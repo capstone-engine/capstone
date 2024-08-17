@@ -226,14 +226,14 @@ class TestInput:
 
 
 class TestExpected:
-    def __init__(self, expected_dict: dict, bits: int):
-        self.arch_bits = bits
+    def __init__(self, handle: Cs, expected_dict: dict):
+        self.handle = handle
         self.expected_dict = expected_dict
         self.insns = (
             list() if "insns" not in self.expected_dict else self.expected_dict["insns"]
         )
 
-    def compare(self, actual_insns: list[CsInsn]) -> TestResult:
+    def compare(self, actual_insns: list[CsInsn], bits: int) -> TestResult:
         if len(actual_insns) != len(self.insns):
             log.error(
                 "Number of decoded instructions don't match (actual != expected): "
@@ -241,40 +241,40 @@ class TestExpected:
             )
             return TestResult.FAILED
         for a_insn, e_insn in zip(actual_insns, self.insns):
-            if "asm_text" in self.expected_dict and not compare_asm_text(
+            if "asm_text" in e_insn and not compare_asm_text(
                 a_insn,
-                self.expected_dict["asm_text"],
-                self.arch_bits,
+                e_insn["asm_text"],
+                bits,
             ):
                 return TestResult.FAILED
 
-            if "mnemonic" in self.expected_dict and not compare_str(
-                a_insn.mnemonic, self.expected_dict["mnemonic"], "mnemonic"
+            if "mnemonic" in e_insn and not compare_str(
+                a_insn.mnemonic, e_insn["mnemonic"], "mnemonic"
             ):
                 return TestResult.FAILED
 
-            if "op_str" in self.expected_dict and not compare_str(
-                a_insn.op_str, self.expected_dict["op_str"], "op_str"
+            if "op_str" in e_insn and not compare_str(
+                a_insn.op_str, e_insn["op_str"], "op_str"
             ):
                 return TestResult.FAILED
 
-            if "id" in self.expected_dict and not compare_uint32(
-                a_insn.id, self.expected_dict["id"], "id"
+            if "id" in e_insn and not compare_uint32(a_insn.id, e_insn["id"], "id"):
+                return TestResult.FAILED
+
+            if "is_alias" in e_insn and not compare_tbool(
+                a_insn.is_alias, e_insn["is_alias"], "is_alias"
             ):
                 return TestResult.FAILED
 
-            if "is_alias" in self.expected_dict and not compare_tbool(
-                a_insn.is_alias, self.expected_dict["is_alias"], "is_alias"
+            if "alias_id" in e_insn and not compare_uint32(
+                a_insn.alias_id, e_insn["alias_id"], "alias_id"
             ):
                 return TestResult.FAILED
 
-            if "alias_id" in self.expected_dict and not compare_uint32(
-                a_insn.alias_id, self.expected_dict["alias_id"], "alias_id"
+            if "details" in e_insn and not compare_details(
+                self.handle, a_insn, e_insn["detail"]
             ):
                 return TestResult.FAILED
-
-            if "details" in self.expected_dict:
-                pass
         return TestResult.SUCCESS
 
 
@@ -286,7 +286,7 @@ class TestCase:
         if "expected" not in self.tc_dict:
             raise ValueError("Mandatory field 'expected' missing")
         self.input = TestInput(self.tc_dict["input"])
-        self.expected = TestExpected(self.tc_dict["expected"], self.input.arch_bits)
+        self.expected = TestExpected(self.input.handle, self.tc_dict["expected"])
         self.skip = "skip" in self.tc_dict
         if self.skip and "skip_reason" not in self.tc_dict:
             raise ValueError(
@@ -317,7 +317,7 @@ class TestCase:
             return TestResult.ERROR
 
         try:
-            return self.expected.compare(insns)
+            return self.expected.compare(insns, self.input.arch_bits)
         except Exception as e:
             log.error(f"Compare expected failed with: {e}")
             return TestResult.ERROR
@@ -408,7 +408,7 @@ class CSTest:
                     result = TestResult.ERROR
                     self.stats.add_error_msg(str(e))
                 if result == TestResult.FAILED or result == TestResult.ERROR:
-                    self.stats.add_failing_file(tf)
+                    self.stats.add_failing_file(tf.path)
                 self.stats.add_test_case_data_point(result)
                 log.info(result)
                 print()

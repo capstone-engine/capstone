@@ -8,20 +8,25 @@ import capstone
 import re
 
 
+def normalize_asm_text(text: str, arch_bits: int) -> str:
+    text = text.strip()
+    text = re.sub(r"\s+", " ", text)
+    # Replace hex numbers with decimals
+    for hex_num in re.findall(r"0x[0-9a-fA-F]+", text):
+        text = re.sub(hex_num, f"{int(hex_num, base=16)}", text)
+    # Replace negatives with twos-complement
+    for num in re.findall(r"-\d+", text):
+        text = re.sub(num, f"{~(int(num, base=10) % (1 << arch_bits)) + 1}", text)
+    text = text.lower()
+    return text
+
+
 def compare_asm_text(a_insn: capstone.CsInsn, expected: str, arch_bits: int) -> bool:
     from py_cstest.cstest import log
 
     actual = f"{a_insn.mnemonic} {a_insn.op_str}"
-    actual = actual.strip()
-    actual = re.sub(r"\s+", " ", actual)
-    # Replace hex numbers with decimals
-    for hex_num in re.findall(r"0x[0-9a-fA-F]+", actual):
-        actual = re.sub(hex_num, f"{int(hex_num, base=16)}", actual)
-    # Replace negatives with twos-complement
-    for match in re.finditer(r"\W(\d+)", actual):
-        num = match.group(1)
-        actual = re.sub(num, f"{~(int(num, base=10) % (1 << arch_bits)) + 1}", actual)
-    actual = actual.lower()
+    actual = normalize_asm_text(actual, arch_bits)
+    expected = normalize_asm_text(expected, arch_bits)
 
     if actual != expected:
         log.error(
