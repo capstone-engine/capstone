@@ -40,6 +40,7 @@ __all__ = [
     'CS_ARCH_TRICORE',
     'CS_ARCH_ALPHA',
     'CS_ARCH_HPPA',
+    'CS_ARCH_LOONGARCH',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -225,6 +226,7 @@ CS_ARCH_SH = 16
 CS_ARCH_TRICORE = 17
 CS_ARCH_ALPHA = 18
 CS_ARCH_HPPA = 19
+CS_ARCH_LOONGARCH = 20
 CS_ARCH_MAX = 20
 CS_ARCH_ALL = 0xFFFF
 
@@ -834,6 +836,8 @@ class CsInsn(object):
             (self.operands) = alpha.get_arch_info(self._raw.detail.contents.arch.alpha)
         elif arch == CS_ARCH_HPPA:
             (self.operands) = hppa.get_arch_info(self._raw.detail.contents.arch.hppa)
+        elif arch == CS_ARCH_LOONGARCH:
+            (self.operands) = loongarch.get_arch_info(self._raw.detail.contents.arch.loongarch)
 
 
     def __getattr__(self, name):
