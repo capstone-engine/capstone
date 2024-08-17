@@ -204,14 +204,14 @@ class TestInput:
     def decode(self) -> list[CsInsn]:
         if not self.handle:
             raise ValueError("self.handle is None. Must be setup before.")
-        return list(self.handle.disasm(self.in_bytes, self.address))
+        return [i for i in self.handle.disasm(self.in_bytes, self.address)]
 
     def __str__(self):
         if self.name:
             return self.name
         return (
             f"TestInput {{ arch: {self.arch}, options: {self.options}, "
-            f"addr: {self.address:x}, bytes: {self.in_bytes} }}"
+            f"addr: {self.address:x}, bytes: [ {','.join([f'{b:#04x}' for b in self.in_bytes])} ] }}"
         )
 
 
