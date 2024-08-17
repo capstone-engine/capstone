@@ -16,22 +16,12 @@ import capstone
 from capstone import CsInsn, Cs, CS_ARCH_AARCH64, CS_MODE_64, CS_MODE_16
 
 from py_cstest.cs_modes import configs
+from py_cstest.details import compare_details
 from py_cstest.compare import (
     compare_asm_text,
     compare_str,
     compare_tbool,
-    compare_uint8,
-    compare_int8,
-    compare_uint16,
-    compare_int16,
     compare_uint32,
-    compare_int32,
-    compare_uint64,
-    compare_int64,
-    compare_fp,
-    compare_enum,
-    compare_bit_flags,
-    compare_reg,
 )
 from enum import Enum
 from pathlib import Path
