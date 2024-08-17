@@ -18,8 +18,9 @@ def compare_asm_text(a_insn: capstone.CsInsn, expected: str, arch_bits: int) -> 
     for hex_num in re.findall(r"0x[0-9a-fA-F]+", actual):
         actual = re.sub(hex_num, f"{int(hex_num, base=16)}", actual)
     # Replace negatives with twos-complement
-    for num in re.findall(r"\d+", actual):
-        actual = re.sub(num, f"{~(num % (1 << arch_bits)) + 1}", actual)
+    for match in re.finditer(r"\W(\d+)", actual):
+        num = match.group(1)
+        actual = re.sub(num, f"{~(int(num, base=10) % (1 << arch_bits)) + 1}", actual)
     actual = actual.lower()
 
     if actual != expected:
