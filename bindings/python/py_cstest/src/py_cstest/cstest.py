@@ -191,7 +191,8 @@ class TestInput:
                     new_mode |= mode
                     continue
             if "CS_OPT_" in opt and opt in configs:
-                mtype, val = configs[opt]
+                mtype = configs[opt]["type"]
+                val = configs[opt]["val"]
                 self.handle.option(mtype, val)
                 continue
             log.warning(f"Option: '{opt}' not used")
