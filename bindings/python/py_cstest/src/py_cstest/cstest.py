@@ -75,6 +75,7 @@ class TestStats:
         self.skipped = 0
         self.errors = 0
         self.invalid_files = 0
+        self.total_valid_files = 0
         self.err_msgs: list[str] = list()
 
     def add_error_msg(self, msg: str):
@@ -214,8 +215,8 @@ class TestInput:
 
 
 class TestExpected:
-    def __init__(self, expected_dict: dict, arch_bits: int):
-        self.arch_bits = arch_bits
+    def __init__(self, expected_dict: dict, bits: int):
+        self.arch_bits = bits
         self.expected_dict = expected_dict
         self.insns = (
             list() if "insns" not in self.expected_dict else self.expected_dict["insns"]
@@ -268,7 +269,6 @@ class TestExpected:
 
 class TestCase:
     def __init__(self, test_case_dict: dict):
-        self.arch_bits = arch_bits
         self.tc_dict = test_case_dict
         if "input" not in self.tc_dict:
             raise ValueError("Mandatory field 'input' missing")
@@ -394,6 +394,7 @@ class CSTest:
                 try:
                     result = tc.test()
                 except Exception as e:
+                    result = TestResult.ERROR
                     self.stats.add_error_msg(str(e))
                 self.stats.add_test_case_data_point(result)
                 log.info(result)
