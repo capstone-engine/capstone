@@ -12,6 +12,7 @@ class ArmOpMem(ctypes.Structure):
         ('scale', ctypes.c_int),
         ('disp', ctypes.c_int),
         ('lshift', ctypes.c_int),
+        ('align', ctypes.c_uint),
     )
 
 class ArmOpShift(ctypes.Structure):
@@ -38,7 +39,7 @@ class ArmOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
         ('sysop', ArmOpSysop),
-        ('imm', ctypes.c_int32),
+        ('imm', ctypes.c_int64),
         ('pred', ctypes.c_int),
         ('fp', ctypes.c_double),
         ('mem', ArmOpMem),
