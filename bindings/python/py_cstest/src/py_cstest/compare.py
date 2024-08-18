@@ -21,7 +21,9 @@ def normalize_asm_text(text: str, arch_bits: int) -> str:
     return text
 
 
-def compare_asm_text(a_insn: capstone.CsInsn, expected: str, arch_bits: int) -> bool:
+def compare_asm_text(a_insn: capstone.CsInsn, expected: None | str, arch_bits: int) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     actual = f"{a_insn.mnemonic} {a_insn.op_str}"
@@ -38,7 +40,9 @@ def compare_asm_text(a_insn: capstone.CsInsn, expected: str, arch_bits: int) -> 
     return True
 
 
-def compare_str(actual: str, expected: str, msg: str) -> bool:
+def compare_str(actual: str, expected: None | str, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     if actual != expected:
@@ -47,7 +51,9 @@ def compare_str(actual: str, expected: str, msg: str) -> bool:
     return True
 
 
-def compare_tbool(actual: bool, expected: int, msg: str) -> bool:
+def compare_tbool(actual: bool, expected: None | int, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     if expected == 0:
@@ -60,7 +66,9 @@ def compare_tbool(actual: bool, expected: int, msg: str) -> bool:
     return True
 
 
-def compare_uint8(actual: int, expected: int, msg: str) -> bool:
+def compare_uint8(actual: int, expected: None | int, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     actual = actual & 0xFF
@@ -71,7 +79,9 @@ def compare_uint8(actual: int, expected: int, msg: str) -> bool:
     return True
 
 
-def compare_int8(actual: int, expected: int, msg: str) -> bool:
+def compare_int8(actual: int, expected: None | int, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     actual = actual & 0xFF
@@ -82,7 +92,9 @@ def compare_int8(actual: int, expected: int, msg: str) -> bool:
     return True
 
 
-def compare_uint16(actual: int, expected: int, msg: str) -> bool:
+def compare_uint16(actual: int, expected: None | int, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     actual = actual & 0xFFFF
@@ -93,7 +105,9 @@ def compare_uint16(actual: int, expected: int, msg: str) -> bool:
     return True
 
 
-def compare_int16(actual: int, expected: int, msg: str) -> bool:
+def compare_int16(actual: int, expected: None | int, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     actual = actual & 0xFFFF
@@ -104,7 +118,9 @@ def compare_int16(actual: int, expected: int, msg: str) -> bool:
     return True
 
 
-def compare_uint32(actual: int, expected: int, msg: str) -> bool:
+def compare_uint32(actual: int, expected: None | int, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     actual = actual & 0xFFFFFFFF
@@ -115,7 +131,9 @@ def compare_uint32(actual: int, expected: int, msg: str) -> bool:
     return True
 
 
-def compare_int32(actual: int, expected: int, msg: str) -> bool:
+def compare_int32(actual: int, expected: None | int, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     actual = actual & 0xFFFFFFFF
@@ -126,7 +144,9 @@ def compare_int32(actual: int, expected: int, msg: str) -> bool:
     return True
 
 
-def compare_uint64(actual: int, expected: int, msg: str) -> bool:
+def compare_uint64(actual: int, expected: None | int, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     actual = actual & 0xFFFFFFFFFFFFFFFF
@@ -137,7 +157,9 @@ def compare_uint64(actual: int, expected: int, msg: str) -> bool:
     return True
 
 
-def compare_int64(actual: int, expected: int, msg: str) -> bool:
+def compare_int64(actual: int, expected: None | int, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     actual = actual & 0xFFFFFFFFFFFFFFFF
@@ -148,7 +170,9 @@ def compare_int64(actual: int, expected: int, msg: str) -> bool:
     return True
 
 
-def compare_fp(actual: float, expected: float, msg: str) -> bool:
+def compare_fp(actual: float, expected: None | float, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     if actual != expected:
@@ -170,7 +194,9 @@ def compare_enum(actual, expected, msg: str) -> bool:
     return True
 
 
-def compare_bit_flags(actual: int, expected: list[str], msg: str) -> bool:
+def compare_bit_flags(actual: int, expected: None | list[str], msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     for flag in expected:
@@ -184,7 +210,9 @@ def compare_bit_flags(actual: int, expected: list[str], msg: str) -> bool:
     return True
 
 
-def compare_reg(handle: capstone.Cs, actual: int, expected: str, msg: str) -> bool:
+def compare_reg(handle: capstone.Cs, actual: int, expected: None | str, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
     if handle.reg_name(actual) != expected:
