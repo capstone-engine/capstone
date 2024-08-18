@@ -6,6 +6,97 @@ from __future__ import annotations
 
 import capstone
 import re
+from capstone import arm_const
+from capstone import aarch64_const
+from capstone import m68k_const
+from capstone import mips_const
+from capstone import ppc_const
+from capstone import sparc_const
+from capstone import sysz_const
+from capstone import x86_const
+from capstone import xcore_const
+from capstone import tms320c64x_const
+from capstone import m680x_const
+from capstone import evm_const
+from capstone import mos65xx_const
+from capstone import wasm_const
+from capstone import bpf_const
+from capstone import riscv_const
+from capstone import sh_const
+from capstone import tricore_const
+from capstone import alpha_const
+from capstone import hppa_const
+from capstone import loongarch_const
+
+
+def cs_const_getattr(identifier: str):
+    attr = getattr(capstone, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(arm_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(aarch64_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(m68k_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(mips_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(ppc_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(sparc_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(sysz_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(x86_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(xcore_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(tms320c64x_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(m680x_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(evm_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(mos65xx_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(wasm_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(bpf_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(riscv_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(sh_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(tricore_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(alpha_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(hppa_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(loongarch_const, identifier, None)
+    if attr is not None:
+        return attr
+    raise ValueError(f"Python capstone doesn't have the constant: {identifier}")
 
 
 def normalize_asm_text(text: str, arch_bits: int) -> str:
@@ -21,7 +112,9 @@ def normalize_asm_text(text: str, arch_bits: int) -> str:
     return text
 
 
-def compare_asm_text(a_insn: capstone.CsInsn, expected: None | str, arch_bits: int) -> bool:
+def compare_asm_text(
+    a_insn: capstone.CsInsn, expected: None | str, arch_bits: int
+) -> bool:
     if expected is None:
         return True
     from py_cstest.cstest import log
@@ -181,15 +274,14 @@ def compare_fp(actual: float, expected: None | float, msg: str) -> bool:
     return True
 
 
-def compare_enum(actual, expected, msg: str) -> bool:
+def compare_enum(actual, expected: None | str, msg: str) -> bool:
+    if expected is None:
+        return True
     from py_cstest.cstest import log
 
-    enum_val = getattr(capstone, expected)
-    if not enum_val:
-        log.error(f"capstone package doesn't have the an attribute '{expected}'")
-        return False
-    if actual != expected:
-        log.error(f"{msg}: {actual} != {expected}")
+    enum_val = cs_const_getattr(expected)
+    if actual != enum_val:
+        log.error(f"{msg}: {actual} != {expected} ({enum_val})")
         return False
     return True
 
@@ -200,22 +292,21 @@ def compare_bit_flags(actual: int, expected: None | list[str], msg: str) -> bool
     from py_cstest.cstest import log
 
     for flag in expected:
-        enum_val = getattr(capstone, flag)
-        if not enum_val:
-            log.error(f"capstone package doesn't have the an attribute '{expected}'")
-            return False
+        enum_val = cs_const_getattr(flag)
         if not actual & enum_val:
             log.error(f"{msg}: In {actual:x} the flag {expected} isn't set.")
             return False
     return True
 
 
-def compare_reg(handle: capstone.Cs, actual: int, expected: None | str, msg: str) -> bool:
+def compare_reg(
+    insn: capstone.CsInsn, actual: int, expected: None | str, msg: str
+) -> bool:
     if expected is None:
         return True
     from py_cstest.cstest import log
 
-    if handle.reg_name(actual) != expected:
+    if insn.reg_name(actual) != expected:
         log.error(f"{msg}: {actual} != {expected}")
         return False
     return True
