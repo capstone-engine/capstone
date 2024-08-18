@@ -216,8 +216,7 @@ class TestInput:
 
 
 class TestExpected:
-    def __init__(self, handle: Cs, expected_dict: dict):
-        self.handle = handle
+    def __init__(self, expected_dict: dict):
         self.expected_dict = expected_dict
         self.insns = (
             list() if "insns" not in self.expected_dict else self.expected_dict["insns"]
@@ -231,38 +230,38 @@ class TestExpected:
             )
             return TestResult.FAILED
         for a_insn, e_insn in zip(actual_insns, self.insns):
-            if "asm_text" in e_insn and not compare_asm_text(
+            if not compare_asm_text(
                 a_insn,
-                e_insn["asm_text"],
+                e_insn.get("asm_text"),
                 bits,
             ):
                 return TestResult.FAILED
 
-            if "mnemonic" in e_insn and not compare_str(
-                a_insn.mnemonic, e_insn["mnemonic"], "mnemonic"
+            if not compare_str(
+                a_insn.mnemonic, e_insn.get("mnemonic"), "mnemonic"
             ):
                 return TestResult.FAILED
 
-            if "op_str" in e_insn and not compare_str(
-                a_insn.op_str, e_insn["op_str"], "op_str"
+            if not compare_str(
+                a_insn.op_str, e_insn.get("op_str"), "op_str"
             ):
                 return TestResult.FAILED
 
-            if "id" in e_insn and not compare_uint32(a_insn.id, e_insn["id"], "id"):
+            if not compare_uint32(a_insn.id, e_insn.get("id"), "id"):
                 return TestResult.FAILED
 
-            if "is_alias" in e_insn and not compare_tbool(
-                a_insn.is_alias, e_insn["is_alias"], "is_alias"
+            if not compare_tbool(
+                a_insn.is_alias, e_insn.get("is_alias"), "is_alias"
             ):
                 return TestResult.FAILED
 
-            if "alias_id" in e_insn and not compare_uint32(
-                a_insn.alias_id, e_insn["alias_id"], "alias_id"
+            if not compare_uint32(
+                a_insn.alias_id, e_insn.get("alias_id"), "alias_id"
             ):
                 return TestResult.FAILED
 
-            if "details" in e_insn and not compare_details(
-                self.handle, a_insn, e_insn["details"]
+            if not compare_details(
+                a_insn, e_insn.get("details")
             ):
                 return TestResult.FAILED
         return TestResult.SUCCESS
@@ -276,7 +275,7 @@ class TestCase:
         if "expected" not in self.tc_dict:
             raise ValueError("Mandatory field 'expected' missing")
         self.input = TestInput(self.tc_dict["input"])
-        self.expected = TestExpected(self.input.handle, self.tc_dict["expected"])
+        self.expected = TestExpected(self.tc_dict["expected"])
         self.skip = "skip" in self.tc_dict
         if self.skip and "skip_reason" not in self.tc_dict:
             raise ValueError(

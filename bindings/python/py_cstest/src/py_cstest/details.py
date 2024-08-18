@@ -121,6 +121,9 @@ def compare_details(insn: CsInsn, expected: dict) -> bool:
             if not compare_enum(agroup, egroup, "group"):
                 return False
 
+    if not compare_tbool(insn.writeback, expected.get("writeback"), "writeback"):
+        return False
+
     if "aarch64" in expected:
         return test_expected_aarch64(actual, expected["aarch64"])
     elif "arm" in expected:
@@ -152,17 +155,17 @@ def compare_details(insn: CsInsn, expected: dict) -> bool:
     elif "tms320c64x" in expected:
         return test_expected_tms320c64x(actual, expected["tms320c64x"])
     elif "mos65xx" in expected:
-        return test_expected_mos65xx(handle, actual, expected["mos65xx"])
+        return test_expected_mos65xx(actual, expected["mos65xx"])
     elif "evm" in expected:
-        return test_expected_evm(handle, actual, expected["evm"])
+        return test_expected_evm(actual, expected["evm"])
     elif "loongarch" in expected:
-        return test_expected_loongarch(handle, actual, expected["loongarch"])
+        return test_expected_loongarch(actual, expected["loongarch"])
     elif "wasm" in expected:
-        return test_expected_wasm(handle, actual, expected["wasm"])
+        return test_expected_wasm(actual, expected["wasm"])
     elif "x86" in expected:
-        return test_expected_x86(handle, actual, expected["x86"])
+        return test_expected_x86(actual, expected["x86"])
     elif "m68k" in expected:
-        return test_expected_m68k(handle, actual, expected["m68k"])
+        return test_expected_m68k(actual, expected["m68k"])
 
     return True
 
@@ -207,7 +210,7 @@ def test_expected_tms320c64x(handle: Cs, actual: CsInsn, expected: dict) -> bool
     return True
 
 
-def test_expected_aarch64(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
     if not compare_enum(actual.cc, expected.get("cc"), "cc"):
         return False
     if not compare_tbool(
@@ -215,27 +218,24 @@ def test_expected_aarch64(handle: Cs, actual: CsInsn, expected: dict) -> bool:
     ):
         return False
     if not compare_tbool(
-        actual.post_indexed, expected.get("post_indexed"), "post_indexed"
+        actual.post_index, expected.get("post_indexed"), "post_indexed"
     ):
         return False
 
-    if not compare_uint32(
-        len(actual.operands), expected.get("operands_count"), "operands_count"
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
     ):
         return False
 
     for aop, eop in zip(actual.operands, expected["operands"]):
-        if not compare_enum(aop.type, eop["type"], "op type"):
-            return False
-
-        if not compare_enum(aop.sub_type, eop.get("sub_type"), "sub_type"):
-            return False
         if not compare_enum(aop.access, eop.get("access"), "access"):
             return False
 
-        if not compare_enum(aop.shift_type, eop.get("shift_type"), "shift_type"):
+        if not compare_enum(aop.shift.type, eop.get("shift_type"), "shift_type"):
             return False
-        if not compare_uint32(aop.shift_value, eop.get("shift_value"), "shift_value"):
+        if not compare_uint32(aop.shift.value, eop.get("shift_value"), "shift_value"):
             return False
         if not compare_enum(aop.ext, eop.get("ext"), "ext"):
             return False
@@ -246,9 +246,7 @@ def test_expected_aarch64(handle: Cs, actual: CsInsn, expected: dict) -> bool:
             return False
 
         if eop.get("vector_index_is_set"):
-            if compare_int32(
-                aop.sme.vector_index, eop.get("vector_index"), "vector_index"
-            ):
+            if compare_int32(aop.vector_index, eop.get("vector_index"), "vector_index"):
                 return False
 
         if not compare_tbool(
@@ -256,100 +254,130 @@ def test_expected_aarch64(handle: Cs, actual: CsInsn, expected: dict) -> bool:
         ):
             return False
 
+        if not compare_enum(aop.type, eop["type"], "op type"):
+            return False
         # Operand
         if aop.type == AARCH64_OP_REG:
-            if not compare_reg(handle, aop.reg, eop.get("reg"), "reg"):
+            if not compare_reg(actual, aop.value.reg, eop.get("reg"), "reg"):
                 return False
         elif aop.type == AARCH64_OP_IMM:
-            if not compare_int64(aop.imm, eop.get("imm"), "imm"):
+            if not compare_int64(aop.value.imm, eop.get("imm"), "imm"):
                 return False
         elif aop.type == AARCH64_OP_MEM:
-            if not compare_reg(handle, aop.mem_base, eop.get("mem_base"), "mem_base"):
-                return False
             if not compare_reg(
-                handle, aop.mem_index, eop.get("mem_index"), "mem_index"
+                actual, aop.value.mem.base, eop.get("mem_base"), "mem_base"
             ):
                 return False
-            if not compare_int32(aop.mem_disp, eop.get("mem_disp"), "mem_disp"):
+            if not compare_reg(
+                actual, aop.value.mem.index, eop.get("mem_index"), "mem_index"
+            ):
+                return False
+            if not compare_int32(aop.value.mem.disp, eop.get("mem_disp"), "mem_disp"):
                 return False
         elif aop.type == AARCH64_OP_IMM_RANGE:
             if not compare_int8(
-                aop.imm_range_first, eop.get("imm_range_first"), "imm_range_first"
+                aop.value.imm_range.first, eop.get("imm_range_first"), "imm_range_first"
             ):
                 return False
             if not compare_int8(
-                aop.imm_range_offset, eop.get("imm_range_offset"), "imm_range_offset"
+                aop.value.imm_range.offset,
+                eop.get("imm_range_offset"),
+                "imm_range_offset",
             ):
                 return False
         elif aop.type == AARCH64_OP_FP:
-            if not compare_fp(aop.fp, eop.get("fp"), "fp"):
+            if not compare_fp(aop.value.fp, eop.get("fp"), "fp"):
                 return False
         elif aop.type == AARCH64_OP_SYSREG:
+            if not compare_enum(
+                aop.value.sysop.sub_type, eop.get("sub_type"), "sub_type"
+            ):
+                return False
             if not compare_uint64(
-                aop.sys_raw_val, eop.get("sys_raw_val"), "sys_raw_val"
+                aop.value.sysop.reg.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
         elif aop.type == AARCH64_OP_SYSIMM:
+            if not compare_enum(
+                aop.value.sysop.sub_type, eop.get("sub_type"), "sub_type"
+            ):
+                return False
             if not compare_uint64(
-                aop.sys_raw_val, eop.get("sys_raw_val"), "sys_raw_val"
+                aop.value.sysop.imm.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
         elif aop.type == AARCH64_OP_SYSALIAS:
+            if not compare_enum(
+                aop.value.sysop.sub_type, eop.get("sub_type"), "sub_type"
+            ):
+                return False
             if not compare_uint64(
-                aop.sys_raw_val, eop.get("sys_raw_val"), "sys_raw_val"
+                aop.value.sysop.alias.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
         elif aop.type == AARCH64_OP_PRED:
-            if not compare_reg(handle, aop.pred.reg, eop.get("pred_reg"), "pred_reg"):
+            if not compare_reg(
+                actual, aop.value.pred.reg, eop.get("pred_reg"), "pred_reg"
+            ):
                 return False
             if not compare_reg(
-                handle,
-                aop.pred.vec_select,
+                actual,
+                aop.value.pred.vec_select,
                 eop.get("pred_vec_select"),
                 "pred_vec_select",
             ):
                 return False
             if eop.get("pred_imm_index_set"):
                 if not compare_int32(
-                    aop.pred.imm_index, eop.get("pred_imm_index"), "pred_imm_index"
+                    aop.value.pred.imm_index,
+                    eop.get("pred_imm_index"),
+                    "pred_imm_index",
                 ):
                     return False
         elif aop.type == AARCH64_OP_SME:
-            if not compare_enum(aop.sme.type, eop.get("type"), "type"):
-                return False
-            if not compare_reg(handle, aop.sme.tile, eop.get("tile"), "tile"):
+            if "sme" not in eop:
+                continue
+
+            if not compare_enum(aop.value.sme.type, eop["sme"].get("type"), "type"):
                 return False
             if not compare_reg(
-                handle, aop.sme.slice_reg, eop.get("slice_reg"), "slice_reg"
+                actual, aop.value.sme.tile, eop["sme"].get("tile"), "tile"
+            ):
+                return False
+            if not compare_reg(
+                actual,
+                aop.value.sme.slice_reg,
+                eop["sme"].get("slice_reg"),
+                "slice_reg",
             ):
                 return False
             if not compare_int8(
-                aop.sme.slice_offset.imm,
-                eop.get("slice_offset_imm"),
+                aop.value.sme.slice_offset.imm,
+                eop["sme"].get("slice_offset_imm"),
                 "slice_offset_imm",
             ):
                 return False
-            if eop.get("slice_offset_ir_set"):
+            if eop["sme"].get("slice_offset_ir_set"):
                 if not compare_int8(
-                    aop.sme.slice_offset.imm_range.first,
-                    eop.get("slice_offset_ir_first"),
+                    aop.value.sme.slice_offset.imm_range.first,
+                    eop["sme"].get("slice_offset_ir_first"),
                     "slice_offset_ir_first",
                 ):
                     return False
                 if not compare_int8(
-                    aop.sme.slice_offset.imm_range.offset,
-                    eop.get("slice_offset_ir_offset"),
+                    aop.value.sme.slice_offset.imm_range.offset,
+                    eop["sme"].get("slice_offset_ir_offset"),
                     "slice_offset_ir_offset",
                 ):
                     return False
             if not compare_tbool(
-                aop.sme.has_range_offset,
-                eop.get("has_range_offset"),
+                aop.value.sme.has_range_offset,
+                eop["sme"].get("has_range_offset"),
                 "has_range_offset",
             ):
                 return False
             if not compare_tbool(
-                aop.sme.is_vertical, eop.get("is_vertical"), "is_vertical"
+                aop.value.sme.is_vertical, eop["sme"].get("is_vertical"), "is_vertical"
             ):
                 return False
         else:
@@ -357,41 +385,41 @@ def test_expected_aarch64(handle: Cs, actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_bpf(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_bpf(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_sh(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_sh(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_hppa(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_hppa(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_riscv(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_riscv(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_m68k(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_mips(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_mips(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_sysz(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_sysz(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_mos65xx(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_mos65xx(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_loongarch(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_loongarch(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_wasm(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_wasm(actual: CsInsn, expected: dict) -> bool:
     return True
