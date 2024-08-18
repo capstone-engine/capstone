@@ -123,6 +123,16 @@ jobs:
       run: |
         ctest --test-dir build --output-on-failure -R DetailTests
 
+    - name: cstest issues
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --test-dir build --output-on-failure -R IssueTests
+
+    - name: cstest features
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --test-dir build --output-on-failure -R FeaturesTests
+
     - name: Legacy integration tests
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |

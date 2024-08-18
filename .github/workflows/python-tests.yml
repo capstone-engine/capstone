@@ -34,7 +34,24 @@ jobs:
     - name: Run legacy tests
       run: python ./bindings/python/tests/test_all.py
 
-    - name: cstest.py integration tests
+    - name: py_cstest integration tests
       run: |
         cd suite/cstest/test/
         python3 ./integration_tests.py py_cstest
+        cd ../../../
+
+    - name: py_cstest MC
+      run: |
+        py_cstest tests/MC/
+
+    - name: py_cstest details
+      run: |
+        py_cstest tests/details/
+
+    - name: py_cstest issues
+      run: |
+        py_cstest tests/issues/
+
+    - name: py_cstest features
+      run: |
+        py_cstest tests/features/

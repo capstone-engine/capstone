@@ -66,6 +66,15 @@ add_test(DetailTests
     cstest ${PROJECT_SOURCE_DIR}/tests/details
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
+add_test(IssueTests
+    cstest ${PROJECT_SOURCE_DIR}/tests/issues
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+add_test(FeaturesTests
+    cstest ${PROJECT_SOURCE_DIR}/tests/features
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+
 
 if(CAPSTONE_INSTALL)
     install(TARGETS cstest EXPORT capstone-targets DESTINATION ${CMAKE_INSTALL_BINDIR})
