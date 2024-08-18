@@ -252,7 +252,7 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
             return False
 
         if eop.get("vector_index_is_set"):
-            if compare_int32(aop.vector_index, eop.get("vector_index"), "vector_index"):
+            if not compare_int32(aop.vector_index, eop.get("vector_index"), "vector_index"):
                 return False
 
         if not compare_tbool(
