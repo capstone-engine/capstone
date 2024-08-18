@@ -1,7 +1,8 @@
 # Capstone Disassembler Engine
 # By Dang Hoang Vu, 2013
 from __future__ import print_function
-import sys, re
+import sys
+import re
 
 INCL_DIR = '../include/capstone/'
 
@@ -163,6 +164,11 @@ def gen(lang):
             elif line.startswith('}') or line.startswith('#'):
                 doc_lines = []
                 pass
+            elif re.search(r"^(\s*typedef\s+)?enum", line):
+                # First new enum value should be 0.
+                # Because `rhs` is incremented later, it must be set to -1 here.
+                # Everything about this code is so broken -.-
+                rhs = "-1"
 
             if line == '' or line.startswith('//'):
                 continue
@@ -177,7 +183,7 @@ def gen(lang):
                 xline.insert(1, '=')            # insert an = so the expression below can parse it
                 line = ' '.join(xline)
 
-            def is_with_prefix(x):
+            def has_special_arch_prefix(x):
                 if target in excluded_prefixes and any(x.startswith(excl_pre) for excl_pre in excluded_prefixes[target]):
                     return False
                 if prefixs:
@@ -185,7 +191,7 @@ def gen(lang):
                 else:
                     return x.startswith(prefix.upper())
 
-            if not is_with_prefix(line):
+            if not has_special_arch_prefix(line):
                 continue
 
             tmp = line.strip().split(',')
@@ -197,7 +203,7 @@ def gen(lang):
                 t = re.sub(r'\((\d+)ULL << (\d+)\)', r'\1 << \2', t)    # (1ULL<<1) to 1 << 1
                 f = re.split('\s+', t)
 
-                if not is_with_prefix(f[0]):
+                if not has_special_arch_prefix(f[0]):
                     continue
 
                 if len(f) > 1 and f[1] not in ('//', '///<', '='):
