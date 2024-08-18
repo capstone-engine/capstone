@@ -21,8 +21,12 @@ void test_detail_arm_free(TestDetailARM *detail)
 		test_detail_arm_op_free(detail->operands[i]);
 	}
 	cs_mem_free(detail->operands);
+	cs_mem_free(detail->vector_data);
+	cs_mem_free(detail->cps_mode);
+	cs_mem_free(detail->cps_flag);
 	cs_mem_free(detail->cc);
 	cs_mem_free(detail->vcc);
+	cs_mem_free(detail->mem_barrier);
 	cs_mem_free(detail);
 }
 
@@ -32,6 +36,12 @@ TestDetailARM *test_detail_arm_clone(TestDetailARM *detail)
 	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
 	clone->update_flags = detail->update_flags;
 	clone->post_indexed = detail->post_indexed;
+	clone->vector_data = detail->vector_data ? strdup(detail->vector_data) : NULL;
+	clone->cps_mode = detail->cps_mode ? strdup(detail->cps_mode) : NULL;
+	clone->cps_flag = detail->cps_flag ? strdup(detail->cps_flag) : NULL;
+	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
+	clone->vcc = detail->vcc ? strdup(detail->vcc) : NULL;
+	clone->mem_barrier = detail->mem_barrier ? strdup(detail->mem_barrier) : NULL;
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
