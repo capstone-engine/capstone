@@ -187,7 +187,7 @@ class TestInput:
         for opt in self.options:
             if "CS_MODE_" in opt:
                 mode = get_cs_int_attr(capstone, opt, "CS_OPT")
-                if mode:
+                if mode is not None:
                     new_mode |= mode
                     continue
             if "CS_OPT_" in opt and opt in configs:
@@ -262,7 +262,7 @@ class TestExpected:
                 return TestResult.FAILED
 
             if "details" in e_insn and not compare_details(
-                self.handle, a_insn, e_insn["detail"]
+                self.handle, a_insn, e_insn["details"]
             ):
                 return TestResult.FAILED
         return TestResult.SUCCESS

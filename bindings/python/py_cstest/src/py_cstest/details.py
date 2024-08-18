@@ -51,11 +51,53 @@ from py_cstest.compare import (
 
 
 def test_reg_rw_access(handle: Cs, insn: CsInsn, expected: dict):
-    pass
+    if ("regs_read_count" not in expected or expected["regs_read_count"] <= 0) and (
+        "regs_write_count" not in expected or expected["regs_write_count"] <= 0
+    ):
+        return True
+
+    regs_read, regs_write = handle.regs_access()
+    if "regs_read_count" not in expected or expected["regs_read_count"] <= 0:
+        if not compare_uint32(len(regs_read), expected["regs_read_count"]):
+            return False
+        for i, wreg in enumerate(regs_read):
+            if not compare_reg(*handle, wreg, expected["regs_read"][i]):
+                return False
+
+    if "regs_write_count" not in expected or expected["regs_write_count"] <= 0:
+        if not compare_uint32(len(regs_write), expected["regs_write_count"]):
+            return False
+        for i, wreg in enumerate(regs_write):
+            if not compare_reg(*handle, wreg, expected["regs_write"][i]):
+                return False
+
+    return True
 
 
 def test_impl_reg_rw_access(handle: Cs, insn: CsInsn, expected: dict):
-    pass
+    if ("regs_impl_read_count" not in expected or expected["regs_impl_read_count"] <= 0) and (
+        "regs_impl_write_count" not in expected or expected["regs_impl_write_count"] <= 0
+    ):
+        return True
+
+    regs_impl_read = insn.detail.regs_read
+    regs_impl_write = insn.detail.regs_write
+
+    if "regs_impl_read_count" not in expected or expected["regs_impl_read_count"] <= 0:
+        if not compare_uint32(len(regs_impl_read), expected["regs_impl_read_count"]):
+            return False
+        for i, wreg in enumerate(regs_impl_read):
+            if not compare_reg(*handle, wreg, expected["regs_impl_read"][i]):
+                return False
+
+    if "regs_impl_write_count" not in expected or expected["regs_impl_write_count"] <= 0:
+        if not compare_uint32(len(regs_impl_write), expected["regs_impl_write_count"]):
+            return False
+        for i, wreg in enumerate(regs_impl_write):
+            if not compare_reg(*handle, wreg, expected["regs_impl_write"][i]):
+                return False
+
+    return True
 
 
 def compare_details(handle: Cs, insn: CsInsn, expected: dict) -> bool:
