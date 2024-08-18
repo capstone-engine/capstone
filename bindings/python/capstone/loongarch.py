@@ -52,4 +52,4 @@ class CsLoongArch(ctypes.Structure):
 
 
 def get_arch_info(a):
-    return copy_ctypes_list(a.operands[: a.op_count])
+    return a.format, copy_ctypes_list(a.operands[: a.op_count])

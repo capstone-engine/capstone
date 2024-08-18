@@ -466,7 +466,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, alpha, hppa
+from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, alpha, hppa, loongarch
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -490,6 +490,7 @@ class _cs_arch(ctypes.Union):
         ('tricore', tricore.CsTriCore),
         ('alpha', alpha.CsAlpha),
         ('hppa', hppa.CsHPPA),
+        ('loongarch', loongarch.CsLoongArch),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -839,7 +840,7 @@ class CsInsn(object):
         elif arch == CS_ARCH_HPPA:
             (self.operands) = hppa.get_arch_info(self._raw.detail.contents.arch.hppa)
         elif arch == CS_ARCH_LOONGARCH:
-            (self.operands) = loongarch.get_arch_info(self._raw.detail.contents.arch.loongarch)
+            (self.format, self.operands) = loongarch.get_arch_info(self._raw.detail.contents.arch.loongarch)
 
 
     def __getattr__(self, name):
