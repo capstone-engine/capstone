@@ -14,7 +14,7 @@ class AArch64OpMem(ctypes.Structure):
 
 class AArch64ImmRange(ctypes.Structure):
     _fields_ = (
-        ('imm', ctypes.c_int8),
+        ('first', ctypes.c_int8),
         ('offset', ctypes.c_int8),
     )
 
