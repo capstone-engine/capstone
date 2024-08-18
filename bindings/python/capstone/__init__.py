@@ -108,6 +108,8 @@ __all__ = [
     'CS_MODE_HPPA_11',
     'CS_MODE_HPPA_20',
     'CS_MODE_HPPA_20W',
+    'CS_MODE_LOONGARCH32',
+    'CS_MODE_LOONGARCH64',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -1337,7 +1339,7 @@ def debug():
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
         'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV, 'tricore': CS_ARCH_TRICORE,
         'wasm': CS_ARCH_WASM, 'sh': CS_ARCH_SH, 'alpha': CS_ARCH_ALPHA,
-        'hppa': CS_ARCH_HPPA
+        'hppa': CS_ARCH_HPPA, 'loongarch': CS_ARCH_LOONGARCH
     }
 
     all_archs = ""
