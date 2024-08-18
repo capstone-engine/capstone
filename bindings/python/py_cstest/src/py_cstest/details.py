@@ -21,6 +21,22 @@ from capstone.aarch64_const import (
     AARCH64_OP_REG,
 )
 
+from capstone.arm_const import (
+    ARM_OP_PRED,
+    ARM_OP_CIMM,
+    ARM_OP_PIMM,
+    ARM_OP_SETEND,
+    ARM_OP_SYSREG,
+    ARM_OP_BANKEDREG,
+    ARM_OP_SPSR,
+    ARM_OP_CPSR,
+    ARM_OP_SYSM,
+    ARM_OP_FP,
+    ARM_OP_MEM,
+    ARM_OP_IMM,
+    ARM_OP_REG,
+)
+
 from py_cstest.compare import (
     compare_tbool,
     compare_uint8,
@@ -176,43 +192,164 @@ def compare_details(insn: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_x86(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_x86(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_sparc(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_sparc(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_tricore(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_tricore(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_ppc(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_ppc(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_evm(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_evm(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_alpha(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_alpha(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_arm(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_arm(actual: CsInsn, expected: dict) -> bool:
+    if not compare_int32(
+        actual.vector_size, expected.get("vector_size"), "vector_size"
+    ):
+        return False
+    if not compare_enum(actual.vector_data, expected.get("vector_data"), "vector_data"):
+        return False
+    if not compare_enum(actual.cps_mode, expected.get("cps_mode"), "cps_mode"):
+        return False
+    if not compare_enum(actual.cps_flag, expected.get("cps_flag"), "cps_flag"):
+        return False
+    if not compare_enum(actual.cc, expected.get("cc"), "cc"):
+        return False
+    if not compare_enum(actual.vcc, expected.get("vcc"), "vcc"):
+        return False
+    if not compare_enum(actual.mem_barrier, expected.get("mem_barrier"), "mem_barrier"):
+        return False
+    if not compare_uint8(actual.pred_mask, expected.get("pred_mask"), "pred_mask"):
+        return False
+
+    if not compare_tbool(actual.usermode, expected.get("usermode"), "usermode"):
+        return False
+    if not compare_tbool(
+        actual.update_flags, expected.get("update_flags"), "update_flags"
+    ):
+        return False
+    if not compare_tbool(
+        actual.post_index, expected.get("post_indexed"), "post_indexed"
+    ):
+        return False
+
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+
+        if aop.type == ARM_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif (
+            aop.type == ARM_OP_IMM or aop.type == ARM_OP_PIMM or aop.type == ARM_OP_CIMM
+        ):
+            if not compare_int64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == ARM_OP_SETEND:
+            if not compare_enum(aop.setend, eop.get("setend"), "setend"):
+                return False
+        elif aop.type == ARM_OP_PRED:
+            if not compare_int32(aop.pred, eop.get("pred"), "pred"):
+                return False
+        elif aop.type == ARM_OP_FP:
+            if not compare_fp(aop.fp, eop.get("fp"), "fp"):
+                return False
+        elif aop.type == ARM_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_reg(
+                actual, aop.mem.index, eop.get("mem_index"), "mem_index"
+            ):
+                return False
+            if not compare_int32(aop.mem.scale, eop.get("mem_scale"), "mem_scale"):
+                return False
+            if not compare_int32(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+            if not compare_uint32(aop.mem.align, eop.get("mem_align"), "mem_align"):
+                return False
+        elif aop.type == ARM_OP_SYSREG:
+            if not compare_enum(
+                aop.sysop.reg.mclasssysreg, eop.get("sys_reg"), "sys_reg"
+            ):
+                return False
+            if not compare_int32(aop.sysop.sysm, eop.get("sys_sysm"), "sys_sysm"):
+                return False
+            if not compare_int32(
+                aop.sysop.msr_mask, eop.get("sys_msr_mask"), "sys_msr_mask"
+            ):
+                return False
+        elif aop.type == ARM_OP_BANKEDREG:
+            if not compare_enum(aop.sysop.reg.bankedreg, eop.get("sys_reg"), "sys_reg"):
+                return False
+            if not compare_int32(aop.sysop.sysm, eop.get("sys_sysm"), "sys_sysm"):
+                return False
+            if not compare_int32(
+                aop.sysop.msr_mask, eop.get("sys_msr_mask"), "sys_msr_mask"
+            ):
+                return False
+        elif aop.type == ARM_OP_SPSR or aop.type == ARM_OP_CPSR:
+            if not compare_bit_flags(
+                aop.sysop.psr_bits, eop.get("sys_psr_bits"), "sys_psr_bits"
+            ):
+                return False
+            if not compare_int32(aop.sysop.sysm, eop.get("sys_sysm"), "sys_sysm"):
+                return False
+            if not compare_int32(
+                aop.sysop.msr_mask, eop.get("sys_msr_mask"), "sys_msr_mask"
+            ):
+                return False
+
+        if not compare_enum(aop.shift.type, eop.get("shift_type"), "shift_type"):
+            return False
+        if not compare_uint32(aop.shift.value, eop.get("shift_value"), "shift_value"):
+            return False
+
+        if not compare_int8(aop.neon_lane, eop.get("neon_lane"), "neon_lane"):
+            return False
+
+        if expected.get("vector_index_is_set"):
+            if not compare_int32(
+                aop.vector_index, eop.get("vector_index"), "vector_index"
+            ):
+                return False
+
+        if not compare_tbool(aop.subtracted, eop.get("subtracted"), "subtracted"):
+            return False
     return True
 
 
-def test_expected_m680x(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_m680x(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_xcore(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_xcore(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_tms320c64x(handle: Cs, actual: CsInsn, expected: dict) -> bool:
+def test_expected_tms320c64x(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
@@ -252,7 +389,9 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
             return False
 
         if eop.get("vector_index_is_set"):
-            if not compare_int32(aop.vector_index, eop.get("vector_index"), "vector_index"):
+            if not compare_int32(
+                aop.vector_index, eop.get("vector_index"), "vector_index"
+            ):
                 return False
 
         if not compare_tbool(
