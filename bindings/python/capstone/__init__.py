@@ -353,7 +353,7 @@ CS_GRP_BRANCH_RELATIVE = 7 # all relative branching instructions
 CS_AC_INVALID  = 0        # Invalid/uninitialized access type.
 CS_AC_READ     = (1 << 0) # Operand that is read from.
 CS_AC_WRITE    = (1 << 1) # Operand that is written to.
-CS_AC_READ_WRITE = (2)
+CS_AC_READ_WRITE = CS_AC_READ | CS_AC_WRITE
 
 # Capstone syntax value
 CS_OPT_SYNTAX_DEFAULT = (1 << 1)  # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
@@ -704,6 +704,21 @@ class CsInsn(object):
     def size(self):
         return self._raw.size
 
+    # return instruction's is_alias flag
+    @property
+    def is_alias(self):
+        return self._raw.is_alias
+
+    # return instruction's alias_id
+    @property
+    def alias_id(self):
+        return self._raw.alias_id
+
+    # return instruction's flag if it uses alias details
+    @property
+    def uses_alias_details(self):
+        return self._raw.usesAliasDetails
+
     # return instruction's machine bytes (which should have @size bytes).
     @property
     def bytes(self):
@@ -851,14 +866,14 @@ class CsInsn(object):
 
         attr = object.__getattribute__
         if not attr(self, '_cs')._detail:
-            raise AttributeError(name)
+            raise AttributeError(f"'CsInsn' has no attribute '{name}'")
         _dict = attr(self, '__dict__')
         if 'operands' not in _dict:
             self.__gen_detail()
         if name not in _dict:
             if self._raw.id == 0:
                 raise CsError(CS_ERR_SKIPDATA)
-            raise AttributeError(name)
+            raise AttributeError(f"'CsInsn' has no attribute '{name}'")
         return _dict[name]
 
     # get the last error code
