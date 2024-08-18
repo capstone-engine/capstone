@@ -1157,7 +1157,7 @@ test_cases:
         asm_text: "dmb nshst"
         details:
           arm:
-            mem_barrier: ARM_MB_NSHLD
+            mem_barrier: ARM_MB_NSHST
           groups: [ IsThumb, HasDB ]
   -
     input:
