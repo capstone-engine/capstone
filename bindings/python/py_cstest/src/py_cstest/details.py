@@ -38,67 +38,72 @@ from py_cstest.compare import (
 )
 
 
-def test_reg_rw_access(handle: Cs, insn: CsInsn, expected: dict):
-    if ("regs_read_count" not in expected or expected["regs_read_count"] <= 0) and (
-        "regs_write_count" not in expected or expected["regs_write_count"] <= 0
+def test_reg_rw_access(insn: CsInsn, expected: dict):
+    if ("regs_read" not in expected or len(expected["regs_read"]) <= 0) and (
+        "regs_write" not in expected or len(expected["regs_write"]) <= 0
     ):
         return True
 
     regs_read, regs_write = insn.regs_access()
-    if "regs_read_count" not in expected or expected["regs_read_count"] <= 0:
-        if not compare_uint32(len(regs_read), expected["regs_read_count"]):
+    if "regs_read" in expected and len(expected["regs_read"]) > 0:
+        if not compare_uint32(len(regs_read), len(expected["regs_read"]), "regs_read_count"):
             return False
-        for i, wreg in enumerate(regs_read):
-            if not compare_reg(handle, wreg, expected["regs_read"][i]):
+        for i, rreg in enumerate(regs_read):
+            if not compare_reg(insn, rreg, expected["regs_read"][i], "regs_read"):
                 return False
 
-    if "regs_write_count" not in expected or expected["regs_write_count"] <= 0:
-        if not compare_uint32(len(regs_write), expected["regs_write_count"]):
+    if "regs_write" in expected and len(expected["regs_write"]) > 0:
+        if not compare_uint32(len(regs_write), len(expected["regs_write"]), "regs_write_count"):
             return False
         for i, wreg in enumerate(regs_write):
-            if not compare_reg(handle, wreg, expected["regs_write"][i]):
+            if not compare_reg(insn, wreg, expected["regs_write"][i], "regs_write"):
                 return False
 
     return True
 
 
-def test_impl_reg_rw_access(handle: Cs, insn: CsInsn, expected: dict):
-    if (
-        "regs_impl_read_count" not in expected or expected["regs_impl_read_count"] <= 0
-    ) and (
-        "regs_impl_write_count" not in expected
-        or expected["regs_impl_write_count"] <= 0
+def test_impl_reg_rw_access(insn: CsInsn, expected: dict):
+    if ("regs_impl_read" not in expected or len(expected["regs_impl_read"]) <= 0) and (
+        "regs_impl_write" not in expected or len(expected["regs_impl_write"]) <= 0
     ):
         return True
 
-    regs_impl_read = insn.detail.regs_read
-    regs_impl_write = insn.detail.regs_write
+    regs_impl_read = insn.regs_read
+    regs_impl_write = insn.regs_write
 
-    if "regs_impl_read_count" not in expected or expected["regs_impl_read_count"] <= 0:
-        if not compare_uint32(len(regs_impl_read), expected["regs_impl_read_count"]):
+    if "regs_impl_read" in expected and len(expected["regs_impl_read"]) > 0:
+        if not compare_uint32(
+            len(regs_impl_read), len(expected["regs_impl_read"]), "regs_impl_read_count"
+        ):
             return False
-        for i, wreg in enumerate(regs_impl_read):
-            if not compare_reg(handle, wreg, expected["regs_impl_read"][i]):
+        for i, rreg in enumerate(regs_impl_read):
+            if not compare_reg(
+                insn, rreg, expected["regs_impl_read"][i], "regs_impl_read"
+            ):
                 return False
 
-    if (
-        "regs_impl_write_count" not in expected
-        or expected["regs_impl_write_count"] <= 0
-    ):
-        if not compare_uint32(len(regs_impl_write), expected["regs_impl_write_count"]):
+    if "regs_impl_write" in expected and len(expected["regs_impl_write"]) > 0:
+        if not compare_uint32(
+            len(regs_impl_write), len(expected["regs_impl_write"]), "regs_impl_write_count"
+        ):
             return False
         for i, wreg in enumerate(regs_impl_write):
-            if not compare_reg(handle, wreg, expected["regs_impl_write"][i]):
+            if not compare_reg(
+                insn, wreg, expected["regs_impl_write"][i], "regs_impl_write"
+            ):
                 return False
 
     return True
 
 
-def compare_details(handle: Cs, insn: CsInsn, expected: dict) -> bool:
-    if not test_reg_rw_access(handle, insn, expected):
+def compare_details(insn: CsInsn, expected: dict) -> bool:
+    if expected is None:
+        return True
+
+    if not test_reg_rw_access(insn, expected):
         return False
 
-    if not test_impl_reg_rw_access(handle, insn, expected):
+    if not test_impl_reg_rw_access(insn, expected):
         return False
 
     # The current Python bindings don't have such a thing as
@@ -106,48 +111,46 @@ def compare_details(handle: Cs, insn: CsInsn, expected: dict) -> bool:
     # The attributes of each <arch_detail> are directly
     # an attribute of the instruction.
     actual = insn
-    if "groups_count" in expected and expected["groups_count"] > 0:
-        if not compare_uint32(
-            len(actual.groups), len(expected["groups"]), "group_count"
-        ):
+    if "groups" in expected and len(expected["groups"]) > 0:
+        if not compare_uint32(len(actual.groups), len(expected["groups"]), "group"):
             return False
 
         for agroup, egroup in zip(actual.groups, expected["groups"]):
-            if handle.group_name(agroup) == egroup:
+            if insn.group_name(agroup) == egroup:
                 continue
             if not compare_enum(agroup, egroup, "group"):
                 return False
 
     if "aarch64" in expected:
-        return test_expected_aarch64(handle, actual, expected["aarch64"])
+        return test_expected_aarch64(actual, expected["aarch64"])
     elif "arm" in expected:
-        return test_expected_arm(handle, actual, expected["arm"])
+        return test_expected_arm(actual, expected["arm"])
     elif "ppc" in expected:
-        return test_expected_ppc(handle, actual, expected["ppc"])
+        return test_expected_ppc(actual, expected["ppc"])
     elif "tricore" in expected:
-        return test_expected_tricore(handle, actual, expected["tricore"])
+        return test_expected_tricore(actual, expected["tricore"])
     elif "alpha" in expected:
-        return test_expected_alpha(handle, actual, expected["alpha"])
+        return test_expected_alpha(actual, expected["alpha"])
     elif "bpf" in expected:
-        return test_expected_bpf(handle, actual, expected["bpf"])
+        return test_expected_bpf(actual, expected["bpf"])
     elif "hppa" in expected:
-        return test_expected_hppa(handle, actual, expected["hppa"])
+        return test_expected_hppa(actual, expected["hppa"])
     elif "xcore" in expected:
-        return test_expected_xcore(handle, actual, expected["xcore"])
+        return test_expected_xcore(actual, expected["xcore"])
     elif "systemz" in expected:
-        return test_expected_sysz(handle, actual, expected["systemz"])
+        return test_expected_sysz(actual, expected["systemz"])
     elif "sparc" in expected:
-        return test_expected_sparc(handle, actual, expected["sparc"])
+        return test_expected_sparc(actual, expected["sparc"])
     elif "sh" in expected:
-        return test_expected_sh(handle, actual, expected["sh"])
+        return test_expected_sh(actual, expected["sh"])
     elif "mips" in expected:
-        return test_expected_mips(handle, actual, expected["mips"])
+        return test_expected_mips(actual, expected["mips"])
     elif "riscv" in expected:
-        return test_expected_riscv(handle, actual, expected["riscv"])
+        return test_expected_riscv(actual, expected["riscv"])
     elif "m680x" in expected:
-        return test_expected_m680x(handle, actual, expected["m680x"])
+        return test_expected_m680x(actual, expected["m680x"])
     elif "tms320c64x" in expected:
-        return test_expected_tms320c64x(handle, actual, expected["tms320c64x"])
+        return test_expected_tms320c64x(actual, expected["tms320c64x"])
     elif "mos65xx" in expected:
         return test_expected_mos65xx(handle, actual, expected["mos65xx"])
     elif "evm" in expected:
