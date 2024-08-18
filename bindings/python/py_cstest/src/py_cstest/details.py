@@ -46,14 +46,18 @@ def test_reg_rw_access(insn: CsInsn, expected: dict):
 
     regs_read, regs_write = insn.regs_access()
     if "regs_read" in expected and len(expected["regs_read"]) > 0:
-        if not compare_uint32(len(regs_read), len(expected["regs_read"]), "regs_read_count"):
+        if not compare_uint32(
+            len(regs_read), len(expected["regs_read"]), "regs_read_count"
+        ):
             return False
         for i, rreg in enumerate(regs_read):
             if not compare_reg(insn, rreg, expected["regs_read"][i], "regs_read"):
                 return False
 
     if "regs_write" in expected and len(expected["regs_write"]) > 0:
-        if not compare_uint32(len(regs_write), len(expected["regs_write"]), "regs_write_count"):
+        if not compare_uint32(
+            len(regs_write), len(expected["regs_write"]), "regs_write_count"
+        ):
             return False
         for i, wreg in enumerate(regs_write):
             if not compare_reg(insn, wreg, expected["regs_write"][i], "regs_write"):
@@ -84,7 +88,9 @@ def test_impl_reg_rw_access(insn: CsInsn, expected: dict):
 
     if "regs_impl_write" in expected and len(expected["regs_impl_write"]) > 0:
         if not compare_uint32(
-            len(regs_impl_write), len(expected["regs_impl_write"]), "regs_impl_write_count"
+            len(regs_impl_write),
+            len(expected["regs_impl_write"]),
+            "regs_impl_write_count",
         ):
             return False
         for i, wreg in enumerate(regs_impl_write):
