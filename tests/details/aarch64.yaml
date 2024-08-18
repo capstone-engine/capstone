@@ -388,7 +388,7 @@ test_cases:
               -
                 type: AARCH64_OP_SME
                 sme:
-                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  type: AARCH64_SME_OP_TILE_VEC
                   tile: za0.s
                   slice_reg: w12
                   slice_offset_imm: 0
@@ -422,7 +422,7 @@ test_cases:
               -
                 type: AARCH64_OP_SME
                 sme:
-                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  type: AARCH64_SME_OP_TILE_VEC
                   tile: za0.s
                   slice_reg: w13
                   slice_offset_imm: 1
@@ -504,7 +504,7 @@ test_cases:
               -
                 type: AARCH64_OP_SME
                 sme:
-                  type: AARCH64_SME_MATRIX_TILE_LIST
+                  type: AARCH64_SME_OP_TILE
                   tile: za0.h
                 access: CS_AC_WRITE
                 vas: AARCH64LAYOUT_VL_H
@@ -527,7 +527,7 @@ test_cases:
               -
                 type: AARCH64_OP_SME
                 sme:
-                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  type: AARCH64_SME_OP_TILE_VEC
                   tile: za
                   slice_reg: w11
                   slice_offset_imm: 2
@@ -610,7 +610,7 @@ test_cases:
               -
                 type: AARCH64_OP_SME
                 sme:
-                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  type: AARCH64_SME_OP_TILE_VEC
                   tile: za
                   slice_reg: w8
                   slice_offset_imm: 5
@@ -689,7 +689,7 @@ test_cases:
               -
                 type: AARCH64_OP_SME
                 sme:
-                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  type: AARCH64_SME_OP_TILE_VEC
                   tile: za
                   slice_reg: w9
                   slice_offset_imm: 0
@@ -748,7 +748,7 @@ test_cases:
               -
                 type: AARCH64_OP_SME
                 sme:
-                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  type: AARCH64_SME_OP_TILE_VEC
                   tile: za
                   slice_reg: w10
                   slice_offset_ir_first: 2
