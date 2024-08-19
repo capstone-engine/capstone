@@ -8,6 +8,17 @@ from capstone import (
     Cs,
     CsInsn,
 )
+
+from capstone.m680x_const import (
+    M680X_OP_REGISTER,
+    M680X_OP_IMMEDIATE,
+    M680X_OP_INDEXED,
+    M680X_OP_EXTENDED,
+    M680X_OP_DIRECT,
+    M680X_OP_RELATIVE,
+    M680X_OP_CONSTANT,
+)
+
 from capstone.aarch64_const import (
     AARCH64_OP_SME,
     AARCH64_OP_PRED,
@@ -540,6 +551,81 @@ def test_expected_arm(actual: CsInsn, expected: dict) -> bool:
 
 
 def test_expected_m680x(actual: CsInsn, expected: dict) -> bool:
+    if not compare_bit_flags(actual.flags, expected.get("flags"), "flags"):
+        return False
+
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+        if not compare_uint8(aop.size, eop.get("size"), "size"):
+            return False
+
+        if aop.type == M680X_OP_INDEXED:
+            if "idx" not in eop:
+                continue
+            if not compare_reg(
+                actual, aop.idx.base_reg, eop["idx"].get("base_reg"), "base_reg"
+            ):
+                return False
+            if not compare_reg(
+                actual, aop.idx.offset_reg, eop["idx"].get("offset_reg"), "offset_reg"
+            ):
+                return False
+            if not compare_int16(aop.idx.offset, eop["idx"].get("offset"), "offset"):
+                return False
+            if not compare_uint16(
+                aop.idx.offset_addr, eop["idx"].get("offset_addr"), "offset_addr"
+            ):
+                return False
+            if not compare_uint8(
+                aop.idx.offset_bits, eop["idx"].get("offset_bits"), "offset_bits"
+            ):
+                return False
+            if not compare_int8(aop.idx.inc_dec, eop["idx"].get("inc_dec"), "inc_dec"):
+                return False
+            if not compare_bit_flags(aop.idx.flags, eop["idx"].get("flags"), "flags"):
+                return False
+
+        elif aop.type == M680X_OP_REGISTER:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == M680X_OP_IMMEDIATE:
+            if not compare_int32(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == M680X_OP_RELATIVE:
+            if not compare_uint16(
+                aop.rel.address, eop.get("rel_address"), "rel_address"
+            ):
+                return False
+            if not compare_int16(aop.rel.offset, eop.get("rel_offset"), "rel_offset"):
+                return False
+        elif aop.type == M680X_OP_EXTENDED:
+            if not compare_uint16(
+                aop.ext.address, eop.get("ext_address"), "ext_address"
+            ):
+                return False
+            if not compare_tbool(
+                aop.ext.indirect, eop.get("ext_indirect"), "ext_indirect"
+            ):
+                return False
+        elif aop.type == M680X_OP_DIRECT:
+            if not compare_uint8(
+                aop.direct_addr, eop.get("direct_addr"), "direct_addr"
+            ):
+                return False
+        elif aop.type == M680X_OP_CONSTANT:
+            if not compare_uint8(aop.const_val, eop.get("const_val"), "const_val"):
+                return False
+
     return True
 
 
