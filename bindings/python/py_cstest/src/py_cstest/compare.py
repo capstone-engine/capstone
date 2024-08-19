@@ -99,6 +99,12 @@ def cs_const_getattr(identifier: str):
     raise ValueError(f"Python capstone doesn't have the constant: {identifier}")
 
 
+def twos_complement(val, bits):
+    if (val & (1 << (bits - 1))) != 0:
+        val = val - (1 << bits)
+    return val & ((1 << bits) - 1)
+
+
 def normalize_asm_text(text: str, arch_bits: int) -> str:
     text = text.strip()
     text = re.sub(r"\s+", " ", text)
@@ -107,7 +113,8 @@ def normalize_asm_text(text: str, arch_bits: int) -> str:
         text = re.sub(hex_num, f"{int(hex_num, base=16)}", text)
     # Replace negatives with twos-complement
     for num in re.findall(r"-\d+", text):
-        text = re.sub(num, f"{~(int(num, base=10) % (1 << arch_bits)) + 1}", text)
+        n = twos_complement(int(num, base=10), arch_bits)
+        text = re.sub(num, f"{n}", text)
     text = text.lower()
     return text
 
