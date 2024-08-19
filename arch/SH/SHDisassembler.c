@@ -99,7 +99,7 @@ static void set_groups(cs_detail *detail, int n, ...)
 	va_start(g, n);
 	while (n > 0) {
 		sh_insn_group grp;
-		grp = va_arg(g, sh_insn_group);
+		grp = va_arg(g, sh_insn_group); // NOLINT(clang-analyzer-valist.Uninitialized)
 		if (detail) {
 			detail->groups[detail->groups_count] = grp;
 			detail->groups_count++;
