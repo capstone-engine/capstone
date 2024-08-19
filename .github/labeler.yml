@@ -1,4 +1,4 @@
-auto-sync-files:
+Auto-Sync-files:
   - suite/auto-sync/*
 
 LLVM-core-files:
@@ -161,3 +161,15 @@ XCore:
   - cstool/cstool_xcore.c
   - include/capstone/xcore.h
   - tests/test_xcore.c
+
+python:
+  - bindings/python/*
+
+ocaml:
+  - bindings/ocaml/*
+
+java:
+  - bindings/java/*
+
+Github-files:
+  - .github/*
