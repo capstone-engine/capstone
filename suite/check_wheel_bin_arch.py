@@ -33,6 +33,7 @@ archs = {
 filename = {
     "macosx": "libcapstone.dylib",
     "manylinux": "libcapstone.so",
+    "musllinux": "libcapstone.so",
     "win": "capstone.dll",
 }
 
@@ -45,7 +46,7 @@ for root, dir, files in os.walk(sys.argv[1]):
             continue
         wheel_seen = True
         target = re.search(r"py3-none-(.+).whl", f"{f}").group(1)
-        platform = re.search("^(win|manylinux|macosx)", target).group(1)
+        platform = re.search("^(win|manylinux|musllinux|macosx)", target).group(1)
 
         arch = re.search(
             "(universal2|x86_64|arm64|aarch64|i686|win32|amd64)$", target
