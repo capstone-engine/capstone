@@ -12,6 +12,7 @@ import sys
 import os
 import yaml
 import capstone
+import traceback
 
 from capstone import CsInsn, Cs, CS_ARCH_AARCH64, CS_MODE_64, CS_MODE_16
 
@@ -286,19 +287,22 @@ class TestCase:
         try:
             self.input.setup()
         except Exception as e:
-            log.error(f"Setup failed with: {e}")
+            log.error(f"Setup failed at with: {e}")
+            traceback.print_exc()
             return TestResult.ERROR
 
         try:
             insns = self.input.decode()
         except Exception as e:
             log.error(f"Decode failed with: {e}")
+            traceback.print_exc()
             return TestResult.ERROR
 
         try:
             return self.expected.compare(insns, self.input.arch_bits)
         except Exception as e:
             log.error(f"Compare expected failed with: {e}")
+            traceback.print_exc()
             return TestResult.ERROR
 
 
