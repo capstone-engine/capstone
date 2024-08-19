@@ -183,7 +183,6 @@ class TestInput:
                     f"Couldn't init architecture as '{self.arch}' or '{cs_name}'.\n"
                     f"'{self.arch}' is not mapped to a capstone architecture."
                 )
-        self.handle = Cs(arch, 0)
         new_mode = 0
         for opt in self.options:
             if "CS_MODE_" in opt:
@@ -191,6 +190,11 @@ class TestInput:
                 if mode is not None:
                     new_mode |= mode
                     continue
+        self.handle = Cs(arch, new_mode)
+
+        for opt in self.options:
+            if "CS_MODE_" in opt:
+                continue
             if "CS_OPT_" in opt and opt in configs:
                 mtype = configs[opt]["type"]
                 val = configs[opt]["val"]
@@ -198,7 +202,6 @@ class TestInput:
                 continue
             log.warning(f"Option: '{opt}' not used")
 
-        self.handle.mode = new_mode
         self.arch_bits = arch_bits(self.handle.arch, self.handle.mode)
         log.debug("Init done")
 
