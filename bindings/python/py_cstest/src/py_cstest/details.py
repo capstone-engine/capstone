@@ -321,6 +321,15 @@ def test_expected_arm(actual: CsInsn, expected: dict) -> bool:
                 aop.sysop.msr_mask, eop.get("sys_msr_mask"), "sys_msr_mask"
             ):
                 return False
+        elif aop.type == ARM_OP_SYSM:
+            if not compare_int32(aop.sysop.sysm, eop.get("sys_sysm"), "sys_sysm"):
+                return False
+            if not compare_int32(
+                aop.sysop.msr_mask, eop.get("sys_msr_mask"), "sys_msr_mask"
+            ):
+                return False
+        else:
+            raise ValueError("ARM operand type not handled")
 
         if not compare_enum(aop.shift.type, eop.get("shift_type"), "shift_type"):
             return False
