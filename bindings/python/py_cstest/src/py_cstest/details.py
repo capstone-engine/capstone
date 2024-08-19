@@ -21,6 +21,12 @@ from capstone.aarch64_const import (
     AARCH64_OP_REG,
 )
 
+from capstone.x86_const import (
+    X86_OP_MEM,
+    X86_OP_IMM,
+    X86_OP_REG,
+)
+
 from capstone.arm_const import (
     ARM_OP_PRED,
     ARM_OP_CIMM,
@@ -193,6 +199,117 @@ def compare_details(insn: CsInsn, expected: dict) -> bool:
 
 
 def test_expected_x86(actual: CsInsn, expected: dict) -> bool:
+    if not compare_reg(
+        actual, actual.sib_index, expected.get("sib_index"), "sib_index"
+    ):
+        return False
+    if not compare_reg(actual, actual.sib_base, expected.get("sib_base"), "sib_base"):
+        return False
+    if not compare_enum(actual.xop_cc, expected.get("xop_cc"), "xop_cc"):
+        return False
+    if not compare_enum(actual.sse_cc, expected.get("sse_cc"), "sse_cc"):
+        return False
+    if not compare_enum(actual.avx_cc, expected.get("avx_cc"), "avx_cc"):
+        return False
+    if not compare_enum(actual.avx_rm, expected.get("avx_rm"), "avx_rm"):
+        return False
+
+    for i, prefix in enumerate(expected.get("prefix")):
+        if not compare_enum(actual.prefix[i], expected.get("prefix")[i], "prefix"):
+            return False
+
+    for i, opcode in enumerate(expected.get("opcode")):
+        if not compare_uint8(actual.opcode[i], expected.get("opcode")[i], "opcode"):
+            return False
+
+    if not compare_uint8(actual.rex, expected.get("rex"), "rex"):
+        return False
+    if not compare_uint8(actual.addr_size, expected.get("addr_size"), "addr_size"):
+        return False
+    if not compare_uint8(actual.modrm, expected.get("modrm"), "modrm"):
+        return False
+    if not compare_uint8(actual.sib, expected.get("sib"), "sib"):
+        return False
+    if not compare_int64(actual.disp, expected.get("disp"), "disp"):
+        return False
+    if not compare_int8(actual.sib_scale, expected.get("sib_scale"), "sib_scale"):
+        return False
+    if not compare_tbool(actual.avx_sae, expected.get("avx_sae"), "avx_sae"):
+        return False
+
+    if not compare_bit_flags(actual.eflags, expected.get("eflags"), "eflags"):
+        return False
+    if not compare_bit_flags(actual.fpu_flags, expected.get("fpu_flags"), "fpu_flags"):
+        return False
+
+    if not compare_uint8(
+        actual.encoding.modrm_offset,
+        expected.get("enc_modrm_offset"),
+        "enc_modrm_offset",
+    ):
+        return False
+    if not compare_uint8(
+        actual.encoding.disp_offset, expected.get("enc_disp_offset"), "enc_disp_offset"
+    ):
+        return False
+    if not compare_uint8(
+        actual.encoding.disp_size, expected.get("enc_disp_size"), "enc_disp_size"
+    ):
+        return False
+    if not compare_uint8(
+        actual.encoding.imm_offset, expected.get("enc_imm_offset"), "enc_imm_offset"
+    ):
+        return False
+    if not compare_uint8(
+        actual.encoding.imm_size, expected.get("enc_imm_size"), "enc_imm_size"
+    ):
+        return False
+
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected["operands"]), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+        if not compare_uint8(aop.size, eop.get("size"), "size"):
+            return False
+        if not compare_enum(aop.avx_bcast, eop.get("avx_bcast"), "avx_bcast"):
+            return False
+        if not compare_tbool(
+            aop.avx_zero_opmask, eop.get("avx_zero_opmask"), "avx_zero_opmask"
+        ):
+            return False
+
+        if aop.type == X86_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == X86_OP_IMM:
+            if not compare_int64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == X86_OP_MEM:
+            if not compare_reg(
+                actual, aop.mem.segment, eop.get("mem_segment"), "mem_segment"
+            ):
+                return False
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_reg(
+                actual, aop.mem.index, eop.get("mem_index"), "mem_index"
+            ):
+                return False
+            if not compare_int32(aop.mem.scale, eop.get("mem_scale"), "mem_scale"):
+                return False
+            if not compare_int64(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+        else:
+            raise ValueError("x86 operand type not handled")
+
     return True
 
 
