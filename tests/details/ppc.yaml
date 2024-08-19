@@ -18,7 +18,7 @@ test_cases:
                 access: CS_AC_READ
               -
                 type: PPC_OP_REG
-                reg: 0
+                reg: "0"
                 access: CS_AC_READ
               -
                 type: PPC_OP_IMM
@@ -37,7 +37,7 @@ test_cases:
             operands:
               -
                 type: PPC_OP_REG
-                reg: 22
+                reg: "22"
                 access: CS_AC_READ
               -
                 type: PPC_OP_IMM
@@ -115,15 +115,15 @@ test_cases:
             operands:
               -
                 type: PPC_OP_REG
-                reg: 2
+                reg: "2"
                 access: CS_AC_WRITE
               -
                 type: PPC_OP_REG
-                reg: 3
+                reg: "3"
                 access: CS_AC_READ
               -
                 type: PPC_OP_REG
-                reg: 4
+                reg: "4"
                 access: CS_AC_READ
       -
         asm_text: "cmpwi cr2, r3, 0x80"
@@ -196,7 +196,7 @@ test_cases:
             operands:
               -
                 type: PPC_OP_REG
-                reg: 8
+                reg: "8"
                 access: CS_AC_READ
             bc:
                bi: 8
@@ -214,7 +214,7 @@ test_cases:
              operands:
                -
                  type: PPC_OP_REG
-                 reg: 2
+                 reg: "2"
                  access: CS_AC_READ
                -
                  type: PPC_OP_IMM
