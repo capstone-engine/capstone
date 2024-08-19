@@ -82,5 +82,6 @@ jobs:
         if: ${{ success() }}
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
+          verbose: true
           user: __token__
           password: ${{ secrets.pypi_pass }}
