@@ -160,11 +160,6 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 	compare_enum_ret(actual->avx_cc, expected->avx_cc, false);
 	compare_enum_ret(actual->avx_rm, expected->avx_rm, false);
 
-	if (expected->operands_count == 0) {
-		return true;
-	}
-	compare_uint8_ret(actual->op_count, expected->operands_count, false);
-
 	if (expected->rex) {
 		compare_uint8_ret(actual->rex, expected->rex, false);
 	}
@@ -221,6 +216,11 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 		compare_uint8_ret(actual->encoding.imm_size,
 				  expected->enc_imm_size, false);
 	}
+
+	if (expected->operands_count == 0) {
+		return true;
+	}
+	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 
 	for (size_t i = 0; i < actual->op_count; ++i) {
 		cs_x86_op *op = &actual->operands[i];
