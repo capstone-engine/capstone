@@ -110,7 +110,7 @@ def normalize_asm_text(text: str, arch_bits: int) -> str:
     text = re.sub(r"\s+", " ", text)
     # Replace hex numbers with decimals
     for hex_num in re.findall(r"0x[0-9a-fA-F]+", text):
-        text = re.sub(hex_num, f"{int(hex_num, base=16)}", text)
+        text = re.sub(hex_num, f"{int(hex_num, base=16)}", text, count=1)
     # Replace negatives with twos-complement
     for num in re.findall(r"-\d+", text):
         n = twos_complement(int(num, base=10), arch_bits)
