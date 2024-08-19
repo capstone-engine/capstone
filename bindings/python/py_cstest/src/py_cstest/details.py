@@ -27,6 +27,12 @@ from capstone.x86_const import (
     X86_OP_REG,
 )
 
+from capstone.ppc_const import (
+    PPC_OP_MEM,
+    PPC_OP_IMM,
+    PPC_OP_REG,
+)
+
 from capstone.arm_const import (
     ARM_OP_PRED,
     ARM_OP_CIMM,
@@ -322,6 +328,72 @@ def test_expected_tricore(actual: CsInsn, expected: dict) -> bool:
 
 
 def test_expected_ppc(actual: CsInsn, expected: dict) -> bool:
+    if "bc" in expected and expected["bc"].get("bo_set"):
+        if not compare_uint8(actual.bc.bo, expected["bc"].get("bo"), "bo"):
+            return False
+
+    if "bc" in expected and expected["bc"].get("bi_set"):
+        if not compare_uint8(actual.bc.bi, expected["bc"].get("bi"), "bi"):
+            return False
+
+    if "bc" in expected and not compare_enum(
+        actual.bc.crX_bit, expected.get("bc").get("crX_bit"), "crX_bit"
+    ):
+        return False
+    if "bc" in expected and not compare_reg(
+        actual, actual.bc.crX, expected.get("bc").get("crX"), "crX"
+    ):
+        return False
+    if "bc" in expected and not compare_enum(
+        actual.bc.hint, expected.get("bc").get("hint"), "hint"
+    ):
+        return False
+    if "bc" in expected and not compare_enum(
+        actual.bc.pred_cr, expected.get("bc").get("pred_cr"), "pred_cr"
+    ):
+        return False
+    if "bc" in expected and not compare_enum(
+        actual.bc.pred_ctr, expected.get("bc").get("pred_ctr"), "pred_ctr"
+    ):
+        return False
+    if "bc" in expected and not compare_enum(
+        actual.bc.bh, expected.get("bc").get("bh"), "bh"
+    ):
+        return False
+
+    if not compare_tbool(actual.update_cr0, expected.get("update_cr0"), "update_cr0"):
+        return False
+    if not compare_enum(actual.format, expected.get("format"), "format"):
+        return False
+
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected["operands"]), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+
+        if aop.type == X86_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == X86_OP_IMM:
+            if not compare_int64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == X86_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_reg(
+                actual, aop.mem.offset, eop.get("mem_offset"), "mem_offset"
+            ):
+                return False
+            if not compare_int32(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
     return True
 
 
