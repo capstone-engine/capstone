@@ -78,6 +78,9 @@ jobs:
           merge-multiple: true
           path: dist
 
+      - name: Show downloaded artifacts
+        run: ls -laR dist
+
       - name: Publish distribution 📦 to PyPI
         if: ${{ success() }}
         uses: pypa/gh-action-pypi-publish@release/v1
