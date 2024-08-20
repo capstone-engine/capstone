@@ -1015,7 +1015,7 @@ test_cases:
         -
           asm_text: brk 0xfe
           mnemonic: brk
-          op_str: 0xfe
+          op_str: "0xfe"
           details:
             groups: [ int ]
   -
