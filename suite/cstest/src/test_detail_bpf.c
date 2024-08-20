@@ -28,7 +28,6 @@ void test_detail_bpf_free(TestDetailBPF *detail)
 TestDetailBPF *test_detail_bpf_clone(const TestDetailBPF *detail)
 {
 	TestDetailBPF *clone = test_detail_bpf_new();
-	clone->update_flags = detail->update_flags;
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {

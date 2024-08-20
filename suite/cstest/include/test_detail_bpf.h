@@ -50,14 +50,11 @@ static const cyaml_schema_value_t test_detail_bpf_op_schema = {
 };
 
 typedef struct {
-	tbool update_flags;
 	TestDetailBPFOp **operands;
 	uint32_t operands_count;
 } TestDetailBPF;
 
 static const cyaml_schema_field_t test_detail_bpf_mapping_schema[] = {
-	CYAML_FIELD_INT("update_flags", CYAML_FLAG_OPTIONAL, TestDetailBPF,
-			update_flags),
 	CYAML_FIELD_SEQUENCE(
 		"operands", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 		TestDetailBPF, operands, &test_detail_bpf_op_schema, 0,

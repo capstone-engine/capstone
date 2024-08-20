@@ -22,7 +22,6 @@ typedef struct {
 	uint32_t brt_length;
 	uint64_t brt_address;
 	uint32_t brt_default_target;
-
 } TestDetailWASMOp;
 
 static const cyaml_schema_field_t test_detail_wasm_op_mapping_schema[] = {
