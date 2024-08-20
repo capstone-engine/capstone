@@ -211,12 +211,13 @@ class TestInput:
         return [i for i in self.handle.disasm(self.in_bytes, self.address)]
 
     def __str__(self):
-        if self.name:
-            return self.name
-        return (
+        default = (
             f"TestInput {{ arch: {self.arch}, options: {self.options}, "
             f"addr: {self.address:x}, bytes: [ {','.join([f'{b:#04x}' for b in self.in_bytes])} ] }}"
         )
+        if self.name:
+            return f"{self.name} -- {default}"
+        return default
 
 
 class TestExpected:
