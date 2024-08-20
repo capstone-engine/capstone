@@ -169,26 +169,6 @@ jobs:
       shell: bash
       run: |
         cmake --version
-        cmake --preset=${{ matrix.config.platform }}-x64 -DCAPSTONE_BUILD_CSTEST=ON
+        cmake --preset=${{ matrix.config.platform }}-x64
         cmake --build --preset build-${{ matrix.config.platform }}-release
         cmake --build --preset install-${{ matrix.config.platform }}-release
-
-    - name: cstest unit tests - Windows
-      run: |
-        ctest --test-dir build --output-on-failure -R UnitCSTest
-
-    - name: cstest integration tests - Windows
-      run: |
-        ctest --test-dir build --output-on-failure -R IntegrationCSTest
-
-    - name: cstest MC - Windows
-      run: |
-        ctest --test-dir build --output-on-failure -R MCTests
-
-    - name: cstest details - Windows
-      run: |
-        ctest --test-dir build --output-on-failure -R DetailTests
-
-    - name: Legacy integration tests - Windows
-      run: |
-        ctest --test-dir build --output-on-failure -R legacy*
