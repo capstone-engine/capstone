@@ -22,7 +22,7 @@ cmake_policy(SET CMP0042 NEW)
 cmake_policy(SET CMP0091 NEW)
 
 project(capstone
-    VERSION 5.0.2
+    VERSION 5.0.3
 )
 
 if (MSVC)

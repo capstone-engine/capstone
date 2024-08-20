@@ -3,7 +3,7 @@ This file credits all the contributors of the Capstone engine project.
 Key developers
 ==============
 Nguyen Anh Quynh <aquynh -at- gmail.com>
-Chenxu Wu (kabeor) kabeor@qiling.io
+Chenxu Wu (kabeor) <kabeor00 -at- gmail.com>
 
 
 Past key developers

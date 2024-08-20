@@ -1,6 +1,14 @@
 This file details the changelog of Capstone.
 
 --------------------------------
+Version 5.0.2: August 20th, 2024
+
+## What's Changed
+* [v5] Updates and fixes to the Python wheel builder workflow by @Rot127 in https://github.com/capstone-engine/capstone/pull/2440
+* Relocatable package v5 by @mrexodia in https://github.com/capstone-engine/capstone/pull/2447
+* [v5] Wheel build fixes: manylinux1, trigger upload on release, Linux AArch64 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2443
+
+--------------------------------
 Version 5.0.2: August 12th, 2024
 
 ## What's Changed
