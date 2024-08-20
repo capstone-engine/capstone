@@ -8,6 +8,29 @@ from capstone import (
     Cs,
     CsInsn,
 )
+from capstone.alpha_const import ALPHA_OP_IMM, ALPHA_OP_REG
+from capstone.bpf_const import (
+    BPF_OP_REG,
+    BPF_OP_IMM,
+    BPF_OP_OFF,
+    BPF_OP_MMEM,
+    BPF_OP_MSH,
+    BPF_OP_EXT,
+    BPF_OP_MEM,
+)
+from capstone.hppa_const import (
+    HPPA_OP_REG,
+    HPPA_OP_IMM,
+    HPPA_OP_MEM,
+    HPPA_OP_IDX_REG,
+    HPPA_OP_DISP,
+    HPPA_OP_TARGET,
+)
+from capstone.loongarch_const import (
+    LOONGARCH_OP_REG,
+    LOONGARCH_OP_IMM,
+    LOONGARCH_OP_MEM,
+)
 
 from capstone.m680x_const import (
     M680X_OP_REGISTER,
@@ -30,6 +53,40 @@ from capstone.aarch64_const import (
     AARCH64_OP_MEM,
     AARCH64_OP_IMM,
     AARCH64_OP_REG,
+)
+from capstone.m68k_const import (
+    M68K_OP_REG,
+    M68K_OP_REG_PAIR,
+    M68K_OP_IMM,
+    M68K_OP_BR_DISP,
+    M68K_OP_REG_BITS,
+    M68K_OP_FP_DOUBLE,
+    M68K_OP_FP_SINGLE,
+    M68K_OP_MEM,
+)
+from capstone.mips_const import MIPS_OP_REG, MIPS_OP_IMM, MIPS_OP_MEM
+from capstone.mos65xx_const import MOS65XX_OP_REG, MOS65XX_OP_MEM, MOS65XX_OP_IMM
+from capstone.riscv_const import RISCV_OP_MEM, RISCV_OP_IMM, RISCV_OP_REG
+from capstone.sh_const import SH_OP_REG, SH_OP_MEM, SH_OP_IMM
+from capstone.sparc_const import SPARC_OP_REG, SPARC_OP_IMM, SPARC_OP_MEM
+from capstone.sysz_const import SYSZ_OP_REG, SYSZ_OP_IMM, SYSZ_OP_MEM
+from capstone.tms320c64x_const import (
+    TMS320C64X_OP_REG,
+    TMS320C64X_OP_REGPAIR,
+    TMS320C64X_MEM_DISP_CONSTANT,
+    TMS320C64X_MEM_DISP_REGISTER,
+    TMS320C64X_OP_MEM,
+    TMS320C64X_OP_IMM,
+)
+from capstone.tricore_const import TRICORE_OP_REG, TRICORE_OP_IMM, TRICORE_OP_MEM
+from capstone.wasm_const import (
+    WASM_OP_INT7,
+    WASM_OP_VARUINT32,
+    WASM_OP_VARUINT64,
+    WASM_OP_UINT32,
+    WASM_OP_UINT64,
+    WASM_OP_IMM,
+    WASM_OP_BRTABLE,
 )
 
 from capstone.x86_const import (
@@ -59,6 +116,7 @@ from capstone.arm_const import (
     ARM_OP_IMM,
     ARM_OP_REG,
 )
+from capstone.xcore_const import XCORE_OP_REG, XCORE_OP_IMM, XCORE_OP_MEM
 
 from py_cstest.compare import (
     compare_tbool,
@@ -71,6 +129,7 @@ from py_cstest.compare import (
     compare_uint64,
     compare_int64,
     compare_fp,
+    compare_dp,
     compare_enum,
     compare_bit_flags,
     compare_reg,
@@ -330,14 +389,6 @@ def test_expected_x86(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_sparc(actual: CsInsn, expected: dict) -> bool:
-    return True
-
-
-def test_expected_tricore(actual: CsInsn, expected: dict) -> bool:
-    return True
-
-
 def test_expected_ppc(actual: CsInsn, expected: dict) -> bool:
     if "bc" in expected and expected["bc"].get("bo_set"):
         if not compare_uint8(actual.bc.bo, expected["bc"].get("bo"), "bo"):
@@ -390,13 +441,13 @@ def test_expected_ppc(actual: CsInsn, expected: dict) -> bool:
         if not compare_enum(aop.access, eop.get("access"), "access"):
             return False
 
-        if aop.type == X86_OP_REG:
+        if aop.type == PPC_OP_REG:
             if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
                 return False
-        elif aop.type == X86_OP_IMM:
+        elif aop.type == PPC_OP_IMM:
             if not compare_int64(aop.imm, eop.get("imm"), "imm"):
                 return False
-        elif aop.type == X86_OP_MEM:
+        elif aop.type == PPC_OP_MEM:
             if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
                 return False
             if not compare_reg(
@@ -405,14 +456,6 @@ def test_expected_ppc(actual: CsInsn, expected: dict) -> bool:
                 return False
             if not compare_int32(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
                 return False
-    return True
-
-
-def test_expected_evm(actual: CsInsn, expected: dict) -> bool:
-    return True
-
-
-def test_expected_alpha(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
@@ -629,14 +672,6 @@ def test_expected_m680x(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_xcore(actual: CsInsn, expected: dict) -> bool:
-    return True
-
-
-def test_expected_tms320c64x(actual: CsInsn, expected: dict) -> bool:
-    return True
-
-
 def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
     if not compare_enum(actual.cc, expected.get("cc"), "cc"):
         return False
@@ -814,41 +849,667 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_bpf(actual: CsInsn, expected: dict) -> bool:
+def test_expected_sparc(actual: CsInsn, expected: dict) -> bool:
+    if not compare_enum(actual.cc, expected.get("cc"), "cc"):
+        return False
+    if not compare_enum(actual.hint, expected.get("hint"), "hint"):
+        return False
+
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+
+        if aop.type == SPARC_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == SPARC_OP_IMM:
+            if not compare_int64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == SPARC_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_reg(
+                actual, aop.mem.index, eop.get("mem_index"), "mem_index"
+            ):
+                return False
+            if not compare_int32(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
     return True
 
 
-def test_expected_sh(actual: CsInsn, expected: dict) -> bool:
+def test_expected_tricore(actual: CsInsn, expected: dict) -> bool:
+    if not compare_tbool(
+        actual.update_flags, expected.get("update_flags"), "update_flags"
+    ):
+        return False
+
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+
+        if aop.type == TRICORE_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == TRICORE_OP_IMM:
+            if not compare_int64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == TRICORE_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_int64(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
     return True
 
 
-def test_expected_hppa(actual: CsInsn, expected: dict) -> bool:
+def test_expected_evm(actual: CsInsn, expected: dict) -> bool:
+    if not compare_uint8(actual.pop, expected.get("pop"), "pop"):
+        return False
+    if not compare_uint8(actual.push, expected.get("push"), "push"):
+        return False
+    if not compare_int32(actual.fee, expected.get("fee"), "fee"):
+        return False
     return True
 
 
-def test_expected_riscv(actual: CsInsn, expected: dict) -> bool:
+def test_expected_alpha(actual: CsInsn, expected: dict) -> bool:
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+
+        if aop.type == ALPHA_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == ALPHA_OP_IMM:
+            if not compare_int32(aop.imm, eop.get("imm"), "imm"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
+    return True
+
+
+def test_expected_xcore(actual: CsInsn, expected: dict) -> bool:
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+
+        if aop.type == XCORE_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == XCORE_OP_IMM:
+            if not compare_int32(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == XCORE_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_reg(
+                actual, aop.mem.index, eop.get("mem_index"), "mem_index"
+            ):
+                return False
+            if not compare_int32(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+            if not compare_int32(aop.mem.direct, eop.get("mem_direct"), "mem_direct"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
+    return True
+
+
+def test_expected_tms320c64x(actual: CsInsn, expected: dict) -> bool:
+    if not compare_reg(
+        actual, actual.condition.reg, expected.get("cond_reg"), "cond_reg"
+    ):
+        return False
+    if not compare_tbool(actual.condition.zero, expected.get("cond_zero"), "cond_zero"):
+        return False
+
+    if not compare_enum(actual.funit.unit, expected.get("funit_unit"), "funit_unit"):
+        return False
+    if not compare_uint8(actual.funit.side, expected.get("funit_side"), "funit_side"):
+        return False
+    if not compare_uint8(
+        actual.funit.crosspath, expected.get("funit_crosspath"), "funit_crosspath"
+    ):
+        return False
+
+    if not compare_int8(actual.parallel, expected.get("parallel"), "parallel"):
+        return False
+
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+
+        if aop.type == TMS320C64X_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == TMS320C64X_OP_REGPAIR:
+            if not compare_reg(
+                actual, aop.reg + 1, eop.get("reg_pair_0"), "reg_pair_0"
+            ):
+                return False
+            if not compare_reg(actual, aop.reg, eop.get("reg_pair_1"), "reg_pair_1"):
+                return False
+        elif aop.type == TMS320C64X_OP_IMM:
+            if not compare_int32(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == TMS320C64X_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_tbool(aop.mem.scaled, eop.get("mem_scaled"), "mem_scaled"):
+                return False
+            if not compare_enum(
+                aop.mem.disptype, eop.get("mem_disptype"), "mem_disptype"
+            ):
+                return False
+            if not compare_enum(
+                aop.mem.direction, eop.get("mem_direction"), "mem_direction"
+            ):
+                return False
+            if not compare_enum(aop.mem.modify, eop.get("mem_modify"), "mem_modify"):
+                return False
+            if aop.mem.disptype == TMS320C64X_MEM_DISP_REGISTER:
+                if not compare_reg(
+                    actual, aop.mem.disp, eop.get("mem_disp_reg"), "mem_disp_reg"
+                ):
+                    return False
+            elif aop.mem.disptype == TMS320C64X_MEM_DISP_CONSTANT:
+                if not compare_uint32(
+                    aop.mem.disp, eop.get("mem_disp_const"), "mem_disp_const"
+                ):
+                    return False
+            else:
+                raise ValueError("TMS320c64x memory offset type not handled.")
+
+            if not compare_uint32(aop.mem.unit, eop.get("mem_unit"), "mem_unit"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
+
     return True
 
 
 def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
+    if not compare_enum(
+        actual.op_size.type, expected.get("op_size_type"), "op_size_type"
+    ):
+        return False
+    if not compare_enum(
+        actual.op_size.size, expected.get("op_size_fpu"), "op_size_fpu"
+    ):
+        return False
+    if not compare_enum(
+        actual.op_size.size, expected.get("op_size_cpu"), "op_size_cpu"
+    ):
+        return False
+
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.address_mode, eop.get("address_mode"), "address_mode"):
+            return False
+
+        if aop.type == M68K_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == M68K_OP_REG_PAIR:
+            if not compare_reg(
+                actual, aop.reg_pair.reg_0, eop.get("reg_pair_0"), "reg_pair_0"
+            ):
+                return False
+            if not compare_reg(
+                actual, aop.reg_pair.reg_1, eop.get("reg_pair_1"), "reg_pair_1"
+            ):
+                return False
+        elif aop.type == M68K_OP_IMM:
+            if not compare_uint64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == M68K_OP_BR_DISP:
+            if not compare_int32(aop.br_disp.disp, eop.get("br_disp"), "br_disp"):
+                return False
+            if not compare_uint8(
+                aop.br_disp.disp_size, eop.get("br_disp_size"), "br_disp_size"
+            ):
+                return False
+        elif aop.type == M68K_OP_REG_BITS:
+            if not compare_uint32(
+                aop.register_bits, eop.get("register_bits"), "register_bits"
+            ):
+                return False
+        elif aop.type == M68K_OP_FP_DOUBLE:
+            if not compare_dp(aop.dimm, eop.get("dimm"), "dimm"):
+                return False
+        elif aop.type == M68K_OP_FP_SINGLE:
+            if not compare_fp(aop.simm, eop.get("simm"), "simm"):
+                return False
+        elif aop.type == M68K_OP_MEM:
+            if "mem" not in eop:
+                continue
+
+            if not compare_reg(
+                actual, aop.mem.base_reg, eop["mem"].get("base_reg"), "base_reg"
+            ):
+                return False
+            if not compare_reg(
+                actual, aop.mem.index_reg, eop["mem"].get("index_reg"), "index_reg"
+            ):
+                return False
+            if not compare_reg(
+                actual,
+                aop.mem.in_base_reg,
+                eop["mem"].get("in_base_reg"),
+                "in_base_reg",
+            ):
+                return False
+            if not compare_tbool(
+                aop.mem.index_size, eop["mem"].get("index_size"), "index_size"
+            ):
+                return False
+            if not compare_int16(aop.mem.disp, eop["mem"].get("disp"), "disp"):
+                return False
+            if not compare_uint32(
+                aop.mem.in_disp, eop["mem"].get("in_disp"), "in_disp"
+            ):
+                return False
+            if not compare_uint32(
+                aop.mem.out_disp, eop["mem"].get("out_disp"), "out_disp"
+            ):
+                return False
+            if not compare_uint8(aop.mem.scale, eop["mem"].get("scale"), "scale"):
+                return False
+            if not compare_uint8(
+                aop.mem.bitfield, eop["mem"].get("bitfield"), "bitfield"
+            ):
+                return False
+            if not compare_uint8(aop.mem.width, eop["mem"].get("width"), "width"):
+                return False
+            if not compare_uint8(aop.mem.offset, eop["mem"].get("offset"), "offset"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
+    return True
+
+
+def test_expected_bpf(actual: CsInsn, expected: dict) -> bool:
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+
+        if aop.type == BPF_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == BPF_OP_IMM:
+            if not compare_uint64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == BPF_OP_OFF:
+            if not compare_uint32(aop.off, eop.get("off"), "off"):
+                return False
+        elif aop.type == BPF_OP_MMEM:
+            if not compare_uint32(aop.mmem, eop.get("mmem"), "mmem"):
+                return False
+        elif aop.type == BPF_OP_MSH:
+            if not compare_uint32(aop.msh, eop.get("msh"), "msh"):
+                return False
+        elif aop.type == BPF_OP_EXT:
+            if not compare_enum(aop.ext, eop.get("ext"), "ext"):
+                return False
+        elif aop.type == BPF_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_uint32(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
+    return True
+
+
+def test_expected_sh(actual: CsInsn, expected: dict) -> bool:
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+
+        if aop.type == SH_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == SH_OP_IMM:
+            if not compare_uint64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == SH_OP_MEM:
+            if not compare_reg(actual, aop.mem.reg, eop.get("mem_reg"), "mem_reg"):
+                return False
+            if not compare_reg(
+                actual, aop.mem.address, eop.get("mem_address"), "mem_address"
+            ):
+                return False
+            if not compare_int32(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
+    return True
+
+
+def test_expected_hppa(actual: CsInsn, expected: dict) -> bool:
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+
+        if aop.type == HPPA_OP_REG or aop.type == HPPA_OP_IDX_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif (
+            aop.type == HPPA_OP_IMM
+            or aop.type == HPPA_OP_DISP
+            or aop.type == HPPA_OP_TARGET
+        ):
+            if not compare_int64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == HPPA_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_reg(
+                actual, aop.mem.space, eop.get("mem_space"), "mem_space"
+            ):
+                return False
+            if not compare_reg(
+                actual,
+                aop.mem.base_access,
+                eop.get("mem_base_access"),
+                "mem_base_access",
+            ):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
+    return True
+
+
+def test_expected_riscv(actual: CsInsn, expected: dict) -> bool:
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+
+        if aop.type == RISCV_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == RISCV_OP_IMM:
+            if not compare_uint64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == RISCV_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_int64(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
     return True
 
 
 def test_expected_mips(actual: CsInsn, expected: dict) -> bool:
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+
+        if aop.type == MIPS_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == MIPS_OP_IMM:
+            if not compare_uint64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == MIPS_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_int64(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
     return True
 
 
 def test_expected_sysz(actual: CsInsn, expected: dict) -> bool:
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+
+        if aop.type == SYSZ_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == SYSZ_OP_IMM:
+            if not compare_int64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == SYSZ_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_reg(
+                actual, aop.mem.index, eop.get("mem_index"), "mem_index"
+            ):
+                return False
+            if not compare_int64(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+            if not compare_uint64(aop.mem.length, eop.get("mem_length"), "mem_length"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
     return True
 
 
 def test_expected_mos65xx(actual: CsInsn, expected: dict) -> bool:
+    if not compare_enum(actual.am, expected.get("am"), "am"):
+        return False
+    if not compare_tbool(
+        actual.modifies_flags, expected.get("modifies_flags"), "modifies_flags"
+    ):
+        return False
+
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+
+        if aop.type == MOS65XX_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == MOS65XX_OP_IMM:
+            if not compare_uint16(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == MOS65XX_OP_MEM:
+            if not compare_uint32(aop.mem, eop.get("mem"), "mem"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
     return True
 
 
 def test_expected_loongarch(actual: CsInsn, expected: dict) -> bool:
+    if not compare_enum(actual.format, expected.get("format"), "format"):
+        return False
+
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+
+        if aop.type == LOONGARCH_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == LOONGARCH_OP_IMM:
+            if not compare_uint64(aop.imm, eop.get("imm"), "imm"):
+                return False
+        elif aop.type == LOONGARCH_OP_MEM:
+            if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
+                return False
+            if not compare_reg(
+                actual, aop.mem.index, eop.get("mem_index"), "mem_index"
+            ):
+                return False
+            if not compare_int64(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
     return True
 
 
 def test_expected_wasm(actual: CsInsn, expected: dict) -> bool:
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+
+        if not compare_uint32(aop.size, eop.get("size"), "size"):
+            return False
+        if aop.type == WASM_OP_INT7:
+            if not compare_int8(aop.int7, eop.get("int7"), "int7"):
+                return False
+        elif aop.type == WASM_OP_VARUINT32:
+            if not compare_uint32(aop.varuint32, eop.get("varuint32"), "varuint32"):
+                return False
+        elif aop.type == WASM_OP_VARUINT64:
+            if not compare_uint64(aop.varuint64, eop.get("varuint64"), "varuint64"):
+                return False
+        elif aop.type == WASM_OP_UINT32:
+            if not compare_uint32(aop.uint32, eop.get("uint32"), "uint32"):
+                return False
+        elif aop.type == WASM_OP_UINT64:
+            if not compare_uint64(aop.uint64, eop.get("uint64"), "uint64"):
+                return False
+        elif aop.type == WASM_OP_IMM:
+            if not compare_uint32(
+                aop.immediate[0], eop.get("immediate_0"), "immediate_0"
+            ):
+                return False
+            if not compare_uint32(
+                aop.immediate[1], eop.get("immediate_1"), "immediate_1"
+            ):
+                return False
+        elif aop.type == WASM_OP_BRTABLE:
+            if not compare_uint32(
+                aop.brtable.length, eop.get("brt_length"), "brt_length"
+            ):
+                return False
+            if not compare_uint64(
+                aop.brtable.address, eop.get("brt_address"), "brt_address"
+            ):
+                return False
+            if not compare_uint32(
+                aop.brtable.default_target,
+                eop.get("brt_default_target"),
+                "brt_default_target",
+            ):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
     return True

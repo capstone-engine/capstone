@@ -4,6 +4,7 @@
 # Typing for Python3.8
 from __future__ import annotations
 
+import struct
 import capstone
 import re
 from capstone import arm_const
@@ -275,7 +276,24 @@ def compare_fp(actual: float, expected: None | float, msg: str) -> bool:
         return True
     from py_cstest.cstest import log
 
-    if actual != expected:
+    def floatToBits(f):
+        return struct.unpack("=L", struct.pack("=f", f))[0]
+
+    if floatToBits(actual) != floatToBits(expected):
+        log.error(f"{msg}: {actual} != {expected}")
+        return False
+    return True
+
+
+def compare_dp(actual: float, expected: None | float, msg: str) -> bool:
+    if expected is None:
+        return True
+    from py_cstest.cstest import log
+
+    def doubleToBits(f):
+        return struct.unpack("=Q", struct.pack("=d", f))[0]
+
+    if doubleToBits(actual) != doubleToBits(expected):
         log.error(f"{msg}: {actual} != {expected}")
         return False
     return True
