@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import glob
 import os
@@ -134,15 +134,21 @@ def build_libraries():
 
     os.chdir(BUILD_DIR)
 
-    # platform description refers at https://docs.python.org/2/library/sys.html#sys.platform
-    if SYSTEM == "win32":
+    # platform description refers at https://docs.python.org/3/library/sys.html#sys.platform
+    # Use cmake for both Darwin and Windows since it can generate fat binaries
+    if SYSTEM == "win32" or SYSTEM == 'darwin':
         # Windows build: this process requires few things:
         #    - CMake + MSVC installed
         #    - Run this command in an environment setup for MSVC
-        if not os.path.exists("build"): os.mkdir("build")
+        if not os.path.exists("build"):
+            os.mkdir("build")
         os.chdir("build")
-        # Only build capstone.dll
-        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+        print("Build Directory: {}\n".format(os.getcwd()))
+        # Only build capstone.dll / libcapstone.dylib
+        if SYSTEM == "win32":
+            os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+        else:
+            os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "Unix Makefiles" ..')
         os.system("cmake --build .")
     else:  # Unix incl. cygwin
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
@@ -198,18 +204,19 @@ except ImportError:
     print("Proper 'develop' support unavailable.")
 
 if 'bdist_wheel' in sys.argv and '--plat-name' not in sys.argv:
+    # Inject the platform identifier into argv.
+    # Platform tags are described here:
+    # https://packaging.python.org/en/latest/specifications/platform-compatibility-tags
+    #
+    # I couldn't really find out in time why we need to inject the platform here?
+    # The cibuildwheel doesn't need it for the Windows job. But for Mac and Linux.
+    # This here is very dirty and will maybe break in the future.
+    # Sorry if this is the case and you read this.
+    # See: https://github.com/capstone-engine/capstone/issues/2445
     idx = sys.argv.index('bdist_wheel') + 1
     sys.argv.insert(idx, '--plat-name')
     name = get_platform()
-    if 'linux' in name:
-        # linux_* platform tags are disallowed because the python ecosystem is fubar
-        # linux builds should be built in the centos 5 vm for maximum compatibility
-        # see https://github.com/pypa/manylinux
-        # see also https://github.com/angr/angr-dev/blob/master/bdist.sh
-        sys.argv.insert(idx + 1, 'manylinux1_' + platform.machine())
-    else:
-        # https://www.python.org/dev/peps/pep-0425/
-        sys.argv.insert(idx + 1, name.replace('.', '_').replace('-', '_'))
+    sys.argv.insert(idx + 1, name.replace('.', '_').replace('-', '_'))
 
 setup(
     provides=['capstone'],
