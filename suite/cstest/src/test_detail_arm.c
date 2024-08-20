@@ -33,7 +33,6 @@ void test_detail_arm_free(TestDetailARM *detail)
 TestDetailARM *test_detail_arm_clone(TestDetailARM *detail)
 {
 	TestDetailARM *clone = test_detail_arm_new();
-	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
 	clone->update_flags = detail->update_flags;
 	clone->post_indexed = detail->post_indexed;
 	clone->vector_data = detail->vector_data ? strdup(detail->vector_data) : NULL;
