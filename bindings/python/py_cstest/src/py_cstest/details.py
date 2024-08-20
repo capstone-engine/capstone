@@ -290,13 +290,15 @@ def test_expected_x86(actual: CsInsn, expected: dict) -> bool:
     if not compare_enum(actual.avx_rm, expected.get("avx_rm"), "avx_rm"):
         return False
 
-    for i, prefix in enumerate(expected.get("prefix")):
-        if not compare_enum(actual.prefix[i], expected.get("prefix")[i], "prefix"):
-            return False
+    if "prefix" in expected:
+        for i, prefix in enumerate(expected.get("prefix")):
+            if not compare_enum(actual.prefix[i], expected.get("prefix")[i], "prefix"):
+                return False
 
-    for i, opcode in enumerate(expected.get("opcode")):
-        if not compare_uint8(actual.opcode[i], expected.get("opcode")[i], "opcode"):
-            return False
+    if "opcode" in expected:
+        for i, opcode in enumerate(expected.get("opcode")):
+            if not compare_uint8(actual.opcode[i], expected.get("opcode")[i], "opcode"):
+                return False
 
     if not compare_uint8(actual.rex, expected.get("rex"), "rex"):
         return False
