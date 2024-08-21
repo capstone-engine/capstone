@@ -69,12 +69,19 @@ option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by defau
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 option(ENABLE_ASAN "Enable address sanitizer" OFF)
+option(ENABLE_COVERAGE "Enable test coverage" OFF)
 
 if (ENABLE_ASAN)
     message("Enabling ASAN")
     add_definitions(-DASAN_ENABLED)
     add_compile_options(-fsanitize=address)
     add_link_options(-fsanitize=address)
+endif()
+
+if (ENABLE_COVERAGE)
+    message("Enabling COVERAGE")
+    add_compile_options(--coverage)
+    add_link_options(--coverage)
 endif()
 
 # If building for OSX it's best to allow CMake to handle building both architectures
