@@ -300,7 +300,7 @@ static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64
 
 	// copy in reverse order this access array from Intel syntax -> AT&T syntax
 	count--;
-	for(i = 0; i <= count; i++) {
+	for(i = 0; i <= count && ((count - i) < CS_X86_MAXIMUM_OPERAND_SIZE) && i < CS_X86_MAXIMUM_OPERAND_SIZE; i++) {
 		if (arr[count - i] != CS_AC_IGNORE)
 			access[i] = arr[count - i];
 		else
