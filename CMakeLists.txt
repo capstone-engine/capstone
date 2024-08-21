@@ -71,6 +71,7 @@ option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 option(ENABLE_ASAN "Enable address sanitizer" OFF)
 
 if (ENABLE_ASAN)
+    message("Enabling ASAN")
     add_definitions(-DASAN_ENABLED)
     add_compile_options(-fsanitize=address)
     add_link_options(-fsanitize=address)
