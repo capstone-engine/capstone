@@ -168,7 +168,7 @@ static bool compare_asm_text(const char *asm_text, const char *expected,
 	}
 	// Normalize both strings
 	char asm_copy[MAX_ASM_TXT_MEM] = { 0 };
-	strncpy(asm_copy, asm_text, sizeof(asm_copy));
+	strncpy(asm_copy, asm_text, MAX_ASM_TXT_MEM - 1);
 	trim_str(asm_copy);
 	replace_hex(asm_copy, sizeof(asm_copy));
 	replace_negative(asm_copy, sizeof(asm_copy), arch_bits);
@@ -176,7 +176,7 @@ static bool compare_asm_text(const char *asm_text, const char *expected,
 	str_to_lower(asm_copy);
 
 	char expected_copy[MAX_ASM_TXT_MEM] = { 0 };
-	strncpy(expected_copy, expected, sizeof(expected_copy));
+	strncpy(expected_copy, expected, MAX_ASM_TXT_MEM - 1);
 	trim_str(expected_copy);
 	replace_hex(expected_copy, sizeof(expected_copy));
 	replace_negative(expected_copy, sizeof(expected_copy), arch_bits);
