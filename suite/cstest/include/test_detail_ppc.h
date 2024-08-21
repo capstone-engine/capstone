@@ -80,6 +80,7 @@ static const cyaml_schema_field_t test_detail_ppc_bc_mapping_schema[] = {
 			       TestDetailPPCBC, pred_ctr, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("bh", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailPPCBC, bh, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_END
 };
 
 typedef struct {

@@ -41,6 +41,7 @@ static const cyaml_schema_field_t test_detail_m680x_idx_mapping_schema[] = {
 	CYAML_FIELD_SEQUENCE("flags", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetailM680xIdx, flags, &flag_schema, 0,
 			     CYAML_UNLIMITED), // 0-MAX flags
+	CYAML_FIELD_END
 };
 
 typedef struct {
