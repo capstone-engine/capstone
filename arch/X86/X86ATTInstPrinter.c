@@ -288,9 +288,7 @@ static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64
 
 	// initialize access
 	memset(access, 0, CS_X86_MAXIMUM_OPERAND_SIZE * sizeof(access[0]));
-
 	if (!arr) {
-		access[0] = 0;
 		return;
 	}
 
