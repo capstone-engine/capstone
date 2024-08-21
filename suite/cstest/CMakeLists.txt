@@ -14,7 +14,7 @@ ExternalProject_Add(cmocka_ext
     INSTALL_COMMAND ""
 )
 
-if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     set(LIBCYAML_VARIANT "debug")
 else()
     set(LIBCYAML_VARIANT "release")
