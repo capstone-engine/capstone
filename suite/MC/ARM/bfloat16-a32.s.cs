@@ -1,0 +1,2 @@
+# CS_ARCH_ARM, CS_MODE_ARM, None
+0x05,0x3d,0x04,0xfc = vdot.bf16 d3, d4, d5

@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0xbd,0xb0,0x3a,0x75 = xvfdiv.s $xr29, $xr5, $xr12
+0x5f,0x79,0x3b,0x75 = xvfdiv.d $xr31, $xr10, $xr30

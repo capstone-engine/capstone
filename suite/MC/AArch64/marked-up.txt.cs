@@ -1,0 +1,15 @@
+# CS_ARCH_AARCH64, None, None
+# This regression test file is new. The option flags could not be determined.
+# LLVM uses the following mattr = ['mattr=+all']
+0xa1 0x00 0x00 0x54 == b.ne	<imm:#20>
+0x00 0x7c 0x00 0x13 == asr	<reg:w0>, <reg:w0>, <imm:#0>
+0xac 0x9d 0x8e 0xeb == subs	<reg:x12>, <reg:x13>, <reg:x14>, asr <imm:#39>
+0xe3 0x09 0xc2 0x29 == ldp	<reg:w3>, <reg:w2>, [<reg:x15>, <imm:#16>]!
+0x22 0x90 0x3f 0xf8 == st64b <reg:x2>, [<reg:x1>]
+0xa4 0x28 0x4c 0xb3 == bfi	<reg:x4>, <reg:x5>, <imm:#52>, <imm:#11>
+0x49 0x1 0x0 0x33 == bfxil	<reg:w9>, <reg:w10>, <imm:#0>, <imm:#1>
+0x62 0x0 0x41 0x93 == sbfiz	<reg:x2>, <reg:x3>, <imm:#63>, <imm:#1>
+0xff 0x2b 0x76 0xd3 == ubfiz	<reg:xzr>, <reg:xzr>, <imm:#10>, <imm:#11>
+0x2c 0x1 0x0 0x13 == sbfx	<reg:w12>, <reg:w9>, <imm:#0>, <imm:#1>
+0x9f 0x0 0x40 0xd3 == ubfx	<reg:xzr>, <reg:x4>, <imm:#0>, <imm:#1>
+0xc0 0x30 0x01 0x0e == tbx	<reg:v0>.8b, { <reg:v6>.16b, <reg:v7>.16b }, <reg:v1>.8b

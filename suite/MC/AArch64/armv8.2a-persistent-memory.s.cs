@@ -1,0 +1,3 @@
+# CS_ARCH_AARCH64, 0, None
+
+0x27,0x7c,0x0b,0xd5 == dc cvap, x7

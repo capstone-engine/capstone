@@ -1,0 +1,2 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x4e,0x2b,0x27,0x75 = xvxor.v $xr14, $xr26, $xr10

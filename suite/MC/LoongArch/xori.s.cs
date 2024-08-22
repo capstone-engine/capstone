@@ -1,0 +1,2 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x1a,0x55,0xda,0x77 = xvxori.b $xr26, $xr8, 0x95

@@ -1,0 +1,3 @@
+# CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64, None
+0x7d,0xc7,0x42,0x75 = xvfmina.s $xr29, $xr27, $xr17
+0x8c,0x4a,0x43,0x75 = xvfmina.d $xr12, $xr20, $xr18

@@ -1,0 +1,3 @@
+# CS_ARCH_AARCH64, 0, None
+
+0x40,0x53,0x38,0xd5 == mrs x0, ERXGSR_EL1

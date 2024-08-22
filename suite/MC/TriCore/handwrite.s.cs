@@ -1,0 +1,2 @@
+# CS_ARCH_TRICORE, CS_MODE_TRICORE_162, None
+0x8f,0xff,0x83,0x81 = xor d8, d15, #0x3f
