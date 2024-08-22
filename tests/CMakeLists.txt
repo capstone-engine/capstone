@@ -14,7 +14,4 @@ if (CAPSTONE_BUILD_LEGACY_TESTS)
       target_link_libraries(${TBIN} PRIVATE capstone)
       add_test(NAME "legacy_${TBIN}" COMMAND ${TBIN})
   endforeach()
-  # fuzz target built with the tests
-  add_executable(fuzz_disasm ${PROJECT_SOURCE_DIR}/suite/fuzz/onefile.c ${PROJECT_SOURCE_DIR}/suite/fuzz/fuzz_disasm.c ${PROJECT_SOURCE_DIR}/suite/fuzz/platform.c)
-  target_link_libraries(fuzz_disasm PRIVATE capstone)
 endif()
