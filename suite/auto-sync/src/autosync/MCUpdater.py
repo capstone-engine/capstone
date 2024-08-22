@@ -28,6 +28,8 @@ class LLVM_MC_Command:
         self.cmd, self.opts, self.file = self.parse_llvm_mc_line(cmd_line)
         if not (self.cmd and self.opts and self.file):
             raise ValueError(f"Could not parse llvm-mc command: {cmd_line}")
+        if not "--show-encoding" in self.cmd:
+            self.cmd = re.sub("llvm-mc", "llvm-mc --show-encoding", self.cmd)
 
     def parse_llvm_mc_line(self, line: str) -> tuple[str, str, Path]:
         test_file_base_dir = str(get_path("{LLVM_LIT_TEST_DIR}").absolute())
@@ -293,7 +295,9 @@ class MCUpdater:
         log.debug("Parsing llvm-mc commands")
         # Get only the RUN lines which have a show-encoding set.
         matches = filter(
-            lambda l: l if re.search(r"^RUN.+show-encoding[^|]+", l) else None,
+            lambda l: (
+                l if re.search(r"^RUN.+(show-encoding|disassemble)[^|]+", l) else None
+            ),
             cmds.splitlines(),
         )
         # Don't add tests which are allowed to fail
