@@ -136,13 +136,16 @@ def build_libraries():
     # Windows build: this process requires few things:
     #    - MSVC installed
     #    - Run this command in an environment setup for MSVC
-    if not os.path.exists("build"):
-        os.mkdir("build")
-    os.chdir("build")
+    if not os.path.exists("build_py"):
+        os.mkdir("build_py")
+    os.chdir("build_py")
     print("Build Directory: {}\n".format(os.getcwd()))
     # Only build capstone.dll / libcapstone.dylib
     if SYSTEM == "win32":
         os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_LEGACY_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+    elif 'AFL_NOOPT' in os.environ:
+        # build for test_corpus
+        os.system('cmake -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_LEGACY_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF ..')
     else:
         os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_LEGACY_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "Unix Makefiles" ..')
     os.system("cmake --build .")
