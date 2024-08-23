@@ -1520,7 +1520,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			AArch64_set_detail_op_sme(MI, OpNum,
 						  AARCH64_SME_MATRIX_TILE_LIST,
 						  AARCH64LAYOUT_VL_D,
-						  AARCH64_REG_ZAD0 + I);
+						  (int) (AARCH64_REG_ZAD0 + I));
 			AArch64_inc_op_count(MI);
 		}
 		break;
@@ -1813,7 +1813,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 				AArch64_set_detail_op_sme(MI, OpNum,
 							  AARCH64_SME_MATRIX_SLICE_OFF,
 							  AARCH64LAYOUT_INVALID,
-							  MCInst_getOpVal(MI, OpNum) * scale);
+							  (int64_t) (MCInst_getOpVal(MI, OpNum) * scale));
 		} else if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_PRED) {
 			// The index is part of a predicate
 			AArch64_set_detail_op_pred(MI, OpNum);
@@ -2525,7 +2525,7 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 		if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_SME) {
 			AArch64_set_detail_op_sme(MI, OpNum,
 						  AARCH64_SME_MATRIX_SLICE_OFF,
-						  AARCH64LAYOUT_INVALID, 1);
+						  AARCH64LAYOUT_INVALID, (int64_t) 1);
 		} else if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_PRED) {
 			AArch64_set_detail_op_pred(MI, OpNum);
 		} else {
@@ -2559,8 +2559,8 @@ void AArch64_set_detail_op_imm_range(MCInst *MI, unsigned OpNum,
 		if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_SME) {
 			AArch64_set_detail_op_sme(MI, OpNum,
 						  AARCH64_SME_MATRIX_SLICE_OFF_RANGE,
-						  AARCH64LAYOUT_INVALID, FirstImm,
-						  Offset);
+						  AARCH64LAYOUT_INVALID, (int) FirstImm,
+						  (int) Offset);
 		} else if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_PRED) {
 			assert(0 && "Unkown SME predicate imm range type");
 		} else {

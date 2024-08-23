@@ -878,7 +878,8 @@ static uint16_t reverse_bits(uint32_t v)
 		s--;
 	}
 
-	return r <<= s; // shift when v's highest bits are zero
+	r <<= s; // shift when v's highest bits are zero
+	return r;
 }
 
 static uint8_t reverse_bits_8(uint32_t v)
@@ -892,7 +893,8 @@ static uint8_t reverse_bits_8(uint32_t v)
 		s--;
 	}
 
-	return r <<= s; // shift when v's highest bits are zero
+	r <<= s; // shift when v's highest bits are zero
+	return r;
 }
 
 
