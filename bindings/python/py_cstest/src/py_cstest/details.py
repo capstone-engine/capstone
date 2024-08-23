@@ -392,13 +392,11 @@ def test_expected_x86(actual: CsInsn, expected: dict) -> bool:
 
 
 def test_expected_ppc(actual: CsInsn, expected: dict) -> bool:
-    if "bc" in expected and expected["bc"].get("bo_set"):
-        if not compare_uint8(actual.bc.bo, expected["bc"].get("bo"), "bo"):
-            return False
+    if not compare_uint8(actual.bc.bo, expected["bc"].get("bo"), "bo"):
+        return False
 
-    if "bc" in expected and expected["bc"].get("bi_set"):
-        if not compare_uint8(actual.bc.bi, expected["bc"].get("bi"), "bi"):
-            return False
+    if not compare_uint8(actual.bc.bi, expected["bc"].get("bi"), "bi"):
+        return False
 
     if "bc" in expected and not compare_enum(
         actual.bc.crX_bit, expected.get("bc").get("crX_bit"), "crX_bit"
@@ -584,11 +582,10 @@ def test_expected_arm(actual: CsInsn, expected: dict) -> bool:
         if not compare_int8(aop.neon_lane, eop.get("neon_lane"), "neon_lane"):
             return False
 
-        if expected.get("vector_index_is_set"):
-            if not compare_int32(
-                aop.vector_index, eop.get("vector_index"), "vector_index"
-            ):
-                return False
+        if not compare_int32(
+            aop.vector_index, eop.get("vector_index"), "vector_index"
+        ):
+            return False
 
         if not compare_tbool(aop.subtracted, eop.get("subtracted"), "subtracted"):
             return False
@@ -709,11 +706,10 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
         if not compare_tbool(aop.is_vreg, eop.get("is_vreg"), "is_vreg"):
             return False
 
-        if eop.get("vector_index_is_set"):
-            if not compare_int32(
-                aop.vector_index, eop.get("vector_index"), "vector_index"
-            ):
-                return False
+        if not compare_int32(
+            aop.vector_index, eop.get("vector_index"), "vector_index"
+        ):
+            return False
 
         if not compare_tbool(
             aop.is_list_member, eop.get("is_list_member"), "is_list_member"
@@ -793,13 +789,12 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
                 "pred_vec_select",
             ):
                 return False
-            if eop.get("pred_imm_index_set"):
-                if not compare_int32(
-                    aop.value.pred.imm_index,
-                    eop.get("pred_imm_index"),
-                    "pred_imm_index",
-                ):
-                    return False
+            if not compare_int32(
+                aop.value.pred.imm_index,
+                eop.get("pred_imm_index"),
+                "pred_imm_index",
+            ):
+                return False
         elif aop.type == AARCH64_OP_SME:
             if "sme" not in eop:
                 continue
@@ -823,19 +818,18 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
                 "slice_offset_imm",
             ):
                 return False
-            if eop["sme"].get("slice_offset_ir_set"):
-                if not compare_int8(
-                    aop.value.sme.slice_offset.imm_range.first,
-                    eop["sme"].get("slice_offset_ir_first"),
-                    "slice_offset_ir_first",
-                ):
-                    return False
-                if not compare_int8(
-                    aop.value.sme.slice_offset.imm_range.offset,
-                    eop["sme"].get("slice_offset_ir_offset"),
-                    "slice_offset_ir_offset",
-                ):
-                    return False
+            if not compare_int8(
+                aop.value.sme.slice_offset.imm_range.first,
+                eop["sme"].get("slice_offset_ir_first"),
+                "slice_offset_ir_first",
+            ):
+                return False
+            if not compare_int8(
+                aop.value.sme.slice_offset.imm_range.offset,
+                eop["sme"].get("slice_offset_ir_offset"),
+                "slice_offset_ir_offset",
+            ):
+                return False
             if not compare_tbool(
                 aop.value.sme.has_range_offset,
                 eop["sme"].get("has_range_offset"),
