@@ -63,6 +63,10 @@ jobs:
           ./src/autosync/ASUpdater.py --ci -d -a PPC -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a LoongArch -s Translate
 
+      - name: Install llvm-mc
+        run: |
+          sudo apt install llvm-18
+
       - name: Test Header patcher
         run: |
           python -m unittest src/autosync/Tests/test_header_patcher.py
