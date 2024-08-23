@@ -392,10 +392,10 @@ def test_expected_x86(actual: CsInsn, expected: dict) -> bool:
 
 
 def test_expected_ppc(actual: CsInsn, expected: dict) -> bool:
-    if not compare_uint8(actual.bc.bo, expected["bc"].get("bo"), "bo"):
+    if "bc" in expected and not compare_uint8(actual.bc.bo, expected["bc"].get("bo"), "bo"):
         return False
 
-    if not compare_uint8(actual.bc.bi, expected["bc"].get("bi"), "bi"):
+    if "bc" in expected and not compare_uint8(actual.bc.bi, expected["bc"].get("bi"), "bi"):
         return False
 
     if "bc" in expected and not compare_enum(
