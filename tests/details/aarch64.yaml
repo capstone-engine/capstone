@@ -793,3 +793,83 @@ test_cases:
           regs_read: [ za, w10, z0, z1, z2, z3, z11 ]
           regs_write: [ za ]
           groups: [ HasSME2 ]
+  -
+    input:
+      bytes: [ 0x15,0x50,0xdf,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov	z21.d, p15/m, #-0x80"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z21
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p15
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_IMM
+                imm: -0x80
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xd3,0x03,0x9b,0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "luti4	{ z19.b, z23.b, z27.b, z31.b }, zt0, { z30, z31 }"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z19
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z23
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z27
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z31
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: zt0
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                reg: z30
+                is_list_member: 1
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                reg: z31
+                is_list_member: 1
+                access: CS_AC_READ
+          regs_read: [ zt0, z30, z31 ]
+          regs_write: [ z19, z23, z27, z31 ]
+          groups: [ HasSME2p1, HasSME_LUTv2 ]
