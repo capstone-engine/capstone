@@ -2719,13 +2719,13 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 	if (!detail_is_set(MI))
 		return;
 	AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_SME;
-	va_list args;
 	switch (part) {
 	default:
 		printf("Unhandled SME operand part %d\n", part);
 		assert(0);
-	case AARCH64_SME_MATRIX_TILE_LIST:
+	case AARCH64_SME_MATRIX_TILE_LIST: {
 		setup_sme_operand(MI);
+		va_list args;
 		va_start(args, vas);
 		int Tile = va_arg(args, int);
 		va_end(args);
@@ -2735,6 +2735,7 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 		AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 		AArch64_get_detail(MI)->is_doing_sme = true;
 		break;
+	}
 	case AARCH64_SME_MATRIX_TILE:
 		assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
@@ -2756,20 +2757,23 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 		AArch64_get_detail_op(MI, 0)->sme.slice_reg =
 			MCInst_getOpVal(MI, OpNum);
 		break;
-	case AARCH64_SME_MATRIX_SLICE_OFF:
+	case AARCH64_SME_MATRIX_SLICE_OFF: {
 		assert((map_get_op_type(MI, OpNum) & ~(CS_OP_MEM | CS_OP_BOUND)) == CS_OP_IMM);
 		// Because we took care of the slice register before, the op at -1 must be a SME operand.
 		assert(AArch64_get_detail_op(MI, 0)->type ==
 		       AARCH64_OP_SME);
 		assert(AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm ==
 		       -1);
+		va_list args;
 		va_start(args, vas);
 		int64_t offset = va_arg(args, int64_t);
 		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm =
 			offset;
 		break;
+	}
 	case AARCH64_SME_MATRIX_SLICE_OFF_RANGE: {
+		va_list args;
 		va_start(args, vas);
 		int8_t First = va_arg(args, int);
 		int8_t Offset = va_arg(args, int);
