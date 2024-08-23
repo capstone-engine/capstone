@@ -34,7 +34,9 @@
     "{DIFFER_TEST_PERSISTENCE_FILE}": "{DIFFER_TEST_DIR}/test_saved_patches.json",
     "{AUTO_SYNC_TEST_DIR}": "{AUTO_SYNC_SRC}/Tests/",
     "{MCUPDATER_TEST_DIR}": "{AUTO_SYNC_TEST_DIR}/MCUpdaterTests/",
+    "{MCUPDATER_TEST_DIR_EXPECTED}": "{AUTO_SYNC_TEST_DIR}/MCUpdaterTests/expected",
     "{MCUPDATER_OUT_DIR}": "{BUILD_DIR}/mc_out/",
+    "{MCUPDATER_TEST_OUT_DIR}": "{MCUPDATER_TEST_DIR}/test_output/",
     "{MC_DIR}": "{CS_ROOT}/tests/MC/"
   },
   "create_during_runtime": [

@@ -159,6 +159,11 @@ def get_path(config_path: str) -> Path:
     return PathVarHandler().complete_path(config_path)
 
 
+def test_only_overwrite_path_var(var_name: str, new_path: Path):
+    """Don't use outside of testing."""
+    return PathVarHandler().test_only_overwrite_var(var_name, new_path)
+
+
 def fail_exit(msg: str) -> None:
     """Logs a fatal message and exits with error code 1."""
     log.fatal(msg)

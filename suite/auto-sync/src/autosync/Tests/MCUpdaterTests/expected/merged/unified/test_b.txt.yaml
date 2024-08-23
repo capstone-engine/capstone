@@ -1,0 +1,12 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x0a, 0x31, 0xd5, 0x80, 0x08, 0x31, 0xd5 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "arm64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRCRSR"
+        -
+          asm_text: "mrs x0, TRCEXTINSELR"

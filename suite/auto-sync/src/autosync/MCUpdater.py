@@ -121,17 +121,18 @@ class TestFile:
     def __init__(
         self,
         arch: str,
-        filename: Path,
+        file_path: Path,
         opts: list[str] | None,
         mc_cmd: LLVM_MC_Command,
         unified_test_cases: bool,
     ):
         self.arch: str = arch
-        self.filename: Path = filename
+        self.file_path: Path = file_path
         self.opts: list[str] = list() if not opts else opts
         self.mc_cmd: LLVM_MC_Command = mc_cmd
         # Indexed by .text section count
         self.tests: dict[int : list[MCTest]] = dict()
+
         self.init_tests(unified_test_cases)
 
     def init_tests(self, unified_test_cases: bool):
@@ -192,8 +193,35 @@ class TestFile:
             case _:
                 return True
 
+    def get_multi_mode_filename(self) -> Path:
+        filename = self.file_path.stem
+        parent = self.file_path.parent
+        detailed_name = f"{filename}_{'_'.join(self.opts)}.txt"
+        detailed_name = re.sub(r"[+-]", "_", detailed_name)
+        out_path = parent.joinpath(detailed_name)
+        return Path(out_path)
+
+    def get_simple_filename(self) -> Path:
+        return self.file_path
+
 
 class MCUpdater:
+    """
+    The MCUpdate parses all test files of the LLVM MC regression tests.
+    Each of those LLVM files can contain several llvm-mc commands to run on the same file.
+    Mostly this is done to test the same file with different CPU features enabled.
+    So it can test different flavors of assembly etc.
+
+    In Capstone all modules enable always all CPU features (even if this is not
+    possible in reality).
+    Due to this we always parse all llvm-mc commands run on a test file, generate a TestFile
+    object for each of it, but only write the last one of them to disk.
+    Once https://github.com/capstone-engine/capstone/issues/1992 is resolved, we can
+    write all variants of a test file to disk.
+
+    This is already implemented and tested with multi_mode = True.
+    """
+
     def __init__(
         self,
         arch: str,
@@ -201,6 +229,7 @@ class MCUpdater:
         excluded: list[str] | None,
         included: list[str] | None,
         unified_test_cases: bool,
+        multi_mode: bool = False,
     ):
         self.symbolic_links = list()
         self.arch = arch
@@ -211,6 +240,7 @@ class MCUpdater:
         self.test_files: list[TestFile] = list()
         self.unified_test_cases = unified_test_cases
         self.mattr: str = ARCH_MATTR[self.arch] if self.arch in ARCH_MATTR else ""
+        self.multi_mode = multi_mode
 
     def check_prerequisites(self, paths):
         for path in paths:
@@ -227,6 +257,7 @@ class MCUpdater:
     def write_to_build_dir(self):
         file_cnt = 0
         test_cnt = 0
+        overwritten = 0
         files_written = set()
         for test in self.test_files:
             if not test.has_tests():
@@ -234,7 +265,19 @@ class MCUpdater:
             file_cnt += 1
             test_cnt += test.num_test_cases()
 
-            rel_path = str(test.filename.relative_to(get_path("{LLVM_LIT_TEST_DIR}")))
+            if self.multi_mode:
+                rel_path = str(
+                    test.get_multi_mode_filename().relative_to(
+                        get_path("{LLVM_LIT_TEST_DIR}")
+                    )
+                )
+            else:
+                rel_path = str(
+                    test.get_simple_filename().relative_to(
+                        get_path("{LLVM_LIT_TEST_DIR}")
+                    )
+                )
+
             filename = re.sub(rf"{self.test_dir_link_prefix}\d+", ".", rel_path)
             filename = get_path("{MCUPDATER_OUT_DIR}").joinpath(f"{filename}.yaml")
             if filename in files_written:
@@ -242,6 +285,14 @@ class MCUpdater:
             else:
                 write_mode = "w+"
             filename.parent.mkdir(parents=True, exist_ok=True)
+            if self.multi_mode and filename.exists():
+                raise ValueError(
+                    f"The following file exists already: {filename}\n"
+                    "This is not allowed in multi-mode."
+                )
+            else:
+                log.debug(f"Overwrite: {filename}")
+                overwritten += 1
             with open(filename, write_mode) as f:
                 f.write(test.get_cs_testfile_content(only_test=(write_mode == "a")))
                 log.debug(f"Write {filename}")
@@ -249,6 +300,14 @@ class MCUpdater:
         log.info(
             f"Processed {file_cnt} files with {test_cnt} test cases. Generated {len(files_written)} files"
         )
+        if overwritten > 0:
+            log.warning(
+                f"Overwrote {overwritten} test files with the same name.\n"
+                f"These files contain instructions of several different cpu features.\n"
+                f"You have to use multi-mode to write them into distinct files.\n"
+                f"The current setting will only keep the last one written.\n"
+                f"See also: https://github.com/capstone-engine/capstone/issues/1992"
+            )
 
     def build_test_files(self, mc_cmds: list[LLVM_MC_Command]) -> list[TestFile]:
         log.info("Build TestFile objects")
@@ -331,8 +390,10 @@ class MCUpdater:
                 continue
             if any(re.search(x, match) is not None for x in self.excluded):
                 continue
-
-            all_cmds.append(LLVM_MC_Command(match, self.mattr))
+            llvm_mc_cmd = LLVM_MC_Command(match, self.mattr)
+            all_cmds.append(llvm_mc_cmd)
+            log.debug(f"Added: {llvm_mc_cmd}")
+        log.debug(f"Extracted {len(all_cmds)} llvm-mc commands")
         return all_cmds
 
     def gen_all(self):
