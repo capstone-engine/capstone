@@ -1,6 +1,0 @@
-Metadata-Version: 2.1
-Name: py_cstest
-Version: 0.1.0
-Requires-Python: >=3.8
-Requires-Dist: pyyaml>=6.0.2
-Requires-Dist: capstone>=5.0.0

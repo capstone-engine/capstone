@@ -1,2 +1,0 @@
-[console_scripts]
-py_cstest = py_cstest.cstest:main
