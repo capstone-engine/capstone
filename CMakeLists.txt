@@ -751,11 +751,6 @@ if(BUILD_SHARED_LIBS)
     )
 endif()
 
-set(TESTS_INTEGRATION_DIR ${PROJECT_SOURCE_DIR}/tests/integration)
-add_subdirectory(${TESTS_INTEGRATION_DIR})
-set(TESTS_UNIT_DIR ${PROJECT_SOURCE_DIR}/tests/unit)
-add_subdirectory(${TESTS_UNIT_DIR})
-
 # Fuzzer if this is moved to it's own CMakeLists.txt (as it should be)
 # the OSS fuzzer build fails. And must be fixed.
 # Simply because it builds the fuzzer there again with hard-coded paths.
@@ -880,6 +875,12 @@ if(CAPSTONE_BUILD_CSTEST)
     enable_testing()
     set(CSTEST_DIR ${PROJECT_SOURCE_DIR}/suite/cstest)
     add_subdirectory(${CSTEST_DIR})
+
+    # Integration and unit tests
+    set(TESTS_INTEGRATION_DIR ${PROJECT_SOURCE_DIR}/tests/integration)
+    add_subdirectory(${TESTS_INTEGRATION_DIR})
+    set(TESTS_UNIT_DIR ${PROJECT_SOURCE_DIR}/tests/unit)
+    add_subdirectory(${TESTS_UNIT_DIR})
 
     # Unit tests for auto-sync
     set(AUTO_SYNC_C_TEST_DIR ${PROJECT_SOURCE_DIR}/suite/auto-sync/c_tests/)

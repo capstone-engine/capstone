@@ -7,8 +7,8 @@ include_directories(${AUTO_SYNC_C_TEST_INC_DIR} ${PROJECT_SOURCE_DIR}/include)
 
 file(GLOB AUTO_SYNC_C_SRC ${AUTO_SYNC_C_TEST_SRC_DIR}/*.c)
 add_executable(compat_header_build_test ${AUTO_SYNC_C_SRC})
-add_dependencies(compat_header_build_test libcstest)
-target_link_libraries(compat_header_build_test PUBLIC libcstest)
+add_dependencies(compat_header_build_test capstone)
+target_link_libraries(compat_header_build_test PUBLIC capstone)
 
 add_test(NAME ASCompatibilityHeaderTest
   COMMAND compat_header_build_test
