@@ -27,15 +27,16 @@ class LLVM_MC_Command:
 
         self.cmd, self.opts, self.file = self.parse_llvm_mc_line(cmd_line)
         if not (self.cmd and self.opts and self.file):
-            raise ValueError(f"Could not parse llvm-mc command: {cmd_line}")
-        if not "--show-encoding" in self.cmd:
+            log.warning(f"Could not parse llvm-mc command: {cmd_line}")
+        elif not "--show-encoding" in self.cmd:
             self.cmd = re.sub("llvm-mc", "llvm-mc --show-encoding", self.cmd)
 
     def parse_llvm_mc_line(self, line: str) -> tuple[str, str, Path]:
         test_file_base_dir = str(get_path("{LLVM_LIT_TEST_DIR}").absolute())
         file = re.findall(rf"{test_file_base_dir}\S+", line)
         if not file:
-            raise ValueError(f"llvm-mc command doesn't contain a file: {line}")
+            log.warning(f"llvm-mc command doesn't contain a file: {line}")
+            return None, None, None
         test_file = file[0]
         cmd = re.sub(rf"{test_file}", "", line).strip()
         cmd = re.sub(r"\s+", " ", cmd)
@@ -391,6 +392,9 @@ class MCUpdater:
             if any(re.search(x, match) is not None for x in self.excluded):
                 continue
             llvm_mc_cmd = LLVM_MC_Command(match, self.mattr)
+            if not llvm_mc_cmd.cmd:
+                # Invalid
+                continue
             all_cmds.append(llvm_mc_cmd)
             log.debug(f"Added: {llvm_mc_cmd}")
         log.debug(f"Extracted {len(all_cmds)} llvm-mc commands")
