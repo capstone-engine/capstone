@@ -9,6 +9,8 @@ from __future__ import annotations
 import sys
 import subprocess as sp
 
+from pathlib import Path
+
 
 def check(cmd: list[str], expected_stdout: str, expected_stderr: str, fail_msg: str):
     print(f"Run: {' '.join(cmd)}")
@@ -32,58 +34,65 @@ def check(cmd: list[str], expected_stdout: str, expected_stderr: str, fail_msg: 
 
 
 def run_tests(cmd: str):
+    p = (
+        sp.run(["git", "rev-parse", "--show-toplevel"], check=True, capture_output=True)
+        .stdout.decode("utf8")
+        .strip()
+    )
+    path = Path(p).joinpath("suite").joinpath("cstest").joinpath("test")
+
     cmd = cmd.split(" ")
     check(
-        cmd + ["empty_test_file.yaml"],
-        expected_stderr="Failed to parse test file 'empty_test_file.yaml'",
+        cmd + [f"{path.joinpath('empty_test_file.yaml')}"],
+        expected_stderr="Failed to parse test file ",
         expected_stdout="",
         fail_msg="Failed the empty file test",
     )
 
     check(
-        cmd + ["missing_madatory_field.yaml"],
+        cmd + [f"{path.joinpath('missing_madatory_field.yaml')}"],
         expected_stderr="Error: 'Missing required mapping field'",
         expected_stdout="",
         fail_msg="Failed the mandatory field test",
     )
 
     check(
-        cmd + ["invalid_test_file.yaml"],
+        cmd + [f"{path.joinpath('invalid_test_file.yaml')}"],
         expected_stderr="Error: 'libyaml parser error'",
         expected_stdout="",
         fail_msg="Failed the invalid test file test",
     )
 
     check(
-        cmd + ["min_valid_test_file.yaml"],
+        cmd + [f"{path.joinpath('min_valid_test_file.yaml')}"],
         expected_stdout="All tests succeeded.",
         expected_stderr="",
         fail_msg="Failed the minimal valid parsing test",
     )
 
     check(
-        cmd + ["invalid_cs_input.yaml"],
+        cmd + [f"{path.joinpath('invalid_cs_input.yaml')}"],
         expected_stderr="'ar' is not mapped to a capstone architecture.",
         expected_stdout="",
         fail_msg="Test: Invalid CS option failed",
     )
 
     check(
-        cmd + ["invalid_cs_input.yaml"],
+        cmd + [f"{path.joinpath('invalid_cs_input.yaml')}"],
         expected_stderr="0 != 0x1",
         expected_stdout="",
         fail_msg="Test: Wrong number of instruction disassembled failed",
     )
 
     check(
-        cmd + ["invalid_cs_input.yaml"],
+        cmd + [f"{path.joinpath('invalid_cs_input.yaml')}"],
         expected_stderr="Option: 'thum' not used",
         expected_stdout="",
         fail_msg="Test: Invalid disassembly due to wrong option failed",
     )
 
     check(
-        cmd + ["."],
+        cmd + [f"{path}"],
         expected_stdout="Test files found: 6",
         expected_stderr="",
         fail_msg="Test: Detecting file in directory failed.",
@@ -93,7 +102,7 @@ def run_tests(cmd: str):
         check(
             cmd
             + [
-                ".",
+                f"{path}",
                 "-e",
                 "invalid_cs_input.yaml",
                 "-i",
