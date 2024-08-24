@@ -753,6 +753,8 @@ endif()
 
 set(TESTS_INTEGRATION_DIR ${PROJECT_SOURCE_DIR}/tests/integration)
 add_subdirectory(${TESTS_INTEGRATION_DIR})
+set(TESTS_UNIT_DIR ${PROJECT_SOURCE_DIR}/tests/unit)
+add_subdirectory(${TESTS_UNIT_DIR})
 
 # Fuzzer if this is moved to it's own CMakeLists.txt (as it should be)
 # the OSS fuzzer build fails. And must be fixed.
