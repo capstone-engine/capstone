@@ -80,9 +80,6 @@ jobs:
       if: startsWith(matrix.config.build-system, 'make')
       run: |
         ./make.sh
-        make check
-        sudo make install
-        cp libcapstone.so.5 libcapstone.so.5.0
 
     - name: cmake
       if: startsWith(matrix.config.build-system, 'cmake')
