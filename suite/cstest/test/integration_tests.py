@@ -89,6 +89,24 @@ def run_tests(cmd: str):
         fail_msg="Test: Detecting file in directory failed.",
     )
 
+    if "py_cstest" in cmd:
+        check(
+            cmd
+            + [
+                ".",
+                "-e",
+                "invalid_cs_input.yaml",
+                "-i",
+                "invalid_cs_input.yaml",
+                "min_valid_test_file.yaml",
+                "-v",
+                "debug",
+            ],
+            expected_stdout="Test files found: 2",
+            expected_stderr="",
+            fail_msg="Test: Detecting file in directory failed.",
+        )
+
 
 def print_usage_exit():
     print(f'{sys.argv[0]} "cstest_command"')

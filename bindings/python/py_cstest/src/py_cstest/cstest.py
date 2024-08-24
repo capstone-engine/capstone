@@ -334,8 +334,6 @@ class TestFile:
 
 class CSTest:
     def __init__(self, path: Path, exclude: list[Path], include: list[Path]):
-        self.exclude = exclude
-        self.include = include
         self.yaml_paths: list[Path] = list()
 
         log.info(f"Search test files in {path}")
@@ -345,7 +343,12 @@ class CSTest:
             for root, dirs, files in os.walk(path, onerror=print):
                 for file in files:
                     f = Path(root).joinpath(file)
-                    if f.suffix in [".yaml", ".yml"]:
+                    if f.suffix not in [".yaml", ".yml"]:
+                        continue
+                    if f.name in exclude:
+                        continue
+                    if not include or f.name in include:
+                        log.debug(f"Add: {f}")
                         self.yaml_paths.append(f)
 
         log.info(f"Test files found: {len(self.yaml_paths)}")
@@ -471,8 +474,10 @@ def main():
     log.setLevel(log_levels[args.verbosity])
 
     h1 = logging.StreamHandler(sys.stdout)
-    h1.setLevel(log_levels[args.verbosity])
-    h1.addFilter(lambda record: record.levelno <= log_levels[args.verbosity])
+    h1.addFilter(
+        lambda record: record.levelno >= log_levels[args.verbosity]
+        and record.levelno < logging.WARNING
+    )
     h1.setFormatter(format)
 
     h2 = logging.StreamHandler(sys.stderr)
