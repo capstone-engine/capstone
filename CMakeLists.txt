@@ -751,8 +751,8 @@ if(BUILD_SHARED_LIBS)
     )
 endif()
 
-set(TESTS_DIR ${PROJECT_SOURCE_DIR}/tests)
-add_subdirectory(${TESTS_DIR})
+set(TESTS_INTEGRATION_DIR ${PROJECT_SOURCE_DIR}/tests/integration)
+add_subdirectory(${TESTS_INTEGRATION_DIR})
 
 # Fuzzer if this is moved to it's own CMakeLists.txt (as it should be)
 # the OSS fuzzer build fails. And must be fixed.
