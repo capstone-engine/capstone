@@ -4,16 +4,11 @@
 
 1. To install Capstone and the Python bindings on *nix, run the command below:
 
-		$ sudo make install
-
-   To control the install destination, set the DESTDIR environment variable.
+```
+pip install bindings/python/
+```
 
 2. The tests directory contains some test code to show how to use the Capstone API.
-
-- test_basic.py
-  This code shows the most simple form of API where we only want to get basic
-  information out of disassembled instruction, such as address, mnemonic and
-  operand string.
 
 - test_lite.py
   Similarly to test_basic.py, but this code shows how to use disasm_lite(), a lighter
@@ -23,12 +18,3 @@
   The main reason for using this API is better performance: disasm_lite() is at least
   20% faster than disasm(). Memory usage is also less. So if you just need basic
   information out of disassembler, use disasm_lite() instead of disasm().
-
-- test_detail.py:
-  This code shows how to access to architecture-neutral information in disassembled
-  instructions, such as implicit registers read/written, or groups of instructions
-  that this instruction belong to.
-
-- test_<arch>.py
-  These code show how to access architecture-specific information for each
-  architecture.
