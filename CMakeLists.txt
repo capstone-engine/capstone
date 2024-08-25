@@ -69,11 +69,19 @@ option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by defau
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 option(ENABLE_ASAN "Enable address sanitizer" OFF)
+option(ENABLE_COVERAGE "Enable test coverage" OFF)
 
 if (ENABLE_ASAN)
+    message("Enabling ASAN")
     add_definitions(-DASAN_ENABLED)
     add_compile_options(-fsanitize=address)
     add_link_options(-fsanitize=address)
+endif()
+
+if (ENABLE_COVERAGE)
+    message("Enabling COVERAGE")
+    add_compile_options(--coverage)
+    add_link_options(--coverage)
 endif()
 
 # If building for OSX it's best to allow CMake to handle building both architectures
@@ -766,27 +774,12 @@ if(BUILD_SHARED_LIBS)
     )
 endif()
 
-if(CAPSTONE_BUILD_TESTS)
-    set(CMAKE_FOLDER "Tests")
-    enable_testing()
-    foreach(TSRC ${TEST_SOURCES})
-        string(REGEX REPLACE ".c$" "" TBIN ${TSRC})
-        add_executable(${TBIN} "tests/${TSRC}")
-        target_link_libraries(${TBIN} PRIVATE capstone)
-        add_test(NAME "capstone_${TBIN}" COMMAND ${TBIN})
-    endforeach()
-    if(CAPSTONE_ARM_SUPPORT)
-        set(ARM_REGRESS_TEST test_arm_regression.c)
-        string(REGEX REPLACE ".c$" "" ARM_REGRESS_BIN ${ARM_REGRESS_TEST})
-        add_executable(${ARM_REGRESS_BIN} "suite/arm/${ARM_REGRESS_TEST}")
-        target_link_libraries(${ARM_REGRESS_BIN} PRIVATE capstone)
-        add_test(NAME "capstone_${ARM_REGRESS_BIN}" COMMAND ${ARM_REGRESS_BIN})
-    endif()
-    # fuzz target built with the tests
-    add_executable(fuzz_disasm suite/fuzz/onefile.c suite/fuzz/fuzz_disasm.c suite/fuzz/platform.c)
-    target_link_libraries(fuzz_disasm PRIVATE capstone)
-    unset(CMAKE_FOLDER)
-endif()
+# Fuzzer if this is moved to it's own CMakeLists.txt (as it should be)
+# the OSS fuzzer build fails. And must be fixed.
+# Simply because it builds the fuzzer there again with hard-coded paths.
+# See: https://github.com/google/oss-fuzz/blob/master/projects/capstone/build.sh
+add_executable(fuzz_disasm ${PROJECT_SOURCE_DIR}/suite/fuzz/onefile.c ${PROJECT_SOURCE_DIR}/suite/fuzz/fuzz_disasm.c ${PROJECT_SOURCE_DIR}/suite/fuzz/platform.c)
+target_link_libraries(fuzz_disasm PRIVATE capstone)
 
 source_group("Source\\Engine" FILES ${SOURCES_ENGINE})
 source_group("Source\\ARM" FILES ${SOURCES_ARM})
@@ -900,7 +893,6 @@ if(CAPSTONE_INSTALL)
             "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
             IMMEDIATE @ONLY
         )
-        set(CMAKE_FOLDER)
         add_custom_target(UNINSTALL COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
         set_target_properties(UNINSTALL PROPERTIES
             FOLDER CMakePredefinedTargets
@@ -919,32 +911,17 @@ if(CAPSTONE_BUILD_CSTOOL)
 endif()
 
 if(CAPSTONE_BUILD_CSTEST)
-    include(ExternalProject)
-    ExternalProject_Add(cmocka_ext
-        PREFIX extern
-        GIT_REPOSITORY "https://git.cryptomilk.org/projects/cmocka.git"
-        GIT_TAG "origin/stable-1.1"
-        GIT_SHALLOW true
-        CONFIGURE_COMMAND cmake -DBUILD_SHARED_LIBS=OFF ../cmocka_ext/
-        BUILD_COMMAND cmake --build . --config Release
-        INSTALL_COMMAND ""
-    )
-    set(CMOCKA_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext/include)
-    set(CMOCKA_LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext-build/src/)
-    add_library(cmocka STATIC IMPORTED)
-    set_target_properties(cmocka PROPERTIES IMPORTED_LOCATION ${CMOCKA_LIB_DIR}/libcmocka.a)
+    enable_testing()
+    set(CSTEST_DIR ${PROJECT_SOURCE_DIR}/suite/cstest)
+    add_subdirectory(${CSTEST_DIR})
 
-    file(GLOB CSTEST_SRC suite/cstest/src/*.c)
-    add_executable(cstest ${CSTEST_SRC})
-    add_dependencies(cstest cmocka_ext)
-    target_link_libraries(cstest PUBLIC capstone cmocka)
-    target_include_directories(cstest PRIVATE
-            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-            ${PROJECT_SOURCE_DIR}/suite/cstest/include
-            ${CMOCKA_INCLUDE_DIR}
-            )
+    # Integration and unit tests
+    set(TESTS_INTEGRATION_DIR ${PROJECT_SOURCE_DIR}/tests/integration)
+    add_subdirectory(${TESTS_INTEGRATION_DIR})
+    set(TESTS_UNIT_DIR ${PROJECT_SOURCE_DIR}/tests/unit)
+    add_subdirectory(${TESTS_UNIT_DIR})
 
-    if(CAPSTONE_INSTALL)
-        install(TARGETS cstest EXPORT capstone-targets DESTINATION ${CMAKE_INSTALL_BINDIR})
-    endif()
+    # Unit tests for auto-sync
+    set(AUTO_SYNC_C_TEST_DIR ${PROJECT_SOURCE_DIR}/suite/auto-sync/c_tests/)
+    add_subdirectory(${AUTO_SYNC_C_TEST_DIR})
 endif()

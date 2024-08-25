@@ -1,0 +1,8 @@
+test_cases:
+ -
+  input:
+    arch: "arm"
+  expected:
+    insns:
+      -
+        op_str: "mov r11, r5"
