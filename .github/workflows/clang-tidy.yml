@@ -8,11 +8,11 @@ on:
 
 jobs:
   analyze:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     name: clang-tidy
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Install clang-tidy
@@ -26,9 +26,9 @@ jobs:
         CC=clang sudo cmake --build . --config Release
         cd ..
 
-    - name: Install clang-tidy-15
+    - name: Install clang-tidy-18
       run: |
-        sudo apt install clang-tidy-15
+        sudo apt install clang-tidy-18
 
     - name: Check for warnings
       env:
@@ -36,3 +36,8 @@ jobs:
         head_sha: ${{ github.event.pull_request.head.sha }}
       run: |
         ./run-clang-tidy.sh build
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ failure() }}
+      with:
+        path: ct-warnings.txt
