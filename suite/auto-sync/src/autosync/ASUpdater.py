@@ -16,7 +16,7 @@ from pathlib import Path
 from autosync.cpptranslator.Configurator import Configurator
 from autosync.cpptranslator.CppTranslator import Translator
 from autosync.HeaderPatcher import CompatHeaderBuilder, HeaderPatcher
-from autosync.Helper import check_py_version, convert_loglevel, fail_exit, get_path
+from autosync.Helper import convert_loglevel, fail_exit, get_path
 
 from autosync.IncGenerator import IncGenerator
 
@@ -293,9 +293,7 @@ def parse_args() -> argparse.Namespace:
     return arguments
 
 
-if __name__ == "__main__":
-    check_py_version()
-
+def main():
     args = parse_args()
     log.basicConfig(
         level=convert_loglevel(args.verbosity),
@@ -315,3 +313,7 @@ if __name__ == "__main__":
         args.wait_for_user,
     )
     Updater.update()
+
+
+if __name__ == "__main__":
+    main()
