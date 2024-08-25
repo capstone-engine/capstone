@@ -40,6 +40,7 @@ __all__ = [
     'CS_ARCH_TRICORE',
     'CS_ARCH_ALPHA',
     'CS_ARCH_HPPA',
+    'CS_ARCH_LOONGARCH',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -107,6 +108,8 @@ __all__ = [
     'CS_MODE_HPPA_11',
     'CS_MODE_HPPA_20',
     'CS_MODE_HPPA_20W',
+    'CS_MODE_LOONGARCH32',
+    'CS_MODE_LOONGARCH64',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -225,6 +228,7 @@ CS_ARCH_SH = 16
 CS_ARCH_TRICORE = 17
 CS_ARCH_ALPHA = 18
 CS_ARCH_HPPA = 19
+CS_ARCH_LOONGARCH = 20
 CS_ARCH_MAX = 20
 CS_ARCH_ALL = 0xFFFF
 
@@ -294,6 +298,8 @@ CS_MODE_TRICORE_162 = 1 << 7 # Tricore 1.6.2
 CS_MODE_HPPA_11 = 1 << 1 # HPPA 1.1
 CS_MODE_HPPA_20 = 1 << 2 # HPPA 2.0
 CS_MODE_HPPA_20W = CS_MODE_HPPA_20 | (1 << 3) # HPPA 2.0 wide
+CS_MODE_LOONGARCH32 = 1 << 0
+CS_MODE_LOONGARCH64 = 1 << 1
 
 # Capstone option type
 CS_OPT_INVALID = 0   # No option specified
@@ -347,16 +353,18 @@ CS_GRP_BRANCH_RELATIVE = 7 # all relative branching instructions
 CS_AC_INVALID  = 0        # Invalid/uninitialized access type.
 CS_AC_READ     = (1 << 0) # Operand that is read from.
 CS_AC_WRITE    = (1 << 1) # Operand that is written to.
-CS_AC_READ_WRITE = (2)
+CS_AC_READ_WRITE = CS_AC_READ | CS_AC_WRITE
 
 # Capstone syntax value
-CS_OPT_SYNTAX_DEFAULT = 1 << 1  # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
-CS_OPT_SYNTAX_INTEL = 1 << 2  # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_SYNTAX_ATT = 1 << 3  # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_SYNTAX_NOREGNAME = 1 << 4  # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
-CS_OPT_SYNTAX_MASM = 1 << 5  # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
-CS_OPT_SYNTAX_MOTOROLA = 1 << 6  # MOS65XX use $ as hex prefix
-CS_OPT_SYNTAX_CS_REG_ALIAS = 1 << 7  # Prints common register alias which are not defined in LLVM (ARM: r9 = sb etc.)
+CS_OPT_SYNTAX_DEFAULT = (1 << 1)  # Default assembly syntax of all platforms (CS_OPT_SYNTAX)
+CS_OPT_SYNTAX_INTEL = (1 << 2)  # Intel X86 asm syntax - default syntax on X86 (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_ATT = (1 << 3)  # ATT asm syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_NOREGNAME = (1 << 4)  # Asm syntax prints register name with only number - (CS_OPT_SYNTAX, CS_ARCH_PPC, CS_ARCH_ARM)
+CS_OPT_SYNTAX_MASM = (1 << 5)  # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
+CS_OPT_SYNTAX_MOTOROLA = (1 << 6)  # MOS65XX use $ as hex prefix
+CS_OPT_SYNTAX_CS_REG_ALIAS = (1 << 7)  # Prints common register alias which are not defined in LLVM (ARM: r9 = sb etc.)
+CS_OPT_SYNTAX_PERCENT = (1 << 8)  # Prints the % in front of PPC registers.
+CS_OPT_DETAIL_REAL = (1 << 1)  # If enabled, always sets the real instruction detail.Even if the instruction is an alias.
 
 # Capstone error type
 CS_ERR_OK = 0      # No error: everything was fine
@@ -460,7 +468,7 @@ def copy_ctypes_list(src):
     return [copy_ctypes(n) for n in src]
 
 # Weird import placement because these modules are needed by the below code but need the above functions
-from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, alpha, hppa
+from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, riscv, sh, tricore, alpha, hppa, loongarch
 
 class _cs_arch(ctypes.Union):
     _fields_ = (
@@ -484,6 +492,7 @@ class _cs_arch(ctypes.Union):
         ('tricore', tricore.CsTriCore),
         ('alpha', alpha.CsAlpha),
         ('hppa', hppa.CsHPPA),
+        ('loongarch', loongarch.CsLoongArch),
     )
 
 class _cs_detail(ctypes.Structure):
@@ -695,6 +704,21 @@ class CsInsn(object):
     def size(self):
         return self._raw.size
 
+    # return instruction's is_alias flag
+    @property
+    def is_alias(self):
+        return self._raw.is_alias
+
+    # return instruction's alias_id
+    @property
+    def alias_id(self):
+        return self._raw.alias_id
+
+    # return instruction's flag if it uses alias details
+    @property
+    def uses_alias_details(self):
+        return self._raw.usesAliasDetails
+
     # return instruction's machine bytes (which should have @size bytes).
     @property
     def bytes(self):
@@ -802,7 +826,7 @@ class CsInsn(object):
         elif arch == CS_ARCH_MIPS:
                 self.operands = mips.get_arch_info(self._raw.detail.contents.arch.mips)
         elif arch == CS_ARCH_PPC:
-            (self.bc, self.update_cr0, self.operands) = \
+            (self.bc, self.update_cr0, self.format, self.operands) = \
                 ppc.get_arch_info(self._raw.detail.contents.arch.ppc)
         elif arch == CS_ARCH_SPARC:
             (self.cc, self.hint, self.operands) = sparc.get_arch_info(self._raw.detail.contents.arch.sparc)
@@ -832,6 +856,8 @@ class CsInsn(object):
             (self.operands) = alpha.get_arch_info(self._raw.detail.contents.arch.alpha)
         elif arch == CS_ARCH_HPPA:
             (self.operands) = hppa.get_arch_info(self._raw.detail.contents.arch.hppa)
+        elif arch == CS_ARCH_LOONGARCH:
+            (self.format, self.operands) = loongarch.get_arch_info(self._raw.detail.contents.arch.loongarch)
 
 
     def __getattr__(self, name):
@@ -840,14 +866,14 @@ class CsInsn(object):
 
         attr = object.__getattribute__
         if not attr(self, '_cs')._detail:
-            raise AttributeError(name)
+            raise AttributeError(f"'CsInsn' has no attribute '{name}'")
         _dict = attr(self, '__dict__')
         if 'operands' not in _dict:
             self.__gen_detail()
         if name not in _dict:
             if self._raw.id == 0:
                 raise CsError(CS_ERR_SKIPDATA)
-            raise AttributeError(name)
+            raise AttributeError(f"'CsInsn' has no attribute '{name}'")
         return _dict[name]
 
     # get the last error code
@@ -1021,9 +1047,16 @@ class Cs(object):
             except: # _cs might be pulled from under our feet
                 pass
 
-
-    # def option(self, opt_type, opt_value):
-    #    return _cs.cs_option(self.csh, opt_type, opt_value)
+    def option(self, opt_type, opt_value):
+        status = _cs.cs_option(self.csh, opt_type, opt_value)
+        if status != CS_ERR_OK:
+            raise CsError(status)
+        if opt_type == CS_OPT_DETAIL:
+            self._detail = opt_value == CS_OPT_ON
+        elif opt_type == CS_OPT_SKIPDATA:
+            self._skipdata = opt_value == CS_OPT_ON
+        elif opt_type == CS_OPT_UNSIGNED:
+            self._imm_unsigned = opt_value == CS_OPT_ON
 
 
     # is this a diet engine?
@@ -1321,7 +1354,7 @@ def debug():
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
         'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV, 'tricore': CS_ARCH_TRICORE,
         'wasm': CS_ARCH_WASM, 'sh': CS_ARCH_SH, 'alpha': CS_ARCH_ALPHA,
-        'hppa': CS_ARCH_HPPA
+        'hppa': CS_ARCH_HPPA, 'loongarch': CS_ARCH_LOONGARCH
     }
 
     all_archs = ""

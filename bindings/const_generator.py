@@ -1,11 +1,12 @@
 # Capstone Disassembler Engine
 # By Dang Hoang Vu, 2013
 from __future__ import print_function
-import sys, re
+import sys
+import re
 
 INCL_DIR = '../include/capstone/'
 
-include = [ 'arm.h', 'aarch64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'sh.h', 'tricore.h', 'alpha.h', 'hppa.h' ]
+include = [ 'arm.h', 'aarch64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h', 'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h' ,'riscv.h', 'sh.h', 'tricore.h', 'alpha.h', 'hppa.h', 'loongarch.h' ]
 
 template = {
     'java': {
@@ -56,6 +57,7 @@ template = {
             'tricore.h': ['TRICORE', 'TriCore'],
             'alpha.h': ['ALPHA', 'Alpha'],
             'hppa.h': 'hppa',
+            'loongarch.h': 'loongarch',
             'comment_open': '#',
             'comment_close': '',
         },
@@ -80,81 +82,6 @@ template = {
             'comment_open': '(*',
             'comment_close': ' *)',
         },
-    # 'swift': {
-    #         'header': "// For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT (%s)\n\n",
-    #         'footer': "",
-    #         'enum_doc': '/// %s\n',
-    #         'enum_header': 'public enum %s: %s {\n',
-    #         'enum_default_type': 'UInt32',
-    #         'enum_types': {
-    #             'UInt16': r'^\w+Reg$',
-    #             'UInt8': r'^\w+Grp$'
-    #         },
-    #         'option_set_header': 'public struct %s: OptionSet {\n    public typealias RawValue = %s\n    public let rawValue: RawValue\n    public init(rawValue: RawValue) { self.rawValue = rawValue }\n',
-    #         'option_sets': {
-    #             'X86Eflags': 'UInt64',
-    #             'X86FpuFlags': 'UInt64',
-    #             'SparcHint': 'UInt32',
-    #             'M680xIdx': 'UInt8',
-    #             'M680xOpFlags': 'UInt8',
-    #         },
-    #         'rename': {
-    #             r'^M680X_(\w+_OP_IN_MNEM)$': r'M680X_OP_FLAGS_\1',
-    #         },
-    #         'option_format': '    public static let {option} = {type}(rawValue: {value})\n',
-    #         'enum_extra_options': {
-    #             # swift enum != OptionSet, so options must be specified
-    #             'ArmSysreg': {
-    #                 'spsrCx': 'spsrC + spsrX',
-    #                 'spsrCs': 'spsrC + spsrS',
-    #                 'spsrXs': 'spsrX + spsrS',
-    #                 'spsrCxs': 'spsrC + spsrX + spsrS',
-    #                 'spsrCf': 'spsrC + spsrF',
-    #                 'spsrXf': 'spsrX + spsrF',
-    #                 'spsrCxf': 'spsrC + spsrX + spsrF',
-    #                 'spsrSf': 'spsrS + spsrF',
-    #                 'spsrCsf': 'spsrC + spsrS + spsrF',
-    #                 'spsrXsf': 'spsrX + spsrS + spsrF',
-    #                 'spsrCxsf': 'spsrC + spsrX + spsrS + spsrF',
-    #                 'cpsrCx': 'cpsrC + cpsrX',
-    #                 'cpsrCs': 'cpsrC + cpsrS',
-    #                 'cpsrXs': 'cpsrX + cpsrS',
-    #                 'cpsrCxs': 'cpsrC + cpsrX + cpsrS',
-    #                 'cpsrCf': 'cpsrC + cpsrF',
-    #                 'cpsrXf': 'cpsrX + cpsrF',
-    #                 'cpsrCxf': 'cpsrC + cpsrX + cpsrF',
-    #                 'cpsrSf': 'cpsrS + cpsrF',
-    #                 'cpsrCsf': 'cpsrC + cpsrS + cpsrF',
-    #                 'cpsrXsf': 'cpsrX + cpsrS + cpsrF',
-    #                 'cpsrCxsf': 'cpsrC + cpsrX + cpsrS + cpsrF',
-    #             }
-    #         },
-    #         'enum_footer': '}\n\n',
-    #         'doc_line_format': '    /// %s\n',
-    #         'line_format': '    case %s = %s\n',
-    #         'dup_line_format': '    public static let %s = %s\n',
-    #         'out_file': './swift/Sources/Capstone/%sEnums.swift',
-    #         'reserved_words': [
-    #             'break', 'class', 'for', 'false', 'in', 'init', 'return', 'true'
-    #         ],
-    #         'reserved_word_format': '`%s`',
-    #         # prefixes for constant filenames of all archs - case sensitive
-    #         'arm.h': 'Arm',
-    #         'arm64.h': 'Arm64',
-    #         'm68k.h': 'M68k',
-    #         'mips.h': 'Mips',
-    #         'x86.h': 'X86',
-    #         'ppc.h': 'Ppc',
-    #         'sparc.h': 'Sparc',
-    #         'systemz.h': 'Sysz',
-    #         'xcore.h': 'Xcore',
-    #         'tms320c64x.h': 'TMS320C64x',
-    #         'm680x.h': 'M680x',
-    #         'evm.h': 'Evm',
-    #         'mos65xx.h': 'Mos65xx',
-    #         'comment_open': '\t//',
-    #         'comment_close': '',
-    #     },
 }
 
 excluded_prefixes = {
@@ -237,6 +164,11 @@ def gen(lang):
             elif line.startswith('}') or line.startswith('#'):
                 doc_lines = []
                 pass
+            elif re.search(r"^(\s*typedef\s+)?enum", line):
+                # First new enum value should be 0.
+                # Because `rhs` is incremented later, it must be set to -1 here.
+                # Everything about this code is so broken -.-
+                rhs = "-1"
 
             if line == '' or line.startswith('//'):
                 continue
@@ -251,7 +183,7 @@ def gen(lang):
                 xline.insert(1, '=')            # insert an = so the expression below can parse it
                 line = ' '.join(xline)
 
-            def is_with_prefix(x):
+            def has_special_arch_prefix(x):
                 if target in excluded_prefixes and any(x.startswith(excl_pre) for excl_pre in excluded_prefixes[target]):
                     return False
                 if prefixs:
@@ -259,7 +191,7 @@ def gen(lang):
                 else:
                     return x.startswith(prefix.upper())
 
-            if not is_with_prefix(line):
+            if not has_special_arch_prefix(line):
                 continue
 
             tmp = line.strip().split(',')
@@ -271,7 +203,7 @@ def gen(lang):
                 t = re.sub(r'\((\d+)ULL << (\d+)\)', r'\1 << \2', t)    # (1ULL<<1) to 1 << 1
                 f = re.split('\s+', t)
 
-                if not is_with_prefix(f[0]):
+                if not has_special_arch_prefix(f[0]):
                     continue
 
                 if len(f) > 1 and f[1] not in ('//', '///<', '='):
