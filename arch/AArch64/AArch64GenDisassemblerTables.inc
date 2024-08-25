@@ -35510,6 +35510,7 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
         /* Decoding complete. */ \
         return S; \
       } else { \
+        MCInst_clear(MI); \
         /* If the decoding was incomplete, skip. */ \
         Ptr += NumToSkip; \
         /* Reset decode status. This also drops a SoftFail status that could be */ \

@@ -1965,7 +1965,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_TSB> end
-	AArch64_TSB_ENDING,
+	AARCH64_TSB_ENDING,
 } aarch64_tsb;
 
 typedef union {

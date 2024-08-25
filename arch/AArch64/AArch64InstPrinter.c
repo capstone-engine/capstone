@@ -462,12 +462,18 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 	if ((Opcode == AArch64_MOVZXi || Opcode == AArch64_MOVZWi ||
 	     Opcode == AArch64_MOVNXi || Opcode == AArch64_MOVNWi) &&
 	    MCOperand_isExpr(MCInst_getOperand(MI, (1)))) {
-		SStream_concat0(O, "<llvm-expr>");
+		printUInt64Bang(O, MCInst_getOpVal(MI, 1));
+		if (detail_is_set(MI) && useAliasDetails) {
+			AArch64_set_detail_op_imm(MI, 1, AARCH64_OP_IMM, MCInst_getOpVal(MI, 1));
+		}
 	}
 
 	if ((Opcode == AArch64_MOVKXi || Opcode == AArch64_MOVKWi) &&
 	    MCOperand_isExpr(MCInst_getOperand(MI, (2)))) {
-		SStream_concat0(O, "<llvm-expr>");
+		printUInt64Bang(O, MCInst_getOpVal(MI, 2));
+		if (detail_is_set(MI) && useAliasDetails) {
+			AArch64_set_detail_op_imm(MI, 2, AARCH64_OP_IMM, MCInst_getOpVal(MI, 2));
+		}
 	}
 
 	// MOVZ, MOVN and "ORR wzr, #imm" instructions are aliases for MOV, but
@@ -994,7 +1000,7 @@ void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		printInt64Bang(O, MCOperand_getImm(Op));
 		SStream_concat0(O, markup(">"));
 	} else {
-		SStream_concat0(O, "<llvm-expr>");
+		printUInt64Bang(O, MCInst_getOpVal(MI, OpNo));
 	}
 }
 
@@ -1282,7 +1288,7 @@ DEFINE_printRegWithShiftExtend(false, 128, x, 0);
 			assert(0 && \
 			       "Unsupported predicate-as-counter register"); \
 		SStream_concat(O, "%s", "pn"); \
-		printUInt32(O, (Reg - AArch64_P0)); \
+		printUInt32(O, (Reg - AArch64_PN0)); \
 		switch (EltSize) { \
 		case 0: \
 			break; \
@@ -1380,7 +1386,7 @@ void printUImm12Offset(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
 		printUInt32Bang(O, (MCOperand_getImm(MO) * Scale));
 		SStream_concat0(O, markup(">"));
 	} else {
-		SStream_concat0(O, "<llvm-expr>");
+		printUInt64Bang(O, MCOperand_getImm(MO));
 	}
 }
 
@@ -1395,7 +1401,7 @@ void printAMIndexedWB(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
 		printUInt32Bang(O, MCOperand_getImm(MO1) * Scale);
 		SStream_concat0(O, markup(">"));
 	} else {
-		SStream_concat0(O, "<llvm-expr>");
+		printUInt64Bang(O, MCOperand_getImm(MO1));
 	}
 	SStream_concat0(O, "]");
 }
@@ -1964,7 +1970,7 @@ void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O)
 					    NumLanes), \
 				     LaneKind), \
 			      OpNum, NumLanes, CHAR(LaneKind)); \
-		if (CHAR(LaneKind) == 0) { \
+		if (CHAR(LaneKind) == '0') { \
 			printVectorList(MI, OpNum, O, ""); \
 			return; \
 		} \
@@ -2026,7 +2032,7 @@ void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 		return;
 	}
 
-	SStream_concat0(O, "<llvm-expr>");
+	printUInt64Bang(O, MCOperand_getImm(Op));
 }
 
 void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
@@ -2048,7 +2054,7 @@ void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 		return;
 	}
 
-	SStream_concat0(O, "<llvm-expr>");
+	printUInt64Bang(O, MCOperand_getImm(Op));
 }
 
 void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
@@ -2070,7 +2076,7 @@ void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 		return;
 	}
 
-	SStream_concat0(O, "<llvm-expr>");
+	printUInt64Bang(O, MCOperand_getImm(Op));
 }
 
 void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O) {
@@ -2095,7 +2101,7 @@ void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
     return;
   }
 
-	SStream_concat0(O, "<llvm-expr>");
+	printUInt64Bang(O, MCOperand_getImm(Op));
 }
 
 void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
@@ -2287,6 +2293,8 @@ void printSVEPattern(MCInst *MI, unsigned OpNum, SStream *O)
 		AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val);
 	if (Pat)
 		SStream_concat0(O, Pat->Name);
+	else
+		printUInt32Bang(O, Val);
 }
 
 void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)
@@ -2371,7 +2379,7 @@ DECLARE_printImmSVE_U64(uint64_t);
 #define DEFINE_isSignedType(T) \
 	static inline bool CONCAT(isSignedType, T)() \
 	{ \
-		return CHAR(t) == 'i'; \
+		return CHAR(T) == 'i'; \
 	}
 DEFINE_isSignedType(int8_t);
 DEFINE_isSignedType(int16_t);
