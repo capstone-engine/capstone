@@ -140,7 +140,7 @@ class CompatHeaderBuilder:
                 typedef = ""
                 continue
 
-            if re.search(f"^typedef\s+(struct|union)", line):
+            if re.search(rf"^typedef\s+(struct|union)", line):
                 typedef = line
                 continue
             output.append(line)
@@ -173,7 +173,7 @@ class CompatHeaderBuilder:
                 typedef = ""
                 continue
 
-            if re.search(f"^typedef\s+enum", line):
+            if re.search(rf"^typedef\s+enum", line):
                 typedef = line
                 output.append("typedef enum {\n")
                 continue
