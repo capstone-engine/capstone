@@ -1,0 +1,160 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x50, 0x9c, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z0.h, z8.h }, zt0, z0[0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x51, 0x9d, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z21.h, z29.h }, zt0, z10[2]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xd1, 0x9c, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z23.h, z31.h }, zt0, z13[1]"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xd3, 0x9f, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z23.h, z31.h }, zt0, z31[7]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x40, 0x9c, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z0.b, z8.b }, zt0, z0[0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x41, 0x9d, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z21.b, z29.b }, zt0, z10[2]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xc1, 0x9c, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z23.b, z31.b }, zt0, z13[1]"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xc3, 0x9f, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z23.b, z31.b }, zt0, z31[7]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x90, 0x9c, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z0.h, z4.h, z8.h, z12.h }, zt0, z0[0]"
+
+  -
+    input:
+      bytes: [ 0x51, 0x91, 0x9d, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z17.h, z21.h, z25.h, z29.h }, zt0, z10[1]"
+
+  -
+    input:
+      bytes: [ 0xb3, 0x91, 0x9c, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z19.h, z23.h, z27.h, z31.h }, zt0, z13[0]"
+
+  -
+    input:
+      bytes: [ 0xf3, 0x93, 0x9f, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z19.h, z23.h, z27.h, z31.h }, zt0, z31[3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x80, 0x9c, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z0.b, z4.b, z8.b, z12.b }, zt0, z0[0]"
+
+  -
+    input:
+      bytes: [ 0x51, 0x81, 0x9d, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z17.b, z21.b, z25.b, z29.b }, zt0, z10[1]"
+
+  -
+    input:
+      bytes: [ 0xb3, 0x81, 0x9c, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z19.b, z23.b, z27.b, z31.b }, zt0, z13[0]"
+
+  -
+    input:
+      bytes: [ 0xf3, 0x83, 0x9f, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti2 { z19.b, z23.b, z27.b, z31.b }, zt0, z31[3]"

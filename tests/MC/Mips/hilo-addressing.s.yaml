@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x03, 0xe0, 0x00, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jr $ra"

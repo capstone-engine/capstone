@@ -1,0 +1,217 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xfd, 0xe5, 0x00, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd.s $fs5, $ft7, $fs1"
+  -
+    input:
+      bytes: [ 0xf9, 0x34, 0x01, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd.d $fs1, $fa7, $ft5"
+  -
+    input:
+      bytes: [ 0x3d, 0x48, 0x03, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsub.d $fs5, $fa1, $ft10"
+  -
+    input:
+      bytes: [ 0xc4, 0x1f, 0x05, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul.d $fa4, $fs6, $fa7"
+  -
+    input:
+      bytes: [ 0x23, 0x73, 0x07, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdiv.d $fa3, $fs1, $fs4"
+  -
+    input:
+      bytes: [ 0x15, 0x73, 0x2c, 0x08 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmadd.d $ft13, $fs0, $fs4, $fs0"
+  -
+    input:
+      bytes: [ 0x46, 0xd2, 0x6d, 0x08 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmsub.d $fa6, $ft10, $ft12, $fs3"
+  -
+    input:
+      bytes: [ 0xb9, 0x4d, 0xaf, 0x08 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fnmadd.d $fs1, $ft5, $ft11, $fs6"
+  -
+    input:
+      bytes: [ 0x5e, 0x1f, 0xec, 0x08 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fnmsub.d $fs6, $fs2, $fa7, $fs0"
+  -
+    input:
+      bytes: [ 0x4b, 0x37, 0x09, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmax.d $ft3, $fs2, $ft5"
+  -
+    input:
+      bytes: [ 0xa1, 0x6d, 0x0b, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmin.d $fa1, $ft5, $fs3"
+  -
+    input:
+      bytes: [ 0xb8, 0x11, 0x0d, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmaxa.d $fs0, $ft5, $fa4"
+  -
+    input:
+      bytes: [ 0x52, 0x01, 0x0f, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmina.d $ft10, $ft2, $fa0"
+  -
+    input:
+      bytes: [ 0x77, 0x08, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fabs.d $ft15, $fa3"
+  -
+    input:
+      bytes: [ 0x4b, 0x1b, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fneg.d $ft3, $fs2"
+  -
+    input:
+      bytes: [ 0x62, 0x49, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsqrt.d $fa2, $ft3"
+  -
+    input:
+      bytes: [ 0x7b, 0x5b, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecip.d $fs3, $fs3"
+  -
+    input:
+      bytes: [ 0x00, 0x78, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecipe.d $fa0, $fa0"
+  -
+    input:
+      bytes: [ 0x76, 0x68, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "frsqrt.d $ft14, $fa3"
+  -
+    input:
+      bytes: [ 0x21, 0x88, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "frsqrte.d $fa1, $fa1"
+  -
+    input:
+      bytes: [ 0xcc, 0x69, 0x11, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscaleb.d $ft4, $ft6, $fs2"
+  -
+    input:
+      bytes: [ 0xb5, 0x2b, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "flogb.d $ft13, $fs5"
+  -
+    input:
+      bytes: [ 0x50, 0x1b, 0x13, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcopysign.d $ft8, $fs2, $fa6"
+  -
+    input:
+      bytes: [ 0x53, 0x38, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclass.d $ft11, $fa2"

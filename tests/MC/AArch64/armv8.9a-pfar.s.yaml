@@ -1,0 +1,80 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa0, 0x60, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, PFAR_EL1"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x60, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr PFAR_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x60, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, PFAR_EL2"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x60, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr PFAR_EL2, x0"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x60, 0x3d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, PFAR_EL12"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x60, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr PFAR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x60, 0x3e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, MFAR_EL3"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x60, 0x1e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr MFAR_EL3, x0"

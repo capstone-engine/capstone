@@ -1,0 +1,120 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe0, 0xe3, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xe3, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xe3, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xe3, 0x6f, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0, all, mul #16"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0, pow2"
+
+  -
+    input:
+      bytes: [ 0x80, 0xe3, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0, #28"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xe3, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xe3, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xe3, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xe3, 0x6f, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0, all, mul #16"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0, pow2"
+
+  -
+    input:
+      bytes: [ 0x80, 0xe3, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cnth x0, #28"

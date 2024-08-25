@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe0, 0xbb, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "fexpa z0.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbb, 0xa0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "fexpa z0.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbb, 0xe0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "fexpa z0.d, z31.d"

@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x62, 0xdf, 0x00, 0x20 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ll.w $tp, $s4, 0xdc"
+  -
+    input:
+      bytes: [ 0xd3, 0x39, 0x00, 0x21 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sc.w $t7, $t2, 0x38"
+  -
+    input:
+      bytes: [ 0xcd, 0x81, 0x57, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "llacq.w $t1, $t2"
+  -
+    input:
+      bytes: [ 0xcd, 0x85, 0x57, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "screl.w $t1, $t2"

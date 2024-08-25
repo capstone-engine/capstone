@@ -1,0 +1,19 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x17, 0x01, 0x40, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_131" ]
+    expected:
+      insns:
+        -
+          asm_text: "extr d0, d1, e2"
+  -
+    input:
+      bytes: [ 0x17, 0x01, 0x60, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_131" ]
+    expected:
+      insns:
+        -
+          asm_text: "extr.u d0, d1, e2"

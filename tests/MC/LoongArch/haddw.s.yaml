@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7f, 0x76, 0x54, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvhaddw.h.b $xr31, $xr19, $xr29"
+  -
+    input:
+      bytes: [ 0x1f, 0xde, 0x54, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvhaddw.w.h $xr31, $xr16, $xr23"
+  -
+    input:
+      bytes: [ 0x3e, 0x60, 0x55, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvhaddw.d.w $xr30, $xr1, $xr24"
+  -
+    input:
+      bytes: [ 0xf0, 0xc5, 0x55, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvhaddw.q.d $xr16, $xr15, $xr17"
+  -
+    input:
+      bytes: [ 0x2e, 0x0a, 0x58, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvhaddw.hu.bu $xr14, $xr17, $xr2"
+  -
+    input:
+      bytes: [ 0x55, 0xa0, 0x58, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvhaddw.wu.hu $xr21, $xr2, $xr8"
+  -
+    input:
+      bytes: [ 0x06, 0x4f, 0x59, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvhaddw.du.wu $xr6, $xr24, $xr19"
+  -
+    input:
+      bytes: [ 0x8a, 0xb5, 0x59, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvhaddw.qu.du $xr10, $xr12, $xr13"

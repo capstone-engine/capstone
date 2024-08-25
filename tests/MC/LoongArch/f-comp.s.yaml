@@ -1,0 +1,199 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x10, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.caf.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x14, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.cun.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x12, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.ceq.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x16, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.cueq.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x11, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.clt.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x15, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.cult.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x13, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.cle.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x17, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.cule.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x18, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.cne.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x1a, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.cor.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x1c, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.cune.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x10, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.saf.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x14, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.sun.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x12, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.seq.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x16, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.sueq.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x11, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.slt.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x15, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.sult.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x13, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.sle.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x17, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.sule.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x18, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.sne.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x1a, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.sor.s $fcc0, $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x1c, 0x0c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp.sune.s $fcc0, $fa0, $fa1"

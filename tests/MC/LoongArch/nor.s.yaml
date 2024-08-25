@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe4, 0x8e, 0x27, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvnor.v $xr4, $xr23, $xr3"

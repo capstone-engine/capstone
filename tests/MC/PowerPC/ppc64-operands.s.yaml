@@ -1,0 +1,275 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7c, 0x22, 0x1a, 0x14 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "add 1, 2, 3"
+  -
+    input:
+      bytes: [ 0x7c, 0x22, 0x1a, 0x14 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "add 1, 2, 3"
+  -
+    input:
+      bytes: [ 0x7c, 0x00, 0x02, 0x14 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "add 0, 0, 0"
+  -
+    input:
+      bytes: [ 0x7f, 0xff, 0xfa, 0x14 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "add 31, 31, 31"
+  -
+    input:
+      bytes: [ 0x38, 0x20, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "li 1, 0"
+  -
+    input:
+      bytes: [ 0x38, 0x22, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi 1, 2, 0"
+  -
+    input:
+      bytes: [ 0x38, 0x20, 0x80, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "li 1, -0x8000"
+  -
+    input:
+      bytes: [ 0x38, 0x20, 0x7f, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "li 1, 0x7fff"
+  -
+    input:
+      bytes: [ 0x60, 0x41, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ori 1, 2, 0"
+  -
+    input:
+      bytes: [ 0x60, 0x41, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ori 1, 2, 65535"
+  -
+    input:
+      bytes: [ 0x3c, 0x20, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lis 1, 0"
+  -
+    input:
+      bytes: [ 0x3c, 0x20, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lis 1, -1"
+  -
+    input:
+      bytes: [ 0x80, 0x20, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwz 1, 0(0)"
+  -
+    input:
+      bytes: [ 0x80, 0x20, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwz 1, 0(0)"
+  -
+    input:
+      bytes: [ 0x80, 0x3f, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwz 1, 0(31)"
+  -
+    input:
+      bytes: [ 0x80, 0x3f, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwz 1, 0(31)"
+  -
+    input:
+      bytes: [ 0x80, 0x22, 0x80, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwz 1, -32768(2)"
+  -
+    input:
+      bytes: [ 0x80, 0x22, 0x7f, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwz 1, 32767(2)"
+  -
+    input:
+      bytes: [ 0xe8, 0x20, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld 1, 0(0)"
+  -
+    input:
+      bytes: [ 0xe8, 0x20, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld 1, 0(0)"
+  -
+    input:
+      bytes: [ 0xe8, 0x3f, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld 1, 0(31)"
+  -
+    input:
+      bytes: [ 0xe8, 0x3f, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld 1, 0(31)"
+  -
+    input:
+      bytes: [ 0xe8, 0x22, 0x80, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld 1, -32768(2)"
+  -
+    input:
+      bytes: [ 0xe8, 0x22, 0x7f, 0xfc ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld 1, 32764(2)"
+  -
+    input:
+      bytes: [ 0xe8, 0x22, 0x00, 0x04 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld 1, 4(2)"
+  -
+    input:
+      bytes: [ 0xe8, 0x22, 0xff, 0xfc ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld 1, -4(2)"
+  -
+    input:
+      bytes: [ 0x48, 0x00, 0x04, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "b 1024"
+    skip_reason: "Note: The assemble accepts it with .+. But the disassembler just returns the scalar."
+
+  -
+    input:
+      bytes: [ 0x48, 0x00, 0x04, 0x02 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ba 1024"
+  -
+    input:
+      bytes: [ 0x41, 0x82, 0x04, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "bt 2, 1024"
+    skip_reason: "Note: The assemble accepts it with .+. But the disassembler just returns the scalar."
+
+  -
+    input:
+      bytes: [ 0x41, 0x82, 0x04, 0x02 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "bta 2, 1024"

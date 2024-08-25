@@ -1,0 +1,140 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x60, 0x22, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z0.b, z1.b, z2.b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x60, 0x62, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z0.h, z1.h, z2.h"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x63, 0xbf, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z29.s, z30.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0x63, 0xff, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z31.d, z31.d, z31.d"
+
+  -
+    input:
+      bytes: [ 0x20, 0xf8, 0x7f, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z0.h, z1.h, z7.h[7]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xf8, 0xbf, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z0.s, z1.s, z7.s[3]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xf8, 0xff, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z0.d, z1.d, z15.d[1]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x60, 0x22, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z0.b, z1.b, z2.b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x60, 0x62, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z0.h, z1.h, z2.h"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x63, 0xbf, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z29.s, z30.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0x63, 0xff, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z31.d, z31.d, z31.d"
+
+  -
+    input:
+      bytes: [ 0x20, 0xf8, 0x7f, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z0.h, z1.h, z7.h[7]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xf8, 0xbf, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z0.s, z1.s, z7.s[3]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xf8, 0xff, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul z0.d, z1.d, z15.d[1]"

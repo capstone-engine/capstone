@@ -1,0 +1,320 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0x20, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbb z0.s, z0.b, z0.b[0]"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xcd, 0x28, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbb z23.s, z13.b, z0.b[7]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xcf, 0x3f, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbb z31.s, z31.b, z7.b[15]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x88, 0x20, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbb z0.s, z0.b, z0.b"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x89, 0x28, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbb z23.s, z13.b, z8.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x8b, 0x3f, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbb z31.s, z31.b, z31.b"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0x60, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbt z0.s, z0.b, z0.b[0]"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xcd, 0x68, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbt z23.s, z13.b, z0.b[7]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xcf, 0x7f, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbt z31.s, z31.b, z7.b[15]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x98, 0x20, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbt z0.s, z0.b, z0.b"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x99, 0x28, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbt z23.s, z13.b, z8.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x9b, 0x3f, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlallbt z31.s, z31.b, z31.b"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xa0, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltb z0.s, z0.b, z0.b[0]"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xcd, 0xa8, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltb z23.s, z13.b, z0.b[7]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xcf, 0xbf, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltb z31.s, z31.b, z7.b[15]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa8, 0x20, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltb z0.s, z0.b, z0.b"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xa9, 0x28, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltb z23.s, z13.b, z8.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0xab, 0x3f, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltb z31.s, z31.b, z31.b"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xe0, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltt z0.s, z0.b, z0.b[0]"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xcd, 0xe8, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltt z23.s, z13.b, z0.b[7]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xcf, 0xff, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltt z31.s, z31.b, z7.b[15]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xb8, 0x20, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltt z0.s, z0.b, z0.b"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xb9, 0x28, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltt z23.s, z13.b, z8.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbb, 0x3f, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "ssve-fp8fma" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmlalltt z31.s, z31.b, z31.b"

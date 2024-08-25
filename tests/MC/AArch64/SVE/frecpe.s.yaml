@@ -1,0 +1,60 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe0, 0x33, 0x4e, 0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecpe z0.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x33, 0x8e, 0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecpe z0.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x33, 0xce, 0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecpe z0.d, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x33, 0x4e, 0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecpe z0.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x33, 0x8e, 0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecpe z0.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x33, 0xce, 0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecpe z0.d, z31.d"

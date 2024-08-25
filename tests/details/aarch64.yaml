@@ -1,0 +1,875 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x38, 0xd5, 0xbf, 0x40, 0x00, 0xd5, 0x0c, 0x05, 0x13, 0xd5, 0x20, 0x50, 0x02, 0x0e, 0x20, 0xe4, 0x3d, 0x0f, 0x00, 0x18, 0xa0, 0x5f, 0xa2, 0x00, 0xae, 0x9e, 0x9f, 0x37, 0x03, 0xd5, 0xbf, 0x33, 0x03, 0xd5, 0xdf, 0x3f, 0x03, 0xd5, 0x21, 0x7c, 0x02, 0x9b, 0x21, 0x7c, 0x00, 0x53, 0x00, 0x40, 0x21, 0x4b, 0xe1, 0x0b, 0x40, 0xb9, 0x20, 0x04, 0x81, 0xda, 0x20, 0x08, 0x02, 0x8b, 0x10, 0x5b, 0xe8, 0x3c, 0xfd, 0x7b, 0xba, 0xa9, 0xfd, 0xc7, 0x43, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_DETAIL" ]
+      address: 0x2c
+    expected:
+      insns:
+      -
+        asm_text: "mrs x9, MIDR_EL1"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: x9
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_SYSREG
+                sub_type: AARCH64_OP_REG_MRS
+                sys_raw_val: 0xc000
+            cc: AArch64CC_Invalid
+            update_flags: 1
+          regs_write: [ nzcv, x9 ]
+
+      -
+        asm_text: "msr SPSel, #0"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSALIAS
+              sub_type: AARCH64_OP_PSTATEIMM0_15
+              sys_raw_val: 0x5
+            -
+              type: AARCH64_OP_IMM
+              imm: 0x0
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+
+      -
+        asm_text: "msr DBGDTRTX_EL0, x12"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSREG
+              sub_type: AARCH64_OP_REG_MSR
+              sys_raw_val: 0x9828
+            -
+              type: AARCH64_OP_REG
+              reg: x12
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ x12 ]
+
+      -
+        asm_text: "tbx v0.8b, { v1.16b, v2.16b, v3.16b }, v2.8b"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: d0
+              access: CS_AC_READ_WRITE
+              vas: AARCH64LAYOUT_VL_8B
+              is_vreg: 1
+            -
+              type: AARCH64_OP_REG
+              reg: q1
+              access: CS_AC_READ
+              vas: AARCH64LAYOUT_VL_16B
+              is_vreg: 1
+            -
+              type: AARCH64_OP_REG
+              reg: q2
+              access: CS_AC_READ
+              vas: AARCH64LAYOUT_VL_16B
+              is_vreg: 1
+            -
+              type: AARCH64_OP_REG
+              reg: q3
+              access: CS_AC_READ
+              vas: AARCH64LAYOUT_VL_16B
+              is_vreg: 1
+            -
+              type: AARCH64_OP_REG
+              reg: d2
+              access: CS_AC_READ
+              vas: AARCH64LAYOUT_VL_8B
+              is_vreg: 1
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ d0, q1, q2, q3, d2 ]
+          regs_write: [ d0 ]
+
+      -
+        asm_text: "scvtf v0.2s, v1.2s, #3"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: d0
+              access: CS_AC_WRITE
+              vas: AARCH64LAYOUT_VL_2S
+            -
+              type: AARCH64_OP_REG
+              reg: d1
+              access: CS_AC_READ
+              vas: AARCH64LAYOUT_VL_2S
+            -
+              type: AARCH64_OP_IMM
+              imm: 0x3
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ d1 ]
+          regs_write: [ d0 ]
+
+      -
+        asm_text: "fmla s0, s0, v0.s[3]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: s0
+              access: CS_AC_READ_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: s0
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: q0
+              access: CS_AC_READ
+              vas: AARCH64LAYOUT_VL_S
+              vector_index: 3
+              vector_index_is_set: true
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ fpcr, s0, q0 ]
+          regs_write: [ s0 ]
+
+      -
+        asm_text: "fmov x2, v5.d[1]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x2
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: q5
+              access: CS_AC_READ
+              vas: AARCH64LAYOUT_VL_D
+              vector_index: 1
+              vector_index_is_set: true
+            cc: AArch64CC_Invalid
+          regs_read: [ q5 ]
+          regs_write: [ x2 ]
+
+      -
+        asm_text: "dsb nsh"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSALIAS
+              sub_type: AARCH64_OP_DB
+              sys_raw_val: 0x7
+            cc: AArch64CC_Invalid
+
+      -
+        asm_text: "dmb osh"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSALIAS
+              sub_type: AARCH64_OP_DB
+              sys_raw_val: 0x3
+            cc: AArch64CC_Invalid
+
+      -
+        asm_text: "isb"
+
+      -
+        asm_text: "mul x1, x1, x2"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: x2
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ x1, x2 ]
+          regs_write: [ x1 ]
+
+      -
+        asm_text: "lsr w1, w1, #0"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ w1 ]
+          regs_write: [ w1 ]
+
+      -
+        asm_text: "sub w0, w0, w1, uxtw"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w0
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w0
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_READ
+              ext: AARCH64_EXT_UXTW
+            cc: AArch64CC_Invalid
+          regs_read: [ w0, w1 ]
+          regs_write: [ w0 ]
+
+      -
+        asm_text: "ldr w1, [sp, #8]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: sp
+              mem_disp: 0x8
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ sp ]
+          regs_write: [ w1 ]
+
+      -
+        asm_text: "cneg x0, x1, ne"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_READ
+            cc: AArch64CC_NE
+          regs_read: [ nzcv, x1 ]
+          regs_write: [ x0 ]
+
+      -
+        asm_text: "add x0, x1, x2, lsl #2"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: x2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_LSL
+              shift_value: 2
+            cc: AArch64CC_Invalid
+          regs_read: [ x1, x2 ]
+          regs_write: [ x0 ]
+
+      -
+        asm_text: "ldr q16, [x24, w8, uxtw #4]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: q16
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x24
+              mem_index: w8
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_LSL
+              shift_value: 4
+              ext: AARCH64_EXT_UXTW
+            cc: AArch64CC_Invalid
+          regs_read: [ x24, w8 ]
+          regs_write: [ q16 ]
+
+      -
+        asm_text: "stp x29, x30, [sp, #-0x60]!"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x29
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: x30
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_MEM
+              mem_base: sp
+              mem_disp: -0x60
+              access: CS_AC_WRITE
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ x29, x30, sp ]
+          regs_write: [ sp ]
+
+      -
+        asm_text: "ldr x29, [sp], #0x3c"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x29
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: sp
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_IMM
+              imm: 0x3c
+              access: CS_AC_READ
+            post_indexed: 1
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ sp ]
+          regs_write: [ sp, x29 ]
+  -
+    input:
+      bytes: [ 0xc0,0x08,0x9f,0xe0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ld1w {za0h.s[w12, 0]}, p2/z, [x6]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE_VEC
+                  tile: za0.s
+                  slice_reg: w12
+                  slice_offset_imm: 0
+                  is_vertical: -1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p2
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x6
+                access: CS_AC_READ
+          regs_read: [ w12, p2, x6 ]
+          regs_write: [ za0.s ]
+          groups: [ HasSME ]
+  -
+    input:
+      bytes: [ 0x41,0x31,0xa2,0xe0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "st1w {za0h.s[w13, 1]}, p4, [x10, x2, lsl #2]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE_VEC
+                  tile: za0.s
+                  slice_reg: w13
+                  slice_offset_imm: 1
+                  is_vertical: -1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p4
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x10
+                mem_index: x2
+                access: CS_AC_WRITE
+                shift_type: ARM_SFT_ASR
+                shift_value: 2
+          regs_read: [ za0.s, w13, p4, x10, x2 ]
+          groups: [ HasSME ]
+  -
+    input:
+      bytes: [ 0x67,0x44,0x71,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "psel p7, p1, p3.s[w13, 1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p7
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p1
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p3
+                pred_vec_select: w13
+                pred_imm_index: 1
+                pred_imm_index_set: true
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_S
+          regs_read: [ p1, p3, w13 ]
+          regs_write: [ p7 ]
+          groups: [ HasSVE2p1_or_HasSME ]
+  -
+    input:
+      bytes: [ 0x7f,0x47,0x03,0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "smstart"
+        details:
+          aarch64:
+            cc: AArch64CC_Invalid
+          groups: [ privilege ]
+  -
+    input:
+      bytes: [ 0x55,0x00,0x08,0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "zero {za0.h}"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE
+                  tile: za0.h
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_H
+            cc: AArch64CC_Invalid
+          regs_write: [ za0.h ]
+          groups: [ HasSME ]
+  -
+    input:
+      bytes: [ 0x02,0xf8,0x55,0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sdot za.s[w11, 2, vgx4], { z0.h - z3.h }, z5.h[2]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE_VEC
+                  tile: za
+                  slice_reg: w11
+                  slice_offset_imm: 2
+                  is_vertical: -1
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: z0
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z1
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z2
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z3
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z5
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+                vector_index: 2
+                vector_index_is_set: true
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ za, w11, z0, z1, z2, z3, z5 ]
+          regs_write: [ za ]
+          groups: [ HasSME2 ]
+  -
+    input:
+      bytes: [ 0xa4,0x0e,0x06,0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movaz { z4.d - z7.d }, za.d[w8, 5, vgx4]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z4
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_REG
+                reg: z5
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_REG
+                reg: z6
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_REG
+                reg: z7
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE_VEC
+                  tile: za
+                  slice_reg: w8
+                  slice_offset_imm: 5
+                  is_vertical: -1
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_D
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ za, w8 ]
+          regs_write: [ z4, z5, z6, z7, za ]
+          groups: [ HasSME2p1 ]
+  -
+    input:
+      bytes: [ 0x80,0xa0,0x8d,0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "luti2 { z0.s - z3.s }, zt0, z4[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z0
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: z1
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: z2
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: z3
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: zt0
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                reg: z4
+                access: CS_AC_READ
+                vector_index: 1
+                vector_index_is_set: true
+            cc: AArch64CC_Invalid
+          regs_read: [ zt0, z4 ]
+          regs_write: [ z0, z1, z2, z3 ]
+          groups: [ HasSME2 ]
+  -
+    input:
+      bytes: [ 0x00,0xb1,0x10,0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmla za.h[w9, 0, vgx4], { z8.h - z11.h }, z0.h[0]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE_VEC
+                  tile: za
+                  slice_reg: w9
+                  slice_offset_imm: 0
+                  is_vertical: -1
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z8
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z9
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z10
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z11
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z0
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+                vector_index: 0
+                vector_index_is_set: true
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ za, w9, z8, z9, z10, z11, z0 ]
+          regs_write: [ za ]
+          groups: [ HasSME2p1, HasSMEF16F16 ]
+  -
+    input:
+      bytes: [ 0x05,0xd0,0x9b,0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmlal za.s[w10, 2:3, vgx4], { z0.h - z3.h }, z11.h[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE_VEC
+                  tile: za
+                  slice_reg: w10
+                  slice_offset_ir_first: 2
+                  slice_offset_ir_offset: 3
+                  slice_offset_ir_set: true
+                  is_vertical: -1
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_REG
+                reg: z0
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z1
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z2
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z3
+                is_list_member: 1
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_REG
+                reg: z11
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_H
+                vector_index: 1
+                vector_index_is_set: true
+            cc: AArch64CC_Invalid
+          writeback: 1
+          regs_read: [ za, w10, z0, z1, z2, z3, z11 ]
+          regs_write: [ za ]
+          groups: [ HasSME2 ]
+  -
+    input:
+      bytes: [ 0x15,0x50,0xdf,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov	z21.d, p15/m, #-0x80"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z21
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p15
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_IMM
+                imm: -0x80
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xd3,0x03,0x9b,0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "luti4	{ z19.b, z23.b, z27.b, z31.b }, zt0, { z30, z31 }"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z19
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z23
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z27
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z31
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: zt0
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                reg: z30
+                is_list_member: 1
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                reg: z31
+                is_list_member: 1
+                access: CS_AC_READ
+          regs_read: [ zt0, z30, z31 ]
+          regs_write: [ z19, z23, z27, z31 ]
+          groups: [ HasSME2p1, HasSME_LUTv2 ]

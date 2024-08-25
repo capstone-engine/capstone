@@ -1,0 +1,101 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x09, 0xcf, 0xbc, 0xf5, 0x09, 0xf4, 0x01, 0x00, 0x89, 0xfb, 0x8f, 0x74, 0x89, 0xfe, 0x48, 0x01, 0x29, 0x00, 0x19, 0x25, 0x29, 0x03, 0x09, 0xf4, 0x85, 0xf9, 0x68, 0x0f, 0x16, 0x01  ]
+      arch: "tricore"
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ld.a a15, [+a12]#-4"
+        details:
+          tricore:
+            operands:
+              -
+                type: TRICORE_OP_REG
+                reg: a15
+              -
+                type: TRICORE_OP_MEM
+                mem_base: a12
+                mem_disp: -4
+      -
+        asm_text: "ld.b d4, [a15+]#1"
+        details:
+          tricore:
+            operands:
+              -
+                type: TRICORE_OP_REG
+                reg: d4
+              -
+                type: TRICORE_OP_MEM
+                mem_base: a15
+                mem_disp: 0x1
+      -
+        asm_text: "st.h [+a15]#0x1cf, d11"
+        details:
+          tricore:
+            operands:
+              -
+                type: TRICORE_OP_MEM
+                mem_base: a15
+                mem_disp: 0x1cf
+              -
+                type: TRICORE_OP_REG
+                reg: d11
+      -
+        asm_text: "st.d [a15+]#8, e14"
+        details:
+          tricore:
+            operands:
+              -
+                type: TRICORE_OP_MEM
+                mem_base: a15
+                mem_disp: 0x8
+              -
+                type: TRICORE_OP_REG
+                reg: e14
+      -
+        asm_text: "ld.w d0, [p0+c]#0x99"
+        details:
+          tricore:
+            operands:
+              -
+                type: TRICORE_OP_REG
+                reg: d0
+              -
+                type: TRICORE_OP_MEM
+                mem_base: p0
+                mem_disp: 0x99
+      -
+        asm_text: "ld.b d3, [p0+c]#-0x37"
+        details:
+          tricore:
+            operands:
+              -
+                type: TRICORE_OP_REG
+                reg: d3
+              -
+                type: TRICORE_OP_MEM
+                mem_base: p0
+                mem_disp: -0x37
+      -
+        asm_text: "ld.da p8, #0xf0003428"
+        details:
+          tricore:
+            operands:
+              -
+                type: TRICORE_OP_REG
+                reg: p8
+              -
+                type: TRICORE_OP_IMM
+                imm: 0xf0003428
+      -
+        asm_text: "and d15, #1"
+        details:
+          tricore:
+            operands:
+              -
+                type: TRICORE_OP_IMM
+                imm: 0x1
+

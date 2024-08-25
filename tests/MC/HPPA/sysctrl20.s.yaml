@@ -1,0 +1,433 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x50, 0xa2 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldsid (sr1,r1),rp"
+  -
+    input:
+      bytes: [ 0x00, 0x01, 0x58, 0x20 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtsp r1,sr1"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x44, 0xa1 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfsp sr1,r1"
+  -
+    input:
+      bytes: [ 0x00, 0x41, 0x18, 0x40 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtctl r1,cr2"
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x08, 0xa2 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfctl cr1,rp"
+  -
+    input:
+      bytes: [ 0x01, 0x60, 0x48, 0xa1 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfctl,w sar,r1"
+  -
+    input:
+      bytes: [ 0x01, 0x61, 0x18, 0xc0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtsarcm r1"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x14, 0xa1 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfia r1"
+  -
+    input:
+      bytes: [ 0x00, 0x0f, 0x0d, 0x61 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssm 0xf,r1"
+  -
+    input:
+      bytes: [ 0x00, 0x0f, 0x0e, 0x61 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsm 0xf,r1"
+  -
+    input:
+      bytes: [ 0x00, 0x01, 0x18, 0x60 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtsm r1"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x0c, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "rfi"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x0c, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "rfi,r"
+  -
+    input:
+      bytes: [ 0x03, 0xff, 0xc0, 0x1f ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "break 0x1f,0x1ffe"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x04, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "sync"
+  -
+    input:
+      bytes: [ 0x00, 0x10, 0x04, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "syncdma"
+  -
+    input:
+      bytes: [ 0x04, 0x22, 0x51, 0x83 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "probe,r (sr1,r1),rp,r3"
+  -
+    input:
+      bytes: [ 0x04, 0x22, 0x51, 0xc3 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "probe,w (sr1,r1),rp,r3"
+  -
+    input:
+      bytes: [ 0x04, 0x22, 0x51, 0x83 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "probe,r (sr1,r1),rp,r3"
+  -
+    input:
+      bytes: [ 0x04, 0x2f, 0x71, 0x83 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "probei,r (sr1,r1),0xf,r3"
+  -
+    input:
+      bytes: [ 0x04, 0x2f, 0x71, 0xc3 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "probei,w (sr1,r1),0xf,r3"
+  -
+    input:
+      bytes: [ 0x04, 0x2f, 0x71, 0x83 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "probei,r (sr1,r1),0xf,r3"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x53, 0x43 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "lpa r1(sr1,rp),r3"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x53, 0x63 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "lpa,m r1(sr1,rp),r3"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x53, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "lci r1(sr1,rp),r3"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x12, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdtlb r1(rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x16, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdtlb,l r1(rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x16, 0x20 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdtlb,l,m r1(rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pitlb r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x46, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pitlb,l r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x46, 0x20 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pitlb,l,m r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x12, 0x40 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdtlbe r1(rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x12, 0x60 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdtlbe,m r1(rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0x40 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pitlbe r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0x60 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pitlbe,m r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x18, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "idtlbt r1,rp"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x08, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "iitlbt r1,rp"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x13, 0x80 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdc r1(rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x13, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdc,m r1(rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x52, 0x80 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdc r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x52, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdc,m r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x5e, 0x72, 0x80 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdc 0xf(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0x80 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fic r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x52, 0xc0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdce r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x52, 0xe0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdce,m r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0xc0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fice r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0xe0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fice,m r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x14, 0x00, 0xde, 0xad ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "diag 0xdead"

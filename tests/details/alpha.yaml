@@ -1,0 +1,130 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0xbb, 0x27, 0x50, 0x7a, 0xbd, 0x23, 0xd0, 0xff, 0xde, 0x23, 0x00, 0x00, 0x5e, 0xb7  ]
+      arch: "alpha"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldah $15,2($13)"
+        details:
+          alpha:
+            operands:
+              -
+                type: ALPHA_OP_REG
+                reg: $15
+              -
+                type: ALPHA_OP_IMM
+                imm: 0x2
+              -
+                type: ALPHA_OP_REG
+                reg: $13
+      -
+        asm_text: "lda $15,0x7a50($15)"
+        details:
+          alpha:
+            operands:
+              -
+                type: ALPHA_OP_REG
+                reg: $15
+              -
+                type: ALPHA_OP_IMM
+                imm: 0x7a50
+              -
+                type: ALPHA_OP_REG
+                reg: $15
+      -
+        asm_text: "lda $30,0xffd0($30)"
+        details:
+          alpha:
+            operands:
+              -
+                type: ALPHA_OP_REG
+                reg: $30
+              -
+                type: ALPHA_OP_IMM
+                imm: 0xffd0
+              -
+                type: ALPHA_OP_REG
+                reg: $30
+      -
+        asm_text: "stq $12,0($30)"
+        details:
+          alpha:
+            operands:
+              -
+                type: ALPHA_OP_REG
+                reg: $12
+              -
+                type: ALPHA_OP_IMM
+                imm: 0x0
+              -
+                type: ALPHA_OP_REG
+                reg: $30
+  -
+    input:
+      bytes: [ 0x27, 0xbb, 0x00, 0x02, 0x23, 0xbd, 0x7a, 0x50, 0x23, 0xde, 0xff, 0xd0, 0xb7, 0x5e, 0x00, 0x00  ]
+      arch: "alpha"
+      options: [ CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldah $15,2($13)"
+        details:
+          alpha:
+            operands:
+              -
+                type: ALPHA_OP_REG
+                reg: $15
+              -
+                type: ALPHA_OP_IMM
+                imm: 0x2
+              -
+                type: ALPHA_OP_REG
+                reg: $13
+      -
+        asm_text: "lda $15,0x7a50($15)"
+        details:
+          alpha:
+            operands:
+              -
+                type: ALPHA_OP_REG
+                reg: $15
+              -
+                type: ALPHA_OP_IMM
+                imm: 0x7a50
+              -
+                type: ALPHA_OP_REG
+                reg: $15
+      -
+        asm_text: "lda $30,0xffd0($30)"
+        details:
+          alpha:
+            operands:
+              -
+                type: ALPHA_OP_REG
+                reg: $30
+              -
+                type: ALPHA_OP_IMM
+                imm: 0xffd0
+              -
+                type: ALPHA_OP_REG
+                reg: $30
+      -
+        asm_text: "stq $12,0($30)"
+        details:
+          alpha:
+            operands:
+              -
+                type: ALPHA_OP_REG
+                reg: $12
+              -
+                type: ALPHA_OP_IMM
+                imm: 0x0
+              -
+                type: ALPHA_OP_REG
+                reg: $30
+

@@ -1,0 +1,1498 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x43, 0x20, 0x0c, 0x07, 0x41, 0x56, 0xff, 0x17, 0x80, 0x20, 0x00, 0x00, 0x80, 0x3f, 0x00, 0x00, 0x10, 0x43, 0x23, 0x0e, 0xd0, 0x44, 0x00, 0x80, 0x4c, 0x43, 0x22, 0x02, 0x2d, 0x03, 0x00, 0x80, 0x7c, 0x43, 0x20, 0x14, 0x7c, 0x43, 0x20, 0x93, 0x4f, 0x20, 0x00, 0x21, 0x4c, 0xc8, 0x00, 0x21, 0x40, 0x82, 0x00, 0x14 ]
+      arch: "ppc"
+      options: [ CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bcla 0x19, lt, 0xc04"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_IMM
+                imm: 0x19
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: "0"
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0xc04
+                access: CS_AC_READ
+            bc:
+              bi: 0
+              bi_set: true
+              bo: 25
+              bo_set: true
+              pred_ctr: PPC_PRED_NZ
+      -
+        asm_text: "bdztla 4*cr5+eq, 0xff14"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: "22"
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0xff14
+                access: CS_AC_READ
+            bc:
+              bi: 22
+              bi_set: true
+              bo: 10
+              bo_set: true
+              crX: cr5
+              crX_bit: PPC_BI_Z
+              pred_ctr: PPC_PRED_Z
+      -
+        asm_text: "lwz r1, 0(0)"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_MEM
+                mem_base: "0"
+                access: CS_AC_READ
+      -
+        asm_text: "lwz r1, 0(r31)"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_MEM
+                mem_base: r31
+                access: CS_AC_READ
+      -
+        asm_text: "vpkpx v2, v3, v4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: v2
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: v3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: v4
+                access: CS_AC_READ
+      -
+        asm_text: "stfs f2, 0x80(r4)"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f2
+                access: CS_AC_READ
+              -
+                type: PPC_OP_MEM
+                mem_base: r4
+                mem_disp: 0x80
+                access: CS_AC_WRITE
+      -
+        asm_text: "crand eq, un, 4*cr1+lt"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: "2"
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: "3"
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: "4"
+                access: CS_AC_READ
+      -
+        asm_text: "cmpwi cr2, r3, 0x80"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: cr2
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x80
+                access: CS_AC_READ
+      -
+        asm_text: "addc r2, r3, r4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r2
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: r4
+                access: CS_AC_READ
+      -
+        asm_text: "mulhd. r2, r3, r4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r2
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: r4
+                access: CS_AC_READ
+            update_cr0: 1
+      -
+        asm_text: "bdnzlrl+"
+        details:
+         ppc:
+           bc:
+             bi: 0
+             bi_set: true
+             bo: 25
+             bo_set: true
+             bh: PPC_BH_SUBROUTINE_RET
+             pred_ctr: PPC_PRED_NZ
+             hint: PPC_BR_TAKEN
+      -
+        asm_text: "bflrl- 4*cr2+lt"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: "8"
+                access: CS_AC_READ
+            bc:
+               bi: 8
+               bi_set: true
+               bo: 6
+               bo_set: true
+               bh: PPC_BH_SUBROUTINE_RET
+               crX: cr2
+               crX_bit: PPC_BI_LT
+               hint: PPC_BR_NOT_TAKEN
+      -
+        asm_text: "bf eq, 0x1044"
+        details:
+          ppc:
+             operands:
+               -
+                 type: PPC_OP_REG
+                 reg: "2"
+                 access: CS_AC_READ
+               -
+                 type: PPC_OP_IMM
+                 imm: 0x1044
+                 access: CS_AC_READ
+             bc:
+               bi: 2
+               bi_set: true
+               bo: 4
+               bo_set: true
+               crX: cr0
+               crX_bit: PPC_BI_Z
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2a, 0x10, 0x10, 0x64, 0x28, 0x88, 0x7c, 0x4a, 0x5d, 0x0f  ]
+      arch: "ppc"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN, CS_MODE_QPX, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "qvfabs q3, q5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: q3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: q5
+                access: CS_AC_READ
+      -
+        asm_text: "qvfand q3, q4, q5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: q3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: q4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: q5
+                access: CS_AC_READ
+      -
+        asm_text: "qvstfsxa q2, r10, r11"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: q2
+                access: CS_AC_READ
+              -
+                type: PPC_OP_MEM
+                mem_base: r10
+                mem_offset: r11
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0x1f, 0xec, 0xe0, 0x6d, 0x80, 0x04, 0xe4, 0x6d, 0x80, 0x04, 0x10, 0x60, 0x1c, 0x4c, 0x10, 0x60, 0x1c, 0x0c, 0xf0, 0x6d, 0x80, 0x04, 0xf4, 0x6d, 0x80, 0x04, 0x10, 0x60, 0x1c, 0x4e, 0x10, 0x60, 0x1c, 0x0e, 0x10, 0x60, 0x1a, 0x10, 0x10, 0x60, 0x1a, 0x11, 0x10, 0x63, 0x20, 0x2a, 0x10, 0x63, 0x20, 0x2b, 0x10, 0x83, 0x20, 0x40, 0x10, 0x83, 0x20, 0xc0, 0x10, 0x83, 0x20, 0x00, 0x10, 0x83, 0x20, 0x80, 0x10, 0x63, 0x20, 0x24, 0x10, 0x63, 0x20, 0x25, 0x10, 0x63, 0x29, 0x3a, 0x10, 0x63, 0x29, 0x3b, 0x10, 0x63, 0x29, 0x1c, 0x10, 0x63, 0x29, 0x1d, 0x10, 0x63, 0x29, 0x1e, 0x10, 0x63, 0x29, 0x1f, 0x10, 0x63, 0x24, 0x20, 0x10, 0x63, 0x24, 0x21, 0x10, 0x63, 0x24, 0x60, 0x10, 0x63, 0x24, 0x61, 0x10, 0x63, 0x24, 0xa0, 0x10, 0x63, 0x24, 0xa1, 0x10, 0x63, 0x24, 0xe0, 0x10, 0x63, 0x24, 0xe1, 0x10, 0x60, 0x20, 0x90, 0x10, 0x60, 0x20, 0x91, 0x10, 0x63, 0x29, 0x38, 0x10, 0x63, 0x29, 0x39, 0x10, 0x63, 0x01, 0x32, 0x10, 0x63, 0x01, 0x33, 0x10, 0x63, 0x01, 0x18, 0x10, 0x63, 0x01, 0x19, 0x10, 0x63, 0x01, 0x1a, 0x10, 0x63, 0x01, 0x1b, 0x10, 0x60, 0x19, 0x10, 0x10, 0x60, 0x19, 0x11, 0x10, 0x60, 0x18, 0x50, 0x10, 0x60, 0x18, 0x51, 0x10, 0x63, 0x29, 0x3e, 0x10, 0x63, 0x29, 0x3f, 0x10, 0x63, 0x29, 0x3c, 0x10, 0x63, 0x29, 0x3d, 0x10, 0x60, 0x18, 0x30, 0x10, 0x60, 0x18, 0x31, 0x10, 0x60, 0x18, 0x34, 0x10, 0x60, 0x18, 0x35, 0x10, 0x63, 0x29, 0x2e, 0x10, 0x63, 0x29, 0x2f, 0x10, 0x63, 0x20, 0x28, 0x10, 0x63, 0x20, 0x29, 0x10, 0x63, 0x29, 0x14, 0x10, 0x63, 0x29, 0x15, 0x10, 0x63, 0x29, 0x16, 0x10, 0x63, 0x29, 0x17  ]
+      arch: "ppc"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_PS, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dcbz_l r0, r3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: r3
+                access: CS_AC_READ
+      -
+        asm_text: "psq_l f3, 4(r13), 1, 0"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_MEM
+                mem_base: r13
+                mem_disp: 0x4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x1
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+      -
+        asm_text: "psq_lu f3, 4(r13), 1, 0"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_MEM
+                mem_base: r13
+                mem_disp: 0x4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x1
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+      -
+        asm_text: "psq_lux f3, r0, r3, 1, 0"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x1
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+      -
+        asm_text: "psq_lx f3, r0, r3, 1, 0"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x1
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+      -
+        asm_text: "psq_st f3, 4(r13), 1, 0"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_MEM
+                mem_base: r13
+                mem_disp: 0x4
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_IMM
+                imm: 0x1
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+      -
+        asm_text: "psq_stu f3, 4(r13), 1, 0"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_MEM
+                mem_base: r13
+                mem_disp: 0x4
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_IMM
+                imm: 0x1
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+      -
+        asm_text: "psq_stux f3, r0, r3, 1, 0"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x1
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+      -
+        asm_text: "psq_stx f3, r0, r3, 1, 0"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x1
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+      -
+        asm_text: "ps_abs f3, f3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+      -
+        asm_text: "ps_abs. f3, f3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+      -
+        asm_text: "ps_add f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_add. f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_cmpo0 cr1, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: cr1
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_cmpo1 cr1, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: cr1
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_cmpu0 cr1, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: cr1
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_cmpu1 cr1, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: cr1
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_div f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_div. f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_madd f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_madd. f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_madds0 f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_madds0. f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_madds1 f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_madds1. f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_merge00 f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_merge00. f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_merge01 f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_merge01. f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_merge10 f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_merge10. f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_merge11 f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_merge11. f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_mr f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_mr. f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_msub f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_msub. f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_mul f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_mul. f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_muls0 f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_muls0. f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_muls1 f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_muls1. f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_nabs f3, f3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+      -
+        asm_text: "ps_nabs. f3, f3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+      -
+        asm_text: "ps_neg f3, f3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+      -
+        asm_text: "ps_neg. f3, f3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+      -
+        asm_text: "ps_nmadd f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_nmadd. f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_nmsub f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_nmsub. f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_res f3, f3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+      -
+        asm_text: "ps_res. f3, f3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+      -
+        asm_text: "ps_rsqrte f3, f3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+      -
+        asm_text: "ps_rsqrte. f3, f3"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+      -
+        asm_text: "ps_sel f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_sel. f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_sub f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_sub. f3, f3, f4"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+      -
+        asm_text: "ps_sum0 f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_sum0. f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_sum1 f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+      -
+        asm_text: "ps_sum1. f3, f3, f4, f5"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: f3
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f4
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: f5
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x54,0x22,0xe0,0x06 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "slwi r2, r1, 0x1c"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r2
+              -
+                type: PPC_OP_REG
+                reg: r1
+              -
+                type: PPC_OP_IMM
+                imm: 0x1c
+  -
+    input:
+      bytes: [ 0x54,0x66,0xf0,0xbe ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "srwi r6, r3, 2"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r6
+              -
+                type: PPC_OP_REG
+                reg: r3
+              -
+                type: PPC_OP_IMM
+                imm: 0x2
+  -
+    input:
+      bytes: [ 0x78,0x62,0x26,0xe4 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sldi r2, r3, 4"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r2
+              -
+                type: PPC_OP_REG
+                reg: r3
+              -
+                type: PPC_OP_IMM
+                imm: 0x4

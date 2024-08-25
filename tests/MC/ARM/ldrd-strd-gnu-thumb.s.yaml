@@ -1,0 +1,32 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xfa, 0xe9, 0x80, 0x01, 0xfa, 0xe8, 0x80, 0x01, 0xda, 0xe9, 0x80, 0x01, 0xea, 0xe9, 0x80, 0x01, 0xea, 0xe8, 0x80, 0x01, 0xca, 0xe9, 0x80, 0x01, 0xfa, 0xe9, 0x80, 0x12, 0xfa, 0xe8, 0x80, 0x12, 0xda, 0xe9, 0x80, 0x12, 0xea, 0xe9, 0x80, 0x12, 0xea, 0xe8, 0x80, 0x12, 0xca, 0xe9, 0x80, 0x12 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrd r0, r1, [r10, #0x200]!"
+        -
+          asm_text: "ldrd r0, r1, [r10], #0x200"
+        -
+          asm_text: "ldrd r0, r1, [r10, #0x200]"
+        -
+          asm_text: "strd r0, r1, [r10, #0x200]!"
+        -
+          asm_text: "strd r0, r1, [r10], #0x200"
+        -
+          asm_text: "strd r0, r1, [r10, #0x200]"
+        -
+          asm_text: "ldrd r1, r2, [r10, #0x200]!"
+        -
+          asm_text: "ldrd r1, r2, [r10], #0x200"
+        -
+          asm_text: "ldrd r1, r2, [r10, #0x200]"
+        -
+          asm_text: "strd r1, r2, [r10, #0x200]!"
+        -
+          asm_text: "strd r1, r2, [r10], #0x200"
+        -
+          asm_text: "strd r1, r2, [r10, #0x200]"

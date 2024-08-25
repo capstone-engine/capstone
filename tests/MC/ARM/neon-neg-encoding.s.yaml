@@ -1,0 +1,36 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa0, 0x03, 0xf1, 0xf3, 0xa0, 0x03, 0xf5, 0xf3, 0xa0, 0x03, 0xf9, 0xf3, 0xa0, 0x07, 0xf9, 0xf3, 0xe0, 0x03, 0xf1, 0xf3, 0xe0, 0x03, 0xf5, 0xf3, 0xe0, 0x03, 0xf9, 0xf3, 0xe0, 0x07, 0xf9, 0xf3, 0xa0, 0x07, 0xf0, 0xf3, 0xa0, 0x07, 0xf4, 0xf3, 0xa0, 0x07, 0xf8, 0xf3, 0xe0, 0x07, 0xf0, 0xf3, 0xe0, 0x07, 0xf4, 0xf3, 0xe0, 0x07, 0xf8, 0xf3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "vneg.s8 d16, d16"
+        -
+          asm_text: "vneg.s16 d16, d16"
+        -
+          asm_text: "vneg.s32 d16, d16"
+        -
+          asm_text: "vneg.f32 d16, d16"
+        -
+          asm_text: "vneg.s8 q8, q8"
+        -
+          asm_text: "vneg.s16 q8, q8"
+        -
+          asm_text: "vneg.s32 q8, q8"
+        -
+          asm_text: "vneg.f32 q8, q8"
+        -
+          asm_text: "vqneg.s8 d16, d16"
+        -
+          asm_text: "vqneg.s16 d16, d16"
+        -
+          asm_text: "vqneg.s32 d16, d16"
+        -
+          asm_text: "vqneg.s8 q8, q8"
+        -
+          asm_text: "vqneg.s16 q8, q8"
+        -
+          asm_text: "vqneg.s32 q8, q8"

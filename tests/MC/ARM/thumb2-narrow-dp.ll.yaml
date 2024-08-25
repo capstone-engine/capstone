@@ -1,0 +1,836 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x40, 0x1d, 0x08, 0x31, 0x11, 0xf1, 0x08, 0x01, 0x18, 0xf1, 0x08, 0x08, 0x08, 0xbf, 0x40, 0x1d, 0x08, 0xbf, 0x08, 0x31, 0x08, 0xbf, 0x10, 0xf1, 0x05, 0x00, 0x08, 0xbf, 0x11, 0xf1, 0x08, 0x01, 0x50, 0x18, 0x52, 0x18, 0x0b, 0x44, 0x08, 0xbf, 0x50, 0x18, 0x08, 0xbf, 0x52, 0x18, 0x08, 0xbf, 0x12, 0xeb, 0x01, 0x00, 0x08, 0xbf, 0x12, 0xeb, 0x01, 0x02, 0x0b, 0x44, 0x7c, 0x44, 0x7c, 0x44, 0x97, 0x44, 0x97, 0x44, 0xef, 0x44, 0x05, 0xb0, 0x7f, 0xb0, 0x0d, 0xf5, 0x00, 0x7d, 0xe9, 0x44, 0xd5, 0x44, 0xd5, 0x44, 0xfd, 0x44, 0x12, 0xea, 0x01, 0x00, 0x0a, 0x40, 0x0a, 0x40, 0x10, 0xea, 0x01, 0x00, 0x11, 0xea, 0x03, 0x03, 0x01, 0xea, 0x00, 0x00, 0x0f, 0x40, 0x0f, 0x40, 0x11, 0xea, 0x08, 0x08, 0x18, 0xea, 0x01, 0x08, 0x18, 0xea, 0x00, 0x00, 0x11, 0xea, 0x08, 0x01, 0x12, 0xea, 0x41, 0x02, 0x11, 0xea, 0x50, 0x00, 0x08, 0xbf, 0x02, 0xea, 0x01, 0x00, 0x08, 0xbf, 0x0b, 0x40, 0x08, 0xbf, 0x0b, 0x40, 0x08, 0xbf, 0x00, 0xea, 0x01, 0x00, 0x08, 0xbf, 0x01, 0xea, 0x02, 0x02, 0x08, 0xbf, 0x11, 0xea, 0x00, 0x00, 0x08, 0xbf, 0x0f, 0x40, 0x08, 0xbf, 0x0f, 0x40, 0x08, 0xbf, 0x01, 0xea, 0x08, 0x08, 0x08, 0xbf, 0x08, 0xea, 0x01, 0x08, 0x08, 0xbf, 0x08, 0xea, 0x04, 0x04, 0x08, 0xbf, 0x04, 0xea, 0x08, 0x04, 0x08, 0xbf, 0x00, 0xea, 0x41, 0x00, 0x08, 0xbf, 0x01, 0xea, 0x55, 0x05, 0x92, 0xea, 0x01, 0x00, 0x4d, 0x40, 0x4d, 0x40, 0x90, 0xea, 0x01, 0x00, 0x91, 0xea, 0x02, 0x02, 0x81, 0xea, 0x01, 0x01, 0x4f, 0x40, 0x4f, 0x40, 0x91, 0xea, 0x08, 0x08, 0x98, 0xea, 0x01, 0x08, 0x98, 0xea, 0x06, 0x06, 0x90, 0xea, 0x08, 0x00, 0x92, 0xea, 0x41, 0x02, 0x91, 0xea, 0x50, 0x00, 0x08, 0xbf, 0x82, 0xea, 0x01, 0x03, 0x08, 0xbf, 0x48, 0x40, 0x08, 0xbf, 0x4a, 0x40, 0x08, 0xbf, 0x83, 0xea, 0x01, 0x03, 0x08, 0xbf, 0x81, 0xea, 0x00, 0x00, 0x08, 0xbf, 0x91, 0xea, 0x01, 0x01, 0x08, 0xbf, 0x4f, 0x40, 0x08, 0xbf, 0x4f, 0x40, 0x08, 0xbf, 0x81, 0xea, 0x08, 0x08, 0x08, 0xbf, 0x88, 0xea, 0x01, 0x08, 0x08, 0xbf, 0x88, 0xea, 0x00, 0x00, 0x08, 0xbf, 0x83, 0xea, 0x08, 0x03, 0x08, 0xbf, 0x84, 0xea, 0x41, 0x04, 0x08, 0xbf, 0x81, 0xea, 0x50, 0x00, 0x12, 0xfa, 0x01, 0xf0, 0x8a, 0x40, 0x11, 0xfa, 0x02, 0xf2, 0x10, 0xfa, 0x01, 0xf0, 0x11, 0xfa, 0x04, 0xf4, 0x01, 0xfa, 0x04, 0xf4, 0x8f, 0x40, 0x11, 0xfa, 0x08, 0xf8, 0x18, 0xfa, 0x01, 0xf8, 0x18, 0xfa, 0x03, 0xf3, 0x15, 0xfa, 0x08, 0xf5, 0x08, 0xbf, 0x02, 0xfa, 0x01, 0xf0, 0x08, 0xbf, 0x8a, 0x40, 0x08, 0xbf, 0x01, 0xfa, 0x02, 0xf2, 0x08, 0xbf, 0x00, 0xfa, 0x01, 0xf0, 0x08, 0xbf, 0x01, 0xfa, 0x03, 0xf3, 0x08, 0xbf, 0x11, 0xfa, 0x04, 0xf4, 0x08, 0xbf, 0x8f, 0x40, 0x08, 0xbf, 0x01, 0xfa, 0x08, 0xf8, 0x08, 0xbf, 0x08, 0xfa, 0x01, 0xf8, 0x08, 0xbf, 0x08, 0xfa, 0x00, 0xf0, 0x08, 0xbf, 0x03, 0xfa, 0x08, 0xf3, 0x32, 0xfa, 0x01, 0xf6, 0xca, 0x40, 0x31, 0xfa, 0x02, 0xf2, 0x32, 0xfa, 0x01, 0xf2, 0x31, 0xfa, 0x03, 0xf3, 0x21, 0xfa, 0x04, 0xf4, 0xcf, 0x40, 0x31, 0xfa, 0x08, 0xf8, 0x38, 0xfa, 0x01, 0xf8, 0x38, 0xfa, 0x02, 0xf2, 0x35, 0xfa, 0x08, 0xf5, 0x08, 0xbf, 0x22, 0xfa, 0x01, 0xf6, 0x08, 0xbf, 0xcf, 0x40, 0x08, 0xbf, 0x21, 0xfa, 0x07, 0xf7, 0x08, 0xbf, 0x27, 0xfa, 0x01, 0xf7, 0x08, 0xbf, 0x21, 0xfa, 0x02, 0xf2, 0x08, 0xbf, 0x31, 0xfa, 0x00, 0xf0, 0x08, 0xbf, 0xcf, 0x40, 0x08, 0xbf, 0x21, 0xfa, 0x08, 0xf8, 0x08, 0xbf, 0x28, 0xfa, 0x01, 0xf8, 0x08, 0xbf, 0x28, 0xfa, 0x01, 0xf1, 0x08, 0xbf, 0x24, 0xfa, 0x08, 0xf4, 0x56, 0xfa, 0x05, 0xf7, 0x08, 0x41, 0x51, 0xfa, 0x00, 0xf0, 0x53, 0xfa, 0x01, 0xf3, 0x51, 0xfa, 0x01, 0xf1, 0x41, 0xfa, 0x00, 0xf0, 0x0f, 0x41, 0x51, 0xfa, 0x08, 0xf8, 0x58, 0xfa, 0x01, 0xf8, 0x58, 0xfa, 0x05, 0xf5, 0x55, 0xfa, 0x08, 0xf5, 0x08, 0xbf, 0x42, 0xfa, 0x01, 0xf0, 0x08, 0xbf, 0x0a, 0x41, 0x08, 0xbf, 0x42, 0xfa, 0x01, 0xf1, 0x08, 0xbf, 0x44, 0xfa, 0x01, 0xf4, 0x08, 0xbf, 0x41, 0xfa, 0x06, 0xf6, 0x08, 0xbf, 0x51, 0xfa, 0x03, 0xf3, 0x08, 0xbf, 0x0f, 0x41, 0x08, 0xbf, 0x41, 0xfa, 0x08, 0xf8, 0x08, 0xbf, 0x48, 0xfa, 0x01, 0xf8, 0x08, 0xbf, 0x48, 0xfa, 0x01, 0xf1, 0x08, 0xbf, 0x43, 0xfa, 0x08, 0xf3, 0x52, 0xeb, 0x01, 0x05, 0x4d, 0x41, 0x4b, 0x41, 0x52, 0xeb, 0x01, 0x02, 0x51, 0xeb, 0x03, 0x03, 0x41, 0xeb, 0x00, 0x00, 0x4f, 0x41, 0x4f, 0x41, 0x51, 0xeb, 0x08, 0x08, 0x58, 0xeb, 0x01, 0x08, 0x58, 0xeb, 0x05, 0x05, 0x52, 0xeb, 0x08, 0x02, 0x53, 0xeb, 0x41, 0x03, 0x51, 0xeb, 0x54, 0x04, 0x08, 0xbf, 0x42, 0xeb, 0x03, 0x01, 0x08, 0xbf, 0x49, 0x41, 0x08, 0xbf, 0x4b, 0x41, 0x08, 0xbf, 0x43, 0xeb, 0x01, 0x03, 0x08, 0xbf, 0x41, 0xeb, 0x00, 0x00, 0x08, 0xbf, 0x51, 0xeb, 0x03, 0x03, 0x08, 0xbf, 0x4f, 0x41, 0x08, 0xbf, 0x4f, 0x41, 0x08, 0xbf, 0x41, 0xeb, 0x08, 0x08, 0x08, 0xbf, 0x48, 0xeb, 0x01, 0x08, 0x08, 0xbf, 0x48, 0xeb, 0x03, 0x03, 0x08, 0xbf, 0x41, 0xeb, 0x08, 0x01, 0x08, 0xbf, 0x42, 0xeb, 0x41, 0x02, 0x08, 0xbf, 0x41, 0xeb, 0x51, 0x01, 0x72, 0xeb, 0x01, 0x03, 0x8c, 0x41, 0x74, 0xeb, 0x01, 0x01, 0x74, 0xeb, 0x01, 0x04, 0x71, 0xeb, 0x02, 0x02, 0x61, 0xeb, 0x00, 0x00, 0x8f, 0x41, 0x71, 0xeb, 0x08, 0x08, 0x78, 0xeb, 0x01, 0x08, 0x78, 0xeb, 0x04, 0x04, 0x73, 0xeb, 0x08, 0x03, 0x72, 0xeb, 0x41, 0x02, 0x71, 0xeb, 0x55, 0x05, 0x08, 0xbf, 0x62, 0xeb, 0x01, 0x05, 0x08, 0xbf, 0x8d, 0x41, 0x08, 0xbf, 0x65, 0xeb, 0x01, 0x01, 0x08, 0xbf, 0x65, 0xeb, 0x01, 0x05, 0x08, 0xbf, 0x61, 0xeb, 0x00, 0x00, 0x08, 0xbf, 0x71, 0xeb, 0x02, 0x02, 0x08, 0xbf, 0x8f, 0x41, 0x08, 0xbf, 0x61, 0xeb, 0x08, 0x08, 0x08, 0xbf, 0x68, 0xeb, 0x01, 0x08, 0x08, 0xbf, 0x68, 0xeb, 0x07, 0x07, 0x08, 0xbf, 0x67, 0xeb, 0x08, 0x07, 0x08, 0xbf, 0x62, 0xeb, 0x41, 0x02, 0x08, 0xbf, 0x61, 0xeb, 0x55, 0x05, 0x72, 0xfa, 0x01, 0xf3, 0xc8, 0x41, 0x70, 0xfa, 0x01, 0xf1, 0x72, 0xfa, 0x01, 0xf2, 0x71, 0xfa, 0x02, 0xf2, 0x61, 0xfa, 0x05, 0xf5, 0xcf, 0x41, 0x71, 0xfa, 0x08, 0xf8, 0x78, 0xfa, 0x01, 0xf8, 0x78, 0xfa, 0x06, 0xf6, 0x76, 0xfa, 0x08, 0xf6, 0x08, 0xbf, 0x62, 0xfa, 0x01, 0xf4, 0x08, 0xbf, 0xcc, 0x41, 0x08, 0xbf, 0x64, 0xfa, 0x01, 0xf1, 0x08, 0xbf, 0x64, 0xfa, 0x01, 0xf4, 0x08, 0xbf, 0x61, 0xfa, 0x00, 0xf0, 0x08, 0xbf, 0x71, 0xfa, 0x00, 0xf0, 0x08, 0xbf, 0xcf, 0x41, 0x08, 0xbf, 0x61, 0xfa, 0x08, 0xf8, 0x08, 0xbf, 0x68, 0xfa, 0x01, 0xf8, 0x08, 0xbf, 0x68, 0xfa, 0x03, 0xf3, 0x08, 0xbf, 0x61, 0xfa, 0x08, 0xf1, 0x52, 0xea, 0x01, 0x07, 0x0a, 0x43, 0x0b, 0x43, 0x54, 0xea, 0x01, 0x04, 0x51, 0xea, 0x05, 0x05, 0x41, 0xea, 0x02, 0x02, 0x0f, 0x43, 0x0f, 0x43, 0x51, 0xea, 0x08, 0x08, 0x58, 0xea, 0x01, 0x08, 0x58, 0xea, 0x01, 0x01, 0x50, 0xea, 0x08, 0x00, 0x51, 0xea, 0x41, 0x01, 0x51, 0xea, 0x50, 0x00, 0x08, 0xbf, 0x42, 0xea, 0x01, 0x00, 0x08, 0xbf, 0x0d, 0x43, 0x08, 0xbf, 0x0d, 0x43, 0x08, 0xbf, 0x42, 0xea, 0x01, 0x02, 0x08, 0xbf, 0x41, 0xea, 0x03, 0x03, 0x08, 0xbf, 0x51, 0xea, 0x04, 0x04, 0x08, 0xbf, 0x0f, 0x43, 0x08, 0xbf, 0x0f, 0x43, 0x08, 0xbf, 0x41, 0xea, 0x08, 0x08, 0x08, 0xbf, 0x48, 0xea, 0x01, 0x08, 0x08, 0xbf, 0x48, 0xea, 0x00, 0x00, 0x08, 0xbf, 0x40, 0xea, 0x08, 0x00, 0x08, 0xbf, 0x42, 0xea, 0x41, 0x02, 0x08, 0xbf, 0x41, 0xea, 0x52, 0x02, 0x32, 0xea, 0x01, 0x03, 0x8a, 0x43, 0x32, 0xea, 0x01, 0x01, 0x32, 0xea, 0x01, 0x02, 0x31, 0xea, 0x00, 0x00, 0x21, 0xea, 0x00, 0x00, 0x8f, 0x43, 0x31, 0xea, 0x08, 0x08, 0x38, 0xea, 0x01, 0x08, 0x38, 0xea, 0x07, 0x07, 0x35, 0xea, 0x08, 0x05, 0x33, 0xea, 0x41, 0x03, 0x31, 0xea, 0x54, 0x04, 0x08, 0xbf, 0x22, 0xea, 0x01, 0x00, 0x08, 0xbf, 0x8d, 0x43, 0x08, 0xbf, 0x25, 0xea, 0x01, 0x01, 0x08, 0xbf, 0x24, 0xea, 0x01, 0x04, 0x08, 0xbf, 0x21, 0xea, 0x02, 0x02, 0x08, 0xbf, 0x31, 0xea, 0x05, 0x05, 0x08, 0xbf, 0x8f, 0x43, 0x08, 0xbf, 0x21, 0xea, 0x08, 0x08, 0x08, 0xbf, 0x28, 0xea, 0x01, 0x08, 0x08, 0xbf, 0x28, 0xea, 0x00, 0x00, 0x08, 0xbf, 0x22, 0xea, 0x08, 0x02, 0x08, 0xbf, 0x24, 0xea, 0x41, 0x04, 0x08, 0xbf, 0x21, 0xea, 0x55, 0x05 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds r0, r0, #5"
+        -
+          asm_text: "adds r1, #8"
+        -
+          asm_text: "adds.w r1, r1, #8"
+        -
+          asm_text: "adds.w r8, r8, #8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "addeq r0, r0, #5"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "addeq r1, #8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "addseq.w r0, r0, #5"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "addseq.w r1, r1, #8"
+        -
+          asm_text: "adds r0, r2, r1"
+        -
+          asm_text: "adds r2, r2, r1"
+        -
+          asm_text: "add r3, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "addeq r0, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "addeq r2, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "addseq.w r0, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "addseq.w r2, r2, r1"
+        -
+          asm_text: "add r3, r1"
+        -
+          asm_text: "add r4, pc"
+        -
+          asm_text: "add r4, pc"
+        -
+          asm_text: "add pc, r2"
+        -
+          asm_text: "add pc, r2"
+        -
+          asm_text: "add pc, sp, pc"
+        -
+          asm_text: "add sp, #0x14"
+        -
+          asm_text: "add sp, #0x1fc"
+        -
+          asm_text: "add.w sp, sp, #0x200"
+        -
+          asm_text: "add r9, sp, r9"
+        -
+          asm_text: "add sp, r10"
+        -
+          asm_text: "add sp, r10"
+        -
+          asm_text: "add sp, pc"
+        -
+          asm_text: "ands.w r0, r2, r1"
+        -
+          asm_text: "ands r2, r1"
+        -
+          asm_text: "ands r2, r1"
+        -
+          asm_text: "ands.w r0, r0, r1"
+        -
+          asm_text: "ands.w r3, r1, r3"
+        -
+          asm_text: "and.w r0, r1, r0"
+        -
+          asm_text: "ands r7, r1"
+        -
+          asm_text: "ands r7, r1"
+        -
+          asm_text: "ands.w r8, r1, r8"
+        -
+          asm_text: "ands.w r8, r8, r1"
+        -
+          asm_text: "ands.w r0, r8, r0"
+        -
+          asm_text: "ands.w r1, r1, r8"
+        -
+          asm_text: "ands.w r2, r2, r1, lsl #1"
+        -
+          asm_text: "ands.w r0, r1, r0, lsr #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq.w r0, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq r3, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq r3, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq.w r0, r0, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq.w r2, r1, r2"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andseq.w r0, r1, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq.w r8, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq.w r8, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq.w r4, r8, r4"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq.w r4, r4, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq.w r0, r0, r1, lsl #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "andeq.w r5, r1, r5, lsr #1"
+        -
+          asm_text: "eors.w r0, r2, r1"
+        -
+          asm_text: "eors r5, r1"
+        -
+          asm_text: "eors r5, r1"
+        -
+          asm_text: "eors.w r0, r0, r1"
+        -
+          asm_text: "eors.w r2, r1, r2"
+        -
+          asm_text: "eor.w r1, r1, r1"
+        -
+          asm_text: "eors r7, r1"
+        -
+          asm_text: "eors r7, r1"
+        -
+          asm_text: "eors.w r8, r1, r8"
+        -
+          asm_text: "eors.w r8, r8, r1"
+        -
+          asm_text: "eors.w r6, r8, r6"
+        -
+          asm_text: "eors.w r0, r0, r8"
+        -
+          asm_text: "eors.w r2, r2, r1, lsl #1"
+        -
+          asm_text: "eors.w r0, r1, r0, lsr #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq.w r3, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq r0, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq.w r3, r3, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq.w r0, r1, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eorseq.w r1, r1, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq.w r8, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq.w r8, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq.w r0, r8, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq.w r3, r3, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq.w r4, r4, r1, lsl #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "eoreq.w r0, r1, r0, lsr #1"
+        -
+          asm_text: "lsls.w r0, r2, r1"
+        -
+          asm_text: "lsls r2, r1"
+        -
+          asm_text: "lsls.w r2, r1, r2"
+        -
+          asm_text: "lsls.w r0, r0, r1"
+        -
+          asm_text: "lsls.w r4, r1, r4"
+        -
+          asm_text: "lsl.w r4, r1, r4"
+        -
+          asm_text: "lsls r7, r1"
+        -
+          asm_text: "lsls.w r8, r1, r8"
+        -
+          asm_text: "lsls.w r8, r8, r1"
+        -
+          asm_text: "lsls.w r3, r8, r3"
+        -
+          asm_text: "lsls.w r5, r5, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsleq.w r0, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsleq r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsleq.w r2, r1, r2"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsleq.w r0, r0, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsleq.w r3, r1, r3"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lslseq.w r4, r1, r4"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsleq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsleq.w r8, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsleq.w r8, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsleq.w r0, r8, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsleq.w r3, r3, r8"
+        -
+          asm_text: "lsrs.w r6, r2, r1"
+        -
+          asm_text: "lsrs r2, r1"
+        -
+          asm_text: "lsrs.w r2, r1, r2"
+        -
+          asm_text: "lsrs.w r2, r2, r1"
+        -
+          asm_text: "lsrs.w r3, r1, r3"
+        -
+          asm_text: "lsr.w r4, r1, r4"
+        -
+          asm_text: "lsrs r7, r1"
+        -
+          asm_text: "lsrs.w r8, r1, r8"
+        -
+          asm_text: "lsrs.w r8, r8, r1"
+        -
+          asm_text: "lsrs.w r2, r8, r2"
+        -
+          asm_text: "lsrs.w r5, r5, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsreq.w r6, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsreq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsreq.w r7, r1, r7"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsreq.w r7, r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsreq.w r2, r1, r2"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsrseq.w r0, r1, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsreq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsreq.w r8, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsreq.w r8, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsreq.w r1, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "lsreq.w r4, r4, r8"
+        -
+          asm_text: "asrs.w r7, r6, r5"
+        -
+          asm_text: "asrs r0, r1"
+        -
+          asm_text: "asrs.w r0, r1, r0"
+        -
+          asm_text: "asrs.w r3, r3, r1"
+        -
+          asm_text: "asrs.w r1, r1, r1"
+        -
+          asm_text: "asr.w r0, r1, r0"
+        -
+          asm_text: "asrs r7, r1"
+        -
+          asm_text: "asrs.w r8, r1, r8"
+        -
+          asm_text: "asrs.w r8, r8, r1"
+        -
+          asm_text: "asrs.w r5, r8, r5"
+        -
+          asm_text: "asrs.w r5, r5, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asreq.w r0, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asreq r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asreq.w r1, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asreq.w r4, r4, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asreq.w r6, r1, r6"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asrseq.w r3, r1, r3"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asreq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asreq.w r8, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asreq.w r8, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asreq.w r1, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "asreq.w r3, r3, r8"
+        -
+          asm_text: "adcs.w r5, r2, r1"
+        -
+          asm_text: "adcs r5, r1"
+        -
+          asm_text: "adcs r3, r1"
+        -
+          asm_text: "adcs.w r2, r2, r1"
+        -
+          asm_text: "adcs.w r3, r1, r3"
+        -
+          asm_text: "adc.w r0, r1, r0"
+        -
+          asm_text: "adcs r7, r1"
+        -
+          asm_text: "adcs r7, r1"
+        -
+          asm_text: "adcs.w r8, r1, r8"
+        -
+          asm_text: "adcs.w r8, r8, r1"
+        -
+          asm_text: "adcs.w r5, r8, r5"
+        -
+          asm_text: "adcs.w r2, r2, r8"
+        -
+          asm_text: "adcs.w r3, r3, r1, lsl #1"
+        -
+          asm_text: "adcs.w r4, r1, r4, lsr #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq.w r1, r2, r3"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq r1, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq r3, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq.w r3, r3, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq.w r0, r1, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adcseq.w r3, r1, r3"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq.w r8, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq.w r8, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq.w r3, r8, r3"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq.w r1, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq.w r2, r2, r1, lsl #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "adceq.w r1, r1, r1, lsr #1"
+        -
+          asm_text: "sbcs.w r3, r2, r1"
+        -
+          asm_text: "sbcs r4, r1"
+        -
+          asm_text: "sbcs.w r1, r4, r1"
+        -
+          asm_text: "sbcs.w r4, r4, r1"
+        -
+          asm_text: "sbcs.w r2, r1, r2"
+        -
+          asm_text: "sbc.w r0, r1, r0"
+        -
+          asm_text: "sbcs r7, r1"
+        -
+          asm_text: "sbcs.w r8, r1, r8"
+        -
+          asm_text: "sbcs.w r8, r8, r1"
+        -
+          asm_text: "sbcs.w r4, r8, r4"
+        -
+          asm_text: "sbcs.w r3, r3, r8"
+        -
+          asm_text: "sbcs.w r2, r2, r1, lsl #1"
+        -
+          asm_text: "sbcs.w r5, r1, r5, lsr #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq.w r5, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq r5, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq.w r1, r5, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq.w r5, r5, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq.w r0, r1, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbcseq.w r2, r1, r2"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq.w r8, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq.w r8, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq.w r7, r8, r7"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq.w r7, r7, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq.w r2, r2, r1, lsl #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "sbceq.w r5, r1, r5, lsr #1"
+        -
+          asm_text: "rors.w r3, r2, r1"
+        -
+          asm_text: "rors r0, r1"
+        -
+          asm_text: "rors.w r1, r0, r1"
+        -
+          asm_text: "rors.w r2, r2, r1"
+        -
+          asm_text: "rors.w r2, r1, r2"
+        -
+          asm_text: "ror.w r5, r1, r5"
+        -
+          asm_text: "rors r7, r1"
+        -
+          asm_text: "rors.w r8, r1, r8"
+        -
+          asm_text: "rors.w r8, r8, r1"
+        -
+          asm_text: "rors.w r6, r8, r6"
+        -
+          asm_text: "rors.w r6, r6, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "roreq.w r4, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "roreq r4, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "roreq.w r1, r4, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "roreq.w r4, r4, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "roreq.w r0, r1, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "rorseq.w r0, r1, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "roreq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "roreq.w r8, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "roreq.w r8, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "roreq.w r3, r8, r3"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "roreq.w r1, r1, r8"
+        -
+          asm_text: "orrs.w r7, r2, r1"
+        -
+          asm_text: "orrs r2, r1"
+        -
+          asm_text: "orrs r3, r1"
+        -
+          asm_text: "orrs.w r4, r4, r1"
+        -
+          asm_text: "orrs.w r5, r1, r5"
+        -
+          asm_text: "orr.w r2, r1, r2"
+        -
+          asm_text: "orrs r7, r1"
+        -
+          asm_text: "orrs r7, r1"
+        -
+          asm_text: "orrs.w r8, r1, r8"
+        -
+          asm_text: "orrs.w r8, r8, r1"
+        -
+          asm_text: "orrs.w r1, r8, r1"
+        -
+          asm_text: "orrs.w r0, r0, r8"
+        -
+          asm_text: "orrs.w r1, r1, r1, lsl #1"
+        -
+          asm_text: "orrs.w r0, r1, r0, lsr #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq.w r0, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq r5, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq r5, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq.w r2, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq.w r3, r1, r3"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orrseq.w r4, r1, r4"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq.w r8, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq.w r8, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq.w r0, r8, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq.w r0, r0, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq.w r2, r2, r1, lsl #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "orreq.w r2, r1, r2, lsr #1"
+        -
+          asm_text: "bics.w r3, r2, r1"
+        -
+          asm_text: "bics r2, r1"
+        -
+          asm_text: "bics.w r1, r2, r1"
+        -
+          asm_text: "bics.w r2, r2, r1"
+        -
+          asm_text: "bics.w r0, r1, r0"
+        -
+          asm_text: "bic.w r0, r1, r0"
+        -
+          asm_text: "bics r7, r1"
+        -
+          asm_text: "bics.w r8, r1, r8"
+        -
+          asm_text: "bics.w r8, r8, r1"
+        -
+          asm_text: "bics.w r7, r8, r7"
+        -
+          asm_text: "bics.w r5, r5, r8"
+        -
+          asm_text: "bics.w r3, r3, r1, lsl #1"
+        -
+          asm_text: "bics.w r4, r1, r4, lsr #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq.w r0, r2, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq r5, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq.w r1, r5, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq.w r4, r4, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq.w r2, r1, r2"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "bicseq.w r5, r1, r5"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq r7, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq.w r8, r1, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq.w r8, r8, r1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq.w r0, r8, r0"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq.w r2, r2, r8"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq.w r4, r4, r1, lsl #1"
+        -
+          asm_text: "it eq"
+        -
+          asm_text: "biceq.w r5, r1, r5, lsr #1"

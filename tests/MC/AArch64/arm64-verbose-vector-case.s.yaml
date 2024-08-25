@@ -1,0 +1,80 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x08, 0xe1, 0x28, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "crypto" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull v8.8h, v8.8b, v8.8b"
+
+  -
+    input:
+      bytes: [ 0x08, 0xe1, 0x28, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "crypto" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull2 v8.8h, v8.16b, v8.16b"
+
+  -
+    input:
+      bytes: [ 0x08, 0xe1, 0xe8, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "crypto" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull v8.1q, v8.1d, v8.1d"
+
+  -
+    input:
+      bytes: [ 0x08, 0xe1, 0xe8, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "crypto" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull2 v8.1q, v8.2d, v8.2d"
+
+  -
+    input:
+      bytes: [ 0x08, 0xe1, 0x28, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "crypto" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull v8.8h, v8.8b, v8.8b"
+
+  -
+    input:
+      bytes: [ 0x08, 0xe1, 0x28, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "crypto" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull2 v8.8h, v8.16b, v8.16b"
+
+  -
+    input:
+      bytes: [ 0x08, 0xe1, 0xe8, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "crypto" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull v8.1q, v8.1d, v8.1d"
+
+  -
+    input:
+      bytes: [ 0x08, 0xe1, 0xe8, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "crypto" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull2 v8.1q, v8.2d, v8.2d"

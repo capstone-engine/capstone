@@ -1,0 +1,90 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xd3, 0x29, 0x21, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqxtun b19, h14"
+
+  -
+    input:
+      bytes: [ 0xf5, 0x29, 0x61, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqxtun h21, s15"
+
+  -
+    input:
+      bytes: [ 0x94, 0x29, 0xa1, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqxtun s20, d12"
+
+  -
+    input:
+      bytes: [ 0x52, 0x4a, 0x21, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqxtn b18, h18"
+
+  -
+    input:
+      bytes: [ 0x34, 0x4a, 0x61, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqxtn h20, s17"
+
+  -
+    input:
+      bytes: [ 0xd3, 0x49, 0xa1, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqxtn s19, d14"
+
+  -
+    input:
+      bytes: [ 0x52, 0x4a, 0x21, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uqxtn b18, h18"
+
+  -
+    input:
+      bytes: [ 0x34, 0x4a, 0x61, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uqxtn h20, s17"
+
+  -
+    input:
+      bytes: [ 0xd3, 0x49, 0xa1, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uqxtn s19, d14"

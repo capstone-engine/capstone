@@ -1,0 +1,78 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa0, 0x0b, 0x71, 0xee, 0xe0, 0x0b, 0x71, 0xee, 0xa0, 0x0b, 0xc1, 0xee, 0x07, 0x5b, 0x85, 0xee, 0xa0, 0x0b, 0x61, 0xee, 0xa1, 0x4b, 0x64, 0xee, 0xe0, 0x0b, 0x61, 0xee, 0xe0, 0x1b, 0xf4, 0xee, 0xc0, 0x0b, 0xf5, 0xee, 0xe0, 0x0b, 0xf0, 0xee, 0xe0, 0x0b, 0xb7, 0xee, 0xc0, 0x0a, 0xf7, 0xee, 0x60, 0x0b, 0xf1, 0xee, 0xe0, 0x0b, 0xf1, 0xee, 0xc0, 0x0b, 0xf8, 0xee, 0x40, 0x0b, 0xf8, 0xee, 0xe0, 0x0b, 0xbd, 0xee, 0xe0, 0x0b, 0xbc, 0xee, 0xa1, 0x0b, 0x42, 0xee, 0xe1, 0x0b, 0x42, 0xee, 0xe1, 0x0b, 0x52, 0xee, 0xa1, 0x0b, 0x52, 0xee, 0x60, 0x0b, 0xf1, 0x1e, 0x08, 0x0b, 0xf0, 0xee, 0x08, 0x0b, 0xf8, 0xee, 0x40, 0x0b, 0xbd, 0xee, 0x40, 0x0b, 0xbc, 0xee, 0xc0, 0x0b, 0xba, 0xee, 0x40, 0x0b, 0xba, 0xee, 0xc0, 0x4b, 0xfb, 0xee, 0x40, 0x7b, 0xfb, 0xee, 0xc0, 0x2b, 0xbe, 0xee, 0x40, 0xfb, 0xbe, 0xee, 0xc0, 0x4b, 0xff, 0xee, 0x40, 0x7b, 0xff, 0xee ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_V8", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "vadd.f64 d16, d17, d16"
+        -
+          asm_text: "vsub.f64 d16, d17, d16"
+        -
+          asm_text: "vdiv.f64 d16, d17, d16"
+        -
+          asm_text: "vdiv.f64 d5, d5, d7"
+        -
+          asm_text: "vmul.f64 d16, d17, d16"
+        -
+          asm_text: "vmul.f64 d20, d20, d17"
+        -
+          asm_text: "vnmul.f64 d16, d17, d16"
+        -
+          asm_text: "vcmpe.f64 d17, d16"
+        -
+          asm_text: "vcmpe.f64 d16, #0"
+        -
+          asm_text: "vabs.f64 d16, d16"
+        -
+          asm_text: "vcvt.f32.f64 s0, d16"
+        -
+          asm_text: "vcvt.f64.f32 d16, s0"
+        -
+          asm_text: "vneg.f64 d16, d16"
+        -
+          asm_text: "vsqrt.f64 d16, d16"
+        -
+          asm_text: "vcvt.f64.s32 d16, s0"
+        -
+          asm_text: "vcvt.f64.u32 d16, s0"
+        -
+          asm_text: "vcvt.s32.f64 s0, d16"
+        -
+          asm_text: "vcvt.u32.f64 s0, d16"
+        -
+          asm_text: "vmla.f64 d16, d18, d17"
+        -
+          asm_text: "vmls.f64 d16, d18, d17"
+        -
+          asm_text: "vnmla.f64 d16, d18, d17"
+        -
+          asm_text: "vnmls.f64 d16, d18, d17"
+        -
+          asm_text: "vnegne.f64 d16, d16"
+        -
+          asm_text: "vmov.f64 d16, #3.000000e+00"
+        -
+          asm_text: "vmov.f64 d16, #-3.000000e+00"
+        -
+          asm_text: "vcvtr.s32.f64 s0, d0"
+        -
+          asm_text: "vcvtr.u32.f64 s0, d0"
+        -
+          asm_text: "vcvt.f64.s32 d0, d0, #32"
+        -
+          asm_text: "vcvt.f64.s16 d0, d0, #16"
+        -
+          asm_text: "vcvt.f64.u32 d20, d20, #32"
+        -
+          asm_text: "vcvt.f64.u16 d23, d23, #16"
+        -
+          asm_text: "vcvt.s32.f64 d2, d2, #32"
+        -
+          asm_text: "vcvt.s16.f64 d15, d15, #16"
+        -
+          asm_text: "vcvt.u32.f64 d20, d20, #32"
+        -
+          asm_text: "vcvt.u16.f64 d23, d23, #16"

@@ -1,0 +1,3820 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x08, 0x03, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, TRCSTATR"
+
+  -
+    input:
+      bytes: [ 0xc9, 0x00, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCIDR8"
+
+  -
+    input:
+      bytes: [ 0xcb, 0x01, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x11, TRCIDR9"
+
+  -
+    input:
+      bytes: [ 0xd9, 0x02, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x25, TRCIDR10"
+
+  -
+    input:
+      bytes: [ 0xc7, 0x03, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x7, TRCIDR11"
+
+  -
+    input:
+      bytes: [ 0xc7, 0x04, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x7, TRCIDR12"
+
+  -
+    input:
+      bytes: [ 0xc6, 0x05, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, TRCIDR13"
+
+  -
+    input:
+      bytes: [ 0xfb, 0x08, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x27, TRCIDR0"
+
+  -
+    input:
+      bytes: [ 0xfd, 0x09, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x29, TRCIDR1"
+
+  -
+    input:
+      bytes: [ 0xe4, 0x0a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x4, TRCIDR2"
+
+  -
+    input:
+      bytes: [ 0xe8, 0x0b, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, TRCIDR3"
+
+  -
+    input:
+      bytes: [ 0xef, 0x0c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x15, TRCIDR4"
+
+  -
+    input:
+      bytes: [ 0xf4, 0x0d, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x20, TRCIDR5"
+
+  -
+    input:
+      bytes: [ 0xe6, 0x0e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, TRCIDR6"
+
+  -
+    input:
+      bytes: [ 0xe6, 0x0f, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, TRCIDR7"
+
+  -
+    input:
+      bytes: [ 0x98, 0x11, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x24, TRCOSLSR"
+
+  -
+    input:
+      bytes: [ 0x92, 0x15, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x18, TRCPDSR"
+
+  -
+    input:
+      bytes: [ 0xdc, 0x7a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x28, TRCDEVAFF0"
+
+  -
+    input:
+      bytes: [ 0xc5, 0x7b, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, TRCDEVAFF1"
+
+  -
+    input:
+      bytes: [ 0xc5, 0x7d, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, TRCLSR"
+
+  -
+    input:
+      bytes: [ 0xcb, 0x7e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x11, TRCAUTHSTATUS"
+
+  -
+    input:
+      bytes: [ 0xcd, 0x7f, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x13, TRCDEVARCH"
+
+  -
+    input:
+      bytes: [ 0xf2, 0x72, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x18, TRCDEVID"
+
+  -
+    input:
+      bytes: [ 0xf6, 0x73, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x22, TRCDEVTYPE"
+
+  -
+    input:
+      bytes: [ 0xee, 0x74, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x14, TRCPIDR4"
+
+  -
+    input:
+      bytes: [ 0xe5, 0x75, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, TRCPIDR5"
+
+  -
+    input:
+      bytes: [ 0xe5, 0x76, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, TRCPIDR6"
+
+  -
+    input:
+      bytes: [ 0xe9, 0x77, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCPIDR7"
+
+  -
+    input:
+      bytes: [ 0xef, 0x78, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x15, TRCPIDR0"
+
+  -
+    input:
+      bytes: [ 0xe6, 0x79, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, TRCPIDR1"
+
+  -
+    input:
+      bytes: [ 0xeb, 0x7a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x11, TRCPIDR2"
+
+  -
+    input:
+      bytes: [ 0xf4, 0x7b, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x20, TRCPIDR3"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x7c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x17, TRCCIDR0"
+
+  -
+    input:
+      bytes: [ 0xe2, 0x7d, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, TRCCIDR1"
+
+  -
+    input:
+      bytes: [ 0xf4, 0x7e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x20, TRCCIDR2"
+
+  -
+    input:
+      bytes: [ 0xe4, 0x7f, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x4, TRCCIDR3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x01, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x11, TRCPRGCTLR"
+
+  -
+    input:
+      bytes: [ 0x17, 0x02, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x23, TRCPROCSELR"
+
+  -
+    input:
+      bytes: [ 0x0d, 0x04, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x13, TRCCONFIGR"
+
+  -
+    input:
+      bytes: [ 0x17, 0x06, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x23, TRCAUXCTLR"
+
+  -
+    input:
+      bytes: [ 0x09, 0x08, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCEVENTCTL0R"
+
+  -
+    input:
+      bytes: [ 0x10, 0x09, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x16, TRCEVENTCTL1R"
+
+  -
+    input:
+      bytes: [ 0x04, 0x0b, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x4, TRCSTALLCTLR"
+
+  -
+    input:
+      bytes: [ 0x0e, 0x0c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x14, TRCTSCTLR"
+
+  -
+    input:
+      bytes: [ 0x18, 0x0d, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x24, TRCSYNCPR"
+
+  -
+    input:
+      bytes: [ 0x1c, 0x0e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x28, TRCCCCTLR"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x15, TRCBBCTLR"
+
+  -
+    input:
+      bytes: [ 0x21, 0x00, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x1, TRCTRACEIDR"
+
+  -
+    input:
+      bytes: [ 0x34, 0x01, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x20, TRCQCTLR"
+
+  -
+    input:
+      bytes: [ 0x42, 0x00, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, TRCVICTLR"
+
+  -
+    input:
+      bytes: [ 0x4c, 0x01, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x12, TRCVIIECTLR"
+
+  -
+    input:
+      bytes: [ 0x50, 0x02, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x16, TRCVISSCTLR"
+
+  -
+    input:
+      bytes: [ 0x48, 0x03, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, TRCVIPCSSCTLR"
+
+  -
+    input:
+      bytes: [ 0x5b, 0x08, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x27, TRCVDCTLR"
+
+  -
+    input:
+      bytes: [ 0x49, 0x09, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCVDSACCTLR"
+
+  -
+    input:
+      bytes: [ 0x40, 0x0a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRCVDARCCTLR"
+
+  -
+    input:
+      bytes: [ 0x8d, 0x00, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x13, TRCSEQEVR0"
+
+  -
+    input:
+      bytes: [ 0x8b, 0x01, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x11, TRCSEQEVR1"
+
+  -
+    input:
+      bytes: [ 0x9a, 0x02, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x26, TRCSEQEVR2"
+
+  -
+    input:
+      bytes: [ 0x8e, 0x06, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x14, TRCSEQRSTEVR"
+
+  -
+    input:
+      bytes: [ 0x84, 0x07, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x4, TRCSEQSTR"
+
+  -
+    input:
+      bytes: [ 0x91, 0x08, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x17, TRCEXTINSELR"
+
+  -
+    input:
+      bytes: [ 0xb5, 0x00, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x21, TRCCNTRLDVR0"
+
+  -
+    input:
+      bytes: [ 0xaa, 0x01, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x10, TRCCNTRLDVR1"
+
+  -
+    input:
+      bytes: [ 0xb4, 0x02, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x20, TRCCNTRLDVR2"
+
+  -
+    input:
+      bytes: [ 0xa5, 0x03, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, TRCCNTRLDVR3"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x04, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x17, TRCCNTCTLR0"
+
+  -
+    input:
+      bytes: [ 0xa1, 0x05, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x1, TRCCNTCTLR1"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x06, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x17, TRCCNTCTLR2"
+
+  -
+    input:
+      bytes: [ 0xa6, 0x07, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, TRCCNTCTLR3"
+
+  -
+    input:
+      bytes: [ 0xbc, 0x08, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x28, TRCCNTVR0"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x09, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x23, TRCCNTVR1"
+
+  -
+    input:
+      bytes: [ 0xa9, 0x0a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCCNTVR2"
+
+  -
+    input:
+      bytes: [ 0xa6, 0x0b, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, TRCCNTVR3"
+
+  -
+    input:
+      bytes: [ 0xf8, 0x00, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x24, TRCIMSPEC0"
+
+  -
+    input:
+      bytes: [ 0xf8, 0x01, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x24, TRCIMSPEC1"
+
+  -
+    input:
+      bytes: [ 0xef, 0x02, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x15, TRCIMSPEC2"
+
+  -
+    input:
+      bytes: [ 0xea, 0x03, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x10, TRCIMSPEC3"
+
+  -
+    input:
+      bytes: [ 0xfd, 0x04, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x29, TRCIMSPEC4"
+
+  -
+    input:
+      bytes: [ 0xf2, 0x05, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x18, TRCIMSPEC5"
+
+  -
+    input:
+      bytes: [ 0xfd, 0x06, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x29, TRCIMSPEC6"
+
+  -
+    input:
+      bytes: [ 0xe2, 0x07, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, TRCIMSPEC7"
+
+  -
+    input:
+      bytes: [ 0x08, 0x12, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, TRCRSCTLR2"
+
+  -
+    input:
+      bytes: [ 0x00, 0x13, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRCRSCTLR3"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x14, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x12, TRCRSCTLR4"
+
+  -
+    input:
+      bytes: [ 0x1a, 0x15, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x26, TRCRSCTLR5"
+
+  -
+    input:
+      bytes: [ 0x1d, 0x16, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x29, TRCRSCTLR6"
+
+  -
+    input:
+      bytes: [ 0x11, 0x17, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x17, TRCRSCTLR7"
+
+  -
+    input:
+      bytes: [ 0x00, 0x18, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRCRSCTLR8"
+
+  -
+    input:
+      bytes: [ 0x01, 0x19, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x1, TRCRSCTLR9"
+
+  -
+    input:
+      bytes: [ 0x11, 0x1a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x17, TRCRSCTLR10"
+
+  -
+    input:
+      bytes: [ 0x15, 0x1b, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x21, TRCRSCTLR11"
+
+  -
+    input:
+      bytes: [ 0x01, 0x1c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x1, TRCRSCTLR12"
+
+  -
+    input:
+      bytes: [ 0x08, 0x1d, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, TRCRSCTLR13"
+
+  -
+    input:
+      bytes: [ 0x18, 0x1e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x24, TRCRSCTLR14"
+
+  -
+    input:
+      bytes: [ 0x00, 0x1f, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRCRSCTLR15"
+
+  -
+    input:
+      bytes: [ 0x22, 0x10, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, TRCRSCTLR16"
+
+  -
+    input:
+      bytes: [ 0x3d, 0x11, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x29, TRCRSCTLR17"
+
+  -
+    input:
+      bytes: [ 0x36, 0x12, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x22, TRCRSCTLR18"
+
+  -
+    input:
+      bytes: [ 0x26, 0x13, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, TRCRSCTLR19"
+
+  -
+    input:
+      bytes: [ 0x3a, 0x14, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x26, TRCRSCTLR20"
+
+  -
+    input:
+      bytes: [ 0x3a, 0x15, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x26, TRCRSCTLR21"
+
+  -
+    input:
+      bytes: [ 0x24, 0x16, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x4, TRCRSCTLR22"
+
+  -
+    input:
+      bytes: [ 0x2c, 0x17, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x12, TRCRSCTLR23"
+
+  -
+    input:
+      bytes: [ 0x21, 0x18, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x1, TRCRSCTLR24"
+
+  -
+    input:
+      bytes: [ 0x20, 0x19, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRCRSCTLR25"
+
+  -
+    input:
+      bytes: [ 0x31, 0x1a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x17, TRCRSCTLR26"
+
+  -
+    input:
+      bytes: [ 0x28, 0x1b, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, TRCRSCTLR27"
+
+  -
+    input:
+      bytes: [ 0x2a, 0x1c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x10, TRCRSCTLR28"
+
+  -
+    input:
+      bytes: [ 0x39, 0x1d, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x25, TRCRSCTLR29"
+
+  -
+    input:
+      bytes: [ 0x2c, 0x1e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x12, TRCRSCTLR30"
+
+  -
+    input:
+      bytes: [ 0x2b, 0x1f, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x11, TRCRSCTLR31"
+
+  -
+    input:
+      bytes: [ 0x52, 0x10, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x18, TRCSSCCR0"
+
+  -
+    input:
+      bytes: [ 0x4c, 0x11, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x12, TRCSSCCR1"
+
+  -
+    input:
+      bytes: [ 0x43, 0x12, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, TRCSSCCR2"
+
+  -
+    input:
+      bytes: [ 0x42, 0x13, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, TRCSSCCR3"
+
+  -
+    input:
+      bytes: [ 0x55, 0x14, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x21, TRCSSCCR4"
+
+  -
+    input:
+      bytes: [ 0x4a, 0x15, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x10, TRCSSCCR5"
+
+  -
+    input:
+      bytes: [ 0x56, 0x16, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x22, TRCSSCCR6"
+
+  -
+    input:
+      bytes: [ 0x57, 0x17, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x23, TRCSSCCR7"
+
+  -
+    input:
+      bytes: [ 0x57, 0x18, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x23, TRCSSCSR0"
+
+  -
+    input:
+      bytes: [ 0x53, 0x19, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x19, TRCSSCSR1"
+
+  -
+    input:
+      bytes: [ 0x59, 0x1a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x25, TRCSSCSR2"
+
+  -
+    input:
+      bytes: [ 0x51, 0x1b, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x17, TRCSSCSR3"
+
+  -
+    input:
+      bytes: [ 0x53, 0x1c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x19, TRCSSCSR4"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x1d, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x11, TRCSSCSR5"
+
+  -
+    input:
+      bytes: [ 0x45, 0x1e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, TRCSSCSR6"
+
+  -
+    input:
+      bytes: [ 0x49, 0x1f, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCSSCSR7"
+
+  -
+    input:
+      bytes: [ 0x61, 0x10, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x1, TRCSSPCICR0"
+
+  -
+    input:
+      bytes: [ 0x6c, 0x11, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x12, TRCSSPCICR1"
+
+  -
+    input:
+      bytes: [ 0x75, 0x12, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x21, TRCSSPCICR2"
+
+  -
+    input:
+      bytes: [ 0x6b, 0x13, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x11, TRCSSPCICR3"
+
+  -
+    input:
+      bytes: [ 0x63, 0x14, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, TRCSSPCICR4"
+
+  -
+    input:
+      bytes: [ 0x69, 0x15, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCSSPCICR5"
+
+  -
+    input:
+      bytes: [ 0x65, 0x16, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, TRCSSPCICR6"
+
+  -
+    input:
+      bytes: [ 0x62, 0x17, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, TRCSSPCICR7"
+
+  -
+    input:
+      bytes: [ 0x9a, 0x14, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x26, TRCPDCR"
+
+  -
+    input:
+      bytes: [ 0x08, 0x20, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, TRCACVR0"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x22, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x15, TRCACVR1"
+
+  -
+    input:
+      bytes: [ 0x13, 0x24, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x19, TRCACVR2"
+
+  -
+    input:
+      bytes: [ 0x08, 0x26, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, TRCACVR3"
+
+  -
+    input:
+      bytes: [ 0x1c, 0x28, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x28, TRCACVR4"
+
+  -
+    input:
+      bytes: [ 0x03, 0x2a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, TRCACVR5"
+
+  -
+    input:
+      bytes: [ 0x19, 0x2c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x25, TRCACVR6"
+
+  -
+    input:
+      bytes: [ 0x18, 0x2e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x24, TRCACVR7"
+
+  -
+    input:
+      bytes: [ 0x26, 0x20, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, TRCACVR8"
+
+  -
+    input:
+      bytes: [ 0x23, 0x22, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, TRCACVR9"
+
+  -
+    input:
+      bytes: [ 0x38, 0x24, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x24, TRCACVR10"
+
+  -
+    input:
+      bytes: [ 0x23, 0x26, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, TRCACVR11"
+
+  -
+    input:
+      bytes: [ 0x2c, 0x28, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x12, TRCACVR12"
+
+  -
+    input:
+      bytes: [ 0x29, 0x2a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCACVR13"
+
+  -
+    input:
+      bytes: [ 0x2e, 0x2c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x14, TRCACVR14"
+
+  -
+    input:
+      bytes: [ 0x23, 0x2e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, TRCACVR15"
+
+  -
+    input:
+      bytes: [ 0x55, 0x20, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x21, TRCACATR0"
+
+  -
+    input:
+      bytes: [ 0x5a, 0x22, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x26, TRCACATR1"
+
+  -
+    input:
+      bytes: [ 0x48, 0x24, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, TRCACATR2"
+
+  -
+    input:
+      bytes: [ 0x56, 0x26, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x22, TRCACATR3"
+
+  -
+    input:
+      bytes: [ 0x46, 0x28, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, TRCACATR4"
+
+  -
+    input:
+      bytes: [ 0x5d, 0x2a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x29, TRCACATR5"
+
+  -
+    input:
+      bytes: [ 0x45, 0x2c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, TRCACATR6"
+
+  -
+    input:
+      bytes: [ 0x52, 0x2e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x18, TRCACATR7"
+
+  -
+    input:
+      bytes: [ 0x62, 0x20, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, TRCACATR8"
+
+  -
+    input:
+      bytes: [ 0x73, 0x22, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x19, TRCACATR9"
+
+  -
+    input:
+      bytes: [ 0x6d, 0x24, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x13, TRCACATR10"
+
+  -
+    input:
+      bytes: [ 0x79, 0x26, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x25, TRCACATR11"
+
+  -
+    input:
+      bytes: [ 0x72, 0x28, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x18, TRCACATR12"
+
+  -
+    input:
+      bytes: [ 0x7d, 0x2a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x29, TRCACATR13"
+
+  -
+    input:
+      bytes: [ 0x69, 0x2c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCACATR14"
+
+  -
+    input:
+      bytes: [ 0x72, 0x2e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x18, TRCACATR15"
+
+  -
+    input:
+      bytes: [ 0x9d, 0x20, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x29, TRCDVCVR0"
+
+  -
+    input:
+      bytes: [ 0x8f, 0x24, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x15, TRCDVCVR1"
+
+  -
+    input:
+      bytes: [ 0x8f, 0x28, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x15, TRCDVCVR2"
+
+  -
+    input:
+      bytes: [ 0x8f, 0x2c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x15, TRCDVCVR3"
+
+  -
+    input:
+      bytes: [ 0xb3, 0x20, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x19, TRCDVCVR4"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x24, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x22, TRCDVCVR5"
+
+  -
+    input:
+      bytes: [ 0xbb, 0x28, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x27, TRCDVCVR6"
+
+  -
+    input:
+      bytes: [ 0xa1, 0x2c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x1, TRCDVCVR7"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x20, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x29, TRCDVCMR0"
+
+  -
+    input:
+      bytes: [ 0xc9, 0x24, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCDVCMR1"
+
+  -
+    input:
+      bytes: [ 0xc1, 0x28, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x1, TRCDVCMR2"
+
+  -
+    input:
+      bytes: [ 0xc2, 0x2c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, TRCDVCMR3"
+
+  -
+    input:
+      bytes: [ 0xe5, 0x20, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, TRCDVCMR4"
+
+  -
+    input:
+      bytes: [ 0xf5, 0x24, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x21, TRCDVCMR5"
+
+  -
+    input:
+      bytes: [ 0xe5, 0x28, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, TRCDVCMR6"
+
+  -
+    input:
+      bytes: [ 0xe1, 0x2c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x1, TRCDVCMR7"
+
+  -
+    input:
+      bytes: [ 0x15, 0x30, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x21, TRCCIDCVR0"
+
+  -
+    input:
+      bytes: [ 0x18, 0x32, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x24, TRCCIDCVR1"
+
+  -
+    input:
+      bytes: [ 0x18, 0x34, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x24, TRCCIDCVR2"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x36, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x12, TRCCIDCVR3"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x38, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x10, TRCCIDCVR4"
+
+  -
+    input:
+      bytes: [ 0x09, 0x3a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCCIDCVR5"
+
+  -
+    input:
+      bytes: [ 0x06, 0x3c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, TRCCIDCVR6"
+
+  -
+    input:
+      bytes: [ 0x14, 0x3e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x20, TRCCIDCVR7"
+
+  -
+    input:
+      bytes: [ 0x34, 0x30, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x20, TRCVMIDCVR0"
+
+  -
+    input:
+      bytes: [ 0x34, 0x32, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x20, TRCVMIDCVR1"
+
+  -
+    input:
+      bytes: [ 0x3a, 0x34, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x26, TRCVMIDCVR2"
+
+  -
+    input:
+      bytes: [ 0x21, 0x36, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x1, TRCVMIDCVR3"
+
+  -
+    input:
+      bytes: [ 0x2e, 0x38, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x14, TRCVMIDCVR4"
+
+  -
+    input:
+      bytes: [ 0x3b, 0x3a, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x27, TRCVMIDCVR5"
+
+  -
+    input:
+      bytes: [ 0x3d, 0x3c, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x29, TRCVMIDCVR6"
+
+  -
+    input:
+      bytes: [ 0x31, 0x3e, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x17, TRCVMIDCVR7"
+
+  -
+    input:
+      bytes: [ 0x4a, 0x30, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x10, TRCCIDCCTLR0"
+
+  -
+    input:
+      bytes: [ 0x44, 0x31, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x4, TRCCIDCCTLR1"
+
+  -
+    input:
+      bytes: [ 0x49, 0x32, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, TRCVMIDCCTLR0"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x33, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x11, TRCVMIDCCTLR1"
+
+  -
+    input:
+      bytes: [ 0x96, 0x70, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x22, TRCITCTRL"
+
+  -
+    input:
+      bytes: [ 0xd7, 0x78, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x23, TRCCLAIMSET"
+
+  -
+    input:
+      bytes: [ 0xce, 0x79, 0x31, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x14, TRCCLAIMCLR"
+
+  -
+    input:
+      bytes: [ 0x9c, 0x10, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCOSLAR, x28"
+
+  -
+    input:
+      bytes: [ 0xce, 0x7c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCLAR, x14"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x01, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCPRGCTLR, x10"
+
+  -
+    input:
+      bytes: [ 0x1b, 0x02, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCPROCSELR, x27"
+
+  -
+    input:
+      bytes: [ 0x18, 0x04, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCONFIGR, x24"
+
+  -
+    input:
+      bytes: [ 0x08, 0x06, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCAUXCTLR, x8"
+
+  -
+    input:
+      bytes: [ 0x10, 0x08, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCEVENTCTL0R, x16"
+
+  -
+    input:
+      bytes: [ 0x1b, 0x09, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCEVENTCTL1R, x27"
+
+  -
+    input:
+      bytes: [ 0x1a, 0x0b, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSTALLCTLR, x26"
+
+  -
+    input:
+      bytes: [ 0x00, 0x0c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCTSCTLR, x0"
+
+  -
+    input:
+      bytes: [ 0x0e, 0x0d, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSYNCPR, x14"
+
+  -
+    input:
+      bytes: [ 0x08, 0x0e, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCCCTLR, x8"
+
+  -
+    input:
+      bytes: [ 0x06, 0x0f, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCBBCTLR, x6"
+
+  -
+    input:
+      bytes: [ 0x37, 0x00, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCTRACEIDR, x23"
+
+  -
+    input:
+      bytes: [ 0x25, 0x01, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCQCTLR, x5"
+
+  -
+    input:
+      bytes: [ 0x40, 0x00, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVICTLR, x0"
+
+  -
+    input:
+      bytes: [ 0x40, 0x01, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVIIECTLR, x0"
+
+  -
+    input:
+      bytes: [ 0x41, 0x02, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVISSCTLR, x1"
+
+  -
+    input:
+      bytes: [ 0x40, 0x03, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVIPCSSCTLR, x0"
+
+  -
+    input:
+      bytes: [ 0x47, 0x08, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVDCTLR, x7"
+
+  -
+    input:
+      bytes: [ 0x52, 0x09, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVDSACCTLR, x18"
+
+  -
+    input:
+      bytes: [ 0x58, 0x0a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVDARCCTLR, x24"
+
+  -
+    input:
+      bytes: [ 0x9c, 0x00, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSEQEVR0, x28"
+
+  -
+    input:
+      bytes: [ 0x95, 0x01, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSEQEVR1, x21"
+
+  -
+    input:
+      bytes: [ 0x90, 0x02, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSEQEVR2, x16"
+
+  -
+    input:
+      bytes: [ 0x90, 0x06, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSEQRSTEVR, x16"
+
+  -
+    input:
+      bytes: [ 0x99, 0x07, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSEQSTR, x25"
+
+  -
+    input:
+      bytes: [ 0x9d, 0x08, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCEXTINSELR, x29"
+
+  -
+    input:
+      bytes: [ 0xb4, 0x00, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTRLDVR0, x20"
+
+  -
+    input:
+      bytes: [ 0xb4, 0x01, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTRLDVR1, x20"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x02, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTRLDVR2, x22"
+
+  -
+    input:
+      bytes: [ 0xac, 0x03, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTRLDVR3, x12"
+
+  -
+    input:
+      bytes: [ 0xb4, 0x04, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTCTLR0, x20"
+
+  -
+    input:
+      bytes: [ 0xa4, 0x05, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTCTLR1, x4"
+
+  -
+    input:
+      bytes: [ 0xa8, 0x06, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTCTLR2, x8"
+
+  -
+    input:
+      bytes: [ 0xb0, 0x07, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTCTLR3, x16"
+
+  -
+    input:
+      bytes: [ 0xa5, 0x08, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTVR0, x5"
+
+  -
+    input:
+      bytes: [ 0xbb, 0x09, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTVR1, x27"
+
+  -
+    input:
+      bytes: [ 0xb5, 0x0a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTVR2, x21"
+
+  -
+    input:
+      bytes: [ 0xa8, 0x0b, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCNTVR3, x8"
+
+  -
+    input:
+      bytes: [ 0xe6, 0x00, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCIMSPEC0, x6"
+
+  -
+    input:
+      bytes: [ 0xfb, 0x01, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCIMSPEC1, x27"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x02, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCIMSPEC2, x23"
+
+  -
+    input:
+      bytes: [ 0xef, 0x03, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCIMSPEC3, x15"
+
+  -
+    input:
+      bytes: [ 0xed, 0x04, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCIMSPEC4, x13"
+
+  -
+    input:
+      bytes: [ 0xf9, 0x05, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCIMSPEC5, x25"
+
+  -
+    input:
+      bytes: [ 0xf3, 0x06, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCIMSPEC6, x19"
+
+  -
+    input:
+      bytes: [ 0xfb, 0x07, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCIMSPEC7, x27"
+
+  -
+    input:
+      bytes: [ 0x04, 0x12, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR2, x4"
+
+  -
+    input:
+      bytes: [ 0x00, 0x13, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR3, x0"
+
+  -
+    input:
+      bytes: [ 0x15, 0x14, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR4, x21"
+
+  -
+    input:
+      bytes: [ 0x08, 0x15, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR5, x8"
+
+  -
+    input:
+      bytes: [ 0x14, 0x16, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR6, x20"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x17, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR7, x11"
+
+  -
+    input:
+      bytes: [ 0x12, 0x18, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR8, x18"
+
+  -
+    input:
+      bytes: [ 0x18, 0x19, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR9, x24"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x1a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR10, x15"
+
+  -
+    input:
+      bytes: [ 0x15, 0x1b, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR11, x21"
+
+  -
+    input:
+      bytes: [ 0x04, 0x1c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR12, x4"
+
+  -
+    input:
+      bytes: [ 0x1c, 0x1d, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR13, x28"
+
+  -
+    input:
+      bytes: [ 0x03, 0x1e, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR14, x3"
+
+  -
+    input:
+      bytes: [ 0x14, 0x1f, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR15, x20"
+
+  -
+    input:
+      bytes: [ 0x2c, 0x10, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR16, x12"
+
+  -
+    input:
+      bytes: [ 0x31, 0x11, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR17, x17"
+
+  -
+    input:
+      bytes: [ 0x2a, 0x12, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR18, x10"
+
+  -
+    input:
+      bytes: [ 0x2b, 0x13, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR19, x11"
+
+  -
+    input:
+      bytes: [ 0x23, 0x14, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR20, x3"
+
+  -
+    input:
+      bytes: [ 0x32, 0x15, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR21, x18"
+
+  -
+    input:
+      bytes: [ 0x3a, 0x16, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR22, x26"
+
+  -
+    input:
+      bytes: [ 0x25, 0x17, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR23, x5"
+
+  -
+    input:
+      bytes: [ 0x39, 0x18, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR24, x25"
+
+  -
+    input:
+      bytes: [ 0x25, 0x19, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR25, x5"
+
+  -
+    input:
+      bytes: [ 0x24, 0x1a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR26, x4"
+
+  -
+    input:
+      bytes: [ 0x34, 0x1b, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR27, x20"
+
+  -
+    input:
+      bytes: [ 0x25, 0x1c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR28, x5"
+
+  -
+    input:
+      bytes: [ 0x2a, 0x1d, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR29, x10"
+
+  -
+    input:
+      bytes: [ 0x38, 0x1e, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR30, x24"
+
+  -
+    input:
+      bytes: [ 0x34, 0x1f, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCRSCTLR31, x20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x10, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCCR0, x23"
+
+  -
+    input:
+      bytes: [ 0x5b, 0x11, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCCR1, x27"
+
+  -
+    input:
+      bytes: [ 0x5b, 0x12, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCCR2, x27"
+
+  -
+    input:
+      bytes: [ 0x46, 0x13, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCCR3, x6"
+
+  -
+    input:
+      bytes: [ 0x43, 0x14, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCCR4, x3"
+
+  -
+    input:
+      bytes: [ 0x4c, 0x15, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCCR5, x12"
+
+  -
+    input:
+      bytes: [ 0x47, 0x16, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCCR6, x7"
+
+  -
+    input:
+      bytes: [ 0x46, 0x17, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCCR7, x6"
+
+  -
+    input:
+      bytes: [ 0x54, 0x18, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCSR0, x20"
+
+  -
+    input:
+      bytes: [ 0x51, 0x19, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCSR1, x17"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x1a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCSR2, x11"
+
+  -
+    input:
+      bytes: [ 0x44, 0x1b, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCSR3, x4"
+
+  -
+    input:
+      bytes: [ 0x4e, 0x1c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCSR4, x14"
+
+  -
+    input:
+      bytes: [ 0x56, 0x1d, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCSR5, x22"
+
+  -
+    input:
+      bytes: [ 0x43, 0x1e, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCSR6, x3"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x1f, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSCSR7, x11"
+
+  -
+    input:
+      bytes: [ 0x62, 0x10, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSPCICR0, x2"
+
+  -
+    input:
+      bytes: [ 0x63, 0x11, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSPCICR1, x3"
+
+  -
+    input:
+      bytes: [ 0x65, 0x12, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSPCICR2, x5"
+
+  -
+    input:
+      bytes: [ 0x67, 0x13, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSPCICR3, x7"
+
+  -
+    input:
+      bytes: [ 0x6b, 0x14, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSPCICR4, x11"
+
+  -
+    input:
+      bytes: [ 0x6d, 0x15, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSPCICR5, x13"
+
+  -
+    input:
+      bytes: [ 0x71, 0x16, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSPCICR6, x17"
+
+  -
+    input:
+      bytes: [ 0x77, 0x17, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCSSPCICR7, x23"
+
+  -
+    input:
+      bytes: [ 0x83, 0x14, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCPDCR, x3"
+
+  -
+    input:
+      bytes: [ 0x06, 0x20, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR0, x6"
+
+  -
+    input:
+      bytes: [ 0x14, 0x22, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR1, x20"
+
+  -
+    input:
+      bytes: [ 0x19, 0x24, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR2, x25"
+
+  -
+    input:
+      bytes: [ 0x01, 0x26, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR3, x1"
+
+  -
+    input:
+      bytes: [ 0x1c, 0x28, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR4, x28"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x2a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR5, x15"
+
+  -
+    input:
+      bytes: [ 0x19, 0x2c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR6, x25"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x2e, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR7, x12"
+
+  -
+    input:
+      bytes: [ 0x25, 0x20, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR8, x5"
+
+  -
+    input:
+      bytes: [ 0x39, 0x22, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR9, x25"
+
+  -
+    input:
+      bytes: [ 0x2d, 0x24, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR10, x13"
+
+  -
+    input:
+      bytes: [ 0x2a, 0x26, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR11, x10"
+
+  -
+    input:
+      bytes: [ 0x33, 0x28, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR12, x19"
+
+  -
+    input:
+      bytes: [ 0x2a, 0x2a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR13, x10"
+
+  -
+    input:
+      bytes: [ 0x33, 0x2c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR14, x19"
+
+  -
+    input:
+      bytes: [ 0x22, 0x2e, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACVR15, x2"
+
+  -
+    input:
+      bytes: [ 0x4f, 0x20, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR0, x15"
+
+  -
+    input:
+      bytes: [ 0x4d, 0x22, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR1, x13"
+
+  -
+    input:
+      bytes: [ 0x48, 0x24, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR2, x8"
+
+  -
+    input:
+      bytes: [ 0x41, 0x26, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR3, x1"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x28, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR4, x11"
+
+  -
+    input:
+      bytes: [ 0x48, 0x2a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR5, x8"
+
+  -
+    input:
+      bytes: [ 0x58, 0x2c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR6, x24"
+
+  -
+    input:
+      bytes: [ 0x46, 0x2e, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR7, x6"
+
+  -
+    input:
+      bytes: [ 0x77, 0x20, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR8, x23"
+
+  -
+    input:
+      bytes: [ 0x65, 0x22, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR9, x5"
+
+  -
+    input:
+      bytes: [ 0x6b, 0x24, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR10, x11"
+
+  -
+    input:
+      bytes: [ 0x6b, 0x26, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR11, x11"
+
+  -
+    input:
+      bytes: [ 0x63, 0x28, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR12, x3"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x2a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR13, x28"
+
+  -
+    input:
+      bytes: [ 0x79, 0x2c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR14, x25"
+
+  -
+    input:
+      bytes: [ 0x64, 0x2e, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCACATR15, x4"
+
+  -
+    input:
+      bytes: [ 0x86, 0x20, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCVR0, x6"
+
+  -
+    input:
+      bytes: [ 0x83, 0x24, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCVR1, x3"
+
+  -
+    input:
+      bytes: [ 0x85, 0x28, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCVR2, x5"
+
+  -
+    input:
+      bytes: [ 0x8b, 0x2c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCVR3, x11"
+
+  -
+    input:
+      bytes: [ 0xa9, 0x20, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCVR4, x9"
+
+  -
+    input:
+      bytes: [ 0xae, 0x24, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCVR5, x14"
+
+  -
+    input:
+      bytes: [ 0xaa, 0x28, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCVR6, x10"
+
+  -
+    input:
+      bytes: [ 0xac, 0x2c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCVR7, x12"
+
+  -
+    input:
+      bytes: [ 0xc8, 0x20, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCMR0, x8"
+
+  -
+    input:
+      bytes: [ 0xc8, 0x24, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCMR1, x8"
+
+  -
+    input:
+      bytes: [ 0xd6, 0x28, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCMR2, x22"
+
+  -
+    input:
+      bytes: [ 0xd6, 0x2c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCMR3, x22"
+
+  -
+    input:
+      bytes: [ 0xe5, 0x20, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCMR4, x5"
+
+  -
+    input:
+      bytes: [ 0xf0, 0x24, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCMR5, x16"
+
+  -
+    input:
+      bytes: [ 0xfb, 0x28, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCMR6, x27"
+
+  -
+    input:
+      bytes: [ 0xf5, 0x2c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCDVCMR7, x21"
+
+  -
+    input:
+      bytes: [ 0x08, 0x30, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCIDCVR0, x8"
+
+  -
+    input:
+      bytes: [ 0x06, 0x32, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCIDCVR1, x6"
+
+  -
+    input:
+      bytes: [ 0x09, 0x34, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCIDCVR2, x9"
+
+  -
+    input:
+      bytes: [ 0x08, 0x36, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCIDCVR3, x8"
+
+  -
+    input:
+      bytes: [ 0x03, 0x38, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCIDCVR4, x3"
+
+  -
+    input:
+      bytes: [ 0x15, 0x3a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCIDCVR5, x21"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x3c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCIDCVR6, x12"
+
+  -
+    input:
+      bytes: [ 0x07, 0x3e, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCIDCVR7, x7"
+
+  -
+    input:
+      bytes: [ 0x24, 0x30, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVMIDCVR0, x4"
+
+  -
+    input:
+      bytes: [ 0x23, 0x32, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVMIDCVR1, x3"
+
+  -
+    input:
+      bytes: [ 0x29, 0x34, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVMIDCVR2, x9"
+
+  -
+    input:
+      bytes: [ 0x31, 0x36, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVMIDCVR3, x17"
+
+  -
+    input:
+      bytes: [ 0x2e, 0x38, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVMIDCVR4, x14"
+
+  -
+    input:
+      bytes: [ 0x2c, 0x3a, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVMIDCVR5, x12"
+
+  -
+    input:
+      bytes: [ 0x2a, 0x3c, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVMIDCVR6, x10"
+
+  -
+    input:
+      bytes: [ 0x23, 0x3e, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVMIDCVR7, x3"
+
+  -
+    input:
+      bytes: [ 0x4e, 0x30, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCIDCCTLR0, x14"
+
+  -
+    input:
+      bytes: [ 0x56, 0x31, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCIDCCTLR1, x22"
+
+  -
+    input:
+      bytes: [ 0x48, 0x32, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVMIDCCTLR0, x8"
+
+  -
+    input:
+      bytes: [ 0x4f, 0x33, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCVMIDCCTLR1, x15"
+
+  -
+    input:
+      bytes: [ 0x81, 0x70, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCITCTRL, x1"
+
+  -
+    input:
+      bytes: [ 0xc7, 0x78, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCLAIMSET, x7"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x79, 0x11, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRCCLAIMCLR, x29"

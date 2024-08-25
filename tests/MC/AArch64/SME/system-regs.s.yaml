@@ -1,0 +1,240 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa3, 0x04, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, ID_AA64SMFR0_EL1"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x12, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, SMCR_EL1"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x12, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, SMCR_EL2"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x12, 0x3e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, SMCR_EL3"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x12, 0x3d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, SMCR_EL12"
+
+  -
+    input:
+      bytes: [ 0x43, 0x42, 0x3b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, SVCR"
+
+  -
+    input:
+      bytes: [ 0x83, 0x12, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, SMPRI_EL1"
+
+  -
+    input:
+      bytes: [ 0xa3, 0x12, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, SMPRIMAP_EL2"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x00, 0x39, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, SMIDR_EL1"
+
+  -
+    input:
+      bytes: [ 0xa3, 0xd0, 0x3b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, TPIDR2_EL0"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x12, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SMCR_EL1, x3"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x12, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SMCR_EL2, x3"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x12, 0x1e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SMCR_EL3, x3"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x12, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SMCR_EL12, x3"
+
+  -
+    input:
+      bytes: [ 0x43, 0x42, 0x1b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SVCR, x3"
+
+  -
+    input:
+      bytes: [ 0x83, 0x12, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SMPRI_EL1, x3"
+
+  -
+    input:
+      bytes: [ 0xa3, 0x12, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SMPRIMAP_EL2, x3"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x42, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop sm"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x43, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstart sm"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x44, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop za"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x45, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstart za"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x46, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x47, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstart"
+
+  -
+    input:
+      bytes: [ 0xa3, 0xd0, 0x1b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TPIDR2_EL0, x3"

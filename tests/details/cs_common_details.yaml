@@ -1,0 +1,2213 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x8d, 0x4c, 0x32, 0x08, 0x01, 0xd8, 0x81, 0xc6, 0x34, 0x12, 0x00, 0x00  ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "lea cx, [si + 0x32]"
+          mnemonic: "lea"
+          op_str: "cx, [si + 0x32]"
+        -
+          asm_text: "or byte ptr [bx + di], al"
+          mnemonic: "or"
+          op_str: "byte ptr [bx + di], al"
+          details:
+            regs_impl_write: [ flags ]
+        -
+          asm_text: "fadd dword ptr [bx + di + 0x34c6]"
+          mnemonic: "fadd"
+          op_str: "dword ptr [bx + di + 0x34c6]"
+          details:
+            regs_impl_write: [ fpsw ]
+            groups: [ fpu ]
+        -
+          asm_text: "adc al, byte ptr [bx + si]"
+          mnemonic: "adc"
+          op_str: "al, byte ptr [bx + si]"
+          details:
+            regs_impl_read: [ flags ]
+            regs_impl_write: [ flags ]
+  -
+    input:
+      bytes: [ 0x8d, 0x4c, 0x32, 0x08, 0x01, 0xd8, 0x81, 0xc6, 0x34, 0x12, 0x00, 0x00  ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32, CS_OPT_SYNTAX_ATT]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "leal 8(%edx, %esi), %ecx"
+          mnemonic: "leal"
+          op_str: "8(%edx, %esi), %ecx"
+          details:
+            groups: [ not64bitmode ]
+        -
+          asm_text: "addl %ebx, %eax"
+          mnemonic: "addl"
+          op_str: "%ebx, %eax"
+          details:
+            regs_impl_write: [ eflags ]
+        -
+          asm_text: "addl $0x1234, %esi"
+          mnemonic: "addl"
+          op_str: "$0x1234, %esi"
+          details:
+            regs_impl_write: [ eflags ]
+  -
+    input:
+      bytes: [ 0x8d, 0x4c, 0x32, 0x08, 0x01, 0xd8, 0x81, 0xc6, 0x34, 0x12, 0x00, 0x00  ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "lea ecx, [edx + esi + 8]"
+          mnemonic: "lea"
+          op_str: "ecx, [edx + esi + 8]"
+          details:
+            groups: [ not64bitmode ]
+        -
+          asm_text: "add eax, ebx"
+          mnemonic: "add"
+          op_str: "eax, ebx"
+          details:
+            regs_impl_write: [ eflags ]
+        -
+          asm_text: "add esi, 0x1234"
+          mnemonic: "add"
+          op_str: "esi, 0x1234"
+          details:
+            regs_impl_write: [ eflags ]
+  -
+    input:
+      bytes: [ 0x55, 0x48, 0x8b, 0x05, 0xb8, 0x13, 0x00, 0x00  ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "push rbp"
+          mnemonic: "push"
+          op_str: "rbp"
+          details:
+            regs_impl_read: [ rsp ]
+            regs_impl_write: [ rsp ]
+            groups: [ mode64 ]
+        -
+          asm_text: "mov rax, qword ptr [rip + 0x13b8]"
+          mnemonic: "mov"
+          op_str: "rax, qword ptr [rip + 0x13b8]"
+  -
+    input:
+      bytes: [ 0xed, 0xff, 0xff, 0xeb, 0x04, 0xe0, 0x2d, 0xe5, 0x00, 0x00, 0x00, 0x00, 0xe0, 0x83, 0x22, 0xe5, 0xf1, 0x02, 0x03, 0x0e, 0x00, 0x00, 0xa0, 0xe3, 0x02, 0x30, 0xc1, 0xe7, 0x00, 0x00, 0x53, 0xe3  ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL, CS_MODE_ARM ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "bl 0xfbc"
+          mnemonic: "bl"
+          op_str: "0xfbc"
+          details:
+            regs_impl_read: [ r13 ]
+            regs_impl_write: [ r14 ]
+            groups: [ call, branch_relative, IsARM ]
+        -
+          asm_text: "str lr, [sp, #-4]!"
+          mnemonic: "str"
+          op_str: "lr, [sp, #-4]!"
+          details:
+            regs_impl_write: [ r13 ]
+            groups: [ IsARM ]
+        -
+          asm_text: "andeq r0, r0, r0"
+          mnemonic: "andeq"
+          op_str: "r0, r0, r0"
+          details:
+            regs_impl_read: [ cpsr ]
+            groups: [ IsARM ]
+        -
+          asm_text: "str r8, [r2, #-0x3e0]!"
+          mnemonic: "str"
+          op_str: "r8, [r2, #-0x3e0]!"
+          details:
+            regs_impl_write: [ r2 ]
+            groups: [ IsARM ]
+        -
+          asm_text: "mcreq p2, #0, r0, c3, c1, #7"
+          mnemonic: "mcreq"
+          op_str: "p2, #0, r0, c3, c1, #7"
+          details:
+            regs_impl_read: [ cpsr ]
+            groups: [ IsARM, privilege ]
+        -
+          asm_text: "mov r0, #0"
+          mnemonic: "mov"
+          op_str: "r0, #0"
+          details:
+            groups: [ IsARM ]
+        -
+          asm_text: "strb r3, [r1, r2]"
+          mnemonic: "strb"
+          op_str: "r3, [r1, r2]"
+          details:
+            groups: [ IsARM ]
+        -
+          asm_text: "cmp r3, #0"
+          mnemonic: "cmp"
+          op_str: "r3, #0"
+          details:
+            regs_impl_write: [ cpsr ]
+            groups: [ IsARM ]
+  -
+    input:
+      bytes: [ 0x10, 0xf1, 0x10, 0xe7, 0x11, 0xf2, 0x31, 0xe7, 0xdc, 0xa1, 0x2e, 0xf3, 0xe8, 0x4e, 0x62, 0xf3  ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL, CS_MODE_ARM ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "sdiv r0, r0, r1"
+          mnemonic: "sdiv"
+          op_str: "r0, r0, r1"
+          details:
+            groups: [ IsARM, HasDivideInARM ]
+        -
+          asm_text: "udiv r1, r1, r2"
+          mnemonic: "udiv"
+          op_str: "r1, r1, r2"
+          details:
+            groups: [ IsARM, HasDivideInARM ]
+        -
+          asm_text: "vbit q5, q15, q6"
+          mnemonic: "vbit"
+          op_str: "q5, q15, q6"
+          details:
+            groups: [ HasNEON ]
+        -
+          asm_text: "vcgt.f32 q10, q9, q12"
+          mnemonic: "vcgt.f32"
+          op_str: "q10, q9, q12"
+          details:
+            groups: [ HasNEON ]
+  -
+    input:
+      bytes: [ 0x70, 0x47, 0xeb, 0x46, 0x83, 0xb0, 0xc9, 0x68  ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL, CS_MODE_THUMB ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "bx lr"
+          mnemonic: "bx"
+          op_str: "lr"
+          details:
+            groups: [ jump, IsThumb ]
+        -
+          asm_text: "mov r11, sp"
+          mnemonic: "mov"
+          op_str: "r11, sp"
+          details:
+            groups: [ IsThumb ]
+        -
+          asm_text: "sub sp, #0xc"
+          mnemonic: "sub"
+          op_str: "sp, #0xc"
+          details:
+            groups: [ IsThumb ]
+        -
+          asm_text: "ldr r1, [r1, #0xc]"
+          mnemonic: "ldr"
+          op_str: "r1, [r1, #0xc]"
+          details:
+            groups: [ IsThumb ]
+  -
+    input:
+      bytes: [ 0x4f, 0xf0, 0x00, 0x01, 0xbd, 0xe8, 0x00, 0x88, 0xd1, 0xe8, 0x00, 0xf0  ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL, CS_MODE_THUMB ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "mov.w r1, #0"
+          mnemonic: "mov.w"
+          op_str: "r1, #0"
+          details:
+            groups: [ IsThumb2 ]
+        -
+          asm_text: "pop.w {r11, pc}"
+          mnemonic: "pop.w"
+          op_str: "{r11, pc}"
+          details:
+            groups: [ IsThumb2, jump ]
+        -
+          asm_text: "tbb [r1, r0]"
+          mnemonic: "tbb"
+          op_str: "[r1, r0]"
+          details:
+            groups: [ jump, IsThumb2 ]
+  -
+    input:
+      bytes: [ 0xef, 0xf3, 0x02, 0x80  ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL, CS_MODE_THUMB, CS_MODE_MCLASS ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "mrs r0, eapsr"
+          mnemonic: "mrs"
+          op_str: "r0, eapsr"
+          details:
+            groups: [ IsThumb, IsMClass ]
+  -
+    input:
+      bytes: [ 0xe0, 0x3b, 0xb2, 0xee, 0x42, 0x00, 0x01, 0xe1, 0x51, 0xf0, 0x7f, 0xf5  ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL, CS_MODE_ARM, CS_MODE_V8 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "vcvtt.f64.f16 d3, s1"
+          mnemonic: "vcvtt.f64.f16"
+          op_str: "d3, s1"
+          details:
+            groups: [ HasFPARMv8, HasDPVFP ]
+        -
+          asm_text: "crc32b r0, r1, r2"
+          mnemonic: "crc32b"
+          op_str: "r0, r1, r2"
+          details:
+            groups: [ IsARM, HasV8, HasCRC ]
+        -
+          asm_text: "dmb oshld"
+          mnemonic: "dmb"
+          op_str: "oshld"
+          details:
+            groups: [ IsARM, HasDB ]
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x38, 0xd5, 0xbf, 0x40, 0x00, 0xd5, 0x0c, 0x05, 0x13, 0xd5, 0x20, 0x50, 0x02, 0x0e, 0x20, 0xe4, 0x3d, 0x0f, 0x00, 0x18, 0xa0, 0x5f, 0xa2, 0x00, 0xae, 0x9e, 0x9f, 0x37, 0x03, 0xd5, 0xbf, 0x33, 0x03, 0xd5, 0xdf, 0x3f, 0x03, 0xd5, 0x21, 0x7c, 0x02, 0x9b, 0x21, 0x7c, 0x00, 0x53, 0x00, 0x40, 0x21, 0x4b, 0xe1, 0x0b, 0x40, 0xb9, 0x20, 0x04, 0x81, 0xda, 0x20, 0x08, 0x02, 0x8b, 0x10, 0x5b, 0xe8, 0x3c  ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_ARM ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, MIDR_EL1"
+          mnemonic: "mrs"
+          op_str: "x9, MIDR_EL1"
+          details:
+            regs_impl_write: [ nzcv ]
+            groups: [ privilege ]
+        -
+          asm_text: "msr SPSel, #0"
+          mnemonic: "msr"
+          op_str: "SPSel, #0"
+          details:
+            groups: [ privilege ]
+        -
+          asm_text: "msr DBGDTRTX_EL0, x12"
+          mnemonic: "msr"
+          op_str: "DBGDTRTX_EL0, x12"
+          details:
+            groups: [ privilege ]
+        -
+          asm_text: "tbx v0.8b, { v1.16b, v2.16b, v3.16b }, v2.8b"
+          mnemonic: "tbx"
+          op_str: "v0.8b, { v1.16b, v2.16b, v3.16b }, v2.8b"
+          details:
+            groups: [ HasNEON ]
+        -
+          asm_text: "scvtf v0.2s, v1.2s, #3"
+          mnemonic: "scvtf"
+          op_str: "v0.2s, v1.2s, #3"
+          details:
+            groups: [ HasNEON ]
+        -
+          asm_text: "fmla s0, s0, v0.s[3]"
+          mnemonic: "fmla"
+          op_str: "s0, s0, v0.s[3]"
+          details:
+            regs_impl_read: [ fpcr ]
+            groups: [ HasNEON ]
+        -
+          asm_text: "fmov x2, v5.d[1]"
+          mnemonic: "fmov"
+          op_str: "x2, v5.d[1]"
+          details:
+            groups: [ HasFPARMv8 ]
+        -
+          asm_text: "dsb nsh"
+          mnemonic: "dsb"
+          op_str: "nsh"
+        -
+          asm_text: "dmb osh"
+          mnemonic: "dmb"
+          op_str: "osh"
+        -
+          asm_text: "isb"
+          mnemonic: "isb"
+        -
+          asm_text: "mul x1, x1, x2"
+          mnemonic: "mul"
+          op_str: "x1, x1, x2"
+        -
+          asm_text: "lsr w1, w1, #0"
+          mnemonic: "lsr"
+          op_str: "w1, w1, #0"
+        -
+          asm_text: "sub w0, w0, w1, uxtw"
+          mnemonic: "sub"
+          op_str: "w0, w0, w1, uxtw"
+        -
+          asm_text: "ldr w1, [sp, #8]"
+          mnemonic: "ldr"
+          op_str: "w1, [sp, #8]"
+        -
+          asm_text: "cneg x0, x1, ne"
+          mnemonic: "cneg"
+          op_str: "x0, x1, ne"
+          details:
+            regs_impl_read: [ nzcv ]
+        -
+          asm_text: "add x0, x1, x2, lsl #2"
+          mnemonic: "add"
+          op_str: "x0, x1, x2, lsl #2"
+        -
+          asm_text: "ldr q16, [x24, w8, uxtw #4]"
+          mnemonic: "ldr"
+          op_str: "q16, [x24, w8, uxtw #4]"
+          details:
+            groups: [ HasFPARMv8 ]
+  -
+    input:
+      bytes: [ 0x0c, 0x10, 0x00, 0x97, 0x00, 0x00, 0x00, 0x00, 0x24, 0x02, 0x00, 0x0c, 0x8f, 0xa2, 0x00, 0x00, 0x34, 0x21, 0x34, 0x56, 0x00, 0x80, 0x04, 0x08  ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS32, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "jal 0x40025c"
+          mnemonic: "jal"
+          op_str: "0x40025c"
+          details:
+            regs_impl_write: [ ra ]
+            groups: [ stdenc ]
+        -
+          asm_text: "nop"
+          mnemonic: "nop"
+          details:
+            groups: [ stdenc, notinmicromips ]
+        -
+          asm_text: "addiu $v0, $zero, 0xc"
+          mnemonic: "addiu"
+          op_str: "$v0, $zero, 0xc"
+          details:
+            groups: [ stdenc, notinmicromips ]
+        -
+          asm_text: "lw $v0, ($sp)"
+          mnemonic: "lw"
+          op_str: "$v0, ($sp)"
+          details:
+            groups: [ stdenc, notinmicromips ]
+        -
+          asm_text: "ori $at, $at, 0x3456"
+          mnemonic: "ori"
+          op_str: "$at, $at, 0x3456"
+          details:
+            groups: [ stdenc ]
+        -
+          asm_text: "jr.hb $a0"
+          mnemonic: "jr.hb"
+          op_str: "$a0"
+          details:
+            groups: [ stdenc, mips32, notmips32r6, notmips64r6, jump ]
+  -
+    input:
+      bytes: [ 0x56, 0x34, 0x21, 0x34, 0xc2, 0x17, 0x01, 0x00  ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS64, CS_MODE_LITTLE_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "ori $at, $at, 0x3456"
+          mnemonic: "ori"
+          op_str: "$at, $at, 0x3456"
+          details:
+            groups: [ stdenc ]
+        -
+          asm_text: "srl $v0, $at, 0x1f"
+          mnemonic: "srl"
+          op_str: "$v0, $at, 0x1f"
+          details:
+            groups: [ stdenc, notinmicromips ]
+  -
+    input:
+      bytes: [ 0x00, 0x07, 0x00, 0x07, 0x00, 0x11, 0x93, 0x7c, 0x01, 0x8c, 0x8b, 0x7c, 0x00, 0xc7, 0x48, 0xd0  ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS32R6, CS_MODE_MICRO, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "break 7, 0"
+          mnemonic: "break"
+          op_str: "7, 0"
+          details:
+            groups: [ micromips ]
+        -
+          asm_text: "wait 0x11"
+          mnemonic: "wait"
+          op_str: "0x11"
+          details:
+            groups: [ micromips ]
+        -
+          asm_text: "syscall 0x18c"
+          mnemonic: "syscall"
+          op_str: "0x18c"
+          details:
+            groups: [ micromips, int ]
+        -
+          asm_text: "rotrv $t1, $a2, $a3"
+          mnemonic: "rotrv"
+          op_str: "$t1, $a2, $a3"
+          details:
+            groups: [ micromips ]
+  -
+    input:
+      bytes: [ 0xec, 0x80, 0x00, 0x19, 0x7c, 0x43, 0x22, 0xa0  ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS32R6, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "addiupc $a0, 0x64"
+          mnemonic: "addiupc"
+          op_str: "$a0, 0x64"
+          details:
+            groups: [ stdenc, mips32r6 ]
+        -
+          asm_text: "align $a0, $v0, $v1, 2"
+          mnemonic: "align"
+          op_str: "$a0, $v0, $v1, 2"
+          details:
+            groups: [ stdenc, mips32r6 ]
+  -
+    input:
+      bytes: [ 0x80, 0x20, 0x00, 0x00, 0x80, 0x3f, 0x00, 0x00, 0x10, 0x43, 0x23, 0x0e, 0xd0, 0x44, 0x00, 0x80, 0x4c, 0x43, 0x22, 0x02, 0x2d, 0x03, 0x00, 0x80, 0x7c, 0x43, 0x20, 0x14, 0x7c, 0x43, 0x20, 0x93, 0x4f, 0x20, 0x00, 0x21, 0x4c, 0xc8, 0x00, 0x21, 0x40, 0x82, 0x00, 0x14  ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "lwz r1, 0(0)"
+          mnemonic: "lwz"
+          op_str: "r1, 0(0)"
+        -
+          asm_text: "lwz r1, 0(r31)"
+          mnemonic: "lwz"
+          op_str: "r1, 0(r31)"
+        -
+          asm_text: "vpkpx v2, v3, v4"
+          mnemonic: "vpkpx"
+          op_str: "v2, v3, v4"
+        -
+          asm_text: "stfs f2, 0x80(r4)"
+          mnemonic: "stfs"
+          op_str: "f2, 0x80(r4)"
+          details:
+            groups: [ HasFPU ]
+        -
+          asm_text: "crand eq, un, 4*cr1+lt"
+          mnemonic: "crand"
+          op_str: "eq, un, 4*cr1+lt"
+        -
+          asm_text: "cmpwi cr2, r3, 0x80"
+          mnemonic: "cmpwi"
+          op_str: "cr2, r3, 0x80"
+        -
+          asm_text: "addc r2, r3, r4"
+          mnemonic: "addc"
+          op_str: "r2, r3, r4"
+          details:
+            regs_impl_write: [ xer ]
+        -
+          asm_text: "mulhd. r2, r3, r4"
+          mnemonic: "mulhd."
+          op_str: "r2, r3, r4"
+          details:
+            regs_impl_write: [ cr0 ]
+        -
+          asm_text: "bdnzlrl+"
+          mnemonic: "bdnzlrl+"
+          details:
+            regs_impl_read: [ "ctr", "lr", "**ROUNDING MODE**" ]
+            regs_impl_write: [ lr, ctr ]
+            groups: [ jump ]
+        -
+          asm_text: "bflrl- 4*cr2+lt"
+          mnemonic: "bflrl-"
+          op_str: "4*cr2+lt"
+          details:
+            regs_impl_read: [ "ctr", "lr", "**ROUNDING MODE**" ]
+            regs_impl_write: [ lr, ctr ]
+            groups: [ jump ]
+        -
+          asm_text: "bf eq, 0x103c"
+          mnemonic: "bf"
+          op_str: "eq, 0x103c"
+          details:
+            regs_impl_read: [ "ctr", "**ROUNDING MODE**" ]
+            regs_impl_write: [ ctr ]
+            groups: [ jump, branch_relative ]
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2a, 0x10, 0x10, 0x64, 0x28, 0x88, 0x7c, 0x4a, 0x5d, 0x0f  ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_QPX ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "qvfabs q3, q5"
+          mnemonic: "qvfabs"
+          op_str: "q3, q5"
+          details:
+            regs_impl_read: [ "**ROUNDING MODE**" ]
+            groups: [ HasQPX ]
+        -
+          asm_text: "qvfand q3, q4, q5"
+          mnemonic: "qvfand"
+          op_str: "q3, q4, q5"
+          details:
+            regs_impl_read: [ "**ROUNDING MODE**" ]
+            groups: [ HasQPX ]
+        -
+          asm_text: "qvstfsxa q2, r10, r11"
+          mnemonic: "qvstfsxa"
+          op_str: "q2, r10, r11"
+          details:
+            regs_impl_read: [ "**ROUNDING MODE**" ]
+            groups: [ HasQPX ]
+  -
+    input:
+      bytes: [ 0x80, 0xa0, 0x40, 0x02, 0x85, 0xc2, 0x60, 0x08, 0x85, 0xe8, 0x20, 0x01, 0x81, 0xe8, 0x00, 0x00, 0x90, 0x10, 0x20, 0x01, 0xd5, 0xf6, 0x10, 0x16, 0x21, 0x00, 0x00, 0x0a, 0x86, 0x00, 0x40, 0x02, 0x01, 0x00, 0x00, 0x00, 0x12, 0xbf, 0xff, 0xff, 0x10, 0xbf, 0xff, 0xff, 0xa0, 0x02, 0x00, 0x09, 0x0d, 0xbf, 0xff, 0xff, 0xd4, 0x20, 0x60, 0x00, 0xd4, 0x4e, 0x00, 0x16, 0x2a, 0xc2, 0x80, 0x03  ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "cmp %g1, %g2"
+          mnemonic: "cmp"
+          op_str: "%g1, %g2"
+          details:
+            regs_impl_write: [ icc ]
+        -
+          asm_text: "jmpl %o1+8, %g2"
+          mnemonic: "jmpl"
+          op_str: "%o1+8, %g2"
+        -
+          asm_text: "restore %g0, 1, %g2"
+          mnemonic: "restore"
+          op_str: "%g0, 1, %g2"
+        -
+          asm_text: "restore"
+          mnemonic: "restore"
+        -
+          asm_text: "mov 1, %o0"
+          mnemonic: "mov"
+          op_str: "1, %o0"
+        -
+          asm_text: "casx [%i0], %l6, %o2"
+          mnemonic: "casx"
+          op_str: "[%i0], %l6, %o2"
+          details:
+            groups: [ 64bit ]
+        -
+          asm_text: "sethi 0xa, %l0"
+          mnemonic: "sethi"
+          op_str: "0xa, %l0"
+        -
+          asm_text: "add %g1, %g2, %g3"
+          mnemonic: "add"
+          op_str: "%g1, %g2, %g3"
+        -
+          asm_text: "nop"
+          mnemonic: "nop"
+        -
+          asm_text: "bne 0x1020"
+          mnemonic: "bne"
+          op_str: "0x1020"
+          details:
+            regs_impl_read: [ icc ]
+            groups: [ jump ]
+        -
+          asm_text: "ba 0x1024"
+          mnemonic: "ba"
+          op_str: "0x1024"
+          details:
+            groups: [ jump ]
+        -
+          asm_text: "add %o0, %o1, %l0"
+          mnemonic: "add"
+          op_str: "%o0, %o1, %l0"
+        -
+          asm_text: "fbg 0x102c"
+          mnemonic: "fbg"
+          op_str: "0x102c"
+          details:
+            regs_impl_read: [ fcc0 ]
+            groups: [ jump ]
+        -
+          asm_text: "st %o2, [%g1]"
+          mnemonic: "st"
+          op_str: "%o2, [%g1]"
+        -
+          asm_text: "ldsb [%i0+%l6], %o2"
+          mnemonic: "ldsb"
+          op_str: "[%i0+%l6], %o2"
+        -
+          asm_text: "brnz,a,pn %o2, 0x1048"
+          mnemonic: "brnz,a,pn"
+          op_str: "%o2, 0x1048"
+          details:
+            groups: [ 64bit, jump ]
+  -
+    input:
+      bytes: [ 0x81, 0xa8, 0x0a, 0x24, 0x89, 0xa0, 0x10, 0x20, 0x89, 0xa0, 0x1a, 0x60, 0x89, 0xa0, 0x00, 0xe0  ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "fcmps %f0, %f4"
+          mnemonic: "fcmps"
+          op_str: "%f0, %f4"
+        -
+          asm_text: "fstox %f0, %f4"
+          mnemonic: "fstox"
+          op_str: "%f0, %f4"
+          details:
+            groups: [ 64bit ]
+        -
+          asm_text: "fqtoi %f0, %f4"
+          mnemonic: "fqtoi"
+          op_str: "%f0, %f4"
+          details:
+            groups: [ hardquad ]
+        -
+          asm_text: "fnegq %f0, %f4"
+          mnemonic: "fnegq"
+          op_str: "%f0, %f4"
+          details:
+            groups: [ v9 ]
+  -
+    input:
+      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x5a, 0x0f, 0x1f, 0xff, 0xc2, 0x09, 0x80, 0x00, 0x00, 0x00, 0x07, 0xf7, 0xeb, 0x2a, 0xff, 0xff, 0x7f, 0x57, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x57, 0xeb, 0x00, 0xf0, 0x00, 0x00, 0x24, 0xb2, 0x4f, 0x00, 0x78  ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "adb %f0, 0"
+          mnemonic: "adb"
+          op_str: "%f0, 0"
+          details:
+            regs_impl_write: [ cc ]
+        -
+          asm_text: "a %r0, 0xfff(%r15, %r1)"
+          mnemonic: "a"
+          op_str: "%r0, 0xfff(%r15, %r1)"
+          details:
+            regs_impl_write: [ cc ]
+        -
+          asm_text: "afi %r0, -0x80000000"
+          mnemonic: "afi"
+          op_str: "%r0, -0x80000000"
+          details:
+            regs_impl_write: [ cc ]
+        -
+          asm_text: "br %r7"
+          mnemonic: "br"
+          op_str: "%r7"
+          details:
+            groups: [ jump ]
+        -
+          asm_text: "xiy 0x7ffff(%r15), 0x2a"
+          mnemonic: "xiy"
+          op_str: "0x7ffff(%r15), 0x2a"
+          details:
+            regs_impl_write: [ cc ]
+        -
+          asm_text: "xy %r0, 0x7ffff(%r1, %r15)"
+          mnemonic: "xy"
+          op_str: "%r0, 0x7ffff(%r1, %r15)"
+          details:
+            regs_impl_write: [ cc ]
+        -
+          asm_text: "stmg %r0, %r0, 0(%r15)"
+          mnemonic: "stmg"
+          op_str: "%r0, %r0, 0(%r15)"
+        -
+          asm_text: "ear %r7, %a8"
+          mnemonic: "ear"
+          op_str: "%r7, %a8"
+  -
+    input:
+      bytes: [ 0xfe, 0x0f, 0xfe, 0x17, 0x13, 0x17, 0xc6, 0xfe, 0xec, 0x17, 0x97, 0xf8, 0xec, 0x4f, 0x1f, 0xfd, 0xec, 0x37, 0x07, 0xf2, 0x45, 0x5b, 0xf9, 0xfa, 0x02, 0x06, 0x1b, 0x10  ]
+      arch: "CS_ARCH_XCORE"
+      options: [ CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "get r11, ed"
+          mnemonic: "get"
+          op_str: "r11, ed"
+          details:
+            regs_impl_write: [ r11 ]
+        -
+          asm_text: "ldw et, sp[4]"
+          mnemonic: "ldw"
+          op_str: "et, sp[4]"
+          details:
+            regs_impl_read: [ sp ]
+        -
+          asm_text: "setd res[r3], r4"
+          mnemonic: "setd"
+          op_str: "res[r3], r4"
+        -
+          asm_text: "init t[r2]:lr, r1"
+          mnemonic: "init"
+          op_str: "t[r2]:lr, r1"
+        -
+          asm_text: "divu r9, r1, r3"
+          mnemonic: "divu"
+          op_str: "r9, r1, r3"
+        -
+          asm_text: "lda16 r9, r3[-r11]"
+          mnemonic: "lda16"
+          op_str: "r9, r3[-r11]"
+        -
+          asm_text: "ldw dp, dp[0x81c5]"
+          mnemonic: "ldw"
+          op_str: "dp, dp[0x81c5]"
+        -
+          asm_text: "lmul r11, r0, r2, r5, r8, r10"
+          mnemonic: "lmul"
+          op_str: "r11, r0, r2, r5, r8, r10"
+        -
+          asm_text: "add r1, r2, r3"
+          mnemonic: "add"
+          op_str: "r1, r2, r3"
+  -
+    input:
+      bytes: [ 0xd4, 0x40, 0x87, 0x5a, 0x4e, 0x71, 0x02, 0xb4, 0xc0, 0xde, 0xc0, 0xde, 0x5c, 0x00, 0x1d, 0x80, 0x71, 0x12, 0x01, 0x23, 0xf2, 0x3c, 0x44, 0x22, 0x40, 0x49, 0x0e, 0x56, 0x54, 0xc5, 0xf2, 0x3c, 0x44, 0x00, 0x44, 0x7a, 0x00, 0x00, 0xf2, 0x00, 0x0a, 0x28, 0x4e, 0xb9, 0x00, 0x00, 0x00, 0x12, 0x4e, 0x75  ]
+      arch: "CS_ARCH_M68K"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "add.w d0, d2"
+          mnemonic: "add.w"
+          op_str: "d0, d2"
+          details:
+            regs_impl_read: [ d0 ]
+            regs_impl_write: [ d2 ]
+        -
+          asm_text: "or.w d3, (a2)+"
+          mnemonic: "or.w"
+          op_str: "d3, (a2)+"
+          details:
+            regs_impl_read: [ d3 ]
+            regs_impl_write: [ a2 ]
+        -
+          asm_text: "nop"
+          mnemonic: "nop"
+        -
+          asm_text: "andi.l #$c0dec0de, (a4, d5.l * 4)"
+          mnemonic: "andi.l"
+          op_str: "#$c0dec0de, (a4, d5.l * 4)"
+          details:
+            regs_impl_read: [ d5, a4 ]
+        -
+          asm_text: "move.b d0, ([a6, d7.w], $123)"
+          mnemonic: "move.b"
+          op_str: "d0, ([a6, d7.w], $123)"
+          details:
+            regs_impl_read: [ d0, d7, a6 ]
+        -
+          asm_text: "fadd.s #3.141500, fp0"
+          mnemonic: "fadd.s"
+          op_str: "#3.141500, fp0"
+          details:
+            regs_impl_write: [ fp0 ]
+        -
+          asm_text: "scc.b d5"
+          mnemonic: "scc.b"
+          op_str: "d5"
+          details:
+            regs_impl_write: [ d5 ]
+        -
+          asm_text: "fmove.s #1000.000000, fp0"
+          mnemonic: "fmove.s"
+          op_str: "#1000.000000, fp0"
+          details:
+            regs_impl_write: [ fp0 ]
+        -
+          asm_text: "fsub fp2, fp4"
+          mnemonic: "fsub"
+          op_str: "fp2, fp4"
+          details:
+            regs_impl_read: [ fp2 ]
+            regs_impl_write: [ fp4 ]
+        -
+          asm_text: "jsr $12.l"
+          mnemonic: "jsr"
+          op_str: "$12.l"
+          details:
+            groups: [ jump ]
+        -
+          asm_text: "rts"
+          mnemonic: "rts"
+          details:
+            groups: [ ret ]
+  -
+    input:
+      bytes: [ 0x06, 0x10, 0x19, 0x1a, 0x55, 0x1e, 0x01, 0x23, 0xe9, 0x31, 0x06, 0x34, 0x55, 0xa6, 0x81, 0xa7, 0x89, 0x7f, 0xff, 0xa6, 0x9d, 0x10, 0x00, 0xa7, 0x91, 0xa6, 0x9f, 0x10, 0x00, 0x11, 0xac, 0x99, 0x10, 0x00, 0x39  ]
+      arch: "CS_ARCH_M680X"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_6809 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "ror $10"
+          mnemonic: "ror"
+          op_str: "$10"
+          details:
+            regs_impl_read: [ cc ]
+            regs_impl_write: [ cc ]
+        -
+          asm_text: "daa"
+          mnemonic: "daa"
+          details:
+            regs_impl_read: [ cc, a ]
+            regs_impl_write: [ cc, a ]
+        -
+          asm_text: "orcc #85"
+          mnemonic: "orcc"
+          op_str: "#85"
+          details:
+            regs_impl_read: [ cc ]
+            regs_impl_write: [ cc ]
+        -
+          asm_text: "exg d, x"
+          mnemonic: "exg"
+          op_str: "d, x"
+          details:
+            regs_impl_read: [ d, x ]
+            regs_impl_write: [ d, x ]
+        -
+          asm_text: "bls $0ff2"
+          mnemonic: "bls"
+          op_str: "$0ff2"
+          details:
+            regs_impl_read: [ cc ]
+            groups: [ branch_relative, jump ]
+        -
+          asm_text: "leay 6, x"
+          mnemonic: "leay"
+          op_str: "6, x"
+          details:
+            regs_impl_read: [ cc, x ]
+            regs_impl_write: [ cc, y ]
+        -
+          asm_text: "pshs cc, b, x, u"
+          mnemonic: "pshs"
+          op_str: "cc, b, x, u"
+          details:
+            regs_impl_read: [ s, cc, b, x, u ]
+            regs_impl_write: [ s ]
+        -
+          asm_text: "lda , x++"
+          mnemonic: "lda"
+          op_str: ", x++"
+          details:
+            regs_impl_read: [ cc, x ]
+            regs_impl_write: [ cc, a, x ]
+        -
+          asm_text: "sta 32767, x"
+          mnemonic: "sta"
+          op_str: "32767, x"
+          details:
+            regs_impl_read: [ cc, a, x ]
+            regs_impl_write: [ cc ]
+        -
+          asm_text: "lda [$2017, pcr]"
+          mnemonic: "lda"
+          op_str: "[$2017, pcr]"
+          details:
+            regs_impl_read: [ cc, pc ]
+            regs_impl_write: [ cc, a ]
+        -
+          asm_text: "sta [, x++]"
+          mnemonic: "sta"
+          op_str: "[, x++]"
+          details:
+            regs_impl_read: [ cc, a, x ]
+            regs_impl_write: [ cc, x ]
+        -
+          asm_text: "lda [$1000]"
+          mnemonic: "lda"
+          op_str: "[$1000]"
+          details:
+            regs_impl_read: [ cc ]
+            regs_impl_write: [ cc, a ]
+        -
+          asm_text: "cmps [4096, x]"
+          mnemonic: "cmps"
+          op_str: "[4096, x]"
+          details:
+            regs_impl_read: [ cc, s, x ]
+            regs_impl_write: [ cc ]
+        -
+          asm_text: "rts"
+          mnemonic: "rts"
+          details:
+            regs_impl_read: [ s ]
+            regs_impl_write: [ s, pc ]
+            groups: [ return ]
+  -
+    input:
+      bytes: [ 0x0a, 0x00, 0xfe, 0x34, 0x12, 0xd0, 0xff, 0xea, 0x19, 0x56, 0x34, 0x46, 0x80 ]
+      arch: "CS_ARCH_MOS65XX"
+      options: [ CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: asl a
+          mnemonic: asl
+          op_str: a
+          details:
+            regs_impl_read: [ A ]
+            regs_impl_write: [ A, P ]
+        -
+          asm_text: brk 0xfe
+          mnemonic: brk
+          op_str: "0xfe"
+          details:
+            groups: [ int ]
+  -
+    input:
+      bytes: [ 0x97, 0x09, 0x00, 0x00, 0x37, 0x13, 0x03, 0x00, 0xdc, 0x02, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xdb, 0x3a, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x84, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6d, 0x33, 0x17, 0x02, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ CS_OPT_DETAIL, CS_MODE_LITTLE_ENDIAN, CS_MODE_BPF_EXTENDED ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "mod64 r9, 0x31337"
+          mnemonic: mod64
+          op_str: "r9, 0x31337"
+          details:
+            groups: [ alu ]
+        -
+          asm_text: "be32 r2"
+          mnemonic: be32
+          op_str: "r2"
+          details:
+              groups: [ alu ]
+        -
+          asm_text: "ldb [0x0]"
+          mnemonic: ldb
+          op_str: "[0x0]"
+          details:
+            regs_write: [ r0 ]
+            groups: [ load ]
+        -
+          asm_text: "xadddw [r10+0x100], r3"
+          mnemonic: xadddw
+          op_str: "[r10+0x100], r3"
+          details:
+            groups: [ store ]
+        -
+          asm_text: "neg r2"
+          mnemonic: neg
+          op_str: "r2"
+          details:
+            groups: [ alu ]
+        -
+          asm_text: "jsgt r3, r3, +0x217"
+          mnemonic: jsgt
+          op_str: "r3, r3, +0x217"
+          details:
+            groups: [ jump ]
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0xbb, 0x27, 0x50, 0x7a, 0xbd, 0x23, 0xd0, 0xff, 0xde, 0x23, 0x00, 0x00, 0x5e, 0xb7 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ CS_OPT_DETAIL, CS_MODE_LITTLE_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "ldah $15,2($13)"
+          mnemonic: "ldah"
+          op_str: "$15,2($13)"
+          details:
+            regs_impl_write: [ $28 ]
+        -
+          asm_text: "lda $15,0x7a50($15)"
+          mnemonic: "lda"
+          op_str: "$15,0x7a50($15)"
+          details:
+            regs_impl_write: [ $28 ]
+        -
+          asm_text: "lda $30,0xffd0($30)"
+          mnemonic: "lda"
+          op_str: "$30,0xffd0($30)"
+          details:
+            regs_impl_write: [ $28 ]
+        -
+          asm_text: "stq $12,0($30)"
+          mnemonic: "stq"
+          op_str: "$12,0($30)"
+          details:
+            regs_impl_write: [ $28 ]
+
+  -
+    input:
+      bytes: [ 0x27, 0xbb, 0x00, 0x02, 0x23, 0xbd, 0x7a, 0x50, 0x23, 0xde, 0xff, 0xd0, 0xb7, 0x5e, 0x00, 0x00 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "ldah $15,2($13)"
+          mnemonic: "ldah"
+          op_str: "$15,2($13)"
+          details:
+            regs_impl_write: [ $28 ]
+        -
+          asm_text: "lda $15,0x7a50($15)"
+          mnemonic: "lda"
+          op_str: "$15,0x7a50($15)"
+          details:
+            regs_impl_write: [ $28 ]
+        -
+          asm_text: "lda $30,0xffd0($30)"
+          mnemonic: "lda"
+          op_str: "$30,0xffd0($30)"
+          details:
+            regs_impl_write: [ $28 ]
+        -
+          asm_text: "stq $12,0($30)"
+          mnemonic: "stq"
+          op_str: "$12,0($30)"
+          details:
+            regs_impl_write: [ $28 ]
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x50, 0xa2, 0x00, 0x01, 0x58, 0x20, 0x00, 0x00, 0x44, 0xa1, 0x00, 0x41, 0x18, 0x40, 0x00, 0x20, 0x08, 0xa2, 0x01, 0x60, 0x48, 0xa1, 0x01, 0x61, 0x18, 0xc0, 0x00, 0x00, 0x14, 0xa1, 0x00, 0x0f, 0x0d, 0x61, 0x00, 0x0f, 0x0e, 0x61, 0x00, 0x01, 0x18, 0x60, 0x00, 0x00, 0x0c, 0x00, 0x00, 0x00, 0x0c, 0xa0, 0x03, 0xff, 0xc0, 0x1f, 0x00, 0x00, 0x04, 0x00, 0x00, 0x10, 0x04, 0x00, 0x04, 0x22, 0x51, 0x83, 0x04, 0x22, 0x51, 0xc3, 0x04, 0x22, 0x51, 0x83, 0x04, 0x2f, 0x71, 0x83, 0x04, 0x2f, 0x71, 0xc3, 0x04, 0x2f, 0x71, 0x83, 0x04, 0x41, 0x53, 0x43, 0x04, 0x41, 0x53, 0x63, 0x04, 0x41, 0x53, 0x03, 0x04, 0x41, 0x12, 0x00, 0x04, 0x41, 0x16, 0x00, 0x04, 0x41, 0x16, 0x20, 0x04, 0x41, 0x42, 0x00, 0x04, 0x41, 0x46, 0x00, 0x04, 0x41, 0x46, 0x20, 0x04, 0x41, 0x12, 0x40, 0x04, 0x41, 0x12, 0x60, 0x04, 0x41, 0x42, 0x40, 0x04, 0x41, 0x42, 0x60, 0x04, 0x41, 0x18, 0x00, 0x04, 0x41, 0x08, 0x00, 0x04, 0x41, 0x13, 0x80, 0x04, 0x41, 0x13, 0xa0, 0x04, 0x41, 0x52, 0x80, 0x04, 0x41, 0x52, 0xa0, 0x04, 0x5e, 0x72, 0x80, 0x04, 0x41, 0x42, 0x80, 0x04, 0x41, 0x52, 0xc0, 0x04, 0x41, 0x52, 0xe0, 0x04, 0x41, 0x42, 0xc0, 0x04, 0x41, 0x42, 0xe0, 0x14, 0x00, 0xde, 0xad  ]
+      arch: "CS_ARCH_HPPA"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_HPPA_20 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "ldsid (sr1,r1),rp"
+          mnemonic: "ldsid"
+          op_str: "(sr1,r1),rp"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mtsp r1,sr1"
+          mnemonic: "mtsp"
+          op_str: "r1,sr1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mfsp sr1,r1"
+          mnemonic: "mfsp"
+          op_str: "sr1,r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mtctl r1,cr2"
+          mnemonic: "mtctl"
+          op_str: "r1,cr2"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mfctl cr1,rp"
+          mnemonic: "mfctl"
+          op_str: "cr1,rp"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mfctl,w sar,r1"
+          mnemonic: "mfctl,w"
+          op_str: "sar,r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mtsarcm r1"
+          mnemonic: "mtsarcm"
+          op_str: "r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mfia r1"
+          mnemonic: "mfia"
+          op_str: "r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "ssm 0xf,r1"
+          mnemonic: "ssm"
+          op_str: "0xf,r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "rsm 0xf,r1"
+          mnemonic: "rsm"
+          op_str: "0xf,r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mtsm r1"
+          mnemonic: "mtsm"
+          op_str: "r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "rfi"
+          mnemonic: "rfi"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "rfi,r"
+          mnemonic: "rfi,r"
+          details:
+            regs_impl_write: [ r1, r8, r9, r16, r17, r24, r25 ]
+            groups: [ system_control ]
+        -
+          asm_text: "break 0x1f,0x1ffe"
+          mnemonic: "break"
+          op_str: "0x1f,0x1ffe"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "sync"
+          mnemonic: "sync"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "syncdma"
+          mnemonic: "syncdma"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probe,r (sr1,r1),rp,r3"
+          mnemonic: "probe,r"
+          op_str: "(sr1,r1),rp,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probe,w (sr1,r1),rp,r3"
+          mnemonic: "probe,w"
+          op_str: "(sr1,r1),rp,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probe,r (sr1,r1),rp,r3"
+          mnemonic: "probe,r"
+          op_str: "(sr1,r1),rp,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probei,r (sr1,r1),0xf,r3"
+          mnemonic: "probei,r"
+          op_str: "(sr1,r1),0xf,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probei,w (sr1,r1),0xf,r3"
+          mnemonic: "probei,w"
+          op_str: "(sr1,r1),0xf,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probei,r (sr1,r1),0xf,r3"
+          mnemonic: "probei,r"
+          op_str: "(sr1,r1),0xf,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "lpa r1(sr1,rp),r3"
+          mnemonic: "lpa"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "lpa,m r1(sr1,rp),r3"
+          mnemonic: "lpa,m"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "lci r1(sr1,rp),r3"
+          mnemonic: "lci"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdtlb r1(rp)"
+          mnemonic: "pdtlb"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdtlb,l r1(rp)"
+          mnemonic: "pdtlb,l"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdtlb,l,m r1(rp)"
+          mnemonic: "pdtlb,l,m"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pitlb r1(sr1,rp)"
+          mnemonic: "pitlb"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pitlb,l r1(sr1,rp)"
+          mnemonic: "pitlb,l"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pitlb,l,m r1(sr1,rp)"
+          mnemonic: "pitlb,l,m"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdtlbe r1(rp)"
+          mnemonic: "pdtlbe"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdtlbe,m r1(rp)"
+          mnemonic: "pdtlbe,m"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pitlbe r1(sr1,rp)"
+          mnemonic: "pitlbe"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pitlbe,m r1(sr1,rp)"
+          mnemonic: "pitlbe,m"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "idtlbt r1,rp"
+          mnemonic: "idtlbt"
+          op_str: "r1,rp"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "iitlbt r1,rp"
+          mnemonic: "iitlbt"
+          op_str: "r1,rp"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdc r1(rp)"
+          mnemonic: "pdc"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdc,m r1(rp)"
+          mnemonic: "pdc,m"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fdc r1(sr1,rp)"
+          mnemonic: "fdc"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fdc,m r1(sr1,rp)"
+          mnemonic: "fdc,m"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fdc 0xf(sr1,rp)"
+          mnemonic: "fdc"
+          op_str: "0xf(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fic r1(sr1,rp)"
+          mnemonic: "fic"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fdce r1(sr1,rp)"
+          mnemonic: "fdce"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fdce,m r1(sr1,rp)"
+          mnemonic: "fdce,m"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fice r1(sr1,rp)"
+          mnemonic: "fice"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fice,m r1(sr1,rp)"
+          mnemonic: "fice,m"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "diag 0xdead"
+          mnemonic: "diag"
+          op_str: "0xdead"
+          details:
+            groups: [ system_control ]
+  -
+    input:
+      bytes: [ 0xa2, 0x50, 0x20, 0x00, 0x20, 0x58, 0x01, 0x00, 0xa1, 0x44, 0x00, 0x00, 0x40, 0x18, 0x41, 0x00, 0xa2, 0x08, 0x20, 0x00, 0xa1, 0x48, 0x60, 0x01, 0xc0, 0x18, 0x61, 0x01, 0xa1, 0x14, 0x00, 0x00, 0x61, 0x0d, 0x0f, 0x00, 0x61, 0x0e, 0x0f, 0x00, 0x60, 0x18, 0x01, 0x00, 0x00, 0x0c, 0x00, 0x00, 0xa0, 0x0c, 0x00, 0x00, 0x1f, 0xc0, 0xff, 0x03, 0x00, 0x04, 0x00, 0x00, 0x00, 0x04, 0x10, 0x00, 0x83, 0x51, 0x22, 0x04, 0xc3, 0x51, 0x22, 0x04, 0x83, 0x51, 0x22, 0x04, 0x83, 0x71, 0x2f, 0x04, 0xc3, 0x71, 0x2f, 0x04, 0x83, 0x71, 0x2f, 0x04, 0x43, 0x53, 0x41, 0x04, 0x63, 0x53, 0x41, 0x04, 0x03, 0x53, 0x41, 0x04, 0x00, 0x12, 0x41, 0x04, 0x00, 0x16, 0x41, 0x04, 0x20, 0x16, 0x41, 0x04, 0x00, 0x42, 0x41, 0x04, 0x00, 0x46, 0x41, 0x04, 0x20, 0x46, 0x41, 0x04, 0x40, 0x12, 0x41, 0x04, 0x60, 0x12, 0x41, 0x04, 0x40, 0x42, 0x41, 0x04, 0x60, 0x42, 0x41, 0x04, 0x00, 0x18, 0x41, 0x04, 0x00, 0x08, 0x41, 0x04, 0x80, 0x13, 0x41, 0x04, 0xa0, 0x13, 0x41, 0x04, 0x80, 0x52, 0x41, 0x04, 0xa0, 0x52, 0x41, 0x04, 0x80, 0x72, 0x5e, 0x04, 0x80, 0x42, 0x41, 0x04, 0xc0, 0x52, 0x41, 0x04, 0xe0, 0x52, 0x41, 0x04, 0xc0, 0x42, 0x41, 0x04, 0xe0, 0x42, 0x41, 0x04, 0xad, 0xde, 0x00, 0x14  ]
+      arch: "CS_ARCH_HPPA"
+      options: [ CS_OPT_DETAIL, CS_MODE_LITTLE_ENDIAN, CS_MODE_HPPA_20 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "ldsid (sr1,r1),rp"
+          mnemonic: "ldsid"
+          op_str: "(sr1,r1),rp"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mtsp r1,sr1"
+          mnemonic: "mtsp"
+          op_str: "r1,sr1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mfsp sr1,r1"
+          mnemonic: "mfsp"
+          op_str: "sr1,r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mtctl r1,cr2"
+          mnemonic: "mtctl"
+          op_str: "r1,cr2"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mfctl cr1,rp"
+          mnemonic: "mfctl"
+          op_str: "cr1,rp"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mfctl,w sar,r1"
+          mnemonic: "mfctl,w"
+          op_str: "sar,r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mtsarcm r1"
+          mnemonic: "mtsarcm"
+          op_str: "r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mfia r1"
+          mnemonic: "mfia"
+          op_str: "r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "ssm 0xf,r1"
+          mnemonic: "ssm"
+          op_str: "0xf,r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "rsm 0xf,r1"
+          mnemonic: "rsm"
+          op_str: "0xf,r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "mtsm r1"
+          mnemonic: "mtsm"
+          op_str: "r1"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "rfi"
+          mnemonic: "rfi"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "rfi,r"
+          mnemonic: "rfi,r"
+          details:
+            regs_impl_write: [ r1, r8, r9, r16, r17, r24, r25 ]
+            groups: [ system_control ]
+        -
+          asm_text: "break 0x1f,0x1ffe"
+          mnemonic: "break"
+          op_str: "0x1f,0x1ffe"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "sync"
+          mnemonic: "sync"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "syncdma"
+          mnemonic: "syncdma"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probe,r (sr1,r1),rp,r3"
+          mnemonic: "probe,r"
+          op_str: "(sr1,r1),rp,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probe,w (sr1,r1),rp,r3"
+          mnemonic: "probe,w"
+          op_str: "(sr1,r1),rp,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probe,r (sr1,r1),rp,r3"
+          mnemonic: "probe,r"
+          op_str: "(sr1,r1),rp,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probei,r (sr1,r1),0xf,r3"
+          mnemonic: "probei,r"
+          op_str: "(sr1,r1),0xf,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probei,w (sr1,r1),0xf,r3"
+          mnemonic: "probei,w"
+          op_str: "(sr1,r1),0xf,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "probei,r (sr1,r1),0xf,r3"
+          mnemonic: "probei,r"
+          op_str: "(sr1,r1),0xf,r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "lpa r1(sr1,rp),r3"
+          mnemonic: "lpa"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "lpa,m r1(sr1,rp),r3"
+          mnemonic: "lpa,m"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "lci r1(sr1,rp),r3"
+          mnemonic: "lci"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdtlb r1(rp)"
+          mnemonic: "pdtlb"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdtlb,l r1(rp)"
+          mnemonic: "pdtlb,l"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdtlb,l,m r1(rp)"
+          mnemonic: "pdtlb,l,m"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pitlb r1(sr1,rp)"
+          mnemonic: "pitlb"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pitlb,l r1(sr1,rp)"
+          mnemonic: "pitlb,l"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pitlb,l,m r1(sr1,rp)"
+          mnemonic: "pitlb,l,m"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdtlbe r1(rp)"
+          mnemonic: "pdtlbe"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdtlbe,m r1(rp)"
+          mnemonic: "pdtlbe,m"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pitlbe r1(sr1,rp)"
+          mnemonic: "pitlbe"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pitlbe,m r1(sr1,rp)"
+          mnemonic: "pitlbe,m"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "idtlbt r1,rp"
+          mnemonic: "idtlbt"
+          op_str: "r1,rp"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "iitlbt r1,rp"
+          mnemonic: "iitlbt"
+          op_str: "r1,rp"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdc r1(rp)"
+          mnemonic: "pdc"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "pdc,m r1(rp)"
+          mnemonic: "pdc,m"
+          op_str: "r1(rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fdc r1(sr1,rp)"
+          mnemonic: "fdc"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fdc,m r1(sr1,rp)"
+          mnemonic: "fdc,m"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fdc 0xf(sr1,rp)"
+          mnemonic: "fdc"
+          op_str: "0xf(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fic r1(sr1,rp)"
+          mnemonic: "fic"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fdce r1(sr1,rp)"
+          mnemonic: "fdce"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fdce,m r1(sr1,rp)"
+          mnemonic: "fdce,m"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fice r1(sr1,rp)"
+          mnemonic: "fice"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "fice,m r1(sr1,rp)"
+          mnemonic: "fice,m"
+          op_str: "r1(sr1,rp)"
+          details:
+            groups: [ system_control ]
+        -
+          asm_text: "diag 0xdead"
+          mnemonic: "diag"
+          op_str: "0xdead"
+          details:
+            groups: [ system_control ]
+  -
+    input:
+      bytes: [ 0x24, 0x41, 0x40, 0xc3, 0x24, 0x41, 0x60, 0xc3, 0x24, 0x41, 0x40, 0xe3, 0x24, 0x41, 0x60, 0xe3, 0x24, 0x41, 0x68, 0xe3, 0x2c, 0x41, 0x40, 0xc3, 0x2c, 0x41, 0x60, 0xc3, 0x2c, 0x41, 0x40, 0xe3, 0x2c, 0x41, 0x60, 0xe3, 0x2c, 0x41, 0x68, 0xe3, 0x24, 0x62, 0x42, 0xc1, 0x24, 0x62, 0x62, 0xc1, 0x24, 0x62, 0x42, 0xe1, 0x24, 0x62, 0x46, 0xe1, 0x24, 0x62, 0x62, 0xe1, 0x24, 0x62, 0x6a, 0xe1, 0x2c, 0x62, 0x42, 0xc1, 0x2c, 0x62, 0x62, 0xc1, 0x2c, 0x62, 0x42, 0xe1, 0x2c, 0x62, 0x46, 0xe1, 0x2c, 0x62, 0x62, 0xe1, 0x2c, 0x62, 0x6a, 0xe1, 0x24, 0x3e, 0x50, 0xc2, 0x24, 0x3e, 0x50, 0xe2, 0x24, 0x3e, 0x70, 0xe2, 0x24, 0x3e, 0x78, 0xe2, 0x2c, 0x3e, 0x50, 0xc2, 0x2c, 0x3e, 0x50, 0xe2, 0x2c, 0x3e, 0x70, 0xe2, 0x2c, 0x3e, 0x78, 0xe2, 0x24, 0x5e, 0x52, 0xc1, 0x24, 0x5e, 0x52, 0xe1, 0x24, 0x5e, 0x56, 0xe1, 0x24, 0x5e, 0x72, 0xe1, 0x24, 0x5e, 0x7a, 0xe1, 0x2c, 0x5e, 0x52, 0xc1, 0x2c, 0x5e, 0x52, 0xe1, 0x2c, 0x5e, 0x56, 0xe1, 0x2c, 0x5e, 0x72, 0xe1, 0x2c, 0x5e, 0x7a, 0xe1  ]
+      arch: "CS_ARCH_HPPA"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_HPPA_11 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "cldwx,3 r1(sr1,rp),r3"
+          mnemonic: "cldwx,3"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldwx,3,s r1(sr1,rp),r3"
+          mnemonic: "cldwx,3,s"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldwx,3,m r1(sr1,rp),r3"
+          mnemonic: "cldwx,3,m"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldwx,3,sm r1(sr1,rp),r3"
+          mnemonic: "cldwx,3,sm"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldwx,3,sm,sl r1(sr1,rp),r3"
+          mnemonic: "cldwx,3,sm,sl"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "clddx,3 r1(sr1,rp),r3"
+          mnemonic: "clddx,3"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "clddx,3,s r1(sr1,rp),r3"
+          mnemonic: "clddx,3,s"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "clddx,3,m r1(sr1,rp),r3"
+          mnemonic: "clddx,3,m"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "clddx,3,sm r1(sr1,rp),r3"
+          mnemonic: "clddx,3,sm"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "clddx,3,sm,sl r1(sr1,rp),r3"
+          mnemonic: "clddx,3,sm,sl"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3 r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3,s r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3,s"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3,m r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3,m"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3,m,bc r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3,m,bc"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3,sm r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3,sm"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3,sm,sl r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3,sm,sl"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3 r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3,s r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3,s"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3,m r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3,m"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3,m,bc r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3,m,bc"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3,sm r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3,sm"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3,sm,sl r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3,sm,sl"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldws,3 0xf(sr1,r1),rp"
+          mnemonic: "cldws,3"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldws,3,ma 0xf(sr1,r1),rp"
+          mnemonic: "cldws,3,ma"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldws,3,mb 0xf(sr1,r1),rp"
+          mnemonic: "cldws,3,mb"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldws,3,mb,sl 0xf(sr1,r1),rp"
+          mnemonic: "cldws,3,mb,sl"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldds,3 0xf(sr1,r1),rp"
+          mnemonic: "cldds,3"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldds,3,ma 0xf(sr1,r1),rp"
+          mnemonic: "cldds,3,ma"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldds,3,mb 0xf(sr1,r1),rp"
+          mnemonic: "cldds,3,mb"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldds,3,mb,sl 0xf(sr1,r1),rp"
+          mnemonic: "cldds,3,mb,sl"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstws,3 r1,0xf(sr1,rp)"
+          mnemonic: "cstws,3"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstws,3,ma r1,0xf(sr1,rp)"
+          mnemonic: "cstws,3,ma"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstws,3,ma,bc r1,0xf(sr1,rp)"
+          mnemonic: "cstws,3,ma,bc"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstws,3,mb r1,0xf(sr1,rp)"
+          mnemonic: "cstws,3,mb"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstws,3,mb,sl r1,0xf(sr1,rp)"
+          mnemonic: "cstws,3,mb,sl"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstds,3 r1,0xf(sr1,rp)"
+          mnemonic: "cstds,3"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstds,3,ma r1,0xf(sr1,rp)"
+          mnemonic: "cstds,3,ma"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstds,3,ma,bc r1,0xf(sr1,rp)"
+          mnemonic: "cstds,3,ma,bc"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstds,3,mb r1,0xf(sr1,rp)"
+          mnemonic: "cstds,3,mb"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstds,3,mb,sl r1,0xf(sr1,rp)"
+          mnemonic: "cstds,3,mb,sl"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+  -
+    input:
+      bytes: [ 0xc3, 0x40, 0x41, 0x24, 0xc3, 0x60, 0x41, 0x24, 0xe3, 0x40, 0x41, 0x24, 0xe3, 0x60, 0x41, 0x24, 0xe3, 0x68, 0x41, 0x24, 0xc3, 0x40, 0x41, 0x2c, 0xc3, 0x60, 0x41, 0x2c, 0xe3, 0x40, 0x41, 0x2c, 0xe3, 0x60, 0x41, 0x2c, 0xe3, 0x68, 0x41, 0x2c, 0xc1, 0x42, 0x62, 0x24, 0xc1, 0x62, 0x62, 0x24, 0xe1, 0x42, 0x62, 0x24, 0xe1, 0x46, 0x62, 0x24, 0xe1, 0x62, 0x62, 0x24, 0xe1, 0x6a, 0x62, 0x24, 0xc1, 0x42, 0x62, 0x2c, 0xc1, 0x62, 0x62, 0x2c, 0xe1, 0x42, 0x62, 0x2c, 0xe1, 0x46, 0x62, 0x2c, 0xe1, 0x62, 0x62, 0x2c, 0xe1, 0x6a, 0x62, 0x2c, 0xc2, 0x50, 0x3e, 0x24, 0xe2, 0x50, 0x3e, 0x24, 0xe2, 0x70, 0x3e, 0x24, 0xe2, 0x78, 0x3e, 0x24, 0xc2, 0x50, 0x3e, 0x2c, 0xe2, 0x50, 0x3e, 0x2c, 0xe2, 0x70, 0x3e, 0x2c, 0xe2, 0x78, 0x3e, 0x2c, 0xc1, 0x52, 0x5e, 0x24, 0xe1, 0x52, 0x5e, 0x24, 0xe1, 0x56, 0x5e, 0x24, 0xe1, 0x72, 0x5e, 0x24, 0xe1, 0x7a, 0x5e, 0x24, 0xc1, 0x52, 0x5e, 0x2c, 0xe1, 0x52, 0x5e, 0x2c, 0xe1, 0x56, 0x5e, 0x2c, 0xe1, 0x72, 0x5e, 0x2c, 0xe1, 0x7a, 0x5e, 0x2c  ]
+      arch: "CS_ARCH_HPPA"
+      options: [ CS_OPT_DETAIL, CS_MODE_LITTLE_ENDIAN, CS_MODE_HPPA_11 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "cldwx,3 r1(sr1,rp),r3"
+          mnemonic: "cldwx,3"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldwx,3,s r1(sr1,rp),r3"
+          mnemonic: "cldwx,3,s"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldwx,3,m r1(sr1,rp),r3"
+          mnemonic: "cldwx,3,m"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldwx,3,sm r1(sr1,rp),r3"
+          mnemonic: "cldwx,3,sm"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldwx,3,sm,sl r1(sr1,rp),r3"
+          mnemonic: "cldwx,3,sm,sl"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "clddx,3 r1(sr1,rp),r3"
+          mnemonic: "clddx,3"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "clddx,3,s r1(sr1,rp),r3"
+          mnemonic: "clddx,3,s"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "clddx,3,m r1(sr1,rp),r3"
+          mnemonic: "clddx,3,m"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "clddx,3,sm r1(sr1,rp),r3"
+          mnemonic: "clddx,3,sm"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "clddx,3,sm,sl r1(sr1,rp),r3"
+          mnemonic: "clddx,3,sm,sl"
+          op_str: "r1(sr1,rp),r3"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3 r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3,s r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3,s"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3,m r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3,m"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3,m,bc r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3,m,bc"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3,sm r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3,sm"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstwx,3,sm,sl r1,rp(sr1,r3)"
+          mnemonic: "cstwx,3,sm,sl"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3 r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3,s r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3,s"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3,m r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3,m"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3,m,bc r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3,m,bc"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3,sm r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3,sm"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstdx,3,sm,sl r1,rp(sr1,r3)"
+          mnemonic: "cstdx,3,sm,sl"
+          op_str: "r1,rp(sr1,r3)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldws,3 0xf(sr1,r1),rp"
+          mnemonic: "cldws,3"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldws,3,ma 0xf(sr1,r1),rp"
+          mnemonic: "cldws,3,ma"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldws,3,mb 0xf(sr1,r1),rp"
+          mnemonic: "cldws,3,mb"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldws,3,mb,sl 0xf(sr1,r1),rp"
+          mnemonic: "cldws,3,mb,sl"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldds,3 0xf(sr1,r1),rp"
+          mnemonic: "cldds,3"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldds,3,ma 0xf(sr1,r1),rp"
+          mnemonic: "cldds,3,ma"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldds,3,mb 0xf(sr1,r1),rp"
+          mnemonic: "cldds,3,mb"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cldds,3,mb,sl 0xf(sr1,r1),rp"
+          mnemonic: "cldds,3,mb,sl"
+          op_str: "0xf(sr1,r1),rp"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstws,3 r1,0xf(sr1,rp)"
+          mnemonic: "cstws,3"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstws,3,ma r1,0xf(sr1,rp)"
+          mnemonic: "cstws,3,ma"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstws,3,ma,bc r1,0xf(sr1,rp)"
+          mnemonic: "cstws,3,ma,bc"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstws,3,mb r1,0xf(sr1,rp)"
+          mnemonic: "cstws,3,mb"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstws,3,mb,sl r1,0xf(sr1,rp)"
+          mnemonic: "cstws,3,mb,sl"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstds,3 r1,0xf(sr1,rp)"
+          mnemonic: "cstds,3"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstds,3,ma r1,0xf(sr1,rp)"
+          mnemonic: "cstds,3,ma"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstds,3,ma,bc r1,0xf(sr1,rp)"
+          mnemonic: "cstds,3,ma,bc"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstds,3,mb r1,0xf(sr1,rp)"
+          mnemonic: "cstds,3,mb"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+        -
+          asm_text: "cstds,3,mb,sl r1,0xf(sr1,rp)"
+          mnemonic: "cstds,3,mb,sl"
+          op_str: "r1,0xf(sr1,rp)"
+          details:
+            groups: [ assist ]
+

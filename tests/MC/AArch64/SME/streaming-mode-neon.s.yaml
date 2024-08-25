@@ -1,0 +1,230 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0xdc, 0x22, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmulx s0, s1, s2"
+
+  -
+    input:
+      bytes: [ 0x20, 0xdc, 0x62, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmulx d0, d1, d2"
+
+  -
+    input:
+      bytes: [ 0x20, 0xfc, 0x22, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecps s0, s1, s2"
+
+  -
+    input:
+      bytes: [ 0x20, 0xfc, 0x62, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecps d0, d1, d2"
+
+  -
+    input:
+      bytes: [ 0x20, 0xfc, 0xa2, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frsqrts s0, s1, s2"
+
+  -
+    input:
+      bytes: [ 0x20, 0xfc, 0xe2, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frsqrts d0, d1, d2"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd8, 0xa1, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecpe s0, s1"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd8, 0xe1, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecpe d0, d1"
+
+  -
+    input:
+      bytes: [ 0x20, 0xf8, 0xa1, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecpx s0, s1"
+
+  -
+    input:
+      bytes: [ 0x20, 0xf8, 0xe1, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frecpx d0, d1"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd8, 0xa1, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frsqrte s0, s1"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd8, 0xe1, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "frsqrte d0, d1"
+
+  -
+    input:
+      bytes: [ 0x00, 0x2c, 0x01, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smov w0, v0.b[0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x2c, 0x01, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smov x0, v0.b[0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x2c, 0x02, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smov w0, v0.h[0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x2c, 0x02, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smov x0, v0.h[0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x2c, 0x04, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smov x0, v0.s[0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x3c, 0x01, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "umov w0, v0.b[0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x3c, 0x02, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "umov w0, v0.h[0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x3c, 0x04, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov w0, v0.s[0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x3c, 0x08, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov x0, v0.d[0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x3c, 0x04, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov w0, v0.s[0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x3c, 0x08, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "-neon", "+sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov x0, v0.d[0]"

@@ -1,0 +1,1100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x5f, 0x01, 0x00, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurb wzr, [x10]"
+
+  -
+    input:
+      bytes: [ 0x41, 0x01, 0x00, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurb w1, [x10]"
+
+  -
+    input:
+      bytes: [ 0x41, 0x01, 0x10, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurb w1, [x10, #-256]"
+
+  -
+    input:
+      bytes: [ 0x62, 0xf1, 0x0f, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurb w2, [x11, #255]"
+
+  -
+    input:
+      bytes: [ 0xe3, 0xd3, 0x1f, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurb w3, [sp, #-3]"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x01, 0x40, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurb wzr, [x12]"
+
+  -
+    input:
+      bytes: [ 0x84, 0x01, 0x40, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurb w4, [x12]"
+
+  -
+    input:
+      bytes: [ 0x84, 0x01, 0x50, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurb w4, [x12, #-256]"
+
+  -
+    input:
+      bytes: [ 0xa5, 0xf1, 0x4f, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurb w5, [x13, #255]"
+
+  -
+    input:
+      bytes: [ 0xe6, 0xe3, 0x5f, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurb w6, [sp, #-2]"
+
+  -
+    input:
+      bytes: [ 0xc7, 0x01, 0xc0, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb w7, [x14]"
+
+  -
+    input:
+      bytes: [ 0xc7, 0x01, 0xd0, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb w7, [x14, #-256]"
+
+  -
+    input:
+      bytes: [ 0xe8, 0xf1, 0xcf, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb w8, [x15, #255]"
+
+  -
+    input:
+      bytes: [ 0xe9, 0xf3, 0xdf, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb w9, [sp, #-1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x02, 0x80, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb x0, [x16]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x02, 0x90, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb x0, [x16, #-256]"
+
+  -
+    input:
+      bytes: [ 0x21, 0xf2, 0x8f, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb x1, [x17, #255]"
+
+  -
+    input:
+      bytes: [ 0xe2, 0x03, 0x80, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb x2, [sp]"
+
+  -
+    input:
+      bytes: [ 0xe2, 0x03, 0x80, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb x2, [sp]"
+
+  -
+    input:
+      bytes: [ 0x4a, 0x02, 0x00, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurh w10, [x18]"
+
+  -
+    input:
+      bytes: [ 0x4a, 0x02, 0x10, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurh w10, [x18, #-256]"
+
+  -
+    input:
+      bytes: [ 0x6b, 0xf2, 0x0f, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurh w11, [x19, #255]"
+
+  -
+    input:
+      bytes: [ 0xec, 0x13, 0x00, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurh w12, [sp, #1]"
+
+  -
+    input:
+      bytes: [ 0x8d, 0x02, 0x40, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurh w13, [x20]"
+
+  -
+    input:
+      bytes: [ 0x8d, 0x02, 0x50, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurh w13, [x20, #-256]"
+
+  -
+    input:
+      bytes: [ 0xae, 0xf2, 0x4f, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurh w14, [x21, #255]"
+
+  -
+    input:
+      bytes: [ 0xef, 0x23, 0x40, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurh w15, [sp, #2]"
+
+  -
+    input:
+      bytes: [ 0xd0, 0x02, 0xc0, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh w16, [x22]"
+
+  -
+    input:
+      bytes: [ 0xd0, 0x02, 0xd0, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh w16, [x22, #-256]"
+
+  -
+    input:
+      bytes: [ 0xf1, 0xf2, 0xcf, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh w17, [x23, #255]"
+
+  -
+    input:
+      bytes: [ 0xf2, 0x33, 0xc0, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh w18, [sp, #3]"
+
+  -
+    input:
+      bytes: [ 0x03, 0x03, 0x80, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh x3, [x24]"
+
+  -
+    input:
+      bytes: [ 0x03, 0x03, 0x90, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh x3, [x24, #-256]"
+
+  -
+    input:
+      bytes: [ 0x24, 0xf3, 0x8f, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh x4, [x25, #255]"
+
+  -
+    input:
+      bytes: [ 0xe5, 0x43, 0x80, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh x5, [sp, #4]"
+
+  -
+    input:
+      bytes: [ 0x53, 0x03, 0x00, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur w19, [x26]"
+
+  -
+    input:
+      bytes: [ 0x53, 0x03, 0x10, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur w19, [x26, #-256]"
+
+  -
+    input:
+      bytes: [ 0x74, 0xf3, 0x0f, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur w20, [x27, #255]"
+
+  -
+    input:
+      bytes: [ 0xf5, 0x53, 0x00, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur w21, [sp, #5]"
+
+  -
+    input:
+      bytes: [ 0x96, 0x03, 0x40, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur w22, [x28]"
+
+  -
+    input:
+      bytes: [ 0x96, 0x03, 0x50, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur w22, [x28, #-256]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xf3, 0x4f, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur w23, [x29, #255]"
+
+  -
+    input:
+      bytes: [ 0xf8, 0x63, 0x40, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur w24, [sp, #6]"
+
+  -
+    input:
+      bytes: [ 0xc6, 0x03, 0x80, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursw x6, [x30]"
+
+  -
+    input:
+      bytes: [ 0xc6, 0x03, 0x90, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursw x6, [x30, #-256]"
+
+  -
+    input:
+      bytes: [ 0x07, 0xf0, 0x8f, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursw x7, [x0, #255]"
+
+  -
+    input:
+      bytes: [ 0xe8, 0x73, 0x80, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursw x8, [sp, #7]"
+
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x00, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur x9, [x1]"
+
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x10, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur x9, [x1, #-256]"
+
+  -
+    input:
+      bytes: [ 0x4a, 0xf0, 0x0f, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur x10, [x2, #255]"
+
+  -
+    input:
+      bytes: [ 0xeb, 0x83, 0x00, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur x11, [sp, #8]"
+
+  -
+    input:
+      bytes: [ 0x6c, 0x00, 0x40, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur x12, [x3]"
+
+  -
+    input:
+      bytes: [ 0x6c, 0x00, 0x50, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur x12, [x3, #-256]"
+
+  -
+    input:
+      bytes: [ 0x8d, 0xf0, 0x4f, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur x13, [x4, #255]"
+
+  -
+    input:
+      bytes: [ 0xee, 0x93, 0x40, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur x14, [sp, #9]"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x01, 0x00, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurb wzr, [x10]"
+
+  -
+    input:
+      bytes: [ 0x41, 0x01, 0x00, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurb w1, [x10]"
+
+  -
+    input:
+      bytes: [ 0x41, 0x01, 0x10, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurb w1, [x10, #-256]"
+
+  -
+    input:
+      bytes: [ 0x62, 0xf1, 0x0f, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurb w2, [x11, #255]"
+
+  -
+    input:
+      bytes: [ 0xe3, 0xd3, 0x1f, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurb w3, [sp, #-3]"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x01, 0x40, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurb wzr, [x12]"
+
+  -
+    input:
+      bytes: [ 0x84, 0x01, 0x40, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurb w4, [x12]"
+
+  -
+    input:
+      bytes: [ 0x84, 0x01, 0x50, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurb w4, [x12, #-256]"
+
+  -
+    input:
+      bytes: [ 0xa5, 0xf1, 0x4f, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurb w5, [x13, #255]"
+
+  -
+    input:
+      bytes: [ 0xe6, 0xe3, 0x5f, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurb w6, [sp, #-2]"
+
+  -
+    input:
+      bytes: [ 0xc7, 0x01, 0xc0, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb w7, [x14]"
+
+  -
+    input:
+      bytes: [ 0xc7, 0x01, 0xd0, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb w7, [x14, #-256]"
+
+  -
+    input:
+      bytes: [ 0xe8, 0xf1, 0xcf, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb w8, [x15, #255]"
+
+  -
+    input:
+      bytes: [ 0xe9, 0xf3, 0xdf, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb w9, [sp, #-1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x02, 0x80, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb x0, [x16]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x02, 0x90, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb x0, [x16, #-256]"
+
+  -
+    input:
+      bytes: [ 0x21, 0xf2, 0x8f, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb x1, [x17, #255]"
+
+  -
+    input:
+      bytes: [ 0xe2, 0x03, 0x80, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb x2, [sp]"
+
+  -
+    input:
+      bytes: [ 0xe2, 0x03, 0x80, 0x19 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursb x2, [sp]"
+
+  -
+    input:
+      bytes: [ 0x4a, 0x02, 0x00, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurh w10, [x18]"
+
+  -
+    input:
+      bytes: [ 0x4a, 0x02, 0x10, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurh w10, [x18, #-256]"
+
+  -
+    input:
+      bytes: [ 0x6b, 0xf2, 0x0f, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurh w11, [x19, #255]"
+
+  -
+    input:
+      bytes: [ 0xec, 0x13, 0x00, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlurh w12, [sp, #1]"
+
+  -
+    input:
+      bytes: [ 0x8d, 0x02, 0x40, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurh w13, [x20]"
+
+  -
+    input:
+      bytes: [ 0x8d, 0x02, 0x50, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurh w13, [x20, #-256]"
+
+  -
+    input:
+      bytes: [ 0xae, 0xf2, 0x4f, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurh w14, [x21, #255]"
+
+  -
+    input:
+      bytes: [ 0xef, 0x23, 0x40, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapurh w15, [sp, #2]"
+
+  -
+    input:
+      bytes: [ 0xd0, 0x02, 0xc0, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh w16, [x22]"
+
+  -
+    input:
+      bytes: [ 0xd0, 0x02, 0xd0, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh w16, [x22, #-256]"
+
+  -
+    input:
+      bytes: [ 0xf1, 0xf2, 0xcf, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh w17, [x23, #255]"
+
+  -
+    input:
+      bytes: [ 0xf2, 0x33, 0xc0, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh w18, [sp, #3]"
+
+  -
+    input:
+      bytes: [ 0x03, 0x03, 0x80, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh x3, [x24]"
+
+  -
+    input:
+      bytes: [ 0x03, 0x03, 0x90, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh x3, [x24, #-256]"
+
+  -
+    input:
+      bytes: [ 0x24, 0xf3, 0x8f, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh x4, [x25, #255]"
+
+  -
+    input:
+      bytes: [ 0xe5, 0x43, 0x80, 0x59 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursh x5, [sp, #4]"
+
+  -
+    input:
+      bytes: [ 0x53, 0x03, 0x00, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur w19, [x26]"
+
+  -
+    input:
+      bytes: [ 0x53, 0x03, 0x10, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur w19, [x26, #-256]"
+
+  -
+    input:
+      bytes: [ 0x74, 0xf3, 0x0f, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur w20, [x27, #255]"
+
+  -
+    input:
+      bytes: [ 0xf5, 0x53, 0x00, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur w21, [sp, #5]"
+
+  -
+    input:
+      bytes: [ 0x96, 0x03, 0x40, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur w22, [x28]"
+
+  -
+    input:
+      bytes: [ 0x96, 0x03, 0x50, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur w22, [x28, #-256]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xf3, 0x4f, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur w23, [x29, #255]"
+
+  -
+    input:
+      bytes: [ 0xf8, 0x63, 0x40, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur w24, [sp, #6]"
+
+  -
+    input:
+      bytes: [ 0xc6, 0x03, 0x80, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursw x6, [x30]"
+
+  -
+    input:
+      bytes: [ 0xc6, 0x03, 0x90, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursw x6, [x30, #-256]"
+
+  -
+    input:
+      bytes: [ 0x07, 0xf0, 0x8f, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursw x7, [x0, #255]"
+
+  -
+    input:
+      bytes: [ 0xe8, 0x73, 0x80, 0x99 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapursw x8, [sp, #7]"
+
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x00, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur x9, [x1]"
+
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x10, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur x9, [x1, #-256]"
+
+  -
+    input:
+      bytes: [ 0x4a, 0xf0, 0x0f, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur x10, [x2, #255]"
+
+  -
+    input:
+      bytes: [ 0xeb, 0x83, 0x00, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlur x11, [sp, #8]"
+
+  -
+    input:
+      bytes: [ 0x6c, 0x00, 0x40, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur x12, [x3]"
+
+  -
+    input:
+      bytes: [ 0x6c, 0x00, 0x50, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur x12, [x3, #-256]"
+
+  -
+    input:
+      bytes: [ 0x8d, 0xf0, 0x4f, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur x13, [x4, #255]"
+
+  -
+    input:
+      bytes: [ 0xee, 0x93, 0x40, 0xd9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.4a", "+rcpc-immo" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapur x14, [sp, #9]"

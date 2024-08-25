@@ -1,0 +1,298 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa4, 0x04, 0x29, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "addu12i.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x84, 0x29, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "addu12i.d $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x18, 0x30, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc.b $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x98, 0x30, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc.h $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x18, 0x31, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc.w $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x98, 0x31, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "adc.d $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x18, 0x32, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbc.b $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x98, 0x32, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbc.h $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x18, 0x33, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbc.w $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x98, 0x33, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbc.d $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x18, 0x1a, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rotr.b $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x98, 0x1a, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rotr.h $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x24, 0x4c, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rotri.b $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x44, 0x4c, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rotri.h $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x18, 0x34, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rcr.b $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x98, 0x34, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rcr.h $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x18, 0x35, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rcr.w $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x98, 0x35, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rcr.d $a0, $a1, $a2"
+  -
+    input:
+      bytes: [ 0xa4, 0x24, 0x50, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rcri.b $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x44, 0x50, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rcri.h $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x84, 0x50, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rcri.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x04, 0x51, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rcri.d $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x20, 0xe4, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.ud.d $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x20, 0xe0, 0x14, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.ld.d $fa0, $fa1"
+  -
+    input:
+      bytes: [ 0x20, 0x08, 0x15, 0x01 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.d.ld $fa0, $fa1, $fa2"
+  -
+    input:
+      bytes: [ 0xa4, 0x04, 0x80, 0x2e ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldl.d $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x04, 0x00, 0x2e ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldl.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x04, 0x40, 0x2e ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x04, 0xc0, 0x2e ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr.d $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x04, 0x00, 0x2f ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "stl.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x04, 0x80, 0x2f ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "stl.d $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x04, 0x40, 0x2f ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "str.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0xa4, 0x04, 0xc0, 0x2f ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "str.d $a0, $a1, 1"

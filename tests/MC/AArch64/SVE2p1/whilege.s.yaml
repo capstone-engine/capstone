@@ -1,0 +1,640 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x10, 0x40, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn8.h, x0, x0, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x41, 0x75, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn13.h, x10, x21, vlx2"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x61, 0x68, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.h, x13, x8, vlx4"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x63, 0x7f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.h, xzr, xzr, vlx4"
+
+  -
+    input:
+      bytes: [ 0x10, 0x50, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p0.h, p1.h }, x0, x0"
+
+  -
+    input:
+      bytes: [ 0x54, 0x51, 0x75, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p4.h, p5.h }, x10, x21"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x51, 0x68, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p6.h, p7.h }, x13, x8"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x53, 0x7f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p14.h, p15.h }, xzr, xzr"
+
+  -
+    input:
+      bytes: [ 0x10, 0x40, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn8.s, x0, x0, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x41, 0xb5, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn13.s, x10, x21, vlx2"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x61, 0xa8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.s, x13, x8, vlx4"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x63, 0xbf, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.s, xzr, xzr, vlx4"
+
+  -
+    input:
+      bytes: [ 0x10, 0x50, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p0.s, p1.s }, x0, x0"
+
+  -
+    input:
+      bytes: [ 0x54, 0x51, 0xb5, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p4.s, p5.s }, x10, x21"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x51, 0xa8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p6.s, p7.s }, x13, x8"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x53, 0xbf, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p14.s, p15.s }, xzr, xzr"
+
+  -
+    input:
+      bytes: [ 0x10, 0x40, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn8.d, x0, x0, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x41, 0xf5, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn13.d, x10, x21, vlx2"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x61, 0xe8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.d, x13, x8, vlx4"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x63, 0xff, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.d, xzr, xzr, vlx4"
+
+  -
+    input:
+      bytes: [ 0x10, 0x50, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p0.d, p1.d }, x0, x0"
+
+  -
+    input:
+      bytes: [ 0x54, 0x51, 0xf5, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p4.d, p5.d }, x10, x21"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x51, 0xe8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p6.d, p7.d }, x13, x8"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x53, 0xff, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p14.d, p15.d }, xzr, xzr"
+
+  -
+    input:
+      bytes: [ 0x10, 0x40, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn8.b, x0, x0, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x41, 0x35, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn13.b, x10, x21, vlx2"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x61, 0x28, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.b, x13, x8, vlx4"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x63, 0x3f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.b, xzr, xzr, vlx4"
+
+  -
+    input:
+      bytes: [ 0x10, 0x50, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p0.b, p1.b }, x0, x0"
+
+  -
+    input:
+      bytes: [ 0x54, 0x51, 0x35, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p4.b, p5.b }, x10, x21"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x51, 0x28, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p6.b, p7.b }, x13, x8"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x53, 0x3f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p14.b, p15.b }, xzr, xzr"
+
+  -
+    input:
+      bytes: [ 0x10, 0x40, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn8.h, x0, x0, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x41, 0x75, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn13.h, x10, x21, vlx2"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x61, 0x68, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.h, x13, x8, vlx4"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x63, 0x7f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.h, xzr, xzr, vlx4"
+
+  -
+    input:
+      bytes: [ 0x10, 0x50, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p0.h, p1.h }, x0, x0"
+
+  -
+    input:
+      bytes: [ 0x54, 0x51, 0x75, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p4.h, p5.h }, x10, x21"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x51, 0x68, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p6.h, p7.h }, x13, x8"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x53, 0x7f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p14.h, p15.h }, xzr, xzr"
+
+  -
+    input:
+      bytes: [ 0x10, 0x40, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn8.s, x0, x0, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x41, 0xb5, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn13.s, x10, x21, vlx2"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x61, 0xa8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.s, x13, x8, vlx4"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x63, 0xbf, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.s, xzr, xzr, vlx4"
+
+  -
+    input:
+      bytes: [ 0x10, 0x50, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p0.s, p1.s }, x0, x0"
+
+  -
+    input:
+      bytes: [ 0x54, 0x51, 0xb5, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p4.s, p5.s }, x10, x21"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x51, 0xa8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p6.s, p7.s }, x13, x8"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x53, 0xbf, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p14.s, p15.s }, xzr, xzr"
+
+  -
+    input:
+      bytes: [ 0x10, 0x40, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn8.d, x0, x0, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x41, 0xf5, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn13.d, x10, x21, vlx2"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x61, 0xe8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.d, x13, x8, vlx4"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x63, 0xff, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.d, xzr, xzr, vlx4"
+
+  -
+    input:
+      bytes: [ 0x10, 0x50, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p0.d, p1.d }, x0, x0"
+
+  -
+    input:
+      bytes: [ 0x54, 0x51, 0xf5, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p4.d, p5.d }, x10, x21"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x51, 0xe8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p6.d, p7.d }, x13, x8"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x53, 0xff, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p14.d, p15.d }, xzr, xzr"
+
+  -
+    input:
+      bytes: [ 0x10, 0x40, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn8.b, x0, x0, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x41, 0x35, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn13.b, x10, x21, vlx2"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x61, 0x28, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.b, x13, x8, vlx4"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x63, 0x3f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege pn15.b, xzr, xzr, vlx4"
+
+  -
+    input:
+      bytes: [ 0x10, 0x50, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p0.b, p1.b }, x0, x0"
+
+  -
+    input:
+      bytes: [ 0x54, 0x51, 0x35, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p4.b, p5.b }, x10, x21"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x51, 0x28, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p6.b, p7.b }, x13, x8"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x53, 0x3f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilege { p14.b, p15.b }, xzr, xzr"

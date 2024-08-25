@@ -1,0 +1,64 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x01, 0x00, 0x00, 0x33, 0x00, 0x0c, 0x11 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_BPF_CLASSIC" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldx 0x33000c11"
+  -
+    input:
+      bytes: [ 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_BPF_CLASSIC" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld #len"
+  -
+    input:
+      bytes: [ 0x00, 0xa1, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_BPF_CLASSIC" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldx 4*([0x10000000]&0xf)"
+  -
+    input:
+      bytes: [ 0x00, 0x60, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_BPF_CLASSIC" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld m[0x9000000]"
+  -
+    input:
+      bytes: [ 0x00, 0x30, 0x00, 0x00, 0x37, 0x13, 0x03, 0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_BPF_CLASSIC" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldb [0x37130300]"
+  -
+    input:
+      bytes: [ 0x00, 0x63, 0x00, 0x00, 0x0f, 0x00, 0x30, 0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_BPF_CLASSIC" ]
+    expected:
+      insns:
+        -
+          asm_text: "stx m[0xf003000]"
+  -
+    input:
+      bytes: [ 0x00, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_BPF_CLASSIC" ]
+    expected:
+      insns:
+        -
+          asm_text: "neg"

@@ -1,0 +1,280 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x24, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $zero, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x01, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $at, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x02, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $v0, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x03, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $v1, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x04, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $a0, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x05, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $a1, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x06, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $a2, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x07, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $a3, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x08, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t0, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x09, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t1, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x0a, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t2, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x0b, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t3, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x0c, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t4, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x0d, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t5, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x0e, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t6, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x0f, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t7, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x10, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $s0, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x11, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $s1, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x12, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $s2, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x13, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $s3, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x14, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $s4, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x15, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $s5, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x16, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $s6, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x17, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $s7, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x18, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t8, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x19, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t9, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x1a, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $k0, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x1b, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $k1, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x1c, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $gp, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x1d, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $sp, $zero, 0"
+  -
+    input:
+      bytes: [ 0x24, 0x1e, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $fp, $zero, 0"

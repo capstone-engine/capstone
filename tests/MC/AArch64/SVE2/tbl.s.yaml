@@ -1,0 +1,80 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xbc, 0x2b, 0x3f, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbl z28.b, { z29.b, z30.b }, z31.b"
+
+  -
+    input:
+      bytes: [ 0xbc, 0x2b, 0x7f, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbl z28.h, { z29.h, z30.h }, z31.h"
+
+  -
+    input:
+      bytes: [ 0xbc, 0x2b, 0xbf, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbl z28.s, { z29.s, z30.s }, z31.s"
+
+  -
+    input:
+      bytes: [ 0xbc, 0x2b, 0xff, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbl z28.d, { z29.d, z30.d }, z31.d"
+
+  -
+    input:
+      bytes: [ 0xbc, 0x2b, 0x3f, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbl z28.b, { z29.b, z30.b }, z31.b"
+
+  -
+    input:
+      bytes: [ 0xbc, 0x2b, 0x7f, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbl z28.h, { z29.h, z30.h }, z31.h"
+
+  -
+    input:
+      bytes: [ 0xbc, 0x2b, 0xbf, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbl z28.s, { z29.s, z30.s }, z31.s"
+
+  -
+    input:
+      bytes: [ 0xbc, 0x2b, 0xff, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbl z28.d, { z29.d, z30.d }, z31.d"

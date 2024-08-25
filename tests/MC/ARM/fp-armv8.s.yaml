@@ -1,0 +1,110 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe0, 0x3b, 0xb2, 0xee, 0xcc, 0x2b, 0xf3, 0xee, 0x60, 0x3b, 0xb2, 0xee, 0x41, 0x2b, 0xb3, 0xee, 0xe0, 0x3b, 0xb2, 0xae, 0xcc, 0x2b, 0xf3, 0xce, 0x60, 0x3b, 0xb2, 0x0e, 0x41, 0x2b, 0xb3, 0xbe, 0xe1, 0x1a, 0xbc, 0xfe, 0xc3, 0x1b, 0xbc, 0xfe, 0xeb, 0x3a, 0xbd, 0xfe, 0xe7, 0x3b, 0xbd, 0xfe, 0xc2, 0x0a, 0xbe, 0xfe, 0xc4, 0x0b, 0xbe, 0xfe, 0xc4, 0x8a, 0xff, 0xfe, 0xc8, 0x8b, 0xff, 0xfe, 0x61, 0x1a, 0xbc, 0xfe, 0x43, 0x1b, 0xbc, 0xfe, 0x6b, 0x3a, 0xbd, 0xfe, 0x67, 0x3b, 0xbd, 0xfe, 0x42, 0x0a, 0xbe, 0xfe, 0x44, 0x0b, 0xbe, 0xfe, 0x44, 0x8a, 0xff, 0xfe, 0x48, 0x8b, 0xff, 0xfe, 0xab, 0x2a, 0x20, 0xfe, 0xa7, 0xeb, 0x6f, 0xfe, 0x80, 0x0a, 0x30, 0xfe, 0x24, 0x5b, 0x3a, 0xfe, 0x2b, 0xfa, 0x0e, 0xfe, 0x08, 0x2b, 0x04, 0xfe, 0x07, 0xaa, 0x58, 0xfe, 0x2f, 0x0b, 0x11, 0xfe, 0x00, 0x2a, 0xc6, 0xfe, 0xae, 0x5b, 0x86, 0xfe, 0x46, 0x0a, 0x80, 0xfe, 0x49, 0x4b, 0x86, 0xfe, 0xcc, 0x3b, 0xb6, 0xae, 0xcc, 0x1a, 0xf6, 0xee, 0x40, 0x5b, 0xb6, 0xbe, 0x64, 0x0a, 0xb6, 0xee, 0x6e, 0xcb, 0xf7, 0x0e, 0x47, 0x5a, 0xb7, 0x6e, 0x44, 0x3b, 0xb8, 0xfe, 0x60, 0x6a, 0xb8, 0xfe, 0x44, 0x3b, 0xb9, 0xfe, 0x60, 0x6a, 0xb9, 0xfe, 0x44, 0x3b, 0xba, 0xfe, 0x60, 0x6a, 0xba, 0xfe, 0x44, 0x3b, 0xbb, 0xfe, 0x60, 0x6a, 0xbb, 0xfe, 0x10, 0xda, 0xf5, 0xee ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_V8", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "vcvtt.f64.f16 d3, s1"
+        -
+          asm_text: "vcvtt.f16.f64 s5, d12"
+        -
+          asm_text: "vcvtb.f64.f16 d3, s1"
+        -
+          asm_text: "vcvtb.f16.f64 s4, d1"
+        -
+          asm_text: "vcvttge.f64.f16 d3, s1"
+        -
+          asm_text: "vcvttgt.f16.f64 s5, d12"
+        -
+          asm_text: "vcvtbeq.f64.f16 d3, s1"
+        -
+          asm_text: "vcvtblt.f16.f64 s4, d1"
+        -
+          asm_text: "vcvta.s32.f32 s2, s3"
+        -
+          asm_text: "vcvta.s32.f64 s2, d3"
+        -
+          asm_text: "vcvtn.s32.f32 s6, s23"
+        -
+          asm_text: "vcvtn.s32.f64 s6, d23"
+        -
+          asm_text: "vcvtp.s32.f32 s0, s4"
+        -
+          asm_text: "vcvtp.s32.f64 s0, d4"
+        -
+          asm_text: "vcvtm.s32.f32 s17, s8"
+        -
+          asm_text: "vcvtm.s32.f64 s17, d8"
+        -
+          asm_text: "vcvta.u32.f32 s2, s3"
+        -
+          asm_text: "vcvta.u32.f64 s2, d3"
+        -
+          asm_text: "vcvtn.u32.f32 s6, s23"
+        -
+          asm_text: "vcvtn.u32.f64 s6, d23"
+        -
+          asm_text: "vcvtp.u32.f32 s0, s4"
+        -
+          asm_text: "vcvtp.u32.f64 s0, d4"
+        -
+          asm_text: "vcvtm.u32.f32 s17, s8"
+        -
+          asm_text: "vcvtm.u32.f64 s17, d8"
+        -
+          asm_text: "vselge.f32 s4, s1, s23"
+        -
+          asm_text: "vselge.f64 d30, d31, d23"
+        -
+          asm_text: "vselgt.f32 s0, s1, s0"
+        -
+          asm_text: "vselgt.f64 d5, d10, d20"
+        -
+          asm_text: "vseleq.f32 s30, s28, s23"
+        -
+          asm_text: "vseleq.f64 d2, d4, d8"
+        -
+          asm_text: "vselvs.f32 s21, s16, s14"
+        -
+          asm_text: "vselvs.f64 d0, d1, d31"
+        -
+          asm_text: "vmaxnm.f32 s5, s12, s0"
+        -
+          asm_text: "vmaxnm.f64 d5, d22, d30"
+        -
+          asm_text: "vminnm.f32 s0, s0, s12"
+        -
+          asm_text: "vminnm.f64 d4, d6, d9"
+        -
+          asm_text: "vrintzge.f64 d3, d12"
+        -
+          asm_text: "vrintz.f32 s3, s24"
+        -
+          asm_text: "vrintrlt.f64 d5, d0"
+        -
+          asm_text: "vrintr.f32 s0, s9"
+        -
+          asm_text: "vrintxeq.f64 d28, d30"
+        -
+          asm_text: "vrintxvs.f32 s10, s14"
+        -
+          asm_text: "vrinta.f64 d3, d4"
+        -
+          asm_text: "vrinta.f32 s12, s1"
+        -
+          asm_text: "vrintn.f64 d3, d4"
+        -
+          asm_text: "vrintn.f32 s12, s1"
+        -
+          asm_text: "vrintp.f64 d3, d4"
+        -
+          asm_text: "vrintp.f32 s12, s1"
+        -
+          asm_text: "vrintm.f64 d3, d4"
+        -
+          asm_text: "vrintm.f32 s12, s1"
+        -
+          asm_text: "vmrs sp, mvfr2"

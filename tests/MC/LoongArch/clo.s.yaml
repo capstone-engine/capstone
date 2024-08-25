@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x89, 0x01, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvclo.b $xr9, $xr12"
+  -
+    input:
+      bytes: [ 0xd0, 0x05, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvclo.h $xr16, $xr14"
+  -
+    input:
+      bytes: [ 0x5e, 0x0a, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvclo.w $xr30, $xr18"
+  -
+    input:
+      bytes: [ 0xbf, 0x0c, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvclo.d $xr31, $xr5"

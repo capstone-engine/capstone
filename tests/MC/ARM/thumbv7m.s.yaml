@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xef, 0xf3, 0x11, 0x80, 0xef, 0xf3, 0x12, 0x80, 0xef, 0xf3, 0x13, 0x80, 0x80, 0xf3, 0x11, 0x88, 0x80, 0xf3, 0x12, 0x88, 0x80, 0xf3, 0x13, 0x88 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_MCLASS", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs r0, basepri"
+        -
+          asm_text: "mrs r0, basepri_max"
+        -
+          asm_text: "mrs r0, faultmask"
+        -
+          asm_text: "msr basepri, r0"
+        -
+          asm_text: "msr basepri_max, r0"
+        -
+          asm_text: "msr faultmask, r0"

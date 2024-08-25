@@ -1,0 +1,266 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x74, 0x41, 0xd1, 0x1c, 0x03, 0x32, 0x08, 0x32, 0xd1, 0x18, 0x42, 0x44, 0x01, 0xb0, 0x7f, 0xb0, 0x01, 0xb0, 0x02, 0xaa, 0xff, 0xaa, 0x82, 0xb0, 0x82, 0xb0, 0x9d, 0x44, 0x6a, 0x44, 0x00, 0xa5, 0x01, 0xa2, 0xff, 0xa3, 0x1a, 0x10, 0x5a, 0x11, 0x5a, 0x10, 0x6d, 0x15, 0x6d, 0x15, 0x6b, 0x15, 0x15, 0x41, 0x97, 0xe3, 0x2e, 0xe7, 0x80, 0xd0, 0x50, 0xd0, 0xd8, 0xf0, 0x20, 0xe8, 0xb0, 0xf1, 0x40, 0xe8, 0xb1, 0x43, 0x00, 0xbe, 0xff, 0xbe, 0xa0, 0x47, 0x10, 0x47, 0xcd, 0x42, 0x20, 0x2e, 0xa3, 0x42, 0x88, 0x45, 0x61, 0xb6, 0x74, 0xb6, 0x6c, 0x40, 0xff, 0xcb, 0xba, 0xca, 0x02, 0xc9, 0x29, 0x68, 0x32, 0x6a, 0xfb, 0x6f, 0x00, 0x99, 0x06, 0x9a, 0xff, 0x9b, 0x97, 0x4b, 0x5c, 0x4b, 0xd1, 0x58, 0x1c, 0x78, 0x35, 0x78, 0xfe, 0x7f, 0x66, 0x5d, 0x1b, 0x88, 0x74, 0x88, 0xfd, 0x8f, 0x96, 0x5b, 0x96, 0x57, 0x7b, 0x5e, 0x2c, 0x00, 0x2c, 0x01, 0x1b, 0x03, 0x1b, 0x03, 0x19, 0x03, 0xb2, 0x40, 0x59, 0x08, 0x19, 0x08, 0x24, 0x0d, 0x24, 0x0d, 0x22, 0x0d, 0xf2, 0x40, 0x00, 0x22, 0xff, 0x22, 0x17, 0x22, 0x23, 0x46, 0x19, 0x00, 0x51, 0x43, 0x5a, 0x43, 0x63, 0x43, 0xde, 0x43, 0x63, 0x42, 0x4c, 0xbc, 0x86, 0xb4, 0x1e, 0xba, 0x57, 0xba, 0xcd, 0xba, 0xfa, 0x41, 0x59, 0x42, 0x9c, 0x41, 0x58, 0xb6, 0x50, 0xb6, 0x44, 0xc1, 0x8e, 0xc1, 0x3a, 0x60, 0x3a, 0x60, 0x4d, 0x60, 0xfb, 0x67, 0x00, 0x92, 0x00, 0x93, 0x05, 0x94, 0xff, 0x95, 0xfa, 0x50, 0x1c, 0x70, 0x35, 0x70, 0xfe, 0x77, 0x66, 0x55, 0x1b, 0x80, 0x74, 0x80, 0xfd, 0x87, 0x96, 0x53, 0xd1, 0x1e, 0x03, 0x3a, 0x08, 0x3a, 0x83, 0xb0, 0xff, 0xb0, 0xd1, 0x1a, 0x00, 0xdf, 0xff, 0xdf, 0x6b, 0xb2, 0x2b, 0xb2, 0x0e, 0x42, 0xd7, 0xb2, 0xa1, 0xb2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "adcs r4, r6"
+        -
+          asm_text: "adds r1, r2, #3"
+        -
+          asm_text: "adds r2, #3"
+        -
+          asm_text: "adds r2, #8"
+        -
+          asm_text: "adds r1, r2, r3"
+        -
+          asm_text: "add r2, r8"
+        -
+          asm_text: "add sp, #4"
+        -
+          asm_text: "add sp, #0x1fc"
+        -
+          asm_text: "add sp, #4"
+        -
+          asm_text: "add r2, sp, #8"
+        -
+          asm_text: "add r2, sp, #0x3fc"
+        -
+          asm_text: "sub sp, #8"
+        -
+          asm_text: "sub sp, #8"
+        -
+          asm_text: "add sp, r3"
+        -
+          asm_text: "add r2, sp, r2"
+        -
+          asm_text: "adr r5, #0"
+        -
+          asm_text: "adr r2, #4"
+        -
+          asm_text: "adr r3, #0x3fc"
+        -
+          asm_text: "asrs r2, r3, #0x20"
+        -
+          asm_text: "asrs r2, r3, #5"
+        -
+          asm_text: "asrs r2, r3, #1"
+        -
+          asm_text: "asrs r5, r5, #0x15"
+        -
+          asm_text: "asrs r5, r5, #0x15"
+        -
+          asm_text: "asrs r3, r5, #0x15"
+        -
+          asm_text: "asrs r5, r2"
+        -
+          asm_text: "b #0x72e"
+        -
+          asm_text: "b #-0x1a4"
+        -
+          asm_text: "beq #-0x100"
+        -
+          asm_text: "beq #0xa0"
+        -
+          asm_text: "blx #0xd8040"
+        -
+          asm_text: "blx #0x1b0080"
+        -
+          asm_text: "bics r1, r6"
+        -
+          asm_text: "bkpt #0"
+        -
+          asm_text: "bkpt #0xff"
+        -
+          asm_text: "blx r4"
+        -
+          asm_text: "bx r2"
+        -
+          asm_text: "cmn r5, r1"
+        -
+          asm_text: "cmp r6, #0x20"
+        -
+          asm_text: "cmp r3, r4"
+        -
+          asm_text: "cmp r8, r1"
+        -
+          asm_text: "cpsie f"
+        -
+          asm_text: "cpsid a"
+        -
+          asm_text: "eors r4, r5"
+        -
+          asm_text: "ldm r3, {r0, r1, r2, r3, r4, r5, r6, r7}"
+        -
+          asm_text: "ldm r2!, {r1, r3, r4, r5, r7}"
+        -
+          asm_text: "ldm r1, {r1}"
+        -
+          asm_text: "ldr r1, [r5]"
+        -
+          asm_text: "ldr r2, [r6, #0x20]"
+        -
+          asm_text: "ldr r3, [r7, #0x7c]"
+        -
+          asm_text: "ldr r1, [sp]"
+        -
+          asm_text: "ldr r2, [sp, #0x18]"
+        -
+          asm_text: "ldr r3, [sp, #0x3fc]"
+        -
+          asm_text: "ldr r3, [pc, #0x25c]"
+        -
+          asm_text: "ldr r3, [pc, #0x170]"
+        -
+          asm_text: "ldr r1, [r2, r3]"
+        -
+          asm_text: "ldrb r4, [r3]"
+        -
+          asm_text: "ldrb r5, [r6]"
+        -
+          asm_text: "ldrb r6, [r7, #0x1f]"
+        -
+          asm_text: "ldrb r6, [r4, r5]"
+        -
+          asm_text: "ldrh r3, [r3]"
+        -
+          asm_text: "ldrh r4, [r6, #2]"
+        -
+          asm_text: "ldrh r5, [r7, #0x3e]"
+        -
+          asm_text: "ldrh r6, [r2, r6]"
+        -
+          asm_text: "ldrsb r6, [r2, r6]"
+        -
+          asm_text: "ldrsh r3, [r7, r1]"
+        -
+          asm_text: "movs r4, r5"
+        -
+          asm_text: "lsls r4, r5, #4"
+        -
+          asm_text: "lsls r3, r3, #0xc"
+        -
+          asm_text: "lsls r3, r3, #0xc"
+        -
+          asm_text: "lsls r1, r3, #0xc"
+        -
+          asm_text: "lsls r2, r6"
+        -
+          asm_text: "lsrs r1, r3, #1"
+        -
+          asm_text: "lsrs r1, r3, #0x20"
+        -
+          asm_text: "lsrs r4, r4, #0x14"
+        -
+          asm_text: "lsrs r4, r4, #0x14"
+        -
+          asm_text: "lsrs r2, r4, #0x14"
+        -
+          asm_text: "lsrs r2, r6"
+        -
+          asm_text: "movs r2, #0"
+        -
+          asm_text: "movs r2, #0xff"
+        -
+          asm_text: "movs r2, #0x17"
+        -
+          asm_text: "mov r3, r4"
+        -
+          asm_text: "movs r1, r3"
+        -
+          asm_text: "muls r1, r2, r1"
+        -
+          asm_text: "muls r2, r3, r2"
+        -
+          asm_text: "muls r3, r4, r3"
+        -
+          asm_text: "mvns r6, r3"
+        -
+          asm_text: "rsbs r3, r4, #0"
+        -
+          asm_text: "pop {r2, r3, r6}"
+        -
+          asm_text: "push {r1, r2, r7}"
+        -
+          asm_text: "rev r6, r3"
+        -
+          asm_text: "rev16 r7, r2"
+        -
+          asm_text: "revsh r5, r1"
+        -
+          asm_text: "rors r2, r7"
+        -
+          asm_text: "rsbs r1, r3, #0"
+        -
+          asm_text: "sbcs r4, r3"
+        -
+          asm_text: "setend be"
+        -
+          asm_text: "setend le"
+        -
+          asm_text: "stm r1!, {r2, r6}"
+        -
+          asm_text: "stm r1!, {r1, r2, r3, r7}"
+        -
+          asm_text: "str r2, [r7]"
+        -
+          asm_text: "str r2, [r7]"
+        -
+          asm_text: "str r5, [r1, #4]"
+        -
+          asm_text: "str r3, [r7, #0x7c]"
+        -
+          asm_text: "str r2, [sp]"
+        -
+          asm_text: "str r3, [sp]"
+        -
+          asm_text: "str r4, [sp, #0x14]"
+        -
+          asm_text: "str r5, [sp, #0x3fc]"
+        -
+          asm_text: "str r2, [r7, r3]"
+        -
+          asm_text: "strb r4, [r3]"
+        -
+          asm_text: "strb r5, [r6]"
+        -
+          asm_text: "strb r6, [r7, #0x1f]"
+        -
+          asm_text: "strb r6, [r4, r5]"
+        -
+          asm_text: "strh r3, [r3]"
+        -
+          asm_text: "strh r4, [r6, #2]"
+        -
+          asm_text: "strh r5, [r7, #0x3e]"
+        -
+          asm_text: "strh r6, [r2, r6]"
+        -
+          asm_text: "subs r1, r2, #3"
+        -
+          asm_text: "subs r2, #3"
+        -
+          asm_text: "subs r2, #8"
+        -
+          asm_text: "sub sp, #0xc"
+        -
+          asm_text: "sub sp, #0x1fc"
+        -
+          asm_text: "subs r1, r2, r3"
+        -
+          asm_text: "svc #0"
+        -
+          asm_text: "svc #0xff"
+        -
+          asm_text: "sxtb r3, r5"
+        -
+          asm_text: "sxth r3, r5"
+        -
+          asm_text: "tst r6, r1"
+        -
+          asm_text: "uxtb r7, r2"
+        -
+          asm_text: "uxth r1, r4"

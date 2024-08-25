@@ -1,0 +1,160 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x20, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta w0, p7, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x60, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta w0, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xa0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta w0, p7, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xe0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta x0, p7, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x22, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta b0, p7, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x62, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta h0, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xa2, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta s0, p7, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xe2, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta d0, p7, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x20, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta w0, p7, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x60, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta w0, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xa0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta w0, p7, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xe0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta x0, p7, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x22, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta b0, p7, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x62, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta h0, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xa2, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta s0, p7, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xe2, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lasta d0, p7, z31.d"

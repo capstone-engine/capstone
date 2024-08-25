@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x42, 0x12, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "hcx" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, HCRX_EL2"
+
+  -
+    input:
+      bytes: [ 0x43, 0x12, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "hcx" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr HCRX_EL2, x3"
+
+  -
+    input:
+      bytes: [ 0x42, 0x12, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.7a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, HCRX_EL2"
+
+  -
+    input:
+      bytes: [ 0x43, 0x12, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.7a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr HCRX_EL2, x3"

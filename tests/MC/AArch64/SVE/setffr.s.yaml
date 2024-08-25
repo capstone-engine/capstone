@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x90, 0x2c, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "setffr"

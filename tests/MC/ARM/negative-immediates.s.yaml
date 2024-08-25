@@ -1,0 +1,26 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x61, 0xf1, 0x01, 0x10, 0x61, 0xf1, 0x01, 0x20, 0xa0, 0xf1, 0xfe, 0x10, 0xa1, 0xf2, 0xff, 0x00, 0xa1, 0xf1, 0xff, 0x00, 0x21, 0xf0, 0x01, 0x20, 0x01, 0xf0, 0x01, 0x20, 0x61, 0xf0, 0x01, 0x20, 0x41, 0xf0, 0x01, 0x20 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbc r0, r1, #0x10001"
+        -
+          asm_text: "sbc r0, r1, #0x1000100"
+        -
+          asm_text: "sub.w r0, r0, #0xfe00fe"
+        -
+          asm_text: "subw r0, r1, #0xff"
+        -
+          asm_text: "sub.w r0, r1, #0xff"
+        -
+          asm_text: "bic r0, r1, #0x1000100"
+        -
+          asm_text: "and r0, r1, #0x1000100"
+        -
+          asm_text: "orn r0, r1, #0x1000100"
+        -
+          asm_text: "orr r0, r1, #0x1000100"

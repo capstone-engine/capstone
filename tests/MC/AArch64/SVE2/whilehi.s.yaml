@@ -1,0 +1,200 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xff, 0x1b, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.b, xzr, x0"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x18, 0x3f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.b, x0, xzr"
+
+  -
+    input:
+      bytes: [ 0xff, 0x0b, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.b, wzr, w0"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x08, 0x3f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.b, w0, wzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x18, 0x7f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.h, x0, xzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x08, 0x7f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.h, w0, wzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x18, 0xbf, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.s, x0, xzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x08, 0xbf, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.s, w0, wzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x08, 0xff, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.d, w0, wzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x18, 0xff, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.d, x0, xzr"
+
+  -
+    input:
+      bytes: [ 0xff, 0x1b, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.b, xzr, x0"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x18, 0x3f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.b, x0, xzr"
+
+  -
+    input:
+      bytes: [ 0xff, 0x0b, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.b, wzr, w0"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x08, 0x3f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.b, w0, wzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x18, 0x7f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.h, x0, xzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x08, 0x7f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.h, w0, wzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x18, 0xbf, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.s, x0, xzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x08, 0xbf, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.s, w0, wzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x08, 0xff, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.d, w0, wzr"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x18, 0xff, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "whilehi p15.d, x0, xzr"

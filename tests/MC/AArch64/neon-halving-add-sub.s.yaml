@@ -1,0 +1,240 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shadd v0.8b, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shadd v0.16b, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shadd v0.4h, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shadd v0.8h, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shadd v0.2s, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shadd v0.4s, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhadd v0.8b, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhadd v0.16b, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhadd v0.4h, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhadd v0.8h, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhadd v0.2s, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhadd v0.4s, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shsub v0.8b, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shsub v0.16b, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shsub v0.4h, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shsub v0.8h, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shsub v0.2s, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "shsub v0.4s, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhsub v0.8b, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhsub v0.16b, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhsub v0.4h, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhsub v0.8h, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhsub v0.2s, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uhsub v0.4s, v1.4s, v2.4s"

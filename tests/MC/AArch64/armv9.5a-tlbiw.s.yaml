@@ -1,0 +1,60 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x5f, 0x86, 0x0c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "tlbiw", "xs" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbi vmallws2e1"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x82, 0x0c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "tlbiw", "xs" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbi vmallws2e1is"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x85, 0x0c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "tlbiw", "xs" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbi vmallws2e1os"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x96, 0x0c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "tlbiw", "xs" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbi vmallws2e1nxs"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x92, 0x0c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "tlbiw", "xs" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbi vmallws2e1isnxs"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x95, 0x0c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "tlbiw", "xs" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbi vmallws2e1osnxs"

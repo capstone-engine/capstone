@@ -1,0 +1,58 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x20, 0x01, 0x41, 0x20, 0x10, 0xc9, 0x01, 0x45, 0x0b  ]
+      arch: "wasm"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "get_local 0x0"
+        details:
+          groups: [ WASM_GRP_VARIABLE ]
+          wasm:
+            operands:
+              -
+                type: WASM_OP_VARUINT32
+                varuint32: 0x0
+                size: 1
+      -
+        asm_text: "get_local 0x1"
+        details:
+          groups: [ WASM_GRP_VARIABLE ]
+          wasm:
+            operands:
+              -
+                type: WASM_OP_VARUINT32
+                varuint32: 0x1
+                size: 1
+      -
+        asm_text: "i32.const 0x20"
+        details:
+          groups: [ WASM_GRP_NUMBERIC ]
+          wasm:
+            operands:
+              -
+                type: WASM_OP_VARUINT32
+                varuint32: 0x20
+                size: 1
+      -
+        asm_text: "call 0xc9"
+        details:
+          groups: [ WASM_GRP_CONTROL ]
+          wasm:
+            operands:
+              -
+                type: WASM_OP_VARUINT32
+                varuint32: 0xc9
+                size: 2
+      -
+        asm_text: "i32.eqz"
+        details:
+          groups: [ WASM_GRP_NUMBERIC ]
+      -
+        asm_text: "end"
+        details:
+          groups: [ WASM_GRP_CONTROL ]
+

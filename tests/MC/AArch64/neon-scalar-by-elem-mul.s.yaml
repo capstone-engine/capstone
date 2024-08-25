@@ -1,0 +1,140 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x98, 0x11, 0x5f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul h0, h1, v1.h[5]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x90, 0x81, 0x5f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul s0, s1, v1.s[0]"
+
+  -
+    input:
+      bytes: [ 0x7e, 0x91, 0xa1, 0x5f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul s30, s11, v1.s[1]"
+
+  -
+    input:
+      bytes: [ 0xa4, 0x98, 0x87, 0x5f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul s4, s5, v7.s[2]"
+
+  -
+    input:
+      bytes: [ 0xd0, 0x9a, 0xb0, 0x5f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul s16, s22, v16.s[3]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x90, 0xc1, 0x5f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul d0, d1, v1.d[0]"
+
+  -
+    input:
+      bytes: [ 0x7e, 0x99, 0xc1, 0x5f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul d30, d11, v1.d[1]"
+
+  -
+    input:
+      bytes: [ 0x46, 0x98, 0x18, 0x7f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmulx h6, h2, v8.h[5]"
+
+  -
+    input:
+      bytes: [ 0x46, 0x90, 0x88, 0x7f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmulx s6, s2, v8.s[0]"
+
+  -
+    input:
+      bytes: [ 0x67, 0x90, 0xad, 0x7f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmulx s7, s3, v13.s[1]"
+
+  -
+    input:
+      bytes: [ 0xe9, 0x98, 0x89, 0x7f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmulx s9, s7, v9.s[2]"
+
+  -
+    input:
+      bytes: [ 0xad, 0x9a, 0xaa, 0x7f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmulx s13, s21, v10.s[3]"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x91, 0xc7, 0x7f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmulx d15, d9, v7.d[0]"
+
+  -
+    input:
+      bytes: [ 0x8d, 0x99, 0xcb, 0x7f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmulx d13, d12, v11.d[1]"

@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xc5, 0x10, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvclz.b $xr5, $xr6"
+  -
+    input:
+      bytes: [ 0xe4, 0x14, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvclz.h $xr4, $xr7"
+  -
+    input:
+      bytes: [ 0x0c, 0x18, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvclz.w $xr12, $xr0"
+  -
+    input:
+      bytes: [ 0x01, 0x1c, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvclz.d $xr1, $xr0"

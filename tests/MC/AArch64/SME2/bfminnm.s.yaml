@@ -1,0 +1,160 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x21, 0xa1, 0x20, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z0.h, z1.h }, { z0.h, z1.h }, z0.h"
+
+  -
+    input:
+      bytes: [ 0x35, 0xa1, 0x25, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z20.h, z21.h }, { z20.h, z21.h }, z5.h"
+
+  -
+    input:
+      bytes: [ 0x37, 0xa1, 0x28, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z22.h, z23.h }, { z22.h, z23.h }, z8.h"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xa1, 0x2f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z30.h, z31.h }, { z30.h, z31.h }, z15.h"
+
+  -
+    input:
+      bytes: [ 0x21, 0xb1, 0x20, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z0.h, z1.h }, { z0.h, z1.h }, { z0.h, z1.h }"
+
+  -
+    input:
+      bytes: [ 0x35, 0xb1, 0x34, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z20.h, z21.h }, { z20.h, z21.h }, { z20.h, z21.h }"
+
+  -
+    input:
+      bytes: [ 0x37, 0xb1, 0x28, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z22.h, z23.h }, { z22.h, z23.h }, { z8.h, z9.h }"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xb1, 0x3e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z30.h, z31.h }, { z30.h, z31.h }, { z30.h, z31.h }"
+
+  -
+    input:
+      bytes: [ 0x21, 0xa9, 0x20, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z0.h - z3.h }, { z0.h - z3.h }, z0.h"
+
+  -
+    input:
+      bytes: [ 0x35, 0xa9, 0x25, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z20.h - z23.h }, { z20.h - z23.h }, z5.h"
+
+  -
+    input:
+      bytes: [ 0x35, 0xa9, 0x28, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z20.h - z23.h }, { z20.h - z23.h }, z8.h"
+
+  -
+    input:
+      bytes: [ 0x3d, 0xa9, 0x2f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z28.h - z31.h }, { z28.h - z31.h }, z15.h"
+
+  -
+    input:
+      bytes: [ 0x21, 0xb9, 0x20, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z0.h - z3.h }, { z0.h - z3.h }, { z0.h - z3.h }"
+
+  -
+    input:
+      bytes: [ 0x35, 0xb9, 0x34, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z20.h - z23.h }, { z20.h - z23.h }, { z20.h - z23.h }"
+
+  -
+    input:
+      bytes: [ 0x35, 0xb9, 0x28, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z20.h - z23.h }, { z20.h - z23.h }, { z8.h - z11.h }"
+
+  -
+    input:
+      bytes: [ 0x3d, 0xb9, 0x3c, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfminnm { z28.h - z31.h }, { z28.h - z31.h }, { z28.h - z31.h }"

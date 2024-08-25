@@ -1,0 +1,1117 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2a, 0x10 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfabs q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2a, 0x10 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfabs q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x28, 0x2a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfadd q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x28, 0x2a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfadds q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x2a, 0x08 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfandc q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x28, 0x88 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfand q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2e, 0x9c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfcfid q3, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x60, 0x2e, 0x9c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfcfids q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2f, 0x9c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfcfidu q3, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x60, 0x2f, 0x9c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfcfidus q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x63, 0x18, 0x08 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfclr q3"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x28, 0x10 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfcpsgn q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x22, 0x88 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfctfb q3, q4"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2e, 0x5c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfctid q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2f, 0x5c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfctidu q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2f, 0x5e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfctiduz q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2e, 0x5e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfctidz q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x28, 0x1c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfctiw q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x29, 0x1c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfctiwu q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x29, 0x1e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfctiwuz q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x28, 0x1e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfctiwz q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x2c, 0x88 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfequ q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x2e, 0x08 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvflogical q3, q4, q5, 12"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x29, 0xba ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfmadd q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x29, 0xba ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfmadds q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x28, 0x90 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfmr q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x29, 0xb8 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfmsub q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x29, 0xb8 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfmsubs q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x01, 0xb2 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfmul q3, q4, q6"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x01, 0xb2 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfmuls q3, q4, q6"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x29, 0x10 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfnabs q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x2f, 0x08 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfnand q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x28, 0x50 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfneg q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x29, 0xbe ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfnmadd q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x29, 0xbe ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfnmadds q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x29, 0xbc ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfnmsub q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x29, 0xbc ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfnmsubs q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x2c, 0x08 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfnor q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x25, 0x08 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfnot q3, q4"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x2e, 0x88 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvforc q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x2b, 0x88 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfor q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x29, 0x8c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfperm q3, q4, q5, q6"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x28, 0x30 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfre q3, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x60, 0x28, 0x30 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfres q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2b, 0xd0 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfrim q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2b, 0x10 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfrin q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2b, 0x90 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfrip q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x2b, 0x50 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfriz q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x28, 0x18 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfrsp q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x60, 0x28, 0x34 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfrsqrte q3, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x60, 0x28, 0x34 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfrsqrtes q3, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x29, 0xae ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfsel q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x63, 0x1f, 0x88 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfset q3"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x28, 0x28 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfsub q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x28, 0x28 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfsubs q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x29, 0x92 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxmadd q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x29, 0x92 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxmadds q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x01, 0xa2 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxmul q3, q4, q6"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x01, 0xa2 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxmuls q3, q4, q6"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x2b, 0x08 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxor q3, q4, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x29, 0x86 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxxcpnmadd q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x29, 0x86 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxxcpnmadds q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x29, 0x82 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxxmadd q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x29, 0x82 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxxmadds q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x10, 0x64, 0x29, 0x96 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxxnpmadd q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x00, 0x64, 0x29, 0x96 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvfxxnpmadds q3, q4, q6, q5"
+  -
+    input:
+      bytes: [ 0x7c, 0x69, 0x58, 0xcf ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfcduxa q3, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x69, 0x58, 0xce ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfcdux q3, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x58, 0x8f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfcdxa q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x58, 0x8e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfcdx q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x69, 0x58, 0x4f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfcsuxa q3, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x69, 0x58, 0x4e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfcsux q3, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x58, 0x0f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfcsxa q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x58, 0x0e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfcsx q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x69, 0x5c, 0xcf ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfduxa q3, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x69, 0x5c, 0xce ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfdux q3, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x5c, 0x8f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfdxa q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x5c, 0x8e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfdx q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x5e, 0xcf ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfiwaxa q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x5e, 0xce ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfiwax q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x5e, 0x8f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfiwzxa q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x5e, 0x8e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfiwzx q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x69, 0x5c, 0x4f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfsuxa q3, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x69, 0x5c, 0x4e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfsux q3, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x5c, 0x0f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfsxa q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x5c, 0x0e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlfsx q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x5c, 0x8c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlpcldx q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x5c, 0x0c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlpclsx q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x58, 0x8c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlpcrdx q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x6a, 0x58, 0x0c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvlpcrsx q3, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x59, 0xcf ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcduxa q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x59, 0xcb ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcduxia q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x59, 0xca ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcduxi q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x59, 0xce ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcdux q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x59, 0x8f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcdxa q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x59, 0x8b ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcdxia q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x59, 0x8a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcdxi q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x59, 0x8e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcdx q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x59, 0x4f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcsuxa q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x59, 0x4b ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcsuxia q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x59, 0x4a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcsuxi q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x59, 0x4e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcsux q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x59, 0x0f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcsxa q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x59, 0x0b ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcsxia q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x59, 0x0a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcsxi q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x59, 0x0e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfcsx q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x5d, 0xcf ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfduxa q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x5d, 0xcb ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfduxia q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x5d, 0xca ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfduxi q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x5d, 0xce ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfdux q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x5d, 0x8f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfdxa q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x5d, 0x8b ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfdxia q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x5d, 0x8a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfdxi q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x5d, 0x8e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfdx q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x5f, 0x8f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfiwxa q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x5f, 0x8e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfiwx q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x5d, 0x4f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfsuxa q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x5d, 0x4b ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfsuxia q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x5d, 0x4a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfsuxi q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x49, 0x5d, 0x4e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfsux q2, r9, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x5d, 0x0f ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfsxa q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x5d, 0x0b ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfsxia q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x5d, 0x0a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfsxi q2, r10, r11"
+  -
+    input:
+      bytes: [ 0x7c, 0x4a, 0x5d, 0x0e ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_SYNTAX_DEFAULT", "CS_MODE_QPX", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "qvstfsx q2, r10, r11"

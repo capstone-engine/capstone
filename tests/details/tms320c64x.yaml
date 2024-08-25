@@ -1,0 +1,147 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x01, 0xac, 0x88, 0x40, 0x81, 0xac, 0x88, 0x43, 0x00, 0x00, 0x00, 0x00, 0x02, 0x90, 0x32, 0x96, 0x02, 0x80, 0x46, 0x9e, 0x05, 0x3c, 0x83, 0xe6, 0x0b, 0x0c, 0x8b, 0x24  ]
+      arch: "tms320c64x"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "add.D1 a11, a4, a3"
+        details:
+          tms320c64x:
+            operands:
+              -
+                type: TMS320C64X_OP_REG
+                reg: a11
+              -
+                type: TMS320C64X_OP_REG
+                reg: a4
+              -
+                type: TMS320C64X_OP_REG
+                reg: a3
+            funit_unit: TMS320C64X_FUNIT_D
+            funit_side: 1
+            funit_side_set: true
+            parallel: 0
+            parallel_set: true
+      -
+        asm_text: "[ a1] add.D2 b11, b4, b3 ||"
+        details:
+          tms320c64x:
+            operands:
+              -
+                type: TMS320C64X_OP_REG
+                reg: b11
+              -
+                type: TMS320C64X_OP_REG
+                reg: b4
+              -
+                type: TMS320C64X_OP_REG
+                reg: b3
+            funit_unit: TMS320C64X_FUNIT_D
+            funit_side: 2
+            funit_side_set: true
+            cond_reg: a1
+            cond_zero: -1
+            parallel: 1
+            parallel_set: true
+      -
+        asm_text: "NOP"
+        details:
+          tms320c64x:
+            funit_unit: TMS320C64X_FUNIT_NO
+            parallel: 0
+            parallel_set: true
+      -
+        asm_text: "ldbu.D1T2 *++a4[1], b5"
+        details:
+          tms320c64x:
+            operands:
+              -
+                type: TMS320C64X_OP_MEM
+                mem_base: a4
+                mem_disptype: TMS320C64X_MEM_DISP_CONSTANT
+                mem_disp_const: 0x1
+                mem_unit: 2
+                mem_direction: TMS320C64X_MEM_DIR_FW
+                mem_modify: TMS320C64X_MEM_MOD_PRE
+                mem_scaled: 1
+              -
+                type: TMS320C64X_OP_REG
+                reg: b5
+            funit_unit: TMS320C64X_FUNIT_D
+            funit_side: 2
+            funit_side_set: true
+            parallel: 0
+            parallel_set: true
+      -
+        asm_text: "ldbu.D2T2 *+b15[0x46], b5"
+        details:
+          tms320c64x:
+            operands:
+              -
+                type: TMS320C64X_OP_MEM
+                mem_base: b15
+                mem_disptype: TMS320C64X_MEM_DISP_CONSTANT
+                mem_disp_const: 0x46
+                mem_unit: 2
+                mem_direction: TMS320C64X_MEM_DIR_FW
+                mem_modify: TMS320C64X_MEM_MOD_NO
+                mem_scaled: -1
+              -
+                type: TMS320C64X_OP_REG
+                reg: b5
+            funit_unit: TMS320C64X_FUNIT_D
+            funit_side: 2
+            funit_side_set: true
+            parallel: 0
+            parallel_set: true
+      -
+        asm_text: "lddw.D1T2 *+a15[4], b11:b10"
+        details:
+          tms320c64x:
+            operands:
+              -
+                type: TMS320C64X_OP_MEM
+                mem_base: a15
+                mem_disptype: TMS320C64X_MEM_DISP_CONSTANT
+                mem_disp_const: 0x4
+                mem_unit: 2
+                mem_direction: TMS320C64X_MEM_DIR_FW
+                mem_modify: TMS320C64X_MEM_MOD_NO
+                mem_scaled: 1
+              -
+                type: TMS320C64X_OP_REGPAIR
+                reg_pair_0: b11
+                reg_pair_1: b10
+            funit_unit: TMS320C64X_FUNIT_D
+            funit_side: 2
+            funit_side_set: true
+            parallel: 0
+            parallel_set: true
+      -
+        asm_text: "ldndw.D1T1 *+a3(a4), a23:a22"
+        details:
+          tms320c64x:
+            operands:
+              -
+                type: TMS320C64X_OP_MEM
+                mem_base: a3
+                mem_disptype: TMS320C64X_MEM_DISP_REGISTER
+                mem_disp_reg: a4
+                mem_unit: 1
+                mem_direction: TMS320C64X_MEM_DIR_FW
+                mem_modify: TMS320C64X_MEM_MOD_NO
+                mem_scaled: -1
+              -
+                type: TMS320C64X_OP_REGPAIR
+                reg_pair_0: a23
+                reg_pair_1: a22
+            funit_unit: TMS320C64X_FUNIT_D
+            funit_side: 1
+            funit_side_set: true
+            parallel: 0
+            parallel_set: true
+

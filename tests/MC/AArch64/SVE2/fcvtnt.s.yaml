@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x88, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtnt z0.h, p0/m, z1.s"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xbf, 0xca, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtnt z30.s, p7/m, z31.d"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x88, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtnt z0.h, p0/m, z1.s"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xbf, 0xca, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtnt z30.s, p7/m, z31.d"

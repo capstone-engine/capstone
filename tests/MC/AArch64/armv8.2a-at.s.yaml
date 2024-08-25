@@ -1,0 +1,60 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x01, 0x79, 0x08, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.2a" ]
+    expected:
+      insns:
+        -
+          asm_text: "at s1e1rp, x1"
+
+  -
+    input:
+      bytes: [ 0x22, 0x79, 0x08, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.2a" ]
+    expected:
+      insns:
+        -
+          asm_text: "at s1e1wp, x2"
+
+  -
+    input:
+      bytes: [ 0x01, 0x79, 0x08, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.2a", "+pan-rwv" ]
+    expected:
+      insns:
+        -
+          asm_text: "at s1e1rp, x1"
+
+  -
+    input:
+      bytes: [ 0x22, 0x79, 0x08, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "-v8.2a", "+pan-rwv" ]
+    expected:
+      insns:
+        -
+          asm_text: "at s1e1wp, x2"
+
+  -
+    input:
+      bytes: [ 0x01, 0x79, 0x08, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8r" ]
+    expected:
+      insns:
+        -
+          asm_text: "at s1e1rp, x1"
+
+  -
+    input:
+      bytes: [ 0x22, 0x79, 0x08, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8r" ]
+    expected:
+      insns:
+        -
+          asm_text: "at s1e1wp, x2"

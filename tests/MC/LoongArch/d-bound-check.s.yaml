@@ -1,0 +1,46 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x63, 0x37, 0x74, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fldgt.s $fa3, $s4, $t1"
+  -
+    input:
+      bytes: [ 0xba, 0xfc, 0x74, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fldgt.d $fs2, $a1, $s8"
+  -
+    input:
+      bytes: [ 0xe3, 0xd9, 0x75, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fldle.d $fa3, $t3, $fp"
+  -
+    input:
+      bytes: [ 0x6d, 0xe9, 0x76, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fstgt.d $ft5, $a7, $s3"
+  -
+    input:
+      bytes: [ 0x32, 0xb5, 0x77, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "fstle.d $ft10, $a5, $t1"

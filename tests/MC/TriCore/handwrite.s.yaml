@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x8f, 0xff, 0x83, 0x81 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor d8, d15, #0x3f"

@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0x60, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld4w { z0.s - z3.s }, p0/z, [x0, x0, lsl #2]"
+
+  -
+    input:
+      bytes: [ 0x25, 0xce, 0x70, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld4w { z5.s - z8.s }, p3/z, [x17, x16, lsl #2]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x60, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld4w { z0.s - z3.s }, p0/z, [x0]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0x68, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld4w { z23.s - z26.s }, p3/z, [x13, #-32, mul vl]"
+
+  -
+    input:
+      bytes: [ 0x55, 0xf5, 0x65, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld4w { z21.s - z24.s }, p5/z, [x10, #20, mul vl]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0x60, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld4w { z0.s - z3.s }, p0/z, [x0, x0, lsl #2]"
+
+  -
+    input:
+      bytes: [ 0x25, 0xce, 0x70, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld4w { z5.s - z8.s }, p3/z, [x17, x16, lsl #2]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x60, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld4w { z0.s - z3.s }, p0/z, [x0]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0x68, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld4w { z23.s - z26.s }, p3/z, [x13, #-32, mul vl]"
+
+  -
+    input:
+      bytes: [ 0x55, 0xf5, 0x65, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld4w { z21.s - z24.s }, p5/z, [x10, #20, mul vl]"

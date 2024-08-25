@@ -1,0 +1,360 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0xe8, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.d, z13.d, z8.d"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0xe0, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z0.d, z0.d, z0.d"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0xf5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z21.d, z10.d, z21.d"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0xe8, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.d, z13.d, z8.d"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0xff, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z31.d, z31.d, z31.d"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x68, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.h, z13.h, z8.h"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0x60, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z0.h, z0.h, z0.h"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0x75, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z21.h, z10.h, z21.h"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x68, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.h, z13.h, z8.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0x7f, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z31.h, z31.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0xa8, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.s, z13.s, z8.s"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0xa0, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z0.s, z0.s, z0.s"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0xb5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z21.s, z10.s, z21.s"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0xa8, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.s, z13.s, z8.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0xbf, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z31.s, z31.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0xe8, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.d, z13.d, z8.d"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0xe0, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z0.d, z0.d, z0.d"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0xf5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z21.d, z10.d, z21.d"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0xe8, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.d, z13.d, z8.d"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0xff, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z31.d, z31.d, z31.d"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x68, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.h, z13.h, z8.h"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0x60, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z0.h, z0.h, z0.h"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0x75, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z21.h, z10.h, z21.h"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x68, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.h, z13.h, z8.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0x7f, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z31.h, z31.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xf7, 0xbf, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z23, z31"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0xa8, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.s, z13.s, z8.s"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0xa0, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z0.s, z0.s, z0.s"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0xb5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z21.s, z10.s, z21.s"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0xa8, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z23.s, z13.s, z8.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0xbf, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclamp z31.s, z31.s, z31.s"

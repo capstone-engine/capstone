@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x10, 0x02, 0x9f, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvreplgr2vr.b $xr16, $t4"
+  -
+    input:
+      bytes: [ 0xc7, 0x06, 0x9f, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvreplgr2vr.h $xr7, $fp"
+  -
+    input:
+      bytes: [ 0xe4, 0x09, 0x9f, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvreplgr2vr.w $xr4, $t3"
+  -
+    input:
+      bytes: [ 0x10, 0x0f, 0x9f, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvreplgr2vr.d $xr16, $s1"

@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa0, 0xd4, 0x66, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd v0.2d, v5.2d, v6.2d"
+
+  -
+    input:
+      bytes: [ 0xa0, 0xd4, 0x66, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd v0.2d, v5.2d, v6.2d"
+
+  -
+    input:
+      bytes: [ 0xa0, 0xd4, 0x66, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd v0.2d, v5.2d, v6.2d"

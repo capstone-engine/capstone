@@ -1,0 +1,60 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xff, 0x3b, 0x73, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "uunpkhi z31.h, z31.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x3b, 0xb3, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "uunpkhi z31.s, z31.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x3b, 0xf3, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "uunpkhi z31.d, z31.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0x3b, 0x73, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "uunpkhi z31.h, z31.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x3b, 0xb3, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "uunpkhi z31.s, z31.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x3b, 0xf3, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "uunpkhi z31.d, z31.s"

@@ -1,0 +1,4049 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x37, 0x34, 0x00, 0x00, 0x97, 0x82, 0x00, 0x00, 0xef, 0x00, 0x80, 0x00, 0xef, 0xf0, 0x1f, 0xff, 0xe7, 0x00, 0x45, 0x00, 0xe7, 0x00, 0xc0, 0xff, 0x63, 0x05, 0x41, 0x00, 0xe3, 0x9d, 0x61, 0xfe, 0x63, 0xca, 0x93, 0x00, 0x63, 0x53, 0xb5, 0x00, 0x63, 0x65, 0xd6, 0x00, 0x63, 0x76, 0xf7, 0x00, 0x03, 0x88, 0x18, 0x00, 0x03, 0x99, 0x49, 0x00, 0x03, 0xaa, 0x6a, 0x00, 0x03, 0xcb, 0x2b, 0x01, 0x03, 0xdc, 0x8c, 0x01, 0x23, 0x86, 0xad, 0x03, 0x23, 0x9a, 0xce, 0x03, 0x23, 0x8f, 0xef, 0x01, 0x93, 0x00, 0xe0, 0x00, 0x13, 0xa1, 0x01, 0x01, 0x13, 0xb2, 0x02, 0x7d, 0x13, 0xc3, 0x03, 0xdd, 0x13, 0xe4, 0xc4, 0x12, 0x13, 0xf5, 0x85, 0x0c, 0x13, 0x96, 0xe6, 0x01, 0x13, 0xd7, 0x97, 0x01, 0x13, 0xd8, 0xf8, 0x40, 0x33, 0x89, 0x49, 0x01, 0xb3, 0x0a, 0x7b, 0x41, 0x33, 0xac, 0xac, 0x01, 0xb3, 0x3d, 0xde, 0x01, 0x33, 0xd2, 0x62, 0x40, 0xb3, 0x43, 0x94, 0x00, 0x33, 0xe5, 0xc5, 0x00, 0xb3, 0x76, 0xf7, 0x00, 0xb3, 0x54, 0x39, 0x01, 0xb3, 0x50, 0x31, 0x00, 0x33, 0x9f, 0x0f, 0x00, 0x73, 0x15, 0x04, 0xb0, 0xf3, 0x56, 0x00, 0x10, 0x33, 0x05, 0x7b, 0x03, 0xb3, 0x45, 0x9c, 0x03, 0x33, 0x66, 0xbd, 0x03, 0x2f, 0xa4, 0x02, 0x10, 0xaf, 0x23, 0x65, 0x18, 0x2f, 0x27, 0x2f, 0x01, 0x43, 0xf0, 0x20, 0x18, 0xd3, 0x72, 0x73, 0x00, 0x53, 0xf4, 0x04, 0x58, 0x53, 0x85, 0xc5, 0x28, 0x53, 0x2e, 0xde, 0xa1, 0xd3, 0x84, 0x05, 0xf0, 0x53, 0x06, 0x05, 0xe0, 0x53, 0x75, 0x00, 0xc0, 0xd3, 0xf0, 0x05, 0xd0, 0xd3, 0x15, 0x08, 0xe0, 0x87, 0xaa, 0x75, 0x00, 0x27, 0x27, 0x66, 0x01, 0x43, 0xf0, 0x20, 0x1a, 0xd3, 0x72, 0x73, 0x02, 0x53, 0xf4, 0x04, 0x5a, 0x53, 0x85, 0xc5, 0x2a, 0x53, 0x2e, 0xde, 0xa3  ]
+      arch: "riscv"
+      options: [ CS_OPT_DETAIL, CS_MODE_RISCV32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "lui s0, 3"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x3
+                access: CS_AC_READ
+      -
+        asm_text: "auipc t0, 8"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x8
+                access: CS_AC_READ
+      -
+        asm_text: "jal 8"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: 0x8
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_CALL ]
+      -
+        asm_text: "jal -0x10"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: -0x10
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_CALL ]
+      -
+        asm_text: "jalr ra, a0, 4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ra
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x4
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_CALL ]
+      -
+        asm_text: "jalr ra, zero, -4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ra
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: zero
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: -4
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_CALL ]
+      -
+        asm_text: "beq sp, tp, 0xa"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: tp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xa
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+      -
+        asm_text: "bne gp, t1, -6"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: gp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: -6
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+      -
+        asm_text: "blt t2, s1, 0x14"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x14
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+      -
+        asm_text: "bge a0, a1, 6"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x6
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+      -
+        asm_text: "bltu a2, a3, 0xa"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: a3
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xa
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+      -
+        asm_text: "bgeu a4, a5, 0xc"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: a5
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xc
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+      -
+        asm_text: "lb a6, 1(a7)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a6
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: a7
+                mem_disp: 0x1
+                access: CS_AC_READ
+      -
+        asm_text: "lh s2, 4(s3)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: s3
+                mem_disp: 0x4
+                access: CS_AC_READ
+      -
+        asm_text: "lw s4, 6(s5)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s4
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: s5
+                mem_disp: 0x6
+                access: CS_AC_READ
+      -
+        asm_text: "lbu s6, 0x12(s7)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s6
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: s7
+                mem_disp: 0x12
+                access: CS_AC_READ
+      -
+        asm_text: "lhu s8, 0x18(s9)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s8
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: s9
+                mem_disp: 0x18
+                access: CS_AC_READ
+      -
+        asm_text: "sb s10, 0x2c(s11)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s10
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: s11
+                mem_disp: 0x2c
+                access: CS_AC_WRITE
+      -
+        asm_text: "sh t3, 0x34(t4)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t3
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: t4
+                mem_disp: 0x34
+                access: CS_AC_WRITE
+      -
+        asm_text: "sb t5, 0x1e(t6)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t5
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: t6
+                mem_disp: 0x1e
+                access: CS_AC_WRITE
+      -
+        asm_text: "addi ra, zero, 0xe"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ra
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: zero
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xe
+                access: CS_AC_READ
+      -
+        asm_text: "slti sp, gp, 0x10"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: gp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x10
+                access: CS_AC_READ
+      -
+        asm_text: "sltiu tp, t0, 0x7d0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: tp
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x7d0
+                access: CS_AC_READ
+      -
+        asm_text: "xori t1, t2, -0x230"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: -0x230
+                access: CS_AC_READ
+      -
+        asm_text: "ori s0, s1, 0x12c"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x12c
+                access: CS_AC_READ
+      -
+        asm_text: "andi a0, a1, 0xc8"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xc8
+                access: CS_AC_READ
+      -
+        asm_text: "slli a2, a3, 0x1e"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a3
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x1e
+                access: CS_AC_READ
+      -
+        asm_text: "srli a4, a5, 0x19"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a5
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x19
+                access: CS_AC_READ
+      -
+        asm_text: "srai a6, a7, 0xf"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a6
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a7
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xf
+                access: CS_AC_READ
+      -
+        asm_text: "add s2, s3, s4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s3
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s4
+                access: CS_AC_READ
+      -
+        asm_text: "sub s5, s6, s7"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s7
+                access: CS_AC_READ
+      -
+        asm_text: "slt s8, s9, s10"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s8
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s9
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s10
+                access: CS_AC_READ
+      -
+        asm_text: "sltu s11, t3, t4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s11
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t3
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: t4
+                access: CS_AC_READ
+      -
+        asm_text: "sra tp, t0, t1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: tp
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_READ
+      -
+        asm_text: "xor t2, s0, s1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+      -
+        asm_text: "or a0, a1, a2"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_READ
+      -
+        asm_text: "and a3, a4, a5"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a3
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: a5
+                access: CS_AC_READ
+      -
+        asm_text: "srl s1, s2, s3"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s3
+                access: CS_AC_READ
+      -
+        asm_text: "srl ra, sp, gp"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ra
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: gp
+                access: CS_AC_READ
+      -
+        asm_text: "sll t5, t6, zero"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: zero
+                access: CS_AC_READ
+      -
+        asm_text: "csrrw a0, mcycle, s0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_READ
+      -
+        asm_text: "csrrwi a3, sstatus, 0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a3
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+      -
+        asm_text: "mul a0, s6, s7"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s7
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTM ]
+      -
+        asm_text: "div a1, s8, s9"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s8
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s9
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTM ]
+      -
+        asm_text: "rem a2, s10, s11"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s10
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s11
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTM ]
+      -
+        asm_text: "lr.w s0, (t0)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: t0
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTA ]
+      -
+        asm_text: "sc.w t2, t1, (a0)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a0
+                access: CS_AC_WRITE
+          groups: [ RISCV_GRP_HASSTDEXTA ]
+      -
+        asm_text: "amoadd.w a4, s2, (t5)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: t5
+                access: CS_AC_READ_WRITE
+          groups: [ RISCV_GRP_HASSTDEXTA ]
+      -
+        asm_text: "fmadd.s ft0, ft1, ft2, ft3"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft3
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "fadd.s ft5, ft6, ft7"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft7
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "fsqrt.s fs0, fs1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fs1
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "fmin.s fa0, fa1, fa2"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: fa2
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "feq.s t3, ft8, ft9"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t3
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft8
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft9
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "fmv.w.x fs1, a1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "fmv.x.w a2, fa0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "fcvt.w.s a0, ft0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft0
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "fcvt.s.w ft1, a1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "fclass.s a1, fa6"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa6
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "flw fs5, 7(a1)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: a1
+                mem_disp: 0x7
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "fsw fs6, 0xe(a2)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a2
+                mem_disp: 0xe
+                access: CS_AC_WRITE
+          groups: [ RISCV_GRP_HASSTDEXTF ]
+      -
+        asm_text: "fmadd.d ft0, ft1, ft2, ft3"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft3
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "fadd.d ft5, ft6, ft7"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft7
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "fsqrt.d fs0, fs1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fs1
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "fmin.d fa0, fa1, fa2"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: fa2
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "feq.d t3, ft8, ft9"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t3
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft8
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft9
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD ]
+  -
+    input:
+      bytes: [ 0x13, 0x04, 0xa8, 0x7a, 0xbb, 0x07, 0x9c, 0x02, 0xbb, 0x40, 0x5d, 0x02, 0x3b, 0x63, 0xb7, 0x03, 0x2f, 0xb4, 0x02, 0x10, 0xaf, 0x33, 0x65, 0x18, 0x2f, 0x37, 0x2f, 0x01, 0x53, 0x75, 0x20, 0xc0, 0xd3, 0xf0, 0x25, 0xd0, 0xd3, 0x84, 0x05, 0xf2, 0x53, 0x06, 0x05, 0xe2, 0x53, 0x75, 0x00, 0xc2, 0xd3, 0x80, 0x05, 0xd2, 0xd3, 0x15, 0x08, 0xe2, 0x87, 0xba, 0x75, 0x00, 0x27, 0x37, 0x66, 0x01  ]
+      arch: "riscv"
+      options: [ CS_OPT_DETAIL, CS_MODE_RISCV64 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "addi s0, a6, 0x7aa"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x7aa
+                access: CS_AC_READ
+      -
+        asm_text: "mulw a5, s8, s1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s8
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTM, RISCV_GRP_ISRV64 ]
+      -
+        asm_text: "divw ra, s10, t0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ra
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s10
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: t0
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTM, RISCV_GRP_ISRV64 ]
+      -
+        asm_text: "remw t1, a4, s11"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s11
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTM, RISCV_GRP_ISRV64 ]
+      -
+        asm_text: "lr.d s0, (t0)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: t0
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTA, RISCV_GRP_ISRV64 ]
+      -
+        asm_text: "sc.d t2, t1, (a0)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a0
+                access: CS_AC_WRITE
+          groups: [ RISCV_GRP_HASSTDEXTA, RISCV_GRP_ISRV64 ]
+      -
+        asm_text: "amoadd.d a4, s2, (t5)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: t5
+                access: CS_AC_READ_WRITE
+          groups: [ RISCV_GRP_HASSTDEXTA, RISCV_GRP_ISRV64 ]
+      -
+        asm_text: "fcvt.l.s a0, ft0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft0
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF, RISCV_GRP_ISRV64 ]
+      -
+        asm_text: "fcvt.s.l ft1, a1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTF, RISCV_GRP_ISRV64 ]
+      -
+        asm_text: "fmv.d.x fs1, a1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD, RISCV_GRP_ISRV64 ]
+      -
+        asm_text: "fmv.x.d a2, fa0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD, RISCV_GRP_ISRV64 ]
+      -
+        asm_text: "fcvt.w.d a0, ft0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft0
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "fcvt.d.w ft1, a1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "fclass.d a1, fa6"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa6
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "fld fs5, 7(a1)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: a1
+                mem_disp: 0x7
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "fsd fs6, 0xe(a2)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a2
+                mem_disp: 0xe
+                access: CS_AC_WRITE
+          groups: [ RISCV_GRP_HASSTDEXTD ]
+  -
+    input:
+      bytes: [ 0xe8, 0x1f, 0x7d, 0x61, 0x80, 0x25, 0x00, 0x46, 0x88, 0xa2, 0x04, 0xcb, 0x55, 0x13, 0xf2, 0x93, 0x5d, 0x45, 0x19, 0x80, 0x15, 0x68, 0x2a, 0xa4, 0x62, 0x24, 0xa6, 0xff, 0x2a, 0x65, 0x76, 0x86, 0x65, 0xdd, 0x01, 0x00, 0xfd, 0xaf, 0x82, 0x82, 0x11, 0x20, 0x82, 0x94  ]
+      arch: "riscv"
+      options: [ CS_OPT_DETAIL, CS_MODE_RISCVC ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "c.addi4spn a0, sp, 0x3fc"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x3fc
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.addi16sp sp, 0x1f0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_READ_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x1f0
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.fld fs0, 8(a1)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: a1
+                mem_disp: 0x8
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "c.lw s0, 8(a2)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: a2
+                mem_disp: 0x8
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.fsd fa0, 0(a3)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a3
+                access: CS_AC_WRITE
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "c.sw s1, 0x10(a4)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a4
+                mem_disp: 0x10
+                access: CS_AC_WRITE
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.addi t1, -0xb"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_READ_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: -0xb
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.add t2, t3"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_READ_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t3
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.li a0, 0x17"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x17
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.srli s0, 6"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_READ_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x6
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.lui a6, 5"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a6
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x5
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.fsdsp fa0, 8(sp)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: sp
+                mem_disp: 0x8
+                access: CS_AC_WRITE
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "c.fldsp fs0, 0x18(sp)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: sp
+                mem_disp: 0x18
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTD ]
+      -
+        asm_text: "c.fswsp fs1, 0xfc(sp)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xfc
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_WRITE
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTF, RISCV_GRP_ISRV32 ]
+      -
+        asm_text: "c.flwsp fa0, 0x88(sp)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x88
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTF, RISCV_GRP_ISRV32 ]
+      -
+        asm_text: "c.mv a2, t4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t4
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.beqz a0, -8"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: -8
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+      -
+        asm_text: "c.nop"
+        details:
+          groups: [ RISCV_GRP_HASSTDEXTC ]
+      -
+        asm_text: "c.j 0x7fe"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: 0x7fe
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_JUMP ]
+      -
+        asm_text: "c.jr t0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t0
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_JUMP ]
+      -
+        asm_text: "c.jal 4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: 0x4
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_ISRV32, RISCV_GRP_CALL ]
+      -
+        asm_text: "c.jalr s1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_CALL ]
+  -
+    input:
+      bytes: [ 0x37,0x34,0x00,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lui s0, 3"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x3
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x97,0x82,0x00,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "auipc t0, 8"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x8
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xef,0x00,0x80,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jal 8"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: 0x8
+                access: CS_AC_READ
+          groups: [ call ]
+  -
+    input:
+      bytes: [ 0xef,0xf0,0x1f,0xff ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jal -0x10"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: -0x10
+                access: CS_AC_READ
+          groups: [ call ]
+  -
+    input:
+      bytes: [ 0xe7,0x00,0x45,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jalr ra, a0, 4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ra
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x4
+                access: CS_AC_READ
+          groups: [ call ]
+  -
+    input:
+      bytes: [ 0xe7,0x00,0xc0,0xff ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jalr ra, zero, -4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ra
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: zero
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: -4
+                access: CS_AC_READ
+          groups: [ call ]
+  -
+    input:
+      bytes: [ 0x63,0x05,0x41,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "beq sp, tp, 0xa"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: tp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xa
+                access: CS_AC_READ
+          groups: [ branch_relative, jump ]
+  -
+    input:
+      bytes: [ 0xe3,0x9d,0x61,0xfe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bne gp, t1, -6"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: gp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: -6
+                access: CS_AC_READ
+          groups: [ branch_relative, jump ]
+  -
+    input:
+      bytes: [ 0x63,0xca,0x93,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "blt t2, s1, 0x14"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x14
+                access: CS_AC_READ
+          groups: [ branch_relative, jump ]
+  -
+    input:
+      bytes: [ 0x63,0x53,0xb5,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bge a0, a1, 6"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x6
+                access: CS_AC_READ
+          groups: [ branch_relative, jump ]
+  -
+    input:
+      bytes: [ 0x63,0x65,0xd6,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bltu a2, a3, 0xa"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: a3
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xa
+                access: CS_AC_READ
+          groups: [ branch_relative, jump ]
+  -
+    input:
+      bytes: [ 0x63,0x76,0xf7,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bgeu a4, a5, 0xc"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: a5
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xc
+                access: CS_AC_READ
+          groups: [ branch_relative, jump ]
+  -
+    input:
+      bytes: [ 0x03,0x88,0x18,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lb a6, 1(a7)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a6
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: a7
+                mem_disp: 0x1
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x03,0x99,0x49,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lh s2, 4(s3)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: s3
+                mem_disp: 0x4
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x03,0xaa,0x6a,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lw s4, 6(s5)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s4
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: s5
+                mem_disp: 0x6
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x03,0xcb,0x2b,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lbu s6, 0x12(s7)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s6
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: s7
+                mem_disp: 0x12
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x03,0xdc,0x8c,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lhu s8, 0x18(s9)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s8
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: s9
+                mem_disp: 0x18
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x23,0x86,0xad,0x03 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sb s10, 0x2c(s11)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s10
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: s11
+                mem_disp: 0x2c
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x23,0x9a,0xce,0x03 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sh t3, 0x34(t4)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t3
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: t4
+                mem_disp: 0x34
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x23,0x8f,0xef,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sb t5, 0x1e(t6)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t5
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: t6
+                mem_disp: 0x1e
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x93,0x00,0xe0,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "addi ra, zero, 0xe"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ra
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: zero
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xe
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x13,0xa1,0x01,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "slti sp, gp, 0x10"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: gp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x10
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x13,0xb2,0x02,0x7d ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sltiu tp, t0, 0x7d0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: tp
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x7d0
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x13,0xc3,0x03,0xdd ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "xori t1, t2, -0x230"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: -0x230
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x13,0xe4,0xc4,0x12 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ori s0, s1, 0x12c"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x12c
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x13,0xf5,0x85,0x0c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "andi a0, a1, 0xc8"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xc8
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x13,0x96,0xe6,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "slli a2, a3, 0x1e"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a3
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x1e
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x13,0xd7,0x97,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "srli a4, a5, 0x19"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a5
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x19
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x13,0xd8,0xf8,0x40 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "srai a6, a7, 0xf"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a6
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a7
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xf
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x33,0x89,0x49,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "add s2, s3, s4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s3
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s4
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xb3,0x0a,0x7b,0x41 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sub s5, s6, s7"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s7
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x33,0xac,0xac,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "slt s8, s9, s10"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s8
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s9
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s10
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xb3,0x3d,0xde,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sltu s11, t3, t4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s11
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t3
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: t4
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x33,0xd2,0x62,0x40 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sra tp, t0, t1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: tp
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xb3,0x43,0x94,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "xor t2, s0, s1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x33,0xe5,0xc5,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "or a0, a1, a2"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xb3,0x76,0xf7,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "and a3, a4, a5"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a3
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: a5
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xb3,0x54,0x39,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "srl s1, s2, s3"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s3
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xb3,0x50,0x31,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "srl ra, sp, gp"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ra
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: gp
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x33,0x9f,0x0f,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sll t5, t6, zero"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: zero
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x73,0x15,0x04,0xb0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "csrrw a0, mcycle, s0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xf3,0x56,0x00,0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "csrrwi a3, sstatus, 0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a3
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x33,0x05,0x7b,0x03 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mul a0, s6, s7"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s7
+                access: CS_AC_READ
+          groups: [ hasStdExtM ]
+  -
+    input:
+      bytes: [ 0xb3,0x45,0x9c,0x03 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "div a1, s8, s9"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s8
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s9
+                access: CS_AC_READ
+          groups: [ hasStdExtM ]
+  -
+    input:
+      bytes: [ 0x33,0x66,0xbd,0x03 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rem a2, s10, s11"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s10
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s11
+                access: CS_AC_READ
+          groups: [ hasStdExtM ]
+  -
+    input:
+      bytes: [ 0x2f,0xa4,0x02,0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lr.w s0, (t0)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: t0
+                access: CS_AC_READ
+          groups: [ hasStdExtA ]
+  -
+    input:
+      bytes: [ 0xaf,0x23,0x65,0x18 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sc.w t2, t1, (a0)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a0
+                access: CS_AC_WRITE
+          groups: [ hasStdExtA ]
+  -
+    input:
+      bytes: [ 0x2f,0x27,0x2f,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "amoadd.w a4, s2, (t5)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: t5
+                access: CS_AC_READ_WRITE
+          groups: [ hasStdExtA ]
+  -
+    input:
+      bytes: [ 0x43,0xf0,0x20,0x18 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmadd.s ft0, ft1, ft2, ft3"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft3
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0xd3,0x72,0x73,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fadd.s ft5, ft6, ft7"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft7
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0x53,0xf4,0x04,0x58 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fsqrt.s fs0, fs1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fs1
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0x53,0x85,0xc5,0x28 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmin.s fa0, fa1, fa2"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: fa2
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0x53,0x2e,0xde,0xa1 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "feq.s t3, ft8, ft9"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t3
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft8
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft9
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0xd3,0x84,0x05,0xf0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmv.w.x fs1, a1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0x53,0x06,0x05,0xe0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmv.x.w a2, fa0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0x53,0x75,0x00,0xc0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fcvt.w.s a0, ft0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft0
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0xd3,0xf0,0x05,0xd0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fcvt.s.w ft1, a1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0xd3,0x15,0x08,0xe0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fclass.s a1, fa6"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa6
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0x87,0xaa,0x75,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "flw fs5, 7(a1)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: a1
+                mem_disp: 0x7
+                access: CS_AC_READ
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0x27,0x27,0x66,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fsw fs6, 0xe(a2)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a2
+                mem_disp: 0xe
+                access: CS_AC_WRITE
+          groups: [ hasStdExtF ]
+  -
+    input:
+      bytes: [ 0x43,0xf0,0x20,0x1a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmadd.d ft0, ft1, ft2, ft3"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft3
+                access: CS_AC_READ
+          groups: [ hasStdExtD ]
+  -
+    input:
+      bytes: [ 0xd3,0x72,0x73,0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fadd.d ft5, ft6, ft7"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft7
+                access: CS_AC_READ
+          groups: [ hasStdExtD ]
+  -
+    input:
+      bytes: [ 0x53,0xf4,0x04,0x5a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fsqrt.d fs0, fs1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fs1
+                access: CS_AC_READ
+          groups: [ hasStdExtD ]
+  -
+    input:
+      bytes: [ 0x53,0x85,0xc5,0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmin.d fa0, fa1, fa2"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: fa2
+                access: CS_AC_READ
+          groups: [ hasStdExtD ]
+  -
+    input:
+      bytes: [ 0x53,0x2e,0xde,0xa3 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "feq.d t3, ft8, ft9"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t3
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft8
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: ft9
+                access: CS_AC_READ
+          groups: [ hasStdExtD ]
+  -
+    input:
+      bytes: [ 0x13,0x04,0xa8,0x7a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "addi s0, a6, 0x7aa"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x7aa
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0xbb,0x07,0x9c,0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mulw a5, s8, s1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s8
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+          groups: [ hasStdExtM, isrv64 ]
+  -
+    input:
+      bytes: [ 0xbb,0x40,0x5d,0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "divw ra, s10, t0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ra
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s10
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: t0
+                access: CS_AC_READ
+          groups: [ hasStdExtM, isrv64 ]
+  -
+    input:
+      bytes: [ 0x3b,0x63,0xb7,0x03 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "remw t1, a4, s11"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: s11
+                access: CS_AC_READ
+          groups: [ hasStdExtM, isrv64 ]
+  -
+    input:
+      bytes: [ 0x2f,0xb4,0x02,0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lr.d s0, (t0)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: t0
+                access: CS_AC_READ
+          groups: [ hasStdExtA, isrv64 ]
+  -
+    input:
+      bytes: [ 0xaf,0x33,0x65,0x18 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sc.d t2, t1, (a0)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a0
+                access: CS_AC_WRITE
+          groups: [ hasStdExtA, isrv64 ]
+  -
+    input:
+      bytes: [ 0x2f,0x37,0x2f,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "amoadd.d a4, s2, (t5)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a4
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: s2
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: t5
+                access: CS_AC_READ_WRITE
+          groups: [ hasStdExtA, isrv64 ]
+  -
+    input:
+      bytes: [ 0x53,0x75,0x20,0xc0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fcvt.l.s a0, ft0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft0
+                access: CS_AC_READ
+          groups: [ hasStdExtF, isrv64 ]
+  -
+    input:
+      bytes: [ 0xd3,0xf0,0x25,0xd0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fcvt.s.l ft1, a1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+          groups: [ hasStdExtF, isrv64 ]
+  -
+    input:
+      bytes: [ 0xd3,0x84,0x05,0xf2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmv.d.x fs1, a1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+          groups: [ hasStdExtD, isrv64 ]
+  -
+    input:
+      bytes: [ 0x53,0x06,0x05,0xe2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmv.x.d a2, fa0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_READ
+          groups: [ hasStdExtD, isrv64 ]
+  -
+    input:
+      bytes: [ 0x53,0x75,0x00,0xc2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fcvt.w.d a0, ft0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: ft0
+                access: CS_AC_READ
+          groups: [ hasStdExtD ]
+  -
+    input:
+      bytes: [ 0xd3,0x80,0x05,0xd2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fcvt.d.w ft1, a1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: ft1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_READ
+          groups: [ hasStdExtD ]
+  -
+    input:
+      bytes: [ 0xd3,0x15,0x08,0xe2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fclass.d a1, fa6"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a1
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: fa6
+                access: CS_AC_READ
+          groups: [ hasStdExtD ]
+  -
+    input:
+      bytes: [ 0x87,0xba,0x75,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fld fs5, 7(a1)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs5
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: a1
+                mem_disp: 0x7
+                access: CS_AC_READ
+          groups: [ hasStdExtD ]
+  -
+    input:
+      bytes: [ 0x27,0x37,0x66,0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fsd fs6, 0xe(a2)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs6
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a2
+                mem_disp: 0xe
+                access: CS_AC_WRITE
+          groups: [ hasStdExtD ]
+  -
+    input:
+      bytes: [ 0xe8,0x1f ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.addi4spn a0, sp, 0x3fc"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0x3fc
+                access: CS_AC_READ
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0x7d,0x61 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.addi16sp sp, 0x1f0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_READ_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x1f0
+                access: CS_AC_READ
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0x80,0x25 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.fld fs0, 8(a1)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: a1
+                mem_disp: 0x8
+                access: CS_AC_READ
+          groups: [ hasStdExtC, hasStdExtD ]
+  -
+    input:
+      bytes: [ 0x00,0x46 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.lw s0, 8(a2)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: a2
+                mem_disp: 0x8
+                access: CS_AC_READ
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0x88,0xa2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.fsd fa0, 0(a3)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a3
+                access: CS_AC_WRITE
+          groups: [ hasStdExtC, hasStdExtD ]
+  -
+    input:
+      bytes: [ 0x04,0xcb ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.sw s1, 0x10(a4)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: a4
+                mem_disp: 0x10
+                access: CS_AC_WRITE
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0x55,0x13 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.addi t1, -0xb"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t1
+                access: CS_AC_READ_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: -0xb
+                access: CS_AC_READ
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0xf2,0x93 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.add t2, t3"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t2
+                access: CS_AC_READ_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t3
+                access: CS_AC_READ
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0x5d,0x45 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.li a0, 0x17"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x17
+                access: CS_AC_READ
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0x19,0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.srli s0, 6"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s0
+                access: CS_AC_READ_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x6
+                access: CS_AC_READ
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0x15,0x68 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.lui a6, 5"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a6
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x5
+                access: CS_AC_READ
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0x2a,0xa4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.fsdsp fa0, 8(sp)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_MEM
+                mem_base: sp
+                mem_disp: 0x8
+                access: CS_AC_WRITE
+          groups: [ hasStdExtC, hasStdExtD ]
+  -
+    input:
+      bytes: [ 0x62,0x24 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.fldsp fs0, 0x18(sp)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_MEM
+                mem_base: sp
+                mem_disp: 0x18
+                access: CS_AC_READ
+          groups: [ hasStdExtC, hasStdExtD ]
+  -
+    input:
+      bytes: [ 0xa6,0xff ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.fswsp fs1, 0xfc(sp)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fs1
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: 0xfc
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_WRITE
+          groups: [ hasStdExtC, hasStdExtF, isrv32 ]
+  -
+    input:
+      bytes: [ 0x2a,0x65 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.flwsp fa0, 0x88(sp)"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: fa0
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_IMM
+                imm: 0x88
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_REG
+                reg: sp
+                access: CS_AC_READ
+          groups: [ hasStdExtC, hasStdExtF, isrv32 ]
+  -
+    input:
+      bytes: [ 0x76,0x86 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.mv a2, t4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a2
+                access: CS_AC_WRITE
+              -
+                type: RISCV_OP_REG
+                reg: t4
+                access: CS_AC_READ
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0x65,0xdd ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.beqz a0, -8"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a0
+                access: CS_AC_READ
+              -
+                type: RISCV_OP_IMM
+                imm: -0x8
+                access: CS_AC_READ
+          groups: [ hasStdExtC, branch_relative, jump ]
+  -
+    input:
+      bytes: [ 0x01,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.nop"
+        details:
+          groups: [ hasStdExtC ]
+  -
+    input:
+      bytes: [ 0xfd,0xaf ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.j 0x7fe"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: 0x7fe
+                access: CS_AC_READ
+          groups: [ hasStdExtC, jump ]
+  -
+    input:
+      bytes: [ 0x82,0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.jr t0"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t0
+                access: CS_AC_READ
+          groups: [ hasStdExtC, jump ]
+  -
+    input:
+      bytes: [ 0x11,0x20 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.jal 4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: 0x4
+                access: CS_AC_READ
+          groups: [ hasStdExtC, isrv32, call ]
+  -
+    input:
+      bytes: [ 0x82,0x94 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.jalr s1"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: s1
+                access: CS_AC_READ
+          groups: [ hasStdExtC, call ]

@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xfc, 0xff, 0x7f, 0x1e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcsel d28, d31, d31, nv"
+
+  -
+    input:
+      bytes: [ 0x00, 0xf0, 0x80, 0x9a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "csel x0, x0, x0, nv"
+
+  -
+    input:
+      bytes: [ 0x00, 0xf0, 0x40, 0xfa ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ccmp x0, x0, #0, nv"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0x00, 0x54 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "b.nv #0"

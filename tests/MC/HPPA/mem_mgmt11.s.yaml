@@ -1,0 +1,217 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x40, 0x40 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "iitlba r1,(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x40, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "iitlbp r1,(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "pitlb r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0x40 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "pitlbe r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0x80 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fic r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fic,m r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0xc0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fice r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x42, 0xe0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fice,m r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x50, 0x40 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "idtlba r1,(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x50, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "idtlbp r1,(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x52, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdtlb r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x52, 0x40 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdtlbe r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x52, 0x80 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdc r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x52, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdc,m r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x52, 0xc0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdce r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x52, 0xe0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdce,m r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x53, 0x80 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdc r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x53, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdc,m r1(sr1,rp)"
+  -
+    input:
+      bytes: [ 0x04, 0x22, 0x51, 0x83 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "prober (sr1,r1),rp,r3"
+  -
+    input:
+      bytes: [ 0x04, 0x30, 0x71, 0x83 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "proberi (sr1,r1),0x10,r3"
+  -
+    input:
+      bytes: [ 0x04, 0x22, 0x51, 0xc3 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "probew (sr1,r1),rp,r3"
+  -
+    input:
+      bytes: [ 0x04, 0x30, 0x71, 0xc3 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "probewi (sr1,r1),0x10,r3"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x53, 0x43 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "lpa r1(sr1,rp),r3"
+  -
+    input:
+      bytes: [ 0x04, 0x41, 0x53, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "lci r1(sr1,rp),r3"

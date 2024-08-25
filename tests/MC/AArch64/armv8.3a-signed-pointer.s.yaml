@@ -1,0 +1,910 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x21, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, APIAKeyLo_EL1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x21, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, APIAKeyHi_EL1"
+
+  -
+    input:
+      bytes: [ 0x40, 0x21, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, APIBKeyLo_EL1"
+
+  -
+    input:
+      bytes: [ 0x60, 0x21, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, APIBKeyHi_EL1"
+
+  -
+    input:
+      bytes: [ 0x00, 0x22, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, APDAKeyLo_EL1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x22, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, APDAKeyHi_EL1"
+
+  -
+    input:
+      bytes: [ 0x40, 0x22, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, APDBKeyLo_EL1"
+
+  -
+    input:
+      bytes: [ 0x60, 0x22, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, APDBKeyHi_EL1"
+
+  -
+    input:
+      bytes: [ 0x00, 0x23, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, APGAKeyLo_EL1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x23, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, APGAKeyHi_EL1"
+
+  -
+    input:
+      bytes: [ 0x00, 0x21, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr APIAKeyLo_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x21, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr APIAKeyHi_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x40, 0x21, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr APIBKeyLo_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x60, 0x21, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr APIBKeyHi_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0x22, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr APDAKeyLo_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x22, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr APDAKeyHi_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x40, 0x22, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr APDBKeyLo_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x60, 0x22, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr APDBKeyHi_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0x23, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr APGAKeyLo_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x23, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr APGAKeyHi_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0xff, 0x20, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "xpaclri"
+
+  -
+    input:
+      bytes: [ 0xff, 0x20, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "xpaclri"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x21, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacia1716"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x21, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacia1716"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x21, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacib1716"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x21, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacib1716"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x21, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autia1716"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x21, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autia1716"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x21, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autib1716"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x21, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autib1716"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "paciaz"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "paciaz"
+
+  -
+    input:
+      bytes: [ 0x3f, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "paciasp"
+
+  -
+    input:
+      bytes: [ 0x3f, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "paciasp"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacibz"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacibz"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacibsp"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacibsp"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autiaz"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autiaz"
+
+  -
+    input:
+      bytes: [ 0xbf, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autiasp"
+
+  -
+    input:
+      bytes: [ 0xbf, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autiasp"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autibz"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autibz"
+
+  -
+    input:
+      bytes: [ 0xff, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autibsp"
+
+  -
+    input:
+      bytes: [ 0xff, 0x23, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autibsp"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacia x0, x1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autia x0, x1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x08, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacda x0, x1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x18, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autda x0, x1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacib x0, x1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x14, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autib x0, x1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x0c, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacdb x0, x1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x1c, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autdb x0, x1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0xc2, 0x9a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacga x0, x1, x2"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x23, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "paciza x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x33, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autiza x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x2b, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacdza x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x3b, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autdza x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x27, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacizb x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x37, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autizb x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x2f, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacdzb x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x3f, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "autdzb x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x43, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "xpaci x0"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x47, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "xpacd x0"
+
+  -
+    input:
+      bytes: [ 0x01, 0x08, 0x1f, 0xd7 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "braa x0, x1"
+
+  -
+    input:
+      bytes: [ 0x01, 0x0c, 0x1f, 0xd7 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "brab x0, x1"
+
+  -
+    input:
+      bytes: [ 0x01, 0x08, 0x3f, 0xd7 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "blraa x0, x1"
+
+  -
+    input:
+      bytes: [ 0x01, 0x0c, 0x3f, 0xd7 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "blrab x0, x1"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x08, 0x1f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "braaz x0"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x0c, 0x1f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "brabz x0"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x08, 0x3f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "blraaz x0"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x0c, 0x3f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "blrabz x0"
+
+  -
+    input:
+      bytes: [ 0xff, 0x0b, 0x5f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "retaa"
+
+  -
+    input:
+      bytes: [ 0xff, 0x0f, 0x5f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "retab"
+
+  -
+    input:
+      bytes: [ 0xff, 0x0b, 0x9f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "eretaa"
+
+  -
+    input:
+      bytes: [ 0xff, 0x0f, 0x9f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "eretab"
+
+  -
+    input:
+      bytes: [ 0x20, 0xf4, 0x3f, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldraa x0, [x1, #4088]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x60, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldraa x0, [x1, #-4096]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xf4, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrab x0, [x1, #4088]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0xe0, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrab x0, [x1, #-4096]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xfc, 0x3f, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldraa x0, [x1, #4088]!"
+
+  -
+    input:
+      bytes: [ 0x20, 0x0c, 0x60, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldraa x0, [x1, #-4096]!"
+
+  -
+    input:
+      bytes: [ 0x20, 0xfc, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrab x0, [x1, #4088]!"
+
+  -
+    input:
+      bytes: [ 0x20, 0x0c, 0xe0, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrab x0, [x1, #-4096]!"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x20, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldraa x0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0xa0, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrab x0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x0c, 0x20, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldraa x0, [x1, #0]!"
+
+  -
+    input:
+      bytes: [ 0x20, 0x0c, 0xa0, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrab x0, [x1, #0]!"
+
+  -
+    input:
+      bytes: [ 0xff, 0x0f, 0x60, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldraa xzr, [sp, #-4096]!"
+
+  -
+    input:
+      bytes: [ 0xff, 0x0f, 0xe0, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrab xzr, [sp, #-4096]!"
