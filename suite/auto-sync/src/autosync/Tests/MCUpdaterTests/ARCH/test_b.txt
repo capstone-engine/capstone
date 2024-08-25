@@ -1,0 +1,9 @@
+# The RUN line parsing
+# RUN: llvm-mc --disassemble -triple=arm64 < %s | FileCheck %s
+
+
+[0x00,0x0a,0x31,0xd5]
+# CHECK:   mrs x0, TRCRSR
+
+[0x80,0x08,0x31,0xd5]
+# CHECK:   mrs x0, TRCEXTINSELR

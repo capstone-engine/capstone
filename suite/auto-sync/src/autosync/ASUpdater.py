@@ -73,7 +73,11 @@ class ASUpdater:
             self.inc_list,
         )
         self.mc_updater = MCUpdater(
-            self.arch, get_path("{LLVM_MC_TEST_DIR}"), None, None
+            self.arch,
+            get_path("{LLVM_MC_TEST_DIR}"),
+            None,
+            None,
+            True if self.arch == "ARM" else False,
         )
 
     def clean_build_dir(self) -> None:
@@ -192,6 +196,7 @@ class ASUpdater:
             log.info(f"Copied {i} files")
 
             # MC tests
+            i = 0
             mc_dir = get_path("{MC_DIR}").joinpath(self.arch)
             log.info(f"Copy MC test files to {mc_dir}")
             for file in get_path("{MCUPDATER_OUT_DIR}").iterdir():
