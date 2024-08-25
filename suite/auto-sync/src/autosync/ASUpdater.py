@@ -21,7 +21,7 @@ from autosync.Helper import convert_loglevel, fail_exit, get_path
 from autosync.IncGenerator import IncGenerator
 
 from autosync.MCUpdater import MCUpdater
-
+from autosync.Targets import ARCH_LLVM_NAMING
 
 class USteps(StrEnum):
     INC_GEN = "IncGen"
@@ -216,7 +216,7 @@ def parse_args() -> argparse.Namespace:
         "-a",
         dest="arch",
         help="Name of target architecture.",
-        choices=["ARM", "PPC", "AArch64", "Alpha", "LoongArch", "Mips"],
+        choices=ARCH_LLVM_NAMING,
         required=True,
     )
     parser.add_argument(
