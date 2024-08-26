@@ -147,7 +147,7 @@ typedef struct cs_arch_config {
 		Sparc_option, \
 		~(CS_MODE_BIG_ENDIAN | CS_MODE_V9), \
 	}
-#define CS_ARCH_CONFIG_SYSZ \
+#define CS_ARCH_CONFIG_SYSTEMZ \
 	{ \
 		SystemZ_global_init, \
 		SystemZ_option, \
@@ -277,8 +277,8 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #else
 	{ NULL, NULL, 0 },
 #endif
-#ifdef CAPSTONE_HAS_SYSZ
-	CS_ARCH_CONFIG_SYSZ,
+#ifdef CAPSTONE_HAS_SYSTEMZ
+	CS_ARCH_CONFIG_SYSTEMZ,
 #else
 	{ NULL, NULL, 0 },
 #endif
@@ -540,7 +540,7 @@ void CAPSTONE_API cs_arch_register_sparc(void)
 }
 
 CAPSTONE_EXPORT
-void CAPSTONE_API cs_arch_register_sysz(void)
+void CAPSTONE_API cs_arch_register_systemz(void)
 {
 #if defined(CAPSTONE_USE_ARCH_REGISTRATION) && defined(CAPSTONE_HAS_SYSZ)
 	CS_ARCH_REGISTER(SYSZ);
@@ -1852,9 +1852,9 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 			break;
-		case CS_ARCH_SYSZ:
-			for (i = 0; i < insn->detail->sysz.op_count; i++) {
-				if (insn->detail->sysz.operands[i].type == (sysz_op_type)op_type)
+		case CS_ARCH_SYSTEMZ:
+			for (i = 0; i < insn->detail->systemz.op_count; i++) {
+				if (insn->detail->systemz.operands[i].type == (systemz_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

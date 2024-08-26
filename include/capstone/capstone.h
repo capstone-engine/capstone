@@ -144,7 +144,7 @@ typedef enum cs_arch {
 	CS_ARCH_X86,		///< X86 architecture (including x86 & x86-64)
 	CS_ARCH_PPC,		///< PowerPC architecture
 	CS_ARCH_SPARC,		///< Sparc architecture
-	CS_ARCH_SYSZ,		///< SystemZ architecture
+	CS_ARCH_SYSTEMZ,	///< SystemZ architecture
 	CS_ARCH_XCORE,		///< XCore architecture
 	CS_ARCH_M68K,		///< 68K architecture
 	CS_ARCH_TMS320C64X,	///< TMS320C64x architecture
@@ -451,12 +451,17 @@ typedef struct cs_detail {
 #else
 		cs_aarch64 aarch64; ///< AArch6464 architecture (aka ARM64)
 #endif
+
+#ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER
+		cs_sysz sysz;   ///< SystemZ architecture
+#else
+		cs_systemz systemz; ///< SystemZ architecture (aka SysZ)
+#endif
 		cs_arm arm;     ///< ARM architecture (including Thumb/Thumb2)
 		cs_m68k m68k;   ///< M68K architecture
 		cs_mips mips;   ///< MIPS architecture
 		cs_ppc ppc;	    ///< PowerPC architecture
 		cs_sparc sparc; ///< Sparc architecture
-		cs_sysz sysz;   ///< SystemZ architecture
 		cs_xcore xcore; ///< XCore architecture
 		cs_tms320c64x tms320c64x;  ///< TMS320C64x architecture
 		cs_m680x m680x; ///< M680X architecture
@@ -591,7 +596,10 @@ void CAPSTONE_API cs_arch_register_powerpc(void);
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_sparc(void);
 CAPSTONE_EXPORT
-void CAPSTONE_API cs_arch_register_sysz(void);
+void CAPSTONE_API cs_arch_register_systemz(void);
+#ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER
+#define cs_arch_register_sysz cs_arch_register_systemz
+#endif
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_xcore(void);
 CAPSTONE_EXPORT

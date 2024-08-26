@@ -146,8 +146,8 @@ static struct {
 	{ "sparc", "Sparc, big endian", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN },
 	{ "sparcv9", "Sparc v9, big endian", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN | CS_MODE_V9 },
 
-	{ "systemz", "SystemZ, big endian", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
-	{ "s390x", "SystemZ s390x, big endian", CS_ARCH_SYSZ, CS_MODE_BIG_ENDIAN },
+	{ "systemz", "SystemZ, big endian", CS_ARCH_SYSTEMZ, CS_MODE_BIG_ENDIAN },
+	{ "s390x", "SystemZ s390x, big endian", CS_ARCH_SYSTEMZ, CS_MODE_BIG_ENDIAN },
 
 	{ "xcore", "xcore, big endian", CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN },
 
@@ -283,7 +283,7 @@ static const char *get_arch_name(cs_arch arch)
 	case CS_ARCH_X86: return "x86";
 	case CS_ARCH_PPC: return "PowerPC";
 	case CS_ARCH_SPARC: return "Sparc";
-	case CS_ARCH_SYSZ: return "SysZ";
+	case CS_ARCH_SYSTEMZ: return "SystemZ";
 	case CS_ARCH_XCORE: return "Xcore";
 	case CS_ARCH_M68K: return "M68K";
 	case CS_ARCH_TMS320C64X: return "TMS320C64X";
@@ -370,8 +370,8 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		case CS_ARCH_SPARC:
 			print_insn_detail_sparc(handle, ins);
 			break;
-		case CS_ARCH_SYSZ:
-			print_insn_detail_sysz(handle, ins);
+		case CS_ARCH_SYSTEMZ:
+			print_insn_detail_systemz(handle, ins);
 			break;
 		case CS_ARCH_XCORE:
 			print_insn_detail_xcore(handle, ins);
@@ -581,8 +581,8 @@ int main(int argc, char **argv)
 					printf("sparc=1 ");
 				}
 
-				if (cs_support(CS_ARCH_SYSZ)) {
-					printf("sysz=1 ");
+				if (cs_support(CS_ARCH_SYSTEMZ)) {
+					printf("systemz=1 ");
 				}
 
 				if (cs_support(CS_ARCH_XCORE)) {
@@ -767,7 +767,7 @@ int main(int argc, char **argv)
 				for (; j < 16; j++) {
 					printf("   ");
 				}
-			} else if (arch == CS_ARCH_SYSZ) {
+			} else if (arch == CS_ARCH_SYSTEMZ) {
 				for (; j < 6; j++) {
 					printf("   ");
 				}
