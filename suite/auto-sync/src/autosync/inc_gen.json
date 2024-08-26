@@ -1,0 +1,53 @@
+{
+  "inc_tables": [
+    {
+      "name": "Disassembler",
+      "tblgen_arg": "--gen-disassembler",
+      "inc_name": "DisassemblerTables",
+      "only_arch": [],
+      "lang": ["CCS", "C++"]
+    },
+    {
+      "name": "AsmWriter",
+      "tblgen_arg": "--gen-asm-writer",
+      "inc_name": "AsmWriter",
+      "only_arch": [],
+      "lang": ["CCS", "C++"]
+    },
+    {
+      "name": "RegisterInfo",
+      "tblgen_arg": "--gen-register-info",
+      "inc_name": "RegisterInfo",
+      "only_arch": [],
+      "lang": ["CCS"]
+    },
+    {
+      "name": "InstrInfo",
+      "tblgen_arg": "--gen-instr-info",
+      "inc_name": "InstrInfo",
+      "only_arch": [],
+      "lang": ["CCS"]
+    },
+    {
+      "name": "SubtargetInfo",
+      "tblgen_arg": "--gen-subtarget",
+      "inc_name": "SubtargetInfo",
+      "only_arch": [],
+      "lang": ["CCS"]
+    },
+    {
+      "name": "Mapping",
+      "tblgen_arg": "--gen-asm-matcher",
+      "inc_name": "",
+      "only_arch": [],
+      "lang": ["CCS"]
+    },
+    {
+      "name": "SystemOperand",
+      "tblgen_arg": "--gen-searchable-tables",
+      "inc_name": "",
+      "only_arch": ["AArch64", "ARM"],
+      "lang": ["CCS"]
+    }
+  ]
+}

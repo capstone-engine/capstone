@@ -9,6 +9,7 @@
     "{VENDOR_DIR}": "{AUTO_SYNC_ROOT}/vendor/",
     "{BUILD_DIR}": "{AUTO_SYNC_ROOT}/build/",
     "{C_INC_OUT_DIR}": "{BUILD_DIR}/llvm_c_inc/",
+    "{INC_GEN_CONF_FILE}": "{AUTO_SYNC_SRC}/inc_gen.json",
     "{CPP_INC_OUT_DIR}": "{BUILD_DIR}/llvm_cpp_inc/",
     "{CPP_TRANSLATOR_DIR}": "{AUTO_SYNC_SRC}/cpptranslator/",
     "{CPP_TRANSLATOR_CONFIG}": "{CPP_TRANSLATOR_DIR}/arch_config.json",
