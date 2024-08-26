@@ -23,6 +23,7 @@ from autosync.IncGenerator import IncGenerator
 from autosync.MCUpdater import MCUpdater
 from autosync.Targets import ARCH_LLVM_NAMING
 
+
 class USteps(StrEnum):
     INC_GEN = "IncGen"
     TRANS = "Translate"
@@ -44,7 +45,7 @@ class ASUpdater:
         steps: list[USteps],
         inc_list: list,
         no_clean: bool,
-        refactor: bool,
+        copy_translated: bool,
         differ_no_auto_apply: bool,
         wait_for_user: bool = True,
     ) -> None:
@@ -63,7 +64,7 @@ class ASUpdater:
             ]
         else:
             self.steps = steps
-        self.refactor = refactor
+        self.copy_translated = copy_translated
         self.differ_no_auto_apply = differ_no_auto_apply
         self.arch_dir = get_path("{CS_ARCH_MODULE_DIR}").joinpath(self.arch)
         if not self.no_clean_build:
@@ -173,36 +174,44 @@ class ASUpdater:
             self.diff()
         if USteps.MC in self.steps:
             self.mc_updater.gen_all()
-        if self.write:
-            # Copy .inc files
-            log.info(f"Copy .inc files to {self.arch_dir}")
-            i = 0
-            arch_header = get_path("{CS_INCLUDE_DIR}").joinpath(
-                f"{self.arch.lower()}.h"
-            )
-            for file in get_path("{C_INC_OUT_DIR}").iterdir():
-                if HeaderPatcher.file_in_main_header(arch_header, file.name):
-                    continue
+        if not self.write:
+            # Done
+            exit(0)
+
+        # Copy .inc files
+        log.info(f"Copy .inc files to {self.arch_dir}")
+        i = 0
+        arch_header = get_path("{CS_INCLUDE_DIR}").joinpath(f"{self.arch.lower()}.h")
+        for file in get_path("{C_INC_OUT_DIR}").iterdir():
+            if HeaderPatcher.file_in_main_header(arch_header, file.name):
+                continue
+            self.copy_files(file, self.arch_dir)
+            i += 1
+        log.info(f"Copied {i} files")
+
+        i = 0
+        if self.copy_translated:
+            # Diffed files
+            log.info(f"Copy translated files to {self.arch_dir}")
+            for file in get_path("{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}").iterdir():
                 self.copy_files(file, self.arch_dir)
                 i += 1
-            log.info(f"Copied {i} files")
-
-            i = 0
+        else:
             # Diffed files
             log.info(f"Copy diffed files to {self.arch_dir}")
             for file in get_path("{CPP_TRANSLATOR_DIFF_OUT_DIR}").iterdir():
                 self.copy_files(file, self.arch_dir)
                 i += 1
-            log.info(f"Copied {i} files")
+        log.info(f"Copied {i} files")
 
-            # MC tests
-            i = 0
-            mc_dir = get_path("{MC_DIR}").joinpath(self.arch)
-            log.info(f"Copy MC test files to {mc_dir}")
-            for file in get_path("{MCUPDATER_OUT_DIR}").iterdir():
-                self.copy_files(file, mc_dir)
-                i += 1
-            log.info(f"Copied {i} files")
+        # MC tests
+        i = 0
+        mc_dir = get_path("{MC_DIR}").joinpath(self.arch)
+        log.info(f"Copy MC test files to {mc_dir}")
+        for file in get_path("{MCUPDATER_OUT_DIR}").iterdir():
+            self.copy_files(file, mc_dir)
+            i += 1
+        log.info(f"Copied {i} files")
 
         exit(0)
 
@@ -278,9 +287,9 @@ def parse_args() -> argparse.Namespace:
         default=["All"],
     )
     parser.add_argument(
-        "--refactor",
-        dest="refactor",
-        help="Sets change update behavior to ease refactoring and new implementations.",
+        "--copy-translated",
+        dest="copy_translated",
+        help="Copy the translated files and not the files produced by the Differ.",
         action="store_true",
     )
     parser.add_argument(
@@ -308,7 +317,7 @@ def main():
         args.steps,
         args.inc_list,
         args.no_clean,
-        args.refactor,
+        args.copy_translated,
         args.no_auto_apply,
         args.wait_for_user,
     )
