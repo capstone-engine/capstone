@@ -370,8 +370,6 @@ def get_SystemZ_includes(filename: str) -> bytes:
         case "SystemZMCTargetDesc.cpp":
             return (
                 b'#include "../../MCInst.h"\n'
-                + b'#include "../../MCInstrInfo.h"\n'
-                + b'#include "../../MCRegisterInfo.h"\n'
                 + b'#include "../../MCRegisterInfo.h"\n\n'
                 + b'#include "SystemZMCTargetDesc.h"\n'
                 + b'#include "SystemZInstPrinter.h"\n\n'
