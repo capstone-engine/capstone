@@ -60,6 +60,7 @@ class LLVM_MC_Command:
             else:
                 self.cmd = re.sub(r"llvm-mc", f"llvm-mc -mattr={self.mattr}", self.cmd)
 
+        log.debug(f"Run: {self.cmd}")
         result = sp.run(self.cmd.split(" "), input=content, capture_output=True)
         return result
 
@@ -141,6 +142,7 @@ class TestFile:
         if mc_output.stderr and not mc_output.stdout:
             # We can still continue. We just ignore the failed cases.
             log.debug(f"llvm-mc cmd stderr: {mc_output.stderr}")
+        log.debug(f"llvm-mc result: {mc_output}")
         text_section = 0  # Counts the .text sections
         asm_pat = f"(?P<asm_text>.+)"
         enc_pat = r"(\[?(?P<enc_bytes>((0x[a-fA-F0-9]{1,2}[, ]{0,2}))+)[^, ]?\]?)"
@@ -318,7 +320,7 @@ class MCUpdater:
         test_files = list()
         n_all = len(mc_cmds)
         for i, mcc in enumerate(mc_cmds):
-            print(f"{i}/{n_all} {mcc.file.name}", flush=True, end="\r")
+            print(f"{i + 1}/{n_all} {mcc.file.name}", flush=True, end="\r")
             test_files.append(
                 TestFile(
                     self.arch,
@@ -357,25 +359,34 @@ class MCUpdater:
     def extract_llvm_mc_cmds(self, cmds: str) -> list[LLVM_MC_Command]:
         log.debug("Parsing llvm-mc commands")
         # Get only the RUN lines which have a show-encoding set.
-        matches = filter(
-            lambda l: (
-                l if re.search(r"^RUN.+(show-encoding|disassemble)[^|]+", l) else None
-            ),
-            cmds.splitlines(),
+        cmd_lines = cmds.splitlines()
+        log.debug(f"NO FILTER: {cmd_lines}")
+        matches = list(
+            filter(
+                lambda l: (
+                    l
+                    if re.search(r"^RUN.+(show-encoding|disassemble)[^|]+", l)
+                    else None
+                ),
+                cmd_lines,
+            )
         )
+        log.debug(f"FILTER RUN: {' '.join(matches)}")
         # Don't add tests which are allowed to fail
-        matches = filter(
-            lambda m: None if re.search(r"not\s+llvm-mc", m) else m, matches
+        matches = list(
+            filter(lambda m: None if re.search(r"not\s+llvm-mc", m) else m, matches)
         )
+        log.debug(f"FILTER not llvm-mc: {' '.join(matches)}")
         # Skip object file tests
-        matches = filter(
-            lambda m: None if re.search(r"filetype=obj", m) else m, matches
+        matches = list(
+            filter(lambda m: None if re.search(r"filetype=obj", m) else m, matches)
         )
+        log.debug(f"FILTER filetype=obj-mc: {' '.join(matches)}")
         # Skip any relocation related tests.
         matches = filter(lambda m: None if re.search(r"reloc", m) else m, matches)
         # Remove 'RUN: at ...' prefix
         matches = map(lambda m: re.sub(r"^RUN: at line \d+: ", "", m), matches)
-        # Remove redirections
+        # Remove redirection
         matches = map(lambda m: re.sub(r"\d>&\d", "", m), matches)
         # Remove unused arguments
         matches = map(lambda m: re.sub(r"-o\s?-", "", m), matches)
@@ -411,6 +422,7 @@ class MCUpdater:
         self.check_prerequisites(test_paths)
         log.info("Generate MC regression tests")
         llvm_mc_cmds = self.run_llvm_lit(test_paths)
+        log.info(f"Got {len(llvm_mc_cmds)} llvm-mc commands to run")
         self.test_files = self.build_test_files(llvm_mc_cmds)
         for slink in self.symbolic_links:
             log.debug(f"Unlink {slink}")
