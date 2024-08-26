@@ -113,7 +113,11 @@ uint16_t readBytes16(MCInst *MI, const uint8_t *Bytes)
 /// @param str The string to append to.
 /// @param str_size The length of @p str
 /// @param src The string to append.
+/// Does nothing if any of the given strings is NULL.
 void append_to_str_lower(char *str, size_t str_size, const char *src) {
+	if (!str || !src) {
+		return;
+	}
 	char *dest = strchr(str, '\0');
 	if (dest - str >= str_size) {
 		assert("str_size does not match actual string length." && 0);
@@ -131,7 +135,11 @@ void append_to_str_lower(char *str, size_t str_size, const char *src) {
 /// @param str The string to append to.
 /// @param str_buf_size Size of buffer @p str.
 /// @param src The string to append.
+/// Does nothing if any of the given strings is NULL.
 void append_to_str(char *str, size_t str_buf_size, const char *src) {
+	if (!str || !src) {
+		return;
+	}
 	if (strlen(str) + strlen(src) + 1 > str_buf_size) {
 		assert("str_size does not match actual string length." && 0);
 		return;
@@ -144,7 +152,11 @@ void append_to_str(char *str, size_t str_buf_size, const char *src) {
 /// and copies all strings into it as str_a + str_b
 /// str_a is passed to realloc and should not be used afterwards.
 /// Returns the result.
+/// Returns NULL in case of failure.
 char *str_append(char *str_a, const char *str_b) {
+	if (!str_a || !str_b) {
+		return NULL;
+	}
 	assert(str_a && str_b);
 	size_t asize = strlen(str_a) + strlen(str_b) + 1;
 	str_a = realloc(str_a, asize);
@@ -154,8 +166,12 @@ char *str_append(char *str_a, const char *str_b) {
 
 /// Returns the given byte sequence @bytes as a string of the
 /// form: 0xXX,0xXX...
+/// Returns NULL in case of failure.
 char *byte_seq_to_str(uint8_t *bytes, size_t len)
 {
+	if (!bytes) {
+		return NULL;
+	}
 	if (len == 0) {
 		return NULL;
 	}
@@ -165,6 +181,9 @@ char *byte_seq_to_str(uint8_t *bytes, size_t len)
 		cs_snprintf(single_byte, sizeof(single_byte), "0x%02" PRIx8 "%s",
 			    bytes[i], i == len - 1 ? "" : ",");
 		s = str_append(s, single_byte);
+		if (!s) {
+			return NULL;
+		}
 	}
 	return s;
 }

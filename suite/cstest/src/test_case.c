@@ -60,6 +60,9 @@ char *test_input_stringify(const TestInput *test_input, const char *postfix)
 	char *msg = cs_mem_calloc(sizeof(char), msg_len);
 	char *byte_seq =
 		byte_seq_to_str(test_input->bytes, test_input->bytes_count);
+	if (!msg) {
+		return NULL;
+	}
 	char opt_seq[128] = { 0 };
 	append_to_str(opt_seq, sizeof(opt_seq), "[");
 	for (size_t i = 0; i < test_input->options_count; ++i) {
