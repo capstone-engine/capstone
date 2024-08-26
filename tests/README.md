@@ -4,17 +4,17 @@
 
 ### Types of test and their location
 
-_Legacy (integration)_
-
-Legacy tests which only printed to `stdout`. In practice they only test if the code segfaults.
-Checking the produced output was not implemented.
-
 _YAML test files_
 
 These test files are consumed by the various `cstest` tools.
 They contain all detail tests. As well as the LLVM regression tests (`MC` tests).
 
 Directories group tests by the category they intent to test.
+
+_Legacy (integration)_
+
+Legacy tests which only printed to `stdout`. In practice they only test if the code segfaults.
+Checking the produced output was not implemented.
 
 ### Testing tools and usage
 
