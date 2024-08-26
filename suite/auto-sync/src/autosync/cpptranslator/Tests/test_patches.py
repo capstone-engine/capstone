@@ -132,7 +132,7 @@ class TestPatches(unittest.TestCase):
     def test_assert(self):
         patch = Assert(0)
         syntax = b"assert(0 == 0)"
-        self.check_patching_result(patch, syntax, b"")
+        self.check_patching_result(patch, syntax, b"CS_ASSERT((0 == 0));")
 
     def test_bitcaststdarray(self):
         patch = BitCastStdArray(0)
