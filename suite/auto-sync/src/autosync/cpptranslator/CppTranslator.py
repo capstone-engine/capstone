@@ -87,6 +87,7 @@ from autosync.Helper import (
     print_prominent_warning,
     run_clang_format,
 )
+from autosync.cpptranslator.patches.isUInt import IsUInt
 
 
 class Translator:
@@ -136,6 +137,7 @@ class Translator:
         CreateOperand0.__name__: 0,  # ◁───┐ `CreateOperand0` removes most calls to MI.addOperand().
         AddOperand.__name__: 1,  # ────────┘ The ones left are fixed with the `AddOperand` patch.
         CreateOperand1.__name__: 0,
+        IsUInt.__name__: 0,
         GetOpcode.__name__: 0,
         SetOpcode.__name__: 0,
         GetOperand.__name__: 0,
@@ -248,6 +250,8 @@ class Translator:
                     patch = CreateOperand0(p)
                 case CreateOperand1.__name__:
                     patch = CreateOperand1(p)
+                case IsUInt.__name__:
+                    patch = IsUInt(p)
                 case GetOpcode.__name__:
                     patch = GetOpcode(p)
                 case SetOpcode.__name__:

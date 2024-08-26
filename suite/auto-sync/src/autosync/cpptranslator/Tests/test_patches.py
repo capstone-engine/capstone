@@ -78,6 +78,7 @@ from autosync.cpptranslator.patches.UseMarkup import UseMarkup
 from autosync.cpptranslator.patches.UsingDeclaration import UsingDeclaration
 from autosync.cpptranslator.TemplateCollector import TemplateCollector
 from autosync.Helper import get_path
+from autosync.cpptranslator.patches.isUInt import IsUInt
 
 
 class TestPatches(unittest.TestCase):
@@ -579,3 +580,8 @@ public:
         patch = UsingDeclaration(0)
         syntax = b"using namespace llvm;"
         self.check_patching_result(patch, syntax, b"")
+
+    def test_isuintn(self):
+        patch = IsUInt(0)
+        syntax = b"isUInt<RegUnitBits>(FirstRU);"
+        self.check_patching_result(patch, syntax, b"isUIntN(RegUnitBits, FirstRU)")
