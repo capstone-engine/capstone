@@ -66,6 +66,8 @@ class Includes(Patch):
                 return res + get_LoongArch_includes(filename) + get_general_macros()
             case "Mips":
                 return res + get_Mips_includes(filename) + get_general_macros()
+            case "SystemZ":
+                return res + get_SystemZ_includes(filename) + get_general_macros()
             case "TEST_ARCH":
                 return res + b"test_output"
             case _:
@@ -330,6 +332,35 @@ def get_Mips_includes(filename: str) -> bytes:
                 b'#include "../../MCInstPrinter.h"\n' + b'#include "../../cs_priv.h"\n'
             )
     log.fatal(f"No includes given for Mips source file: {filename}")
+    exit(1)
+
+def get_SystemZ_includes(filename: str) -> bytes:
+    match filename:
+        case "SystemZDisassembler.cpp":
+                + b'#include "SystemZDisassemblerExtension.h"\n'
+                + b"#define GET_SUBTARGETINFO_ENUM\n"
+                + b'#include "SystemZGenSubtargetInfo.inc"\n\n'
+                + b"#define GET_INSTRINFO_ENUM\n"
+                + b'#include "SystemZGenInstrInfo.inc"\n\n'
+                + b"#define GET_REGINFO_ENUM\n"
+                + b'#include "SystemZGenRegisterInfo.inc"\n\n'
+            )
+        case "SystemZInstPrinter.cpp":
+            return (
+                b'#include "SystemZMapping.h"\n'
+                + b'#include "SystemZInstPrinter.h"\n\n'
+                + b"#define GET_SUBTARGETINFO_ENUM\n"
+                + b'#include "SystemZGenSubtargetInfo.inc"\n\n'
+                + b"#define GET_INSTRINFO_ENUM\n"
+                + b'#include "SystemZGenInstrInfo.inc"\n\n'
+                + b"#define GET_REGINFO_ENUM\n"
+                + b'#include "SystemZGenRegisterInfo.inc"\n\n'
+            )
+        case "SystemZInstPrinter.h":
+            return (
+                b'#include "../../MCInstPrinter.h"\n' + b'#include "../../cs_priv.h"\n'
+            )
+    log.fatal(f"No includes given for SystemZ source file: {filename}")
     exit(1)
 
 
