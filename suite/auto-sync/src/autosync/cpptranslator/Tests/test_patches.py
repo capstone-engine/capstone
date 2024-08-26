@@ -389,10 +389,20 @@ public:
             b"MCOperandInfo_isPredicate(&OpInfo[i])",
         )
 
-    def test_isregimm(self):
+    def test_isreg(self):
         patch = IsOperandRegImm(0)
         syntax = b"OPERAND.isReg()"
         self.check_patching_result(patch, syntax, b"MCOperand_isReg(OPERAND)")
+
+    def test_isimm(self):
+        patch = IsOperandRegImm(0)
+        syntax = b"OPERAND.isImm()"
+        self.check_patching_result(patch, syntax, b"MCOperand_isImm(OPERAND)")
+
+    def test_isexpr(self):
+        patch = IsOperandRegImm(0)
+        syntax = b"OPERAND.isExpr()"
+        self.check_patching_result(patch, syntax, b"MCOperand_isExpr(OPERAND)")
 
     def test_llvmfallthrough(self):
         patch = LLVMFallThrough(0)
