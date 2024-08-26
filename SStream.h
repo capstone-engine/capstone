@@ -6,16 +6,31 @@
 
 #include "include/capstone/platform.h"
 
+typedef enum {
+	Markup_Immediate,
+	Markup_Register,
+	Markup_Target,
+	Markup_Memory,
+} SStreamMarkup;
+
 typedef struct SStream {
 	char buffer[512];
 	int index;
 	bool is_closed;
+	bool markup_stream; ///< If true, markups to the stream are allowed.
+	bool prefixed_by_markup; ///< Set after the stream wrote a markup for an operand.
 } SStream;
 
 #define SSTREAM_RETURN_IF_CLOSED(OS) \
 do { \
 	if (OS->is_closed) \
 		return; \
+} while(0)
+
+#define SSTREAM_FINISH_MARKUP(OS) \
+do { \
+	if (OS->markup_stream && OS->prefixed_by_markup) \
+		SStream_concat0(OS, ">"); \
 } while(0)
 
 void SStream_Init(SStream *ss);
@@ -53,5 +68,7 @@ void printFloat(SStream *O, float val);
 void printFloatBang(SStream *O, float val);
 
 void printExpr(SStream *O, uint64_t val);
+
+SStream *markup_OS(SStream *OS, SStreamMarkup style);
 
 #endif

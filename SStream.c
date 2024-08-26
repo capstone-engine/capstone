@@ -28,6 +28,8 @@ void SStream_Init(SStream *ss)
 	ss->index = 0;
 	ss->buffer[0] = '\0';
 	ss->is_closed = false;
+	ss->markup_stream = false;
+	ss->prefixed_by_markup = false;
 }
 
 /**
@@ -60,6 +62,7 @@ void SStream_concat0(SStream *ss, const char *s)
 	memcpy(ss->buffer + ss->index, s, len);
 	ss->index += len;
 	ss->buffer[ss->index] = '\0';
+	SSTREAM_FINISH_MARKUP(ss);
 #endif
 }
 
@@ -75,6 +78,7 @@ void SStream_concat1(SStream *ss, const char c)
 	ss->buffer[ss->index] = c;
 	ss->index++;
 	ss->buffer[ss->index] = '\0';
+	SSTREAM_FINISH_MARKUP(ss);
 #endif
 }
 
@@ -92,6 +96,7 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 	ret = cs_vsnprintf(ss->buffer + ss->index, sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
 	va_end(ap);
 	ss->index += ret;
+	SSTREAM_FINISH_MARKUP(ss);
 #endif
 }
 
@@ -113,6 +118,7 @@ void printInt64Bang(SStream *O, int64_t val)
 		} else
 			SStream_concat(O, "#-%"PRIu64, -val);
 	}
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 void printUInt64Bang(SStream *O, uint64_t val)
@@ -122,6 +128,7 @@ void printUInt64Bang(SStream *O, uint64_t val)
 		SStream_concat(O, "#0x%"PRIx64, val);
 	else
 		SStream_concat(O, "#%"PRIu64, val);
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 // print number
@@ -142,6 +149,7 @@ void printInt64(SStream *O, int64_t val)
 		} else
 			SStream_concat(O, "-%"PRIu64, -val);
 	}
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 void printUInt64(SStream *O, uint64_t val)
@@ -151,6 +159,7 @@ void printUInt64(SStream *O, uint64_t val)
 		SStream_concat(O, "0x%"PRIx64, val);
 	else
 		SStream_concat(O, "%"PRIu64, val);
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 // print number in decimal mode
@@ -165,6 +174,7 @@ void printInt32BangDec(SStream *O, int32_t val)
 		else
 			SStream_concat(O, "#-%u", (uint32_t)-val);
 	}
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 void printInt32Bang(SStream *O, int32_t val)
@@ -184,6 +194,7 @@ void printInt32Bang(SStream *O, int32_t val)
 		} else
 			SStream_concat(O, "#-%u", -val);
 	}
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 void printInt32(SStream *O, int32_t val)
@@ -203,6 +214,7 @@ void printInt32(SStream *O, int32_t val)
 		} else
 			SStream_concat(O, "-%u", -val);
 	}
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 void printUInt32Bang(SStream *O, uint32_t val)
@@ -212,6 +224,7 @@ void printUInt32Bang(SStream *O, uint32_t val)
 		SStream_concat(O, "#0x%x", val);
 	else
 		SStream_concat(O, "#%u", val);
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 void printUInt32(SStream *O, uint32_t val)
@@ -221,22 +234,53 @@ void printUInt32(SStream *O, uint32_t val)
 		SStream_concat(O, "0x%x", val);
 	else
 		SStream_concat(O, "%u", val);
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 void printFloat(SStream *O, float val)
 {
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat(O, "%e", val);
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 void printFloatBang(SStream *O, float val)
 {
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat(O, "#%e", val);
+	SSTREAM_FINISH_MARKUP(O);
 }
 
 void printExpr(SStream *O, uint64_t val)
 {
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat(O, "%"PRIu64, val);
+	SSTREAM_FINISH_MARKUP(O);
+}
+
+SStream *markup_OS(SStream *OS, SStreamMarkup style) {
+	assert(OS);
+
+	if (OS->is_closed || !OS->markup_stream) {
+		return OS;
+	}
+	switch (style) {
+	default:
+		SStream_concat0(OS, "<UNKNOWN:");
+		return OS;
+	case Markup_Immediate:
+		SStream_concat0(OS, "<imm:");
+		break;
+	case Markup_Register:
+		SStream_concat0(OS, "<reg:");
+		break;
+	case Markup_Target:
+		SStream_concat0(OS, "<tar:");
+		break;
+	case Markup_Memory:
+		SStream_concat0(OS, "<mem:");
+		break;
+	}
+	OS->prefixed_by_markup = true;
+	return OS;
 }
