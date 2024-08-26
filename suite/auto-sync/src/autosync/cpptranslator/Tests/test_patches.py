@@ -309,10 +309,20 @@ public:
         syntax = b"MI.getOperand(0);"
         self.check_patching_result(patch, syntax, b"MCInst_getOperand(MI, (0))")
 
-    def test_getoperandregimm(self):
+    def test_getoperandreg(self):
         patch = GetOperandRegImm(0)
         syntax = b"OPERAND.getReg()"
         self.check_patching_result(patch, syntax, b"MCOperand_getReg(OPERAND)")
+
+    def test_getoperandimm(self):
+        patch = GetOperandRegImm(0)
+        syntax = b"OPERAND.getImm()"
+        self.check_patching_result(patch, syntax, b"MCOperand_getImm(OPERAND)")
+
+    def test_getoperandexpr(self):
+        patch = GetOperandRegImm(0)
+        syntax = b"OPERAND.getExpr()"
+        self.check_patching_result(patch, syntax, b"MCOperand_getExpr(OPERAND)")
 
     def test_getregclass(self):
         patch = GetRegClass(0)
