@@ -224,6 +224,12 @@
       },{
         "in": "{LLVM_ROOT}/llvm/lib/Target/SystemZ/MCTargetDesc/SystemZInstPrinter.h",
         "out": "SystemZInstPrinter.h"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/SystemZ/MCTargetDesc/SystemZMCTargetDesc.cpp",
+        "out": "SystemZMCTargetDesc.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/SystemZ/MCTargetDesc/SystemZMCTargetDesc.h",
+        "out": "SystemZMCTargetDesc.h"
       }
     ],
     "files_for_template_search": [

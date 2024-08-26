@@ -338,6 +338,9 @@ def get_SystemZ_includes(filename: str) -> bytes:
     match filename:
         case "SystemZDisassembler.cpp":
                 + b'#include "SystemZDisassemblerExtension.h"\n'
+                + b'#include "../../utils.h"\n\n'
+                + b'#include "SystemZMCTargetDesc.h"\n'
+                + b'#include "SystemZDisassemblerExtension.h"\n\n'
                 + b"#define GET_SUBTARGETINFO_ENUM\n"
                 + b'#include "SystemZGenSubtargetInfo.inc"\n\n'
                 + b"#define GET_INSTRINFO_ENUM\n"
@@ -359,6 +362,19 @@ def get_SystemZ_includes(filename: str) -> bytes:
         case "SystemZInstPrinter.h":
             return (
                 b'#include "../../MCInstPrinter.h"\n' + b'#include "../../cs_priv.h"\n'
+            )
+        case "SystemZMCTargetDesc.h":
+            return (
+                b'#include "../../MCInstPrinter.h"\n' + b'#include "../../cs_priv.h"\n'
+            )
+        case "SystemZMCTargetDesc.cpp":
+            return (
+                b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCInstrInfo.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n\n'
+                + b'#include "SystemZMCTargetDesc.h"\n'
+                + b'#include "SystemZInstPrinter.h"\n\n'
             )
     log.fatal(f"No includes given for SystemZ source file: {filename}")
     exit(1)
