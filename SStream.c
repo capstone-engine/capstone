@@ -234,3 +234,9 @@ void printFloatBang(SStream *O, float val)
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat(O, "#%e", val);
 }
+
+void printExpr(SStream *O, uint64_t val)
+{
+	SSTREAM_RETURN_IF_CLOSED(O);
+	SStream_concat(O, "%"PRIu64, val);
+}

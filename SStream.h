@@ -52,4 +52,6 @@ void printFloat(SStream *O, float val);
 
 void printFloatBang(SStream *O, float val);
 
+void printExpr(SStream *O, uint64_t val);
+
 #endif
