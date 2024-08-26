@@ -150,6 +150,11 @@ int64_t MCOperand_getImm(const MCOperand *op)
 	return op->ImmVal;
 }
 
+int64_t MCOperand_getExpr(const MCOperand *op)
+{
+	return op->ImmVal;
+}
+
 void MCOperand_setImm(MCOperand *op, int64_t Val)
 {
 	op->ImmVal = Val;

@@ -74,6 +74,8 @@ int64_t MCOperand_getImm(const MCOperand *op);
 
 void MCOperand_setImm(MCOperand *op, int64_t Val);
 
+int64_t MCOperand_getExpr(const MCOperand *op);
+
 double MCOperand_getFPImm(const MCOperand *op);
 
 void MCOperand_setFPImm(MCOperand *op, double Val);
