@@ -125,8 +125,9 @@ to the values for comparison.
 The `MCUpdater` translates most test files of the LLVM MC regression tests into our YAML files.
 
 The LLVM regression tests, check the bytes and assembly for all instructions of an architecture.
-They do it by passing bytes or assembly to the `llvm-mc` tool and compare the output.
-We capture this output and process it into YAML. So you need to install `llvm-mc` for our updater to work.
+They do it by passing bytes or assembly to the `llvm-mc` and `FileCheck` tool and compare the output.
+We capture this output and process it into YAML.
+So you need to install `llvm-mc` and `FileCheck` for our updater to work.
 
 To update the YAML MC regression tests, you need to install `Auto-Sync` and run the `MCUpdater`.
 

@@ -47,13 +47,13 @@ cmake --build . --target llvm-tblgen --config Debug
 cd ../../
 ```
 
-#### Install `llvm-mc`
+#### Install `llvm-mc` and `FileCheck`
 
-Additionally, we need `llvm-mc` for generating our regression tests.
+Additionally, we need `llvm-mc` and `FileCheck` to generate our regression tests.
 You can build it, but it will take a lot of space on your hard drive.
 You can also get the binaries [here](https://releases.llvm.org/download.html) or
 install it with your package manager (usually something like `llvm-18-dev`).
-Just ensure it is in your `PATH` as `llvm-mc`.
+Just ensure it is in your `PATH` as `llvm-mc` and `FileCheck` (not as `llvm-mc-18` or similar though!).
 
 ## Architecture
 

@@ -40,8 +40,11 @@ jobs:
         run: |
           sudo apt install llvm-18
           llvm-mc-18 --version
+          FileCheck-18 --version
           sudo ln -s $(whereis -b llvm-mc-18 | grep -Eo "/.*") /usr/local/bin/llvm-mc
+          sudo ln -s $(whereis -b FileCheck-18 | grep -Eo "/.*") /usr/local/bin/FileCheck
           llvm-mc --version
+          FileCheck --version
 
       - name: Clone llvm-capstone
         run: |
@@ -65,10 +68,7 @@ jobs:
         run: |
           sudo apt remove llvm-18
           sudo rm /usr/local/bin/llvm-mc
-
-      - name: Differ - Test save file is up-to-date
-        run: |
-          ./src/autosync/cpptranslator/Differ.py -a AArch64 --check_saved
+          sudo rm /usr/local/bin/FileCheck
 
       - name: Test generation of inc files
         run: |
@@ -92,3 +92,7 @@ jobs:
           ./src/autosync/ASUpdater.py --ci -d -a ARM -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a PPC -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a LoongArch -s Translate
+
+      - name: Differ - Test save file is up-to-date
+        run: |
+          ./src/autosync/cpptranslator/Differ.py -a AArch64 --check_saved
