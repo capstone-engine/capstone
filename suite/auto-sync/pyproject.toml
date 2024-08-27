@@ -7,7 +7,7 @@ name = "autosync"
 version = "0.1.0"
 dependencies = [
   "termcolor >= 2.3.0",
-  "tree_sitter >= 0.21.3",
+  "tree_sitter == 0.22.3",
   "tree-sitter-cpp >=0.22.0",
   "black >= 24.3.0",
   "usort >= 1.0.8",
