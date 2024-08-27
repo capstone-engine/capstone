@@ -96,3 +96,6 @@ jobs:
       - name: Differ - Test save file is up-to-date
         run: |
           ./src/autosync/cpptranslator/Differ.py -a AArch64 --check_saved
+          ./src/autosync/cpptranslator/Differ.py -a ARM --check_saved
+          ./src/autosync/cpptranslator/Differ.py -a PPC --check_saved
+          ./src/autosync/cpptranslator/Differ.py -a LoongArch --check_saved
