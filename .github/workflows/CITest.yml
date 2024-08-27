@@ -38,14 +38,6 @@ jobs:
               enable-asan: 'OFF'
             }
           - {
-              name: 'ubuntu-latest x64 cmake',
-              os: ubuntu-latest,
-              arch: x64,
-              build-system: 'cmake',
-              diet-build: 'OFF',
-              enable-asan: 'OFF'
-            }
-          - {
               name: 'ubuntu-22.04 x64 cmake',
               os: ubuntu-22.04,
               arch: x64,
