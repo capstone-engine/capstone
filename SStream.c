@@ -59,6 +59,8 @@ void SStream_concat0(SStream *ss, const char *s)
 		return;
 	unsigned int len = (unsigned int) strlen(s);
 
+	SSTREAM_OVERFLOW_CHECK(ss, len);
+
 	memcpy(ss->buffer + ss->index, s, len);
 	ss->index += len;
 	ss->buffer[ss->index] = '\0';
@@ -75,6 +77,9 @@ void SStream_concat1(SStream *ss, const char c)
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (c == '\0')
 		return;
+
+	SSTREAM_OVERFLOW_CHECK(ss, 1);
+
 	ss->buffer[ss->index] = c;
 	ss->index++;
 	ss->buffer[ss->index] = '\0';

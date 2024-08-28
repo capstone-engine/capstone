@@ -13,13 +13,23 @@ typedef enum {
 	Markup_Memory,
 } SStreamMarkup;
 
+#define SSTREAM_BUF_LEN 512
+
 typedef struct SStream {
-	char buffer[512];
+	char buffer[SSTREAM_BUF_LEN];
 	int index;
 	bool is_closed;
 	bool markup_stream; ///< If true, markups to the stream are allowed.
 	bool prefixed_by_markup; ///< Set after the stream wrote a markup for an operand.
 } SStream;
+
+#define SSTREAM_OVERFLOW_CHECK(OS, len) \
+do { \
+	if (OS->index + len + 1 > SSTREAM_BUF_LEN) { \
+		fprintf(stderr, "Buffer overflow caught!\n"); \
+		return; \
+	} \
+} while(0)
 
 #define SSTREAM_RETURN_IF_CLOSED(OS) \
 do { \
