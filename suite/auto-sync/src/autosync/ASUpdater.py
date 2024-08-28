@@ -10,6 +10,7 @@ import os
 import shutil
 import subprocess
 import sys
+import json
 from enum import StrEnum
 from pathlib import Path
 
@@ -73,12 +74,15 @@ class ASUpdater:
             self.arch,
             self.inc_list,
         )
+        with open(get_path("{MCUPDATER_CONFIG_FILE}")) as f:
+            self.mcupdater_conf = json.loads(f.read())
+
         self.mc_updater = MCUpdater(
             self.arch,
             get_path("{LLVM_MC_TEST_DIR}"),
             None,
             None,
-            True if self.arch == "ARM" else False,
+            self.arch in self.mcupdater_conf["unify_test_cases"],
         )
 
     def clean_build_dir(self) -> None:
