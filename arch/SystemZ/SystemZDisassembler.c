@@ -375,15 +375,19 @@ static DecodeStatus getInstruction(MCInst *MI, uint16_t *Size, const uint8_t *By
 
 	// The top 2 bits of the first byte specify the size.
 	const uint8_t *Table;
+	uint64_t Inst = 0;
 	if (Bytes[0] < 0x40) {
 		*Size = 2;
 		Table = DecoderTable16;
+		Inst = readBytes16(MI, Bytes);
 	} else if (Bytes[0] < 0xc0) {
 		*Size = 4;
 		Table = DecoderTable32;
+		Inst = readBytes32(MI, Bytes);
 	} else {
 		*Size = 6;
 		Table = DecoderTable48;
+		Inst = readBytes48(MI, Bytes);
 	}
 
 	// Read any remaining bytes.
@@ -391,11 +395,6 @@ static DecodeStatus getInstruction(MCInst *MI, uint16_t *Size, const uint8_t *By
 		*Size = BytesLen;
 		return MCDisassembler_Fail;
 	}
-
-	// Construct the instruction.
-	uint64_t Inst = 0;
-	for (uint64_t I = 0; I < *Size; ++I)
-		Inst = (Inst << 8) | Bytes[I];
 
 	return decodeInstruction_8(Table, MI, Inst, Address, NULL);
 }
