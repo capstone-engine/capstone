@@ -1229,7 +1229,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 	insn_cache = total;
 
 	while (size > 0) {
-		MCInst_Init(&mci);
+		MCInst_Init(&mci, handle->arch);
 		mci.csh = handle;
 
 		// relative branches need to know the address & size of current insn
@@ -1442,7 +1442,7 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 
 	handle->errnum = CS_ERR_OK;
 
-	MCInst_Init(&mci);
+	MCInst_Init(&mci, handle->arch);
 	mci.csh = handle;
 
 	// relative branches need to know the address & size of current insn

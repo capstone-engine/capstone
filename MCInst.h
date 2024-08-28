@@ -139,7 +139,7 @@ struct MCInst {
 	MCAsmInfo MAI; ///< The equivalent to MCAsmInfo in LLVM. It holds flags relevant for the asm style to print.
 };
 
-void MCInst_Init(MCInst *inst);
+void MCInst_Init(MCInst *inst, cs_arch arch);
 
 void MCInst_clear(MCInst *inst);
 

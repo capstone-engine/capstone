@@ -359,7 +359,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		if (MCRegisterClass_contains(MRC, Reg)) {
 			MCInst NewMI;
 
-			MCInst_Init(&NewMI);
+			MCInst_Init(&NewMI, CS_ARCH_ARM);
 			MCInst_setOpcode(&NewMI, Opcode);
 
 			if (isStore)
