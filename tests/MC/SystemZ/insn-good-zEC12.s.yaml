@@ -1,3640 +1,744 @@
 test_cases:
   -
     input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0xaa ]
+      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0xaa, 0xed, 0x00, 0x00, 0x00, 0xf0, 0xaa, 0xed, 0x00, 0x00, 0x00, 0x0f, 0xaa, 0xed, 0x00, 0x10, 0x00, 0x00, 0xaa, 0xed, 0x00, 0xf0, 0x00, 0x00, 0xaa, 0xed, 0x00, 0x1f, 0xff, 0x00, 0xaa, 0xed, 0x00, 0xff, 0xff, 0x00, 0xaa, 0xed, 0xff, 0x10, 0x00, 0x00, 0xaa, 0xed, 0xff, 0xf0, 0x00, 0x00, 0xaa, 0xeb, 0x0c, 0x00, 0x00, 0x80, 0x23, 0xeb, 0x0c, 0x0f, 0xff, 0xff, 0x23, 0xeb, 0x0c, 0x00, 0x00, 0x00, 0x23, 0xeb, 0x0c, 0x00, 0x01, 0x00, 0x23, 0xeb, 0x0c, 0x0f, 0xff, 0x7f, 0x23, 0xeb, 0x0c, 0x10, 0x00, 0x00, 0x23, 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x0c, 0x60, 0x39, 0x03, 0x23, 0xeb, 0xfc, 0x00, 0x00, 0x00, 0x23, 0xeb, 0x02, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x04, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x08, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x06, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x0a, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x0c, 0x00, 0x00, 0x80, 0x2b, 0xeb, 0x0c, 0x0f, 0xff, 0xff, 0x2b, 0xeb, 0x0c, 0x00, 0x00, 0x00, 0x2b, 0xeb, 0x0c, 0x00, 0x01, 0x00, 0x2b, 0xeb, 0x0c, 0x0f, 0xff, 0x7f, 0x2b, 0xeb, 0x0c, 0x10, 0x00, 0x00, 0x2b, 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x0c, 0x60, 0x39, 0x03, 0x2b, 0xeb, 0xfc, 0x00, 0x00, 0x00, 0x2b, 0xeb, 0x02, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x04, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x08, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x06, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x0a, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x2b, 0xb9, 0x8f, 0x00, 0x00, 0xb9, 0x8f, 0x00, 0x0e, 0xb9, 0x8f, 0xf0, 0x00, 0xb9, 0x8f, 0x00, 0xe0, 0xb9, 0x8f, 0x0f, 0x00, 0xb9, 0x8f, 0x57, 0x46, 0xed, 0x00, 0x00, 0x00, 0x00, 0xab, 0xed, 0x00, 0x00, 0x00, 0xd0, 0xab, 0xed, 0x00, 0x00, 0x00, 0x0f, 0xab, 0xed, 0x00, 0x10, 0x00, 0x00, 0xab, 0xed, 0x00, 0xf0, 0x00, 0x00, 0xab, 0xed, 0x00, 0x1f, 0xff, 0x00, 0xab, 0xed, 0x00, 0xff, 0xff, 0x00, 0xab, 0xed, 0xff, 0x10, 0x00, 0x00, 0xab, 0xed, 0xff, 0xf0, 0x00, 0x00, 0xab, 0xed, 0x00, 0x00, 0x00, 0x00, 0xa8, 0xed, 0x00, 0x00, 0x00, 0xf0, 0xa8, 0xed, 0x00, 0x00, 0x00, 0x0f, 0xa8, 0xed, 0x00, 0x10, 0x00, 0x00, 0xa8, 0xed, 0x00, 0xf0, 0x00, 0x00, 0xa8, 0xed, 0x00, 0x1f, 0xff, 0x00, 0xa8, 0xed, 0x00, 0xff, 0xff, 0x00, 0xa8, 0xed, 0xff, 0x10, 0x00, 0x00, 0xa8, 0xed, 0xff, 0xf0, 0x00, 0x00, 0xa8, 0xed, 0x00, 0x00, 0x00, 0x00, 0xa9, 0xed, 0x00, 0x00, 0x00, 0xd0, 0xa9, 0xed, 0x00, 0x00, 0x00, 0x0f, 0xa9, 0xed, 0x00, 0x10, 0x00, 0x00, 0xa9, 0xed, 0x00, 0xf0, 0x00, 0x00, 0xa9, 0xed, 0x00, 0x1f, 0xff, 0x00, 0xa9, 0xed, 0x00, 0xff, 0xff, 0x00, 0xa9, 0xed, 0xff, 0x10, 0x00, 0x00, 0xa9, 0xed, 0xff, 0xf0, 0x00, 0x00, 0xa9, 0xb2, 0xec, 0x00, 0x00, 0xb2, 0xec, 0x00, 0xf0, 0xb2, 0xec, 0x00, 0x70, 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9f, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9f, 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9f, 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9f, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9f, 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9f, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9f, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9f, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9f, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9f, 0xe3, 0x00, 0x00, 0x00, 0x80, 0xc8, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xc8, 0xe3, 0x00, 0x00, 0x00, 0x00, 0xc8, 0xe3, 0x00, 0x00, 0x01, 0x00, 0xc8, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xc8, 0xe3, 0x00, 0x10, 0x00, 0x00, 0xc8, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xc8, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xc8, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xc8, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xc8, 0xe3, 0x00, 0x00, 0x00, 0x80, 0x85, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x85, 0xe3, 0x00, 0x00, 0x00, 0x00, 0x85, 0xe3, 0x00, 0x00, 0x01, 0x00, 0x85, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x85, 0xe3, 0x00, 0x10, 0x00, 0x00, 0x85, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x85, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x85, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x85, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x85, 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9d, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9d, 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9d, 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9d, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9d, 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9d, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9d, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9d, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9d, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9d, 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9c, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9c, 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9c, 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9c, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9c, 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9c, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9c, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9c, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9c, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9c, 0xb2, 0xfa, 0x00, 0x00, 0xb2, 0xfa, 0x00, 0xf0, 0xb2, 0xfa, 0x00, 0x0f, 0xb2, 0xfa, 0x00, 0xff, 0xe3, 0x00, 0x00, 0x00, 0x80, 0x25, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x25, 0xe3, 0x00, 0x00, 0x00, 0x00, 0x25, 0xe3, 0x00, 0x00, 0x01, 0x00, 0x25, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x25, 0xe3, 0x00, 0x10, 0x00, 0x00, 0x25, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x25, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x25, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x25, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x25, 0xb2, 0xe8, 0x00, 0x00, 0xb2, 0xe8, 0xf0, 0x00, 0xb2, 0xe8, 0x00, 0x0f, 0xb2, 0xe8, 0x70, 0x46, 0xb2, 0xe8, 0x00, 0xf0, 0xec, 0x00, 0x00, 0x00, 0x00, 0x59, 0xec, 0x00, 0x00, 0x00, 0x3f, 0x59, 0xec, 0x00, 0x00, 0x00, 0x40, 0x59, 0xec, 0x00, 0x00, 0x00, 0xff, 0x59, 0xec, 0x00, 0x00, 0xff, 0x00, 0x59, 0xec, 0x00, 0xff, 0x00, 0x00, 0x59, 0xec, 0x0f, 0x00, 0x00, 0x00, 0x59, 0xec, 0xf0, 0x00, 0x00, 0x00, 0x59, 0xec, 0x45, 0x06, 0x07, 0x08, 0x59, 0xb2, 0xfc, 0x00, 0x00, 0xb2, 0xfc, 0x10, 0x00, 0xb2, 0xfc, 0xf0, 0x00, 0xb2, 0xfc, 0x0f, 0xff, 0xb2, 0xfc, 0x1f, 0xff, 0xb2, 0xfc, 0xff, 0xff, 0xe5, 0x60, 0x00, 0x00, 0x00, 0x00, 0xe5, 0x60, 0x0f, 0xff, 0x00, 0x00, 0xe5, 0x60, 0x00, 0x00, 0x00, 0x00, 0xe5, 0x60, 0x00, 0x00, 0x00, 0x01, 0xe5, 0x60, 0x00, 0x00, 0x7f, 0xff, 0xe5, 0x60, 0x00, 0x00, 0x80, 0x00, 0xe5, 0x60, 0x00, 0x00, 0xff, 0xff, 0xe5, 0x60, 0x10, 0x00, 0x00, 0x2a, 0xe5, 0x60, 0xf0, 0x00, 0x00, 0x2a, 0xe5, 0x60, 0x1f, 0xff, 0x00, 0x2a, 0xe5, 0x60, 0xff, 0xff, 0x00, 0x2a, 0xe5, 0x61, 0x00, 0x00, 0x00, 0x00, 0xe5, 0x61, 0x0f, 0xff, 0x00, 0x00, 0xe5, 0x61, 0x00, 0x00, 0x00, 0x00, 0xe5, 0x61, 0x00, 0x00, 0x00, 0x01, 0xe5, 0x61, 0x00, 0x00, 0x7f, 0xff, 0xe5, 0x61, 0x00, 0x00, 0x80, 0x00, 0xe5, 0x61, 0x00, 0x00, 0xff, 0xff, 0xe5, 0x61, 0x10, 0x00, 0x00, 0x2a, 0xe5, 0x61, 0xf0, 0x00, 0x00, 0x2a, 0xe5, 0x61, 0x1f, 0xff, 0x00, 0x2a, 0xe5, 0x61, 0xff, 0xff, 0x00, 0x2a, 0xb2, 0xf8, 0x00, 0x00 ]
       arch: "CS_ARCH_SYSTEMZ"
       options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
           asm_text: "cdzt %f0, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0xf0, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f15, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x0f, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 0(1), 15"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x10, 0x00, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 0(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xf0, 0x00, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 0(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x1f, 0xff, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 4095(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xff, 0xff, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 4095(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0x10, 0x00, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 0(256,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0xf0, 0x00, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 0(256,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x00, 0x80, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, -524288"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x0f, 0xff, 0xff, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, -1"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 0"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x01, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 1"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x0f, 0xff, 0x7f, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 524287"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x10, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x60, 0x39, 0x03, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 12345(%r6)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0xfc, 0x00, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r15, 12, 0"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x02, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clth %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x04, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cltl %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x08, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clte %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x06, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cltne %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0a, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cltnl %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cltnh %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x00, 0x80, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, -524288"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x0f, 0xff, 0xff, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, -1"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 0"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x01, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 1"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x0f, 0xff, 0x7f, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 524287"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x10, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x60, 0x39, 0x03, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 12345(%r6)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0xfc, 0x00, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r15, 12, 0"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x02, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgth %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x04, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgtl %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x08, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgte %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x06, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgtne %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0a, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgtnl %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgtnh %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r0, %r0, %r0"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0x00, 0x0e ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r0, %r0, %r14"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0xf0, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r0, %r15, %r0"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0x00, 0xe0 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r14, %r0, %r0"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0x0f, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r0, %r0, %r0, 15"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0x57, 0x46 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r4, %r5, %r6, 7"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0xd0, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f13, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x0f, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(1), 15"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x10, 0x00, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xf0, 0x00, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x1f, 0xff, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 4095(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xff, 0xff, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 4095(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0x10, 0x00, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(256,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0xf0, 0x00, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(256,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0xf0, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f15, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x0f, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(1), 15"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x10, 0x00, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xf0, 0x00, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x1f, 0xff, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 4095(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xff, 0xff, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 4095(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0x10, 0x00, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(256,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0xf0, 0x00, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(256,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0xd0, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f13, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x0f, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(1), 15"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x10, 0x00, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xf0, 0x00, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x1f, 0xff, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 4095(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xff, 0xff, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 4095(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0x10, 0x00, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(256,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0xf0, 0x00, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(256,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xec, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "etnd %r0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xec, 0x00, 0xf0 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "etnd %r15"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xec, 0x00, 0x70 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "etnd %r7"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfa, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "niai 0, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfa, 0x00, 0xf0 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "niai 15, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfa, 0x00, 0x0f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "niai 0, 15"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfa, 0x00, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "niai 15, 15"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xe8, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ppa %r0, %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xe8, 0xf0, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ppa %r0, %r0, 15"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xe8, 0x00, 0x0f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ppa %r0, %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xe8, 0x70, 0x46 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ppa %r4, %r6, 7"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xe8, 0x00, 0xf0 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ppa %r15, %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x00, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 0, 0, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x3f, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 0, 0, 63"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x40, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 0, 0, 64"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0x00, 0x00, 0xff, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 0, 0, 255"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0x00, 0xff, 0x00, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 0, 255, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0xff, 0x00, 0x00, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 255, 0, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0x0f, 0x00, 0x00, 0x00, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r15, 0, 0, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0xf0, 0x00, 0x00, 0x00, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r15, %r0, 0, 0, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0x45, 0x06, 0x07, 0x08, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r4, %r5, 6, 7, 8"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0x10, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0xf0, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0x0f, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 4095"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0x1f, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 4095(%r1)"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0xff, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 4095(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x0f, 0xff, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 4095, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0x00, 0x01 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 1"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0x7f, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 32767"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0x80, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 32768"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0xff, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 65535"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x10, 0x00, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0(%r1), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0xf0, 0x00, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0(%r15), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x1f, 0xff, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 4095(%r1), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0xff, 0xff, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 4095(%r15), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x0f, 0xff, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 4095, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0x00, 0x01 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 1"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0x7f, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 32767"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0x80, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 32768"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0xff, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 65535"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x10, 0x00, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0(%r1), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0xf0, 0x00, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0(%r15), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x1f, 0xff, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 4095(%r1), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0xff, 0xff, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 4095(%r15), 42"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xf8, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "zEC12", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tend"
 
   -
     input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0xaa ]
+      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0xaa, 0xed, 0x00, 0x00, 0x00, 0xf0, 0xaa, 0xed, 0x00, 0x00, 0x00, 0x0f, 0xaa, 0xed, 0x00, 0x10, 0x00, 0x00, 0xaa, 0xed, 0x00, 0xf0, 0x00, 0x00, 0xaa, 0xed, 0x00, 0x1f, 0xff, 0x00, 0xaa, 0xed, 0x00, 0xff, 0xff, 0x00, 0xaa, 0xed, 0xff, 0x10, 0x00, 0x00, 0xaa, 0xed, 0xff, 0xf0, 0x00, 0x00, 0xaa, 0xeb, 0x0c, 0x00, 0x00, 0x80, 0x23, 0xeb, 0x0c, 0x0f, 0xff, 0xff, 0x23, 0xeb, 0x0c, 0x00, 0x00, 0x00, 0x23, 0xeb, 0x0c, 0x00, 0x01, 0x00, 0x23, 0xeb, 0x0c, 0x0f, 0xff, 0x7f, 0x23, 0xeb, 0x0c, 0x10, 0x00, 0x00, 0x23, 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x0c, 0x60, 0x39, 0x03, 0x23, 0xeb, 0xfc, 0x00, 0x00, 0x00, 0x23, 0xeb, 0x02, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x04, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x08, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x06, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x0a, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x23, 0xeb, 0x0c, 0x00, 0x00, 0x80, 0x2b, 0xeb, 0x0c, 0x0f, 0xff, 0xff, 0x2b, 0xeb, 0x0c, 0x00, 0x00, 0x00, 0x2b, 0xeb, 0x0c, 0x00, 0x01, 0x00, 0x2b, 0xeb, 0x0c, 0x0f, 0xff, 0x7f, 0x2b, 0xeb, 0x0c, 0x10, 0x00, 0x00, 0x2b, 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x0c, 0x60, 0x39, 0x03, 0x2b, 0xeb, 0xfc, 0x00, 0x00, 0x00, 0x2b, 0xeb, 0x02, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x04, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x08, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x06, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x0a, 0xf0, 0x00, 0x00, 0x2b, 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x2b, 0xb9, 0x8f, 0x00, 0x00, 0xb9, 0x8f, 0x00, 0x0e, 0xb9, 0x8f, 0xf0, 0x00, 0xb9, 0x8f, 0x00, 0xe0, 0xb9, 0x8f, 0x0f, 0x00, 0xb9, 0x8f, 0x57, 0x46, 0xed, 0x00, 0x00, 0x00, 0x00, 0xab, 0xed, 0x00, 0x00, 0x00, 0xd0, 0xab, 0xed, 0x00, 0x00, 0x00, 0x0f, 0xab, 0xed, 0x00, 0x10, 0x00, 0x00, 0xab, 0xed, 0x00, 0xf0, 0x00, 0x00, 0xab, 0xed, 0x00, 0x1f, 0xff, 0x00, 0xab, 0xed, 0x00, 0xff, 0xff, 0x00, 0xab, 0xed, 0xff, 0x10, 0x00, 0x00, 0xab, 0xed, 0xff, 0xf0, 0x00, 0x00, 0xab, 0xed, 0x00, 0x00, 0x00, 0x00, 0xa8, 0xed, 0x00, 0x00, 0x00, 0xf0, 0xa8, 0xed, 0x00, 0x00, 0x00, 0x0f, 0xa8, 0xed, 0x00, 0x10, 0x00, 0x00, 0xa8, 0xed, 0x00, 0xf0, 0x00, 0x00, 0xa8, 0xed, 0x00, 0x1f, 0xff, 0x00, 0xa8, 0xed, 0x00, 0xff, 0xff, 0x00, 0xa8, 0xed, 0xff, 0x10, 0x00, 0x00, 0xa8, 0xed, 0xff, 0xf0, 0x00, 0x00, 0xa8, 0xed, 0x00, 0x00, 0x00, 0x00, 0xa9, 0xed, 0x00, 0x00, 0x00, 0xd0, 0xa9, 0xed, 0x00, 0x00, 0x00, 0x0f, 0xa9, 0xed, 0x00, 0x10, 0x00, 0x00, 0xa9, 0xed, 0x00, 0xf0, 0x00, 0x00, 0xa9, 0xed, 0x00, 0x1f, 0xff, 0x00, 0xa9, 0xed, 0x00, 0xff, 0xff, 0x00, 0xa9, 0xed, 0xff, 0x10, 0x00, 0x00, 0xa9, 0xed, 0xff, 0xf0, 0x00, 0x00, 0xa9, 0xb2, 0xec, 0x00, 0x00, 0xb2, 0xec, 0x00, 0xf0, 0xb2, 0xec, 0x00, 0x70, 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9f, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9f, 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9f, 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9f, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9f, 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9f, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9f, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9f, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9f, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9f, 0xe3, 0x00, 0x00, 0x00, 0x80, 0xc8, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xc8, 0xe3, 0x00, 0x00, 0x00, 0x00, 0xc8, 0xe3, 0x00, 0x00, 0x01, 0x00, 0xc8, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xc8, 0xe3, 0x00, 0x10, 0x00, 0x00, 0xc8, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xc8, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xc8, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xc8, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xc8, 0xe3, 0x00, 0x00, 0x00, 0x80, 0x85, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x85, 0xe3, 0x00, 0x00, 0x00, 0x00, 0x85, 0xe3, 0x00, 0x00, 0x01, 0x00, 0x85, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x85, 0xe3, 0x00, 0x10, 0x00, 0x00, 0x85, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x85, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x85, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x85, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x85, 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9d, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9d, 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9d, 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9d, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9d, 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9d, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9d, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9d, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9d, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9d, 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9c, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9c, 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9c, 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9c, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9c, 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9c, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9c, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9c, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9c, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9c, 0xb2, 0xfa, 0x00, 0x00, 0xb2, 0xfa, 0x00, 0xf0, 0xb2, 0xfa, 0x00, 0x0f, 0xb2, 0xfa, 0x00, 0xff, 0xe3, 0x00, 0x00, 0x00, 0x80, 0x25, 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x25, 0xe3, 0x00, 0x00, 0x00, 0x00, 0x25, 0xe3, 0x00, 0x00, 0x01, 0x00, 0x25, 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x25, 0xe3, 0x00, 0x10, 0x00, 0x00, 0x25, 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x25, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x25, 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x25, 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x25, 0xb2, 0xe8, 0x00, 0x00, 0xb2, 0xe8, 0xf0, 0x00, 0xb2, 0xe8, 0x00, 0x0f, 0xb2, 0xe8, 0x70, 0x46, 0xb2, 0xe8, 0x00, 0xf0, 0xec, 0x00, 0x00, 0x00, 0x00, 0x59, 0xec, 0x00, 0x00, 0x00, 0x3f, 0x59, 0xec, 0x00, 0x00, 0x00, 0x40, 0x59, 0xec, 0x00, 0x00, 0x00, 0xff, 0x59, 0xec, 0x00, 0x00, 0xff, 0x00, 0x59, 0xec, 0x00, 0xff, 0x00, 0x00, 0x59, 0xec, 0x0f, 0x00, 0x00, 0x00, 0x59, 0xec, 0xf0, 0x00, 0x00, 0x00, 0x59, 0xec, 0x45, 0x06, 0x07, 0x08, 0x59, 0xb2, 0xfc, 0x00, 0x00, 0xb2, 0xfc, 0x10, 0x00, 0xb2, 0xfc, 0xf0, 0x00, 0xb2, 0xfc, 0x0f, 0xff, 0xb2, 0xfc, 0x1f, 0xff, 0xb2, 0xfc, 0xff, 0xff, 0xe5, 0x60, 0x00, 0x00, 0x00, 0x00, 0xe5, 0x60, 0x0f, 0xff, 0x00, 0x00, 0xe5, 0x60, 0x00, 0x00, 0x00, 0x00, 0xe5, 0x60, 0x00, 0x00, 0x00, 0x01, 0xe5, 0x60, 0x00, 0x00, 0x7f, 0xff, 0xe5, 0x60, 0x00, 0x00, 0x80, 0x00, 0xe5, 0x60, 0x00, 0x00, 0xff, 0xff, 0xe5, 0x60, 0x10, 0x00, 0x00, 0x2a, 0xe5, 0x60, 0xf0, 0x00, 0x00, 0x2a, 0xe5, 0x60, 0x1f, 0xff, 0x00, 0x2a, 0xe5, 0x60, 0xff, 0xff, 0x00, 0x2a, 0xe5, 0x61, 0x00, 0x00, 0x00, 0x00, 0xe5, 0x61, 0x0f, 0xff, 0x00, 0x00, 0xe5, 0x61, 0x00, 0x00, 0x00, 0x00, 0xe5, 0x61, 0x00, 0x00, 0x00, 0x01, 0xe5, 0x61, 0x00, 0x00, 0x7f, 0xff, 0xe5, 0x61, 0x00, 0x00, 0x80, 0x00, 0xe5, 0x61, 0x00, 0x00, 0xff, 0xff, 0xe5, 0x61, 0x10, 0x00, 0x00, 0x2a, 0xe5, 0x61, 0xf0, 0x00, 0x00, 0x2a, 0xe5, 0x61, 0x1f, 0xff, 0x00, 0x2a, 0xe5, 0x61, 0xff, 0xff, 0x00, 0x2a, 0xb2, 0xf8, 0x00, 0x00 ]
       arch: "CS_ARCH_SYSTEMZ"
       options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
           asm_text: "cdzt %f0, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0xf0, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f15, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x0f, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 0(1), 15"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x10, 0x00, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 0(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xf0, 0x00, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 0(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x1f, 0xff, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 4095(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xff, 0xff, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 4095(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0x10, 0x00, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 0(256,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0xf0, 0x00, 0x00, 0xaa ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cdzt %f0, 0(256,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x00, 0x80, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, -524288"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x0f, 0xff, 0xff, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, -1"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 0"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x01, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 1"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x0f, 0xff, 0x7f, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 524287"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x10, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x60, 0x39, 0x03, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r0, 12, 12345(%r6)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0xfc, 0x00, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clt %r15, 12, 0"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x02, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clth %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x04, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cltl %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x08, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clte %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x06, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cltne %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0a, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cltnl %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x23 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cltnh %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x00, 0x80, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, -524288"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x0f, 0xff, 0xff, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, -1"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 0"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x00, 0x01, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 1"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x0f, 0xff, 0x7f, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 524287"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x10, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0x60, 0x39, 0x03, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r0, 12, 12345(%r6)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0xfc, 0x00, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgt %r15, 12, 0"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x02, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgth %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x04, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgtl %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x08, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgte %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x06, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgtne %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0a, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgtnl %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xeb, 0x0c, 0xf0, 0x00, 0x00, 0x2b ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "clgtnh %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r0, %r0, %r0"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0x00, 0x0e ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r0, %r0, %r14"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0xf0, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r0, %r15, %r0"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0x00, 0xe0 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r14, %r0, %r0"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0x0f, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r0, %r0, %r0, 15"
-
-  -
-    input:
-      bytes: [ 0xb9, 0x8f, 0x57, 0x46 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "crdte %r4, %r5, %r6, 7"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0xd0, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f13, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x0f, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(1), 15"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x10, 0x00, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xf0, 0x00, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x1f, 0xff, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 4095(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xff, 0xff, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 4095(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0x10, 0x00, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(256,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0xf0, 0x00, 0x00, 0xab ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "cxzt %f0, 0(256,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0xf0, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f15, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x0f, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(1), 15"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x10, 0x00, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xf0, 0x00, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x1f, 0xff, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 4095(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xff, 0xff, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 4095(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0x10, 0x00, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(256,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0xf0, 0x00, 0x00, 0xa8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czdt %f0, 0(256,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0xd0, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f13, 0(1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x0f, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(1), 15"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x10, 0x00, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xf0, 0x00, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0x1f, 0xff, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 4095(1,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0x00, 0xff, 0xff, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 4095(1,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0x10, 0x00, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(256,%r1), 0"
-
-  -
-    input:
-      bytes: [ 0xed, 0xff, 0xf0, 0x00, 0x00, 0xa9 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "czxt %f0, 0(256,%r15), 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xec, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "etnd %r0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xec, 0x00, 0xf0 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "etnd %r15"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xec, 0x00, 0x70 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "etnd %r7"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lat %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xc8 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lfhat %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x85 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "lgat %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9d ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgfat %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x9c ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "llgtat %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfa, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "niai 0, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfa, 0x00, 0xf0 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "niai 15, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfa, 0x00, 0x0f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "niai 0, 15"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfa, 0x00, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "niai 15, 15"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, -524288"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, -1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 1"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 524287"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 524287(%r1,%r15)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r0, 524287(%r15,%r1)"
-
-  -
-    input:
-      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0x25 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ntstg %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xe8, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ppa %r0, %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xe8, 0xf0, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ppa %r0, %r0, 15"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xe8, 0x00, 0x0f ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ppa %r0, %r15, 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xe8, 0x70, 0x46 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ppa %r4, %r6, 7"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xe8, 0x00, 0xf0 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "ppa %r15, %r0, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x00, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 0, 0, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x3f, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 0, 0, 63"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x40, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 0, 0, 64"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0x00, 0x00, 0xff, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 0, 0, 255"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0x00, 0xff, 0x00, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 0, 255, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0x00, 0xff, 0x00, 0x00, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r0, 255, 0, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0x0f, 0x00, 0x00, 0x00, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r0, %r15, 0, 0, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0xf0, 0x00, 0x00, 0x00, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r15, %r0, 0, 0, 0"
-
-  -
-    input:
-      bytes: [ 0xec, 0x45, 0x06, 0x07, 0x08, 0x59 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "risbgn %r4, %r5, 6, 7, 8"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 0"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0x10, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 0(%r1)"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0xf0, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 0(%r15)"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0x0f, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 4095"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0x1f, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 4095(%r1)"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xfc, 0xff, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tabort 4095(%r15)"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x0f, 0xff, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 4095, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0x00, 0x01 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 1"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0x7f, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 32767"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0x80, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 32768"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x00, 0x00, 0xff, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0, 65535"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x10, 0x00, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0(%r1), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0xf0, 0x00, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 0(%r15), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0x1f, 0xff, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 4095(%r1), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x60, 0xff, 0xff, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbegin 4095(%r15), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x0f, 0xff, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 4095, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 0"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0x00, 0x01 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 1"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0x7f, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 32767"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0x80, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 32768"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x00, 0x00, 0xff, 0xff ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0, 65535"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x10, 0x00, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0(%r1), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0xf0, 0x00, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 0(%r15), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0x1f, 0xff, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 4095(%r1), 42"
-
-  -
-    input:
-      bytes: [ 0xe5, 0x61, 0xff, 0xff, 0x00, 0x2a ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tbeginc 4095(%r15), 42"
-
-  -
-    input:
-      bytes: [ 0xb2, 0xf8, 0x00, 0x00 ]
-      arch: "CS_ARCH_SYSTEMZ"
-      options: [ "s390x-linux-gnu", "arch10", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
         -
           asm_text: "tend"
