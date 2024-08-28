@@ -122,7 +122,7 @@ struct platform platforms[] = {
 		},
 		{
 				//item 17
-				CS_ARCH_SYSZ,
+				CS_ARCH_SYSTEMZ,
 				(cs_mode) 0,
 				"SystemZ",
 				"systemz"

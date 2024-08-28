@@ -65,7 +65,7 @@ TestDetailSystemZOp *
 test_detail_systemz_op_clone(const TestDetailSystemZOp *detail);
 void test_detail_systemz_op_free(TestDetailSystemZOp *detail);
 
-bool test_expected_systemz(csh *handle, const cs_sysz *actual,
+bool test_expected_systemz(csh *handle, const cs_systemz *actual,
 			   const TestDetailSystemZ *expected);
 
 #endif // TEST_DETAIL_SYSTEMZ_H

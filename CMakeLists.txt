@@ -416,23 +416,30 @@ if(CAPSTONE_SYSTEMZ_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SYSTEMZ)
     set(SOURCES_SYSTEMZ
         arch/SystemZ/SystemZDisassembler.c
+        arch/SystemZ/SystemZDisassemblerExtension.c
         arch/SystemZ/SystemZInstPrinter.c
         arch/SystemZ/SystemZMapping.c
         arch/SystemZ/SystemZModule.c
         arch/SystemZ/SystemZMCTargetDesc.c
     )
     set(HEADERS_SYSTEMZ
-        arch/SystemZ/SystemZDisassembler.h
+        arch/SystemZ/SystemZLinkage.h
+        arch/SystemZ/SystemZDisassemblerExtension.h
+        arch/SystemZ/SystemZInstPrinter.h
+        arch/SystemZ/SystemZMCTargetDesc.h
+        arch/SystemZ/SystemZMapping.h
+        arch/SystemZ/SystemZModule.h
         arch/SystemZ/SystemZGenAsmWriter.inc
+        arch/SystemZ/SystemZGenCSAliasMnemMap.inc
+        arch/SystemZ/SystemZGenCSFeatureName.inc
+        arch/SystemZ/SystemZGenCSMappingInsn.inc
+        arch/SystemZ/SystemZGenCSMappingInsnName.inc
+        arch/SystemZ/SystemZGenCSMappingInsnOp.inc
+        arch/SystemZ/SystemZGenCSOpGroup.inc
         arch/SystemZ/SystemZGenDisassemblerTables.inc
-        arch/SystemZ/SystemZGenInsnNameMaps.inc
         arch/SystemZ/SystemZGenInstrInfo.inc
         arch/SystemZ/SystemZGenRegisterInfo.inc
         arch/SystemZ/SystemZGenSubtargetInfo.inc
-        arch/SystemZ/SystemZInstPrinter.h
-        arch/SystemZ/SystemZMapping.h
-        arch/SystemZ/SystemZMappingInsn.inc
-        arch/SystemZ/SystemZMCTargetDesc.h
     )
 endif()
 

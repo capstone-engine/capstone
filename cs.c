@@ -379,8 +379,8 @@ static const uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_SPARC
 	| (1 << CS_ARCH_SPARC)
 #endif
-#ifdef CAPSTONE_HAS_SYSZ
-	| (1 << CS_ARCH_SYSZ)
+#ifdef CAPSTONE_HAS_SYSTEMZ
+	| (1 << CS_ARCH_SYSTEMZ)
 #endif
 #ifdef CAPSTONE_HAS_XCORE
 	| (1 << CS_ARCH_XCORE)
@@ -542,8 +542,8 @@ void CAPSTONE_API cs_arch_register_sparc(void)
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_systemz(void)
 {
-#if defined(CAPSTONE_USE_ARCH_REGISTRATION) && defined(CAPSTONE_HAS_SYSZ)
-	CS_ARCH_REGISTER(SYSZ);
+#if defined(CAPSTONE_USE_ARCH_REGISTRATION) && defined(CAPSTONE_HAS_SYSTEMZ)
+	CS_ARCH_REGISTER(SYSTEMZ);
 #endif
 }
 
@@ -659,7 +659,7 @@ bool CAPSTONE_API cs_support(int query)
 				    ((1 << CS_ARCH_ARM)  | (1 << CS_ARCH_AARCH64)    |
 				    (1 << CS_ARCH_MIPS)  | (1 << CS_ARCH_X86)        |
 				    (1 << CS_ARCH_PPC)   | (1 << CS_ARCH_SPARC)      |
-				    (1 << CS_ARCH_SYSZ)  | (1 << CS_ARCH_XCORE)      |
+				    (1 << CS_ARCH_SYSTEMZ)  | (1 << CS_ARCH_XCORE)      |
 				    (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
 				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
 				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    |
@@ -962,7 +962,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_SPARC:
 			// skip 4 bytes
 			return 4;
-		case CS_ARCH_SYSZ:
+		case CS_ARCH_SYSTEMZ:
 			// SystemZ instruction's length can be 2, 4 or 6 bytes,
 			// so we just skip 2 bytes
 			return 2;
@@ -1700,9 +1700,9 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->sparc.operands[i].type == (sparc_op_type)op_type)
 					count++;
 			break;
-		case CS_ARCH_SYSZ:
-			for (i = 0; i < insn->detail->sysz.op_count; i++)
-				if (insn->detail->sysz.operands[i].type == (sysz_op_type)op_type)
+		case CS_ARCH_SYSTEMZ:
+			for (i = 0; i < insn->detail->systemz.op_count; i++)
+				if (insn->detail->systemz.operands[i].type == (systemz_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_XCORE:

@@ -73,14 +73,14 @@ void test_detail_systemz_op_free(TestDetailSystemZOp *op)
 	cs_mem_free(op);
 }
 
-bool test_expected_systemz(csh *handle, const cs_sysz *actual,
+bool test_expected_systemz(csh *handle, const cs_systemz *actual,
 			   const TestDetailSystemZ *expected)
 {
 	assert(handle && actual && expected);
 
 	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	for (size_t i = 0; i < actual->op_count; ++i) {
-		const cs_sysz_op *op = &actual->operands[i];
+		const cs_systemz_op *op = &actual->operands[i];
 		TestDetailSystemZOp *eop = expected->operands[i];
 		compare_enum_ret(op->type, eop->type, false);
 		switch (op->type) {
@@ -89,14 +89,14 @@ bool test_expected_systemz(csh *handle, const cs_sysz *actual,
 				"arm op type %" PRId32 " not handled.\n",
 				op->type);
 			return false;
-		case SYSZ_OP_REG:
-		case SYSZ_OP_ACREG:
+		case SYSTEMZ_OP_REG:
+		case SYSTEMZ_OP_ACREG:
 			compare_reg_ret(*handle, op->reg, eop->reg, false);
 			break;
-		case SYSZ_OP_IMM:
+		case SYSTEMZ_OP_IMM:
 			compare_int64_ret(op->imm, eop->imm, false);
 			break;
-		case SYSZ_OP_MEM:
+		case SYSTEMZ_OP_MEM:
 			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
 					false);
 			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
