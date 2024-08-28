@@ -351,9 +351,7 @@ const char *SystemZ_LLVM_getRegisterName(unsigned RegNo)
 	return getRegisterName(RegNo);
 }
 
-void SystemZ_LLVM_printInstruction(MCInst *MI, SStream *O,
-			       void * /* MCRegisterInfo* */ info)
+void SystemZ_LLVM_printInstruction(MCInst *MI, const char *Annotation, SStream *O)
 {
-	printInst(MI, MI->address, "", O);
-}
-
+	printInst(MI, MI->address, Annotation, O);
+}	

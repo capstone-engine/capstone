@@ -60,7 +60,7 @@ void SystemZ_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 {
 	MI->MRI = (MCRegisterInfo *)info;
 	MI->fillDetailOps = detail_is_set(MI);
-	SystemZ_LLVM_printInstruction(MI, MI->address, "", O);
+	SystemZ_LLVM_printInstruction(MI, "", O);
 #ifndef CAPSTONE_DIET
 	map_set_alias_id(MI, O, insn_alias_mnem_map,
 			 ARR_SIZE(insn_alias_mnem_map));
@@ -76,6 +76,7 @@ bool SystemZ_getInstruction(csh handle, const uint8_t *bytes, size_t bytes_len,
 			void *info)
 {
 	SystemZ_init_cs_detail(MI);
+	MI->MRI = (MCRegisterInfo *)info;
 	DecodeStatus result = SystemZ_LLVM_getInstruction(
 		handle, bytes, bytes_len, MI, size, address, info);
 	SystemZ_set_instr_map_data(MI, bytes, bytes_len);
