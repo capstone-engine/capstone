@@ -245,6 +245,7 @@ static void cstest_unit_test(void **state)
 				       tcase->input->address, 0, &insns);
 	test_expected_compare(&ustate->handle, tcase->expected, insns,
 			      insns_count, ustate->arch_bits);
+	ustate->decoded_insns += insns_count;
 	cs_free(insns, insns_count);
 }
 
@@ -298,6 +299,8 @@ static void eval_test_cases(TestFile **test_files, TestRunStats *stats)
 		"All test cases", utest_table, stats->tc_total, NULL, NULL);
 	for (size_t i = 0; i < stats->tc_total; ++i) {
 		cs_mem_free((char *)utest_table[i].name);
+		UnitTestState *ustate = utest_table[i].initial_state;
+		stats->decoded_insns += ustate->decoded_insns;
 		cs_mem_free(utest_table[i].initial_state);
 	}
 	cs_mem_free(utest_table);
