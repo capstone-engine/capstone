@@ -4,6 +4,7 @@
 
 import argparse
 import logging as log
+import json
 import re
 import sys
 import subprocess as sp
@@ -12,10 +13,6 @@ from pathlib import Path
 
 from autosync.Targets import TARGETS_LLVM_NAMING
 from autosync.Helper import convert_loglevel, get_path
-
-# mattr flags which have to be added to all llvm-mc commands
-# before executing them.
-ARCH_MATTR = {"AArch64": "+all"}
 
 
 class LLVM_MC_Command:
@@ -245,7 +242,20 @@ class MCUpdater:
         self.included = included if included else list()
         self.test_files: list[TestFile] = list()
         self.unified_test_cases = unified_test_cases
-        self.mattr: str = ARCH_MATTR[self.arch] if self.arch in ARCH_MATTR else ""
+        with open(get_path("{MCUPDATER_CONFIG_FILE}")) as f:
+            self.conf = json.loads(f.read())
+        # Additional mattr passed to llvm-mc
+        self.mattr: str = (
+            ",".join(self.conf["additional_mattr"][self.arch])
+            if self.arch in self.conf["additional_mattr"]
+            else ""
+        )
+        # A list of options which are always added.
+        self.mandatory_options: str = (
+            self.conf["mandatory_options"][self.arch]
+            if self.arch in self.conf["mandatory_options"]
+            else list()
+        )
         self.multi_mode = multi_mode
 
     def check_prerequisites(self, paths):
@@ -325,7 +335,7 @@ class MCUpdater:
                 TestFile(
                     self.arch,
                     mcc.file,
-                    mcc.get_opts_list(),
+                    mcc.get_opts_list() + self.mandatory_options,
                     mcc,
                     self.unified_test_cases,
                 )

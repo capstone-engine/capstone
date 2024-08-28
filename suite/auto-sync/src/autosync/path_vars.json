@@ -33,6 +33,7 @@
     "{DIFFER_TEST_NEW_SRC_DIR}": "{DIFFER_TEST_DIR}/new_src/",
     "{DIFFER_TEST_PERSISTENCE_FILE}": "{DIFFER_TEST_DIR}/test_saved_patches.json",
     "{AUTO_SYNC_TEST_DIR}": "{AUTO_SYNC_SRC}/Tests/",
+    "{MCUPDATER_CONFIG_FILE}": "{AUTO_SYNC_SRC}/mcupdater.json",
     "{MCUPDATER_TEST_DIR}": "{AUTO_SYNC_TEST_DIR}/MCUpdaterTests/",
     "{MCUPDATER_TEST_DIR_EXPECTED}": "{AUTO_SYNC_TEST_DIR}/MCUpdaterTests/expected",
     "{MCUPDATER_OUT_DIR}": "{BUILD_DIR}/mc_out/",
