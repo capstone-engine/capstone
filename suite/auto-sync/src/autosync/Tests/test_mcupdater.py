@@ -127,6 +127,30 @@ class TestHeaderPatcher(unittest.TestCase):
             ],
         )
 
+    def test_no_symbol_tests(self):
+        out_dir = Path(get_path("{MCUPDATER_TEST_OUT_DIR}").joinpath("no_symbol"))
+        if not out_dir.exists():
+            out_dir.mkdir(parents=True)
+        for file in out_dir.iterdir():
+            logging.debug(f"Delete old file: {file}")
+            os.remove(file)
+        test_only_overwrite_path_var(
+            "{MCUPDATER_OUT_DIR}",
+            out_dir,
+        )
+        self.updater = MCUpdater(
+            "ARCH",
+            get_path("{MCUPDATER_TEST_DIR}"),
+            [],
+            [],
+            False,
+        )
+        self.updater.gen_all()
+        self.assertFalse(
+            out_dir.joinpath("test_no_symbol.s.txt.yaml").exists(),
+            "File should not exist",
+        )
+
     def compare_files(self, out_dir: Path, filenames: list[str]) -> bool:
         if not out_dir.is_dir():
             logging.error(f"{out_dir} is not a directory.")
