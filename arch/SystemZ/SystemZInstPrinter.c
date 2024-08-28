@@ -114,7 +114,7 @@ static void printMCOperandMAI(const MCOperand *MO, const MCAsmInfo *MAI,
       printFormattedRegName(MAI, MCOperand_getReg(MO), O);
   }
   else if (MCOperand_isImm(MO))
-    printUInt64(markup_OS(O, Markup_Immediate), MCOperand_getImm(MO));
+    printInt64(markup_OS(O, Markup_Immediate), MCOperand_getImm(MO));
   else if (MCOperand_isExpr(MO))
     printExpr(O, MCOperand_getExpr(MO));
   else
@@ -130,7 +130,7 @@ static void printMCOperand(const MCInst *MI, const MCOperand *MO, SStream *O)
 		else
 			printFormattedRegName(&MI->MAI, MCOperand_getReg(MO), O);
 	} else if (MCOperand_isImm(MO))
-		printUInt64(markup_OS(O, Markup_Immediate),
+		printInt64(markup_OS(O, Markup_Immediate),
 				MCOperand_getImm(MO));
 	else if (MCOperand_isExpr(MO))
 		printExpr(O, MCOperand_getExpr(MO)); \
@@ -194,7 +194,7 @@ DEFINE_printUImmOperand(48);
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		CS_ASSERT( \
 			(CONCAT(isInt, N)(Value) && "Invalid simm argument")); \
-		printUInt64(markup_OS(O, Markup_Immediate), Value); \
+		printInt64(markup_OS(O, Markup_Immediate), Value); \
 	}
 DEFINE_printSImmOperand(8);
 DEFINE_printSImmOperand(16);
@@ -264,7 +264,7 @@ static void printPCRelOperand(MCInst *MI, uint64_t Address, int OpNum, SStream *
 {
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
-		printUInt64(O, MCOperand_getImm(MO));
+		printInt64(O, MCOperand_getImm(MO));
 	} else
     printExpr(O, MCOperand_getExpr(MO));
 }
