@@ -433,8 +433,7 @@ class MCUpdater:
     def gen_all(self):
         log.info("Check prerequisites")
         disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch}")
-        assembly_tests = self.mc_dir.joinpath(f"{self.arch}")
-        test_paths = [disas_tests, assembly_tests]
+        test_paths = [disas_tests]
         self.check_prerequisites(test_paths)
         log.info("Generate MC regression tests")
         llvm_mc_cmds = self.run_llvm_lit(test_paths)
