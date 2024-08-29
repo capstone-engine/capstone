@@ -9,17 +9,6 @@ from tree_sitter import Node
 class Patch:
     priority: int = None
 
-    # List of filenames and architectures this patch applies to or not.
-    # Order of testing:
-    # 1. apply_only_to.archs
-    # 2. apply_only_to.files
-    # 3. do_not_apply.archs
-    # 4. do_not_apply.files
-    # Contains the _in_ filenames and architectures this patch should be applied to. Empty list means all.
-    apply_only_to = {"files": list(), "archs": list()}
-    # Contains the _in_ filenames and architectures this patch should NOT be applied to.
-    do_not_apply = {"files": list(), "archs": list()}
-
     def __init__(self, priority: int = 0):
         self.priority = priority
 
