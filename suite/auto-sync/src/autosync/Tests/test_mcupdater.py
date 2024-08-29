@@ -3,6 +3,7 @@
 
 import logging
 import os
+import shutil
 import sys
 import unittest
 from pathlib import Path
@@ -176,6 +177,39 @@ class TestHeaderPatcher(unittest.TestCase):
                 "File should not exist",
             )
 
+    def test_systemz_mapping(self):
+        with self.mutex:
+            out_dir = Path(
+                get_path("{MCUPDATER_TEST_OUT_DIR}").joinpath("mode_mapping/")
+            )
+            if not out_dir.exists():
+                out_dir.mkdir(parents=True)
+            for file in out_dir.iterdir():
+                logging.debug(f"Delete old file: {file}")
+                if file.is_dir():
+                    shutil.rmtree(file)
+                else:
+                    os.remove(file)
+            test_only_overwrite_path_var(
+                "{MCUPDATER_OUT_DIR}",
+                out_dir,
+            )
+            self.updater = MCUpdater(
+                "SystemZ",
+                get_path("{MCUPDATER_TEST_DIR}"),
+                [],
+                [],
+                False,
+            )
+            self.updater.gen_all()
+            self.assertTrue(
+                self.compare_files(
+                    out_dir,
+                    ["test_systemz_mapping.txt.yaml"],
+                ),
+                "File mismatch",
+            )
+
     def compare_files(self, out_dir: Path, filenames: list[str]) -> bool:
         if not out_dir.is_dir():
             logging.error(f"{out_dir} is not a directory.")
@@ -184,11 +218,13 @@ class TestHeaderPatcher(unittest.TestCase):
         parent_name = out_dir.parent.name
         expected_dir = (
             get_path("{MCUPDATER_TEST_DIR_EXPECTED}")
-            .joinpath(parent_name)
-            .joinpath(out_dir.name)
+            # Dirty for now. Sorry.
+            .joinpath(parent_name if parent_name != "test_output" else "").joinpath(
+                out_dir.name
+            )
         )
         if not expected_dir.exists() or not expected_dir.is_dir():
-            logging.error(f"{expected_dir} is not a directory.")
+            logging.error(f"Expected: {expected_dir} is not a directory.")
             return False
         for file in filenames:
             efile = expected_dir.joinpath(file)

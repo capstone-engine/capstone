@@ -16,17 +16,20 @@ from autosync.Helper import convert_loglevel, get_path
 
 
 class LLVM_MC_Command:
-    def __init__(self, cmd_line: str, mattr: str):
+    def __init__(self, cmd_line: str, mattr: str, mattr_map: dict = dict()):
         self.cmd: str = ""
         self.opts: str = ""
         self.file: Path | None = None
-        self.mattr: str = mattr
+        self.additional_mattr: str = mattr
+        self.mattr_map: dict = mattr_map
 
         self.cmd, self.opts, self.file = self.parse_llvm_mc_line(cmd_line)
         if not (self.cmd and self.opts and self.file):
             log.warning(f"Could not parse llvm-mc command: {cmd_line}")
         elif not "--show-encoding" in self.cmd:
             self.cmd = re.sub("llvm-mc", "llvm-mc --show-encoding", self.cmd)
+        elif not "--disassemble" in self.cmd:
+            self.cmd = re.sub("llvm-mc", "llvm-mc --disassemble", self.cmd)
 
     def parse_llvm_mc_line(self, line: str) -> tuple[str, str, Path]:
         test_file_base_dir = str(get_path("{LLVM_LIT_TEST_DIR}").absolute())
@@ -42,20 +45,29 @@ class LLVM_MC_Command:
         opts = ",".join([m.group(2) for m in arch]) if arch else ""
         if mattr:
             opts += "" if not opts else ","
-            opts += ",".join([m.group(2).strip("+") for m in mattr])
+            processed_attr = list()
+            for m in mattr:
+                attribute = m.group(2).strip("+")
+                if attribute in self.mattr_map:
+                    processed_attr.append(self.mattr_map[attribute])
+                else:
+                    processed_attr.append(attribute)
+            opts += ",".join(processed_attr)
         return cmd, opts, Path(test_file)
 
     def exec(self) -> sp.CompletedProcess:
         with open(self.file, "b+r") as f:
             content = f.read()
-        if self.mattr:
+        if self.additional_mattr:
             # If mattr exists, patch it into the cmd
             if "mattr" in self.cmd:
                 self.cmd = re.sub(
-                    r"mattr[=\s]+", f"mattr={self.mattr} -mattr=", self.cmd
+                    r"mattr[=\s]+", f"mattr={self.additional_mattr} -mattr=", self.cmd
                 )
             else:
-                self.cmd = re.sub(r"llvm-mc", f"llvm-mc -mattr={self.mattr}", self.cmd)
+                self.cmd = re.sub(
+                    r"llvm-mc", f"llvm-mc -mattr={self.additional_mattr}", self.cmd
+                )
 
         log.debug(f"Run: {self.cmd}")
         result = sp.run(self.cmd.split(" "), input=content, capture_output=True)
@@ -454,7 +466,15 @@ class MCUpdater:
                 continue
             if any(re.search(x, match) is not None for x in self.excluded):
                 continue
-            llvm_mc_cmd = LLVM_MC_Command(match, self.mattr)
+            llvm_mc_cmd = LLVM_MC_Command(
+                match,
+                self.mattr,
+                (
+                    self.conf["mode_map"][self.arch]
+                    if self.arch in self.conf["mode_map"]
+                    else dict()
+                ),
+            )
             if not llvm_mc_cmd.cmd:
                 # Invalid
                 continue
