@@ -114,28 +114,28 @@ static void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo,
 	static void CONCAT(printUImm, CONCAT(Bits, Offset))( \
 		MCInst *MI, int opNum, SStream *O)
 #define DECLARE_printUImm(Bits) \
-	static void CONCAT(printUImm, Bits)( \
+	static void CONCAT(printUImm, CONCAT(Bits, 0))( \
 		MCInst *MI, int opNum, SStream *O)
-
-
-DECLARE_printUImm(16);
+DECLARE_printUImm(0);
+DECLARE_printUImm(1);
 DECLARE_printUImm(10);
+DECLARE_printUImm(12);
+DECLARE_printUImm(16);
+DECLARE_printUImm(2);
+DECLARE_printUImm(20);
+DECLARE_printUImm(26);
+DECLARE_printUImm(3);
+DECLARE_printUImm(32);
 DECLARE_printUImm(4);
 DECLARE_printUImm(5);
-DECLARE_printUImm(26);
-DECLARE_printUImm(20);
-DECLARE_printUImm(2);
-DECLARE_printUImm(1);
-DECLARE_printUImm(3);
-DECLARE_printUImm(0);
+DECLARE_printUImm(6);
 DECLARE_printUImm(7);
 DECLARE_printUImm(8);
 DECLARE_printUImm_2(2, 1);
-DECLARE_printUImm(6);
-DECLARE_printUImm_2(5, 32);
 DECLARE_printUImm_2(5, 1);
-DECLARE_printUImm_2(6, 1);
+DECLARE_printUImm_2(5, 32);
 DECLARE_printUImm_2(5, 33);
+DECLARE_printUImm_2(6, 1);
 DECLARE_printUImm_2(6, 2);
 
 static void printMemOperand(MCInst *MI, int opNum, SStream *O);
@@ -146,7 +146,13 @@ static bool printAlias(const char *Str, const MCInst *MI, uint64_t Address,
 static bool printAlias2(const char *Str, const MCInst *MI, uint64_t Address,
 		unsigned OpNo0, unsigned OpNo1, SStream *OS,
 		bool IsBranch);
-static bool printAlias3(const MCInst *MI, uint64_t Address, SStream *OS);
+static bool printAlias3(const char *Str, const MCInst *MI, uint64_t Address,
+		unsigned OpNo0, unsigned OpNo1, unsigned OpNo2, SStream *OS);
+static bool printAlias4(const MCInst *MI, uint64_t Address, SStream *OS);
 static void printRegisterList(MCInst *MI, int opNum, SStream *O);
+static void printNanoMipsRegisterList(MCInst *MI, int opNum, SStream *O);
+static void printHi20(MCInst *MI, int OpNum, SStream *O);
+static void printHi20PCRel(MCInst *MI, uint64_t Address, int OpNum, SStream *O);
+static void printPCRel(MCInst *MI, uint64_t Address, int OpNum, SStream *O);
 
 #endif

@@ -120,7 +120,13 @@ typedef struct cs_arch_config {
 			CS_MODE_MIPS64R5 | \
 			CS_MODE_MIPS64R6 | \
 			CS_MODE_OCTEON | \
-			CS_MODE_OCTEONP), \
+			CS_MODE_OCTEONP | \
+			CS_MODE_NANOMIPS | \
+			CS_MODE_NMS1 | \
+			CS_MODE_I7200 | \
+			CS_MODE_MIPS_NOFLOAT | \
+			CS_MODE_MIPS_PTR64 \
+			), \
 	}
 #define CS_ARCH_CONFIG_X86 \
 	{ \

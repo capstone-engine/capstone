@@ -9,7 +9,46 @@
 #include <capstone/capstone.h>
 #include "cstool.h"
 
+#ifdef CAPSTONE_AARCH64_COMPAT_HEADER
+#define CS_ARCH_AARCH64 CS_ARCH_ARM
+#endif
+
 void print_string_hex(const char *comment, unsigned char *str, size_t len);
+
+static struct {
+	const char *name;
+	const char *desc;
+	cs_arch archs[CS_ARCH_MAX];
+	cs_opt_value opt;
+	cs_mode mode;
+} all_opts[] = {
+	// cs_opt_value only
+	{ "+att", "ATT syntax", {
+		CS_ARCH_X86, CS_ARCH_MAX }, CS_OPT_SYNTAX_ATT, 0 },
+	{ "+intel", "Intel syntax", {
+		CS_ARCH_X86, CS_ARCH_MAX }, CS_OPT_SYNTAX_INTEL, 0 },
+	{ "+masm", "Intel MASM syntax", {
+		CS_ARCH_X86, CS_ARCH_MAX }, CS_OPT_SYNTAX_MASM, 0 },
+	{ "+noregname", "Number only registers", {
+		CS_ARCH_AARCH64, CS_ARCH_ARM, CS_ARCH_LOONGARCH,
+		CS_ARCH_MIPS, CS_ARCH_PPC, CS_ARCH_MAX },
+		CS_OPT_SYNTAX_NOREGNAME, 0 },
+	{ "+moto", "Use $ as hex prefix", {
+		CS_ARCH_MOS65XX, CS_ARCH_MAX }, CS_OPT_SYNTAX_MOTOROLA, 0 },
+	{ "+regalias", "Use register aliases, like r9 > sb", {
+		CS_ARCH_ARM, CS_ARCH_AARCH64, CS_ARCH_MAX },
+		CS_OPT_SYNTAX_CS_REG_ALIAS, 0 },
+	{ "+percentage", "Adds % in front of the registers", {
+		CS_ARCH_PPC, CS_ARCH_MAX }, CS_OPT_SYNTAX_PERCENT, 0 },
+	{ "+nodollar", "Removes $ in front of the registers", {
+		CS_ARCH_MIPS, CS_ARCH_MAX }, CS_OPT_SYNTAX_NO_DOLLAR, 0 },
+	// cs_mode only
+	{ "+nofloat", "Disables floating point support", {
+		CS_ARCH_MIPS, CS_ARCH_MAX }, 0, CS_MODE_MIPS_NOFLOAT },
+	{ "+ptr64", "Enables 64-bit pointers support", {
+		CS_ARCH_MIPS, CS_ARCH_MAX }, 0, CS_MODE_MIPS_PTR64 },
+	{ NULL }
+};
 
 static struct {
 	const char *name;
@@ -81,17 +120,17 @@ static struct {
 	{ "mips64r5", "Mips64 r5 ISA", CS_ARCH_MIPS, CS_MODE_MIPS64R5 | CS_MODE_BIG_ENDIAN },
 	{ "mipsel64r6", "Mips64 r6 ISA, little endian", CS_ARCH_MIPS, CS_MODE_MIPS64R6 },
 	{ "mips64r6", "Mips64 r6 ISA", CS_ARCH_MIPS, CS_MODE_MIPS64R6 | CS_MODE_BIG_ENDIAN },
-	{ "octeon", "Octeon cnMIPS, little endian", CS_ARCH_MIPS, CS_MODE_OCTEON },
-	{ "octeonel", "Octeon cnMIPS", CS_ARCH_MIPS, CS_MODE_OCTEON | CS_MODE_BIG_ENDIAN },
-	{ "octeon+", "Octeon+ cnMIPS, little endian", CS_ARCH_MIPS, CS_MODE_OCTEONP },
-	{ "octeonel+", "Octeon+ cnMIPS", CS_ARCH_MIPS, CS_MODE_OCTEONP | CS_MODE_BIG_ENDIAN },
+	{ "octeonle", "Octeon cnMIPS, little endian", CS_ARCH_MIPS, CS_MODE_OCTEON },
+	{ "octeon", "Octeon cnMIPS", CS_ARCH_MIPS, CS_MODE_OCTEON | CS_MODE_BIG_ENDIAN },
+	{ "octeonple", "Octeon+ cnMIPS, little endian", CS_ARCH_MIPS, CS_MODE_OCTEONP },
+	{ "octeonp", "Octeon+ cnMIPS", CS_ARCH_MIPS, CS_MODE_OCTEONP | CS_MODE_BIG_ENDIAN },
+	{ "nanomips", "nanoMIPS", CS_ARCH_MIPS, CS_MODE_NANOMIPS },
+	{ "nms1", "nanoMIPS Subset", CS_ARCH_MIPS, CS_MODE_NMS1 },
+	{ "i7200", "nanoMIPS i7200", CS_ARCH_MIPS, CS_MODE_I7200 },
 
 	{ "x16", "x86 16-bit mode", CS_ARCH_X86, CS_MODE_16 }, // CS_MODE_16
-	{ "x16att", "x86 16-bit mode, syntax AT&T", CS_ARCH_X86, CS_MODE_16 }, // CS_MODE_16 , CS_OPT_SYNTAX_ATT
 	{ "x32", "x86 32-bit mode", CS_ARCH_X86, CS_MODE_32 }, // CS_MODE_32
-	{ "x32att", "x86 32-bit mode, syntax AT&T", CS_ARCH_X86, CS_MODE_32 }, // CS_MODE_32, CS_OPT_SYNTAX_ATT
 	{ "x64", "x86 64-bit mode", CS_ARCH_X86, CS_MODE_64 }, // CS_MODE_64
-	{ "x64att", "x86 64-bit mode, syntax AT&T", CS_ARCH_X86, CS_MODE_64 }, // CS_MODE_64, CS_OPT_SYNTAX_ATT
 
 	{ "ppc32", "PowerPC 32-bit, little endian", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_LITTLE_ENDIAN },
 	{ "ppc32be", "PowerPC 32-bit, big endian", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN },
@@ -234,17 +273,64 @@ static uint8_t *preprocess(char *code, size_t *size)
 
 	return result;
 }
+
+static const char *get_arch_name(cs_arch arch)
+{
+	switch(arch) {
+	case CS_ARCH_ARM: return "ARM";
+	case CS_ARCH_AARCH64: return "Arm64";
+	case CS_ARCH_MIPS: return "Mips";
+	case CS_ARCH_X86: return "x86";
+	case CS_ARCH_PPC: return "PowerPC";
+	case CS_ARCH_SPARC: return "Sparc";
+	case CS_ARCH_SYSZ: return "SysZ";
+	case CS_ARCH_XCORE: return "Xcore";
+	case CS_ARCH_M68K: return "M68K";
+	case CS_ARCH_TMS320C64X: return "TMS320C64X";
+	case CS_ARCH_M680X: return "M680X";
+	case CS_ARCH_EVM: return "Evm";
+	case CS_ARCH_MOS65XX: return "MOS65XX";
+	case CS_ARCH_WASM: return "Wasm";
+	case CS_ARCH_BPF: return "BPF";
+	case CS_ARCH_RISCV: return "RiscV";
+	case CS_ARCH_SH: return "SH";
+	case CS_ARCH_TRICORE: return "TriCore";
+	case CS_ARCH_ALPHA: return "Alpha";
+	case CS_ARCH_HPPA: return "HPPA";
+	case CS_ARCH_LOONGARCH: return "LoongArch";
+	default: return NULL;
+	}
+}
+
 static void usage(char *prog)
 {
-	int i;
+	int i, j;
 	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n", CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
-	printf("Syntax: %s [-d|-a|-r|-s|-u|-v] <arch+mode> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
-	printf("\nThe following <arch+mode> options are supported:\n");
+	printf("Syntax: %s [-d|-a|-r|-s|-u|-v] <arch+opts> <assembly-hexstring> [start-address-in-hex-format]\n", prog);
+	printf("\nThe following <arch+opts> options are supported:\n");
 
 	for (i = 0; all_archs[i].name; i++) {
 		if (cs_support(all_archs[i].arch)) {
 			printf("        %-16s %s\n", all_archs[i].name, all_archs[i].desc);
 		}
+	}
+
+	printf("\nArch specific options:\n");
+	for (i = 0; all_opts[i].name; i++) {
+		printf("        %-16s %s (only: ", all_opts[i].name, all_opts[i].desc);
+		for (j = 0; j < CS_ARCH_MAX; j++) {
+			cs_arch arch = all_opts[i].archs[j];
+			const char *name = get_arch_name(arch);
+			if (!name) {
+				break;
+			}
+			if (j > 0) {
+				printf(", %s", name);
+			} else {
+				printf("%s", name);
+			}
+		}
+		printf(")\n");
 	}
 
 	printf("\nExtra options:\n");
@@ -388,6 +474,44 @@ static void run_dev_fuzz(csh handle, uint8_t *bytes, uint32_t size) {
 			free(insn);
 			printf("\n");
 			return;
+		}
+	}
+}
+
+static cs_mode find_additional_modes(const char *mode, cs_arch arch) {
+	if (!mode) {
+		return 0;
+	}
+	cs_mode md = 0;
+	int i, j;
+	for (i = 0; all_opts[i].name; i++) {
+		if (all_opts[i].opt || !strstr(mode, all_opts[i].name)) {
+			continue;
+		}
+		for (j = 0; j < CS_ARCH_MAX; j++) {
+			if (arch == all_opts[i].archs[j]) {
+				md |= all_opts[i].mode;
+				break;
+			}
+		}
+	}
+	return md;
+}
+
+static void enable_additional_options(csh handle, const char *mode, cs_arch arch) {
+	if (!mode) {
+		return;
+	}
+	int i, j;
+	for (i = 0; all_opts[i].name; i++) {
+		if (all_opts[i].mode || !strstr(mode, all_opts[i].name)) {
+			continue;
+		}
+		for (j = 0; j < CS_ARCH_MAX; j++) {
+			if (arch == all_opts[i].archs[j]) {
+				cs_option(handle, all_opts[i].opt, CS_OPT_ON);
+				break;
+			}
 		}
 	}
 }
@@ -561,18 +685,22 @@ int main(int argc, char **argv)
 		}
 	}
 
+	size_t mode_len = strlen(mode);
+	const char *plus = strchr(mode, '+');
+	if (plus) {
+		mode_len = plus - mode;
+	}
+
 	for (i = 0; all_archs[i].name; i++) {
-		if (!strcmp(all_archs[i].name, mode)) {
+		size_t len = strlen(all_archs[i].name);
+		if (len == mode_len && !strncmp(all_archs[i].name, mode, mode_len)) {
 			arch = all_archs[i].arch;
 			md = all_archs[i].mode;
-			if (arch == CS_ARCH_MIPS && strstr (mode, "nofp")) {
-				md |= CS_MODE_MIPS_NOFLOAT;
-			}
+			md |= find_additional_modes(plus, arch);
+
 			err = cs_open(all_archs[i].arch, md, &handle);
 			if (!err) {
-				if (strstr (mode, "att")) {
-					cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
-				}
+				enable_additional_options(handle, plus, arch);
 
 				// turn on SKIPDATA mode
 				if (skipdata) {

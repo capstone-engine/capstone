@@ -36,10 +36,26 @@ void Mips_reg_access(const cs_insn *insn, cs_regs regs_read,
 
 // cs_detail related functions
 void Mips_init_cs_detail(MCInst *MI);
-void Mips_set_detail_op_imm(MCInst *MI, unsigned OpNum,
-				 mips_op_type ImmType, int64_t Imm);
-void Mips_set_detail_op_reg(MCInst *MI, unsigned OpNum, mips_reg Reg);
+
 void Mips_set_mem_access(MCInst *MI, bool status);
 
+void Mips_add_cs_detail(MCInst *MI, mips_op_group op_group, va_list args);
+
+static inline void add_cs_detail(MCInst *MI, mips_op_group op_group, ...)
+{
+	if (!MI->flat_insn->detail)
+		return;
+	va_list args;
+	va_start(args, op_group);
+	Mips_add_cs_detail(MI, op_group, args);
+	va_end(args);
+}
+
+static inline void set_mem_access(MCInst *MI, bool status)
+{
+	if (!MI->flat_insn->detail)
+		return;
+	Mips_set_mem_access(MI, status);
+}
 
 #endif // CS_MIPS_MAPPING_H

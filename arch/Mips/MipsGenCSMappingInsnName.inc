@@ -13,6 +13,7 @@
 
   "invalid", // MIPS_INS_INVALID
   "abs", // MIPS_INS_ABS
+  "align", // MIPS_INS_ALIGN
   "beql", // MIPS_INS_BEQL
   "bge", // MIPS_INS_BGE
   "bgel", // MIPS_INS_BGEL
@@ -74,6 +75,9 @@
   "mulo", // MIPS_INS_MULO
   "mulou", // MIPS_INS_MULOU
   "nor", // MIPS_INS_NOR
+  "addiu", // MIPS_INS_ADDIU
+  "andi", // MIPS_INS_ANDI
+  "subu", // MIPS_INS_SUBU
   "trunc_w_d", // MIPS_INS_TRUNC_W_D
   "trunc_w_s", // MIPS_INS_TRUNC_W_S
   "rol", // MIPS_INS_ROL
@@ -111,7 +115,6 @@
   "addiur2", // MIPS_INS_ADDIUR2
   "addius5", // MIPS_INS_ADDIUS5
   "addiusp", // MIPS_INS_ADDIUSP
-  "addiu", // MIPS_INS_ADDIU
   "addqh_ph", // MIPS_INS_ADDQH_PH
   "addqh_r_ph", // MIPS_INS_ADDQH_R_PH
   "addqh_r_w", // MIPS_INS_ADDQH_R_W
@@ -155,13 +158,11 @@
   "add_a_h", // MIPS_INS_ADD_A_H
   "add_a_w", // MIPS_INS_ADD_A_W
   "addi", // MIPS_INS_ADDI
-  "align", // MIPS_INS_ALIGN
   "aluipc", // MIPS_INS_ALUIPC
   "and", // MIPS_INS_AND
   "and16", // MIPS_INS_AND16
   "andi16", // MIPS_INS_ANDI16
   "andi_b", // MIPS_INS_ANDI_B
-  "andi", // MIPS_INS_ANDI
   "and_v", // MIPS_INS_AND_V
   "append", // MIPS_INS_APPEND
   "asub_s_b", // MIPS_INS_ASUB_S_B
@@ -195,10 +196,13 @@
   "bal", // MIPS_INS_BAL
   "balc", // MIPS_INS_BALC
   "balign", // MIPS_INS_BALIGN
+  "balrsc", // MIPS_INS_BALRSC
+  "bbeqzc", // MIPS_INS_BBEQZC
   "bbit0", // MIPS_INS_BBIT0
   "bbit032", // MIPS_INS_BBIT032
   "bbit1", // MIPS_INS_BBIT1
   "bbit132", // MIPS_INS_BBIT132
+  "bbnezc", // MIPS_INS_BBNEZC
   "bc", // MIPS_INS_BC
   "bc16", // MIPS_INS_BC16
   "bc1eqz", // MIPS_INS_BC1EQZ
@@ -222,11 +226,14 @@
   "bclr_h", // MIPS_INS_BCLR_H
   "bclr_w", // MIPS_INS_BCLR_W
   "beqc", // MIPS_INS_BEQC
+  "beqic", // MIPS_INS_BEQIC
   "beqz16", // MIPS_INS_BEQZ16
   "beqzalc", // MIPS_INS_BEQZALC
   "beqzc", // MIPS_INS_BEQZC
   "beqzc16", // MIPS_INS_BEQZC16
   "bgec", // MIPS_INS_BGEC
+  "bgeic", // MIPS_INS_BGEIC
+  "bgeiuc", // MIPS_INS_BGEIUC
   "bgeuc", // MIPS_INS_BGEUC
   "bgez", // MIPS_INS_BGEZ
   "bgezal", // MIPS_INS_BGEZAL
@@ -256,12 +263,15 @@
   "binsr_h", // MIPS_INS_BINSR_H
   "binsr_w", // MIPS_INS_BINSR_W
   "bitrev", // MIPS_INS_BITREV
+  "bitrevw", // MIPS_INS_BITREVW
   "bitswap", // MIPS_INS_BITSWAP
   "blez", // MIPS_INS_BLEZ
   "blezalc", // MIPS_INS_BLEZALC
   "blezc", // MIPS_INS_BLEZC
   "blezl", // MIPS_INS_BLEZL
   "bltc", // MIPS_INS_BLTC
+  "bltic", // MIPS_INS_BLTIC
+  "bltiuc", // MIPS_INS_BLTIUC
   "bltuc", // MIPS_INS_BLTUC
   "bltz", // MIPS_INS_BLTZ
   "bltzal", // MIPS_INS_BLTZAL
@@ -283,6 +293,7 @@
   "bneg_d", // MIPS_INS_BNEG_D
   "bneg_h", // MIPS_INS_BNEG_H
   "bneg_w", // MIPS_INS_BNEG_W
+  "bneic", // MIPS_INS_BNEIC
   "bnez16", // MIPS_INS_BNEZ16
   "bnezalc", // MIPS_INS_BNEZALC
   "bnezc", // MIPS_INS_BNEZC
@@ -298,6 +309,7 @@
   "bposge32c", // MIPS_INS_BPOSGE32C
   "break", // MIPS_INS_BREAK
   "break16", // MIPS_INS_BREAK16
+  "brsc", // MIPS_INS_BRSC
   "bseli_b", // MIPS_INS_BSELI_B
   "bsel_v", // MIPS_INS_BSEL_V
   "bseti_b", // MIPS_INS_BSETI_B
@@ -308,6 +320,7 @@
   "bset_d", // MIPS_INS_BSET_D
   "bset_h", // MIPS_INS_BSET_H
   "bset_w", // MIPS_INS_BSET_W
+  "byterevw", // MIPS_INS_BYTEREVW
   "bz_b", // MIPS_INS_BZ_B
   "bz_d", // MIPS_INS_BZ_D
   "bz_h", // MIPS_INS_BZ_H
@@ -602,6 +615,7 @@
   "extr_w", // MIPS_INS_EXTR_W
   "exts", // MIPS_INS_EXTS
   "exts32", // MIPS_INS_EXTS32
+  "extw", // MIPS_INS_EXTW
   "abs_d", // MIPS_INS_ABS_D
   "abs_s", // MIPS_INS_ABS_S
   "fadd_d", // MIPS_INS_FADD_D
@@ -775,8 +789,8 @@
   "insve_w", // MIPS_INS_INSVE_W
   "j", // MIPS_INS_J
   "jalr", // MIPS_INS_JALR
-  "jalrc_hb", // MIPS_INS_JALRC_HB
   "jalrc", // MIPS_INS_JALRC
+  "jalrc_hb", // MIPS_INS_JALRC_HB
   "jalrs16", // MIPS_INS_JALRS16
   "jalrs", // MIPS_INS_JALRS
   "jalr_hb", // MIPS_INS_JALR_HB
@@ -791,11 +805,14 @@
   "jrc16", // MIPS_INS_JRC16
   "jrcaddiusp", // MIPS_INS_JRCADDIUSP
   "jr_hb", // MIPS_INS_JR_HB
+  "lapc_h", // MIPS_INS_LAPC_H
+  "lapc_b", // MIPS_INS_LAPC_B
   "lb", // MIPS_INS_LB
   "lbe", // MIPS_INS_LBE
   "lbu16", // MIPS_INS_LBU16
-  "lbux", // MIPS_INS_LBUX
   "lbu", // MIPS_INS_LBU
+  "lbux", // MIPS_INS_LBUX
+  "lbx", // MIPS_INS_LBX
   "lbue", // MIPS_INS_LBUE
   "ldc1", // MIPS_INS_LDC1
   "ldc2", // MIPS_INS_LDC2
@@ -815,13 +832,17 @@
   "lh", // MIPS_INS_LH
   "lhe", // MIPS_INS_LHE
   "lhu16", // MIPS_INS_LHU16
-  "lhx", // MIPS_INS_LHX
   "lhu", // MIPS_INS_LHU
+  "lhuxs", // MIPS_INS_LHUXS
+  "lhux", // MIPS_INS_LHUX
+  "lhx", // MIPS_INS_LHX
+  "lhxs", // MIPS_INS_LHXS
   "lhue", // MIPS_INS_LHUE
   "li16", // MIPS_INS_LI16
   "ll", // MIPS_INS_LL
   "lld", // MIPS_INS_LLD
   "lle", // MIPS_INS_LLE
+  "llwp", // MIPS_INS_LLWP
   "lsa", // MIPS_INS_LSA
   "lui", // MIPS_INS_LUI
   "luxc1", // MIPS_INS_LUXC1
@@ -936,6 +957,7 @@
   "mod_u_w", // MIPS_INS_MOD_U_W
   "move", // MIPS_INS_MOVE
   "move16", // MIPS_INS_MOVE16
+  "move_balc", // MIPS_INS_MOVE_BALC
   "movep", // MIPS_INS_MOVEP
   "move_v", // MIPS_INS_MOVE_V
   "movf_d", // MIPS_INS_MOVF_D
@@ -1020,11 +1042,13 @@
   "nmadd_s", // MIPS_INS_NMADD_S
   "nmsub_d", // MIPS_INS_NMSUB_D
   "nmsub_s", // MIPS_INS_NMSUB_S
+  "nop32", // MIPS_INS_NOP32
+  "nop", // MIPS_INS_NOP
   "nori_b", // MIPS_INS_NORI_B
   "nor_v", // MIPS_INS_NOR_V
   "not16", // MIPS_INS_NOT16
-  "neg", // MIPS_INS_NEG
   "not", // MIPS_INS_NOT
+  "neg", // MIPS_INS_NEG
   "or", // MIPS_INS_OR
   "or16", // MIPS_INS_OR16
   "ori_b", // MIPS_INS_ORI_B
@@ -1082,10 +1106,13 @@
   "replv_qb", // MIPS_INS_REPLV_QB
   "repl_ph", // MIPS_INS_REPL_PH
   "repl_qb", // MIPS_INS_REPL_QB
+  "restore_jrc", // MIPS_INS_RESTORE_JRC
+  "restore", // MIPS_INS_RESTORE
   "rint_d", // MIPS_INS_RINT_D
   "rint_s", // MIPS_INS_RINT_S
   "rotr", // MIPS_INS_ROTR
   "rotrv", // MIPS_INS_ROTRV
+  "rotx", // MIPS_INS_ROTX
   "round_l_d", // MIPS_INS_ROUND_L_D
   "round_l_s", // MIPS_INS_ROUND_L_S
   "round_w_d", // MIPS_INS_ROUND_W_D
@@ -1100,12 +1127,15 @@
   "sat_u_d", // MIPS_INS_SAT_U_D
   "sat_u_h", // MIPS_INS_SAT_U_H
   "sat_u_w", // MIPS_INS_SAT_U_W
+  "save", // MIPS_INS_SAVE
   "sb", // MIPS_INS_SB
   "sb16", // MIPS_INS_SB16
   "sbe", // MIPS_INS_SBE
+  "sbx", // MIPS_INS_SBX
   "sc", // MIPS_INS_SC
   "scd", // MIPS_INS_SCD
   "sce", // MIPS_INS_SCE
+  "scwp", // MIPS_INS_SCWP
   "sdbbp", // MIPS_INS_SDBBP
   "sdbbp16", // MIPS_INS_SDBBP16
   "sdc1", // MIPS_INS_SDC1
@@ -1155,6 +1185,8 @@
   "shrlv_qb", // MIPS_INS_SHRLV_QB
   "shrl_ph", // MIPS_INS_SHRL_PH
   "shrl_qb", // MIPS_INS_SHRL_QB
+  "shxs", // MIPS_INS_SHXS
+  "shx", // MIPS_INS_SHX
   "sigrie", // MIPS_INS_SIGRIE
   "sldi_b", // MIPS_INS_SLDI_B
   "sldi_d", // MIPS_INS_SLDI_D
@@ -1175,9 +1207,10 @@
   "sll_d", // MIPS_INS_SLL_D
   "sll_h", // MIPS_INS_SLL_H
   "sll_w", // MIPS_INS_SLL_W
-  "slti", // MIPS_INS_SLTI
   "sltiu", // MIPS_INS_SLTIU
+  "slti", // MIPS_INS_SLTI
   "snei", // MIPS_INS_SNEI
+  "sov", // MIPS_INS_SOV
   "splati_b", // MIPS_INS_SPLATI_B
   "splati_d", // MIPS_INS_SPLATI_D
   "splati_h", // MIPS_INS_SPLATI_H
@@ -1255,7 +1288,6 @@
   "subu16", // MIPS_INS_SUBU16
   "subuh_qb", // MIPS_INS_SUBUH_QB
   "subuh_r_qb", // MIPS_INS_SUBUH_R_QB
-  "subu", // MIPS_INS_SUBU
   "subu_ph", // MIPS_INS_SUBU_PH
   "subu_qb", // MIPS_INS_SUBU_QB
   "subu_s_ph", // MIPS_INS_SUBU_S_PH
@@ -1279,11 +1311,14 @@
   "swle", // MIPS_INS_SWLE
   "swm16", // MIPS_INS_SWM16
   "swm32", // MIPS_INS_SWM32
+  "swpc", // MIPS_INS_SWPC
   "swp", // MIPS_INS_SWP
   "swr", // MIPS_INS_SWR
   "swre", // MIPS_INS_SWRE
   "swsp", // MIPS_INS_SWSP
   "swxc1", // MIPS_INS_SWXC1
+  "swxs", // MIPS_INS_SWXS
+  "swx", // MIPS_INS_SWX
   "sync", // MIPS_INS_SYNC
   "synci", // MIPS_INS_SYNCI
   "syscall", // MIPS_INS_SYSCALL
@@ -1313,6 +1348,12 @@
   "tnei", // MIPS_INS_TNEI
   "trunc_l_d", // MIPS_INS_TRUNC_L_D
   "trunc_l_s", // MIPS_INS_TRUNC_L_S
+  "ualh", // MIPS_INS_UALH
+  "ualwm", // MIPS_INS_UALWM
+  "ualw", // MIPS_INS_UALW
+  "uash", // MIPS_INS_UASH
+  "uaswm", // MIPS_INS_UASWM
+  "uasw", // MIPS_INS_UASW
   "v3mulu", // MIPS_INS_V3MULU
   "vmm0", // MIPS_INS_VMM0
   "vmulu", // MIPS_INS_VMULU

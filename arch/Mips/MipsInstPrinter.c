@@ -121,99 +121,141 @@ static void printRegName(MCInst *MI, SStream *OS, MCRegister Reg)
 }
 
 void Mips_LLVM_printInst(MCInst *MI, uint64_t Address, SStream *O) {
-	if (!printAliasInstr(MI, Address, O) && !printAlias3(MI, Address, O))
+	if (!printAliasInstr(MI, Address, O) && !printAlias4(MI, Address, O))
 		printInstruction(MI, Address, O);
 }
 
 void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
+	switch (MCInst_getOpcode(MI)) {
+	default:
+		break;
+	case Mips_AND16_NM:
+	case Mips_XOR16_NM:
+	case Mips_OR16_NM:
+		if (MCInst_getNumOperands(MI) == 2 && OpNo == 2)
+			OpNo = 0; // rt, rs -> rt, rs, rt
+		break;
+	case Mips_ADDu4x4_NM:
+	case Mips_MUL4x4_NM:
+		if (MCInst_getNumOperands(MI) == 2 && OpNo > 0)
+			OpNo = OpNo - 1; // rt, rs -> rt, rt, rs
+		break;
+	}
+
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 	if (MCOperand_isReg(Op)) {
-		MCRegister Reg = MCOperand_getReg(Op);
-		Mips_set_detail_op_reg(MI, OpNo, Reg);
-		printRegName(MI, O, Reg);
+		add_cs_detail(MI, Mips_OP_GROUP_Operand, OpNo);
+		printRegName(MI, O, MCOperand_getReg(Op));
 		return;
 	}
 
-	int64_t Imm = MCOperand_getImm(Op);
-	Mips_set_detail_op_imm(MI, OpNo, MIPS_OP_IMM, Imm);
-	printInt64(O, Imm);
+
+	if (MCOperand_isImm(Op)) {
+		switch (MCInst_getOpcode(MI)) {
+		case Mips_LI48_NM:
+		case Mips_ANDI16_NM:
+		case Mips_ANDI_NM:
+		case Mips_ORI_NM:
+		case Mips_XORI_NM:
+		case Mips_TEQ_NM:
+		case Mips_TNE_NM:
+		case Mips_SIGRIE_NM:
+		case Mips_SDBBP_NM:
+		case Mips_SDBBP16_NM:
+		case Mips_BREAK_NM:
+		case Mips_BREAK16_NM:
+		case Mips_SYSCALL_NM:
+		case Mips_SYSCALL16_NM:
+		case Mips_WAIT_NM:
+			CONCAT(printUImm, CONCAT(32, 0))
+			(MI, OpNo, O);
+			break;
+		default:
+			add_cs_detail(MI, Mips_OP_GROUP_Operand, OpNo);
+			printInt64(O, MCOperand_getImm(Op));
+			break;
+		}
+		return;
+	}
 }
 
 static void printJumpOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
+	add_cs_detail(MI, Mips_OP_GROUP_JumpOperand, OpNo);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
-	if (!MCOperand_isImm(Op))
-		return printOperand((MCInst *)MI, OpNo, O);
+	if (MCOperand_isReg(Op))
+		return printRegName(MI, O, MCOperand_getReg(Op));
 
-	int64_t Imm = MCOperand_getImm(Op);
-	Mips_set_detail_op_imm(MI, OpNo, MIPS_OP_IMM, Imm);
-	printInt64(O, Imm);
+	printInt64(O, MCOperand_getImm(Op));
 }
 
 static void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo, SStream *O)
 {
+	add_cs_detail(MI, Mips_OP_GROUP_BranchOperand, OpNo);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
-	if (!MCOperand_isImm(Op))
-		return printOperand((MCInst *)MI, OpNo, O);
+	if (MCOperand_isReg(Op))
+		return printRegName(MI, O, MCOperand_getReg(Op));
 
     uint64_t Target = Address + MCOperand_getImm(Op);
-	Mips_set_detail_op_imm(MI, OpNo, MIPS_OP_IMM, Target);
 	printInt64(O, Target);
 }
 
 #define DEFINE_printUImm(Bits) \
-	static void CONCAT(printUImm, Bits)(MCInst * MI, int opNum, \
+	static void CONCAT(printUImm, CONCAT(Bits, 0))(MCInst * MI, int opNum, \
 						     SStream *O) \
 	{ \
+		add_cs_detail(MI, CONCAT(Mips_OP_GROUP_UImm, CONCAT(Bits, 0)), opNum); \
 		MCOperand *MO = MCInst_getOperand(MI, (opNum)); \
 		if (MCOperand_isImm(MO)) { \
 			uint64_t Imm = MCOperand_getImm(MO); \
-			Imm &= (1 << Bits) - 1; \
-			Mips_set_detail_op_imm(MI, opNum, MIPS_OP_IMM, Imm); \
+			Imm &= (((uint64_t)1) << Bits) - 1; \
 			printUInt64(O, Imm); \
 			return; \
 		} \
-\
-		printOperand((MCInst *)MI, opNum, O); \
+		MCOperand *Op = MCInst_getOperand(MI, (opNum)); \
+		printRegName(MI, O, MCOperand_getReg(Op)); \
 	}
 
 #define DEFINE_printUImm_2(Bits, Offset) \
 	static void CONCAT(printUImm, CONCAT(Bits, Offset))(MCInst * MI, int opNum, \
 						     SStream *O) \
 	{ \
+		add_cs_detail(MI, CONCAT(Mips_OP_GROUP_UImm, CONCAT(Bits, Offset)), \
+						opNum); \
 		MCOperand *MO = MCInst_getOperand(MI, (opNum)); \
 		if (MCOperand_isImm(MO)) { \
 			uint64_t Imm = MCOperand_getImm(MO); \
 			Imm -= Offset; \
 			Imm &= (1 << Bits) - 1; \
 			Imm += Offset; \
-			Mips_set_detail_op_imm(MI, opNum, MIPS_OP_IMM, Imm); \
 			printUInt64(O, Imm); \
 			return; \
 		} \
-\
-		printOperand((MCInst *)MI, opNum, O); \
+		MCOperand *Op = MCInst_getOperand(MI, (opNum)); \
+		printRegName(MI, O, MCOperand_getReg(Op)); \
 	}
 
-DEFINE_printUImm(16);
+DEFINE_printUImm(0);
+DEFINE_printUImm(1);
 DEFINE_printUImm(10);
+DEFINE_printUImm(12);
+DEFINE_printUImm(16);
+DEFINE_printUImm(2);
+DEFINE_printUImm(20);
+DEFINE_printUImm(26);
+DEFINE_printUImm(3);
+DEFINE_printUImm(32);
 DEFINE_printUImm(4);
 DEFINE_printUImm(5);
-DEFINE_printUImm(26);
-DEFINE_printUImm(20);
-DEFINE_printUImm(2);
-DEFINE_printUImm(1);
-DEFINE_printUImm(3);
-DEFINE_printUImm(0);
+DEFINE_printUImm(6);
 DEFINE_printUImm(7);
 DEFINE_printUImm(8);
 DEFINE_printUImm_2(2, 1);
-DEFINE_printUImm(6);
-DEFINE_printUImm_2(5, 32);
 DEFINE_printUImm_2(5, 1);
-DEFINE_printUImm_2(6, 1);
+DEFINE_printUImm_2(5, 32);
 DEFINE_printUImm_2(5, 33);
+DEFINE_printUImm_2(6, 1);
 DEFINE_printUImm_2(6, 2);
 
 static void printMemOperand(MCInst *MI, int opNum, SStream *O)
@@ -237,12 +279,43 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O)
 		break;
 	}
 
-	Mips_set_mem_access(MI, true);
-	printOperand((MCInst *)MI, opNum + 1, O);
+	set_mem_access(MI, true);
+	// Index register is encoded as immediate value
+	// in case of nanoMIPS indexed instructions
+	switch (MCInst_getOpcode(MI)) {
+	// No offset needed for paired LL/SC
+	case Mips_LLWP_NM:
+	case Mips_SCWP_NM:
+		break;
+	case Mips_LWX_NM:
+	case Mips_LWXS_NM:
+	case Mips_LWXS16_NM:
+	case Mips_LBX_NM:
+	case Mips_LBUX_NM:
+	case Mips_LHX_NM:
+	case Mips_LHUX_NM:
+	case Mips_LHXS_NM:
+	case Mips_LHUXS_NM:
+	case Mips_SWX_NM:
+	case Mips_SWXS_NM:
+	case Mips_SBX_NM:
+	case Mips_SHX_NM:
+	case Mips_SHXS_NM:
+		if (!MCOperand_isReg(MCInst_getOperand(MI, (opNum + 1)))) {
+			add_cs_detail(MI, Mips_OP_GROUP_MemOperand, (opNum + 1));
+			printRegName(MI, O, MCOperand_getImm(MCInst_getOperand(
+						MI, (opNum + 1))));
+			break;
+		}
+		// Fall through
+	default:
+		printOperand((MCInst *)MI, opNum + 1, O);
+		break;
+	}
 	SStream_concat0(O, "(");
 	printOperand((MCInst *)MI, opNum, O);
 	SStream_concat0(O, ")");
-	Mips_set_mem_access(MI, false);
+	set_mem_access(MI, false);
 }
 
 static void printMemOperandEA(MCInst *MI, int opNum, SStream *O)
@@ -285,7 +358,18 @@ static bool printAlias2(const char *Str, const MCInst *MI, uint64_t Address,
 	return true;
 }
 
-static bool printAlias3(const MCInst *MI, uint64_t Address, SStream *OS)
+static bool printAlias3(const char *Str, const MCInst *MI, uint64_t Address,
+		unsigned OpNo0, unsigned OpNo1, unsigned OpNo2, SStream *OS)
+{
+	printAlias(Str, MI, Address, OpNo0, OS, false);
+	SStream_concat0(OS, ", ");
+	printOperand((MCInst *)MI, OpNo1, OS);
+	SStream_concat0(OS, ", ");
+	printOperand((MCInst *)MI, OpNo2, OS);
+	return true;
+}
+
+static bool printAlias4(const MCInst *MI, uint64_t Address, SStream *OS)
 {
 	switch (MCInst_getOpcode(MI)) {
 	case Mips_BEQ:
@@ -352,6 +436,27 @@ static bool printAlias3(const MCInst *MI, uint64_t Address, SStream *OS)
 		// addu $r0, $r1, $zero => move $r0, $r1
 		return isReg(MI, 2, Mips_ZERO) &&
 		       printAlias2("move", MI, Address, 0, 1, OS, false);
+	case Mips_LI48_NM:
+	case Mips_LI16_NM:
+		// li[16/48] $r0, imm => li $r0, imm
+		return printAlias2("li", MI, Address, 0, 1, OS, false);
+	case Mips_ADDIU_NM:
+	case Mips_ADDIUNEG_NM:
+		if (isReg(MI, 1, Mips_ZERO_NM))
+			return printAlias2("li", MI, Address, 0, 2, OS, false);
+		else
+			return printAlias3("addiu", MI, Address, 0, 1, 2, OS);
+	case Mips_ADDIU48_NM:
+	case Mips_ADDIURS5_NM:
+	case Mips_ADDIUR1SP_NM:
+	case Mips_ADDIUR2_NM:
+	case Mips_ADDIUGPB_NM:
+	case Mips_ADDIUGPW_NM:
+		return printAlias3("addiu", MI, Address, 0, 1, 2, OS);
+	case Mips_ANDI16_NM:
+	case Mips_ANDI_NM:
+		// andi[16/32] $r0, $r1, imm => andi $r0, $r1, imm
+		return printAlias3("andi", MI, Address, 0, 1, 2, OS);
 	default:
 		return false;
 	}
@@ -361,11 +466,56 @@ static void printRegisterList(MCInst *MI, int opNum, SStream *O)
 {
 	// - 2 because register List is always first operand of instruction and it is
 	// always followed by memory operand (base + offset).
+	add_cs_detail(MI, Mips_OP_GROUP_RegisterList, opNum);
 	for (int i = opNum, e = MCInst_getNumOperands(MI) - 2; i != e; ++i) {
 		if (i != opNum)
 			SStream_concat0(O, ", ");
 		printRegName(MI, O, MCOperand_getReg(MCInst_getOperand(MI, (i))));
 	}
+}
+
+static void printNanoMipsRegisterList(MCInst *MI, int OpNum, SStream *O)
+{
+	add_cs_detail(MI, Mips_OP_GROUP_NanoMipsRegisterList, OpNum);
+	for (unsigned I = OpNum; I < MCInst_getNumOperands(MI); I++) {
+		SStream_concat0(O, ", ");
+		printRegName(MI, O, MCOperand_getReg(MCInst_getOperand(MI, (I))));
+	}
+}
+
+static void printHi20(MCInst *MI, int OpNum, SStream *O)
+{
+	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
+	if (MCOperand_isImm(MO)) {
+		add_cs_detail(MI, Mips_OP_GROUP_Hi20, OpNum);
+		SStream_concat0(O, "%hi(");
+		printUInt64(O, MCOperand_getImm(MO));
+		SStream_concat0(O, ")");
+	} else
+		printOperand(MI, OpNum, O);
+}
+
+static void printHi20PCRel(MCInst *MI, uint64_t Address, int OpNum, SStream *O)
+{
+	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
+	if (MCOperand_isImm(MO)) {
+		add_cs_detail(MI, Mips_OP_GROUP_Hi20PCRel, OpNum);
+		SStream_concat0(O, "%pcrel_hi(");
+		printUInt64(O, MCOperand_getImm(MO) + Address);
+		SStream_concat0(O, ")");
+	} else
+		printOperand(MI, OpNum, O);
+}
+
+static void printPCRel(MCInst *MI, uint64_t Address, int OpNum, SStream *O)
+{
+	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
+	if (MCOperand_isImm(MO)) {
+		add_cs_detail(MI, Mips_OP_GROUP_PCRel, OpNum);
+		printUInt64(O, MCOperand_getImm(MO) + Address);
+	}
+	else
+		printOperand(MI, OpNum, O);
 }
 
 const char *Mips_LLVM_getRegisterName(unsigned RegNo, bool noRegName)
