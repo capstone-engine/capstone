@@ -118,7 +118,7 @@ from capstone.arm_const import (
 )
 from capstone.xcore_const import XCORE_OP_REG, XCORE_OP_IMM, XCORE_OP_MEM
 
-from py_cstest.compare import (
+from cstest_py.compare import (
     compare_tbool,
     compare_uint8,
     compare_int8,

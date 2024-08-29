@@ -25,7 +25,7 @@
 # python
 bindings/python/build/
 bindings/python/capstone.egg-info/
-bindings/python/py_cstest/src/py_cstest.egg**
+bindings/python/cstest_py/src/cstest_py.egg**
 bindings/cython/capstone.egg-info/
 *.pyc
 

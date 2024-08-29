@@ -98,7 +98,7 @@ def run_tests(cmd: str):
         fail_msg="Test: Detecting file in directory failed.",
     )
 
-    if "py_cstest" in cmd:
+    if "cstest_py" in cmd:
         check(
             cmd
             + [

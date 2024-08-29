@@ -68,14 +68,14 @@ ctest --test-dir build -N
 ctest --test-dir build -R "<name>"
 ```
 
-#### `py_cstest`
+#### `cstest_py`
 
-`py_cstest` is the testing tool written in Python. It is implemented in `bindings/python/py_cstest`
+`cstest_py` is the testing tool written in Python. It is implemented in `bindings/python/cstest_py`
 It consumes the `yaml` files and reports errors or mismatches for disassembled instructions and their details.
 
 **Installing**
 
-You need to install the Capstone Python bindings first and afterwards the `py_cstest`.
+You need to install the Capstone Python bindings first and afterwards the `cstest_py`.
 
 ```bash
 # Optionally, create a new virtual environment
@@ -84,23 +84,23 @@ source .venv/bin/activate
 
 cd bindings/python
 pip install -e .
-pip install -e py_cstest
+pip install -e cstest_py
 cd ../..
 ```
 
-Run the integration tests for `py_cstest` itself
+Run the integration tests for `cstest_py` itself
 
 ```bash
-./suite/cstest/test/integration_tests.py py_cstest
+./suite/cstest/test/integration_tests.py cstest_py
 ```
 
 And run the tests
 
 ```bash
 # Check supported options
-py_cstest -h
+cstest_py -h
 # Run all
-py_cstest tests/
+cstest_py tests/
 ```
 
 ## Add new tests

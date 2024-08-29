@@ -16,9 +16,9 @@ import traceback
 
 from capstone import CsInsn, Cs, CS_ARCH_AARCH64, CS_MODE_64, CS_MODE_16
 
-from py_cstest.cs_modes import configs
-from py_cstest.details import compare_details
-from py_cstest.compare import (
+from cstest_py.cs_modes import configs
+from cstest_py.details import compare_details
+from cstest_py.compare import (
     compare_asm_text,
     compare_str,
     compare_tbool,
