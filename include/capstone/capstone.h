@@ -263,6 +263,21 @@ typedef enum cs_mode {
 	CS_MODE_HPPA_20W = CS_MODE_HPPA_20 | (1 << 3), ///< HPPA 2.0 wide
 	CS_MODE_LOONGARCH32  = 1 << 0,        ///< LoongArch32
 	CS_MODE_LOONGARCH64  = 1 << 1,        ///< LoongArch64
+	CS_MODE_SYSTEMZ_ARCH8 = 1 << 1, ///< Enables features of the ARCH8 processor
+	CS_MODE_SYSTEMZ_ARCH9 = 1 << 2, ///< Enables features of the ARCH9 processor
+	CS_MODE_SYSTEMZ_ARCH10 = 1 << 3, ///< Enables features of the ARCH10 processor
+	CS_MODE_SYSTEMZ_ARCH11 = 1 << 4, ///< Enables features of the ARCH11 processor
+	CS_MODE_SYSTEMZ_ARCH12 = 1 << 5, ///< Enables features of the ARCH12 processor
+	CS_MODE_SYSTEMZ_ARCH13 = 1 << 6, ///< Enables features of the ARCH13 processor
+	CS_MODE_SYSTEMZ_ARCH14 = 1 << 7, ///< Enables features of the ARCH14 processor
+	CS_MODE_SYSTEMZ_Z10 = 1 << 8, ///< Enables features of the Z10 processor
+	CS_MODE_SYSTEMZ_Z196 = 1 << 9, ///< Enables features of the Z196 processor
+	CS_MODE_SYSTEMZ_ZEC12 = 1 << 10, ///< Enables features of the ZEC12 processor
+	CS_MODE_SYSTEMZ_Z13 = 1 << 11, ///< Enables features of the Z13 processor
+	CS_MODE_SYSTEMZ_Z14 = 1 << 12, ///< Enables features of the Z14 processor
+	CS_MODE_SYSTEMZ_Z15 = 1 << 13, ///< Enables features of the Z15 processor
+	CS_MODE_SYSTEMZ_Z16 = 1 << 14, ///< Enables features of the Z16 processor
+	CS_MODE_SYSTEMZ_GENERIC = 1 << 15, ///< Enables features of the generic processor
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);

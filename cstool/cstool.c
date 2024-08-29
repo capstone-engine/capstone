@@ -146,7 +146,15 @@ static struct {
 	{ "sparc", "Sparc, big endian", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN },
 	{ "sparcv9", "Sparc v9, big endian", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN | CS_MODE_V9 },
 
-	{ "systemz", "SystemZ, big endian", CS_ARCH_SYSTEMZ, CS_MODE_BIG_ENDIAN },
+	{ "systemz", "systemz (s390x) - all features", CS_ARCH_SYSTEMZ, CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch8", "(arch8/z10/generic)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH8 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch9", "(arch9/z196)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH9 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch10", "(arch10/zec12)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH10 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch11", "(arch11/z13)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH11 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch12", "(arch12/z14)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH12 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch13", "(arch13/z15)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH13 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch14", "(arch14/z16)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH14 | CS_MODE_BIG_ENDIAN },
+
 	{ "s390x", "SystemZ s390x, big endian", CS_ARCH_SYSTEMZ, CS_MODE_BIG_ENDIAN },
 
 	{ "xcore", "xcore, big endian", CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN },

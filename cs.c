@@ -151,7 +151,23 @@ typedef struct cs_arch_config {
 	{ \
 		SystemZ_global_init, \
 		SystemZ_option, \
-		~(CS_MODE_BIG_ENDIAN), \
+		~(CS_MODE_BIG_ENDIAN | \
+			CS_MODE_SYSTEMZ_ARCH8 | \
+			CS_MODE_SYSTEMZ_ARCH9 | \
+			CS_MODE_SYSTEMZ_ARCH10 | \
+			CS_MODE_SYSTEMZ_ARCH11 | \
+			CS_MODE_SYSTEMZ_ARCH12 | \
+			CS_MODE_SYSTEMZ_ARCH13 | \
+			CS_MODE_SYSTEMZ_ARCH14 | \
+			CS_MODE_SYSTEMZ_Z10 | \
+			CS_MODE_SYSTEMZ_Z196 | \
+			CS_MODE_SYSTEMZ_ZEC12 | \
+			CS_MODE_SYSTEMZ_Z13 | \
+			CS_MODE_SYSTEMZ_Z14 | \
+			CS_MODE_SYSTEMZ_Z15 | \
+			CS_MODE_SYSTEMZ_Z16 | \
+			CS_MODE_SYSTEMZ_GENERIC \
+		), \
 	}
 #define CS_ARCH_CONFIG_XCORE \
 	{ \
