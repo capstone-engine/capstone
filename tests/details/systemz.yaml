@@ -16,20 +16,21 @@ test_cases:
                 type: SYSTEMZ_OP_REG
                 reg: f0
               -
-                type: SYSTEMZ_OP_IMM
-                imm: 0x0
+                type: SYSTEMZ_OP_MEM
+                mem_am: SYSTEMZ_AM_BDX
+                mem_disp: 0x0
       -
-        asm_text: "a %r0, 0xfff(%r15, %r1)"
+        asm_text: "a %r0, 0xfff(%r15,%r1)"
         details:
           systemz:
             operands:
               -
                 type: SYSTEMZ_OP_REG
-                reg: "0"
+                reg: "r0"
               -
                 type: SYSTEMZ_OP_MEM
-                mem_base: "1"
-                mem_index: "15"
+                mem_base: "r1"
+                mem_index: "r15"
                 mem_disp: 0xfff
       -
         asm_text: "afi %r0, -0x80000000"
@@ -38,9 +39,10 @@ test_cases:
             operands:
               -
                 type: SYSTEMZ_OP_REG
-                reg: "0"
+                reg: "r0"
               -
                 type: SYSTEMZ_OP_IMM
+                imm_width: 32
                 imm: -0x80000000
       -
         asm_text: "br %r7"
@@ -49,7 +51,7 @@ test_cases:
             operands:
               -
                 type: SYSTEMZ_OP_REG
-                reg: "7"
+                reg: "r7"
       -
         asm_text: "xiy 0x7ffff(%r15), 0x2a"
         details:
@@ -57,23 +59,24 @@ test_cases:
             operands:
               -
                 type: SYSTEMZ_OP_MEM
-                mem_base: "15"
+                mem_base: "r15"
                 mem_disp: 0x7ffff
               -
                 type: SYSTEMZ_OP_IMM
+                imm_width: 8
                 imm: 0x2a
       -
-        asm_text: "xy %r0, 0x7ffff(%r1, %r15)"
+        asm_text: "xy %r0, 0x7ffff(%r1,%r15)"
         details:
           systemz:
             operands:
               -
                 type: SYSTEMZ_OP_REG
-                reg: "0"
+                reg: "r0"
               -
                 type: SYSTEMZ_OP_MEM
-                mem_base: "15"
-                mem_index: "1"
+                mem_base: "r15"
+                mem_index: "r1"
                 mem_disp: 0x7ffff
       -
         asm_text: "stmg %r0, %r0, 0(%r15)"
@@ -82,13 +85,13 @@ test_cases:
             operands:
               -
                 type: SYSTEMZ_OP_REG
-                reg: "0"
+                reg: "r0"
               -
                 type: SYSTEMZ_OP_REG
-                reg: "0"
+                reg: "r0"
               -
                 type: SYSTEMZ_OP_MEM
-                mem_base: "15"
+                mem_base: "r15"
       -
         asm_text: "ear %r7, %a8"
         details:
@@ -96,7 +99,7 @@ test_cases:
             operands:
               -
                 type: SYSTEMZ_OP_REG
-                reg: "7"
+                reg: "r7"
               -
                 type: SYSTEMZ_OP_REG
                 reg: a8
@@ -107,11 +110,12 @@ test_cases:
             operands:
               -
                 type: SYSTEMZ_OP_REG
-                reg: "1"
+                reg: "r1"
               -
                 type: SYSTEMZ_OP_IMM
+                imm_width: 8
                 imm: 0xc1
               -
                 type: SYSTEMZ_OP_IMM
+                imm_width: 0
                 imm: 0x1028
-

@@ -82,7 +82,7 @@ void SystemZ_init_cs_detail(MCInst *MI) {
 	if (!detail_is_set(MI)) {
 		return;
 	}
-	memset(SystemZ_get_detail(MI), 0, sizeof(cs_systemz));
+	memset(get_detail(MI), 0, sizeof(cs_detail));
 	if (detail_is_set(MI)) {
 		SystemZ_get_detail(MI)->cc = SystemZ_CC_INVALID;
 	}
@@ -332,6 +332,7 @@ void SystemZ_set_detail_op_mem(MCInst *MI, unsigned op_num, systemz_reg base, in
 		return;
 	SystemZ_get_detail_op(MI, 0)->type = SYSTEMZ_OP_MEM;
 	SystemZ_get_detail_op(MI, 0)->access = map_get_op_access(MI, op_num);
+	SystemZ_get_detail_op(MI, 0)->mem.am = am;
 	switch(am) {
 	default:
 		CS_ASSERT(0 && "Address mode not handled\n");

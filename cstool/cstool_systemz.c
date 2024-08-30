@@ -46,9 +46,42 @@ void print_insn_detail_systemz(csh handle, cs_insn *ins)
 					}
 				}
 				printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->mem.disp);
-
+				switch(op->mem.am) {
+				default:
+					printf("\t\t\toperands[%u].mem.am: UNHANDLED\n", i);
+					break;
+				case SYSTEMZ_AM_BD:
+					printf("\t\t\toperands[%u].mem.am: SYSTEMZ_AM_BD\n", i);
+					break;
+				case SYSTEMZ_AM_BDX:
+					printf("\t\t\toperands[%u].mem.am: SYSTEMZ_AM_BDX\n", i);
+					break;
+				case SYSTEMZ_AM_BDL:
+					printf("\t\t\toperands[%u].mem.am: SYSTEMZ_AM_BDL\n", i);
+					break;
+				case SYSTEMZ_AM_BDR:
+					printf("\t\t\toperands[%u].mem.am: SYSTEMZ_AM_BDR\n", i);
+					break;
+				case SYSTEMZ_AM_BDV:
+					printf("\t\t\toperands[%u].mem.am: SYSTEMZ_AM_BDV\n", i);
+					break;
+				}
 				break;
 		}
+		switch(op->access) {
+			default:
+				break;
+			case CS_AC_READ:
+				printf("\t\toperands[%u].access: READ\n", i);
+				break;
+			case CS_AC_WRITE:
+				printf("\t\toperands[%u].access: WRITE\n", i);
+				break;
+			case CS_AC_READ | CS_AC_WRITE:
+				printf("\t\toperands[%u].access: READ | WRITE\n", i);
+				break;
+		}
+
 	}
 
 	if (systemz->cc != SystemZ_CC_INVALID)
