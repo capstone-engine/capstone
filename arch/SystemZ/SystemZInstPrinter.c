@@ -202,66 +202,79 @@ DEFINE_printSImmOperand(32);
 
 static void printU1ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_U1ImmOperand, OpNum);
 	CONCAT(printUImmOperand, 1)(MI, OpNum, O);
 }
 
 static void printU2ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_U2ImmOperand, OpNum);
 	CONCAT(printUImmOperand, 2)(MI, OpNum, O);
 }
 
 static void printU3ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_U3ImmOperand, OpNum);
 	CONCAT(printUImmOperand, 3)(MI, OpNum, O);
 }
 
 static void printU4ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_U4ImmOperand, OpNum);
 	CONCAT(printUImmOperand, 4)(MI, OpNum, O);
 }
 
 static void printS8ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_S8ImmOperand, OpNum);
 	CONCAT(printSImmOperand, 8)(MI, OpNum, O);
 }
 
 static void printU8ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_U8ImmOperand, OpNum);
 	CONCAT(printUImmOperand, 8)(MI, OpNum, O);
 }
 
 static void printU12ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_U12ImmOperand, OpNum);
 	CONCAT(printUImmOperand, 12)(MI, OpNum, O);
 }
 
 static void printS16ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_S16ImmOperand, OpNum);
 	CONCAT(printSImmOperand, 16)(MI, OpNum, O);
 }
 
 static void printU16ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_U16ImmOperand, OpNum);
 	CONCAT(printUImmOperand, 16)(MI, OpNum, O);
 }
 
 static void printS32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_S32ImmOperand, OpNum);
 	CONCAT(printSImmOperand, 32)(MI, OpNum, O);
 }
 
 static void printU32ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_U32ImmOperand, OpNum);
 	CONCAT(printUImmOperand, 32)(MI, OpNum, O);
 }
 
 static void printU48ImmOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_U48ImmOperand, OpNum);
 	CONCAT(printUImmOperand, 48)(MI, OpNum, O);
 }
 
 static void printPCRelOperand(MCInst *MI, uint64_t Address, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_PCRelOperand, OpNum);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
 		printInt64(O, MCOperand_getImm(MO));
@@ -276,23 +289,26 @@ static void printPCRelTLSOperand(MCInst *MI, uint64_t Address, int OpNum, SStrea
 
 	// Output the TLS marker if present.
 	if ((unsigned)OpNum + 1 < MCInst_getNumOperands(MI)) {
-		// Expression not supported
+		// Expressions not supported
 	}
 }
 
 static void printOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_Operand, OpNum);
 	printMCOperand(MI, MCInst_getOperand(MI, (OpNum)), O);
 }
 
 static void printBDAddrOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_BDAddrOperand, OpNum);
 	printAddress(&MI->MAI, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))),
 		     MCInst_getOperand(MI, (OpNum + 1)), 0, O);
 }
 
 static void printBDXAddrOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_BDXAddrOperand, OpNum);
 	printAddress(&MI->MAI, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))),
 		     MCInst_getOperand(MI, (OpNum + 1)),
 		     MCOperand_getReg(MCInst_getOperand(MI, (OpNum + 2))), O);
@@ -300,6 +316,7 @@ static void printBDXAddrOperand(MCInst *MI, int OpNum, SStream *O)
 
 static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_BDLAddrOperand, OpNum);
 	unsigned Base = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
 	MCOperand *DispMO = MCInst_getOperand(MI, (OpNum + 1));
 	uint64_t Length = MCOperand_getImm(MCInst_getOperand(MI, (OpNum + 2)));
@@ -315,6 +332,7 @@ static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O)
 
 static void printBDRAddrOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_BDRAddrOperand, OpNum);
 	unsigned Base = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
 	MCOperand *DispMO = MCInst_getOperand(MI, (OpNum + 1));
 	unsigned Length = MCOperand_getReg(MCInst_getOperand(MI, (OpNum + 2)));
@@ -330,6 +348,7 @@ static void printBDRAddrOperand(MCInst *MI, int OpNum, SStream *O)
 
 static void printBDVAddrOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_BDVAddrOperand, OpNum);
 	printAddress(&MI->MAI, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))),
 		     MCInst_getOperand(MI, (OpNum + 1)),
 		     MCOperand_getReg(MCInst_getOperand(MI, (OpNum + 2))), O);
@@ -337,6 +356,7 @@ static void printBDVAddrOperand(MCInst *MI, int OpNum, SStream *O)
 
 static void printCond4Operand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, SystemZ_OP_GROUP_Cond4Operand, OpNum);
 	static const char *const CondNames[] = { "o",	"h",  "nle", "l",
 						 "nhe", "lh", "ne",  "e",
 						 "nlh", "he", "nl",  "le",

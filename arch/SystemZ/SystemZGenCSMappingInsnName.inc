@@ -809,27 +809,27 @@
   "jo", // SYSTEMZ_INS_JO
   "jp", // SYSTEMZ_INS_JP
   "jz", // SYSTEMZ_INS_JZ
-  "jg_lu}", // SYSTEMZ_INS_JG_LU
-  "jg_l}e", // SYSTEMZ_INS_JG_LE
-  "jg_l}h", // SYSTEMZ_INS_JG_LH
-  "jg_l}he", // SYSTEMZ_INS_JG_LHE
-  "jg_l}l", // SYSTEMZ_INS_JG_LL
-  "jg_l}le", // SYSTEMZ_INS_JG_LLE
-  "jg_l}lh", // SYSTEMZ_INS_JG_LLH
-  "jg_l}m", // SYSTEMZ_INS_JG_LM
-  "jg_l}ne", // SYSTEMZ_INS_JG_LNE
-  "jg_l}nh", // SYSTEMZ_INS_JG_LNH
-  "jg_l}nhe", // SYSTEMZ_INS_JG_LNHE
-  "jg_l}nl", // SYSTEMZ_INS_JG_LNL
-  "jg_l}nle", // SYSTEMZ_INS_JG_LNLE
-  "jg_l}nlh", // SYSTEMZ_INS_JG_LNLH
-  "jg_l}nm", // SYSTEMZ_INS_JG_LNM
-  "jg_l}no", // SYSTEMZ_INS_JG_LNO
-  "jg_l}np", // SYSTEMZ_INS_JG_LNP
-  "jg_l}nz", // SYSTEMZ_INS_JG_LNZ
-  "jg_l}o", // SYSTEMZ_INS_JG_LO
-  "jg_l}p", // SYSTEMZ_INS_JG_LP
-  "jg_l}z", // SYSTEMZ_INS_JG_LZ
+  "j_g_lu_", // SYSTEMZ_INS_J_G_LU_
+  "j_g_l_e", // SYSTEMZ_INS_J_G_L_E
+  "j_g_l_h", // SYSTEMZ_INS_J_G_L_H
+  "j_g_l_he", // SYSTEMZ_INS_J_G_L_HE
+  "j_g_l_l", // SYSTEMZ_INS_J_G_L_L
+  "j_g_l_le", // SYSTEMZ_INS_J_G_L_LE
+  "j_g_l_lh", // SYSTEMZ_INS_J_G_L_LH
+  "j_g_l_m", // SYSTEMZ_INS_J_G_L_M
+  "j_g_l_ne", // SYSTEMZ_INS_J_G_L_NE
+  "j_g_l_nh", // SYSTEMZ_INS_J_G_L_NH
+  "j_g_l_nhe", // SYSTEMZ_INS_J_G_L_NHE
+  "j_g_l_nl", // SYSTEMZ_INS_J_G_L_NL
+  "j_g_l_nle", // SYSTEMZ_INS_J_G_L_NLE
+  "j_g_l_nlh", // SYSTEMZ_INS_J_G_L_NLH
+  "j_g_l_nm", // SYSTEMZ_INS_J_G_L_NM
+  "j_g_l_no", // SYSTEMZ_INS_J_G_L_NO
+  "j_g_l_np", // SYSTEMZ_INS_J_G_L_NP
+  "j_g_l_nz", // SYSTEMZ_INS_J_G_L_NZ
+  "j_g_l_o", // SYSTEMZ_INS_J_G_L_O
+  "j_g_l_p", // SYSTEMZ_INS_J_G_L_P
+  "j_g_l_z", // SYSTEMZ_INS_J_G_L_Z
   "kdb", // SYSTEMZ_INS_KDB
   "kdbr", // SYSTEMZ_INS_KDBR
   "kdsa", // SYSTEMZ_INS_KDSA

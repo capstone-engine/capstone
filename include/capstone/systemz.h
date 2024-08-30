@@ -28,15 +28,15 @@ typedef enum systemz_cc {
 	SYSTEMZ_CC_LE,
 	SYSTEMZ_CC_NH,
 	SYSTEMZ_CC_NO,
+	SystemZ_CC_INVALID,
 } systemz_cc;
 
 /// Operand type for instruction's operands
 typedef enum systemz_op_type {
-	SYSTEMZ_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
+	SYSTEMZ_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
 	SYSTEMZ_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
 	SYSTEMZ_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
 	SYSTEMZ_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
-	SYSTEMZ_OP_ACREG = 64,	///< Access register operand.
 } systemz_op_type;
 
 /// SystemZ registers
@@ -248,14 +248,117 @@ typedef enum systemz_reg {
 	// None
 } systemz_reg;
 
+typedef enum {
+	SYSTEMZ_INSN_FORM_INVALID = 0,
+	// generated content <SystemZGenCSInsnFormatsEnum.inc> begin
+	// clang-format off
+
+	SYSTEMZ_INSN_FORM_INSTRXA,
+	SYSTEMZ_INSN_FORM_INSTRXE,
+	SYSTEMZ_INSN_FORM_INSTRRE,
+	SYSTEMZ_INSN_FORM_INSTRR,
+	SYSTEMZ_INSN_FORM_INSTRRFA,
+	SYSTEMZ_INSN_FORM_INSTRILA,
+	SYSTEMZ_INSN_FORM_INSTRXYA,
+	SYSTEMZ_INSN_FORM_INSTRIA,
+	SYSTEMZ_INSN_FORM_INSTRIED,
+	SYSTEMZ_INSN_FORM_INSTSIY,
+	SYSTEMZ_INSN_FORM_INSTSSB,
+	SYSTEMZ_INSN_FORM_INSTRXB,
+	SYSTEMZ_INSN_FORM_INSTRXYB,
+	SYSTEMZ_INSN_FORM_INSTSMI,
+	SYSTEMZ_INSN_FORM_INSTMII,
+	SYSTEMZ_INSN_FORM_INSTRIB,
+	SYSTEMZ_INSN_FORM_INSTRILB,
+	SYSTEMZ_INSN_FORM_INSTRIC,
+	SYSTEMZ_INSN_FORM_INSTRILC,
+	SYSTEMZ_INSN_FORM_INSTRSI,
+	SYSTEMZ_INSN_FORM_INSTRIEE,
+	SYSTEMZ_INSN_FORM_INSTRSA,
+	SYSTEMZ_INSN_FORM_INSTRSYA,
+	SYSTEMZ_INSN_FORM_INSTRRFE,
+	SYSTEMZ_INSN_FORM_INSTRSLB,
+	SYSTEMZ_INSN_FORM_INSTS,
+	SYSTEMZ_INSN_FORM_INSTSIL,
+	SYSTEMZ_INSN_FORM_INSTRIS,
+	SYSTEMZ_INSN_FORM_INSTRIEC,
+	SYSTEMZ_INSN_FORM_INSTRIEA,
+	SYSTEMZ_INSN_FORM_INSTRRS,
+	SYSTEMZ_INSN_FORM_INSTRIEB,
+	SYSTEMZ_INSN_FORM_INSTRRFC,
+	SYSTEMZ_INSN_FORM_INSTSSA,
+	SYSTEMZ_INSN_FORM_INSTRSYB,
+	SYSTEMZ_INSN_FORM_INSTSI,
+	SYSTEMZ_INSN_FORM_INSTRSB,
+	SYSTEMZ_INSN_FORM_INSTRRFB,
+	SYSTEMZ_INSN_FORM_INSTRRFD,
+	SYSTEMZ_INSN_FORM_INSTSSF,
+	SYSTEMZ_INSN_FORM_INSTSSE,
+	SYSTEMZ_INSN_FORM_INSTRIEG,
+	SYSTEMZ_INSN_FORM_INSTRXF,
+	SYSTEMZ_INSN_FORM_INSTRRD,
+	SYSTEMZ_INSN_FORM_INSTSSD,
+	SYSTEMZ_INSN_FORM_INSTIE,
+	SYSTEMZ_INSN_FORM_INSTE,
+	SYSTEMZ_INSN_FORM_INSTRIEF,
+	SYSTEMZ_INSN_FORM_INSTSSC,
+	SYSTEMZ_INSN_FORM_INSTI,
+	SYSTEMZ_INSN_FORM_INSTRSLA,
+	SYSTEMZ_INSN_FORM_INSTVRRC,
+	SYSTEMZ_INSN_FORM_INSTVRRD,
+	SYSTEMZ_INSN_FORM_INSTVRIF,
+	SYSTEMZ_INSN_FORM_INSTVRRA,
+	SYSTEMZ_INSN_FORM_INSTVRRB,
+	SYSTEMZ_INSN_FORM_INSTVRRK,
+	SYSTEMZ_INSN_FORM_INSTVRRH,
+	SYSTEMZ_INSN_FORM_INSTVRRJ,
+	SYSTEMZ_INSN_FORM_INSTVRRI,
+	SYSTEMZ_INSN_FORM_INSTVRII,
+	SYSTEMZ_INSN_FORM_INSTVRID,
+	SYSTEMZ_INSN_FORM_INSTVRSA,
+	SYSTEMZ_INSN_FORM_INSTVRRE,
+	SYSTEMZ_INSN_FORM_INSTVRIE,
+	SYSTEMZ_INSN_FORM_INSTVRIA,
+	SYSTEMZ_INSN_FORM_INSTVRV,
+	SYSTEMZ_INSN_FORM_INSTVRIB,
+	SYSTEMZ_INSN_FORM_INSTVRX,
+	SYSTEMZ_INSN_FORM_INSTVRSC,
+	SYSTEMZ_INSN_FORM_INSTVRIH,
+	SYSTEMZ_INSN_FORM_INSTVRSB,
+	SYSTEMZ_INSN_FORM_INSTVSI,
+	SYSTEMZ_INSN_FORM_INSTVRSD,
+	SYSTEMZ_INSN_FORM_INSTVRRF,
+	SYSTEMZ_INSN_FORM_INSTVRIG,
+	SYSTEMZ_INSN_FORM_INSTVRIC,
+	SYSTEMZ_INSN_FORM_INSTVRRG,
+
+	// clang-format on
+	// generated content <SystemZGenCSInsnFormatsEnum.inc> end
+
+} systemz_insn_form;
+
+typedef enum {
+	SYXTEMZ_AM_INVALID = 0,
+	SYSTEMZ_AM_BD, ///< Base and displacement are set.
+	SYSTEMZ_AM_BDX, ///< Base, displacement and index register are set.
+	SYSTEMZ_AM_BDL, ///< Base, displacement and length (immediate) are set.
+	SYSTEMZ_AM_BDR, ///< Base, displacement and length (register) are set.
+	SYSTEMZ_AM_BDV, ///< Base, displacement and index vector register are set.
+} systemz_addr_mode;
+
+typedef struct {
+	systemz_insn_form form;
+} systemz_suppl_info;
+
 /// Instruction's operand referring to memory
 /// This is associated with SYSTEMZ_OP_MEM operand type above
 typedef struct systemz_op_mem {
-	uint8_t base;		///< base register, can be safely interpreted as
+	systemz_addr_mode am; ///< Address mode. Indicates which field below are set.
+	uint8_t /* systemz_reg */ base;		///< base register, can be safely interpreted as
 				///< a value of type `systemz_reg`, but it is only
 				///< one byte wide
-	uint8_t index;		///< index register, same conditions apply here
-	uint64_t length;	///< BDLAddr operand
+	uint8_t /* systemz_reg */ index;	///< Index register, same conditions apply here
+	uint64_t length;	///< Length component. Can be a register or immediate.
 	int64_t disp;	///< displacement/offset value
 } systemz_op_mem;
 
@@ -267,6 +370,8 @@ typedef struct cs_systemz_op {
 		int64_t imm;		///< immediate value for IMM operand
 		systemz_op_mem mem;	///< base/disp value for MEM operand
 	};
+	cs_ac_type access; ///< R/W access of the operand.
+	uint8_t imm_width; ///< Bit width of the immediate. 0 if not specified.
 } cs_systemz_op;
 
 #define MAX_SYSTEMZ_OPS 6
@@ -274,6 +379,7 @@ typedef struct cs_systemz_op {
 // Instruction structure
 typedef struct cs_systemz {
 	systemz_cc cc;		///< Code condition
+	systemz_insn_form format; ///< The instruction format.
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
@@ -2910,7 +3016,6 @@ typedef enum systemz_insn_group {
 
 	SYSTEMZ_GRP_ENDING,   // <-- mark the end of the list of groups
 } systemz_insn_group;
-
 #ifdef __cplusplus
 }
 #endif

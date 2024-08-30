@@ -27,9 +27,6 @@ void print_insn_detail_systemz(csh handle, cs_insn *ins)
 			case SYSTEMZ_OP_REG:
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;
-			case SYSTEMZ_OP_ACREG:
-				printf("\t\toperands[%u].type: ACREG = %u\n", i, op->reg);
-				break;
 			case SYSTEMZ_OP_IMM:
 				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
 				break;
@@ -41,15 +38,19 @@ void print_insn_detail_systemz(csh handle, cs_insn *ins)
 				if (op->mem.index != SYSTEMZ_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.index));
-				if (op->mem.length != 0)
-					printf("\t\t\toperands[%u].mem.length: 0x%" PRIx64 "\n", i, op->mem.length);
-				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->mem.disp);
+				if (op->mem.length != 0) {
+					if (op->mem.am == SYSTEMZ_AM_BDL) {
+						printf("\t\t\toperands[%u].mem.length: 0x%" PRIx64 "\n", i, op->mem.length);
+					} else {
+						printf("\t\t\toperands[%u].mem.length: 0x%" PRIx64 "\n", i, op->mem.length);
+					}
+				}
+				printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->mem.disp);
 
 				break;
 		}
 	}
 
-	if (systemz->cc != 0)
+	if (systemz->cc != SystemZ_CC_INVALID)
 		printf("\tCode condition: %u\n", systemz->cc);
 }

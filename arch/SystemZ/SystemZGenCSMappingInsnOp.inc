@@ -7418,107 +7418,107 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JG (1367) - SYSTEMZ_INS_JG_LU} - j{g|lu}	$RI2 */
+{ /* SYSTEMZ_JG (1367) - SYSTEMZ_INS_J_G_LU_ - j{g|lu}	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmE (1368) - SYSTEMZ_INS_JG_L}E - j{g|l}e	$RI2 */
+{ /* SYSTEMZ_JGAsmE (1368) - SYSTEMZ_INS_J_G_L_E - j{g|l}e	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmH (1369) - SYSTEMZ_INS_JG_L}H - j{g|l}h	$RI2 */
+{ /* SYSTEMZ_JGAsmH (1369) - SYSTEMZ_INS_J_G_L_H - j{g|l}h	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmHE (1370) - SYSTEMZ_INS_JG_L}HE - j{g|l}he	$RI2 */
+{ /* SYSTEMZ_JGAsmHE (1370) - SYSTEMZ_INS_J_G_L_HE - j{g|l}he	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmL (1371) - SYSTEMZ_INS_JG_L}L - j{g|l}l	$RI2 */
+{ /* SYSTEMZ_JGAsmL (1371) - SYSTEMZ_INS_J_G_L_L - j{g|l}l	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmLE (1372) - SYSTEMZ_INS_JG_L}LE - j{g|l}le	$RI2 */
+{ /* SYSTEMZ_JGAsmLE (1372) - SYSTEMZ_INS_J_G_L_LE - j{g|l}le	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmLH (1373) - SYSTEMZ_INS_JG_L}LH - j{g|l}lh	$RI2 */
+{ /* SYSTEMZ_JGAsmLH (1373) - SYSTEMZ_INS_J_G_L_LH - j{g|l}lh	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmM (1374) - SYSTEMZ_INS_JG_L}M - j{g|l}m	$RI2 */
+{ /* SYSTEMZ_JGAsmM (1374) - SYSTEMZ_INS_J_G_L_M - j{g|l}m	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmNE (1375) - SYSTEMZ_INS_JG_L}NE - j{g|l}ne	$RI2 */
+{ /* SYSTEMZ_JGAsmNE (1375) - SYSTEMZ_INS_J_G_L_NE - j{g|l}ne	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmNH (1376) - SYSTEMZ_INS_JG_L}NH - j{g|l}nh	$RI2 */
+{ /* SYSTEMZ_JGAsmNH (1376) - SYSTEMZ_INS_J_G_L_NH - j{g|l}nh	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmNHE (1377) - SYSTEMZ_INS_JG_L}NHE - j{g|l}nhe	$RI2 */
+{ /* SYSTEMZ_JGAsmNHE (1377) - SYSTEMZ_INS_J_G_L_NHE - j{g|l}nhe	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmNL (1378) - SYSTEMZ_INS_JG_L}NL - j{g|l}nl	$RI2 */
+{ /* SYSTEMZ_JGAsmNL (1378) - SYSTEMZ_INS_J_G_L_NL - j{g|l}nl	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmNLE (1379) - SYSTEMZ_INS_JG_L}NLE - j{g|l}nle	$RI2 */
+{ /* SYSTEMZ_JGAsmNLE (1379) - SYSTEMZ_INS_J_G_L_NLE - j{g|l}nle	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmNLH (1380) - SYSTEMZ_INS_JG_L}NLH - j{g|l}nlh	$RI2 */
+{ /* SYSTEMZ_JGAsmNLH (1380) - SYSTEMZ_INS_J_G_L_NLH - j{g|l}nlh	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmNM (1381) - SYSTEMZ_INS_JG_L}NM - j{g|l}nm	$RI2 */
+{ /* SYSTEMZ_JGAsmNM (1381) - SYSTEMZ_INS_J_G_L_NM - j{g|l}nm	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmNO (1382) - SYSTEMZ_INS_JG_L}NO - j{g|l}no	$RI2 */
+{ /* SYSTEMZ_JGAsmNO (1382) - SYSTEMZ_INS_J_G_L_NO - j{g|l}no	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmNP (1383) - SYSTEMZ_INS_JG_L}NP - j{g|l}np	$RI2 */
+{ /* SYSTEMZ_JGAsmNP (1383) - SYSTEMZ_INS_J_G_L_NP - j{g|l}np	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmNZ (1384) - SYSTEMZ_INS_JG_L}NZ - j{g|l}nz	$RI2 */
+{ /* SYSTEMZ_JGAsmNZ (1384) - SYSTEMZ_INS_J_G_L_NZ - j{g|l}nz	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmO (1385) - SYSTEMZ_INS_JG_L}O - j{g|l}o	$RI2 */
+{ /* SYSTEMZ_JGAsmO (1385) - SYSTEMZ_INS_J_G_L_O - j{g|l}o	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmP (1386) - SYSTEMZ_INS_JG_L}P - j{g|l}p	$RI2 */
+{ /* SYSTEMZ_JGAsmP (1386) - SYSTEMZ_INS_J_G_L_P - j{g|l}p	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }
 }},
-{ /* SYSTEMZ_JGAsmZ (1387) - SYSTEMZ_INS_JG_L}Z - j{g|l}z	$RI2 */
+{ /* SYSTEMZ_JGAsmZ (1387) - SYSTEMZ_INS_J_G_L_Z - j{g|l}z	$RI2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST } }, /* RI2 */
   { 0 }

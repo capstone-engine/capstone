@@ -1356,9 +1356,15 @@ def test_expected_sysz(actual: CsInsn, expected: dict) -> bool:
         len(actual.operands), len(expected.get("operands")), "operands_count"
     ):
         return False
+    elif not compare_enum(
+        len(actual.format), len(expected.get("format")), "format"
+    ):
+        return False
 
     for aop, eop in zip(actual.operands, expected["operands"]):
         if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
             return False
 
         if aop.type == SYSZ_OP_REG:
@@ -1367,7 +1373,11 @@ def test_expected_sysz(actual: CsInsn, expected: dict) -> bool:
         elif aop.type == SYSZ_OP_IMM:
             if not compare_int64(aop.imm, eop.get("imm"), "imm"):
                 return False
+            if not compare_int64(aop.imm_width, eop.get("imm_width"), "imm_width"):
+                return False
         elif aop.type == SYSZ_OP_MEM:
+            if not compare_reg(actual, aop.mem.am, eop.get("mem_am"), "mem_am"):
+                return False
             if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
                 return False
             if not compare_reg(
