@@ -82,6 +82,22 @@ bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id)
 	return false;
 }
 
+/// @brief Checks if the @id is in the @table. @table has @table_size elements.
+/// @param table The table with the values to compare to.
+/// @param table_size The number elements in the table.
+/// @param id The identifier to search for in the table.
+/// @return True if @id is part of the @table, false otherwise.
+bool arr_exist_int(int *table, size_t table_size, int id)
+{
+	int i;
+	for (i = 0; i < table_size; i++) {
+		if (table[i] == id)
+			return true;
+	}
+
+	return false;
+}
+
 /// Reads 8 bytes in the endian order specified in MI->cs->mode.
 uint64_t readBytes64(MCInst *MI, const uint8_t *Bytes)
 {
