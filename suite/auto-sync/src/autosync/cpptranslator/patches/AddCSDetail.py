@@ -35,6 +35,7 @@ class AddCSDetail(Patch):
         b"(SStream*O,ARM_AM::ShiftOpcShOpc,unsignedShImm,boolgetUseMarkup())",  # ARM - printRegImmShift
         b"(MCInst*MI,unsignedOpNo,SStream*O,constchar*Modifier)",  # PPC - printPredicateOperand
         b"(MCInst*MI,uint64_tAddress,unsignedOpNo,SStream*O)",  # PPC - printBranchOperand
+        b"(MCInst*MI,intOpNum,SStream*O)",  # SystemZ
     ]
 
     def __init__(self, priority: int, arch: str):

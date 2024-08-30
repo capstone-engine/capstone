@@ -6,6 +6,7 @@
 import argparse
 import logging as log
 import sys
+import re
 from pathlib import Path
 
 import termcolor
@@ -395,6 +396,17 @@ class Translator:
         file_constraints = apply_only_to[patch_name]
         if self.current_src_path_in.name in file_constraints["files"]:
             return True
+        elif (
+            re.search("InstPrinter.cpp", self.current_src_path_in.name)
+            and patch_name == AddCSDetail.__name__
+        ):
+            print_prominent_warning(
+                (
+                    f"The AddCSDetail patch is not applied to {self.current_src_path_in.name}. "
+                    "Have you forgotten to add it to arch_config.json?"
+                ),
+                False,
+            )
         return False
 
     def translate(self) -> None:
