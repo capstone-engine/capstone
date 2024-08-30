@@ -34,6 +34,62 @@ The `auto-sync` updater, the additional updates of ARM, AArch64 and PPC, as well
 
 With all that said, we hope you enjoy the new release!
 
+## New features
+
+**LoongArch**
+
+- Architecture support was added (based on LLVM-18).
+
+**HPPA**
+
+- Architecture support was added.
+
+**Alpha**
+
+- Architecture support was added (based on LLVM-3)
+- System operands are provided with way more detail in separated operand.
+
+**AArch64**
+
+- Updated to LLVM-18
+- Adding new instructions of SME, SVE2 extensions. With it the `sme` and `pred` operands are added.
+- System operands are provided with way more detail in separated operand.
+
+**PPC**
+
+- Updated to LLVM-16
+- The instruction encoding formats are added for PPC. They are accessible via `cs_ppc->format`.
+They do follow loosely the ISA formats of instructions but not quite. Unfortunately,
+LLV doesn't group the instruction formats perfectly aligned with the ISA.
+Nonetheless, we hope this additional information is useful to you.
+- Branching information in `cs_ppc->bc` is way more detailed now.
+- The Paired Single extension was added.
+
+**SystemZ**
+
+- Updated to LLVM-18
+- Operands have now read/write access information
+- Memory operands have now the address mode specified
+- Immediate oprands have a new `imm_width` field. storing the bit width if known.
+- CPU features can be enabled or disabled by SystemZ architecture (arch8-arch14).
+
+**Mips**
+
+- Updated to LLVM-18
+- Support added for: `microMips32r3`, `microMips32r6`, `Mips16`, `Mips I ISA`, `Mips II ISA`, `Mips32 r2 ISA`, `Mips32 r3 ISA`, `Mips32 r5 ISA`, `Mips32 r6 ISA`, `Mips III ISA`, `Mips IV ISA`, `Mips V ISA`, `Mips64 r2 ISA`, `Mips64 r3 ISA`, `Mips64 r5 ISA`, `Mips64 r6 ISA`, `Octeon (cnMIPS)`, `Octeon+ (cnMIPS+)`, `NanoMips`
+- Support for different register naming style (`CS_OPT_SYNTAX_NO_DOLLAR`, `CS_OPT_SYNTAX_NOREGNAME`)
+
+**RISCV**
+
+- Operands have now read/write access information
+
+**Code quality**
+
+- ASAN: All tests are now run with the address sanitizer enabled. This includes checking for leaks.
+- Coverity code scanning workflow added.
+- Testing was re-written from scratch. Now allowing fine-grained testing of all details and is more convenient to use by contributors.
+
+
 ## Breaking changes
 
 **All `auto-sync` architectures**
@@ -49,6 +105,7 @@ With all that said, we hope you enjoy the new release!
 | Post-index | Post-index memory access has the disponent now set in the `MEMORY` operand! No longer as separated `reg`/`imm` operand. | The CS memory operand had a field which was there for disponents. Not having it set, for post-index operands was inconsistent. | Edit `ARM_set_detail_op_mem()` and add an immediate operand instead of setting the disponent. |
 | Sign `mem.disp` | `mem.disp` is now always positive and the `subtracted` flag indicates if it should be subtracted. | It was inconsistent before. | Change behavior in `ARM_set_detail_op_mem()` |
 | `ARM_CC` | `ARM_CC` → `ARMCC` and value change | They match the same LLVM enum. Better for LLVM compatibility and code generation. | Change it manually. |
+| `ARMCC_*` | `ARMCC_EQ == 0` but `ARMCC_INVALID != 0` | They match the LLVM enum. Better for LLVM compatibility and code generation. | Change by hand. |
 | System registers | System registers are no longer saved in `cs_arm->reg`, but are separated and have more detail. | System operands follow their own encoding logic. Hence, they should be separated in the details as well. | None |
 | System operands | System operands have now the encoding of LLVM (SYSm value mostly) | See note about system registers. | None |
 | Instruction enum | Multiple instructions which were only alias were removed from the instruction enum. | Alias are always disassembled as their real instructions and an additional field identifies which alias it is. | None |
@@ -68,7 +125,6 @@ With all that said, we hope you enjoy the new release!
 | `crx` | `ppc_ops_crx` was removed. | It was never used in the first place. | None. |
 | `(RA\|0)` | The `(RA\|0)` cases (see ISA for details) for which `0` is used, the `PPC_REG_ZERO` register is used. The register name of it is `0`. | Mimics LLVM behavior. | None. |
 
-
 **AArch64**
 
 | Keyword | Change | Justification | Possible revert |
@@ -79,6 +135,24 @@ With all that said, we hope you enjoy the new release!
 | `writeback` | `writeback` member was moved to detail. | See ARM explanation. | See ARM. |
 | `arm64_vas` | `arm64_vas` renamed to `AArch64Layout_VectorLayout` | LLVM compatibility. | None. |
 | Register alias | Register alias (`x29 = fp` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. | Mimic LLVM as close as possible. | Enable option. |
+| `AArch64CC_*` | `AArch64CC_EQ == 0` but `AArch64CC_INVALID != 0` | They match the LLVM enum. Better for LLVM compatibility and code generation. | Change by hand. |
+
+**Mips**
+
+| Keyword | Change | Justification | Possible revert |
+|---------|--------|---------------|-----------------|
+| `CS_OPT_SYNTAX_NO_DOLLAR` | Adds options which removes the `$` (dollar sign) from the register name. | New Feature | Enable option. |
+| `CS_OPT_SYNTAX_NOREGNAME` | Implements the options to output raw register numbers (only the standard GPR are numeric). | Was not implemented | Enable option. |
+| `cs_mips_op.uimm` | Access for the unsigned immediate value of the IMM operand. | Was missing | None. |
+| `cs_mips_op.is_unsigned` | Defines if the IMM operand is signed (when false) or unsigned (when true). | Was missing | None. |
+| `cs_mips_op.is_reglist` | Defines if the REG operand is part of a list of registers. | Was missing | None. |
+| `cs_mips_op.access` | Defines how is this operand accessed, i.e. READ, WRITE or READ & WRITE. | Was missing | None. |
+
+**SystemZ**
+
+| Keyword | Change | Justification | Possible revert |
+|---------|--------|---------------|-----------------|
+| `SYSTEMZ_CC_*` | `SYSTEMZ_CC_O = 0` and `SYSTEMZ_CC_INVALID != 0` | They match the same LLVM values. Better for LLVM compatibility and code generation. | Change by hand. |
 
 **Note about AArch64**
 
@@ -108,6 +182,7 @@ If you want to use the compatibility header and stick with the `ARM64` naming, y
 _Meta programming macros_
 
 The following `sed` commands in a sh script should ease the replacement of `ARM64` with the macros a lot.
+These macros are also part of the latest `v4` and `v5` release.
 
 ```sh
 #!/bin/sh
@@ -166,18 +241,6 @@ sed -i "s|detail->arm64|detail->aarch64|g" $1
 ```
 
 Write it into `rename_arm64.sh` and run it on files with `sh rename_arm64.sh <src-file>`
-
-
-**Mips**
-
-| Keyword | Change | Justification | Possible revert |
-|---------|--------|---------------|-----------------|
-| `CS_OPT_SYNTAX_NO_DOLLAR` | Adds options which removes the `$` (dollar sign) from the register name. | New Feature | Enable option. |
-| `CS_OPT_SYNTAX_NOREGNAME` | Implements the options to output raw register numbers (only the standard GPR are numeric). | Was not implemented | Enable option. |
-| `cs_mips_op.uimm` | Access for the unsigned immediate value of the IMM operand. | Was missing | None. |
-| `cs_mips_op.is_unsigned` | Defines if the IMM operand is signed (when false) or unsigned (when true). | Was missing | None. |
-| `cs_mips_op.is_reglist` | Defines if the REG operand is part of a list of registers. | Was missing | None. |
-| `cs_mips_op.access` | Defines how is this operand accessed, i.e. READ, WRITE or READ & WRITE. | Was missing | None. |
 
 **Note about AArch64**
 
