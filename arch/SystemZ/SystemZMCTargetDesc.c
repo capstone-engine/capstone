@@ -131,7 +131,7 @@ const unsigned SystemZMC_CR64Regs[16] = { SystemZ_C0,  SystemZ_C1,  SystemZ_C2,
 					  SystemZ_C12, SystemZ_C13, SystemZ_C14,
 					  SystemZ_C15 };
 
-unsigned getFirstReg(unsigned Reg)
+unsigned SystemZMC_getFirstReg(unsigned Reg)
 {
 	static unsigned Map[NUM_TARGET_REGS];
 	static bool Initialized = false;
