@@ -1,0 +1,111 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0c, 0x31, 0x10, 0x20, 0x22, 0x21, 0x36, 0x64, 0x46, 0x25, 0x12, 0x12, 0x1c, 0x02, 0x08, 0xc1, 0x05, 0xc7, 0x0c, 0x71, 0x1f, 0x02, 0x22, 0xcf, 0x06, 0x89, 0x23, 0x00, 0x2b, 0x41, 0x0b, 0x00, 0x0e, 0x40, 0x32, 0x00, 0x0a, 0xf1, 0x09, 0x00  ]
+      arch: "sh"
+      options: [ CS_OPT_DETAIL, CS_MODE_SH4A, CS_MODE_SHFPU ]
+      address: 0x80000000
+    expected:
+      insns:
+      -
+        asm_text: "add r0,r1"
+        details:
+          regs_read: [ r0 ]
+          regs_write: [ r1 ]
+      -
+        asm_text: "mov.b r1,@r0"
+        details:
+          regs_read: [ r0, r1 ]
+      -
+        asm_text: "mov.l r2,@r1"
+        details:
+          regs_read: [ r1, r2 ]
+      -
+        asm_text: "mov.l @r3+,r4"
+        details:
+          regs_write: [ r3, r4 ]
+      -
+        asm_text: "mov.l r4,@-r5"
+        details:
+          regs_read: [ r4 ]
+          regs_write: [ r5 ]
+      -
+        asm_text: "mov.l r1,@(8,r2)"
+        details:
+          regs_read: [ r2, r1 ]
+      -
+        asm_text: "mov.b @(r0,r1),r2"
+        details:
+          regs_read: [ r0, r1 ]
+          regs_write: [ r2 ]
+      -
+        asm_text: "mov.w r0,@(16,gbr)"
+        details:
+          regs_read: [ gbr, r0 ]
+      -
+        asm_text: "mova 0x80000028,r0"
+        details:
+          regs_write: [ r0 ]
+      -
+        asm_text: "add #12,r1"
+        details:
+          regs_write: [ r1 ]
+      -
+        asm_text: "mac.l @r1+,@r2+"
+        details:
+          regs_write: [ r1, r2 ]
+      -
+        asm_text: "or.b #34,@(r0,gbr)"
+        details:
+          regs_read: [ gbr, r0 ]
+      -
+        asm_text: "bt 0x80000028"
+        details:
+          groups: [ SH_GRP_JUMP, SH_GRP_BRANCH_RELATIVE ]
+      -
+        asm_text: "braf r0"
+        details:
+          regs_read: [ r0 ]
+          groups: [ SH_GRP_JUMP, SH_GRP_BRANCH_RELATIVE ]
+      -
+        asm_text: "jmp @r1"
+        details:
+          regs_read: [ r1 ]
+          groups: [ SH_GRP_JUMP ]
+      -
+        asm_text: "rts"
+
+      -
+        asm_text: "ldc r0,sr"
+        details:
+          regs_read: [ r0 ]
+          regs_write: [ sr ]
+      -
+        asm_text: "stc ssr,r0"
+        details:
+          regs_read: [ ssr ]
+          regs_write: [ r0 ]
+      -
+        asm_text: "fmov fr0,@r1"
+        details:
+          regs_read: [ r1, fr0 ]
+      -
+        asm_text: "nop"
+  -
+    input:
+      bytes: [ 0x32, 0x11, 0x92, 0x00, 0x32, 0x49, 0x31, 0x00  ]
+      arch: "sh"
+      options: [ CS_OPT_DETAIL, CS_MODE_SH2A, CS_MODE_SHFPU, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movu.w @(1024,r1),r2"
+        details:
+          regs_read: [ r1 ]
+          regs_write: [ r2 ]
+      -
+        asm_text: "bld.b #4,@(256,r2)"
+        details:
+          regs_read: [ r2 ]
+

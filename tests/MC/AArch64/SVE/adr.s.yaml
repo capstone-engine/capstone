@@ -1,0 +1,200 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0xa0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.s, [z0.s, z0.s]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0xa0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.s, [z0.s, z0.s]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa4, 0xa0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.s, [z0.s, z0.s, lsl #1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa8, 0xa0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.s, [z0.s, z0.s, lsl #2]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xac, 0xa0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.s, [z0.s, z0.s, lsl #3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0xe0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0xe0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa4, 0xe0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, lsl #1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa8, 0xe0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, lsl #2]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xac, 0xe0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, lsl #3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, uxtw]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, uxtw]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa4, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, uxtw #1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa8, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, uxtw #2]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xac, 0x60, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, uxtw #3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, sxtw]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, sxtw]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa4, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, sxtw #1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa8, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, sxtw #2]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xac, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "adr z0.d, [z0.d, z0.d, sxtw #3]"

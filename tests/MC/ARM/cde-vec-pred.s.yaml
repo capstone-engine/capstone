@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x41, 0xfe, 0x00, 0xef ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_MCLASS", "CS_MODE_V8", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vptete.i8 eq, q0, q0"

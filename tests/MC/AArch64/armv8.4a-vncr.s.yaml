@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x22, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, VNCR_EL2"
+
+  -
+    input:
+      bytes: [ 0x00, 0x22, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr VNCR_EL2, x0"

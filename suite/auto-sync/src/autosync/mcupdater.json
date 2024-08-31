@@ -1,0 +1,10 @@
+{
+  "additional_mattr":
+  {
+    "AArch64": [ "+all" ]
+  },
+  "mandatory_options":
+  {
+    "SystemZ": [ "CS_MODE_BIG_ENDIAN" ]
+  }
+}

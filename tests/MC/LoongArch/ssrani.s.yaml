@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xda, 0x7a, 0x60, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvssrani.b.h $xr26, $xr22, 0xe"
+  -
+    input:
+      bytes: [ 0xd3, 0xe9, 0x60, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvssrani.h.w $xr19, $xr14, 0x1a"
+  -
+    input:
+      bytes: [ 0x61, 0x6f, 0x61, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvssrani.w.d $xr1, $xr27, 0x1b"
+  -
+    input:
+      bytes: [ 0x49, 0xed, 0x62, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvssrani.d.q $xr9, $xr10, 0x3b"
+  -
+    input:
+      bytes: [ 0x66, 0x68, 0x64, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvssrani.bu.h $xr6, $xr3, 0xa"
+  -
+    input:
+      bytes: [ 0x34, 0x99, 0x64, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvssrani.hu.w $xr20, $xr9, 6"
+  -
+    input:
+      bytes: [ 0x78, 0x21, 0x65, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvssrani.wu.d $xr24, $xr11, 8"
+  -
+    input:
+      bytes: [ 0x50, 0x3c, 0x66, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvssrani.du.q $xr16, $xr2, 0xf"

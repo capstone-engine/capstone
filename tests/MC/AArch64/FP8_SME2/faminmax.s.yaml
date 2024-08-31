@@ -1,0 +1,240 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x40, 0xb1, 0x60, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z0.h, z1.h }, { z0.h, z1.h }, { z0.h, z1.h }"
+
+  -
+    input:
+      bytes: [ 0x5e, 0xb1, 0x7e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z30.h, z31.h }, { z30.h, z31.h }, { z30.h, z31.h }"
+
+  -
+    input:
+      bytes: [ 0x40, 0xb1, 0xa0, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z0.s, z1.s }, { z0.s, z1.s }, { z0.s, z1.s }"
+
+  -
+    input:
+      bytes: [ 0x5e, 0xb1, 0xbe, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z30.s, z31.s }, { z30.s, z31.s }, { z30.s, z31.s }"
+
+  -
+    input:
+      bytes: [ 0x40, 0xb1, 0xe0, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z0.d, z1.d }, { z0.d, z1.d }, { z0.d, z1.d }"
+
+  -
+    input:
+      bytes: [ 0x5e, 0xb1, 0xfe, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z30.d, z31.d }, { z30.d, z31.d }, { z30.d, z31.d }"
+
+  -
+    input:
+      bytes: [ 0x40, 0xb9, 0x60, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z0.h - z3.h }, { z0.h - z3.h }, { z0.h - z3.h }"
+
+  -
+    input:
+      bytes: [ 0x5c, 0xb9, 0x7c, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z28.h - z31.h }, { z28.h - z31.h }, { z28.h - z31.h }"
+
+  -
+    input:
+      bytes: [ 0x40, 0xb9, 0xa0, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z0.s - z3.s }, { z0.s - z3.s }, { z0.s - z3.s }"
+
+  -
+    input:
+      bytes: [ 0x5c, 0xb9, 0xbc, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z28.s - z31.s }, { z28.s - z31.s }, { z28.s - z31.s }"
+
+  -
+    input:
+      bytes: [ 0x40, 0xb9, 0x60, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z0.h - z3.h }, { z0.h - z3.h }, { z0.h - z3.h }"
+
+  -
+    input:
+      bytes: [ 0x5c, 0xb9, 0x7c, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax { z28.h - z31.h }, { z28.h - z31.h }, { z28.h - z31.h }"
+
+  -
+    input:
+      bytes: [ 0x41, 0xb1, 0x60, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z0.h, z1.h }, { z0.h, z1.h }, { z0.h, z1.h }"
+
+  -
+    input:
+      bytes: [ 0x5f, 0xb1, 0x7e, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z30.h, z31.h }, { z30.h, z31.h }, { z30.h, z31.h }"
+
+  -
+    input:
+      bytes: [ 0x41, 0xb1, 0xa0, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z0.s, z1.s }, { z0.s, z1.s }, { z0.s, z1.s }"
+
+  -
+    input:
+      bytes: [ 0x5f, 0xb1, 0xbe, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z30.s, z31.s }, { z30.s, z31.s }, { z30.s, z31.s }"
+
+  -
+    input:
+      bytes: [ 0x41, 0xb1, 0xe0, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z0.d, z1.d }, { z0.d, z1.d }, { z0.d, z1.d }"
+
+  -
+    input:
+      bytes: [ 0x5f, 0xb1, 0xfe, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z30.d, z31.d }, { z30.d, z31.d }, { z30.d, z31.d }"
+
+  -
+    input:
+      bytes: [ 0x41, 0xb9, 0x60, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z0.h - z3.h }, { z0.h - z3.h }, { z0.h - z3.h }"
+
+  -
+    input:
+      bytes: [ 0x5d, 0xb9, 0x7c, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z28.h - z31.h }, { z28.h - z31.h }, { z28.h - z31.h }"
+
+  -
+    input:
+      bytes: [ 0x41, 0xb9, 0xa0, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z0.s - z3.s }, { z0.s - z3.s }, { z0.s - z3.s }"
+
+  -
+    input:
+      bytes: [ 0x5d, 0xb9, 0xbc, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z28.s - z31.s }, { z28.s - z31.s }, { z28.s - z31.s }"
+
+  -
+    input:
+      bytes: [ 0x41, 0xb9, 0xe0, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z0.d - z3.d }, { z0.d - z3.d }, { z0.d - z3.d }"
+
+  -
+    input:
+      bytes: [ 0x5d, 0xb9, 0xfc, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin { z28.d - z31.d }, { z28.d - z31.d }, { z28.d - z31.d }"

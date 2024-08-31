@@ -1,0 +1,60 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x2c, 0x22, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbx z0.b, z1.b, z2.b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x62, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfdot z0.s, z1.h, z2.h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x2c, 0x22, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "sme-f64f64" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbx z0.b, z1.b, z2.b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x62, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "sme-f64f64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfdot z0.s, z1.h, z2.h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x2c, 0x22, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "sme-i16i64" ]
+    expected:
+      insns:
+        -
+          asm_text: "tbx z0.b, z1.b, z2.b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x62, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "sme-i16i64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfdot z0.s, z1.h, z2.h"

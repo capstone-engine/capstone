@@ -1,0 +1,19 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x29, 0x5e, 0x46, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcvt.h.s $xr9, $xr17, $xr23"
+  -
+    input:
+      bytes: [ 0x5b, 0xf5, 0x46, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfcvt.s.d $xr27, $xr10, $xr29"

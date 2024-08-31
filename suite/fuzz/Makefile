@@ -81,7 +81,7 @@ else
 	$(link-static)
 endif
 
-$(FUZZERBIN): FUZZLDFLAGS="-fsanitize=fuzzer"
+$(FUZZERBIN): FUZZLDFLAGS="-fsanitize=fuzzer -fno-sanitize-coverage=stack-depth"
 
 $(FUZZERBIN): fuzz_disasm.o platform.o
 	@mkdir -p $(@D)

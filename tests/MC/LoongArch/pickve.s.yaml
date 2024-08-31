@@ -1,0 +1,19 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x99, 0xc7, 0x03, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickve.w $xr25, $xr28, 1"
+  -
+    input:
+      bytes: [ 0x2d, 0xe0, 0x03, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickve.d $xr13, $xr1, 0"

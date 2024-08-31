@@ -232,4 +232,27 @@ bool map_use_alias_details(const MCInst *MI);
 
 void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_id_map, int map_size);
 
+/// Mapping from Capstone enumeration identifiers and their values.
+///
+/// This map MUST BE sorted to allow binary searches.
+/// Please always ensure the map is sorted after you added a value.
+///
+/// You can sort the map with Python.
+/// Copy the map into a file and run:
+///
+/// ```python
+/// with open("/tmp/file_with_map_entries") as f:
+///     text = f.readlines()
+///
+/// text.sort()
+/// print(''.join(text))
+/// ```
+typedef struct {
+	const char *str; ///< The name of the enumeration identifier
+	uint64_t val;	 ///< The value of the identifier
+} cs_enum_id_map;
+
+uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,
+			     const char *id, bool *found);
+
 #endif // CS_MAPPING_H

@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x4f, 0xe1, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvexth.h.b $xr15, $xr10"
+  -
+    input:
+      bytes: [ 0x7a, 0xe5, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvexth.w.h $xr26, $xr11"
+  -
+    input:
+      bytes: [ 0x62, 0xeb, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvexth.d.w $xr2, $xr27"
+  -
+    input:
+      bytes: [ 0x36, 0xef, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvexth.q.d $xr22, $xr25"
+  -
+    input:
+      bytes: [ 0xd5, 0xf3, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvexth.hu.bu $xr21, $xr30"
+  -
+    input:
+      bytes: [ 0x7c, 0xf5, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvexth.wu.hu $xr28, $xr11"
+  -
+    input:
+      bytes: [ 0x3b, 0xfb, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvexth.du.wu $xr27, $xr25"
+  -
+    input:
+      bytes: [ 0x90, 0xff, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvexth.qu.du $xr16, $xr28"

@@ -903,7 +903,7 @@ typedef struct cs_arm {
 	ARMVCC_VPTCodes vcc;	///< Vector conditional code for this instruction.
 	bool update_flags;	///< does this insn update flags?
 	bool post_index;	///< only set if writeback is 'True', if 'False' pre-index, otherwise post.
-	int /* arm_mem_bo_opt */ mem_barrier;	///< Option for some memory barrier instructions
+	arm_mem_bo_opt mem_barrier; ///< Option for some memory barrier instructions
 	// Check ARM_PredBlockMask for encoding details.
 	uint8_t /* ARM_PredBlockMask */ pred_mask;	///< Used by IT/VPT block instructions.
 	/// Number of operands of this instruction,

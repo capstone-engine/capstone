@@ -1,0 +1,140 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x44, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sadalp z0.h, p0/m, z1.b"
+
+  -
+    input:
+      bytes: [ 0xdd, 0xa3, 0x84, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sadalp z29.s, p0/m, z30.h"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xbf, 0xc4, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sadalp z30.d, p7/m, z31.s"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x20, 0xd0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z31.d, p0/z, z6.d"
+
+  -
+    input:
+      bytes: [ 0xdf, 0xa3, 0xc4, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sadalp z31.d, p0/m, z30.s"
+
+  -
+    input:
+      bytes: [ 0xdf, 0xbc, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z31, z6"
+
+  -
+    input:
+      bytes: [ 0xdf, 0xa3, 0xc4, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sadalp z31.d, p0/m, z30.s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x44, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sadalp z0.h, p0/m, z1.b"
+
+  -
+    input:
+      bytes: [ 0xdd, 0xa3, 0x84, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sadalp z29.s, p0/m, z30.h"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xbf, 0xc4, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sadalp z30.d, p7/m, z31.s"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x20, 0xd0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z31.d, p0/z, z6.d"
+
+  -
+    input:
+      bytes: [ 0xdf, 0xa3, 0xc4, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sadalp z31.d, p0/m, z30.s"
+
+  -
+    input:
+      bytes: [ 0xdf, 0xbc, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z31, z6"
+
+  -
+    input:
+      bytes: [ 0xdf, 0xa3, 0xc4, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sadalp z31.d, p0/m, z30.s"

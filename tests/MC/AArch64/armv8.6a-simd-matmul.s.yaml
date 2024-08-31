@@ -1,0 +1,180 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x01, 0xa6, 0x9f, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "i8mm" ]
+    expected:
+      insns:
+        -
+          asm_text: "smmla v1.4s, v16.16b, v31.16b"
+
+  -
+    input:
+      bytes: [ 0x01, 0xa6, 0x9f, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "i8mm" ]
+    expected:
+      insns:
+        -
+          asm_text: "ummla v1.4s, v16.16b, v31.16b"
+
+  -
+    input:
+      bytes: [ 0x01, 0xae, 0x9f, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "i8mm" ]
+    expected:
+      insns:
+        -
+          asm_text: "usmmla v1.4s, v16.16b, v31.16b"
+
+  -
+    input:
+      bytes: [ 0xe3, 0x9d, 0x9e, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "i8mm" ]
+    expected:
+      insns:
+        -
+          asm_text: "usdot v3.2s, v15.8b, v30.8b"
+
+  -
+    input:
+      bytes: [ 0xe3, 0x9d, 0x9e, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "i8mm" ]
+    expected:
+      insns:
+        -
+          asm_text: "usdot v3.4s, v15.16b, v30.16b"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xf8, 0xa2, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "i8mm" ]
+    expected:
+      insns:
+        -
+          asm_text: "usdot v31.2s, v1.8b, v2.4b[3]"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xf8, 0xa2, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "i8mm" ]
+    expected:
+      insns:
+        -
+          asm_text: "usdot v31.4s, v1.16b, v2.4b[3]"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xf8, 0x22, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "i8mm" ]
+    expected:
+      insns:
+        -
+          asm_text: "sudot v31.2s, v1.8b, v2.4b[3]"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xf8, 0x22, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "i8mm" ]
+    expected:
+      insns:
+        -
+          asm_text: "sudot v31.4s, v1.16b, v2.4b[3]"
+
+  -
+    input:
+      bytes: [ 0x01, 0xa6, 0x9f, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.6a" ]
+    expected:
+      insns:
+        -
+          asm_text: "smmla v1.4s, v16.16b, v31.16b"
+
+  -
+    input:
+      bytes: [ 0x01, 0xa6, 0x9f, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.6a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ummla v1.4s, v16.16b, v31.16b"
+
+  -
+    input:
+      bytes: [ 0x01, 0xae, 0x9f, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.6a" ]
+    expected:
+      insns:
+        -
+          asm_text: "usmmla v1.4s, v16.16b, v31.16b"
+
+  -
+    input:
+      bytes: [ 0xe3, 0x9d, 0x9e, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.6a" ]
+    expected:
+      insns:
+        -
+          asm_text: "usdot v3.2s, v15.8b, v30.8b"
+
+  -
+    input:
+      bytes: [ 0xe3, 0x9d, 0x9e, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.6a" ]
+    expected:
+      insns:
+        -
+          asm_text: "usdot v3.4s, v15.16b, v30.16b"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xf8, 0xa2, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.6a" ]
+    expected:
+      insns:
+        -
+          asm_text: "usdot v31.2s, v1.8b, v2.4b[3]"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xf8, 0xa2, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.6a" ]
+    expected:
+      insns:
+        -
+          asm_text: "usdot v31.4s, v1.16b, v2.4b[3]"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xf8, 0x22, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.6a" ]
+    expected:
+      insns:
+        -
+          asm_text: "sudot v31.2s, v1.8b, v2.4b[3]"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xf8, 0x22, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.6a" ]
+    expected:
+      insns:
+        -
+          asm_text: "sudot v31.4s, v1.16b, v2.4b[3]"

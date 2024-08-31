@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xdd, 0x6f, 0x1f, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2-aes" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmullt z29.q, z30.d, z31.d"

@@ -1,0 +1,730 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.2s, #1"
+
+  -
+    input:
+      bytes: [ 0x01, 0x04, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v1.2s, #0"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x24, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v15.2s, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x30, 0x44, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v16.2s, #1, lsl #16"
+
+  -
+    input:
+      bytes: [ 0x3f, 0x64, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v31.2s, #1, lsl #24"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.4s, #1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.4s, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x44, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.4s, #1, lsl #16"
+
+  -
+    input:
+      bytes: [ 0x20, 0x64, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.4s, #1, lsl #24"
+
+  -
+    input:
+      bytes: [ 0x20, 0x84, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.4h, #1"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa4, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.4h, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x84, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.8h, #1"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa4, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.8h, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.2s, #1"
+
+  -
+    input:
+      bytes: [ 0x01, 0x04, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v1.2s, #0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x24, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.2s, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x44, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.2s, #1, lsl #16"
+
+  -
+    input:
+      bytes: [ 0x20, 0x64, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.2s, #1, lsl #24"
+
+  -
+    input:
+      bytes: [ 0x20, 0x04, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.4s, #1"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x24, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v15.4s, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x30, 0x44, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v16.4s, #1, lsl #16"
+
+  -
+    input:
+      bytes: [ 0x3f, 0x64, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v31.4s, #1, lsl #24"
+
+  -
+    input:
+      bytes: [ 0x20, 0x84, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.4h, #1"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa4, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.4h, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x84, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.8h, #1"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa4, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.8h, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x14, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v0.2s, #1"
+
+  -
+    input:
+      bytes: [ 0x01, 0x14, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v1.2s, #0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x34, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v0.2s, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x54, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v0.2s, #1, lsl #16"
+
+  -
+    input:
+      bytes: [ 0x20, 0x74, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v0.2s, #1, lsl #24"
+
+  -
+    input:
+      bytes: [ 0x20, 0x14, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v0.4s, #1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x34, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v0.4s, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x54, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v0.4s, #1, lsl #16"
+
+  -
+    input:
+      bytes: [ 0x20, 0x74, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v0.4s, #1, lsl #24"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x94, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v15.4h, #1"
+
+  -
+    input:
+      bytes: [ 0x30, 0xb4, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v16.4h, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x94, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v0.8h, #1"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xb4, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "bic v31.8h, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x14, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v0.2s, #1"
+
+  -
+    input:
+      bytes: [ 0x01, 0x14, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v1.2s, #0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x34, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v0.2s, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x54, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v0.2s, #1, lsl #16"
+
+  -
+    input:
+      bytes: [ 0x20, 0x74, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v0.2s, #1, lsl #24"
+
+  -
+    input:
+      bytes: [ 0x20, 0x14, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v0.4s, #1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x34, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v0.4s, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x54, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v0.4s, #1, lsl #16"
+
+  -
+    input:
+      bytes: [ 0x20, 0x74, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v0.4s, #1, lsl #24"
+
+  -
+    input:
+      bytes: [ 0x3f, 0x94, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v31.4h, #1"
+
+  -
+    input:
+      bytes: [ 0x2f, 0xb4, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v15.4h, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x94, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v0.8h, #1"
+
+  -
+    input:
+      bytes: [ 0x30, 0xb4, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "orr v16.8h, #1, lsl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc4, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.2s, #1, msl #8"
+
+  -
+    input:
+      bytes: [ 0x21, 0xd4, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v1.2s, #1, msl #16"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc4, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.4s, #1, msl #8"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xd4, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v31.4s, #1, msl #16"
+
+  -
+    input:
+      bytes: [ 0x21, 0xc4, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v1.2s, #1, msl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd4, 0x00, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.2s, #1, msl #16"
+
+  -
+    input:
+      bytes: [ 0x3f, 0xc4, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v31.4s, #1, msl #8"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd4, 0x00, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mvni v0.4s, #1, msl #16"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe4, 0x00, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.8b, #0"
+
+  -
+    input:
+      bytes: [ 0xff, 0xe7, 0x07, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v31.8b, #255"
+
+  -
+    input:
+      bytes: [ 0xef, 0xe5, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v15.16b, #15"
+
+  -
+    input:
+      bytes: [ 0xff, 0xe7, 0x00, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v31.16b, #31"
+
+  -
+    input:
+      bytes: [ 0x40, 0xe5, 0x05, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi v0.2d, #0xff00ff00ff00ff00"
+
+  -
+    input:
+      bytes: [ 0x40, 0xe5, 0x05, 0x2f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "movi d0, #0xff00ff00ff00ff00"
+
+  -
+    input:
+      bytes: [ 0x01, 0xf6, 0x03, 0x0f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmov v1.2s, #1.00000000"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xf6, 0x03, 0x4f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmov v15.4s, #1.00000000"
+
+  -
+    input:
+      bytes: [ 0x1f, 0xf6, 0x03, 0x6f ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmov v31.2d, #1.00000000"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x1f, 0xbf, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov v0.8b, v31.8b"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x1e, 0xb0, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov v15.16b, v16.16b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x1f, 0xbf, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov v0.8b, v31.8b"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x1e, 0xb0, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov v15.16b, v16.16b"

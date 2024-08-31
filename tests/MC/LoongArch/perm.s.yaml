@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xf8, 0x42, 0x7d, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvperm.w $xr24, $xr23, $xr16"

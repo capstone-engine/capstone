@@ -1,0 +1,200 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x40, 0x24, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p0, p0, p0.b[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x45, 0x55, 0x75, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p5, p5, p10.b[w13, 6]"
+
+  -
+    input:
+      bytes: [ 0xa7, 0x6d, 0x6c, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p7, p11, p13.b[w12, 5]"
+
+  -
+    input:
+      bytes: [ 0xef, 0x7d, 0xff, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p15, p15, p15.b[w15, 15]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x40, 0x28, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p0, p0, p0.h[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x45, 0x55, 0x79, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p5, p5, p10.h[w13, 3]"
+
+  -
+    input:
+      bytes: [ 0xa7, 0x6d, 0x68, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p7, p11, p13.h[w12, 2]"
+
+  -
+    input:
+      bytes: [ 0xef, 0x7d, 0xfb, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p15, p15, p15.h[w15, 7]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x40, 0x30, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p0, p0, p0.s[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x45, 0x55, 0x71, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p5, p5, p10.s[w13, 1]"
+
+  -
+    input:
+      bytes: [ 0xa7, 0x6d, 0x70, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p7, p11, p13.s[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0xef, 0x7d, 0xf3, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p15, p15, p15.s[w15, 3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x40, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p0, p0, p0.d[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x45, 0x55, 0x61, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p5, p5, p10.d[w13, 0]"
+
+  -
+    input:
+      bytes: [ 0xa7, 0x6d, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p7, p11, p13.d[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0xef, 0x7d, 0xe3, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p15, p15, p15.d[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0xef, 0x7d, 0xff, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p15, p15, p15.b[w15, 15]"
+
+  -
+    input:
+      bytes: [ 0xef, 0x7d, 0xfb, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p15, p15, p15.h[w15, 7]"
+
+  -
+    input:
+      bytes: [ 0xef, 0x7d, 0xf3, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p15, p15, p15.s[w15, 3]"
+
+  -
+    input:
+      bytes: [ 0xef, 0x7d, 0xe3, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "psel p15, p15, p15.d[w15, 1]"

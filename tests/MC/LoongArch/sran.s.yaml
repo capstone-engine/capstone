@@ -1,0 +1,28 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xbe, 0x8d, 0xf6, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsran.b.h $xr30, $xr13, $xr3"
+  -
+    input:
+      bytes: [ 0x52, 0x13, 0xf7, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsran.h.w $xr18, $xr26, $xr4"
+  -
+    input:
+      bytes: [ 0x7b, 0xd6, 0xf7, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsran.w.d $xr27, $xr19, $xr21"

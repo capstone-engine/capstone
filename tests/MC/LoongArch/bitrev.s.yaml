@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x90, 0x0e, 0x10, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitrev.b $xr16, $xr20, $xr3"
+  -
+    input:
+      bytes: [ 0x70, 0xd0, 0x10, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitrev.h $xr16, $xr3, $xr20"
+  -
+    input:
+      bytes: [ 0x58, 0x5f, 0x11, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitrev.w $xr24, $xr26, $xr23"
+  -
+    input:
+      bytes: [ 0x2d, 0xec, 0x11, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitrev.d $xr13, $xr1, $xr27"
+  -
+    input:
+      bytes: [ 0x67, 0x35, 0x18, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitrevi.b $xr7, $xr11, 5"
+  -
+    input:
+      bytes: [ 0xa1, 0x7c, 0x18, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitrevi.h $xr1, $xr5, 0xf"
+  -
+    input:
+      bytes: [ 0xad, 0xca, 0x18, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitrevi.w $xr13, $xr21, 0x12"
+  -
+    input:
+      bytes: [ 0x61, 0x24, 0x19, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitrevi.d $xr1, $xr3, 0x9"

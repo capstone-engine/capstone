@@ -3,11 +3,17 @@ on:
   push:
     paths:
       - "suite/auto-sync/**"
+      - ".github/workflows/auto-sync.yml"
   pull_request:
+
+# Stop previous runs on the same branch on new push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: suite/auto-sync/
@@ -30,15 +36,39 @@ jobs:
         run: |
           python3.11 -m black --check src/autosync
 
-      - name: Build llvm-tblgen
+      - name: Install llvm-mc
+        run: |
+          sudo apt install llvm-18
+          llvm-mc-18 --version
+          FileCheck-18 --version
+          sudo ln -s $(whereis -b llvm-mc-18 | grep -Eo "/.*") /usr/local/bin/llvm-mc
+          sudo ln -s $(whereis -b FileCheck-18 | grep -Eo "/.*") /usr/local/bin/FileCheck
+          llvm-mc --version
+          FileCheck --version
+
+      - name: Clone llvm-capstone
         run: |
           git clone https://github.com/capstone-engine/llvm-capstone.git vendor/llvm_root
+
+      - name: Build llvm-tblgen
+        run: |
           cd vendor/llvm_root
           mkdir build
           cd build
           cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug ../llvm
           cmake --build . --target llvm-tblgen --config Debug
           cd ../../../
+
+      - name: Test Header patcher
+        run: |
+          python -m unittest src/autosync/Tests/test_header_patcher.py
+          python -m unittest src/autosync/Tests/test_mcupdater.py
+
+      - name: Remove llvm-mc
+        run: |
+          sudo apt remove llvm-18
+          sudo rm /usr/local/bin/llvm-mc
+          sudo rm /usr/local/bin/FileCheck
 
       - name: Test generation of inc files
         run: |
@@ -63,11 +93,9 @@ jobs:
           ./src/autosync/ASUpdater.py --ci -d -a PPC -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a LoongArch -s Translate
 
-      - name: Test Header patcher
-        run: |
-          python -m unittest src/autosync/Tests/test_header_patcher.py
-          python -m unittest src/autosync/Tests/test_mcupdater.py
-
       - name: Differ - Test save file is up-to-date
         run: |
           ./src/autosync/cpptranslator/Differ.py -a AArch64 --check_saved
+          ./src/autosync/cpptranslator/Differ.py -a ARM --check_saved
+          ./src/autosync/cpptranslator/Differ.py -a PPC --check_saved
+          ./src/autosync/cpptranslator/Differ.py -a LoongArch --check_saved

@@ -1,0 +1,200 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x10, 0x42, 0x00, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov p0.b, p0/m, p0.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7f, 0x0f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov p15.b, p15/m, p15.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0x3f, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov z31.b, p15/m, z31.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0x7f, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov z31.h, p15/m, z31.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0xbf, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov z31.s, p15/m, z31.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0xff, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov z31.d, p15/m, z31.d"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0xa8, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel z23.s, p11, z13.s, z8.s"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0xe8, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel z23.d, p11, z13.d, z8.d"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0x68, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel z23.h, p11, z13.h, z8.h"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0x28, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel z23.b, p11, z13.b, z8.b"
+
+  -
+    input:
+      bytes: [ 0x10, 0x42, 0x00, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov p0.b, p0/m, p0.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7f, 0x0f, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov p15.b, p15/m, p15.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0x3f, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov z31.b, p15/m, z31.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0x7f, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov z31.h, p15/m, z31.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0xbf, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov z31.s, p15/m, z31.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0xff, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov z31.d, p15/m, z31.d"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0xa8, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel z23.s, p11, z13.s, z8.s"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0xe8, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel z23.d, p11, z13.d, z8.d"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0x68, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel z23.h, p11, z13.h, z8.h"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0x28, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel z23.b, p11, z13.b, z8.b"

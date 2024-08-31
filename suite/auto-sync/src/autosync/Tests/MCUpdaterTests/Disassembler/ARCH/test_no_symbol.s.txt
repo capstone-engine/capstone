@@ -1,0 +1,41 @@
+# RUN: llvm-mc -triple s390x-unknown-unknown -mcpu=z13 --show-encoding %s | FileCheck %s
+
+# RUN: llvm-mc -triple s390x-unknown-unknown -mcpu=z13 -filetype=obj %s | \
+# RUN: llvm-readobj -r - | FileCheck %s -check-prefix=CHECK-REL
+
+# RUN: llvm-mc -triple s390x-unknown-unknown -mcpu=z13 -filetype=obj %s | \
+# RUN: llvm-objdump -d - | FileCheck %s -check-prefix=CHECK-DIS
+
+# CHECK: larl %r14, target                      # encoding: [0xc0,0xe0,A,A,A,A]
+# CHECK-NEXT:                                   # fixup A - offset: 2, value: target+2, kind: FK_390_PC32DBL
+# CHECK-REL:                                    0x{{[0-9A-F]*2}} R_390_PC32DBL target 0x2
+	.align 16
+	larl %r14, target
+
+# CHECK: larl %r14, target@GOT                  # encoding: [0xc0,0xe0,A,A,A,A]
+# CHECK-NEXT:                                   # fixup A - offset: 2, value: target@GOT+2, kind: FK_390_PC32DBL
+# CHECK-REL:                                    0x{{[0-9A-F]*2}} R_390_GOTENT target 0x2
+	.align 16
+	larl %r14, target@got
+
+# CHECK: vl %v0, src(%r1)                       # encoding: [0xe7,0x00,0b0001AAAA,A,0x00,0x06]
+# CHECK-NEXT:                                   # fixup A - offset: 2, value: src, kind: FK_390_U12Imm
+# CHECK-REL:                                    0x{{[0-9A-F]*2}} R_390_12 src 0x0
+        .align 16
+        vl %v0, src(%r1)
+
+
+# CHECK: .insn ss,238594023227392,dst(%r2,%r1),src,%r3  # encoding: [0xd9,0x23,0b0001AAAA,A,0b0000BBBB,B]
+# CHECK-NEXT:                                           # fixup A - offset: 2, value: dst, kind: FK_390_U12Imm
+# CHECK-NEXT:                                           # fixup B - offset: 4, value: src, kind: FK_390_U12Imm
+# CHECK-REL:                                            0x{{[0-9A-F]*2}} R_390_12 dst 0x0
+# CHECK-REL:                                            0x{{[0-9A-F]*4}} R_390_12 src 0x0
+        .align 16
+        .insn ss,0xd90000000000,dst(%r2,%r1),src,%r3	# mvck
+
+##S8
+# CHECK: asi 0(%r1), src                        # encoding: [0xeb,A,0x10,0x00,0x00,0x6a]
+# CHECK-NEXT:                                   # fixup A - offset: 1, value: src, kind: FK_390_S8Imm
+# CHECK-REL:                                    0x{{[0-9A-F]+}} R_390_8 src 0x0
+       .align 16
+       asi 0(%r1),src

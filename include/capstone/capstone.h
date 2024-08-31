@@ -284,7 +284,7 @@ typedef enum cs_opt_type {
 	CS_OPT_SKIPDATA_SETUP, ///< Setup user-defined function for SKIPDATA option
 	CS_OPT_MNEMONIC,       ///< Customize instruction mnemonic
 	CS_OPT_UNSIGNED,       ///< print immediate operands in unsigned form
-	CS_OPT_NO_BRANCH_OFFSET, ///< ARM, prints branch immediates without offset.
+	CS_OPT_NO_BRANCH_OFFSET, ///< ARM, PPC, AArch64, prints branch immediates without offset.
 } cs_opt_type;
 
 /// Runtime option value (associated with option type above)
@@ -301,6 +301,12 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_PERCENT = 1 << 8, ///< Prints the % in front of PPC registers.
 	CS_OPT_DETAIL_REAL = 1 << 1, ///< If enabled, always sets the real instruction detail. Even if the instruction is an alias.
 } cs_opt_value;
+
+/// An option
+typedef struct {
+	cs_opt_type type; ///< The option type
+	cs_opt_value val; ///< The option value to set.
+} cs_opt;
 
 /// Common instruction groups - to be consistent across all architectures.
 typedef enum cs_group_type {

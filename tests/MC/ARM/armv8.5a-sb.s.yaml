@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x70, 0xf0, 0x7f, 0xf5 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "sb"

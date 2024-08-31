@@ -1,0 +1,420 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.8a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.8a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.8a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.8a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.3a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.3a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.8a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.8a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.3a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.3a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.9a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.9a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.9a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.9a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.4a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.4a", "+clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.9a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v8.9a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.4a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"
+
+  -
+    input:
+      bytes: [ 0xdf, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-elf", "v9.4a", "-clrbhb" ]
+    expected:
+      insns:
+        -
+          asm_text: "clrbhb"

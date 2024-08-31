@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa4, 0xf4, 0x8e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbsrl.v $xr4, $xr5, 0x1d"

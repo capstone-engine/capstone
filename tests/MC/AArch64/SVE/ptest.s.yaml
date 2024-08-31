@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0xfc, 0x50, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptest p15, p0.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xfd, 0x50, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptest p15, p15.b"
+
+  -
+    input:
+      bytes: [ 0x00, 0xfc, 0x50, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptest p15, p0.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xfd, 0x50, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptest p15, p15.b"

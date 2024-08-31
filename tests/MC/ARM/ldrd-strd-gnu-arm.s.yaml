@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xd0, 0x02, 0xea, 0xe1, 0xd0, 0x02, 0xca, 0xe0, 0xd0, 0x02, 0xca, 0xe1, 0xf0, 0x02, 0xea, 0xe1, 0xf0, 0x02, 0xca, 0xe0, 0xf0, 0x02, 0xca, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrd r0, r1, [r10, #0x20]!"
+        -
+          asm_text: "ldrd r0, r1, [r10], #0x20"
+        -
+          asm_text: "ldrd r0, r1, [r10, #0x20]"
+        -
+          asm_text: "strd r0, r1, [r10, #0x20]!"
+        -
+          asm_text: "strd r0, r1, [r10], #0x20"
+        -
+          asm_text: "strd r0, r1, [r10, #0x20]"

@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x9f, 0x84 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "sme-fa64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldnt1sh { z0.s }, p0/z, [z1.s]"

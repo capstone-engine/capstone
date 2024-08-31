@@ -1,0 +1,64 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x78, 0x1b, 0xa6, 0x5e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.v $w25, $w20, $w27"
+  -
+    input:
+      bytes: [ 0x78, 0x87, 0x34, 0x5e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "bmnz.v $w17, $w6, $w7"
+  -
+    input:
+      bytes: [ 0x78, 0xa9, 0x88, 0xde ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "bmz.v $w3, $w17, $w9"
+  -
+    input:
+      bytes: [ 0x78, 0xce, 0x02, 0x1e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "bsel.v $w8, $w0, $w14"
+  -
+    input:
+      bytes: [ 0x78, 0x40, 0xf9, 0xde ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "nor.v $w7, $w31, $w0"
+  -
+    input:
+      bytes: [ 0x78, 0x3e, 0xd6, 0x1e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.v $w24, $w26, $w30"
+  -
+    input:
+      bytes: [ 0x78, 0x6f, 0xd9, 0xde ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.v $w7, $w27, $w15"

@@ -71,6 +71,13 @@ class PathVarHandler(metaclass=Singleton):
                 log.fatal(f"\t{m}")
             exit(1)
 
+    def test_only_overwrite_var(self, var_name: str, new_path: Path):
+        if var_name not in self.paths:
+            raise ValueError(f"PathVarHandler doesn't have a path for '{var_name}'")
+        if not new_path.exists():
+            raise ValueError(f"New path doesn't exists: '{new_path}")
+        self.paths[var_name] = new_path
+
     def get_path(self, name: str) -> Path:
         if name not in self.paths:
             raise ValueError(f"Path variable {name} has no path saved.")

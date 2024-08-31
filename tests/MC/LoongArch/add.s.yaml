@@ -1,0 +1,46 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x74, 0x16, 0x0a, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvadd.b $xr20, $xr19, $xr5"
+  -
+    input:
+      bytes: [ 0xf8, 0xb8, 0x0a, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvadd.h $xr24, $xr7, $xr14"
+  -
+    input:
+      bytes: [ 0x33, 0x54, 0x0b, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvadd.w $xr19, $xr1, $xr21"
+  -
+    input:
+      bytes: [ 0xd3, 0xb4, 0x0b, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvadd.d $xr19, $xr6, $xr13"
+  -
+    input:
+      bytes: [ 0x84, 0x1b, 0x2d, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvadd.q $xr4, $xr28, $xr6"

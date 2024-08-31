@@ -1,0 +1,793 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x30, 0x00, 0x00, 0x20 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "copr,0,0,n"
+  -
+    input:
+      bytes: [ 0x30, 0x00, 0x00, 0x62 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "copr,1,2,n"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x40, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcpy,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x48, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcpy,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x58, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcpy,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x60, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fabs,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x68, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fabs,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x78, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fabs,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x80, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsqrt,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x88, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsqrt,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x98, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsqrt,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0xa0, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "frnd,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0xa8, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "frnd,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0xb8, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "frnd,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x22, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvff,sgl,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x62, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvff,sgl,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x0a, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvff,dbl,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x6a, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvff,dbl,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x02, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvff,sgl,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x2a, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvff,dbl,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x7a, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvff,quad,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0xa2, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvxf,sgl,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0xe2, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvxf,sgl,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x8a, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvxf,dbl,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0xea, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvxf,dbl,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0x82, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvxf,sgl,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0xaa, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvxf,dbl,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x20, 0xfa, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvxf,quad,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0x22, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfx,sgl,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0x62, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfx,sgl,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0x0a, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfx,dbl,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0x6a, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfx,dbl,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0x02, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfx,sgl,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0x2a, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfx,dbl,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0x7a, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfx,quad,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0xa2, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfxt,sgl,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0xe2, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfxt,sgl,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0x8a, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfxt,dbl,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0xea, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfxt,dbl,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0x82, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfxt,sgl,sgl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0xaa, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfxt,dbl,dbl fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x21, 0xfa, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcnvfxt,quad,quad fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,false? fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x01 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,false fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,? fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!<=> fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x04 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x05 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,=t fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x06 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,?= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x07 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!<> fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x08 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!?>= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x09 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,< fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x0a ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,?< fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x0b ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!>= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x0c ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!?> fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x0d ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,<= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x0e ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,?<= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x0f ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!> fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x10 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!?<= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x11 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,> fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x12 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,?> fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x13 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!<= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x14 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!?< fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x15 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,>= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x16 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,?>= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x17 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!< fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x18 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!?= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x19 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,<> fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x1a ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!= fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x1b ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!=t fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x1c ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,!? fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x1d ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,<=> fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x1e ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,true? fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x04, 0x1f ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcmp,sgl,true fpe2,fpe4"
+  -
+    input:
+      bytes: [ 0x30, 0x00, 0x24, 0x20 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "ftest"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x06, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd,sgl fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x0e, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd,dbl fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x1e, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd,quad fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x26, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsub,sgl fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x2e, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsub,dbl fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x3e, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsub,quad fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x46, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmpy,sgl fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x4e, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmpy,dbl fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x5e, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmpy,quad fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x66, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdiv,sgl fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x6e, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdiv,dbl fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x30, 0x22, 0x7e, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdiv,quad fpe2,fpe4,fpe6"
+  -
+    input:
+      bytes: [ 0x38, 0x22, 0x47, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "xmpyu fpe2,fpe4,fpe6"

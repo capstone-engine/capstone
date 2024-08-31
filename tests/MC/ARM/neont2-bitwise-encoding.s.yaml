@@ -1,0 +1,44 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x41, 0xef, 0xb0, 0x01, 0x40, 0xef, 0xf2, 0x01, 0x41, 0xff, 0xb0, 0x01, 0x40, 0xff, 0xf2, 0x01, 0x61, 0xef, 0xb0, 0x01, 0x60, 0xef, 0xf2, 0x01, 0x51, 0xef, 0xb0, 0x01, 0x50, 0xef, 0xf2, 0x01, 0x71, 0xef, 0xb0, 0x01, 0x70, 0xef, 0xf2, 0x01, 0xf0, 0xff, 0xa0, 0x05, 0xf0, 0xff, 0xe0, 0x05, 0x51, 0xff, 0xb0, 0x21, 0x54, 0xff, 0xf2, 0x01, 0x61, 0xff, 0xb0, 0x21, 0x64, 0xff, 0xf2, 0x01, 0x71, 0xff, 0xb0, 0x21, 0x74, 0xff, 0xf2, 0x01 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vand d16, d17, d16"
+        -
+          asm_text: "vand q8, q8, q9"
+        -
+          asm_text: "veor d16, d17, d16"
+        -
+          asm_text: "veor q8, q8, q9"
+        -
+          asm_text: "vorr d16, d17, d16"
+        -
+          asm_text: "vorr q8, q8, q9"
+        -
+          asm_text: "vbic d16, d17, d16"
+        -
+          asm_text: "vbic q8, q8, q9"
+        -
+          asm_text: "vorn d16, d17, d16"
+        -
+          asm_text: "vorn q8, q8, q9"
+        -
+          asm_text: "vmvn d16, d16"
+        -
+          asm_text: "vmvn q8, q8"
+        -
+          asm_text: "vbsl d18, d17, d16"
+        -
+          asm_text: "vbsl q8, q10, q9"
+        -
+          asm_text: "vbit d18, d17, d16"
+        -
+          asm_text: "vbit q8, q10, q9"
+        -
+          asm_text: "vbif d18, d17, d16"
+        -
+          asm_text: "vbif q8, q10, q9"

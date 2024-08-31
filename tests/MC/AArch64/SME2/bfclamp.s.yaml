@@ -1,0 +1,80 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0x20, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfclamp { z0.h, z1.h }, z0.h, z0.h"
+
+  -
+    input:
+      bytes: [ 0x54, 0xc1, 0x35, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfclamp { z20.h, z21.h }, z10.h, z21.h"
+
+  -
+    input:
+      bytes: [ 0xb6, 0xc1, 0x28, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfclamp { z22.h, z23.h }, z13.h, z8.h"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xc3, 0x3f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfclamp { z30.h, z31.h }, z31.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc8, 0x20, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfclamp { z0.h - z3.h }, z0.h, z0.h"
+
+  -
+    input:
+      bytes: [ 0x54, 0xc9, 0x35, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfclamp { z20.h - z23.h }, z10.h, z21.h"
+
+  -
+    input:
+      bytes: [ 0xb4, 0xc9, 0x28, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfclamp { z20.h - z23.h }, z13.h, z8.h"
+
+  -
+    input:
+      bytes: [ 0xfc, 0xcb, 0x3f, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+b16b16" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfclamp { z28.h - z31.h }, z31.h, z31.h"

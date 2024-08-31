@@ -1,0 +1,19 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xc4, 0x43, 0x29, 0x44, 0xdc, 0x11 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vpclmulqdq $17, %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x63, 0x29, 0x44, 0x28, 0x11 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vpclmulqdq $17, (%rax), %xmm10, %xmm13"

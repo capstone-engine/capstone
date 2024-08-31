@@ -1,0 +1,18 @@
+# Copyright © 2024 Rot127 <unisono@quyllur.org>
+# SPDX-License-Identifier: BSD-3
+
+[project]
+name = "cstest_py"
+version = "0.1.0"
+dependencies = [
+  "pyyaml >= 6.0.2",
+  "capstone >= 5.0.0",
+]
+requires-python = ">= 3.8"
+
+[tool.setuptools]
+packages = ["cstest_py"]
+package-dir = {"" = "src"}
+
+[project.scripts]
+cstest_py = "cstest_py.cstest:main"

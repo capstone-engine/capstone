@@ -1,0 +1,18 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x00, 0xea, 0x01, 0x00, 0x00, 0xeb, 0x01, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0xfb, 0x01, 0x00, 0x00, 0xea ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "b #4"
+        -
+          asm_text: "bl #4"
+        -
+          asm_text: "beq #4"
+        -
+          asm_text: "blx #2"
+        -
+          asm_text: "b #4"

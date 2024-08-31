@@ -1,0 +1,49 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x8d, 0x4c, 0x32, 0x08, 0x01, 0xd8, 0x81, 0xc6, 0x34, 0x12, 0x00, 0x00, 0x00, 0x91, 0x92  ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_SKIPDATA ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "lea ecx, [edx + esi + 8]"
+      -
+        asm_text: "add eax, ebx"
+      -
+        asm_text: "add esi, 0x1234"
+      -
+        asm_text: ".byte 0x00"
+      -
+        asm_text: "xchg ecx, eax"
+      -
+        asm_text: "xchg edx, eax"
+  -
+    input:
+      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x5a, 0x0f, 0x1f, 0xff, 0xc2, 0x09, 0x80, 0x00, 0x00, 0x00, 0x07, 0xf7, 0xeb, 0x2a, 0xff, 0xff, 0x7f, 0x57, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x57, 0xeb, 0x00, 0xf0, 0x00, 0x00, 0x24, 0xb2, 0x4f, 0x00, 0x78  ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_SKIPDATA ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "andeq r0, r0, sp, ror #1"
+      -
+        asm_text: "svceq #0x5a1a00"
+      -
+        asm_text: "stmibeq r2, {r0, r1, r2, r3, r4, r8, r9, r10, r11, r12, sp, lr, pc} ^"
+      -
+        asm_text: "andeq r0, r0, r0, lsl #1"
+      -
+        asm_text: "bhs 0xffafec34"
+      -
+        asm_text: ".byte 0xff, 0xff, 0x7f, 0x57"
+      -
+        asm_text: ".byte 0xe3, 0x01, 0xff, 0xff"
+      -
+        asm_text: "rsceq r5, r11, pc, ror r7"
+      -
+        asm_text: "strhs r0, [r0], #-0xf0"
+      -
+        asm_text: "stmdavc r0, {r1, r4, r5, r7, r8, r9, r10, r11, lr}"

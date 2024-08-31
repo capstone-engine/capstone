@@ -1,0 +1,343 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7e, 0x32, 0x83, 0x11 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precrq.qb.ph $s0, $s1, $s2"
+  -
+    input:
+      bytes: [ 0x7e, 0x53, 0x8d, 0x11 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precrq.ph.w $s1, $s2, $s3"
+  -
+    input:
+      bytes: [ 0x7e, 0x74, 0x95, 0x51 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precrq_rs.ph.w $s2, $s3, $s4"
+  -
+    input:
+      bytes: [ 0x7e, 0x95, 0x9b, 0xd1 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precrqu_s.qb.ph $s3, $s4, $s5"
+  -
+    input:
+      bytes: [ 0x7c, 0x15, 0xa3, 0x12 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "preceq.w.phl $s4, $s5"
+  -
+    input:
+      bytes: [ 0x7c, 0x16, 0xab, 0x52 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "preceq.w.phr $s5, $s6"
+  -
+    input:
+      bytes: [ 0x7c, 0x17, 0xb1, 0x12 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precequ.ph.qbl $s6, $s7"
+  -
+    input:
+      bytes: [ 0x7c, 0x18, 0xb9, 0x52 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precequ.ph.qbr $s7, $t8"
+  -
+    input:
+      bytes: [ 0x7c, 0x19, 0xc1, 0x92 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precequ.ph.qbla $t8, $t9"
+  -
+    input:
+      bytes: [ 0x7c, 0x1a, 0xc9, 0xd2 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precequ.ph.qbra $t9, $k0"
+  -
+    input:
+      bytes: [ 0x7c, 0x1b, 0xd7, 0x12 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "preceu.ph.qbl $k0, $k1"
+  -
+    input:
+      bytes: [ 0x7c, 0x1c, 0xdf, 0x52 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "preceu.ph.qbr $k1, $gp"
+  -
+    input:
+      bytes: [ 0x7c, 0x1d, 0xe7, 0x92 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "preceu.ph.qbla $gp, $sp"
+  -
+    input:
+      bytes: [ 0x7c, 0x1e, 0xef, 0xd2 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "preceu.ph.qbra $sp, $fp"
+  -
+    input:
+      bytes: [ 0x7f, 0x19, 0xbb, 0x51 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precr.qb.ph $s7, $t8, $t9"
+  -
+    input:
+      bytes: [ 0x7f, 0x38, 0x07, 0x91 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precr_sra.ph.w $t8, $t9, 0"
+  -
+    input:
+      bytes: [ 0x7f, 0x38, 0xff, 0x91 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precr_sra.ph.w $t8, $t9, 31"
+  -
+    input:
+      bytes: [ 0x7f, 0x59, 0x07, 0xd1 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precr_sra_r.ph.w $t9, $k0, 0"
+  -
+    input:
+      bytes: [ 0x7f, 0x59, 0xff, 0xd1 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "precr_sra_r.ph.w $t9, $k0, 31"
+  -
+    input:
+      bytes: [ 0x7f, 0x54, 0x51, 0x8a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lbux $t2, $s4($k0)"
+  -
+    input:
+      bytes: [ 0x7f, 0x75, 0x59, 0x0a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lhx $t3, $s5($k1)"
+  -
+    input:
+      bytes: [ 0x7f, 0x96, 0x60, 0x0a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwx $t4, $s6($gp)"
+  -
+    input:
+      bytes: [ 0x00, 0x43, 0x18, 0x18 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mult $ac3, $v0, $v1"
+  -
+    input:
+      bytes: [ 0x00, 0x85, 0x10, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "multu $ac2, $a0, $a1"
+  -
+    input:
+      bytes: [ 0x70, 0xc7, 0x08, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "madd $ac1, $a2, $a3"
+  -
+    input:
+      bytes: [ 0x71, 0x4b, 0x18, 0x04 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "msub $ac3, $t2, $t3"
+  -
+    input:
+      bytes: [ 0x71, 0x8d, 0x10, 0x05 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubu $ac2, $t4, $t5"
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x70, 0x10 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfhi $t6, $ac1"
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0x18, 0x11 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mthi $s0, $ac3"
+  -
+    input:
+      bytes: [ 0x02, 0x20, 0x10, 0x13 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtlo $s1, $ac2"
+  -
+    input:
+      bytes: [ 0x00, 0x43, 0x00, 0x18 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mult $v0, $v1"
+  -
+    input:
+      bytes: [ 0x00, 0x85, 0x00, 0x19 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "multu $a0, $a1"
+  -
+    input:
+      bytes: [ 0x70, 0xc7, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "madd $a2, $a3"
+  -
+    input:
+      bytes: [ 0x71, 0x4b, 0x00, 0x04 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "msub $t2, $t3"
+  -
+    input:
+      bytes: [ 0x71, 0x8d, 0x00, 0x05 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubu $t4, $t5"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x70, 0x10 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfhi $t6"
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0x00, 0x11 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mthi $s0"
+  -
+    input:
+      bytes: [ 0x02, 0x20, 0x00, 0x13 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtlo $s1"

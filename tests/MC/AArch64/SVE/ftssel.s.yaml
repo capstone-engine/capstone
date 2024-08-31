@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0xb0, 0x7f, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ftssel z0.h, z1.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xb0, 0xbf, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ftssel z0.s, z1.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xb0, 0xff, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ftssel z0.d, z1.d, z31.d"

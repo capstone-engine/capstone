@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0xc8, 0x91 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v9.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "smin x0, x0, #0"
+
+  -
+    input:
+      bytes: [ 0x55, 0x55, 0xc9, 0x91 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v9.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "smin x21, x10, #85"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0xc8, 0x91 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v9.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "smin x23, x13, #59"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0xcb, 0x91 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v9.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "smin xzr, xzr, #-1"

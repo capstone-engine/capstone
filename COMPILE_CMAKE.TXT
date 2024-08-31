@@ -1,8 +1,6 @@
 This documentation explains how to compile Capstone with CMake, focus on
 using Microsoft Visual C as the compiler.
 
-To compile Capstone on *nix, see COMPILE.TXT.
-
 To compile Capstone on Windows using Visual Studio, see COMPILE_MSVC.TXT.
 
                         *-*-*-*-*-*
@@ -57,7 +55,7 @@ Get CMake for free from http://www.cmake.org.
   - CAPSTONE_X86_REDUCE: change this to ON to make X86 binary smaller.
   - CAPSTONE_X86_ATT_DISABLE: change this to ON to disable AT&T syntax on x86.
   - CAPSTONE_DEBUG: change this to ON to enable extra debug assertions.
-  - CAPSTONE_BUILD_CSTEST: Build `cstest` in `suite/cstest/`
+  - CAPSTONE_BUILD_CSTEST: Build `cstest` in `suite/cstest/`. `cstest` requires `libyaml` on your system.
   - ENABLE_ASAN: Compiles Capstone with the address sanitizer.
 
   By default, Capstone use system dynamic memory management, and both DIET and X86_REDUCE

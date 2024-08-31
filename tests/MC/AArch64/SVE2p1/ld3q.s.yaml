@@ -1,0 +1,140 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x80, 0x20, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z0.q - z2.q }, p0/z, [x0, x0, lsl #4]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x95, 0x35, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z21.q - z23.q }, p5/z, [x10, x21, lsl #4]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x8d, 0x28, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z23.q - z25.q }, p3/z, [x13, x8, lsl #4]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x10, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z0.q - z2.q }, p0/z, [x0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0xf5, 0x15, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z21.q - z23.q }, p5/z, [x10, #15, mul vl]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0x18, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z23.q - z25.q }, p3/z, [x13, #-24, mul vl]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0x1f, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z31.q, z0.q, z1.q }, p7/z, [sp, #-3, mul vl]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x80, 0x20, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z0.q - z2.q }, p0/z, [x0, x0, lsl #4]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x95, 0x35, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z21.q - z23.q }, p5/z, [x10, x21, lsl #4]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x8d, 0x28, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z23.q - z25.q }, p3/z, [x13, x8, lsl #4]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x10, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z0.q - z2.q }, p0/z, [x0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0xf5, 0x15, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z21.q - z23.q }, p5/z, [x10, #15, mul vl]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xed, 0x18, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z23.q - z25.q }, p3/z, [x13, #-24, mul vl]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0x1f, 0xa5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld3q { z31.q, z0.q, z1.q }, p7/z, [sp, #-3, mul vl]"

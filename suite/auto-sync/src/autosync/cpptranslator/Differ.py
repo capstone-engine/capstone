@@ -851,6 +851,10 @@ class Differ:
             filename, node_id = self.all_choices_saved(
                 old_filepath, new_file[k]["nodes"], old_file[k]["nodes"]
             )
+            if not node_id:
+                # Edge case of file has all nodes matching. And therefore has
+                # no decision saved because the user never was asked.
+                continue
             if filename or node_id:
                 print(
                     f"{get_path('{DIFFER_PERSISTENCE_FILE}').name} is not up-to-date!\n"
@@ -918,7 +922,7 @@ def parse_args() -> argparse.Namespace:
         "-a",
         dest="arch",
         help="Name of target architecture (ignored with -t option)",
-        choices=["ARM", "PPC", "AArch64", "Alpha"],
+        choices=["ARM", "PPC", "AArch64", "Alpha", "LoongArch"],
         required=True,
     )
     parser.add_argument(

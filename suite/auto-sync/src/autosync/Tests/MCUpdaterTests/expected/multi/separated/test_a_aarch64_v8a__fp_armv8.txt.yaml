@@ -1,0 +1,120 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x41, 0x10, 0x43, 0x93 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbfx x1, x2, #3, #2"
+
+  -
+    input:
+      bytes: [ 0x83, 0xfc, 0x7f, 0x93 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "asr x3, x4, #63"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7f, 0x1f, 0x13 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "asr wzr, wzr, #31"
+
+  -
+    input:
+      bytes: [ 0x2c, 0x01, 0x00, 0x13 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "sbfx w12, w9, #0, #1"
+
+  -
+    input:
+      bytes: [ 0xa4, 0x28, 0x4c, 0xd3 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "ubfiz x4, x5, #52, #11"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x00, 0x40, 0xd3 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "ubfx xzr, x4, #0, #1"
+
+  -
+    input:
+      bytes: [ 0xe4, 0x17, 0x7f, 0xd3 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "ubfiz x4, xzr, #1, #6"
+
+  -
+    input:
+      bytes: [ 0xc5, 0xfc, 0x4c, 0xd3 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "lsr x5, x6, #12"
+
+  -
+    input:
+      bytes: [ 0xa4, 0x28, 0x4c, 0xb3 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfi x4, x5, #52, #11"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x00, 0x40, 0xb3 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfxil xzr, x4, #0, #1"
+
+  -
+    input:
+      bytes: [ 0xe4, 0x17, 0x7f, 0xb3 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfi x4, xzr, #1, #6"
+
+  -
+    input:
+      bytes: [ 0xc5, 0xfc, 0x4c, 0xb3 ]
+      arch: "CS_ARCH_ARCH"
+      options: [ "aarch64", "v8a", "+fp-armv8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bfxil x5, x6, #12, #52"

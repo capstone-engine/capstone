@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x64, 0x42, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmullt z0.h, z1.b, z2.b"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x67, 0x9f, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmullt z29.s, z30.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x67, 0xdf, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmullt z31.d, z31.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xec, 0xbf, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmullt z0.s, z1.h, z7.h[7]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xec, 0xef, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmullt z0.d, z1.s, z15.s[1]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x64, 0x42, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmullt z0.h, z1.b, z2.b"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x67, 0x9f, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmullt z29.s, z30.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x67, 0xdf, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmullt z31.d, z31.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xec, 0xbf, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmullt z0.s, z1.h, z7.h[7]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xec, 0xef, 0x44 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmullt z0.d, z1.s, z15.s[1]"

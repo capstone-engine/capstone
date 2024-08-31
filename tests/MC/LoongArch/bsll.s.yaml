@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xae, 0x52, 0x8e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbsll.v $xr14, $xr21, 0x14"

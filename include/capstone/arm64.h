@@ -1863,7 +1863,7 @@ typedef enum {
 
 	ARM64_TSB_CSYNC = AARCH64_TSB_CSYNC,
 
-	ARM64_TSB_ENDING = AArch64_TSB_ENDING,
+	ARM64_TSB_ENDING = AARCH64_TSB_ENDING,
 } arm64_tsb;
 
 typedef aarch64_sysop_reg arm64_sysop_reg;

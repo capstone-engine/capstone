@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x63, 0xa5, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme", "+mpam" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x3, MPAMSM_EL1"
+
+  -
+    input:
+      bytes: [ 0x63, 0xa5, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme", "+mpam" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr MPAMSM_EL1, x3"

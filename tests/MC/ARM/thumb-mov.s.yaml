@@ -1,0 +1,24 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x85, 0x46, 0x68, 0x46, 0xed, 0x46, 0x87, 0x46, 0x78, 0x46, 0xff, 0x46, 0x4f, 0xea, 0x00, 0x0d, 0x4f, 0xea, 0x0d, 0x00 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov sp, r0"
+        -
+          asm_text: "mov r0, sp"
+        -
+          asm_text: "mov sp, sp"
+        -
+          asm_text: "mov pc, r0"
+        -
+          asm_text: "mov r0, pc"
+        -
+          asm_text: "mov pc, pc"
+        -
+          asm_text: "mov.w sp, r0"
+        -
+          asm_text: "mov.w r0, sp"

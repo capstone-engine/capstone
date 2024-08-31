@@ -13,7 +13,7 @@ cs_err M68K_global_init(cs_struct *ud)
 {
 	m68k_info *info;
 
-	info = cs_mem_malloc(sizeof(m68k_info));
+	info = cs_mem_calloc(sizeof(m68k_info), 1);
 	if (!info) {
 		return CS_ERR_MEM;
 	}
@@ -29,6 +29,9 @@ cs_err M68K_global_init(cs_struct *ud)
 	ud->insn_id = M68K_get_insn_id;
 	ud->insn_name = M68K_insn_name;
 	ud->group_name = M68K_group_name;
+#ifndef CAPSTONE_DIET
+	ud->reg_access = M68K_reg_access;
+#endif
 
 	return CS_ERR_OK;
 }

@@ -1,0 +1,320 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0x22, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z0.h, z0.h[0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0x36, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z21.h, z10.h[5]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x2a, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z23.h, z13.h[2]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0x3e, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z31.h, z31.h[7]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0x24, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z0.s, z0.s[0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0x34, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z21.s, z10.s[2]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x2c, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z23.s, z13.s[1]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0x3c, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z31.s, z31.s[3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0x28, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z0.d, z0.d[0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0x38, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z21.d, z10.d[1]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x28, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z23.d, z13.d[0]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0x38, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z31.d, z31.d[1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0x21, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z0.b, z0.b[0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0x35, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z21.b, z10.b[10]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x29, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z23.b, z13.b[4]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0x3f, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z31.b, z31.b[15]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0x22, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z0.h, z0.h[0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0x36, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z21.h, z10.h[5]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x2a, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z23.h, z13.h[2]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0x3e, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z31.h, z31.h[7]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0x24, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z0.s, z0.s[0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0x34, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z21.s, z10.s[2]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x2c, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z23.s, z13.s[1]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0x3c, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z31.s, z31.s[3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0x28, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z0.d, z0.d[0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0x38, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z21.d, z10.d[1]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x28, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z23.d, z13.d[0]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0x38, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z31.d, z31.d[1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x24, 0x21, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z0.b, z0.b[0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x25, 0x35, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z21.b, z10.b[10]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x25, 0x29, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z23.b, z13.b[4]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x27, 0x3f, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupq z31.b, z31.b[15]"

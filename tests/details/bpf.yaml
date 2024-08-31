@@ -1,0 +1,137 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x94, 0x09, 0x00, 0x00, 0x37, 0x13, 0x03, 0x00, 0x87, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "bpf"
+      options: [ CS_OPT_DETAIL, CS_MODE_BPF_CLASSIC ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mod 0x31337"
+        details:
+          groups: [ BPF_GRP_ALU ]
+          bpf:
+            operands:
+              -
+                type: BPF_OP_IMM
+                imm: 0x31337
+          regs_read: [ a ]
+          regs_write: [ a ]
+      -
+        asm_text: "txa"
+        details:
+          regs_read: [ x ]
+          groups: [ BPF_GRP_MISC ]
+          regs_write: [ a ]
+      -
+        asm_text: "tax"
+        details:
+          regs_read: [ a ]
+          groups: [ BPF_GRP_MISC ]
+          regs_write: [ x ]
+      -
+        asm_text: "ret a"
+        details:
+          groups: [ BPF_GRP_RETURN ]
+          bpf:
+            operands:
+              -
+                type: BPF_OP_REG
+                reg: a
+          regs_read: [ a ]
+      -
+        asm_text: "ld #len"
+        details:
+          groups: [ BPF_GRP_LOAD ]
+          bpf:
+            operands:
+              -
+                type: BPF_OP_EXT
+                ext: BPF_EXT_LEN
+          regs_write: [ a ]
+  -
+    input:
+      bytes: [ 0x97, 0x09, 0x00, 0x00, 0x37, 0x13, 0x03, 0x00, 0xdc, 0x02, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xdb, 0x3a, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x84, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6d, 0x33, 0x17, 0x02, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "bpf"
+      options: [ CS_OPT_DETAIL, CS_MODE_BPF_EXTENDED ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mod64 r9, 0x31337"
+        details:
+          groups: [ BPF_GRP_ALU ]
+          bpf:
+            operands:
+              -
+                type: BPF_OP_REG
+                reg: r9
+              -
+                type: BPF_OP_IMM
+                imm: 0x31337
+          regs_read: [ r9 ]
+          regs_write: [ r9 ]
+      -
+        asm_text: "be32 r2"
+        details:
+          groups: [ BPF_GRP_ALU ]
+          bpf:
+            operands:
+              -
+                type: BPF_OP_REG
+                reg: r2
+          regs_read: [ r2 ]
+          regs_write: [ r2 ]
+      -
+        asm_text: "ldb [0x0]"
+        details:
+          groups: [ BPF_GRP_LOAD ]
+          bpf:
+            operands:
+              -
+                type: BPF_OP_MEM
+                mem_disp: 0x0
+          regs_write: [ r0 ]
+      -
+        asm_text: "xadddw [r10+0x100], r3"
+        details:
+          groups: [ BPF_GRP_STORE ]
+          bpf:
+            operands:
+              -
+                type: BPF_OP_MEM
+                mem_base: r10
+                mem_disp: 0x100
+              -
+                type: BPF_OP_REG
+                reg: r3
+          regs_read: [ r3, r10 ]
+      -
+        asm_text: "neg r2"
+        details:
+          groups: [ BPF_GRP_ALU ]
+          bpf:
+            operands:
+              -
+                type: BPF_OP_REG
+                reg: r2
+          regs_read: [ r2 ]
+          regs_write: [ r2 ]
+      -
+        asm_text: "jsgt r3, r3, +0x217"
+        details:
+          groups: [ BPF_GRP_JUMP ]
+          bpf:
+            operands:
+              -
+                type: BPF_OP_REG
+                reg: r3
+              -
+                type: BPF_OP_REG
+                reg: r3
+              -
+                type: BPF_OP_OFF
+                off: 0x217
+          regs_read: [ r3 ]
+

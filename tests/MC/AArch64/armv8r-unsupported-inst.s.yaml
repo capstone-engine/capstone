@@ -1,0 +1,60 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0xa0, 0xd4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "el3" ]
+    expected:
+      insns:
+        -
+          asm_text: "dcps3"
+
+  -
+    input:
+      bytes: [ 0x83, 0x00, 0xa0, 0xd4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "el3" ]
+    expected:
+      insns:
+        -
+          asm_text: "dcps3 #0x4"
+
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0xd4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "el3" ]
+    expected:
+      insns:
+        -
+          asm_text: "smc #0x7"
+
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0xa0, 0xd4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8a" ]
+    expected:
+      insns:
+        -
+          asm_text: "dcps3"
+
+  -
+    input:
+      bytes: [ 0x83, 0x00, 0xa0, 0xd4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8a" ]
+    expected:
+      insns:
+        -
+          asm_text: "dcps3 #0x4"
+
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0xd4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8a" ]
+    expected:
+      insns:
+        -
+          asm_text: "smc #0x7"

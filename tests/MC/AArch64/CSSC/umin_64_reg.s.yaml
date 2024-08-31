@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x6c, 0xc0, 0x9a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v9.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "umin x0, x0, x0"
+
+  -
+    input:
+      bytes: [ 0x55, 0x6d, 0xd5, 0x9a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v9.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "umin x21, x10, x21"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x6d, 0xc8, 0x9a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v9.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "umin x23, x13, x8"
+
+  -
+    input:
+      bytes: [ 0xff, 0x6f, 0xdf, 0x9a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v9.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "umin xzr, xzr, xzr"

@@ -4,6 +4,7 @@
 #ifndef CS_UTILS_H
 #define CS_UTILS_H
 
+#include <stdint.h>
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <libkern/libkern.h>
 #else
@@ -41,9 +42,13 @@ uint16_t readBytes16(MCInst *MI, const uint8_t *Bytes);
 uint32_t readBytes32(MCInst *MI, const uint8_t *Bytes);
 
 void append_to_str_lower(char *str, size_t str_size, const char *src);
+void append_to_str(char *str, size_t str_buf_size, const char *src);
+char *str_append(char *str_a, const char *str_b);
 static inline bool strings_match(const char *str0, const char *str1) { return strcmp(str0, str1) == 0; }
 
 static inline bool is_blank_char(const char c) {
 	return c == ' ' || c == '\t';
 }
+
+char *byte_seq_to_str(uint8_t *bytes, size_t len);
 #endif

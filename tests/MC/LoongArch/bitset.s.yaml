@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x06, 0x72, 0x0e, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitset.b $xr6, $xr16, $xr28"
+  -
+    input:
+      bytes: [ 0xa5, 0xfd, 0x0e, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitset.h $xr5, $xr13, $xr31"
+  -
+    input:
+      bytes: [ 0x87, 0x23, 0x0f, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitset.w $xr7, $xr28, $xr8"
+  -
+    input:
+      bytes: [ 0x04, 0xb2, 0x0f, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitset.d $xr4, $xr16, $xr12"
+  -
+    input:
+      bytes: [ 0x7a, 0x20, 0x14, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitseti.b $xr26, $xr3, 0"
+  -
+    input:
+      bytes: [ 0x69, 0x66, 0x14, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitseti.h $xr9, $xr19, 0x9"
+  -
+    input:
+      bytes: [ 0x6c, 0x8a, 0x14, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitseti.w $xr12, $xr19, 2"
+  -
+    input:
+      bytes: [ 0xf4, 0x08, 0x15, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitseti.d $xr20, $xr7, 2"

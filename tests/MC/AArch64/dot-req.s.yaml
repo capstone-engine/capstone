@@ -1,0 +1,110 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe5, 0x03, 0x0b, 0xaa ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov x5, x11"
+
+  -
+    input:
+      bytes: [ 0xe1, 0x03, 0x06, 0x2a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov w1, w6"
+
+  -
+    input:
+      bytes: [ 0xe1, 0x03, 0x06, 0x2a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov w1, w6"
+
+  -
+    input:
+      bytes: [ 0x06, 0xb8, 0x31, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "addv b6, v0.8b"
+
+  -
+    input:
+      bytes: [ 0x85, 0x04, 0x0e, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov h5, v4.h[3]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x28, 0x24, 0x1e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd s0, s4, s4"
+
+  -
+    input:
+      bytes: [ 0x62, 0x40, 0x60, 0x1e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmov d2, d3"
+
+  -
+    input:
+      bytes: [ 0xe2, 0x03, 0xc0, 0x3d ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldr q2, [sp]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x1c, 0xa1, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov v0.8b, v1.8b"
+
+  -
+    input:
+      bytes: [ 0x06, 0x00, 0x00, 0x8b ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "add x6, x0, x0"
+
+  -
+    input:
+      bytes: [ 0x06, 0x00, 0x00, 0x8b ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu" ]
+    expected:
+      insns:
+        -
+          asm_text: "add x6, x0, x0"

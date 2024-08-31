@@ -6,7 +6,7 @@ on:
       - "docs/**"
       - "ChangeLog"
       - "CREDITS.TXT"
-      - "COMPILE.TXT"
+      - "COMPILE_MAKE.TXT"
       - "COMPILE_MSVC.TXT"
       - "COMPILE_CMAKE.TXT"
       - "HACK.TXT"
@@ -34,6 +34,7 @@ jobs:
               os: ubuntu-22.04,
               arch: x64,
               build-system: 'make',
+              diet-build: 'OFF',
               enable-asan: 'OFF'
             }
           - {
@@ -41,34 +42,37 @@ jobs:
               os: ubuntu-22.04,
               arch: x64,
               build-system: 'cmake',
+              diet-build: 'OFF',
               enable-asan: 'OFF'
             }
           - {
-              name: 'ubuntu-22.04 x64 ASAN',
-              os: ubuntu-latest,
+              name: 'ubuntu-24.04 x64 ASAN',
+              os: ubuntu-24.04,
               arch: x64,
               build-system: 'cmake',
+              diet-build: 'OFF',
               enable-asan: 'ON'
             }
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: prepare
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.config.python-version }}
+
+    - name: Prepare fuzzing
       run: |
         export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
         wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
         unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
-        git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
-        chmod +x suite/cstest/build_cstest.sh
 
     - name: make
       if: startsWith(matrix.config.build-system, 'make')
       run: |
         ./make.sh
-        make check
         sudo make install
-        cp libcapstone.so.5 libcapstone.so.5.0
 
     - name: cmake
       if: startsWith(matrix.config.build-system, 'cmake')
@@ -82,47 +86,55 @@ jobs:
         # build shared library
         cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ..
         sudo cmake --build . --config Release --target install
-        cp libcapstone.* ../
-        cp libcapstone.* ../tests/
-        cp test_* ../tests/
 
     - name: Lower number of KASL randomized address bits
       run: |
         # Work-around ASAN bug https://github.com/google/sanitizers/issues/1716
         sudo sysctl vm.mmap_rnd_bits=28
 
-    - name: "Compatibility header test build"
-      if: matrix.config.diet-build == 'OFF'
-      env:
-        asan: ${{ matrix.config.enable-asan }}
+    - name: "Compatibility header test"
+      if: startsWith(matrix.config.build-system, 'cmake') && matrix.config.diet-build == 'OFF'
       run: |
-        cd "$(git rev-parse --show-toplevel)/suite/auto-sync/c_tests/"
-        if [ "$asan" = "ON" ]; then
-          clang -lcapstone -fsanitize=address src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
-        else
-          clang -lcapstone src/test_arm64_compatibility_header.c -o test_arm64_compatibility_header
-        fi
-        ./test_arm64_compatibility_header
+        ctest --test-dir build --output-on-failure -R ASCompatibilityHeaderTest
 
     - name: cstool - reaches disassembler engine
       run: |
         sh suite/run_invalid_cstool.sh
 
-    - name: cstest (cmake)
+    - name: cstest unit tests
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        python suite/cstest/cstest_report.py -D -d suite/MC
-        python suite/cstest/cstest_report.py -D -f suite/cstest/issues.cs
-        python suite/cstest/cstest_report.py -D -f tests/cs_details/issue.cs
+        ctest --test-dir build --output-on-failure -R UnitCSTest
 
-    - name: cstest (make)
-      if: startsWith(matrix.config.build-system, 'make')
+    - name: cstest integration tests
+      if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        cd suite/cstest && ./build_cstest.sh
-        python cstest_report.py -D -t build/cstest -d ../MC
-        python cstest_report.py -D -t build/cstest -f issues.cs
-        python cstest_report.py -D -t build/cstest -f ../../tests/cs_details/issue.cs
-        cd ../../
+        ctest --test-dir build --output-on-failure -R IntegrationCSTest
+
+    - name: cstest MC
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --test-dir build --output-on-failure -R MCTests
+
+    - name: cstest details
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --test-dir build --output-on-failure -R DetailTests
+
+    - name: cstest issues
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --test-dir build --output-on-failure -R IssueTests
+
+    - name: cstest features
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --test-dir build --output-on-failure -R FeaturesTests
+
+    - name: Legacy integration tests
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --test-dir build --output-on-failure -R legacy*
 
   Windows:
     runs-on: ${{ matrix.config.os }}

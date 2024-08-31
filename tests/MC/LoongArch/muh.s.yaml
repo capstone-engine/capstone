@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x04, 0x11, 0x86, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmuh.b $xr4, $xr8, $xr4"
+  -
+    input:
+      bytes: [ 0xe5, 0xea, 0x86, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmuh.h $xr5, $xr23, $xr26"
+  -
+    input:
+      bytes: [ 0x7c, 0x64, 0x87, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmuh.w $xr28, $xr3, $xr25"
+  -
+    input:
+      bytes: [ 0x06, 0xa4, 0x87, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmuh.d $xr6, $xr0, $xr9"
+  -
+    input:
+      bytes: [ 0x8f, 0x62, 0x88, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmuh.bu $xr15, $xr20, $xr24"
+  -
+    input:
+      bytes: [ 0x9c, 0xed, 0x88, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmuh.hu $xr28, $xr12, $xr27"
+  -
+    input:
+      bytes: [ 0xd9, 0x28, 0x89, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmuh.wu $xr25, $xr6, $xr10"
+  -
+    input:
+      bytes: [ 0x13, 0xfd, 0x89, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmuh.du $xr19, $xr8, $xr31"

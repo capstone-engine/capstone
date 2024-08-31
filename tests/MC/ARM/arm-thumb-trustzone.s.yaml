@@ -1,0 +1,12 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xff, 0xf7, 0x00, 0x80, 0x0c, 0xbf ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "smc #15"
+        -
+          asm_text: "ite eq"

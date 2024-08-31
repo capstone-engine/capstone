@@ -97,9 +97,9 @@ static void setup_sme_operand(MCInst *MI)
 	AArch64_get_detail_op(MI, 0)->sme.type = AARCH64_SME_OP_INVALID;
 	AArch64_get_detail_op(MI, 0)->sme.tile = AARCH64_REG_INVALID;
 	AArch64_get_detail_op(MI, 0)->sme.slice_reg = AARCH64_REG_INVALID;
-	AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm = -1;
-	AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.first = -1;
-	AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.offset = -1;
+	AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm = AARCH64_SLICE_IMM_INVALID;
+	AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.first = AARCH64_SLICE_IMM_RANGE_INVALID;
+	AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.offset = AARCH64_SLICE_IMM_RANGE_INVALID;
 }
 
 static void setup_pred_operand(MCInst *MI)
@@ -556,6 +556,9 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 	default:
 		return;
 	case AARCH64_INS_ALIAS_FMOV:
+		if (AArch64_get_detail_op(MI, -1)->type == AARCH64_OP_FP) {
+			break;
+		}
 		AArch64_insert_detail_op_float_at(MI, -1, 0.0f, CS_AC_READ);
 		break;
 	case AARCH64_INS_ALIAS_LD1:
@@ -1315,6 +1318,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			int64_t Offset = MCInst_getOpVal(MI, OpNum);
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 						  (MI->address & -4) + Offset);
+		} else {
+			// Expression
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  MCOperand_isImm(MCInst_getOperand(MI, OpNum)));
 		}
 		break;
 	}
@@ -1323,11 +1330,18 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			int64_t Offset = MCInst_getOpVal(MI, OpNum) * 4096;
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 						  (MI->address & -4096) + Offset);
+		} else {
+			// Expression
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  MCOperand_isImm(MCInst_getOperand(MI, OpNum)));
 		}
 		break;
 	}
 	case AArch64_OP_GROUP_AdrAdrpLabel: {
 		if (!MCOperand_isImm(MCInst_getOperand(MI, OpNum))) {
+			// Expression
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  MCOperand_isImm(MCInst_getOperand(MI, OpNum)));
 			break;
 		}
 		int64_t Offset = MCInst_getOpVal(MI, OpNum);
@@ -1345,6 +1359,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			int64_t Offset = MCInst_getOpVal(MI, OpNum) * 4;
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 						  MI->address + Offset);
+		} else {
+			// Expression
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
+						  MCOperand_isImm(MCInst_getOperand(MI, OpNum)));
 		}
 		break;
 	}
@@ -1502,7 +1520,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			AArch64_set_detail_op_sme(MI, OpNum,
 						  AARCH64_SME_MATRIX_TILE_LIST,
 						  AARCH64LAYOUT_VL_D,
-						  AARCH64_REG_ZAD0 + I);
+						  (int) (AARCH64_REG_ZAD0 + I));
 			AArch64_inc_op_count(MI);
 		}
 		break;
@@ -1607,8 +1625,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 		const AArch64SVEPredPattern_SVEPREDPAT *Pat =
 			AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val);
-		if (!Pat)
+		if (!Pat) {
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM, Val);
 			break;
+		}
 		aarch64_sysop sysop;
 		sysop.alias = Pat->SysAlias;
 		sysop.sub_type = AARCH64_OP_SVEPREDPAT;
@@ -1738,6 +1758,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 				     (1 << AArch64_AM_getShiftValue(Shift));
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 						  Val);
+			break;
 		}
 		case AArch64_OP_GROUP_Imm8OptLsl_uint16_t:
 		case AArch64_OP_GROUP_Imm8OptLsl_uint32_t:
@@ -1747,6 +1768,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 				      (1 << AArch64_AM_getShiftValue(Shift));
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 						  Val);
+			break;
 		}
 		}
 		break;
@@ -1791,7 +1813,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 				AArch64_set_detail_op_sme(MI, OpNum,
 							  AARCH64_SME_MATRIX_SLICE_OFF,
 							  AARCH64LAYOUT_INVALID,
-							  MCInst_getOpVal(MI, OpNum) * scale);
+							  (uint32_t) (MCInst_getOpVal(MI, OpNum) * scale));
 		} else if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_PRED) {
 			// The index is part of a predicate
 			AArch64_set_detail_op_pred(MI, OpNum);
@@ -1852,7 +1874,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		unsigned EltSize = temp_arg_0;
 		AArch64_get_detail_op(MI, 0)->vas = EltSize;
 		AArch64_set_detail_op_reg(
-			MI, OpNum, MCInst_getOpVal(MI, OpNum) - AArch64_P0);
+			MI, OpNum, MCInst_getOpVal(MI, OpNum) - AArch64_PN0);
 		break;
 	}
 	case AArch64_OP_GROUP_PrefetchOp_0:
@@ -1925,7 +1947,8 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_UImm12Offset_2:
 	case AArch64_OP_GROUP_UImm12Offset_4:
 	case AArch64_OP_GROUP_UImm12Offset_8: {
-		unsigned Scale = temp_arg_0;
+		// Otherwise it is an expression. For which we only add the immediate
+		unsigned Scale = MCOperand_isImm(MCInst_getOperand(MI, OpNum)) ? temp_arg_0 : 1;
 		AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
 					  Scale * MCInst_getOpVal(MI, OpNum));
 		break;
@@ -2050,6 +2073,7 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_TypedVectorList_0_h:
 	case AArch64_OP_GROUP_TypedVectorList_0_q:
 	case AArch64_OP_GROUP_TypedVectorList_0_s:
+	case AArch64_OP_GROUP_TypedVectorList_0_0:
 	case AArch64_OP_GROUP_TypedVectorList_16_b:
 	case AArch64_OP_GROUP_TypedVectorList_1_d:
 	case AArch64_OP_GROUP_TypedVectorList_2_d:
@@ -2107,7 +2131,7 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 		case 'q':
 			vas = AARCH64LAYOUT_VL_Q;
 			break;
-		case '\0':
+		case '0':
 			// Implicitly Typed register
 			break;
 		}
@@ -2389,6 +2413,7 @@ void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 	case AArch64_OP_GROUP_TypedVectorList_0_h:
 	case AArch64_OP_GROUP_TypedVectorList_0_q:
 	case AArch64_OP_GROUP_TypedVectorList_0_s:
+	case AArch64_OP_GROUP_TypedVectorList_0_0:
 	case AArch64_OP_GROUP_TypedVectorList_16_b:
 	case AArch64_OP_GROUP_TypedVectorList_1_d:
 	case AArch64_OP_GROUP_TypedVectorList_2_d:
@@ -2500,7 +2525,7 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 		if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_SME) {
 			AArch64_set_detail_op_sme(MI, OpNum,
 						  AARCH64_SME_MATRIX_SLICE_OFF,
-						  AARCH64LAYOUT_INVALID, 1);
+						  AARCH64LAYOUT_INVALID, (uint32_t) 1);
 		} else if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_PRED) {
 			AArch64_set_detail_op_pred(MI, OpNum);
 		} else {
@@ -2524,7 +2549,7 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 }
 
 void AArch64_set_detail_op_imm_range(MCInst *MI, unsigned OpNum,
-				     int64_t FirstImm, int64_t Offset)
+				     uint32_t FirstImm, uint32_t Offset)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -2534,8 +2559,8 @@ void AArch64_set_detail_op_imm_range(MCInst *MI, unsigned OpNum,
 		if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_SME) {
 			AArch64_set_detail_op_sme(MI, OpNum,
 						  AARCH64_SME_MATRIX_SLICE_OFF_RANGE,
-						  AARCH64LAYOUT_INVALID, FirstImm,
-						  Offset);
+						  AARCH64LAYOUT_INVALID, (uint32_t) FirstImm,
+						  (uint32_t) Offset);
 		} else if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_PRED) {
 			assert(0 && "Unkown SME predicate imm range type");
 		} else {
@@ -2694,15 +2719,15 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 	if (!detail_is_set(MI))
 		return;
 	AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_SME;
-	va_list args;
 	switch (part) {
 	default:
 		printf("Unhandled SME operand part %d\n", part);
 		assert(0);
-	case AARCH64_SME_MATRIX_TILE_LIST:
+	case AARCH64_SME_MATRIX_TILE_LIST: {
 		setup_sme_operand(MI);
+		va_list args;
 		va_start(args, vas);
-		int Tile = va_arg(args, int);
+		int Tile = va_arg(args, int); // NOLINT(clang-analyzer-valist.Uninitialized)
 		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.type = AARCH64_SME_OP_TILE;
 		AArch64_get_detail_op(MI, 0)->sme.tile = Tile;
@@ -2710,6 +2735,7 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 		AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 		AArch64_get_detail(MI)->is_doing_sme = true;
 		break;
+	}
 	case AARCH64_SME_MATRIX_TILE:
 		assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
@@ -2731,23 +2757,26 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 		AArch64_get_detail_op(MI, 0)->sme.slice_reg =
 			MCInst_getOpVal(MI, OpNum);
 		break;
-	case AARCH64_SME_MATRIX_SLICE_OFF:
+	case AARCH64_SME_MATRIX_SLICE_OFF: {
 		assert((map_get_op_type(MI, OpNum) & ~(CS_OP_MEM | CS_OP_BOUND)) == CS_OP_IMM);
 		// Because we took care of the slice register before, the op at -1 must be a SME operand.
 		assert(AArch64_get_detail_op(MI, 0)->type ==
 		       AARCH64_OP_SME);
 		assert(AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm ==
-		       -1);
+		       AARCH64_SLICE_IMM_INVALID);
+		va_list args;
 		va_start(args, vas);
-		int64_t offset = va_arg(args, int64_t);
+		uint16_t offset = va_arg(args, uint32_t); // NOLINT(clang-analyzer-valist.Uninitialized)
 		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm =
 			offset;
 		break;
+	}
 	case AARCH64_SME_MATRIX_SLICE_OFF_RANGE: {
+		va_list args;
 		va_start(args, vas);
-		int8_t First = va_arg(args, int);
-		int8_t Offset = va_arg(args, int);
+		uint8_t First = va_arg(args, uint32_t); // NOLINT(clang-analyzer-valist.Uninitialized)
+		uint8_t Offset = va_arg(args, uint32_t); // NOLINT(clang-analyzer-valist.Uninitialized)
 		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.first =
 			First;

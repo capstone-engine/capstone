@@ -1,0 +1,24 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xee, 0xfe, 0x86, 0xef, 0xee, 0xee, 0x82, 0xef, 0xec, 0xfe, 0x80, 0xef, 0xec, 0xee, 0x86, 0xef, 0xee, 0xfe, 0x02, 0xef, 0xee, 0xee, 0x02, 0xaf, 0xec, 0xfe, 0x0c, 0x0f, 0xec, 0xee, 0x0e, 0xef ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_MCLASS", "CS_MODE_V8", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vminnmv.f16 lr, q3"
+        -
+          asm_text: "vminnmv.f32 lr, q1"
+        -
+          asm_text: "vminnmav.f16 lr, q0"
+        -
+          asm_text: "vminnmav.f32 lr, q3"
+        -
+          asm_text: "vmaxnmv.f16 lr, q1"
+        -
+          asm_text: "vmaxnmv.f32 r10, q1"
+        -
+          asm_text: "vmaxnmav.f16 r0, q6"
+        -
+          asm_text: "vmaxnmav.f32 lr, q7"

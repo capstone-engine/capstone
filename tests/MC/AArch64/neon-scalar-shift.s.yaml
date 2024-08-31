@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xf1, 0x47, 0xe8, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sshl d17, d31, d8"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x47, 0xe8, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ushl d17, d31, d8"

@@ -7,15 +7,15 @@ name = "autosync"
 version = "0.1.0"
 dependencies = [
   "termcolor >= 2.3.0",
-  "tree_sitter >= 0.21.3",
+  "tree_sitter == 0.22.3",
   "tree-sitter-cpp >=0.22.0",
   "black >= 24.3.0",
   "usort >= 1.0.8",
   "setuptools >= 69.2.0",
   "ninja >= 1.11.1.1",
-  "cmake >= 3.28.3",
   "reuse >= 3.0.1",
   "clang-format >= 18.1.1",
+  "lit >= 18.1.8",
 ]
 requires-python = ">= 3.11"
 

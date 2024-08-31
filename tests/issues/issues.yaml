@@ -1,0 +1,4817 @@
+test_cases:
+  -
+    input:
+      name: "issue 2323 eBPF bswap16 instruction"
+      bytes: [ 0xd7,0x53,0x3f,0x0c,0x10,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_BPF_EXTENDED, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bswap16 r3"
+  -
+    input:
+      name: "issue 2323 eBPF bswap32 instruction"
+      bytes: [ 0xd7,0x53,0x3f,0x0c,0x20,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_BPF_EXTENDED, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bswap32 r3"
+  -
+    input:
+      name: "issue 2323 eBPF bswap64 instruction"
+      bytes: [ 0xd7,0x53,0x3f,0x0c,0x40,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_BPF_EXTENDED, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bswap64 r3"
+  -
+    input:
+      name: "issue 2258 vcmpunordss incorrect read/modified register"
+      bytes: [ 0x62,0xd1,0x56,0x08,0xc2,0xca,0x03 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vcmpunordss k1, xmm5, xmm10"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+  -
+    input:
+      name: "issue 2062 repz Prefix"
+      bytes: [ 0xf3,0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "repz ret"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "issue 2007 RISCV64 instruction groups"
+      bytes: [ 0x63,0x04,0x03,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "beqz t1, 8"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t1
+              -
+                type: RISCV_OP_IMM
+                imm: 0x8
+          groups: [ branch_relative, jump ]
+  -
+    input:
+      name: "issue 2007 RISCV64 instruction groups"
+      bytes: [ 0x73,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ecall"
+        details:
+          groups: [ int ]
+  -
+    input:
+      name: "issue 2007 RISCV64 instruction groups"
+      bytes: [ 0xef,0x00,0x40,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jal 4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: 0x4
+          groups: [ call ]
+  -
+    input:
+      name: "issue 2007 RISCV32 instruction groups"
+      bytes: [ 0x63,0x04,0x03,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "beqz t1, 8"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: t1
+              -
+                type: RISCV_OP_IMM
+                imm: 0x8
+          groups: [ branch_relative, jump ]
+  -
+    input:
+      name: "issue 2007 RISCV32 instruction groups"
+      bytes: [ 0x73,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ecall"
+        details:
+          groups: [ int ]
+  -
+    input:
+      name: "issue 2007 RISCV32 instruction groups"
+      bytes: [ 0xef,0x00,0x40,0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jal 4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: 0x4
+          groups: [ call ]
+  -
+    input:
+      name: "issue 2007 RISCV32 instruction groups"
+      bytes: [ 0x11,0x20 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.jal 4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_IMM
+                imm: 0x4
+          groups: [ hasStdExtC, isrv32, call ]
+  -
+    input:
+      name: "issue 2007 RISCV32 instruction groups"
+      bytes: [ 0x91,0xc1 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.beqz a1, 4"
+        details:
+          riscv:
+            operands:
+              -
+                type: RISCV_OP_REG
+                reg: a1
+              -
+                type: RISCV_OP_IMM
+                imm: 0x4
+          groups: [ hasStdExtC, branch_relative, jump ]
+  -
+    input:
+      name: "issue 1997 notrack jmp"
+      bytes: [ 0x3e,0xff,0xe0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "notrack jmp rax"
+  -
+    input:
+      name: "issue 1997 notrack call"
+      bytes: [ 0x3e,0xff,0xd0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "notrack call rax"
+  -
+    input:
+      name: "issue 1924 SME Index instruction alias printing is not always valid"
+      bytes: [ 0x02,0x00,0x9f,0xe0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ld1w {za0h.s[w12, 2]}, p0/z, [x0]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  tile: za0.s
+                  slice_reg: w12
+                  slice_offset_imm: 2
+                  is_vertical: -1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_S
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p0
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x0
+                access: CS_AC_READ
+          regs_read: [ w12, p0, x0 ]
+          regs_write: [ za0.s ]
+          groups: [ HasSME ]
+  -
+    input:
+      name: "issue 1912 PPC register name"
+      bytes: [ 0x2d,0x03,0x00,0x80 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cmpwi cr2, r3, 0x80"
+  -
+    input:
+      name: "issue 1912 PPC no register name"
+      bytes: [ 0x2d,0x03,0x00,0x80 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_BIG_ENDIAN, CS_OPT_SYNTAX_NOREGNAME ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cmpwi 2, 3, 0x80"
+  -
+    input:
+      name: "issue 1902 PPC psq_st negative displacement"
+      bytes: [ 0xf3,0xec,0x0f,0xf8 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_MODE_PS, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "psq_st f31, -8(r12), 0, 0"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f31
+              -
+                type: PPC_OP_MEM
+                mem_base: r12
+                mem_disp: -8
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x21,0x04,0x03,0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov b1, v1.b[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+                vector_index: 1
+                vector_index_is_set: true
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0xc0,0x1e,0x03,0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov v0.b[1], w22"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+                vector_index: 1
+                vector_index_is_set: true
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0xc0,0x1e,0x06,0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov v0.h[1], w22"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_H
+                vector_index: 1
+                vector_index_is_set: true
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0xc0,0x1e,0x0c,0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov v0.s[1], w22"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_S
+                vector_index: 1
+                vector_index_is_set: true
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0xc0,0x1e,0x18,0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov v0.d[1], x22"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_D
+                vector_index: 1
+                vector_index_is_set: true
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0x0c,0x03,0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov v0.b[1], v1.b[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+                vector_index: 1
+                vector_index_is_set: true
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+                vector_index: 1
+                vector_index_is_set: true
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0x14,0x06,0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov v0.h[1], v1.h[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_H
+                vector_index: 1
+                vector_index_is_set: true
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_H
+                vector_index: 1
+                vector_index_is_set: true
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0x24,0x0c,0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov v0.s[1], v1.s[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_S
+                vector_index: 1
+                vector_index_is_set: true
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_S
+                vector_index: 1
+                vector_index_is_set: true
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0x44,0x18,0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov v0.d[1], v1.d[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_D
+                vector_index: 1
+                vector_index_is_set: true
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_D
+                vector_index: 1
+                vector_index_is_set: true
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0x3c,0x0c,0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov w0, v1.s[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_S
+                vector_index: 1
+                vector_index_is_set: true
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0x3c,0x0c,0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov w0, v1.s[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_S
+                vector_index: 1
+                vector_index_is_set: true
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0x3c,0x18,0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov x0, v1.d[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_D
+                vector_index: 1
+                vector_index_is_set: true
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0x3c,0x18,0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov x0, v1.d[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_D
+                vector_index: 1
+                vector_index_is_set: true
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x00,0xc0,0x50,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmov z0.h, p0/m, #2.00000000"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_FP
+                fp: 2.0
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x00,0xc0,0x79,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmov z0.h, #2.00000000"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_FP
+                fp: 2.0
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0xa1,0xca,0xf8,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z1.d, #0x55"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x55
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x21,0x44,0x81,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov p1.b, p1.b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x21,0x40,0x51,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z1.h, p1/m, #1"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x1
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x21,0x00,0x51,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z1.h, p1/z, #1"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x1
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0xc0,0x38,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z0.b, #1"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x1
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x71,0x4a,0x01,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov p1.b, p2/m, p3.b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x61,0x48,0x03,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov p1.b, p2/z, p3.b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x21,0xa8,0x28,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z1.b, p2/m, w1"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x21,0x38,0x20,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z1.b, w1"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x01,0x88,0x20,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z1.b, p2/m, b0"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x00,0x20,0x21,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z0.b, b0"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x00,0x20,0x23,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z0.b, z0.b[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+                vector_index: 1
+                vector_index_is_set: true
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0xc4,0x20,0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z0.b, p1/m, z1.b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0x30,0x61,0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov z0.d, z1.d"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_D
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x40,0x44,0x42,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movs p0.b, p1/z, p2.b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x20,0x44,0xc1,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movs p0.b, p1.b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x40,0x46,0x01,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "not p0.b, p1/z, p2.b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+  -
+    input:
+      name: "issue 1873 AArch64 missing VAS specifiers in aliased instructions"
+      bytes: [ 0x40,0x46,0x41,0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "nots p0.b, p1/z, p2.b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+              -
+                type: AARCH64_OP_PRED
+                vas: AARCH64LAYOUT_VL_B
+  -
+    input:
+      name: "issue 1856 AArch64 SYS instruction operands: tlbi 1 op"
+      bytes: [ 0x1f,0x83,0x08,0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "tlbi vmalle1is"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SYSREG
+                sub_type: AARCH64_OP_TLBI
+                sys_raw_val: 0x418
+  -
+    input:
+      name: "issue 1856 AArch64 SYS instruction operands: tlbi 2 op"
+      bytes: [ 0x22,0x87,0x08,0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "tlbi vae1, x2"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SYSREG
+                sub_type: AARCH64_OP_TLBI
+                sys_raw_val: 0x439
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1856 AArch64 SYS instruction operands: at"
+      bytes: [ 0xc0,0x78,0x0c,0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "at s12e0r, x0"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SYSALIAS
+                sub_type: AARCH64_OP_AT
+                sys_raw_val: 0x23c6
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1856 AArch64 SYS instruction operands: dc"
+      bytes: [ 0x22,0x7b,0x0b,0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc cvau, x2"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SYSALIAS
+                sub_type: AARCH64_OP_DC
+                sys_raw_val: 0x1bd9
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1856 AArch64 SYS instruction operands: ic"
+      bytes: [ 0x20,0x75,0x0b,0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ic ivau, x0"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SYSREG
+                sub_type: AARCH64_OP_IC
+                sys_raw_val: 0x1ba9
+              -
+                type: AARCH64_OP_REG
+  -
+    input:
+      name: "issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 16b"
+      bytes: [ 0x40,0x1e,0xb2,0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov v0.16b, v18.16b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: q0
+                is_vreg: 1
+                vas: AARCH64LAYOUT_VL_16B
+              -
+                type: AARCH64_OP_REG
+                reg: q18
+                is_vreg: 1
+                vas: AARCH64LAYOUT_VL_16B
+  -
+    input:
+      name: "issue 1843 AArch64 missing VAS specifiers in aliased instructions: mov 8b"
+      bytes: [ 0x40,0x1e,0xb2,0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov v0.8b, v18.8b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: d0
+                is_vreg: 1
+                vas: AARCH64LAYOUT_VL_8B
+              -
+                type: AARCH64_OP_REG
+                reg: d18
+                is_vreg: 1
+                vas: AARCH64LAYOUT_VL_8B
+  -
+    input:
+      name: "issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 16b"
+      bytes: [ 0x40,0x5a,0x20,0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mvn v0.16b, v18.16b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: q0
+                is_vreg: 1
+                vas: AARCH64LAYOUT_VL_16B
+              -
+                type: AARCH64_OP_REG
+                reg: q18
+                is_vreg: 1
+                vas: AARCH64LAYOUT_VL_16B
+  -
+    input:
+      name: "issue 1843 AArch64 missing VAS specifiers in aliased instructions: mvn 8b"
+      bytes: [ 0x40,0x5a,0x20,0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mvn v0.8b, v18.8b"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: d0
+                is_vreg: 1
+                vas: AARCH64LAYOUT_VL_8B
+              -
+                type: AARCH64_OP_REG
+                reg: d18
+                is_vreg: 1
+                vas: AARCH64LAYOUT_VL_8B
+  -
+    input:
+      name: "issue 1839 AArch64 Incorrect detailed disassembly of ldr"
+      bytes: [ 0x41,0x00,0x40,0xf9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldr x1, [x2]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_MEM
+                access: CS_AC_READ
+  -
+    input:
+      name: "issue 1827 x16 lcall seg:off format"
+      bytes: [ 0xb8,0x01,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov eax, 1"
+  -
+    input:
+      name: "issue 1827 x16 lcall seg:off format"
+      bytes: [ 0xb9,0x00,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov ecx, 0"
+  -
+    input:
+      name: "issue 1827 x16 lcall seg:off format"
+      bytes: [ 0x80,0xb8,0x01,0x00,0x00,0x00,0xb9 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cmp byte ptr [eax + 1], 0xb9"
+  -
+    input:
+      name: "issue 1827 x16 lcall seg:off format"
+      bytes: [ 0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr [eax], al"
+  -
+    input:
+      name: "issue 1827 x16 lcall seg:off format"
+      bytes: [ 0x01,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "add dword ptr [eax], eax"
+  -
+    input:
+      name: "issue 1827 x16 lcall seg:off format"
+      bytes: [ 0x33,0xc0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "xor ax, ax"
+  -
+    input:
+      name: "issue 1827 x16 lcall seg:off format"
+      bytes: [ 0xba,0x5a,0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov dx, 0xff5a"
+  -
+    input:
+      name: "issue 1710 M68K floating point immediates broken on big endian hosts"
+      bytes: [ 0xf2,0x3c,0x44,0x22,0x40,0x49,0x0e,0x56 ]
+      arch: "CS_ARCH_M68K"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fadd.s #3.141500, fp0"
+  -
+    input:
+      name: "issue 1708 M68K floating point loads and stores generate the same op_str"
+      bytes: [ 0xf2,0x27,0x74,0x00 ]
+      arch: "CS_ARCH_M68K"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmove.d fp0, -(a7)"
+  -
+    input:
+      name: "issue 1708 M68K floating point loads and stores generate the same op_str"
+      bytes: [ 0xf2,0x1f,0x54,0x80 ]
+      arch: "CS_ARCH_M68K"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmove.d (a7)+, fp1"
+  -
+    input:
+      name: "issue 1708 M68K floating point loads and stores generate the same op_str"
+      bytes: [ 0x4e,0x75 ]
+      arch: "CS_ARCH_M68K"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rts"
+  -
+    input:
+      name: "issue 1661 M68K invalid transfer direction in MOVEC instruction"
+      bytes: [ 0x4E,0x7A,0x00,0x02 ]
+      arch: "CS_ARCH_M68K"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movec cacr, d0"
+  -
+    input:
+      name: "issue 1643 M68K incorrect read of 32-bit imm for bsr"
+      bytes: [ 0x61,0xff,0x00,0x00,0x0b,0xea ]
+      arch: "CS_ARCH_M68K"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bsr.l $bec"
+  -
+    input:
+      name: "issue 1627 Arm64 LD1 missing immediate operand"
+      bytes: [ 0xe0,0x73,0xdf,0x0c ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ld1 { v0.8b }, [sp], #8"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_8B
+              -
+                type: AARCH64_OP_MEM
+                mem_base: sp
+                mem_disp: 0x8
+                access: CS_AC_READ
+  -
+    input:
+      name: "issue 1587 ARM thumb pushed registers write"
+      bytes: [ 0x2d,0xe9,0xf0,0x47 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "push.w {r4, r5, r6, r7, r8, r9, r10, lr}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                access: CS_AC_READ
+  -
+    input:
+      name: "issue 1504 movhps qword ptr"
+      bytes: [ 0x0f,0x16,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movhps xmm1, qword ptr [rax]"
+        details:
+          x86:
+            opcode: [ 0x0f, 0x16, 0x00, 0x00 ]
+  -
+    input:
+      name: "issue 1505 opcode 0f"
+      bytes: [ 0x0f,0xa5,0xc2 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "shld edx, eax, cl"
+        details:
+          x86:
+            opcode: [ 0x0f, 0xa5, 0x00, 0x00 ]
+  -
+    input:
+      name: "issue 1478 tbegin."
+      bytes: [ 0x7c,0x20,0x05,0x1d ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "tbegin. 1"
+        details:
+          ppc:
+            update_cr0: 1
+  -
+    input:
+      name: "issue 970 PPC bdnzt lt"
+      bytes: [ 0x41,0x00,0xff,0xac ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bdnzt lt, 0xffffffffffffffac"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: "0"
+              -
+                type: PPC_OP_IMM
+                imm: -0x54
+  -
+    input:
+      name: "issue 970 PPC bdnzt eq"
+      bytes: [ 0x41,0x02,0xff,0xac ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bdnzt eq, 0xffffffffffffffac"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: "2"
+              -
+                type: PPC_OP_IMM
+                imm: -0x54
+  -
+    input:
+      name: "issue 969 PPC bdnzflr operand 2"
+      bytes: [ 0x4c,0x10,0x00,0x20 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bdnzflr 4*cr4+lt"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: "16"
+  -
+    input:
+      name: "issue 1481 AARCH64 LDR operand2"
+      bytes: [ 0xe9,0x03,0x40,0xf9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldr x9, [sp]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_MEM
+                mem_base: sp
+  -
+    input:
+      name: "issue 968 PPC absolute branch: bdnzla"
+      bytes: [ 0x42,0x00,0x12,0x37 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bcla 0x10, lt, 0x1234"
+  -
+    input:
+      name: "issue 968 PPC absolute branch: bdzla"
+      bytes: [ 0x42,0x40,0x12,0x37 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bcla	0x12, lt, 0x1234"
+  -
+    input:
+      name: "issue X86 xrelease xchg"
+      bytes: [ 0xf3,0x87,0x03 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "xrelease xchg dword ptr [ebx], eax"
+  -
+    input:
+      name: "issue X86 xacquire xchg"
+      bytes: [ 0xf2,0x87,0x03 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "xacquire xchg dword ptr [ebx], eax"
+  -
+    input:
+      name: "issue X86 xrelease"
+      bytes: [ 0xf3,0xf0,0x31,0x1f ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "xrelease lock xor dword ptr [rdi], ebx"
+  -
+    input:
+      name: "issue 1477 X86 xacquire"
+      bytes: [ 0xf2,0xf0,0x31,0x1f ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "xacquire lock xor dword ptr [rdi], ebx"
+  -
+    input:
+      name: "issue PPC JUMP group"
+      bytes: [ 0x41,0x82,0x00,0x10 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bt eq, 0x10"
+        details:
+          groups: [ jump, branch_relative ]
+  -
+    input:
+      name: "issue 1468 PPC bdnz"
+      bytes: [ 0x42,0x00,0xff,0xf8 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN ]
+      address: 0x101086c
+    expected:
+      insns:
+      -
+        asm_text: "bc 0x10, lt, 0x1010864"
+  -
+    input:
+      name: "issue PPC bdnzt"
+      bytes: [ 0x41,0x00,0xff,0xac ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bdnzt lt, 0xfac"
+  -
+    input:
+      name: "issue 1469 PPC CRx"
+      bytes: [ 0x4c,0x02,0x39,0x82 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "crxor lt, eq, 4*cr1+un"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: "0"
+              -
+                type: PPC_OP_REG
+                reg: "2"
+              -
+                type: PPC_OP_REG
+                reg: "7"
+  -
+    input:
+      name: "issue 1468 B target"
+      bytes: [ 0x4b,0xff,0xf8,0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_64, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "b 0x800"
+  -
+    input:
+      name: "issue 1456 test alt 1"
+      bytes: [ 0xf6,0x08,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "test byte ptr [eax], 0"
+  -
+    input:
+      name: "issue 1456 test alt 2"
+      bytes: [ 0xf7,0x08,0x00,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "test dword ptr [eax], 0"
+  -
+    input:
+      name: "issue 1472 lock sub"
+      bytes: [ 0xF0,0x2B,0x45,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lock sub eax, dword ptr [ebp + 8]"
+  -
+    input:
+      name: "issue 1472 lock or"
+      bytes: [ 0xF0,0x0B,0x45,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lock or eax, dword ptr [ebp + 8]"
+  -
+    input:
+      name: "issue 1472 lock and"
+      bytes: [ 0xF0,0x23,0x45,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lock and eax, dword ptr [ebp + 8]"
+  -
+    input:
+      name: "issue 1472 lock add"
+      bytes: [ 0xF0,0x03,0x45,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lock add eax, dword ptr [ebp + 8]"
+  -
+    input:
+      name: "issue 1456 MOV dr"
+      bytes: [ 0x0f,0x23,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov dr0, eax"
+  -
+    input:
+      name: "issue 1456 MOV dr"
+      bytes: [ 0x0f,0x21,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov eax, dr0"
+  -
+    input:
+      name: "issue 1456 MOV cr"
+      bytes: [ 0x0f,0x22,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov cr0, eax"
+  -
+    input:
+      name: "issue 1472 lock adc"
+      bytes: [ 0xf0,0x12,0x45,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lock adc al, byte ptr [ebp + 8]"
+  -
+    input:
+      name: "issue 1456 xmmword"
+      bytes: [ 0x66,0x0f,0x2f,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "comisd xmm0, xmmword ptr [eax]"
+  -
+    input:
+      name: "issue 1456 ARM printPKHASRShiftImm"
+      bytes: [ 0xca,0xea,0x21,0x06 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pkhtb r6, r10, r1, asr #0x20"
+  -
+    input:
+      name: "issue 1456 EIZ"
+      bytes: [ 0x8d,0xb4,0x26,0x00,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lea esi, [esi]"
+  -
+    input:
+      name: "issue 1456 ARM POP"
+      bytes: [ 0x04,0x10,0x9d,0xe4 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pop {r1}"
+  -
+    input:
+      name: "issue 1456"
+      bytes: [ 0x31,0x02,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsr r0, r1, r2"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+              -
+                type: ARM_OP_REG
+                reg: r1
+              -
+                type: ARM_OP_REG
+                reg: r2
+  -
+    input:
+      name: "issue 1456"
+      bytes: [ 0x0c,0x00,0x80,0x12 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov w12, #-1"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: w12
+              -
+                type: AARCH64_OP_IMM
+                imm: -1
+  -
+    input:
+      name: "issue 1456"
+      bytes: [ 0xb8,0x00,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movl $0, %eax"
+  -
+    input:
+      name: "issue 1456"
+      bytes: [ 0xd1,0x5e,0x48 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcrl $1, 0x48(%esi)"
+  -
+    input:
+      name: "issue 1456"
+      bytes: [ 0xd1,0x5e,0x48 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcr dword ptr [esi + 0x48], 1"
+  -
+    input:
+      name: "issue 1456"
+      bytes: [ 0xd1,0x5e,0x48 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcrl $1, 0x48(%esi)"
+  -
+    input:
+      name: "issue 1456"
+      bytes: [ 0x62,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bound eax, qword ptr [eax]"
+  -
+    input:
+      name: "issue 1454"
+      bytes: [ 0xf0,0x0f,0xb1,0x1e ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lock cmpxchg dword ptr [esi], ebx"
+        details:
+          regs_read: [ eax, esi, ebx ]
+  -
+    input:
+      name: "issue 1452"
+      bytes: [ 0x20,0x3c,0x0c,0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov w0, v1.s[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_S
+  -
+    input:
+      name: "issue 1452"
+      bytes: [ 0x20,0x3c,0x18,0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov x0, v1.d[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_D
+  -
+    input:
+      name: "issue 1452"
+      bytes: [ 0x20,0x3c,0x03,0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "umov w0, v1.b[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_B
+  -
+    input:
+      name: "issue 1452"
+      bytes: [ 0x20,0x3c,0x06,0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "umov w0, v1.h[1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_REG
+                vas: AARCH64LAYOUT_VL_H
+  -
+    input:
+      name: "issue 1211"
+      bytes: [ 0xc4,0xe1,0xf8,0x90,0xc0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "kmovq k0, k0"
+  -
+    input:
+      name: "issue 1211"
+      bytes: [ 0xc4,0xe1,0xfb,0x92,0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "kmovq k0, rbx"
+  -
+    input:
+      name: "issue 1211"
+      bytes: [ 0x62,0xf1,0x7d,0x48,0x74,0x83,0x12,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vpcmpeqb k0, zmm0, zmmword ptr [rbx + 0x12]"
+  -
+    input:
+      name: "issue 1211"
+      bytes: [ 0x62,0xf2,0x7d,0x48,0x30,0x43,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vpmovzxbw zmm0, ymmword ptr [rbx + 0x100]"
+  -
+    input:
+      name: "issue x86 BND register (OSS-fuzz #13467)"
+      bytes: [ 0x0f,0x1a,0x1a ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bndldx bnd3, [edx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: bnd3
+              -
+                type: X86_OP_MEM
+  -
+    input:
+      name: "issue 1335"
+      bytes: [ 0x0f,0x1f,0xc0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "nop eax"
+  -
+    input:
+      name: "issue 1335"
+      bytes: [ 0x48,0x0f,0x1f,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "nop qword ptr [rax]"
+  -
+    input:
+      name: "issue 1259"
+      bytes: [ 0x0f,0x0d,0x44,0x11,0x40 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "prefetch byte ptr [rcx + rdx + 0x40]"
+  -
+    input:
+      name: "issue 1259"
+      bytes: [ 0x41,0x0f,0x0d,0x44,0x12,0x40 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "prefetch byte ptr [r10 + rdx + 0x40]"
+  -
+    input:
+      name: "issue 1304"
+      bytes: [ 0x66,0x0f,0x7f,0x4c,0x24,0x40 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movdqa xmmword ptr [rsp + 0x40], xmm1"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+  -
+    input:
+      name: "issue 1304"
+      bytes: [ 0x66,0x0f,0x7e,0x04,0x24 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movd dword ptr [rsp], xmm0"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+  -
+    input:
+      name: "issue 1304"
+      bytes: [ 0xf3,0x41,0x0f,0x7f,0x4d,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movdqu xmmword ptr [r13], xmm1"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0xf3,0x48,0x0f,0x1e,0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rdsspq rax"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0xf3,0x0f,0x1e,0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rdsspd eax"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0xf3,0x48,0x0f,0xae,0xe8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "incsspq rax"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0xf3,0x0f,0xae,0xe8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "incsspd eax"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0xf3,0x0f,0x01,0xea ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "saveprevssp"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0xf3,0x0f,0x01,0x28 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rstorssp dword ptr [rax]"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0x67,0xf3,0x0f,0x01,0x28 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rstorssp dword ptr [eax]"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0x48,0x0f,0x38,0xf6,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "wrssq qword ptr [rax], rax"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0x67,0x0f,0x38,0xf6,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "wrssd dword ptr [eax], eax"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0xf3,0x0f,0x01,0xe8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setssbsy"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0xf3,0x0f,0xae,0x30 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "clrssbsy dword ptr [rax]"
+  -
+    input:
+      name: "issue 1346"
+      bytes: [ 0x67,0xf3,0x0f,0xae,0x30 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "clrssbsy dword ptr [eax]"
+  -
+    input:
+      name: "issue 1206"
+      bytes: [ 0xc4,0xe2,0x7d,0x5a,0x0c,0x0e ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vbroadcasti128 ymm1, xmmword ptr [rsi + rcx]"
+  -
+    input:
+      name: "issue xchg 16bit"
+      bytes: [ 0x91 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "xchg cx, ax"
+  -
+    input:
+      name: "issue ROL 1, ATT syntax"
+      bytes: [ 0x66,0x48,0xf3,0xd1,0xc0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rolw $1, %ax"
+  -
+    input:
+      name: "issue 1129"
+      bytes: [ 0xf3,0x0f,0x1e,0xfa ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "endbr64"
+  -
+    input:
+      name: "issue 1129"
+      bytes: [ 0xf3,0x0f,0x1e,0xfa ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "endbr64"
+  -
+    input:
+      name: "issue 1129"
+      bytes: [ 0xf3,0x0f,0x1e,0xfb ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "endbr32"
+  -
+    input:
+      name: "issue 1129"
+      bytes: [ 0xf3,0x0f,0x1e,0xfb ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "endbr32"
+  -
+    input:
+      name: "issue x64 jmp"
+      bytes: [ 0xeb,0xfe ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x1000"
+  -
+    input:
+      name: "issue x64att jmp"
+      bytes: [ 0xeb,0xfe ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x1000"
+  -
+    input:
+      name: "issue x32 jmp"
+      bytes: [ 0xeb,0xfe ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x1000"
+  -
+    input:
+      name: "issue x32att jmp"
+      bytes: [ 0xeb,0xfe ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x1000"
+  -
+    input:
+      name: "issue 1389"
+      bytes: [ 0x66,0x0f,0x73,0xf9,0x01 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pslldq xmm1, 1"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ_WRITE
+                reg: xmm1
+              -
+                type: X86_OP_IMM
+                size: 1
+                imm: 1
+  -
+    input:
+      name: "issue x64 unsigned"
+      bytes: [ 0x66,0x83,0xc0,0x80 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_UNSIGNED ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "add ax, 0xff80"
+  -
+    input:
+      name: "issue x64att unsigned"
+      bytes: [ 0x66,0x83,0xc0,0x80 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_SYNTAX_ATT, CS_OPT_UNSIGNED ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "addw $0xff80, %ax"
+  -
+    input:
+      name: "issue 1323"
+      bytes: [ 0x70,0x47,0x00 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bx lr"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r14
+                access: CS_AC_READ
+          regs_read: [ r14 ]
+          groups: [ jump, IsThumb ]
+  -
+    input:
+      name: "issue 1317"
+      bytes: [ 0xd0,0xe8,0x11,0xf0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "tbh [r0, r1, lsl #1]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_MEM
+                mem_base: r0
+                mem_index: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_LSL
+                shift_value: 1
+          regs_read: [ r0, r1 ]
+          groups: [ jump, IsThumb2 ]
+  -
+    input:
+      name: "issue 1308"
+      bytes: [ 0x83,0x3d,0xa1,0x75,0x21,0x00,0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cmp dword ptr [rip + 0x2175a1], 4"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x83, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x3d
+            disp: 0x2175a1
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rip
+                mem_disp: 0x2175a1
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_IMM
+                imm: 0x4
+                size: 4
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ rip ]
+          regs_write: [ rflags ]
+  -
+    input:
+      name: "issue 1262"
+      bytes: [ 0x0f,0x95,0x44,0x24,0x5e ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setne byte ptr [rsp + 0x5e]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x95, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x44
+            disp: 0x5e
+            sib: 0x24
+            sib_base: rsp
+            sib_scale: 1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rsp
+                mem_disp: 0x5e
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags, rsp ]
+  -
+    input:
+      name: "issue 1262"
+      bytes: [ 0x0f,0x94,0x44,0x24,0x1f ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sete byte ptr [rsp + 0x1f]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x94, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x44
+            disp: 0x1f
+            sib: 0x24
+            sib_base: rsp
+            sib_scale: 1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rsp
+                mem_disp: 0x1f
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags, rsp ]
+  -
+    input:
+      name: "issue 1263"
+      bytes: [ 0x67,0x48,0x89,0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov qword ptr [eax], rbx"
+  -
+    input:
+      name: "issue 1263"
+      bytes: [ 0x67,0x48,0x8b,0x03 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov rax, qword ptr [ebx]"
+  -
+    input:
+      name: "issue 1255"
+      bytes: [ 0xdb,0x7c,0x24,0x40 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fstp xword ptr [rsp + 0x40]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xdb, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x7c
+            disp: 0x40
+            sib: 0x24
+            sib_base: rsp
+            sib_scale: 1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rsp
+                mem_disp: 0x40
+                size: 10
+                access: CS_AC_WRITE
+            fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1, X86_FPU_FLAGS_UNDEFINED_C0, X86_FPU_FLAGS_UNDEFINED_C2, X86_FPU_FLAGS_UNDEFINED_C3 ]
+          regs_read: [ rsp ]
+          regs_write: [ fpsw ]
+          groups: [ fpu ]
+  -
+    input:
+      name: "issue 1255"
+      bytes: [ 0xdd,0xd9 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fstp st(1)"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xdd, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0xd9
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: st(1)
+                size: 10
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_MODIFY_CF, X86_EFLAGS_PRIOR_SF, X86_EFLAGS_PRIOR_AF, X86_EFLAGS_PRIOR_PF ]
+          regs_write: [ fpsw, st(1) ]
+  -
+    input:
+      name: "issue 1255"
+      bytes: [ 0xdf,0x7c,0x24,0x68 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fistp qword ptr [rsp + 0x68]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xdf, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x7c
+            disp: 0x68
+            sib: 0x24
+            sib_base: rsp
+            sib_scale: 1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rsp
+                mem_disp: 0x68
+                size: 8
+                access: CS_AC_WRITE
+            fpu_flags: [ X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_UNDEFINED_C0, X86_FPU_FLAGS_UNDEFINED_C2, X86_FPU_FLAGS_UNDEFINED_C3 ]
+          regs_read: [ rsp ]
+          regs_write: [ fpsw ]
+          groups: [ fpu ]
+  -
+    input:
+      name: "issue 1221"
+      bytes: [ 0x55,0x48,0x89,0xe5 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "call 0x55222794"
+  -
+    input:
+      name: "issue 1144"
+      bytes: [ 0x00,0x00,0x02,0xb6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "tbz x0, #0x20, 0x4000"
+  -
+    input:
+      name: "issue 1144"
+      bytes: [ 0x00,0x00,0x04,0xb6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "tbz x0, #0x20, 0xffffffffffff8000"
+  -
+    input:
+      name: "issue 1144"
+      bytes: [ 0x00,0x00,0x02,0xb7 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "tbnz x0, #0x20, 0x4000"
+  -
+    input:
+      name: "issue 1144"
+      bytes: [ 0x00,0x00,0x04,0xb7 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "tbnz x0, #0x20, 0xffffffffffff8000"
+  -
+    input:
+      name: "issue 826"
+      bytes: [ 0x0b,0x00,0x00,0x0a ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "beq 0x34"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_IMM
+                imm: 0x34
+            cc: ARMCC_EQ
+          regs_read: [ cpsr ]
+          groups: [ jump, branch_relative, IsARM ]
+  -
+    input:
+      name: "issue 1047"
+      bytes: [ 0x48,0x83,0xe4,0xf0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "andq $0xfffffffffffffff0, %rsp"
+  -
+    input:
+      name: "issue 959"
+      bytes: [ 0xa0,0x28,0x57,0x88,0x7c ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov al, byte ptr [0x7c885728]"
+  -
+    input:
+      name: "issue 950"
+      bytes: [ 0x66,0xa3,0x94,0x90,0x04,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov word ptr [0x8049094], ax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xa3, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x8049094
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_disp: 0x8049094
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ ax ]
+  -
+    input:
+      name: "issue 938"
+      bytes: [ 0x70,0x00,0xb2,0xff ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS64, CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sd $s2, 0x70($sp)"
+  -
+    input:
+      name: "issue 915"
+      bytes: [ 0xf0,0x0f,0x1f,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lock nop dword ptr [rax]"
+  -
+    input:
+      name: "!# issue 913"
+      bytes: [ 0x04,0x10,0x9d,0xe4 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pop {r1}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+          writeback: 1
+          regs_read: [ r13 ]
+          regs_write: [ r13, r1 ]
+          groups: [ IsARM ]
+  -
+    input:
+      name: "issue 884"
+      bytes: [ 0x64,0x48,0x03,0x04,0x25,0x00,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "addq %fs:0, %rax"
+  -
+    input:
+      name: "issue 872"
+      bytes: [ 0xf2,0xeb,0x3e ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bnd jmp 0x41"
+  -
+    input:
+      name: "issue 861"
+      bytes: [ 0x01,0x81,0xa0,0xfc ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stc2 p1, c8, [r0], #4"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_PIMM
+                imm: 1
+                access: CS_AC_READ
+              -
+                type: ARM_OP_CIMM
+                imm: 8
+                access: CS_AC_READ
+              -
+                type: ARM_OP_MEM
+                mem_base: r0
+                mem_disp: 0x4
+                access: CS_AC_WRITE
+          regs_read: [ r0 ]
+          groups: [ IsARM, PreV8 ]
+  -
+    input:
+      name: "issue 852"
+      bytes: [ 0x64,0xa3,0x00,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov dword ptr fs:[0], eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_FS, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xa3, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_segment: fs
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ fs, eax ]
+  -
+    input:
+      name: "issue 825"
+      bytes: [ 0x0e,0xf0,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov pc, lr"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r15
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r14
+                access: CS_AC_READ
+          regs_read: [ r14 ]
+          regs_write: [ r15 ]
+          groups: [ jump, return, IsARM ]
+  -
+    input:
+      name: "issue 813"
+      bytes: [ 0xF6,0xC0,0x04,0x01 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movt r4, #0x801"
+  -
+    input:
+      name: "issue 809"
+      bytes: [ 0x0f,0x29,0x8d,0xf0,0xfd,0xff,0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movaps xmmword ptr [rbp - 0x210], xmm1"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x29, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x8d
+            disp: -0x210
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbp
+                mem_disp: -0x210
+                size: 16
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: xmm1
+                size: 16
+                access: CS_AC_READ
+          regs_read: [ rbp, xmm1 ]
+          groups: [ sse1 ]
+  -
+    input:
+      name: "issue 807"
+      bytes: [ 0x4c,0x0f,0x00,0x80,0x16,0x76,0x8a,0xfe ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sldt word ptr [rax - 0x17589ea]"
+  -
+    input:
+      name: "issue 806"
+      bytes: [ 0x0f,0x35 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sysexit"
+  -
+    input:
+      name: "issue 805"
+      bytes: [ 0x48,0x4c,0x0f,0xb5,0x80,0x16,0x76,0x8a,0xfe ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lgs -0x17589ea(%rax), %r8"
+  -
+    input:
+      name: "issue 804"
+      bytes: [ 0x66,0x48,0xf3,0xd1,0xc0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rolw $1, %ax"
+  -
+    input:
+      name: "issue 789"
+      bytes: [ 0x8e,0x1e ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movw (%rsi), %ds"
+  -
+    input:
+      name: "issue 767"
+      bytes: [ 0xb1,0xe8,0xfc,0x07 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldm.w r1!, {r2, r3, r4, r5, r6, r7, r8, r9, r10}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r3
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r4
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r5
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r6
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r7
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r8
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r9
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r10
+                access: CS_AC_WRITE
+          writeback: 1
+          regs_read: [ r1 ]
+          regs_write: [ r1, r2, r3, r4, r5, r6, r7, r8, r9, r10 ]
+          groups: [ IsThumb2 ]
+  -
+    input:
+      name: "issue 760"
+      bytes: [ 0x02,0x80,0xbd,0xe8 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pop {r1, pc}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r15
+                access: CS_AC_WRITE
+          writeback: 1
+          regs_read: [ r13 ]
+          regs_write: [ r13, r1, r15 ]
+          groups: [ IsARM, return, jump ]
+  -
+    input:
+      name: "issue 750"
+      bytes: [ 0x0e,0x00,0x20,0xe9 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stmdb r0!, {r1, r2, r3}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r3
+                access: CS_AC_READ
+          writeback: 1
+          regs_read: [ r0, r1, r2, r3 ]
+          regs_write: [ r0 ]
+          groups: [ IsARM ]
+  -
+    input:
+      name: "issue 747"
+      bytes: [ 0x0e,0x00,0xb0,0xe8 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldm r0!, {r1, r2, r3}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r3
+                access: CS_AC_WRITE
+          writeback: 1
+          regs_read: [ r0 ]
+          regs_write: [ r0, r1, r2, r3 ]
+          groups: [ IsARM ]
+  -
+    input:
+      name: "issue 747"
+      bytes: [ 0x0e,0xc8 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldm r0!, {r1, r2, r3}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r3
+                access: CS_AC_WRITE
+          writeback: 1
+          regs_read: [ r0 ]
+          regs_write: [ r0, r1, r2, r3 ]
+          groups: [ IsThumb ]
+  -
+    input:
+      name: "issue 746"
+      bytes: [ 0x89,0x00,0x2d,0xe9 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "push {r0, r3, r7}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: ARM_OP_REG
+                reg: r7
+                access: CS_AC_READ
+          writeback: 1
+          regs_read: [ r13, r0, r3, r7 ]
+          regs_write: [ r13 ]
+          groups: [ IsARM ]
+  -
+    input:
+      name: "issue 744"
+      bytes: [ 0x02,0x80,0xbd,0xe8 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pop {r1, pc}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r15
+                access: CS_AC_WRITE
+          writeback: 1
+          regs_read: [ r13 ]
+          regs_write: [ r13, r1, r15 ]
+          groups: [ IsARM, return, jump ]
+  -
+    input:
+      name: "issue 741"
+      bytes: [ 0x83,0xff,0xf7 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cmp edi, -9"
+  -
+    input:
+      name: "issue 717"
+      bytes: [ 0x48,0x8b,0x04,0x25,0x00,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movq 0, %rax"
+  -
+    input:
+      name: "issue 711"
+      bytes: [ 0xa3,0x44,0xb0,0x00,0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov dword ptr [0x1000b044], eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xa3, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x1000b044
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_disp: 0x1000b044
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ eax ]
+  -
+    input:
+      name: "issue 613"
+      bytes: [ 0xd9,0x74,0x24,0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fnstenv [rsp - 0x28]"
+  -
+    input:
+      name: "issue 554"
+      bytes: [ 0xe7,0x84 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "out 0x84, eax"
+  -
+    input:
+      name: "issue 554"
+      bytes: [ 0xe5,0x8c ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "in eax, 0x8c"
+  -
+    input:
+      name: "issue 545"
+      bytes: [ 0x95 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "xchg ebp, eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x95, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ebp
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ_WRITE
+          regs_read: [ ebp, eax ]
+          regs_write: [ ebp, eax ]
+          groups: [ not64bitmode ]
+  -
+    input:
+      name: "issue 544"
+      bytes: [ 0xdf,0x30 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fbstp tbyte ptr [eax]"
+  -
+    input:
+      name: "issue 544"
+      bytes: [ 0xdf,0x20 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fbld tbyte ptr [eax]"
+  -
+    input:
+      name: "issue 541"
+      bytes: [ 0x48,0xb8,0x00,0x00,0x00,0x00,0x80,0xf8,0xff,0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movabs rax, 0xfffff88000000000"
+  -
+    input:
+      name: "issue 499"
+      bytes: [ 0x48,0xb8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x80 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movabs rax, 0x8000000000000000"
+  -
+    input:
+      name: "issue 492"
+      bytes: [ 0xff,0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "call ptr [eax]"
+  -
+    input:
+      name: "issue 492"
+      bytes: [ 0xff,0x28 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jmp ptr [eax]"
+  -
+    input:
+      name: "issue 492"
+      bytes: [ 0x0f,0xae,0x04,0x24 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fxsave [esp]"
+  -
+    input:
+      name: "issue 492"
+      bytes: [ 0x0f,0xae,0x0c,0x24 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fxrstor [esp]"
+  -
+    input:
+      name: "issue 470"
+      bytes: [ 0x0f,0x01,0x05,0xa0,0x90,0x04,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sgdt [0x80490a0]"
+  -
+    input:
+      name: "issue 470"
+      bytes: [ 0x0f,0x01,0x0d,0xa7,0x90,0x04,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sidt [0x80490a7]"
+  -
+    input:
+      name: "issue 470"
+      bytes: [ 0x0f,0x01,0x15,0xa0,0x90,0x04,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lgdt [0x80490a0]"
+  -
+    input:
+      name: "issue 470"
+      bytes: [ 0x0f,0x01,0x1d,0xa7,0x90,0x04,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lidt [0x80490a7]"
+  -
+    input:
+      name: "issue 459"
+      bytes: [ 0xd3,0x20,0x11,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldrsb r2, [r1, -r3]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r1
+                mem_index: r3
+                mem_scale: 0
+                access: CS_AC_READ
+                subtracted: 1
+          regs_read: [ r1, r3 ]
+          regs_write: [ r2 ]
+          groups: [ IsARM ]
+  -
+    input:
+      name: "issue 456"
+      bytes: [ 0xe8,0x35,0x64 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "call 0x6438"
+  -
+    input:
+      name: "issue 456"
+      bytes: [ 0xe9,0x35,0x64 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x6438"
+  -
+    input:
+      name: "issue 456"
+      bytes: [ 0x66,0xe9,0x35,0x64,0x93,0x53 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x5393643b"
+  -
+    input:
+      name: "issue 456"
+      bytes: [ 0x66,0xe8,0x35,0x64,0x93,0x53 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "call 0x5393643b"
+  -
+    input:
+      name: "issue 456"
+      bytes: [ 0x66,0xe9,0x35,0x64,0x93,0x53 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x5393643b"
+  -
+    input:
+      name: "issue 456"
+      bytes: [ 0x66,0xe8,0x35,0x64 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "call 0x6439"
+  -
+    input:
+      name: "issue 456"
+      bytes: [ 0xe9,0x35,0x64,0x93,0x53 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x5393643a"
+  -
+    input:
+      name: "issue 456"
+      bytes: [ 0x66,0xe9,0x35,0x64 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x6439"
+  -
+    input:
+      name: "issue 458"
+      bytes: [ 0xA1,0x12,0x34,0x90,0x90 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov eax, dword ptr [0x90903412]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xa1, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x90903412
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_disp: 0x90903412
+                size: 4
+                access: CS_AC_READ
+          regs_write: [ eax ]
+  -
+    input:
+      name: "issue 454"
+      bytes: [ 0xf2,0x6c ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "repne insb byte ptr es:[edi], dx"
+  -
+    input:
+      name: "issue 454"
+      bytes: [ 0xf2,0x6d ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "repne insd dword ptr es:[edi], dx"
+  -
+    input:
+      name: "issue 454"
+      bytes: [ 0xf2,0x6e ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "repne outsb dx, byte ptr [esi]"
+  -
+    input:
+      name: "issue 454"
+      bytes: [ 0xf2,0x6f ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "repne outsd dx, dword ptr [esi]"
+  -
+    input:
+      name: "issue 454"
+      bytes: [ 0xf2,0xac ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "repne lodsb al, byte ptr [esi]"
+  -
+    input:
+      name: "issue 454"
+      bytes: [ 0xf2,0xad ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "repne lodsd eax, dword ptr [esi]"
+  -
+    input:
+      name: "issue 450"
+      bytes: [ 0xff,0x2d,0x34,0x35,0x23,0x01 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jmp ptr [0x1233534]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x2d
+            disp: 0x1233534
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_disp: 0x1233534
+                size: 6
+          groups: [ jump ]
+  -
+    input:
+      name: "issue 448"
+      bytes: [ 0xea,0x12,0x34,0x56,0x78,0x9a,0xbc ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ljmp 0xbc9a:0x78563412"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xea, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0xbc9a
+                size: 2
+              -
+                type: X86_OP_IMM
+                imm: 0x78563412
+                size: 4
+          groups: [ not64bitmode, jump ]
+  -
+    input:
+      name: "issue 426"
+      bytes: [ 0xbb,0x70,0x00,0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "popc %g0, %i5"
+  -
+    input:
+      name: "issue 358"
+      bytes: [ 0xe8,0xe3,0xf6,0xff,0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "call 0xfffff6e8"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0xfffff6e8
+                size: 4
+          regs_read: [ esp, eip ]
+          regs_write: [ esp ]
+          groups: [ call, branch_relative, not64bitmode ]
+  -
+    input:
+      name: "issue 353"
+      bytes: [ 0xe6,0xa2 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "out 0xa2, al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe6, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0xa2
+                size: 1
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ al ]
+  -
+    input:
+      name: "issue 305"
+      bytes: [ 0x34,0x8b ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "xor al, 0x8b"
+  -
+    input:
+      name: "issue 298"
+      bytes: [ 0xf3,0x90 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pause"
+  -
+    input:
+      name: "issue 298"
+      bytes: [ 0x66,0xf3,0xf2,0x0f,0x59,0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mulsd xmm7, xmm7"
+  -
+    input:
+      name: "issue 294"
+      bytes: [ 0xc1,0xe6,0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "shl esi, 8"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc1, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0xe6
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: esi
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x8
+                size: 1
+            eflags: [ X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_UNDEFINED_AF ]
+          regs_read: [ esi ]
+          regs_write: [ eflags, esi ]
+  -
+    input:
+      name: "issue 285"
+      bytes: [ 0x3c,0x12,0x80 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cmp al, 0x12"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x3c, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_IMM
+                imm: 0x12
+                size: 1
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ al ]
+          regs_write: [ eflags ]
+  -
+    input:
+      name: "issue 265"
+      bytes: [ 0x52,0xf8,0x23,0x30 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldr.w r3, [r2, r3, lsl #2]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r3
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r2
+                mem_index: r3
+                mem_scale: 0
+                shift_type: ARM_SFT_LSL
+                shift_value: 2
+          regs_read: [ r2, r3 ]
+          regs_write: [ r3 ]
+          groups: [ IsThumb2 ]
+  -
+    input:
+      name: "issue 264"
+      bytes: [ 0x0c,0xbf ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ite eq"
+  -
+    input:
+      name: "issue 264"
+      bytes: [ 0x17,0x20 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movs r0, #0x17"
+  -
+    input:
+      name: "issue 264"
+      bytes: [ 0x4f,0xf0,0xff,0x30 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov.w r0, #0xffffffff"
+  -
+    input:
+      name: "issue 246"
+      bytes: [ 0x52,0xf8,0x23,0xf0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldr.w pc, [r2, r3, lsl #2]"
+  -
+    input:
+      name: "issue 232"
+      bytes: [ 0x8e,0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov ss, word ptr [eax]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8e, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x10
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ss
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ eax ]
+          regs_write: [ ss ]
+          groups: [ privilege ]
+  -
+    input:
+      name: "issue 231"
+      bytes: [ 0x66,0x6b,0xc0,0x02 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "imul ax, ax, 2"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0x6b, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0xc0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_READ
+              -
+                type: X86_OP_IMM
+                imm: 0x2
+                size: 2
+            eflags: [ X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_UNDEFINED_ZF, X86_EFLAGS_UNDEFINED_PF, X86_EFLAGS_UNDEFINED_AF ]
+          regs_read: [ ax ]
+          regs_write: [ eflags, ax ]
+  -
+    input:
+      name: "issue 230"
+      bytes: [ 0xec ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "in al, dx"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xec, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: dx
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ dx ]
+          regs_write: [ al ]
+  -
+    input:
+      name: "issue 213"
+      bytes: [ 0xea,0xaa,0xff,0x00,0xf0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ljmp 0xf000:0xffaa"
+  -
+    input:
+      name: "issue 191"
+      bytes: [ 0xc5,0xe8,0xc2,0x33,0x9b ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vcmpps xmm6, xmm2, xmmword ptr [rbx], 0x9b"
+  -
+    input:
+      name: "issue 176"
+      bytes: [ 0xfd,0xff,0xff,0x1a ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bne 0xfffffffc"
+  -
+    input:
+      name: "issue 151"
+      bytes: [ 0x4d,0x8d,0x3d,0x02,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lea r15, [rip + 2]"
+  -
+    input:
+      name: "issue 151"
+      bytes: [ 0xeb,0xb0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0xffffffffffffffb2"
+  -
+    input:
+      name: "issue 134"
+      bytes: [ 0xe7,0x92,0x11,0x80 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldr r1, [r2, r0, lsl #3]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r2
+                mem_index: r0
+                access: CS_AC_READ
+                shift_type: ARM_SFT_LSL
+                shift_value: 3
+          regs_read: [ r2, r0 ]
+          regs_write: [ r1 ]
+          groups: [ IsARM ]
+  -
+    input:
+      name: "issue 133"
+      bytes: [ 0xed,0xdf,0x2b,0x1b ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vldr d18, [pc, #0x6c]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: d18
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r15
+                mem_disp: 0x6c
+                access: CS_AC_READ
+          regs_read: [ r15 ]
+          regs_write: [ d18 ]
+          groups: [ HasFPRegs ]
+  -
+    input:
+      name: "issue 132"
+      bytes: [ 0x49,0x19 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldr r1, [pc, #0x64]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r15
+                mem_disp: 0x64
+                access: CS_AC_READ
+          regs_read: [ r15 ]
+          regs_write: [ r1 ]
+          groups: [ IsThumb ]
+  -
+    input:
+      name: "issue 130"
+      bytes: [ 0xe1,0xa0,0xf0,0x0e ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov pc, lr"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r15
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r14
+                access: CS_AC_READ
+          regs_read: [ r14 ]
+          regs_write: [ r15 ]
+          groups: [ jump, return, IsARM ]
+  -
+    input:
+      name: "issue 85"
+      bytes: [ 0xee,0x3f,0xbf,0x29 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stp w14, w15, [sp, #-8]!"
+  -
+    input:
+      name: "issue 82"
+      bytes: [ 0xf2,0x66,0xaf ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "repne scasw ax, word ptr [rdi]"
+  -
+    input:
+      name: "issue 35"
+      bytes: [ 0xe8,0xc6,0x02,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "call 0x2cb"
+  -
+    input:
+      name: "issue 8"
+      bytes: [ 0xff,0x8c,0xf9,0xff,0xff,0x9b,0xf9 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dec dword ptr [ecx + edi*8 - 0x6640001]"
+  -
+    input:
+      name: "issue 29"
+      bytes: [ 0x00,0x00,0x00,0x4c ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "st4 { v0.16b, v1.16b, v2.16b, v3.16b }, [x0]"
+  -
+    input:
+      name: "issue 2233 ARM write to PC is branch"
+      bytes: [ 0x87,0x46 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov pc, r0"
+        details:
+          groups: [ IsThumb, jump ]
+  -
+    input:
+      name: "issue 2128"
+      bytes: [ 0x4c,0x85,0x7d,0x30 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "test	qword ptr [rbp + 0x30], r15"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+              -
+                type: X86_OP_REG
+                reg: r15
+                access: CS_AC_READ
+          regs_read: [ rbp, r15 ]
+          regs_write: [ rflags ]
+  -
+    input:
+      name: "issue 2079"
+      bytes: [ 0xd1,0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcl	dword ptr [eax]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+              -
+                type: X86_OP_IMM
+                imm: 0x1
+  -
+    input:
+      name: "issue 2244"
+      bytes: [ 0xc5,0xfb,0xc2,0xda,0x06 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vcmpnlesd	xmm3, xmm0, xmm2"
+        id: 797
+  -
+    input:
+      name: "issue 2349"
+      bytes: [ 0xcf, 0x41, 0xd0, 0x28 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ld.d $t3, $t2, 0x410"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+              -
+                type: LOONGARCH_OP_MEM
+                mem_base: t2
+                mem_disp: 0x410
+  -
+    input:
+      name: "issue 2349"
+      bytes: [ 0x8d, 0x59, 0x10, 0x27 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stptr.d $t1, $t0, 0x1058"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+              -
+                type: LOONGARCH_OP_MEM
+                mem_base: t0
+                mem_disp: 0x1058
+  -
+    input:
+      name: "issue 2349"
+      bytes: [ 0xa4, 0x15, 0x20, 0x30 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vldrepl.w $vr4, $t1, 0x14"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+              -
+                type: LOONGARCH_OP_MEM
+                mem_base: t1
+                mem_disp: 0x14
+  -
+    input:
+      name: "issue 2349"
+      bytes: [ 0x68, 0x22, 0xc2, 0x2a ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "preld 8, $t7, 0x88"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_IMM
+                imm: 0x8
+              -
+                type: LOONGARCH_OP_MEM
+                mem_base: t7
+                mem_disp: 0x88
+  -
+    input:
+      name: "issue 2349"
+      bytes: [ 0xe1, 0x2c, 0x30, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fldx.s $fa1, $a3, $a7"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+              -
+                type: LOONGARCH_OP_MEM
+                mem_base: a3
+                mem_index: a7
+  -
+    input:
+      name: "issue 2349"
+      bytes: [ 0xc4, 0x14, 0x57, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sc.q $a0, $a1, $a2"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: a0
+              -
+                type: LOONGARCH_OP_REG
+                reg: a1
+              -
+                type: LOONGARCH_OP_MEM
+                mem_base: a2
+  -
+    input:
+      name: "issue 2349"
+      bytes: [ 0xc4, 0x14, 0x61, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "amadd.w $a0, $a1, $a2"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: a0
+              -
+                type: LOONGARCH_OP_REG
+                reg: a1
+              -
+                type: LOONGARCH_OP_MEM
+                mem_base: a2
+  -
+    input:
+      name: "issue 2349"
+      bytes: [ 0xa4, 0x18, 0x78, 0x38 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldgt.b $a0, $a1, $a2"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+              -
+                type: LOONGARCH_OP_MEM
+                mem_base: a1
+              -
+                type: LOONGARCH_OP_REG
+                reg: a2
+  -
+    input:
+      name: "issue 2268"
+      bytes: [ 0x00,0x80,0x58,0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fadd z0.h, p0/m, z0.h, #0.5"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                access: CS_AC_READ_WRITE
+              -
+                type: AARCH64_OP_PRED
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                access: CS_AC_READ_WRITE
+              -
+                type: AARCH64_OP_SYSIMM
+                sub_type: AARCH64_OP_EXACTFPIMM
+                sys_raw_val: 1
+  -
+    input:
+      name: "issue 2268"
+      bytes: [ 0x20,0x80,0x58,0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fadd z0.h, p0/m, z0.h, #1.0"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                access: CS_AC_READ_WRITE
+              -
+                type: AARCH64_OP_PRED
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                access: CS_AC_READ_WRITE
+              -
+                type: AARCH64_OP_SYSIMM
+                sub_type: AARCH64_OP_EXACTFPIMM
+                sys_raw_val: 2
+  -
+    input:
+      name: "issue 2268"
+      bytes: [ 0x3f,0x9c,0xda,0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fmul z31.d, p7/m, z31.d, #2.0"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                access: CS_AC_READ_WRITE
+              -
+                type: AARCH64_OP_PRED
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                access: CS_AC_READ_WRITE
+              -
+                type: AARCH64_OP_SYSIMM
+                sub_type: AARCH64_OP_EXACTFPIMM
+                sys_raw_val: 3
+  -
+    input:
+      name: "issue 2268"
+      bytes: [ 0x6a,0xd9,0xf8,0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fcmle h10, h11, #0.0"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_REG
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_SYSIMM
+                sub_type: AARCH64_OP_EXACTFPIMM
+                sys_raw_val: 0
+  -
+    input:
+      name: "issue 2419"
+      bytes: [ 0x12,0xbf,0xff,0xff ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bne -4"
+        details:
+          sparc:
+            cc: SPARC_CC_ICC_NE

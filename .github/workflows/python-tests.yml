@@ -28,5 +28,30 @@ jobs:
     - name: Build and install capstone
       run: pip install ./bindings/python
 
-    - name: Run tests
+    - name: Install cstest_py
+      run: pip install ./bindings/python/cstest_py
+
+    - name: Run legacy tests
       run: python ./bindings/python/tests/test_all.py
+
+    - name: cstest_py integration tests
+      run: |
+        cd suite/cstest/test/
+        python3 ./integration_tests.py cstest_py
+        cd ../../../
+
+    - name: cstest_py MC
+      run: |
+        cstest_py tests/MC/
+
+    - name: cstest_py details
+      run: |
+        cstest_py tests/details/
+
+    - name: cstest_py issues
+      run: |
+        cstest_py tests/issues/
+
+    - name: cstest_py features
+      run: |
+        cstest_py tests/features/

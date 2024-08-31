@@ -1,0 +1,36 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xf0, 0xff, 0x20, 0x05, 0xf0, 0xff, 0x60, 0x05, 0xf0, 0xff, 0xa0, 0x04, 0xf4, 0xff, 0xa0, 0x04, 0xf8, 0xff, 0xa0, 0x04, 0xf0, 0xff, 0xe0, 0x04, 0xf4, 0xff, 0xe0, 0x04, 0xf8, 0xff, 0xe0, 0x04, 0xf0, 0xff, 0x20, 0x04, 0xf4, 0xff, 0x20, 0x04, 0xf8, 0xff, 0x20, 0x04, 0xf0, 0xff, 0x60, 0x04, 0xf4, 0xff, 0x60, 0x04, 0xf8, 0xff, 0x60, 0x04 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vcnt.8 d16, d16"
+        -
+          asm_text: "vcnt.8 q8, q8"
+        -
+          asm_text: "vclz.i8 d16, d16"
+        -
+          asm_text: "vclz.i16 d16, d16"
+        -
+          asm_text: "vclz.i32 d16, d16"
+        -
+          asm_text: "vclz.i8 q8, q8"
+        -
+          asm_text: "vclz.i16 q8, q8"
+        -
+          asm_text: "vclz.i32 q8, q8"
+        -
+          asm_text: "vcls.s8 d16, d16"
+        -
+          asm_text: "vcls.s16 d16, d16"
+        -
+          asm_text: "vcls.s32 d16, d16"
+        -
+          asm_text: "vcls.s8 q8, q8"
+        -
+          asm_text: "vcls.s16 q8, q8"
+        -
+          asm_text: "vcls.s32 q8, q8"

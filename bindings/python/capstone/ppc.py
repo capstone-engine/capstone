@@ -60,5 +60,5 @@ class CsPpc(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (a.bc, a.update_cr0, copy_ctypes_list(a.operands[:a.op_count]))
+    return (a.bc, a.update_cr0, a.format, copy_ctypes_list(a.operands[:a.op_count]))
 

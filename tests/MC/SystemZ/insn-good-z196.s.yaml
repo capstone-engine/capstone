@@ -1,0 +1,5149 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x80, 0x00, 0x00, 0xd9 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aghik %r0, %r0, -32768"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0xff, 0xff, 0x00, 0xd9 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aghik %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x00, 0xd9 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aghik %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x01, 0x00, 0xd9 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aghik %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x7f, 0xff, 0x00, 0xd9 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aghik %r0, %r0, 32767"
+  -
+    input:
+      bytes: [ 0xec, 0x0f, 0x00, 0x00, 0x00, 0xd9 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aghik %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xec, 0xf0, 0x00, 0x00, 0x00, 0xd9 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aghik %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x78, 0xff, 0xf0, 0x00, 0xd9 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aghik %r7, %r8, -16"
+  -
+    input:
+      bytes: [ 0xb9, 0xe8, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "agrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe8, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "agrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xe8, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "agrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe8, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "agrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe8, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "agrk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x80, 0x00, 0x00, 0xd8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ahik %r0, %r0, -32768"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0xff, 0xff, 0x00, 0xd8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ahik %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x00, 0xd8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ahik %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x01, 0x00, 0xd8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ahik %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x7f, 0xff, 0x00, 0xd8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ahik %r0, %r0, 32767"
+  -
+    input:
+      bytes: [ 0xec, 0x0f, 0x00, 0x00, 0x00, 0xd8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ahik %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xec, 0xf0, 0x00, 0x00, 0x00, 0xd8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ahik %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x78, 0xff, 0xf0, 0x00, 0xd8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ahik %r7, %r8, -16"
+  -
+    input:
+      bytes: [ 0xcc, 0x08, 0x80, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aih %r0, -2147483648"
+  -
+    input:
+      bytes: [ 0xcc, 0x08, 0xff, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aih %r0, -1"
+  -
+    input:
+      bytes: [ 0xcc, 0x08, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aih %r0, 0"
+  -
+    input:
+      bytes: [ 0xcc, 0x08, 0x00, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aih %r0, 1"
+  -
+    input:
+      bytes: [ 0xcc, 0x08, 0x7f, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aih %r0, 2147483647"
+  -
+    input:
+      bytes: [ 0xcc, 0xf8, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "aih %r15, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x80, 0x00, 0x00, 0xdb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alghsik %r0, %r0, -32768"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0xff, 0xff, 0x00, 0xdb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alghsik %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x00, 0xdb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alghsik %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x01, 0x00, 0xdb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alghsik %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x7f, 0xff, 0x00, 0xdb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alghsik %r0, %r0, 32767"
+  -
+    input:
+      bytes: [ 0xec, 0x0f, 0x00, 0x00, 0x00, 0xdb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alghsik %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xec, 0xf0, 0x00, 0x00, 0x00, 0xdb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alghsik %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x78, 0xff, 0xf0, 0x00, 0xdb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alghsik %r7, %r8, -16"
+  -
+    input:
+      bytes: [ 0xb9, 0xea, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "algrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xea, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "algrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xea, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "algrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xea, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "algrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xea, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "algrk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x80, 0x00, 0x00, 0xda ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alhsik %r0, %r0, -32768"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0xff, 0xff, 0x00, 0xda ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alhsik %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x00, 0xda ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alhsik %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x01, 0x00, 0xda ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alhsik %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x7f, 0xff, 0x00, 0xda ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alhsik %r0, %r0, 32767"
+  -
+    input:
+      bytes: [ 0xec, 0x0f, 0x00, 0x00, 0x00, 0xda ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alhsik %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xec, 0xf0, 0x00, 0x00, 0x00, 0xda ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alhsik %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x78, 0xff, 0xf0, 0x00, 0xda ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alhsik %r7, %r8, -16"
+  -
+    input:
+      bytes: [ 0xb9, 0xfa, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xfa, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xfa, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xfa, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xfa, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "alrk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xb9, 0xf8, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ark %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf8, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ark %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xf8, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ark %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf8, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ark %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf8, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ark %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xb3, 0x91, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlfbr %f0, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x91, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlfbr %f0, 0, %r0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0x91, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlfbr %f0, 0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x91, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlfbr %f0, 15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x91, 0x57, 0x46 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlfbr %f4, 5, %r6, 7"
+  -
+    input:
+      bytes: [ 0xb3, 0x91, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlfbr %f15, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa1, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlgbr %f0, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa1, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlgbr %f0, 0, %r0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0xa1, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlgbr %f0, 0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa1, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlgbr %f0, 15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa1, 0x57, 0x46 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlgbr %f4, 5, %r6, 7"
+  -
+    input:
+      bytes: [ 0xb3, 0xa1, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cdlgbr %f15, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x90, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celfbr %f0, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x90, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celfbr %f0, 0, %r0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0x90, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celfbr %f0, 0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x90, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celfbr %f0, 15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x90, 0x57, 0x46 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celfbr %f4, 5, %r6, 7"
+  -
+    input:
+      bytes: [ 0xb3, 0x90, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celfbr %f15, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa0, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celgbr %f0, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa0, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celgbr %f0, 0, %r0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0xa0, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celgbr %f0, 0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa0, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celgbr %f0, 15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa0, 0x57, 0x46 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celgbr %f4, 5, %r6, 7"
+  -
+    input:
+      bytes: [ 0xb3, 0xa0, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "celgbr %f15, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xcd ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "chf %r0, -524288"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xcd ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "chf %r0, -1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xcd ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "chf %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xcd ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "chf %r0, 1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xcd ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "chf %r0, 524287"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xcd ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "chf %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xcd ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "chf %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xcd ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "chf %r0, 524287(%r1, %r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xcd ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "chf %r0, 524287(%r15, %r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xcd ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "chf %r15, 0"
+  -
+    input:
+      bytes: [ 0xcc, 0x0d, 0x80, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cih %r0, -2147483648"
+  -
+    input:
+      bytes: [ 0xcc, 0x0d, 0xff, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cih %r0, -1"
+  -
+    input:
+      bytes: [ 0xcc, 0x0d, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cih %r0, 0"
+  -
+    input:
+      bytes: [ 0xcc, 0x0d, 0x00, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cih %r0, 1"
+  -
+    input:
+      bytes: [ 0xcc, 0x0d, 0x7f, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cih %r0, 2147483647"
+  -
+    input:
+      bytes: [ 0xcc, 0xfd, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cih %r15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9d, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfdbr %r0, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9d, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfdbr %r0, 0, %f0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0x9d, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfdbr %r0, 0, %f15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9d, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfdbr %r0, 15, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9d, 0x57, 0x46 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfdbr %r4, 5, %f6, 7"
+  -
+    input:
+      bytes: [ 0xb3, 0x9d, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfdbr %r15, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9c, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfebr %r0, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9c, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfebr %r0, 0, %f0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0x9c, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfebr %r0, 0, %f15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9c, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfebr %r0, 15, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9c, 0x57, 0x46 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfebr %r4, 5, %f6, 7"
+  -
+    input:
+      bytes: [ 0xb3, 0x9c, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfebr %r15, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9e, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfxbr %r0, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9e, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfxbr %r0, 0, %f0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0x9e, 0x00, 0x0d ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfxbr %r0, 0, %f13, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9e, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfxbr %r0, 15, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x9e, 0x59, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfxbr %r7, 5, %f8, 9"
+  -
+    input:
+      bytes: [ 0xb3, 0x9e, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clfxbr %r15, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xad, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgdbr %r0, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xad, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgdbr %r0, 0, %f0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0xad, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgdbr %r0, 0, %f15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xad, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgdbr %r0, 15, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xad, 0x57, 0x46 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgdbr %r4, 5, %f6, 7"
+  -
+    input:
+      bytes: [ 0xb3, 0xad, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgdbr %r15, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xac, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgebr %r0, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xac, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgebr %r0, 0, %f0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0xac, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgebr %r0, 0, %f15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xac, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgebr %r0, 15, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xac, 0x57, 0x46 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgebr %r4, 5, %f6, 7"
+  -
+    input:
+      bytes: [ 0xb3, 0xac, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgebr %r15, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xae, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgxbr %r0, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xae, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgxbr %r0, 0, %f0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0xae, 0x00, 0x0d ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgxbr %r0, 0, %f13, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xae, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgxbr %r0, 15, %f0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xae, 0x59, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgxbr %r7, 5, %f8, 9"
+  -
+    input:
+      bytes: [ 0xb3, 0xae, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clgxbr %r15, 0, %f0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xcf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clhf %r0, -524288"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xcf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clhf %r0, -1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xcf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clhf %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xcf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clhf %r0, 1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xcf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clhf %r0, 524287"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xcf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clhf %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xcf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clhf %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xcf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clhf %r0, 524287(%r1, %r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xcf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clhf %r0, 524287(%r15, %r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xcf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clhf %r15, 0"
+  -
+    input:
+      bytes: [ 0xcc, 0x0f, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clih %r0, 0"
+  -
+    input:
+      bytes: [ 0xcc, 0x0f, 0x00, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clih %r0, 1"
+  -
+    input:
+      bytes: [ 0xcc, 0x0f, 0xff, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clih %r0, 4294967295"
+  -
+    input:
+      bytes: [ 0xcc, 0xff, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "clih %r15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x92, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlfbr %f0, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x92, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlfbr %f0, 0, %r0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0x92, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlfbr %f0, 0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x92, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlfbr %f0, 15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x92, 0x5a, 0x49 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlfbr %f4, 5, %r9, 10"
+  -
+    input:
+      bytes: [ 0xb3, 0x92, 0x00, 0xd0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlfbr %f13, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa2, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlgbr %f0, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa2, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlgbr %f0, 0, %r0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0xa2, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlgbr %f0, 0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa2, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlgbr %f0, 15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0xa2, 0x5a, 0x49 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlgbr %f4, 5, %r9, 10"
+  -
+    input:
+      bytes: [ 0xb3, 0xa2, 0x00, 0xd0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "cxlgbr %f13, 0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xb3, 0x5f, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "fidbra %f0, 0, %f0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0x5f, 0x57, 0x46 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "fidbra %f4, 5, %f6, 7"
+  -
+    input:
+      bytes: [ 0xb3, 0x57, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "fiebra %f0, 0, %f0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0x57, 0x57, 0x46 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "fiebra %f4, 5, %f6, 7"
+  -
+    input:
+      bytes: [ 0xb3, 0x47, 0x0f, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "fixbra %f0, 0, %f0, 15"
+  -
+    input:
+      bytes: [ 0xb3, 0x47, 0x59, 0x48 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "fixbra %f4, 5, %f8, 9"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xf8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laa %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xe8 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laag %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xfa ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laal %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xea ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laalg %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xf4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lan %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xe4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lang %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xf6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lao %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xe6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laog %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xf7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lax %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r0, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xe7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "laxg %r15, %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xc0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lbh %r0, -524288"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xc0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lbh %r0, -1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xc0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lbh %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xc0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lbh %r0, 1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xc0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lbh %r0, 524287"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xc0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lbh %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xc0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lbh %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xc0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lbh %r0, 524287(%r1, %r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xc0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lbh %r0, 524287(%r15, %r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xc0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lbh %r15, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xca ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lfh %r0, -524288"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xca ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lfh %r0, -1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xca ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lfh %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xca ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lfh %r0, 1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xca ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lfh %r0, 524287"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xca ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lfh %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xca ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lfh %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xca ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lfh %r0, 524287(%r1, %r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xca ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lfh %r0, 524287(%r15, %r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xca ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lfh %r15, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xc4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lhh %r0, -524288"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xc4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lhh %r0, -1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xc4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lhh %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xc4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lhh %r0, 1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xc4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lhh %r0, 524287"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xc4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lhh %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xc4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lhh %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xc4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lhh %r0, 524287(%r1, %r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xc4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lhh %r0, 524287(%r15, %r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xc4 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "lhh %r15, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xc2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llch %r0, -524288"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xc2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llch %r0, -1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xc2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llch %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xc2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llch %r0, 1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xc2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llch %r0, 524287"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xc2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llch %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xc2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llch %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xc2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llch %r0, 524287(%r1, %r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xc2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llch %r0, 524287(%r15, %r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xc2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llch %r15, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xc6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llhh %r0, -524288"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xc6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llhh %r0, -1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xc6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llhh %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xc6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llhh %r0, 1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xc6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llhh %r0, 524287"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xc6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llhh %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xc6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llhh %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xc6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llhh %r0, 524287(%r1, %r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xc6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llhh %r0, 524287(%r15, %r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xc6 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "llhh %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loc %r0, 0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loc %r0, 0, 15"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loc %r0, -524288, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loc %r0, 524287, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loc %r0, 0(%r1), 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loc %r0, 0(%r15), 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loc %r15, 0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x11, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loco %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x12, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loch %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x13, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locnle %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x14, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locl %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x15, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locnhe %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x16, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loclh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x17, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locne %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x18, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loce %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x19, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locnlh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1a, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "loche %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1b, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locnl %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1c, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locle %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1d, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locnh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1e, 0x30, 0x02, 0x00, 0xf2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locno %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locg %r0, 0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locg %r0, 0, 15"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locg %r0, -524288, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locg %r0, 524287, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locg %r0, 0(%r1), 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locg %r0, 0(%r15), 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locg %r15, 0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x11, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgo %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x12, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x13, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgnle %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x14, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgl %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x15, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgnhe %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x16, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locglh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x17, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgne %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x18, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locge %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x19, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgnlh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1a, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locghe %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1b, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgnl %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1c, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgle %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1d, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgnh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1e, 0x30, 0x02, 0x00, 0xe2 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgno %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0x00, 0x12 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgr %r1, %r2, 0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0xf0, 0x12 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgr %r1, %r2, 15"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0x10, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgro %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0x20, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrh %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0x30, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrnle %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0x40, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrl %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0x50, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrnhe %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0x60, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrlh %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0x70, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrne %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0x80, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgre %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0x90, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrnlh %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0xa0, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrhe %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0xb0, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrnl %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0xc0, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrle %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0xd0, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrnh %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe2, 0xe0, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locgrno %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0x00, 0x12 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locr %r1, %r2, 0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0xf0, 0x12 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locr %r1, %r2, 15"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0x10, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locro %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0x20, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrh %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0x30, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrnle %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0x40, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrl %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0x50, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrnhe %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0x60, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrlh %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0x70, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrne %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0x80, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locre %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0x90, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrnlh %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0xa0, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrhe %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0xb0, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrnl %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0xc0, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrle %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0xd0, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrnh %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xf2, 0xe0, 0x13 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "locrno %r1, %r3"
+  -
+    input:
+      bytes: [ 0xb9, 0xe4, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ngrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe4, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ngrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xe4, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ngrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe4, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ngrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe4, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ngrk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xb9, 0xf4, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "nrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf4, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "nrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xf4, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "nrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf4, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "nrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf4, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "nrk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xb9, 0xe6, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ogrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe6, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ogrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xe6, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ogrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe6, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ogrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe6, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ogrk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xb9, 0xf6, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ork %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf6, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ork %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xf6, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ork %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf6, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ork %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf6, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "ork %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x00, 0x5d ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risbhg %r0, %r0, 0, 0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x3f, 0x5d ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risbhg %r0, %r0, 0, 0, 63"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0xff, 0x00, 0x5d ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risbhg %r0, %r0, 0, 255, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0xff, 0x00, 0x00, 0x5d ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risbhg %r0, %r0, 255, 0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x0f, 0x00, 0x00, 0x00, 0x5d ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risbhg %r0, %r15, 0, 0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0xf0, 0x00, 0x00, 0x00, 0x5d ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risbhg %r15, %r0, 0, 0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x45, 0x06, 0x07, 0x08, 0x5d ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risbhg %r4, %r5, 6, 7, 8"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x00, 0x51 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risblg %r0, %r0, 0, 0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0x00, 0x3f, 0x51 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risblg %r0, %r0, 0, 0, 63"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0x00, 0xff, 0x00, 0x51 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risblg %r0, %r0, 0, 255, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x00, 0xff, 0x00, 0x00, 0x51 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risblg %r0, %r0, 255, 0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x0f, 0x00, 0x00, 0x00, 0x51 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risblg %r0, %r15, 0, 0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0xf0, 0x00, 0x00, 0x00, 0x51 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risblg %r15, %r0, 0, 0, 0"
+  -
+    input:
+      bytes: [ 0xec, 0x45, 0x06, 0x07, 0x08, 0x51 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "risblg %r4, %r5, 6, 7, 8"
+  -
+    input:
+      bytes: [ 0xb9, 0xe9, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sgrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe9, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sgrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xe9, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sgrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe9, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sgrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe9, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sgrk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xb9, 0xeb, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "slgrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xeb, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "slgrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xeb, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "slgrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xeb, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "slgrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xeb, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "slgrk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xb9, 0xfb, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "slrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xfb, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "slrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xfb, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "slrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xfb, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "slrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xfb, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "slrk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf1, 0x00, 0x00, 0x00, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r15, %r1, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x1f, 0x00, 0x00, 0x00, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r1, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xff, 0x00, 0x00, 0x00, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r15, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xdf ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sllk %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf1, 0x00, 0x00, 0x00, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r15, %r1, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x1f, 0x00, 0x00, 0x00, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r1, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xff, 0x00, 0x00, 0x00, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r15, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xdc ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srak %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xb9, 0xf9, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf9, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xf9, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf9, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf9, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r0, %r0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf1, 0x00, 0x00, 0x00, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r15, %r1, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x1f, 0x00, 0x00, 0x00, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r1, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xff, 0x00, 0x00, 0x00, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r15, %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r0, %r0, -524288"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0xff, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r0, %r0, -1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x01, 0x00, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r0, %r0, 1"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r0, %r0, 524287"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r0, %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r0, %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x1f, 0xff, 0x7f, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r0, %r0, 524287(%r1)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xff, 0xff, 0x7f, 0xde ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "srlk %r0, %r0, 524287(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xc3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stch %r0, -524288"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xc3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stch %r0, -1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xc3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stch %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xc3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stch %r0, 1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xc3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stch %r0, 524287"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xc3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stch %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xc3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stch %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xc3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stch %r0, 524287(%r1, %r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xc3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stch %r0, 524287(%r15, %r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xc3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stch %r15, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xc7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sthh %r0, -524288"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xc7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sthh %r0, -1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xc7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sthh %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xc7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sthh %r0, 1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xc7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sthh %r0, 524287"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xc7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sthh %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xc7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sthh %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xc7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sthh %r0, 524287(%r1, %r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xc7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sthh %r0, 524287(%r15, %r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xc7 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "sthh %r15, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x80, 0xcb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stfh %r0, -524288"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0xff, 0xcb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stfh %r0, -1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x00, 0x00, 0xcb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stfh %r0, 0"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x00, 0x01, 0x00, 0xcb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stfh %r0, 1"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x0f, 0xff, 0x7f, 0xcb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stfh %r0, 524287"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0x10, 0x00, 0x00, 0xcb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stfh %r0, 0(%r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0x00, 0xf0, 0x00, 0x00, 0xcb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stfh %r0, 0(%r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x01, 0xff, 0xff, 0x7f, 0xcb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stfh %r0, 524287(%r1, %r15)"
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x1f, 0xff, 0x7f, 0xcb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stfh %r0, 524287(%r15, %r1)"
+  -
+    input:
+      bytes: [ 0xe3, 0xf0, 0x00, 0x00, 0x00, 0xcb ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stfh %r15, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoc %r0, 0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoc %r0, 0, 15"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoc %r0, -524288, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoc %r0, 524287, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoc %r0, 0(%r1), 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoc %r0, 0(%r15), 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoc %r15, 0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x11, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoco %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x12, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoch %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x13, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocnle %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x14, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocl %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x15, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocnhe %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x16, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoclh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x17, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocne %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x18, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoce %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x19, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocnlh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1a, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stoche %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1b, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocnl %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1c, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocle %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1d, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocnh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1e, 0x30, 0x02, 0x00, 0xf3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocno %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocg %r0, 0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x0f, 0x00, 0x00, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocg %r0, 0, 15"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x00, 0x00, 0x80, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocg %r0, -524288, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x0f, 0xff, 0x7f, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocg %r0, 524287, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0x10, 0x00, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocg %r0, 0(%r1), 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x00, 0xf0, 0x00, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocg %r0, 0(%r15), 0"
+  -
+    input:
+      bytes: [ 0xeb, 0xf0, 0x00, 0x00, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocg %r15, 0, 0"
+  -
+    input:
+      bytes: [ 0xeb, 0x11, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgo %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x12, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x13, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgnle %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x14, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgl %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x15, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgnhe %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x16, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocglh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x17, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgne %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x18, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocge %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x19, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgnlh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1a, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocghe %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1b, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgnl %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1c, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgle %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1d, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgnh %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xeb, 0x1e, 0x30, 0x02, 0x00, 0xe3 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "stocgno %r1, 2(%r3)"
+  -
+    input:
+      bytes: [ 0xb9, 0xe7, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "xgrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe7, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "xgrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xe7, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "xgrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe7, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "xgrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xe7, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "xgrk %r7, %r8, %r9"
+  -
+    input:
+      bytes: [ 0xb9, 0xf7, 0x00, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "xrk %r0, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf7, 0xf0, 0x00 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "xrk %r0, %r0, %r15"
+  -
+    input:
+      bytes: [ 0xb9, 0xf7, 0x00, 0x0f ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "xrk %r0, %r15, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf7, 0x00, 0xf0 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "xrk %r15, %r0, %r0"
+  -
+    input:
+      bytes: [ 0xb9, 0xf7, 0x90, 0x78 ]
+      arch: "CS_ARCH_SYSZ"
+      options: [ ]
+    expected:
+      insns:
+        -
+          asm_text: "xrk %r7, %r8, %r9"

@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xf0, 0x00, 0xf0, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "udf #0"

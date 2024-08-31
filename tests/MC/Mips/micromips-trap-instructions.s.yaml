@@ -1,0 +1,55 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xc9, 0x41, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "teqi $t1, 17767"
+  -
+    input:
+      bytes: [ 0x29, 0x41, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgei $t1, 17767"
+  -
+    input:
+      bytes: [ 0x69, 0x41, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgeiu $t1, 17767"
+  -
+    input:
+      bytes: [ 0x09, 0x41, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlti $t1, 17767"
+  -
+    input:
+      bytes: [ 0x49, 0x41, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tltiu $t1, 17767"
+  -
+    input:
+      bytes: [ 0x89, 0x41, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tnei $t1, 17767"

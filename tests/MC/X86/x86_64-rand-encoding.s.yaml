@@ -1,0 +1,109 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x66, 0x0f, 0xc7, 0xf0 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdrandw %ax"
+  -
+    input:
+      bytes: [ 0x0f, 0xc7, 0xf0 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdrandl %eax"
+  -
+    input:
+      bytes: [ 0x48, 0x0f, 0xc7, 0xf0 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdrandq %rax"
+  -
+    input:
+      bytes: [ 0x66, 0x41, 0x0f, 0xc7, 0xf3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdrandw %r11w"
+  -
+    input:
+      bytes: [ 0x41, 0x0f, 0xc7, 0xf3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdrandl %r11d"
+  -
+    input:
+      bytes: [ 0x49, 0x0f, 0xc7, 0xf3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdrandq %r11"
+  -
+    input:
+      bytes: [ 0x66, 0x0f, 0xc7, 0xf8 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdseedw %ax"
+  -
+    input:
+      bytes: [ 0x0f, 0xc7, 0xf8 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdseedl %eax"
+  -
+    input:
+      bytes: [ 0x48, 0x0f, 0xc7, 0xf8 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdseedq %rax"
+  -
+    input:
+      bytes: [ 0x66, 0x41, 0x0f, 0xc7, 0xfb ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdseedw %r11w"
+  -
+    input:
+      bytes: [ 0x41, 0x0f, 0xc7, 0xfb ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdseedl %r11d"
+  -
+    input:
+      bytes: [ 0x49, 0x0f, 0xc7, 0xfb ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdseedq %r11"

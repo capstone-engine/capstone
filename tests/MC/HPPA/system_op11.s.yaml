@@ -1,0 +1,118 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x20, 0x01 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "break 1,1"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x04, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "sync"
+  -
+    input:
+      bytes: [ 0x00, 0x10, 0x04, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "syncdma"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x0c, 0x00 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "rfi"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x0c, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "rfir"
+  -
+    input:
+      bytes: [ 0x00, 0x1e, 0x0d, 0x61 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssm 0x1e,r1"
+  -
+    input:
+      bytes: [ 0x00, 0x1e, 0x0e, 0x61 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsm 0x1e,r1"
+  -
+    input:
+      bytes: [ 0x00, 0x01, 0x18, 0x60 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtsm r1"
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x50, 0xa2 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldsid (sr1,r1),rp"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x58, 0x20 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtsp flags,sr1"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x44, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfsp sr1,flags"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x18, 0x40 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtctl flags,rctr"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x18, 0x40 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtctl flags,rctr"

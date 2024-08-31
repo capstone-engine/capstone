@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xd6, 0x62, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvmsknz.b $xr22, $xr22"

@@ -1,0 +1,32 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0xf0, 0xf3, 0x20, 0x00, 0xf4, 0xf3, 0x20, 0x00, 0xf8, 0xf3, 0x60, 0x00, 0xf0, 0xf3, 0x60, 0x00, 0xf4, 0xf3, 0x60, 0x00, 0xf8, 0xf3, 0xa0, 0x00, 0xf0, 0xf3, 0xa0, 0x00, 0xf4, 0xf3, 0xe0, 0x00, 0xf0, 0xf3, 0xe0, 0x00, 0xf4, 0xf3, 0x20, 0x01, 0xf0, 0xf3, 0x60, 0x01, 0xf0, 0xf3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrev64.8 d16, d16"
+        -
+          asm_text: "vrev64.16 d16, d16"
+        -
+          asm_text: "vrev64.32 d16, d16"
+        -
+          asm_text: "vrev64.8 q8, q8"
+        -
+          asm_text: "vrev64.16 q8, q8"
+        -
+          asm_text: "vrev64.32 q8, q8"
+        -
+          asm_text: "vrev32.8 d16, d16"
+        -
+          asm_text: "vrev32.16 d16, d16"
+        -
+          asm_text: "vrev32.8 q8, q8"
+        -
+          asm_text: "vrev32.16 q8, q8"
+        -
+          asm_text: "vrev16.8 d16, d16"
+        -
+          asm_text: "vrev16.8 q8, q8"

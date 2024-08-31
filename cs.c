@@ -1110,9 +1110,8 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 			}
 			break;
 		case CS_OPT_NO_BRANCH_OFFSET:
-			if (handle->PrintBranchImmNotAsAddress)
-				return CS_ERR_OK;
-			break;
+			handle->PrintBranchImmNotAsAddress = value == CS_OPT_ON ? true : false;
+			return CS_ERR_OK;
 	}
 
 	if (!arch_configs[handle->arch].arch_option)

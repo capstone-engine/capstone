@@ -1,0 +1,12 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7f, 0x00, 0x60, 0xe1, 0x70, 0x00, 0x60, 0x01 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "smc #15"
+        -
+          asm_text: "smceq #0"

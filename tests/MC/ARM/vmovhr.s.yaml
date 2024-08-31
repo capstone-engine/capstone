@@ -1,0 +1,16 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x16, 0xee, 0x90, 0x09, 0x0a, 0xee, 0x90, 0x19, 0x01, 0xee, 0x10, 0xd9, 0x12, 0xee, 0x90, 0xd9 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_V8", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmov.f16 r0, s13"
+        -
+          asm_text: "vmov.f16 s21, r1"
+        -
+          asm_text: "vmov.f16 s2, sp"
+        -
+          asm_text: "vmov.f16 sp, s5"

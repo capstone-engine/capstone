@@ -15,7 +15,7 @@ Please refer to [intro.md](intro.md) for an introduction about this tool.
 
 ## Install
 
-Setup Python environment and Tree-sitter
+#### Setup Python environment and Tree-sitter
 
 ```
 cd <root-dir-Capstone>
@@ -26,12 +26,34 @@ python3 -m venv ./.venv
 source ./.venv/bin/activate
 ```
 
-Install Auto-Sync framework
+#### Install Auto-Sync framework
 
 ```
 cd suite/auto-sync/
 pip install -e .
 ```
+
+#### Clone Capstones LLVM fork and build `llvm-tblgen`
+
+```bash
+git clone https://github.com/capstone-engine/llvm-capstone vendor/llvm_root/
+cd llvm-capstone
+git checkout auto-sync
+mkdir build
+cd build
+# You can also build the "Release" version
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug ../llvm
+cmake --build . --target llvm-tblgen --config Debug
+cd ../../
+```
+
+#### Install `llvm-mc` and `FileCheck`
+
+Additionally, we need `llvm-mc` and `FileCheck` to generate our regression tests.
+You can build it, but it will take a lot of space on your hard drive.
+You can also get the binaries [here](https://releases.llvm.org/download.html) or
+install it with your package manager (usually something like `llvm-18-dev`).
+Just ensure it is in your `PATH` as `llvm-mc` and `FileCheck` (not as `llvm-mc-18` or similar though!).
 
 ## Architecture
 
@@ -48,20 +70,6 @@ Check if your architecture is supported.
 
 ```
 ./src/autosync/ASUpdater.py -h
-```
-
-Clone Capstones LLVM fork and build `llvm-tblgen`
-
-```
-git clone https://github.com/capstone-engine/llvm-capstone vendor/llvm_root/
-cd llvm-capstone
-git checkout auto-sync
-mkdir build
-cd build
-# You can also build the "Release" version
-cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug ../llvm
-cmake --build . --target llvm-tblgen --config Debug
-cd ../../
 ```
 
 Run the updater

@@ -1,0 +1,300 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xff, 0x1f, 0xdf, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v31.4h, v31.4h, v31.4h"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x1c, 0xdf, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v31.4h, v0.4h, v31.4h"
+
+  -
+    input:
+      bytes: [ 0x00, 0x1c, 0xc0, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v0.4h, v0.4h, v0.4h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x1f, 0xdf, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v31.8h, v31.8h, v31.8h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x1f, 0xc0, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v31.8h, v31.8h, v0.8h"
+
+  -
+    input:
+      bytes: [ 0x00, 0x1c, 0xc0, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v0.8h, v0.8h, v0.8h"
+
+  -
+    input:
+      bytes: [ 0xff, 0xdf, 0xbf, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v31.2s, v31.2s, v31.2s"
+
+  -
+    input:
+      bytes: [ 0x1f, 0xdc, 0xa0, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v31.2s, v0.2s, v0.2s"
+
+  -
+    input:
+      bytes: [ 0x00, 0xdc, 0xa0, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v0.2s, v0.2s, v0.2s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xdf, 0xbf, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v31.4s, v31.4s, v31.4s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xdf, 0xbf, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v0.4s, v31.4s, v31.4s"
+
+  -
+    input:
+      bytes: [ 0x00, 0xdc, 0xa0, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v0.4s, v0.4s, v0.4s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xdf, 0xff, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v31.2d, v31.2d, v31.2d"
+
+  -
+    input:
+      bytes: [ 0x00, 0xdc, 0xff, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v0.2d, v0.2d, v31.2d"
+
+  -
+    input:
+      bytes: [ 0x00, 0xdc, 0xe0, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famax v0.2d, v0.2d, v0.2d"
+
+  -
+    input:
+      bytes: [ 0xff, 0x1f, 0xdf, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v31.4h, v31.4h, v31.4h"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x1c, 0xdf, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v31.4h, v0.4h, v31.4h"
+
+  -
+    input:
+      bytes: [ 0x00, 0x1c, 0xc0, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v0.4h, v0.4h, v0.4h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x1f, 0xdf, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v31.8h, v31.8h, v31.8h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x1f, 0xc0, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v31.8h, v31.8h, v0.8h"
+
+  -
+    input:
+      bytes: [ 0x00, 0x1c, 0xc0, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v0.8h, v0.8h, v0.8h"
+
+  -
+    input:
+      bytes: [ 0xff, 0xdf, 0xbf, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v31.2s, v31.2s, v31.2s"
+
+  -
+    input:
+      bytes: [ 0x1f, 0xdc, 0xa0, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v31.2s, v0.2s, v0.2s"
+
+  -
+    input:
+      bytes: [ 0x00, 0xdc, 0xa0, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v0.2s, v0.2s, v0.2s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xdf, 0xbf, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v31.4s, v31.4s, v31.4s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xdf, 0xbf, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v0.4s, v31.4s, v31.4s"
+
+  -
+    input:
+      bytes: [ 0x00, 0xdc, 0xa0, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v0.4s, v0.4s, v0.4s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xdf, 0xff, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v31.2d, v31.2d, v31.2d"
+
+  -
+    input:
+      bytes: [ 0x00, 0xdc, 0xff, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v0.2d, v0.2d, v31.2d"
+
+  -
+    input:
+      bytes: [ 0x00, 0xdc, 0xe0, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "faminmax" ]
+    expected:
+      insns:
+        -
+          asm_text: "famin v0.2d, v0.2d, v0.2d"

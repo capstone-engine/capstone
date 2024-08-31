@@ -1,0 +1,60 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x18, 0x42, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "usublb z0.h, z1.b, z2.b"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x1b, 0x9f, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "usublb z29.s, z30.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x1b, 0xdf, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "usublb z31.d, z31.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x18, 0x42, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "usublb z0.h, z1.b, z2.b"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x1b, 0x9f, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "usublb z29.s, z30.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x1b, 0xdf, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "usublb z31.d, z31.s, z31.s"

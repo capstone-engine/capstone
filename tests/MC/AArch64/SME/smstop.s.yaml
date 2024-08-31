@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7f, 0x46, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x42, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop sm"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x44, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop za"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x42, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop sm"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x44, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop za"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x46, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x42, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop sm"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x44, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop za"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x42, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop sm"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x44, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "smstop za"

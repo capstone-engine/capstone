@@ -1,0 +1,212 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xf0, 0x10, 0xf0, 0x00, 0x48, 0xaf, 0xff, 0xff, 0x7f, 0xff, 0x11, 0xb0, 0x01, 0x37, 0x7f, 0xff, 0xff, 0xff, 0x12, 0x34, 0x56, 0x78, 0x01, 0x33, 0x10, 0x10, 0x10, 0x10, 0x32, 0x32, 0x32, 0x32, 0x4c, 0x00, 0x54, 0x04, 0x48, 0xe7, 0xe0, 0x30, 0x4c, 0xdf, 0x0c, 0x07, 0xd4, 0x40, 0x87, 0x5a, 0x4e, 0x71, 0x02, 0xb4, 0xc0, 0xde, 0xc0, 0xde, 0x5c, 0x00, 0x1d, 0x80, 0x71, 0x12, 0x01, 0x23, 0xf2, 0x3c, 0x44, 0x22, 0x40, 0x49, 0x0e, 0x56, 0x54, 0xc5, 0xf2, 0x3c, 0x44, 0x00, 0x44, 0x7a, 0x00, 0x00, 0xf2, 0x00, 0x0a, 0x28, 0x4e, 0xb9, 0x00, 0x00, 0x00, 0x12, 0x4e, 0x75  ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "fmovem #$0, (a0)"
+        details:
+          regs_read: [ a0 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_REG_BITS
+                register_bits: 0x0
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_REGI_ADDR
+      -
+        asm_text: "movem.w d0-d7/a0-a7, $7fff(a7)"
+        details:
+          regs_read: [ d0, d1, d2, d3, d4, d5, d6, d7, a0, a1, a2, a3, a4, a5, a6, a7 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_REG_BITS
+                register_bits: 0xffff
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: a7
+                  disp: 0x7fff
+                address_mode: M68K_AM_REGI_ADDR_DISP
+      -
+        asm_text: "move.b ([$7fffffff, a0], d0.w, $12345678), ([$10101010, a0, d0.w], $32323232)"
+        details:
+          regs_read: [ d0, a0 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: a0
+                  index_reg: d0
+                  index_size: -1
+                address_mode: M68K_AM_MEMI_POST_INDEX
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: a0
+                  index_reg: d0
+                  index_size: -1
+                address_mode: M68K_AM_MEMI_PRE_INDEX
+      -
+        asm_text: "mulu.l d0, d4:d5"
+        details:
+          regs_read: [ d0 ]
+          regs_write: [ d4, d5 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_REG
+                reg: d0
+              -
+                type: M68K_OP_REG_PAIR
+                reg_pair_0: d4
+                reg_pair_1: d5
+      -
+        asm_text: "movem.l d0-d2/a2-a3, -(a7)"
+        details:
+          regs_read: [ d0, d1, d2, a2, a3 ]
+          regs_write: [ a7 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_REG_BITS
+                register_bits: 0xc07
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_REGI_ADDR_PRE_DEC
+      -
+        asm_text: "movem.l (a7)+, d0-d2/a2-a3"
+        details:
+          regs_write: [ a7, d0, d1, d2, a2, a3 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_REGI_ADDR_POST_INC
+              -
+                type: M68K_OP_REG_BITS
+                register_bits: 0xc07
+      -
+        asm_text: "add.w d0, d2"
+        details:
+          regs_read: [ d0 ]
+          regs_write: [ d2 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_REG
+                reg: d0
+              -
+                type: M68K_OP_REG
+                reg: d2
+      -
+        asm_text: "or.w d3, (a2)+"
+        details:
+          regs_read: [ d3 ]
+          regs_write: [ a2 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_REG
+                reg: d3
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_REGI_ADDR_POST_INC
+      -
+        asm_text: "nop"
+      -
+        asm_text: "andi.l #$c0dec0de, (a4, d5.l * 4)"
+        details:
+          regs_read: [ d5, a4 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xc0dec0de
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: a4
+                  index_reg: d5
+                  index_size: 1
+                  scale: 4
+                address_mode: M68K_AM_AREGI_INDEX_BASE_DISP
+      -
+        asm_text: "move.b d0, ([a6, d7.w], $123)"
+        details:
+          regs_read: [ d0, d7, a6 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_REG
+                reg: d0
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: a6
+                  index_reg: d7
+                  index_size: -1
+                address_mode: M68K_AM_MEMI_PRE_INDEX
+      -
+        asm_text: "fadd.s #3.141500, fp0"
+        details:
+          regs_write: [ fp0 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_FP_SINGLE
+                simm: 3.141500
+              -
+                type: M68K_OP_REG
+                reg: fp0
+      -
+        asm_text: "scc.b d5"
+        details:
+          regs_write: [ d5 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_REG
+                reg: d5
+      -
+        asm_text: "fmove.s #1000.000000, fp0"
+        details:
+          regs_write: [ fp0 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_FP_SINGLE
+                simm: 1000.000000
+              -
+                type: M68K_OP_REG
+                reg: fp0
+      -
+        asm_text: "fsub fp2, fp4"
+        details:
+          regs_read: [ fp2 ]
+          regs_write: [ fp4 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_REG
+                reg: fp2
+              -
+                type: M68K_OP_REG
+                reg: fp4
+      -
+        asm_text: "jsr $12.l"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_ABSOLUTE_DATA_LONG
+      -
+        asm_text: "rts"

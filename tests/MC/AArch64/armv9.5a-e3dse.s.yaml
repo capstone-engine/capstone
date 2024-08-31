@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0xc1, 0x3e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, VDISR_EL3"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc1, 0x1e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr VDISR_EL3, x0"
+
+  -
+    input:
+      bytes: [ 0x60, 0x52, 0x3e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, VSESR_EL3"
+
+  -
+    input:
+      bytes: [ 0x60, 0x52, 0x1e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr VSESR_EL3, x0"

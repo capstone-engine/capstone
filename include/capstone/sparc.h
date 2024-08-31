@@ -64,6 +64,8 @@ typedef enum sparc_hint {
 	SPARC_HINT_A	= 1 << 0,	///< annul delay slot instruction
 	SPARC_HINT_PT	= 1 << 1,	///< branch taken
 	SPARC_HINT_PN	= 1 << 2,	///< branch NOT taken
+	SPARC_HINT_A_PN	= SPARC_HINT_A | SPARC_HINT_PN,
+	SPARC_HINT_A_PT	= SPARC_HINT_A | SPARC_HINT_PT,
 } sparc_hint;
 
 /// Operand type for instruction's operands

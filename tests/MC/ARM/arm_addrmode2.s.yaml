@@ -1,0 +1,44 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x02, 0x10, 0xb0, 0xe6, 0xa2, 0x11, 0xb0, 0xe6, 0x04, 0x10, 0xb0, 0xe4, 0x00, 0x10, 0xb0, 0xe4, 0x02, 0x10, 0xf0, 0xe6, 0xa2, 0x11, 0xf0, 0xe6, 0x04, 0x10, 0xf0, 0xe4, 0x00, 0x10, 0xf0, 0xe4, 0x02, 0x10, 0xa0, 0xe6, 0xa2, 0x11, 0xa0, 0xe6, 0x04, 0x10, 0xa0, 0xe4, 0x00, 0x10, 0xa0, 0xe4, 0x02, 0x10, 0xe0, 0xe6, 0xa2, 0x11, 0xe0, 0xe6, 0x04, 0x10, 0xe0, 0xe4, 0x00, 0x10, 0xe0, 0xe4, 0xa2, 0x11, 0xb0, 0xe7, 0xa2, 0x11, 0xf0, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldrt r1, [r0], r2"
+        -
+          asm_text: "ldrt r1, [r0], r2, lsr #3"
+        -
+          asm_text: "ldrt r1, [r0], #4"
+        -
+          asm_text: "ldrt r1, [r0], #0"
+        -
+          asm_text: "ldrbt r1, [r0], r2"
+        -
+          asm_text: "ldrbt r1, [r0], r2, lsr #3"
+        -
+          asm_text: "ldrbt r1, [r0], #4"
+        -
+          asm_text: "ldrbt r1, [r0], #0"
+        -
+          asm_text: "strt r1, [r0], r2"
+        -
+          asm_text: "strt r1, [r0], r2, lsr #3"
+        -
+          asm_text: "strt r1, [r0], #4"
+        -
+          asm_text: "strt r1, [r0], #0"
+        -
+          asm_text: "strbt r1, [r0], r2"
+        -
+          asm_text: "strbt r1, [r0], r2, lsr #3"
+        -
+          asm_text: "strbt r1, [r0], #4"
+        -
+          asm_text: "strbt r1, [r0], #0"
+        -
+          asm_text: "ldr r1, [r0, r2, lsr #3]!"
+        -
+          asm_text: "ldrb r1, [r0, r2, lsr #3]!"

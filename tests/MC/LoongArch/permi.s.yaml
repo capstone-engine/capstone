@@ -1,0 +1,28 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x87, 0x95, 0xe5, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpermi.w $xr7, $xr12, 0x65"
+  -
+    input:
+      bytes: [ 0xd1, 0x0c, 0xea, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpermi.d $xr17, $xr6, 0x83"
+  -
+    input:
+      bytes: [ 0xea, 0xe1, 0xee, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpermi.q $xr10, $xr15, 0xb8"

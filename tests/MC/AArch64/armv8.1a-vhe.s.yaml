@@ -1,0 +1,270 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TTBR1_EL2, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd0, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CONTEXTIDR_EL2, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe3, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CNTHV_TVAL_EL2, x0"
+
+  -
+    input:
+      bytes: [ 0x40, 0xe3, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CNTHV_CVAL_EL2, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0xe3, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CNTHV_CTL_EL2, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0x10, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCTLR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x40, 0x10, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CPACR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TTBR0_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TTBR1_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x40, 0x20, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TCR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0x51, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr AFSR0_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x51, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr AFSR1_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0x52, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr ESR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0x60, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr FAR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa2, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr MAIR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa3, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr AMAIR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr VBAR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd0, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CONTEXTIDR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe1, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CNTKCTL_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe2, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CNTP_TVAL_EL02, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0xe2, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CNTP_CTL_EL02, x0"
+
+  -
+    input:
+      bytes: [ 0x40, 0xe2, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CNTP_CVAL_EL02, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe3, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CNTV_TVAL_EL02, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0xe3, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CNTV_CTL_EL02, x0"
+
+  -
+    input:
+      bytes: [ 0x40, 0xe3, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr CNTV_CVAL_EL02, x0"
+
+  -
+    input:
+      bytes: [ 0x00, 0x40, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SPSR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr ELR_EL12, x0"

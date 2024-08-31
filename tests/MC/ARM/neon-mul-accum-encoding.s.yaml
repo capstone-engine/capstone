@@ -1,0 +1,84 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa1, 0x09, 0x42, 0xf2, 0xa1, 0x09, 0x52, 0xf2, 0xa1, 0x09, 0x62, 0xf2, 0xb1, 0x0d, 0x42, 0xf2, 0xe4, 0x29, 0x40, 0xf2, 0xe4, 0x29, 0x50, 0xf2, 0xe4, 0x29, 0x60, 0xf2, 0xf4, 0x2d, 0x40, 0xf2, 0xc3, 0x80, 0xe0, 0xf3, 0xa2, 0x08, 0xc3, 0xf2, 0xa2, 0x08, 0xd3, 0xf2, 0xa2, 0x08, 0xe3, 0xf2, 0xa2, 0x08, 0xc3, 0xf3, 0xa2, 0x08, 0xd3, 0xf3, 0xa2, 0x08, 0xe3, 0xf3, 0xa2, 0x09, 0xd3, 0xf2, 0xa2, 0x09, 0xe3, 0xf2, 0x47, 0x63, 0xdb, 0xf2, 0x4f, 0x63, 0xdb, 0xf2, 0x67, 0x63, 0xdb, 0xf2, 0x6f, 0x63, 0xdb, 0xf2, 0xa1, 0x09, 0x42, 0xf3, 0xa1, 0x09, 0x52, 0xf3, 0xa1, 0x09, 0x62, 0xf3, 0xb1, 0x0d, 0x62, 0xf2, 0xe4, 0x29, 0x40, 0xf3, 0xe4, 0x29, 0x50, 0xf3, 0xe4, 0x29, 0x60, 0xf3, 0xf4, 0x2d, 0x60, 0xf2, 0xe6, 0x84, 0x98, 0xf3, 0xa2, 0x0a, 0xc3, 0xf2, 0xa2, 0x0a, 0xd3, 0xf2, 0xa2, 0x0a, 0xe3, 0xf2, 0xa2, 0x0a, 0xc3, 0xf3, 0xa2, 0x0a, 0xd3, 0xf3, 0xa2, 0x0a, 0xe3, 0xf3, 0xa2, 0x0b, 0xd3, 0xf2, 0xa2, 0x0b, 0xe3, 0xf2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmla.i8 d16, d18, d17"
+        -
+          asm_text: "vmla.i16 d16, d18, d17"
+        -
+          asm_text: "vmla.i32 d16, d18, d17"
+        -
+          asm_text: "vmla.f32 d16, d18, d17"
+        -
+          asm_text: "vmla.i8 q9, q8, q10"
+        -
+          asm_text: "vmla.i16 q9, q8, q10"
+        -
+          asm_text: "vmla.i32 q9, q8, q10"
+        -
+          asm_text: "vmla.f32 q9, q8, q10"
+        -
+          asm_text: "vmla.i32 q12, q8, d3[0]"
+        -
+          asm_text: "vmlal.s8 q8, d19, d18"
+        -
+          asm_text: "vmlal.s16 q8, d19, d18"
+        -
+          asm_text: "vmlal.s32 q8, d19, d18"
+        -
+          asm_text: "vmlal.u8 q8, d19, d18"
+        -
+          asm_text: "vmlal.u16 q8, d19, d18"
+        -
+          asm_text: "vmlal.u32 q8, d19, d18"
+        -
+          asm_text: "vqdmlal.s16 q8, d19, d18"
+        -
+          asm_text: "vqdmlal.s32 q8, d19, d18"
+        -
+          asm_text: "vqdmlal.s16 q11, d11, d7[0]"
+        -
+          asm_text: "vqdmlal.s16 q11, d11, d7[1]"
+        -
+          asm_text: "vqdmlal.s16 q11, d11, d7[2]"
+        -
+          asm_text: "vqdmlal.s16 q11, d11, d7[3]"
+        -
+          asm_text: "vmls.i8 d16, d18, d17"
+        -
+          asm_text: "vmls.i16 d16, d18, d17"
+        -
+          asm_text: "vmls.i32 d16, d18, d17"
+        -
+          asm_text: "vmls.f32 d16, d18, d17"
+        -
+          asm_text: "vmls.i8 q9, q8, q10"
+        -
+          asm_text: "vmls.i16 q9, q8, q10"
+        -
+          asm_text: "vmls.i32 q9, q8, q10"
+        -
+          asm_text: "vmls.f32 q9, q8, q10"
+        -
+          asm_text: "vmls.i16 q4, q12, d6[2]"
+        -
+          asm_text: "vmlsl.s8 q8, d19, d18"
+        -
+          asm_text: "vmlsl.s16 q8, d19, d18"
+        -
+          asm_text: "vmlsl.s32 q8, d19, d18"
+        -
+          asm_text: "vmlsl.u8 q8, d19, d18"
+        -
+          asm_text: "vmlsl.u16 q8, d19, d18"
+        -
+          asm_text: "vmlsl.u32 q8, d19, d18"
+        -
+          asm_text: "vqdmlsl.s16 q8, d19, d18"
+        -
+          asm_text: "vqdmlsl.s32 q8, d19, d18"

@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x22, 0x43, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x2, PM"
+
+  -
+    input:
+      bytes: [ 0x23, 0x43, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr PM, x3"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x43, 0x01, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr PM, #1"

@@ -1,0 +1,12 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x02, 0x10, 0xb2, 0xf3, 0x44, 0x20, 0xb2, 0xf3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "vswp d1, d2"
+        -
+          asm_text: "vswp q1, q2"

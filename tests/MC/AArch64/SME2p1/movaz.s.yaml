@@ -1,0 +1,1680 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x0a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d, z1.d }, za.d[w8, 0, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x0a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d, z1.d }, za.d[w8, 0, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x54, 0x4a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z20.d, z21.d }, za.d[w10, 2, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x54, 0x4a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z20.d, z21.d }, za.d[w10, 2, vgx2]"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x6a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z22.d, z23.d }, za.d[w11, 5, vgx2]"
+
+  -
+    input:
+      bytes: [ 0xb6, 0x6a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z22.d, z23.d }, za.d[w11, 5, vgx2]"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x6a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z30.d, z31.d }, za.d[w11, 7, vgx2]"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x6a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z30.d, z31.d }, za.d[w11, 7, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x24, 0x0a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z4.d, z5.d }, za.d[w8, 1, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x24, 0x0a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z4.d, z5.d }, za.d[w8, 1, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x0a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d, z1.d }, za.d[w8, 1, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x0a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d, z1.d }, za.d[w8, 1, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x78, 0x4a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z24.d, z25.d }, za.d[w10, 3, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x78, 0x4a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z24.d, z25.d }, za.d[w10, 3, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x0a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d, z1.d }, za.d[w8, 4, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x0a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d, z1.d }, za.d[w8, 4, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x30, 0x4a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z16.d, z17.d }, za.d[w10, 1, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x30, 0x4a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z16.d, z17.d }, za.d[w10, 1, vgx2]"
+
+  -
+    input:
+      bytes: [ 0xdc, 0x0a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z28.d, z29.d }, za.d[w8, 6, vgx2]"
+
+  -
+    input:
+      bytes: [ 0xdc, 0x0a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z28.d, z29.d }, za.d[w8, 6, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x22, 0x6a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z2.d, z3.d }, za.d[w11, 1, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x22, 0x6a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z2.d, z3.d }, za.d[w11, 1, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x86, 0x2a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z6.d, z7.d }, za.d[w9, 4, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x86, 0x2a, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z6.d, z7.d }, za.d[w9, 4, vgx2]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x0e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d - z3.d }, za.d[w8, 0, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x0e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d - z3.d }, za.d[w8, 0, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x54, 0x4e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z20.d - z23.d }, za.d[w10, 2, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x54, 0x4e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z20.d - z23.d }, za.d[w10, 2, vgx4]"
+
+  -
+    input:
+      bytes: [ 0xb4, 0x6e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z20.d - z23.d }, za.d[w11, 5, vgx4]"
+
+  -
+    input:
+      bytes: [ 0xb4, 0x6e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z20.d - z23.d }, za.d[w11, 5, vgx4]"
+
+  -
+    input:
+      bytes: [ 0xfc, 0x6e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z28.d - z31.d }, za.d[w11, 7, vgx4]"
+
+  -
+    input:
+      bytes: [ 0xfc, 0x6e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z28.d - z31.d }, za.d[w11, 7, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x24, 0x0e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z4.d - z7.d }, za.d[w8, 1, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x24, 0x0e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z4.d - z7.d }, za.d[w8, 1, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x0e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d - z3.d }, za.d[w8, 1, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x0e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d - z3.d }, za.d[w8, 1, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x78, 0x4e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z24.d - z27.d }, za.d[w10, 3, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x78, 0x4e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z24.d - z27.d }, za.d[w10, 3, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x0e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d - z3.d }, za.d[w8, 4, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x0e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d - z3.d }, za.d[w8, 4, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x30, 0x4e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z16.d - z19.d }, za.d[w10, 1, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x30, 0x4e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z16.d - z19.d }, za.d[w10, 1, vgx4]"
+
+  -
+    input:
+      bytes: [ 0xdc, 0x0e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z28.d - z31.d }, za.d[w8, 6, vgx4]"
+
+  -
+    input:
+      bytes: [ 0xdc, 0x0e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z28.d - z31.d }, za.d[w8, 6, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x6e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d - z3.d }, za.d[w11, 1, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x6e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z0.d - z3.d }, za.d[w11, 1, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x84, 0x2e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z4.d - z7.d }, za.d[w9, 4, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x84, 0x2e, 0x06, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz { z4.d - z7.d }, za.d[w9, 4, vgx4]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x02, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.q, za0h.q[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x43, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z21.q, za10h.q[w14, 0]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x63, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z23.q, za13h.q[w15, 0]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x63, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z31.q, za15h.q[w15, 0]"
+
+  -
+    input:
+      bytes: [ 0x25, 0x02, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z5.q, za1h.q[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x21, 0x02, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z1.q, za1h.q[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x78, 0x42, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z24.q, za3h.q[w14, 0]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x03, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.q, za12h.q[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x31, 0x42, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z17.q, za1h.q[w14, 0]"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x02, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z29.q, za6h.q[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x22, 0x63, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z2.q, za9h.q[w15, 0]"
+
+  -
+    input:
+      bytes: [ 0x87, 0x23, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z7.q, za12h.q[w13, 0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.q, za0v.q[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0xc3, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z21.q, za10v.q[w14, 0]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xe3, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z23.q, za13v.q[w15, 0]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xe3, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z31.q, za15v.q[w15, 0]"
+
+  -
+    input:
+      bytes: [ 0x25, 0x82, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z5.q, za1v.q[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x21, 0x82, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z1.q, za1v.q[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x78, 0xc2, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z24.q, za3v.q[w14, 0]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x83, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.q, za12v.q[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x31, 0xc2, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z17.q, za1v.q[w14, 0]"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x82, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z29.q, za6v.q[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x22, 0xe3, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z2.q, za9v.q[w15, 0]"
+
+  -
+    input:
+      bytes: [ 0x87, 0xa3, 0xc3, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z7.q, za12v.q[w13, 0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x02, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.h, za0h.h[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x43, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z21.h, za1h.h[w14, 2]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x63, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z23.h, za1h.h[w15, 5]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x63, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z31.h, za1h.h[w15, 7]"
+
+  -
+    input:
+      bytes: [ 0x25, 0x02, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z5.h, za0h.h[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x21, 0x02, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z1.h, za0h.h[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x78, 0x42, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z24.h, za0h.h[w14, 3]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x03, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.h, za1h.h[w12, 4]"
+
+  -
+    input:
+      bytes: [ 0x31, 0x42, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z17.h, za0h.h[w14, 1]"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x02, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z29.h, za0h.h[w12, 6]"
+
+  -
+    input:
+      bytes: [ 0x22, 0x63, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z2.h, za1h.h[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0x87, 0x23, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z7.h, za1h.h[w13, 4]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.h, za0v.h[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0xc3, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z21.h, za1v.h[w14, 2]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xe3, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z23.h, za1v.h[w15, 5]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xe3, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z31.h, za1v.h[w15, 7]"
+
+  -
+    input:
+      bytes: [ 0x25, 0x82, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z5.h, za0v.h[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x21, 0x82, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z1.h, za0v.h[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x78, 0xc2, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z24.h, za0v.h[w14, 3]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x83, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.h, za1v.h[w12, 4]"
+
+  -
+    input:
+      bytes: [ 0x31, 0xc2, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z17.h, za0v.h[w14, 1]"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x82, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z29.h, za0v.h[w12, 6]"
+
+  -
+    input:
+      bytes: [ 0x22, 0xe3, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z2.h, za1v.h[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0x87, 0xa3, 0x42, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z7.h, za1v.h[w13, 4]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x02, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.s, za0h.s[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x43, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z21.s, za2h.s[w14, 2]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x63, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z23.s, za3h.s[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x63, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z31.s, za3h.s[w15, 3]"
+
+  -
+    input:
+      bytes: [ 0x25, 0x02, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z5.s, za0h.s[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x21, 0x02, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z1.s, za0h.s[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x78, 0x42, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z24.s, za0h.s[w14, 3]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x03, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.s, za3h.s[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x31, 0x42, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z17.s, za0h.s[w14, 1]"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x02, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z29.s, za1h.s[w12, 2]"
+
+  -
+    input:
+      bytes: [ 0x22, 0x63, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z2.s, za2h.s[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0x87, 0x23, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z7.s, za3h.s[w13, 0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.s, za0v.s[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0xc3, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z21.s, za2v.s[w14, 2]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xe3, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z23.s, za3v.s[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xe3, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z31.s, za3v.s[w15, 3]"
+
+  -
+    input:
+      bytes: [ 0x25, 0x82, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z5.s, za0v.s[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x21, 0x82, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z1.s, za0v.s[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x78, 0xc2, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z24.s, za0v.s[w14, 3]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x83, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.s, za3v.s[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x31, 0xc2, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z17.s, za0v.s[w14, 1]"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x82, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z29.s, za1v.s[w12, 2]"
+
+  -
+    input:
+      bytes: [ 0x22, 0xe3, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z2.s, za2v.s[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0x87, 0xa3, 0x82, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z7.s, za3v.s[w13, 0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x02, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.d, za0h.d[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x43, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z21.d, za5h.d[w14, 0]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x63, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z23.d, za6h.d[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x63, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z31.d, za7h.d[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0x25, 0x02, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z5.d, za0h.d[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x21, 0x02, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z1.d, za0h.d[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x78, 0x42, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z24.d, za1h.d[w14, 1]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x03, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.d, za6h.d[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x31, 0x42, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z17.d, za0h.d[w14, 1]"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x02, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z29.d, za3h.d[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x22, 0x63, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z2.d, za4h.d[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0x87, 0x23, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z7.d, za6h.d[w13, 0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.d, za0v.d[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0xc3, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z21.d, za5v.d[w14, 0]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xe3, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z23.d, za6v.d[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xe3, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z31.d, za7v.d[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0x25, 0x82, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z5.d, za0v.d[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x21, 0x82, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z1.d, za0v.d[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x78, 0xc2, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z24.d, za1v.d[w14, 1]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x83, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.d, za6v.d[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x31, 0xc2, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z17.d, za0v.d[w14, 1]"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x82, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z29.d, za3v.d[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x22, 0xe3, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z2.d, za4v.d[w15, 1]"
+
+  -
+    input:
+      bytes: [ 0x87, 0xa3, 0xc2, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z7.d, za6v.d[w13, 0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x02, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.b, za0h.b[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0x43, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z21.b, za0h.b[w14, 10]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x63, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z23.b, za0h.b[w15, 13]"
+
+  -
+    input:
+      bytes: [ 0xff, 0x63, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z31.b, za0h.b[w15, 15]"
+
+  -
+    input:
+      bytes: [ 0x25, 0x02, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z5.b, za0h.b[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x21, 0x02, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z1.b, za0h.b[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x78, 0x42, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z24.b, za0h.b[w14, 3]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x03, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.b, za0h.b[w12, 12]"
+
+  -
+    input:
+      bytes: [ 0x31, 0x42, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z17.b, za0h.b[w14, 1]"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x02, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z29.b, za0h.b[w12, 6]"
+
+  -
+    input:
+      bytes: [ 0x22, 0x63, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z2.b, za0h.b[w15, 9]"
+
+  -
+    input:
+      bytes: [ 0x87, 0x23, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z7.b, za0h.b[w13, 12]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.b, za0v.b[w12, 0]"
+
+  -
+    input:
+      bytes: [ 0x55, 0xc3, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z21.b, za0v.b[w14, 10]"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xe3, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z23.b, za0v.b[w15, 13]"
+
+  -
+    input:
+      bytes: [ 0xff, 0xe3, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z31.b, za0v.b[w15, 15]"
+
+  -
+    input:
+      bytes: [ 0x25, 0x82, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z5.b, za0v.b[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x21, 0x82, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z1.b, za0v.b[w12, 1]"
+
+  -
+    input:
+      bytes: [ 0x78, 0xc2, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z24.b, za0v.b[w14, 3]"
+
+  -
+    input:
+      bytes: [ 0x80, 0x83, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z0.b, za0v.b[w12, 12]"
+
+  -
+    input:
+      bytes: [ 0x31, 0xc2, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z17.b, za0v.b[w14, 1]"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x82, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z29.b, za0v.b[w12, 6]"
+
+  -
+    input:
+      bytes: [ 0x22, 0xe3, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z2.b, za0v.b[w15, 9]"
+
+  -
+    input:
+      bytes: [ 0x87, 0xa3, 0x02, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "movaz z7.b, za0v.b[w13, 12]"

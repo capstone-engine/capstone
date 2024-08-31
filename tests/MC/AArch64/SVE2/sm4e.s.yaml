@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe0, 0xe3, 0x23, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2-sm4" ]
+    expected:
+      insns:
+        -
+          asm_text: "sm4e z0.s, z0.s, z31.s"

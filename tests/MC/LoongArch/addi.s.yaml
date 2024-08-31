@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xc1, 0x0a, 0x8a, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvaddi.bu $xr1, $xr22, 2"
+  -
+    input:
+      bytes: [ 0x43, 0xf5, 0x8a, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvaddi.hu $xr3, $xr10, 0x1d"
+  -
+    input:
+      bytes: [ 0x65, 0x0d, 0x8b, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvaddi.wu $xr5, $xr11, 3"
+  -
+    input:
+      bytes: [ 0x06, 0x9c, 0x8b, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvaddi.du $xr6, $xr0, 7"

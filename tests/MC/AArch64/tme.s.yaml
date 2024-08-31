@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x63, 0x30, 0x23, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "tme" ]
+    expected:
+      insns:
+        -
+          asm_text: "tstart x3"
+
+  -
+    input:
+      bytes: [ 0x64, 0x31, 0x23, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "tme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ttest x4"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x30, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "tme" ]
+    expected:
+      insns:
+        -
+          asm_text: "tcommit"
+
+  -
+    input:
+      bytes: [ 0x80, 0x46, 0x62, 0xd4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "tme" ]
+    expected:
+      insns:
+        -
+          asm_text: "tcancel #0x1234"

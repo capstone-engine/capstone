@@ -1965,7 +1965,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_TSB> end
-	AArch64_TSB_ENDING,
+	AARCH64_TSB_ENDING,
 } aarch64_tsb;
 
 typedef union {
@@ -2788,9 +2788,12 @@ typedef enum {
 	AARCH64_SME_OP_TILE_VEC, ///< SME operand is a tile indexed by a register and/or immediate
 } aarch64_sme_op_type;
 
+#define AARCH64_SLICE_IMM_INVALID UINT16_MAX
+#define AARCH64_SLICE_IMM_RANGE_INVALID UINT8_MAX
+
 typedef struct {
-	int8_t first;
-	int8_t offset;
+	uint8_t first;
+	uint8_t offset;
 } aarch64_imm_range;
 
 /// SME Instruction's matrix operand
@@ -2799,9 +2802,9 @@ typedef struct {
   aarch64_reg tile; ///< Matrix tile register
   aarch64_reg slice_reg; ///< slice index reg
 	union {
-		int8_t imm;
-		aarch64_imm_range imm_range;
-	} slice_offset; ///< slice index offset. Is set to -1 if invalid.
+		uint16_t imm; ///< Invalid if equal to AARCH64_SLICE_IMM_INVALID
+		aarch64_imm_range imm_range; ///< Members are set to AARCH64_SLICE_IMM_RANGE_INVALID if invalid.
+	} slice_offset; ///< slice index offset.
 	bool has_range_offset; ///< If true, the offset is a range.
   bool is_vertical;	///< Flag if slice is vertical or horizontal
 } aarch64_op_sme;

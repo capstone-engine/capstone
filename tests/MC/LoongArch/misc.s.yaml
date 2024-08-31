@@ -1,0 +1,46 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x64, 0x00, 0x2b, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "syscall 0x64"
+  -
+    input:
+      bytes: [ 0xc7, 0x00, 0x2a, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "break 0xc7"
+  -
+    input:
+      bytes: [ 0x98, 0x60, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdtimel.w $s1, $a0"
+  -
+    input:
+      bytes: [ 0xab, 0x64, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rdtimeh.w $a7, $a1"
+  -
+    input:
+      bytes: [ 0x03, 0x6d, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "cpucfg $sp, $a4"

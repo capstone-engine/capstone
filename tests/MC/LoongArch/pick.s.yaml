@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x76, 0x1b, 0x1e, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickev.b $xr22, $xr27, $xr6"
+  -
+    input:
+      bytes: [ 0x6e, 0x8d, 0x1e, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickev.h $xr14, $xr11, $xr3"
+  -
+    input:
+      bytes: [ 0x9e, 0x37, 0x1f, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickev.w $xr30, $xr28, $xr13"
+  -
+    input:
+      bytes: [ 0x01, 0xa7, 0x1f, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickev.d $xr1, $xr24, $xr9"
+  -
+    input:
+      bytes: [ 0xce, 0x3e, 0x20, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickod.b $xr14, $xr22, $xr15"
+  -
+    input:
+      bytes: [ 0xbf, 0xb2, 0x20, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickod.h $xr31, $xr21, $xr12"
+  -
+    input:
+      bytes: [ 0x1f, 0x78, 0x21, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickod.w $xr31, $xr0, $xr30"
+  -
+    input:
+      bytes: [ 0xaa, 0xc0, 0x21, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickod.d $xr10, $xr5, $xr16"

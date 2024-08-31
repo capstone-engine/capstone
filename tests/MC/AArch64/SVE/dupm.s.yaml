@@ -1,0 +1,200 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa5, 0x2e, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z5.b, #0xf9"
+
+  -
+    input:
+      bytes: [ 0xa5, 0x2e, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z5.b, #0xf9"
+
+  -
+    input:
+      bytes: [ 0xa5, 0x2e, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z5.b, #0xf9"
+
+  -
+    input:
+      bytes: [ 0xa5, 0x2e, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z5.b, #0xf9"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x6d, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z23.h, #0xfff9"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x6d, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z23.h, #0xfff9"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x6d, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z23.h, #0xfff9"
+
+  -
+    input:
+      bytes: [ 0xa0, 0xeb, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z0.s, #0xfffffff9"
+
+  -
+    input:
+      bytes: [ 0xa0, 0xeb, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z0.s, #0xfffffff9"
+
+  -
+    input:
+      bytes: [ 0xa0, 0xef, 0xc3, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z0.d, #0xfffffffffffffff9"
+
+  -
+    input:
+      bytes: [ 0xa5, 0x2e, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z5.b, #0xf9"
+
+  -
+    input:
+      bytes: [ 0xa5, 0x2e, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z5.b, #0xf9"
+
+  -
+    input:
+      bytes: [ 0xa5, 0x2e, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z5.b, #0xf9"
+
+  -
+    input:
+      bytes: [ 0xa5, 0x2e, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z5.b, #0xf9"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x6d, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z23.h, #0xfff9"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x6d, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z23.h, #0xfff9"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x6d, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z23.h, #0xfff9"
+
+  -
+    input:
+      bytes: [ 0xa0, 0xeb, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z0.s, #0xfffffff9"
+
+  -
+    input:
+      bytes: [ 0xa0, 0xeb, 0xc0, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z0.s, #0xfffffff9"
+
+  -
+    input:
+      bytes: [ 0xa0, 0xef, 0xc3, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "dupm z0.d, #0xfffffffffffffff9"

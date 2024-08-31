@@ -1,17 +1,6 @@
 /* Capstone Disassembly Engine */
 /* M68K Backend by Daniel Collin <daniel@collin.com> 2015-2016 */
 
-#ifdef _MSC_VER
-// Disable security warnings for strcat & sprintf
-#ifndef _CRT_SECURE_NO_WARNINGS
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
-//Banned API Usage : strcat / sprintf is a Banned API as listed in dontuse.h for
-//security purposes.
-#pragma warning(disable:28719)
-#endif
-
 #include <stdio.h>	// DEBUG
 #include <stdlib.h>
 #include <string.h>
@@ -78,7 +67,7 @@ static const char* getRegName(m68k_reg reg)
 	return s_reg_names[(int)reg];
 }
 
-static void printRegbitsRange(char* buffer, uint32_t data, const char* prefix)
+static void printRegbitsRange(char* buffer, size_t buf_len, uint32_t data, const char* prefix)
 {
 	unsigned int first = 0;
 	unsigned int run_length = 0;
@@ -95,11 +84,11 @@ static void printRegbitsRange(char* buffer, uint32_t data, const char* prefix)
 			}
 
 			if (buffer[0] != 0)
-				strcat(buffer, "/");
+				strncat(buffer, "/", buf_len - 1);
 
-			sprintf(buffer + strlen(buffer), "%s%d", prefix, first);
+			snprintf(buffer + strlen(buffer), buf_len, "%s%d", prefix, first);
 			if (run_length > 0)
-				sprintf(buffer + strlen(buffer), "-%s%d", prefix, first + run_length);
+				snprintf(buffer + strlen(buffer), buf_len, "-%s%d", prefix, first + run_length);
 		}
 	}
 }
@@ -116,9 +105,9 @@ static void registerBits(SStream* O, const cs_m68k_op* op)
 		return;
 	}
 
-	printRegbitsRange(buffer, data & 0xff, "d");
-	printRegbitsRange(buffer, (data >> 8) & 0xff, "a");
-	printRegbitsRange(buffer, (data >> 16) & 0xff, "fp");
+	printRegbitsRange(buffer, sizeof(buffer), data & 0xff, "d");
+	printRegbitsRange(buffer, sizeof(buffer), (data >> 8) & 0xff, "a");
+	printRegbitsRange(buffer, sizeof(buffer), (data >> 16) & 0xff, "fp");
 
 	SStream_concat(O, "%s", buffer);
 }
@@ -385,4 +374,25 @@ const char *M68K_group_name(csh handle, unsigned int id)
 	return NULL;
 #endif
 }
+
+#ifndef CAPSTONE_DIET
+void M68K_reg_access(const cs_insn *insn,
+		cs_regs regs_read, uint8_t *regs_read_count,
+		cs_regs regs_write, uint8_t *regs_write_count)
+{
+	uint8_t read_count, write_count;
+
+	read_count = insn->detail->regs_read_count;
+	write_count = insn->detail->regs_write_count;
+
+	// implicit registers
+	memcpy(regs_read, insn->detail->regs_read,
+	       read_count * sizeof(insn->detail->regs_read[0]));
+	memcpy(regs_write, insn->detail->regs_write,
+	       write_count * sizeof(insn->detail->regs_write[0]));
+
+	*regs_read_count = read_count;
+	*regs_write_count = write_count;
+}
+#endif
 

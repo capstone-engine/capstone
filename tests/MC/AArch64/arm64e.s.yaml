@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64e--" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacia x0, x1"

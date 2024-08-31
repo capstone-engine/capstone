@@ -1,0 +1,128 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xfe, 0x0f, 0xfe, 0x17, 0x13, 0x17, 0xc6, 0xfe, 0xec, 0x17, 0x97, 0xf8, 0xec, 0x4f, 0x1f, 0xfd, 0xec, 0x37, 0x07, 0xf2, 0x45, 0x5b, 0xf9, 0xfa, 0x02, 0x06, 0x1b, 0x10, 0x09, 0xfd, 0xec, 0xa7  ]
+      arch: "xcore"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "get r11, ed"
+        details:
+          xcore:
+            operands:
+              -
+                type: XCORE_OP_REG
+                reg: r11
+              -
+                type: XCORE_OP_REG
+                reg: ed
+      -
+        asm_text: "ldw et, sp[4]"
+        details:
+          xcore:
+            operands:
+              -
+                type: XCORE_OP_REG
+                reg: et
+              -
+                type: XCORE_OP_MEM
+                mem_base: sp
+                mem_disp: 0x4
+      -
+        asm_text: "setd res[r3], r4"
+        details:
+          xcore:
+            operands:
+              -
+                type: XCORE_OP_REG
+                reg: r4
+      -
+        asm_text: "init t[r2]:lr, r1"
+        details:
+          xcore:
+            operands:
+              -
+                type: XCORE_OP_MEM
+                mem_base: r2
+                mem_index: lr
+              -
+                type: XCORE_OP_REG
+                reg: r1
+      -
+        asm_text: "divu r9, r1, r3"
+        details:
+          xcore:
+            operands:
+              -
+                type: XCORE_OP_REG
+                reg: r9
+              -
+                type: XCORE_OP_REG
+                reg: r1
+              -
+                type: XCORE_OP_REG
+                reg: r3
+      -
+        asm_text: "lda16 r9, r3[-r11]"
+        details:
+          xcore:
+            operands:
+              -
+                type: XCORE_OP_REG
+                reg: r9
+      -
+        asm_text: "ldw dp, dp[0x81c5]"
+        details:
+          xcore:
+            operands:
+              -
+                type: XCORE_OP_REG
+                reg: dp
+      -
+        asm_text: "lmul r11, r0, r2, r5, r8, r10"
+        details:
+          xcore:
+            operands:
+              -
+                type: XCORE_OP_REG
+                reg: r11
+              -
+                type: XCORE_OP_REG
+                reg: r0
+              -
+                type: XCORE_OP_REG
+                reg: r2
+              -
+                type: XCORE_OP_REG
+                reg: r5
+              -
+                type: XCORE_OP_REG
+                reg: r8
+              -
+                type: XCORE_OP_REG
+                reg: r10
+      -
+        asm_text: "add r1, r2, r3"
+        details:
+          xcore:
+            operands:
+              -
+                type: XCORE_OP_REG
+                reg: r1
+              -
+                type: XCORE_OP_REG
+                reg: r2
+              -
+                type: XCORE_OP_REG
+                reg: r3
+      -
+        asm_text: "ldaw r8, r2[-9]"
+        details:
+          xcore:
+            operands:
+              -
+                type: XCORE_OP_REG
+                reg: r8
+

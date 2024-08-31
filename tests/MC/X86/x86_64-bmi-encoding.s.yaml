@@ -1,0 +1,451 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xc4, 0xc2, 0x28, 0xf3, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsmskl %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0xc2, 0xa8, 0xf3, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsmskq %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0xe2, 0x28, 0xf3, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsmskl (%rax), %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0xe2, 0xa8, 0xf3, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsmskq (%rax), %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0xc2, 0x28, 0xf3, 0xdb ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsil %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0xc2, 0xa8, 0xf3, 0xdb ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsiq %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0xe2, 0x28, 0xf3, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsil (%rax), %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0xe2, 0xa8, 0xf3, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsiq (%rax), %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0xc2, 0x28, 0xf3, 0xcb ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsrl %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0xc2, 0xa8, 0xf3, 0xcb ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsrq %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0xe2, 0x28, 0xf3, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsrl (%rax), %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0xe2, 0xa8, 0xf3, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "blsrq (%rax), %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x20, 0xf2, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "andnl (%rax), %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa0, 0xf2, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "andnq (%rax), %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x18, 0xf7, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bextrl %r12d, (%rax), %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x18, 0xf7, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bextrl %r12d, %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x98, 0xf7, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bextrq %r12, (%rax), %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x98, 0xf7, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bextrq %r12, %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x18, 0xf5, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bzhil %r12d, (%rax), %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x18, 0xf5, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bzhil %r12d, %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x98, 0xf5, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bzhiq %r12, (%rax), %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x98, 0xf5, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "bzhiq %r12, %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x22, 0xf5, 0xd4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pextl %r12d, %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x22, 0xf5, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pextl (%rax), %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa2, 0xf5, 0xd4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pextq %r12, %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa2, 0xf5, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pextq (%rax), %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x23, 0xf5, 0xd4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdepl %r12d, %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x23, 0xf5, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdepl (%rax), %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa3, 0xf5, 0xd4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdepq %r12, %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa3, 0xf5, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "pdepq (%rax), %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x23, 0xf6, 0xd4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulxl %r12d, %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x23, 0xf6, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulxl (%rax), %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa3, 0xf6, 0xd4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulxq %r12, %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa3, 0xf6, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulxq (%rax), %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x43, 0x7b, 0xf0, 0xd4, 0x0a ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rorxl $10, %r12d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x63, 0x7b, 0xf0, 0x10, 0x1f ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rorxl $31, (%rax), %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x43, 0xfb, 0xf0, 0xd4, 0x01 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rorxq $1, %r12, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x63, 0xfb, 0xf0, 0x10, 0x3f ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "rorxq $63, (%rax), %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x19, 0xf7, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "shlxl %r12d, (%rax), %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x19, 0xf7, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "shlxl %r12d, %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x99, 0xf7, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "shlxq %r12, (%rax), %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x99, 0xf7, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "shlxq %r12, %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x1a, 0xf7, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sarxl %r12d, (%rax), %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x1a, 0xf7, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sarxl %r12d, %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x9a, 0xf7, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sarxq %r12, (%rax), %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x9a, 0xf7, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "sarxq %r12, %r11, %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x1b, 0xf7, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "shrxl %r12d, (%rax), %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x1b, 0xf7, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "shrxl %r12d, %r11d, %r10d"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x9b, 0xf7, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "shrxq %r12, (%rax), %r10"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x9b, 0xf7, 0xd3 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "shrxq %r12, %r11, %r10"

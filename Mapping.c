@@ -400,3 +400,44 @@ void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_i
 	MI->flat_insn->alias_id = name2id(alias_mnem_id_map, map_size, alias_mnem);
 }
 
+/// Does a binary search over the given map and searches for @id.
+/// If @id exists in @map, it sets @found to true and returns
+/// the value for the @id.
+/// Otherwise, @found is set to false and it returns UINT64_MAX.
+///
+/// Of course it assumes the map is sorted.
+uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,
+			     const char *id, bool *found)
+{
+	size_t l = 0;
+	size_t r = map_len;
+	size_t id_len = strlen(id);
+
+	while (l <= r) {
+		size_t m = (l + r) / 2;
+		size_t j = 0;
+		size_t i = 0;
+		size_t entry_len = strlen(map[m].str);
+
+		while (j < entry_len && i < id_len && id[i] == map[m].str[j]) {
+			++j, ++i;
+		}
+		if (i == id_len && j == entry_len) {
+			*found = true;
+			return map[m].val;
+		}
+
+		if (id[i] < map[m].str[j]) {
+			r = m - 1;
+		} else if (id[i] > map[m].str[j]) {
+			l = m + 1;
+		}
+		if (m == 0 || (l + r) / 2 >= map_len) {
+			// Break before we go out of bounds.
+			break;
+		}
+	}
+	*found = false;
+	return UINT64_MAX;
+}
+

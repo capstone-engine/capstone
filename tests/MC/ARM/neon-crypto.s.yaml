@@ -1,0 +1,38 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x42, 0x03, 0xb0, 0xf3, 0x02, 0x03, 0xb0, 0xf3, 0xc2, 0x03, 0xb0, 0xf3, 0x82, 0x03, 0xb0, 0xf3, 0xc2, 0x02, 0xb9, 0xf3, 0x82, 0x03, 0xba, 0xf3, 0xc2, 0x03, 0xba, 0xf3, 0x44, 0x0c, 0x02, 0xf2, 0x44, 0x0c, 0x22, 0xf2, 0x44, 0x0c, 0x12, 0xf2, 0x44, 0x0c, 0x32, 0xf2, 0x44, 0x0c, 0x02, 0xf3, 0x44, 0x0c, 0x12, 0xf3, 0x44, 0x0c, 0x22, 0xf3, 0xa1, 0x0e, 0xe0, 0xf2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_V8", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "aesd.8 q0, q1"
+        -
+          asm_text: "aese.8 q0, q1"
+        -
+          asm_text: "aesimc.8 q0, q1"
+        -
+          asm_text: "aesmc.8 q0, q1"
+        -
+          asm_text: "sha1h.32 q0, q1"
+        -
+          asm_text: "sha1su1.32 q0, q1"
+        -
+          asm_text: "sha256su0.32 q0, q1"
+        -
+          asm_text: "sha1c.32 q0, q1, q2"
+        -
+          asm_text: "sha1m.32 q0, q1, q2"
+        -
+          asm_text: "sha1p.32 q0, q1, q2"
+        -
+          asm_text: "sha1su0.32 q0, q1, q2"
+        -
+          asm_text: "sha256h.32 q0, q1, q2"
+        -
+          asm_text: "sha256h2.32 q0, q1, q2"
+        -
+          asm_text: "sha256su1.32 q0, q1, q2"
+        -
+          asm_text: "vmull.p64 q8, d16, d17"

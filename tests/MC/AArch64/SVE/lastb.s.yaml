@@ -1,0 +1,160 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x21, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb w0, p7, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x61, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb w0, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xa1, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb w0, p7, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xe1, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb x0, p7, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x23, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb b0, p7, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x63, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb h0, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xa3, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb s0, p7, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xe3, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb d0, p7, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x21, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb w0, p7, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x61, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb w0, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xa1, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb w0, p7, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xe1, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb x0, p7, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x23, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb b0, p7, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x63, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb h0, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xa3, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb s0, p7, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xe3, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "lastb d0, p7, z31.d"
