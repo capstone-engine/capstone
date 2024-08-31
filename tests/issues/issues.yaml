@@ -4815,3 +4815,24 @@ test_cases:
         details:
           sparc:
             cc: SPARC_CC_ICC_NE
+  -
+    input:
+      name: "issue 2424"
+      bytes: [ 0x32,0x11,0x92,0x00 ]
+      arch: "CS_ARCH_SH"
+      options: [ CS_MODE_SH2A, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movu.w @(1024,r1),r2"
+        details:
+          sh:
+            operands:
+              -
+                type: SH_OP_MEM
+                mem_disp: 0x400
+                reg: r1
+              -
+                type: SH_OP_REG
+                reg: r2
