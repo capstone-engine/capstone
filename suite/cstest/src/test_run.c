@@ -294,13 +294,18 @@ static void eval_test_cases(TestFile **test_files, TestRunStats *stats)
 			utest_table[tci].test_func = cstest_unit_test;
 		}
 	}
+	assert(tci == stats->tc_total);
 	// Use private function here, because the API takes only constant tables.
 	int failed_tests = _cmocka_run_group_tests(
 		"All test cases", utest_table, stats->tc_total, NULL, NULL);
 	for (size_t i = 0; i < stats->tc_total; ++i) {
-		cs_mem_free((char *)utest_table[i].name);
 		UnitTestState *ustate = utest_table[i].initial_state;
+		if (!ustate) {
+			// Skipped test case
+			continue;
+		}
 		stats->decoded_insns += ustate->decoded_insns;
+		cs_mem_free((char *)utest_table[i].name);
 		cs_mem_free(utest_table[i].initial_state);
 	}
 	cs_mem_free(utest_table);
