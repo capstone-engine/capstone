@@ -2727,7 +2727,7 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 		setup_sme_operand(MI);
 		va_list args;
 		va_start(args, vas);
-		int Tile = va_arg(args, int);
+		int Tile = va_arg(args, int); // NOLINT(clang-analyzer-valist.Uninitialized)
 		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.type = AARCH64_SME_OP_TILE;
 		AArch64_get_detail_op(MI, 0)->sme.tile = Tile;
@@ -2766,7 +2766,7 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 		       AARCH64_SLICE_IMM_INVALID);
 		va_list args;
 		va_start(args, vas);
-		uint16_t offset = va_arg(args, uint32_t);
+		uint16_t offset = va_arg(args, uint32_t); // NOLINT(clang-analyzer-valist.Uninitialized)
 		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm =
 			offset;
@@ -2775,8 +2775,8 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 	case AARCH64_SME_MATRIX_SLICE_OFF_RANGE: {
 		va_list args;
 		va_start(args, vas);
-		uint8_t First = va_arg(args, uint32_t);
-		uint8_t Offset = va_arg(args, uint32_t);
+		uint8_t First = va_arg(args, uint32_t); // NOLINT(clang-analyzer-valist.Uninitialized)
+		uint8_t Offset = va_arg(args, uint32_t); // NOLINT(clang-analyzer-valist.Uninitialized)
 		va_end(args);
 		AArch64_get_detail_op(MI, 0)->sme.slice_offset.imm_range.first =
 			First;
