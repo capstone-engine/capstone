@@ -1,8 +1,8 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
-#ifndef CS_SYSZ_MAP_H
-#define CS_SYSZ_MAP_H
+#ifndef CS_SYSTEMZ_MAP_H
+#define CS_SYSTEMZ_MAP_H
 
 #include <capstone/capstone.h>
 
@@ -46,6 +46,5 @@ static inline void add_cs_detail(MCInst *MI,
 	va_end(args);
 }
 
-
-#endif
+#endif // CS_SYSTEMZ_MAP_H
 

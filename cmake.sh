@@ -31,7 +31,7 @@ case $1 in
     ARCH=SPARC
     ;;
   SystemZ)
-    ARCH=SYSZ
+    ARCH=SYSTEMZ
     ;;
   XCore)
     ARCH=XCORE
