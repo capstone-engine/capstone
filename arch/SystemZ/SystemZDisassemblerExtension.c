@@ -7,8 +7,6 @@
 
 #include "SystemZMCTargetDesc.h"
 
-static int systemz_arch8_features[] = {};
-
 static int systemz_arch9_features[] = {
 	SystemZ_FeatureDistinctOps,
 	SystemZ_FeatureFastSerialization,
@@ -108,9 +106,7 @@ bool SystemZ_getFeatureBits(unsigned int mode, unsigned int feature) {
 	case CS_MODE_SYSTEMZ_GENERIC:
 	case CS_MODE_SYSTEMZ_ARCH8:
 	case CS_MODE_SYSTEMZ_Z10:
-		if (arr_exist_int(systemz_arch8_features, ARR_SIZE(systemz_arch8_features), feature)) {
-			return true;
-		}
+		// There are no features defined for Arch8
 		return false;
 	default:
 		// Default case is the "allow all features", which is normal Capstone behavior
