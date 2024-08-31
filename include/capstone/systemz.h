@@ -338,7 +338,7 @@ typedef enum {
 } systemz_insn_form;
 
 typedef enum {
-	SYXTEMZ_AM_INVALID = 0,
+	SYSTEMZ_AM_INVALID = 0,
 	SYSTEMZ_AM_BD, ///< Base and displacement are set.
 	SYSTEMZ_AM_BDX, ///< Base, displacement and index register are set.
 	SYSTEMZ_AM_BDL, ///< Base, displacement and length (immediate) are set.
