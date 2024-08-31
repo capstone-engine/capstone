@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x78, 0x30, 0xe8, 0x80 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "andi.b $w2, $w29, 48"
+
+  -
+    input:
+      bytes: [ 0x78, 0x7e, 0xb1, 0x81 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "bmnzi.b $w6, $w22, 126"
+
+  -
+    input:
+      bytes: [ 0x79, 0x58, 0x0e, 0xc1 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "bmzi.b $w27, $w1, 88"
+
+  -
+    input:
+      bytes: [ 0x7a, 0xbd, 0x1f, 0x41 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "bseli.b $w29, $w3, 189"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x38, 0x88, 0x40 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "nori.b $w1, $w17, 56"
+
+  -
+    input:
+      bytes: [ 0x79, 0x87, 0xa6, 0x80 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "ori.b $w26, $w20, 135"
+
+  -
+    input:
+      bytes: [ 0x78, 0x69, 0xf4, 0xc2 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "shf.b $w19, $w30, 105"
+
+  -
+    input:
+      bytes: [ 0x79, 0x4c, 0x44, 0x42 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "shf.h $w17, $w8, 76"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x5d, 0x1b, 0x82 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "shf.w $w14, $w3, 93"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x14, 0x54, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "xori.b $w16, $w10, 20"

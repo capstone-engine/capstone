@@ -1,0 +1,1550 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x85, 0xc1, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "abs.d $f6, $f24"
+
+  -
+    input:
+      bytes: [ 0x45, 0x82, 0x00, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "abs.s $f9, $f16"
+
+  -
+    input:
+      bytes: [ 0x20, 0xb8, 0x45, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "add $23, $18, $5"
+
+  -
+    input:
+      bytes: [ 0x48, 0x3b, 0xc9, 0x21 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi $9, $14, 15176"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xe3, 0x18, 0x23 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi $24, $24, -7193"
+
+  -
+    input:
+      bytes: [ 0x00, 0x30, 0x3c, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "add.d $f0, $f6, $f28"
+
+  -
+    input:
+      bytes: [ 0x00, 0xaa, 0x18, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "add.s $f8, $f21, $f24"
+
+  -
+    input:
+      bytes: [ 0xd2, 0x66, 0x2d, 0x21 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi $13, $9, 26322"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xff, 0x08, 0x21 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi $8, $8, -2"
+
+  -
+    input:
+      bytes: [ 0x21, 0x48, 0x86, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "addu $9, $4, $6"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x00, 0x29, 0x25 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $9, $9, 10"
+
+  -
+    input:
+      bytes: [ 0x24, 0xb8, 0x4c, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "and $23, $2, $12"
+
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0x42, 0x30 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "andi $2, $2, 4"
+
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0x00, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bc1f 12"
+
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x02, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bc1fl 56"
+
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0x01, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bc1t 12"
+
+  -
+    input:
+      bytes: [ 0xf5, 0xf7, 0x03, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bc1tl -8232"
+
+  -
+    input:
+      bytes: [ 0x9c, 0x14, 0x11, 0x04 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bal 21108"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "nop"
+
+  -
+    input:
+      bytes: [ 0x9c, 0x14, 0xd0, 0x04 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bltzal $6, 21108"
+
+  -
+    input:
+      bytes: [ 0x41, 0x0c, 0xd3, 0x51 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "beql $14, $19, 12552"
+
+  -
+    input:
+      bytes: [ 0x4e, 0x01, 0x20, 0x51 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "beqzl $9, 1340"
+
+  -
+    input:
+      bytes: [ 0x20, 0x07, 0x93, 0x05 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgezall $12, 7300"
+
+  -
+    input:
+      bytes: [ 0x4e, 0xf9, 0x83, 0x04 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgezl $4, -6852"
+
+  -
+    input:
+      bytes: [ 0x5a, 0xfc, 0x40, 0x5d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgtzl $10, -3732"
+
+  -
+    input:
+      bytes: [ 0xe8, 0x02, 0xc0, 0x58 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "blezl $6, 2980"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x00, 0xd2, 0x04 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bltzall $6, 496"
+
+  -
+    input:
+      bytes: [ 0x46, 0xf6, 0x22, 0x06 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bltzl $17, -9956"
+
+  -
+    input:
+      bytes: [ 0xfd, 0x04, 0x94, 0x57 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnel $gp, $20, 5112"
+
+  -
+    input:
+      bytes: [ 0x4e, 0x01, 0x20, 0x55 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnezl $9, 1340"
+
+  -
+    input:
+      bytes: [ 0x3b, 0xe0, 0x3c, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.ngl.d $f28, $f28"
+
+  -
+    input:
+      bytes: [ 0x39, 0x00, 0x30, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.ngle.d $f0, $f16"
+
+  -
+    input:
+      bytes: [ 0x38, 0xf0, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.sf.d $f30, $f0"
+
+  -
+    input:
+      bytes: [ 0x38, 0x70, 0x16, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.sf.s $f14, $f22"
+
+  -
+    input:
+      bytes: [ 0xce, 0xc2, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ceil.w.d $f11, $f24"
+
+  -
+    input:
+      bytes: [ 0x8e, 0xa1, 0x00, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ceil.w.s $f6, $f20"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa8, 0x51, 0x44 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfc1 $17, $21"
+
+  -
+    input:
+      bytes: [ 0x00, 0xd0, 0xc6, 0x44 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ctc1 $6, $26"
+
+  -
+    input:
+      bytes: [ 0xa1, 0xe5, 0x00, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cvt.d.s $f22, $f28"
+
+  -
+    input:
+      bytes: [ 0xa1, 0x5e, 0x80, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cvt.d.w $f26, $f11"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x46, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cvt.s.d $f26, $f8"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x7d, 0x80, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cvt.s.w $f22, $f15"
+
+  -
+    input:
+      bytes: [ 0x24, 0x75, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cvt.w.d $f20, $f14"
+
+  -
+    input:
+      bytes: [ 0x24, 0xc5, 0x00, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cvt.w.s $f20, $f24"
+
+  -
+    input:
+      bytes: [ 0x1a, 0x00, 0x2b, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "div $zero, $25, $11"
+
+  -
+    input:
+      bytes: [ 0x03, 0xa7, 0x3a, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "div.d $f28, $f20, $f26"
+
+  -
+    input:
+      bytes: [ 0x03, 0x29, 0x0f, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "div.s $f4, $f5, $f15"
+
+  -
+    input:
+      bytes: [ 0x1b, 0x00, 0x2f, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "divu $zero, $25, $15"
+
+  -
+    input:
+      bytes: [ 0xc0, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ehb"
+
+  -
+    input:
+      bytes: [ 0x8f, 0x53, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "floor.w.d $f14, $f10"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x4a, 0x00, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "floor.w.s $f8, $f9"
+
+  -
+    input:
+      bytes: [ 0x4d, 0xc7, 0x58, 0x81 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "lb $24, -14515($10)"
+
+  -
+    input:
+      bytes: [ 0xf3, 0x75, 0x68, 0x90 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "lbu $8, 30195($3)"
+
+  -
+    input:
+      bytes: [ 0x07, 0x40, 0x0a, 0xd6 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldc1 $f10, 16391($16)"
+
+  -
+    input:
+      bytes: [ 0x43, 0xad, 0x28, 0xd8 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldc2 $8, -21181($1)"
+
+  -
+    input:
+      bytes: [ 0x1b, 0x90, 0x3d, 0xde ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldc3 $29, -28645($17)"
+
+  -
+    input:
+      bytes: [ 0x94, 0xde, 0xab, 0x86 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "lh $11, -8556($21)"
+
+  -
+    input:
+      bytes: [ 0xbd, 0xa6, 0x53, 0x94 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "lhu $19, -22851($2)"
+
+  -
+    input:
+      bytes: [ 0xb3, 0x8b, 0x01, 0x24 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $1, $zero, -29773"
+
+  -
+    input:
+      bytes: [ 0x3f, 0x8b, 0x00, 0x24 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $zero, $zero, -29889"
+
+  -
+    input:
+      bytes: [ 0x67, 0xe3, 0x42, 0xc2 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ll $2, -7321($18)"
+
+  -
+    input:
+      bytes: [ 0x2a, 0x16, 0xa8, 0x8c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "lw $8, 5674($5)"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x27, 0x50, 0xc7 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwc1 $f16, 10225($26)"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xfc, 0xd2, 0xc8 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwc2 $18, -841($6)"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x81, 0x4a, 0xcf ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwc3 $10, -32265($26)"
+
+  -
+    input:
+      bytes: [ 0x79, 0xef, 0xf4, 0x89 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwl $20, -4231($15)"
+
+  -
+    input:
+      bytes: [ 0x35, 0xb5, 0x80, 0x9b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwr $zero, -19147($gp)"
+
+  -
+    input:
+      bytes: [ 0x00, 0xd8, 0x07, 0x44 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfc1 $7, $f27"
+
+  -
+    input:
+      bytes: [ 0x10, 0x98, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfhi $19"
+
+  -
+    input:
+      bytes: [ 0x10, 0xe8, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfhi $sp"
+
+  -
+    input:
+      bytes: [ 0x12, 0x88, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mflo $17"
+
+  -
+    input:
+      bytes: [ 0x06, 0x75, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.d $f20, $f14"
+
+  -
+    input:
+      bytes: [ 0x86, 0xd8, 0x00, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.s $f2, $f27"
+
+  -
+    input:
+      bytes: [ 0x21, 0xf0, 0x80, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "move $fp, $4"
+
+  -
+    input:
+      bytes: [ 0x21, 0xc8, 0xc0, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "move $25, $6"
+
+  -
+    input:
+      bytes: [ 0x25, 0xf0, 0x80, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "move $fp, $4"
+
+  -
+    input:
+      bytes: [ 0x25, 0xc8, 0xc0, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "move $25, $6"
+
+  -
+    input:
+      bytes: [ 0x00, 0x48, 0x9e, 0x44 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtc1 $fp, $f9"
+
+  -
+    input:
+      bytes: [ 0x11, 0x00, 0x20, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mthi $17"
+
+  -
+    input:
+      bytes: [ 0x13, 0x00, 0xa0, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtlo $sp"
+
+  -
+    input:
+      bytes: [ 0x13, 0x00, 0x20, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtlo $25"
+
+  -
+    input:
+      bytes: [ 0x02, 0xa5, 0x30, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul.d $f20, $f20, $f16"
+
+  -
+    input:
+      bytes: [ 0x82, 0x57, 0x02, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul.s $f30, $f10, $f2"
+
+  -
+    input:
+      bytes: [ 0x18, 0x00, 0xb4, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mult $sp, $20"
+
+  -
+    input:
+      bytes: [ 0x18, 0x00, 0xa2, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mult $sp, $2"
+
+  -
+    input:
+      bytes: [ 0x19, 0x00, 0x9a, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "multu $gp, $26"
+
+  -
+    input:
+      bytes: [ 0x19, 0x00, 0x32, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "multu $9, $18"
+
+  -
+    input:
+      bytes: [ 0x23, 0x10, 0x02, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "negu $2, $2"
+
+  -
+    input:
+      bytes: [ 0x23, 0x10, 0x03, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "negu $2, $3"
+
+  -
+    input:
+      bytes: [ 0x87, 0x96, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "neg.d $f26, $f18"
+
+  -
+    input:
+      bytes: [ 0x47, 0x78, 0x00, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "neg.s $f1, $f15"
+
+  -
+    input:
+      bytes: [ 0x27, 0x38, 0x07, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "nor $7, $zero, $7"
+
+  -
+    input:
+      bytes: [ 0x25, 0x60, 0x1d, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "or $12, $16, $sp"
+
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0x42, 0x34 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ori $2, $2, 4"
+
+  -
+    input:
+      bytes: [ 0x8c, 0x21, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "round.w.d $f6, $f4"
+
+  -
+    input:
+      bytes: [ 0xcc, 0xe6, 0x00, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "round.w.s $f27, $f28"
+
+  -
+    input:
+      bytes: [ 0x6f, 0xb2, 0xd6, 0xa1 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sb $22, -19857($14)"
+
+  -
+    input:
+      bytes: [ 0xd8, 0x49, 0x6f, 0xe2 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sc $15, 18904($19)"
+
+  -
+    input:
+      bytes: [ 0x6e, 0x77, 0xbe, 0xf5 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sdc1 $f30, 30574($13)"
+
+  -
+    input:
+      bytes: [ 0x75, 0x5a, 0x54, 0xfa ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sdc2 $20, 23157($18)"
+
+  -
+    input:
+      bytes: [ 0xcb, 0x16, 0x4c, 0xfd ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sdc3 $12, 5835($10)"
+
+  -
+    input:
+      bytes: [ 0xd0, 0xe5, 0xee, 0xa5 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh $14, -6704($15)"
+
+  -
+    input:
+      bytes: [ 0x80, 0x3c, 0x07, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sll $7, $7, 18"
+
+  -
+    input:
+      bytes: [ 0x80, 0x3c, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sll $7, $zero, 18"
+
+  -
+    input:
+      bytes: [ 0x04, 0x38, 0x20, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sllv $7, $zero, $9"
+
+  -
+    input:
+      bytes: [ 0x2a, 0xb8, 0x7b, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "slt $23, $11, $27"
+
+  -
+    input:
+      bytes: [ 0x11, 0x25, 0x51, 0x29 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "slti $17, $10, 9489"
+
+  -
+    input:
+      bytes: [ 0x55, 0xc3, 0x39, 0x2f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sltiu $25, $25, -15531"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xa0, 0xab, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sltu $20, $21, $11"
+
+  -
+    input:
+      bytes: [ 0x55, 0xc3, 0x38, 0x2f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sltiu $24, $25, -15531"
+
+  -
+    input:
+      bytes: [ 0x04, 0xb4, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqrt.d $f16, $f22"
+
+  -
+    input:
+      bytes: [ 0x04, 0x08, 0x00, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqrt.s $f0, $f1"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x8b, 0x11, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sra $17, $17, 15"
+
+  -
+    input:
+      bytes: [ 0xc3, 0x8b, 0x17, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sra $17, $23, 15"
+
+  -
+    input:
+      bytes: [ 0x07, 0x88, 0xb7, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "srav $17, $23, $sp"
+
+  -
+    input:
+      bytes: [ 0xc2, 0x11, 0x02, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "srl $2, $2, 7"
+
+  -
+    input:
+      bytes: [ 0x06, 0xc8, 0x94, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "srlv $25, $20, $4"
+
+  -
+    input:
+      bytes: [ 0x40, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssnop"
+
+  -
+    input:
+      bytes: [ 0x22, 0xb0, 0x6c, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub $22, $19, $12"
+
+  -
+    input:
+      bytes: [ 0x36, 0x0c, 0x36, 0x22 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi $22, $17, 3126"
+
+  -
+    input:
+      bytes: [ 0x90, 0xe6, 0xad, 0x21 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi $13, $13, -6512"
+
+  -
+    input:
+      bytes: [ 0x81, 0x14, 0x30, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub.d $f18, $f2, $f16"
+
+  -
+    input:
+      bytes: [ 0xc1, 0xb5, 0x16, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub.s $f23, $f22, $f22"
+
+  -
+    input:
+      bytes: [ 0x23, 0xe8, 0xd6, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "subu $sp, $22, $22"
+
+  -
+    input:
+      bytes: [ 0x50, 0xd8, 0xbf, 0xaf ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "sw $ra, -10160($sp)"
+
+  -
+    input:
+      bytes: [ 0xef, 0xde, 0x06, 0xe7 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "swc1 $f6, -8465($24)"
+
+  -
+    input:
+      bytes: [ 0x30, 0x61, 0x19, 0xea ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "swc2 $25, 24880($16)"
+
+  -
+    input:
+      bytes: [ 0xf7, 0x81, 0x4a, 0xef ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "swc3 $10, -32265($26)"
+
+  -
+    input:
+      bytes: [ 0x7e, 0x35, 0x6f, 0xaa ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "swl $15, 13694($19)"
+
+  -
+    input:
+      bytes: [ 0x22, 0x98, 0xd1, 0xb9 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "swr $17, -26590($14)"
+
+  -
+    input:
+      bytes: [ 0x34, 0x00, 0x03, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "teq $zero, $3"
+
+  -
+    input:
+      bytes: [ 0x34, 0x9b, 0xa7, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "teq $5, $7, 620"
+
+  -
+    input:
+      bytes: [ 0xa0, 0xbb, 0xac, 0x06 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "teqi $21, -17504"
+
+  -
+    input:
+      bytes: [ 0x30, 0x00, 0xea, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tge $7, $10"
+
+  -
+    input:
+      bytes: [ 0x30, 0x55, 0xb3, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tge $5, $19, 340"
+
+  -
+    input:
+      bytes: [ 0xa1, 0x13, 0x28, 0x06 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgei $17, 5025"
+
+  -
+    input:
+      bytes: [ 0x33, 0x90, 0xa9, 0x07 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgeiu $sp, -28621"
+
+  -
+    input:
+      bytes: [ 0x31, 0x00, 0xdc, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgeu $22, $gp"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x5e, 0x8e, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgeu $20, $14, 379"
+
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0x00, 0x42 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbp"
+
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x00, 0x42 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbr"
+
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0x00, 0x42 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbwi"
+
+  -
+    input:
+      bytes: [ 0x06, 0x00, 0x00, 0x42 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbwr"
+
+  -
+    input:
+      bytes: [ 0x32, 0x00, 0xed, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlt $15, $13"
+
+  -
+    input:
+      bytes: [ 0x72, 0x21, 0x53, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlt $2, $19, 133"
+
+  -
+    input:
+      bytes: [ 0xbd, 0xad, 0xca, 0x05 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlti $14, -21059"
+
+  -
+    input:
+      bytes: [ 0x2c, 0xec, 0xeb, 0x07 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tltiu $ra, -5076"
+
+  -
+    input:
+      bytes: [ 0x33, 0x00, 0x70, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tltu $11, $16"
+
+  -
+    input:
+      bytes: [ 0x33, 0xfe, 0x1d, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tltu $16, $sp, 1016"
+
+  -
+    input:
+      bytes: [ 0x36, 0x00, 0xd1, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tne $6, $17"
+
+  -
+    input:
+      bytes: [ 0x76, 0xdd, 0xe8, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tne $7, $8, 885"
+
+  -
+    input:
+      bytes: [ 0x31, 0x8c, 0x8e, 0x05 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "tnei $12, -29647"
+
+  -
+    input:
+      bytes: [ 0x8d, 0x75, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "trunc.w.d $f22, $f14"
+
+  -
+    input:
+      bytes: [ 0x0d, 0xf7, 0x00, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "trunc.w.s $f28, $f30"
+
+  -
+    input:
+      bytes: [ 0x26, 0x90, 0x9e, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS2" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor $18, $4, $fp"

@@ -27,11 +27,10 @@
 
 void Mips_init_mri(MCRegisterInfo *MRI)
 {
-	MCRegisterInfo_InitMCRegisterInfo(MRI, MipsRegDesc,
-					  sizeof(MipsRegDesc), 0, 0,
-					  MipsMCRegisterClasses,
-					  ARR_SIZE(MipsMCRegisterClasses),
-					  0, 0, MipsRegDiffLists, 0,
+	MCRegisterInfo_InitMCRegisterInfo(MRI, MipsRegDesc, sizeof(MipsRegDesc),
+					  0, 0, MipsMCRegisterClasses,
+					  ARR_SIZE(MipsMCRegisterClasses), 0, 0,
+					  MipsRegDiffLists, 0,
 					  MipsSubRegIdxLists,
 					  ARR_SIZE(MipsSubRegIdxLists), 0);
 }
@@ -39,7 +38,8 @@ void Mips_init_mri(MCRegisterInfo *MRI)
 const char *Mips_reg_name(csh handle, unsigned int reg)
 {
 	int syntax_opt = ((cs_struct *)(uintptr_t)handle)->syntax;
-	return Mips_LLVM_getRegisterName(reg, syntax_opt & CS_OPT_SYNTAX_NOREGNAME);
+	return Mips_LLVM_getRegisterName(reg,
+					 syntax_opt & CS_OPT_SYNTAX_NOREGNAME);
 }
 
 void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
@@ -94,8 +94,8 @@ const insn_map mips_insns[] = {
 };
 
 void Mips_reg_access(const cs_insn *insn, cs_regs regs_read,
-			uint8_t *regs_read_count, cs_regs regs_write,
-			uint8_t *regs_write_count)
+		     uint8_t *regs_read_count, cs_regs regs_write,
+		     uint8_t *regs_write_count)
 {
 	uint8_t i;
 	uint8_t read_count, write_count;
@@ -149,12 +149,12 @@ void Mips_reg_access(const cs_insn *insn, cs_regs regs_read,
 	*regs_write_count = write_count;
 }
 
-void Mips_set_instr_map_data(MCInst *MI) 
+void Mips_set_instr_map_data(MCInst *MI)
 {
 	// Fixes for missing groups.
 	if (MCInst_getOpcode(MI) == Mips_JR) {
 		unsigned Reg = MCInst_getOpVal(MI, 0);
-		switch(Reg) {
+		switch (Reg) {
 		case MIPS_REG_RA:
 		case MIPS_REG_RA_64:
 			add_group(MI, MIPS_GRP_RET);
@@ -169,16 +169,17 @@ void Mips_set_instr_map_data(MCInst *MI)
 }
 
 bool Mips_getInstruction(csh handle, const uint8_t *code, size_t code_len,
-			      MCInst *instr, uint16_t *size, uint64_t address,
-			      void *info)
+			 MCInst *instr, uint16_t *size, uint64_t address,
+			 void *info)
 {
 	uint64_t size64;
 	Mips_init_cs_detail(instr);
 	instr->MRI = (MCRegisterInfo *)info;
+	map_set_fill_detail_ops(instr, true);
 
-	bool result = Mips_LLVM_getInstruction(instr, &size64, code,
-						    code_len, address, info)
-						    != MCDisassembler_Fail;
+	bool result = Mips_LLVM_getInstruction(instr, &size64, code, code_len,
+					       address,
+					       info) != MCDisassembler_Fail;
 	if (result) {
 		Mips_set_instr_map_data(instr);
 	}
@@ -186,8 +187,7 @@ bool Mips_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 	return result;
 }
 
-void Mips_printer(MCInst *MI, SStream *O,
-		       void * /* MCRegisterInfo* */ info)
+void Mips_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
 	MI->MRI = MRI;
@@ -209,10 +209,8 @@ void Mips_init_cs_detail(MCInst *MI)
 		memset(get_detail(MI), 0,
 		       offsetof(cs_detail, mips) + sizeof(cs_mips));
 
-		for (i = 0; i < ARR_SIZE(Mips_get_detail(MI)->operands);
-		     i++)
-			Mips_setup_op(
-				&Mips_get_detail(MI)->operands[i]);
+		for (i = 0; i < ARR_SIZE(Mips_get_detail(MI)->operands); i++)
+			Mips_setup_op(&Mips_get_detail(MI)->operands[i]);
 	}
 }
 
@@ -250,7 +248,25 @@ static void Mips_set_detail_op_imm(MCInst *MI, unsigned OpNum, int64_t Imm)
 	Mips_inc_op_count(MI);
 }
 
-static void Mips_set_detail_op_reg(MCInst *MI, unsigned OpNum, mips_reg Reg)
+static void Mips_set_detail_op_uimm(MCInst *MI, unsigned OpNum, uint64_t Imm)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	if (doing_mem(MI)) {
+		Mips_set_detail_op_mem_disp(MI, OpNum, Imm);
+		return;
+	}
+
+	Mips_get_detail_op(MI, 0)->type = MIPS_OP_IMM;
+	Mips_get_detail_op(MI, 0)->imm = (int64_t)Imm;
+	Mips_get_detail_op(MI, 0)->is_unsigned = true;
+	Mips_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+	Mips_inc_op_count(MI);
+}
+
+static void Mips_set_detail_op_reg(MCInst *MI, unsigned OpNum, mips_reg Reg,
+				   bool is_reglist)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -260,10 +276,10 @@ static void Mips_set_detail_op_reg(MCInst *MI, unsigned OpNum, mips_reg Reg)
 		return;
 	}
 
-	assert((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
-
+	CS_ASSERT((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_REG;
 	Mips_get_detail_op(MI, 0)->reg = Reg;
+	Mips_get_detail_op(MI, 0)->is_reglist = is_reglist;
 	Mips_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	Mips_inc_op_count(MI);
 }
@@ -271,12 +287,11 @@ static void Mips_set_detail_op_reg(MCInst *MI, unsigned OpNum, mips_reg Reg)
 static void Mips_set_detail_op_operand(MCInst *MI, unsigned OpNum)
 {
 	cs_op_type op_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
+	int64_t value = MCInst_getOpVal(MI, OpNum);
 	if (op_type == CS_OP_IMM) {
-		Mips_set_detail_op_imm(MI, OpNum,
-					    MCInst_getOpVal(MI, OpNum));
+		Mips_set_detail_op_imm(MI, OpNum, value);
 	} else if (op_type == CS_OP_REG) {
-		Mips_set_detail_op_reg(MI, OpNum,
-					    MCInst_getOpVal(MI, OpNum));
+		Mips_set_detail_op_reg(MI, OpNum, value, false);
 	} else
 		printf("Operand type %d not handled!\n", op_type);
 }
@@ -286,34 +301,32 @@ static void Mips_set_detail_op_branch(MCInst *MI, unsigned OpNum)
 	cs_op_type op_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
 	if (op_type == CS_OP_IMM) {
 		uint64_t Target = (uint64_t)MCInst_getOpVal(MI, OpNum);
-		Mips_set_detail_op_imm(MI, OpNum, Target + MI->address);
+		Mips_set_detail_op_uimm(MI, OpNum, Target + MI->address);
 	} else if (op_type == CS_OP_REG) {
-		Mips_set_detail_op_reg(MI, OpNum,
-					    MCInst_getOpVal(MI, OpNum));
+		Mips_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum),
+				       false);
 	} else
 		printf("Operand type %d not handled!\n", op_type);
 }
 
-static void Mips_set_detail_op_uimm(MCInst *MI, unsigned OpNum)
+static void Mips_set_detail_op_unsigned(MCInst *MI, unsigned OpNum)
 {
-	Mips_set_detail_op_imm(MI, OpNum,
-				    MCInst_getOpVal(MI, OpNum));
+	Mips_set_detail_op_uimm(MI, OpNum, MCInst_getOpVal(MI, OpNum));
 }
 
-static void Mips_set_detail_op_uimm_offset(MCInst *MI, unsigned OpNum,
-											unsigned Bits, uint64_t Offset)
+static void Mips_set_detail_op_unsigned_offset(MCInst *MI, unsigned OpNum,
+					       unsigned Bits, uint64_t Offset)
 {
 	uint64_t Imm = MCInst_getOpVal(MI, OpNum);
 	Imm -= Offset;
-	Imm &= (1 << Bits) - 1;
+	Imm &= (((uint64_t)1) << Bits) - 1;
 	Imm += Offset;
-	Mips_set_detail_op_imm(MI, OpNum, Imm);
+	Mips_set_detail_op_uimm(MI, OpNum, Imm);
 }
 
 static void Mips_set_detail_op_mem_nanomips(MCInst *MI, unsigned OpNum)
 {
-	if (!detail_is_set(MI) || !doing_mem(MI))
-		return;
+	CS_ASSERT(doing_mem(MI))
 
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_MEM;
@@ -322,25 +335,25 @@ static void Mips_set_detail_op_mem_nanomips(MCInst *MI, unsigned OpNum)
 	Mips_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 }
 
-static void Mips_set_detail_op_reglist(MCInst *MI, unsigned OpNum, bool isNanoMips)
+static void Mips_set_detail_op_reglist(MCInst *MI, unsigned OpNum,
+				       bool isNanoMips)
 {
-	if (!detail_is_set(MI))
-		return;
-
 	if (isNanoMips) {
 		for (unsigned i = OpNum; i < MCInst_getNumOperands(MI); i++) {
-			Mips_set_detail_op_reg(MI, i, MCInst_getOpVal(MI, i));
+			Mips_set_detail_op_reg(MI, i, MCInst_getOpVal(MI, i),
+					       true);
 		}
 		return;
 	}
 	// -2 because register List is always first operand of instruction
 	// and it is always followed by memory operand (base + offset).
-	for (unsigned i = OpNum, e = MCInst_getNumOperands(MI) - 2; i != e; ++i) {
-		Mips_set_detail_op_reg(MI, i, MCInst_getOpVal(MI, i));
+	for (unsigned i = OpNum, e = MCInst_getNumOperands(MI) - 2; i != e;
+	     ++i) {
+		Mips_set_detail_op_reg(MI, i, MCInst_getOpVal(MI, i), true);
 	}
 }
 
-static void Mips_set_detail_op_uimm_address(MCInst *MI, unsigned OpNum)
+static void Mips_set_detail_op_unsigned_address(MCInst *MI, unsigned OpNum)
 {
 	uint64_t Target = MI->address + (uint64_t)MCInst_getOpVal(MI, OpNum);
 	Mips_set_detail_op_imm(MI, OpNum, Target);
@@ -348,7 +361,7 @@ static void Mips_set_detail_op_uimm_address(MCInst *MI, unsigned OpNum)
 
 void Mips_add_cs_detail(MCInst *MI, mips_op_group op_group, va_list args)
 {
-	if (!detail_is_set(MI))
+	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 
 	unsigned OpNum = va_arg(args, unsigned);
@@ -367,47 +380,47 @@ void Mips_add_cs_detail(MCInst *MI, mips_op_group op_group, va_list args)
 	case Mips_OP_GROUP_Operand:
 		return Mips_set_detail_op_operand(MI, OpNum);
 	case Mips_OP_GROUP_UImm_1_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 1, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 1, 0);
 	case Mips_OP_GROUP_UImm_2_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 2, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 2, 0);
 	case Mips_OP_GROUP_UImm_3_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 3, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 3, 0);
 	case Mips_OP_GROUP_UImm_32_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 32, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 32, 0);
 	case Mips_OP_GROUP_UImm_16_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 16, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 16, 0);
 	case Mips_OP_GROUP_UImm_8_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 8, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 8, 0);
 	case Mips_OP_GROUP_UImm_5_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 5, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 5, 0);
 	case Mips_OP_GROUP_UImm_6_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 6, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 6, 0);
 	case Mips_OP_GROUP_UImm_4_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 4, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 4, 0);
 	case Mips_OP_GROUP_UImm_7_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 7, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 7, 0);
 	case Mips_OP_GROUP_UImm_10_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 10, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 10, 0);
 	case Mips_OP_GROUP_UImm_6_1:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 6, 1);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 6, 1);
 	case Mips_OP_GROUP_UImm_5_1:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 5, 1);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 5, 1);
 	case Mips_OP_GROUP_UImm_5_33:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 5, 33);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 5, 33);
 	case Mips_OP_GROUP_UImm_5_32:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 5, 32);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 5, 32);
 	case Mips_OP_GROUP_UImm_6_2:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 6, 2);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 6, 2);
 	case Mips_OP_GROUP_UImm_2_1:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 2, 1);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 2, 1);
 	case Mips_OP_GROUP_UImm_0_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 0, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 0, 0);
 	case Mips_OP_GROUP_UImm_26_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 26, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 26, 0);
 	case Mips_OP_GROUP_UImm_12_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 12, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 12, 0);
 	case Mips_OP_GROUP_UImm_20_0:
-		return Mips_set_detail_op_uimm_offset(MI, OpNum, 20, 0);
+		return Mips_set_detail_op_unsigned_offset(MI, OpNum, 20, 0);
 	case Mips_OP_GROUP_RegisterList:
 		return Mips_set_detail_op_reglist(MI, OpNum, false);
 	case Mips_OP_GROUP_NanoMipsRegisterList:
@@ -415,9 +428,9 @@ void Mips_add_cs_detail(MCInst *MI, mips_op_group op_group, va_list args)
 	case Mips_OP_GROUP_PCRel:
 		/* fall-thru */
 	case Mips_OP_GROUP_Hi20PCRel:
-		return Mips_set_detail_op_uimm_address(MI, OpNum);
+		return Mips_set_detail_op_unsigned_address(MI, OpNum);
 	case Mips_OP_GROUP_Hi20:
-		return Mips_set_detail_op_uimm(MI, OpNum);
+		return Mips_set_detail_op_unsigned(MI, OpNum);
 	}
 }
 

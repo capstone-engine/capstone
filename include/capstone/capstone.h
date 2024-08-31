@@ -422,7 +422,7 @@ typedef struct cs_opt_skipdata {
 
 #define MAX_IMPL_W_REGS 47
 #define MAX_IMPL_R_REGS 20
-#define MAX_NUM_GROUPS 8
+#define MAX_NUM_GROUPS 16
 
 /// NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 /// Initialized as memset(., 0, offsetof(cs_detail, ARCH)+sizeof(cs_ARCH))

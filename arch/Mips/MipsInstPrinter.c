@@ -107,6 +107,7 @@ static const char *MipsFCCToString(Mips_CondCode CC)
 		return "ngt";
 	}
 	assert(0 && "Impossible condition code!");
+	return "";
 }
 
 const char *Mips_LLVM_getRegisterName(unsigned RegNo, bool noRegName);
@@ -121,8 +122,24 @@ static void printRegName(MCInst *MI, SStream *OS, MCRegister Reg)
 }
 
 void Mips_LLVM_printInst(MCInst *MI, uint64_t Address, SStream *O) {
-	if (!printAliasInstr(MI, Address, O) && !printAlias4(MI, Address, O))
+	bool useAliasDetails = map_use_alias_details(MI);
+	if (!useAliasDetails) {
+		SStream_Close(O);
 		printInstruction(MI, Address, O);
+		SStream_Open(O);
+		map_set_fill_detail_ops(MI, false);
+	}
+
+	if (printAliasInstr(MI, Address, O) ||
+		printAlias4(MI, Address, O)) {
+		MCInst_setIsAlias(MI, true);
+	} else {
+		printInstruction(MI, Address, O);
+	}
+
+	if (!useAliasDetails) {
+		map_set_fill_detail_ops(MI, true);
+	}
 }
 
 void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
@@ -520,7 +537,7 @@ static void printPCRel(MCInst *MI, uint64_t Address, int OpNum, SStream *O)
 
 const char *Mips_LLVM_getRegisterName(unsigned RegNo, bool noRegName)
 {
-	if (RegNo >= MIPS_REG_ENDING) {
+	if (!RegNo || RegNo >= MIPS_REG_ENDING) {
 		return NULL;
 	}
 	if (noRegName) {

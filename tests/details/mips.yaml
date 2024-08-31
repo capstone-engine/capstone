@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0x0c, 0x10, 0x00, 0x97, 0x00, 0x00, 0x00, 0x00, 0x24, 0x02, 0x00, 0x0c, 0x8f, 0xa2, 0x00, 0x00, 0x34, 0x21, 0x34, 0x56  ]
       arch: "mips"
-      options: [ CS_OPT_DETAIL, CS_MODE_MIPS32, CS_MODE_BIG_ENDIAN ]
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS32R5, CS_MODE_BIG_ENDIAN ]
       address: 0x0
     expected:
       insns:
@@ -32,7 +32,7 @@ test_cases:
                 type: MIPS_OP_IMM
                 imm: 0xc
       -
-        asm_text: "lw $v0, ($sp)"
+        asm_text: "lw $v0, 0($sp)"
         details:
           mips:
             operands:
@@ -150,7 +150,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "addiupc $a0, 0x64"
+        asm_text: "lapc $a0, 0x64"
         details:
           mips:
             operands:
@@ -181,7 +181,7 @@ test_cases:
     input:
       bytes: [ 0x70, 0x00, 0xb2, 0xff  ]
       arch: "mips"
-      options: [ CS_MODE_MIPS64, CS_MODE_MIPS2, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      options: [ CS_MODE_MIPS2, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
       address: 0x0
     expected:
       insns:
@@ -192,7 +192,7 @@ test_cases:
             operands:
               -
                 type: MIPS_OP_REG
-                reg: s2
+                reg: 18
               -
                 type: MIPS_OP_MEM
                 mem_base: sp

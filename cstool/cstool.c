@@ -478,38 +478,38 @@ static void run_dev_fuzz(csh handle, uint8_t *bytes, uint32_t size) {
 	}
 }
 
-static cs_mode find_additional_modes(const char *mode, cs_arch arch) {
-	if (!mode) {
+static cs_mode find_additional_modes(const char *input, cs_arch arch) {
+	if (!input) {
 		return 0;
 	}
-	cs_mode md = 0;
+	cs_mode mode = 0;
 	int i, j;
 	for (i = 0; all_opts[i].name; i++) {
-		if (all_opts[i].opt || !strstr(mode, all_opts[i].name)) {
+		if (all_opts[i].opt || !strstr(input, all_opts[i].name)) {
 			continue;
 		}
 		for (j = 0; j < CS_ARCH_MAX; j++) {
 			if (arch == all_opts[i].archs[j]) {
-				md |= all_opts[i].mode;
+				mode |= all_opts[i].mode;
 				break;
 			}
 		}
 	}
-	return md;
+	return mode;
 }
 
-static void enable_additional_options(csh handle, const char *mode, cs_arch arch) {
-	if (!mode) {
+static void enable_additional_options(csh handle, const char *input, cs_arch arch) {
+	if (!input) {
 		return;
 	}
 	int i, j;
 	for (i = 0; all_opts[i].name; i++) {
-		if (all_opts[i].mode || !strstr(mode, all_opts[i].name)) {
+		if (all_opts[i].mode || !strstr(input, all_opts[i].name)) {
 			continue;
 		}
 		for (j = 0; j < CS_ARCH_MAX; j++) {
 			if (arch == all_opts[i].archs[j]) {
-				cs_option(handle, all_opts[i].opt, CS_OPT_ON);
+				cs_option(handle, CS_OPT_SYNTAX, all_opts[i].opt);
 				break;
 			}
 		}
@@ -520,13 +520,13 @@ int main(int argc, char **argv)
 {
 	int i, c;
 	csh handle;
-	char *mode;
+	char *choosen_arch;
 	uint8_t *assembly;
 	size_t count, size;
 	uint64_t address = 0LL;
 	cs_insn *insn;
 	cs_err err;
-	cs_mode md;
+	cs_mode mode;
 	cs_arch arch = CS_ARCH_ALL;
 	bool detail_flag = false;
 	bool unsigned_flag = false;
@@ -669,7 +669,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	mode = argv[optind];
+	choosen_arch = argv[optind];
 	assembly = preprocess(argv[optind + 1], &size);
 	if (!assembly) {
 		usage(argv[0]);
@@ -680,25 +680,25 @@ int main(int argc, char **argv)
 		char *temp, *src = argv[optind + 2];
 		address = strtoull(src, &temp, 16);
 		if (temp == src || *temp != '\0' || errno == ERANGE) {
-			printf("ERROR: invalid address argument, quit!\n");
+			fprintf(stderr, "ERROR: invalid address argument, quit!\n");
 			return -2;
 		}
 	}
 
-	size_t mode_len = strlen(mode);
-	const char *plus = strchr(mode, '+');
+	size_t arch_len = strlen(choosen_arch);
+	const char *plus = strchr(choosen_arch, '+');
 	if (plus) {
-		mode_len = plus - mode;
+		arch_len = plus - choosen_arch;
 	}
 
 	for (i = 0; all_archs[i].name; i++) {
 		size_t len = strlen(all_archs[i].name);
-		if (len == mode_len && !strncmp(all_archs[i].name, mode, mode_len)) {
+		if (len == arch_len && !strncmp(all_archs[i].name, choosen_arch, arch_len)) {
 			arch = all_archs[i].arch;
-			md = all_archs[i].mode;
-			md |= find_additional_modes(plus, arch);
+			mode = all_archs[i].mode;
+			mode |= find_additional_modes(plus, arch);
 
-			err = cs_open(all_archs[i].arch, md, &handle);
+			err = cs_open(all_archs[i].arch, mode, &handle);
 			if (!err) {
 				enable_additional_options(handle, plus, arch);
 
@@ -712,14 +712,14 @@ int main(int argc, char **argv)
 	}
 
 	if (arch == CS_ARCH_ALL) {
-		printf("ERROR: Invalid <arch+mode>: \"%s\", quit!\n", mode);
+		fprintf(stderr, "ERROR: Invalid <arch+mode>: \"%s\", quit!\n", choosen_arch);
 		usage(argv[0]);
 		return -1;
 	}
 
 	if (err) {
 		const char *error = cs_strerror(err);
-		printf("ERROR: Failed on cs_open(): %s\n", error);
+		fprintf(stderr, "ERROR: Failed on cs_open(): %s\n", error);
 		usage(argv[0]);
 		return -1;
 	}
@@ -776,14 +776,14 @@ int main(int argc, char **argv)
 			printf("  %s\t%s\n", insn[i].mnemonic, insn[i].op_str);
 
 			if (detail_flag) {
-				print_details(handle, arch, md, &insn[i]);
+				print_details(handle, arch, mode, &insn[i]);
 			}
 		}
 
 		cs_free(insn, count);
 		free(assembly);
 	} else {
-		printf("ERROR: invalid assembly code\n");
+		fprintf(stderr, "ERROR: invalid assembly code\n");
 		cs_close(&handle);
 		free(assembly);
 		return(-4);

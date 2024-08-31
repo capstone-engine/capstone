@@ -63,10 +63,11 @@ bool Mips_getFeatureBits(unsigned int mode, unsigned int feature)
 	case Mips_FeatureFP64Bit:
 		return mode & (CS_MODE_MIPS32R6 | CS_MODE_MIPS3 | 
 						CS_MODE_MIPS4 | CS_MODE_MIPS5 | 
-						CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | 
-						CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | 
-						CS_MODE_MIPS64R6 | CS_MODE_OCTEON | 
-						CS_MODE_OCTEONP);
+						CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 |
+						CS_MODE_MIPS32R5 | CS_MODE_MIPS64 |
+						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 |
+						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 |
+						CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureNaN2008:
 		return mode & (CS_MODE_MIPS32R6 | CS_MODE_MIPS64R6);
 	case Mips_FeatureAbs2008:
@@ -835,8 +836,8 @@ static DecodeStatus DecodeDAHIDATIMMR6(MCInst *MI, uint32_t insn,
 {
        uint32_t Rs = fieldFromInstruction_4(insn, 16, 5);
        uint32_t Imm = fieldFromInstruction_4(insn, 0, 16);
-       MCOperand_CreateReg0(MI, (getReg(Decoder, Mips_GPR64RegClassID, Rs)));
-       MCOperand_CreateReg0(MI, (getReg(Decoder, Mips_GPR64RegClassID, Rs)));
+       MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR64RegClassID, Rs)));
+       MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR64RegClassID, Rs)));
        MCOperand_CreateImm0(MI, (Imm));
 
        return MCDisassembler_Success;
@@ -848,8 +849,8 @@ static DecodeStatus DecodeDAHIDATI(MCInst *MI, uint32_t insn, uint64_t Address,
  {
        uint32_t Rs = fieldFromInstruction_4(insn, 21, 5);
        uint32_t Imm = fieldFromInstruction_4(insn, 0, 16);
-       MCOperand_CreateReg0(MI, (getReg(Decoder, Mips_GPR64RegClassID, Rs)));
-       MCOperand_CreateReg0(MI, (getReg(Decoder, Mips_GPR64RegClassID, Rs)));
+       MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR64RegClassID, Rs)));
+       MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR64RegClassID, Rs)));
         MCOperand_CreateImm0(MI, (Imm));
  
         return MCDisassembler_Success;

@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0x24, 0x48, 0xc7, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -12,7 +12,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x45, 0xc9, 0x30 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -21,7 +21,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x45, 0xc9, 0x30 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -30,7 +30,7 @@ test_cases:
     input:
       bytes: [ 0x21, 0x30, 0xe6, 0x70 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -39,7 +39,7 @@ test_cases:
     input:
       bytes: [ 0x20, 0x30, 0xe6, 0x70 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -48,7 +48,7 @@ test_cases:
     input:
       bytes: [ 0x84, 0x61, 0x33, 0x7d ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -57,7 +57,7 @@ test_cases:
     input:
       bytes: [ 0x27, 0x48, 0xc7, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -66,7 +66,7 @@ test_cases:
     input:
       bytes: [ 0x25, 0x18, 0x65, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -75,7 +75,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x45, 0xa4, 0x34 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -84,7 +84,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x45, 0xc9, 0x34 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -93,7 +93,7 @@ test_cases:
     input:
       bytes: [ 0xc2, 0x49, 0x26, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -102,7 +102,7 @@ test_cases:
     input:
       bytes: [ 0x46, 0x48, 0xe6, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -111,7 +111,7 @@ test_cases:
     input:
       bytes: [ 0xc0, 0x21, 0x03, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -120,7 +120,7 @@ test_cases:
     input:
       bytes: [ 0x04, 0x10, 0xa3, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -129,7 +129,7 @@ test_cases:
     input:
       bytes: [ 0x2a, 0x18, 0x65, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -138,7 +138,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x00, 0x63, 0x28 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -147,7 +147,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x00, 0x63, 0x28 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -156,7 +156,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x00, 0x63, 0x2c ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -165,7 +165,7 @@ test_cases:
     input:
       bytes: [ 0x2b, 0x18, 0x65, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -174,7 +174,7 @@ test_cases:
     input:
       bytes: [ 0xc3, 0x21, 0x03, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -183,7 +183,7 @@ test_cases:
     input:
       bytes: [ 0x07, 0x10, 0xa3, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -192,7 +192,7 @@ test_cases:
     input:
       bytes: [ 0xc2, 0x21, 0x03, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -201,7 +201,7 @@ test_cases:
     input:
       bytes: [ 0x06, 0x10, 0xa3, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -210,7 +210,7 @@ test_cases:
     input:
       bytes: [ 0x26, 0x18, 0x65, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -219,7 +219,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x45, 0xc9, 0x38 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -228,7 +228,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x45, 0xc9, 0x38 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -237,7 +237,7 @@ test_cases:
     input:
       bytes: [ 0xa0, 0x30, 0x07, 0x7c ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -246,7 +246,7 @@ test_cases:
     input:
       bytes: [ 0x27, 0x38, 0x00, 0x01 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -255,7 +255,7 @@ test_cases:
     input:
       bytes: [ 0x2c, 0x48, 0xc7, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -264,7 +264,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x45, 0xc9, 0x60 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -273,7 +273,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0xc5, 0xc9, 0x64 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -282,7 +282,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x45, 0xc9, 0x60 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -291,7 +291,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0x45, 0x29, 0x61 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -300,7 +300,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0xc5, 0xc9, 0x64 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -309,7 +309,7 @@ test_cases:
     input:
       bytes: [ 0x67, 0xc5, 0x29, 0x65 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -318,7 +318,7 @@ test_cases:
     input:
       bytes: [ 0x2d, 0x48, 0xc7, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -327,7 +327,7 @@ test_cases:
     input:
       bytes: [ 0x3a, 0x4d, 0x26, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -336,7 +336,7 @@ test_cases:
     input:
       bytes: [ 0x00, 0x00, 0xc7, 0x70 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -345,7 +345,7 @@ test_cases:
     input:
       bytes: [ 0x01, 0x00, 0xc7, 0x70 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -354,7 +354,7 @@ test_cases:
     input:
       bytes: [ 0x04, 0x00, 0xc7, 0x70 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -363,7 +363,7 @@ test_cases:
     input:
       bytes: [ 0x05, 0x00, 0xc7, 0x70 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -372,7 +372,7 @@ test_cases:
     input:
       bytes: [ 0x18, 0x00, 0x65, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -381,7 +381,7 @@ test_cases:
     input:
       bytes: [ 0x19, 0x00, 0x65, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -390,7 +390,7 @@ test_cases:
     input:
       bytes: [ 0x2f, 0x20, 0x65, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -
@@ -399,7 +399,7 @@ test_cases:
     input:
       bytes: [ 0x2d, 0x38, 0x00, 0x01 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS64" ]
+      options: [ "CS_MODE_MIPS64R5" ]
     expected:
       insns:
         -

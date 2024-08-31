@@ -6,6 +6,7 @@
 
 #include "../../include/capstone/capstone.h"
 #include "../../utils.h"
+#include "../../Mapping.h"
 
 typedef enum {
 #include "MipsGenCSOpGroup.inc"
@@ -43,7 +44,7 @@ void Mips_add_cs_detail(MCInst *MI, mips_op_group op_group, va_list args);
 
 static inline void add_cs_detail(MCInst *MI, mips_op_group op_group, ...)
 {
-	if (!MI->flat_insn->detail)
+	if (!detail_is_set(MI))
 		return;
 	va_list args;
 	va_start(args, op_group);
@@ -53,7 +54,7 @@ static inline void add_cs_detail(MCInst *MI, mips_op_group op_group, ...)
 
 static inline void set_mem_access(MCInst *MI, bool status)
 {
-	if (!MI->flat_insn->detail)
+	if (!detail_is_set(MI))
 		return;
 	Mips_set_mem_access(MI, status);
 }

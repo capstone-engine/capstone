@@ -1,0 +1,160 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x85, 0x00, 0xfc, 0x04 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfgc0 $4, $5, 0"
+
+  -
+    input:
+      bytes: [ 0x85, 0x00, 0xfc, 0x14 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfgc0 $4, $5, 2"
+
+  -
+    input:
+      bytes: [ 0xa4, 0x00, 0xfc, 0x06 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtgc0 $5, $4, 0"
+
+  -
+    input:
+      bytes: [ 0xa4, 0x00, 0xfc, 0x16 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtgc0 $5, $4, 2"
+
+  -
+    input:
+      bytes: [ 0x85, 0x00, 0xf4, 0x04 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfhgc0 $4, $5, 0"
+
+  -
+    input:
+      bytes: [ 0x85, 0x00, 0xf4, 0x14 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfhgc0 $4, $5, 2"
+
+  -
+    input:
+      bytes: [ 0xa4, 0x00, 0xf4, 0x06 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "mthgc0 $5, $4, 0"
+
+  -
+    input:
+      bytes: [ 0xa4, 0x00, 0xf4, 0x16 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "mthgc0 $5, $4, 2"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x7c, 0xc3 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "hypcall"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x00, 0x7c, 0xc3 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "hypcall 10"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x7c, 0x41 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbginv"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x7c, 0x51 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbginvf"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x7c, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbgp"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x7c, 0x11 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbgr"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x7c, 0x21 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbgwi"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x7c, 0x31 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MIPS32R5", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbgwr"

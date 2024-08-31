@@ -687,6 +687,8 @@ typedef struct cs_mips_op {
 		int64_t imm;		///< immediate value for IMM operand
 		mips_op_mem mem;	///< base/index/scale/disp value for MEM operand
 	};
+	bool is_reglist;    ///< defines if the register is part of a list
+	bool is_unsigned;   ///< when true, the immediate value is unsigned
 
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
