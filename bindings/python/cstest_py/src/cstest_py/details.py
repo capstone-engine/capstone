@@ -1376,7 +1376,7 @@ def test_expected_SystemZ(actual: CsInsn, expected: dict) -> bool:
             if not compare_int64(aop.imm_width, eop.get("imm_width"), "imm_width"):
                 return False
         elif aop.type == SYSTEMZ_OP_MEM:
-            if not compare_reg(actual, aop.mem.am, eop.get("mem_am"), "mem_am"):
+            if not compare_enum(aop.mem.am, eop.get("mem_am"), "mem_am"):
                 return False
             if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
                 return False
