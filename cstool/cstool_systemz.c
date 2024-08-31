@@ -84,6 +84,6 @@ void print_insn_detail_systemz(csh handle, cs_insn *ins)
 
 	}
 
-	if (systemz->cc != SystemZ_CC_INVALID)
+	if (systemz->cc != SYSTEMZ_CC_INVALID)
 		printf("\tCode condition: %u\n", systemz->cc);
 }

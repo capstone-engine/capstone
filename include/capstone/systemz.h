@@ -28,7 +28,7 @@ typedef enum systemz_cc {
 	SYSTEMZ_CC_LE,
 	SYSTEMZ_CC_NH,
 	SYSTEMZ_CC_NO,
-	SystemZ_CC_INVALID,
+	SYSTEMZ_CC_INVALID,
 } systemz_cc;
 
 /// Operand type for instruction's operands

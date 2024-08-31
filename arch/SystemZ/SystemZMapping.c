@@ -84,7 +84,7 @@ void SystemZ_init_cs_detail(MCInst *MI) {
 	}
 	memset(get_detail(MI), 0, sizeof(cs_detail));
 	if (detail_is_set(MI)) {
-		SystemZ_get_detail(MI)->cc = SystemZ_CC_INVALID;
+		SystemZ_get_detail(MI)->cc = SYSTEMZ_CC_INVALID;
 	}
 }
 
