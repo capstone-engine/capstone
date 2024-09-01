@@ -16,6 +16,7 @@ from shutil import copy2
 
 from tree_sitter import Language, Node, Parser, Tree
 
+from autosync.Targets import ARCH_LLVM_NAMING
 from autosync.cpptranslator.Configurator import Configurator
 from autosync.Helper import (
     bold,
