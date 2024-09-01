@@ -83,6 +83,7 @@ class ASUpdater:
             None,
             None,
             self.arch in self.mcupdater_conf["unify_test_cases"],
+            multi_mode=True,
         )
 
     def clean_build_dir(self) -> None:

@@ -309,12 +309,14 @@ class MCUpdater:
             )
 
     def write_to_build_dir(self):
+        no_tests_file = 0
         file_cnt = 0
         test_cnt = 0
         overwritten = 0
         files_written = set()
         for test in sorted(self.test_files):
             if not test.has_tests():
+                no_tests_file += 1
                 continue
             file_cnt += 1
             test_cnt += test.num_test_cases()
@@ -344,7 +346,7 @@ class MCUpdater:
                     f"The following file exists already: {filename}\n"
                     "This is not allowed in multi-mode."
                 )
-            else:
+            elif not self.multi_mode and filename.exists():
                 log.debug(f"Overwrite: {filename}")
                 overwritten += 1
             with open(filename, write_mode) as f:
@@ -352,7 +354,10 @@ class MCUpdater:
                 log.debug(f"Write {filename}")
             files_written.add(filename)
         log.info(
-            f"Processed {file_cnt} files with {test_cnt} test cases. Generated {len(files_written)} files"
+            f"Got {len(self.test_files)} test files.\n"
+            f"\t\tProcessed {file_cnt} files with {test_cnt} test cases.\n"
+            f"\t\tIgnored {no_tests_file} without tests.\n"
+            f"\t\tGenerated {len(files_written)} files"
         )
         if overwritten > 0:
             log.warning(
@@ -564,4 +569,5 @@ if __name__ == "__main__":
         args.excluded_files,
         args.included_files,
         args.unified_tests,
+        True,
     ).gen_all()
