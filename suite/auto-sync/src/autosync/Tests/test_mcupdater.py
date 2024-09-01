@@ -8,6 +8,7 @@ import sys
 import unittest
 from pathlib import Path
 
+from threading import Lock
 from autosync.Helper import get_path, test_only_overwrite_path_var
 from autosync.MCUpdater import MCUpdater
 
@@ -21,22 +22,24 @@ class TestHeaderPatcher(unittest.TestCase):
             format="%(levelname)-5s - %(message)s",
             force=True,
         )
+        cls.mutex = Lock()
 
     def test_test_case_gen(self):
         """
         To enforce sequential execution of the tests, we execute them in here.
         And don't make them a separated test.
         """
-        self.assertTrue(self.unified_test_cases(), "Failed: unified_test_cases")
-        self.assertTrue(self.separated_test_cases(), "Failed: separated_test_cases")
-        self.assertTrue(
-            self.multi_mode_unified_test_cases(),
-            "Failed: multi_mode_unified_test_cases",
-        )
-        self.assertTrue(
-            self.multi_mode_separated_test_cases(),
-            "Failed: multi_mode_separated_test_cases",
-        )
+        with self.mutex:
+            self.assertTrue(self.unified_test_cases(), "Failed: unified_test_cases")
+            self.assertTrue(self.separated_test_cases(), "Failed: separated_test_cases")
+            self.assertTrue(
+                self.multi_mode_unified_test_cases(),
+                "Failed: multi_mode_unified_test_cases",
+            )
+            self.assertTrue(
+                self.multi_mode_separated_test_cases(),
+                "Failed: multi_mode_separated_test_cases",
+            )
 
     def unified_test_cases(self):
         out_dir = Path(
@@ -129,30 +132,6 @@ class TestHeaderPatcher(unittest.TestCase):
         )
 
     def test_no_symbol_tests(self):
-        out_dir = Path(get_path("{MCUPDATER_TEST_OUT_DIR}").joinpath("no_symbol"))
-        if not out_dir.exists():
-            out_dir.mkdir(parents=True)
-        for file in out_dir.iterdir():
-            logging.debug(f"Delete old file: {file}")
-            os.remove(file)
-        test_only_overwrite_path_var(
-            "{MCUPDATER_OUT_DIR}",
-            out_dir,
-        )
-        self.updater = MCUpdater(
-            "ARCH",
-            get_path("{MCUPDATER_TEST_DIR}"),
-            [],
-            [],
-            False,
-        )
-        self.updater.gen_all()
-        self.assertFalse(
-            out_dir.joinpath("test_no_symbol.s.txt.yaml").exists(),
-            "File should not exist",
-        )
-
-    def test_no_symbol_tests(self):
         with self.mutex:
             out_dir = Path(get_path("{MCUPDATER_TEST_OUT_DIR}").joinpath("no_symbol"))
             if not out_dir.exists():
@@ -178,34 +157,35 @@ class TestHeaderPatcher(unittest.TestCase):
             )
 
     def test_systemz_mapping(self):
-        out_dir = Path(get_path("{MCUPDATER_TEST_OUT_DIR}").joinpath("mode_mapping/"))
-        if not out_dir.exists():
-            out_dir.mkdir(parents=True)
-        for file in out_dir.iterdir():
-            logging.debug(f"Delete old file: {file}")
-            if file.is_dir():
-                shutil.rmtree(file)
-            else:
-                os.remove(file)
-        test_only_overwrite_path_var(
-            "{MCUPDATER_OUT_DIR}",
-            out_dir,
-        )
-        self.updater = MCUpdater(
-            "SystemZ",
-            get_path("{MCUPDATER_TEST_DIR}"),
-            [],
-            [],
-            False,
-        )
-        self.updater.gen_all()
-        self.assertTrue(
-            self.compare_files(
+        with self.mutex:
+            out_dir = Path(get_path("{MCUPDATER_TEST_OUT_DIR}").joinpath("mode_mapping/"))
+            if not out_dir.exists():
+                out_dir.mkdir(parents=True)
+            for file in out_dir.iterdir():
+                logging.debug(f"Delete old file: {file}")
+                if file.is_dir():
+                    shutil.rmtree(file)
+                else:
+                    os.remove(file)
+            test_only_overwrite_path_var(
+                "{MCUPDATER_OUT_DIR}",
                 out_dir,
-                ["test_systemz_mapping.txt.yaml"],
-            ),
-            "File mismatch",
-        )
+            )
+            self.updater = MCUpdater(
+                "SystemZ",
+                get_path("{MCUPDATER_TEST_DIR}"),
+                [],
+                [],
+                False,
+            )
+            self.updater.gen_all()
+            self.assertTrue(
+                self.compare_files(
+                    out_dir,
+                    ["test_systemz_mapping.txt.yaml"],
+                ),
+                "File mismatch",
+            )
 
     def compare_files(self, out_dir: Path, filenames: list[str]) -> bool:
         if not out_dir.is_dir():
