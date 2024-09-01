@@ -207,7 +207,7 @@ struct platform platforms[] = {
 #ifdef CAPSTONE_HAS_SYSTEMZ
 		{
 			CS_ARCH_SYSTEMZ,
-			(cs_mode)0,
+			(cs_mode)CS_MODE_BIG_ENDIAN,
 			(unsigned char*)SYSTEMZ_CODE,
 			sizeof(SYSTEMZ_CODE) - 1,
 			"SystemZ"
