@@ -3016,6 +3016,11 @@ typedef enum systemz_insn_group {
 
 	SYSTEMZ_GRP_ENDING,   // <-- mark the end of the list of groups
 } systemz_insn_group;
+
+#ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER
+#include "systemz_compatibility.h"
+#endif
+
 #ifdef __cplusplus
 }
 #endif

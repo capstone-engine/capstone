@@ -113,10 +113,10 @@ class ASUpdater:
         if self.arch == "AArch64":
             # Update the compatibility header
             builder = CompatHeaderBuilder(
-                aarch64_h=main_header,
-                arm64_h=get_path("{CS_INCLUDE_DIR}").joinpath(f"arm64.h"),
+                v6=main_header,
+                v5=get_path("{CS_INCLUDE_DIR}").joinpath(f"arm64.h"),
             )
-            builder.generate_aarch64_compat_header()
+            builder.generate_v5_compat_header()
         return patched
 
     def copy_files(self, path: Path, dest: Path) -> None:

@@ -273,6 +273,11 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #else
 	{ NULL, NULL, 0 },
 #endif
+#ifdef CAPSTONE_HAS_SYSTEMZ
+	CS_ARCH_CONFIG_SYSTEMZ,
+#else
+	{ NULL, NULL, 0 },
+#endif
 #ifdef CAPSTONE_HAS_MIPS
 	CS_ARCH_CONFIG_MIPS,
 #else
@@ -290,11 +295,6 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #endif
 #ifdef CAPSTONE_HAS_SPARC
 	CS_ARCH_CONFIG_SPARC,
-#else
-	{ NULL, NULL, 0 },
-#endif
-#ifdef CAPSTONE_HAS_SYSTEMZ
-	CS_ARCH_CONFIG_SYSTEMZ,
 #else
 	{ NULL, NULL, 0 },
 #endif

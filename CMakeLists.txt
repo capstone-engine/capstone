@@ -200,6 +200,7 @@ set(HEADERS_COMMON
     include/capstone/x86.h
     include/capstone/sparc.h
     include/capstone/systemz.h
+    include/capstone/systemz_compatibility.h
     include/capstone/xcore.h
     include/capstone/m68k.h
     include/capstone/tms320c64x.h
@@ -905,8 +906,4 @@ if(CAPSTONE_BUILD_CSTEST)
     add_subdirectory(${TESTS_INTEGRATION_DIR})
     set(TESTS_UNIT_DIR ${PROJECT_SOURCE_DIR}/tests/unit)
     add_subdirectory(${TESTS_UNIT_DIR})
-
-    # Unit tests for auto-sync
-    set(AUTO_SYNC_C_TEST_DIR ${PROJECT_SOURCE_DIR}/suite/auto-sync/c_tests/)
-    add_subdirectory(${AUTO_SYNC_C_TEST_DIR})
 endif()

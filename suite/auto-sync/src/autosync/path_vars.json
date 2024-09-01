@@ -28,6 +28,9 @@
     "{HEADER_GEN_TEST_AARCH64_FILE}": "{AUTO_SYNC_SRC}/Tests/test_aarch64_header.h",
     "{HEADER_GEN_TEST_ARM64_FILE}": "{AUTO_SYNC_SRC}/Tests/test_arm64_header.h",
     "{HEADER_GEN_TEST_ARM64_OUT_FILE}": "{AUTO_SYNC_SRC}/Tests/test_arm64_header.h.out",
+    "{HEADER_GEN_TEST_SYSTEMZ_FILE}": "{AUTO_SYNC_SRC}/Tests/test_systemz_header.h",
+    "{HEADER_GEN_TEST_SYSZ_FILE}": "{AUTO_SYNC_SRC}/Tests/test_sysz_header.h",
+    "{HEADER_GEN_TEST_SYSZ_OUT_FILE}": "{AUTO_SYNC_SRC}/Tests/test_sysz_header.h.out",
     "{DIFFER_TEST_DIR}": "{CPP_TRANSLATOR_TEST_DIR}/Differ/",
     "{DIFFER_TEST_CONFIG_FILE}": "{DIFFER_TEST_DIR}/test_arch_config.json",
     "{DIFFER_TEST_OLD_SRC_DIR}": "{DIFFER_TEST_DIR}/old_src/",
@@ -48,6 +51,7 @@
     "{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}",
     "{CPP_TRANSLATOR_DIFF_OUT_DIR}",
     "{HEADER_GEN_TEST_ARM64_OUT_FILE}",
+    "{HEADER_GEN_TEST_SYSZ_OUT_FILE}",
     "{MCUPDATER_OUT_DIR}",
     "{MCUPDATER_TEST_OUT_DIR}"
   ],

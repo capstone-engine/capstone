@@ -140,11 +140,15 @@ typedef enum cs_arch {
 #else
 	CS_ARCH_AARCH64 = 1,	///< AArch64
 #endif
+#ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER
+	CS_ARCH_SYSZ = 2,	///< SystemZ architecture
+#else
+	CS_ARCH_SYSTEMZ = 2,	///< SystemZ architecture
+#endif
 	CS_ARCH_MIPS,		///< Mips architecture
 	CS_ARCH_X86,		///< X86 architecture (including x86 & x86-64)
 	CS_ARCH_PPC,		///< PowerPC architecture
 	CS_ARCH_SPARC,		///< Sparc architecture
-	CS_ARCH_SYSTEMZ,	///< SystemZ architecture
 	CS_ARCH_XCORE,		///< XCore architecture
 	CS_ARCH_M68K,		///< 68K architecture
 	CS_ARCH_TMS320C64X,	///< TMS320C64x architecture
