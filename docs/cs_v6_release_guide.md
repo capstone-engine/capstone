@@ -154,25 +154,25 @@ Nonetheless, we hope this additional information is useful to you.
 |---------|--------|---------------|-----------------|
 | `SYSTEMZ_CC_*` | `SYSTEMZ_CC_O = 0` and `SYSTEMZ_CC_INVALID != 0` | They match the same LLVM values. Better for LLVM compatibility and code generation. | Change by hand. |
 
-**Note about AArch64**
+**Note about AArch64 and SystemZ**
 
-`ARM64` was everywhere renamed to `AArch64`. This is a necessity to ensure that the update scripts stay reasonably simple.
-Capstone was very inconsistent with the naming before (sometimes `AArch64` sometimes `ARM64`).
-Because Capstone uses a huge amount of LLVM code, we renamed everything to `AArch64`. This reduces complexity enormously because it follows the naming of LLVM.
+`ARM64` was everywhere renamed to `AArch64`. And `SYSZ` to `SYSTEMZ`. This is a necessity to ensure that the update scripts stay reasonably simple.
+Capstone was very inconsistent with the naming before (sometimes `AArch64` sometimes `ARM64`. Sometimes `SYSZ` sometimes `SYSTEMZ`).
+Because Capstone uses a huge amount of LLVM code, we renamed everything to `AArch64` and `SystemZ`. This reduces complexity enormously because it follows the naming of LLVM.
 
-Because this would completely break maintaining Capstone `v6` and `pre-v6` in a project, we added two solutions:
+Because this would completely break maintaining Capstone `v6` and `pre-v6` in a project, we added compatibility headers:
 
 1. Make `arm64.h` a compatibility header which merely maps every member to the one in the `aarch64.h` header.
-2. Macros for meta-programming which select the right name.
+2. The `systemz.h` header includes the `SYSZ` to `SYSZTEMZ` mapping if `CAPSTONE_SYSTEMZ_COMPAT_HEADER` is defined.
 
-We will continue to maintain both solutions.
-So if you need to support the previous version of Capstone as well, you can use either of the solutions.
+We will continue to maintain both headers.
 
 _Compatibility header_
 
-If you want to use the compatibility header and stick with the `ARM64` naming, you can define `CAPSTONE_AARCH64_COMPAT_HEADER` before including `capstone.h`.
+If you want to use the compatibility header and stick with the `ARM64`/`SYSZ` naming, you can define `CAPSTONE_AARCH64_COMPAT_HEADER` and `CAPSTONE_SYSTEMZ_COMPAT_HEADER` before including `capstone.h`.
 
 ```c
+#define CAPSTONE_SYSTEMZ_COMPAT_HEADER
 #define CAPSTONE_AARCH64_COMPAT_HEADER
 #include <capstone/capstone.h>
 
@@ -212,6 +212,8 @@ echo "Replace detail->arm64"
 sed -i -E "s/detail->arm64/detail->CS_aarch64()/g" $1	
 ```
 
+_Example renaming with `sed`_
+
 Simple renaming from `ARM64` to `AArch64`:
 
 ```sh
@@ -238,6 +240,33 @@ sed -i "s|arm64_vas |AArch64Layout_VectorLayout |g" $1
 echo "Replace detail->arm64"
 
 sed -i "s|detail->arm64|detail->aarch64|g" $1
+```
+
+Simple renaming from `SYSZ` to `SYSTEMZ`:
+
+```sh
+#!/bin/sh
+echo "Replace enum names"
+
+sed -i "s|CS_ARCH_SYSZ|CS_ARCH_SYSTEMZ|g" $1
+sed -i "s|SYSZ_INS_|SYSTEMZ_INS_|g" $1
+sed -i "s|SYSZ_REG_|SYSTEMZ_REG_|g" $1
+sed -i "s|SYSZ_OP_|SYSTEMZ_OP_|g" $1
+sed -i "s|SYSZ_CC_|SYSTEMZ_CC_|g" $1
+
+echo "Replace type identifiers"
+
+sed -i "s|sysz_reg|systemz_reg|g" $1
+sed -i "s|sysz_cc |systemz_cc |g" $1
+sed -i "s|cs_sysz|cs_systemz|g" $1
+sed -i "s|sysz_op_type|systemz_op_type|g" $1
+sed -i "s|sysz_op_type|systemz_op_type|g" $1
+sed -i "s|sysz_op_mem|systemz_op_mem|g" $1
+sed -i "s|sysz_op|systemz_op|g" $1
+
+echo "Replace detail->sysz"
+
+sed -i "s|detail->sysz|detail->systemz|g" $1
 ```
 
 Write it into `rename_arm64.sh` and run it on files with `sh rename_arm64.sh <src-file>`
