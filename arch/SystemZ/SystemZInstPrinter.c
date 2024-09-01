@@ -194,7 +194,14 @@ DEFINE_printUImmOperand(48);
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		CS_ASSERT( \
 			(CONCAT(isInt, N)(Value) && "Invalid simm argument")); \
-		printInt64(markup_OS(O, Markup_Immediate), Value); \
+		if (N == 8) \
+			printInt8(markup_OS(O, Markup_Immediate), Value); \
+		else if (N == 16) \
+			printInt16(markup_OS(O, Markup_Immediate), Value); \
+		else if (N == 32) \
+			printInt32(markup_OS(O, Markup_Immediate), Value); \
+		else \
+			CS_ASSERT(0 && "Unreachable"); \
 	}
 DEFINE_printSImmOperand(8);
 DEFINE_printSImmOperand(16);
