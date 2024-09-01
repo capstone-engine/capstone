@@ -70,7 +70,7 @@ int sysz(void)
 		fprintf(stderr, "register wrong.\n");
 		goto err;
 	}
-	if (insn[0].detail->sysz.operands[1].mem.am != SYSZ_AM_BDX) {
+	if (((sysz_addr_mode) insn[0].detail->sysz.operands[1].mem.am) != SYSZ_AM_BDX) {
 		fprintf(stderr, "mem.am wrong\n");
 		goto err;
 	}
