@@ -37,12 +37,6 @@ do { \
 		return; \
 } while(0)
 
-#define SSTREAM_FINISH_MARKUP(OS) \
-do { \
-	if (OS->markup_stream && OS->prefixed_by_markup) \
-		SStream_concat0(OS, ">"); \
-} while(0)
-
 void SStream_Init(SStream *ss);
 
 void SStream_Open(SStream *ss);
