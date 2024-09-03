@@ -595,7 +595,7 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 		const char *disp_off = NULL;
 		disp_off = strstr(OS->buffer, " za");
 		if (disp_off) {
-			aarch64_sysop sysop;
+			aarch64_sysop sysop = { 0 };
 			sysop.alias.svcr = AARCH64_SVCR_SVCRZA;
 			sysop.sub_type = AARCH64_OP_SVCR;
 			AArch64_insert_detail_op_sys(MI, -1, sysop,
@@ -604,7 +604,7 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 		}
 		disp_off = strstr(OS->buffer, " sm");
 		if (disp_off) {
-			aarch64_sysop sysop;
+			aarch64_sysop sysop = { 0 };
 			sysop.alias.svcr = AARCH64_SVCR_SVCRSM;
 			sysop.sub_type = AARCH64_OP_SVCR;
 			AArch64_insert_detail_op_sys(MI, -1, sysop,
@@ -1384,7 +1384,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	}
 	case AArch64_OP_GROUP_BarriernXSOption: {
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		const AArch64DBnXS_DBnXS *DB =
 			AArch64DBnXS_lookupDBnXSByEncoding(Val);
 		if (DB)
@@ -1398,7 +1398,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_BarrierOption: {
 		unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 		unsigned Opcode = MCInst_getOpcode(MI);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 
 		if (Opcode == AArch64_ISB) {
 			const AArch64ISB_ISB *ISB =
@@ -1434,7 +1434,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		break;
 	}
 	case AArch64_OP_GROUP_BTIHintOp: {
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		unsigned btihintop = MCInst_getOpVal(MI, OpNum) ^ 32;
 		const AArch64BTIHint_BTI *BTI =
 			AArch64BTIHint_lookupBTIByEncoding(btihintop);
@@ -1541,7 +1541,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 
 		if (Reg && !isValidSysReg)
 			Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		// If Reg is NULL it is a generic system register.
 		if (Reg)
 			sysop.reg = Reg->SysReg;
@@ -1560,7 +1560,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned psbhintop = MCInst_getOpVal(MI, OpNum);
 		const AArch64PSBHint_PSB *PSB =
 			AArch64PSBHint_lookupPSBByEncoding(psbhintop);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		if (PSB)
 			sysop.alias = PSB->SysAlias;
 		else
@@ -1574,7 +1574,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned prfop = MCInst_getOpVal(MI, OpNum);
 		const AArch64PRFM_PRFM *PRFM =
 			AArch64PRFM_lookupPRFMByEncoding(prfop);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		if (PRFM)
 			sysop.alias = PRFM->SysAlias;
 		else
@@ -1611,7 +1611,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned svcrop = MCInst_getOpVal(MI, OpNum);
 		const AArch64SVCR_SVCR *SVCR =
 			AArch64SVCR_lookupSVCRByEncoding(svcrop);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		if (SVCR)
 			sysop.alias = SVCR->SysAlias;
 		else
@@ -1629,7 +1629,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM, Val);
 			break;
 		}
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		sysop.alias = Pat->SysAlias;
 		sysop.sub_type = AARCH64_OP_SVEPREDPAT;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop,
@@ -1646,7 +1646,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 				Val);
 		if (!Pat)
 			break;
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		sysop.alias = Pat->SysAlias;
 		sysop.sub_type = AARCH64_OP_SVEVECLENSPECIFIER;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop,
@@ -1667,7 +1667,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_SystemPStateField: {
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		const AArch64PState_PStateImm0_15 *PStateImm15 =
 			AArch64PState_lookupPStateImm0_15ByEncoding(Val);
 		const AArch64PState_PStateImm0_1 *PStateImm1 =
@@ -1881,7 +1881,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_PrefetchOp_1: {
 		bool IsSVEPrefetch = (bool)temp_arg_0;
 		unsigned prfop = MCInst_getOpVal(MI, (OpNum));
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		if (IsSVEPrefetch) {
 			const AArch64SVEPRFM_SVEPRFM *PRFM =
 				AArch64SVEPRFM_lookupSVEPRFMByEncoding(prfop);
@@ -2036,7 +2036,7 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 		const AArch64ExactFPImm_ExactFPImm *Imm1Desc =
 			AArch64ExactFPImm_lookupExactFPImmByEnum(ImmIs1);
 		unsigned Val = MCInst_getOpVal(MI, (OpNum));
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		sysop.imm = Val ? Imm1Desc->SysImm : Imm0Desc->SysImm;
 		sysop.sub_type = AARCH64_OP_EXACTFPIMM;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AARCH64_OP_SYSIMM);
