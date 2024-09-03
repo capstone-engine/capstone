@@ -22,6 +22,9 @@ class MipsOp(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', MipsOpValue),
+        ('is_reglist', ctypes.c_bool),
+        ('is_unsigned', ctypes.c_bool),
+        ('access', ctypes.c_uint8),
     )
 
     @property

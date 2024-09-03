@@ -38,4 +38,8 @@ configs = {
         "type": cs.CS_OPT_SYNTAX,
         "val": cs.CS_OPT_SYNTAX_PERCENT,
     },
+    "CS_OPT_SYNTAX_NO_DOLLAR": {
+        "type": cs.CS_OPT_SYNTAX,
+        "val": cs.CS_OPT_SYNTAX_NO_DOLLAR,
+    },
 }

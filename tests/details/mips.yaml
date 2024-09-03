@@ -192,7 +192,7 @@ test_cases:
             operands:
               -
                 type: MIPS_OP_REG
-                reg: 18
+                reg: "18"
               -
                 type: MIPS_OP_MEM
                 mem_base: sp

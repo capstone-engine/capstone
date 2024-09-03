@@ -51,24 +51,44 @@ __all__ = [
     'CS_MODE_ARM',
     'CS_MODE_THUMB',
     'CS_MODE_MCLASS',
-    'CS_MODE_MICRO',
-    'CS_MODE_MIPS3',
-    'CS_MODE_MIPS32R6',
-    'CS_MODE_MIPS2',
     'CS_MODE_V8',
     'CS_MODE_V9',
     'CS_MODE_QPX',
     'CS_MODE_SPE',
     'CS_MODE_BOOKE',
     'CS_MODE_PS',
+    'CS_MODE_MIPS16',
+    'CS_MODE_MIPS32',
+    'CS_MODE_MIPS64',
+    'CS_MODE_MICRO',
+    'CS_MODE_MIPS1',
+    'CS_MODE_MIPS2',
+    'CS_MODE_MIPS32R2',
+    'CS_MODE_MIPS32R3',
+    'CS_MODE_MIPS32R5',
+    'CS_MODE_MIPS32R6',
+    'CS_MODE_MIPS3',
+    'CS_MODE_MIPS4',
+    'CS_MODE_MIPS5',
+    'CS_MODE_MIPS64R2',
+    'CS_MODE_MIPS64R3',
+    'CS_MODE_MIPS64R5',
+    'CS_MODE_MIPS64R6',
+    'CS_MODE_OCTEON',
+    'CS_MODE_OCTEONP',
+    'CS_MODE_NANOMIPS',
+    'CS_MODE_NMS1',
+    'CS_MODE_I7200',
+    'CS_MODE_MIPS_NOFLOAT',
+    'CS_MODE_MIPS_PTR64',
+    'CS_MODE_MICRO32R3',
+    'CS_MODE_MICRO32R6',
     'CS_MODE_M68K_000',
     'CS_MODE_M68K_010',
     'CS_MODE_M68K_020',
     'CS_MODE_M68K_030',
     'CS_MODE_M68K_040',
     'CS_MODE_M68K_060',
-    'CS_MODE_MIPS32',
-    'CS_MODE_MIPS64',
     'CS_MODE_M680X_6301',
     'CS_MODE_M680X_6309',
     'CS_MODE_M680X_6800',
@@ -119,8 +139,10 @@ __all__ = [
     'CS_OPT_SYNTAX_MASM',
     'CS_OPT_SYNTAX_MOTOROLA',
     'CS_OPT_SYNTAX_CS_REG_ALIAS',
+    'CS_OPT_SYNTAX_NO_DOLLAR',
 
     'CS_OPT_DETAIL',
+    'CS_OPT_DETAIL_REAL',
     'CS_OPT_MODE',
     'CS_OPT_ON',
     'CS_OPT_OFF',
@@ -257,8 +279,32 @@ CS_MODE_M68K_030 = (1 << 4)    # M68K 68030 mode
 CS_MODE_M68K_040 = (1 << 5)    # M68K 68040 mode
 CS_MODE_M68K_060 = (1 << 6)    # M68K 68060 mode
 CS_MODE_BIG_ENDIAN = (1 << 31) # big-endian mode
-CS_MODE_MIPS32 = CS_MODE_32    # Mips32 ISA
-CS_MODE_MIPS64 = CS_MODE_64    # Mips64 ISA
+CS_MODE_MIPS16 = CS_MODE_16 # Generic mips16
+CS_MODE_MIPS32 = CS_MODE_32 # Generic mips32
+CS_MODE_MIPS64 = CS_MODE_64 # Generic mips64
+CS_MODE_MICRO = 1 << 4 # microMips
+CS_MODE_MIPS1 = 1 << 5 # Mips I ISA Support
+CS_MODE_MIPS2 = 1 << 6 # Mips II ISA Support
+CS_MODE_MIPS32R2 = 1 << 7 # Mips32r2 ISA Support
+CS_MODE_MIPS32R3 = 1 << 8 # Mips32r3 ISA Support
+CS_MODE_MIPS32R5 = 1 << 9 # Mips32r5 ISA Support
+CS_MODE_MIPS32R6 = 1 << 10 # Mips32r6 ISA Support
+CS_MODE_MIPS3 = 1 << 11 # MIPS III ISA Support
+CS_MODE_MIPS4 = 1 << 12 # MIPS IV ISA Support
+CS_MODE_MIPS5 = 1 << 13 # MIPS V ISA Support
+CS_MODE_MIPS64R2 = 1 << 14 # Mips64r2 ISA Support
+CS_MODE_MIPS64R3 = 1 << 15 # Mips64r3 ISA Support
+CS_MODE_MIPS64R5 = 1 << 16 # Mips64r5 ISA Support
+CS_MODE_MIPS64R6 = 1 << 17 # Mips64r6 ISA Support
+CS_MODE_OCTEON = 1 << 18 # Octeon cnMIPS Support
+CS_MODE_OCTEONP = 1 << 19 # Octeon+ cnMIPS Support
+CS_MODE_NANOMIPS = 1 << 20 # Generic nanomips 
+CS_MODE_NMS1 = ((1 << 21) | CS_MODE_NANOMIPS) # nanoMips NMS1
+CS_MODE_I7200 = ((1 << 22) | CS_MODE_NANOMIPS) # nanoMips I7200
+CS_MODE_MIPS_NOFLOAT = 1 << 23 # Disable floating points ops
+CS_MODE_MIPS_PTR64 = 1 << 24 # Mips pointers are 64-bit
+CS_MODE_MICRO32R3 = (CS_MODE_MICRO | CS_MODE_MIPS32R3) # microMips32r3
+CS_MODE_MICRO32R6 = (CS_MODE_MICRO | CS_MODE_MIPS32R6) # microMips32r6
 CS_MODE_M680X_6301 = (1 << 1)  # M680X HD6301/3 mode
 CS_MODE_M680X_6309 = (1 << 2)  # M680X HD6309 mode
 CS_MODE_M680X_6800 = (1 << 3)  # M680X M6800/2 mode
@@ -364,6 +410,7 @@ CS_OPT_SYNTAX_MASM = (1 << 5)  # MASM syntax (CS_OPT_SYNTAX, CS_ARCH_X86)
 CS_OPT_SYNTAX_MOTOROLA = (1 << 6)  # MOS65XX use $ as hex prefix
 CS_OPT_SYNTAX_CS_REG_ALIAS = (1 << 7)  # Prints common register alias which are not defined in LLVM (ARM: r9 = sb etc.)
 CS_OPT_SYNTAX_PERCENT = (1 << 8)  # Prints the % in front of PPC registers.
+CS_OPT_SYNTAX_NO_DOLLAR = (1 << 9) # Does not print the $ in front of Mips registers.
 CS_OPT_DETAIL_REAL = (1 << 1)  # If enabled, always sets the real instruction detail.Even if the instruction is an alias.
 
 # Capstone error type
@@ -501,7 +548,7 @@ class _cs_detail(ctypes.Structure):
         ('regs_read_count', ctypes.c_ubyte),
         ('regs_write', ctypes.c_uint16 * 47),
         ('regs_write_count', ctypes.c_ubyte),
-        ('groups', ctypes.c_ubyte * 8),
+        ('groups', ctypes.c_ubyte * 16),
         ('groups_count', ctypes.c_ubyte),
         ('writeback', ctypes.c_bool),
         ('arch', _cs_arch),

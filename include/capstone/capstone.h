@@ -217,10 +217,10 @@ typedef enum cs_mode {
 	CS_MODE_NANOMIPS = 1 << 20, ///< Generic nanomips 
 	CS_MODE_NMS1 = ((1 << 21) | CS_MODE_NANOMIPS), ///< nanoMips NMS1
 	CS_MODE_I7200 = ((1 << 22) | CS_MODE_NANOMIPS), ///< nanoMips I7200
-	CS_MODE_MIPS_NOFLOAT = 1 << 23, /// Disable floating points ops
-	CS_MODE_MIPS_PTR64 = 1 << 24, /// Mips pointers are 64-bit
-	CS_MODE_MICRO32R3 = (CS_MODE_MICRO | CS_MODE_MIPS32R3), /// microMips32r3
-	CS_MODE_MICRO32R6 = (CS_MODE_MICRO | CS_MODE_MIPS32R6), /// microMips32r6
+	CS_MODE_MIPS_NOFLOAT = 1 << 23, ///< Disable floating points ops
+	CS_MODE_MIPS_PTR64 = 1 << 24, ///< Mips pointers are 64-bit
+	CS_MODE_MICRO32R3 = (CS_MODE_MICRO | CS_MODE_MIPS32R3), ///< microMips32r3
+	CS_MODE_MICRO32R6 = (CS_MODE_MICRO | CS_MODE_MIPS32R6), ///< microMips32r6
 	CS_MODE_M680X_6301 = 1 << 1, ///< M680X Hitachi 6301,6303 mode
 	CS_MODE_M680X_6309 = 1 << 2, ///< M680X Hitachi 6309 mode
 	CS_MODE_M680X_6800 = 1 << 3, ///< M680X Motorola 6800,6802 mode
