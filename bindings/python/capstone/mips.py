@@ -15,6 +15,7 @@ class MipsOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int64),
+        ('uimm', ctypes.c_uint64),
         ('mem', MipsOpMem),
     )
 

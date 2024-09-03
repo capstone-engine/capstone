@@ -684,7 +684,8 @@ typedef struct cs_mips_op {
 	mips_op_type type;	///< operand type
 	union {
 		mips_reg reg;		///< register id for REG operand
-		int64_t imm;		///< immediate value for IMM operand
+		int64_t imm;		///< signed immediate value for IMM operand
+		uint64_t uimm;		///< unsigned immediate value for IMM operand
 		mips_op_mem mem;	///< base/index/scale/disp value for MEM operand
 	};
 	bool is_reglist;    ///< defines if the register is part of a list

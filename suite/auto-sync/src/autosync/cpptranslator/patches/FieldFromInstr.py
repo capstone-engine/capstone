@@ -41,9 +41,9 @@ class FieldFromInstr(Patch):
 
         # Determine width of instruction by the variable name.
         if ffi_first_arg_text[-2:] == "32":
-            inst_width = 4
+            inst_width = b"4"
         elif ffi_first_arg_text[-2:] == "16":
-            inst_width = 2
+            inst_width = b"2"
         else:
             # Get the Val/Inst parameter.
             # Its type determines the instruction width.

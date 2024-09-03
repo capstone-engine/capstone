@@ -259,7 +259,7 @@ static void Mips_set_detail_op_uimm(MCInst *MI, unsigned OpNum, uint64_t Imm)
 	}
 
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_IMM;
-	Mips_get_detail_op(MI, 0)->imm = (int64_t)Imm;
+	Mips_get_detail_op(MI, 0)->uimm = Imm;
 	Mips_get_detail_op(MI, 0)->is_unsigned = true;
 	Mips_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	Mips_inc_op_count(MI);
