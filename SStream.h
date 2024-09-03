@@ -5,6 +5,7 @@
 #define CS_SSTREAM_H_
 
 #include "include/capstone/platform.h"
+#include <stdio.h>
 
 typedef enum {
 	Markup_Immediate,
@@ -38,6 +39,8 @@ do { \
 } while(0)
 
 void SStream_Init(SStream *ss);
+
+void SStream_Flush(SStream *ss, FILE *file);
 
 void SStream_Open(SStream *ss);
 
