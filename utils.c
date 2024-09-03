@@ -210,7 +210,7 @@ char *str_append(char *str_a, const char *str_b) {
 	assert(str_a && str_b);
 	size_t asize = strlen(str_a) + strlen(str_b) + 1;
 	str_a = realloc(str_a, asize);
-	strncat(str_a, str_b, asize);
+	strncat(str_a, str_b, strlen(str_b));
 	return str_a;
 }
 

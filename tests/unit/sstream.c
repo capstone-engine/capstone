@@ -1,20 +1,11 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
+#include "unit_test.h"
 #include "../SStream.h"
 #include "../utils.h"
 #include <stdio.h>
 #include <string.h>
-
-#define CHECK_EQUAL_RET_FALSE(OS, str) \
-	do { \
-		if (strcmp(OS.buffer, str) != 0) { \
-			printf("OS.buffer != str\n"); \
-			printf("OS.buffer: %s\n", OS.buffer); \
-			printf("str      : %s\n", str); \
-			return false; \
-		} \
-	} while (0);
 
 static void overflow_SStream_concat0(SStream *OS, bool *returned_in_time)
 {
