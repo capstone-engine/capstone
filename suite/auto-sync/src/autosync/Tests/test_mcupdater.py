@@ -158,7 +158,9 @@ class TestHeaderPatcher(unittest.TestCase):
 
     def test_systemz_mapping(self):
         with self.mutex:
-            out_dir = Path(get_path("{MCUPDATER_TEST_OUT_DIR}").joinpath("mode_mapping/"))
+            out_dir = Path(
+                get_path("{MCUPDATER_TEST_OUT_DIR}").joinpath("mode_mapping/")
+            )
             if not out_dir.exists():
                 out_dir.mkdir(parents=True)
             for file in out_dir.iterdir():
