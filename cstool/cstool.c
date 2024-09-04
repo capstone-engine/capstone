@@ -438,20 +438,6 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 	printf("\n");
 }
 
-static uint32_t read_le(uint8_t *buf, size_t size) {
-	uint32_t res = 0;
-	for (size_t i = 0, j = size - 1; i < size; ++i, --j) {
-		res |= buf[i] << j * 8;
-	}
-	return res;
-}
-
-static void to_buf(uint32_t num, uint8_t *buf) {
-	for (size_t i = 0, j = 3; i < 4; ++i, --j) {
-		buf[i] = (num >> j) & 0xff;
-	}
-}
-
 int main(int argc, char **argv)
 {
 	int i, c;
