@@ -1605,6 +1605,9 @@ static bool set_dsp_move_d(sh_info *info, int xy, uint16_t code, cs_mode mode, c
 	int op;
 	static const sh_reg base[] = {SH_REG_DSP_A0, SH_REG_DSP_X0};
 	switch (xy) {
+	default:
+		printf("Invalid xy value %" PRId32 "\n", xy);
+		return MCDisassembler_Fail;
 	case 0:
 		op = (code >> 2) & 3;
 		dir = 1 - ((code >> 5) & 1);
