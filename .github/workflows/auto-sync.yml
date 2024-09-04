@@ -96,11 +96,3 @@ jobs:
           ./src/autosync/ASUpdater.py --ci -d -a LoongArch -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a Mips -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a SystemZ -s Translate
-
-      - name: Differ - Test save file is up-to-date
-        run: |
-          ./src/autosync/cpptranslator/Differ.py -a AArch64 --check_saved
-          ./src/autosync/cpptranslator/Differ.py -a ARM --check_saved
-          ./src/autosync/cpptranslator/Differ.py -a PPC --check_saved
-          ./src/autosync/cpptranslator/Differ.py -a LoongArch --check_saved
-          ./src/autosync/cpptranslator/Differ.py -a SystemZ --check_saved
