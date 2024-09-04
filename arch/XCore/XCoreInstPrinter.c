@@ -167,8 +167,10 @@ static void set_mem_access(MCInst *MI, bool status, int reg)
 		} else {
 			// the last op should be the memory base
 			MI->flat_insn->detail->xcore.op_count--;
+			uint8_t base = MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg;
+			memset(&MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count], 0, sizeof(cs_xcore_op));
 			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_MEM;
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = (uint8_t)MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg;
+			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = base;
 			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.index = XCORE_REG_INVALID;
 			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.disp = 0;
 			if (reg > 0)
