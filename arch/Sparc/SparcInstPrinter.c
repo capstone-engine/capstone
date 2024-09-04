@@ -81,8 +81,10 @@ void Sparc_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 	// fix up some instructions
 	if (insn->id == SPARC_INS_CASX) {
 		// first op is actually a memop, not regop
+		uint8_t base = (uint8_t)insn->detail->sparc.operands[0].reg;
+		memset(&insn->detail->sparc.operands[0], 0, sizeof(cs_sparc_op));
 		insn->detail->sparc.operands[0].type = SPARC_OP_MEM;
-		insn->detail->sparc.operands[0].mem.base = (uint8_t)insn->detail->sparc.operands[0].reg;
+		insn->detail->sparc.operands[0].mem.base = base;
 		insn->detail->sparc.operands[0].mem.disp = 0;
 	}
 }
