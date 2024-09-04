@@ -61,6 +61,7 @@ char *test_input_stringify(const TestInput *test_input, const char *postfix)
 	char *byte_seq =
 		byte_seq_to_str(test_input->bytes, test_input->bytes_count);
 	if (!msg) {
+		cs_mem_free(byte_seq);
 		return NULL;
 	}
 	char opt_seq[128] = { 0 };
