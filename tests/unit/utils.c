@@ -45,16 +45,16 @@ static bool test_str_append()
 	CHECK_NULL_RET_FALSE(str_append(str_a, str_b));
 
 	str_b = calloc(5, sizeof(char));
-	char *result = str_append(str_a, str_b);
-	CHECK_STR_EQUAL_RET_FALSE(result, "AAAA");
+	str_a = str_append(str_a, str_b);
+	CHECK_STR_EQUAL_RET_FALSE(str_a, "AAAA");
 
 	memcpy(str_b, "BBBB", 5);
-	result = str_append(str_a, str_b);
-	CHECK_STR_EQUAL_RET_FALSE(result, "AAAABBBB");
+	str_a = str_append(str_a, str_b);
+	CHECK_STR_EQUAL_RET_FALSE(str_a, "AAAABBBB");
 
-	memset(str_a, 0, 5);
-	result = str_append(str_a, str_b);
-	CHECK_STR_EQUAL_RET_FALSE(result, "BBBB");
+	memset(str_a, 0, strlen(str_a) + 1);
+	str_a = str_append(str_a, str_b);
+	CHECK_STR_EQUAL_RET_FALSE(str_a, "BBBB");
 	free(str_a);
 	free(str_b);
 
