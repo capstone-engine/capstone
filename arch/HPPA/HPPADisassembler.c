@@ -221,8 +221,8 @@ static void push_str_modifier(hppa_ext *hppa, const char *modifier)
 		hppa_modifier *mod = &hppa->modifiers[hppa->mod_num++];
 		assert(hppa->mod_num <= HPPA_MAX_MODIFIERS_LEN);
 		mod->type = HPPA_MOD_STR;
-		assert(strlen(modifier) <= HPPA_STR_MODIFIER_LEN);
-		strcpy(mod->str_mod, modifier);
+		assert(strlen(modifier) < HPPA_STR_MODIFIER_LEN);
+		strncpy(mod->str_mod, modifier, HPPA_STR_MODIFIER_LEN - 1);
 	}
 }
 
