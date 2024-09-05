@@ -125,6 +125,7 @@ typedef enum VPTCodes {
 ///   Txy = xy10
 ///   Txyz = xyz1
 typedef enum PredBlockMask {
+  ARM_PredBlockMaskInvalid = 0,
   ARM_T = 0x8, // 0b1000
   ARM_TT = 0x4, // 0b0100
   ARM_TE = 0xc, // 0b1100

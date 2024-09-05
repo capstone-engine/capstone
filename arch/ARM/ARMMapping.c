@@ -1192,7 +1192,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_VPTMask: {
 		unsigned Mask = MCInst_getOpVal(MI, OpNum);
 		unsigned NumTZ = CountTrailingZeros_32(Mask);
-		ARM_PredBlockMask PredMask = 0;
+		ARM_PredBlockMask PredMask = ARM_PredBlockMaskInvalid;
 
 		// Check the documentation of ARM_PredBlockMask how the bits are set.
 		for (unsigned Pos = 3, e = NumTZ; Pos > e; --Pos) {
@@ -2112,7 +2112,7 @@ void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
 	default:
 		assert(0 && "Unknown system operand type.");
 	case ARM_OP_SYSREG:
-		ARM_get_detail_op(MI, 0)->sysop.reg.mclasssysreg = Val;
+		ARM_get_detail_op(MI, 0)->sysop.reg.mclasssysreg = Val; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
 		break;
 	case ARM_OP_BANKEDREG:
 		ARM_get_detail_op(MI, 0)->sysop.reg.bankedreg = Val;
@@ -2121,7 +2121,7 @@ void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
 	case ARM_OP_CPSR:
 		ARM_get_detail_op(MI, 0)->reg =
 			type == ARM_OP_SPSR ? ARM_REG_SPSR : ARM_REG_CPSR;
-		ARM_get_detail_op(MI, 0)->sysop.psr_bits = Val;
+		ARM_get_detail_op(MI, 0)->sysop.psr_bits = Val; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
 		break;
 	}
 	ARM_get_detail_op(MI, 0)->sysop.sysm = Sysm;
