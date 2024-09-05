@@ -1774,7 +1774,7 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_RELATIVE;
 
-	op->rel.offset = (post_byte & 0x10) ? 0xff00 | rel : rel;
+	op->rel.offset = (post_byte & 0x10) ? (int16_t) (0xff00 | rel) : rel;
 
 	op->rel.address = *address + op->rel.offset;
 
