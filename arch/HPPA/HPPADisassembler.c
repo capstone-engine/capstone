@@ -1457,7 +1457,7 @@ static void fill_ldst_w_insn_name(MCInst *MI, uint32_t insn)
 	}
 }
 
-static void fill_ldst_w_mods(uint32_t insn, hppa_ext *hppa_ext, uint32_t im)
+static void fill_ldst_w_mods(uint32_t insn, hppa_ext *hppa_ext, int32_t im)
 {
 	if (im >= 0) {
 		push_str_modifier(hppa_ext, "mb");
@@ -1470,7 +1470,7 @@ static bool decode_ldst_w(const cs_struct *ud, MCInst *MI, uint32_t insn)
 {
 	uint32_t opcode = insn >> 26;
 	uint32_t ext = get_insn_bit(insn, 29);
-	uint32_t im = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
+	int32_t im = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
 	im &= ~3;
 	uint32_t r = get_insn_field(insn, 11, 15);
 	uint32_t b = get_insn_field(insn, 6, 10);
