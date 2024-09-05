@@ -3621,7 +3621,7 @@ static bool decode_load(const cs_struct *ud, MCInst *MI, uint32_t insn)
 {
 	uint32_t opcode = insn >> 26;
 	if (MODE_IS_HPPA_20(ud->mode)) {
-		uint32_t d = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
+		int32_t d = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
 		if (opcode == HPPA_OP_TYPE_LDWM) {
 			if (d < 0) {
 				push_str_modifier(HPPA_EXT_REF(MI), "mb");
