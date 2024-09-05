@@ -934,7 +934,7 @@ static bool op4xxb(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 			rw = write;
 			break;
 		case 2:
-			insn = SH_INS_JMP;
+			MCInst_setOpcode(MI, SH_INS_JMP);
 			grp = SH_GRP_JUMP;
 			break;
 		case 8:
