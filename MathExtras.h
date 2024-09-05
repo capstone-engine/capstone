@@ -29,6 +29,8 @@
 #endif
 #endif
 
+#include <limits.h>
+
 // NOTE: The following support functions use the _32/_64 extensions instead of
 // type overloading so that signed and unsigned integers can be used without
 // ambiguity.
@@ -280,15 +282,21 @@ static inline unsigned CountPopulation_64(uint64_t Value) {
 }
 
 /// Log2_32 - This function returns the floor log base 2 of the specified value,
-/// -1 if the value is zero. (32 bit edition.)
+/// UINT_MAX if the value is zero. (32 bit edition.)
 /// Ex. Log2_32(32) == 5, Log2_32(1) == 0, Log2_32(0) == -1, Log2_32(6) == 2
 static inline unsigned Log2_32(uint32_t Value) {
+	if (Value == 0) {
+		return UINT_MAX;
+	}
 	return 31 - CountLeadingZeros_32(Value);
 }
 
 /// Log2_64 - This function returns the floor log base 2 of the specified value,
-/// -1 if the value is zero. (64 bit edition.)
+/// UINT_MAX if the value is zero. (64 bit edition.)
 static inline unsigned Log2_64(uint64_t Value) {
+	if (Value == 0) {
+		return UINT32_MAX;
+	}
 	return 63 - CountLeadingZeros_64(Value);
 }
 
