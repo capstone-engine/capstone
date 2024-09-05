@@ -39,11 +39,7 @@ void print_insn_detail_systemz(csh handle, cs_insn *ins)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.index));
 				if (op->mem.length != 0) {
-					if (op->mem.am == SYSTEMZ_AM_BDL) {
-						printf("\t\t\toperands[%u].mem.length: 0x%" PRIx64 "\n", i, op->mem.length);
-					} else {
-						printf("\t\t\toperands[%u].mem.length: 0x%" PRIx64 "\n", i, op->mem.length);
-					}
+					printf("\t\t\toperands[%u].mem.length: 0x%" PRIx64 "\n", i, op->mem.length);
 				}
 				printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->mem.disp);
 				switch(op->mem.am) {
