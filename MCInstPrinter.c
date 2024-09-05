@@ -232,8 +232,8 @@ unsigned int binsearch_IndexTypeStrEncoding(const struct IndexTypeStr *index, si
 
 	right = size - 1;
 
-	size_t str_left_cmp = strcmp(name, index[0].name);
-	size_t str_right_cmp = strcmp(name, index[right].name);
+	int str_left_cmp = strcmp(name, index[0].name);
+	int str_right_cmp = strcmp(name, index[right].name);
 	if (str_left_cmp < 0 || str_right_cmp > 0)
 		// not found
 		return -1;
