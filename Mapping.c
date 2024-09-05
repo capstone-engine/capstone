@@ -152,8 +152,6 @@ void map_implicit_reads(MCInst *MI, const insn_map *imap)
 		detail->regs_read[detail->regs_read_count++] = reg;
 		if (i < MAX_IMPL_R_REGS) {
 			reg = imap[Opcode].regs_use[++i];
-		} else {
-			break;
 		}
 	}
 #endif // CAPSTONE_DIET
@@ -181,8 +179,6 @@ void map_implicit_writes(MCInst *MI, const insn_map *imap)
 		detail->regs_write[detail->regs_write_count++] = reg;
 		if (i < MAX_IMPL_W_REGS) {
 			reg = imap[Opcode].regs_mod[++i];
-		} else {
-			break;
 		}
 	}
 #endif // CAPSTONE_DIET
