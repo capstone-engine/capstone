@@ -1173,7 +1173,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		unsigned CondBit0 = Firstcond & 1;
 		unsigned NumTZ = CountTrailingZeros_32(Mask);
 		unsigned Pos, e;
-		ARM_PredBlockMask PredMask = 0;
+		ARM_PredBlockMask PredMask = ARM_PredBlockMaskInvalid;
 
 		// Check the documentation of ARM_PredBlockMask how the bits are set.
 		for (Pos = 3, e = NumTZ; Pos > e; --Pos) {
