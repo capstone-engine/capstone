@@ -1680,7 +1680,7 @@ static void indexedS16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	uint16_t offset = 0;
 
 	read_word(info, &offset, *address);
-	address += 2;
+	*address += 2;
 
 	add_indexed_operand(info, M680X_REG_S, false, 0, M680X_OFFSET_BITS_16,
 		offset, false);
