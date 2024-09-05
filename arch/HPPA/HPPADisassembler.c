@@ -3644,7 +3644,7 @@ static bool decode_store(const cs_struct *ud, MCInst *MI, uint32_t insn)
 	uint32_t opcode = insn >> 26;
 	CREATE_GR_REG(MI, get_insn_field(insn, 11, 15));
 	if (MODE_IS_HPPA_20(ud->mode)) {
-		uint32_t d = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
+		int d = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
 		if (opcode == HPPA_OP_TYPE_STWM) {
 			if (d < 0) {
 				push_str_modifier(HPPA_EXT_REF(MI), "mb");
