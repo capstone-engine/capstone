@@ -196,7 +196,7 @@ void str_append_no_realloc(char *dest, size_t dest_buf_size, const char *src) {
 		printf("str_size does not match actual string length.\n");
 		return;
 	}
-	strncat(dest, src, strlen(src));
+	strncat(dest, src, dest_buf_size - strlen(dest));
 }
 
 
@@ -211,7 +211,7 @@ char *str_append(char *str_a, const char *str_b) {
 	}
 	size_t asize = strlen(str_a) + strlen(str_b) + 1;
 	str_a = realloc(str_a, asize);
-	strncat(str_a, str_b, strlen(str_b));
+	strncat(str_a, str_b, asize - strlen(str_a));
 	return str_a;
 }
 
