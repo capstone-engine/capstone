@@ -459,9 +459,6 @@ static bool read_memoryimmediate(const uint8_t *code, size_t code_len, uint16_t 
 
 	len = tmp;
 	data[1] = get_varuint32(&code[len], code_len - len, &tmp);
-	if (len == -1) {
-		return false;
-	}
 
 	if (MI->flat_insn->detail) {
 		MI->flat_insn->detail->wasm.operands[1].type = WASM_OP_VARUINT32;
