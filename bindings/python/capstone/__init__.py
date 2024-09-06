@@ -1129,8 +1129,8 @@ class Cs(object):
         status = _cs.cs_option(self.csh, opt_type, opt_value)
         if status != CS_ERR_OK:
             raise CsError(status)
-        if opt_type == CS_OPT_DETAIL:
-            self._detail = opt_value == CS_OPT_ON
+        if opt_type == CS_OPT_DETAIL or opt_type == CS_OPT_DETAIL_REAL:
+            self._detail = (opt_value & CS_OPT_ON) != 0
         elif opt_type == CS_OPT_SKIPDATA:
             self._skipdata = opt_value == CS_OPT_ON
         elif opt_type == CS_OPT_UNSIGNED:
