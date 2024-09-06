@@ -28,6 +28,7 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 		cs_aarch64_op *op = &(aarch64->operands[i]);
 		switch(op->type) {
 		default:
+			printf("\t\tOperand type %" PRId32 " not handled\n", op->type);
 			break;
 		case AARCH64_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s%s\n", i, cs_reg_name(handle, op->reg), op->is_vreg ? " (vreg)" : "");

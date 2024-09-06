@@ -4957,3 +4957,77 @@ test_cases:
     expected:
       insns:
       - asm_text: "jalrc  $t9"
+
+  -
+    input:
+      name: "issue 2471 -- max operands overflow"
+      bytes: [ 0xff, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "zero	{za}"
+        is_alias: 1
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE
+                  tile: za0.d
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE
+                  tile: za1.d
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE
+                  tile: za2.d
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE
+                  tile: za3.d
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE
+                  tile: za4.d
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE
+                  tile: za5.d
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE
+                  tile: za6.d
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SME
+                sme:
+                  type: AARCH64_SME_OP_TILE
+                  tile: za7.d
+                access: CS_AC_READ
+                vas: AARCH64LAYOUT_VL_D
+          regs_read: [ za0.d, za1.d, za2.d, za3.d, za4.d, za5.d, za6.d, za7.d ]
+          groups: [ HasSME ]

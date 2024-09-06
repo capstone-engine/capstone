@@ -2852,7 +2852,7 @@ typedef struct {
 	cs_ac_type mem_acc; ///< CGI memory access according to mayLoad and mayStore
 } aarch64_suppl_info;
 
-#define MAX_AARCH64_OPS 8
+#define MAX_AARCH64_OPS 16
 
 /// Instruction structure
 typedef struct cs_aarch64 {
