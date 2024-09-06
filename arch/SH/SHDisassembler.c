@@ -1765,14 +1765,14 @@ static void set_reg_dsp_write_z(sh_info *info, int pos, int r,
 }	
 
 static bool dsp_op_cc_3opr(uint32_t code, sh_info *info, sh_dsp_insn insn,
-			   sh_dsp_insn_type insn2, cs_detail *detail)
+			   sh_dsp_insn insn2, cs_detail *detail)
 {
 	info->op.operands[2].dsp.cc = (code >> 8) & 3;
 	if (info->op.operands[2].dsp.cc > 0) {
 		info->op.operands[2].dsp.insn = insn;
 	} else {
 		if (insn2 != SH_INS_DSP_INVALID)
-			info->op.operands[2].dsp.insn = (sh_dsp_insn) insn2;
+			info->op.operands[2].dsp.insn = insn2;
 		else
 			return MCDisassembler_Fail;
 	}
@@ -1917,11 +1917,11 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 		}
 	case 0x08:
 		return dsp_op_cc_3opr(code, info,
-				      SH_INS_DSP_PSUB, (sh_dsp_insn_type) SH_INS_DSP_PSUBC,
+				      SH_INS_DSP_PSUB, SH_INS_DSP_PSUBC,
 				      detail);
 	case 0x09:
 		return dsp_op_cc_3opr(code, info,
-				      SH_INS_DSP_PXOR, (sh_dsp_insn_type) SH_INS_DSP_PWSB,
+				      SH_INS_DSP_PXOR, SH_INS_DSP_PWSB,
 				      detail);
 	case 0x0a:
 		switch(sx) {
@@ -1961,7 +1961,7 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 	case 0x0d:
 		return dsp_op_cc_3opr(code, info,
 								SH_INS_DSP_POR,
-								(sh_dsp_insn_type) SH_INS_DSP_PWAD,
+								SH_INS_DSP_PWAD,
 								detail);
 	case 0x0e:
 		if (cc == 0) {
