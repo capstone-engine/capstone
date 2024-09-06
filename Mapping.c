@@ -352,7 +352,7 @@ DEFINE_get_detail_op(systemz, SystemZ);
 /// 			So it can be toggled between disas() calls.
 bool map_use_alias_details(const MCInst *MI) {
 	assert(MI);
-	return !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
+	return (MI->csh->detail_opt & CS_OPT_ON) && !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
 }
 
 /// Sets the setDetailOps flag to @p Val.

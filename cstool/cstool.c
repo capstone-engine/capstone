@@ -655,7 +655,7 @@ int main(int argc, char **argv)
 	}
 
 	if (set_real_detail) {
-		cs_option(handle, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL);
+		cs_option(handle, CS_OPT_DETAIL, (CS_OPT_DETAIL_REAL | CS_OPT_ON));
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
