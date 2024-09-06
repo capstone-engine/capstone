@@ -18,18 +18,106 @@
 #include "cs_priv.h"
 #include "utils.h"
 
-#ifdef _MSC_VER
-#pragma warning(disable: 4996) // disable MSVC's warning on strcpy()
-#endif
-
 void SStream_Init(SStream *ss)
 {
 	assert(ss);
 	ss->index = 0;
-	ss->buffer[0] = '\0';
+	memset(ss->buffer, 0, sizeof(ss->buffer));
 	ss->is_closed = false;
 	ss->markup_stream = false;
 	ss->prefixed_by_markup = false;
+}
+
+/// Returns the a pointer to the internal string buffer of the stream.
+/// For reading only.
+const char *SStream_rbuf(const SStream *ss) {
+	assert(ss);
+	return ss->buffer;
+}
+
+/// Searches in the stream for the first (from the left) occurrence of @elem and replaces
+/// it with @repl. It returns the pointer *after* the replaced character
+/// or NULL if no character was replaced.
+///
+/// It will never replace the final \0 byte in the stream buffer.
+const char *SStream_replc(const SStream *ss, char elem, char repl) {
+	assert(ss);
+	char *found = strchr(ss->buffer, elem);
+	if (!found || found == ss->buffer + (SSTREAM_BUF_LEN - 1)) {
+		return NULL;
+	}
+	*found = repl;
+	found++;
+	return found;
+}
+
+/// Searches in the stream for the first (from the left) occurrence of @chr and replaces
+/// it with @rstr.
+void SStream_replc_str(SStream *ss, char chr, const char *rstr) {
+	assert(ss && rstr);
+	char *found = strchr(ss->buffer, chr);
+	if (!found || found == ss->buffer + (SSTREAM_BUF_LEN - 1)) {
+		return;
+	}
+	size_t post_len = strlen(found + 1);
+	size_t buf_str_len = strlen(ss->buffer);
+	size_t repl_len = strlen(rstr);
+	if (repl_len - 1 + buf_str_len >= SSTREAM_BUF_LEN) {
+		return;
+	}
+	memmove(found + repl_len, found + 1, post_len);
+	memcpy(found, rstr, repl_len);
+	ss->index = strlen(ss->buffer);
+}
+
+/// Removes the space characters '\t' and ' ' from the beginning of the stream buffer.
+void SStream_trimls(SStream *ss) {
+	assert(ss);
+	size_t buf_off = 0;
+	/// Remove leading spaces
+	while (ss->buffer[buf_off] == ' ' || ss->buffer[buf_off] == '\t') {
+		buf_off++;
+	}
+	if (buf_off > 0) {
+		memmove(ss->buffer, ss->buffer + buf_off, SSTREAM_BUF_LEN - buf_off);
+		ss->index -= buf_off;
+	}
+}
+
+/// Extract the mnemonic to @mnem_buf and the operand string into @op_str_buf from the stream buffer.
+/// The mnemonic is everything up until the first ' ' or '\t' character.
+/// The operand string is everything after the first ' ' or '\t' sequence.
+void SStream_extract_mnem_opstr(const SStream *ss, char *mnem_buf, size_t mnem_buf_size, char *op_str_buf, size_t op_str_buf_size) {
+	assert(ss && mnem_buf && mnem_buf_size > 0 && op_str_buf && op_str_buf_size > 0);
+	size_t off = 0;
+	// Copy all non space chars to as mnemonic.
+	while (ss->buffer[off] && ss->buffer[off] != ' ' && ss->buffer[off] != '\t') {
+		if (off < mnem_buf_size - 1) {
+			// Only copy if there is space left.
+			mnem_buf[off] = ss->buffer[off];
+		}
+		off++;
+	}
+	if (!ss->buffer[off]) {
+		return;
+	}
+
+	// Iterate until next non space char.
+	do {
+		off++;
+	} while (ss->buffer[off] && (ss->buffer[off] == ' ' || ss->buffer[off] == '\t'));
+
+	if (!ss->buffer[off]) {
+		return;
+	}
+
+	// Copy all follow up characters as op_str
+	const char *ss_op_str = ss->buffer + off;
+	off = 0;
+	while (ss_op_str[off] && off < op_str_buf_size - 1) {
+		op_str_buf[off] = ss_op_str[off];
+		off++;
+	}
 }
 
 /// Empty the stream @ss to given @file (stdin/stderr).

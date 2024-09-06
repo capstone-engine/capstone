@@ -316,6 +316,198 @@ bool test_printuint64_bang()
 	return true;
 }
 
+bool test_trimls() {
+	printf("Test test_replc\n");
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+	SStream_concat0(&OS, "AAA");
+	SStream_trimls(&OS);
+	CHECK_EQUAL_RET_FALSE(OS, "AAA");
+	SStream_Flush(&OS, NULL);
+
+	SStream_concat0(&OS, "\t AAA");
+	SStream_trimls(&OS);
+	CHECK_EQUAL_RET_FALSE(OS, "AAA");
+
+	// Don't remove middle tabs and spaces
+	SStream_concat0(&OS, "\t AAA");
+	SStream_trimls(&OS);
+	CHECK_EQUAL_RET_FALSE(OS, "AAA\t AAA");
+	SStream_Flush(&OS, NULL);
+
+	// Test do nothing
+	SStream_trimls(&OS);
+	CHECK_EQUAL_RET_FALSE(OS, "");
+
+	// Everywhere tabs
+	char cmp_buf[SSTREAM_BUF_LEN] = { 0 };
+	memset(cmp_buf, '\t', sizeof(cmp_buf) - 1);
+	SStream_trimls(&OS);
+	CHECK_EQUAL_RET_FALSE(OS, "");
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, 0);
+	return true;
+}
+
+bool test_copy_mnem_opstr() {
+	printf("Test test_copy_mnem_opstr\n");
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+	SStream_concat0(&OS, "AAA\tBBBB");
+
+	char mnem_1[1] = { 0 };
+	char opstr_1[1] = { 0 };
+	SStream_extract_mnem_opstr(&OS, mnem_1, sizeof(mnem_1), opstr_1, sizeof(opstr_1));
+	CHECK_STR_EQUAL_RET_FALSE(mnem_1, "");
+	CHECK_STR_EQUAL_RET_FALSE(opstr_1, "");
+
+	char mnem_3[3] = { 0 };
+	char opstr_3[3] = { 0 };
+	SStream_extract_mnem_opstr(&OS, mnem_3, sizeof(mnem_3), opstr_3, sizeof(opstr_3));
+	CHECK_STR_EQUAL_RET_FALSE(mnem_3, "AA");
+	CHECK_STR_EQUAL_RET_FALSE(opstr_3, "BB");
+
+	char mnem_4[4] = { 0 };
+	char opstr_4[4] = { 0 };
+	SStream_extract_mnem_opstr(&OS, mnem_4, sizeof(mnem_4), opstr_4, sizeof(opstr_4));
+	CHECK_STR_EQUAL_RET_FALSE(mnem_4, "AAA");
+	CHECK_STR_EQUAL_RET_FALSE(opstr_4, "BBB");
+
+	char mnem_5[5] = { 0 };
+	char opstr_5[5] = { 0 };
+	SStream_extract_mnem_opstr(&OS, mnem_5, sizeof(mnem_5), opstr_5, sizeof(opstr_5));
+	CHECK_STR_EQUAL_RET_FALSE(mnem_5, "AAA");
+	CHECK_STR_EQUAL_RET_FALSE(opstr_5, "BBBB");
+
+	// No mnemonic
+	char mnem_9[9] = { 0 };
+	char opstr_9[9] = { 0 };
+	SStream_Flush(&OS, NULL);
+	SStream_concat0(&OS, " AAA\tBBBB");
+	SStream_extract_mnem_opstr(&OS, mnem_9, sizeof(mnem_9), opstr_9, sizeof(opstr_9));
+	CHECK_STR_EQUAL_RET_FALSE(mnem_9, "");
+	CHECK_STR_EQUAL_RET_FALSE(opstr_9, "AAA\tBBBB");
+
+	// No opstr
+	char mnem_6[6] = { 0 };
+	char opstr_6[6] = { 0 };
+	SStream_Flush(&OS, NULL);
+	SStream_concat0(&OS, "AAA  \t");
+	SStream_extract_mnem_opstr(&OS, mnem_6, sizeof(mnem_6), opstr_6, sizeof(opstr_6));
+	CHECK_STR_EQUAL_RET_FALSE(mnem_6, "AAA");
+	CHECK_STR_EQUAL_RET_FALSE(opstr_6, "");
+
+	return true;
+}
+
+bool test_replc()
+{
+	printf("Test test_replc\n");
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+	char cmp_buf[SSTREAM_BUF_LEN] = { 0 };
+	memset(cmp_buf, 'A', sizeof(cmp_buf) - 1);
+	cmp_buf[100] = 'C';
+	SStream_concat0(&OS, cmp_buf);
+
+	cmp_buf[0] = 'B';
+	const char *next = SStream_replc(&OS, 'A', 'B');
+	CHECK_PTR_EQUAL_RET_FALSE(SStream_rbuf(&OS) + 1, next);
+	CHECK_EQUAL_RET_FALSE(OS, cmp_buf);
+
+	cmp_buf[1] = 'B';
+	next = SStream_replc(&OS, 'A', 'B');
+	CHECK_PTR_EQUAL_RET_FALSE(SStream_rbuf(&OS) + 2, next);
+	CHECK_EQUAL_RET_FALSE(OS, cmp_buf);
+
+	cmp_buf[100] = 'A'; // Replace the C from before
+	next = SStream_replc(&OS, 'C', 'A');
+	CHECK_PTR_EQUAL_RET_FALSE(SStream_rbuf(&OS) + 101, next);
+	CHECK_EQUAL_RET_FALSE(OS, cmp_buf);
+
+	// X doesn't exist
+	next = SStream_replc(&OS, 'X', 'A');
+	CHECK_NULL_RET_FALSE(next);
+
+	// Replacing \0 byte is forbidden.
+	next = SStream_replc(&OS, '\0', 'A');
+	CHECK_NULL_RET_FALSE(next);
+
+	// But replacing any \0 byte is allowed.
+	SStream_Flush(&OS, NULL);
+	next = SStream_replc(&OS, '\0', 'A');
+	CHECK_PTR_EQUAL_RET_FALSE(SStream_rbuf(&OS) + 1, next);
+	CHECK_EQUAL_RET_FALSE(OS, "A");
+
+	return true;
+}
+
+
+bool test_replc_str()
+{
+	printf("Test test_replc_str\n");
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+
+	SStream_replc_str(&OS, 'A', "REPLACED");
+	CHECK_EQUAL_RET_FALSE(OS, "");
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, 0);
+
+	SStream_replc_str(&OS, '\0', "REPLACED");
+	CHECK_EQUAL_RET_FALSE(OS, "REPLACED");
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, 8);
+
+	SStream_Flush(&OS, NULL);
+	SStream_concat0(&OS, "\tA--X");
+	SStream_replc_str(&OS, 'A', "REPLACED");
+	CHECK_EQUAL_RET_FALSE(OS, "\tREPLACED--X");
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, 12);
+	SStream_replc_str(&OS, 'X', "REPLACED");
+	CHECK_EQUAL_RET_FALSE(OS, "\tREPLACED--REPLACED");
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, 19);
+
+	/// Too big strings are ignored.
+	char repl[SSTREAM_BUF_LEN] = { 0 };
+	memset(repl, 'A', sizeof(repl) - 1);
+	SStream_Flush(&OS, NULL);
+	SStream_concat0(&OS, "\tA--");
+	SStream_replc_str(&OS, 'A', repl);
+	CHECK_EQUAL_RET_FALSE(OS, "\tA--");
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, 4);
+
+	/// Last null byte is not replaced.
+	memset(repl, 'A', sizeof(repl) - 1);
+	SStream_Flush(&OS, NULL);
+	SStream_concat0(&OS, repl);
+	SStream_replc_str(&OS, '\0', repl);
+	CHECK_EQUAL_RET_FALSE(OS, repl);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, 511);
+
+	/// Last char is replaced.
+	memset(repl, 'A', sizeof(repl) - 1);
+	repl[sizeof(repl) - 2] = 'X';
+	SStream_Flush(&OS, NULL);
+	SStream_concat0(&OS, repl);
+	SStream_replc_str(&OS, 'X', "Y");
+	repl[sizeof(repl) - 2] = 'Y';
+	CHECK_EQUAL_RET_FALSE(OS, repl);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, 511);
+
+	// Possible overflow
+	char too_long[SSTREAM_BUF_LEN + 10] = { 0 };
+	memset(too_long, 'A', sizeof(too_long) - 1);
+	SStream_Flush(&OS, NULL);
+	SStream_concat0(&OS, "\tA--");
+	SStream_replc_str(&OS, 'A', too_long);
+	CHECK_EQUAL_RET_FALSE(OS, "\tA--");
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, 4);
+
+	return true;
+}
+
 int main()
 {
 	bool result = true;
@@ -329,6 +521,10 @@ int main()
 	result &= test_printint64_bang();
 	result &= test_printuint32_bang();
 	result &= test_printuint64_bang();
+	result &= test_replc();
+	result &= test_replc_str();
+	result &= test_copy_mnem_opstr();
+	result &= test_trimls();
 	if (result) {
 		printf("All tests passed.\n");
 	} else {
