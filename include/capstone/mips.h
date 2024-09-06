@@ -696,12 +696,14 @@ typedef struct cs_mips_op {
 	uint8_t access;
 } cs_mips_op;
 
+#define NUM_MIPS_OPS 10
+
 /// Instruction structure
 typedef struct cs_mips {
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_mips_op operands[10]; ///< operands for this instruction.
+	cs_mips_op operands[NUM_MIPS_OPS]; ///< operands for this instruction.
 } cs_mips;
 
 /// MIPS instruction

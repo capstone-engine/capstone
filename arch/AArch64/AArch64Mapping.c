@@ -2475,7 +2475,7 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	if (Reg == AARCH64_REG_ZA ||
 	    (Reg >= AARCH64_REG_ZAB0 && Reg < AARCH64_REG_ZT0)) {
@@ -2522,7 +2522,7 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	if (AArch64_get_detail(MI)->is_doing_sme) {
 		assert(map_get_op_type(MI, OpNum) & CS_OP_BOUND);
@@ -2557,7 +2557,7 @@ void AArch64_set_detail_op_imm_range(MCInst *MI, unsigned OpNum,
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	if (AArch64_get_detail(MI)->is_doing_sme) {
 		assert(map_get_op_type(MI, OpNum) & CS_OP_BOUND);
@@ -2590,7 +2590,7 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 	assert(map_get_op_type(MI, OpNum) & CS_OP_MEM);
 
 	AArch64_set_mem_access(MI, true);
@@ -2676,7 +2676,7 @@ void AArch64_set_detail_op_float(MCInst *MI, unsigned OpNum, float Val)
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_FP;
 	AArch64_get_detail_op(MI, 0)->fp = Val;
@@ -2691,7 +2691,7 @@ void AArch64_set_detail_op_sys(MCInst *MI, unsigned OpNum, aarch64_sysop sys_op,
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	AArch64_get_detail_op(MI, 0)->type = type;
 	AArch64_get_detail_op(MI, 0)->sysop = sys_op;
@@ -2701,7 +2701,7 @@ void AArch64_set_detail_op_sys(MCInst *MI, unsigned OpNum, aarch64_sysop sys_op,
 void AArch64_set_detail_op_pred(MCInst *MI, unsigned OpNum) {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_INVALID) {
 		setup_pred_operand(MI);
@@ -2729,7 +2729,7 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_SME;
 	switch (part) {
@@ -2807,9 +2807,9 @@ static void insert_op(MCInst *MI, unsigned index, cs_aarch64_op op)
 		return;
 	}
 
+	AArch64_check_safe_inc();
 	cs_aarch64_op *ops = AArch64_get_detail(MI)->operands;
 	int i = AArch64_get_detail(MI)->op_count;
-	assert(i < MAX_AARCH64_OPS);
 	if (index == -1) {
 		ops[i] = op;
 		AArch64_inc_op_count(MI);
@@ -2831,7 +2831,7 @@ void AArch64_insert_detail_op_float_at(MCInst *MI, unsigned index, double val,
 	if (!detail_is_set(MI))
 		return;
 
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	cs_aarch64_op op;
 	AArch64_setup_op(&op);
@@ -2851,7 +2851,7 @@ void AArch64_insert_detail_op_reg_at(MCInst *MI, unsigned index,
 	if (!detail_is_set(MI))
 		return;
 
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	cs_aarch64_op op;
 	AArch64_setup_op(&op);
@@ -2869,7 +2869,7 @@ void AArch64_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Imm)
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	cs_aarch64_op op;
 	AArch64_setup_op(&op);
@@ -2885,7 +2885,7 @@ void AArch64_insert_detail_op_sys(MCInst *MI, unsigned index, aarch64_sysop sys_
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	cs_aarch64_op op;
 	AArch64_setup_op(&op);
@@ -2899,7 +2899,7 @@ void AArch64_insert_detail_op_sme(MCInst *MI, unsigned index, aarch64_op_sme sme
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count + 1 < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	cs_aarch64_op op;
 	AArch64_setup_op(&op);
