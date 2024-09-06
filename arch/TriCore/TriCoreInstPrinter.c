@@ -346,7 +346,7 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O)
 		int64_t res = 0;
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_CALL_sb:
-			disp = DISP1(8);
+			res = DISP1(8);
 			break;
 		case TRICORE_J_sb:
 		case TRICORE_JNZ_sb:
