@@ -19,6 +19,22 @@
 #include "AArch64Linkage.h"
 #include "AArch64Mapping.h"
 
+static float aarch64_exact_fp_to_fp(aarch64_exactfpimm exact) {
+	switch (exact) {
+	default:
+		CS_ASSERT(0 && "Not handled.");
+		return 999.0;
+	case AARCH64_EXACTFPIMM_HALF:
+		return 0.5;
+	case AARCH64_EXACTFPIMM_ONE:
+		return 1.0;
+	case AARCH64_EXACTFPIMM_TWO:
+		return 2.0;
+	case AARCH64_EXACTFPIMM_ZERO:
+		return 0.0;
+	}
+}
+
 #ifndef CAPSTONE_DIET
 static const aarch64_reg aarch64_flag_regs[] = {
 	AARCH64_REG_NZCV,
@@ -2716,6 +2732,9 @@ void AArch64_set_detail_op_sys(MCInst *MI, unsigned OpNum, aarch64_sysop sys_op,
 
 	AArch64_get_detail_op(MI, 0)->type = type;
 	AArch64_get_detail_op(MI, 0)->sysop = sys_op;
+	if (sys_op.sub_type == AARCH64_OP_EXACTFPIMM) {
+		AArch64_get_detail_op(MI, 0)->fp = aarch64_exact_fp_to_fp(sys_op.imm.exactfpimm);
+	}
 	AArch64_inc_op_count(MI);
 }
 
@@ -2912,6 +2931,9 @@ void AArch64_insert_detail_op_sys(MCInst *MI, unsigned index, aarch64_sysop sys_
 	AArch64_setup_op(&op);
 	op.type = type;
 	op.sysop = sys_op;
+	if (op.sysop.sub_type == AARCH64_OP_EXACTFPIMM) {
+		op.fp = aarch64_exact_fp_to_fp(op.sysop.imm.exactfpimm);
+	}
 	insert_op(MI, index, op);
 }
 

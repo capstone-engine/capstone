@@ -109,8 +109,9 @@ Nonetheless, we hope this additional information is useful to you.
 **AArch64**
 
 - Updated to LLVM-18
-- Adding new instructions of SME, SVE2 extensions. With it the `sme` and `pred` operands are added.
+- Adding new instructions of SME, SVE2 extensions. With it the new `sme` and `pred` operands are added.
 - System operands are provided with way more detail in separated operand.
+	- The `EXACTFPIMM` operand also sets the `fp` field.
 
 **PPC**
 

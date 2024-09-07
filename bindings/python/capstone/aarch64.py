@@ -96,7 +96,6 @@ class AArch64OpValue(ctypes.Union):
         ('imm_range', AArch64ImmRange),
         ('fp', ctypes.c_double),
         ('mem', AArch64OpMem),
-        ('sysop', AArch64SysOp),
         ('sme', AArch64OpSme),
         ('pred', AArch64OpPred),
     )
@@ -110,6 +109,7 @@ class AArch64Op(ctypes.Structure):
         ('type', ctypes.c_uint),
         ('is_vreg', ctypes.c_bool),
         ('value', AArch64OpValue),
+        ('sysop', AArch64SysOp),
         ('access', ctypes.c_uint8),
         ('is_list_member', ctypes.c_bool),
     )
@@ -136,7 +136,7 @@ class AArch64Op(ctypes.Structure):
 
     @property
     def sysop(self):
-        return self.value.sysop
+        return self.sysop
 
     @property
     def sme(self):

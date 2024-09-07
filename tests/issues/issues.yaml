@@ -5325,3 +5325,37 @@ test_cases:
           regs_read: [ p0 ]
           regs_write: [ z1 ]
           groups: [ HasSVEorSME ]
+  -
+    input:
+      name: "issue 2472 -- Extra fp for EXACTFPIMM"
+      bytes: [ 0x05, 0x84, 0xd8, 0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fadd	z5.d, p1/m, z5.d, #0.5"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z5
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p1
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                reg: z5
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SYSIMM
+                sub_type: AARCH64_OP_EXACTFPIMM
+                sys_raw_val: 1
+                fp: 0.5
+                fp_set: true

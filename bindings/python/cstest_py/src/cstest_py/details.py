@@ -768,6 +768,11 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
                 aop.value.sysop.imm.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
+            # EXACTFPIMM operands
+            if not compare_fp(
+                aop.fp, eop.get("fp"), "fp"
+            ):
+                return False
         elif aop.type == AARCH64_OP_SYSALIAS:
             if not compare_enum(
                 aop.value.sysop.sub_type, eop.get("sub_type"), "sub_type"
