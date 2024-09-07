@@ -150,7 +150,8 @@ void map_implicit_reads(MCInst *MI, const insn_map *imap)
 			return;
 		}
 		detail->regs_read[detail->regs_read_count++] = reg;
-		if (i < MAX_IMPL_R_REGS) {
+		if (i + 1 < MAX_IMPL_R_REGS) {
+			// Select next one
 			reg = imap[Opcode].regs_use[++i];
 		}
 	}
@@ -177,7 +178,8 @@ void map_implicit_writes(MCInst *MI, const insn_map *imap)
 			return;
 		}
 		detail->regs_write[detail->regs_write_count++] = reg;
-		if (i < MAX_IMPL_W_REGS) {
+		if (i + 1 < MAX_IMPL_W_REGS) {
+			// Select next one
 			reg = imap[Opcode].regs_mod[++i];
 		}
 	}
