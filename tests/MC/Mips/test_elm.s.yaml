@@ -48,7 +48,7 @@ test_cases:
     input:
       bytes: [ 0x78, 0xf2, 0x6f, 0x99 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+      options: [ "CS_MODE_MIPS64", "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -

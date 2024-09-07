@@ -107,7 +107,6 @@ class TemplateCollector:
 
             tree = self.parser.parse(src, keep_text=True)
             query: Query = self.lang_cpp.query(self.get_template_pattern())
-            self.get_capture_bundles(query, tree)
             capture_bundles = self.get_capture_bundles(query, tree)
 
             for cb in capture_bundles:

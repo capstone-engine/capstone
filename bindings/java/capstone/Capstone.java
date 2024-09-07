@@ -84,7 +84,7 @@ public class Capstone {
     public short[] regs_write = new short[20];
     public byte regs_write_count;
     // list of semantic groups this instruction belongs to.
-    public byte[] groups = new byte[8];
+    public byte[] groups = new byte[16];
     public byte groups_count;
 
     public UnionArch arch;

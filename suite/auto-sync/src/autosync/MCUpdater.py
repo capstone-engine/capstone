@@ -143,6 +143,8 @@ class TestFile:
         text_section = 0  # Counts the .text sections
         asm_pat = f"(?P<asm_text>.+)"
         enc_pat = r"(\[?(?P<full_enc_string>(?P<enc_bytes>((0x[a-fA-F0-9]{1,2}[, ]{0,2}))+)[^, ]?)\]?)"
+
+        dups = []
         for line in mc_output.stdout.splitlines():
             line = line.decode("utf8")
             if ".text" in line:
@@ -166,6 +168,10 @@ class TestFile:
             if not self.valid_byte_seq(enc_bytes):
                 continue
 
+            if (enc_bytes + asm_text) in dups:
+                continue
+
+            dups.append(enc_bytes + asm_text)
             if text_section in self.tests:
                 if unified_test_cases:
                     self.tests[text_section][0].extend(enc_bytes, asm_text)
@@ -262,6 +268,20 @@ class MCUpdater:
             if self.arch in self.conf["mandatory_options"]
             else list()
         )
+        self.remove_options: str = (
+            self.conf["remove_options"][self.arch]
+            if self.arch in self.conf["remove_options"]
+            else list()
+        )
+        self.remove_options = [x.lower() for x in self.remove_options]
+        self.replace_option_map: str = (
+            self.conf["replace_option_map"][self.arch]
+            if self.arch in self.conf["replace_option_map"]
+            else {}
+        )
+        self.replace_option_map = {
+            k.lower(): v for k, v in self.replace_option_map.items()
+        }
         self.multi_mode = multi_mode
 
     def check_prerequisites(self, paths):
@@ -331,17 +351,30 @@ class MCUpdater:
                 f"See also: https://github.com/capstone-engine/capstone/issues/1992"
             )
 
+    def build_test_options(self, options):
+        new_options = [] + self.mandatory_options
+        for opt in options:
+            opt = opt.lower()
+            if opt in self.remove_options:
+                continue
+            elif opt in self.replace_option_map:
+                new_options.append(self.replace_option_map[opt])
+            else:
+                new_options.append(opt)
+        return new_options
+
     def build_test_files(self, mc_cmds: list[LLVM_MC_Command]) -> list[TestFile]:
         log.info("Build TestFile objects")
         test_files = list()
         n_all = len(mc_cmds)
         for i, mcc in enumerate(mc_cmds):
             print(f"{i + 1}/{n_all} {mcc.file.name}", flush=True, end="\r")
+            opts = self.build_test_options(mcc.get_opts_list())
             test_files.append(
                 TestFile(
                     self.arch,
                     mcc.file,
-                    mcc.get_opts_list() + self.mandatory_options,
+                    opts,
                     mcc,
                     self.unified_test_cases,
                 )

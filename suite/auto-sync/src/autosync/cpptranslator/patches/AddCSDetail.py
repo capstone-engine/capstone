@@ -31,6 +31,7 @@ class AddCSDetail(Patch):
     valid_param_lists = [
         b"(MCInst*MI,unsignedOpNum,SStream*O)",  # Default printOperand parameters.
         b"(MCInst*MI,unsignedOpNo,SStream*O)",  # ARM - printComplexRotationOp / PPC default
+        b"(MCInst*MI,intopNum,SStream *O)",  # Mips - printMemOperandEA and others
         b"(SStream*O,ARM_AM::ShiftOpcShOpc,unsignedShImm,boolgetUseMarkup())",  # ARM - printRegImmShift
         b"(MCInst*MI,unsignedOpNo,SStream*O,constchar*Modifier)",  # PPC - printPredicateOperand
         b"(MCInst*MI,uint64_tAddress,unsignedOpNo,SStream*O)",  # PPC - printBranchOperand
@@ -39,15 +40,6 @@ class AddCSDetail(Patch):
     def __init__(self, priority: int, arch: str):
         super().__init__(priority)
         self.arch = arch
-        self.apply_only_to = {
-            "files": [
-                "ARMInstPrinter.cpp",
-                "PPCInstPrinter.cpp",
-                "AArch64InstPrinter.cpp",
-                "LoongArchInstPrinter.cpp",
-            ],
-            "archs": list(),
-        }
 
     def get_search_pattern(self) -> str:
         return (
@@ -88,11 +80,15 @@ class AddCSDetail(Patch):
         )  # Remove "print" from function id
 
         is_template = fcn_def.prev_sibling.type == "template_parameter_list"
-        op_num_var_name = (
-            b"OpNum"
-            if b"OpNum" in params
-            else (b"OpNo" if b"OpNo" in params else b"-.-")
-        )
+        if b"OpNum" in params:
+            op_num_var_name = b"OpNum"
+        elif b"OpNo" in params:
+            op_num_var_name = b"OpNo"
+        elif b"opNum" in params:
+            op_num_var_name = b"opNum"
+        else:
+            raise ValueError("OpNum parameter could not be identified.")
+
         if not is_template and op_num_var_name in params:
             # Standard printOperand() parameters
             mcinst_var = get_MCInst_var_name(src, fcn_def)

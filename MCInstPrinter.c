@@ -7,6 +7,7 @@
 
 extern bool ARM_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool PPC_getFeatureBits(unsigned int mode, unsigned int feature);
+extern bool Mips_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool AArch64_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature);
 
@@ -24,6 +25,10 @@ static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 #ifdef CAPSTONE_HAS_POWERPC
 	case CS_ARCH_PPC:
 		return PPC_getFeatureBits(MI->csh->mode, Value);
+#endif
+#ifdef CAPSTONE_HAS_MIPS
+	case CS_ARCH_MIPS:
+		return Mips_getFeatureBits(MI->csh->mode, Value);
 #endif
 #ifdef CAPSTONE_HAS_AARCH64
 	case CS_ARCH_AARCH64:

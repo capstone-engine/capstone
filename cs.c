@@ -100,8 +100,33 @@ typedef struct cs_arch_config {
 	{ \
 		Mips_global_init, \
 		Mips_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_MICRO \
-			| CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN | CS_MODE_MIPS2 | CS_MODE_MIPS3), \
+		~(CS_MODE_LITTLE_ENDIAN | \
+			CS_MODE_BIG_ENDIAN | \
+			CS_MODE_MIPS16 | \
+			CS_MODE_MIPS32 | \
+			CS_MODE_MIPS64 | \
+			CS_MODE_MICRO | \
+			CS_MODE_MIPS1 | \
+			CS_MODE_MIPS2 | \
+			CS_MODE_MIPS32R2 | \
+			CS_MODE_MIPS32R3 | \
+			CS_MODE_MIPS32R5 | \
+			CS_MODE_MIPS32R6 | \
+			CS_MODE_MIPS3 | \
+			CS_MODE_MIPS4 | \
+			CS_MODE_MIPS5 | \
+			CS_MODE_MIPS64R2 | \
+			CS_MODE_MIPS64R3 | \
+			CS_MODE_MIPS64R5 | \
+			CS_MODE_MIPS64R6 | \
+			CS_MODE_OCTEON | \
+			CS_MODE_OCTEONP | \
+			CS_MODE_NANOMIPS | \
+			CS_MODE_NMS1 | \
+			CS_MODE_I7200 | \
+			CS_MODE_MIPS_NOFLOAT | \
+			CS_MODE_MIPS_PTR64 \
+			), \
 	}
 #define CS_ARCH_CONFIG_X86 \
 	{ \

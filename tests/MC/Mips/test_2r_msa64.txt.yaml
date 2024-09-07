@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7b, 0x03, 0x4e, 0xde ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fill.d $w27, $9"

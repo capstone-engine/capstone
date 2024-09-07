@@ -1,0 +1,160 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x46, 0x11, 0xc5, 0x32 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.eq.s $fcc5, $f24, $f17"
+
+  -
+    input:
+      bytes: [ 0x46, 0x07, 0xf4, 0x30 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.f.s $fcc4, $f30, $f7"
+
+  -
+    input:
+      bytes: [ 0x46, 0x04, 0xc6, 0x3e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.le.s $fcc6, $f24, $f4"
+
+  -
+    input:
+      bytes: [ 0x46, 0x0e, 0x8a, 0x3c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.lt.s $fcc2, $f17, $f14"
+
+  -
+    input:
+      bytes: [ 0x46, 0x08, 0x5b, 0x3d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.nge.s $fcc3, $f11, $f8"
+
+  -
+    input:
+      bytes: [ 0x46, 0x17, 0xfa, 0x3b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.ngl.s $fcc2, $f31, $f23"
+
+  -
+    input:
+      bytes: [ 0x46, 0x17, 0x92, 0x39 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.ngle.s $fcc2, $f18, $f23"
+
+  -
+    input:
+      bytes: [ 0x46, 0x0d, 0x45, 0x3f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.ngt.s $fcc5, $f8, $f13"
+
+  -
+    input:
+      bytes: [ 0x46, 0x14, 0x3b, 0x36 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.ole.s $fcc3, $f7, $f20"
+
+  -
+    input:
+      bytes: [ 0x46, 0x07, 0xa6, 0x34 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.olt.s $fcc6, $f20, $f7"
+
+  -
+    input:
+      bytes: [ 0x46, 0x19, 0x0f, 0x3a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.seq.s $fcc7, $f1, $f25"
+
+  -
+    input:
+      bytes: [ 0x46, 0x1e, 0x1e, 0x33 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.ueq.s $fcc6, $f3, $f30"
+
+  -
+    input:
+      bytes: [ 0x46, 0x1e, 0xaf, 0x37 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.ule.s $fcc7, $f21, $f30"
+
+  -
+    input:
+      bytes: [ 0x46, 0x0a, 0xc7, 0x35 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.ult.s $fcc7, $f24, $f10"
+
+  -
+    input:
+      bytes: [ 0x46, 0x04, 0xf1, 0x31 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.un.s $fcc1, $f30, $f4"
+
+  -
+    input:
+      bytes: [ 0x02, 0xa7, 0x68, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "rotrv $13, $7, $21"

@@ -4815,3 +4815,145 @@ test_cases:
         details:
           sparc:
             cc: SPARC_CC_ICC_NE
+
+  -
+    input:
+      name: "issue 2448"
+      bytes: [ 0x04, 0x00, 0x00, 0x0c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS32 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "jal    0x10"
+
+  -
+    input:
+      name: "issue 1054"
+      bytes: [ 0x01, 0x20, 0x10, 0x2d, 0x00, 0x80, 0xe8, 0x2d, 0x40, 0xab, 0x50, 0x00, 0x00, 0xa0, 0x40, 0x2d, 0x00, 0x80, 0x50, 0x2d, 0x01, 0xa0, 0x70, 0x2d, 0x40, 0xac, 0x10, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_MIPS3 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "move   $v0, $t1"
+      - asm_text: "move   $sp, $a0"
+      - asm_text: "dmtc0  $t3, $10, 0"
+      - asm_text: "move   $t0, $a1"
+      - asm_text: "move   $t2, $a0"
+      - asm_text: "move   $t6, $t5"
+      - asm_text: "dmtc0  $t4, $2, 0"
+
+  -
+    input:
+      name: "issue 1133"
+      bytes: [ 0xb5, 0x06, 0xff, 0x7d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS32R6 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "pref   0x1f, 0xd($t7)"
+
+  -
+    input:
+      name: "issue 1267"
+      bytes: [ 0x00, 0xc0, 0x50, 0x2d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_MIPS3 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "move   $t2, $a2"
+
+  -
+    input:
+      name: "issue 1508"
+      bytes: [ 0x40, 0x02, 0x10, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_MIPS32R6 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "mfc0   $v0, $2, 0"
+
+  -
+    input:
+      name: "issue 1634"
+      bytes: [ 0x46, 0x20, 0x09, 0x37 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_MIPS3 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "c.ule.d  $fcc1, $f1, $f0"
+
+  -
+    input:
+      name: "issue 1673"
+      bytes: [ 0x03, 0x80, 0x0c, 0x40, 0x80, 0x00, 0x8c, 0x35 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS64 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "mfc0   $t4, $16, 3"
+      - asm_text: "ori    $t4, $t4, 0x80"
+
+  -
+    input:
+      name: "issue 1680"
+      bytes: [ 0x40, 0x00, 0x00, 0x0c, 0x08, 0x00, 0xe0, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS32 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "jal    0x100"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_IMM
+                imm: 0x100
+
+      - asm_text: "jr     $ra"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: ra
+
+  -
+    input:
+      name: "issue 1780"
+      bytes: [ 0x7c, 0x03, 0xe8, 0x3b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_MIPS32 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "rdhwr  $v1, $29"
+
+  -
+    input:
+      name: "issue 1851"
+      bytes: [ 0x32, 0xC0, 0x38, 0x46, 0x32, 0x02, 0x20, 0x46, 0x32, 0x03, 0x20, 0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS64 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "c.eq.d $f24, $f24"
+      - asm_text: "c.eq.d $fcc2, $f0, $f0"
+      - asm_text: "c.eq.d $fcc3, $f0, $f0"
+
+  -
+    input:
+      name: "issue 1851"
+      bytes: [ 0x00, 0x00, 0x19, 0xf8 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS32R6 ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "jalrc  $t9"

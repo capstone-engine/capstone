@@ -5,7 +5,30 @@
     "diff_color_saved": "yellow",
     "diff_color_edited": "light_magenta",
     "patch_editor": "vim",
-    "nodes_to_diff": []
+    "nodes_to_diff": [],
+        "patching": {
+      "apply_patch_only_to": {
+        "AddCSDetail": {
+          "files": [
+            "ARMInstPrinter.cpp",
+            "PPCInstPrinter.cpp",
+            "AArch64InstPrinter.cpp",
+            "LoongArchInstPrinter.cpp",
+            "MipsInstPrinter.cpp"
+          ]
+        },
+        "InlineToStaticInline": {
+          "files": [
+            "ARMAddressingModes.h"
+          ]
+        },
+        "PrintRegImmShift": {
+          "files": [
+            "ARMInstPrinter.cpp"
+          ]
+        }
+      }
+    }
   },
   "ARCH": {
     "files_to_translate": [],

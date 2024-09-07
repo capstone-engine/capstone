@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ld.b $w1, ($v0)"
+          asm_text: "ld.b $w1, 0($v0)"
   -
     input:
       bytes: [ 0x79, 0xff, 0x18, 0xa0 ]
@@ -52,7 +52,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ld.h $w5, ($a2)"
+          asm_text: "ld.h $w5, 0($a2)"
   -
     input:
       bytes: [ 0x79, 0x00, 0x39, 0xa1 ]
@@ -169,7 +169,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ld.d $w18, ($s3)"
+          asm_text: "ld.d $w18, 0($s3)"
   -
     input:
       bytes: [ 0x78, 0x40, 0xa4, 0xe3 ]
