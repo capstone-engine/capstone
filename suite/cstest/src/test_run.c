@@ -175,9 +175,6 @@ static bool open_cs_handle(UnitTestState *ustate)
 	} else {
 		ustate->arch_bits = 32;
 	}
-	if (err != CS_ERR_OK) {
-		goto option_error;
-	}
 
 	for (size_t i = 0; i < options_set; ++i) {
 		err = cs_option(ustate->handle, options[i].type,
