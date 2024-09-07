@@ -21,8 +21,7 @@ test_cases:
                 sub_type: AARCH64_OP_REG_MRS
                 sys_raw_val: 0xc000
             cc: AArch64CC_Invalid
-            update_flags: 1
-          regs_write: [ nzcv, x9 ]
+          regs_write: [ x9 ]
 
       -
         asm_text: "msr SPSel, #0"

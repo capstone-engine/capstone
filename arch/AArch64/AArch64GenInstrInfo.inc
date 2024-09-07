@@ -8256,7 +8256,7 @@
 typedef struct AArch64InstrTable {
   MCInstrDesc Insts[8232];
   MCOperandInfo OperandInfo[2330];
-  MCPhysReg ImplicitOps[54];
+  MCPhysReg ImplicitOps[53];
 } AArch64InstrTable;
 
 #endif // defined(GET_INSTRINFO_MC_DESC) || defined(GET_INSTRINFO_CTOR_DTOR)
@@ -17148,26 +17148,26 @@ static const AArch64InstrTable AArch64Descs = {
     /* 0 */
     /* 0 */ AArch64_NZCV,
     /* 1 */ AArch64_SP, AArch64_SP,
-    /* 3 */ AArch64_SP, AArch64_LR,
-    /* 5 */ AArch64_X16, AArch64_SP, AArch64_LR,
-    /* 8 */ AArch64_X9, AArch64_X16, AArch64_X17, AArch64_LR, AArch64_NZCV,
-    /* 13 */ AArch64_X20, AArch64_X16, AArch64_X17, AArch64_LR, AArch64_NZCV,
-    /* 18 */ AArch64_X9, AArch64_X16, AArch64_X17, AArch64_NZCV,
-    /* 22 */ AArch64_FPCR,
-    /* 23 */ AArch64_LR, AArch64_SP, AArch64_LR,
-    /* 26 */ AArch64_SP, AArch64_SP, AArch64_NZCV,
-    /* 29 */ AArch64_X16, AArch64_X17,
-    /* 31 */ AArch64_SP,
-    /* 32 */ AArch64_NZCV, AArch64_LR, AArch64_X0, AArch64_X1,
-    /* 36 */ AArch64_NZCV, AArch64_NZCV,
-    /* 38 */ AArch64_X16, AArch64_X17, AArch64_X17,
-    /* 41 */ AArch64_LR, AArch64_LR,
-    /* 43 */ AArch64_X16, AArch64_X16,
-    /* 45 */ AArch64_LR, AArch64_SP,
-    /* 47 */ AArch64_FPCR, AArch64_NZCV,
-    /* 49 */ AArch64_FFR, AArch64_FFR,
-    /* 51 */ AArch64_FFR, AArch64_NZCV,
-    /* 53 */ AArch64_FFR,
+    /* 3 */ AArch64_LR,
+    /* 4 */ AArch64_X16, AArch64_SP, AArch64_LR,
+    /* 7 */ AArch64_X9, AArch64_X16, AArch64_X17, AArch64_LR, AArch64_NZCV,
+    /* 12 */ AArch64_X20, AArch64_X16, AArch64_X17, AArch64_LR, AArch64_NZCV,
+    /* 17 */ AArch64_X9, AArch64_X16, AArch64_X17, AArch64_NZCV,
+    /* 21 */ AArch64_FPCR,
+    /* 22 */ AArch64_LR, AArch64_SP, AArch64_LR,
+    /* 25 */ AArch64_SP, AArch64_SP, AArch64_NZCV,
+    /* 28 */ AArch64_X16, AArch64_X17,
+    /* 30 */ AArch64_SP,
+    /* 31 */ AArch64_NZCV, AArch64_LR, AArch64_X0, AArch64_X1,
+    /* 35 */ AArch64_NZCV, AArch64_NZCV,
+    /* 37 */ AArch64_X16, AArch64_X17, AArch64_X17,
+    /* 40 */ AArch64_LR, AArch64_LR,
+    /* 42 */ AArch64_X16, AArch64_X16,
+    /* 44 */ AArch64_LR, AArch64_SP,
+    /* 46 */ AArch64_FPCR, AArch64_NZCV,
+    /* 48 */ AArch64_FFR, AArch64_FFR,
+    /* 50 */ AArch64_FFR, AArch64_NZCV,
+    /* 52 */ AArch64_FFR,
   }
 };
 

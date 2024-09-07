@@ -5359,3 +5359,28 @@ test_cases:
                 sys_raw_val: 1
                 fp: 0.5
                 fp_set: true
+  -
+    input:
+      name: "issue 2472 -- Incorrectly has NZCV in reg mod list"
+      bytes: [ 0x42, 0xd0, 0x3b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mrs	x2, TPIDR_EL0"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: x2
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_SYSREG
+                sub_type: AARCH64_OP_REG_MRS
+                sys_raw_val: 0xde82
+            update_flags: -1
+          regs_write: [ x2 ]
+          groups: [ privilege ]

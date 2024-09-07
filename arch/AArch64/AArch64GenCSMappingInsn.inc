@@ -13190,7 +13190,7 @@
   /* bl	$addr */
   AArch64_BL /* 1828 */, AARCH64_INS_BL,
   #ifndef CAPSTONE_DIET
-    { AARCH64_REG_SP, 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, AARCH64_GRP_BRANCH_RELATIVE, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, AARCH64_GRP_BRANCH_RELATIVE, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
@@ -13198,7 +13198,7 @@
   /* blr	$Rn */
   AArch64_BLR /* 1829 */, AARCH64_INS_BLR,
   #ifndef CAPSTONE_DIET
-    { AARCH64_REG_SP, 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
@@ -13206,7 +13206,7 @@
   /* blraa	$Rn, $Rm */
   AArch64_BLRAA /* 1830 */, AARCH64_INS_BLRAA,
   #ifndef CAPSTONE_DIET
-    { AARCH64_REG_SP, 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, AARCH64_FEATURE_HASPAUTH, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, AARCH64_FEATURE_HASPAUTH, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
@@ -13214,7 +13214,7 @@
   /* blraaz	$Rn */
   AArch64_BLRAAZ /* 1831 */, AARCH64_INS_BLRAAZ,
   #ifndef CAPSTONE_DIET
-    { AARCH64_REG_SP, 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, AARCH64_FEATURE_HASPAUTH, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, AARCH64_FEATURE_HASPAUTH, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
@@ -13222,7 +13222,7 @@
   /* blrab	$Rn, $Rm */
   AArch64_BLRAB /* 1832 */, AARCH64_INS_BLRAB,
   #ifndef CAPSTONE_DIET
-    { AARCH64_REG_SP, 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, AARCH64_FEATURE_HASPAUTH, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, AARCH64_FEATURE_HASPAUTH, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
@@ -13230,7 +13230,7 @@
   /* blrabz	$Rn */
   AArch64_BLRABZ /* 1833 */, AARCH64_INS_BLRABZ,
   #ifndef CAPSTONE_DIET
-    { AARCH64_REG_SP, 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, AARCH64_FEATURE_HASPAUTH, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { AARCH64_REG_LR, 0 }, { AARCH64_GRP_CALL, AARCH64_FEATURE_HASPAUTH, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
@@ -37390,7 +37390,7 @@
   /* mrs	$Rt, $systemreg */
   AArch64_MRS /* 4853 */, AARCH64_INS_MRS,
   #ifndef CAPSTONE_DIET
-    { 0 }, { AARCH64_REG_NZCV, 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
