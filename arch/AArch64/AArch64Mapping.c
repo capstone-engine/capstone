@@ -19,6 +19,8 @@
 #include "AArch64Linkage.h"
 #include "AArch64Mapping.h"
 
+#define CHAR(c) #c[0]
+
 static float aarch64_exact_fp_to_fp(aarch64_exactfpimm exact) {
 	switch (exact) {
 	default:
@@ -1765,11 +1767,16 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		}
 
 	#define SCALE_SET(T) \
-			do { \
-				T Val = (uint8_t)UnscaledVal * \
-					      (1 << AArch64_AM_getShiftValue(Shift)); \
-				AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM, Val); \
-			} while (0)
+		do { \
+			T Val; \
+			if (CHAR(T) == 'i') /* Signed */ \
+				Val = (int8_t)UnscaledVal * \
+					    (1 << AArch64_AM_getShiftValue(Shift)); \
+			else \
+				Val = (uint8_t)UnscaledVal * \
+					    (1 << AArch64_AM_getShiftValue(Shift)); \
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM, Val); \
+		} while (0)
 
 		switch (op_group) {
 		default:
