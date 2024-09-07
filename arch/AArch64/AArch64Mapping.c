@@ -1747,28 +1747,48 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 			// Shift is handled in printShifter()
 			break;
 		}
+
+	#define SCALE_SET(T) \
+			do { \
+				T Val = (uint8_t)UnscaledVal * \
+					      (1 << AArch64_AM_getShiftValue(Shift)); \
+				AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM, Val); \
+			} while (0)
+
 		switch (op_group) {
 		default:
 			assert(0 &&
 			       "Operand group for Imm8OptLsl not handled.");
-		case AArch64_OP_GROUP_Imm8OptLsl_int16_t:
-		case AArch64_OP_GROUP_Imm8OptLsl_int32_t:
-		case AArch64_OP_GROUP_Imm8OptLsl_int64_t:
-		case AArch64_OP_GROUP_Imm8OptLsl_int8_t: {
-			int8_t Val = (int8_t)UnscaledVal *
-				     (1 << AArch64_AM_getShiftValue(Shift));
-			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
-						  Val);
+		case AArch64_OP_GROUP_Imm8OptLsl_int16_t: {
+			SCALE_SET(int16_t);
 			break;
 		}
-		case AArch64_OP_GROUP_Imm8OptLsl_uint16_t:
-		case AArch64_OP_GROUP_Imm8OptLsl_uint32_t:
-		case AArch64_OP_GROUP_Imm8OptLsl_uint64_t:
+		case AArch64_OP_GROUP_Imm8OptLsl_int32_t: {
+			SCALE_SET(int32_t);
+			break;
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_int64_t: {
+			SCALE_SET(int64_t);
+			break;
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_int8_t: {
+			SCALE_SET(int8_t);
+			break;
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_uint16_t: {
+			SCALE_SET(uint16_t);
+			break;
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_uint32_t: {
+			SCALE_SET(uint32_t);
+			break;
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_uint64_t: {
+			SCALE_SET(uint64_t);
+			break;
+		}
 		case AArch64_OP_GROUP_Imm8OptLsl_uint8_t: {
-			uint8_t Val = (uint8_t)UnscaledVal *
-				      (1 << AArch64_AM_getShiftValue(Shift));
-			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
-						  Val);
+			SCALE_SET(uint8_t);
 			break;
 		}
 		}

@@ -5250,7 +5250,7 @@ test_cases:
       name: "issue 2471 -- PNx was register"
       bytes: [ 0x10, 0x80, 0x40, 0xa1 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      options: [ CS_OPT_DETAIL ]
       address: 0x0
     expected:
       insns:
@@ -5295,3 +5295,33 @@ test_cases:
           regs_read: [pn8, x0]
           regs_write: [z16, z20, z24, z28]
           groups: [ HasSME2 ]
+  -
+    input:
+      name: "issue 2472 -- Shift immediate is 0"
+      bytes: [ 0x01, 0x21, 0x50, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov	z1.h, p0/z, #0x800"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p0
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x800
+                access: CS_AC_READ
+          regs_read: [ p0 ]
+          regs_write: [ z1 ]
+          groups: [ HasSVEorSME ]
