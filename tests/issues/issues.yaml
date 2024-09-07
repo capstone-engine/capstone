@@ -5384,3 +5384,30 @@ test_cases:
             update_flags: -1
           regs_write: [ x2 ]
           groups: [ privilege ]
+  -
+    input:
+      name: "issue 2472 -- CASAL source operand has incorrectly the WRITE flag set"
+      bytes: [ 0x02, 0xfc, 0xe1, 0x88 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "casal	w1, w2, [x0]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: w1
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                reg: w2
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x0
+                access: CS_AC_READ_WRITE
+          regs_read: [ w1, w2, x0 ]
