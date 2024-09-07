@@ -1875,7 +1875,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		unsigned EltSize = temp_arg_0;
 		AArch64_get_detail_op(MI, 0)->vas = EltSize;
 		AArch64_set_detail_op_reg(
-			MI, OpNum, MCInst_getOpVal(MI, OpNum) - AArch64_PN0);
+			MI, OpNum, MCInst_getOpVal(MI, OpNum));
 		break;
 	}
 	case AArch64_OP_GROUP_PrefetchOp_0:
@@ -2483,7 +2483,8 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 		AArch64_set_detail_op_sme(MI, OpNum, AARCH64_SME_MATRIX_TILE,
 					  sme_reg_to_vas(Reg));
 		return;
-	} else if ((Reg >= AARCH64_REG_P0) && (Reg <= AARCH64_REG_P15)) {
+	} else if (((Reg >= AARCH64_REG_P0) && (Reg <= AARCH64_REG_P15)) ||
+	           ((Reg >= AARCH64_REG_PN0) && (Reg <= AARCH64_REG_PN15))) {
 		// SME/SVE predicate register.
 		AArch64_set_detail_op_pred(MI, OpNum);
 		return;

@@ -5125,7 +5125,6 @@ test_cases:
                 vas: AARCH64LAYOUT_VL_D
           regs_read: [ za0.d, za1.d, za2.d, za3.d, za4.d, za5.d, za6.d, za7.d ]
           groups: [ HasSME ]
-
   -
     input:
       address: 0x0
@@ -5246,3 +5245,53 @@ test_cases:
               -
                 type: SH_OP_REG
                 reg: r2
+  -
+    input:
+      name: "issue 2471 -- PNx was register"
+      bytes: [ 0x10, 0x80, 0x40, 0xa1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ld1b	{ z16.b, z20.b, z24.b, z28.b }, pn8/z, [x0]"
+        is_alias: 1
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z16
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z20
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z24
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z28
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: pn8
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x0
+                access: CS_AC_READ
+          regs_read: [pn8, x0]
+          regs_write: [z16, z20, z24, z28]
+          groups: [ HasSME2 ]
