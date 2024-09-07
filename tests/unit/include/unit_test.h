@@ -1,7 +1,7 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
-#define CHECK_EQUAL_RET_FALSE(OS, str) \
+#define CHECK_OS_EQUAL_RET_FALSE(OS, str) \
 	do { \
 		if (strcmp(OS.buffer, str) != 0) { \
 			printf("OS.buffer != str\n"); \
