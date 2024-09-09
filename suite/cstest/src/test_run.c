@@ -128,6 +128,7 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 				}
 				opt_arr[opt_idx++] = test_option_map[k].opt;
 				opt_found = true;
+				break;
 			}
 		}
 		if (!opt_found) {

@@ -434,7 +434,7 @@ uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,
 		} else if (id[i] > map[m].str[j]) {
 			l = m + 1;
 		}
-		if (m == 0 || (l + r) / 2 >= map_len) {
+		if ((m == 0 && id[i] < map[m].str[j]) || (l + r) / 2 >= map_len) {
 			// Break before we go out of bounds.
 			break;
 		}

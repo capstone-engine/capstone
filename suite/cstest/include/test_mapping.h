@@ -201,6 +201,7 @@ static const TestOptionMapEntry test_option_map[] = {
 
 static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "AAAAAAAAAAAAAAAAAAAAAAAAAA", .val = 0xffffff }, // For testing
+	{ .str = "AAAAAAAAAAAAAAAAAAAAAAAAAB", .val = 0xffffff }, // For testing
 	{ .str = "AARCH64LAYOUT_INVALID", .val = AARCH64LAYOUT_INVALID },
 	{ .str = "AARCH64LAYOUT_VL_16B", .val = AARCH64LAYOUT_VL_16B },
 	{ .str = "AARCH64LAYOUT_VL_16S", .val = AARCH64LAYOUT_VL_16S },
@@ -1472,6 +1473,8 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "XCORE_OP_IMM", .val = XCORE_OP_IMM },
 	{ .str = "XCORE_OP_MEM", .val = XCORE_OP_MEM },
 	{ .str = "XCORE_OP_REG", .val = XCORE_OP_REG },
+	{ .str = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzx",
+	  .val = 0xffffff }, // For testing
 	{ .str = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
 	  .val = 0xffffff }, // For testing
 };
