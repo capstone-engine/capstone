@@ -24,6 +24,16 @@ class TestHeaderPatcher(unittest.TestCase):
         )
         cls.mutex = Lock()
 
+    @staticmethod
+    def del_path(file: Path):
+        if not file.exists():
+            return
+        logging.debug(f"Delete old file: {file}")
+        if file.is_dir():
+            shutil.rmtree(file)
+        else:
+            os.remove(file)
+
     def test_test_case_gen(self):
         """
         To enforce sequential execution of the tests, we execute them in here.
@@ -48,8 +58,7 @@ class TestHeaderPatcher(unittest.TestCase):
         if not out_dir.exists():
             out_dir.mkdir(parents=True)
         for file in out_dir.iterdir():
-            logging.debug(f"Delete old file: {file}")
-            os.remove(file)
+            self.del_path(file)
         test_only_overwrite_path_var(
             "{MCUPDATER_OUT_DIR}",
             out_dir,
@@ -67,8 +76,7 @@ class TestHeaderPatcher(unittest.TestCase):
         if not out_dir.exists():
             out_dir.mkdir(parents=True)
         for file in out_dir.iterdir():
-            logging.debug(f"Delete old file: {file}")
-            os.remove(file)
+            self.del_path(file)
         test_only_overwrite_path_var(
             "{MCUPDATER_OUT_DIR}",
             out_dir,
@@ -86,8 +94,7 @@ class TestHeaderPatcher(unittest.TestCase):
         if not out_dir.exists():
             out_dir.mkdir(parents=True)
         for file in out_dir.iterdir():
-            logging.debug(f"Delete old file: {file}")
-            os.remove(file)
+            self.del_path(file)
         test_only_overwrite_path_var(
             "{MCUPDATER_OUT_DIR}",
             out_dir,
@@ -112,8 +119,7 @@ class TestHeaderPatcher(unittest.TestCase):
         if not out_dir.exists():
             out_dir.mkdir(parents=True)
         for file in out_dir.iterdir():
-            logging.debug(f"Delete old file: {file}")
-            os.remove(file)
+            self.del_path(file)
         test_only_overwrite_path_var(
             "{MCUPDATER_OUT_DIR}",
             out_dir,
@@ -137,8 +143,7 @@ class TestHeaderPatcher(unittest.TestCase):
             if not out_dir.exists():
                 out_dir.mkdir(parents=True)
             for file in out_dir.iterdir():
-                logging.debug(f"Delete old file: {file}")
-                os.remove(file)
+                self.del_path(file)
             test_only_overwrite_path_var(
                 "{MCUPDATER_OUT_DIR}",
                 out_dir,
@@ -164,11 +169,7 @@ class TestHeaderPatcher(unittest.TestCase):
             if not out_dir.exists():
                 out_dir.mkdir(parents=True)
             for file in out_dir.iterdir():
-                logging.debug(f"Delete old file: {file}")
-                if file.is_dir():
-                    shutil.rmtree(file)
-                else:
-                    os.remove(file)
+                self.del_path(file)
             test_only_overwrite_path_var(
                 "{MCUPDATER_OUT_DIR}",
                 out_dir,
