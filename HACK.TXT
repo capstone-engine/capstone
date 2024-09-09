@@ -31,15 +31,14 @@ Capstone source is organized as followings.
 ├── cstool          <- Cstool
 ├── docs            <- Documentation
 ├── include         <- API headers in C language (*.h)
-├── msvc            <- Microsoft Visual Studio support (for Windows compile)
 ├── packages        <- Packages for Linux/OSX/BSD.
 ├── windows         <- Windows support (for Windows kernel driver compile)
 ├── suite           <- Development test tools - for Capstone developers only
-├── tests           <- Test code (in C language)
+├── tests           <- Unit and itegration tests
 └── xcode           <- Xcode support (for MacOSX compile)
 
 
-Follow the instructions in COMPILE_CMAKE.TXT for how to compile and run test code.
+Follow the instructions in BUILDING.md for how to compile and run test code.
 
 Note: if you find some strange bugs, it is recommended to firstly clean
 the code and try to recompile/reinstall again. This can be done with:
