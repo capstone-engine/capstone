@@ -8,7 +8,7 @@ on:
       - "CREDITS.TXT"
       - "COMPILE_MAKE.TXT"
       - "BUILDING.md"
-      - "HACK.TXT"
+      - "CONTRIBUTING.md"
       - "LICENSE.TXT"
       - "LICENSE_LLVM.TXT"
       - "README.md"

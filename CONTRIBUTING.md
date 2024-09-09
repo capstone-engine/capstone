@@ -3,7 +3,8 @@ Code structure
 
 Capstone source is organized as followings.
 
-.                   <- core engine + README + COMPILE_CMAKE.TXT etc
+```
+.                   <- core engine + README.md + BUILDING.md etc
 ├── arch            <- code handling disasm engine for each arch
 │   ├── AArch64     <- AArch64 engine
 │   ├── Alpha       <- Alpha engine
@@ -24,43 +25,63 @@ Capstone source is organized as followings.
 │   ├── TriCore     <- TriCore engine
 │   └── WASM        <- WASM engine
 ├── bindings        <- all bindings are under this dir
-│   ├── java        <- Java bindings + test code
-│   ├── ocaml       <- Ocaml bindings + test code
-│   └── python      <- Python bindings + test code
+│   ├── java        <- Java bindings
+│   ├── ocaml       <- Ocaml bindings
+│   └── python      <- Python bindings
+│       └── cstest  <- Testing tool for the Python bindings.
+├── suite           <- Several tools used for development
+│   ├── cstest      <- Testing tool to consume and check the test `yaml` files in `tests`
+│   ├── fuzz        <- Fuzzer
+│   └── auto-sync   <- The updater for Capstone modules
 ├── contrib         <- Code contributed by community to help Capstone integration
 ├── cstool          <- Cstool
 ├── docs            <- Documentation
 ├── include         <- API headers in C language (*.h)
 ├── packages        <- Packages for Linux/OSX/BSD.
 ├── windows         <- Windows support (for Windows kernel driver compile)
-├── suite           <- Development test tools - for Capstone developers only
 ├── tests           <- Unit and itegration tests
 └── xcode           <- Xcode support (for MacOSX compile)
+```
 
+Building
+--------
 
-Follow the instructions in BUILDING.md for how to compile and run test code.
+Follow the instructions in [BUILDING.md](BUILDING.md) for how to compile and run test code.
 
-Note: if you find some strange bugs, it is recommended to firstly clean
-the code and try to recompile/reinstall again. This can be done with:
+Testing
+-------
 
-	$ ./make.sh
-	$ sudo ./make.sh install
+General testing docs are at [tests/README.md](tests/README.md).
 
-Then test Capstone with cstool, for example:
+You can test single instructions easily with the `cstool`.
+For example:
 
-	$ cstool x32 "90 91"
+```bash
+$ cstool x32 "90 91"
+```
 
-At the same time, for Java/Ocaml/Python bindings, be sure to always use
-the bindings coming with the core to avoid potential incompatibility issue
-with older versions.
-See bindings/<language>/README for detail instructions on how to compile &
-install the bindings.
+Using `cstool` is also the prefered way for debugging a single instruction.
 
+**Bindings**
+
+Bindings currently have not equivalent to a `cstool`.
+
+The Python bindings have `cstool` implemented.
+
+Other bindings are out-of-date for a while because of missing maintainers.
+They only have legacy integration tests.
+
+Please check the issues or open a new one if you intent to work on them or need them.
 
 Coding style
 ------------
-- C code follows Linux kernel coding style, using tabs for indentation.
-- Python code uses 4 spaces for indentation.
+- We provide a `.clang-format` for C code.
+- Python files should be formatted with `black`.
+
+Support
+-------
+
+**Please always open an issue or leave a comment in one, before starting work on an architecture! We can give support and save you a lot of time.**
 
 Updating an Architecture
 ------------------------
@@ -86,49 +107,7 @@ supported currently.
 Adding an architecture
 ----------------------
 
-If your architecture is supported in LLVM or one of its forks, you can use `auto-sync` to
+If your architecture is supported in LLVM or one of its forks, you can use `Auto-Sync` to
 add the new module.
 
-<!-- TODO: Move this info to the auto-sync docs -->
-
-Obviously, you first need to write all the logic and put it in a new directory arch/newarch
-Then, you have to modify other files.
-(You can look for one architecture such as EVM in these files to get what you need to do)
-
-Integrate:
-- cs.c
-- cstool/cstool.c
-- cstool/cstool_newarch.c: print the architecture specific details
-- include/capstone/capstone.h
-- include/capstone/newarch.h: create this file to export all specifics about the new architecture
-
-Compile:
-- CMakeLists.txt
-- Makefile
-- config.mk
-
-Tests:
-- tests/Makefile
-- tests/test_basic.c
-- tests/test_iter.c
-- tests/test_newarch.c
-- suite/fuzz/platform.c: add the architecture and its modes to the list of fuzzed platforms
-- suite/capstone_get_setup.c
-- suite/MC/newarch/mode.mc: samples
-- suite/test_corpus.py: correspondence between architecture and mode as text and architecture number for fuzzing
-- suite/cstest/
-
-Bindings:
-- bindings/Makefile
-- bindings/const_generator.py: add the header file and the architecture
-- bindings/python/Makefile
-- bindings/python/capstone/__init__.py
-- bindings/python/capstone/newarch.py: define the python structures
-- bindings/python/capstone/newarch_const.py: generate this file
-- bindings/python/test_newarch.py: create a basic decoding test
-- bindings/python/test_all.py
-
-Docs:
-- README.md
-- HACK.txt
-- CREDITS.txt: add your name
+Otherwise, you need to implement the disassembler on your own.

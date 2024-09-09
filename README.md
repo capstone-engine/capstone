@@ -55,20 +55,20 @@ See [BUILDING.md](BUILDING.md) file for how to compile and install Capstone.
 Documentation
 -------------
 
-See docs/README for how to customize & program your own tools with Capstone.
+- Useful links and tutorials: [docs/README](docs/README)
+- Software architecture overview: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- Testing documentation: [tests/README.md](tests/README.md)
+- Updater (Auto-Sync) documentation: [suite/auto-sync/README.md](suite/auto-sync/README.md)
 
-
-Hack
+Contributing
 ----
 
-See HACK.TXT file for the structure of the source code.
-
+See [CONTRIBUTING.md](CONTRIBUTING.md) for an intro.
 
 Fuzz
 ----
 
 See suite/fuzz/README.md for more information.
-
 
 License
 -------
