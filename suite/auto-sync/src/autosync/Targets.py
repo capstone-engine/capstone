@@ -2,7 +2,15 @@
 # SPDX-License-Identifier: BSD-3
 
 # Names of the target architectures as they are listed under llvm/lib/Target/
-TARGETS_LLVM_NAMING = ["ARM", "PowerPC", "Alpha", "AArch64", "LoongArch", "SystemZ", "Mips"]
+TARGETS_LLVM_NAMING = [
+    "ARM",
+    "PowerPC",
+    "Alpha",
+    "AArch64",
+    "LoongArch",
+    "SystemZ",
+    "Mips",
+]
 
 # Names of the target architecture as they are used in code and pretty much everywhere else.
 ARCH_LLVM_NAMING = ["ARM", "PPC", "Alpha", "AArch64", "LoongArch", "SystemZ", "Mips"]

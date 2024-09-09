@@ -334,10 +334,14 @@ def get_Mips_includes(filename: str) -> bytes:
     log.fatal(f"No includes given for Mips source file: {filename}")
     exit(1)
 
+
 def get_SystemZ_includes(filename: str) -> bytes:
     match filename:
         case "SystemZDisassembler.cpp":
-                + b'#include "SystemZDisassemblerExtension.h"\n'
+            return (
+                b'#include "../../MCInst.h"\n'
+                + b'#include "../../MathExtras.h"\n'
+                + b'#include "../../cs_priv.h"\n'
                 + b'#include "../../utils.h"\n\n'
                 + b'#include "SystemZMCTargetDesc.h"\n'
                 + b'#include "SystemZDisassemblerExtension.h"\n\n'
