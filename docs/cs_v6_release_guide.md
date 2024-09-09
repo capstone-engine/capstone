@@ -47,7 +47,6 @@ With all that said, we hope you enjoy the new release!
 **Alpha**
 
 - Architecture support was added (based on LLVM-3)
-- System operands are provided with way more detail in separated operand.
 
 **AArch64**
 
@@ -60,7 +59,7 @@ With all that said, we hope you enjoy the new release!
 - Updated to LLVM-16
 - The instruction encoding formats are added for PPC. They are accessible via `cs_ppc->format`.
 They do follow loosely the ISA formats of instructions but not quite. Unfortunately,
-LLV doesn't group the instruction formats perfectly aligned with the ISA.
+LLVM doesn't group the instruction formats perfectly aligned with the ISA.
 Nonetheless, we hope this additional information is useful to you.
 - Branching information in `cs_ppc->bc` is way more detailed now.
 - The Paired Single extension was added.
@@ -70,8 +69,8 @@ Nonetheless, we hope this additional information is useful to you.
 - Updated to LLVM-18
 - Operands have now read/write access information
 - Memory operands have now the address mode specified
-- Immediate oprands have a new `imm_width` field. storing the bit width if known.
-- CPU features can be enabled or disabled by SystemZ architecture (arch8-arch14).
+- Immediate operands have a new `imm_width` field. Storing the bit width if known.
+- CPU features can be enabled or disabled, grouped by architecture (arch8-arch14).
 
 **Mips**
 
