@@ -1,38 +1,79 @@
 # V6 Release
 
-With the `v6` release we added a new update mechanism called `auto-sync`.
+With the `v6` release we added a new update mechanism called `Auto-Sync`.
 This is a huge step for Capstone, because it allows for easy module updates, easier addition of new architectures, easy features addition and guarantees less faulty disassembly.
 
-For `v6` we _updated_ the following architectures: `ARM`, `AArch64` and `PPC`.
+This release adds a huge amount of new architectures, extensions, bug fixes and quality of life improvements.
+
+## Contributors
+
+Almost all the work was sponsored by [RizinOrg](https://rizin.re/). This release would have simply not happened without them.
+
+The developers with the biggest contributions were (alphabetically):
+- `TriCore` - @billow (Sponsored)
+- `LoongArch` - @jiegec and @FurryAcetylCoA
+- `Alpha`, `HPPA` - @R33v0LT (Sponsored)
+- `AArch64`, `ARM`, `Auto-Sync`, `PPC`, `SystemZ`, modernized testing - @Rot127 (Sponsored)
+- `Mips` - @wargio
+
+There are also multiple smaller additions
+
+- Reviewing all PRs = @kabeor
+- Architecture module registration - @oleavr
+- Building of thin binaries for Apple - @rickmark
+- Python packaging and testing - @twizmwazin, @peace-maker
+- `RISCV` operand access info - @wxrdnx
+
+And of course there were many more improvements done by other contributors, which add to the release just as the ones above.
+For a full list of all the developers, please see the release page.
+
+With all that said, we hope you enjoy the new release!
+
+## Overview
+
+For `v6` we _updated_ the following architectures: `ARM`, `AArch64`, `Mips`, `SystemZ`, `PPC`.
+And added support for several more: `TriCore` (already in `v5`), `Alpha`, `HPPA`, `LoongArch`.
 
 These updates are significant! While in `v5` the most up-to-date module was based on `LLVM 7`,
-the refactored modules will be based on `LLVM 17`!
+the refactored modules are based on `LLVM 16` (`ARM`, `PPC`) and `LLVM 18` (the others)!
 
-As you can see, `auto-sync` solves the long existing problem that Capstone architecture modules were very hard to update.
-For [`auto-sync`-enabled modules](https://github.com/capstone-engine/capstone/issues/2015) this is no longer the case.
+As you can see, `Auto-Sync` solves the long existing problem that Capstone being hard to update.
+For [`Auto-Sync`-enabled modules](https://github.com/capstone-engine/capstone/issues/2015) this is no longer the case.
+The update process is no pretty much standardized and, while not yet 100% reproducible, creates consistently better maintainable and precise results.
 
-To achieve it we refactored some LLVM backends, so they emit directly the code we use in Capstone.
+To achieve it, we refactored some LLVM backends, so they emit directly the code we use in Capstone.
 Additionally, we implemented many scripts, which automate a great number of manual steps during the update.
 
-Because most of the update steps are automated now the architecture modules must fit this update mechanism.
+Because most of the update steps are automated now, the architecture modules must fit this update mechanism.
 Which means they move closer to the original LLVM code.
 On the flip site it brings many breaking changes.
 
-You can find a list below with a description, justification and a possible way to revert this change locally (if there is any reasonable way).
+You can find a list below with descriptions and justification.
 
-With all the trouble this might bring for you, please keep in mind that this will only occur once for each architecture (when it gets refactored for `auto-sync`).
+With all the trouble this might bring for you, please keep in mind that this will only occur once for each architecture (when it gets refactored for `Auto-Sync`).
 In the long term this will guarantee more stability, more correctness, more features and on top of this makes Capstone directly comparable to `llvm-obdjdump`.
 
-We already added a handful of new features of which you can find a list below.
+If you want to check the current state of this endeavor read the [main Auto-Sync issue](https://github.com/capstone-engine/capstone/issues/2015).
 
-If you want to check the current state of this endeavor checkout https://github.com/capstone-engine/capstone/issues/2015.
 Moreover, if you decide to update an existing architecture module (apart from already updated ones), it would be very much welcome!
 If you want to join the effort, please drop us a note in the issue comments, so we can assist.
 
-Almost all the new features in this release were sponsored and implemented by the [Rizin](https://rizin.re/) team.
-The `auto-sync` updater, the additional updates of ARM, AArch64 and PPC, as well as the newly added Tricore and Alpha support, wouldn't have had happened without them.
+## Why an Alpha?
 
-With all that said, we hope you enjoy the new release!
+Because the changes are so vast and we still need more feedback from the community.
+
+We had many early adopters who helped enormously to find bugs and report issues up until now.
+But there are still features missing, modules not refactored, the test coverage below 100% in the relevant paths and `Auto-Sync` not completely done yet.
+With all the new features we want to have more feedback from users and eyes on the code before calling it "complete".
+
+Although, it is an Alpha, it doesn't mean it is not well tested!
+The testing compared to any other release has increased a lot. Both in quantity, coverage and code quality checks.
+
+The Alpha release now allows projects to pin-point their build to a specific commit and use the new features, while allowing us to add missing features
+still on the list for `v6` Gold.
+
+So when the final `v6` release happens, the `Auto-Sync` transformation of Capstone is completely done.
+For `v7` we can then focus on other big features, like [SAIL](https://github.com/rems-project/sail) based disassembler modules or a new API to support VLIW architectures like Hexagon or E2K.
 
 ## New features
 
@@ -84,12 +125,13 @@ Nonetheless, we hope this additional information is useful to you.
 
 **UX**
 
+- Instruction alias (see below).
 - `cstool`: Architecture specific options can now be enabled with `cstool <arch>+<option>`.
 
 **Developer improvements**
 
 - Testing was re-written from scratch. Now allowing fine-grained testing of all details and is more convenient to use by contributors.
-- Architecture modules from a static library, can be initialized on demand to decrease footprint (see: `cmake` option: CAPSTONE_USE_ARCH_REGISTRATION`).
+- Architecture modules from a static library, can be initialized on demand to decrease footprint (see: `cmake` option `CAPSTONE_USE_ARCH_REGISTRATION`).
 - New `cmake` option to choose between fat and thin binary for Apple.
 
 **Code quality**
@@ -155,10 +197,10 @@ If `-r` is set, you got the real operands. Even if the decoded instruction is an
 
 ```
 
-**Note about alias as part of real instruction enum.**
+**Notes about alias as part of real instruction enum.**
 
 LLVM defines some alias instructions as real instructions.
-This is why you will still find alias instructions being listed in the instruction `enum`.
+This is why you will still find alias instructions being listed in the "real" instruction enumeration.
 This happens due to some LLVM specific edge cases.
 
 Nonetheless, an alias should never be **decoded** as real instruction.
@@ -176,11 +218,11 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | Bindings | The Java and Ocaml bindings were abandoned for a while now. So in the Alpha release they are not yet up-to-date. | Not enough maintainers. |
 | Python | Python 2 and <3.8 are dropped in the `v5` and `next` branch. | Python 2 and <3.8 are EOL. |
 
-**All `auto-sync` architectures**
+**All `Auto-Sync` architectures**
 
 | Keyword | Change | Justification |
 |---------|--------|---------------|
-| Instr. alias | Capstone now clearly separates real instructions and their aliases. Previously many aliases were treated as real instructions. See [Instruction Alias](#instruction-alias) for details. | This became a simple necessity because CS operates with a copy of the LLVMs decoder without any changes. |
+| Instr. alias | Capstone now clearly separates real instructions and their aliases. Previously many aliases were treated as real instructions. See above for details. | This became a simple necessity because CS operates with a copy of the LLVMs decoder without changes to the decoder logic. |
 
 **ARM**
 
@@ -199,10 +241,11 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | Register alias | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. | Mimic LLVM as close as possible. |
 | Immediate | Immediate values (`arm_op.imm`) type changed to `int64_t` | Prevent loss of precision in some cases. |
 
-**AArch64**
+**AArch64 (formerly ARM64)**
 
 | Keyword | Change | Justification |
 |---------|--------|---------------|
+| ARM64 -> AArch64 | ARM64 was everywhere renamed to AArch64 to match the LLVM naming. | See below. |
 | Post-index | Post-index memory access has the disponent now set int the `MEMORY` operand! No longer as separated `reg`/`imm` operand. | See post-index explanation for ARM. |
 | `SME` operands | `SME` operands contain more detail now and member names are closer to the ISA terminology. | New SVE2, SME extensions required more detail. |
 | System operands | System Operands are separated into different types now. | System operands follow a special encoding. Some byte sequences match two different operands. Hence, a more detailed concept was necessary. |
@@ -236,9 +279,10 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 
 | Keyword | Change | Justification |
 |---------|--------|---------------|
+| SYSZ -> SystemZ | `SYSZ` was everywhere renamed to `SystemZ` to match the LLVM naming. | See below |
 | `SYSTEMZ_CC_*` | `SYSTEMZ_CC_O = 0` and `SYSTEMZ_CC_INVALID != 0` | They match the same LLVM values. Better for LLVM compatibility and code generation. |
 
-**Note about AArch64 and SystemZ**
+### Notes about AArch64 and SystemZ renaming
 
 `ARM64` was everywhere renamed to `AArch64`. And `SYSZ` to `SYSTEMZ`. This is a necessity to ensure that the update scripts stay reasonably simple.
 Capstone was very inconsistent with the naming before (sometimes `AArch64` sometimes `ARM64`. Sometimes `SYSZ` sometimes `SYSTEMZ`).
@@ -247,7 +291,7 @@ Because Capstone uses a huge amount of LLVM code, we renamed everything to `AArc
 Because this would completely break maintaining Capstone `v6` and `pre-v6` in a project, we added compatibility headers:
 
 1. Make `arm64.h` a compatibility header which merely maps every member to the one in the `aarch64.h` header.
-2. The `systemz.h` header includes the `SYSZ` to `SYSZTEMZ` mapping if `CAPSTONE_SYSTEMZ_COMPAT_HEADER` is defined.
+2. The `systemz.h` header includes the `systemz_compatibility.h` header if `CAPSTONE_SYSTEMZ_COMPAT_HEADER` is defined.
 
 We will continue to maintain both headers.
 
@@ -264,6 +308,8 @@ If you want to use the compatibility header and stick with the `ARM64`/`SYSZ` na
 ```
 
 _Example renaming with `sed`_
+
+Alternatively you can perform the renaming with `sed`.
 
 Simple renaming from `ARM64` to `AArch64`:
 
@@ -377,7 +423,7 @@ Nonetheless, we hope this additional information is useful to you.
 
 **Arch64**
 
-- Access information for `fcvtn` instructions with two registers are wrong.
+- Access information for `fcvtn` instructions with two vector registers are wrong.
 
 - Some operands have incorrect access attributes set.
 If the same register is used twice in the instruction,
