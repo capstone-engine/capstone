@@ -86,15 +86,15 @@ Support
 Updating an Architecture
 ------------------------
 
-The update tool for Capstone is called `auto-sync` and can be found in `suite/auto-sync`.
+The update tool for Capstone is called `Auto-Sync` and can be found in `suite/auto-sync`.
 
 Not all architectures are supported yet.
 Run `suite/auto-sync/Updater/ASUpdater.py -h` to get a list of currently supported architectures.
 
-The documentation how to update with `auto-sync` or refactor an architecture module
-can be found in [docs/AutoSync.md](docs/AutoSync.md).
+The documentation how to update with `Auto-Sync` or refactor an architecture module
+can be found in [suite/auto-sync/README.md](suite/auto-sync/README.md).
 
-If a module does not support `auto-sync` yet, it is highly recommended to refactor it
+If a module does not support `Auto-Sync` yet, it is highly recommended to refactor it
 instead of attempting to update it manually.
 Refactoring will take less time and updates it during the procedure.
 
@@ -104,10 +104,11 @@ One for `x86` and another for all the other architectures.
 Until now it was not worth it to refactoring this unique `x86` backend. So `x86` is not
 supported currently.
 
-Adding an architecture
+Adding an Architecture
 ----------------------
 
 If your architecture is supported in LLVM or one of its forks, you can use `Auto-Sync` to
 add the new module.
+Checkout [suite/auto-sync/README.md](suite/auto-sync/README.md).
 
-Otherwise, you need to implement the disassembler on your own.
+Otherwise, you need to implement the disassembler on your own and make it work with the Capstone API.
