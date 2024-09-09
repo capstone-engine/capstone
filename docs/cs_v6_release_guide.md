@@ -179,39 +179,6 @@ If you want to use the compatibility header and stick with the `ARM64`/`SYSZ` na
 // Your code...
 ```
 
-_Meta programming macros_
-
-The following `sed` commands in a sh script should ease the replacement of `ARM64` with the macros a lot.
-These macros are also part of the latest `v4` and `v5` release.
-
-```sh
-#!/bin/sh
-echo "Replace enum names"
-
-sed -i -E "s/CS_ARCH_ARM64/CS_AARCH64pre(CS_ARCH_)/g" $1
-sed -i -E "s/ARM64_INS_(\\w+)/CS_AARCH64(_INS_\\1)/g" $1
-sed -i -E "s/ARM64_REG_(\\w+)/CS_AARCH64(_REG_\\1)/g" $1
-sed -i -E "s/ARM64_OP_(\\w+)/CS_AARCH64(_OP_\\1)/g" $1
-sed -i -E "s/ARM64_EXT_(\\w+)/CS_AARCH64(_EXT_\\1)/g" $1
-sed -i -E "s/ARM64_SFT_(\\w+)/CS_AARCH64(_SFT_\\1)/g" $1
-sed -i -E "s/ARM64_VAS_(\\w+)/CS_AARCH64_VL_(\\1)/g" $1
-
-sed -i -E "s/ARM64_CC_(\\w+)/CS_AARCH64CC(_\\1)/g" $1
-
-echo "Replace type identifiers"
-
-sed -i -E "s/cs_arm64_op /CS_aarch64_op() /g" $1
-sed -i -E "s/arm64_reg /CS_aarch64_reg() /g" $1
-sed -i -E "s/arm64_cc /CS_aarch64_cc() /g" $1
-sed -i -E "s/cs_arm64 /CS_cs_aarch64() /g" $1
-sed -i -E "s/arm64_extender /CS_aarch64_extender() /g" $1
-sed -i -E "s/arm64_shifter /CS_aarch64_shifter() /g" $1
-sed -i -E "s/arm64_vas /CS_aarch64_vas() /g" $1
-
-echo "Replace detail->arm64"
-sed -i -E "s/detail->arm64/detail->CS_aarch64()/g" $1	
-```
-
 _Example renaming with `sed`_
 
 Simple renaming from `ARM64` to `AArch64`:
@@ -269,7 +236,7 @@ echo "Replace detail->sysz"
 sed -i "s|detail->sysz|detail->systemz|g" $1
 ```
 
-Write it into `rename_arm64.sh` and run it on files with `sh rename_arm64.sh <src-file>`
+Write it into `rename.sh` and run it on files with `sh rename.sh <src-file>`
 
 **Note about AArch64**
 
