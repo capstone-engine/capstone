@@ -168,6 +168,14 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 
 ## Breaking changes
 
+**General**
+
+| Keyword | Change | Justification |
+|---------|--------|---------------|
+| Make build | Building Capstone with `make` is deprecated now and is no longer supported. Build files will be removed in the next release. | It adds too much maintenance and `make` is not convenient to manage such a modular, complex project for multiple platforms. |
+| Bindings | The Java and Ocaml bindings were abandoned for a while now. So in the Alpha release they are not yet up-to-date. | Not enough maintainers. |
+| Python | Python 2 and <3.8 are dropped in the `v5` and `next` branch. | Python 2 and <3.8 are EOL. |
+
 **All `auto-sync` architectures**
 
 | Keyword | Change | Justification |
