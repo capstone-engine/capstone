@@ -212,7 +212,8 @@
       "DecodeDEXT",
       "DecodeCRC",
       "isReg"
-    ]
+    ],
+    "manually_edited_files": []
   },
   "SystemZ": {
     "files_to_translate": [

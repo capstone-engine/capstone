@@ -1,4 +1,7 @@
 {
+    "unify_test_cases": [
+        "ARM"
+    ],
     "additional_mattr":
     {
         "AArch64":
@@ -15,6 +18,18 @@
         "Mips":
         [
             "CS_OPT_SYNTAX_NOREGNAME"
+        ],
+        "PPC":
+        [
+          "CS_OPT_NO_BRANCH_OFFSET"
+        ],
+        "ARM":
+        [
+          "CS_OPT_NO_BRANCH_OFFSET"
+        ],
+        "AArch64":
+        [
+          "CS_OPT_NO_BRANCH_OFFSET"
         ]
     },
     "remove_options":

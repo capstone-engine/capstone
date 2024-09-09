@@ -16,12 +16,11 @@ from autosync.Helper import convert_loglevel, get_path
 
 
 class LLVM_MC_Command:
-    def __init__(self, cmd_line: str, mattr: str, mattr_map: dict = dict()):
+    def __init__(self, cmd_line: str, mattr: str):
         self.cmd: str = ""
         self.opts: str = ""
         self.file: Path | None = None
         self.additional_mattr: str = mattr
-        self.mattr_map: dict = mattr_map
 
         self.cmd, self.opts, self.file = self.parse_llvm_mc_line(cmd_line)
         if not (self.cmd and self.opts and self.file):
@@ -48,10 +47,7 @@ class LLVM_MC_Command:
             processed_attr = list()
             for m in mattr:
                 attribute = m.group(2).strip("+")
-                if attribute in self.mattr_map:
-                    processed_attr.append(self.mattr_map[attribute])
-                else:
-                    processed_attr.append(attribute)
+                processed_attr.append(attribute)
             opts += ",".join(processed_attr)
         return cmd, opts, Path(test_file)
 
@@ -90,11 +86,7 @@ class MCTest:
 
     def __init__(self, arch: str, opts: list[str], encoding: str, asm_text: str):
         self.arch = arch
-        if arch.lower() in ["arm", "powerpc", "ppc", "aarch64"]:
-            # Arch and PPC require this option for MC tests.
-            self.opts = ["CS_OPT_NO_BRANCH_OFFSET"] + opts
-        else:
-            self.opts = opts
+        self.opts = opts
         self.encoding: list[str] = [encoding]
         self.asm_text: list[str] = [asm_text]
 
@@ -275,7 +267,7 @@ class MCUpdater:
             else ""
         )
         # A list of options which are always added.
-        self.mandatory_options: str = (
+        self.mandatory_options: list[str] = (
             self.conf["mandatory_options"][self.arch]
             if self.arch in self.conf["mandatory_options"]
             else list()
@@ -286,13 +278,15 @@ class MCUpdater:
             else list()
         )
         self.remove_options = [x.lower() for x in self.remove_options]
-        self.replace_option_map: str = (
+        self.replace_option_map: dict = (
             self.conf["replace_option_map"][self.arch]
             if self.arch in self.conf["replace_option_map"]
             else {}
         )
         self.replace_option_map = {
-            k.lower(): v for k, v in self.replace_option_map.items()
+            k.lower(): v
+            for k, v in self.replace_option_map.items()
+            if k.lower not in self.remove_options
         }
         self.multi_mode = multi_mode
 
@@ -471,15 +465,7 @@ class MCUpdater:
                 continue
             if any(re.search(x, match) is not None for x in self.excluded):
                 continue
-            llvm_mc_cmd = LLVM_MC_Command(
-                match,
-                self.mattr,
-                (
-                    self.conf["mode_map"][self.arch]
-                    if self.arch in self.conf["mode_map"]
-                    else dict()
-                ),
-            )
+            llvm_mc_cmd = LLVM_MC_Command(match, self.mattr)
             if not llvm_mc_cmd.cmd:
                 # Invalid
                 continue
