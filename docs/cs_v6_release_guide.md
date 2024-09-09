@@ -322,6 +322,25 @@ They do follow loosely the ISA formats of instructions but not quite. Unfortunat
 LLV doesn't group the instruction formats perfectly aligned with the ISA.
 Nonetheless, we hope this additional information is useful to you.
 
+### Known bugs
+
+**Arch64**
+
+- Access information for `fcvtn` instructions with two registers are wrong.
+
+- Some operands have incorrect access attributes set.
+If the same register is used twice in the instruction,
+once for reading and once for writing, those registers are required by the ISA to be the same,
+the details for this register will always be `access = CS_AC_READ_WRITE`.
+There is no distinction for `READ` and `WRITE`.
+
+- Single memory operand _components_ (base register, offset) have no unique access information. Access information from memory operands should always refer to the memory. Not the register or immediate components.
+Meaning, if a memory operand has the `CS_AC_READ` attribute set, it means the memory is read. Not all of it's components.
+
+Please note though, `writeback` registers are correctly added to the `regs_write` list if `cs_reg_access` is called.
+
+These issues will be addressed in the next releases. For a more detailed descriptions see: https://github.com/capstone-engine/capstone/issues/2472#issuecomment-2335226281 (starting at "eor and the others").
+
 ### Instruction Alias
 
 Instruction alias are now properly separated from real instructions.
