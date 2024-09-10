@@ -252,16 +252,21 @@ inline static unsigned ARMCondCodeFromString(const char *CC)
 /// ARM shift type
 typedef enum arm_shifter {
 	ARM_SFT_INVALID = 0,
-	ARM_SFT_ASR,	///< shift with immediate const
-	ARM_SFT_LSL,	///< shift with immediate const
-	ARM_SFT_LSR,	///< shift with immediate const
-	ARM_SFT_ROR,	///< shift with immediate const
-	ARM_SFT_RRX,	///< shift with immediate const
-	ARM_SFT_ASR_REG,	///< shift with register
-	ARM_SFT_LSL_REG,	///< shift with register
-	ARM_SFT_LSR_REG,	///< shift with register
-	ARM_SFT_ROR_REG,	///< shift with register
-	ARM_SFT_RRX_REG,	///< shift with register
+	ARM_SFT_ASR,
+	ARM_SFT_LSL,
+	ARM_SFT_LSR,
+	ARM_SFT_ROR,
+	ARM_SFT_RRX,
+	ARM_SFT_UXTW,
+
+	// Added by Capstone to signal that the shift amount is stored in a register.
+	// shift.val should be interpreted as register id.
+	ARM_SFT_REG,
+	ARM_SFT_ASR_REG,
+	ARM_SFT_LSL_REG,
+	ARM_SFT_LSR_REG,
+	ARM_SFT_ROR_REG,
+	// Others are not defined in the ISA.
 } arm_shifter;
 
 /// The memory barrier constants map directly to the 4-bit encoding of
@@ -858,8 +863,8 @@ typedef struct cs_arm_op {
 	int vector_index;	///< Vector Index for some vector operands (or -1 if irrelevant)
 
 	struct {
-		arm_shifter type;
-		unsigned int value;
+		arm_shifter type; ///< The shift type
+		unsigned int value; ///< The amount to shift. If shift.type > ARM_SFT_REG, the value must be interpreted as register id.
 	} shift;
 
 	arm_op_type type;	///< operand type

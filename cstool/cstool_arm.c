@@ -123,14 +123,15 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 				break;
 		}
 
-		if (op->shift.type != ARM_SFT_INVALID && op->shift.value) {
-			if (op->shift.type < ARM_SFT_ASR_REG)
+		if (op->shift.type != ARM_SFT_INVALID) {
+			if (op->shift.type < ARM_SFT_REG) {
 				// shift with constant value
 				printf("\t\t\tShift: %u = %u\n", op->shift.type, op->shift.value);
-			else
+			} else {
 				// shift with register
 				printf("\t\t\tShift: %u = %s\n", op->shift.type,
-						cs_reg_name(handle, op->shift.value));
+						op->shift.value > 0 ? cs_reg_name(handle, op->shift.value) : "-");
+			}
 		}
 
 		if (op->vector_index != -1) {

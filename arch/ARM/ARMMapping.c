@@ -252,6 +252,39 @@ static void add_alias_details(MCInst *MI) {
 		}
 		break;
 	}
+	case ARM_INS_ALIAS_ASR:
+	case ARM_INS_ALIAS_LSL:
+	case ARM_INS_ALIAS_LSR:
+	case ARM_INS_ALIAS_ROR: {
+		unsigned shift_value = 0;
+		arm_shifter shift_type = ARM_SFT_INVALID;
+		switch (MCInst_getOpcode(MI)) {
+		default:
+			CS_ASSERT(0 && "ASR, LSL, LSR, ROR alias not handled");
+			return;
+		case ARM_MOVsi: {
+			MCOperand *MO2 = MCInst_getOperand(MI, 2);
+			shift_type = (arm_shifter) ARM_AM_getSORegShOp(MCOperand_getImm(MO2));
+
+			if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
+				break;
+			}
+			shift_value = translateShiftImm(ARM_AM_getSORegOffset(
+							       MCOperand_getImm(MO2)));
+			ARM_insert_detail_op_imm_at(MI, -1, shift_value, CS_AC_READ);
+			break;
+		}
+		case ARM_MOVsr: {
+			MCOperand *MO3 = MCInst_getOperand(MI, (3));
+			shift_type = ARM_AM_getSORegShOp(MCOperand_getImm(MO3)) + ARM_SFT_REG;
+			shift_value = MCInst_getOpVal(MI, 2);
+			break;
+		}
+		}
+		ARM_get_detail_op(MI, -2)->shift.type = shift_type;
+		ARM_get_detail_op(MI, -2)->shift.value = shift_value;
+		break;
+	}
 	}
 }
 
@@ -500,8 +533,7 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 		// Add shift information
 		ARM_get_detail(MI)->operands[1].shift.type =
 			(arm_shifter)ARM_AM_getSORegShOp(
-				MCInst_getOpVal(MI, 3)) +
-			ARM_SFT_ASR_REG - 1;
+				MCInst_getOpVal(MI, 3)) + ARM_SFT_REG;
 		ARM_get_detail(MI)->operands[1].shift.value =
 			MCInst_getOpVal(MI, 2);
 		break;
@@ -1327,7 +1359,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		int64_t imm =
 			MCOperand_getImm(MCInst_getOperand(MI, OpNum + 2));
 		ARM_get_detail_op(MI, 0)->shift.type =
-			(imm & 7) + ARM_SFT_ASR_REG - 1;
+			ARM_AM_getSORegShOp(imm) + ARM_SFT_REG;
 		if (ARM_AM_getSORegShOp(imm) != ARM_AM_rrx)
 			ARM_get_detail_op(MI, 0)->shift.value =
 				MCInst_getOpVal(MI, OpNum + 1);
