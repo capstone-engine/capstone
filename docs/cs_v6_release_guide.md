@@ -14,7 +14,7 @@ The developers with the biggest contributions were (alphabetically):
 - `LoongArch` - @jiegec and @FurryAcetylCoA
 - `Alpha`, `HPPA` - @R33v0LT (Sponsored)
 - `AArch64`, `ARM`, `Auto-Sync`, `PPC`, `SystemZ`, modernized testing - @Rot127 (Sponsored)
-- `Mips` - @wargio
+- `Mips`, `NanoMips` - @wargio
 
 There are also multiple smaller additions
 
@@ -31,7 +31,7 @@ With all that said, we hope you enjoy the new release!
 
 ## Overview
 
-For `v6` we _updated_ the following architectures: `ARM`, `AArch64`, `Mips`, `SystemZ`, `PPC`.
+For `v6` we _updated_ the following architectures: `ARM`, `AArch64`, `Mips` (adding `NanoMips`!), `SystemZ`, `PPC`.
 And added support for several more: `TriCore` (already in `v5`), `Alpha`, `HPPA`, `LoongArch`.
 
 These updates are significant! While in `v5` the most up-to-date module was based on `LLVM 7`,
@@ -116,7 +116,7 @@ Nonetheless, we hope this additional information is useful to you.
 **Mips**
 
 - Updated to LLVM-18
-- Support added for: `microMips32r3`, `microMips32r6`, `Mips16`, `Mips I ISA`, `Mips II ISA`, `Mips32 r2 ISA`, `Mips32 r3 ISA`, `Mips32 r5 ISA`, `Mips32 r6 ISA`, `Mips III ISA`, `Mips IV ISA`, `Mips V ISA`, `Mips64 r2 ISA`, `Mips64 r3 ISA`, `Mips64 r5 ISA`, `Mips64 r6 ISA`, `Octeon (cnMIPS)`, `Octeon+ (cnMIPS+)`, `NanoMips`
+- Support added for: `NanoMips`, `microMips32r3`, `microMips32r6`, `Mips16`, `Mips I ISA`, `Mips II ISA`, `Mips32 r2 ISA`, `Mips32 r3 ISA`, `Mips32 r5 ISA`, `Mips32 r6 ISA`, `Mips III ISA`, `Mips IV ISA`, `Mips V ISA`, `Mips64 r2 ISA`, `Mips64 r3 ISA`, `Mips64 r5 ISA`, `Mips64 r6 ISA`, `Octeon (cnMIPS)`, `Octeon+ (cnMIPS+)`
 - Support for different register naming style (`CS_OPT_SYNTAX_NO_DOLLAR`, `CS_OPT_SYNTAX_NOREGNAME`)
 
 **RISCV**
@@ -290,7 +290,7 @@ Because Capstone uses a huge amount of LLVM code, we renamed everything to `AArc
 
 Because this would completely break maintaining Capstone `v6` and `pre-v6` in a project, we added compatibility headers:
 
-1. Make `arm64.h` a compatibility header which merely maps every member to the one in the `aarch64.h` header.
+1. `arm64.h` is a compatibility header now, which merely maps every member to the one in the `aarch64.h` header. Defining `CAPSTONE_AARCH64_COMPAT_HEADER` before including `capstone.h` will include the headers in the right order.
 2. The `systemz.h` header includes the `systemz_compatibility.h` header if `CAPSTONE_SYSTEMZ_COMPAT_HEADER` is defined.
 
 We will continue to maintain both headers.
@@ -419,7 +419,7 @@ They do follow loosely the ISA formats of instructions but not quite. Unfortunat
 LLV doesn't group the instruction formats perfectly aligned with the ISA.
 Nonetheless, we hope this additional information is useful to you.
 
-### Known bugs
+### Known bugs in the Alpha
 
 **Arch64**
 
