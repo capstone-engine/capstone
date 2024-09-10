@@ -438,6 +438,44 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 	printf("\n");
 }
 
+static cs_mode find_additional_modes(const char *input, cs_arch arch) {
+	if (!input) {
+		return 0;
+	}
+	cs_mode mode = 0;
+	int i, j;
+	for (i = 0; all_opts[i].name; i++) {
+		if (all_opts[i].opt || !strstr(input, all_opts[i].name)) {
+			continue;
+		}
+		for (j = 0; j < CS_ARCH_MAX; j++) {
+			if (arch == all_opts[i].archs[j]) {
+				mode |= all_opts[i].mode;
+				break;
+			}
+		}
+	}
+	return mode;
+}
+
+static void enable_additional_options(csh handle, const char *input, cs_arch arch) {
+	if (!input) {
+		return;
+	}
+	int i, j;
+	for (i = 0; all_opts[i].name; i++) {
+		if (all_opts[i].mode || !strstr(input, all_opts[i].name)) {
+			continue;
+		}
+		for (j = 0; j < CS_ARCH_MAX; j++) {
+			if (arch == all_opts[i].archs[j]) {
+				cs_option(handle, CS_OPT_SYNTAX, all_opts[i].opt);
+				break;
+			}
+		}
+	}
+}
+
 int main(int argc, char **argv)
 {
 	int i, c;
