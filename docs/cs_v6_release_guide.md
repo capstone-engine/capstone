@@ -114,6 +114,7 @@ Nonetheless, we hope this additional information is useful to you.
 | `writeback` | `writeback` member was moved to detail. | More architectures need a `writeback` flag. This is a simplification. | None. |
 | Register alias | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. | Mimic LLVM as close as possible. | Enable `CS_OPT_SYNTAX_CS_REG_ALIAS` option. |
 | Immediate | Immediate values (`arm_op.imm`) type changed to `int64_t` | Prevent loss of precision in some cases. | None. |
+| `mem.lshift` | The `mem.lshift` field was removed. It was not set properly before and just duplicates information in `shift` | Remove faulty and duplicate code. | None. |
 
 **PPC**
 

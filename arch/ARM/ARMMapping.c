@@ -1019,7 +1019,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_Operand:
 		if (op_type == CS_OP_IMM) {
 			if (doing_mem(MI)) {
-				ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+				ARM_set_detail_op_mem(MI, OpNum, false, 0,
 						      MCInst_getOpVal(MI,
 								      OpNum));
 			} else {
@@ -1033,7 +1033,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				bool is_index_reg = map_get_op_type(MI, OpNum) &
 						    CS_OP_MEM;
 				ARM_set_detail_op_mem(
-					MI, OpNum, is_index_reg, is_index_reg ? 1 : 0, 0,
+					MI, OpNum, is_index_reg, is_index_reg ? 1 : 0,
 					MCInst_getOpVal(MI, OpNum));
 			} else {
 				ARM_set_detail_op_reg(
@@ -1053,7 +1053,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_AddrMode6Operand:
 		if (!doing_mem(MI))
 			ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
 		ARM_get_detail_op(MI, 0)->mem.align =
 			MCInst_getOpVal(MI, OpNum + 1) << 3;
@@ -1069,7 +1069,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_AddrMode7Operand:
 		if (!doing_mem(MI))
 			ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
 		ARM_set_mem_access(MI, false);
 		break;
@@ -1414,14 +1414,13 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_AddrModeTBB:
 	case ARM_OP_GROUP_AddrModeTBH:
 		ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
-		ARM_set_detail_op_mem(MI, OpNum + 1, true, 1, 0,
+		ARM_set_detail_op_mem(MI, OpNum + 1, true, 1,
 				      MCInst_getOpVal(MI, OpNum + 1));
 		if (op_group == ARM_OP_GROUP_AddrModeTBH) {
 			ARM_get_detail_op(MI, 0)->shift.type = ARM_SFT_LSL;
 			ARM_get_detail_op(MI, 0)->shift.value = 1;
-			ARM_get_detail_op(MI, 0)->mem.lshift = 1;
 		}
 		ARM_set_mem_access(MI, false);
 		break;
@@ -1432,7 +1431,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			break;
 
 		ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
 		unsigned int imm3 = MCInst_getOpVal(MI, OpNum + 2);
 		unsigned ShOff = ARM_AM_getAM2Offset(imm3);
@@ -1445,7 +1444,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			ARM_set_mem_access(MI, false);
 			break;
 		}
-		ARM_set_detail_op_mem(MI, OpNum + 1, true, subtracted == ARM_AM_sub ? -1 : 1, 0,
+		ARM_set_detail_op_mem(MI, OpNum + 1, true, subtracted == ARM_AM_sub ? -1 : 1,
 				      MCInst_getOpVal(MI, OpNum + 1));
 		add_cs_detail_RegImmShift(MI, ARM_AM_getAM2ShiftOpc(imm3),
 					  ARM_AM_getAM2Offset(imm3));
@@ -1499,7 +1498,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			break;
 
 		ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
 		unsigned ImmOffs = MCInst_getOpVal(MI, OpNum + 1);
 		if (ImmOffs) {
@@ -1519,7 +1518,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				Scale = 4;
 				break;
 			}
-			ARM_set_detail_op_mem(MI, OpNum + 1, false, 0, 0,
+			ARM_set_detail_op_mem(MI, OpNum + 1, false, 0,
 					      ImmOffs * Scale);
 		}
 		ARM_set_mem_access(MI, false);
@@ -1532,11 +1531,11 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			break;
 
 		ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
 		arm_reg RegNum = MCInst_getOpVal(MI, OpNum + 1);
 		if (RegNum)
-			ARM_set_detail_op_mem(MI, OpNum + 1, true, 1, 0,
+			ARM_set_detail_op_mem(MI, OpNum + 1, true, 1,
 					      RegNum);
 		ARM_set_mem_access(MI, false);
 		break;
@@ -1558,9 +1557,9 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		if (!doing_mem(MI))
 			ARM_set_mem_access(MI, true);
 
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
-		ARM_set_detail_op_mem(MI, OpNum + 1, true, 1, 0,
+		ARM_set_detail_op_mem(MI, OpNum + 1, true, 1,
 				      MCInst_getOpVal(MI, OpNum + 1));
 		unsigned ShAmt = MCInst_getOpVal(MI, OpNum + 2);
 		if (ShAmt) {
@@ -1572,11 +1571,11 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	}
 	case ARM_OP_GROUP_T2AddrModeImm0_1020s4Operand:
 		ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
 		int64_t Imm0_1024s4 = MCInst_getOpVal(MI, OpNum + 1);
 		if (Imm0_1024s4)
-			ARM_set_detail_op_mem(MI, OpNum + 1, false, 0, 0,
+			ARM_set_detail_op_mem(MI, OpNum + 1, false, 0,
 					      Imm0_1024s4 * 4);
 		ARM_set_mem_access(MI, false);
 		break;
@@ -1735,12 +1734,12 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_T2AddrModeImm8Operand_1: {
 		bool AlwaysPrintImm0 = temp_arg_0;
 		ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
 		int32_t Imm8 = MCInst_getOpVal(MI, OpNum + 1);
 		if (Imm8 == INT32_MIN)
 			Imm8 = 0;
-		ARM_set_detail_op_mem(MI, OpNum + 1, false, 0, 0, Imm8);
+		ARM_set_detail_op_mem(MI, OpNum + 1, false, 0, Imm8);
 		if (AlwaysPrintImm0)
 			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
 
@@ -1765,7 +1764,7 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 			break;
 
 		ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
 
 		MCOperand *MO2 = MCInst_getOperand(MI, OpNum + 1);
@@ -1773,7 +1772,7 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 			ARM_AM_getAM3Op(MCInst_getOpVal(MI, OpNum + 2));
 
 		if (MCOperand_getReg(MO2)) {
-			ARM_set_detail_op_mem(MI, OpNum + 1, true, Sign == ARM_AM_sub ? -1 : 1, 0,
+			ARM_set_detail_op_mem(MI, OpNum + 1, true, Sign == ARM_AM_sub ? -1 : 1,
 					      MCInst_getOpVal(MI, OpNum + 1));
 			ARM_get_detail_op(MI, 0)->subtracted = Sign ==
 							       ARM_AM_sub;
@@ -1784,7 +1783,7 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 			ARM_AM_getAM3Offset(MCInst_getOpVal(MI, OpNum + 2));
 
 		if (AlwaysPrintImm0 || ImmOffs || Sign == ARM_AM_sub) {
-			ARM_set_detail_op_mem(MI, OpNum + 2, false, 0, 0,
+			ARM_set_detail_op_mem(MI, OpNum + 2, false, 0,
 					      ImmOffs);
 			ARM_get_detail_op(MI, 0)->subtracted = Sign ==
 							       ARM_AM_sub;
@@ -1831,9 +1830,9 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_MveAddrModeRQOperand_3: {
 		unsigned Shift = temp_arg_0;
 		ARM_set_mem_access(MI, true);
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
-		ARM_set_detail_op_mem(MI, OpNum + 1, true, 1, 0,
+		ARM_set_detail_op_mem(MI, OpNum + 1, true, 1,
 				      MCInst_getOpVal(MI, OpNum + 1));
 		if (Shift > 0) {
 			add_cs_detail_RegImmShift(MI, ARM_AM_uxtw, Shift);
@@ -2037,9 +2036,9 @@ void ARM_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val,
 	}
 
 	if ((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_IMM)
-		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0, Val);
+		ARM_set_detail_op_mem(MI, OpNum, false, 0, Val);
 	else if ((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG)
-		ARM_set_detail_op_mem(MI, OpNum, true, subtracted ? -1 : 1, 0, Val);
+		ARM_set_detail_op_mem(MI, OpNum, true, subtracted ? -1 : 1, Val);
 	else
 		assert(0 && "Memory type incorrect.");
 	ARM_get_detail_op(MI, 0)->subtracted = subtracted;
@@ -2051,7 +2050,7 @@ void ARM_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val,
 /// Adds a memory ARM operand at position OpNum. op_count is *not* increased by
 /// one. This is done by ARM_set_mem_access().
 void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
-			   int scale, int lshift, uint64_t Val)
+			   int scale, uint64_t Val)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -2084,7 +2083,6 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 			ARM_get_detail_op(MI, 0)->mem.index = Val;
 		}
 		ARM_get_detail_op(MI, 0)->mem.scale = scale;
-		ARM_get_detail_op(MI, 0)->mem.lshift = lshift;
 
 		break;
 	}
