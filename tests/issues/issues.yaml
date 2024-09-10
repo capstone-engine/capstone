@@ -5031,3 +5031,30 @@ test_cases:
                 vas: AARCH64LAYOUT_VL_D
           regs_read: [ za0.d, za1.d, za2.d, za3.d, za4.d, za5.d, za6.d, za7.d ]
           groups: [ HasSME ]
+
+  -
+    input:
+      address: 0x0
+      name: "issue 2382"
+      bytes: [ 0x42, 0x40 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_THUMB, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "rsbs r0, r0, #0"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: ARM_OP_IMM
+                imm: 0
+                access: CS_AC_READ

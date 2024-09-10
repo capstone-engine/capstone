@@ -277,7 +277,7 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 	case ARM_VCMPEZS:
 	case ARM_VCMPZH:
 	case ARM_VCMPZS:
-		ARM_insert_detail_op_imm_at(MI, 1, 0, CS_AC_READ);
+		ARM_insert_detail_op_imm_at(MI, -1, 0, CS_AC_READ);
 		break;
 	case ARM_MVE_VSHLL_lws16bh:
 	case ARM_MVE_VSHLL_lws16th:
@@ -1929,24 +1929,20 @@ void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
 	add_cs_detail_general(MI, op_group, op_num);
 }
 
-/// Inserts a register to the detail operands at @index.
-/// Already present operands are moved.
-void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
-				 cs_ac_type access)
+static void insert_op(MCInst *MI, unsigned index, cs_arm_op op)
 {
-	if (!detail_is_set(MI))
+	if (!detail_is_set(MI)) {
 		return;
-
+	}
 	ARM_check_safe_inc();
-
-	cs_arm_op op;
-	ARM_setup_op(&op);
-	op.type = ARM_OP_REG;
-	op.reg = Reg;
-	op.access = access;
 
 	cs_arm_op *ops = ARM_get_detail(MI)->operands;
 	int i = ARM_get_detail(MI)->op_count;
+	if (index == -1) {
+		ops[i] = op;
+		ARM_inc_op_count(MI);
+		return;
+	}
 	for (; i > 0 && i > index; --i) {
 		ops[i] = ops[i - 1];
 	}
@@ -1954,8 +1950,26 @@ void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
 	ARM_inc_op_count(MI);
 }
 
+/// Inserts a register to the detail operands at @index.
+/// Already present operands are moved.
+/// If @index is -1 the operand is appended.
+void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
+				 cs_ac_type access)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	cs_arm_op op;
+	ARM_setup_op(&op);
+	op.type = ARM_OP_REG;
+	op.reg = Reg;
+	op.access = access;
+	insert_op(MI, index, op);
+}
+
 /// Inserts a immediate to the detail operands at @index.
 /// Already present operands are moved.
+/// If @index is -1 the operand is appended.
 void ARM_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 				 cs_ac_type access)
 {
@@ -1969,13 +1983,7 @@ void ARM_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 	op.imm = Val;
 	op.access = access;
 
-	cs_arm_op *ops = ARM_get_detail(MI)->operands;
-	int i = ARM_get_detail(MI)->op_count;
-	for (; i > 0 && i > index; --i) {
-		ops[i] = ops[i - 1];
-	}
-	ops[index] = op;
-	ARM_inc_op_count(MI);
+	insert_op(MI, index, op);
 }
 
 /// Adds a register ARM operand at position OpNum and increases the op_count by
