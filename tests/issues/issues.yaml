@@ -3651,7 +3651,7 @@ test_cases:
                 type: ARM_OP_MEM
                 mem_base: r1
                 mem_index: r3
-                mem_scale: 0
+                mem_scale: -1
                 access: CS_AC_READ
                 subtracted: 1
           regs_read: [ r1, r3 ]
@@ -4090,7 +4090,7 @@ test_cases:
                 type: ARM_OP_MEM
                 mem_base: r2
                 mem_index: r3
-                mem_scale: 0
+                mem_scale: 1
                 shift_type: ARM_SFT_LSL
                 shift_value: 2
           regs_read: [ r2, r3 ]
