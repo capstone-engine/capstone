@@ -5058,3 +5058,51 @@ test_cases:
                 type: ARM_OP_IMM
                 imm: 0
                 access: CS_AC_READ
+  -
+    input:
+      address: 0x0
+      name: "issue 2281 - Negative memory index register scale not set"
+      bytes: [ 0x02, 0x00, 0x11, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ldr	r0, [r1, -r2]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r1
+                mem_index: r2
+                mem_scale: -1
+                access: CS_AC_READ
+  -
+    input:
+      address: 0x0
+      name: "issue 2281 - Positive memory index register scale not set"
+      bytes: [ 0x02, 0x00, 0x91, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ldr	r0, [r1, r2]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r1
+                mem_index: r2
+                mem_scale: 1
+                access: CS_AC_READ

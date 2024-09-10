@@ -841,7 +841,7 @@ typedef enum arm_reg {
 typedef struct arm_op_mem {
 	arm_reg base;	///< base register
 	arm_reg index;	///< index register
-	int scale;	///< scale for index register (can be 1, or -1)
+	int scale;	///< scale for index register. Can be 1 if index reg is added, -1 if it is subtracted or 0 if unset.
 	int disp;	///< displacement/offset value
 	/// left-shift on index register, or 0 if irrelevant
 	/// NOTE: this value can also be fetched via operand.shift.value

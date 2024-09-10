@@ -1033,7 +1033,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				bool is_index_reg = map_get_op_type(MI, OpNum) &
 						    CS_OP_MEM;
 				ARM_set_detail_op_mem(
-					MI, OpNum, is_index_reg, 0, 0,
+					MI, OpNum, is_index_reg, is_index_reg ? 1 : 0, 0,
 					MCInst_getOpVal(MI, OpNum));
 			} else {
 				ARM_set_detail_op_reg(
@@ -1416,7 +1416,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		ARM_set_mem_access(MI, true);
 		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
 				      MCInst_getOpVal(MI, OpNum));
-		ARM_set_detail_op_mem(MI, OpNum + 1, true, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum + 1, true, 1, 0,
 				      MCInst_getOpVal(MI, OpNum + 1));
 		if (op_group == ARM_OP_GROUP_AddrModeTBH) {
 			ARM_get_detail_op(MI, 0)->shift.type = ARM_SFT_LSL;
@@ -1439,16 +1439,13 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		ARM_AM_AddrOpc subtracted = ARM_AM_getAM2Op(imm3);
 		if (!MCOperand_getReg(MCInst_getOperand(MI, OpNum + 1)) &&
 		    ShOff) {
-			ARM_get_detail_op(MI, 0)->shift.type =
-				(arm_shifter)subtracted;
 			ARM_get_detail_op(MI, 0)->shift.value = ShOff;
 			ARM_get_detail_op(MI, 0)->subtracted = subtracted ==
 							       ARM_AM_sub;
 			ARM_set_mem_access(MI, false);
 			break;
 		}
-		ARM_get_detail_op(MI, 0)->shift.type = subtracted == ARM_AM_sub;
-		ARM_set_detail_op_mem(MI, OpNum + 1, true, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum + 1, true, subtracted == ARM_AM_sub ? -1 : 1, 0,
 				      MCInst_getOpVal(MI, OpNum + 1));
 		add_cs_detail_RegImmShift(MI, ARM_AM_getAM2ShiftOpc(imm3),
 					  ARM_AM_getAM2Offset(imm3));
@@ -1539,7 +1536,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				      MCInst_getOpVal(MI, OpNum));
 		arm_reg RegNum = MCInst_getOpVal(MI, OpNum + 1);
 		if (RegNum)
-			ARM_set_detail_op_mem(MI, OpNum + 1, true, 0, 0,
+			ARM_set_detail_op_mem(MI, OpNum + 1, true, 1, 0,
 					      RegNum);
 		ARM_set_mem_access(MI, false);
 		break;
@@ -1563,7 +1560,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 
 		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
 				      MCInst_getOpVal(MI, OpNum));
-		ARM_set_detail_op_mem(MI, OpNum + 1, true, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum + 1, true, 1, 0,
 				      MCInst_getOpVal(MI, OpNum + 1));
 		unsigned ShAmt = MCInst_getOpVal(MI, OpNum + 2);
 		if (ShAmt) {
@@ -1776,7 +1773,7 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 			ARM_AM_getAM3Op(MCInst_getOpVal(MI, OpNum + 2));
 
 		if (MCOperand_getReg(MO2)) {
-			ARM_set_detail_op_mem(MI, OpNum + 1, true, 0, 0,
+			ARM_set_detail_op_mem(MI, OpNum + 1, true, Sign == ARM_AM_sub ? -1 : 1, 0,
 					      MCInst_getOpVal(MI, OpNum + 1));
 			ARM_get_detail_op(MI, 0)->subtracted = Sign ==
 							       ARM_AM_sub;
@@ -1836,7 +1833,7 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 		ARM_set_mem_access(MI, true);
 		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0,
 				      MCInst_getOpVal(MI, OpNum));
-		ARM_set_detail_op_mem(MI, OpNum + 1, true, 0, 0,
+		ARM_set_detail_op_mem(MI, OpNum + 1, true, 1, 0,
 				      MCInst_getOpVal(MI, OpNum + 1));
 		if (Shift > 0) {
 			add_cs_detail_RegImmShift(MI, ARM_AM_uxtw, Shift);
@@ -2042,7 +2039,7 @@ void ARM_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val,
 	if ((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_IMM)
 		ARM_set_detail_op_mem(MI, OpNum, false, 0, 0, Val);
 	else if ((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG)
-		ARM_set_detail_op_mem(MI, OpNum, true, 0, 0, Val);
+		ARM_set_detail_op_mem(MI, OpNum, true, subtracted ? -1 : 1, 0, Val);
 	else
 		assert(0 && "Memory type incorrect.");
 	ARM_get_detail_op(MI, 0)->subtracted = subtracted;

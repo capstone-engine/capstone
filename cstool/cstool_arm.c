@@ -54,7 +54,7 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 				if (op->mem.index != ARM_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.index));
-				if (op->mem.scale != 1)
+				if (op->mem.scale != 0)
 					printf("\t\t\toperands[%u].mem.scale: %d\n", i, op->mem.scale);
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
