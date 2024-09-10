@@ -624,7 +624,8 @@ test_cases:
                 access: CS_AC_WRITE
             post_indexed: -1
           writeback: 1
-          regs_write: [ r11, r15 ]
+          regs_read: [ r13 ]
+          regs_write: [ r13, r11, r15 ]
       -
         asm_text: "tbb [r1, r0]"
         details:

@@ -249,7 +249,7 @@ test_cases:
           mnemonic: "pop.w"
           op_str: "{r11, pc}"
           details:
-            groups: [ IsThumb2, jump ]
+            groups: [ IsThumb2, return, jump ]
         -
           asm_text: "tbb [r1, r0]"
           mnemonic: "tbb"
@@ -309,7 +309,7 @@ test_cases:
           mnemonic: "mrs"
           op_str: "x9, MIDR_EL1"
           details:
-            regs_impl_write: [ nzcv ]
+            regs_impl_write: []
             groups: [ privilege ]
         -
           asm_text: "msr SPSel, #0"

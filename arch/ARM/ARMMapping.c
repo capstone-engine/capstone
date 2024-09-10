@@ -171,6 +171,7 @@ static void check_pop_return(MCInst *MI) {
 		cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
 		if (op->type == ARM_OP_REG && op->reg == ARM_REG_PC) {
 			add_group(MI, ARM_GRP_RET);
+			return;
 		}
 	}
 }
@@ -225,7 +226,12 @@ static void add_alias_details(MCInst *MI) {
 		return;
 	case ARM_INS_ALIAS_POP:
 		// Doesn't get set because memop is not printed.
-		ARM_get_detail(MI)->post_index = true;
+		if (ARM_get_detail(MI)->op_count == 1) {
+			CS_ASSERT(MI->flat_insn->usesAliasDetails && "Not valid assumption for non alias details.");
+			// Only single register pop is post-indexed
+			// Assumes only alias details are passed here.
+			ARM_get_detail(MI)->post_index = true;
+		}
 		// fallthrough
 	case ARM_INS_ALIAS_PUSH:
 	case ARM_INS_ALIAS_VPUSH:
