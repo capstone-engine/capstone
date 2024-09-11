@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS1" ]
+    expected:
+      insns:
+        -
+          asm_text: "nop"

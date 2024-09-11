@@ -167,6 +167,53 @@ sed -i "s|detail->arm64|detail->aarch64|g" $1
 
 Write it into `rename_arm64.sh` and run it on files with `sh rename_arm64.sh <src-file>`
 
+
+**Mips**
+
+| Keyword | Change | Justification | Possible revert |
+|---------|--------|---------------|-----------------|
+| `CS_OPT_SYNTAX_NO_DOLLAR` | Adds options which removes the `$` (dollar sign) from the register name. | New Feature | Enable option. |
+| `CS_OPT_SYNTAX_NOREGNAME` | Implements the options to output raw register numbers (only the standard GPR are numeric). | Was not implemented | Enable option. |
+| `cs_mips_op.uimm` | Access for the unsigned immediate value of the IMM operand. | Was missing | None. |
+| `cs_mips_op.is_unsigned` | Defines if the IMM operand is signed (when false) or unsigned (when true). | Was missing | None. |
+| `cs_mips_op.is_reglist` | Defines if the REG operand is part of a list of registers. | Was missing | None. |
+| `cs_mips_op.access` | Defines how is this operand accessed, i.e. READ, WRITE or READ & WRITE. | Was missing | None. |
+
+**Note about AArch64**
+
+in `capstone.h` new mips ISA has been added which can be used by themselves.
+
+```
+	CS_MODE_MIPS16 = CS_MODE_16, ///< Generic mips16
+	CS_MODE_MIPS32 = CS_MODE_32, ///< Generic mips32
+	CS_MODE_MIPS64 = CS_MODE_64, ///< Generic mips64
+	CS_MODE_MICRO = 1 << 4, ///< microMips
+	CS_MODE_MIPS1 = 1 << 5, ///< Mips I ISA Support
+	CS_MODE_MIPS2 = 1 << 6, ///< Mips II ISA Support
+	CS_MODE_MIPS32R2 = 1 << 7, ///< Mips32r2 ISA Support
+	CS_MODE_MIPS32R3 = 1 << 8, ///< Mips32r3 ISA Support
+	CS_MODE_MIPS32R5 = 1 << 9, ///< Mips32r5 ISA Support
+	CS_MODE_MIPS32R6 = 1 << 10, ///< Mips32r6 ISA Support
+	CS_MODE_MIPS3 = 1 << 11, ///< MIPS III ISA Support
+	CS_MODE_MIPS4 = 1 << 12, ///< MIPS IV ISA Support
+	CS_MODE_MIPS5 = 1 << 13, ///< MIPS V ISA Support
+	CS_MODE_MIPS64R2 = 1 << 14, ///< Mips64r2 ISA Support
+	CS_MODE_MIPS64R3 = 1 << 15, ///< Mips64r3 ISA Support
+	CS_MODE_MIPS64R5 = 1 << 16, ///< Mips64r5 ISA Support
+	CS_MODE_MIPS64R6 = 1 << 17, ///< Mips64r6 ISA Support
+	CS_MODE_OCTEON = 1 << 18, ///< Octeon cnMIPS Support
+	CS_MODE_OCTEONP = 1 << 19, ///< Octeon+ cnMIPS Support
+	CS_MODE_NANOMIPS = 1 << 20, ///< Generic nanomips 
+	CS_MODE_NMS1 = ((1 << 21) | CS_MODE_NANOMIPS), ///< nanoMips NMS1
+	CS_MODE_I7200 = ((1 << 22) | CS_MODE_NANOMIPS), ///< nanoMips I7200
+	CS_MODE_MICRO32R3 = (CS_MODE_MICRO | CS_MODE_MIPS32R3), ///< microMips32r3
+	CS_MODE_MICRO32R6 = (CS_MODE_MICRO | CS_MODE_MIPS32R6), ///< microMips32r6
+```
+
+It is also possible to disable floating point support by adding `CS_MODE_MIPS_NOFLOAT`.
+
+**`CS_MODE_MIPS_PTR64` is now required to decode 64-bit pointers**, like jumps and calls (for example: `jal $t0`).
+
 ## New features
 
 These features are only supported by `auto-sync`-enabled architectures.
@@ -250,3 +297,47 @@ Nonetheless, an alias should never be **decoded** as real instruction.
 
 If you find an alias which is decoded as a real instruction, please let us know.
 Such an instruction is ill-defined in LLVM and should be fixed upstream.
+
+### Refactoring of cstool
+
+`cstool` has been refactored to simplify its usage; before you needed to add extra options in the C code to enable features and recompile, but now you can easily decode instructions with different syntaxes or options, by appending after the arch one of the followings values:
+
+```
++att         ATT syntax (only: x86)
++intel       Intel syntax (only: x86)
++masm        Intel MASM syntax (only: x86)
++noregname   Number only registers (only: Arm64, ARM, LoongArch, Mips, PowerPC)
++moto        Use $ as hex prefix (only: MOS65XX)
++regalias    Use register aliases, like r9 > sb (only: ARM, Arm64)
++percentage  Adds % in front of the registers (only: PowerPC)
++nodollar    Removes $ in front of the registers (only: Mips)
++nofloat     Disables floating point support (only: Mips)
++ptr64       Enables 64-bit pointers support (only: Mips)
+```
+
+For example:
+```
+$ cstool -s ppc32+percentage 0c100097
+ 0  0c 10 00 97  stwu   %r24, 0x100c(0)
+$ cstool -s ppc32 0c100097
+ 0  0c 10 00 97  stwu   r24, 0x100c(0)
+$ cstool -s x32+att 0c1097
+ 0  0c 10        orb    $0x10, %al
+ 2  97           xchgl  %eax, %edi
+$ cstool -s x32+intel 0c1097
+ 0  0c 10        or     al, 0x10
+ 2  97           xchg   edi, eax
+$ cstool -s x32+masm 0c1097
+ 0  0c 10        or     al, 10h
+ 2  97           xchg   edi, eax
+$ cstool -s arm+regalias 0c100097000000008fa2000034213456
+ 0  0c 10 00 97  strls    r1, [r0, -ip]
+ 4  00 00 00 00  andeq    r0, r0, r0
+ 8  8f a2 00 00  andeq    sl, r0, pc, lsl #5
+10  34 21 34 56  shasxpl  r2, r4, r4
+$ cstool -s arm 0c100097000000008fa2000034213456
+ 0  0c 10 00 97  strls    r1, [r0, -r12]
+ 4  00 00 00 00  andeq    r0, r0, r0
+ 8  8f a2 00 00  andeq    r10, r0, pc, lsl #5
+10  34 21 34 56  shasxpl  r2, r4, r4
+```

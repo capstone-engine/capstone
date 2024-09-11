@@ -57,6 +57,12 @@ class Configurator:
         self.load_config()
         return self.config["General"]
 
+    def get_patch_config(self) -> dict:
+        if self.config:
+            return self.config["General"]["patching"]
+        self.load_config()
+        return self.config["General"]["patching"]
+
     def load_config(self) -> None:
         if not Path.exists(self.config_path):
             fail_exit(f"Could not load arch config file at '{self.config_path}'")

@@ -5,6 +5,29 @@
     "diff_color_saved": "yellow",
     "diff_color_edited": "light_magenta",
     "patch_editor": "vim",
+    "patching": {
+      "apply_patch_only_to": {
+        "AddCSDetail": {
+          "files": [
+            "ARMInstPrinter.cpp",
+            "PPCInstPrinter.cpp",
+            "AArch64InstPrinter.cpp",
+            "LoongArchInstPrinter.cpp",
+            "MipsInstPrinter.cpp"
+          ]
+        },
+        "InlineToStaticInline": {
+          "files": [
+            "ARMAddressingModes.h"
+          ]
+        },
+        "PrintRegImmShift": {
+          "files": [
+            "ARMInstPrinter.cpp"
+          ]
+        }
+      }
+    },
     "nodes_to_diff": [
       {
         "node_type": "function_definition",
@@ -51,7 +74,7 @@
       "{LLVM_ROOT}/llvm/lib/Target/ARM/Utils/ARMBaseInfo.h"
     ]
   },
-   "PPC": {
+  "PPC": {
     "files_to_translate": [
       {
         "in": "{LLVM_ROOT}/llvm/lib/Target/PowerPC/Disassembler/PPCDisassembler.cpp",
@@ -147,7 +170,47 @@
       "{LLVM_ROOT}/llvm/lib/Target/LoongArch/Disassembler/LoongArchDisassembler.cpp",
       "{LLVM_ROOT}/llvm/lib/Target/LoongArch/MCTargetDesc/LoongArchInstPrinter.cpp"
     ],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": []
+  },
+  "Mips": {
+    "files_to_translate": [
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/Mips/Disassembler/MipsDisassembler.cpp",
+        "out": "MipsDisassembler.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/Mips/MCTargetDesc/MipsInstPrinter.cpp",
+        "out": "MipsInstPrinter.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/Mips/MCTargetDesc/MipsInstPrinter.h",
+        "out": "MipsInstPrinter.h"
+      }
+    ],
+    "files_for_template_search": [
+      "{CPP_INC_OUT_DIR}/MipsGenDisassemblerTables.inc",
+      "{LLVM_ROOT}/llvm/lib/Target/Mips/MCTargetDesc/MipsInstPrinter.cpp",
+      "{CPP_INC_OUT_DIR}/MipsGenAsmWriter.inc"
+    ],
     "templates_with_arg_deduction": [
+      "DecodeINSVE_DF",
+      "DecodeDAHIDATIMMR6",
+      "DecodeDAHIDATI",
+      "DecodeAddiGroupBranch",
+      "DecodePOP35GroupBranchMMR6",
+      "DecodeDaddiGroupBranch",
+      "DecodePOP37GroupBranchMMR6",
+      "DecodePOP65GroupBranchMMR6",
+      "DecodePOP75GroupBranchMMR6",
+      "DecodeBlezlGroupBranch",
+      "DecodeBgtzlGroupBranch",
+      "DecodeBgtzGroupBranch",
+      "DecodeBlezGroupBranch",
+      "DecodeBgtzGroupBranchMMR6",
+      "DecodeBlezGroupBranchMMR6",
+      "DecodeDINS",
+      "DecodeDEXT",
+      "DecodeCRC",
+      "isReg"
     ],
     "manually_edited_files": []
   }

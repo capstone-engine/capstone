@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0xe6, 0x00, 0x10, 0x49 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -12,7 +12,7 @@ test_cases:
     input:
       bytes: [ 0x26, 0x11, 0x67, 0x45 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -21,7 +21,7 @@ test_cases:
     input:
       bytes: [ 0x26, 0x31, 0x67, 0xc5 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -30,7 +30,7 @@ test_cases:
     input:
       bytes: [ 0x26, 0x11, 0x67, 0x45 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -39,7 +39,7 @@ test_cases:
     input:
       bytes: [ 0x26, 0x31, 0x67, 0xc5 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -48,7 +48,7 @@ test_cases:
     input:
       bytes: [ 0xe6, 0x00, 0x50, 0x49 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -57,7 +57,7 @@ test_cases:
     input:
       bytes: [ 0xe6, 0x00, 0x90, 0x49 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -66,7 +66,7 @@ test_cases:
     input:
       bytes: [ 0xa3, 0x00, 0xd0, 0x21 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -75,25 +75,25 @@ test_cases:
     input:
       bytes: [ 0xe0, 0x00, 0x90, 0x31 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
-          asm_text: "sub $a2, $zero, $a3"
+          asm_text: "neg $a2, $a3"
   -
     input:
       bytes: [ 0xe0, 0x00, 0xd0, 0x31 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
-          asm_text: "subu $a2, $zero, $a3"
+          asm_text: "negu $a2, $a3"
   -
     input:
       bytes: [ 0x08, 0x00, 0x50, 0x39 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -102,7 +102,7 @@ test_cases:
     input:
       bytes: [ 0xa3, 0x00, 0x50, 0x1b ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -111,7 +111,7 @@ test_cases:
     input:
       bytes: [ 0x63, 0x90, 0x67, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -120,7 +120,7 @@ test_cases:
     input:
       bytes: [ 0x63, 0x90, 0x67, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -129,7 +129,7 @@ test_cases:
     input:
       bytes: [ 0x63, 0xb0, 0x67, 0x00 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -138,7 +138,7 @@ test_cases:
     input:
       bytes: [ 0xa3, 0x00, 0x90, 0x1b ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -147,7 +147,7 @@ test_cases:
     input:
       bytes: [ 0xa9, 0x41, 0x67, 0x45 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -156,7 +156,7 @@ test_cases:
     input:
       bytes: [ 0xe6, 0x00, 0x50, 0x4a ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -165,7 +165,7 @@ test_cases:
     input:
       bytes: [ 0x26, 0xd1, 0x67, 0x45 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -174,7 +174,7 @@ test_cases:
     input:
       bytes: [ 0x26, 0xd1, 0x67, 0x45 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -183,7 +183,7 @@ test_cases:
     input:
       bytes: [ 0xa4, 0x00, 0x90, 0x1a ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -192,7 +192,7 @@ test_cases:
     input:
       bytes: [ 0x26, 0x51, 0x67, 0x45 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -201,7 +201,7 @@ test_cases:
     input:
       bytes: [ 0xa3, 0x00, 0x10, 0x1b ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -210,7 +210,7 @@ test_cases:
     input:
       bytes: [ 0x26, 0x71, 0x67, 0x45 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -219,7 +219,7 @@ test_cases:
     input:
       bytes: [ 0x26, 0x71, 0x67, 0x45 ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -228,7 +228,7 @@ test_cases:
     input:
       bytes: [ 0xe6, 0x00, 0xd0, 0x4a ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -237,7 +237,7 @@ test_cases:
     input:
       bytes: [ 0x08, 0x00, 0xd0, 0x3a ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -246,7 +246,7 @@ test_cases:
     input:
       bytes: [ 0xe6, 0x00, 0x10, 0x4a ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -255,7 +255,7 @@ test_cases:
     input:
       bytes: [ 0xe9, 0x00, 0x3c, 0x8b ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -264,7 +264,7 @@ test_cases:
     input:
       bytes: [ 0xe9, 0x00, 0x3c, 0x9b ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -273,7 +273,7 @@ test_cases:
     input:
       bytes: [ 0xe9, 0x00, 0x3c, 0xab ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -
@@ -282,7 +282,7 @@ test_cases:
     input:
       bytes: [ 0xe9, 0x00, 0x3c, 0xbb ]
       arch: "CS_ARCH_MIPS"
-      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
     expected:
       insns:
         -

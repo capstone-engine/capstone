@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7b, 0x06, 0x32, 0x07 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldi.b $w8, 198"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x29, 0xcd, 0x07 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldi.h $w20, 313"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x4f, 0x66, 0x07 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldi.w $w24, 492"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x7a, 0x66, 0xc7 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldi.d $w27, 844"

@@ -1,0 +1,150 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7b, 0x00, 0x4f, 0x9e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fill.b $w30, $9"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x01, 0xbf, 0xde ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fill.h $w31, $23"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x02, 0xc4, 0x1e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fill.w $w16, $24"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x08, 0x05, 0x5e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "nloc.b $w21, $w0"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x09, 0xfc, 0x9e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "nloc.h $w18, $w31"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x0a, 0xb8, 0x9e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "nloc.w $w2, $w23"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x0b, 0x51, 0x1e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "nloc.d $w4, $w10"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x0c, 0x17, 0xde ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "nlzc.b $w31, $w2"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x0d, 0xb6, 0xde ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "nlzc.h $w27, $w22"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x0e, 0xea, 0x9e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "nlzc.w $w10, $w29"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x0f, 0x4e, 0x5e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "nlzc.d $w25, $w9"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x04, 0x95, 0x1e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "pcnt.b $w20, $w18"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x05, 0x40, 0x1e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "pcnt.h $w0, $w8"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x06, 0x4d, 0xde ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "pcnt.w $w23, $w9"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x07, 0xc5, 0x5e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "pcnt.d $w21, $w24"

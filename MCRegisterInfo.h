@@ -113,4 +113,6 @@ const MCRegisterClass* MCRegisterInfo_getRegClass(const MCRegisterInfo *RI, unsi
 
 bool MCRegisterClass_contains(const MCRegisterClass *c, unsigned Reg);
 
+unsigned MCRegisterClass_getRegister(const MCRegisterClass *c, unsigned i);
+
 #endif

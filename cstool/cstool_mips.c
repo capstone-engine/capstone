@@ -27,9 +27,11 @@ void print_insn_detail_mips(csh handle, cs_insn *ins)
 				break;
 			case MIPS_OP_REG:
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].is_reglist: %s\n", i, op->is_reglist ? "true" : "false");
 				break;
 			case MIPS_OP_IMM:
 				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
+				printf("\t\toperands[%u].is_unsigned: %s\n", i, op->is_unsigned ? "true" : "false");
 				break;
 			case MIPS_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);

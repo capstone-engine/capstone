@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x41, 0x1f, 0xf8, 0x21 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mftr $ra, $ra, 1, 1, 0"
+
+  -
+    input:
+      bytes: [ 0x41, 0x9f, 0xf8, 0x21 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mttr $ra, $ra, 1, 1, 0"
+
+  -
+    input:
+      bytes: [ 0x41, 0x0d, 0xf8, 0x26 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mftr $ra, $13, 1, 6, 0"
+
+  -
+    input:
+      bytes: [ 0x41, 0x9f, 0x68, 0x26 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mttr $ra, $13, 1, 6, 0"

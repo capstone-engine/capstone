@@ -1,0 +1,150 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0x00, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "bovc $2, $zero, 12"
+
+  -
+    input:
+      bytes: [ 0x20, 0x82, 0x00, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "bovc $4, $2, 12"
+
+  -
+    input:
+      bytes: [ 0x60, 0x40, 0x00, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnvc $2, $zero, 12"
+
+  -
+    input:
+      bytes: [ 0x60, 0x82, 0x00, 0x02 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnvc $4, $2, 12"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0x00, 0x41 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "bovc $6, $zero, 264"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x00, 0x41 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "bovc $5, $zero, 264"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa6, 0x00, 0x41 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "beqc $5, $6, 264"
+
+  -
+    input:
+      bytes: [ 0x60, 0xc0, 0x00, 0x41 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnvc $6, $zero, 264"
+
+  -
+    input:
+      bytes: [ 0x60, 0xa0, 0x00, 0x41 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnvc $5, $zero, 264"
+
+  -
+    input:
+      bytes: [ 0x60, 0xa6, 0x00, 0x41 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnec $5, $6, 264"
+
+  -
+    input:
+      bytes: [ 0x64, 0x58, 0x46, 0x9f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "daddiu $24, $2, 18079"
+
+  -
+    input:
+      bytes: [ 0x66, 0x73, 0x69, 0x3f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "daddiu $19, $19, 26943"
+
+  -
+    input:
+      bytes: [ 0x65, 0x6f, 0xec, 0x5f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "daddiu $15, $11, -5025"
+
+  -
+    input:
+      bytes: [ 0x65, 0xce, 0x11, 0xea ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "daddiu $14, $14, 4586"
+
+  -
+    input:
+      bytes: [ 0x04, 0x7e, 0xab, 0xcd ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "dati $3, $3, 43981"

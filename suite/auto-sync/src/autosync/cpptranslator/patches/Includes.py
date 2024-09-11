@@ -64,6 +64,8 @@ class Includes(Patch):
                 return res + get_AArch64_includes(filename) + get_general_macros()
             case "LoongArch":
                 return res + get_LoongArch_includes(filename) + get_general_macros()
+            case "Mips":
+                return res + get_Mips_includes(filename) + get_general_macros()
             case "TEST_ARCH":
                 return res + b"test_output"
             case _:
@@ -291,6 +293,43 @@ def get_LoongArch_includes(filename: str) -> bytes:
                 b'#include "../../MCInstPrinter.h"\n' + b'#include "../../cs_priv.h"\n'
             )
     log.fatal(f"No includes given for LoongArch source file: {filename}")
+    exit(1)
+
+
+def get_Mips_includes(filename: str) -> bytes:
+    match filename:
+        case "MipsDisassembler.cpp":
+            return (
+                b'#include "../../MCInst.h"\n'
+                + b'#include "../../MathExtras.h"\n'
+                + b'#include "../../MCInstPrinter.h"\n'
+                + b'#include "../../MCDisassembler.h"\n'
+                + b'#include "../../MCFixedLenDisassembler.h"\n'
+                + b'#include "../../cs_priv.h"\n'
+                + b'#include "../../utils.h"\n'
+                + b"#define GET_SUBTARGETINFO_ENUM\n"
+                + b'#include "MipsGenSubtargetInfo.inc"\n\n'
+                + b"#define GET_INSTRINFO_ENUM\n"
+                + b'#include "MipsGenInstrInfo.inc"\n\n'
+                + b"#define GET_REGINFO_ENUM\n"
+                + b'#include "MipsGenRegisterInfo.inc"\n\n'
+            )
+        case "MipsInstPrinter.cpp":
+            return (
+                b'#include "MipsMapping.h"\n'
+                + b'#include "MipsInstPrinter.h"\n\n'
+                + b"#define GET_SUBTARGETINFO_ENUM\n"
+                + b'#include "MipsGenSubtargetInfo.inc"\n\n'
+                + b"#define GET_INSTRINFO_ENUM\n"
+                + b'#include "MipsGenInstrInfo.inc"\n\n'
+                + b"#define GET_REGINFO_ENUM\n"
+                + b'#include "MipsGenRegisterInfo.inc"\n\n'
+            )
+        case "MipsInstPrinter.h":
+            return (
+                b'#include "../../MCInstPrinter.h"\n' + b'#include "../../cs_priv.h"\n'
+            )
+    log.fatal(f"No includes given for Mips source file: {filename}")
     exit(1)
 
 

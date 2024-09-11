@@ -382,32 +382,16 @@ class Translator:
 
     def apply_patch(self, patch: Patch) -> bool:
         """Tests if the given patch should be applied for the current architecture or file."""
-        has_apply_only = (
-            len(patch.apply_only_to["files"]) > 0
-            or len(patch.apply_only_to["archs"]) > 0
-        )
-        has_do_not_apply = (
-            len(patch.do_not_apply["files"]) > 0 or len(patch.do_not_apply["archs"]) > 0
-        )
-
-        if not (has_apply_only or has_do_not_apply):
-            # Lists empty.
+        apply_only_to = self.configurator.get_patch_config()["apply_patch_only_to"]
+        patch_name = patch.__class__.__name__
+        if patch_name not in apply_only_to:
+            # No constraints
             return True
 
-        if has_apply_only:
-            if self.arch in patch.apply_only_to["archs"]:
-                return True
-            elif self.current_src_path_in.name in patch.apply_only_to["files"]:
-                return True
-            return False
-        elif has_do_not_apply:
-            if self.arch in patch.do_not_apply["archs"]:
-                return False
-            elif self.current_src_path_in.name in patch.do_not_apply["files"]:
-                return False
+        file_constraints = apply_only_to[patch_name]
+        if self.current_src_path_in.name in file_constraints["files"]:
             return True
-        log.fatal("Logical error.")
-        exit(1)
+        return False
 
     def translate(self) -> None:
         for self.current_src_path_in, self.current_src_path_out in zip(

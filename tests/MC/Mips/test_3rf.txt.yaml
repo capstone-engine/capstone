@@ -1,0 +1,820 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x78, 0x1c, 0x9f, 0x1b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd.w $w28, $w19, $w28"
+
+  -
+    input:
+      bytes: [ 0x78, 0x3d, 0x13, 0x5b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd.d $w13, $w2, $w29"
+
+  -
+    input:
+      bytes: [ 0x78, 0x19, 0x5b, 0x9a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcaf.w $w14, $w11, $w25"
+
+  -
+    input:
+      bytes: [ 0x78, 0x33, 0x08, 0x5a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcaf.d $w1, $w1, $w19"
+
+  -
+    input:
+      bytes: [ 0x78, 0x90, 0xb8, 0x5a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fceq.w $w1, $w23, $w16"
+
+  -
+    input:
+      bytes: [ 0x78, 0xb0, 0x40, 0x1a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fceq.d $w0, $w8, $w16"
+
+  -
+    input:
+      bytes: [ 0x79, 0x98, 0x4c, 0x1a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcle.w $w16, $w9, $w24"
+
+  -
+    input:
+      bytes: [ 0x79, 0xa1, 0x76, 0xda ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcle.d $w27, $w14, $w1"
+
+  -
+    input:
+      bytes: [ 0x79, 0x08, 0x47, 0x1a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclt.w $w28, $w8, $w8"
+
+  -
+    input:
+      bytes: [ 0x79, 0x2b, 0xcf, 0x9a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclt.d $w30, $w25, $w11"
+
+  -
+    input:
+      bytes: [ 0x78, 0xd7, 0x90, 0x9c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcne.w $w2, $w18, $w23"
+
+  -
+    input:
+      bytes: [ 0x78, 0xef, 0xa3, 0x9c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcne.d $w14, $w20, $w15"
+
+  -
+    input:
+      bytes: [ 0x78, 0x59, 0x92, 0x9c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcor.w $w10, $w18, $w25"
+
+  -
+    input:
+      bytes: [ 0x78, 0x6b, 0xcc, 0x5c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcor.d $w17, $w25, $w11"
+
+  -
+    input:
+      bytes: [ 0x78, 0xd5, 0x13, 0x9a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcueq.w $w14, $w2, $w21"
+
+  -
+    input:
+      bytes: [ 0x78, 0xe7, 0x1f, 0x5a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcueq.d $w29, $w3, $w7"
+
+  -
+    input:
+      bytes: [ 0x79, 0xc3, 0x2c, 0x5a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcule.w $w17, $w5, $w3"
+
+  -
+    input:
+      bytes: [ 0x79, 0xfe, 0x0f, 0xda ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcule.d $w31, $w1, $w30"
+
+  -
+    input:
+      bytes: [ 0x79, 0x49, 0xc9, 0x9a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcult.w $w6, $w25, $w9"
+
+  -
+    input:
+      bytes: [ 0x79, 0x71, 0x46, 0xda ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcult.d $w27, $w8, $w17"
+
+  -
+    input:
+      bytes: [ 0x78, 0x48, 0xa1, 0x1a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcun.w $w4, $w20, $w8"
+
+  -
+    input:
+      bytes: [ 0x78, 0x63, 0x5f, 0x5a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcun.d $w29, $w11, $w3"
+
+  -
+    input:
+      bytes: [ 0x78, 0x93, 0x93, 0x5c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcune.w $w13, $w18, $w19"
+
+  -
+    input:
+      bytes: [ 0x78, 0xb5, 0xd4, 0x1c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcune.d $w16, $w26, $w21"
+
+  -
+    input:
+      bytes: [ 0x78, 0xc2, 0xc3, 0x5b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdiv.w $w13, $w24, $w2"
+
+  -
+    input:
+      bytes: [ 0x78, 0xf9, 0x24, 0xdb ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdiv.d $w19, $w4, $w25"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x10, 0x02, 0x1b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fexdo.h $w8, $w0, $w16"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x3b, 0x68, 0x1b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fexdo.w $w0, $w13, $w27"
+
+  -
+    input:
+      bytes: [ 0x79, 0xc3, 0x04, 0x5b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fexp2.w $w17, $w0, $w3"
+
+  -
+    input:
+      bytes: [ 0x79, 0xea, 0x05, 0x9b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fexp2.d $w22, $w0, $w10"
+
+  -
+    input:
+      bytes: [ 0x79, 0x17, 0x37, 0x5b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmadd.w $w29, $w6, $w23"
+
+  -
+    input:
+      bytes: [ 0x79, 0x35, 0xe2, 0xdb ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmadd.d $w11, $w28, $w21"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x8d, 0xb8, 0x1b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmax.w $w0, $w23, $w13"
+
+  -
+    input:
+      bytes: [ 0x7b, 0xa8, 0x96, 0x9b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmax.d $w26, $w18, $w8"
+
+  -
+    input:
+      bytes: [ 0x7b, 0xca, 0x82, 0x9b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmax_a.w $w10, $w16, $w10"
+
+  -
+    input:
+      bytes: [ 0x7b, 0xf6, 0x4f, 0x9b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmax_a.d $w30, $w9, $w22"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x1e, 0x0e, 0x1b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmin.w $w24, $w1, $w30"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x2a, 0xde, 0xdb ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmin.d $w27, $w27, $w10"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x54, 0xea, 0x9b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmin_a.w $w10, $w29, $w20"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x78, 0xf3, 0x5b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmin_a.d $w13, $w30, $w24"
+
+  -
+    input:
+      bytes: [ 0x79, 0x40, 0xcc, 0x5b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmsub.w $w17, $w25, $w0"
+
+  -
+    input:
+      bytes: [ 0x79, 0x70, 0x92, 0x1b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmsub.d $w8, $w18, $w16"
+
+  -
+    input:
+      bytes: [ 0x78, 0x8f, 0x78, 0xdb ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul.w $w3, $w15, $w15"
+
+  -
+    input:
+      bytes: [ 0x78, 0xaa, 0xf2, 0x5b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul.d $w9, $w30, $w10"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x0a, 0x2e, 0x5a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsaf.w $w25, $w5, $w10"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x3d, 0x1e, 0x5a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsaf.d $w25, $w3, $w29"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x8d, 0x8a, 0xda ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fseq.w $w11, $w17, $w13"
+
+  -
+    input:
+      bytes: [ 0x7a, 0xbf, 0x07, 0x5a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fseq.d $w29, $w0, $w31"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x9f, 0xff, 0x9a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsle.w $w30, $w31, $w31"
+
+  -
+    input:
+      bytes: [ 0x7b, 0xb8, 0xbc, 0x9a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsle.d $w18, $w23, $w24"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x06, 0x2b, 0x1a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fslt.w $w12, $w5, $w6"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x35, 0xd4, 0x1a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fslt.d $w16, $w26, $w21"
+
+  -
+    input:
+      bytes: [ 0x7a, 0xcc, 0x0f, 0x9c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsne.w $w30, $w1, $w12"
+
+  -
+    input:
+      bytes: [ 0x7a, 0xf7, 0x6b, 0x9c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsne.d $w14, $w13, $w23"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x5b, 0x6e, 0xdc ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsor.w $w27, $w13, $w27"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x6b, 0xc3, 0x1c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsor.d $w12, $w24, $w11"
+
+  -
+    input:
+      bytes: [ 0x78, 0x41, 0xd7, 0xdb ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsub.w $w31, $w26, $w1"
+
+  -
+    input:
+      bytes: [ 0x78, 0x7b, 0x8c, 0xdb ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsub.d $w19, $w17, $w27"
+
+  -
+    input:
+      bytes: [ 0x7a, 0xd9, 0xc4, 0x1a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsueq.w $w16, $w24, $w25"
+
+  -
+    input:
+      bytes: [ 0x7a, 0xee, 0x74, 0x9a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsueq.d $w18, $w14, $w14"
+
+  -
+    input:
+      bytes: [ 0x7b, 0xcd, 0xf5, 0xda ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsule.w $w23, $w30, $w13"
+
+  -
+    input:
+      bytes: [ 0x7b, 0xfa, 0x58, 0x9a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsule.d $w2, $w11, $w26"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x56, 0xd2, 0xda ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsult.w $w11, $w26, $w22"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x7e, 0xb9, 0x9a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsult.d $w6, $w23, $w30"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x5c, 0x90, 0xda ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsun.w $w3, $w18, $w28"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x73, 0x5c, 0x9a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsun.d $w18, $w11, $w19"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x82, 0xfc, 0x1c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsune.w $w16, $w31, $w2"
+
+  -
+    input:
+      bytes: [ 0x7a, 0xb1, 0xd0, 0xdc ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsune.d $w3, $w26, $w17"
+
+  -
+    input:
+      bytes: [ 0x7a, 0x98, 0x24, 0x1b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ftq.h $w16, $w4, $w24"
+
+  -
+    input:
+      bytes: [ 0x7a, 0xb9, 0x29, 0x5b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ftq.w $w5, $w5, $w25"
+
+  -
+    input:
+      bytes: [ 0x79, 0x4a, 0xa4, 0x1c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "madd_q.h $w16, $w20, $w10"
+
+  -
+    input:
+      bytes: [ 0x79, 0x69, 0x17, 0x1c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "madd_q.w $w28, $w2, $w9"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x49, 0x92, 0x1c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddr_q.h $w8, $w18, $w9"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x70, 0x67, 0x5c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddr_q.w $w29, $w12, $w16"
+
+  -
+    input:
+      bytes: [ 0x79, 0x8a, 0xd6, 0x1c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "msub_q.h $w24, $w26, $w10"
+
+  -
+    input:
+      bytes: [ 0x79, 0xbc, 0xf3, 0x5c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "msub_q.w $w13, $w30, $w28"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x8b, 0xab, 0x1c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubr_q.h $w12, $w21, $w11"
+
+  -
+    input:
+      bytes: [ 0x7b, 0xb4, 0x70, 0x5c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubr_q.w $w1, $w14, $w20"
+
+  -
+    input:
+      bytes: [ 0x79, 0x1e, 0x81, 0x9c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul_q.h $w6, $w16, $w30"
+
+  -
+    input:
+      bytes: [ 0x79, 0x24, 0x0c, 0x1c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul_q.w $w16, $w1, $w4"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x13, 0xa1, 0x9c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulr_q.h $w6, $w20, $w19"
+
+  -
+    input:
+      bytes: [ 0x7b, 0x34, 0x0e, 0xdc ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulr_q.w $w27, $w1, $w20"

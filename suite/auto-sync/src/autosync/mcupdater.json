@@ -1,10 +1,79 @@
 {
-  "additional_mattr":
-  {
-    "AArch64": [ "+all" ]
-  },
-  "mandatory_options":
-  {
-    "SystemZ": [ "CS_MODE_BIG_ENDIAN" ]
-  }
+    "additional_mattr":
+    {
+        "AArch64":
+        [
+            "+all"
+        ]
+    },
+    "mandatory_options":
+    {
+        "SystemZ":
+        [
+            "CS_MODE_BIG_ENDIAN"
+        ],
+        "Mips":
+        [
+            "CS_OPT_SYNTAX_NOREGNAME"
+        ]
+    },
+    "remove_options":
+    {
+        "Mips":
+        [
+            "mips",
+            "dsp",
+            "dspr2",
+            "dspr3",
+            "mips3d",
+            "msa",
+            "eva",
+            "crc",
+            "virt",
+            "ginv",
+            "fp64",
+            "+virt",
+            "mt"
+        ]
+    },
+    "replace_option_map":
+    {
+        "Mips":
+        {
+            "mips-unknown-linux": "CS_MODE_BIG_ENDIAN",
+            "mips-unknown-linux-gnu": "CS_MODE_BIG_ENDIAN",
+            "mips32-unknown-linux": "CS_MODE_BIG_ENDIAN",
+            "mips64-unknown-linux": "CS_MODE_BIG_ENDIAN",
+            "mips64-unknown-linux-gnu": "CS_MODE_BIG_ENDIAN",
+            "mips64el-unknown-linux": "CS_MODE_LITTLE_ENDIAN",
+            "mips64el-unknown-linux-gnu": "CS_MODE_LITTLE_ENDIAN",
+            "mipsel": "CS_MODE_LITTLE_ENDIAN",
+            "mipsel-unknown-linux": "CS_MODE_LITTLE_ENDIAN",
+            "mipsel-unknown-linux-gnu": "CS_MODE_LITTLE_ENDIAN",
+            "mips16": "CS_MODE_MIPS16",
+            "mips32": "CS_MODE_MIPS32",
+            "mips64": "CS_MODE_MIPS64",
+            "micromips": "CS_MODE_MICRO",
+            "mips1": "CS_MODE_MIPS1",
+            "mips2": "CS_MODE_MIPS2",
+            "mips32r2": "CS_MODE_MIPS32R2",
+            "mips32r3": "CS_MODE_MIPS32R3",
+            "mips32r5": "CS_MODE_MIPS32R5",
+            "mips32r6": "CS_MODE_MIPS32R6",
+            "mips3": "CS_MODE_MIPS3",
+            "mips4": "CS_MODE_MIPS4",
+            "mips5": "CS_MODE_MIPS5",
+            "mips64r2": "CS_MODE_MIPS64R2",
+            "mips64r3": "CS_MODE_MIPS64R3",
+            "mips64r5": "CS_MODE_MIPS64R5",
+            "mips64r6": "CS_MODE_MIPS64R6",
+            "octeon": "CS_MODE_OCTEON",
+            "octeon+": "CS_MODE_OCTEONP",
+            "nanomips": "CS_MODE_NANOMIPS",
+            "nms1": "CS_MODE_NMS1",
+            "i7200": "CS_MODE_I7200",
+            "mips_nofloat": "CS_MODE_MIPS_NOFLOAT",
+            "mips_ptr64": "CS_MODE_MIPS_PTR64"
+        }
+    }
 }

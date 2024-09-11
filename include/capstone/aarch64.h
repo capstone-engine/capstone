@@ -80,7 +80,7 @@ typedef enum VectorLayout {
 // Moved from AArch64BaseInfo.h
 // The CondCodes constants map directly to the 4-bit encoding of the condition
 // field for predicated instructions.
-typedef enum CondCode { // Meaning (integer)          Meaning (floating-point)
+typedef enum AArch64CondCode { // Meaning (integer) Meaning (floating-point)
 	AArch64CC_EQ = 0x0, // Equal                      Equal
 	AArch64CC_NE = 0x1, // Not equal                  Not equal, or unordered
 	AArch64CC_HS = 0x2, // Unsigned higher or same    >, ==, or unordered

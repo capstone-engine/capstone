@@ -395,7 +395,7 @@ test_cases:
     input:
       bytes: [ 0x0c, 0x10, 0x00, 0x97, 0x00, 0x00, 0x00, 0x00, 0x24, 0x02, 0x00, 0x0c, 0x8f, 0xa2, 0x00, 0x00, 0x34, 0x21, 0x34, 0x56, 0x00, 0x80, 0x04, 0x08  ]
       arch: "CS_ARCH_MIPS"
-      options: [ CS_OPT_DETAIL, CS_MODE_MIPS32, CS_MODE_BIG_ENDIAN ]
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS32R5, CS_MODE_BIG_ENDIAN ]
       address: 0x1000
     expected:
       insns:
@@ -405,36 +405,36 @@ test_cases:
           op_str: "0x40025c"
           details:
             regs_impl_write: [ ra ]
-            groups: [ stdenc ]
+            groups: [ call, HasStdEnc, NotInMicroMips, NotNanoMips ]
         -
           asm_text: "nop"
           mnemonic: "nop"
           details:
-            groups: [ stdenc, notinmicromips ]
+            groups: [ HasStdEnc, NotInMicroMips, NotNanoMips ]
         -
           asm_text: "addiu $v0, $zero, 0xc"
           mnemonic: "addiu"
           op_str: "$v0, $zero, 0xc"
           details:
-            groups: [ stdenc, notinmicromips ]
+            groups: [ HasStdEnc, NotInMicroMips, NotNanoMips ]
         -
-          asm_text: "lw $v0, ($sp)"
+          asm_text: "lw $v0, 0($sp)"
           mnemonic: "lw"
-          op_str: "$v0, ($sp)"
+          op_str: "$v0, 0($sp)"
           details:
-            groups: [ stdenc, notinmicromips ]
+            groups: [ HasStdEnc, NotInMicroMips, NotNanoMips ]
         -
           asm_text: "ori $at, $at, 0x3456"
           mnemonic: "ori"
           op_str: "$at, $at, 0x3456"
           details:
-            groups: [ stdenc ]
+            groups: [ HasStdEnc, NotInMicroMips, NotNanoMips ]
         -
           asm_text: "jr.hb $a0"
           mnemonic: "jr.hb"
           op_str: "$a0"
           details:
-            groups: [ stdenc, mips32, notmips32r6, notmips64r6, jump ]
+            groups: [ jump, HasStdEnc, HasMips32r2, NotMips32r6, NotMips64r6 ]
   -
     input:
       bytes: [ 0x56, 0x34, 0x21, 0x34, 0xc2, 0x17, 0x01, 0x00  ]
@@ -448,13 +448,13 @@ test_cases:
           mnemonic: "ori"
           op_str: "$at, $at, 0x3456"
           details:
-            groups: [ stdenc ]
+            groups: [ HasStdEnc, NotInMicroMips, NotNanoMips ]
         -
           asm_text: "srl $v0, $at, 0x1f"
           mnemonic: "srl"
           op_str: "$v0, $at, 0x1f"
           details:
-            groups: [ stdenc, notinmicromips ]
+            groups: [ HasStdEnc, NotInMicroMips, NotNanoMips ]
   -
     input:
       bytes: [ 0x00, 0x07, 0x00, 0x07, 0x00, 0x11, 0x93, 0x7c, 0x01, 0x8c, 0x8b, 0x7c, 0x00, 0xc7, 0x48, 0xd0  ]
@@ -468,25 +468,25 @@ test_cases:
           mnemonic: "break"
           op_str: "7, 0"
           details:
-            groups: [ micromips ]
+            groups: [ InMicroMips, HasMips32r6 ]
         -
           asm_text: "wait 0x11"
           mnemonic: "wait"
           op_str: "0x11"
           details:
-            groups: [ micromips ]
+            groups: [ InMicroMips, HasMips32r6 ]
         -
           asm_text: "syscall 0x18c"
           mnemonic: "syscall"
           op_str: "0x18c"
           details:
-            groups: [ micromips, int ]
+            groups: [ InMicroMips ]
         -
           asm_text: "rotrv $t1, $a2, $a3"
           mnemonic: "rotrv"
           op_str: "$t1, $a2, $a3"
           details:
-            groups: [ micromips ]
+            groups: [ InMicroMips ]
   -
     input:
       bytes: [ 0xec, 0x80, 0x00, 0x19, 0x7c, 0x43, 0x22, 0xa0  ]
@@ -496,17 +496,17 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addiupc $a0, 0x64"
-          mnemonic: "addiupc"
+          asm_text: "lapc $a0, 0x64"
+          mnemonic: "lapc"
           op_str: "$a0, 0x64"
           details:
-            groups: [ stdenc, mips32r6 ]
+            groups: [ HasStdEnc, HasMips32r6 ]
         -
           asm_text: "align $a0, $v0, $v1, 2"
           mnemonic: "align"
           op_str: "$a0, $v0, $v1, 2"
           details:
-            groups: [ stdenc, mips32r6 ]
+            groups: [ HasStdEnc, HasMips32r6 ]
   -
     input:
       bytes: [ 0x80, 0x20, 0x00, 0x00, 0x80, 0x3f, 0x00, 0x00, 0x10, 0x43, 0x23, 0x0e, 0xd0, 0x44, 0x00, 0x80, 0x4c, 0x43, 0x22, 0x02, 0x2d, 0x03, 0x00, 0x80, 0x7c, 0x43, 0x20, 0x14, 0x7c, 0x43, 0x20, 0x93, 0x4f, 0x20, 0x00, 0x21, 0x4c, 0xc8, 0x00, 0x21, 0x40, 0x82, 0x00, 0x14  ]

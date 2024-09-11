@@ -19,7 +19,6 @@ class InlineToStaticInline(Patch):
 
     def __init__(self, priority: int):
         super().__init__(priority)
-        self.apply_only_to = {"files": ["ARMAddressingModes.h"], "archs": list()}
 
     def get_search_pattern(self) -> str:
         return (

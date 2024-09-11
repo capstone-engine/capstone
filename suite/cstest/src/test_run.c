@@ -102,17 +102,18 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 	}
 
 	*mode = 0;
-	bool mode_found = false;
 	size_t opt_idx = 0;
 	char **options = input->options;
 	for (size_t i = 0; i < input->options_count; ++i) {
+		bool opt_found = false;
 		opt_str = options[i];
 		val = enum_map_bin_search(test_mode_map,
-					  ARR_SIZE(test_mode_map), opt_str,
-					  &mode_found);
-		if (mode_found) {
+						   ARR_SIZE(test_mode_map),
+						   opt_str, &opt_found);
+
+		if (opt_found) {
 			*mode |= val;
-			goto next_option;
+			continue;
 		}
 
 		// Might be an option descriptor
@@ -126,12 +127,12 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 					return false;
 				}
 				opt_arr[opt_idx++] = test_option_map[k].opt;
-				goto next_option;
+				opt_found = true;
 			}
 		}
-		fprintf(stderr, "[!] Option: '%s' not used\n", opt_str);
-next_option:
-		continue;
+		if (!opt_found) {
+			fprintf(stderr, "[!] Option: '%s' not used\n", opt_str);
+		}
 	}
 	*opt_set = opt_idx;
 	return true;
