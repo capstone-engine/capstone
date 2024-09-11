@@ -67,7 +67,9 @@ class ASUpdater:
             self.steps = steps
         self.copy_translated = copy_translated
         self.differ_no_auto_apply = differ_no_auto_apply
-        self.arch_dir = get_path("{CS_ARCH_MODULE_DIR}").joinpath(TARGET_TO_DIR_NAME[self.arch])
+        self.arch_dir = get_path("{CS_ARCH_MODULE_DIR}").joinpath(
+            TARGET_TO_DIR_NAME[self.arch]
+        )
         if not self.no_clean_build:
             self.clean_build_dir()
         self.inc_generator = IncGenerator(
