@@ -25,3 +25,14 @@ TARGET_TO_IN_CODE_NAME = {
     "SystemZ": "SystemZ",
     "Mips": "Mips",
 }
+
+# Maps the name from ARCH_LLVM_NAMING to the directory name in LLVM
+TARGET_TO_DIR_NAME = {
+    "ARM": "ARM",
+    "PPC": "PowerPC",
+    "Alpha": "Alpha",
+    "AArch64": "AArch64",
+    "LoongArch": "LoongArch",
+    "SystemZ": "SystemZ",
+    "Mips": "Mips",
+}
