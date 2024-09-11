@@ -72,6 +72,8 @@ The testing compared to any other release has increased a lot. Both in quantity,
 The Alpha release now allows projects to pin-point their build to a specific commit and use the new features, while allowing us to add missing features
 still on the list for `v6` Gold.
 
+Some of them are: update and add more architectures (including x86), rework DIET build, improve Auto-Sync with reproducible file generation and quality of life features and more.
+
 So when the final `v6` release happens, the `Auto-Sync` transformation of Capstone is completely done.
 For `v7` we can then focus on other big features, like [SAIL](https://github.com/rems-project/sail) based disassembler modules or a new API to support VLIW architectures like Hexagon or E2K.
 
