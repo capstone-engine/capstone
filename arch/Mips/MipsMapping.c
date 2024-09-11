@@ -340,7 +340,7 @@ static void Mips_set_detail_op_unsigned_offset(MCInst *MI, unsigned OpNum,
 
 static void Mips_set_detail_op_mem_nanomips(MCInst *MI, unsigned OpNum)
 {
-	CS_ASSERT(doing_mem(MI))
+	CS_ASSERT(doing_mem(MI));
 
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_MEM;

@@ -114,7 +114,13 @@ extern cs_vsnprintf_t cs_vsnprintf;
 #ifdef CAPSTONE_DEBUG
 #define CS_ASSERT_RET_VAL(expr, val) assert(expr)
 #else
-#define CS_ASSERT_RET_VAL(expr, val) do { if (!(expr)) { return val; } } while(0)
+#define CS_ASSERT_RET_VAL(expr, val) \
+do { \
+	if (!(expr)) { \
+		fprintf(stderr, "Hit assert: " #expr "\n"); \
+		return val; \
+	} \
+} while(0)
 #endif
 
 /// If compiled in debug mode it will assert(@expr).
@@ -122,7 +128,13 @@ extern cs_vsnprintf_t cs_vsnprintf;
 #ifdef CAPSTONE_DEBUG
 #define CS_ASSERT_RET(expr) assert(expr)
 #else
-#define CS_ASSERT_RET(expr) do { if (!(expr)) { return; } } while(0)
+#define CS_ASSERT_RET(expr) \
+do { \
+	if (!(expr)) { \
+		fprintf(stderr, "Hit assert: " #expr "\n"); \
+		return; \
+	} \
+} while(0)
 #endif
 
 #endif

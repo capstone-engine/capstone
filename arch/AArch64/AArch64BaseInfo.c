@@ -144,7 +144,7 @@ static void utostr(uint64_t X, bool isNeg, char *result)
 // NOTE: result must be big enough to contain the result
 void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result)
 {
-	// assert(Bits < 0x10000);
+	CS_ASSERT_RET(Bits < 0x10000);
 	char Op0Str[32], Op1Str[32], CRnStr[32], CRmStr[32], Op2Str[32];
 	int dummy;
 	uint32_t Op0 = (Bits >> 14) & 0x3;

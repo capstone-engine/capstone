@@ -3437,7 +3437,7 @@ typedef struct {
 	ppc_insn_form form;
 } ppc_suppl_info;
 
-#define PPC_NUM_OPS 8
+#define NUM_PPC_OPS 8
 
 /// Instruction structure
 typedef struct cs_ppc {
@@ -3453,7 +3453,7 @@ typedef struct cs_ppc {
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_ppc_op operands[PPC_NUM_OPS]; ///< operands for this instruction.
+	cs_ppc_op operands[NUM_PPC_OPS]; ///< operands for this instruction.
 } cs_ppc;
 
 #ifdef __cplusplus

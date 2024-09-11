@@ -61,7 +61,7 @@ static inline const char *ARM_AM_getShiftOpcStr(ARM_AM_ShiftOpc Op)
 {
 	switch (Op) {
 	default:
-		assert(0 && "Unknown shift opc!");
+		CS_ASSERT_RET_VAL(0 && "Unknown shift opc!", NULL);
 	case ARM_AM_asr:
 		return "asr";
 	case ARM_AM_lsl:
@@ -81,7 +81,7 @@ static inline unsigned ARM_AM_getShiftOpcEncoding(ARM_AM_ShiftOpc Op)
 {
 	switch (Op) {
 	default:
-		assert(0 && "Unknown shift opc!");
+		CS_ASSERT_RET_VAL(0 && "Unknown shift opc!", 0);
 	case ARM_AM_asr:
 		return 2;
 	case ARM_AM_lsl:
@@ -105,7 +105,7 @@ static inline const char *ARM_AM_getAMSubModeStr(ARM_AM_SubMode Mode)
 {
 	switch (Mode) {
 	default:
-		assert(0 && "Unknown addressing sub-mode!");
+		CS_ASSERT_RET_VAL(0 && "Unknown addressing sub-mode!", NULL);
 	case ARM_AM_ia:
 		return "ia";
 	case ARM_AM_ib:
@@ -121,7 +121,7 @@ static inline const char *ARM_AM_getAMSubModeStr(ARM_AM_SubMode Mode)
 ///
 static inline unsigned ARM_AM_rotr32(unsigned Val, unsigned Amt)
 {
-	CS_ASSERT(Amt >= 32);
+	CS_ASSERT(Amt <= 32);
 	if (Amt == 32) {
 		return Val;
 	}
@@ -707,7 +707,7 @@ static inline uint64_t ARM_AM_decodeVMOVModImm(unsigned ModImm,
 		}
 		*EltBits = 64;
 	} else {
-		assert(0 && "Unsupported VMOV immediate");
+		CS_ASSERT_RET_VAL(0 && "Unsupported VMOV immediate", 0);
 	}
 	return Val;
 }

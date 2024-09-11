@@ -106,7 +106,7 @@ static const char *MipsFCCToString(Mips_CondCode CC)
 	case Mips_FCOND_GT:
 		return "ngt";
 	}
-	assert(0 && "Impossible condition code!");
+	CS_ASSERT_RET_VAL(0 && "Impossible condition code!", NULL);
 	return "";
 }
 

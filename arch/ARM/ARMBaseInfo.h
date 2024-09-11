@@ -22,6 +22,7 @@
 #include <string.h>
 
 #include "../../MCInstPrinter.h"
+#include "../../cs_priv.h"
 #include "capstone/arm.h"
 
 #define GET_INSTRINFO_ENUM
@@ -107,8 +108,7 @@ inline static const char *ARM_PROC_IModToString(unsigned val)
 {
 	switch (val) {
 	default:
-		// llvm_unreachable("Unknown imod operand");
-		assert(0);
+		CS_ASSERT_RET_VAL("Unknown imod operand", NULL);
 	case ARM_PROC_IE:
 		return "ie";
 	case ARM_PROC_ID:
@@ -120,8 +120,7 @@ inline static const char *ARM_MB_MemBOptToString(unsigned val, bool HasV8)
 {
 	switch (val) {
 	default:
-		// llvm_unreachable("Unknown memory operation");
-		assert(0);
+		CS_ASSERT_RET_VAL("Unknown memory operation", NULL);
 	case ARM_MB_SY:
 		return "sy";
 	case ARM_MB_ST:
@@ -163,8 +162,7 @@ inline static const char *ARM_TSB_TraceSyncBOptToString(unsigned val)
 {
 	switch (val) {
 	default:
-		// llvm_unreachable("Unknown trace synchronization barrier operation");
-		assert(0);
+		CS_ASSERT_RET_VAL("Unknown trace synchronization barrier operation", NULL);
 	case ARM_TSB_CSYNC:
 		return "csync";
 	}
@@ -193,8 +191,7 @@ inline static const char *ARM_ISB_InstSyncBOptToString(unsigned val)
 {
 	switch (val) {
 	default:
-		// llvm_unreachable("Unknown memory operation");
-		assert(0);
+		CS_ASSERT_RET_VAL("Unknown memory operation", NULL);
 	case ARM_ISB_RESERVED_0:
 		return "#0x0";
 	case ARM_ISB_RESERVED_1:

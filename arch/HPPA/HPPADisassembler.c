@@ -219,9 +219,9 @@ static void push_str_modifier(hppa_ext *hppa, const char *modifier)
 {
 	if (strcmp(modifier, "")) {
 		hppa_modifier *mod = &hppa->modifiers[hppa->mod_num++];
-		assert(hppa->mod_num <= HPPA_MAX_MODIFIERS_LEN);
+		CS_ASSERT_RET(hppa->mod_num <= HPPA_MAX_MODIFIERS_LEN);
 		mod->type = HPPA_MOD_STR;
-		assert(strlen(modifier) < HPPA_STR_MODIFIER_LEN);
+		CS_ASSERT_RET(strlen(modifier) < HPPA_STR_MODIFIER_LEN);
 		strncpy(mod->str_mod, modifier, HPPA_STR_MODIFIER_LEN - 1);
 	}
 }
@@ -229,7 +229,7 @@ static void push_str_modifier(hppa_ext *hppa, const char *modifier)
 static void push_int_modifier(hppa_ext *hppa, uint64_t modifier)
 {
 	hppa_modifier *mod = &hppa->modifiers[hppa->mod_num++];
-	assert(hppa->mod_num <= HPPA_MAX_MODIFIERS_LEN);
+	CS_ASSERT_RET(hppa->mod_num <= HPPA_MAX_MODIFIERS_LEN);
 	mod->type = HPPA_MOD_INT;
 	mod->int_mod = modifier;
 }

@@ -135,7 +135,7 @@ void TriCore_set_access(MCInst *MI)
 	if (!(MI->csh->detail_opt == CS_OPT_ON && MI->flat_insn->detail))
 		return;
 
-	assert(MI->Opcode < ARR_SIZE(insn_operands));
+	CS_ASSERT_RET(MI->Opcode < ARR_SIZE(insn_operands));
 
 	cs_detail *detail = MI->flat_insn->detail;
 	cs_tricore *tc = &(detail->tricore);

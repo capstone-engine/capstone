@@ -128,7 +128,7 @@ static void PPC_add_branch_predicates(MCInst *MI, const uint8_t *Bytes,
 	if (!detail_is_set(MI))
 		return;
 #ifndef CAPSTONE_DIET
-	assert(MI && Bytes);
+	CS_ASSERT_RET(MI && Bytes);
 	if (BytesLen < 4)
 		return;
 
@@ -170,7 +170,7 @@ static void PPC_add_branch_predicates(MCInst *MI, const uint8_t *Bytes,
 	bool cond = (xo == bcctr_xo_field || xo == bctar_xo_field);
 	switch (bh) {
 	default:
-		assert(0 && "Invalid BH value.");
+		CS_ASSERT_RET(0 && "Invalid BH value.");
 	case 0:
 		PPC_get_detail(MI)->bc.bh = cond ? PPC_BH_NO_SUBROUTINE_RET :
 						   PPC_BH_SUBROUTINE_RET;
@@ -316,7 +316,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			return;
 		}
 
-		assert((op_type & CS_OP_MEM) ==
+		CS_ASSERT_RET((op_type & CS_OP_MEM) ==
 		       0); // doing_mem should have been true.
 
 		if (op_type == CS_OP_REG)
@@ -326,7 +326,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			PPC_set_detail_op_imm(MI, OpNum,
 					      MCInst_getOpVal(MI, OpNum));
 		else
-			assert(0 && "Operand type not handled.");
+			CS_ASSERT_RET(0 && "Operand type not handled.");
 		break;
 	}
 	case PPC_OP_GROUP_ImmZeroOperand:
@@ -401,7 +401,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			return;
 		unsigned Val = MCInst_getOpVal(MI, OpNum) << 2;
 		int32_t Imm = SignExtend32(Val, 32);
-		PPC_check_safe_inc();
+		PPC_check_safe_inc(MI);
 		PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
 		PPC_get_detail_op(MI, 0)->imm = Imm;
 		PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
@@ -425,7 +425,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		uint64_t Address = MI->address + Imm;
 		if (IS_32BIT(MI->csh->mode))
 			Address &= 0xffffffff;
-		PPC_check_safe_inc();
+		PPC_check_safe_inc(MI);
 		PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
 		PPC_get_detail_op(MI, 0)->imm = Address;
 		PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
@@ -534,12 +534,12 @@ void PPC_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val,
 	if (!detail_is_set(MI))
 		return;
 
-	assert(map_get_op_type(MI, OpNum) & CS_OP_MEM);
+	CS_ASSERT_RET(map_get_op_type(MI, OpNum) & CS_OP_MEM);
 	cs_op_type secondary_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
 
 	switch (secondary_type) {
 	default:
-		assert(0 && "Secondary type not supported yet.");
+		CS_ASSERT_RET(0 && "Secondary type not supported yet.");
 	case CS_OP_REG:
 		if (is_off_reg) {
 			PPC_get_detail_op(MI, 0)->mem.offset = Val;
@@ -568,9 +568,9 @@ void PPC_set_detail_op_reg(MCInst *MI, unsigned OpNum, ppc_reg Reg)
 {
 	if (!detail_is_set(MI))
 		return;
-	PPC_check_safe_inc();
-	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
-	assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
+	PPC_check_safe_inc(MI);
+	CS_ASSERT_RET(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
+	CS_ASSERT_RET(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
 	PPC_get_detail_op(MI, 0)->type = PPC_OP_REG;
 	PPC_get_detail_op(MI, 0)->reg = Reg;
@@ -584,9 +584,9 @@ void PPC_set_detail_op_imm(MCInst *MI, unsigned OpNum, int64_t Imm)
 {
 	if (!detail_is_set(MI))
 		return;
-	PPC_check_safe_inc();
-	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
-	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
+	PPC_check_safe_inc(MI);
+	CS_ASSERT_RET(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
+	CS_ASSERT_RET(map_get_op_type(MI, OpNum) == CS_OP_IMM);
 
 	PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
 	PPC_get_detail_op(MI, 0)->imm = Imm;
@@ -598,7 +598,7 @@ void PPC_set_mem_access(MCInst *MI, bool status)
 {
 	if (!detail_is_set(MI))
 		return;
-	PPC_check_safe_inc();
+	PPC_check_safe_inc(MI);
 	if ((!status && !doing_mem(MI)) || (status && doing_mem(MI)))
 		return; // Nothing to do
 
@@ -634,7 +634,7 @@ void PPC_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 
-	PPC_check_safe_inc();
+	PPC_check_safe_inc(MI);
 
 	cs_ppc_op op;
 	PPC_setup_op(&op);

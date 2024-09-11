@@ -150,7 +150,7 @@ unsigned SystemZMC_getFirstReg(unsigned Reg)
 			Map[SystemZMC_VR128Regs[I]] = I;
 		}
 	}
-	CS_ASSERT((Reg < SystemZ_NUM_TARGET_REGS));
+	CS_ASSERT((Reg < NUM_TARGET_REGS));
 	return Map[Reg];
 }
 

@@ -54,7 +54,7 @@ void ITBlock_setITState(ARM_ITBlock *it, char Firstcond, char Mask)
 	// (3 - the number of trailing zeros) is the number of then / else.
 	unsigned NumTZ = CountTrailingZeros_8(Mask);
 	unsigned char CCBits = (unsigned char)(Firstcond & 0xf);
-	assert(NumTZ <= 3 && "Invalid IT mask!");
+	CS_ASSERT_RET(NumTZ <= 3 && "Invalid IT mask!");
 	// push condition codes onto the stack the correct order for the pops
 	for (unsigned Pos = NumTZ + 1; Pos <= 3; ++Pos) {
 		unsigned Else = (Mask >> Pos) & 1;
@@ -97,7 +97,7 @@ void VPTBlock_setVPTState(ARM_VPTBlock *VPT, char Mask)
 {
 	// (3 - the number of trailing zeros) is the number of then / else.
 	unsigned NumTZ = CountTrailingZeros_8(Mask);
-	assert(NumTZ <= 3 && "Invalid VPT mask!");
+	CS_ASSERT_RET(NumTZ <= 3 && "Invalid VPT mask!");
 	// push predicates onto the stack the correct order for the pops
 	for (unsigned Pos = NumTZ + 1; Pos <= 3; ++Pos) {
 		bool T = ((Mask >> Pos) & 1) == 0;

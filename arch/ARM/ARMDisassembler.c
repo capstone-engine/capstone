@@ -952,8 +952,8 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 			int TiedOp = MCOperandInfo_getOperandConstraint(
 				&ARMInsts[MCInst_getOpcode(MI)], VCCPos + 3,
 				MCOI_TIED_TO);
-			assert(TiedOp >= 0 &&
-			       "Inactive register in vpred_r is not tied to an output!");
+			CS_ASSERT_RET_VAL(TiedOp >= 0 &&
+			       "Inactive register in vpred_r is not tied to an output!", MCDisassembler_Fail);
 			// Copy the operand to ensure it's not invalidated when MI grows.
 			MCOperand Op = *MCInst_getOperand(MI, TiedOp);
 			MCInst_insert0(MI, VCCPos + 3, &Op);

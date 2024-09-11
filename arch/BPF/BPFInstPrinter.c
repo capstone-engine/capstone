@@ -9,7 +9,7 @@
 
 static cs_bpf_op *expand_bpf_operands(cs_bpf *bpf)
 {
-	/* assert(bpf->op_count < 3); */
+	assert(bpf->op_count < 3);
 	return &bpf->operands[bpf->op_count++];
 }
 

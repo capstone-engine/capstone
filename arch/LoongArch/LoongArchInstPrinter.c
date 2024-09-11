@@ -90,7 +90,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		return;
 	}
 
-	assert(0 && "Expressions are not supported.");
+	CS_ASSERT_RET(0 && "Expressions are not supported.");
 }
 
 static void printAtomicMemOp(MCInst *MI, unsigned OpNo, SStream *O)
