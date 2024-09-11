@@ -6630,6 +6630,9 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
         /* Decoding complete. */ \
         return S; \
       } else { \
+        /* LLVM uses a MCInst on the stack, but for our use case, */ \
+        /* it is enough for now to reset the op counter. */ \
+        MCInst_clear(MI); \
         /* If the decoding was incomplete, skip. */ \
         Ptr += NumToSkip; \
         /* Reset decode status. This also drops a SoftFail status that could be */ \
