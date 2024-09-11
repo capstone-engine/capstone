@@ -208,6 +208,16 @@ Nonetheless, an alias should never be **decoded** as real instruction.
 If you find an alias which is decoded as a real instruction, please let us know.
 Such an instruction is ill-defined in LLVM and should be fixed upstream.
 
+**No or partial support for alias**
+
+- SystemZ: Not enabled by default in LLVM. Will be added in Beta.
+- LoongArch: Implemented but not handled yet. Will be added in Beta.
+
+- TriCore: No support in LLVM.
+- Alpha: No support in LLVM.
+
+- HPPA: No LLVM architecture. Alias are not supported.
+
 ## Breaking changes
 
 **General**
