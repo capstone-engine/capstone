@@ -12,6 +12,7 @@
 /* https://github.com/capstone-engine/llvm-capstone */
 
 #include "../../MCInst.h"
+#include "../../cs_priv.h"
 #include "../../LEB128.h"
 
 // Helper function for extracting fields from encoded instructions.
