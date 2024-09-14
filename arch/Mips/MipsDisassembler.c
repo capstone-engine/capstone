@@ -1406,14 +1406,14 @@ static DecodeStatus readInstruction32(const uint8_t *Bytes, size_t BytesLen,
 	if (IsBigEndian) {
 		// Encoded as a big-endian 32-bit word in the stream.
 		*Insn = (Bytes[3] << 0) | (Bytes[2] << 8) | (Bytes[1] << 16) |
-		       (Bytes[0] << 24);
+		       ((unsigned)Bytes[0] << 24);
 	} else {
 		if (IsMicroMips) {
 			*Insn = (Bytes[2] << 0) | (Bytes[3] << 8) |
-			       (Bytes[0] << 16) | (Bytes[1] << 24);
+			       (Bytes[0] << 16) | ((unsigned)Bytes[1] << 24);
 		} else {
 			*Insn = (Bytes[0] << 0) | (Bytes[1] << 8) |
-			       (Bytes[2] << 16) | (Bytes[3] << 24);
+			       (Bytes[2] << 16) | ((unsigned)Bytes[3] << 24);
 		}
 	}
 
