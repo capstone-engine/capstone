@@ -89,7 +89,7 @@ if(APPLE AND NOT CAPSTONE_BUILD_MACOS_THIN)
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 endif()
 
-set(SUPPORTED_ARCHITECTURES ARM AARCH64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE ALPHA HPPA LOONGARCH)
+set(SUPPORTED_ARCHITECTURES ARM AARCH64 M68K MIPS PPC SPARC SYSTEMZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE ALPHA HPPA LOONGARCH)
 set(SUPPORTED_ARCHITECTURE_LABELS ARM AARCH64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore Alpha HPPA LoongArch)
 
 # If building for OSX it's best to allow CMake to handle building both architectures
@@ -200,6 +200,7 @@ set(HEADERS_COMMON
     include/capstone/x86.h
     include/capstone/sparc.h
     include/capstone/systemz.h
+    include/capstone/systemz_compatibility.h
     include/capstone/xcore.h
     include/capstone/m68k.h
     include/capstone/tms320c64x.h
@@ -412,27 +413,34 @@ if(CAPSTONE_SPARC_SUPPORT)
     )
 endif()
 
-if(CAPSTONE_SYSZ_SUPPORT)
-    add_definitions(-DCAPSTONE_HAS_SYSZ)
-    set(SOURCES_SYSZ
+if(CAPSTONE_SYSTEMZ_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_SYSTEMZ)
+    set(SOURCES_SYSTEMZ
         arch/SystemZ/SystemZDisassembler.c
+        arch/SystemZ/SystemZDisassemblerExtension.c
         arch/SystemZ/SystemZInstPrinter.c
         arch/SystemZ/SystemZMapping.c
         arch/SystemZ/SystemZModule.c
         arch/SystemZ/SystemZMCTargetDesc.c
     )
-    set(HEADERS_SYSZ
-        arch/SystemZ/SystemZDisassembler.h
+    set(HEADERS_SYSTEMZ
+        arch/SystemZ/SystemZLinkage.h
+        arch/SystemZ/SystemZDisassemblerExtension.h
+        arch/SystemZ/SystemZInstPrinter.h
+        arch/SystemZ/SystemZMCTargetDesc.h
+        arch/SystemZ/SystemZMapping.h
+        arch/SystemZ/SystemZModule.h
         arch/SystemZ/SystemZGenAsmWriter.inc
+        arch/SystemZ/SystemZGenCSAliasMnemMap.inc
+        arch/SystemZ/SystemZGenCSFeatureName.inc
+        arch/SystemZ/SystemZGenCSMappingInsn.inc
+        arch/SystemZ/SystemZGenCSMappingInsnName.inc
+        arch/SystemZ/SystemZGenCSMappingInsnOp.inc
+        arch/SystemZ/SystemZGenCSOpGroup.inc
         arch/SystemZ/SystemZGenDisassemblerTables.inc
-        arch/SystemZ/SystemZGenInsnNameMaps.inc
         arch/SystemZ/SystemZGenInstrInfo.inc
         arch/SystemZ/SystemZGenRegisterInfo.inc
         arch/SystemZ/SystemZGenSubtargetInfo.inc
-        arch/SystemZ/SystemZInstPrinter.h
-        arch/SystemZ/SystemZMapping.h
-        arch/SystemZ/SystemZMappingInsn.inc
-        arch/SystemZ/SystemZMCTargetDesc.h
     )
 endif()
 
@@ -688,7 +696,7 @@ set(ALL_SOURCES
     ${SOURCES_PPC}
     ${SOURCES_X86}
     ${SOURCES_SPARC}
-    ${SOURCES_SYSZ}
+    ${SOURCES_SYSTEMZ}
     ${SOURCES_XCORE}
     ${SOURCES_M68K}
     ${SOURCES_TMS320C64X}
@@ -714,7 +722,7 @@ set(ALL_HEADERS
     ${HEADERS_PPC}
     ${HEADERS_X86}
     ${HEADERS_SPARC}
-    ${HEADERS_SYSZ}
+    ${HEADERS_SYSTEMZ}
     ${HEADERS_XCORE}
     ${HEADERS_M68K}
     ${HEADERS_TMS320C64X}
@@ -765,7 +773,7 @@ source_group("Source\\AARCH64" FILES ${SOURCES_AARCH64})
 source_group("Source\\Mips" FILES ${SOURCES_MIPS})
 source_group("Source\\PowerPC" FILES ${SOURCES_PPC})
 source_group("Source\\Sparc" FILES ${SOURCES_SPARC})
-source_group("Source\\SystemZ" FILES ${SOURCES_SYSZ})
+source_group("Source\\SystemZ" FILES ${SOURCES_SYSTEMZ})
 source_group("Source\\X86" FILES ${SOURCES_X86})
 source_group("Source\\XCore" FILES ${SOURCES_XCORE})
 source_group("Source\\M68K" FILES ${SOURCES_M68K})
@@ -789,7 +797,7 @@ source_group("Include\\AARCH64" FILES ${HEADERS_AARCH64})
 source_group("Include\\Mips" FILES ${HEADERS_MIPS})
 source_group("Include\\PowerPC" FILES ${HEADERS_PPC})
 source_group("Include\\Sparc" FILES ${HEADERS_SPARC})
-source_group("Include\\SystemZ" FILES ${HEADERS_SYSZ})
+source_group("Include\\SystemZ" FILES ${HEADERS_SYSTEMZ})
 source_group("Include\\X86" FILES ${HEADERS_X86})
 source_group("Include\\XCore" FILES ${HEADERS_XCORE})
 source_group("Include\\M68K" FILES ${HEADERS_M68K})
@@ -898,8 +906,4 @@ if(CAPSTONE_BUILD_CSTEST)
     add_subdirectory(${TESTS_INTEGRATION_DIR})
     set(TESTS_UNIT_DIR ${PROJECT_SOURCE_DIR}/tests/unit)
     add_subdirectory(${TESTS_UNIT_DIR})
-
-    # Unit tests for auto-sync
-    set(AUTO_SYNC_C_TEST_DIR ${PROJECT_SOURCE_DIR}/suite/auto-sync/c_tests/)
-    add_subdirectory(${AUTO_SYNC_C_TEST_DIR})
 endif()

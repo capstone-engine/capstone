@@ -147,11 +147,27 @@ typedef struct cs_arch_config {
 		Sparc_option, \
 		~(CS_MODE_BIG_ENDIAN | CS_MODE_V9), \
 	}
-#define CS_ARCH_CONFIG_SYSZ \
+#define CS_ARCH_CONFIG_SYSTEMZ \
 	{ \
 		SystemZ_global_init, \
 		SystemZ_option, \
-		~(CS_MODE_BIG_ENDIAN), \
+		~(CS_MODE_BIG_ENDIAN | \
+			CS_MODE_SYSTEMZ_ARCH8 | \
+			CS_MODE_SYSTEMZ_ARCH9 | \
+			CS_MODE_SYSTEMZ_ARCH10 | \
+			CS_MODE_SYSTEMZ_ARCH11 | \
+			CS_MODE_SYSTEMZ_ARCH12 | \
+			CS_MODE_SYSTEMZ_ARCH13 | \
+			CS_MODE_SYSTEMZ_ARCH14 | \
+			CS_MODE_SYSTEMZ_Z10 | \
+			CS_MODE_SYSTEMZ_Z196 | \
+			CS_MODE_SYSTEMZ_ZEC12 | \
+			CS_MODE_SYSTEMZ_Z13 | \
+			CS_MODE_SYSTEMZ_Z14 | \
+			CS_MODE_SYSTEMZ_Z15 | \
+			CS_MODE_SYSTEMZ_Z16 | \
+			CS_MODE_SYSTEMZ_GENERIC \
+		), \
 	}
 #define CS_ARCH_CONFIG_XCORE \
 	{ \
@@ -257,6 +273,11 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #else
 	{ NULL, NULL, 0 },
 #endif
+#ifdef CAPSTONE_HAS_SYSTEMZ
+	CS_ARCH_CONFIG_SYSTEMZ,
+#else
+	{ NULL, NULL, 0 },
+#endif
 #ifdef CAPSTONE_HAS_MIPS
 	CS_ARCH_CONFIG_MIPS,
 #else
@@ -274,11 +295,6 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #endif
 #ifdef CAPSTONE_HAS_SPARC
 	CS_ARCH_CONFIG_SPARC,
-#else
-	{ NULL, NULL, 0 },
-#endif
-#ifdef CAPSTONE_HAS_SYSZ
-	CS_ARCH_CONFIG_SYSZ,
 #else
 	{ NULL, NULL, 0 },
 #endif
@@ -379,8 +395,8 @@ static const uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_SPARC
 	| (1 << CS_ARCH_SPARC)
 #endif
-#ifdef CAPSTONE_HAS_SYSZ
-	| (1 << CS_ARCH_SYSZ)
+#ifdef CAPSTONE_HAS_SYSTEMZ
+	| (1 << CS_ARCH_SYSTEMZ)
 #endif
 #ifdef CAPSTONE_HAS_XCORE
 	| (1 << CS_ARCH_XCORE)
@@ -540,10 +556,10 @@ void CAPSTONE_API cs_arch_register_sparc(void)
 }
 
 CAPSTONE_EXPORT
-void CAPSTONE_API cs_arch_register_sysz(void)
+void CAPSTONE_API cs_arch_register_systemz(void)
 {
-#if defined(CAPSTONE_USE_ARCH_REGISTRATION) && defined(CAPSTONE_HAS_SYSZ)
-	CS_ARCH_REGISTER(SYSZ);
+#if defined(CAPSTONE_USE_ARCH_REGISTRATION) && defined(CAPSTONE_HAS_SYSTEMZ)
+	CS_ARCH_REGISTER(SYSTEMZ);
 #endif
 }
 
@@ -659,7 +675,7 @@ bool CAPSTONE_API cs_support(int query)
 				    ((1 << CS_ARCH_ARM)  | (1 << CS_ARCH_AARCH64)    |
 				    (1 << CS_ARCH_MIPS)  | (1 << CS_ARCH_X86)        |
 				    (1 << CS_ARCH_PPC)   | (1 << CS_ARCH_SPARC)      |
-				    (1 << CS_ARCH_SYSZ)  | (1 << CS_ARCH_XCORE)      |
+				    (1 << CS_ARCH_SYSTEMZ)  | (1 << CS_ARCH_XCORE)      |
 				    (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
 				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
 				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    |
@@ -962,7 +978,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_SPARC:
 			// skip 4 bytes
 			return 4;
-		case CS_ARCH_SYSZ:
+		case CS_ARCH_SYSTEMZ:
 			// SystemZ instruction's length can be 2, 4 or 6 bytes,
 			// so we just skip 2 bytes
 			return 2;
@@ -1229,7 +1245,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 	insn_cache = total;
 
 	while (size > 0) {
-		MCInst_Init(&mci);
+		MCInst_Init(&mci, handle->arch);
 		mci.csh = handle;
 
 		// relative branches need to know the address & size of current insn
@@ -1442,7 +1458,7 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 
 	handle->errnum = CS_ERR_OK;
 
-	MCInst_Init(&mci);
+	MCInst_Init(&mci, handle->arch);
 	mci.csh = handle;
 
 	// relative branches need to know the address & size of current insn
@@ -1700,9 +1716,9 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->sparc.operands[i].type == (sparc_op_type)op_type)
 					count++;
 			break;
-		case CS_ARCH_SYSZ:
-			for (i = 0; i < insn->detail->sysz.op_count; i++)
-				if (insn->detail->sysz.operands[i].type == (sysz_op_type)op_type)
+		case CS_ARCH_SYSTEMZ:
+			for (i = 0; i < insn->detail->systemz.op_count; i++)
+				if (insn->detail->systemz.operands[i].type == (systemz_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_XCORE:
@@ -1852,9 +1868,9 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 			break;
-		case CS_ARCH_SYSZ:
-			for (i = 0; i < insn->detail->sysz.op_count; i++) {
-				if (insn->detail->sysz.operands[i].type == (sysz_op_type)op_type)
+		case CS_ARCH_SYSTEMZ:
+			for (i = 0; i < insn->detail->systemz.op_count; i++) {
+				if (insn->detail->systemz.operands[i].type == (systemz_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

@@ -356,7 +356,7 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 					   expected->xcore);
 	}
 	if (expected->systemz) {
-		return test_expected_systemz(handle, &actual->sysz,
+		return test_expected_systemz(handle, &actual->systemz,
 					     expected->systemz);
 	}
 	if (expected->sparc) {

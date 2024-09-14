@@ -26,7 +26,7 @@ __all__ = [
     'CS_ARCH_X86',
     'CS_ARCH_PPC',
     'CS_ARCH_SPARC',
-    'CS_ARCH_SYSZ',
+    'CS_ARCH_SYSTEMZ',
     'CS_ARCH_XCORE',
     'CS_ARCH_M68K',
     'CS_ARCH_TMS320C64X',
@@ -130,6 +130,21 @@ __all__ = [
     'CS_MODE_HPPA_20W',
     'CS_MODE_LOONGARCH32',
     'CS_MODE_LOONGARCH64',
+    'CS_MODE_SYSTEMZ_ARCH8',
+    'CS_MODE_SYSTEMZ_ARCH9',
+    'CS_MODE_SYSTEMZ_ARCH10',
+    'CS_MODE_SYSTEMZ_ARCH11',
+    'CS_MODE_SYSTEMZ_ARCH12',
+    'CS_MODE_SYSTEMZ_ARCH13',
+    'CS_MODE_SYSTEMZ_ARCH14',
+    'CS_MODE_SYSTEMZ_Z10',
+    'CS_MODE_SYSTEMZ_Z196',
+    'CS_MODE_SYSTEMZ_ZEC12',
+    'CS_MODE_SYSTEMZ_Z13',
+    'CS_MODE_SYSTEMZ_Z14',
+    'CS_MODE_SYSTEMZ_Z15',
+    'CS_MODE_SYSTEMZ_Z16',
+    'CS_MODE_SYSTEMZ_GENERIC',
 
     'CS_OPT_SYNTAX',
     'CS_OPT_SYNTAX_DEFAULT',
@@ -214,6 +229,7 @@ __all__ = [
     '__version__',
 ]
 
+UINT8_MAX = 0xff
 UINT16_MAX = 0xffff
 
 # Capstone C interface
@@ -232,11 +248,11 @@ __version__ = "%u.%u.%u" %(CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA)
 # architectures
 CS_ARCH_ARM = 0
 CS_ARCH_AARCH64 = 1
-CS_ARCH_MIPS = 2
-CS_ARCH_X86 = 3
-CS_ARCH_PPC = 4
-CS_ARCH_SPARC = 5
-CS_ARCH_SYSZ = 6
+CS_ARCH_SYSTEMZ = 2
+CS_ARCH_MIPS = 3
+CS_ARCH_X86 = 4
+CS_ARCH_PPC = 5
+CS_ARCH_SPARC = 6
 CS_ARCH_XCORE = 7
 CS_ARCH_M68K = 8
 CS_ARCH_TMS320C64X = 9
@@ -346,6 +362,21 @@ CS_MODE_HPPA_20 = 1 << 2 # HPPA 2.0
 CS_MODE_HPPA_20W = CS_MODE_HPPA_20 | (1 << 3) # HPPA 2.0 wide
 CS_MODE_LOONGARCH32 = 1 << 0
 CS_MODE_LOONGARCH64 = 1 << 1
+CS_MODE_SYSTEMZ_ARCH8 = 1 << 1
+CS_MODE_SYSTEMZ_ARCH9 = 1 << 2
+CS_MODE_SYSTEMZ_ARCH10 = 1 << 3
+CS_MODE_SYSTEMZ_ARCH11 = 1 << 4
+CS_MODE_SYSTEMZ_ARCH12 = 1 << 5
+CS_MODE_SYSTEMZ_ARCH13 = 1 << 6
+CS_MODE_SYSTEMZ_ARCH14 = 1 << 7
+CS_MODE_SYSTEMZ_Z10 = 1 << 8
+CS_MODE_SYSTEMZ_Z196 = 1 << 9
+CS_MODE_SYSTEMZ_ZEC12 = 1 << 10
+CS_MODE_SYSTEMZ_Z13 = 1 << 11
+CS_MODE_SYSTEMZ_Z14 = 1 << 12
+CS_MODE_SYSTEMZ_Z15 = 1 << 13
+CS_MODE_SYSTEMZ_Z16 = 1 << 14
+CS_MODE_SYSTEMZ_GENERIC = 1 << 15
 
 # Capstone option type
 CS_OPT_INVALID = 0   # No option specified
@@ -526,7 +557,7 @@ class _cs_arch(ctypes.Union):
         ('x86', x86.CsX86),
         ('ppc', ppc.CsPpc),
         ('sparc', sparc.CsSparc),
-        ('sysz', systemz.CsSysz),
+        ('systemz', systemz.CsSystemZ),
         ('xcore', xcore.CsXcore),
         ('tms320c64x', tms320c64x.CsTMS320C64x),
         ('m680x', m680x.CsM680x),
@@ -877,8 +908,8 @@ class CsInsn(object):
                 ppc.get_arch_info(self._raw.detail.contents.arch.ppc)
         elif arch == CS_ARCH_SPARC:
             (self.cc, self.hint, self.operands) = sparc.get_arch_info(self._raw.detail.contents.arch.sparc)
-        elif arch == CS_ARCH_SYSZ:
-            (self.cc, self.operands) = systemz.get_arch_info(self._raw.detail.contents.arch.sysz)
+        elif arch == CS_ARCH_SYSTEMZ:
+            (self.cc, self.format, self.operands) = systemz.get_arch_info(self._raw.detail.contents.arch.systemz)
         elif arch == CS_ARCH_XCORE:
             (self.operands) = xcore.get_arch_info(self._raw.detail.contents.arch.xcore)
         elif arch == CS_ARCH_TMS320C64X:
@@ -1397,7 +1428,7 @@ def debug():
     archs = {
         "arm": CS_ARCH_ARM, "aarch64": CS_ARCH_AARCH64, "m68k": CS_ARCH_M68K,
         "mips": CS_ARCH_MIPS, "ppc": CS_ARCH_PPC, "sparc": CS_ARCH_SPARC,
-        "sysz": CS_ARCH_SYSZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
+        "systemz": CS_ARCH_SYSTEMZ, 'xcore': CS_ARCH_XCORE, "tms320c64x": CS_ARCH_TMS320C64X,
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
         'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV, 'tricore': CS_ARCH_TRICORE,
         'wasm': CS_ARCH_WASM, 'sh': CS_ARCH_SH, 'alpha': CS_ARCH_ALPHA,

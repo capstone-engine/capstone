@@ -21,6 +21,7 @@ typedef struct {
 	uint32_t failed;	   ///< Number of failed test cases.
 	uint32_t errors;	   ///< Number errors (parsing errors etc).
 	uint32_t skipped;	   ///< Number skipped test cases.
+	uint32_t decoded_insns; ///< Number of total decoded instructions.
 } TestRunStats;
 
 typedef struct {
@@ -39,6 +40,7 @@ typedef struct {
 	size_t arch_bits; ///< Bits of the architecture.
 	TestCase *tcase;  ///< The test case to check.
 	csh handle; ///< The Capstone instance for this test. Setup and teared down by the cmocka handlers.
+	uint32_t decoded_insns; ///< Counts the number of decoded instructions of this test case.
 } UnitTestState;
 
 TestRunResult cstest_run_tests(char **test_file_paths, uint32_t path_count,

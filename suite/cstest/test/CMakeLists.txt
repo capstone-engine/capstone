@@ -13,11 +13,11 @@ add_executable(unit_test ${CSTEST_TEST_SRC})
 add_dependencies(unit_test libcstest)
 target_link_libraries(unit_test PUBLIC libcstest)
 
-add_test(NAME UnitCSTest
+add_test(NAME unit_cstest
   COMMAND unit_test
   WORKING_DIRECTORY ${CSTEST_TEST_DIR}
 )
-add_test(NAME IntegrationCSTest
+add_test(NAME integration_cstest
   COMMAND python3 ${CSTEST_TEST_DIR}/integration_tests.py cstest
   WORKING_DIRECTORY ${CSTEST_TEST_DIR}
 )

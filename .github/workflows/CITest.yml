@@ -92,24 +92,19 @@ jobs:
         # Work-around ASAN bug https://github.com/google/sanitizers/issues/1716
         sudo sysctl vm.mmap_rnd_bits=28
 
-    - name: "Compatibility header test"
+    - name: unit tests
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        ctest --test-dir build --output-on-failure -R unit_*
+
+    - name: "Integration tests"
       if: startsWith(matrix.config.build-system, 'cmake') && matrix.config.diet-build == 'OFF'
       run: |
-        ctest --test-dir build --output-on-failure -R ASCompatibilityHeaderTest
+        ctest --test-dir build --output-on-failure -R integration_*
 
     - name: cstool - reaches disassembler engine
       run: |
         sh suite/run_invalid_cstool.sh
-
-    - name: cstest unit tests
-      if: startsWith(matrix.config.build-system, 'cmake')
-      run: |
-        ctest --test-dir build --output-on-failure -R UnitCSTest
-
-    - name: cstest integration tests
-      if: startsWith(matrix.config.build-system, 'cmake')
-      run: |
-        ctest --test-dir build --output-on-failure -R IntegrationCSTest
 
     - name: cstest MC
       if: startsWith(matrix.config.build-system, 'cmake')

@@ -13,7 +13,8 @@
             "PPCInstPrinter.cpp",
             "AArch64InstPrinter.cpp",
             "LoongArchInstPrinter.cpp",
-            "MipsInstPrinter.cpp"
+            "MipsInstPrinter.cpp",
+            "SystemZInstPrinter.cpp"
           ]
         },
         "InlineToStaticInline": {
@@ -212,6 +213,34 @@
       "DecodeCRC",
       "isReg"
     ],
+    "manually_edited_files": []
+  },
+  "SystemZ": {
+    "files_to_translate": [
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/SystemZ/Disassembler/SystemZDisassembler.cpp",
+        "out": "SystemZDisassembler.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/SystemZ/MCTargetDesc/SystemZInstPrinter.cpp",
+        "out": "SystemZInstPrinter.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/SystemZ/MCTargetDesc/SystemZInstPrinter.h",
+        "out": "SystemZInstPrinter.h"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/SystemZ/MCTargetDesc/SystemZMCTargetDesc.cpp",
+        "out": "SystemZMCTargetDesc.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/SystemZ/MCTargetDesc/SystemZMCTargetDesc.h",
+        "out": "SystemZMCTargetDesc.h"
+      }
+    ],
+    "files_for_template_search": [
+      "{CPP_INC_OUT_DIR}/SystemZGenDisassemblerTables.inc",
+      "{CPP_INC_OUT_DIR}/SystemZGenAsmWriter.inc",
+      "{LLVM_ROOT}/llvm/lib/Target/SystemZ/Disassembler/SystemZDisassembler.cpp",
+      "{LLVM_ROOT}/llvm/lib/Target/SystemZ/MCTargetDesc/SystemZInstPrinter.cpp"
+    ],
+    "templates_with_arg_deduction": [],
     "manually_edited_files": []
   }
 }

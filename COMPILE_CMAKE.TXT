@@ -28,7 +28,7 @@ Get CMake for free from http://www.cmake.org.
   - CAPSTONE_MOS65XX_SUPPORT: support MOS65XX. Run cmake with -DCAPSTONE_MOS65XX_SUPPORT=0 to remove MOS65XX.
   - CAPSTONE_PPC_SUPPORT: support PPC. Run cmake with -DCAPSTONE_PPC_SUPPORT=0 to remove PPC.
   - CAPSTONE_SPARC_SUPPORT: support Sparc. Run cmake with -DCAPSTONE_SPARC_SUPPORT=0 to remove Sparc.
-  - CAPSTONE_SYSZ_SUPPORT: support SystemZ. Run cmake with -DCAPSTONE_SYSZ_SUPPORT=0 to remove SystemZ.
+  - CAPSTONE_SYSTEMZ_SUPPORT: support SystemZ. Run cmake with -DCAPSTONE_SYSTEMZ_SUPPORT=0 to remove SystemZ.
   - CAPSTONE_XCORE_SUPPORT: support XCore. Run cmake with -DCAPSTONE_XCORE_SUPPORT=0 to remove XCore.
   - CAPSTONE_TRICORE_SUPPORT: support TriCore. Run cmake with -DCAPSTONE_TRICORE_SUPPORT=0 to remove TriCore.
   - CAPSTONE_X86_SUPPORT: support X86. Run cmake with -DCAPSTONE_X86_SUPPORT=0 to remove X86.

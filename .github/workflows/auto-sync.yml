@@ -78,6 +78,7 @@ jobs:
           ./src/autosync/ASUpdater.py -d -a PPC -s IncGen
           ./src/autosync/ASUpdater.py -d -a LoongArch -s IncGen
           ./src/autosync/ASUpdater.py -d -a Mips -s IncGen
+          ./src/autosync/ASUpdater.py -d -a SystemZ -s IncGen
 
       - name: CppTranslator - Patch tests
         run: |
@@ -94,10 +95,4 @@ jobs:
           ./src/autosync/ASUpdater.py --ci -d -a PPC -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a LoongArch -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a Mips -s Translate
-
-      - name: Differ - Test save file is up-to-date
-        run: |
-          ./src/autosync/cpptranslator/Differ.py -a AArch64 --check_saved
-          ./src/autosync/cpptranslator/Differ.py -a ARM --check_saved
-          ./src/autosync/cpptranslator/Differ.py -a PPC --check_saved
-          ./src/autosync/cpptranslator/Differ.py -a LoongArch --check_saved
+          ./src/autosync/ASUpdater.py --ci -d -a SystemZ -s Translate

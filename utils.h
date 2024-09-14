@@ -35,11 +35,13 @@ int cs_snprintf(char *buffer, size_t size, const char *fmt, ...);
 
 // check if an id is existent in an array
 bool arr_exist8(unsigned char *arr, unsigned char max, unsigned int id);
-
 bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id);
+bool arr_exist_int(int *table, size_t table_size, int id);
 
 uint16_t readBytes16(MCInst *MI, const uint8_t *Bytes);
 uint32_t readBytes32(MCInst *MI, const uint8_t *Bytes);
+uint64_t readBytes48(MCInst *MI, const uint8_t *Bytes);
+uint64_t readBytes64(MCInst *MI, const uint8_t *Bytes);
 
 void append_to_str_lower(char *str, size_t str_size, const char *src);
 void append_to_str(char *str, size_t str_buf_size, const char *src);

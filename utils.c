@@ -82,6 +82,56 @@ bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id)
 	return false;
 }
 
+/// @brief Checks if the @id is in the @table. @table has @table_size elements.
+/// @param table The table with the values to compare to.
+/// @param table_size The number elements in the table.
+/// @param id The identifier to search for in the table.
+/// @return True if @id is part of the @table, false otherwise.
+bool arr_exist_int(int *table, size_t table_size, int id)
+{
+	int i;
+	for (i = 0; i < table_size; i++) {
+		if (table[i] == id)
+			return true;
+	}
+
+	return false;
+}
+
+/// Reads 8 bytes in the endian order specified in MI->cs->mode.
+uint64_t readBytes64(MCInst *MI, const uint8_t *Bytes)
+{
+	assert(MI && Bytes);
+	uint64_t Insn;
+	if (MODE_IS_BIG_ENDIAN(MI->csh->mode))
+		Insn = ((uint64_t)Bytes[7] << 0) | ((uint64_t)Bytes[6] << 8) |
+		       ((uint64_t)Bytes[5] << 16) | ((uint64_t)Bytes[4] << 24) |
+					 ((uint64_t)Bytes[3] << 32) | ((uint64_t)Bytes[2] << 40) |
+					 ((uint64_t)Bytes[1] << 48) | ((uint64_t)Bytes[0] << 56);
+	else
+		Insn = ((uint64_t)Bytes[7] << 56) | ((uint64_t)Bytes[6] << 48) |
+		       ((uint64_t)Bytes[5] << 40) | ((uint64_t)Bytes[4] << 32) |
+					 ((uint64_t)Bytes[3] << 24) | ((uint64_t)Bytes[2] << 16) |
+					 ((uint64_t)Bytes[1] << 8) | ((uint64_t)Bytes[0] << 0);
+	return Insn;
+}
+
+/// Reads 6 bytes in the endian order specified in MI->cs->mode.
+uint64_t readBytes48(MCInst *MI, const uint8_t *Bytes)
+{
+	assert(MI && Bytes);
+	uint64_t Insn;
+	if (MODE_IS_BIG_ENDIAN(MI->csh->mode))
+		Insn = ((uint64_t)Bytes[5] << 0) | ((uint64_t)Bytes[4] << 8) |
+		       ((uint64_t)Bytes[3] << 16) | ((uint64_t)Bytes[2] << 24) |
+					 ((uint64_t)Bytes[1] << 32) | ((uint64_t)Bytes[0] << 40);
+	else
+		Insn = ((uint64_t)Bytes[5] << 40) | ((uint64_t)Bytes[4] << 32) |
+					 ((uint64_t)Bytes[3] << 24) | ((uint64_t)Bytes[2] << 16) |
+					 ((uint64_t)Bytes[1] << 8) | ((uint64_t)Bytes[0] << 0);
+	return Insn;
+}
+
 /// Reads 4 bytes in the endian order specified in MI->cs->mode.
 uint32_t readBytes32(MCInst *MI, const uint8_t *Bytes)
 {

@@ -32,6 +32,7 @@ typedef struct insn_map {
 		ppc_suppl_info ppc;
 		loongarch_suppl_info loongarch;
 		aarch64_suppl_info aarch64;
+		systemz_suppl_info systemz;
 	} suppl_info; // Supplementary information for each instruction.
 #endif
 } insn_map;
@@ -140,6 +141,7 @@ DECL_get_detail_op(hppa, HPPA);
 DECL_get_detail_op(loongarch, LoongArch);
 DECL_get_detail_op(mips, Mips);
 DECL_get_detail_op(riscv, RISCV);
+DECL_get_detail_op(systemz, SystemZ);
 
 /// Increments the detail->arch.op_count by one.
 #define DEFINE_inc_detail_op_count(arch, ARCH) \
@@ -173,6 +175,8 @@ DEFINE_inc_detail_op_count(mips, Mips);
 DEFINE_dec_detail_op_count(mips, Mips);
 DEFINE_inc_detail_op_count(riscv, RISCV);
 DEFINE_dec_detail_op_count(riscv, RISCV);
+DEFINE_inc_detail_op_count(systemz, SystemZ);
+DEFINE_dec_detail_op_count(systemz, SystemZ);
 
 /// Returns true if a memory operand is currently edited.
 static inline bool doing_mem(const MCInst *MI)
@@ -203,6 +207,7 @@ DEFINE_get_arch_detail(hppa, HPPA);
 DEFINE_get_arch_detail(loongarch, LoongArch);
 DEFINE_get_arch_detail(mips, Mips);
 DEFINE_get_arch_detail(riscv, RISCV);
+DEFINE_get_arch_detail(systemz, SystemZ);
 
 static inline bool detail_is_set(const MCInst *MI)
 {

@@ -83,7 +83,7 @@ Capstone supports the following architectures: ARM, ARM64 (AArch64), M68K, MIPS,
 - `MIPS`
 - `POWERPC`
 - `SPARC`
-- `SYSZ`
+- `SYSTEMZ`
 - `X86`
 - `XCORE`.
 

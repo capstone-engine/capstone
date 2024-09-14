@@ -122,8 +122,8 @@ struct platform platforms[] = {
 		},
 		{
 				//item 17
-				CS_ARCH_SYSZ,
-				(cs_mode) 0,
+				CS_ARCH_SYSTEMZ,
+				(cs_mode) CS_MODE_BIG_ENDIAN,
 				"SystemZ",
 				"systemz"
 		},
