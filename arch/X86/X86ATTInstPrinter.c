@@ -992,7 +992,8 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 #ifndef CAPSTONE_DIET
 		get_op_access(MI->csh, MCInst_getOpcode(MI), access, &MI->flat_insn->detail->x86.eflags);
 		MI->flat_insn->detail->x86.operands[0].access = access[0];
-		MI->flat_insn->detail->x86.operands[1].access = access[1];
+		MI->flat_insn->detail->x86.operands[1].access = access[1];		
+		MI->flat_insn->detail->x86.operands[2].access = access[2];
 #endif
 	}
 }
