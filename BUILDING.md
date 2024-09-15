@@ -7,17 +7,17 @@ This guide describes how to build Capstone with `CMake`.
 **Unix**
 
 ```bash
-cmake.exe -B build -DCMAKE_BUILD_TYPE=Release # For debug build change it to Debug
-cmake.exe --build build
-cmake.exe --install build
+cmake -B build -DCMAKE_BUILD_TYPE=Release # For debug build change "Release" to "Debug"
+cmake --build build
+cmake --install build --prefix "<install-prefix>"
 ```
 
 **Windows**
 
 ```bash
-cmake -B build 
-cmake --build build --config Release # For debug build change it to Debug
-cmake --install build --prefix "<install-prefix>"
+cmake.exe -B build
+cmake.exe --build build --config Release # For debug build change "Release" to "Debug"
+cmake.exe --install build
 ```
 
 ## Tailor Capstone to your needs.
@@ -81,7 +81,7 @@ X86_REDUCE, run "cmake" with: `-DCAPSTONE_USE_SYS_DYN_MEM=0`, `-DCAPSTONE_BUILD_
 
 ### Developer specific options
 
-- `CAPSTONE_DEBUG`: Change this to ON to enable extra debug assertions.
+- `CAPSTONE_DEBUG`: Change this to ON to enable extra debug assertions. Automatically enabled with `Debug` build.
 - `CAPSTONE_BUILD_CSTEST`: Build `cstest` in `suite/cstest/`. **Note:** `cstest` requires `libyaml` on your system. It attempts to build it from source otherwise.
 - `CMAKE_EXPORT_COMPILE_COMMANDS`: To export `compile_commands.json` for `clangd` and other language servers.
 - `ENABLE_ASAN`: Compiles Capstone with the address sanitizer.
