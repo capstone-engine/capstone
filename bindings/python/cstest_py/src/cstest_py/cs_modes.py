@@ -11,8 +11,8 @@ configs = {
     },
     "CS_OPT_SKIPDATA": {"type": cs.CS_OPT_SKIPDATA, "val": cs.CS_OPT_ON},
     "CS_OPT_UNSIGNED": {"type": cs.CS_OPT_UNSIGNED, "val": cs.CS_OPT_ON},
-    "CS_OPT_NO_BRANCH_OFFSET": {
-        "type": cs.CS_OPT_NO_BRANCH_OFFSET,
+    "CS_OPT_ONLY_OFFSET_BRANCH": {
+        "type": cs.CS_OPT_ONLY_OFFSET_BRANCH,
         "val": cs.CS_OPT_ON,
     },
     "CS_OPT_SYNTAX_DEFAULT": {

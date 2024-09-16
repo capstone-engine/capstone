@@ -784,6 +784,7 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		ud->mode = mode;
 		// by default, do not break instruction into details
 		ud->detail_opt = CS_OPT_OFF;
+		ud->PrintBranchImmAsAddress = true;
 
 		// default skipdata setup
 		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
@@ -1110,8 +1111,8 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 				return CS_ERR_OPTION;
 			}
 			break;
-		case CS_OPT_NO_BRANCH_OFFSET:
-			handle->PrintBranchImmNotAsAddress = value == CS_OPT_ON ? true : false;
+		case CS_OPT_ONLY_OFFSET_BRANCH:
+			handle->PrintBranchImmAsAddress = value == CS_OPT_ON ? false : true;
 			return CS_ERR_OK;
 	}
 

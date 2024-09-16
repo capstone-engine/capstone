@@ -168,7 +168,7 @@ __all__ = [
     'CS_OPT_SKIPDATA_SETUP',
     'CS_OPT_MNEMONIC',
     'CS_OPT_UNSIGNED',
-    'CS_OPT_NO_BRANCH_OFFSET',
+    'CS_OPT_ONLY_OFFSET_BRANCH',
 
     'CS_ERR_OK',
     'CS_ERR_MEM',
@@ -388,7 +388,7 @@ CS_OPT_SKIPDATA = 5  # Skip data when disassembling
 CS_OPT_SKIPDATA_SETUP = 6      # Setup user-defined function for SKIPDATA option
 CS_OPT_MNEMONIC = 7  # Customize instruction mnemonic
 CS_OPT_UNSIGNED = 8  # Print immediate in unsigned form
-CS_OPT_NO_BRANCH_OFFSET = 9  # ARM, prints branch immediates without offset.
+CS_OPT_ONLY_OFFSET_BRANCH = 9  # ARM, prints branch immediates without offset.
 
 # Capstone option value
 CS_OPT_OFF = 0             # Turn OFF an option - default option of CS_OPT_DETAIL

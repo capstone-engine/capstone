@@ -68,7 +68,7 @@ struct cs_struct {
 	cs_err errnum;
 	ARM_ITBlock ITBlock;	// for Arm only
 	ARM_VPTBlock VPTBlock;  // for ARM only
-	bool PrintBranchImmNotAsAddress;
+	bool PrintBranchImmAsAddress;
 	bool ShowVSRNumsAsVR;
 	cs_opt_value detail_opt, imm_unsigned;
 	int syntax;	// asm syntax for simple printer such as ARM, Mips & PPC

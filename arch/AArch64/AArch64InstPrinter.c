@@ -2023,7 +2023,7 @@ void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 	if (MCOperand_isImm(Op)) {
 		SStream_concat0(O, markup("<imm:"));
 		int64_t Offset = MCOperand_getImm(Op) * 4;
-		if (!MI->csh->PrintBranchImmNotAsAddress)
+		if (MI->csh->PrintBranchImmAsAddress)
 			printUInt64(O, (Address + Offset));
 		else {
 			printUInt64Bang(O, (Offset));
@@ -2045,7 +2045,7 @@ void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 	if (MCOperand_isImm(Op)) {
 		const int64_t Offset = MCOperand_getImm(Op);
 		SStream_concat0(O, markup("<imm:"));
-		if (!MI->csh->PrintBranchImmNotAsAddress)
+		if (MI->csh->PrintBranchImmAsAddress)
 			printUInt64(O, ((Address & -4) + Offset));
 		else {
 			printUInt64Bang(O, Offset);
@@ -2067,7 +2067,7 @@ void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 	if (MCOperand_isImm(Op)) {
 		const int64_t Offset = MCOperand_getImm(Op) * 4096;
 		SStream_concat0(O, markup("<imm:"));
-		if (!MI->csh->PrintBranchImmNotAsAddress)
+		if (MI->csh->PrintBranchImmAsAddress)
 			printUInt64(O, ((Address & -4096) + Offset));
 		else {
 			printUInt64Bang(O, Offset);
@@ -2092,7 +2092,7 @@ void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
       Address = Address & -4096;
     }
 		SStream_concat0(O, markup(">"));
-		if (!MI->csh->PrintBranchImmNotAsAddress)
+		if (MI->csh->PrintBranchImmAsAddress)
 			printUInt64(O, (Address + Offset));
 		else {
 			printUInt64Bang(O, Offset);

@@ -21,15 +21,15 @@
         ],
         "PPC":
         [
-          "CS_OPT_NO_BRANCH_OFFSET"
+            "CS_OPT_ONLY_OFFSET_BRANCH"
         ],
         "ARM":
         [
-          "CS_OPT_NO_BRANCH_OFFSET"
+            "CS_OPT_ONLY_OFFSET_BRANCH"
         ],
         "AArch64":
         [
-          "CS_OPT_NO_BRANCH_OFFSET"
+            "CS_OPT_ONLY_OFFSET_BRANCH"
         ]
     },
     "remove_options":

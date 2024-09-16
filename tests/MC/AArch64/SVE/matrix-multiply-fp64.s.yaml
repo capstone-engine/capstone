@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0x20, 0xe4, 0xe2, 0x64 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -13,7 +13,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x27, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -23,7 +23,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa7, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -33,7 +33,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x27, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -43,7 +43,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa7, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -53,7 +53,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x28, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -63,7 +63,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa8, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -73,7 +73,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x28, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -83,7 +83,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa8, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -93,7 +93,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x20, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -103,7 +103,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa0, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -113,7 +113,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x20, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -123,7 +123,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa0, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -133,7 +133,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x20, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -143,7 +143,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa0, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -153,7 +153,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x20, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -163,7 +163,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa0, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -173,7 +173,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x27, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -183,7 +183,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa7, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -193,7 +193,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x27, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -203,7 +203,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa7, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -213,7 +213,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x28, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -223,7 +223,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa8, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -233,7 +233,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0x28, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -243,7 +243,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x24, 0xa8, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -253,7 +253,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x04, 0x23, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -263,7 +263,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x04, 0xa3, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -273,7 +273,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x04, 0x23, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -283,7 +283,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x04, 0xa3, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -293,7 +293,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x04, 0x23, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -303,7 +303,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x04, 0xa3, 0xa4 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -313,7 +313,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x04, 0x23, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -323,7 +323,7 @@ test_cases:
     input:
       bytes: [ 0x40, 0x04, 0xa3, 0xa5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -333,7 +333,7 @@ test_cases:
     input:
       bytes: [ 0x20, 0x00, 0xa2, 0x05 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -343,7 +343,7 @@ test_cases:
     input:
       bytes: [ 0x20, 0x04, 0xa2, 0x05 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -353,7 +353,7 @@ test_cases:
     input:
       bytes: [ 0x20, 0x08, 0xa2, 0x05 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -363,7 +363,7 @@ test_cases:
     input:
       bytes: [ 0x20, 0x0c, 0xa2, 0x05 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -373,7 +373,7 @@ test_cases:
     input:
       bytes: [ 0x20, 0x18, 0xa2, 0x05 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
@@ -383,7 +383,7 @@ test_cases:
     input:
       bytes: [ 0x20, 0x1c, 0xa2, 0x05 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve", "+f64mm" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sve", "+f64mm" ]
     expected:
       insns:
         -
