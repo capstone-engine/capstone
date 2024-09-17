@@ -204,7 +204,10 @@ static void printJumpOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MCOperand_isReg(Op))
 		return printRegName(MI, O, MCOperand_getReg(Op));
 
-	printInt64(O, MCOperand_getImm(Op));
+	// only the upper bits are needed.
+	uint64_t Base = MI->address & ~0x0fffffffull;
+	uint64_t Target = MCOperand_getImm(Op);
+	printInt64(O, Base | Target);
 }
 
 static void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo, SStream *O)
