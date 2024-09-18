@@ -117,6 +117,16 @@ int main(int argc, char **argv)
       (cs_mode)CS_MODE_M680X_6809,
       "M680X_M6809"
     },
+    {
+        CS_ARCH_XTENSA,
+        (cs_mode)CS_MODE_XTENSA,
+        "Xtensa"
+    },
+    {
+        CS_ARCH_XTENSA,
+        (cs_mode)CS_MODE_XTENSA + CS_MODE_BIG_ENDIAN,
+        "Xtensa (Big-Endian)"
+    },
   };
 
   // Read input
