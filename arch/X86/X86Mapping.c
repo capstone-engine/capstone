@@ -2246,7 +2246,7 @@ unsigned short X86_register_map(unsigned short id)
 
 /// The post-printer function. Used to fixup flaws in the disassembly information
 /// of certain instructions.
-void X86_postprinter(csh handle, cs_insn *insn, char *mnem, MCInst *mci) {
+void X86_postprinter(csh handle, cs_insn *insn, SStream *mnem, MCInst *mci) {
 	if (!insn || !insn->detail) {
 		return;
 	}

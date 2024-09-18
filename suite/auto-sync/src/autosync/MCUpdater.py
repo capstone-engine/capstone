@@ -20,13 +20,15 @@ class LLVM_MC_Command:
         self.cmd: str = ""
         self.opts: str = ""
         self.file: Path | None = None
-        self.mattr: str = mattr
+        self.additional_mattr: str = mattr
 
         self.cmd, self.opts, self.file = self.parse_llvm_mc_line(cmd_line)
         if not (self.cmd and self.opts and self.file):
             log.warning(f"Could not parse llvm-mc command: {cmd_line}")
         elif not "--show-encoding" in self.cmd:
             self.cmd = re.sub("llvm-mc", "llvm-mc --show-encoding", self.cmd)
+        elif not "--disassemble" in self.cmd:
+            self.cmd = re.sub("llvm-mc", "llvm-mc --disassemble", self.cmd)
 
     def parse_llvm_mc_line(self, line: str) -> tuple[str, str, Path]:
         test_file_base_dir = str(get_path("{LLVM_LIT_TEST_DIR}").absolute())
@@ -42,20 +44,26 @@ class LLVM_MC_Command:
         opts = ",".join([m.group(2) for m in arch]) if arch else ""
         if mattr:
             opts += "" if not opts else ","
-            opts += ",".join([m.group(2).strip("+") for m in mattr])
+            processed_attr = list()
+            for m in mattr:
+                attribute = m.group(2).strip("+")
+                processed_attr.append(attribute)
+            opts += ",".join(processed_attr)
         return cmd, opts, Path(test_file)
 
     def exec(self) -> sp.CompletedProcess:
         with open(self.file, "b+r") as f:
             content = f.read()
-        if self.mattr:
+        if self.additional_mattr:
             # If mattr exists, patch it into the cmd
             if "mattr" in self.cmd:
                 self.cmd = re.sub(
-                    r"mattr[=\s]+", f"mattr={self.mattr} -mattr=", self.cmd
+                    r"mattr[=\s]+", f"mattr={self.additional_mattr} -mattr=", self.cmd
                 )
             else:
-                self.cmd = re.sub(r"llvm-mc", f"llvm-mc -mattr={self.mattr}", self.cmd)
+                self.cmd = re.sub(
+                    r"llvm-mc", f"llvm-mc -mattr={self.additional_mattr}", self.cmd
+                )
 
         log.debug(f"Run: {self.cmd}")
         result = sp.run(self.cmd.split(" "), input=content, capture_output=True)
@@ -78,11 +86,7 @@ class MCTest:
 
     def __init__(self, arch: str, opts: list[str], encoding: str, asm_text: str):
         self.arch = arch
-        if arch.lower() in ["arm", "powerpc", "ppc", "aarch64"]:
-            # Arch and PPC require this option for MC tests.
-            self.opts = ["CS_OPT_NO_BRANCH_OFFSET"] + opts
-        else:
-            self.opts = opts
+        self.opts = opts
         self.encoding: list[str] = [encoding]
         self.asm_text: list[str] = [asm_text]
 
@@ -263,7 +267,7 @@ class MCUpdater:
             else ""
         )
         # A list of options which are always added.
-        self.mandatory_options: str = (
+        self.mandatory_options: list[str] = (
             self.conf["mandatory_options"][self.arch]
             if self.arch in self.conf["mandatory_options"]
             else list()
@@ -274,13 +278,15 @@ class MCUpdater:
             else list()
         )
         self.remove_options = [x.lower() for x in self.remove_options]
-        self.replace_option_map: str = (
+        self.replace_option_map: dict = (
             self.conf["replace_option_map"][self.arch]
             if self.arch in self.conf["replace_option_map"]
             else {}
         )
         self.replace_option_map = {
-            k.lower(): v for k, v in self.replace_option_map.items()
+            k.lower(): v
+            for k, v in self.replace_option_map.items()
+            if k.lower not in self.remove_options
         }
         self.multi_mode = multi_mode
 
@@ -297,12 +303,14 @@ class MCUpdater:
             )
 
     def write_to_build_dir(self):
+        no_tests_file = 0
         file_cnt = 0
         test_cnt = 0
         overwritten = 0
         files_written = set()
         for test in sorted(self.test_files):
             if not test.has_tests():
+                no_tests_file += 1
                 continue
             file_cnt += 1
             test_cnt += test.num_test_cases()
@@ -332,7 +340,7 @@ class MCUpdater:
                     f"The following file exists already: {filename}\n"
                     "This is not allowed in multi-mode."
                 )
-            else:
+            elif not self.multi_mode and filename.exists():
                 log.debug(f"Overwrite: {filename}")
                 overwritten += 1
             with open(filename, write_mode) as f:
@@ -340,7 +348,10 @@ class MCUpdater:
                 log.debug(f"Write {filename}")
             files_written.add(filename)
         log.info(
-            f"Processed {file_cnt} files with {test_cnt} test cases. Generated {len(files_written)} files"
+            f"Got {len(self.test_files)} test files.\n"
+            f"\t\tProcessed {file_cnt} files with {test_cnt} test cases.\n"
+            f"\t\tIgnored {no_tests_file} without tests.\n"
+            f"\t\tGenerated {len(files_written)} files"
         )
         if overwritten > 0:
             log.warning(
@@ -544,4 +555,5 @@ if __name__ == "__main__":
         args.excluded_files,
         args.included_files,
         args.unified_tests,
+        True,
     ).gen_all()

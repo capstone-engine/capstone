@@ -16,7 +16,7 @@ typedef void (*Printer_t)(MCInst *MI, SStream *OS, void *info);
 
 // function to be called after Printer_t
 // this is the best time to gather insn's characteristics
-typedef void (*PostPrinter_t)(csh handle, cs_insn *, char *mnem, MCInst *mci);
+typedef void (*PostPrinter_t)(csh handle, cs_insn *, SStream *mnem, MCInst *mci);
 
 typedef bool (*Disasm_t)(csh handle, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
 

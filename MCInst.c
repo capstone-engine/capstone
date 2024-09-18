@@ -16,7 +16,7 @@
 
 #define MCINST_CACHE (ARR_SIZE(mcInst->Operands) - 1)
 
-void MCInst_Init(MCInst *inst)
+void MCInst_Init(MCInst *inst, cs_arch arch)
 {
 	// unnecessary to initialize in loop . its expensive and inst->size should be honored
 	inst->Operands[0].Kind = kInvalid;
@@ -37,6 +37,15 @@ void MCInst_Init(MCInst *inst)
 	inst->isAliasInstr = false;
 	inst->fillDetailOps = false;
 	memset(&inst->hppa_ext, 0, sizeof(inst->hppa_ext));
+
+	// Set default assembly dialect.
+	switch (arch) {
+	default:
+		break;
+	case CS_ARCH_SYSTEMZ:
+		inst->MAI.assemblerDialect = SYSTEMZASMDIALECT_AD_HLASM;
+		break;
+	}
 }
 
 void MCInst_clear(MCInst *inst)
@@ -146,6 +155,11 @@ void MCOperand_setReg(MCOperand *op, unsigned Reg)
 }
 
 int64_t MCOperand_getImm(const MCOperand *op)
+{
+	return op->ImmVal;
+}
+
+int64_t MCOperand_getExpr(const MCOperand *op)
 {
 	return op->ImmVal;
 }

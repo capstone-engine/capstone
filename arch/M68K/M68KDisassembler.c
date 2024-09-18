@@ -321,13 +321,6 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op* op, uint32_
 		op->mem.base_reg = M68K_REG_INVALID;
 		op->mem.index_reg = M68K_REG_INVALID;
 
-		/* Not sure how to deal with this?
-		   if (EXT_EFFECTIVE_ZERO(extension)) {
-		   strcpy(mode, "0");
-		   break;
-		   }
-		 */
-
 		op->mem.in_disp = EXT_BASE_DISPLACEMENT_PRESENT(extension) ? (EXT_BASE_DISPLACEMENT_LONG(extension) ? read_imm_32(info) : read_imm_16(info)) : 0;
 		op->mem.out_disp = EXT_OUTER_DISPLACEMENT_PRESENT(extension) ? (EXT_OUTER_DISPLACEMENT_LONG(extension) ? read_imm_32(info) : read_imm_16(info)) : 0;
 

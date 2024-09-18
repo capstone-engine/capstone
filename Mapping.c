@@ -150,7 +150,10 @@ void map_implicit_reads(MCInst *MI, const insn_map *imap)
 			return;
 		}
 		detail->regs_read[detail->regs_read_count++] = reg;
-		reg = imap[Opcode].regs_use[++i];
+		if (i + 1 < MAX_IMPL_R_REGS) {
+			// Select next one
+			reg = imap[Opcode].regs_use[++i];
+		}
 	}
 #endif // CAPSTONE_DIET
 }
@@ -175,7 +178,10 @@ void map_implicit_writes(MCInst *MI, const insn_map *imap)
 			return;
 		}
 		detail->regs_write[detail->regs_write_count++] = reg;
-		reg = imap[Opcode].regs_mod[++i];
+		if (i + 1 < MAX_IMPL_W_REGS) {
+			// Select next one
+			reg = imap[Opcode].regs_mod[++i];
+		}
 	}
 #endif // CAPSTONE_DIET
 }
@@ -340,6 +346,7 @@ DEFINE_get_detail_op(hppa, HPPA);
 DEFINE_get_detail_op(loongarch, LoongArch);
 DEFINE_get_detail_op(mips, Mips);
 DEFINE_get_detail_op(riscv, RISCV);
+DEFINE_get_detail_op(systemz, SystemZ);
 
 /// Returns true if for this architecture the
 /// alias operands should be filled.
@@ -347,7 +354,7 @@ DEFINE_get_detail_op(riscv, RISCV);
 /// 			So it can be toggled between disas() calls.
 bool map_use_alias_details(const MCInst *MI) {
 	assert(MI);
-	return !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
+	return (MI->csh->detail_opt & CS_OPT_ON) && !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
 }
 
 /// Sets the setDetailOps flag to @p Val.
@@ -433,7 +440,7 @@ uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,
 		} else if (id[i] > map[m].str[j]) {
 			l = m + 1;
 		}
-		if (m == 0 || (l + r) / 2 >= map_len) {
+		if ((m == 0 && id[i] < map[m].str[j]) || (l + r) / 2 >= map_len) {
 			// Break before we go out of bounds.
 			break;
 		}

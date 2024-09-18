@@ -1,4 +1,7 @@
 {
+    "unify_test_cases": [
+        "ARM"
+    ],
     "additional_mattr":
     {
         "AArch64":
@@ -15,6 +18,18 @@
         "Mips":
         [
             "CS_OPT_SYNTAX_NOREGNAME"
+        ],
+        "PPC":
+        [
+          "CS_OPT_NO_BRANCH_OFFSET"
+        ],
+        "ARM":
+        [
+          "CS_OPT_NO_BRANCH_OFFSET"
+        ],
+        "AArch64":
+        [
+          "CS_OPT_NO_BRANCH_OFFSET"
         ]
     },
     "remove_options":
@@ -74,6 +89,23 @@
             "i7200": "CS_MODE_I7200",
             "mips_nofloat": "CS_MODE_MIPS_NOFLOAT",
             "mips_ptr64": "CS_MODE_MIPS_PTR64"
+        },
+        "SystemZ": {
+    	    "arch8": "CS_MODE_SYSTEMZ_ARCH8",
+    	    "arch9": "CS_MODE_SYSTEMZ_ARCH9",
+    	    "arch10": "CS_MODE_SYSTEMZ_ARCH10",
+    	    "arch11": "CS_MODE_SYSTEMZ_ARCH11",
+    	    "arch12": "CS_MODE_SYSTEMZ_ARCH12",
+    	    "arch13": "CS_MODE_SYSTEMZ_ARCH13",
+    	    "arch14": "CS_MODE_SYSTEMZ_ARCH14",
+    	    "z10": "CS_MODE_SYSTEMZ_Z10",
+    	    "z196": "CS_MODE_SYSTEMZ_Z196",
+    	    "zec12": "CS_MODE_SYSTEMZ_ZEC12",
+    	    "z13": "CS_MODE_SYSTEMZ_Z13",
+    	    "z14": "CS_MODE_SYSTEMZ_Z14",
+    	    "z15": "CS_MODE_SYSTEMZ_Z15",
+    	    "z16": "CS_MODE_SYSTEMZ_Z16",
+    	    "generic": "CS_MODE_SYSTEMZ_GENERIC"
         }
     }
 }

@@ -22,3 +22,6 @@ requires-python = ">= 3.11"
 [tool.setuptools]
 packages = ["autosync", "autosync.cpptranslator", "autosync.cpptranslator.patches"]
 package-dir = {"" = "src"}
+
+[project.scripts]
+ASUpdater = "autosync.ASUpdater:main"

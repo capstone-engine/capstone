@@ -69,6 +69,7 @@ void print_test_run_stats(const TestRunStats *stats)
 	printf("\tSuccessful: %" PRId32 "\n", stats->successful);
 	printf("\tSkipped: %" PRId32 "\n", stats->skipped);
 	printf("\tFailed: %" PRId32 "\n", stats->failed);
+	printf("\n\tDecoded instructions: %" PRId32 "\n", stats->decoded_insns);
 	printf("-----------------------------------------\n");
 	printf("\n");
 }

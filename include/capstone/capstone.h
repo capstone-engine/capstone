@@ -140,11 +140,15 @@ typedef enum cs_arch {
 #else
 	CS_ARCH_AARCH64 = 1,	///< AArch64
 #endif
+#ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER
+	CS_ARCH_SYSZ = 2,	///< SystemZ architecture
+#else
+	CS_ARCH_SYSTEMZ = 2,	///< SystemZ architecture
+#endif
 	CS_ARCH_MIPS,		///< Mips architecture
 	CS_ARCH_X86,		///< X86 architecture (including x86 & x86-64)
 	CS_ARCH_PPC,		///< PowerPC architecture
 	CS_ARCH_SPARC,		///< Sparc architecture
-	CS_ARCH_SYSZ,		///< SystemZ architecture
 	CS_ARCH_XCORE,		///< XCore architecture
 	CS_ARCH_M68K,		///< 68K architecture
 	CS_ARCH_TMS320C64X,	///< TMS320C64x architecture
@@ -263,6 +267,21 @@ typedef enum cs_mode {
 	CS_MODE_HPPA_20W = CS_MODE_HPPA_20 | (1 << 3), ///< HPPA 2.0 wide
 	CS_MODE_LOONGARCH32  = 1 << 0,        ///< LoongArch32
 	CS_MODE_LOONGARCH64  = 1 << 1,        ///< LoongArch64
+	CS_MODE_SYSTEMZ_ARCH8 = 1 << 1, ///< Enables features of the ARCH8 processor
+	CS_MODE_SYSTEMZ_ARCH9 = 1 << 2, ///< Enables features of the ARCH9 processor
+	CS_MODE_SYSTEMZ_ARCH10 = 1 << 3, ///< Enables features of the ARCH10 processor
+	CS_MODE_SYSTEMZ_ARCH11 = 1 << 4, ///< Enables features of the ARCH11 processor
+	CS_MODE_SYSTEMZ_ARCH12 = 1 << 5, ///< Enables features of the ARCH12 processor
+	CS_MODE_SYSTEMZ_ARCH13 = 1 << 6, ///< Enables features of the ARCH13 processor
+	CS_MODE_SYSTEMZ_ARCH14 = 1 << 7, ///< Enables features of the ARCH14 processor
+	CS_MODE_SYSTEMZ_Z10 = 1 << 8, ///< Enables features of the Z10 processor
+	CS_MODE_SYSTEMZ_Z196 = 1 << 9, ///< Enables features of the Z196 processor
+	CS_MODE_SYSTEMZ_ZEC12 = 1 << 10, ///< Enables features of the ZEC12 processor
+	CS_MODE_SYSTEMZ_Z13 = 1 << 11, ///< Enables features of the Z13 processor
+	CS_MODE_SYSTEMZ_Z14 = 1 << 12, ///< Enables features of the Z14 processor
+	CS_MODE_SYSTEMZ_Z15 = 1 << 13, ///< Enables features of the Z15 processor
+	CS_MODE_SYSTEMZ_Z16 = 1 << 14, ///< Enables features of the Z16 processor
+	CS_MODE_SYSTEMZ_GENERIC = 1 << 15, ///< Enables features of the generic processor
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);
@@ -451,12 +470,17 @@ typedef struct cs_detail {
 #else
 		cs_aarch64 aarch64; ///< AArch6464 architecture (aka ARM64)
 #endif
+
+#ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER
+		cs_sysz sysz;   ///< SystemZ architecture
+#else
+		cs_systemz systemz; ///< SystemZ architecture (aka SysZ)
+#endif
 		cs_arm arm;     ///< ARM architecture (including Thumb/Thumb2)
 		cs_m68k m68k;   ///< M68K architecture
 		cs_mips mips;   ///< MIPS architecture
 		cs_ppc ppc;	    ///< PowerPC architecture
 		cs_sparc sparc; ///< Sparc architecture
-		cs_sysz sysz;   ///< SystemZ architecture
 		cs_xcore xcore; ///< XCore architecture
 		cs_tms320c64x tms320c64x;  ///< TMS320C64x architecture
 		cs_m680x m680x; ///< M680X architecture
@@ -591,7 +615,10 @@ void CAPSTONE_API cs_arch_register_powerpc(void);
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_sparc(void);
 CAPSTONE_EXPORT
-void CAPSTONE_API cs_arch_register_sysz(void);
+void CAPSTONE_API cs_arch_register_systemz(void);
+#ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER
+#define cs_arch_register_sysz cs_arch_register_systemz
+#endif
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_xcore(void);
 CAPSTONE_EXPORT

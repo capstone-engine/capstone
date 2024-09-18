@@ -73,7 +73,7 @@ int main(int argc, char** argv)
                 Data[0] = 15;
             } else if (strcmp(arch, "CS_ARCH_SPARC") == 0 && strcmp(mode, "CS_MODE_BIG_ENDIAN + CS_MODE_V9") == 0) {
                 Data[0] = 16;
-            } else if (strcmp(arch, "CS_ARCH_SYSZ") == 0 && strcmp(mode, "0") == 0) {
+            } else if (strcmp(arch, "CS_ARCH_SYSTEMZ") == 0 && strcmp(mode, "0") == 0) {
                 Data[0] = 17;
             } else if (strcmp(arch, "CS_ARCH_XCORE") == 0 && strcmp(mode, "0") == 0) {
                 Data[0] = 18;

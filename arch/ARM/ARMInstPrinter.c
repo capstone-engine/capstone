@@ -359,7 +359,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		if (MCRegisterClass_contains(MRC, Reg)) {
 			MCInst NewMI;
 
-			MCInst_Init(&NewMI);
+			MCInst_Init(&NewMI, CS_ARCH_ARM);
 			MCInst_setOpcode(&NewMI, Opcode);
 
 			if (isStore)
@@ -490,20 +490,13 @@ void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat0(O, "[pc, ");
 
 	int32_t OffImm = (int32_t)MCOperand_getImm(MO1);
-	bool isSub = OffImm < 0;
 
 	// Special value for #-0. All others are normal.
 	if (OffImm == INT32_MIN)
 		OffImm = 0;
-	if (isSub) {
-		SStream_concat(O, "%s", markup("<imm:"));
-		printInt32Bang(O, OffImm);
-		SStream_concat0(O, markup(">"));
-	} else {
-		SStream_concat(O, "%s", markup("<imm:"));
-		printInt32Bang(O, OffImm);
-		SStream_concat0(O, markup(">"));
-	}
+	SStream_concat(O, "%s", markup("<imm:"));
+	printInt32Bang(O, OffImm);
+	SStream_concat0(O, markup(">"));
 	SStream_concat(O, "%s", "]");
 	SStream_concat0(O, markup(">"));
 }

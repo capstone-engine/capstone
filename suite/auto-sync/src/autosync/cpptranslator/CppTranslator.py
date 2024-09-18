@@ -6,6 +6,7 @@
 import argparse
 import logging as log
 import sys
+import re
 from pathlib import Path
 
 import termcolor
@@ -87,6 +88,7 @@ from autosync.Helper import (
     print_prominent_warning,
     run_clang_format,
 )
+from autosync.cpptranslator.patches.isUInt import IsUInt
 
 
 class Translator:
@@ -136,6 +138,7 @@ class Translator:
         CreateOperand0.__name__: 0,  # ◁───┐ `CreateOperand0` removes most calls to MI.addOperand().
         AddOperand.__name__: 1,  # ────────┘ The ones left are fixed with the `AddOperand` patch.
         CreateOperand1.__name__: 0,
+        IsUInt.__name__: 0,
         GetOpcode.__name__: 0,
         SetOpcode.__name__: 0,
         GetOperand.__name__: 0,
@@ -248,6 +251,8 @@ class Translator:
                     patch = CreateOperand0(p)
                 case CreateOperand1.__name__:
                     patch = CreateOperand1(p)
+                case IsUInt.__name__:
+                    patch = IsUInt(p)
                 case GetOpcode.__name__:
                     patch = GetOpcode(p)
                 case SetOpcode.__name__:
@@ -391,6 +396,17 @@ class Translator:
         file_constraints = apply_only_to[patch_name]
         if self.current_src_path_in.name in file_constraints["files"]:
             return True
+        elif (
+            re.search("InstPrinter.cpp", self.current_src_path_in.name)
+            and patch_name == AddCSDetail.__name__
+        ):
+            print_prominent_warning(
+                (
+                    f"The AddCSDetail patch is not applied to {self.current_src_path_in.name}. "
+                    "Have you forgotten to add it to arch_config.json?"
+                ),
+                False,
+            )
         return False
 
     def translate(self) -> None:

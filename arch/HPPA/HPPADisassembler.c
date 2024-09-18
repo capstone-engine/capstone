@@ -221,8 +221,8 @@ static void push_str_modifier(hppa_ext *hppa, const char *modifier)
 		hppa_modifier *mod = &hppa->modifiers[hppa->mod_num++];
 		assert(hppa->mod_num <= HPPA_MAX_MODIFIERS_LEN);
 		mod->type = HPPA_MOD_STR;
-		assert(strlen(modifier) <= HPPA_STR_MODIFIER_LEN);
-		strcpy(mod->str_mod, modifier);
+		assert(strlen(modifier) < HPPA_STR_MODIFIER_LEN);
+		strncpy(mod->str_mod, modifier, HPPA_STR_MODIFIER_LEN - 1);
 	}
 }
 
@@ -1457,7 +1457,7 @@ static void fill_ldst_w_insn_name(MCInst *MI, uint32_t insn)
 	}
 }
 
-static void fill_ldst_w_mods(uint32_t insn, hppa_ext *hppa_ext, uint32_t im)
+static void fill_ldst_w_mods(uint32_t insn, hppa_ext *hppa_ext, int32_t im)
 {
 	if (im >= 0) {
 		push_str_modifier(hppa_ext, "mb");
@@ -1470,7 +1470,7 @@ static bool decode_ldst_w(const cs_struct *ud, MCInst *MI, uint32_t insn)
 {
 	uint32_t opcode = insn >> 26;
 	uint32_t ext = get_insn_bit(insn, 29);
-	uint32_t im = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
+	int32_t im = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
 	im &= ~3;
 	uint32_t r = get_insn_field(insn, 11, 15);
 	uint32_t b = get_insn_field(insn, 6, 10);
@@ -3621,7 +3621,7 @@ static bool decode_load(const cs_struct *ud, MCInst *MI, uint32_t insn)
 {
 	uint32_t opcode = insn >> 26;
 	if (MODE_IS_HPPA_20(ud->mode)) {
-		uint32_t d = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
+		int32_t d = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
 		if (opcode == HPPA_OP_TYPE_LDWM) {
 			if (d < 0) {
 				push_str_modifier(HPPA_EXT_REF(MI), "mb");
@@ -3644,7 +3644,7 @@ static bool decode_store(const cs_struct *ud, MCInst *MI, uint32_t insn)
 	uint32_t opcode = insn >> 26;
 	CREATE_GR_REG(MI, get_insn_field(insn, 11, 15));
 	if (MODE_IS_HPPA_20(ud->mode)) {
-		uint32_t d = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
+		int d = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
 		if (opcode == HPPA_OP_TYPE_STWM) {
 			if (d < 0) {
 				push_str_modifier(HPPA_EXT_REF(MI), "mb");

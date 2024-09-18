@@ -23,7 +23,7 @@ class IsOperandRegImm(Patch):
             "(call_expression"
             "    (field_expression"
             "        ((_) @operand)"
-            '        ((field_identifier) @field_id (#match? @field_id "is(Reg|Imm)"))'
+            '        ((field_identifier) @field_id (#match? @field_id "is(Reg|Imm|Expr)"))'
             "    )"
             "    (argument_list)"
             ") @is_operand"
@@ -36,7 +36,7 @@ class IsOperandRegImm(Patch):
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
         # The operand
         operand: Node = captures[1][0]
-        # 'isReg()/isImm()'
+        # 'isReg()/isImm()/isExpr'
         get_reg_imm = captures[2][0]
 
         fcn = get_text(src, get_reg_imm.start_byte, get_reg_imm.end_byte)

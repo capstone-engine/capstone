@@ -19,7 +19,7 @@ extern "C" {
 #pragma warning(disable : 4201)
 #endif
 
-#define MAX_ALPHA_OPS 3
+#define NUM_ALPHA_OPS 3
 
 //> Operand type for instruction's operands
 typedef enum alpha_op_type {
@@ -43,7 +43,7 @@ typedef struct cs_alpha {
 	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_alpha_op operands[MAX_ALPHA_OPS]; // operands for this instruction.
+	cs_alpha_op operands[NUM_ALPHA_OPS]; // operands for this instruction.
 } cs_alpha;
 
 
