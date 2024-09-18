@@ -501,25 +501,16 @@ else:
 _found = False
 
 
-def _load_lib(_path):
-    def load_lib(path):
-        lib_file = join(path, _lib)
-        if os.path.exists(lib_file):
-            return ctypes.cdll.LoadLibrary(lib_file)
-        else:
-            # if we're on linux, try again with .so.5 extension
-            if lib_file.endswith('.so'):
-                if os.path.exists(lib_file + '.{}'.format(CS_VERSION_MAJOR)):
-                    return ctypes.cdll.LoadLibrary(lib_file + '.{}'.format(CS_VERSION_MAJOR))
-        return None
-
-    if isinstance(_path, str):
-        return load_lib(_path)
-    elif isinstance(_path, ContextManager):
-        with _path as path:
-            load_lib(path)
+def _load_lib(path):
+    lib_file = join(path, _lib)
+    if os.path.exists(lib_file):
+        return ctypes.cdll.LoadLibrary(lib_file)
     else:
-        return None
+        # if we're on linux, try again with .so.5 extension
+        if lib_file.endswith('.so'):
+            if os.path.exists(lib_file + '.{}'.format(CS_VERSION_MAJOR)):
+                return ctypes.cdll.LoadLibrary(lib_file + '.{}'.format(CS_VERSION_MAJOR))
+    return None
 
 
 _cs = None

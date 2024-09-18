@@ -57,10 +57,10 @@ class ASUpdater:
         self.wait_for_user = wait_for_user
         if USteps.ALL in steps:
             self.steps = [
-                    USteps.INC_GEN,
-                    USteps.TRANS,
-                    USteps.DIFF,
-                    USteps.PATCH_HEADER,
+                USteps.INC_GEN,
+                USteps.TRANS,
+                USteps.DIFF,
+                USteps.PATCH_HEADER,
             ]
         else:
             self.steps = steps
