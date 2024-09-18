@@ -4968,17 +4968,6 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "movu.w @(1024,r1),r2"
-        details:
-          sh:
-            operands:
-              -
-                type: SH_OP_MEM
-                mem_disp: 0x400
-                reg: r1
-              -
-                type: SH_OP_REG
-                reg: r2
         asm_text: "zero	{za}"
         is_alias: 1
         details:
