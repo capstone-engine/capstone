@@ -179,12 +179,6 @@ void MCOperand_setFPImm(MCOperand *op, double Val)
 	op->FPImmVal = Val;
 }
 
-int64_t MCOperand_getExpr(const MCOperand *MC)
-{
-	CS_ASSERT(MC->Kind == kExpr);
-	return MC->ImmVal;
-}
-
 MCOperand *MCOperand_CreateReg1(MCInst *mcInst, unsigned Reg)
 {
 	MCOperand *op = &(mcInst->Operands[MCINST_CACHE]);

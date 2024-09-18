@@ -216,7 +216,6 @@ void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args)
 	} break;
 	}
 
-	const map_insn_ops *ops = insn_operands + MCInst_getOpcode(MI);
-	xop->access = (ops->ops + op_num)->access;
+	xop->access = map_get_op_access(MI, op_num);
 	Xtensa_inc_op_count(MI);
 }

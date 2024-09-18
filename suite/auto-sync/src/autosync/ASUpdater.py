@@ -56,21 +56,12 @@ class ASUpdater:
         self.inc_list = inc_list
         self.wait_for_user = wait_for_user
         if USteps.ALL in steps:
-            if arch not in ["Xtensa"]:
-                self.steps = [
-                    USteps.INC_GEN,
-                    USteps.TRANS,
-                    USteps.DIFF,
-                    USteps.MC,
-                    USteps.PATCH_HEADER,
-                ]
-            else:
-                self.steps = [
+            self.steps = [
                     USteps.INC_GEN,
                     USteps.TRANS,
                     USteps.DIFF,
                     USteps.PATCH_HEADER,
-                ]
+            ]
         else:
             self.steps = steps
         self.copy_translated = copy_translated

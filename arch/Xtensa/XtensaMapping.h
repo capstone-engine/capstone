@@ -4,6 +4,8 @@
 #ifndef XTENSA_MAPPING_H
 #define XTENSA_MAPPING_H
 
+#include "../../Mapping.h"
+
 typedef enum {
 #include "XtensaGenCSOpGroup.inc"
 } xtensa_op_group;
@@ -26,7 +28,7 @@ void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args);
 
 static inline void add_cs_detail(MCInst *MI, xtensa_op_group op_group, ...)
 {
-	if (!MI->flat_insn->detail)
+	if (!detail_is_set(MI))
 		return;
 	va_list args;
 	va_start(args, op_group);

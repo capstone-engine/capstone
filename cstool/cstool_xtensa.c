@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <capstone/capstone.h>
 
-static inline void print_insn_detail_xtensa(csh handle, cs_insn *ins)
+void print_insn_detail_xtensa(csh handle, cs_insn *ins)
 {
 	int i;
 	cs_regs regs_read, regs_write;
