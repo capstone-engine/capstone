@@ -1,0 +1,1242 @@
+test_cases:
+  -
+    input:
+      bytes: [0x8d, 0x4c, 0x32, 0x08, 0x01, 0xd8, 0x81, 0xc6, 0x34, 0x12, 0x00, 0x00, 0x05, 0x23, 0x01, 0x00, 0x00, 0x36, 0x8b, 0x84, 0x91, 0x23, 0x01, 0x00, 0x00, 0x41, 0x8d, 0x84, 0x39, 0x89, 0x67, 0x00, 0x00, 0x8d, 0x87, 0x89, 0x67, 0x00, 0x00, 0xb4, 0xc6, 0x66, 0xe9, 0xb8, 0x00, 0x00, 0x00, 0x67, 0xff, 0xa0, 0x23, 0x01, 0x00, 0x00, 0x66, 0xe8, 0xcb, 0x00, 0x00, 0x00, 0x74, 0xfc, ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "lea cx, [si + 0x32]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8d, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x4c
+            enc_modrm_offset: 0x1
+            disp: 0x32
+            enc_disp_offset: 0x2
+            enc_disp_size: 0x1
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cx
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: si
+                mem_disp: 0x32
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ si ]
+          regs_write: [ cx ]
+      -
+        asm_text: "or byte ptr [bx + di], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x08, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x1
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: di
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_RESET_OF, X86_EFLAGS_RESET_CF, X86_EFLAGS_UNDEFINED_AF ]
+          regs_read: [ bx, di, al ]
+          regs_write: [ flags ]
+      -
+        asm_text: "fadd dword ptr [bx + di + 0x34c6]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xd8, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x81
+            enc_modrm_offset: 0x1
+            disp: 0x34c6
+            enc_disp_offset: 0x2
+            enc_disp_size: 0x2
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: di
+                mem_disp: 0x34c6
+                size: 4
+                access: CS_AC_READ
+            fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1, X86_FPU_FLAGS_UNDEFINED_C0, X86_FPU_FLAGS_UNDEFINED_C2, X86_FPU_FLAGS_UNDEFINED_C3]
+          regs_read: [ bx, di ]
+          regs_write: [ fpsw ]
+      -
+        asm_text: "adc al, byte ptr [bx + si]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x12, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: si
+                size: 1
+                access: CS_AC_READ
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_TEST_CF ]
+          regs_read: [ flags, al, bx, si ]
+          regs_write: [ flags, al ]
+      -
+        asm_text: "add byte ptr [di], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x00, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x5
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: di
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_READ
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ di, al ]
+          regs_write: [ flags ]
+      -
+        asm_text: "and ax, word ptr [bx + di]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x23, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x1
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: di
+                size: 2
+                access: CS_AC_READ
+            eflags: [  X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_RESET_OF, X86_EFLAGS_RESET_CF, X86_EFLAGS_UNDEFINED_AF ]
+          regs_read: [ ax, bx, di ]
+          regs_write: [ flags, ax ]
+      -
+        asm_text: "add byte ptr [bx + si], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x00, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: si
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_READ
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ bx, si, al ]
+          regs_write: [ flags ]
+      -
+        asm_text: "mov ax, word ptr ss:[si + 0x2391]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_SS, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8b, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x84
+            enc_modrm_offset: 0x2
+            disp: 0x2391
+            enc_disp_offset: 0x3
+            enc_disp_size: 0x2
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_segment: ss
+                mem_base: si
+                mem_disp: 0x2391
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ ss, si ]
+          regs_write: [ ax ]
+      -
+        asm_text: "add word ptr [bx + si], ax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x01, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: si
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_READ
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ bx, si, ax ]
+          regs_write: [ flags ]
+      -
+        asm_text: "add byte ptr [bx + di - 0x73], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x00, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x41
+            enc_modrm_offset: 0x1
+            disp: -0x73
+            enc_disp_offset: 0x2
+            enc_disp_size: 0x1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: di
+                mem_disp: -0x73
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_READ
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ bx, di, al ]
+          regs_write: [ flags ]
+      -
+        asm_text: "test byte ptr [bx + di], bh"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x84, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x39
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: di
+                size: 1
+              -
+                type: X86_OP_REG
+                reg: bh
+                size: 1
+          regs_read: [ bx, di ]
+      -
+        asm_text: "mov word ptr [bx], sp"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x89, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x67
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            enc_disp_offset: 0x2
+            enc_disp_size: 0x1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: sp
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ bx, sp ]
+      -
+        asm_text: "add byte ptr [di - 0x7679], cl"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x00, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x8d
+            enc_modrm_offset: 0x1
+            disp: -0x7679
+            enc_disp_offset: 0x2
+            enc_disp_size: 0x2
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: di
+                mem_disp: -0x7679
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ di, cl ]
+          regs_write: [ flags ]
+      -
+        asm_text: "add byte ptr [eax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_ADDRSIZE ]
+            opcode: [ 0x00, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            enc_modrm_offset: 0x2
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_READ
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ eax, al ]
+          regs_write: [ flags ]
+      -
+        asm_text: "mov ah, 0xc6"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xb4, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ah
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0xc6
+                size: 1
+          regs_write: [ ah ]
+      -
+        asm_text: "jmp 0x10e7"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xe9, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x10e7
+                size: 4
+      -
+        asm_text: "jmp word ptr [eax + 0x123]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_ADDRSIZE ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0xa0
+            enc_modrm_offset: 0x2
+            disp: 0x123
+            enc_disp_offset: 0x3
+            enc_disp_size: 0x4
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                mem_disp: 0x123
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ eax ]
+      -
+        asm_text: "call 0x1107"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x1107
+                size: 4
+          regs_read: [ esp, eip ]
+          regs_write: [ esp ]
+      -
+        asm_text: "je 0x103a"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x74, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            disp: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x103a
+                size: 2
+            eflags: [  X86_EFLAGS_TEST_ZF ]
+          regs_read: [ flags ]
+  -
+    input:
+      bytes: [0x8d, 0x4c, 0x32, 0x08, 0x01, 0xd8, 0x81, 0xc6, 0x34, 0x12, 0x00, 0x00, 0x05, 0x23, 0x01, 0x00, 0x00, 0x36, 0x8b, 0x84, 0x91, 0x23, 0x01, 0x00, 0x00, 0x41, 0x8d, 0x84, 0x39, 0x89, 0x67, 0x00, 0x00, 0x8d, 0x87, 0x89, 0x67, 0x00, 0x00, 0xb4, 0xc6, 0xe9, 0xea, 0xbe, 0xad, 0xde, 0xff, 0xa0, 0x23, 0x01, 0x00, 0x00, 0xe8, 0xdf, 0xbe, 0xad, 0xde, 0x74, 0xff, ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "leal 8(%edx, %esi), %ecx"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8d, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x4c
+            enc_modrm_offset: 0x1
+            disp: 0x8
+            enc_disp_offset: 0x3
+            enc_disp_size: 0x1
+            sib: 0x32
+            sib_base: edx
+            sib_index: esi
+            sib_scale: 1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: edx
+                mem_index: esi
+                mem_disp: 0x8
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: ecx
+                size: 4
+                access: CS_AC_WRITE
+          regs_read: [ edx, esi ]
+          regs_write: [ ecx ]
+      -
+        asm_text: "addl %ebx, %eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x01, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0xd8
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ebx
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ_WRITE
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ ebx, eax ]
+          regs_write: [ eflags, eax ]
+      -
+        asm_text: "addl $0x1234, %esi"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x81, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0xc6
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x1234
+                size: 4
+              -
+                type: X86_OP_REG
+                reg: esi
+                size: 4
+                access: CS_AC_READ_WRITE
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ esi ]
+          regs_write: [ eflags, esi ]
+      -
+        asm_text: "addl $0x123, %eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x05, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x123
+                size: 4
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ_WRITE
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ eax ]
+          regs_write: [ eflags, eax ]
+      -
+        asm_text: "movl %ss:0x123(%ecx, %edx, 4), %eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_SS, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8b, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x84
+            enc_modrm_offset: 0x2
+            disp: 0x123
+            enc_disp_offset: 0x4
+            enc_disp_size: 0x4
+            sib: 0x91
+            sib_base: ecx
+            sib_index: edx
+            sib_scale: 4
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_segment: ss
+                mem_base: ecx
+                mem_index: edx
+                mem_scale: 4
+                mem_disp: 0x123
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+          regs_read: [ ss, ecx, edx ]
+          regs_write: [ eax ]
+      -
+        asm_text: "incl %ecx"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x41, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ecx
+                size: 4
+                access: CS_AC_READ_WRITE
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ ecx ]
+          regs_write: [ eflags, ecx ]
+      -
+        asm_text: "leal 0x6789(%ecx, %edi), %eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8d, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x84
+            enc_modrm_offset: 0x1
+            disp: 0x6789
+            enc_disp_offset: 0x3
+            enc_disp_size: 0x4
+            sib: 0x39
+            sib_base: ecx
+            sib_index: edi
+            sib_scale: 1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ecx
+                mem_index: edi
+                mem_disp: 0x6789
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+          regs_read: [ ecx, edi ]
+          regs_write: [ eax ]
+      -
+        asm_text: "leal 0x6789(%edi), %eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8d, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x87
+            enc_modrm_offset: 0x1
+            disp: 0x6789
+            enc_disp_offset: 0x2
+            enc_disp_size: 0x4
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: edi
+                mem_disp: 0x6789
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+          regs_read: [ edi ]
+          regs_write: [ eax ]
+      -
+        asm_text: "movb $0xc6, %ah"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xb4, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0xc6
+                size: 1
+              -
+                type: X86_OP_REG
+                reg: ah
+                size: 1
+                access: CS_AC_WRITE
+          regs_write: [ ah ]
+      -
+        asm_text: "jmp 0xdeadcf18"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe9, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0xdeadcf18
+                size: 4
+      -
+        asm_text: "jmpl *0x123(%eax)"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0xa0
+            enc_modrm_offset: 0x1
+            disp: 0x123
+            enc_disp_offset: 0x2
+            enc_disp_size: 0x4
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                mem_disp: 0x123
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ eax ]
+      -
+        asm_text: "calll 0xdeadcf18"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0xdeadcf18
+                size: 4
+          regs_read: [ esp, eip ]
+          regs_write: [ esp ]
+      -
+        asm_text: "je 0x103a"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x74, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x103a
+                size: 4
+            eflags: [  X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags ]
+  -
+    input:
+      bytes: [0x8d, 0x4c, 0x32, 0x08, 0x01, 0xd8, 0x81, 0xc6, 0x34, 0x12, 0x00, 0x00, 0x05, 0x23, 0x01, 0x00, 0x00, 0x36, 0x8b, 0x84, 0x91, 0x23, 0x01, 0x00, 0x00, 0x41, 0x8d, 0x84, 0x39, 0x89, 0x67, 0x00, 0x00, 0x8d, 0x87, 0x89, 0x67, 0x00, 0x00, 0xb4, 0xc6, 0xe9, 0xea, 0xbe, 0xad, 0xde, 0xff, 0xa0, 0x23, 0x01, 0x00, 0x00, 0xe8, 0xdf, 0xbe, 0xad, 0xde, 0x74, 0xff, ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "lea ecx, [edx + esi + 8]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8d, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x4c
+            enc_modrm_offset: 0x1
+            disp: 0x8
+            enc_disp_offset: 0x3
+            enc_disp_size: 0x1
+            sib: 0x32
+            sib_base: edx
+            sib_index: esi
+            sib_scale: 1
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ecx
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: edx
+                mem_index: esi
+                mem_disp: 0x8
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ edx, esi ]
+          regs_write: [ ecx ]
+      -
+        asm_text: "add eax, ebx"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x01, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0xd8
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: ebx
+                size: 4
+                access: CS_AC_READ
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ eax, ebx ]
+          regs_write: [ eflags, eax ]
+      -
+        asm_text: "add esi, 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x81, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0xc6
+            enc_modrm_offset: 0x1
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: esi
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x1234
+                size: 4
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ esi ]
+          regs_write: [ eflags, esi ]
+      -
+        asm_text: "add eax, 0x123"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x05, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x123
+                size: 4
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ eax ]
+          regs_write: [ eflags, eax ]
+      -
+        asm_text: "mov eax, dword ptr ss:[ecx + edx*4 + 0x123]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_SS, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8b, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x84
+            enc_modrm_offset: 0x2
+            disp: 0x123
+            enc_disp_offset: 0x4
+            enc_disp_size: 0x4
+            sib: 0x91
+            sib_base: ecx
+            sib_index: edx
+            sib_scale: 4
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_segment: ss
+                mem_base: ecx
+                mem_index: edx
+                mem_scale: 4
+                mem_disp: 0x123
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ ss, ecx, edx ]
+          regs_write: [ eax ]
+      -
+        asm_text: "inc ecx"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x41, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ecx
+                size: 4
+                access: CS_AC_READ_WRITE
+            eflags: [  X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF ]
+          regs_read: [ ecx ]
+          regs_write: [ eflags, ecx ]
+      -
+        asm_text: "lea eax, [ecx + edi + 0x6789]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8d, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x84
+            enc_modrm_offset: 0x1
+            disp: 0x6789
+            enc_disp_offset: 0x3
+            enc_disp_size: 0x4
+            sib: 0x39
+            sib_base: ecx
+            sib_index: edi
+            sib_scale: 1
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: ecx
+                mem_index: edi
+                mem_disp: 0x6789
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ ecx, edi ]
+          regs_write: [ eax ]
+      -
+        asm_text: "lea eax, [edi + 0x6789]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8d, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x87
+            enc_modrm_offset: 0x1
+            disp: 0x6789
+            enc_disp_offset: 0x2
+            enc_disp_size: 0x4
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: edi
+                mem_disp: 0x6789
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ edi ]
+          regs_write: [ eax ]
+      -
+        asm_text: "mov ah, 0xc6"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xb4, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ah
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0xc6
+                size: 1
+          regs_write: [ ah ]
+      -
+        asm_text: "jmp 0xdeadcf18"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe9, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0xdeadcf18
+                size: 4
+      -
+        asm_text: "jmp dword ptr [eax + 0x123]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0xa0
+            enc_modrm_offset: 0x1
+            disp: 0x123
+            enc_disp_offset: 0x2
+            enc_disp_size: 0x4
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                mem_disp: 0x123
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ eax ]
+      -
+        asm_text: "call 0xdeadcf18"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0xdeadcf18
+                size: 4
+          regs_read: [ esp, eip ]
+          regs_write: [ esp ]
+      -
+        asm_text: "je 0x103a"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x74, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x103a
+                size: 4
+            eflags: [  X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags ]
+  -
+    input:
+      bytes: [0x55, 0x48, 0x8b, 0x05, 0xb8, 0x13, 0x00, 0x00, 0xe9, 0xea, 0xbe, 0xad, 0xde, 0xff, 0x25, 0x23, 0x01, 0x00, 0x00, 0xe8, 0xdf, 0xbe, 0xad, 0xde, 0x74, 0xff, ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "push rbp"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x55, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: rbp
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ rsp, rbp ]
+          regs_write: [ rsp ]
+      -
+        asm_text: "mov rax, qword ptr [rip + 0x13b8]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x8b, 0x00, 0x00, 0x00 ]
+            rex: 0x48
+            addr_size: 8
+            modrm: 0x5
+            enc_modrm_offset: 0x2
+            disp: 0x13b8
+            enc_disp_offset: 0x3
+            enc_disp_size: 0x4
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: rax
+                size: 8
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: rip
+                mem_disp: 0x13b8
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ rip ]
+          regs_write: [ rax ]
+      -
+        asm_text: "jmp 0xffffffffdeadcef7"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe9, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: -0x21523109
+                size: 8
+      -
+        asm_text: "jmp qword ptr [rip + 0x123]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x25
+            enc_modrm_offset: 0x1
+            disp: 0x123
+            enc_disp_offset: 0x2
+            enc_disp_size: 0x4
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rip
+                mem_disp: 0x123
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ rip ]
+      -
+        asm_text: "call 0xffffffffdeadcef7"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: -0x21523109
+                size: 8
+          regs_read: [ rsp, rip ]
+          regs_write: [ rsp ]
+      -
+        asm_text: "je 0x1019"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x74, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x1019
+                size: 8
+            eflags: [  X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags ]

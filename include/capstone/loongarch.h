@@ -177,6 +177,8 @@ typedef struct {
 		memory_access; ///< Memory access (none/read/write/read+write)
 } loongarch_suppl_info;
 
+#define NUM_LOONGARCH_OPS 8
+
 /// Instruction structure
 typedef struct cs_loongarch {
 	/// The instruction format. Can be use to determine the bit encoding of the instruction.
@@ -185,7 +187,7 @@ typedef struct cs_loongarch {
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_loongarch_op operands[8]; ///< operands for this instruction.
+	cs_loongarch_op operands[NUM_LOONGARCH_OPS]; ///< operands for this instruction.
 } cs_loongarch;
 
 /// LoongArch registers

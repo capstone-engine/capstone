@@ -1,0 +1,60 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x74, 0x7f, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "subhnt z0.b, z1.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x74, 0xbf, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "subhnt z0.h, z1.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x74, 0xff, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "subhnt z0.s, z1.d, z31.d"
+
+  -
+    input:
+      bytes: [ 0x20, 0x74, 0x7f, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "subhnt z0.b, z1.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x74, 0xbf, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "subhnt z0.h, z1.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x74, 0xff, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "subhnt z0.s, z1.d, z31.d"

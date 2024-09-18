@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x83, 0x38, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "sll $a0, $v1, 7"
+  -
+    input:
+      bytes: [ 0x00, 0x65, 0x10, 0x10 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "sllv $v0, $v1, $a1"
+  -
+    input:
+      bytes: [ 0x00, 0x83, 0x38, 0x80 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "sra $a0, $v1, 7"
+  -
+    input:
+      bytes: [ 0x00, 0x65, 0x10, 0x90 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "srav $v0, $v1, $a1"
+  -
+    input:
+      bytes: [ 0x00, 0x83, 0x38, 0x40 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "srl $a0, $v1, 7"
+  -
+    input:
+      bytes: [ 0x00, 0x65, 0x10, 0x50 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "srlv $v0, $v1, $a1"
+  -
+    input:
+      bytes: [ 0x01, 0x26, 0x38, 0xc0 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "rotr $t1, $a2, 7"
+  -
+    input:
+      bytes: [ 0x00, 0xc7, 0x48, 0xd0 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "rotrv $t1, $a2, $a3"

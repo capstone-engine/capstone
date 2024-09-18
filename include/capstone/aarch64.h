@@ -80,7 +80,7 @@ typedef enum VectorLayout {
 // Moved from AArch64BaseInfo.h
 // The CondCodes constants map directly to the 4-bit encoding of the condition
 // field for predicated instructions.
-typedef enum CondCode { // Meaning (integer)          Meaning (floating-point)
+typedef enum AArch64CondCode { // Meaning (integer) Meaning (floating-point)
 	AArch64CC_EQ = 0x0, // Equal                      Equal
 	AArch64CC_NE = 0x1, // Not equal                  Not equal, or unordered
 	AArch64CC_HS = 0x2, // Unsigned higher or same    >, ==, or unordered
@@ -1965,7 +1965,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <AArch64GenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_TSB> end
-	AArch64_TSB_ENDING,
+	AARCH64_TSB_ENDING,
 } aarch64_tsb;
 
 typedef union {
@@ -2788,9 +2788,12 @@ typedef enum {
 	AARCH64_SME_OP_TILE_VEC, ///< SME operand is a tile indexed by a register and/or immediate
 } aarch64_sme_op_type;
 
+#define AARCH64_SLICE_IMM_INVALID UINT16_MAX
+#define AARCH64_SLICE_IMM_RANGE_INVALID UINT8_MAX
+
 typedef struct {
-	int8_t first;
-	int8_t offset;
+	uint8_t first;
+	uint8_t offset;
 } aarch64_imm_range;
 
 /// SME Instruction's matrix operand
@@ -2799,9 +2802,9 @@ typedef struct {
   aarch64_reg tile; ///< Matrix tile register
   aarch64_reg slice_reg; ///< slice index reg
 	union {
-		int8_t imm;
-		aarch64_imm_range imm_range;
-	} slice_offset; ///< slice index offset. Is set to -1 if invalid.
+		uint16_t imm; ///< Invalid if equal to AARCH64_SLICE_IMM_INVALID
+		aarch64_imm_range imm_range; ///< Members are set to AARCH64_SLICE_IMM_RANGE_INVALID if invalid.
+	} slice_offset; ///< slice index offset.
 	bool has_range_offset; ///< If true, the offset is a range.
   bool is_vertical;	///< Flag if slice is vertical or horizontal
 } aarch64_op_sme;
@@ -2849,7 +2852,7 @@ typedef struct {
 	cs_ac_type mem_acc; ///< CGI memory access according to mayLoad and mayStore
 } aarch64_suppl_info;
 
-#define MAX_AARCH64_OPS 8
+#define NUM_AARCH64_OPS 16
 
 /// Instruction structure
 typedef struct cs_aarch64 {
@@ -2862,7 +2865,7 @@ typedef struct cs_aarch64 {
   /// or 0 when instruction has no operand.
   uint8_t op_count;
 
-  cs_aarch64_op operands[MAX_AARCH64_OPS]; ///< operands for this instruction.
+  cs_aarch64_op operands[NUM_AARCH64_OPS]; ///< operands for this instruction.
 } cs_aarch64;
 
 /// AArch64 instruction

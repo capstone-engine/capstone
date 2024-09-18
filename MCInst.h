@@ -20,6 +20,7 @@
 #define CS_MCINST_H
 
 #include "include/capstone/capstone.h"
+#include "MCAsmInfo.h"
 #include "MCInstrDesc.h"
 #include "MCRegisterInfo.h"
 
@@ -72,6 +73,8 @@ void MCOperand_setReg(MCOperand *op, unsigned Reg);
 int64_t MCOperand_getImm(const MCOperand *op);
 
 void MCOperand_setImm(MCOperand *op, int64_t Val);
+
+int64_t MCOperand_getExpr(const MCOperand *op);
 
 double MCOperand_getFPImm(const MCOperand *op);
 
@@ -133,9 +136,10 @@ struct MCInst {
 	bool isAliasInstr; // Flag if this MCInst is an alias.
 	bool fillDetailOps; // If set, detail->operands gets filled.
 	hppa_ext hppa_ext;	///< for HPPA operand. Contains info about modifiers and their effect on the instruction
+	MCAsmInfo MAI; ///< The equivalent to MCAsmInfo in LLVM. It holds flags relevant for the asm style to print.
 };
 
-void MCInst_Init(MCInst *inst);
+void MCInst_Init(MCInst *inst, cs_arch arch);
 
 void MCInst_clear(MCInst *inst);
 

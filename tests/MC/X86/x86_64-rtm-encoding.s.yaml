@@ -1,0 +1,28 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0f, 0x01, 0xd5 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xend"
+  -
+    input:
+      bytes: [ 0x0f, 0x01, 0xd6 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xtest"
+  -
+    input:
+      bytes: [ 0xc6, 0xf8, 0x0d ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xabort $13"

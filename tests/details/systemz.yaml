@@ -1,0 +1,121 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x5a, 0x0f, 0x1f, 0xff, 0xc2, 0x09, 0x80, 0x00, 0x00, 0x00, 0x07, 0xf7, 0xeb, 0x2a, 0xff, 0xff, 0x7f, 0x57, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x57, 0xeb, 0x00, 0xf0, 0x00, 0x00, 0x24, 0xb2, 0x4f, 0x00, 0x78, 0xec, 0x18, 0x00, 0x00, 0xc1, 0x7f  ]
+      arch: "CS_ARCH_SYSTEMZ"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_SYSTEMZ_ARCH14 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "adb %f0, 0"
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: f0
+              -
+                type: SYSTEMZ_OP_MEM
+                mem_am: SYSTEMZ_AM_BDX
+                mem_disp: 0x0
+      -
+        asm_text: "a %r0, 0xfff(%r15,%r1)"
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: "r0"
+              -
+                type: SYSTEMZ_OP_MEM
+                mem_base: "r1"
+                mem_index: "r15"
+                mem_disp: 0xfff
+      -
+        asm_text: "afi %r0, -0x80000000"
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: "r0"
+              -
+                type: SYSTEMZ_OP_IMM
+                imm_width: 32
+                imm: -0x80000000
+      -
+        asm_text: "br %r7"
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: "r7"
+      -
+        asm_text: "xiy 0x7ffff(%r15), 0x2a"
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_MEM
+                mem_base: "r15"
+                mem_disp: 0x7ffff
+              -
+                type: SYSTEMZ_OP_IMM
+                imm_width: 8
+                imm: 0x2a
+      -
+        asm_text: "xy %r0, 0x7ffff(%r1,%r15)"
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: "r0"
+              -
+                type: SYSTEMZ_OP_MEM
+                mem_base: "r15"
+                mem_index: "r1"
+                mem_disp: 0x7ffff
+      -
+        asm_text: "stmg %r0, %r0, 0(%r15)"
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: "r0"
+              -
+                type: SYSTEMZ_OP_REG
+                reg: "r0"
+              -
+                type: SYSTEMZ_OP_MEM
+                mem_base: "r15"
+      -
+        asm_text: "ear %r7, %a8"
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: "r7"
+              -
+                type: SYSTEMZ_OP_REG
+                reg: a8
+      -
+        asm_text: "clije %r1, 0xc1, 0x1028"
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: "r1"
+              -
+                type: SYSTEMZ_OP_IMM
+                imm_width: 8
+                imm: 0xc1
+              -
+                type: SYSTEMZ_OP_IMM
+                imm_width: 0
+                imm: 0x1028

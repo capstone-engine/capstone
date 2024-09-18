@@ -1,0 +1,120 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0x00, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "b 16"
+
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0x00, 0x06 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "b 28"
+
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0x28, 0x0a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "b 41004"
+
+  -
+    input:
+      bytes: [ 0x10, 0x04, 0x14, 0xe2 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "beq $zero, $4, 21388"
+
+  -
+    input:
+      bytes: [ 0x11, 0x00, 0x00, 0xc4 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "beqz $8, 788"
+
+  -
+    input:
+      bytes: [ 0x12, 0x88, 0x00, 0x17 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "beq $20, $8, 96"
+
+  -
+    input:
+      bytes: [ 0x15, 0x00, 0x88, 0x14 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnez $8, -122796"
+
+  -
+    input:
+      bytes: [ 0x15, 0x8a, 0x9f, 0x8a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "bne $12, $10, -98772"
+
+  -
+    input:
+      bytes: [ 0x50, 0xc7, 0x07, 0xf3 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "beql $6, $7, 8144"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x48, 0xc7, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "ext $8, $2, 28, 25"
+
+  -
+    input:
+      bytes: [ 0xc2, 0x44, 0xe3, 0x67 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "ll $4, -7321($18)"
+
+  -
+    input:
+      bytes: [ 0xe2, 0x64, 0x49, 0xd8 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R5" ]
+    expected:
+      insns:
+        -
+          asm_text: "sc $4, 18904($19)"

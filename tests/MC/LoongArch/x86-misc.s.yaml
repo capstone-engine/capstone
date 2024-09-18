@@ -1,0 +1,82 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x04, 0x04, 0x5c, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mfflag $a0, 1"
+  -
+    input:
+      bytes: [ 0x24, 0x04, 0x5c, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mtflag $a0, 1"
+  -
+    input:
+      bytes: [ 0x04, 0x74, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mftop $a0"
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mttop 1"
+  -
+    input:
+      bytes: [ 0x09, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86inctop"
+  -
+    input:
+      bytes: [ 0x29, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86dectop"
+  -
+    input:
+      bytes: [ 0x08, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86settm"
+  -
+    input:
+      bytes: [ 0x28, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86clrtm"
+  -
+    input:
+      bytes: [ 0x24, 0x04, 0x58, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86settag $a0, 1, 1"

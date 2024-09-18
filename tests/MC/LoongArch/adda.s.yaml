@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0a, 0x6f, 0x5c, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvadda.b $xr10, $xr24, $xr27"
+  -
+    input:
+      bytes: [ 0x80, 0xf7, 0x5c, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvadda.h $xr0, $xr28, $xr29"
+  -
+    input:
+      bytes: [ 0x3f, 0x25, 0x5d, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvadda.w $xr31, $xr9, $xr9"
+  -
+    input:
+      bytes: [ 0x2a, 0xe4, 0x5d, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvadda.d $xr10, $xr1, $xr25"

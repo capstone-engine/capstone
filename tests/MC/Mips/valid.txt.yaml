@@ -1,0 +1,280 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xca, 0x76, 0x00, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "bbit0 $19, 22, 8"
+
+  -
+    input:
+      bytes: [ 0x70, 0xc7, 0x48, 0x28 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "baddu $9, $6, $7"
+
+  -
+    input:
+      bytes: [ 0xd9, 0x0a, 0x00, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "bbit032 $8, 10, 8"
+
+  -
+    input:
+      bytes: [ 0xe8, 0x7f, 0x00, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "bbit1 $3, 31, 8"
+
+  -
+    input:
+      bytes: [ 0xfb, 0x0a, 0x00, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "bbit132 $24, 10, 8"
+
+  -
+    input:
+      bytes: [ 0x71, 0x29, 0xec, 0x72 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "cins $9, $9, 17, 29"
+
+  -
+    input:
+      bytes: [ 0x70, 0x4f, 0x44, 0xb3 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "cins32 $15, $2, 18, 8"
+
+  -
+    input:
+      bytes: [ 0x70, 0xc7, 0x48, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmul $9, $6, $7"
+
+  -
+    input:
+      bytes: [ 0x48, 0x22, 0x00, 0x40 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmfc2 $2, 64"
+
+  -
+    input:
+      bytes: [ 0x48, 0xa2, 0x40, 0x47 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmtc2 $2, 16455"
+
+  -
+    input:
+      bytes: [ 0x70, 0xc0, 0x48, 0x2d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "dpop $9, $6"
+
+  -
+    input:
+      bytes: [ 0x71, 0xef, 0x34, 0x7a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "exts $15, $15, 17, 6"
+
+  -
+    input:
+      bytes: [ 0x71, 0xa4, 0x42, 0xbb ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "exts32 $4, $13, 10, 8"
+
+  -
+    input:
+      bytes: [ 0x71, 0xe0, 0x00, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtm0 $15"
+
+  -
+    input:
+      bytes: [ 0x72, 0x00, 0x00, 0x0c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtm1 $16"
+
+  -
+    input:
+      bytes: [ 0x72, 0x20, 0x00, 0x0d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtm2 $17"
+
+  -
+    input:
+      bytes: [ 0x72, 0x40, 0x00, 0x09 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtp0 $18"
+
+  -
+    input:
+      bytes: [ 0x72, 0x60, 0x00, 0x0a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtp1 $19"
+
+  -
+    input:
+      bytes: [ 0x72, 0x80, 0x00, 0x0b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtp2 $20"
+
+  -
+    input:
+      bytes: [ 0x70, 0xc0, 0x48, 0x2c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "pop $9, $6"
+
+  -
+    input:
+      bytes: [ 0x72, 0xf8, 0xc8, 0x2a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "seq $25, $23, $24"
+
+  -
+    input:
+      bytes: [ 0x72, 0x10, 0x09, 0xae ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "seqi $16, $16, 38"
+
+  -
+    input:
+      bytes: [ 0x72, 0xf4, 0xb8, 0x2b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "sne $23, $23, $20"
+
+  -
+    input:
+      bytes: [ 0x72, 0x04, 0xb1, 0xef ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "snei $4, $16, -313"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x01, 0x8f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "sync 6"
+
+  -
+    input:
+      bytes: [ 0x71, 0x55, 0xa8, 0x11 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "v3mulu $21, $10, $21"
+
+  -
+    input:
+      bytes: [ 0x72, 0x70, 0x18, 0x10 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmm0 $3, $19, $16"
+
+  -
+    input:
+      bytes: [ 0x73, 0x66, 0xd8, 0x0f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_OCTEON" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmulu $27, $27, $6"

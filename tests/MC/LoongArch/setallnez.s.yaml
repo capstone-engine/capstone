@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa5, 0xb3, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsetallnez.b $fcc5, $xr29"
+  -
+    input:
+      bytes: [ 0x85, 0xb4, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsetallnez.h $fcc5, $xr4"
+  -
+    input:
+      bytes: [ 0xa4, 0xb8, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsetallnez.w $fcc4, $xr5"
+  -
+    input:
+      bytes: [ 0x87, 0xbe, 0x9c, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsetallnez.d $fcc7, $xr20"

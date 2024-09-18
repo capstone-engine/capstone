@@ -1,0 +1,289 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe6, 0x00, 0x10, 0x49 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "add $t1, $a2, $a3"
+  -
+    input:
+      bytes: [ 0x26, 0x11, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi $t1, $a2, 17767"
+  -
+    input:
+      bytes: [ 0x26, 0x31, 0x67, 0xc5 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t1, $a2, -15001"
+  -
+    input:
+      bytes: [ 0x26, 0x11, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi $t1, $a2, 17767"
+  -
+    input:
+      bytes: [ 0x26, 0x31, 0x67, 0xc5 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $t1, $a2, -15001"
+  -
+    input:
+      bytes: [ 0xe6, 0x00, 0x50, 0x49 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addu $t1, $a2, $a3"
+  -
+    input:
+      bytes: [ 0xe6, 0x00, 0x90, 0x49 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub $t1, $a2, $a3"
+  -
+    input:
+      bytes: [ 0xa3, 0x00, 0xd0, 0x21 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "subu $a0, $v1, $a1"
+  -
+    input:
+      bytes: [ 0xe0, 0x00, 0x90, 0x31 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "neg $a2, $a3"
+  -
+    input:
+      bytes: [ 0xe0, 0x00, 0xd0, 0x31 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "negu $a2, $a3"
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0x50, 0x39 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addu $a3, $t0, $zero"
+  -
+    input:
+      bytes: [ 0xa3, 0x00, 0x50, 0x1b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "slt $v1, $v1, $a1"
+  -
+    input:
+      bytes: [ 0x63, 0x90, 0x67, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "slti $v1, $v1, 103"
+  -
+    input:
+      bytes: [ 0x63, 0x90, 0x67, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "slti $v1, $v1, 103"
+  -
+    input:
+      bytes: [ 0x63, 0xb0, 0x67, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "sltiu $v1, $v1, 103"
+  -
+    input:
+      bytes: [ 0xa3, 0x00, 0x90, 0x1b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "sltu $v1, $v1, $a1"
+  -
+    input:
+      bytes: [ 0xa9, 0x41, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lui $t1, 17767"
+  -
+    input:
+      bytes: [ 0xe6, 0x00, 0x50, 0x4a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "and $t1, $a2, $a3"
+  -
+    input:
+      bytes: [ 0x26, 0xd1, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "andi $t1, $a2, 17767"
+  -
+    input:
+      bytes: [ 0x26, 0xd1, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "andi $t1, $a2, 17767"
+  -
+    input:
+      bytes: [ 0xa4, 0x00, 0x90, 0x1a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "or $v1, $a0, $a1"
+  -
+    input:
+      bytes: [ 0x26, 0x51, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "ori $t1, $a2, 17767"
+  -
+    input:
+      bytes: [ 0xa3, 0x00, 0x10, 0x1b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor $v1, $v1, $a1"
+  -
+    input:
+      bytes: [ 0x26, 0x71, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "xori $t1, $a2, 17767"
+  -
+    input:
+      bytes: [ 0x26, 0x71, 0x67, 0x45 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "xori $t1, $a2, 17767"
+  -
+    input:
+      bytes: [ 0xe6, 0x00, 0xd0, 0x4a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "nor $t1, $a2, $a3"
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0xd0, 0x3a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "not $a3, $t0"
+  -
+    input:
+      bytes: [ 0xe6, 0x00, 0x10, 0x4a ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul $t1, $a2, $a3"
+  -
+    input:
+      bytes: [ 0xe9, 0x00, 0x3c, 0x8b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "mult $t1, $a3"
+  -
+    input:
+      bytes: [ 0xe9, 0x00, 0x3c, 0x9b ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "multu $t1, $a3"
+  -
+    input:
+      bytes: [ 0xe9, 0x00, 0x3c, 0xab ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "div $zero, $t1, $a3"
+  -
+    input:
+      bytes: [ 0xe9, 0x00, 0x3c, 0xbb ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_LITTLE_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "divu $zero, $t1, $a3"

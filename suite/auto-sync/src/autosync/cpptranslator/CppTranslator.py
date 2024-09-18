@@ -6,6 +6,7 @@
 import argparse
 import logging as log
 import sys
+import re
 from pathlib import Path
 
 import termcolor
@@ -87,6 +88,7 @@ from autosync.Helper import (
     print_prominent_warning,
     run_clang_format,
 )
+from autosync.cpptranslator.patches.isUInt import IsUInt
 
 
 class Translator:
@@ -136,6 +138,7 @@ class Translator:
         CreateOperand0.__name__: 0,  # ◁───┐ `CreateOperand0` removes most calls to MI.addOperand().
         AddOperand.__name__: 1,  # ────────┘ The ones left are fixed with the `AddOperand` patch.
         CreateOperand1.__name__: 0,
+        IsUInt.__name__: 0,
         GetOpcode.__name__: 0,
         SetOpcode.__name__: 0,
         GetOperand.__name__: 0,
@@ -248,6 +251,8 @@ class Translator:
                     patch = CreateOperand0(p)
                 case CreateOperand1.__name__:
                     patch = CreateOperand1(p)
+                case IsUInt.__name__:
+                    patch = IsUInt(p)
                 case GetOpcode.__name__:
                     patch = GetOpcode(p)
                 case SetOpcode.__name__:
@@ -382,32 +387,27 @@ class Translator:
 
     def apply_patch(self, patch: Patch) -> bool:
         """Tests if the given patch should be applied for the current architecture or file."""
-        has_apply_only = (
-            len(patch.apply_only_to["files"]) > 0
-            or len(patch.apply_only_to["archs"]) > 0
-        )
-        has_do_not_apply = (
-            len(patch.do_not_apply["files"]) > 0 or len(patch.do_not_apply["archs"]) > 0
-        )
-
-        if not (has_apply_only or has_do_not_apply):
-            # Lists empty.
+        apply_only_to = self.configurator.get_patch_config()["apply_patch_only_to"]
+        patch_name = patch.__class__.__name__
+        if patch_name not in apply_only_to:
+            # No constraints
             return True
 
-        if has_apply_only:
-            if self.arch in patch.apply_only_to["archs"]:
-                return True
-            elif self.current_src_path_in.name in patch.apply_only_to["files"]:
-                return True
-            return False
-        elif has_do_not_apply:
-            if self.arch in patch.do_not_apply["archs"]:
-                return False
-            elif self.current_src_path_in.name in patch.do_not_apply["files"]:
-                return False
+        file_constraints = apply_only_to[patch_name]
+        if self.current_src_path_in.name in file_constraints["files"]:
             return True
-        log.fatal("Logical error.")
-        exit(1)
+        elif (
+            re.search("InstPrinter.cpp", self.current_src_path_in.name)
+            and patch_name == AddCSDetail.__name__
+        ):
+            print_prominent_warning(
+                (
+                    f"The AddCSDetail patch is not applied to {self.current_src_path_in.name}. "
+                    "Have you forgotten to add it to arch_config.json?"
+                ),
+                False,
+            )
+        return False
 
     def translate(self) -> None:
         for self.current_src_path_in, self.current_src_path_out in zip(

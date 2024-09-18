@@ -150,7 +150,10 @@ void map_implicit_reads(MCInst *MI, const insn_map *imap)
 			return;
 		}
 		detail->regs_read[detail->regs_read_count++] = reg;
-		reg = imap[Opcode].regs_use[++i];
+		if (i + 1 < MAX_IMPL_R_REGS) {
+			// Select next one
+			reg = imap[Opcode].regs_use[++i];
+		}
 	}
 #endif // CAPSTONE_DIET
 }
@@ -175,7 +178,10 @@ void map_implicit_writes(MCInst *MI, const insn_map *imap)
 			return;
 		}
 		detail->regs_write[detail->regs_write_count++] = reg;
-		reg = imap[Opcode].regs_mod[++i];
+		if (i + 1 < MAX_IMPL_W_REGS) {
+			// Select next one
+			reg = imap[Opcode].regs_mod[++i];
+		}
 	}
 #endif // CAPSTONE_DIET
 }
@@ -338,7 +344,9 @@ DEFINE_get_detail_op(aarch64, AArch64);
 DEFINE_get_detail_op(alpha, Alpha);
 DEFINE_get_detail_op(hppa, HPPA);
 DEFINE_get_detail_op(loongarch, LoongArch);
+DEFINE_get_detail_op(mips, Mips);
 DEFINE_get_detail_op(riscv, RISCV);
+DEFINE_get_detail_op(systemz, SystemZ);
 
 /// Returns true if for this architecture the
 /// alias operands should be filled.
@@ -346,7 +354,7 @@ DEFINE_get_detail_op(riscv, RISCV);
 /// 			So it can be toggled between disas() calls.
 bool map_use_alias_details(const MCInst *MI) {
 	assert(MI);
-	return !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
+	return (MI->csh->detail_opt & CS_OPT_ON) && !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
 }
 
 /// Sets the setDetailOps flag to @p Val.
@@ -398,5 +406,46 @@ void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_i
 	}
 
 	MI->flat_insn->alias_id = name2id(alias_mnem_id_map, map_size, alias_mnem);
+}
+
+/// Does a binary search over the given map and searches for @id.
+/// If @id exists in @map, it sets @found to true and returns
+/// the value for the @id.
+/// Otherwise, @found is set to false and it returns UINT64_MAX.
+///
+/// Of course it assumes the map is sorted.
+uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,
+			     const char *id, bool *found)
+{
+	size_t l = 0;
+	size_t r = map_len;
+	size_t id_len = strlen(id);
+
+	while (l <= r) {
+		size_t m = (l + r) / 2;
+		size_t j = 0;
+		size_t i = 0;
+		size_t entry_len = strlen(map[m].str);
+
+		while (j < entry_len && i < id_len && id[i] == map[m].str[j]) {
+			++j, ++i;
+		}
+		if (i == id_len && j == entry_len) {
+			*found = true;
+			return map[m].val;
+		}
+
+		if (id[i] < map[m].str[j]) {
+			r = m - 1;
+		} else if (id[i] > map[m].str[j]) {
+			l = m + 1;
+		}
+		if ((m == 0 && id[i] < map[m].str[j]) || (l + r) / 2 >= map_len) {
+			// Break before we go out of bounds.
+			break;
+		}
+	}
+	*found = false;
+	return UINT64_MAX;
 }
 

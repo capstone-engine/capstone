@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xad, 0xe6, 0xc5, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvbitseli.b $xr13, $xr21, 0x79"

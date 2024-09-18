@@ -1,0 +1,90 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x60, 0x20, 0x84 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfd pldl1keep, p0, [x0, z0.s, uxtw #3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x60, 0x60, 0x84 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfd pldl1keep, p0, [x0, z0.s, sxtw #3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x60, 0x20, 0xc4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfd pldl1keep, p0, [x0, z0.d, uxtw #3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x60, 0x60, 0xc4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfd pldl1keep, p0, [x0, z0.d, sxtw #3]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x60, 0xc4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfd pldl1keep, p0, [x0, z0.d, lsl #3]"
+
+  -
+    input:
+      bytes: [ 0xef, 0xff, 0x80, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfd #15, p7, [z31.s]"
+
+  -
+    input:
+      bytes: [ 0xef, 0xff, 0x9f, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfd #15, p7, [z31.s, #248]"
+
+  -
+    input:
+      bytes: [ 0xef, 0xff, 0x80, 0xc5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfd #15, p7, [z31.d]"
+
+  -
+    input:
+      bytes: [ 0xef, 0xff, 0x9f, 0xc5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfd #15, p7, [z31.d, #248]"

@@ -1,0 +1,50 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x1d, 0xbb, 0xe0, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "neg d29, d24"
+
+  -
+    input:
+      bytes: [ 0xd3, 0x79, 0x20, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqneg b19, b14"
+
+  -
+    input:
+      bytes: [ 0xf5, 0x79, 0x60, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqneg h21, h15"
+
+  -
+    input:
+      bytes: [ 0x94, 0x79, 0xa0, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqneg s20, s12"
+
+  -
+    input:
+      bytes: [ 0x92, 0x79, 0xe0, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqneg d18, d12"

@@ -1,0 +1,269 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0c, 0x10, 0x00, 0x97, 0x00, 0x00, 0x00, 0x00, 0x24, 0x02, 0x00, 0x0c, 0x8f, 0xa2, 0x00, 0x00, 0x34, 0x21, 0x34, 0x56  ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS32R5, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jal 0x40025c"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_IMM
+                imm: 0x40025c
+      -
+        asm_text: "nop"
+      -
+        asm_text: "addiu $v0, $zero, 0xc"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: v0
+              -
+                type: MIPS_OP_REG
+                reg: zero
+              -
+                type: MIPS_OP_IMM
+                imm: 0xc
+      -
+        asm_text: "lw $v0, 0($sp)"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: v0
+              -
+                type: MIPS_OP_MEM
+                mem_base: sp
+      -
+        asm_text: "ori $at, $at, 0x3456"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: at
+              -
+                type: MIPS_OP_REG
+                reg: at
+              -
+                type: MIPS_OP_IMM
+                imm: 0x3456
+  -
+    input:
+      bytes: [ 0x56, 0x34, 0x21, 0x34, 0xc2, 0x17, 0x01, 0x00  ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS64, CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ori $at, $at, 0x3456"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: at
+              -
+                type: MIPS_OP_REG
+                reg: at
+              -
+                type: MIPS_OP_IMM
+                imm: 0x3456
+      -
+        asm_text: "srl $v0, $at, 0x1f"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: v0
+              -
+                type: MIPS_OP_REG
+                reg: at
+              -
+                type: MIPS_OP_IMM
+                imm: 0x1f
+  -
+    input:
+      bytes: [ 0x00, 0x07, 0x00, 0x07, 0x00, 0x11, 0x93, 0x7c, 0x01, 0x8c, 0x8b, 0x7c, 0x00, 0xc7, 0x48, 0xd0  ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS32R6, CS_MODE_MICRO, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "break 7, 0"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_IMM
+                imm: 0x7
+              -
+                type: MIPS_OP_IMM
+                imm: 0x0
+      -
+        asm_text: "wait 0x11"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_IMM
+                imm: 0x11
+      -
+        asm_text: "syscall 0x18c"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_IMM
+                imm: 0x18c
+      -
+        asm_text: "rotrv $t1, $a2, $a3"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: t1
+              -
+                type: MIPS_OP_REG
+                reg: a2
+              -
+                type: MIPS_OP_REG
+                reg: a3
+  -
+    input:
+      bytes: [ 0xec, 0x80, 0x00, 0x19, 0x7c, 0x43, 0x22, 0xa0  ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS32R6, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lapc $a0, 0x64"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: a0
+              -
+                type: MIPS_OP_IMM
+                imm: 0x64
+      -
+        asm_text: "align $a0, $v0, $v1, 2"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: a0
+              -
+                type: MIPS_OP_REG
+                reg: v0
+              -
+                type: MIPS_OP_REG
+                reg: v1
+              -
+                type: MIPS_OP_IMM
+                imm: 0x2
+  -
+    input:
+      bytes: [ 0x70, 0x00, 0xb2, 0xff  ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS2, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sdc3 $18, 0x70($sp)"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: "18"
+              -
+                type: MIPS_OP_MEM
+                mem_base: sp
+                mem_disp: 0x70
+  -
+    input:
+      bytes: [ 0x70, 0x00, 0xb2, 0xff  ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_MIPS64, CS_MODE_LITTLE_ENDIAN]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sd $s2, 0x70($sp)"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: s2
+              -
+                type: MIPS_OP_MEM
+                mem_base: sp
+                mem_disp: 0x70
+
+  -
+    skip: true
+    skip_reason: "Capstone python bindings do not handle CS_OPT_DETAIL_REAL."
+    input:
+      bytes: [ 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_OPT_DETAIL_REAL, CS_MODE_MIPS32R6, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "nop"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: zero
+              -
+                type: MIPS_OP_REG
+                reg: zero
+              -
+                type: MIPS_OP_IMM
+                imm: 0
+
+  -
+    skip: true
+    skip_reason: "Capstone python bindings do not handle CS_OPT_DETAIL_REAL."
+    input:
+      bytes: [ 0x38,0xf0,0x20,0x46 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_OPT_DETAIL_REAL, CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS1 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "c.sf.d $f30, $f0"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: fcc0
+              -
+                type: MIPS_OP_REG
+                reg: f30
+              -
+                type: MIPS_OP_REG
+                reg: f0

@@ -1,0 +1,107 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0c, 0x00, 0x08, 0x14, 0x8c, 0xfd, 0xbf, 0x02  ]
+      arch: "loongarch"
+      options: [ CS_OPT_DETAIL, CS_MODE_LOONGARCH32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lu12i.w $t0, 0x4000"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: t0
+              -
+                type: LOONGARCH_OP_IMM
+                imm: 0x4000
+      -
+        asm_text: "addi.w $t0, $t0, -1"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: t0
+              -
+                type: LOONGARCH_OP_REG
+                reg: t0
+              -
+                type: LOONGARCH_OP_IMM
+                imm: -1
+  -
+    input:
+      bytes: [ 0x80, 0x80, 0x00, 0x40, 0x63, 0x80, 0xff, 0x02, 0x78, 0x20, 0xc0, 0x29, 0x00, 0x84, 0x00, 0x01, 0x00, 0xa4, 0x14, 0x01  ]
+      arch: "loongarch"
+      options: [ CS_OPT_DETAIL, CS_MODE_LOONGARCH64]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "beqz $a0, 0x80"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: a0
+              -
+                type: LOONGARCH_OP_IMM
+                imm: 0x80
+          groups: [ LOONGARCH_GRP_JUMP, LOONGARCH_GRP_BRANCH_RELATIVE ]
+      -
+        asm_text: "addi.d $sp, $sp, -0x20"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: sp
+              -
+                type: LOONGARCH_OP_REG
+                reg: sp
+              -
+                type: LOONGARCH_OP_IMM
+                imm: -0x20
+          groups: [ LOONGARCH_FEATURE_ISLA64 ]
+      -
+        asm_text: "st.d $s1, $sp, 8"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: s1
+              -
+                type: LOONGARCH_OP_MEM
+                mem_base: sp
+                mem_disp: 0x8
+          groups: [ LOONGARCH_FEATURE_ISLA64 ]
+      -
+        asm_text: "fadd.s $fa0, $fa0, $fa1"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: fa0
+              -
+                type: LOONGARCH_OP_REG
+                reg: fa0
+              -
+                type: LOONGARCH_OP_REG
+                reg: fa1
+      -
+        asm_text: "movgr2fr.w $fa0, $zero"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: fa0
+              -
+                type: LOONGARCH_OP_REG
+                reg: zero

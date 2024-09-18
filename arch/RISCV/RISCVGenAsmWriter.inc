@@ -1198,7 +1198,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 0 encoded into 2 bits for 4 unique commands.
   switch ((uint32_t)((Bits >> 12) & 3)) {
-  default: CS_ASSERT(0 && "Invalid command number.");
+  default:
+    CS_ASSERT(0 && "Invalid command number.");
+    return;
   case 0:
     // DBG_VALUE, DBG_LABEL, BUNDLE, LIFETIME_START, LIFETIME_END, FENTRY_CAL...
     return;
@@ -1226,7 +1228,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 1 encoded into 2 bits for 3 unique commands.
   switch ((uint32_t)((Bits >> 14) & 3)) {
-  default: CS_ASSERT(0 && "Invalid command number.");
+  default:
+    CS_ASSERT(0 && "Invalid command number.");
+    return;
   case 0:
     // PseudoCALL, PseudoTAIL, C_J, C_JAL, C_JALR, C_JR
     return;
@@ -1247,7 +1251,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 2 encoded into 2 bits for 3 unique commands.
   switch ((uint32_t)((Bits >> 16) & 3)) {
-  default: CS_ASSERT(0 && "Invalid command number.");
+  default:
+    CS_ASSERT(0 && "Invalid command number.");
+    return;
   case 0:
     // PseudoLA, PseudoLI, PseudoLLA, ADD, ADDI, ADDIW, ADDW, AND, ANDI, AUIP...
     printOperand(MI, 1, O);
@@ -1268,7 +1274,9 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Fragment 3 encoded into 2 bits for 4 unique commands.
   switch ((uint32_t)((Bits >> 18) & 3)) {
-  default: CS_ASSERT(0 && "Invalid command number.");
+  default:
+    CS_ASSERT(0 && "Invalid command number.");
+    return;
   case 0:
     // PseudoLA, PseudoLI, PseudoLLA, AUIPC, C_BEQZ, C_BNEZ, C_LI, C_LUI, C_M...
     return;
@@ -1468,7 +1476,9 @@ getRegisterName(unsigned RegNo, unsigned AltIdx)
   };
 
   switch(AltIdx) {
-  default: CS_ASSERT(0 && "Invalid register alt name index!");
+  default:
+    CS_ASSERT(0 && "Invalid register alt name index!");
+    return 0;
   case RISCV_ABIRegAltName:
     CS_ASSERT(*(AsmStrsABIRegAltName+RegAsmOffsetABIRegAltName[RegNo-1]) &&
            "Invalid alt name index for register!");

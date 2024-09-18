@@ -1,0 +1,28 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xd4, 0x00, 0x02, 0x98 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "j 1328"
+  -
+    input:
+      bytes: [ 0xf4, 0x00, 0x02, 0x98 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "jal 1328"
+  -
+    input:
+      bytes: [ 0x00, 0x07, 0x0f, 0x3c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "jr $a3"

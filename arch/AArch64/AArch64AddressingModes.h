@@ -390,7 +390,10 @@ static inline uint64_t AArch64_AM_decodeLogicalImmediate(uint64_t val,
 	unsigned imms = val & 0x3f;
 
 	int len = 31 - countLeadingZeros((N << 6) | (~imms & 0x3f));
-	assert(len >= 1);
+	if (len < 1) {
+		assert(len >= 1 && "Unhandled integer type");
+		return 0;
+	}
 
 	unsigned size = (1 << len);
 	unsigned R = immr & (size - 1);

@@ -1,0 +1,220 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x89, 0x03, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, ID_PFR2_EL1"
+
+  -
+    input:
+      bytes: [ 0xe8, 0xd0, 0x3b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, SCXTNUM_EL0"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xd0, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x7, SCXTNUM_EL1"
+
+  -
+    input:
+      bytes: [ 0xe6, 0xd0, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, SCXTNUM_EL2"
+
+  -
+    input:
+      bytes: [ 0xe5, 0xd0, 0x3e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, SCXTNUM_EL3"
+
+  -
+    input:
+      bytes: [ 0xe4, 0xd0, 0x3d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x4, SCXTNUM_EL12"
+
+  -
+    input:
+      bytes: [ 0xe8, 0xd0, 0x1b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCXTNUM_EL0, x8"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xd0, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCXTNUM_EL1, x7"
+
+  -
+    input:
+      bytes: [ 0xe6, 0xd0, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCXTNUM_EL2, x6"
+
+  -
+    input:
+      bytes: [ 0xe5, 0xd0, 0x1e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCXTNUM_EL3, x5"
+
+  -
+    input:
+      bytes: [ 0xe4, 0xd0, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "specrestrict" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCXTNUM_EL12, x4"
+
+  -
+    input:
+      bytes: [ 0x89, 0x03, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x9, ID_PFR2_EL1"
+
+  -
+    input:
+      bytes: [ 0xe8, 0xd0, 0x3b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x8, SCXTNUM_EL0"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xd0, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x7, SCXTNUM_EL1"
+
+  -
+    input:
+      bytes: [ 0xe6, 0xd0, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x6, SCXTNUM_EL2"
+
+  -
+    input:
+      bytes: [ 0xe5, 0xd0, 0x3e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x5, SCXTNUM_EL3"
+
+  -
+    input:
+      bytes: [ 0xe4, 0xd0, 0x3d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x4, SCXTNUM_EL12"
+
+  -
+    input:
+      bytes: [ 0xe8, 0xd0, 0x1b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCXTNUM_EL0, x8"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xd0, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCXTNUM_EL1, x7"
+
+  -
+    input:
+      bytes: [ 0xe6, 0xd0, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCXTNUM_EL2, x6"
+
+  -
+    input:
+      bytes: [ 0xe5, 0xd0, 0x1e, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCXTNUM_EL3, x5"
+
+  -
+    input:
+      bytes: [ 0xe4, 0xd0, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "v8.5a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr SCXTNUM_EL12, x4"

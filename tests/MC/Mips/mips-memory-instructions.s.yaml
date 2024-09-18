@@ -1,0 +1,145 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0xa4, 0xa0 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "sb $a0, 16($a1)"
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0xa4, 0xe0 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "sc $a0, 16($a1)"
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0xa4, 0xa4 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh $a0, 16($a1)"
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0xa4, 0xac ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "sw $a0, 16($a1)"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0xa7, 0xac ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "sw $a3, 0($a1)"
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0xa2, 0xe4 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "swc1 $f2, 16($a1)"
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0xa4, 0xa8 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "swl $a0, 16($a1)"
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xa4, 0x80 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "lb $a0, 4($a1)"
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xa4, 0x8c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "lw $a0, 4($a1)"
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xa4, 0x90 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "lbu $a0, 4($a1)"
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xa4, 0x84 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "lh $a0, 4($a1)"
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xa4, 0x94 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "lhu $a0, 4($a1)"
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xa4, 0xc0 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "ll $a0, 4($a1)"
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xa4, 0x8c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "lw $a0, 4($a1)"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0xe7, 0x8c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "lw $a3, 0($a3)"
+  -
+    input:
+      bytes: [ 0x10, 0x00, 0xa2, 0x8f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32" ]
+    expected:
+      insns:
+        -
+          asm_text: "lw $v0, 16($sp)"

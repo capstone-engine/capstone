@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xb0, 0x0b, 0x41, 0xf2, 0xb0, 0x0b, 0x51, 0xf2, 0xb0, 0x0b, 0x61, 0xf2, 0xa1, 0x0d, 0x40, 0xf3, 0xb0, 0x1b, 0x41, 0xf2, 0xb0, 0x1b, 0x51, 0xf2, 0xb0, 0x1b, 0x61, 0xf2, 0xa1, 0x0d, 0x40, 0xf3, 0x20, 0x02, 0xf0, 0xf3, 0x20, 0x02, 0xf4, 0xf3, 0x20, 0x02, 0xf8, 0xf3, 0xa0, 0x02, 0xf0, 0xf3, 0xa0, 0x02, 0xf4, 0xf3, 0xa0, 0x02, 0xf8, 0xf3, 0x60, 0x02, 0xf0, 0xf3, 0x60, 0x02, 0xf4, 0xf3, 0x60, 0x02, 0xf8, 0xf3, 0xe0, 0x02, 0xf0, 0xf3, 0xe0, 0x02, 0xf4, 0xf3, 0xe0, 0x02, 0xf8, 0xf3, 0x21, 0x06, 0xf0, 0xf3, 0x21, 0x06, 0xf4, 0xf3, 0x21, 0x06, 0xf8, 0xf3, 0xa1, 0x06, 0xf0, 0xf3, 0xa1, 0x06, 0xf4, 0xf3, 0xa1, 0x06, 0xf8, 0xf3, 0x60, 0x26, 0xf0, 0xf3, 0x60, 0x26, 0xf4, 0xf3, 0x60, 0x26, 0xf8, 0xf3, 0xe0, 0x26, 0xf0, 0xf3, 0xe0, 0x26, 0xf4, 0xf3, 0xe0, 0x26, 0xf8, 0xf3, 0xb1, 0x0a, 0x40, 0xf2, 0xb1, 0x0a, 0x50, 0xf2, 0xb1, 0x0a, 0x60, 0xf2, 0xb1, 0x0a, 0x40, 0xf3, 0xb1, 0x0a, 0x50, 0xf3, 0xb1, 0x0a, 0x60, 0xf3, 0xa1, 0x0f, 0x60, 0xf3, 0xa1, 0x0a, 0x40, 0xf2, 0xa1, 0x0a, 0x50, 0xf2, 0xa1, 0x0a, 0x60, 0xf2, 0xa1, 0x0a, 0x40, 0xf3, 0xa1, 0x0a, 0x50, 0xf3, 0xa1, 0x0a, 0x60, 0xf3, 0xa1, 0x0f, 0x40, 0xf3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "vpadd.i8 d16, d17, d16"
+        -
+          asm_text: "vpadd.i16 d16, d17, d16"
+        -
+          asm_text: "vpadd.i32 d16, d17, d16"
+        -
+          asm_text: "vpadd.f32 d16, d16, d17"
+        -
+          asm_text: "vpadd.i8 d17, d17, d16"
+        -
+          asm_text: "vpadd.i16 d17, d17, d16"
+        -
+          asm_text: "vpadd.i32 d17, d17, d16"
+        -
+          asm_text: "vpadd.f32 d16, d16, d17"
+        -
+          asm_text: "vpaddl.s8 d16, d16"
+        -
+          asm_text: "vpaddl.s16 d16, d16"
+        -
+          asm_text: "vpaddl.s32 d16, d16"
+        -
+          asm_text: "vpaddl.u8 d16, d16"
+        -
+          asm_text: "vpaddl.u16 d16, d16"
+        -
+          asm_text: "vpaddl.u32 d16, d16"
+        -
+          asm_text: "vpaddl.s8 q8, q8"
+        -
+          asm_text: "vpaddl.s16 q8, q8"
+        -
+          asm_text: "vpaddl.s32 q8, q8"
+        -
+          asm_text: "vpaddl.u8 q8, q8"
+        -
+          asm_text: "vpaddl.u16 q8, q8"
+        -
+          asm_text: "vpaddl.u32 q8, q8"
+        -
+          asm_text: "vpadal.s8 d16, d17"
+        -
+          asm_text: "vpadal.s16 d16, d17"
+        -
+          asm_text: "vpadal.s32 d16, d17"
+        -
+          asm_text: "vpadal.u8 d16, d17"
+        -
+          asm_text: "vpadal.u16 d16, d17"
+        -
+          asm_text: "vpadal.u32 d16, d17"
+        -
+          asm_text: "vpadal.s8 q9, q8"
+        -
+          asm_text: "vpadal.s16 q9, q8"
+        -
+          asm_text: "vpadal.s32 q9, q8"
+        -
+          asm_text: "vpadal.u8 q9, q8"
+        -
+          asm_text: "vpadal.u16 q9, q8"
+        -
+          asm_text: "vpadal.u32 q9, q8"
+        -
+          asm_text: "vpmin.s8 d16, d16, d17"
+        -
+          asm_text: "vpmin.s16 d16, d16, d17"
+        -
+          asm_text: "vpmin.s32 d16, d16, d17"
+        -
+          asm_text: "vpmin.u8 d16, d16, d17"
+        -
+          asm_text: "vpmin.u16 d16, d16, d17"
+        -
+          asm_text: "vpmin.u32 d16, d16, d17"
+        -
+          asm_text: "vpmin.f32 d16, d16, d17"
+        -
+          asm_text: "vpmax.s8 d16, d16, d17"
+        -
+          asm_text: "vpmax.s16 d16, d16, d17"
+        -
+          asm_text: "vpmax.s32 d16, d16, d17"
+        -
+          asm_text: "vpmax.u8 d16, d16, d17"
+        -
+          asm_text: "vpmax.u16 d16, d16, d17"
+        -
+          asm_text: "vpmax.u32 d16, d16, d17"
+        -
+          asm_text: "vpmax.f32 d16, d16, d17"

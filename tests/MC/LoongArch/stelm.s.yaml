@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x54, 0x5c, 0xaa, 0x33 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvstelm.b $xr20, $tp, -0x69, 0xa"
+  -
+    input:
+      bytes: [ 0x28, 0x40, 0x51, 0x33 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvstelm.h $xr8, $ra, 0xa0, 4"
+  -
+    input:
+      bytes: [ 0x53, 0x9e, 0x21, 0x33 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvstelm.w $xr19, $t6, 0x19c, 0"
+  -
+    input:
+      bytes: [ 0xd6, 0xe3, 0x1d, 0x33 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvstelm.d $xr22, $s7, 0x3c0, 3"

@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x6e, 0xd9, 0xef, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickve2gr.w $t2, $xr11, 6"
+  -
+    input:
+      bytes: [ 0xc8, 0xe0, 0xef, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickve2gr.d $a4, $xr6, 0"
+  -
+    input:
+      bytes: [ 0x2c, 0xd0, 0xf3, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickve2gr.wu $t0, $xr1, 4"
+  -
+    input:
+      bytes: [ 0x0a, 0xe1, 0xf3, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvpickve2gr.du $a6, $xr8, 0"

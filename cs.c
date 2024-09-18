@@ -1,9 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
-#ifdef _MSC_VER
-#pragma warning(disable:4996)			// disable MSVC's warning on strcpy()
-#pragma warning(disable:28719)		// disable MSVC's warning on strcpy()
-#endif
+
+#include "SStream.h"
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <Availability.h>
 #include <libkern/libkern.h>
@@ -100,8 +98,33 @@ typedef struct cs_arch_config {
 	{ \
 		Mips_global_init, \
 		Mips_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_MICRO \
-			| CS_MODE_MIPS32R6 | CS_MODE_BIG_ENDIAN | CS_MODE_MIPS2 | CS_MODE_MIPS3), \
+		~(CS_MODE_LITTLE_ENDIAN | \
+			CS_MODE_BIG_ENDIAN | \
+			CS_MODE_MIPS16 | \
+			CS_MODE_MIPS32 | \
+			CS_MODE_MIPS64 | \
+			CS_MODE_MICRO | \
+			CS_MODE_MIPS1 | \
+			CS_MODE_MIPS2 | \
+			CS_MODE_MIPS32R2 | \
+			CS_MODE_MIPS32R3 | \
+			CS_MODE_MIPS32R5 | \
+			CS_MODE_MIPS32R6 | \
+			CS_MODE_MIPS3 | \
+			CS_MODE_MIPS4 | \
+			CS_MODE_MIPS5 | \
+			CS_MODE_MIPS64R2 | \
+			CS_MODE_MIPS64R3 | \
+			CS_MODE_MIPS64R5 | \
+			CS_MODE_MIPS64R6 | \
+			CS_MODE_OCTEON | \
+			CS_MODE_OCTEONP | \
+			CS_MODE_NANOMIPS | \
+			CS_MODE_NMS1 | \
+			CS_MODE_I7200 | \
+			CS_MODE_MIPS_NOFLOAT | \
+			CS_MODE_MIPS_PTR64 \
+			), \
 	}
 #define CS_ARCH_CONFIG_X86 \
 	{ \
@@ -122,11 +145,27 @@ typedef struct cs_arch_config {
 		Sparc_option, \
 		~(CS_MODE_BIG_ENDIAN | CS_MODE_V9), \
 	}
-#define CS_ARCH_CONFIG_SYSZ \
+#define CS_ARCH_CONFIG_SYSTEMZ \
 	{ \
 		SystemZ_global_init, \
 		SystemZ_option, \
-		~(CS_MODE_BIG_ENDIAN), \
+		~(CS_MODE_BIG_ENDIAN | \
+			CS_MODE_SYSTEMZ_ARCH8 | \
+			CS_MODE_SYSTEMZ_ARCH9 | \
+			CS_MODE_SYSTEMZ_ARCH10 | \
+			CS_MODE_SYSTEMZ_ARCH11 | \
+			CS_MODE_SYSTEMZ_ARCH12 | \
+			CS_MODE_SYSTEMZ_ARCH13 | \
+			CS_MODE_SYSTEMZ_ARCH14 | \
+			CS_MODE_SYSTEMZ_Z10 | \
+			CS_MODE_SYSTEMZ_Z196 | \
+			CS_MODE_SYSTEMZ_ZEC12 | \
+			CS_MODE_SYSTEMZ_Z13 | \
+			CS_MODE_SYSTEMZ_Z14 | \
+			CS_MODE_SYSTEMZ_Z15 | \
+			CS_MODE_SYSTEMZ_Z16 | \
+			CS_MODE_SYSTEMZ_GENERIC \
+		), \
 	}
 #define CS_ARCH_CONFIG_XCORE \
 	{ \
@@ -232,6 +271,11 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #else
 	{ NULL, NULL, 0 },
 #endif
+#ifdef CAPSTONE_HAS_SYSTEMZ
+	CS_ARCH_CONFIG_SYSTEMZ,
+#else
+	{ NULL, NULL, 0 },
+#endif
 #ifdef CAPSTONE_HAS_MIPS
 	CS_ARCH_CONFIG_MIPS,
 #else
@@ -249,11 +293,6 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #endif
 #ifdef CAPSTONE_HAS_SPARC
 	CS_ARCH_CONFIG_SPARC,
-#else
-	{ NULL, NULL, 0 },
-#endif
-#ifdef CAPSTONE_HAS_SYSZ
-	CS_ARCH_CONFIG_SYSZ,
 #else
 	{ NULL, NULL, 0 },
 #endif
@@ -354,8 +393,8 @@ static const uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_SPARC
 	| (1 << CS_ARCH_SPARC)
 #endif
-#ifdef CAPSTONE_HAS_SYSZ
-	| (1 << CS_ARCH_SYSZ)
+#ifdef CAPSTONE_HAS_SYSTEMZ
+	| (1 << CS_ARCH_SYSTEMZ)
 #endif
 #ifdef CAPSTONE_HAS_XCORE
 	| (1 << CS_ARCH_XCORE)
@@ -515,10 +554,10 @@ void CAPSTONE_API cs_arch_register_sparc(void)
 }
 
 CAPSTONE_EXPORT
-void CAPSTONE_API cs_arch_register_sysz(void)
+void CAPSTONE_API cs_arch_register_systemz(void)
 {
-#if defined(CAPSTONE_USE_ARCH_REGISTRATION) && defined(CAPSTONE_HAS_SYSZ)
-	CS_ARCH_REGISTER(SYSZ);
+#if defined(CAPSTONE_USE_ARCH_REGISTRATION) && defined(CAPSTONE_HAS_SYSTEMZ)
+	CS_ARCH_REGISTER(SYSTEMZ);
 #endif
 }
 
@@ -634,7 +673,7 @@ bool CAPSTONE_API cs_support(int query)
 				    ((1 << CS_ARCH_ARM)  | (1 << CS_ARCH_AARCH64)    |
 				    (1 << CS_ARCH_MIPS)  | (1 << CS_ARCH_X86)        |
 				    (1 << CS_ARCH_PPC)   | (1 << CS_ARCH_SPARC)      |
-				    (1 << CS_ARCH_SYSZ)  | (1 << CS_ARCH_XCORE)      |
+				    (1 << CS_ARCH_SYSTEMZ)  | (1 << CS_ARCH_XCORE)      |
 				    (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
 				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
 				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    |
@@ -825,35 +864,14 @@ static int str_replace(char *result, char *target, const char *str1, char *str2)
 }
 #endif
 
-/// The asm string sometimes has a leading space or tab.
-/// Here we remove it.
-static void fixup_asm_string(char *asm_str) {
-	if (!asm_str) {
-		return;
-	}
-	int i = 0;
-	int k = 0;
-	bool text_reached = (asm_str[0] != ' ' && asm_str[0] != '\t');
-	while (asm_str[i]) {
-		if (!text_reached && (asm_str[i] == ' ' || asm_str[i] == '\t')) {
-			++i;
-			text_reached = true;
-			continue;
-		}
-		asm_str[k] = asm_str[i];
-		++k, ++i;
-	}
-	asm_str[k] = '\0';
-}
-
 // fill insn with mnemonic & operands info
-static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
+static void fill_insn(struct cs_struct *handle, cs_insn *insn, SStream *OS, MCInst *mci,
 		PostPrinter_t postprinter, const uint8_t *code)
 {
 #ifndef CAPSTONE_DIET
-	char *sp, *mnem;
+	char *sp;
 #endif
-	fixup_asm_string(buffer);
+	SStream_trimls(OS);
 	uint16_t copy_size = MIN(sizeof(insn->bytes), insn->size);
 
 	// fill the instruction bytes.
@@ -868,22 +886,16 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 
 	// post printer handles some corner cases (hacky)
 	if (postprinter)
-		postprinter((csh)handle, insn, buffer, mci);
+		postprinter((csh)handle, insn, OS, mci);
 
 #ifndef CAPSTONE_DIET
-	mnem = insn->mnemonic;
-	// memset(mnem, 0, CS_MNEMONIC_SIZE);
-	for (sp = buffer; *sp; sp++) {
-		if (*sp == ' '|| *sp == '\t')
-			break;
+	memset(insn->mnemonic, '\0', sizeof(insn->mnemonic));
+	memset(insn->op_str, '\0', sizeof(insn->op_str));
+	SStream_extract_mnem_opstr(OS, insn->mnemonic, sizeof(insn->mnemonic), insn->op_str, sizeof(insn->op_str));
+	for (sp = insn->mnemonic; *sp; sp++) {
 		if (*sp == '|')	// lock|rep prefix for x86
 			*sp = ' ';
-		// copy to @mnemonic
-		*mnem = *sp;
-		mnem++;
 	}
-
-	*mnem = '\0';
 
 	// we might have customized mnemonic
 	if (handle->mnem_list) {
@@ -903,17 +915,6 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 			tmp = tmp->next;
 		}
 	}
-
-	// copy @op_str
-	if (*sp) {
-		// find the next non-space char
-		sp++;
-		for (; ((*sp == ' ') || (*sp == '\t')); sp++);
-		strncpy(insn->op_str, sp, sizeof(insn->op_str) - 1);
-		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
-	} else
-		insn->op_str[0] = '\0';
-
 #endif
 }
 
@@ -937,7 +938,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 		case CS_ARCH_SPARC:
 			// skip 4 bytes
 			return 4;
-		case CS_ARCH_SYSZ:
+		case CS_ARCH_SYSTEMZ:
 			// SystemZ instruction's length can be 2, 4 or 6 bytes,
 			// so we just skip 2 bytes
 			return 2;
@@ -1110,9 +1111,8 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 			}
 			break;
 		case CS_OPT_NO_BRANCH_OFFSET:
-			if (handle->PrintBranchImmNotAsAddress)
-				return CS_ERR_OK;
-			break;
+			handle->PrintBranchImmNotAsAddress = value == CS_OPT_ON ? true : false;
+			return CS_ERR_OK;
 	}
 
 	if (!arch_configs[handle->arch].arch_option)
@@ -1205,7 +1205,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 	insn_cache = total;
 
 	while (size > 0) {
-		MCInst_Init(&mci);
+		MCInst_Init(&mci, handle->arch);
 		mci.csh = handle;
 
 		// relative branches need to know the address & size of current insn
@@ -1239,7 +1239,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			handle->insn_id(handle, insn_cache, mci.Opcode);
 
 			handle->printer(&mci, &ss, handle->printer_info);
-			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
+			fill_insn(handle, insn_cache, &ss, &mci, handle->post_printer, buffer);
 
 			// adjust for pseudo opcode (X86)
 			if (handle->arch == CS_ARCH_X86 && insn_cache->id != X86_INS_VCMP)
@@ -1418,7 +1418,7 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 
 	handle->errnum = CS_ERR_OK;
 
-	MCInst_Init(&mci);
+	MCInst_Init(&mci, handle->arch);
 	mci.csh = handle;
 
 	// relative branches need to know the address & size of current insn
@@ -1445,7 +1445,7 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 
 		handle->printer(&mci, &ss, handle->printer_info);
 
-		fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer, *code);
+		fill_insn(handle, insn, &ss, &mci, handle->post_printer, *code);
 
 		// adjust for pseudo opcode (X86)
 		if (handle->arch == CS_ARCH_X86)
@@ -1676,9 +1676,9 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->sparc.operands[i].type == (sparc_op_type)op_type)
 					count++;
 			break;
-		case CS_ARCH_SYSZ:
-			for (i = 0; i < insn->detail->sysz.op_count; i++)
-				if (insn->detail->sysz.operands[i].type == (sysz_op_type)op_type)
+		case CS_ARCH_SYSTEMZ:
+			for (i = 0; i < insn->detail->systemz.op_count; i++)
+				if (insn->detail->systemz.operands[i].type == (systemz_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_XCORE:
@@ -1828,9 +1828,9 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 			break;
-		case CS_ARCH_SYSZ:
-			for (i = 0; i < insn->detail->sysz.op_count; i++) {
-				if (insn->detail->sysz.operands[i].type == (sysz_op_type)op_type)
+		case CS_ARCH_SYSTEMZ:
+			for (i = 0; i < insn->detail->systemz.op_count; i++) {
+				if (insn->detail->systemz.operands[i].type == (systemz_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

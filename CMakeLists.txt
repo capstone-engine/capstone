@@ -60,7 +60,7 @@ option(BUILD_SHARED_LIBS "Build shared library" OFF)
 option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" ${BUILD_SHARED_LIBS})
 option(CAPSTONE_BUILD_MACOS_THIN "Disable universal2 builds on macOS" OFF)
 option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
-option(CAPSTONE_BUILD_TESTS "Build tests" ${PROJECT_IS_TOP_LEVEL})
+option(CAPSTONE_BUILD_LEGACY_TESTS "Build legacy tests" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTEST "Build cstest" OFF)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
@@ -69,11 +69,19 @@ option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by defau
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 option(ENABLE_ASAN "Enable address sanitizer" OFF)
+option(ENABLE_COVERAGE "Enable test coverage" OFF)
 
 if (ENABLE_ASAN)
+    message("Enabling ASAN")
     add_definitions(-DASAN_ENABLED)
     add_compile_options(-fsanitize=address)
     add_link_options(-fsanitize=address)
+endif()
+
+if (ENABLE_COVERAGE)
+    message("Enabling COVERAGE")
+    add_compile_options(--coverage)
+    add_link_options(--coverage)
 endif()
 
 # If building for OSX it's best to allow CMake to handle building both architectures
@@ -81,7 +89,7 @@ if(APPLE AND NOT CAPSTONE_BUILD_MACOS_THIN)
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 endif()
 
-set(SUPPORTED_ARCHITECTURES ARM AARCH64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE ALPHA HPPA LOONGARCH)
+set(SUPPORTED_ARCHITECTURES ARM AARCH64 M68K MIPS PPC SPARC SYSTEMZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE ALPHA HPPA LOONGARCH)
 set(SUPPORTED_ARCHITECTURE_LABELS ARM AARCH64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore Alpha HPPA LoongArch)
 
 # If building for OSX it's best to allow CMake to handle building both architectures
@@ -192,6 +200,7 @@ set(HEADERS_COMMON
     include/capstone/x86.h
     include/capstone/sparc.h
     include/capstone/systemz.h
+    include/capstone/systemz_compatibility.h
     include/capstone/xcore.h
     include/capstone/m68k.h
     include/capstone/tms320c64x.h
@@ -207,8 +216,6 @@ set(HEADERS_COMMON
     include/capstone/hppa.h
     include/capstone/loongarch.h
 )
-
-set(TEST_SOURCES test_basic.c test_detail.c test_skipdata.c test_iter.c)
 
 ## architecture support
 if(CAPSTONE_ARM_SUPPORT)
@@ -239,7 +246,6 @@ if(CAPSTONE_ARM_SUPPORT)
         arch/ARM/ARMGenCSMappingInsnName.inc
         arch/ARM/ARMGenSystemRegister.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_arm.c)
 endif()
 
 if(CAPSTONE_AARCH64_SUPPORT)
@@ -270,7 +276,6 @@ if(CAPSTONE_AARCH64_SUPPORT)
         arch/AArch64/AArch64GenCSMappingInsnName.inc
         arch/AArch64/AArch64GenCSMappingInsnOp.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_aarch64.c)
 endif()
 
 if(CAPSTONE_MIPS_SUPPORT)
@@ -302,7 +307,6 @@ if(CAPSTONE_MIPS_SUPPORT)
         arch/Mips/MipsInstPrinter.h
         arch/Mips/MipsMapping.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_mips.c)
 endif()
 
 if(CAPSTONE_PPC_SUPPORT)
@@ -332,7 +336,6 @@ if(CAPSTONE_PPC_SUPPORT)
         arch/PowerPC/PPCGenSubtargetInfo.inc
         arch/PowerPC/PPCGenRegisterInfo.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_ppc.c)
 endif()
 
 if(CAPSTONE_X86_SUPPORT)
@@ -386,7 +389,6 @@ if(CAPSTONE_X86_SUPPORT)
     if(NOT CAPSTONE_BUILD_DIET)
         set(SOURCES_X86 ${SOURCES_X86} arch/X86/X86ATTInstPrinter.c)
     endif()
-    set(TEST_SOURCES ${TEST_SOURCES} test_x86.c test_customized_mnem.c)
 endif()
 
 if(CAPSTONE_SPARC_SUPPORT)
@@ -409,32 +411,37 @@ if(CAPSTONE_SPARC_SUPPORT)
         arch/Sparc/SparcMapping.h
         arch/Sparc/SparcMappingInsn.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_sparc.c)
 endif()
 
-if(CAPSTONE_SYSZ_SUPPORT)
-    add_definitions(-DCAPSTONE_HAS_SYSZ)
-    set(SOURCES_SYSZ
+if(CAPSTONE_SYSTEMZ_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_SYSTEMZ)
+    set(SOURCES_SYSTEMZ
         arch/SystemZ/SystemZDisassembler.c
+        arch/SystemZ/SystemZDisassemblerExtension.c
         arch/SystemZ/SystemZInstPrinter.c
         arch/SystemZ/SystemZMapping.c
         arch/SystemZ/SystemZModule.c
         arch/SystemZ/SystemZMCTargetDesc.c
     )
-    set(HEADERS_SYSZ
-        arch/SystemZ/SystemZDisassembler.h
+    set(HEADERS_SYSTEMZ
+        arch/SystemZ/SystemZLinkage.h
+        arch/SystemZ/SystemZDisassemblerExtension.h
+        arch/SystemZ/SystemZInstPrinter.h
+        arch/SystemZ/SystemZMCTargetDesc.h
+        arch/SystemZ/SystemZMapping.h
+        arch/SystemZ/SystemZModule.h
         arch/SystemZ/SystemZGenAsmWriter.inc
+        arch/SystemZ/SystemZGenCSAliasMnemMap.inc
+        arch/SystemZ/SystemZGenCSFeatureName.inc
+        arch/SystemZ/SystemZGenCSMappingInsn.inc
+        arch/SystemZ/SystemZGenCSMappingInsnName.inc
+        arch/SystemZ/SystemZGenCSMappingInsnOp.inc
+        arch/SystemZ/SystemZGenCSOpGroup.inc
         arch/SystemZ/SystemZGenDisassemblerTables.inc
-        arch/SystemZ/SystemZGenInsnNameMaps.inc
         arch/SystemZ/SystemZGenInstrInfo.inc
         arch/SystemZ/SystemZGenRegisterInfo.inc
         arch/SystemZ/SystemZGenSubtargetInfo.inc
-        arch/SystemZ/SystemZInstPrinter.h
-        arch/SystemZ/SystemZMapping.h
-        arch/SystemZ/SystemZMappingInsn.inc
-        arch/SystemZ/SystemZMCTargetDesc.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_systemz.c)
 endif()
 
 if(CAPSTONE_XCORE_SUPPORT)
@@ -455,7 +462,6 @@ if(CAPSTONE_XCORE_SUPPORT)
         arch/XCore/XCoreMapping.h
         arch/XCore/XCoreMappingInsn.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_xcore.c)
 endif()
 
 if(CAPSTONE_M68K_SUPPORT)
@@ -468,7 +474,6 @@ if(CAPSTONE_M68K_SUPPORT)
     set(HEADERS_M68K
         arch/M68K/M68KDisassembler.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_m68k.c)
 endif()
 
 if(CAPSTONE_TMS320C64X_SUPPORT)
@@ -488,7 +493,6 @@ if(CAPSTONE_TMS320C64X_SUPPORT)
         arch/TMS320C64x/TMS320C64xInstPrinter.h
         arch/TMS320C64x/TMS320C64xMapping.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_tms320c64x.c)
 endif()
 
 if(CAPSTONE_M680X_SUPPORT)
@@ -503,7 +507,6 @@ if(CAPSTONE_M680X_SUPPORT)
         arch/M680X/M680XDisassembler.h
         arch/M680X/M680XDisassemblerInternals.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_m680x.c)
 endif()
 
 if(CAPSTONE_EVM_SUPPORT)
@@ -520,7 +523,6 @@ if(CAPSTONE_EVM_SUPPORT)
         arch/EVM/EVMMapping.h
         arch/EVM/EVMMappingInsn.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_evm.c)
 endif()
 
 if(CAPSTONE_WASM_SUPPORT)
@@ -536,7 +538,6 @@ if(CAPSTONE_WASM_SUPPORT)
         arch/WASM/WASMInstPrinter.h
         arch/WASM/WASMMapping.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_wasm.c)
 endif()
 
 if(CAPSTONE_MOS65XX_SUPPORT)
@@ -547,7 +548,6 @@ if(CAPSTONE_MOS65XX_SUPPORT)
     set(HEADERS_SOURCES_MOS65XX
             arch/MOS65XX/MOS65XXDisassembler.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_mos65xx.c)
 endif()
 
 if(CAPSTONE_BPF_SUPPORT)
@@ -565,7 +565,6 @@ if(CAPSTONE_BPF_SUPPORT)
         arch/BPF/BPFMapping.h
         arch/BPF/BPFModule.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_bpf.c)
 endif()
 
 if(CAPSTONE_RISCV_SUPPORT)
@@ -591,7 +590,6 @@ if(CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVMappingInsn.inc
         arch/RISCV/RISCVMappingInsnOp.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_riscv.c)
 endif()
 
 if(CAPSTONE_SH_SUPPORT)
@@ -607,7 +605,6 @@ if(CAPSTONE_SH_SUPPORT)
         arch/SH/SHModule.h
         arch/SH/SHInsnTable.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_sh.c)
 endif()
 
 if (CAPSTONE_TRICORE_SUPPORT)
@@ -628,7 +625,6 @@ if (CAPSTONE_TRICORE_SUPPORT)
             arch/TriCore/TriCoreMapping.h
             arch/TriCore/TriCoreModule.h
             )
-    set(TEST_SOURCES ${TEST_SOURCES} test_tricore.c)
 endif ()
 
 if (CAPSTONE_ALPHA_SUPPORT)
@@ -652,7 +648,6 @@ if (CAPSTONE_ALPHA_SUPPORT)
             arch/Alpha/AlphaGenCSMappingInsn.inc
             arch/Alpha/AlphaGenCSMappingInsnName.inc
             )
-    set(TEST_SOURCES ${TEST_SOURCES} test_alpha.c)
 endif ()
 
 if(CAPSTONE_HPPA_SUPPORT)
@@ -670,7 +665,6 @@ if(CAPSTONE_HPPA_SUPPORT)
         arch/HPPA/HPPAMapping.h
         arch/HPPA/HPPAModule.h
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_hppa.c)
 endif()
 
 if (CAPSTONE_LOONGARCH_SUPPORT)
@@ -688,7 +682,6 @@ if (CAPSTONE_LOONGARCH_SUPPORT)
             arch/LoongArch/LoongArchModule.h
             arch/LoongArch/LoongArchLinkage.h
             )
-    set(TEST_SOURCES ${TEST_SOURCES} test_loongarch.c)
 endif ()
 
 if (CAPSTONE_OSXKERNEL_SUPPORT)
@@ -703,7 +696,7 @@ set(ALL_SOURCES
     ${SOURCES_PPC}
     ${SOURCES_X86}
     ${SOURCES_SPARC}
-    ${SOURCES_SYSZ}
+    ${SOURCES_SYSTEMZ}
     ${SOURCES_XCORE}
     ${SOURCES_M68K}
     ${SOURCES_TMS320C64X}
@@ -729,7 +722,7 @@ set(ALL_HEADERS
     ${HEADERS_PPC}
     ${HEADERS_X86}
     ${HEADERS_SPARC}
-    ${HEADERS_SYSZ}
+    ${HEADERS_SYSTEMZ}
     ${HEADERS_XCORE}
     ${HEADERS_M68K}
     ${HEADERS_TMS320C64X}
@@ -766,27 +759,13 @@ if(BUILD_SHARED_LIBS)
     )
 endif()
 
-if(CAPSTONE_BUILD_TESTS)
-    set(CMAKE_FOLDER "Tests")
-    enable_testing()
-    foreach(TSRC ${TEST_SOURCES})
-        string(REGEX REPLACE ".c$" "" TBIN ${TSRC})
-        add_executable(${TBIN} "tests/${TSRC}")
-        target_link_libraries(${TBIN} PRIVATE capstone)
-        add_test(NAME "capstone_${TBIN}" COMMAND ${TBIN})
-    endforeach()
-    if(CAPSTONE_ARM_SUPPORT)
-        set(ARM_REGRESS_TEST test_arm_regression.c)
-        string(REGEX REPLACE ".c$" "" ARM_REGRESS_BIN ${ARM_REGRESS_TEST})
-        add_executable(${ARM_REGRESS_BIN} "suite/arm/${ARM_REGRESS_TEST}")
-        target_link_libraries(${ARM_REGRESS_BIN} PRIVATE capstone)
-        add_test(NAME "capstone_${ARM_REGRESS_BIN}" COMMAND ${ARM_REGRESS_BIN})
-    endif()
-    # fuzz target built with the tests
-    add_executable(fuzz_disasm suite/fuzz/onefile.c suite/fuzz/fuzz_disasm.c suite/fuzz/platform.c)
-    target_link_libraries(fuzz_disasm PRIVATE capstone)
-    unset(CMAKE_FOLDER)
-endif()
+# Fuzzer if this is moved to it's own CMakeLists.txt (as it should be)
+# the OSS fuzzer build fails. And must be fixed.
+# Simply because it builds the fuzzer there again with hard-coded paths.
+# See: https://github.com/google/oss-fuzz/blob/master/projects/capstone/build.sh
+# and: https://github.com/capstone-engine/capstone/issues/2454
+add_executable(fuzz_disasm ${PROJECT_SOURCE_DIR}/suite/fuzz/onefile.c ${PROJECT_SOURCE_DIR}/suite/fuzz/fuzz_disasm.c ${PROJECT_SOURCE_DIR}/suite/fuzz/platform.c)
+target_link_libraries(fuzz_disasm PRIVATE capstone)
 
 source_group("Source\\Engine" FILES ${SOURCES_ENGINE})
 source_group("Source\\ARM" FILES ${SOURCES_ARM})
@@ -794,7 +773,7 @@ source_group("Source\\AARCH64" FILES ${SOURCES_AARCH64})
 source_group("Source\\Mips" FILES ${SOURCES_MIPS})
 source_group("Source\\PowerPC" FILES ${SOURCES_PPC})
 source_group("Source\\Sparc" FILES ${SOURCES_SPARC})
-source_group("Source\\SystemZ" FILES ${SOURCES_SYSZ})
+source_group("Source\\SystemZ" FILES ${SOURCES_SYSTEMZ})
 source_group("Source\\X86" FILES ${SOURCES_X86})
 source_group("Source\\XCore" FILES ${SOURCES_XCORE})
 source_group("Source\\M68K" FILES ${SOURCES_M68K})
@@ -818,7 +797,7 @@ source_group("Include\\AARCH64" FILES ${HEADERS_AARCH64})
 source_group("Include\\Mips" FILES ${HEADERS_MIPS})
 source_group("Include\\PowerPC" FILES ${HEADERS_PPC})
 source_group("Include\\Sparc" FILES ${HEADERS_SPARC})
-source_group("Include\\SystemZ" FILES ${HEADERS_SYSZ})
+source_group("Include\\SystemZ" FILES ${HEADERS_SYSTEMZ})
 source_group("Include\\X86" FILES ${HEADERS_X86})
 source_group("Include\\XCore" FILES ${HEADERS_XCORE})
 source_group("Include\\M68K" FILES ${HEADERS_M68K})
@@ -900,7 +879,6 @@ if(CAPSTONE_INSTALL)
             "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
             IMMEDIATE @ONLY
         )
-        set(CMAKE_FOLDER)
         add_custom_target(UNINSTALL COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
         set_target_properties(UNINSTALL PROPERTIES
             FOLDER CMakePredefinedTargets
@@ -919,32 +897,13 @@ if(CAPSTONE_BUILD_CSTOOL)
 endif()
 
 if(CAPSTONE_BUILD_CSTEST)
-    include(ExternalProject)
-    ExternalProject_Add(cmocka_ext
-        PREFIX extern
-        GIT_REPOSITORY "https://git.cryptomilk.org/projects/cmocka.git"
-        GIT_TAG "origin/stable-1.1"
-        GIT_SHALLOW true
-        CONFIGURE_COMMAND cmake -DBUILD_SHARED_LIBS=OFF ../cmocka_ext/
-        BUILD_COMMAND cmake --build . --config Release
-        INSTALL_COMMAND ""
-    )
-    set(CMOCKA_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext/include)
-    set(CMOCKA_LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext-build/src/)
-    add_library(cmocka STATIC IMPORTED)
-    set_target_properties(cmocka PROPERTIES IMPORTED_LOCATION ${CMOCKA_LIB_DIR}/libcmocka.a)
+    enable_testing()
+    set(CSTEST_DIR ${PROJECT_SOURCE_DIR}/suite/cstest)
+    add_subdirectory(${CSTEST_DIR})
 
-    file(GLOB CSTEST_SRC suite/cstest/src/*.c)
-    add_executable(cstest ${CSTEST_SRC})
-    add_dependencies(cstest cmocka_ext)
-    target_link_libraries(cstest PUBLIC capstone cmocka)
-    target_include_directories(cstest PRIVATE
-            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-            ${PROJECT_SOURCE_DIR}/suite/cstest/include
-            ${CMOCKA_INCLUDE_DIR}
-            )
-
-    if(CAPSTONE_INSTALL)
-        install(TARGETS cstest EXPORT capstone-targets DESTINATION ${CMAKE_INSTALL_BINDIR})
-    endif()
+    # Integration and unit tests
+    set(TESTS_INTEGRATION_DIR ${PROJECT_SOURCE_DIR}/tests/integration)
+    add_subdirectory(${TESTS_INTEGRATION_DIR})
+    set(TESTS_UNIT_DIR ${PROJECT_SOURCE_DIR}/tests/unit)
+    add_subdirectory(${TESTS_UNIT_DIR})
 endif()

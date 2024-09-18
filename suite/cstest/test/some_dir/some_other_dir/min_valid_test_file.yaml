@@ -1,0 +1,31 @@
+test_cases:
+ -
+  input:
+    bytes: [ 0x05, 0xb0, 0xa0, 0xe1 ]
+    arch: "arm"
+    options: ["arm"]
+  expected:
+    insns:
+      -
+        asm_text: "mov r11, r5"
+ -
+  input:
+    bytes: [ 0x06, 0x10, 0xa0, 0xe1 ]
+    arch: "arm"
+    options: ["arm"]
+  expected:
+    insns:
+      -
+        asm_text: "mov r1, r6"
+ -
+  input:
+    bytes: [ 0x06, 0x10, 0xa0, 0xe1, 0x05, 0xb0, 0xa0, 0xe1 ]
+    arch: "arm"
+    options: ["arm"]
+  expected:
+    insns:
+      -
+        asm_text: "mov r1, r6"
+      -
+        asm_text: "mov r11, r5"
+

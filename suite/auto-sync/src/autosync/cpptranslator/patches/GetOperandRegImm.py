@@ -23,7 +23,7 @@ class GetOperandRegImm(Patch):
             "(call_expression"
             "    (field_expression"
             "        ((_) @operand)"
-            '        ((field_identifier) @field_id (#match? @field_id "get(Reg|Imm)"))'
+            '        ((field_identifier) @field_id (#match? @field_id "get(Reg|Imm|Expr)"))'
             "    )"
             '    ((argument_list) @arg_list (#eq? @arg_list "()"))'
             ") @get_operand"
@@ -36,7 +36,7 @@ class GetOperandRegImm(Patch):
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
         # The operand
         operand: Node = get_capture_node(captures, "operand")
-        # 'getReg()/getImm()'
+        # 'getReg()/getImm()\getExpr'
         get_reg_imm = get_capture_node(captures, "field_id")
 
         fcn = get_text(src, get_reg_imm.start_byte, get_reg_imm.end_byte)

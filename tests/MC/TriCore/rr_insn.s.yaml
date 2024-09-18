@@ -1,0 +1,46 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0b, 0x20, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_131" ]
+    expected:
+      insns:
+        -
+          asm_text: "abs d0, d2"
+  -
+    input:
+      bytes: [ 0x0b, 0x60, 0xc0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_131" ]
+    expected:
+      insns:
+        -
+          asm_text: "abs.b d0, d6"
+  -
+    input:
+      bytes: [ 0x0b, 0x40, 0xc0, 0x27 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_131" ]
+    expected:
+      insns:
+        -
+          asm_text: "abs.h d2, d4"
+  -
+    input:
+      bytes: [ 0x0b, 0x10, 0xd0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_131" ]
+    expected:
+      insns:
+        -
+          asm_text: "abss d0, d1"
+  -
+    input:
+      bytes: [ 0x0b, 0x10, 0xd0, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_131" ]
+    expected:
+      insns:
+        -
+          asm_text: "abss.h d0, d1"

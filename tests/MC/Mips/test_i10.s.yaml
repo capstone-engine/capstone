@@ -1,0 +1,28 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7b, 0x06, 0x32, 0x07 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldi.b $w8, 198"
+  -
+    input:
+      bytes: [ 0x7b, 0x29, 0xcd, 0x07 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldi.h $w20, 313"
+  -
+    input:
+      bytes: [ 0x7b, 0x4f, 0x66, 0x07 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldi.w $w24, 492"

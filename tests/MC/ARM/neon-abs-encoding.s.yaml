@@ -1,0 +1,36 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x03, 0xf1, 0xf3, 0x20, 0x03, 0xf5, 0xf3, 0x20, 0x03, 0xf9, 0xf3, 0x20, 0x07, 0xf9, 0xf3, 0x60, 0x03, 0xf1, 0xf3, 0x60, 0x03, 0xf5, 0xf3, 0x60, 0x03, 0xf9, 0xf3, 0x60, 0x07, 0xf9, 0xf3, 0x20, 0x07, 0xf0, 0xf3, 0x20, 0x07, 0xf4, 0xf3, 0x20, 0x07, 0xf8, 0xf3, 0x60, 0x07, 0xf0, 0xf3, 0x60, 0x07, 0xf4, 0xf3, 0x60, 0x07, 0xf8, 0xf3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "vabs.s8 d16, d16"
+        -
+          asm_text: "vabs.s16 d16, d16"
+        -
+          asm_text: "vabs.s32 d16, d16"
+        -
+          asm_text: "vabs.f32 d16, d16"
+        -
+          asm_text: "vabs.s8 q8, q8"
+        -
+          asm_text: "vabs.s16 q8, q8"
+        -
+          asm_text: "vabs.s32 q8, q8"
+        -
+          asm_text: "vabs.f32 q8, q8"
+        -
+          asm_text: "vqabs.s8 d16, d16"
+        -
+          asm_text: "vqabs.s16 d16, d16"
+        -
+          asm_text: "vqabs.s32 d16, d16"
+        -
+          asm_text: "vqabs.s8 q8, q8"
+        -
+          asm_text: "vqabs.s16 q8, q8"
+        -
+          asm_text: "vqabs.s32 q8, q8"

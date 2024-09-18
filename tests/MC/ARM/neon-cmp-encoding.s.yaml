@@ -1,0 +1,182 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xb1, 0x08, 0x40, 0xf3, 0xb1, 0x08, 0x50, 0xf3, 0xb1, 0x08, 0x60, 0xf3, 0xa1, 0x0e, 0x40, 0xf2, 0xf2, 0x08, 0x40, 0xf3, 0xf2, 0x08, 0x50, 0xf3, 0xf2, 0x08, 0x60, 0xf3, 0xe2, 0x0e, 0x40, 0xf2, 0xb1, 0x03, 0x40, 0xf2, 0xb1, 0x03, 0x50, 0xf2, 0xb1, 0x03, 0x60, 0xf2, 0xb1, 0x03, 0x40, 0xf3, 0xb1, 0x03, 0x50, 0xf3, 0xb1, 0x03, 0x60, 0xf3, 0xa1, 0x0e, 0x40, 0xf3, 0xf2, 0x03, 0x40, 0xf2, 0xf2, 0x03, 0x50, 0xf2, 0xf2, 0x03, 0x60, 0xf2, 0xf2, 0x03, 0x40, 0xf3, 0xf2, 0x03, 0x50, 0xf3, 0xf2, 0x03, 0x60, 0xf3, 0xe2, 0x0e, 0x40, 0xf3, 0xb1, 0x0e, 0x40, 0xf3, 0xf2, 0x0e, 0x40, 0xf3, 0xa1, 0x03, 0x40, 0xf2, 0xa1, 0x03, 0x50, 0xf2, 0xa1, 0x03, 0x60, 0xf2, 0xa1, 0x03, 0x40, 0xf3, 0xa1, 0x03, 0x50, 0xf3, 0xa1, 0x03, 0x60, 0xf3, 0xa1, 0x0e, 0x60, 0xf3, 0xe2, 0x03, 0x40, 0xf2, 0xe2, 0x03, 0x50, 0xf2, 0xe2, 0x03, 0x60, 0xf2, 0xe2, 0x03, 0x40, 0xf3, 0xe2, 0x03, 0x50, 0xf3, 0xe2, 0x03, 0x60, 0xf3, 0xe2, 0x0e, 0x60, 0xf3, 0xb1, 0x0e, 0x60, 0xf3, 0xf2, 0x0e, 0x60, 0xf3, 0xb1, 0x08, 0x40, 0xf2, 0xb1, 0x08, 0x50, 0xf2, 0xb1, 0x08, 0x60, 0xf2, 0xf2, 0x08, 0x40, 0xf2, 0xf2, 0x08, 0x50, 0xf2, 0xf2, 0x08, 0x60, 0xf2, 0x20, 0x01, 0xf1, 0xf3, 0xa0, 0x00, 0xf1, 0xf3, 0xa0, 0x01, 0xf1, 0xf3, 0x20, 0x00, 0xf1, 0xf3, 0x20, 0x02, 0xf1, 0xf3, 0x6a, 0x83, 0x46, 0xf2, 0x6a, 0x83, 0x56, 0xf2, 0x6a, 0x83, 0x66, 0xf2, 0x6a, 0x83, 0x46, 0xf3, 0x6a, 0x83, 0x56, 0xf3, 0x6a, 0x83, 0x66, 0xf3, 0x6a, 0x8e, 0x66, 0xf3, 0x0d, 0xc3, 0x03, 0xf2, 0x0d, 0xc3, 0x13, 0xf2, 0x0d, 0xc3, 0x23, 0xf2, 0x0d, 0xc3, 0x03, 0xf3, 0x0d, 0xc3, 0x13, 0xf3, 0x0d, 0xc3, 0x23, 0xf3, 0x0d, 0xce, 0x23, 0xf3, 0xb0, 0x03, 0x41, 0xf2, 0xb0, 0x03, 0x51, 0xf2, 0xb0, 0x03, 0x61, 0xf2, 0xb0, 0x03, 0x41, 0xf3, 0xb0, 0x03, 0x51, 0xf3, 0xb0, 0x03, 0x61, 0xf3, 0xa0, 0x0e, 0x41, 0xf3, 0xf0, 0x03, 0x42, 0xf2, 0xf0, 0x03, 0x52, 0xf2, 0xf0, 0x03, 0x62, 0xf2, 0xf0, 0x03, 0x42, 0xf3, 0xf0, 0x03, 0x52, 0xf3, 0xf0, 0x03, 0x62, 0xf3, 0xe0, 0x0e, 0x42, 0xf3, 0xf6, 0x2e, 0x68, 0xf3, 0x1b, 0x9e, 0x2c, 0xf3, 0xf6, 0x6e, 0x68, 0xf3, 0x1b, 0xbe, 0x2c, 0xf3, 0xf6, 0x2e, 0x48, 0xf3, 0x1b, 0x9e, 0x0c, 0xf3, 0xf6, 0x6e, 0x48, 0xf3, 0x1b, 0xbe, 0x0c, 0xf3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "vceq.i8 d16, d16, d17"
+        -
+          asm_text: "vceq.i16 d16, d16, d17"
+        -
+          asm_text: "vceq.i32 d16, d16, d17"
+        -
+          asm_text: "vceq.f32 d16, d16, d17"
+        -
+          asm_text: "vceq.i8 q8, q8, q9"
+        -
+          asm_text: "vceq.i16 q8, q8, q9"
+        -
+          asm_text: "vceq.i32 q8, q8, q9"
+        -
+          asm_text: "vceq.f32 q8, q8, q9"
+        -
+          asm_text: "vcge.s8 d16, d16, d17"
+        -
+          asm_text: "vcge.s16 d16, d16, d17"
+        -
+          asm_text: "vcge.s32 d16, d16, d17"
+        -
+          asm_text: "vcge.u8 d16, d16, d17"
+        -
+          asm_text: "vcge.u16 d16, d16, d17"
+        -
+          asm_text: "vcge.u32 d16, d16, d17"
+        -
+          asm_text: "vcge.f32 d16, d16, d17"
+        -
+          asm_text: "vcge.s8 q8, q8, q9"
+        -
+          asm_text: "vcge.s16 q8, q8, q9"
+        -
+          asm_text: "vcge.s32 q8, q8, q9"
+        -
+          asm_text: "vcge.u8 q8, q8, q9"
+        -
+          asm_text: "vcge.u16 q8, q8, q9"
+        -
+          asm_text: "vcge.u32 q8, q8, q9"
+        -
+          asm_text: "vcge.f32 q8, q8, q9"
+        -
+          asm_text: "vacge.f32 d16, d16, d17"
+        -
+          asm_text: "vacge.f32 q8, q8, q9"
+        -
+          asm_text: "vcgt.s8 d16, d16, d17"
+        -
+          asm_text: "vcgt.s16 d16, d16, d17"
+        -
+          asm_text: "vcgt.s32 d16, d16, d17"
+        -
+          asm_text: "vcgt.u8 d16, d16, d17"
+        -
+          asm_text: "vcgt.u16 d16, d16, d17"
+        -
+          asm_text: "vcgt.u32 d16, d16, d17"
+        -
+          asm_text: "vcgt.f32 d16, d16, d17"
+        -
+          asm_text: "vcgt.s8 q8, q8, q9"
+        -
+          asm_text: "vcgt.s16 q8, q8, q9"
+        -
+          asm_text: "vcgt.s32 q8, q8, q9"
+        -
+          asm_text: "vcgt.u8 q8, q8, q9"
+        -
+          asm_text: "vcgt.u16 q8, q8, q9"
+        -
+          asm_text: "vcgt.u32 q8, q8, q9"
+        -
+          asm_text: "vcgt.f32 q8, q8, q9"
+        -
+          asm_text: "vacgt.f32 d16, d16, d17"
+        -
+          asm_text: "vacgt.f32 q8, q8, q9"
+        -
+          asm_text: "vtst.8 d16, d16, d17"
+        -
+          asm_text: "vtst.16 d16, d16, d17"
+        -
+          asm_text: "vtst.32 d16, d16, d17"
+        -
+          asm_text: "vtst.8 q8, q8, q9"
+        -
+          asm_text: "vtst.16 q8, q8, q9"
+        -
+          asm_text: "vtst.32 q8, q8, q9"
+        -
+          asm_text: "vceq.i8 d16, d16, #0"
+        -
+          asm_text: "vcge.s8 d16, d16, #0"
+        -
+          asm_text: "vcle.s8 d16, d16, #0"
+        -
+          asm_text: "vcgt.s8 d16, d16, #0"
+        -
+          asm_text: "vclt.s8 d16, d16, #0"
+        -
+          asm_text: "vcgt.s8 q12, q3, q13"
+        -
+          asm_text: "vcgt.s16 q12, q3, q13"
+        -
+          asm_text: "vcgt.s32 q12, q3, q13"
+        -
+          asm_text: "vcgt.u8 q12, q3, q13"
+        -
+          asm_text: "vcgt.u16 q12, q3, q13"
+        -
+          asm_text: "vcgt.u32 q12, q3, q13"
+        -
+          asm_text: "vcgt.f32 q12, q3, q13"
+        -
+          asm_text: "vcgt.s8 d12, d3, d13"
+        -
+          asm_text: "vcgt.s16 d12, d3, d13"
+        -
+          asm_text: "vcgt.s32 d12, d3, d13"
+        -
+          asm_text: "vcgt.u8 d12, d3, d13"
+        -
+          asm_text: "vcgt.u16 d12, d3, d13"
+        -
+          asm_text: "vcgt.u32 d12, d3, d13"
+        -
+          asm_text: "vcgt.f32 d12, d3, d13"
+        -
+          asm_text: "vcge.s8 d16, d17, d16"
+        -
+          asm_text: "vcge.s16 d16, d17, d16"
+        -
+          asm_text: "vcge.s32 d16, d17, d16"
+        -
+          asm_text: "vcge.u8 d16, d17, d16"
+        -
+          asm_text: "vcge.u16 d16, d17, d16"
+        -
+          asm_text: "vcge.u32 d16, d17, d16"
+        -
+          asm_text: "vcge.f32 d16, d17, d16"
+        -
+          asm_text: "vcge.s8 q8, q9, q8"
+        -
+          asm_text: "vcge.s16 q8, q9, q8"
+        -
+          asm_text: "vcge.s32 q8, q9, q8"
+        -
+          asm_text: "vcge.u8 q8, q9, q8"
+        -
+          asm_text: "vcge.u16 q8, q9, q8"
+        -
+          asm_text: "vcge.u32 q8, q9, q8"
+        -
+          asm_text: "vcge.f32 q8, q9, q8"
+        -
+          asm_text: "vacgt.f32 q9, q12, q11"
+        -
+          asm_text: "vacgt.f32 d9, d12, d11"
+        -
+          asm_text: "vacgt.f32 q11, q12, q11"
+        -
+          asm_text: "vacgt.f32 d11, d12, d11"
+        -
+          asm_text: "vacge.f32 q9, q12, q11"
+        -
+          asm_text: "vacge.f32 d9, d12, d11"
+        -
+          asm_text: "vacge.f32 q11, q12, q11"
+        -
+          asm_text: "vacge.f32 d11, d12, d11"

@@ -246,6 +246,7 @@ typedef enum x86_avx_rm {
 
 /// Instruction prefixes - to be used in cs_x86.prefix[]
 typedef enum x86_prefix {
+	X86_PREFIX_0		=	0x0,
 	X86_PREFIX_LOCK		= 	0xf0,	///< lock (cs_x86.prefix[0]
 	X86_PREFIX_REP		= 	0xf3,	///< rep (cs_x86.prefix[0]
 	X86_PREFIX_REPE		= 	0xf3,	///< repe/repz (cs_x86.prefix[0]

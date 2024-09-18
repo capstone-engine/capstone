@@ -28,6 +28,7 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 		cs_aarch64_op *op = &(aarch64->operands[i]);
 		switch(op->type) {
 		default:
+			printf("\t\tOperand type %" PRId32 " not handled\n", op->type);
 			break;
 		case AARCH64_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s%s\n", i, cs_reg_name(handle, op->reg), op->is_vreg ? " (vreg)" : "");
@@ -66,14 +67,14 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 				printf("\t\toperands[%u].sme.tile: %s\n", i, cs_reg_name(handle, op->sme.tile));
 			if (op->sme.slice_reg != AARCH64_REG_INVALID)
 				printf("\t\toperands[%u].sme.slice_reg: %s\n", i, cs_reg_name(handle, op->sme.slice_reg));
-			if (op->sme.slice_offset.imm != -1 || op->sme.slice_offset.imm_range.first != -1) {
+			if (op->sme.slice_offset.imm != AARCH64_SLICE_IMM_INVALID || op->sme.slice_offset.imm_range.first != AARCH64_SLICE_IMM_RANGE_INVALID) {
 				printf("\t\toperands[%u].sme.slice_offset: ", i);
 				if (op->sme.has_range_offset)
 					printf("%hhd:%hhd\n", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
 				else
 					printf("%d\n", op->sme.slice_offset.imm);
 			}
-			if (op->sme.slice_reg != AARCH64_REG_INVALID || op->sme.slice_offset.imm != -1)
+			if (op->sme.slice_reg != AARCH64_REG_INVALID || op->sme.slice_offset.imm != AARCH64_SLICE_IMM_INVALID)
 				printf("\t\toperands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
 			break;
 		case AARCH64_OP_PRED:

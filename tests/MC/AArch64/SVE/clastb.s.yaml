@@ -1,0 +1,280 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x31, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb w0, p7, w0, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x71, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb w0, p7, w0, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xb1, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb w0, p7, w0, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xf1, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb x0, p7, x0, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x2b, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb b0, p7, b0, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x6b, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb h0, p7, h0, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xab, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb s0, p7, s0, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xeb, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb d0, p7, d0, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x29, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb z0.b, p7, z0.b, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x69, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb z0.h, p7, z0.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xa9, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb z0.s, p7, z0.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xe9, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb z0.d, p7, z0.d, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbc, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z0, z7"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xe9, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb z0.d, p7, z0.d, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x31, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb w0, p7, w0, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0x71, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb w0, p7, w0, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xb1, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb w0, p7, w0, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbf, 0xf1, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb x0, p7, x0, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x2b, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb b0, p7, b0, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x6b, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb h0, p7, h0, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xab, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb s0, p7, s0, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xeb, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb d0, p7, d0, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x29, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb z0.b, p7, z0.b, z31.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0x69, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb z0.h, p7, z0.h, z31.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xa9, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb z0.s, p7, z0.s, z31.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xe9, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb z0.d, p7, z0.d, z31.d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xbc, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z0, z7"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x9f, 0xe9, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "clastb z0.d, p7, z0.d, z31.d"

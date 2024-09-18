@@ -25,8 +25,7 @@ typedef enum cs_op_type {
 	CS_OP_RESERVED_15 = 15,
 	CS_OP_SPECIAL = 0x10, ///< Special operands from archs
 	CS_OP_BOUND = 0x40, ///< Operand is associated with a previous operand. Used by AArch64 for SME operands.
-	CS_OP_MEM =
-		0x80, ///< Memory operand. Can be ORed with another operand type.
+	CS_OP_MEM = 0x80, ///< Memory operand. Can be ORed with another operand type.
 	CS_OP_MEM_REG = CS_OP_MEM | CS_OP_REG,	   ///< Memory referencing register operand.
 	CS_OP_MEM_IMM = CS_OP_MEM | CS_OP_IMM,	   ///< Memory referencing immediate operand.
 

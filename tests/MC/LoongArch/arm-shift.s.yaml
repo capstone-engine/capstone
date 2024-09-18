@@ -1,0 +1,82 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x91, 0x94, 0x3a, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armsll.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x14, 0x3b, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armsrl.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x94, 0x3b, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armsra.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x14, 0x3c, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armrotr.w $a0, $a1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x84, 0x3c, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armslli.w $a0, 1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x04, 0x3d, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armsrli.w $a0, 1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x84, 0x3d, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armsrai.w $a0, 1, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x04, 0x3e, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armrotri.w $a0, 1, 1"
+  -
+    input:
+      bytes: [ 0x9f, 0xc4, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "armrrx.w $a0, 1"

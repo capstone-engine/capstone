@@ -16,6 +16,7 @@ from shutil import copy2
 
 from tree_sitter import Language, Node, Parser, Tree
 
+from autosync.Targets import ARCH_LLVM_NAMING
 from autosync.cpptranslator.Configurator import Configurator
 from autosync.Helper import (
     bold,
@@ -636,18 +637,21 @@ class Differ:
                 j = old_node_ids.index(self.cur_nid)
                 while j >= 0 and (old_node_ids[j] not in new_nodes.keys()):
                     j -= 1
-                ref_new: Node = (
-                    new_nodes[old_node_ids[j]]
-                    if old_node_ids[j] in new_nodes.keys()
-                    else new_nodes[0]
-                )
-                ref_end_byte = ref_new.start_byte
+                if j < 0 or old_node_ids[j] not in new_nodes.keys():
+                    # No new node exists before the old node.
+                    # So just put it to the very beginning.
+                    ref_end_byte = 1
+                    ref_start_point = (1, 0)
+                else:
+                    ref_new: Node = new_nodes[old_node_ids[j]]
+                    ref_end_byte = ref_new.start_byte
+                    ref_start_point = ref_new.start_point
                 # We always write to the new file. So we always take he coordinates form it.
                 patch_coord = PatchCoord(
                     ref_end_byte - 1,
                     ref_end_byte - 1,
-                    ref_new.start_point,
-                    ref_new.start_point,
+                    ref_start_point,
+                    ref_start_point,
                 )
 
             save_exists = False
@@ -851,6 +855,10 @@ class Differ:
             filename, node_id = self.all_choices_saved(
                 old_filepath, new_file[k]["nodes"], old_file[k]["nodes"]
             )
+            if not node_id:
+                # Edge case of file has all nodes matching. And therefore has
+                # no decision saved because the user never was asked.
+                continue
             if filename or node_id:
                 print(
                     f"{get_path('{DIFFER_PERSISTENCE_FILE}').name} is not up-to-date!\n"
@@ -918,7 +926,7 @@ def parse_args() -> argparse.Namespace:
         "-a",
         dest="arch",
         help="Name of target architecture (ignored with -t option)",
-        choices=["ARM", "PPC", "AArch64", "Alpha"],
+        choices=ARCH_LLVM_NAMING,
         required=True,
     )
     parser.add_argument(

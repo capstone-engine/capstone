@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x05, 0x3d, 0x04, 0xfc ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "vdot.bf16 d3, d4, d5"

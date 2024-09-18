@@ -1,0 +1,140 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x1f, 0x40, 0x00, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfinv"
+
+  -
+    input:
+      bytes: [ 0x2d, 0x08, 0x00, 0x3a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "setf8 w1"
+
+  -
+    input:
+      bytes: [ 0xed, 0x0b, 0x00, 0x3a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "setf8 wzr"
+
+  -
+    input:
+      bytes: [ 0x2d, 0x48, 0x00, 0x3a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "setf16 w1"
+
+  -
+    input:
+      bytes: [ 0xed, 0x4b, 0x00, 0x3a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "setf16 wzr"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x84, 0x1f, 0xba ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "rmif x1, #63, #15"
+
+  -
+    input:
+      bytes: [ 0xef, 0x87, 0x1f, 0xba ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "rmif xzr, #63, #15"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x40, 0x00, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "flagm" ]
+    expected:
+      insns:
+        -
+          asm_text: "cfinv"
+
+  -
+    input:
+      bytes: [ 0x2d, 0x08, 0x00, 0x3a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "flagm" ]
+    expected:
+      insns:
+        -
+          asm_text: "setf8 w1"
+
+  -
+    input:
+      bytes: [ 0xed, 0x0b, 0x00, 0x3a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "flagm" ]
+    expected:
+      insns:
+        -
+          asm_text: "setf8 wzr"
+
+  -
+    input:
+      bytes: [ 0x2d, 0x48, 0x00, 0x3a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "flagm" ]
+    expected:
+      insns:
+        -
+          asm_text: "setf16 w1"
+
+  -
+    input:
+      bytes: [ 0xed, 0x4b, 0x00, 0x3a ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "flagm" ]
+    expected:
+      insns:
+        -
+          asm_text: "setf16 wzr"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x84, 0x1f, 0xba ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "flagm" ]
+    expected:
+      insns:
+        -
+          asm_text: "rmif x1, #63, #15"
+
+  -
+    input:
+      bytes: [ 0xef, 0x87, 0x1f, 0xba ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "flagm" ]
+    expected:
+      insns:
+        -
+          asm_text: "rmif xzr, #63, #15"

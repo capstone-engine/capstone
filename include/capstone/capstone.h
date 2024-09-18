@@ -140,11 +140,15 @@ typedef enum cs_arch {
 #else
 	CS_ARCH_AARCH64 = 1,	///< AArch64
 #endif
+#ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER
+	CS_ARCH_SYSZ = 2,	///< SystemZ architecture
+#else
+	CS_ARCH_SYSTEMZ = 2,	///< SystemZ architecture
+#endif
 	CS_ARCH_MIPS,		///< Mips architecture
 	CS_ARCH_X86,		///< X86 architecture (including x86 & x86-64)
 	CS_ARCH_PPC,		///< PowerPC architecture
 	CS_ARCH_SPARC,		///< Sparc architecture
-	CS_ARCH_SYSZ,		///< SystemZ architecture
 	CS_ARCH_XCORE,		///< XCore architecture
 	CS_ARCH_M68K,		///< 68K architecture
 	CS_ARCH_TMS320C64X,	///< TMS320C64x architecture
@@ -183,10 +187,6 @@ typedef enum cs_mode {
 	CS_MODE_THUMB = 1 << 4,	///< ARM's Thumb mode, including Thumb-2
 	CS_MODE_MCLASS = 1 << 5,	///< ARM's Cortex-M series
 	CS_MODE_V8 = 1 << 6,	///< ARMv8 A32 encodings for ARM
-	CS_MODE_MICRO = 1 << 4, ///< MicroMips mode (MIPS)
-	CS_MODE_MIPS3 = 1 << 5, ///< Mips III ISA
-	CS_MODE_MIPS32R6 = 1 << 6, ///< Mips32r6 ISA
-	CS_MODE_MIPS2 = 1 << 7, ///< Mips II ISA
 	CS_MODE_V9 = 1 << 4, ///< SparcV9 mode (Sparc)
 	CS_MODE_QPX = 1 << 4, ///< Quad Processing eXtensions mode (PPC)
 	CS_MODE_SPE = 1 << 5, ///< Signal Processing Engine mode (PPC)
@@ -198,9 +198,33 @@ typedef enum cs_mode {
 	CS_MODE_M68K_030 = 1 << 4, ///< M68K 68030 mode
 	CS_MODE_M68K_040 = 1 << 5, ///< M68K 68040 mode
 	CS_MODE_M68K_060 = 1 << 6, ///< M68K 68060 mode
-	CS_MODE_BIG_ENDIAN = 1U << 31,	///< big-endian mode
-	CS_MODE_MIPS32 = CS_MODE_32,	///< Mips32 ISA (Mips)
-	CS_MODE_MIPS64 = CS_MODE_64,	///< Mips64 ISA (Mips)
+	CS_MODE_BIG_ENDIAN = 1U << 31, ///< big-endian mode
+	CS_MODE_MIPS16 = CS_MODE_16, ///< Generic mips16
+	CS_MODE_MIPS32 = CS_MODE_32, ///< Generic mips32
+	CS_MODE_MIPS64 = CS_MODE_64, ///< Generic mips64
+	CS_MODE_MICRO = 1 << 4, ///< microMips
+	CS_MODE_MIPS1 = 1 << 5, ///< Mips I ISA Support
+	CS_MODE_MIPS2 = 1 << 6, ///< Mips II ISA Support
+	CS_MODE_MIPS32R2 = 1 << 7, ///< Mips32r2 ISA Support
+	CS_MODE_MIPS32R3 = 1 << 8, ///< Mips32r3 ISA Support
+	CS_MODE_MIPS32R5 = 1 << 9, ///< Mips32r5 ISA Support
+	CS_MODE_MIPS32R6 = 1 << 10, ///< Mips32r6 ISA Support
+	CS_MODE_MIPS3 = 1 << 11, ///< MIPS III ISA Support
+	CS_MODE_MIPS4 = 1 << 12, ///< MIPS IV ISA Support
+	CS_MODE_MIPS5 = 1 << 13, ///< MIPS V ISA Support
+	CS_MODE_MIPS64R2 = 1 << 14, ///< Mips64r2 ISA Support
+	CS_MODE_MIPS64R3 = 1 << 15, ///< Mips64r3 ISA Support
+	CS_MODE_MIPS64R5 = 1 << 16, ///< Mips64r5 ISA Support
+	CS_MODE_MIPS64R6 = 1 << 17, ///< Mips64r6 ISA Support
+	CS_MODE_OCTEON = 1 << 18, ///< Octeon cnMIPS Support
+	CS_MODE_OCTEONP = 1 << 19, ///< Octeon+ cnMIPS Support
+	CS_MODE_NANOMIPS = 1 << 20, ///< Generic nanomips 
+	CS_MODE_NMS1 = ((1 << 21) | CS_MODE_NANOMIPS), ///< nanoMips NMS1
+	CS_MODE_I7200 = ((1 << 22) | CS_MODE_NANOMIPS), ///< nanoMips I7200
+	CS_MODE_MIPS_NOFLOAT = 1 << 23, ///< Disable floating points ops
+	CS_MODE_MIPS_PTR64 = 1 << 24, ///< Mips pointers are 64-bit
+	CS_MODE_MICRO32R3 = (CS_MODE_MICRO | CS_MODE_MIPS32R3), ///< microMips32r3
+	CS_MODE_MICRO32R6 = (CS_MODE_MICRO | CS_MODE_MIPS32R6), ///< microMips32r6
 	CS_MODE_M680X_6301 = 1 << 1, ///< M680X Hitachi 6301,6303 mode
 	CS_MODE_M680X_6309 = 1 << 2, ///< M680X Hitachi 6309 mode
 	CS_MODE_M680X_6800 = 1 << 3, ///< M680X Motorola 6800,6802 mode
@@ -210,7 +234,7 @@ typedef enum cs_mode {
 	CS_MODE_M680X_6809 = 1 << 7, ///< M680X Motorola 6809 mode
 	CS_MODE_M680X_6811 = 1 << 8, ///< M680X Motorola/Freescale/NXP 68HC11 mode
 	CS_MODE_M680X_CPU12 = 1 << 9, ///< M680X Motorola/Freescale/NXP CPU12
-					///< used on M68HC12/HCS12
+							///< used on M68HC12/HCS12
 	CS_MODE_M680X_HCS08 = 1 << 10, ///< M680X Freescale/NXP HCS08 mode
 	CS_MODE_BPF_CLASSIC = 0,	///< Classic BPF mode (default)
 	CS_MODE_BPF_EXTENDED = 1 << 0,	///< Extended BPF mode
@@ -243,6 +267,21 @@ typedef enum cs_mode {
 	CS_MODE_HPPA_20W = CS_MODE_HPPA_20 | (1 << 3), ///< HPPA 2.0 wide
 	CS_MODE_LOONGARCH32  = 1 << 0,        ///< LoongArch32
 	CS_MODE_LOONGARCH64  = 1 << 1,        ///< LoongArch64
+	CS_MODE_SYSTEMZ_ARCH8 = 1 << 1, ///< Enables features of the ARCH8 processor
+	CS_MODE_SYSTEMZ_ARCH9 = 1 << 2, ///< Enables features of the ARCH9 processor
+	CS_MODE_SYSTEMZ_ARCH10 = 1 << 3, ///< Enables features of the ARCH10 processor
+	CS_MODE_SYSTEMZ_ARCH11 = 1 << 4, ///< Enables features of the ARCH11 processor
+	CS_MODE_SYSTEMZ_ARCH12 = 1 << 5, ///< Enables features of the ARCH12 processor
+	CS_MODE_SYSTEMZ_ARCH13 = 1 << 6, ///< Enables features of the ARCH13 processor
+	CS_MODE_SYSTEMZ_ARCH14 = 1 << 7, ///< Enables features of the ARCH14 processor
+	CS_MODE_SYSTEMZ_Z10 = 1 << 8, ///< Enables features of the Z10 processor
+	CS_MODE_SYSTEMZ_Z196 = 1 << 9, ///< Enables features of the Z196 processor
+	CS_MODE_SYSTEMZ_ZEC12 = 1 << 10, ///< Enables features of the ZEC12 processor
+	CS_MODE_SYSTEMZ_Z13 = 1 << 11, ///< Enables features of the Z13 processor
+	CS_MODE_SYSTEMZ_Z14 = 1 << 12, ///< Enables features of the Z14 processor
+	CS_MODE_SYSTEMZ_Z15 = 1 << 13, ///< Enables features of the Z15 processor
+	CS_MODE_SYSTEMZ_Z16 = 1 << 14, ///< Enables features of the Z16 processor
+	CS_MODE_SYSTEMZ_GENERIC = 1 << 15, ///< Enables features of the generic processor
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);
@@ -284,7 +323,7 @@ typedef enum cs_opt_type {
 	CS_OPT_SKIPDATA_SETUP, ///< Setup user-defined function for SKIPDATA option
 	CS_OPT_MNEMONIC,       ///< Customize instruction mnemonic
 	CS_OPT_UNSIGNED,       ///< print immediate operands in unsigned form
-	CS_OPT_NO_BRANCH_OFFSET, ///< ARM, prints branch immediates without offset.
+	CS_OPT_NO_BRANCH_OFFSET, ///< ARM, PPC, AArch64, prints branch immediates without offset.
 } cs_opt_type;
 
 /// Runtime option value (associated with option type above)
@@ -299,8 +338,15 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_MOTOROLA = 1 << 6, ///< MOS65XX use $ as hex prefix
 	CS_OPT_SYNTAX_CS_REG_ALIAS = 1 << 7, ///< Prints common register alias which are not defined in LLVM (ARM: r9 = sb etc.)
 	CS_OPT_SYNTAX_PERCENT = 1 << 8, ///< Prints the % in front of PPC registers.
+	CS_OPT_SYNTAX_NO_DOLLAR = 1 << 9, ///< Does not print the $ in front of Mips registers.
 	CS_OPT_DETAIL_REAL = 1 << 1, ///< If enabled, always sets the real instruction detail. Even if the instruction is an alias.
 } cs_opt_value;
+
+/// An option
+typedef struct {
+	cs_opt_type type; ///< The option type
+	cs_opt_value val; ///< The option value to set.
+} cs_opt;
 
 /// Common instruction groups - to be consistent across all architectures.
 typedef enum cs_group_type {
@@ -395,7 +441,7 @@ typedef struct cs_opt_skipdata {
 
 #define MAX_IMPL_W_REGS 47
 #define MAX_IMPL_R_REGS 20
-#define MAX_NUM_GROUPS 8
+#define MAX_NUM_GROUPS 16
 
 /// NOTE: All information in cs_detail is only available when CS_OPT_DETAIL = CS_OPT_ON
 /// Initialized as memset(., 0, offsetof(cs_detail, ARCH)+sizeof(cs_ARCH))
@@ -424,12 +470,17 @@ typedef struct cs_detail {
 #else
 		cs_aarch64 aarch64; ///< AArch6464 architecture (aka ARM64)
 #endif
+
+#ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER
+		cs_sysz sysz;   ///< SystemZ architecture
+#else
+		cs_systemz systemz; ///< SystemZ architecture (aka SysZ)
+#endif
 		cs_arm arm;     ///< ARM architecture (including Thumb/Thumb2)
 		cs_m68k m68k;   ///< M68K architecture
 		cs_mips mips;   ///< MIPS architecture
 		cs_ppc ppc;	    ///< PowerPC architecture
 		cs_sparc sparc; ///< Sparc architecture
-		cs_sysz sysz;   ///< SystemZ architecture
 		cs_xcore xcore; ///< XCore architecture
 		cs_tms320c64x tms320c64x;  ///< TMS320C64x architecture
 		cs_m680x m680x; ///< M680X architecture
@@ -564,7 +615,10 @@ void CAPSTONE_API cs_arch_register_powerpc(void);
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_sparc(void);
 CAPSTONE_EXPORT
-void CAPSTONE_API cs_arch_register_sysz(void);
+void CAPSTONE_API cs_arch_register_systemz(void);
+#ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER
+#define cs_arch_register_sysz cs_arch_register_systemz
+#endif
 CAPSTONE_EXPORT
 void CAPSTONE_API cs_arch_register_xcore(void);
 CAPSTONE_EXPORT

@@ -1,0 +1,2308 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x20, 0x50, 0xa2, 0x00, 0x01, 0x58, 0x20, 0x00, 0x00, 0x44, 0xa1, 0x00, 0x41, 0x18, 0x40, 0x00, 0x20, 0x08, 0xa2, 0x01, 0x60, 0x48, 0xa1, 0x01, 0x61, 0x18, 0xc0, 0x00, 0x00, 0x14, 0xa1, 0x00, 0x0f, 0x0d, 0x61, 0x00, 0x0f, 0x0e, 0x61, 0x00, 0x01, 0x18, 0x60, 0x00, 0x00, 0x0c, 0x00, 0x00, 0x00, 0x0c, 0xa0, 0x03, 0xff, 0xc0, 0x1f, 0x00, 0x00, 0x04, 0x00, 0x00, 0x10, 0x04, 0x00, 0x04, 0x22, 0x51, 0x83, 0x04, 0x22, 0x51, 0xc3, 0x04, 0x22, 0x51, 0x83, 0x04, 0x2f, 0x71, 0x83, 0x04, 0x2f, 0x71, 0xc3, 0x04, 0x2f, 0x71, 0x83, 0x04, 0x41, 0x53, 0x43, 0x04, 0x41, 0x53, 0x63, 0x04, 0x41, 0x53, 0x03, 0x04, 0x41, 0x12, 0x00, 0x04, 0x41, 0x16, 0x00, 0x04, 0x41, 0x16, 0x20, 0x04, 0x41, 0x42, 0x00, 0x04, 0x41, 0x46, 0x00, 0x04, 0x41, 0x46, 0x20, 0x04, 0x41, 0x12, 0x40, 0x04, 0x41, 0x12, 0x60, 0x04, 0x41, 0x42, 0x40, 0x04, 0x41, 0x42, 0x60, 0x04, 0x41, 0x18, 0x00, 0x04, 0x41, 0x08, 0x00, 0x04, 0x41, 0x13, 0x80, 0x04, 0x41, 0x13, 0xa0, 0x04, 0x41, 0x52, 0x80, 0x04, 0x41, 0x52, 0xa0, 0x04, 0x5e, 0x72, 0x80, 0x04, 0x41, 0x42, 0x80, 0x04, 0x41, 0x52, 0xc0, 0x04, 0x41, 0x52, 0xe0, 0x04, 0x41, 0x42, 0xc0, 0x04, 0x41, 0x42, 0xe0, 0x14, 0x00, 0xde, 0xad  ]
+      arch: "hppa"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_HPPA_20, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldsid (sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "mtsp r1,sr1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_REG
+                reg: sr1
+      -
+        asm_text: "mfsp sr1,r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: sr1
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "mtctl r1,cr2"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_REG
+                reg: cr2
+      -
+        asm_text: "mfctl cr1,rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: cr1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "mfctl,w sar,r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: sar
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "mtsarcm r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "mfia r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "ssm 0xf,r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IMM
+                imm: 0xf
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "rsm 0xf,r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IMM
+                imm: 0xf
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "mtsm r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "rfi"
+      -
+        asm_text: "rfi,r"
+      -
+        asm_text: "break 0x1f,0x1ffe"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IMM
+                imm: 0x1f
+              -
+                type: HPPA_OP_IMM
+                imm: 0x1ffe
+      -
+        asm_text: "sync"
+      -
+        asm_text: "syncdma"
+      -
+        asm_text: "probe,r (sr1,r1),rp,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "probe,w (sr1,r1),rp,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "probe,r (sr1,r1),rp,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "probei,r (sr1,r1),0xf,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_IMM
+                imm: 0xf
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "probei,w (sr1,r1),0xf,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_IMM
+                imm: 0xf
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "probei,r (sr1,r1),0xf,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_IMM
+                imm: 0xf
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "lpa r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "lpa,m r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "lci r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "pdtlb r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pdtlb,l r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pdtlb,l,m r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pitlb r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "pitlb,l r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "pitlb,l,m r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "pdtlbe r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pdtlbe,m r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pitlbe r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "pitlbe,m r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "idtlbt r1,rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "iitlbt r1,rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "pdc r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pdc,m r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "fdc r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fdc,m r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fdc 0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fic r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fdce r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fdce,m r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fice r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fice,m r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "diag 0xdead"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IMM
+                imm: 0xdead
+  -
+    input:
+      bytes: [ 0xa2, 0x50, 0x20, 0x00, 0x20, 0x58, 0x01, 0x00, 0xa1, 0x44, 0x00, 0x00, 0x40, 0x18, 0x41, 0x00, 0xa2, 0x08, 0x20, 0x00, 0xa1, 0x48, 0x60, 0x01, 0xc0, 0x18, 0x61, 0x01, 0xa1, 0x14, 0x00, 0x00, 0x61, 0x0d, 0x0f, 0x00, 0x61, 0x0e, 0x0f, 0x00, 0x60, 0x18, 0x01, 0x00, 0x00, 0x0c, 0x00, 0x00, 0xa0, 0x0c, 0x00, 0x00, 0x1f, 0xc0, 0xff, 0x03, 0x00, 0x04, 0x00, 0x00, 0x00, 0x04, 0x10, 0x00, 0x83, 0x51, 0x22, 0x04, 0xc3, 0x51, 0x22, 0x04, 0x83, 0x51, 0x22, 0x04, 0x83, 0x71, 0x2f, 0x04, 0xc3, 0x71, 0x2f, 0x04, 0x83, 0x71, 0x2f, 0x04, 0x43, 0x53, 0x41, 0x04, 0x63, 0x53, 0x41, 0x04, 0x03, 0x53, 0x41, 0x04, 0x00, 0x12, 0x41, 0x04, 0x00, 0x16, 0x41, 0x04, 0x20, 0x16, 0x41, 0x04, 0x00, 0x42, 0x41, 0x04, 0x00, 0x46, 0x41, 0x04, 0x20, 0x46, 0x41, 0x04, 0x40, 0x12, 0x41, 0x04, 0x60, 0x12, 0x41, 0x04, 0x40, 0x42, 0x41, 0x04, 0x60, 0x42, 0x41, 0x04, 0x00, 0x18, 0x41, 0x04, 0x00, 0x08, 0x41, 0x04, 0x80, 0x13, 0x41, 0x04, 0xa0, 0x13, 0x41, 0x04, 0x80, 0x52, 0x41, 0x04, 0xa0, 0x52, 0x41, 0x04, 0x80, 0x72, 0x5e, 0x04, 0x80, 0x42, 0x41, 0x04, 0xc0, 0x52, 0x41, 0x04, 0xe0, 0x52, 0x41, 0x04, 0xc0, 0x42, 0x41, 0x04, 0xe0, 0x42, 0x41, 0x04, 0xad, 0xde, 0x00, 0x14  ]
+      arch: "hppa"
+      options: [ CS_OPT_DETAIL, CS_MODE_HPPA_20 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldsid (sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "mtsp r1,sr1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_REG
+                reg: sr1
+      -
+        asm_text: "mfsp sr1,r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: sr1
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "mtctl r1,cr2"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_REG
+                reg: cr2
+      -
+        asm_text: "mfctl cr1,rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: cr1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "mfctl,w sar,r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: sar
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "mtsarcm r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "mfia r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "ssm 0xf,r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IMM
+                imm: 0xf
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "rsm 0xf,r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IMM
+                imm: 0xf
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "mtsm r1"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+      -
+        asm_text: "rfi"
+      -
+        asm_text: "rfi,r"
+      -
+        asm_text: "break 0x1f,0x1ffe"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IMM
+                imm: 0x1f
+              -
+                type: HPPA_OP_IMM
+                imm: 0x1ffe
+      -
+        asm_text: "sync"
+      -
+        asm_text: "syncdma"
+      -
+        asm_text: "probe,r (sr1,r1),rp,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "probe,w (sr1,r1),rp,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "probe,r (sr1,r1),rp,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "probei,r (sr1,r1),0xf,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_IMM
+                imm: 0xf
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "probei,w (sr1,r1),0xf,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_IMM
+                imm: 0xf
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "probei,r (sr1,r1),0xf,r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_IMM
+                imm: 0xf
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "lpa r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "lpa,m r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "lci r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "pdtlb r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pdtlb,l r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pdtlb,l,m r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pitlb r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "pitlb,l r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "pitlb,l,m r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "pdtlbe r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pdtlbe,m r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pitlbe r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "pitlbe,m r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "idtlbt r1,rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "iitlbt r1,rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "pdc r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "pdc,m r1(rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: rp
+      -
+        asm_text: "fdc r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fdc,m r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fdc 0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fic r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fdce r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fdce,m r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fice r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "fice,m r1(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "diag 0xdead"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IMM
+                imm: 0xdead
+  -
+    input:
+      bytes: [ 0x24, 0x41, 0x40, 0xc3, 0x24, 0x41, 0x60, 0xc3, 0x24, 0x41, 0x40, 0xe3, 0x24, 0x41, 0x60, 0xe3, 0x24, 0x41, 0x68, 0xe3, 0x2c, 0x41, 0x40, 0xc3, 0x2c, 0x41, 0x60, 0xc3, 0x2c, 0x41, 0x40, 0xe3, 0x2c, 0x41, 0x60, 0xe3, 0x2c, 0x41, 0x68, 0xe3, 0x24, 0x62, 0x42, 0xc1, 0x24, 0x62, 0x62, 0xc1, 0x24, 0x62, 0x42, 0xe1, 0x24, 0x62, 0x46, 0xe1, 0x24, 0x62, 0x62, 0xe1, 0x24, 0x62, 0x6a, 0xe1, 0x2c, 0x62, 0x42, 0xc1, 0x2c, 0x62, 0x62, 0xc1, 0x2c, 0x62, 0x42, 0xe1, 0x2c, 0x62, 0x46, 0xe1, 0x2c, 0x62, 0x62, 0xe1, 0x2c, 0x62, 0x6a, 0xe1, 0x24, 0x3e, 0x50, 0xc2, 0x24, 0x3e, 0x50, 0xe2, 0x24, 0x3e, 0x70, 0xe2, 0x24, 0x3e, 0x78, 0xe2, 0x2c, 0x3e, 0x50, 0xc2, 0x2c, 0x3e, 0x50, 0xe2, 0x2c, 0x3e, 0x70, 0xe2, 0x2c, 0x3e, 0x78, 0xe2, 0x24, 0x5e, 0x52, 0xc1, 0x24, 0x5e, 0x52, 0xe1, 0x24, 0x5e, 0x56, 0xe1, 0x24, 0x5e, 0x72, 0xe1, 0x24, 0x5e, 0x7a, 0xe1, 0x2c, 0x5e, 0x52, 0xc1, 0x2c, 0x5e, 0x52, 0xe1, 0x2c, 0x5e, 0x56, 0xe1, 0x2c, 0x5e, 0x72, 0xe1, 0x2c, 0x5e, 0x7a, 0xe1  ]
+      arch: "hppa"
+      options: [ CS_OPT_DETAIL, CS_MODE_HPPA_11, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cldwx,3 r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "cldwx,3,s r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "cldwx,3,m r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "cldwx,3,sm r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "cldwx,3,sm,sl r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "clddx,3 r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "clddx,3,s r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "clddx,3,m r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "clddx,3,sm r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "clddx,3,sm,sl r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "cstwx,3 r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstwx,3,s r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstwx,3,m r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstwx,3,m,bc r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstwx,3,sm r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstwx,3,sm,sl r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3 r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3,s r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3,m r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3,m,bc r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3,sm r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3,sm,sl r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cldws,3 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldws,3,ma 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldws,3,mb 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldws,3,mb,sl 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldds,3 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldds,3,ma 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldds,3,mb 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldds,3,mb,sl 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cstws,3 r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstws,3,ma r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstws,3,ma,bc r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstws,3,mb r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstws,3,mb,sl r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstds,3 r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstds,3,ma r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstds,3,ma,bc r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstds,3,mb r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstds,3,mb,sl r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+  -
+    input:
+      bytes: [ 0xc3, 0x40, 0x41, 0x24, 0xc3, 0x60, 0x41, 0x24, 0xe3, 0x40, 0x41, 0x24, 0xe3, 0x60, 0x41, 0x24, 0xe3, 0x68, 0x41, 0x24, 0xc3, 0x40, 0x41, 0x2c, 0xc3, 0x60, 0x41, 0x2c, 0xe3, 0x40, 0x41, 0x2c, 0xe3, 0x60, 0x41, 0x2c, 0xe3, 0x68, 0x41, 0x2c, 0xc1, 0x42, 0x62, 0x24, 0xc1, 0x62, 0x62, 0x24, 0xe1, 0x42, 0x62, 0x24, 0xe1, 0x46, 0x62, 0x24, 0xe1, 0x62, 0x62, 0x24, 0xe1, 0x6a, 0x62, 0x24, 0xc1, 0x42, 0x62, 0x2c, 0xc1, 0x62, 0x62, 0x2c, 0xe1, 0x42, 0x62, 0x2c, 0xe1, 0x46, 0x62, 0x2c, 0xe1, 0x62, 0x62, 0x2c, 0xe1, 0x6a, 0x62, 0x2c, 0xc2, 0x50, 0x3e, 0x24, 0xe2, 0x50, 0x3e, 0x24, 0xe2, 0x70, 0x3e, 0x24, 0xe2, 0x78, 0x3e, 0x24, 0xc2, 0x50, 0x3e, 0x2c, 0xe2, 0x50, 0x3e, 0x2c, 0xe2, 0x70, 0x3e, 0x2c, 0xe2, 0x78, 0x3e, 0x2c, 0xc1, 0x52, 0x5e, 0x24, 0xe1, 0x52, 0x5e, 0x24, 0xe1, 0x56, 0x5e, 0x24, 0xe1, 0x72, 0x5e, 0x24, 0xe1, 0x7a, 0x5e, 0x24, 0xc1, 0x52, 0x5e, 0x2c, 0xe1, 0x52, 0x5e, 0x2c, 0xe1, 0x56, 0x5e, 0x2c, 0xe1, 0x72, 0x5e, 0x2c, 0xe1, 0x7a, 0x5e, 0x2c  ]
+      arch: "hppa"
+      options: [ CS_OPT_DETAIL, CS_MODE_HPPA_11 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cldwx,3 r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "cldwx,3,s r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "cldwx,3,m r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "cldwx,3,sm r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "cldwx,3,sm,sl r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "clddx,3 r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "clddx,3,s r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "clddx,3,m r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "clddx,3,sm r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "clddx,3,sm,sl r1(sr1,rp),r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_IDX_REG
+                reg: r1
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+              -
+                type: HPPA_OP_REG
+                reg: r3
+      -
+        asm_text: "cstwx,3 r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstwx,3,s r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstwx,3,m r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstwx,3,m,bc r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstwx,3,sm r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstwx,3,sm,sl r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3 r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3,s r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3,m r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3,m,bc r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3,sm r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cstdx,3,sm,sl r1,rp(sr1,r3)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_IDX_REG
+                reg: rp
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r3
+      -
+        asm_text: "cldws,3 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldws,3,ma 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldws,3,mb 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldws,3,mb,sl 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldds,3 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldds,3,ma 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldds,3,mb 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cldds,3,mb,sl 0xf(sr1,r1),rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: r1
+              -
+                type: HPPA_OP_REG
+                reg: rp
+      -
+        asm_text: "cstws,3 r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstws,3,ma r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstws,3,ma,bc r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstws,3,mb r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstws,3,mb,sl r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstds,3 r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstds,3,ma r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstds,3,ma,bc r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstds,3,mb r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+      -
+        asm_text: "cstds,3,mb,sl r1,0xf(sr1,rp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r1
+              -
+                type: HPPA_OP_DISP
+                imm: 0xf
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr1
+                mem_base: rp
+

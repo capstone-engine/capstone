@@ -34,8 +34,8 @@ def find_id_by_type(node: Node, node_types: [str], type_must_match: bool) -> byt
     """
     Recursively searches for a node sequence with given node types.
 
-    A valid sequence is a path from !\f$node_n\f$ to !\f$node_{(n + |node\_types|-1)}\f$ where
-    !\f$\forall i \in \{0, ..., |node\_types|-1\}: type(node_{(n + i)}) = node\_types_i\f$.
+    A valid sequence is a path from node_n to node_{(n + |node_types|-1)} where
+    forall i in {0, ..., |node_types|-1}: type(node_{(n + i)}) = node_types_i.
 
     If a node sequence is found, this functions returns the text associated with the
     last node in the sequence.
@@ -159,13 +159,12 @@ def get_path(config_path: str) -> Path:
     return PathVarHandler().complete_path(config_path)
 
 
+def test_only_overwrite_path_var(var_name: str, new_path: Path):
+    """Don't use outside of testing."""
+    return PathVarHandler().test_only_overwrite_var(var_name, new_path)
+
+
 def fail_exit(msg: str) -> None:
     """Logs a fatal message and exits with error code 1."""
     log.fatal(msg)
     exit(1)
-
-
-def check_py_version() -> None:
-    if not sys.hexversion >= 0x030B00F0:
-        log.fatal("Python >= v3.11 required.")
-        exit(1)

@@ -1,0 +1,3271 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x6b, 0x10, 0x00, 0x71, 0x10, 0x00, 0x72, 0x10, 0x10, 0x39  ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_6301 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "tim #16; 0, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 16
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 0
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cc, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "aim #16, $00"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 16
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0000
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc ]
+          regs_write: [ cc ]
+      -
+        asm_text: "oim #16, $10"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 16
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0010
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc ]
+          regs_write: [ cc ]
+      -
+        asm_text: "rts"
+        details:
+          regs_read: [ s ]
+          regs_write: [ s, pc ]
+          groups: [ M680X_GRP_RET ]
+  -
+    input:
+      bytes: [ 0x01, 0x10, 0x10, 0x62, 0x10, 0x10, 0x7b, 0x10, 0x10, 0x00, 0xcd, 0x49, 0x96, 0x02, 0xd2, 0x10, 0x30, 0x23, 0x10, 0x38, 0x10, 0x3b, 0x10, 0x53, 0x10, 0x5d, 0x11, 0x30, 0x43, 0x10, 0x11, 0x37, 0x25, 0x10, 0x11, 0x38, 0x12, 0x11, 0x39, 0x23, 0x11, 0x3b, 0x34, 0x11, 0x8e, 0x10, 0x00, 0x11, 0xaf, 0x10, 0x11, 0xab, 0x10, 0x11, 0xf6, 0x80, 0x00  ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_6309 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "oim #16, $10"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 16
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0010
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc ]
+          regs_write: [ cc ]
+      -
+        asm_text: "aim #16; -16, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 16
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: -16
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "tim #16, $1000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 16
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cc ]
+          regs_write: [ cc ]
+      -
+        asm_text: "ldq #1234567890"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: q
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 1234567890
+                size: 4
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ cc, q ]
+      -
+        asm_text: "addr y, u"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: u
+                size: 2
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc, y, u ]
+          regs_write: [ cc, u ]
+      -
+        asm_text: "pshsw"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: s
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_REGISTER
+                reg: w
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM, M680X_SECOND_OP_IN_MNEM ]
+          regs_read: [ s, w ]
+          regs_write: [ s ]
+      -
+        asm_text: "puluw"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: u
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_REGISTER
+                reg: w
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM, M680X_SECOND_OP_IN_MNEM ]
+          regs_read: [ u ]
+          regs_write: [ u, w ]
+      -
+        asm_text: "comw"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: w
+                size: 2
+                access: CS_AC_READ_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, w ]
+          regs_write: [ cc, w ]
+      -
+        asm_text: "tstw"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: w
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, w ]
+          regs_write: [ cc ]
+      -
+        asm_text: "band a, 0, 3, $10"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_CONSTANT
+                const_val: 0
+                access: CS_AC_READ
+              -
+                type: M680X_OP_CONSTANT
+                const_val: 3
+                access: CS_AC_READ
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0010
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ a ]
+          regs_write: [ a ]
+      -
+        asm_text: "stbt cc, 4, 5, $10"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: cc
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_CONSTANT
+                const_val: 4
+                access: CS_AC_READ
+              -
+                type: M680X_OP_CONSTANT
+                const_val: 5
+                access: CS_AC_READ
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0010
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc ]
+      -
+        asm_text: "tfm x+, y+"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  inc_dec: 1
+                  flags: [ M680X_IDX_NO_COMMA, M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: y
+                  inc_dec: 1
+                  flags: [ M680X_IDX_NO_COMMA, M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_WRITE
+          regs_read: [ w, x, y ]
+          regs_write: [ w, x, y ]
+      -
+        asm_text: "tfm y-, u-"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: y
+                  inc_dec: -1
+                  flags: [ M680X_IDX_NO_COMMA, M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: u
+                  inc_dec: -1
+                  flags: [ M680X_IDX_NO_COMMA, M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_WRITE
+          regs_read: [ w, y, u ]
+          regs_write: [ w, y, u ]
+      -
+        asm_text: "tfm u, s+"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: u
+                  flags: [ M680X_IDX_NO_COMMA ]
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: s
+                  inc_dec: 1
+                  flags: [ M680X_IDX_NO_COMMA, M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_WRITE
+          regs_read: [ w, u, s ]
+          regs_write: [ w, s ]
+      -
+        asm_text: "divq #4096"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: q
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 4096
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, q ]
+          regs_write: [ cc, q ]
+      -
+        asm_text: "muld -16, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: -16
+                  offset_bits: 5
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, d, x ]
+          regs_write: [ cc, d, w ]
+      -
+        asm_text: "adde -16, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: e
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: -16
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, e, x ]
+          regs_write: [ cc, e ]
+      -
+        asm_text: "ldf $8000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: f
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x8000
+                ext_indirect: -1
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ cc, f ]
+  -
+    input:
+      bytes: [ 0x01, 0x09, 0x36, 0x64, 0x7f, 0x74, 0x10, 0x00, 0x90, 0x10, 0xa4, 0x10, 0xb6, 0x10, 0x00, 0x39  ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_6800 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "nop"
+      -
+        asm_text: "dex"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 2
+                access: CS_AC_READ_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, x ]
+      -
+        asm_text: "psha"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ a, s ]
+          regs_write: [ s ]
+      -
+        asm_text: "lsr 127, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 127
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "lsr $1000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc ]
+          regs_write: [ cc ]
+      -
+        asm_text: "suba $10"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0010
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "anda 16, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 16
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "ldaa $1000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "rts"
+        details:
+          regs_read: [ s ]
+          regs_write: [ s, pc ]
+          groups: [ M680X_GRP_RET ]
+  -
+    input:
+      bytes: [ 0x04, 0x05, 0x3c, 0x3d, 0x38, 0x93, 0x10, 0xec, 0x10, 0xed, 0x10, 0x39  ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_6801 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "lsrd"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_READ_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, d ]
+          regs_write: [ cc, d ]
+      -
+        asm_text: "asld"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_READ_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, d ]
+          regs_write: [ cc, d ]
+      -
+        asm_text: "pshx"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ x, s ]
+          regs_write: [ s ]
+      -
+        asm_text: "mul"
+        details:
+          regs_read: [ cc, a, b ]
+          regs_write: [ cc, a, b ]
+      -
+        asm_text: "pulx"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ s ]
+          regs_write: [ x, s ]
+      -
+        asm_text: "subd $10"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0010
+                direct_addr_set: true
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, d ]
+          regs_write: [ cc, d ]
+      -
+        asm_text: "ldd 16, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 16
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, d ]
+      -
+        asm_text: "std 16, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 16
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, d, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "rts"
+        details:
+          regs_read: [ s ]
+          regs_write: [ s, pc ]
+          groups: [ M680X_GRP_RET ]
+  -
+    input:
+      bytes: [ 0x04, 0x7f, 0x00, 0x17, 0x22, 0x28, 0x00, 0x2e, 0x00, 0x40, 0x42, 0x5a, 0x70, 0x8e, 0x97, 0x9c, 0xa0, 0x15, 0xad, 0x00, 0xc3, 0x10, 0x00, 0xda, 0x12, 0x34, 0xe5, 0x7f, 0xfe  ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_6805 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "brset 2, $7f, $1003"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_CONSTANT
+                const_val: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x007f
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x1003
+                rel_offset: 0
+          regs_read: [ cc ]
+          regs_write: [ cc ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "bset 3, $22"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_CONSTANT
+                const_val: 3
+                access: CS_AC_READ
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0022
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ_WRITE
+      -
+        asm_text: "bhcc $1007"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x1007
+                rel_offset: 0
+          regs_read: [ cc ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "bil $1009"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x1009
+                rel_offset: 0
+          regs_read: [ cc ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "nega"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "mul"
+        details:
+          regs_read: [ cc, a, x ]
+          regs_write: [ cc, a, x ]
+      -
+        asm_text: "decx"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 1
+                access: CS_AC_READ_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, x ]
+      -
+        asm_text: "neg , x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "stop"
+      -
+        asm_text: "tax"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 1
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM, M680X_SECOND_OP_IN_MNEM ]
+          regs_read: [ a ]
+          regs_write: [ x ]
+      -
+        asm_text: "rsp"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: s
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_write: [ s ]
+      -
+        asm_text: "sub #21"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 21
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "bsr $1014"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x1014
+                rel_offset: 0
+          regs_read: [ s ]
+          regs_write: [ s ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_CALL ]
+      -
+        asm_text: "cpx $1000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "ora 4660, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 4660
+                  offset_bits: 16
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "bit 127, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 127
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "ldx , x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, x ]
+  -
+    input:
+      bytes: [ 0x31, 0x22, 0x00, 0x35, 0x22, 0x45, 0x10, 0x00, 0x4b, 0x00, 0x51, 0x10, 0x52, 0x5e, 0x22, 0x62, 0x65, 0x12, 0x34, 0x72, 0x84, 0x85, 0x86, 0x87, 0x8a, 0x8b, 0x8c, 0x94, 0x95, 0xa7, 0x10, 0xaf, 0x10, 0x9e, 0x60, 0x7f, 0x9e, 0x6b, 0x7f, 0x00, 0x9e, 0xd6, 0x10, 0x00, 0x9e, 0xe6, 0x7f  ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_6808 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "cbeq $22, $1003"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0022
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x1003
+                rel_offset: 0
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "sthx $22"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0022
+                direct_addr_set: true
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, hx ]
+          regs_write: [ cc ]
+      -
+        asm_text: "ldhx #4096"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 4096
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ cc, hx ]
+      -
+        asm_text: "dbnza $100a"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x100a
+                rel_offset: 0
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a ]
+          regs_write: [ a ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "cbeqx #16, $105f"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 16
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x105f
+                rel_offset: 82
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "mov $22; x+"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0022
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  inc_dec: 1
+                  flags: [ M680X_IDX_NO_COMMA, M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_WRITE
+          regs_read: [ cc, x, h ]
+          regs_write: [ cc, x, h ]
+      -
+        asm_text: "nsa"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "cphx #4660"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 4660
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, hx ]
+          regs_write: [ cc ]
+      -
+        asm_text: "daa"
+        details:
+          regs_read: [ cc, a ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "tap"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: cc
+                size: 1
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM, M680X_SECOND_OP_IN_MNEM ]
+          regs_read: [ a ]
+          regs_write: [ cc ]
+      -
+        asm_text: "tpa"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: cc
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM, M680X_SECOND_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ a ]
+      -
+        asm_text: "pula"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ s ]
+          regs_write: [ a, s ]
+      -
+        asm_text: "psha"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ a, s ]
+          regs_write: [ s ]
+      -
+        asm_text: "pulh"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: h
+                size: 1
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ s ]
+          regs_write: [ h, s ]
+      -
+        asm_text: "pshh"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: h
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ h, s ]
+          regs_write: [ s ]
+      -
+        asm_text: "clrh"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: h
+                size: 1
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ cc, h ]
+      -
+        asm_text: "txs"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: s
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM, M680X_SECOND_OP_IN_MNEM ]
+          regs_read: [ hx ]
+          regs_write: [ s ]
+      -
+        asm_text: "tsx"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: s
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM, M680X_SECOND_OP_IN_MNEM ]
+          regs_read: [ s ]
+          regs_write: [ hx ]
+      -
+        asm_text: "ais #16"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: s
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 16
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ s ]
+          regs_write: [ s ]
+      -
+        asm_text: "aix #16"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 16
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ hx ]
+          regs_write: [ hx ]
+      -
+        asm_text: "neg 127, s"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: s
+                  offset: 127
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc, s ]
+          regs_write: [ cc ]
+      -
+        asm_text: "dbnz 127, s; $1028"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: s
+                  offset: 127
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x1028
+                rel_offset: 0
+          regs_read: [ cc, s ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "lda 4096, s"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: s
+                  offset: 4096
+                  offset_bits: 16
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, s ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda 127, s"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: s
+                  offset: 127
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, s ]
+          regs_write: [ cc, a ]
+  -
+    input:
+      bytes: [ 0x06, 0x10, 0x19, 0x1a, 0x55, 0x1e, 0x01, 0x23, 0xe9, 0x31, 0x06, 0x34, 0x55, 0xa6, 0x81, 0xa7, 0x89, 0x7f, 0xff, 0xa6, 0x9d, 0x10, 0x00, 0xa7, 0x91, 0xa6, 0x9f, 0x10, 0x00, 0x11, 0xac, 0x99, 0x10, 0x00, 0x39, 0xa6, 0x07, 0xa6, 0x27, 0xa6, 0x47, 0xa6, 0x67, 0xa6, 0x0f, 0xa6, 0x10, 0xa6, 0x80, 0xa6, 0x81, 0xa6, 0x82, 0xa6, 0x83, 0xa6, 0x84, 0xa6, 0x85, 0xa6, 0x86, 0xa6, 0x88, 0x7f, 0xa6, 0x88, 0x80, 0xa6, 0x89, 0x7f, 0xff, 0xa6, 0x89, 0x80, 0x00, 0xa6, 0x8b, 0xa6, 0x8c, 0x10, 0xa6, 0x8d, 0x10, 0x00, 0xa6, 0x91, 0xa6, 0x93, 0xa6, 0x94, 0xa6, 0x95, 0xa6, 0x96, 0xa6, 0x98, 0x7f, 0xa6, 0x98, 0x80, 0xa6, 0x99, 0x7f, 0xff, 0xa6, 0x99, 0x80, 0x00, 0xa6, 0x9b, 0xa6, 0x9c, 0x10, 0xa6, 0x9d, 0x10, 0x00, 0xa6, 0x9f, 0x10, 0x00  ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_6809 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "ror $10"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0010
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc ]
+          regs_write: [ cc ]
+      -
+        asm_text: "daa"
+        details:
+          regs_read: [ cc, a ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "orcc #85"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: cc
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 85
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ cc ]
+      -
+        asm_text: "exg d, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 2
+                access: CS_AC_READ_WRITE
+          regs_read: [ d, x ]
+          regs_write: [ d, x ]
+      -
+        asm_text: "bls $0ff2"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x0ff2
+                rel_offset: -23
+          regs_read: [ cc ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "leay 6, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 6
+                  offset_bits: 5
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, y ]
+      -
+        asm_text: "pshs cc, b, x, u"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: s
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_REGISTER
+                reg: cc
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: b
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: u
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ s, cc, b, x, u ]
+          regs_write: [ s ]
+      -
+        asm_text: "lda , x++"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  inc_dec: 2
+                  flags: [ M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a, x ]
+      -
+        asm_text: "sta 32767, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 32767
+                  offset_bits: 16
+                size: 1
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "lda [$2017, pcr]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: pc
+                  offset: 4096
+                  offset_addr: 0x2017
+                  offset_bits: 16
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, pc ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "sta [, x++]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  inc_dec: 2
+                  flags: [ M680X_IDX_INDIRECT, M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a, x ]
+          regs_write: [ cc, x ]
+      -
+        asm_text: "lda [$1000]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: 1
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "cmps [4096, x]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: s
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 4096
+                  offset_bits: 16
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, s, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "rts"
+        details:
+          regs_read: [ s ]
+          regs_write: [ s, pc ]
+          groups: [ M680X_GRP_RET ]
+      -
+        asm_text: "lda 7, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 7
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda 7, y"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: y
+                  offset: 7
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, y ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda 7, u"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: u
+                  offset: 7
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, u ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda 7, s"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: s
+                  offset: 7
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, s ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda 15, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 15
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda -16, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: -16
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda , x+"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  inc_dec: 1
+                  flags: [ M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a, x ]
+      -
+        asm_text: "lda , x++"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  inc_dec: 2
+                  flags: [ M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a, x ]
+      -
+        asm_text: "lda , -x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  inc_dec: -1
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a, x ]
+      -
+        asm_text: "lda , --x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  inc_dec: -2
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a, x ]
+      -
+        asm_text: "lda , x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda b, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset_reg: b
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x, b ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda a, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset_reg: a
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x, a ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda 127, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 127
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda -128, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: -128
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda 32767, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 32767
+                  offset_bits: 16
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda -32768, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: -32768
+                  offset_bits: 16
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda d, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset_reg: d
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x, d ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda $1050, pcr"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: pc
+                  offset: 16
+                  offset_addr: 0x1050
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, pc ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda $2054, pcr"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: pc
+                  offset: 4096
+                  offset_addr: 0x2054
+                  offset_bits: 16
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, pc ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [, x++]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  inc_dec: 2
+                  flags: [ M680X_IDX_INDIRECT, M680X_IDX_POST_INC_DEC ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a, x ]
+      -
+        asm_text: "lda [, --x]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  inc_dec: -2
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a, x ]
+      -
+        asm_text: "lda [, x]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [b, x]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset_reg: b
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x, b ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [a, x]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset_reg: a
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x, a ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [127, x]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 127
+                  offset_bits: 8
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [-128, x]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: -128
+                  offset_bits: 8
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [32767, x]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 32767
+                  offset_bits: 16
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [-32768, x]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: -32768
+                  offset_bits: 16
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [d, x]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset_reg: d
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x, d ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [$1071, pcr]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: pc
+                  offset: 16
+                  offset_addr: 0x1071
+                  offset_bits: 8
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, pc ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [$2075, pcr]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: pc
+                  offset: 4096
+                  offset_addr: 0x2075
+                  offset_bits: 16
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, pc ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "lda [$1000]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: 1
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ cc, a ]
+  -
+    input:
+      bytes: [ 0x02, 0x03, 0x12, 0x7f, 0x10, 0x00, 0x13, 0x99, 0x08, 0x00, 0x14, 0x7f, 0x02, 0x15, 0x7f, 0x01, 0x1e, 0x7f, 0x20, 0x00, 0x8f, 0xcf, 0x18, 0x08, 0x18, 0x30, 0x18, 0x3c, 0x18, 0x67, 0x18, 0x8c, 0x10, 0x00, 0x18, 0x8f, 0x18, 0xce, 0x10, 0x00, 0x18, 0xff, 0x10, 0x00, 0x1a, 0xa3, 0x7f, 0x1a, 0xac, 0x1a, 0xee, 0x7f, 0x1a, 0xef, 0x7f, 0xcd, 0xac, 0x7f  ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_6811 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "idiv"
+        details:
+          regs_read: [ cc, d, x ]
+          regs_write: [ cc, d, x ]
+      -
+        asm_text: "fdiv"
+        details:
+          regs_read: [ cc, d, x ]
+          regs_write: [ cc, d, x ]
+      -
+        asm_text: "brset $7f, #16, $1006"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x007f
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 16
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x1006
+                rel_offset: 0
+          regs_read: [ cc ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "brclr $99, #8, $100a"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0099
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 8
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x100a
+                rel_offset: 0
+          regs_read: [ cc ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "bset $7f, #2"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x007f
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 2
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cc ]
+          regs_write: [ cc ]
+      -
+        asm_text: "bclr $7f, #1"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x007f
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 1
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cc ]
+          regs_write: [ cc ]
+      -
+        asm_text: "brset 127, x; #32; $1014"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 127
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 32
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x1014
+                rel_offset: 0
+          regs_read: [ cc, x ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "xgdx"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 2
+                access: CS_AC_READ_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM, M680X_SECOND_OP_IN_MNEM ]
+          regs_read: [ d, x ]
+          regs_write: [ d, x ]
+      -
+        asm_text: "stop"
+      -
+        asm_text: "iny"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                size: 2
+                access: CS_AC_READ_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, y ]
+          regs_write: [ cc, y ]
+      -
+        asm_text: "tsy"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: s
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM, M680X_SECOND_OP_IN_MNEM ]
+          regs_read: [ s ]
+          regs_write: [ y ]
+      -
+        asm_text: "pshy"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ y, s ]
+          regs_write: [ s ]
+      -
+        asm_text: "asr 24, y"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: y
+                  offset: 24
+                  offset_bits: 8
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc, y ]
+          regs_write: [ cc ]
+      -
+        asm_text: "cpx #4096"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 4096
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "xgdy"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                size: 2
+                access: CS_AC_READ_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM, M680X_SECOND_OP_IN_MNEM ]
+          regs_read: [ d, y ]
+          regs_write: [ d, y ]
+      -
+        asm_text: "ldy #4096"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 4096
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ cc, y ]
+      -
+        asm_text: "sty $1000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, y ]
+          regs_write: [ cc ]
+      -
+        asm_text: "cpd 127, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 127
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, d, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "cpy 26, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 26
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, y, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "ldx 127, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 127
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, x ]
+      -
+        asm_text: "sty 127, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 127
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, y, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "cpx 127, y"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: y
+                  offset: 127
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x, y ]
+          regs_write: [ cc ]
+  -
+    input:
+      bytes: [ 0x00, 0x04, 0x01, 0x00, 0x0c, 0x00, 0x80, 0x0e, 0x00, 0x80, 0x00, 0x11, 0x1e, 0x10, 0x00, 0x80, 0x00, 0x3b, 0x4a, 0x10, 0x00, 0x04, 0x4b, 0x01, 0x04, 0x4f, 0x7f, 0x80, 0x00, 0x8f, 0x10, 0x00, 0xb7, 0x52, 0xb7, 0xb1, 0xa6, 0x67, 0xa6, 0xfe, 0xa6, 0xf7, 0x18, 0x02, 0xe2, 0x30, 0x39, 0xe2, 0x10, 0x00, 0x18, 0x0c, 0x30, 0x39, 0x10, 0x00, 0x18, 0x11, 0x18, 0x12, 0x10, 0x00, 0x18, 0x19, 0x00, 0x18, 0x1e, 0x00, 0x18, 0x3e, 0x18, 0x3f, 0x00  ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_CPU12 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bgnd"
+      -
+        asm_text: "dbeq b, $1004"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: b
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x1004
+                rel_offset: 0
+          regs_read: [ b ]
+          regs_write: [ b ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "bset 0, x; #-128"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 0
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: -128
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cc, x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "brset 0, x; #-128; $100b"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 0
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: -128
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x100b
+                rel_offset: 0
+          regs_read: [ cc, x ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "ediv"
+        details:
+          regs_read: [ cc, d, y, x ]
+          regs_write: [ cc, d, y ]
+      -
+        asm_text: "brset $1000, #-128, $1011"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: -128
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x1011
+                rel_offset: 0
+          regs_read: [ cc ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "pshd"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: d
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ d, s ]
+          regs_write: [ s ]
+      -
+        asm_text: "call $1000, 4"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 1
+              -
+                type: M680X_OP_CONSTANT
+                const_val: 4
+          regs_read: [ s ]
+          regs_write: [ s ]
+          groups: [  M680X_GRP_CALL ]
+      -
+        asm_text: "call 1, x; 4"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 1
+                  offset_bits: 5
+                size: 1
+              -
+                type: M680X_OP_CONSTANT
+                const_val: 4
+          regs_read: [ x, s ]
+          regs_write: [ s ]
+          groups: [  M680X_GRP_CALL ]
+      -
+        asm_text: "brclr $7f, #-128, $101d"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x007f
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: -128
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_RELATIVE
+                rel_address: 0x101d
+                rel_offset: 0
+          regs_read: [ cc ]
+          groups: [  M680X_GRP_BRAREL, M680X_GRP_JUMP ]
+      -
+        asm_text: "cps #4096"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: s
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 4096
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, s ]
+          regs_write: [ cc ]
+      -
+        asm_text: "tfr x, cc"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_REGISTER
+                reg: cc
+                size: 1
+                access: CS_AC_WRITE
+          regs_read: [ x ]
+          regs_write: [ cc ]
+      -
+        asm_text: "exg tmp3, b"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: tmp3
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_REGISTER
+                reg: b
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ tmp3, b ]
+          regs_write: [ tmp3, b ]
+      -
+        asm_text: "ldaa 8, +y"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: y
+                  inc_dec: 8
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, y ]
+          regs_write: [ cc, a, y ]
+      -
+        asm_text: "ldaa d, pc"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: pc
+                  offset_reg: d
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, pc, d ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "ldaa [d, s]"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: s
+                  offset_reg: d
+                  flags: [ M680X_IDX_INDIRECT ]
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, s, d ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "movw 12345, x; 4096, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 12345
+                  offset_bits: 16
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 4096
+                  offset_bits: 16
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ x ]
+      -
+        asm_text: "movb $3039, $1000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x3039
+                ext_indirect: -1
+                size: 1
+                access: CS_AC_READ
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 1
+                access: CS_AC_WRITE
+      -
+        asm_text: "fdiv"
+        details:
+          regs_read: [ cc, d, x ]
+          regs_write: [ cc, d, x ]
+      -
+        asm_text: "emacs $1000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 4
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc, x, y ]
+          regs_write: [ cc, x ]
+      -
+        asm_text: "mina 0, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 0
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, a, x ]
+          regs_write: [ cc, a ]
+      -
+        asm_text: "emaxm 0, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 0
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ_WRITE
+          regs_read: [ cc, x, d ]
+          regs_write: [ cc ]
+      -
+        asm_text: "stop"
+      -
+        asm_text: "etbl 0, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 0
+                  offset_bits: 5
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cc, x, b ]
+          regs_write: [ cc, a, b ]
+  -
+    input:
+      bytes: [ 0x32, 0x10, 0x00, 0x9e, 0xae, 0x9e, 0xce, 0x7f, 0x9e, 0xbe, 0x10, 0x00, 0x9e, 0xfe, 0x7f, 0x3e, 0x10, 0x00, 0x9e, 0xf3, 0x7f, 0x96, 0x10, 0x00, 0x9e, 0xff, 0x7f, 0x82  ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_HCS08 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "ldhx $1000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc ]
+          regs_write: [ cc, hx ]
+      -
+        asm_text: "ldhx , x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x, h ]
+          regs_write: [ cc, hx ]
+      -
+        asm_text: "ldhx 127, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 127
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x, h ]
+          regs_write: [ cc, hx ]
+      -
+        asm_text: "ldhx 4096, x"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: x
+                  offset: 4096
+                  offset_bits: 16
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, x, h ]
+          regs_write: [ cc, hx ]
+      -
+        asm_text: "ldhx 127, s"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: s
+                  offset: 127
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, s ]
+          regs_write: [ cc, hx ]
+      -
+        asm_text: "cphx $1000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, hx ]
+          regs_write: [ cc ]
+      -
+        asm_text: "cphx 127, s"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: s
+                  offset: 127
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_READ
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, hx, s ]
+          regs_write: [ cc ]
+      -
+        asm_text: "sthx $1000"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1000
+                ext_indirect: -1
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, hx ]
+          regs_write: [ cc ]
+      -
+        asm_text: "sthx 127, s"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: hx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: M680X_OP_INDEXED
+                idx:
+                  base_reg: s
+                  offset: 127
+                  offset_bits: 8
+                size: 2
+                access: CS_AC_WRITE
+            flags: [M680X_FIRST_OP_IN_MNEM ]
+          regs_read: [ cc, hx, s ]
+          regs_write: [ cc ]
+      -
+        asm_text: "bgnd"
+

@@ -1,0 +1,262 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xb4, 0x51, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrne.w.s $xr20, $xr13"
+  -
+    input:
+      bytes: [ 0xde, 0x55, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrne.l.d $xr30, $xr14"
+  -
+    input:
+      bytes: [ 0xae, 0x48, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrz.w.s $xr14, $xr5"
+  -
+    input:
+      bytes: [ 0x41, 0x4f, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrz.l.d $xr1, $xr26"
+  -
+    input:
+      bytes: [ 0x32, 0x40, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrp.w.s $xr18, $xr1"
+  -
+    input:
+      bytes: [ 0x0a, 0x47, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrp.l.d $xr10, $xr24"
+  -
+    input:
+      bytes: [ 0xe8, 0x3a, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrm.w.s $xr8, $xr23"
+  -
+    input:
+      bytes: [ 0x2c, 0x3e, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrm.l.d $xr12, $xr17"
+  -
+    input:
+      bytes: [ 0x2b, 0x33, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftint.w.s $xr11, $xr25"
+  -
+    input:
+      bytes: [ 0xc7, 0x36, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftint.l.d $xr7, $xr22"
+  -
+    input:
+      bytes: [ 0x6d, 0x72, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrz.wu.s $xr13, $xr19"
+  -
+    input:
+      bytes: [ 0x78, 0x74, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrz.lu.d $xr24, $xr3"
+  -
+    input:
+      bytes: [ 0xce, 0x58, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftint.wu.s $xr14, $xr6"
+  -
+    input:
+      bytes: [ 0x42, 0x5c, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftint.lu.d $xr2, $xr2"
+  -
+    input:
+      bytes: [ 0x8d, 0x96, 0x4b, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrne.w.d $xr13, $xr20, $xr5"
+  -
+    input:
+      bytes: [ 0x0d, 0x6d, 0x4b, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrz.w.d $xr13, $xr8, $xr27"
+  -
+    input:
+      bytes: [ 0x4e, 0xff, 0x4a, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrp.w.d $xr14, $xr26, $xr31"
+  -
+    input:
+      bytes: [ 0xfd, 0x1e, 0x4a, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrm.w.d $xr29, $xr23, $xr7"
+  -
+    input:
+      bytes: [ 0xc7, 0xf6, 0x49, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftint.w.d $xr7, $xr22, $xr29"
+  -
+    input:
+      bytes: [ 0x9f, 0xa3, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrnel.l.s $xr31, $xr28"
+  -
+    input:
+      bytes: [ 0xb0, 0xa7, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrneh.l.s $xr16, $xr29"
+  -
+    input:
+      bytes: [ 0xbb, 0x9b, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrzl.l.s $xr27, $xr29"
+  -
+    input:
+      bytes: [ 0x4e, 0x9d, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrzh.l.s $xr14, $xr10"
+  -
+    input:
+      bytes: [ 0x0e, 0x90, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrpl.l.s $xr14, $xr0"
+  -
+    input:
+      bytes: [ 0x17, 0x94, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrph.l.s $xr23, $xr0"
+  -
+    input:
+      bytes: [ 0xf6, 0x89, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrml.l.s $xr22, $xr15"
+  -
+    input:
+      bytes: [ 0x6a, 0x8e, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintrmh.l.s $xr10, $xr19"
+  -
+    input:
+      bytes: [ 0x7f, 0x81, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftintl.l.s $xr31, $xr11"
+  -
+    input:
+      bytes: [ 0xaf, 0x84, 0x9e, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvftinth.l.s $xr15, $xr5"

@@ -1,0 +1,16 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x41, 0xfe, 0x02, 0x2f, 0x21, 0xfe, 0x03, 0x3f, 0x71, 0xfe, 0x82, 0xef, 0x1c, 0xff, 0x54, 0x2f ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_MCLASS", "CS_MODE_V8", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "vpteee.i8 eq, q0, q1"
+        -
+          asm_text: "vptttt.s32 gt, q0, q1"
+        -
+          asm_text: "vptete.f16 ne, q0, q1"
+        -
+          asm_text: "vmaxnmt.f16 q1, q6, q2"

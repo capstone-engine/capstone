@@ -1,0 +1,390 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {}"
+
+  -
+    input:
+      bytes: [ 0x55, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.h}"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.d, za1.d, za2.d, za4.d, za5.d, za7.d}"
+
+  -
+    input:
+      bytes: [ 0xff, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za}"
+
+  -
+    input:
+      bytes: [ 0xff, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za}"
+
+  -
+    input:
+      bytes: [ 0xff, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za}"
+
+  -
+    input:
+      bytes: [ 0x55, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.h}"
+
+  -
+    input:
+      bytes: [ 0xaa, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za1.h}"
+
+  -
+    input:
+      bytes: [ 0xff, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za}"
+
+  -
+    input:
+      bytes: [ 0x11, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s}"
+
+  -
+    input:
+      bytes: [ 0x22, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za1.s}"
+
+  -
+    input:
+      bytes: [ 0x44, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za2.s}"
+
+  -
+    input:
+      bytes: [ 0x88, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za3.s}"
+
+  -
+    input:
+      bytes: [ 0x33, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s,za1.s}"
+
+  -
+    input:
+      bytes: [ 0x55, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.h}"
+
+  -
+    input:
+      bytes: [ 0x99, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s,za3.s}"
+
+  -
+    input:
+      bytes: [ 0x66, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za1.s,za2.s}"
+
+  -
+    input:
+      bytes: [ 0xaa, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za1.h}"
+
+  -
+    input:
+      bytes: [ 0xcc, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za2.s,za3.s}"
+
+  -
+    input:
+      bytes: [ 0x77, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s,za1.s,za2.s}"
+
+  -
+    input:
+      bytes: [ 0xbb, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s,za1.s,za3.s}"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s,za2.s,za3.s}"
+
+  -
+    input:
+      bytes: [ 0xee, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za1.s,za2.s,za3.s}"
+
+  -
+    input:
+      bytes: [ 0xff, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za}"
+
+  -
+    input:
+      bytes: [ 0xff, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za}"
+
+  -
+    input:
+      bytes: [ 0x55, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.h}"
+
+  -
+    input:
+      bytes: [ 0xaa, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za1.h}"
+
+  -
+    input:
+      bytes: [ 0x11, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s}"
+
+  -
+    input:
+      bytes: [ 0x22, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za1.s}"
+
+  -
+    input:
+      bytes: [ 0x44, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za2.s}"
+
+  -
+    input:
+      bytes: [ 0x88, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za3.s}"
+
+  -
+    input:
+      bytes: [ 0x33, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s,za1.s}"
+
+  -
+    input:
+      bytes: [ 0x99, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s,za3.s}"
+
+  -
+    input:
+      bytes: [ 0x66, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za1.s,za2.s}"
+
+  -
+    input:
+      bytes: [ 0xcc, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za2.s,za3.s}"
+
+  -
+    input:
+      bytes: [ 0x77, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s,za1.s,za2.s}"
+
+  -
+    input:
+      bytes: [ 0xbb, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s,za1.s,za3.s}"
+
+  -
+    input:
+      bytes: [ 0xdd, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za0.s,za2.s,za3.s}"
+
+  -
+    input:
+      bytes: [ 0xee, 0x00, 0x08, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "zero {za1.s,za2.s,za3.s}"

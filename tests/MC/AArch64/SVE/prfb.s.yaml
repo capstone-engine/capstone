@@ -1,0 +1,600 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl2keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl2keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl2strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl2strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl3keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl3keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x05, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl3strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x05, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl3strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x06, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb #6, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x07, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb #7, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl1keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl1keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl1strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl1strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl2keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl2keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl2strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl2strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl3keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl3keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl3strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl3strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0e, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb #14, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb #15, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0xe0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1strm, p0, [x0, #-32, mul vl]"
+
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0xdf, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1strm, p0, [x0, #31, mul vl]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl2keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl2keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl2strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl2strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl3keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x04, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl3keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x05, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl3strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x05, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl3strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x06, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb #6, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x07, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb #7, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl1keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl1keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl1strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl1strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl2keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl2keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl2strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl2strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl3keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl3keep, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl3strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pstl3strm, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0e, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb #14, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xc0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb #15, p0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0xe0, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1strm, p0, [x0, #-32, mul vl]"
+
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0xdf, 0x85 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "prfb pldl1strm, p0, [x0, #31, mul vl]"

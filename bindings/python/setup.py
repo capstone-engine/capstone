@@ -72,9 +72,11 @@ else:
     LIBRARY_FILE = "libcapstone.so"
     STATIC_LIBRARY_FILE = 'libcapstone.a'
 
+
 def clean_bins():
     shutil.rmtree(LIBS_DIR, ignore_errors=True)
     shutil.rmtree(HEADERS_DIR, ignore_errors=True)
+
 
 def copy_sources():
     """Copy the C sources into the source directory.
@@ -92,21 +94,18 @@ def copy_sources():
     shutil.copytree(os.path.join(BUILD_DIR, "include"), os.path.join(SRC_DIR, "include"))
 
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.[ch]")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.mk")))
 
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "Makefile")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "LICENSES/*")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "README")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.TXT")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "RELEASE_NOTES")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "make.sh")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "CMakeLists.txt")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "pkgconfig.mk")))
 
     for filename in src:
         outpath = os.path.join(SRC_DIR, os.path.basename(filename))
         logger.info("%s -> %s" % (filename, outpath))
         shutil.copy(filename, outpath)
+
 
 def build_libraries():
     """
@@ -134,23 +133,22 @@ def build_libraries():
 
     os.chdir(BUILD_DIR)
 
-    # platform description refers at https://docs.python.org/3/library/sys.html#sys.platform
-    # Use cmake for both Darwin and Windows since it can generate fat binaries
-    if SYSTEM == "win32" or SYSTEM == 'darwin':
-        # Windows build: this process requires few things:
-        #    - CMake + MSVC installed
-        #    - Run this command in an environment setup for MSVC
-        if not os.path.exists("build"): os.mkdir("build")
-        os.chdir("build")
-        print("Build Directory: {}\n".format(os.getcwd()))
-        # Only build capstone.dll / libcapstone.dylib
-        if SYSTEM == "win32":
-            os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
-        else:
-            os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "Unix Makefiles" ..')
-        os.system("cmake --build .")
-    else:  # Unix incl. cygwin
-        os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
+    # Windows build: this process requires few things:
+    #    - MSVC installed
+    #    - Run this command in an environment setup for MSVC
+    if not os.path.exists("build_py"):
+        os.mkdir("build_py")
+    os.chdir("build_py")
+    print("Build Directory: {}\n".format(os.getcwd()))
+    # Only build capstone.dll / libcapstone.dylib
+    if SYSTEM == "win32":
+        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_LEGACY_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+    elif 'AFL_NOOPT' in os.environ:
+        # build for test_corpus
+        os.system('cmake -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_LEGACY_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF ..')
+    else:
+        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_LEGACY_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "Unix Makefiles" ..')
+    os.system("cmake --build .")
 
     shutil.copy(VERSIONED_LIBRARY_FILE, os.path.join(LIBS_DIR, LIBRARY_FILE))
 
@@ -182,8 +180,6 @@ class custom_bdist_egg(bdist_egg):
         self.run_command('build')
         return bdist_egg.run(self)
 
-def dummy_src():
-    return []
 
 cmdclass = {}
 cmdclass['build'] = custom_build
@@ -192,6 +188,7 @@ cmdclass['bdist_egg'] = custom_bdist_egg
 
 try:
     from setuptools.command.develop import develop
+
     class custom_develop(develop):
         def run(self):
             logger.info("Building C extensions")

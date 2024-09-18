@@ -1,0 +1,80 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0xe0, 0x21, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtzu { z0.s, z1.s }, { z0.s, z1.s }"
+
+  -
+    input:
+      bytes: [ 0x74, 0xe1, 0x21, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtzu { z20.s, z21.s }, { z10.s, z11.s }"
+
+  -
+    input:
+      bytes: [ 0xb6, 0xe1, 0x21, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtzu { z22.s, z23.s }, { z12.s, z13.s }"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xe3, 0x21, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtzu { z30.s, z31.s }, { z30.s, z31.s }"
+
+  -
+    input:
+      bytes: [ 0x20, 0xe0, 0x31, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtzu { z0.s - z3.s }, { z0.s - z3.s }"
+
+  -
+    input:
+      bytes: [ 0x34, 0xe1, 0x31, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtzu { z20.s - z23.s }, { z8.s - z11.s }"
+
+  -
+    input:
+      bytes: [ 0xb4, 0xe1, 0x31, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtzu { z20.s - z23.s }, { z12.s - z15.s }"
+
+  -
+    input:
+      bytes: [ 0xbc, 0xe3, 0x31, 0xc1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtzu { z28.s - z31.s }, { z28.s - z31.s }"

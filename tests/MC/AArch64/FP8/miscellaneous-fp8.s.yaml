@@ -1,0 +1,510 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x78, 0xa1, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf1cvtl v0.8h, v0.8b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x7b, 0xa1, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf1cvtl v0.8h, v31.8b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7b, 0xa1, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf1cvtl v31.8h, v31.8b"
+
+  -
+    input:
+      bytes: [ 0x00, 0x78, 0xa1, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf1cvtl2 v0.8h, v0.16b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x7b, 0xa1, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf1cvtl2 v0.8h, v31.16b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7b, 0xa1, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf1cvtl2 v31.8h, v31.16b"
+
+  -
+    input:
+      bytes: [ 0x00, 0x78, 0xe1, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf2cvtl v0.8h, v0.8b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x7b, 0xe1, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf2cvtl v0.8h, v31.8b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7b, 0xe1, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf2cvtl v31.8h, v31.8b"
+
+  -
+    input:
+      bytes: [ 0x00, 0x78, 0xe1, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf2cvtl2 v0.8h, v0.16b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x7b, 0xe1, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf2cvtl2 v0.8h, v31.16b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7b, 0xe1, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "bf2cvtl2 v31.8h, v31.16b"
+
+  -
+    input:
+      bytes: [ 0x00, 0x78, 0x21, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f1cvtl v0.8h, v0.8b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x7b, 0x21, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f1cvtl v0.8h, v31.8b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7b, 0x21, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f1cvtl v31.8h, v31.8b"
+
+  -
+    input:
+      bytes: [ 0x00, 0x78, 0x21, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f1cvtl2 v0.8h, v0.16b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x7b, 0x21, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f1cvtl2 v0.8h, v31.16b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7b, 0x21, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f1cvtl2 v31.8h, v31.16b"
+
+  -
+    input:
+      bytes: [ 0x00, 0x78, 0x61, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f2cvtl v0.8h, v0.8b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x7b, 0x61, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f2cvtl v0.8h, v31.8b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7b, 0x61, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f2cvtl v31.8h, v31.8b"
+
+  -
+    input:
+      bytes: [ 0x00, 0x78, 0x61, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f2cvtl2 v0.8h, v0.16b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x7b, 0x61, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f2cvtl2 v0.8h, v31.16b"
+
+  -
+    input:
+      bytes: [ 0xff, 0x7b, 0x61, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "f2cvtl2 v31.8h, v31.16b"
+
+  -
+    input:
+      bytes: [ 0xff, 0xf7, 0x5f, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn v31.8b, v31.4h, v31.4h"
+
+  -
+    input:
+      bytes: [ 0x1f, 0xf4, 0x40, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn v31.8b, v0.4h, v0.4h"
+
+  -
+    input:
+      bytes: [ 0x00, 0xf4, 0x40, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn v0.8b, v0.4h, v0.4h"
+
+  -
+    input:
+      bytes: [ 0x00, 0xf4, 0x40, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn v0.16b, v0.8h, v0.8h"
+
+  -
+    input:
+      bytes: [ 0x1f, 0xf4, 0x40, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn v31.16b, v0.8h, v0.8h"
+
+  -
+    input:
+      bytes: [ 0xff, 0xf7, 0x5f, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn v31.16b, v31.8h, v31.8h"
+
+  -
+    input:
+      bytes: [ 0x00, 0xf4, 0x00, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn v0.8b, v0.4s, v0.4s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xf7, 0x1f, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn v0.8b, v31.4s, v31.4s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xf7, 0x1f, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn v31.8b, v31.4s, v31.4s"
+
+  -
+    input:
+      bytes: [ 0x00, 0xf4, 0x00, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn2 v0.16b, v0.4s, v0.4s"
+
+  -
+    input:
+      bytes: [ 0x00, 0xf4, 0x1f, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn2 v0.16b, v0.4s, v31.4s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xf7, 0x1f, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvtn2 v31.16b, v31.4s, v31.4s"
+
+  -
+    input:
+      bytes: [ 0x00, 0x3c, 0xc0, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v0.4h, v0.4h, v0.4h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x3f, 0xdf, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v0.4h, v31.4h, v31.4h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x3f, 0xdf, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v31.4h, v31.4h, v31.4h"
+
+  -
+    input:
+      bytes: [ 0x00, 0x3c, 0xc0, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v0.8h, v0.8h, v0.8h"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x3c, 0xc0, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v31.8h, v0.8h, v0.8h"
+
+  -
+    input:
+      bytes: [ 0xff, 0x3f, 0xdf, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v31.8h, v31.8h, v31.8h"
+
+  -
+    input:
+      bytes: [ 0x00, 0xfc, 0xa0, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v0.2s, v0.2s, v0.2s"
+
+  -
+    input:
+      bytes: [ 0x00, 0xfc, 0xbf, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v0.2s, v0.2s, v31.2s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0xbf, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v31.2s, v31.2s, v31.2s"
+
+  -
+    input:
+      bytes: [ 0x00, 0xfc, 0xa0, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v0.4s, v0.4s, v0.4s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xff, 0xa0, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v0.4s, v31.4s, v0.4s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0xbf, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v31.4s, v31.4s, v31.4s"
+
+  -
+    input:
+      bytes: [ 0x00, 0xfc, 0xe0, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v0.2d, v0.2d, v0.2d"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xff, 0xe0, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v0.2d, v31.2d, v0.2d"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0xff, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "fp8" ]
+    expected:
+      insns:
+        -
+          asm_text: "fscale v31.2d, v31.2d, v31.2d"

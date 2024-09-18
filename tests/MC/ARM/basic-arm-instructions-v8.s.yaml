@@ -1,0 +1,26 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x59, 0xf0, 0x7f, 0xf5, 0x51, 0xf0, 0x7f, 0xf5, 0x55, 0xf0, 0x7f, 0xf5, 0x5d, 0xf0, 0x7f, 0xf5, 0x49, 0xf0, 0x7f, 0xf5, 0x41, 0xf0, 0x7f, 0xf5, 0x45, 0xf0, 0x7f, 0xf5, 0x4d, 0xf0, 0x7f, 0xf5, 0x05, 0xf0, 0x20, 0xe3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_V8", "CS_MODE_ARM" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmb ishld"
+        -
+          asm_text: "dmb oshld"
+        -
+          asm_text: "dmb nshld"
+        -
+          asm_text: "dmb ld"
+        -
+          asm_text: "dsb ishld"
+        -
+          asm_text: "dsb oshld"
+        -
+          asm_text: "dsb nshld"
+        -
+          asm_text: "dsb ld"
+        -
+          asm_text: "sevl"

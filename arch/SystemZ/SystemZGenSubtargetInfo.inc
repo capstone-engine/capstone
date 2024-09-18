@@ -1,49 +1,65 @@
-/*===- TableGen'erated file -------------------------------------*- C++ -*-===*\
-|*                                                                            *|
-|* Subtarget Enumeration Source Fragment                                      *|
-|*                                                                            *|
-|* Automatically generated file, do not edit!                                 *|
-|*                                                                            *|
-\*===----------------------------------------------------------------------===*/
+/* Capstone Disassembly Engine, https://www.capstone-engine.org */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
+/*    Rot127 <unisono@quyllur.org> 2022-2024 */
+/* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
 
-/* Capstone Disassembly Engine, http://www.capstone-engine.org */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
 
+/* Do not edit. */
+
+/* Capstone's LLVM TableGen Backends: */
+/* https://github.com/capstone-engine/llvm-capstone */
 
 #ifdef GET_SUBTARGETINFO_ENUM
 #undef GET_SUBTARGETINFO_ENUM
 
 enum {
-  SystemZ_FeatureDFPPackedConversion = 1ULL << 0,
-  SystemZ_FeatureDFPZonedConversion = 1ULL << 1,
-  SystemZ_FeatureDistinctOps = 1ULL << 2,
-  SystemZ_FeatureEnhancedDAT2 = 1ULL << 3,
-  SystemZ_FeatureExecutionHint = 1ULL << 4,
-  SystemZ_FeatureFPExtension = 1ULL << 5,
-  SystemZ_FeatureFastSerialization = 1ULL << 6,
-  SystemZ_FeatureGuardedStorage = 1ULL << 7,
-  SystemZ_FeatureHighWord = 1ULL << 8,
-  SystemZ_FeatureInsertReferenceBitsMultiple = 1ULL << 9,
-  SystemZ_FeatureInterlockedAccess1 = 1ULL << 10,
-  SystemZ_FeatureLoadAndTrap = 1ULL << 11,
-  SystemZ_FeatureLoadAndZeroRightmostByte = 1ULL << 12,
-  SystemZ_FeatureLoadStoreOnCond = 1ULL << 13,
-  SystemZ_FeatureLoadStoreOnCond2 = 1ULL << 14,
-  SystemZ_FeatureMessageSecurityAssist3 = 1ULL << 15,
-  SystemZ_FeatureMessageSecurityAssist4 = 1ULL << 16,
-  SystemZ_FeatureMessageSecurityAssist5 = 1ULL << 17,
-  SystemZ_FeatureMessageSecurityAssist7 = 1ULL << 18,
-  SystemZ_FeatureMessageSecurityAssist8 = 1ULL << 19,
-  SystemZ_FeatureMiscellaneousExtensions = 1ULL << 20,
-  SystemZ_FeatureMiscellaneousExtensions2 = 1ULL << 21,
-  SystemZ_FeaturePopulationCount = 1ULL << 22,
-  SystemZ_FeatureProcessorAssist = 1ULL << 23,
-  SystemZ_FeatureResetReferenceBitsMultiple = 1ULL << 24,
-  SystemZ_FeatureTransactionalExecution = 1ULL << 25,
-  SystemZ_FeatureVector = 1ULL << 26,
-  SystemZ_FeatureVectorEnhancements1 = 1ULL << 27,
-  SystemZ_FeatureVectorPackedDecimal = 1ULL << 28,
+  SystemZ_FeatureBEAREnhancement = 0,
+  SystemZ_FeatureBackChain = 1,
+  SystemZ_FeatureDFPPackedConversion = 2,
+  SystemZ_FeatureDFPZonedConversion = 3,
+  SystemZ_FeatureDeflateConversion = 4,
+  SystemZ_FeatureDistinctOps = 5,
+  SystemZ_FeatureEnhancedDAT2 = 6,
+  SystemZ_FeatureEnhancedSort = 7,
+  SystemZ_FeatureExecutionHint = 8,
+  SystemZ_FeatureFPExtension = 9,
+  SystemZ_FeatureFastSerialization = 10,
+  SystemZ_FeatureGuardedStorage = 11,
+  SystemZ_FeatureHighWord = 12,
+  SystemZ_FeatureInsertReferenceBitsMultiple = 13,
+  SystemZ_FeatureInterlockedAccess1 = 14,
+  SystemZ_FeatureLoadAndTrap = 15,
+  SystemZ_FeatureLoadAndZeroRightmostByte = 16,
+  SystemZ_FeatureLoadStoreOnCond = 17,
+  SystemZ_FeatureLoadStoreOnCond2 = 18,
+  SystemZ_FeatureMessageSecurityAssist3 = 19,
+  SystemZ_FeatureMessageSecurityAssist4 = 20,
+  SystemZ_FeatureMessageSecurityAssist5 = 21,
+  SystemZ_FeatureMessageSecurityAssist7 = 22,
+  SystemZ_FeatureMessageSecurityAssist8 = 23,
+  SystemZ_FeatureMessageSecurityAssist9 = 24,
+  SystemZ_FeatureMiscellaneousExtensions = 25,
+  SystemZ_FeatureMiscellaneousExtensions2 = 26,
+  SystemZ_FeatureMiscellaneousExtensions3 = 27,
+  SystemZ_FeatureNNPAssist = 28,
+  SystemZ_FeaturePopulationCount = 29,
+  SystemZ_FeatureProcessorActivityInstrumentation = 30,
+  SystemZ_FeatureProcessorAssist = 31,
+  SystemZ_FeatureResetDATProtection = 32,
+  SystemZ_FeatureResetReferenceBitsMultiple = 33,
+  SystemZ_FeatureSoftFloat = 34,
+  SystemZ_FeatureTransactionalExecution = 35,
+  SystemZ_FeatureVector = 36,
+  SystemZ_FeatureVectorEnhancements1 = 37,
+  SystemZ_FeatureVectorEnhancements2 = 38,
+  SystemZ_FeatureVectorPackedDecimal = 39,
+  SystemZ_FeatureVectorPackedDecimalEnhancement = 40,
+  SystemZ_FeatureVectorPackedDecimalEnhancement2 = 41,
+  SystemZ_NumSubtargetFeatures = 42
 };
-
 #endif // GET_SUBTARGETINFO_ENUM
+
+
 

@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x41, 0x20, 0x40, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "lut" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti4 v1.16b, { v2.16b }, v0[0]"
+
+  -
+    input:
+      bytes: [ 0x9e, 0x62, 0x5f, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "lut" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti4 v30.16b, { v20.16b }, v31[1]"
+
+  -
+    input:
+      bytes: [ 0x41, 0x10, 0x40, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "lut" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti4 v1.8h, { v2.8h, v3.8h }, v0[0]"
+
+  -
+    input:
+      bytes: [ 0x9e, 0x72, 0x5f, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "lut" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti4 v30.8h, { v20.8h, v21.8h }, v31[3]"

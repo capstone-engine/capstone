@@ -1,0 +1,235 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x8b, 0x03 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl (%ebx), %eax"
+  -
+    input:
+      bytes: [ 0x89, 0x4b, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl %ecx, 4(%ebx)"
+  -
+    input:
+      bytes: [ 0x8b, 0x04, 0x85, 0x04, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 4(, %eax, 4), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x04, 0x85, 0x04, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 4(, %eax, 4), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x04, 0x06 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl (%esi, %eax), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x04, 0x06 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl (%esi, %eax), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x04, 0x86 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl (%esi, %eax, 4), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x04, 0x86 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl (%esi, %eax, 4), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x06, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 4(%esi, %eax), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x06, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 4(%esi, %eax), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x06, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 4(%esi, %eax), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x06, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 4(%esi, %eax), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x46, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 4(%esi, %eax, 2), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x46, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 4(%esi, %eax, 2), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x46, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 4(%esi, %eax, 2), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x46, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 4(%esi, %eax, 2), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x46, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 8(%esi, %eax, 2), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x46, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 8(%esi, %eax, 2), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x46, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 8(%esi, %eax, 2), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x46, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 8(%esi, %eax, 2), %eax"
+  -
+    input:
+      bytes: [ 0x8b, 0x44, 0x46, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "movl 16(%esi, %eax, 2), %eax"
+  -
+    input:
+      bytes: [ 0x0f, 0x18, 0x40, 0x40 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "prefetchnta 64(%eax)"
+  -
+    input:
+      bytes: [ 0x60 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pushal"
+  -
+    input:
+      bytes: [ 0x61 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "popal"
+  -
+    input:
+      bytes: [ 0x60 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pushal"
+  -
+    input:
+      bytes: [ 0x61 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "popal"

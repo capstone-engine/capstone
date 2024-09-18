@@ -1,0 +1,91 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x33, 0x76, 0x9d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfrintrne.s $xr19, $xr17"
+  -
+    input:
+      bytes: [ 0xac, 0x7b, 0x9d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfrintrne.d $xr12, $xr29"
+  -
+    input:
+      bytes: [ 0x2a, 0x65, 0x9d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfrintrz.s $xr10, $xr9"
+  -
+    input:
+      bytes: [ 0xbd, 0x68, 0x9d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfrintrz.d $xr29, $xr5"
+  -
+    input:
+      bytes: [ 0x1a, 0x56, 0x9d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfrintrp.s $xr26, $xr16"
+  -
+    input:
+      bytes: [ 0x81, 0x5b, 0x9d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfrintrp.d $xr1, $xr28"
+  -
+    input:
+      bytes: [ 0xbb, 0x45, 0x9d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfrintrm.s $xr27, $xr13"
+  -
+    input:
+      bytes: [ 0x6e, 0x4b, 0x9d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfrintrm.d $xr14, $xr27"
+  -
+    input:
+      bytes: [ 0x15, 0x37, 0x9d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfrint.s $xr21, $xr24"
+  -
+    input:
+      bytes: [ 0x5f, 0x3a, 0x9d, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvfrint.d $xr31, $xr18"

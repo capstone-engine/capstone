@@ -1,0 +1,24 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x60, 0x61, 0x50 ]
+      arch: "evm"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "push1 61"
+        details:
+          evm:
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "pop"
+        details:
+          evm:
+            pop: 1
+            fee: 2
+          groups: [ EVM_GRP_STACK_READ ]
+

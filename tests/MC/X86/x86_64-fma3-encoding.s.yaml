@@ -1,0 +1,1513 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0x98, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0x98, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0x98, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0x98, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xa8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xa8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xa8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xa8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xb8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xb8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xb8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xb8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0x98, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0x98, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0x98, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0x98, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xa8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xa8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xa8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xa8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xb8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xb8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xb8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xb8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0x98, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0x98, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0x98, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0x98, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xa8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xa8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xa8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xa8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xb8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xb8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xb8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xb8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0x96, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub132pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0x96, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub132pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0x96, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub132ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0x96, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub132ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xa6, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub213pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xa6, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub213pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xa6, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub213ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xa6, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub213ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xb6, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub231pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xb6, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub231pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xb6, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub231ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xb6, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub231ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0x97, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd132pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0x97, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd132pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0x97, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd132ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0x97, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd132ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xa7, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd213pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xa7, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd213pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xa7, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd213ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xa7, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd213ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xb7, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd231pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xb7, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd231pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xb7, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd231ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xb7, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd231ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0x9a, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub132pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0x9a, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub132pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0x9a, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub132ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0x9a, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub132ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xaa, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub213pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xaa, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub213pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xaa, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub213ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xaa, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub213ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xba, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub231pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xba, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub231pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xba, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub231ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xba, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub231ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0x9c, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd132pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0x9c, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd132pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0x9c, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd132ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0x9c, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd132ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xac, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd213pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xac, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd213pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xac, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd213ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xac, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd213ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xbc, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd231pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xbc, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd231pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xbc, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd231ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xbc, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd231ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0x9e, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub132pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0x9e, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub132pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0x9e, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub132ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0x9e, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub132ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xae, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub213pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xae, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub213pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xae, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub213ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xae, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub213ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xa9, 0xbe, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub231pd %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xa9, 0xbe, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub231pd (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x29, 0xbe, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub231ps %xmm12, %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x29, 0xbe, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub231ps (%rax), %xmm10, %xmm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0x98, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0x98, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0x98, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0x98, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd132ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xa8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xa8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xa8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xa8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd213ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xb8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xb8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xb8, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xb8, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmadd231ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0x96, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub132pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0x96, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub132pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0x96, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub132ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0x96, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub132ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xa6, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub213pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xa6, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub213pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xa6, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub213ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xa6, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub213ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xb6, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub231pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xb6, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub231pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xb6, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub231ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xb6, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmaddsub231ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0x97, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd132pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0x97, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd132pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0x97, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd132ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0x97, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd132ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xa7, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd213pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xa7, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd213pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xa7, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd213ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xa7, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd213ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xb7, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd231pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xb7, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd231pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xb7, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd231ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xb7, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsubadd231ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0x9a, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub132pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0x9a, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub132pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0x9a, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub132ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0x9a, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub132ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xaa, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub213pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xaa, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub213pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xaa, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub213ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xaa, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub213ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xba, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub231pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xba, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub231pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xba, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub231ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xba, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmsub231ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0x9c, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd132pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0x9c, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd132pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0x9c, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd132ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0x9c, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd132ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xac, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd213pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xac, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd213pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xac, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd213ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xac, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd213ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xbc, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd231pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xbc, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd231pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xbc, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd231ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xbc, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmadd231ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0x9e, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub132pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0x9e, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub132pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0x9e, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub132ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0x9e, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub132ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xae, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub213pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xae, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub213pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xae, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub213ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xae, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub213ps (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0xad, 0xbe, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub231pd %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0xad, 0xbe, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub231pd (%rax), %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x42, 0x2d, 0xbe, 0xdc ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub231ps %ymm12, %ymm10, %ymm11"
+  -
+    input:
+      bytes: [ 0xc4, 0x62, 0x2d, 0xbe, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_OPT_SYNTAX_ATT", "CS_MODE_64" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfnmsub231ps (%rax), %ymm10, %ymm11"

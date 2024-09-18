@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa8, 0x27, 0xe8, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsll.b $xr8, $xr29, $xr9"
+  -
+    input:
+      bytes: [ 0x95, 0xf7, 0xe8, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsll.h $xr21, $xr28, $xr29"
+  -
+    input:
+      bytes: [ 0xd1, 0x2b, 0xe9, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsll.w $xr17, $xr30, $xr10"
+  -
+    input:
+      bytes: [ 0xd3, 0xe8, 0xe9, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsll.d $xr19, $xr6, $xr26"
+  -
+    input:
+      bytes: [ 0x59, 0x27, 0x2c, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvslli.b $xr25, $xr26, 1"
+  -
+    input:
+      bytes: [ 0x91, 0x7b, 0x2c, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvslli.h $xr17, $xr28, 0xe"
+  -
+    input:
+      bytes: [ 0xfa, 0xf7, 0x2c, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvslli.w $xr26, $xr31, 0x1d"
+  -
+    input:
+      bytes: [ 0x8a, 0xbb, 0x2d, 0x77 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvslli.d $xr10, $xr28, 0x2e"

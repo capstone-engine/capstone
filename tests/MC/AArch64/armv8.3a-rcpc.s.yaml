@@ -1,0 +1,660 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.3a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65ae" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65ae" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65ae" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65ae" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65ae" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a65ae" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a75" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a75" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a75" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a75" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a75" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a75" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a55" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a55" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a55" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a55" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a55" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "cortex-a55" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-e1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-e1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-e1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-e1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-e1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-e1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neoverse-n2" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "ampere1a" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0x38 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.2a", "rcpc" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprb w0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc2, 0xbf, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.2a", "rcpc" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldaprh w0, [x17]"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.2a", "rcpc" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w0, [x1]"
+
+  -
+    input:
+      bytes: [ 0x00, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.2a", "rcpc" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x0, [x0]"
+
+  -
+    input:
+      bytes: [ 0x12, 0xc0, 0xbf, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.2a", "rcpc" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr w18, [x0]"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xc0, 0xbf, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.2a", "rcpc" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldapr x15, [x0]"

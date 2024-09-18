@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x8b, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+sme2p1", "+sme-lutv2" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti4 { z0.b - z3.b }, zt0, { z0, z1 }"
+
+  -
+    input:
+      bytes: [ 0xdc, 0x03, 0x8b, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+sme2p1", "+sme-lutv2" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti4 { z28.b - z31.b }, zt0, { z30, z31 }"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x9b, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+sme2p1", "+sme-lutv2" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti4 { z0.b, z4.b, z8.b, z12.b }, zt0, { z0, z1 }"
+
+  -
+    input:
+      bytes: [ 0xd3, 0x03, 0x9b, 0xc0 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+sme2p1", "+sme-lutv2" ]
+    expected:
+      insns:
+        -
+          asm_text: "luti4 { z19.b, z23.b, z27.b, z31.b }, zt0, { z30, z31 }"

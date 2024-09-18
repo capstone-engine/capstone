@@ -2,28 +2,30 @@
 
 import ctypes
 from . import copy_ctypes_list
-from .sysz_const import *
 
 # define the API
-class SyszOpMem(ctypes.Structure):
+class SystemZOpMem(ctypes.Structure):
     _fields_ = (
+        ('am', ctypes.c_int),
         ('base', ctypes.c_uint8),
         ('index', ctypes.c_uint8),
         ('length', ctypes.c_uint64),
         ('disp', ctypes.c_int64),
     )
 
-class SyszOpValue(ctypes.Union):
+class SystemZOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int64),
-        ('mem', SyszOpMem),
+        ('mem', SystemZOpMem),
     )
 
-class SyszOp(ctypes.Structure):
+class SystemZOp(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
-        ('value', SyszOpValue),
+        ('value', SystemZOpValue),
+        ('access', ctypes.c_int),
+        ('imm_width', ctypes.c_uint8),
     )
 
     @property
@@ -39,13 +41,14 @@ class SyszOp(ctypes.Structure):
         return self.value.mem
 
 
-class CsSysz(ctypes.Structure):
+class CsSystemZ(ctypes.Structure):
     _fields_ = (
         ('cc', ctypes.c_uint),
+        ('format', ctypes.c_int),
         ('op_count', ctypes.c_uint8),
-        ('operands', SyszOp * 6),
+        ('operands', SystemZOp * 6),
     )
 
 def get_arch_info(a):
-    return (a.cc, copy_ctypes_list(a.operands[:a.op_count]))
+    return a.cc, a.format, copy_ctypes_list(a.operands[:a.op_count])
 

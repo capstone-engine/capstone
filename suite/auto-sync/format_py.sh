@@ -1,3 +1,3 @@
 #!/usr/bin/bash
 
-python3.11 -m black src/autosync
+python3 -m black src/autosync

@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: BSD-3
 
 import logging as log
+import json
 import os
 import re
 import shutil
@@ -11,58 +12,6 @@ import subprocess
 from pathlib import Path
 
 from autosync.Helper import fail_exit, get_path
-
-inc_tables = [
-    {
-        "name": "Disassembler",
-        "tblgen_arg": "--gen-disassembler",
-        "inc_name": "DisassemblerTables",
-        "only_arch": [],
-        "lang": ["CCS", "C++"],
-    },
-    {
-        "name": "AsmWriter",
-        "tblgen_arg": "--gen-asm-writer",
-        "inc_name": "AsmWriter",
-        "only_arch": [],
-        "lang": ["CCS", "C++"],
-    },
-    {
-        "name": "RegisterInfo",
-        "tblgen_arg": "--gen-register-info",
-        "inc_name": "RegisterInfo",
-        "only_arch": [],
-        "lang": ["CCS"],
-    },
-    {
-        "name": "InstrInfo",
-        "tblgen_arg": "--gen-instr-info",
-        "inc_name": "InstrInfo",
-        "only_arch": [],
-        "lang": ["CCS"],
-    },
-    {
-        "name": "SubtargetInfo",
-        "tblgen_arg": "--gen-subtarget",
-        "inc_name": "SubtargetInfo",
-        "only_arch": [],
-        "lang": ["CCS"],
-    },
-    {
-        "name": "Mapping",
-        "tblgen_arg": "--gen-asm-matcher",
-        "inc_name": None,
-        "only_arch": [],
-        "lang": ["CCS"],
-    },
-    {
-        "name": "SystemOperand",
-        "tblgen_arg": "--gen-searchable-tables",
-        "inc_name": None,
-        "only_arch": ["AArch64", "ARM"],
-        "lang": ["CCS"],
-    },
-]
 
 
 class IncGenerator:
@@ -79,6 +28,8 @@ class IncGenerator:
         self.llvm_tblgen: Path = get_path("{LLVM_TBLGEN_BIN}")
         self.output_dir_c_inc = get_path("{C_INC_OUT_DIR}")
         self.output_dir_cpp_inc = get_path("{CPP_INC_OUT_DIR}")
+        with open(get_path("{INC_GEN_CONF_FILE}")) as f:
+            self.conf = json.loads(f.read())
         self.check_paths()
 
     def check_paths(self) -> None:
@@ -133,7 +84,7 @@ class IncGenerator:
             shutil.move(sys_ops_table_file, new_sys_ops_file)
 
     def gen_incs(self) -> None:
-        for table in inc_tables:
+        for table in self.conf["inc_tables"]:
             if "All" not in self.inc_list and table["name"] not in self.inc_list:
                 log.debug(f"Skip {table['name']} generation")
                 continue

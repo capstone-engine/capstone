@@ -18,10 +18,12 @@ BUILD_PATH="$1"
 
 check_list="clang-analyzer-*,-clang-analyzer-cplusplus*,-clang-analyzer-optin.performance.Padding"
 
-if $(hash clang-tidy-15); then
-  clang-tidy-15 $(find ./arch ./*.c -type f -iregex ".*\.[c]") -p "$BUILD_PATH" -checks="$check_list" > ct-warnings.txt
+if $(hash clang-tidy-18); then
+  echo -e "#############\nProduced by\n$(clang-tidy-18 --version)\n#############\n\n" > ct-warnings.txt
+  clang-tidy-18 $(find ./arch ./*.c -type f -iregex ".*\.[c]") -p "$BUILD_PATH" -checks="$check_list" >> ct-warnings.txt
 else
-  clang-tidy $(find ./arch ./*.c -type f -iregex ".*\.[c]") -p "$BUILD_PATH" -checks="$check_list" > ct-warnings.txt
+  echo -e "#############\nProduced by\n$(clang-tidy --version)\n#############\n\n" > ct-warnings.txt
+  clang-tidy $(find ./arch ./*.c -type f -iregex ".*\.[c]") -p "$BUILD_PATH" -checks="$check_list" >> ct-warnings.txt
 fi
 
 if [ $? -ne 0 ]; then

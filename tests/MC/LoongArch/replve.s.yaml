@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x14, 0x2e, 0x22, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvreplve.b $xr20, $xr16, $a7"
+  -
+    input:
+      bytes: [ 0xa0, 0xe2, 0x22, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvreplve.h $xr0, $xr21, $s1"
+  -
+    input:
+      bytes: [ 0x54, 0x4a, 0x23, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvreplve.w $xr20, $xr18, $t6"
+  -
+    input:
+      bytes: [ 0x64, 0xdc, 0x23, 0x75 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvreplve.d $xr4, $xr3, $s0"

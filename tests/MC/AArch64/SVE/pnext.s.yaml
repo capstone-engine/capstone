@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xef, 0xc5, 0x19, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "pnext p15.b, p15, p15.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xc5, 0x19, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "pnext p0.b, p15, p0.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xc5, 0x59, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "pnext p0.h, p15, p0.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xc5, 0x99, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "pnext p0.s, p15, p0.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xc5, 0xd9, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "pnext p0.d, p15, p0.d"
+
+  -
+    input:
+      bytes: [ 0xef, 0xc5, 0x19, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "pnext p15.b, p15, p15.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xc5, 0x19, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "pnext p0.b, p15, p0.b"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xc5, 0x59, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "pnext p0.h, p15, p0.h"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xc5, 0x99, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "pnext p0.s, p15, p0.s"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xc5, 0xd9, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "pnext p0.d, p15, p0.d"

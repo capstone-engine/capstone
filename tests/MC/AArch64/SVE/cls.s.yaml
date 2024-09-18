@@ -1,0 +1,160 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0x18, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z31.b, p7/m, z31.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0x58, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z31.h, p7/m, z31.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0x98, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z31.s, p7/m, z31.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0xd8, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z31.d, p7/m, z31.d"
+
+  -
+    input:
+      bytes: [ 0xc4, 0x3c, 0xd0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z4.d, p7/z, z6.d"
+
+  -
+    input:
+      bytes: [ 0xe4, 0xbf, 0xd8, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z4.d, p7/m, z31.d"
+
+  -
+    input:
+      bytes: [ 0xc4, 0xbc, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z4, z6"
+
+  -
+    input:
+      bytes: [ 0xe4, 0xbf, 0xd8, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z4.d, p7/m, z31.d"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0x18, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z31.b, p7/m, z31.b"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0x58, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z31.h, p7/m, z31.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0x98, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z31.s, p7/m, z31.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0xd8, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z31.d, p7/m, z31.d"
+
+  -
+    input:
+      bytes: [ 0xc4, 0x3c, 0xd0, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z4.d, p7/z, z6.d"
+
+  -
+    input:
+      bytes: [ 0xe4, 0xbf, 0xd8, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z4.d, p7/m, z31.d"
+
+  -
+    input:
+      bytes: [ 0xc4, 0xbc, 0x20, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "movprfx z4, z6"
+
+  -
+    input:
+      bytes: [ 0xe4, 0xbf, 0xd8, 0x04 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls z4.d, p7/m, z31.d"

@@ -1,0 +1,5617 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "abs d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xc0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "abs.b d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xc0, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "abs.h d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xe0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "absdif d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "absdif d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xe0, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "absdif.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xe0, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "absdif.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xf0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "absdifs d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0xe0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "absdifs d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xf0, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "absdifs.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xf0, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "absdifs.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xd0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "abss d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xd0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "abss.b d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xd0, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "abss.h d0, d0"
+  -
+    input:
+      bytes: [ 0x1a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "add d15, d0, d0"
+  -
+    input:
+      bytes: [ 0x42, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "add d0, d0"
+  -
+    input:
+      bytes: [ 0x9a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "add d15, d0, #0"
+  -
+    input:
+      bytes: [ 0xc2, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "add d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "add d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "add d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x10, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "add.a a0, a0, a0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "add.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x00, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "add.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x50, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "addc d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0xa0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "addc d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x1b, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x9b, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "addih d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x11, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "addih.a a0, a0, #0"
+  -
+    input:
+      bytes: [ 0x22, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x20, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x30, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds.bu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x20, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x30, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds.hu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x30, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "adds.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x10, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "addsc.a a0, d0, #0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x00, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "addsc.a a0, a0, d0, #0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x20, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "addsc.at a0, a0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "addx d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "addx d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x16, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and d0, d0"
+  -
+    input:
+      bytes: [ 0x96, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and d15, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x47, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.and.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x47, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.andn.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x00, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.eq d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.eq d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x40, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.ge d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x80, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.ge d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x50, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.ge.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0xa0, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.ge.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x20, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.lt d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x40, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.lt d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x30, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.lt.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x60, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.lt.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x10, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.ne d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x20, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.ne d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x47, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.nor.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x47, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.or.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x87, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "and.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xe0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "andn d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "andn d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x87, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "andn.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0xc0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "bisr #0"
+  -
+    input:
+      bytes: [ 0xad, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "bisr #0"
+  -
+    input:
+      bytes: [ 0x4b, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "bmerge d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x4b, 0x00, 0x00, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "bsplit e0, d0"
+  -
+    input:
+      bytes: [ 0x0a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cadd d0, d15, d0"
+  -
+    input:
+      bytes: [ 0x8a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cadd d0, d15, #0"
+  -
+    input:
+      bytes: [ 0x2b, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cadd d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0xab, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cadd d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x21, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cadd.a a0, d0, a0, a0"
+  -
+    input:
+      bytes: [ 0xa1, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cadd.a a0, d0, a0, #0"
+  -
+    input:
+      bytes: [ 0x4a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "caddn d0, d15, d0"
+  -
+    input:
+      bytes: [ 0xca, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "caddn d0, d15, #0"
+  -
+    input:
+      bytes: [ 0x2b, 0x00, 0x10, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "caddn d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0xab, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "caddn d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x21, 0x00, 0x10, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "caddn.a a0, d0, a0, a0"
+  -
+    input:
+      bytes: [ 0xa1, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "caddn.a a0, d0, a0, #0"
+  -
+    input:
+      bytes: [ 0x6d, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "call #0"
+  -
+    input:
+      bytes: [ 0xed, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "calla #0"
+  -
+    input:
+      bytes: [ 0x2d, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "calli a0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "clo d0, d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xd0, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "clo.b d0, d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xd0, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "clo.h d0, d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xd0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls d0, d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xe0, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls.b d0, d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xe0, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cls.h d0, d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xb0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "clz d0, d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xc0, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "clz.b d0, d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xc0, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "clz.h d0, d0"
+  -
+    input:
+      bytes: [ 0x2a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmov d0, d15, d0"
+  -
+    input:
+      bytes: [ 0xaa, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmov d0, d15, #0"
+  -
+    input:
+      bytes: [ 0x6a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmovn d0, d15, d0"
+  -
+    input:
+      bytes: [ 0xea, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmovn d0, d15, #0"
+  -
+    input:
+      bytes: [ 0x2b, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "csub d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x21, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "csub.a a0, d0, a0, a0"
+  -
+    input:
+      bytes: [ 0x2b, 0x00, 0x30, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "csubn d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x21, 0x00, 0x30, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "csubn.a a0, d0, a0, a0"
+  -
+    input:
+      bytes: [ 0x00, 0xa0 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "debug"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "debug"
+  -
+    input:
+      bytes: [ 0x77, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dextr d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x17, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dextr d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x00, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "difsc.a d0, a0, a0, #0"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x40, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "disable"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x80, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dsync"
+  -
+    input:
+      bytes: [ 0x72, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvadj e0, d0"
+  -
+    input:
+      bytes: [ 0x2b, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvadj e0, e0, d0"
+  -
+    input:
+      bytes: [ 0x4f, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvinit e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x4f, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvinit.b e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x4f, 0x00, 0x50, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvinit.bu e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x4f, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvinit.h e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x4f, 0x00, 0x30, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvinit.hu e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x4f, 0x00, 0x10, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvinit.u e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x32, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvstep e0, d0"
+  -
+    input:
+      bytes: [ 0x2b, 0x00, 0x90, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvstep e0, e0, d0"
+  -
+    input:
+      bytes: [ 0xb2, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvstep.u e0, d0"
+  -
+    input:
+      bytes: [ 0x2b, 0x00, 0xa0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "dvstep.u e0, e0, d0"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x00, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "enable"
+  -
+    input:
+      bytes: [ 0x3a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eq d15, d0, d0"
+  -
+    input:
+      bytes: [ 0xba, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eq d15, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eq d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x00, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eq d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eq.a d0, a0, a0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x00, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eq.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x00, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eq.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x00, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eq.w d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x60, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eqany.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0xc0, 0x0a ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eqany.b d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x60, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eqany.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0xc0, 0x0e ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eqany.h d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x80, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "eqz.a d0, a0"
+  -
+    input:
+      bytes: [ 0x17, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "extr d0, d0, e0"
+  -
+    input:
+      bytes: [ 0x37, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "extr d0, d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x57, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "extr d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x17, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "extr.u d0, d0, e0"
+  -
+    input:
+      bytes: [ 0x37, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "extr.u d0, d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x57, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "extr.u d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x40, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ge d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x80, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ge d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x30, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ge.a d0, a0, a0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x50, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ge.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0xa0, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ge.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x37, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "imask e0, d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x57, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "imask e0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xb7, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "imask e0, #0, #0, #0"
+  -
+    input:
+      bytes: [ 0xd7, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "imask e0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x67, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ins.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x17, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "insert d0, d0, d0, e0"
+  -
+    input:
+      bytes: [ 0x37, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "insert d0, d0, d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x57, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "insert d0, d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x97, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "insert d0, d0, #0, e0"
+  -
+    input:
+      bytes: [ 0xb7, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "insert d0, d0, #0, #0, #0"
+  -
+    input:
+      bytes: [ 0xd7, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "insert d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x67, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "insn.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0xc0, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "isync"
+  -
+    input:
+      bytes: [ 0x5c, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "j #0"
+  -
+    input:
+      bytes: [ 0x1d, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "j #0"
+  -
+    input:
+      bytes: [ 0x9d, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ja #0"
+  -
+    input:
+      bytes: [ 0x1e, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jeq d15, d0, #0"
+  -
+    input:
+      bytes: [ 0x6e, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jeq d15, #0, #0"
+  -
+    input:
+      bytes: [ 0x5f, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jeq d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xdf, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jeq d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x7d, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jeq.a a0, a0, #0"
+  -
+    input:
+      bytes: [ 0x7f, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jge d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xff, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jge d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x7f, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jge.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xff, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jge.u d0, #0, #0"
+  -
+    input:
+      bytes: [ 0xfe, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jgez d0, #0"
+  -
+    input:
+      bytes: [ 0x7e, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jgtz d0, #0"
+  -
+    input:
+      bytes: [ 0x3c, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ji a0"
+  -
+    input:
+      bytes: [ 0x2d, 0x00, 0x30, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ji a0"
+  -
+    input:
+      bytes: [ 0x5d, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jl #0"
+  -
+    input:
+      bytes: [ 0xdd, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jla #0"
+  -
+    input:
+      bytes: [ 0xbe, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jlez d0, #0"
+  -
+    input:
+      bytes: [ 0x2d, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jli a0"
+  -
+    input:
+      bytes: [ 0x3f, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jlt d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xbf, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jlt d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x3f, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jlt.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xbf, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jlt.u d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x3e, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jltz d0, #0"
+  -
+    input:
+      bytes: [ 0x9e, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jne d15, d0, #0"
+  -
+    input:
+      bytes: [ 0xee, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jne d15, #0, #0"
+  -
+    input:
+      bytes: [ 0x5f, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jne d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xdf, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jne d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x7d, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jne.a a0, a0, #0"
+  -
+    input:
+      bytes: [ 0x1f, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jned d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x9f, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jned d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x1f, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jnei d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x9f, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jnei d0, #0, #0"
+  -
+    input:
+      bytes: [ 0xae, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jnz d15, #0"
+  -
+    input:
+      bytes: [ 0xde, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jnz d0, #0"
+  -
+    input:
+      bytes: [ 0x7c, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jnz.a a0, #0"
+  -
+    input:
+      bytes: [ 0xbd, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jnz.a a0, #0"
+  -
+    input:
+      bytes: [ 0x4e, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jnz.t d15, #0, #0"
+  -
+    input:
+      bytes: [ 0x6f, 0x00, 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jnz.t d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x2e, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jz d15, #0"
+  -
+    input:
+      bytes: [ 0x5e, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jz d0, #0"
+  -
+    input:
+      bytes: [ 0xbc, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jz.a a0, #0"
+  -
+    input:
+      bytes: [ 0xbd, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jz.a a0, #0"
+  -
+    input:
+      bytes: [ 0x0e, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jz.t d15, #0, #0"
+  -
+    input:
+      bytes: [ 0x6f, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "jz.t d0, #0, #0"
+  -
+    input:
+      bytes: [ 0x0c, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a0, [a15]#0"
+  -
+    input:
+      bytes: [ 0x28, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a15, [a0]#0"
+  -
+    input:
+      bytes: [ 0x64, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a0, [a0+]"
+  -
+    input:
+      bytes: [ 0xb8, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a0, [a0]"
+  -
+    input:
+      bytes: [ 0x99, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x80, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a0, [a0+]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x80, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a0, [p0+r]"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x80, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a0, [+a0]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x80, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a0, [p0+c]#0"
+  -
+    input:
+      bytes: [ 0x85, 0x00, 0x00, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a0, #0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x80, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x08, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d15, [a0]#0"
+  -
+    input:
+      bytes: [ 0x34, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d0, [a15]#0"
+  -
+    input:
+      bytes: [ 0x44, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d0, [a0+]"
+  -
+    input:
+      bytes: [ 0x98, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d0, [a0]"
+  -
+    input:
+      bytes: [ 0x05, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d0, #0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d0, [a0+]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d0, [p0+r]"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d0, [+a0]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d0, [p0+c]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x00, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x58, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d0, [a0]"
+  -
+    input:
+      bytes: [ 0x88, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d15, [a0]#0"
+  -
+    input:
+      bytes: [ 0xb4, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d0, [a15]#0"
+  -
+    input:
+      bytes: [ 0xc4, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d0, [a0+]"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d0, [a0+]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d0, [p0+r]"
+  -
+    input:
+      bytes: [ 0x05, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d0, #0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x40, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d0, [+a0]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x40, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d0, [p0+c]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x40, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x40, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.d e0, [a0+]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x40, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.d e0, [p0+r]"
+  -
+    input:
+      bytes: [ 0x85, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.d e0, #0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x40, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.d e0, [+a0]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x40, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.d e0, [p0+c]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x40, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.d e0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.da p0, [a0+]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.da p0, [p0+r]"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0xc0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.da p0, [+a0]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0xc0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.da p0, [p0+c]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0xc0, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.da p0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x85, 0x00, 0x00, 0x0c ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.da p0, #0"
+  -
+    input:
+      bytes: [ 0x24, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d0, [a0+]"
+  -
+    input:
+      bytes: [ 0x48, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d15, [a0]#0"
+  -
+    input:
+      bytes: [ 0x74, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d0, [a15]#0"
+  -
+    input:
+      bytes: [ 0xd8, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d0, [a0]"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d0, [a0+]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d0, [p0+r]"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x80, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d0, [+a0]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x80, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d0, [p0+c]#0"
+  -
+    input:
+      bytes: [ 0x05, 0x00, 0x00, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d0, #0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x80, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0xc0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.hu d0, [a0+]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0xc0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.hu d0, [p0+r]"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0xc0, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.hu d0, [+a0]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0xc0, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.hu d0, [p0+c]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0xc0, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.hu d0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x05, 0x00, 0x00, 0x0c ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.hu d0, #0"
+  -
+    input:
+      bytes: [ 0x45, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.q d0, #0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x00, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.q d0, [a0+]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x00, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.q d0, [p0+r]"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x00, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.q d0, [+a0]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x00, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.q d0, [p0+c]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x00, 0x0a ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.q d0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x38, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d0, [a0]"
+  -
+    input:
+      bytes: [ 0xa4, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d0, [a0+]"
+  -
+    input:
+      bytes: [ 0xc8, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d15, [a0]#0"
+  -
+    input:
+      bytes: [ 0xf4, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d0, [a15]#0"
+  -
+    input:
+      bytes: [ 0x19, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x85, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d0, #0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d0, [a0+]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d0, [p0+r]"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x00, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d0, [+a0]#0"
+  -
+    input:
+      bytes: [ 0x29, 0x00, 0x00, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d0, [p0+c]#0"
+  -
+    input:
+      bytes: [ 0x09, 0x00, 0x00, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x15, 0x00, 0x00, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldlcx #0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x00, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldlcx [a0]#0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldmst [a0+]#0, e0"
+  -
+    input:
+      bytes: [ 0x69, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldmst [p0+r], e0"
+  -
+    input:
+      bytes: [ 0xe5, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldmst #0, e0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x40, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldmst [+a0]#0, e0"
+  -
+    input:
+      bytes: [ 0x69, 0x00, 0x40, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldmst [p0+c]#0, e0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x40, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldmst [a0]#0, e0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x40, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lducx [a0]#0"
+  -
+    input:
+      bytes: [ 0x15, 0x00, 0x00, 0x0c ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lducx #0"
+  -
+    input:
+      bytes: [ 0xc5, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lea a0, #0"
+  -
+    input:
+      bytes: [ 0xd9, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lea a0, [a0]#0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x00, 0x0a ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lea a0, [a0]#0"
+  -
+    input:
+      bytes: [ 0xfc, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "loop a0, #0xffffffe0"
+  -
+    input:
+      bytes: [ 0xfd, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "loop a0, #0"
+  -
+    input:
+      bytes: [ 0x7a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt d15, d0, d0"
+  -
+    input:
+      bytes: [ 0xfa, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt d15, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x20, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x40, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x20, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.a d0, a0, a0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x20, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x30, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.bu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x20, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x30, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.hu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x06, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.u d15, d0, d0"
+  -
+    input:
+      bytes: [ 0x86, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.u d15, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x30, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x60, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x20, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.w d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x30, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "lt.wu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0x0a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "madd d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x13, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "madd d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x83, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "madd.h e0, e0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x43, 0x00, 0x10, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "madd.q d0, d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x13, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddm e0, e0, d0, #0"
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0x6a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddm e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x83, 0x00, 0x70, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddm.h e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x43, 0x00, 0x70, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddm.q e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x13, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddm.u e0, e0, d0, #0"
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0x68, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddm.u e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x13, 0x00, 0xe0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddms e0, e0, d0, #0"
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0xea, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddms e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x13, 0x00, 0xc0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddms.u e0, e0, d0, #0"
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0xe8, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddms.u e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x43, 0x00, 0x78, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddr.h d0, e0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x43, 0x00, 0x18, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddr.q d0, d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x43, 0x00, 0xf8, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddrs.h d0, e0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x43, 0x00, 0x98, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "maddrs.q d0, d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0x8a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "madds d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x13, 0x00, 0xa0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "madds d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x83, 0x00, 0xe0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "madds.h e0, e0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x43, 0x00, 0x90, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "madds.q d0, d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x13, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "madds.u d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x03, 0x00, 0x88, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "madds.u d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xa0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "max d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x40, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "max d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xa0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "max.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xb0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "max.bu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xa0, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "max.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xb0, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "max.hu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xb0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "max.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x60, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "max.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x4d, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfcr d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x80, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "min d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x00, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "min d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x80, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "min.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x90, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "min.bu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x80, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "min.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x90, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "min.hu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x90, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "min.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x20, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "min.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x02, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov d0, d0"
+  -
+    input:
+      bytes: [ 0x82, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov d0, #0"
+  -
+    input:
+      bytes: [ 0xc6, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov d15, #0"
+  -
+    input:
+      bytes: [ 0x3b, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xf0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov d0, d0"
+  -
+    input:
+      bytes: [ 0x30, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.a a0, d0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x30, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.a a0, d0"
+  -
+    input:
+      bytes: [ 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.aa a0, a0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.aa a0, a0"
+  -
+    input:
+      bytes: [ 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.d d0, a0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0xc0, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.d d0, a0"
+  -
+    input:
+      bytes: [ 0xbb, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.u d0, #0"
+  -
+    input:
+      bytes: [ 0x7b, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "movh d0, #0"
+  -
+    input:
+      bytes: [ 0x91, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "movh.a a0, #0"
+  -
+    input:
+      bytes: [ 0x00, 0x10 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "movz.a a0"
+  -
+    input:
+      bytes: [ 0x23, 0x00, 0x0a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msub d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x33, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msub d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xa3, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msub.h e0, e0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x63, 0x00, 0x10, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msub.q d0, d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x33, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubm e0, e0, d0, #0"
+  -
+    input:
+      bytes: [ 0x23, 0x00, 0x6a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubm e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0xa3, 0x00, 0x70, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubm.h e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x63, 0x00, 0x70, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubm.q e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x33, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubm.u e0, e0, d0, #0"
+  -
+    input:
+      bytes: [ 0x23, 0x00, 0x68, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubm.u e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x33, 0x00, 0xe0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubms e0, e0, d0, #0"
+  -
+    input:
+      bytes: [ 0x23, 0x00, 0xea, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubms e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x33, 0x00, 0xc0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubms.u e0, e0, d0, #0"
+  -
+    input:
+      bytes: [ 0x23, 0x00, 0xe8, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubms.u e0, e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x63, 0x00, 0x78, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubr.h d0, e0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x63, 0x00, 0x18, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubr.q d0, d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x63, 0x00, 0xf8, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubrs.h d0, e0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x63, 0x00, 0x98, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubrs.q d0, d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x23, 0x00, 0x8a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubs d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x33, 0x00, 0xa0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubs d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xa3, 0x00, 0xe0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubs.h e0, e0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x63, 0x00, 0x90, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubs.q d0, d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x33, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubs.u d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x23, 0x00, 0x88, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "msubs.u d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0xcd, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtcr #0, d0"
+  -
+    input:
+      bytes: [ 0xe2, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul d0, d0"
+  -
+    input:
+      bytes: [ 0x53, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0xa0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul d0, d0, d0"
+  -
+    input:
+      bytes: [ 0xb3, 0x00, 0x80, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul.h e0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x93, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul.q d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x53, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulm e0, d0, #0"
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0xa0, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulm e0, d0, d0"
+  -
+    input:
+      bytes: [ 0x53, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulm.u e0, d0, #0"
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x80, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulm.u e0, d0, d0"
+  -
+    input:
+      bytes: [ 0xb3, 0x00, 0xc0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulr.h d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x93, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "mulr.q d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x53, 0x00, 0xa0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "muls d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0xa0, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "muls d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x53, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "muls.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x80, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "muls.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0x90, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "nand d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x20, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "nand d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x07, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "nand.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x10, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ne d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x20, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ne d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x10, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ne.a d0, a0, a0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x90, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "nez.a d0, a0"
+  -
+    input:
+      bytes: [ 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "nop"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "nop"
+  -
+    input:
+      bytes: [ 0x36, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "nor d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xb0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "nor d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x60, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "nor d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x87, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "nor.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x56, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or d0, d0"
+  -
+    input:
+      bytes: [ 0xd6, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or d15, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xa0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x40, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xc7, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.and.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0xc7, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.andn.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x70, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.eq d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0xe0, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.eq d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xb0, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.ge d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x60, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.ge d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xc0, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.ge.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x80, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.ge.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x90, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.lt d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x20, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.lt d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xa0, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.lt.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x40, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.lt.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x80, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.ne d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x00, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.ne d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xc7, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.nor.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0xc7, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.or.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x87, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "or.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xf0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "orn d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0xe0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "orn d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x07, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "orn.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x6b, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "pack d0, e0, d0"
+  -
+    input:
+      bytes: [ 0x4b, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "parity d0, d0"
+  -
+    input:
+      bytes: [ 0x00, 0x90 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ret"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x40, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "ret"
+  -
+    input:
+      bytes: [ 0x00, 0x80 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "rfe"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x80, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "rfe"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x40, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "rslcx"
+  -
+    input:
+      bytes: [ 0x2f, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "rstv"
+  -
+    input:
+      bytes: [ 0xd2, 0x50 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsub d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsub d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x40, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsubs d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x60, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsubs.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xd2, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sat.b d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xe0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sat.b d0, d0"
+  -
+    input:
+      bytes: [ 0xd2, 0x10 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sat.bu d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xf0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sat.bu d0, d0"
+  -
+    input:
+      bytes: [ 0xd2, 0x20 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sat.h d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xe0, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sat.h d0, d0"
+  -
+    input:
+      bytes: [ 0xd2, 0x30 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sat.hu d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xf0, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sat.hu d0, d0"
+  -
+    input:
+      bytes: [ 0x2b, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0xab, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x21, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel.a a0, d0, a0, a0"
+  -
+    input:
+      bytes: [ 0xa1, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sel.a a0, d0, a0, #0"
+  -
+    input:
+      bytes: [ 0x2b, 0x00, 0x50, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "seln d0, d0, d0, d0"
+  -
+    input:
+      bytes: [ 0xab, 0x00, 0xa0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "seln d0, d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x21, 0x00, 0x50, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "seln.a a0, d0, a0, a0"
+  -
+    input:
+      bytes: [ 0xa1, 0x00, 0xa0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "seln.a a0, d0, a0, #0"
+  -
+    input:
+      bytes: [ 0x26, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh d0, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x27, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.and.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x27, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.andn.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0x00, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.b d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x70, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.eq d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0xe0, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.eq d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xb0, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.ge d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x60, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.ge d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xc0, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.ge.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x80, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.ge.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x00, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.h d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x90, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.lt d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x20, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.lt d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xa0, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.lt.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x40, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.lt.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0xa7, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.nand.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x80, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.ne d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x00, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.ne d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x27, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.nor.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x27, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.or.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0xa7, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.orn.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0xa7, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.xnor.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0xa7, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh.xor.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0xa6, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha d0, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0x10, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0x10, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x20, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha.b d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0x10, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x20, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha.h d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "shas d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "shas d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x18, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [a0]#0, a15"
+  -
+    input:
+      bytes: [ 0x2c, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [a15]#0, a0"
+  -
+    input:
+      bytes: [ 0x54, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [a0+], a0"
+  -
+    input:
+      bytes: [ 0x84, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [a0], a0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x80, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [a0+]#0, a0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x80, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [p0+r], a0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x80, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [+a0]#0, a0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x80, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [p0+c]#0, a0"
+  -
+    input:
+      bytes: [ 0xa5, 0x00, 0x00, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a #0, a0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x80, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [a0]#0, a0"
+  -
+    input:
+      bytes: [ 0x78, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [a0], d0"
+  -
+    input:
+      bytes: [ 0x8c, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [a15]#0, d0"
+  -
+    input:
+      bytes: [ 0xa8, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [a0]#0, d15"
+  -
+    input:
+      bytes: [ 0xe4, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [a0+], d0"
+  -
+    input:
+      bytes: [ 0x25, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b #0, d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [a0+]#0, d0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [p0+r], d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [+a0]#0, d0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [p0+c]#0, d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x00, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [a0]#0, d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x40, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.d [a0+]#0, e0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x40, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.d [p0+r], e0"
+  -
+    input:
+      bytes: [ 0xa5, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.d #0, e0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x40, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.d [+a0]#0, e0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x40, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.d [p0+c]#0, e0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x40, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.d [a0]#0, e0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.da [a0+]#0, p0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.da [p0+r], p0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0xc0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.da [+a0]#0, p0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0xc0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.da [p0+c]#0, p0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0xc0, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.da [a0]#0, p0"
+  -
+    input:
+      bytes: [ 0xa5, 0x00, 0x00, 0x0c ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.da #0, p0"
+  -
+    input:
+      bytes: [ 0x14, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [a0+], d0"
+  -
+    input:
+      bytes: [ 0x4c, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [a15]#0, d0"
+  -
+    input:
+      bytes: [ 0x68, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [a0]#0, d15"
+  -
+    input:
+      bytes: [ 0xf8, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [a0], d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [a0+]#0, d0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [p0+r], d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x80, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [+a0]#0, d0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x80, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [p0+c]#0, d0"
+  -
+    input:
+      bytes: [ 0x25, 0x00, 0x00, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h #0, d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x80, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [a0]#0, d0"
+  -
+    input:
+      bytes: [ 0x65, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.q #0, d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x00, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.q [a0+]#0, d0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x00, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.q [p0+r], d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x00, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.q [+a0]#0, d0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x00, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.q [p0+c]#0, d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x00, 0x0a ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.q [a0]#0, d0"
+  -
+    input:
+      bytes: [ 0xd5, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.t #0, #0, #0"
+  -
+    input:
+      bytes: [ 0x04, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [a0], d0"
+  -
+    input:
+      bytes: [ 0x94, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [a0+], d0"
+  -
+    input:
+      bytes: [ 0xcc, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [a15]#0, d0"
+  -
+    input:
+      bytes: [ 0xe8, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [a0]#0, d15"
+  -
+    input:
+      bytes: [ 0x59, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [a0]#0, d0"
+  -
+    input:
+      bytes: [ 0xa5, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w #0, d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [a0+]#0, d0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x00, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [p0+r], d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x00, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [+a0]#0, d0"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x00, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [p0+c]#0, d0"
+  -
+    input:
+      bytes: [ 0x89, 0x00, 0x00, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [a0]#0, d0"
+  -
+    input:
+      bytes: [ 0x15, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlcx #0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x80, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "stlcx [a0]#0"
+  -
+    input:
+      bytes: [ 0x15, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "stucx #0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0xc0, 0x09 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "stucx [a0]#0"
+  -
+    input:
+      bytes: [ 0x5a, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub d15, d0, d0"
+  -
+    input:
+      bytes: [ 0xa2, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub.a sp, #0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x20, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub.a a0, a0, a0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x80, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x80, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xd0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "subc d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x62, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xa0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xa0, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs.b d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xb0, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs.bu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xa0, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs.h d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xb0, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs.hu d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xb0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "subs.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x10, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "subsc.a a0, a0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xc0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "subx d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x00, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "svlcx"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.a [a0+]#0, a0"
+  -
+    input:
+      bytes: [ 0x69, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.a [p0+r], a0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x80, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.a [+a0]#0, a0"
+  -
+    input:
+      bytes: [ 0x69, 0x00, 0x80, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.a [p0+c]#0, a0"
+  -
+    input:
+      bytes: [ 0xe5, 0x00, 0x00, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.a #0, a0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x80, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.a [a0]#0, a0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.w [a0+]#0, d0"
+  -
+    input:
+      bytes: [ 0x69, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.w [p0+r], d0"
+  -
+    input:
+      bytes: [ 0xe5, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.w #0, d0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.w [+a0]#0, d0"
+  -
+    input:
+      bytes: [ 0x69, 0x00, 0x00, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.w [p0+c]#0, d0"
+  -
+    input:
+      bytes: [ 0x49, 0x00, 0x00, 0x08 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.w [a0]#0, d0"
+  -
+    input:
+      bytes: [ 0xad, 0x00, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "syscall #0"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x40, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "trapsv"
+  -
+    input:
+      bytes: [ 0x0d, 0x00, 0x00, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "trapv"
+  -
+    input:
+      bytes: [ 0x4b, 0x00, 0x00, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "unpack e0, d0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xd0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xnor d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0xa0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xnor d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x07, 0x00, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xnor.t d0, d0, #0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0f, 0x00, 0xc0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8f, 0x00, 0x80, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xf0, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.eq d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0xe0, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.eq d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x30, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.ge d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x60, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.ge d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x40, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.ge.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x80, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.ge.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x10, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.lt d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x20, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.lt d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x20, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.lt.u d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x40, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.lt.u d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x00, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.ne d0, d0, d0"
+  -
+    input:
+      bytes: [ 0x8b, 0x00, 0x00, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.ne d0, d0, #0"
+  -
+    input:
+      bytes: [ 0x07, 0x00, 0x60, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_110" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor.t d0, d0, #0, d0, #0"

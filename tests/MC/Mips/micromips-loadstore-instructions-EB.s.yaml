@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x1c, 0xa4, 0x00, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lb $a1, 8($a0)"
+  -
+    input:
+      bytes: [ 0x14, 0xc4, 0x00, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lbu $a2, 8($a0)"
+  -
+    input:
+      bytes: [ 0x3c, 0x44, 0x00, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lh $v0, 8($a0)"
+  -
+    input:
+      bytes: [ 0x34, 0x82, 0x00, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lhu $a0, 8($v0)"
+  -
+    input:
+      bytes: [ 0xfc, 0xc5, 0x00, 0x04 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lw $a2, 4($a1)"
+  -
+    input:
+      bytes: [ 0x18, 0xa4, 0x00, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "sb $a1, 8($a0)"
+  -
+    input:
+      bytes: [ 0x38, 0x44, 0x00, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh $v0, 8($a0)"
+  -
+    input:
+      bytes: [ 0xf8, 0xa6, 0x00, 0x04 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "sw $a1, 4($a2)"

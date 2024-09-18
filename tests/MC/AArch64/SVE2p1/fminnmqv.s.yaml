@@ -1,0 +1,240 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0xd5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v0.2d, p0, z0.d"
+
+  -
+    input:
+      bytes: [ 0x55, 0xb5, 0xd5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v21.2d, p5, z10.d"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xad, 0xd5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v23.2d, p3, z13.d"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0xd5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v31.2d, p7, z31.d"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0x55, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v0.8h, p0, z0.h"
+
+  -
+    input:
+      bytes: [ 0x55, 0xb5, 0x55, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v21.8h, p5, z10.h"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xad, 0x55, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v23.8h, p3, z13.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0x55, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v31.8h, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0x95, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v0.4s, p0, z0.s"
+
+  -
+    input:
+      bytes: [ 0x55, 0xb5, 0x95, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v21.4s, p5, z10.s"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xad, 0x95, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v23.4s, p3, z13.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0x95, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v31.4s, p7, z31.s"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0xd5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v0.2d, p0, z0.d"
+
+  -
+    input:
+      bytes: [ 0x55, 0xb5, 0xd5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v21.2d, p5, z10.d"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xad, 0xd5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v23.2d, p3, z13.d"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0xd5, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v31.2d, p7, z31.d"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0x55, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v0.8h, p0, z0.h"
+
+  -
+    input:
+      bytes: [ 0x55, 0xb5, 0x55, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v21.8h, p5, z10.h"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xad, 0x55, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v23.8h, p3, z13.h"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0x55, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v31.8h, p7, z31.h"
+
+  -
+    input:
+      bytes: [ 0x00, 0xa0, 0x95, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v0.4s, p0, z0.s"
+
+  -
+    input:
+      bytes: [ 0x55, 0xb5, 0x95, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v21.4s, p5, z10.s"
+
+  -
+    input:
+      bytes: [ 0xb7, 0xad, 0x95, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v23.4s, p3, z13.s"
+
+  -
+    input:
+      bytes: [ 0xff, 0xbf, 0x95, 0x64 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "fminnmqv v31.4s, p7, z31.s"

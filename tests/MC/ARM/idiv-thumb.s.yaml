@@ -1,0 +1,12 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x92, 0xfb, 0xf3, 0xf1, 0xb4, 0xfb, 0xf5, 0xf3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "sdiv r1, r2, r3"
+        -
+          asm_text: "udiv r3, r4, r5"

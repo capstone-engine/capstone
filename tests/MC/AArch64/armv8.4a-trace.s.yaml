@@ -1,0 +1,140 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRFCR_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRFCR_EL2, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRFCR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRFCR_EL1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRFCR_EL2"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x3d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRFCR_EL12"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "v8.4a" ]
+    expected:
+      insns:
+        -
+          asm_text: "tsb csync"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x18, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "tracev8.4" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRFCR_EL1, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x1c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "tracev8.4" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRFCR_EL2, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x1d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "tracev8.4" ]
+    expected:
+      insns:
+        -
+          asm_text: "msr TRFCR_EL12, x0"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x38, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "tracev8.4" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRFCR_EL1"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x3c, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "tracev8.4" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRFCR_EL2"
+
+  -
+    input:
+      bytes: [ 0x20, 0x12, 0x3d, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "tracev8.4" ]
+    expected:
+      insns:
+        -
+          asm_text: "mrs x0, TRFCR_EL12"
+
+  -
+    input:
+      bytes: [ 0x5f, 0x22, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "tracev8.4" ]
+    expected:
+      insns:
+        -
+          asm_text: "tsb csync"

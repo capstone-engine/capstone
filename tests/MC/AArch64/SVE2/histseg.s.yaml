@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x3f, 0x45 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2" ]
+    expected:
+      insns:
+        -
+          asm_text: "histseg z0.b, z1.b, z31.b"

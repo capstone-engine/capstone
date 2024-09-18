@@ -1,0 +1,82 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x18, 0x55, 0x00, 0x28 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b $s1, $a4, 0x15"
+  -
+    input:
+      bytes: [ 0x47, 0x42, 0x41, 0x28 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h $a3, $t6, 0x50"
+  -
+    input:
+      bytes: [ 0x52, 0x73, 0x81, 0x28 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w $t6, $s3, 0x5c"
+  -
+    input:
+      bytes: [ 0xad, 0x59, 0x02, 0x2a ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu $t1, $t1, 0x96"
+  -
+    input:
+      bytes: [ 0xb2, 0x1b, 0x43, 0x2a ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.hu $t6, $s6, 0xc6"
+  -
+    input:
+      bytes: [ 0xe3, 0x7c, 0x01, 0x29 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b $sp, $a3, 0x5f"
+  -
+    input:
+      bytes: [ 0x19, 0xea, 0x41, 0x29 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h $s2, $t4, 0x7a"
+  -
+    input:
+      bytes: [ 0xad, 0xbd, 0x82, 0x29 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w $t1, $t1, 0xaf"
+  -
+    input:
+      bytes: [ 0x0a, 0x5c, 0xc0, 0x2a ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "preld 0xa, $zero, 0x17"

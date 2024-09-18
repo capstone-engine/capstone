@@ -1,0 +1,80 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x4c, 0x22, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqshl b0, b1, b2"
+
+  -
+    input:
+      bytes: [ 0x6a, 0x4d, 0x6c, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqshl h10, h11, h12"
+
+  -
+    input:
+      bytes: [ 0xb4, 0x4e, 0xa2, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqshl s20, s21, s2"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x4f, 0xe8, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqshl d17, d31, d8"
+
+  -
+    input:
+      bytes: [ 0x20, 0x4c, 0x22, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uqshl b0, b1, b2"
+
+  -
+    input:
+      bytes: [ 0x6a, 0x4d, 0x6c, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uqshl h10, h11, h12"
+
+  -
+    input:
+      bytes: [ 0xb4, 0x4e, 0xa2, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uqshl s20, s21, s2"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x4f, 0xe8, 0x7e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uqshl d17, d31, d8"

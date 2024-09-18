@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xb3, 0x92, 0x9d, 0x32 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvldrepl.b $xr19, $r21, 0x764"
+  -
+    input:
+      bytes: [ 0x20, 0xc6, 0x4d, 0x32 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvldrepl.h $xr0, $t5, 0x6e2"
+  -
+    input:
+      bytes: [ 0x4b, 0x0f, 0x2a, 0x32 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvldrepl.w $xr11, $s3, -0x5f4"
+  -
+    input:
+      bytes: [ 0x9c, 0xdd, 0x13, 0x32 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvldrepl.d $xr28, $t0, 0x7b8"

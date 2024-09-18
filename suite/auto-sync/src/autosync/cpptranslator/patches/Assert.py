@@ -3,6 +3,7 @@
 
 from tree_sitter import Node
 
+from autosync.cpptranslator.patches.Helper import get_text
 from autosync.cpptranslator.patches.Patch import Patch
 
 
@@ -19,7 +20,7 @@ class Assert(Patch):
             "(expression_statement"
             "   (call_expression"
             '       ((identifier) @id (#eq? @id "assert"))'
-            "       (argument_list)"
+            "       ((argument_list) @arg_list)"
             "   )"
             ") @assert"
         )
@@ -27,5 +28,9 @@ class Assert(Patch):
     def get_main_capture_name(self) -> str:
         return "assert"
 
-    def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
-        return b""
+    def get_patch(
+        self, captures: list[tuple[Node, str]], src: bytes, **kwargs
+    ) -> bytes:
+        arg_list = captures[2][0]
+        args = get_text(src, arg_list.start_byte, arg_list.end_byte)
+        return b"CS_ASSERT(" + args + b");"

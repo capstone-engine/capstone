@@ -1,0 +1,37 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x6a, 0x8a, 0xf7, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrepl128vei.b $xr10, $xr19, 2"
+  -
+    input:
+      bytes: [ 0x66, 0xca, 0xf7, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrepl128vei.h $xr6, $xr19, 2"
+  -
+    input:
+      bytes: [ 0xab, 0xe5, 0xf7, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrepl128vei.w $xr11, $xr13, 1"
+  -
+    input:
+      bytes: [ 0xff, 0xf2, 0xf7, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvrepl128vei.d $xr31, $xr23, 0"

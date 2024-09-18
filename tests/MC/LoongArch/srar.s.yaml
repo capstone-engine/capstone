@@ -1,0 +1,73 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x49, 0x2e, 0xf2, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrar.b $xr9, $xr18, $xr11"
+  -
+    input:
+      bytes: [ 0x4f, 0x87, 0xf2, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrar.h $xr15, $xr26, $xr1"
+  -
+    input:
+      bytes: [ 0x71, 0x3a, 0xf3, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrar.w $xr17, $xr19, $xr14"
+  -
+    input:
+      bytes: [ 0xf3, 0x99, 0xf3, 0x74 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrar.d $xr19, $xr15, $xr6"
+  -
+    input:
+      bytes: [ 0x8a, 0x2f, 0xa8, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrari.b $xr10, $xr28, 3"
+  -
+    input:
+      bytes: [ 0x3c, 0x78, 0xa8, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrari.h $xr28, $xr1, 0xe"
+  -
+    input:
+      bytes: [ 0xed, 0xb0, 0xa8, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrari.w $xr13, $xr7, 0xc"
+  -
+    input:
+      bytes: [ 0x3d, 0x21, 0xa9, 0x76 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvsrari.d $xr29, $xr9, 8"

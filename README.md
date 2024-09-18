@@ -49,7 +49,7 @@ Further information is available at https://www.capstone-engine.org
 Compile
 -------
 
-See COMPILE.TXT file for how to compile and install Capstone.
+See [COMPILE_CMAKE.TXT](COMPILE_CMAKE.TXT) file for how to compile and install Capstone.
 
 
 Documentation

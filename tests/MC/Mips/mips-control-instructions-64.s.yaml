@@ -1,0 +1,280 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x00, 0x0d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "break"
+  -
+    input:
+      bytes: [ 0x00, 0x07, 0x01, 0x4d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "break 7, 5"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x00, 0x0c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "syscall"
+  -
+    input:
+      bytes: [ 0x00, 0x0d, 0x15, 0x0c ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "syscall 13396"
+  -
+    input:
+      bytes: [ 0x42, 0x00, 0x00, 0x18 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "eret"
+  -
+    input:
+      bytes: [ 0x42, 0x00, 0x00, 0x1f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "deret"
+  -
+    input:
+      bytes: [ 0x41, 0x60, 0x60, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "di"
+  -
+    input:
+      bytes: [ 0x41, 0x60, 0x60, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "di"
+  -
+    input:
+      bytes: [ 0x41, 0x6a, 0x60, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "di $t2"
+  -
+    input:
+      bytes: [ 0x41, 0x60, 0x60, 0x20 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "ei"
+  -
+    input:
+      bytes: [ 0x41, 0x60, 0x60, 0x20 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "ei"
+  -
+    input:
+      bytes: [ 0x41, 0x6a, 0x60, 0x20 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "ei $t2"
+  -
+    input:
+      bytes: [ 0x42, 0x00, 0x00, 0x20 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "wait"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x00, 0x34 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "teq $zero, $v1"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x00, 0x74 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "teq $zero, $v1, 1"
+  -
+    input:
+      bytes: [ 0x04, 0x6c, 0x00, 0x01 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "teqi $v1, 1"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x00, 0x30 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tge $zero, $v1"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x00, 0xf0 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tge $zero, $v1, 3"
+  -
+    input:
+      bytes: [ 0x04, 0x68, 0x00, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgei $v1, 3"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x00, 0x31 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgeu $zero, $v1"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x01, 0xf1 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgeu $zero, $v1, 7"
+  -
+    input:
+      bytes: [ 0x04, 0x69, 0x00, 0x07 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgeiu $v1, 7"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x00, 0x32 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlt $zero, $v1"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x07, 0xf2 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlt $zero, $v1, 31"
+  -
+    input:
+      bytes: [ 0x04, 0x6a, 0x00, 0x1f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlti $v1, 31"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x00, 0x33 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tltu $zero, $v1"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x3f, 0xf3 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tltu $zero, $v1, 255"
+  -
+    input:
+      bytes: [ 0x04, 0x6b, 0x00, 0xff ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tltiu $v1, 255"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0x00, 0x36 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tne $zero, $v1"
+  -
+    input:
+      bytes: [ 0x00, 0x03, 0xff, 0xf6 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tne $zero, $v1, 1023"
+  -
+    input:
+      bytes: [ 0x04, 0x6e, 0x03, 0xff ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R3" ]
+    expected:
+      insns:
+        -
+          asm_text: "tnei $v1, 1023"

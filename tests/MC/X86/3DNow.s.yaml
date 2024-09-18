@@ -1,0 +1,253 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xbf ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pavgusb %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0x5c, 0x16, 0x09, 0xbf ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pavgusb 9(%esi, %edx), %mm3"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x1d ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pf2id %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0x5c, 0x16, 0x09, 0x1d ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pf2id 9(%esi, %edx), %mm3"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xae ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfacc %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x9e ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfadd %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xb0 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfcmpeq %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x90 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfcmpge %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xa0 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfcmpgt %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xa4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfmax %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x94 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfmin %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xb4 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfmul %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x96 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfrcp %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xa6 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfrcpit1 %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xb6 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfrcpit2 %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xa7 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfrsqit1 %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x97 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfrsqrt %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x9a ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfsub %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xaa ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfsubr %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x0d ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pi2fd %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xb7 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmulhrw %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0e ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "femms"
+  -
+    input:
+      bytes: [ 0x0f, 0x0d, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "prefetch (%eax)"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x1c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pf2iw %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x0c ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pi2fw %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x8a ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfnacc %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0x8e ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pfpnacc %mm2, %mm1"
+  -
+    input:
+      bytes: [ 0x0f, 0x0f, 0xca, 0xbb ]
+      arch: "CS_ARCH_X86"
+      options: [ "CS_MODE_32", "CS_OPT_SYNTAX_ATT" ]
+    expected:
+      insns:
+        -
+          asm_text: "pswapd %mm2, %mm1"

@@ -278,10 +278,10 @@ static unsigned int peek_imm_16(const m68k_info *info) { return m68k_read_safe_1
 static unsigned int peek_imm_32(const m68k_info *info) { return m68k_read_safe_32((info), (info)->pc); }
 static unsigned long long peek_imm_64(const m68k_info *info) { return m68k_read_safe_64((info), (info)->pc); }
 
-static unsigned int read_imm_8(m68k_info *info)  { const unsigned int value = peek_imm_8(info);  (info)->pc+=2; return value; }
-static unsigned int read_imm_16(m68k_info *info) { const unsigned int value = peek_imm_16(info); (info)->pc+=2; return value; }
-static unsigned int read_imm_32(m68k_info *info) { const unsigned int value = peek_imm_32(info); (info)->pc+=4; return value; }
-static unsigned long long read_imm_64(m68k_info *info) { const unsigned long long value = peek_imm_64(info); (info)->pc+=8; return value; }
+static unsigned int read_imm_8(m68k_info *info)  { const unsigned int value = peek_imm_8(info);  (info)->pc+=2; return value & 0xff; }
+static unsigned int read_imm_16(m68k_info *info) { const unsigned int value = peek_imm_16(info); (info)->pc+=2; return value & 0xffff; }
+static unsigned int read_imm_32(m68k_info *info) { const unsigned int value = peek_imm_32(info); (info)->pc+=4; return value & 0xffffffff; }
+static unsigned long long read_imm_64(m68k_info *info) { const unsigned long long value = peek_imm_64(info); (info)->pc+=8; return value & 0xffffffffffffffff; }
 
 /* Fake a split interface */
 #define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)
@@ -320,13 +320,6 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op* op, uint32_
 
 		op->mem.base_reg = M68K_REG_INVALID;
 		op->mem.index_reg = M68K_REG_INVALID;
-
-		/* Not sure how to deal with this?
-		   if (EXT_EFFECTIVE_ZERO(extension)) {
-		   strcpy(mode, "0");
-		   break;
-		   }
-		 */
 
 		op->mem.in_disp = EXT_BASE_DISPLACEMENT_PRESENT(extension) ? (EXT_BASE_DISPLACEMENT_LONG(extension) ? read_imm_32(info) : read_imm_16(info)) : 0;
 		op->mem.out_disp = EXT_OUTER_DISPLACEMENT_PRESENT(extension) ? (EXT_OUTER_DISPLACEMENT_LONG(extension) ? read_imm_32(info) : read_imm_16(info)) : 0;
@@ -472,9 +465,9 @@ static void get_ea_mode_op(m68k_info *info, cs_m68k_op* op, uint32_t instruction
 			op->type = M68K_OP_IMM;
 
 			if (size == 1)
-				op->imm = read_imm_8(info) & 0xff;
+				op->imm = read_imm_8(info);
 			else if (size == 2)
-				op->imm = read_imm_16(info) & 0xffff;
+				op->imm = read_imm_16(info);
 			else if (size == 4)
 				op->imm = read_imm_32(info);
 			else
@@ -604,7 +597,7 @@ static void build_imm_ea(m68k_info *info, int opcode, uint8_t size, int imm)
 
 	op0->type = M68K_OP_IMM;
 	op0->address_mode = M68K_AM_IMMEDIATE;
-	op0->imm = imm;
+	op0->imm = imm & info->address_mask;
 
 	get_ea_mode_op(info, op1, info->ir, size);
 }
@@ -878,7 +871,8 @@ static uint16_t reverse_bits(uint32_t v)
 		s--;
 	}
 
-	return r <<= s; // shift when v's highest bits are zero
+	r <<= s; // shift when v's highest bits are zero
+	return r;
 }
 
 static uint8_t reverse_bits_8(uint32_t v)
@@ -892,7 +886,8 @@ static uint8_t reverse_bits_8(uint32_t v)
 		s--;
 	}
 
-	return r <<= s; // shift when v's highest bits are zero
+	r <<= s; // shift when v's highest bits are zero
+	return r;
 }
 
 

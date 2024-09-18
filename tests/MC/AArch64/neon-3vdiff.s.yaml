@@ -1,0 +1,1420 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddl v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddl v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddl v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddl2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddl2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddl2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddl v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddl v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddl v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddl2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddl2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x00, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddl2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubl v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubl v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubl v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubl2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubl2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubl2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubl v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubl v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubl v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubl2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubl2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubl2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabal v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabal v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabal v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabal2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabal2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabal2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabal v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabal v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabal v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabal2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabal2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x50, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabal2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabdl v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabdl v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabdl v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabdl2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabdl2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sabdl2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabdl v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabdl v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabdl v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabdl2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabdl2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x70, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uabdl2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlal v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlal v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlal v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlal2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlal2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlal2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlal v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlal v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlal v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlal2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlal2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x80, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlal2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlsl v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlsl v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlsl v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlsl2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlsl2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smlsl2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlsl v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlsl v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlsl v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlsl2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlsl2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xa0, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umlsl2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smull v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smull v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smull v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smull2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smull2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "smull2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umull v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umull v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umull v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umull2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umull2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xc0, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "umull2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x90, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmlal v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x90, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmlal v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x90, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmlal2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x90, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmlal2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xb0, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmlsl v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xb0, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmlsl v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xb0, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmlsl2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xb0, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmlsl2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd0, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmull v0.4s, v1.4h, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd0, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmull v0.2d, v1.2s, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd0, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmull2 v0.4s, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0xd0, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "sqdmull2 v0.2d, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0xe0, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull v0.8h, v1.8b, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0xe0, 0xe2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull v0.1q, v1.1d, v2.1d"
+
+  -
+    input:
+      bytes: [ 0x20, 0xe0, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull2 v0.8h, v1.16b, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0xe0, 0xe2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "pmull2 v0.1q, v1.2d, v2.2d"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddw v0.8h, v1.8h, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddw v0.4s, v1.4s, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddw v0.2d, v1.2d, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddw2 v0.8h, v1.8h, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddw2 v0.4s, v1.4s, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "saddw2 v0.2d, v1.2d, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddw v0.8h, v1.8h, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddw v0.4s, v1.4s, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddw v0.2d, v1.2d, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddw2 v0.8h, v1.8h, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddw2 v0.4s, v1.4s, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x10, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "uaddw2 v0.2d, v1.2d, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubw v0.8h, v1.8h, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubw v0.4s, v1.4s, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubw v0.2d, v1.2d, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubw2 v0.8h, v1.8h, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubw2 v0.4s, v1.4s, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssubw2 v0.2d, v1.2d, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubw v0.8h, v1.8h, v2.8b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubw v0.4s, v1.4s, v2.4h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubw v0.2d, v1.2d, v2.2s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubw2 v0.8h, v1.8h, v2.16b"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubw2 v0.4s, v1.4s, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x30, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "usubw2 v0.2d, v1.2d, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0x22, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "addhn v0.8b, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0x62, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "addhn v0.4h, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0xa2, 0x0e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "addhn v0.2s, v1.2d, v2.2d"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0x22, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "addhn2 v0.16b, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0x62, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "addhn2 v0.8h, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0xa2, 0x4e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "addhn2 v0.4s, v1.2d, v2.2d"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "raddhn v0.8b, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "raddhn v0.4h, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "raddhn v0.2s, v1.2d, v2.2d"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "raddhn2 v0.16b, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "raddhn2 v0.8h, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x40, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "raddhn2 v0.4s, v1.2d, v2.2d"
+
+  -
+    input:
+      bytes: [ 0x20, 0x60, 0x22, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsubhn v0.8b, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x60, 0x62, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsubhn v0.4h, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x60, 0xa2, 0x2e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsubhn v0.2s, v1.2d, v2.2d"
+
+  -
+    input:
+      bytes: [ 0x20, 0x60, 0x22, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsubhn2 v0.16b, v1.8h, v2.8h"
+
+  -
+    input:
+      bytes: [ 0x20, 0x60, 0x62, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsubhn2 v0.8h, v1.4s, v2.4s"
+
+  -
+    input:
+      bytes: [ 0x20, 0x60, 0xa2, 0x6e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "crypto", "neon" ]
+    expected:
+      insns:
+        -
+          asm_text: "rsubhn2 v0.4s, v1.2d, v2.2d"

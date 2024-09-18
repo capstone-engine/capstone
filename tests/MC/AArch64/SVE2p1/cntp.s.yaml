@@ -1,0 +1,320 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, pn0.h, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x87, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x21, pn10.h, vlx4"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x87, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x23, pn13.h, vlx4"
+
+  -
+    input:
+      bytes: [ 0xff, 0x87, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp xzr, pn15.h, vlx4"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, pn0.s, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x87, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x21, pn10.s, vlx4"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x87, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x23, pn13.s, vlx4"
+
+  -
+    input:
+      bytes: [ 0xff, 0x87, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp xzr, pn15.s, vlx4"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, pn0.d, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x87, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x21, pn10.d, vlx4"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x87, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x23, pn13.d, vlx4"
+
+  -
+    input:
+      bytes: [ 0xff, 0x87, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp xzr, pn15.d, vlx4"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, pn0.b, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x87, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x21, pn10.b, vlx4"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x87, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x23, pn13.b, vlx4"
+
+  -
+    input:
+      bytes: [ 0xff, 0x87, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp xzr, pn15.b, vlx4"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, pn0.h, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x87, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x21, pn10.h, vlx4"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x87, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x23, pn13.h, vlx4"
+
+  -
+    input:
+      bytes: [ 0xff, 0x87, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp xzr, pn15.h, vlx4"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, pn0.s, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x87, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x21, pn10.s, vlx4"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x87, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x23, pn13.s, vlx4"
+
+  -
+    input:
+      bytes: [ 0xff, 0x87, 0xa0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp xzr, pn15.s, vlx4"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, pn0.d, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x87, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x21, pn10.d, vlx4"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x87, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x23, pn13.d, vlx4"
+
+  -
+    input:
+      bytes: [ 0xff, 0x87, 0xe0, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp xzr, pn15.d, vlx4"
+
+  -
+    input:
+      bytes: [ 0x00, 0x82, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x0, pn0.b, vlx2"
+
+  -
+    input:
+      bytes: [ 0x55, 0x87, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x21, pn10.b, vlx4"
+
+  -
+    input:
+      bytes: [ 0xb7, 0x87, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp x23, pn13.b, vlx4"
+
+  -
+    input:
+      bytes: [ 0xff, 0x87, 0x20, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve2p1" ]
+    expected:
+      insns:
+        -
+          asm_text: "cntp xzr, pn15.b, vlx4"

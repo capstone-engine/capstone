@@ -41,9 +41,9 @@ class FieldFromInstr(Patch):
 
         # Determine width of instruction by the variable name.
         if ffi_first_arg_text[-2:] == "32":
-            inst_width = 4
+            inst_width = b"4"
         elif ffi_first_arg_text[-2:] == "16":
-            inst_width = 2
+            inst_width = b"2"
         else:
             # Get the Val/Inst parameter.
             # Its type determines the instruction width.
@@ -55,17 +55,38 @@ class FieldFromInstr(Patch):
             inst_type = inst_param_text.split(b" ")[0]
             if inst_type:
                 if inst_type in [b"unsigned", b"uint32_t"]:
-                    inst_width = 4
+                    inst_width = b"4"
                 elif inst_type in [b"uint16_t"]:
-                    inst_width = 2
+                    inst_width = b"2"
+                elif inst_type in [b"InsnType"]:
+                    # Case means the decode function inherits the type from
+                    # a template argument InsnType. The InsnType template argument
+                    # is the type of integer holding the instruction bytes.
+                    # This type is defined in ARCHDisassembler on calling the right macro.
+                    # Hence, we do not know at this point of patching which type it might be.
+                    # It needs to call fieldOfInstruction_X() which detects dynamically which
+                    # integer type might hold the bytes (e.g. a uint32_t or uint16_t).
+                    # You can check it manually in ARCHDisassembler.c, but the script can't.
+                    #
+                    # Here we just create a function with the postfix fieldFromInstruction_w (for width).
+                    # This function must be implemented by hand, and check MCInst for the actual bit width.
+                    # The bit width must be set in the ARCHDisassembler.c. Just add the code there by hand.
+                    # Then call fieldFromInstruction_4, fieldFromInstruction_2 appropriately.
+                    log.warning(
+                        "Variable fieldFromInstruction width detected.\n"
+                        "Please implement fieldFromInstruction_w() and call "
+                        "fieldFromInstruction_4, fieldFromInstruction_2 appropriately.\n"
+                        "In fieldFromInstruction_w() check MCInst for the actual bit width.\n"
+                        "The bit width must be set in the ARCHDisassembler.c. Just add the code there by hand."
+                    )
+                    inst_width = b"w"
                 else:
-                    log.fatal(f"Type {inst_type} no handled.")
-                    exit(1)
+                    raise ValueError(f"Type {inst_type} not handled.")
             else:
                 # Needs manual fix
                 return get_text(src, ffi_call.start_byte, ffi_call.end_byte)
         return re.sub(
             rb"fieldFromInstruction",
-            b"fieldFromInstruction_%d" % inst_width,
+            b"fieldFromInstruction_%s" % inst_width,
             get_text(src, ffi_call.start_byte, ffi_call.end_byte),
         )

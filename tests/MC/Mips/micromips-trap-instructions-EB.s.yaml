@@ -1,0 +1,55 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x41, 0xc9, 0x45, 0x67 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "teqi $t1, 17767"
+  -
+    input:
+      bytes: [ 0x41, 0x29, 0x45, 0x67 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgei $t1, 17767"
+  -
+    input:
+      bytes: [ 0x41, 0x69, 0x45, 0x67 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tgeiu $t1, 17767"
+  -
+    input:
+      bytes: [ 0x41, 0x09, 0x45, 0x67 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlti $t1, 17767"
+  -
+    input:
+      bytes: [ 0x41, 0x49, 0x45, 0x67 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tltiu $t1, 17767"
+  -
+    input:
+      bytes: [ 0x41, 0x89, 0x45, 0x67 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "tnei $t1, 17767"

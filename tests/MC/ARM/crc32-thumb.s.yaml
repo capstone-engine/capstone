@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xc1, 0xfa, 0x82, 0xf0, 0xc1, 0xfa, 0x92, 0xf0, 0xc1, 0xfa, 0xa2, 0xf0, 0xd1, 0xfa, 0x82, 0xf0, 0xd1, 0xfa, 0x92, 0xf0, 0xd1, 0xfa, 0xa2, 0xf0 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_V8", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "crc32b r0, r1, r2"
+        -
+          asm_text: "crc32h r0, r1, r2"
+        -
+          asm_text: "crc32w r0, r1, r2"
+        -
+          asm_text: "crc32cb r0, r1, r2"
+        -
+          asm_text: "crc32ch r0, r1, r2"
+        -
+          asm_text: "crc32cw r0, r1, r2"

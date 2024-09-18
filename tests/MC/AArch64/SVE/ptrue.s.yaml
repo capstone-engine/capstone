@@ -1,0 +1,800 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x18, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p0.b, pow2"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x58, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p0.h, pow2"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p0.s, pow2"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0xd8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p0.d, pow2"
+
+  -
+    input:
+      bytes: [ 0xef, 0xe3, 0x18, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p15.b"
+
+  -
+    input:
+      bytes: [ 0xef, 0xe3, 0x58, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p15.h"
+
+  -
+    input:
+      bytes: [ 0xef, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p15.s"
+
+  -
+    input:
+      bytes: [ 0xef, 0xe3, 0xd8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p15.d"
+
+  -
+    input:
+      bytes: [ 0x27, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl1"
+
+  -
+    input:
+      bytes: [ 0x27, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl1"
+
+  -
+    input:
+      bytes: [ 0x47, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl2"
+
+  -
+    input:
+      bytes: [ 0x67, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl3"
+
+  -
+    input:
+      bytes: [ 0x87, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl4"
+
+  -
+    input:
+      bytes: [ 0xa7, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl5"
+
+  -
+    input:
+      bytes: [ 0xc7, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl6"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl7"
+
+  -
+    input:
+      bytes: [ 0x07, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl8"
+
+  -
+    input:
+      bytes: [ 0x27, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl16"
+
+  -
+    input:
+      bytes: [ 0x47, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl32"
+
+  -
+    input:
+      bytes: [ 0x67, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl64"
+
+  -
+    input:
+      bytes: [ 0x87, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl128"
+
+  -
+    input:
+      bytes: [ 0xa7, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl256"
+
+  -
+    input:
+      bytes: [ 0xa7, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, mul4"
+
+  -
+    input:
+      bytes: [ 0xc7, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, mul3"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s"
+
+  -
+    input:
+      bytes: [ 0xc7, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #14"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #15"
+
+  -
+    input:
+      bytes: [ 0x07, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #16"
+
+  -
+    input:
+      bytes: [ 0x27, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #17"
+
+  -
+    input:
+      bytes: [ 0x47, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #18"
+
+  -
+    input:
+      bytes: [ 0x67, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #19"
+
+  -
+    input:
+      bytes: [ 0x87, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #20"
+
+  -
+    input:
+      bytes: [ 0xa7, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #21"
+
+  -
+    input:
+      bytes: [ 0xc7, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #22"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #23"
+
+  -
+    input:
+      bytes: [ 0x07, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #24"
+
+  -
+    input:
+      bytes: [ 0x27, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #25"
+
+  -
+    input:
+      bytes: [ 0x47, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #26"
+
+  -
+    input:
+      bytes: [ 0x67, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #27"
+
+  -
+    input:
+      bytes: [ 0x87, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sve" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #28"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x18, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p0.b, pow2"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x58, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p0.h, pow2"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p0.s, pow2"
+
+  -
+    input:
+      bytes: [ 0x00, 0xe0, 0xd8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p0.d, pow2"
+
+  -
+    input:
+      bytes: [ 0xef, 0xe3, 0x18, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p15.b"
+
+  -
+    input:
+      bytes: [ 0xef, 0xe3, 0x58, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p15.h"
+
+  -
+    input:
+      bytes: [ 0xef, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p15.s"
+
+  -
+    input:
+      bytes: [ 0xef, 0xe3, 0xd8, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p15.d"
+
+  -
+    input:
+      bytes: [ 0x27, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl1"
+
+  -
+    input:
+      bytes: [ 0x27, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl1"
+
+  -
+    input:
+      bytes: [ 0x47, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl2"
+
+  -
+    input:
+      bytes: [ 0x67, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl3"
+
+  -
+    input:
+      bytes: [ 0x87, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl4"
+
+  -
+    input:
+      bytes: [ 0xa7, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl5"
+
+  -
+    input:
+      bytes: [ 0xc7, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl6"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xe0, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl7"
+
+  -
+    input:
+      bytes: [ 0x07, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl8"
+
+  -
+    input:
+      bytes: [ 0x27, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl16"
+
+  -
+    input:
+      bytes: [ 0x47, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl32"
+
+  -
+    input:
+      bytes: [ 0x67, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl64"
+
+  -
+    input:
+      bytes: [ 0x87, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl128"
+
+  -
+    input:
+      bytes: [ 0xa7, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, vl256"
+
+  -
+    input:
+      bytes: [ 0xa7, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, mul4"
+
+  -
+    input:
+      bytes: [ 0xc7, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, mul3"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s"
+
+  -
+    input:
+      bytes: [ 0xc7, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #14"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xe1, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #15"
+
+  -
+    input:
+      bytes: [ 0x07, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #16"
+
+  -
+    input:
+      bytes: [ 0x27, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #17"
+
+  -
+    input:
+      bytes: [ 0x47, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #18"
+
+  -
+    input:
+      bytes: [ 0x67, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #19"
+
+  -
+    input:
+      bytes: [ 0x87, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #20"
+
+  -
+    input:
+      bytes: [ 0xa7, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #21"
+
+  -
+    input:
+      bytes: [ 0xc7, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #22"
+
+  -
+    input:
+      bytes: [ 0xe7, 0xe2, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #23"
+
+  -
+    input:
+      bytes: [ 0x07, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #24"
+
+  -
+    input:
+      bytes: [ 0x27, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #25"
+
+  -
+    input:
+      bytes: [ 0x47, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #26"
+
+  -
+    input:
+      bytes: [ 0x67, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #27"
+
+  -
+    input:
+      bytes: [ 0x87, 0xe3, 0x98, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme" ]
+    expected:
+      insns:
+        -
+          asm_text: "ptrue p7.s, #28"

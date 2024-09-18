@@ -32,6 +32,7 @@ typedef struct insn_map {
 		ppc_suppl_info ppc;
 		loongarch_suppl_info loongarch;
 		aarch64_suppl_info aarch64;
+		systemz_suppl_info systemz;
 	} suppl_info; // Supplementary information for each instruction.
 #endif
 } insn_map;
@@ -138,7 +139,9 @@ DECL_get_detail_op(aarch64, AArch64);
 DECL_get_detail_op(alpha, Alpha);
 DECL_get_detail_op(hppa, HPPA);
 DECL_get_detail_op(loongarch, LoongArch);
+DECL_get_detail_op(mips, Mips);
 DECL_get_detail_op(riscv, RISCV);
+DECL_get_detail_op(systemz, SystemZ);
 
 /// Increments the detail->arch.op_count by one.
 #define DEFINE_inc_detail_op_count(arch, ARCH) \
@@ -168,8 +171,12 @@ DEFINE_inc_detail_op_count(hppa, HPPA);
 DEFINE_dec_detail_op_count(hppa, HPPA);
 DEFINE_inc_detail_op_count(loongarch, LoongArch);
 DEFINE_dec_detail_op_count(loongarch, LoongArch);
+DEFINE_inc_detail_op_count(mips, Mips);
+DEFINE_dec_detail_op_count(mips, Mips);
 DEFINE_inc_detail_op_count(riscv, RISCV);
 DEFINE_dec_detail_op_count(riscv, RISCV);
+DEFINE_inc_detail_op_count(systemz, SystemZ);
+DEFINE_dec_detail_op_count(systemz, SystemZ);
 
 /// Returns true if a memory operand is currently edited.
 static inline bool doing_mem(const MCInst *MI)
@@ -198,7 +205,25 @@ DEFINE_get_arch_detail(aarch64, AArch64);
 DEFINE_get_arch_detail(alpha, Alpha);
 DEFINE_get_arch_detail(hppa, HPPA);
 DEFINE_get_arch_detail(loongarch, LoongArch);
+DEFINE_get_arch_detail(mips, Mips);
 DEFINE_get_arch_detail(riscv, RISCV);
+DEFINE_get_arch_detail(systemz, SystemZ);
+
+#define DEFINE_check_safe_inc(Arch, ARCH) \
+	static inline void Arch##_check_safe_inc() { \
+		CS_ASSERT(Arch##_get_detail(MI)->op_count + 1 < NUM_##ARCH##_OPS); \
+	}
+
+DEFINE_check_safe_inc(ARM, ARM);
+DEFINE_check_safe_inc(PPC, PPC);
+DEFINE_check_safe_inc(TriCore, TRICORE);
+DEFINE_check_safe_inc(AArch64, AARCH64);
+DEFINE_check_safe_inc(Alpha, ALPHA);
+DEFINE_check_safe_inc(HPPA, HPPA);
+DEFINE_check_safe_inc(LoongArch, LOONGARCH);
+DEFINE_check_safe_inc(RISCV, RISCV);
+DEFINE_check_safe_inc(SystemZ, SYSTEMZ);
+DEFINE_check_safe_inc(Mips, MIPS);
 
 static inline bool detail_is_set(const MCInst *MI)
 {
@@ -231,5 +256,28 @@ void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias);
 bool map_use_alias_details(const MCInst *MI);
 
 void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_id_map, int map_size);
+
+/// Mapping from Capstone enumeration identifiers and their values.
+///
+/// This map MUST BE sorted to allow binary searches.
+/// Please always ensure the map is sorted after you added a value.
+///
+/// You can sort the map with Python.
+/// Copy the map into a file and run:
+///
+/// ```python
+/// with open("/tmp/file_with_map_entries") as f:
+///     text = f.readlines()
+///
+/// text.sort()
+/// print(''.join(text))
+/// ```
+typedef struct {
+	const char *str; ///< The name of the enumeration identifier
+	uint64_t val;	 ///< The value of the identifier
+} cs_enum_id_map;
+
+uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,
+			     const char *id, bool *found);
 
 #endif // CS_MAPPING_H

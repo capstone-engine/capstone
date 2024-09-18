@@ -1,0 +1,44 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x91, 0x42, 0x16, 0xbc, 0xfe, 0xde, 0xc8, 0x47, 0xd0, 0x47, 0x1a, 0xba, 0x63, 0xba, 0xf5, 0xba, 0x5a, 0xb2, 0x1a, 0xb2, 0x2c, 0x42, 0xf3, 0xb2, 0xb3, 0xb2, 0x8b, 0x58, 0x02, 0xbe, 0xc0, 0x46, 0x67, 0xb6, 0x78, 0x46 ]
+      arch: "CS_ARCH_ARM"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "CS_MODE_THUMB" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp r1, r2"
+        -
+          asm_text: "pop {r1, r2, r4}"
+        -
+          asm_text: "trap"
+        -
+          asm_text: "blx r9"
+        -
+          asm_text: "blx r10"
+        -
+          asm_text: "rev r2, r3"
+        -
+          asm_text: "rev16 r3, r4"
+        -
+          asm_text: "revsh r5, r6"
+        -
+          asm_text: "sxtb r2, r3"
+        -
+          asm_text: "sxth r2, r3"
+        -
+          asm_text: "tst r4, r5"
+        -
+          asm_text: "uxtb r3, r6"
+        -
+          asm_text: "uxth r3, r6"
+        -
+          asm_text: "ldr r3, [r1, r2]"
+        -
+          asm_text: "bkpt #2"
+        -
+          asm_text: "mov r8, r8"
+        -
+          asm_text: "cpsie aif"
+        -
+          asm_text: "mov r0, pc"

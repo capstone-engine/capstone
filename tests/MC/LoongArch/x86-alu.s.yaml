@@ -1,0 +1,433 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x8c, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86adc.b $a0, $a1"
+  -
+    input:
+      bytes: [ 0x8d, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86adc.h $a0, $a1"
+  -
+    input:
+      bytes: [ 0x8e, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86adc.w $a0, $a1"
+  -
+    input:
+      bytes: [ 0x8f, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86adc.d $a0, $a1"
+  -
+    input:
+      bytes: [ 0x84, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86add.b $a0, $a1"
+  -
+    input:
+      bytes: [ 0x85, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86add.h $a0, $a1"
+  -
+    input:
+      bytes: [ 0x86, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86add.w $a0, $a1"
+  -
+    input:
+      bytes: [ 0x87, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86add.d $a0, $a1"
+  -
+    input:
+      bytes: [ 0x80, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86add.wu $a0, $a1"
+  -
+    input:
+      bytes: [ 0x81, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86add.du $a0, $a1"
+  -
+    input:
+      bytes: [ 0x80, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86inc.b $a0"
+  -
+    input:
+      bytes: [ 0x81, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86inc.h $a0"
+  -
+    input:
+      bytes: [ 0x82, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86inc.w $a0"
+  -
+    input:
+      bytes: [ 0x83, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86inc.d $a0"
+  -
+    input:
+      bytes: [ 0x90, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86sbc.b $a0, $a1"
+  -
+    input:
+      bytes: [ 0x91, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86sbc.h $a0, $a1"
+  -
+    input:
+      bytes: [ 0x92, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86sbc.w $a0, $a1"
+  -
+    input:
+      bytes: [ 0x93, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86sbc.d $a0, $a1"
+  -
+    input:
+      bytes: [ 0x88, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86sub.b $a0, $a1"
+  -
+    input:
+      bytes: [ 0x89, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86sub.h $a0, $a1"
+  -
+    input:
+      bytes: [ 0x8a, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86sub.w $a0, $a1"
+  -
+    input:
+      bytes: [ 0x8b, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86sub.d $a0, $a1"
+  -
+    input:
+      bytes: [ 0x82, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86sub.wu $a0, $a1"
+  -
+    input:
+      bytes: [ 0x83, 0x14, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86sub.du $a0, $a1"
+  -
+    input:
+      bytes: [ 0x84, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86dec.b $a0"
+  -
+    input:
+      bytes: [ 0x85, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86dec.h $a0"
+  -
+    input:
+      bytes: [ 0x86, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86dec.w $a0"
+  -
+    input:
+      bytes: [ 0x87, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86dec.d $a0"
+  -
+    input:
+      bytes: [ 0x90, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86and.b $a0, $a1"
+  -
+    input:
+      bytes: [ 0x91, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86and.h $a0, $a1"
+  -
+    input:
+      bytes: [ 0x92, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86and.w $a0, $a1"
+  -
+    input:
+      bytes: [ 0x93, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86and.d $a0, $a1"
+  -
+    input:
+      bytes: [ 0x94, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86or.b $a0, $a1"
+  -
+    input:
+      bytes: [ 0x95, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86or.h $a0, $a1"
+  -
+    input:
+      bytes: [ 0x96, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86or.w $a0, $a1"
+  -
+    input:
+      bytes: [ 0x97, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86or.d $a0, $a1"
+  -
+    input:
+      bytes: [ 0x98, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86xor.b $a0, $a1"
+  -
+    input:
+      bytes: [ 0x99, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86xor.h $a0, $a1"
+  -
+    input:
+      bytes: [ 0x9a, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86xor.w $a0, $a1"
+  -
+    input:
+      bytes: [ 0x9b, 0x94, 0x3f, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86xor.d $a0, $a1"
+  -
+    input:
+      bytes: [ 0x80, 0x94, 0x3e, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mul.b $a0, $a1"
+  -
+    input:
+      bytes: [ 0x81, 0x94, 0x3e, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mul.h $a0, $a1"
+  -
+    input:
+      bytes: [ 0x82, 0x94, 0x3e, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mul.w $a0, $a1"
+  -
+    input:
+      bytes: [ 0x83, 0x94, 0x3e, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mul.d $a0, $a1"
+  -
+    input:
+      bytes: [ 0x84, 0x94, 0x3e, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mul.bu $a0, $a1"
+  -
+    input:
+      bytes: [ 0x85, 0x94, 0x3e, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mul.hu $a0, $a1"
+  -
+    input:
+      bytes: [ 0x86, 0x94, 0x3e, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mul.wu $a0, $a1"
+  -
+    input:
+      bytes: [ 0x87, 0x94, 0x3e, 0x00 ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "x86mul.du $a0, $a1"

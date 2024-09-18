@@ -1,6 +1,5 @@
 MANIFEST
 dist/
-src/
 capstone/lib
 capstone/include
 pyx/lib

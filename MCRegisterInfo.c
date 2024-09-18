@@ -149,3 +149,7 @@ bool MCRegisterClass_contains(const MCRegisterClass *c, unsigned Reg)
 
 	return (c->RegSet[Byte] & (1 << InByte)) != 0;
 }
+
+unsigned MCRegisterClass_getRegister(const MCRegisterClass *c, unsigned RegNo) {
+    return c->RegsBegin[RegNo];
+}

@@ -47,13 +47,13 @@ typedef struct cs_tricore_op {
 	uint8_t access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)
 } cs_tricore_op;
 
-#define TRICORE_OP_COUNT 8
+#define NUM_TRICORE_OPS 8
 
 /// Instruction structure
 typedef struct cs_tricore {
 	uint8_t op_count; ///< number of operands of this instruction.
 	cs_tricore_op
-		operands[TRICORE_OP_COUNT]; ///< operands for this instruction.
+		operands[NUM_TRICORE_OPS]; ///< operands for this instruction.
 	/// TODO: Mark the modified flags register in td files and regenerate inc files
 	bool update_flags; ///< whether the flags register is updated.
 } cs_tricore;

@@ -1,0 +1,415 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x80, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "cachea.i [p0+r]"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x8a, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "cachea.i [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x00, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "cachea.w [p0+r]"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x0a, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "cachea.w [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x40, 0x03 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "cachea.wi [p0+r]"
+  -
+    input:
+      bytes: [ 0xa9, 0x00, 0x4a, 0x07 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "cachea.wi [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0x69, 0x02, 0xc0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmpswap.w [p0+r], e2"
+  -
+    input:
+      bytes: [ 0x69, 0x02, 0xca, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmpswap.w [p0+c]#0xa, e2"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x80, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a2, [p0+r]"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x8a, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.a a2, [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d2, [p0+r]"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x0a, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.b d2, [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d2, [p0+r]"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x4a, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.bu d2, [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x40, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.d e2, [p0+r]"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x4a, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.d e2, [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.da p2, [p0+r]"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0xca, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.da p2, [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d2, [p0+r]"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x8a, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.h d2, [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0xc0, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.hu d2, [p0+r]"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0xca, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.hu d2, [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x00, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.q d2, [p0+r]"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x0a, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.q d2, [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x00, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d2, [p0+r]"
+  -
+    input:
+      bytes: [ 0x29, 0x02, 0x0a, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.w d2, [p0+c]#0xa"
+  -
+    input:
+      bytes: [ 0x69, 0x02, 0x40, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldmst [p0+r], e2"
+  -
+    input:
+      bytes: [ 0x69, 0x02, 0x4a, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldmst [p0+c]#0xa, e2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x80, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [p0+r], a2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x8a, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.a [p0+c]#0xa, a2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [p0+r], d2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x0a, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.b [p0+c]#0xa, d2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x40, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.d [p0+r], e2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x4a, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.d [p0+c]#0xa, e2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0xc0, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.da [p0+r], p2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0xca, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.da [p0+c]#0xa, p2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [p0+r], d2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x8a, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.h [p0+c]#0xa, d2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x00, 0x02 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.q [p0+r], d2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x0a, 0x06 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.q [p0+c]#0xa, d2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x00, 0x01 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [p0+r], d2"
+  -
+    input:
+      bytes: [ 0xa9, 0x02, 0x0a, 0x05 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.w [p0+c]#0xa, d2"
+  -
+    input:
+      bytes: [ 0x69, 0x02, 0x00, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.w [p0+r], d2"
+  -
+    input:
+      bytes: [ 0x69, 0x02, 0x0a, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap.w [p0+c]#0xa, d2"
+  -
+    input:
+      bytes: [ 0x69, 0x02, 0x80, 0x00 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "swapmsk.w [p0+r], e2"
+  -
+    input:
+      bytes: [ 0x69, 0x02, 0x8a, 0x04 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_162" ]
+    expected:
+      insns:
+        -
+          asm_text: "swapmsk.w [p0+c]#0xa, e2"

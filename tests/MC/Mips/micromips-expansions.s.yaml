@@ -1,0 +1,163 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xa0, 0x50, 0x7b, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "ori $a1, $zero, 123"
+  -
+    input:
+      bytes: [ 0xc0, 0x30, 0xd7, 0xf6 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $a2, $zero, -2345"
+  -
+    input:
+      bytes: [ 0xa7, 0x41, 0x01, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lui $a3, 1"
+  -
+    input:
+      bytes: [ 0xe7, 0x50, 0x02, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "ori $a3, $a3, 2"
+  -
+    input:
+      bytes: [ 0x80, 0x30, 0x14, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $a0, $zero, 20"
+  -
+    input:
+      bytes: [ 0xa7, 0x41, 0x01, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lui $a3, 1"
+  -
+    input:
+      bytes: [ 0xe7, 0x50, 0x02, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "ori $a3, $a3, 2"
+  -
+    input:
+      bytes: [ 0x85, 0x30, 0x14, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addiu $a0, $a1, 20"
+  -
+    input:
+      bytes: [ 0xa7, 0x41, 0x01, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lui $a3, 1"
+  -
+    input:
+      bytes: [ 0xe7, 0x50, 0x02, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "ori $a3, $a3, 2"
+  -
+    input:
+      bytes: [ 0x07, 0x01, 0x50, 0x39 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addu $a3, $a3, $t0"
+  -
+    input:
+      bytes: [ 0x8a, 0x00, 0x50, 0x51 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addu $t2, $t2, $a0"
+  -
+    input:
+      bytes: [ 0x21, 0x01, 0x50, 0x09 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addu $at, $at, $t1"
+  -
+    input:
+      bytes: [ 0xaa, 0x41, 0x0a, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lui $t2, 10"
+  -
+    input:
+      bytes: [ 0x8a, 0x00, 0x50, 0x51 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addu $t2, $t2, $a0"
+  -
+    input:
+      bytes: [ 0x4a, 0xfd, 0x7b, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lw $t2, 123($t2)"
+  -
+    input:
+      bytes: [ 0xa1, 0x41, 0x02, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "lui $at, 2"
+  -
+    input:
+      bytes: [ 0x21, 0x01, 0x50, 0x09 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_MODE_MIPS32", "CS_MODE_MICRO" ]
+    expected:
+      insns:
+        -
+          asm_text: "addu $at, $at, $t1"

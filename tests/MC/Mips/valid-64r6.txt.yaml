@@ -1,0 +1,80 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7c, 0x41, 0x00, 0x0f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "crc32b $1, $2, $1"
+
+  -
+    input:
+      bytes: [ 0x7c, 0xa4, 0x00, 0x4f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "crc32h $4, $5, $4"
+
+  -
+    input:
+      bytes: [ 0x7d, 0x07, 0x00, 0x8f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "crc32w $7, $8, $7"
+
+  -
+    input:
+      bytes: [ 0x7d, 0x6a, 0x00, 0xcf ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "crc32d $10, $11, $10"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x41, 0x01, 0x0f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "crc32cb $1, $2, $1"
+
+  -
+    input:
+      bytes: [ 0x7c, 0xa4, 0x01, 0x4f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "crc32ch $4, $5, $4"
+
+  -
+    input:
+      bytes: [ 0x7d, 0x07, 0x01, 0x8f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "crc32cw $7, $8, $7"
+
+  -
+    input:
+      bytes: [ 0x7d, 0x6a, 0x01, 0xcf ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS64R6" ]
+    expected:
+      insns:
+        -
+          asm_text: "crc32cd $10, $11, $10"

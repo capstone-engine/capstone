@@ -288,9 +288,7 @@ static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64
 
 	// initialize access
 	memset(access, 0, CS_X86_MAXIMUM_OPERAND_SIZE * sizeof(access[0]));
-
 	if (!arr) {
-		access[0] = 0;
 		return;
 	}
 
@@ -302,7 +300,7 @@ static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access, uint64
 
 	// copy in reverse order this access array from Intel syntax -> AT&T syntax
 	count--;
-	for(i = 0; i <= count; i++) {
+	for(i = 0; i <= count && ((count - i) < CS_X86_MAXIMUM_OPERAND_SIZE) && i < CS_X86_MAXIMUM_OPERAND_SIZE; i++) {
 		if (arr[count - i] != CS_AC_IGNORE)
 			access[i] = arr[count - i];
 		else
@@ -584,8 +582,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		int64_t imm = MCOperand_getImm(Op);
 		uint8_t opsize = X86_immediate_size(MCInst_getOpcode(MI), &encsize);
 
-		if (opsize == 1)    // print 1 byte immediate in positive form
+		if (opsize == 1) {   // print 1 byte immediate in positive form
 			imm = imm & 0xff;
+		}
 
 		switch(MI->flat_insn->id) {
 			default:
@@ -600,9 +599,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 							switch(opsize) {
 								default:
 									break;
-								case 1:
-									imm &= 0xff;
-									break;
+								// case 1 cannot occur because above imm was ANDed with 0xff,
+								// making it effectively always positive.
+								// So this switch is never reached.
 								case 2:
 									imm &= 0xffff;
 									break;

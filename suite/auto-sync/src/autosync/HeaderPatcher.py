@@ -18,10 +18,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--header", dest="header", help="Path header file.", type=Path)
     parser.add_argument("--inc", dest="inc", help="Path inc file.", type=Path)
     parser.add_argument(
-        "--aarch64", dest="aarch64", help="aarch64.h header file location", type=Path
+        "--v6", dest="v6", help="aarch64.h/systemz.h header file location", type=Path
     )
     parser.add_argument(
-        "--arm64", dest="arm64", help="arm64.h header file location", type=Path
+        "--v5", dest="v5", help="arm64.h/systemz_v5.h header file location", type=Path
     )
     parser.add_argument(
         "-c", dest="compat", help="Generate compatibility header", action="store_true"
@@ -120,78 +120,98 @@ class HeaderPatcher:
 
 
 class CompatHeaderBuilder:
+    def __init__(self, v6: Path, v5: Path, arch: str):
+        self.v6 = v6
+        self.v5 = v5
+        match arch:
+            case "aarch64":
+                self.v6_lower = "aarch64"
+                self.v6_upper = "AARCH64"
+                self.v6_camel = "AArch64"
+                self.v5_lower = "arm64"
+                self.v5_upper = "ARM64"
+            case "systemz":
+                self.v6_lower = "systemz"
+                self.v6_upper = "SYSTEMZ"
+                self.v6_camel = "SystemZ"
+                self.v5_lower = "sysz"
+                self.v5_upper = "SYSZ"
+            case _:
+                raise ValueError(f"{arch} not handled")
 
-    def __init__(self, aarch64_h: Path, arm64_h: Path):
-        self.aarch64_h = aarch64_h
-        self.arm64_h = arm64_h
-
-    def replace_typedef_struct(self, aarch64_lines: list[str]) -> list[str]:
+    def replace_typedef_struct(self, v6_lines: list[str]) -> list[str]:
         output = list()
         typedef = ""
-        for line in aarch64_lines:
+        for line in v6_lines:
             if typedef:
                 if not re.search(r"^}\s[\w_]+;", line):
                     # Skip struct content
                     continue
                 type_name = re.findall(r"[\w_]+", line)[0]
                 output.append(
-                    f"typedef {type_name} {re.sub('aarch64','arm64', type_name)};\n"
+                    f"typedef {type_name} {re.sub(self.v6_lower,self.v5_lower, type_name)};\n"
                 )
                 typedef = ""
                 continue
 
-            if re.search(f"^typedef\s+(struct|union)", line):
+            if re.search(rf"^typedef\s+(struct|union)", line):
                 typedef = line
                 continue
             output.append(line)
         return output
 
-    def replace_typedef_enum(self, aarch64_lines: list[str]) -> list[str]:
+    def replace_typedef_enum(self, v6_lines: list[str]) -> list[str]:
         output = list()
         typedef = ""
-        for line in aarch64_lines:
+        for line in v6_lines:
             if typedef:
                 if not re.search(r"^}\s[\w_]+;", line):
                     # Replace name
-                    if "AArch64" not in line and "AARCH64" not in line:
+                    if self.v6_camel not in line and self.v6_upper not in line:
                         output.append(line)
                         continue
-                    found = re.findall(r"(AArch64|AARCH64)([\w_]+)", line)
+                    found = re.findall(
+                        rf"({self.v6_camel}|{self.v6_upper})([\w_]+)", line
+                    )
                     entry_name: str = "".join(found[0])
-                    arm64_name = entry_name.replace("AArch64", "ARM64").replace(
-                        "AARCH64", "ARM64"
+                    v5_name = entry_name.replace(self.v6_camel, self.v6_camel).replace(
+                        self.v6_upper, self.v5_upper
                     )
                     patched_line = re.sub(
-                        r"(AArch64|AARCH64).+", f"{arm64_name} = {entry_name},", line
+                        rf"({self.v6_camel}|{self.v6_upper}).+",
+                        f"{v5_name} = {entry_name},",
+                        line,
                     )
                     output.append(patched_line)
                     continue
                 # We still have LLVM and CS naming conventions mixed
-                p = re.sub(r"aarch64", "arm64", line)
-                p = re.sub(r"(AArch64|AARCH64)", "ARM64", p)
+                p = re.sub(self.v6_lower, self.v5_lower, line)
+                p = re.sub(rf"({self.v6_camel}|{self.v6_upper})", self.v5_upper, p)
                 output.append(p)
                 typedef = ""
                 continue
 
-            if re.search(f"^typedef\s+enum", line):
+            if re.search(rf"^typedef\s+enum", line):
                 typedef = line
                 output.append("typedef enum {\n")
                 continue
             output.append(line)
         return output
 
-    def remove_comments(self, aarch64_lines: list[str]) -> list[str]:
+    def remove_comments(self, v6_lines: list[str]) -> list[str]:
         output = list()
-        for line in aarch64_lines:
+        for line in v6_lines:
             if re.search(r"^\s*//", line) and "// SPDX" not in line:
                 continue
             output.append(line)
         return output
 
-    def replace_aarch64(self, aarch64_lines: list[str]) -> list[str]:
+    def replace_v6_prefix(self, v6_lines: list[str]) -> list[str]:
         output = list()
         in_typedef = False
-        for line in aarch64_lines:
+        for line in v6_lines:
+            if "CAPSTONE_SYSTEMZ_COMPAT_HEADER" in line:
+                output.append(line)
             if in_typedef:
                 if re.search(r"^}\s[\w_]+;", line):
                     in_typedef = False
@@ -202,46 +222,61 @@ class CompatHeaderBuilder:
                 in_typedef = True
                 output.append(line)
                 continue
-            output.append(re.sub(r"(AArch64|AARCH64)", "ARM64", line))
+            output.append(
+                re.sub(rf"({self.v6_camel}|{self.v6_upper})", self.v5_upper, line)
+            )
         return output
 
-    def replace_include_guards(self, aarch64_lines: list[str]) -> list[str]:
+    def replace_include_guards(self, v6_lines: list[str]) -> list[str]:
         output = list()
-        for line in aarch64_lines:
+        skip = False
+        for line in v6_lines:
+            if "CAPSTONE_SYSTEMZ_COMPAT_HEADER" in line:
+                # The compat heade is inlcuded in the v6 header.
+                # Because v5 and v6 header share the same name.
+                skip = True
+                continue
+            elif skip and "#endif" in line:
+                skip = False
+                continue
+            elif skip:
+                continue
+
             if not re.search(r"^#(ifndef|define)", line):
                 output.append(line)
                 continue
-            output.append(re.sub(r"AARCH64", "ARM64", line))
+            output.append(re.sub(self.v6_upper, self.v5_upper, line))
         return output
 
-    def inject_aarch64_header(self, aarch64_lines: list[str]) -> list[str]:
+    def inject_v6_header(self, v6_lines: list[str]) -> list[str]:
         output = list()
         header_inserted = False
-        for line in aarch64_lines:
+        for line in v6_lines:
             if re.search(r"^#include", line):
                 if not header_inserted:
-                    output.append("#include <capstone/aarch64.h>\n")
+                    output.append(f"#include <capstone/{self.v6_lower}.h>\n")
                     header_inserted = True
             output.append(line)
         return output
 
-    def generate_aarch64_compat_header(self) -> bool:
+    def generate_v5_compat_header(self) -> bool:
         """
         Translates the aarch64.h header into the arm64.h header and renames all aarch64 occurrences.
         It does simple regex matching and replacing.
+        Same for systemz.h and SYSTEMZ -> SYSZ. But the output file is systemz_compatibility.h.
         """
         log.info("Generate compatibility header")
-        with open(self.aarch64_h) as f:
-            aarch64 = f.readlines()
+        with open(self.v6) as f:
+            v6_lines = f.readlines()
 
-        patched = self.replace_typedef_struct(aarch64)
+        patched = self.replace_typedef_struct(v6_lines)
         patched = self.replace_typedef_enum(patched)
         patched = self.remove_comments(patched)
-        patched = self.replace_aarch64(patched)
+        patched = self.replace_v6_prefix(patched)
         patched = self.replace_include_guards(patched)
-        patched = self.inject_aarch64_header(patched)
+        patched = self.inject_v6_header(patched)
 
-        with open(self.arm64_h, "w+") as f:
+        with open(self.v5, "w+") as f:
             f.writelines(patched)
 
 
@@ -250,10 +285,8 @@ if __name__ == "__main__":
     if (not args.patch and not args.compat) or (args.patch and args.compat):
         print("You need to specify either -c or -p")
         exit(1)
-    if args.compat and not (args.aarch64 and args.arm64):
-        print(
-            "Generating the arm64 compatibility header requires --arm64 and --aarch64"
-        )
+    if args.compat and not (args.v6 and args.v5):
+        print("Generating the v5 compatibility header requires --v5 and --v6")
         exit(1)
     if args.patch and not (args.inc and args.header):
         print("Patching headers requires --inc and --header")
@@ -264,5 +297,12 @@ if __name__ == "__main__":
         patcher.patch_header()
         exit(0)
 
-    builder = CompatHeaderBuilder(args.aarch64, args.arm64)
-    builder.generate_aarch64_compat_header()
+    if "aarch64" in args.v6.name:
+        arch = "aarch64"
+    elif "systemz" in args.v6.name:
+        arch = "systemz"
+    else:
+        raise ValueError(f"Does not know the arch for header file: {args.v6.name}")
+
+    builder = CompatHeaderBuilder(args.v6, args.v5, arch)
+    builder.generate_v5_compat_header()

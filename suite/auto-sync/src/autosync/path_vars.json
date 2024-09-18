@@ -4,10 +4,12 @@
     "{LLVM_TARGET_DIR}": "{LLVM_ROOT}/llvm/lib/Target/",
     "{LLVM_MC_TEST_DIR}": "{LLVM_ROOT}/llvm/test/MC/",
     "{LLVM_TBLGEN_BIN}": "{LLVM_ROOT}/build/bin/llvm-tblgen",
+    "{LLVM_LIT_TEST_DIR}": "{AUTO_SYNC_SRC}/lit_config/",
     "{LLVM_INCLUDE_DIR}": "{LLVM_ROOT}/llvm/include/",
     "{VENDOR_DIR}": "{AUTO_SYNC_ROOT}/vendor/",
     "{BUILD_DIR}": "{AUTO_SYNC_ROOT}/build/",
     "{C_INC_OUT_DIR}": "{BUILD_DIR}/llvm_c_inc/",
+    "{INC_GEN_CONF_FILE}": "{AUTO_SYNC_SRC}/inc_gen.json",
     "{CPP_INC_OUT_DIR}": "{BUILD_DIR}/llvm_cpp_inc/",
     "{CPP_TRANSLATOR_DIR}": "{AUTO_SYNC_SRC}/cpptranslator/",
     "{CPP_TRANSLATOR_CONFIG}": "{CPP_TRANSLATOR_DIR}/arch_config.json",
@@ -26,15 +28,21 @@
     "{HEADER_GEN_TEST_AARCH64_FILE}": "{AUTO_SYNC_SRC}/Tests/test_aarch64_header.h",
     "{HEADER_GEN_TEST_ARM64_FILE}": "{AUTO_SYNC_SRC}/Tests/test_arm64_header.h",
     "{HEADER_GEN_TEST_ARM64_OUT_FILE}": "{AUTO_SYNC_SRC}/Tests/test_arm64_header.h.out",
+    "{HEADER_GEN_TEST_SYSTEMZ_FILE}": "{AUTO_SYNC_SRC}/Tests/test_systemz_header.h",
+    "{HEADER_GEN_TEST_SYSZ_FILE}": "{AUTO_SYNC_SRC}/Tests/test_sysz_header.h",
+    "{HEADER_GEN_TEST_SYSZ_OUT_FILE}": "{AUTO_SYNC_SRC}/Tests/test_sysz_header.h.out",
     "{DIFFER_TEST_DIR}": "{CPP_TRANSLATOR_TEST_DIR}/Differ/",
     "{DIFFER_TEST_CONFIG_FILE}": "{DIFFER_TEST_DIR}/test_arch_config.json",
     "{DIFFER_TEST_OLD_SRC_DIR}": "{DIFFER_TEST_DIR}/old_src/",
     "{DIFFER_TEST_NEW_SRC_DIR}": "{DIFFER_TEST_DIR}/new_src/",
     "{DIFFER_TEST_PERSISTENCE_FILE}": "{DIFFER_TEST_DIR}/test_saved_patches.json",
     "{AUTO_SYNC_TEST_DIR}": "{AUTO_SYNC_SRC}/Tests/",
+    "{MCUPDATER_CONFIG_FILE}": "{AUTO_SYNC_SRC}/mcupdater.json",
     "{MCUPDATER_TEST_DIR}": "{AUTO_SYNC_TEST_DIR}/MCUpdaterTests/",
+    "{MCUPDATER_TEST_DIR_EXPECTED}": "{AUTO_SYNC_TEST_DIR}/MCUpdaterTests/expected",
     "{MCUPDATER_OUT_DIR}": "{BUILD_DIR}/mc_out/",
-    "{MC_DIR}": "{CS_ROOT}/suite/MC/"
+    "{MCUPDATER_TEST_OUT_DIR}": "{MCUPDATER_TEST_DIR}/test_output/",
+    "{MC_DIR}": "{CS_ROOT}/tests/MC/"
   },
   "create_during_runtime": [
     "{BUILD_DIR}",
@@ -43,7 +51,9 @@
     "{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}",
     "{CPP_TRANSLATOR_DIFF_OUT_DIR}",
     "{HEADER_GEN_TEST_ARM64_OUT_FILE}",
-    "{MCUPDATER_OUT_DIR}"
+    "{HEADER_GEN_TEST_SYSZ_OUT_FILE}",
+    "{MCUPDATER_OUT_DIR}",
+    "{MCUPDATER_TEST_OUT_DIR}"
   ],
   "ignore_missing": [
     "{DIFFER_TEST_PERSISTENCE_FILE}"

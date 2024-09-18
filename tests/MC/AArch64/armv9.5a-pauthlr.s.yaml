@@ -1,0 +1,204 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x1f, 0x20, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "nop"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xa3, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "paciasppc"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xa7, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacibsppc"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x83, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacnbiasppc"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x87, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacnbibsppc"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x00, 0xa0, 0xf3 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "autibsppc #0"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0xbf, 0xf3 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "autibsppc #-262140"
+    skip: true
+    skip_reason: "Capstone does not handle expressions."
+
+  -
+    input:
+      bytes: [ 0x1e, 0x90, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "autiasppc x0"
+
+  -
+    input:
+      bytes: [ 0x3e, 0x94, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "autibsppc x1"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x93, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "autiasppc xzr"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x97, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "autibsppc xzr"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x8b, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacia171615"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x8f, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacib171615"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xbb, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "autia171615"
+
+  -
+    input:
+      bytes: [ 0xfe, 0xbf, 0xc1, 0xda ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "autib171615"
+
+  -
+    input:
+      bytes: [ 0x1f, 0x00, 0x00, 0x55 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "retaasppc #0"
+
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0x1f, 0x55 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "retaasppc #-262140"
+    skip: true
+    skip_reason: "Capstone does not handle expressions."
+
+  -
+    input:
+      bytes: [ 0xe2, 0x0b, 0x5f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "retaasppc x2"
+
+  -
+    input:
+      bytes: [ 0xe3, 0x0f, 0x5f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "retabsppc x3"
+
+  -
+    input:
+      bytes: [ 0xff, 0x24, 0x03, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "pauth-lr" ]
+    expected:
+      insns:
+        -
+          asm_text: "pacm"
