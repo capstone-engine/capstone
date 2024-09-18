@@ -347,7 +347,6 @@ static void usage(char *prog)
 	printf("        -a Print Capstone register alias (if any). Otherwise LLVM register names are emitted.\n");
 	printf("        -s decode in SKIPDATA mode\n");
 	printf("        -u show immediates as unsigned\n");
-	printf("        -f Dev fuzzing: Disassembles <assembly-hexstring> to 0xffffffff.\n\n");
 	printf("        -v show version & Capstone core build info\n\n");
 }
 
@@ -439,53 +438,6 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 	printf("\n");
 }
 
-static uint32_t read_le(uint8_t *buf, size_t size) {
-	uint32_t res = 0;
-	for (size_t i = 0, j = size - 1; i < size; ++i, --j) {
-		res |= buf[i] << j * 8;
-	}
-	return res;
-}
-
-static void to_buf(uint32_t num, uint8_t *buf) {
-	for (size_t i = 0, j = 3; i < 4; ++i, --j) {
-		buf[i] = (num >> j) & 0xff;
-	}
-}
-
-static void run_dev_fuzz(csh handle, uint8_t *bytes, uint32_t size) {
-	uint8_t buf[4] = {0};
-	uint32_t bytes_as_num = read_le(bytes, size);
-	uint32_t address = 0xffffffff;
-
-	printf("Run dev fuzz\n");
-	printf("Start: 0x%" PRIx32 "\n", bytes_as_num);
-	printf("End: 0xffffffff\n"
-	       "Address: 0x%" PRIx32 "\n", address);
-
-	cs_insn *insn;
-	while (true) {
-		printf("\rProgress: 0x%08x\t\t", bytes_as_num);
-		fflush(stdout);
-		cs_disasm(handle, buf, 4, address, 0, &insn);
-		if (insn && insn->detail)
-			free(insn->detail);
-		free(insn);
-		bytes_as_num++;
-		to_buf(bytes_as_num, buf);
-		if (bytes_as_num == 0xffffffff) {
-			printf("\rProgress: 0x%08x\t\t", bytes_as_num);
-			fflush(stdout);
-			cs_disasm(handle, (uint8_t*)&buf, 4, address, 0, &insn);
-			if (insn && insn->detail)
-				free(insn->detail);
-			free(insn);
-			printf("\n");
-			return;
-		}
-	}
-}
-
 static cs_mode find_additional_modes(const char *input, cs_arch arch) {
 	if (!input) {
 		return 0;
@@ -541,7 +493,6 @@ int main(int argc, char **argv)
 	bool skipdata = false;
 	bool custom_reg_alias = false;
 	bool set_real_detail = false;
-	bool dev_fuzz = false;
 	int args_left;
 
 	while ((c = getopt (argc, argv, "rasudhvf")) != -1) {
@@ -659,9 +610,6 @@ int main(int argc, char **argv)
 
 				printf("\n");
 				return 0;
-			case 'f':
-				dev_fuzz = true;
-				break;
 			case 'h':
 				usage(argv[0]);
 				return 0;
@@ -745,13 +693,7 @@ int main(int argc, char **argv)
 	}
 
 	if (set_real_detail) {
-		cs_option(handle, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL);
-	}
-
-	if (dev_fuzz) {
-		run_dev_fuzz(handle, assembly, size);
-		cs_close(&handle);
-		return 0;
+		cs_option(handle, CS_OPT_DETAIL, (CS_OPT_DETAIL_REAL | CS_OPT_ON));
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);

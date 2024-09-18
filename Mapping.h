@@ -209,6 +209,22 @@ DEFINE_get_arch_detail(mips, Mips);
 DEFINE_get_arch_detail(riscv, RISCV);
 DEFINE_get_arch_detail(systemz, SystemZ);
 
+#define DEFINE_check_safe_inc(Arch, ARCH) \
+	static inline void Arch##_check_safe_inc() { \
+		CS_ASSERT(Arch##_get_detail(MI)->op_count + 1 < NUM_##ARCH##_OPS); \
+	}
+
+DEFINE_check_safe_inc(ARM, ARM);
+DEFINE_check_safe_inc(PPC, PPC);
+DEFINE_check_safe_inc(TriCore, TRICORE);
+DEFINE_check_safe_inc(AArch64, AARCH64);
+DEFINE_check_safe_inc(Alpha, ALPHA);
+DEFINE_check_safe_inc(HPPA, HPPA);
+DEFINE_check_safe_inc(LoongArch, LOONGARCH);
+DEFINE_check_safe_inc(RISCV, RISCV);
+DEFINE_check_safe_inc(SystemZ, SYSTEMZ);
+DEFINE_check_safe_inc(Mips, MIPS);
+
 static inline bool detail_is_set(const MCInst *MI)
 {
 	assert(MI && MI->flat_insn);

@@ -61,17 +61,18 @@ char *test_input_stringify(const TestInput *test_input, const char *postfix)
 	char *byte_seq =
 		byte_seq_to_str(test_input->bytes, test_input->bytes_count);
 	if (!msg) {
+		cs_mem_free(byte_seq);
 		return NULL;
 	}
 	char opt_seq[128] = { 0 };
-	append_to_str(opt_seq, sizeof(opt_seq), "[");
+	str_append_no_realloc(opt_seq, sizeof(opt_seq), "[");
 	for (size_t i = 0; i < test_input->options_count; ++i) {
-		append_to_str(opt_seq, sizeof(opt_seq), test_input->options[i]);
+		str_append_no_realloc(opt_seq, sizeof(opt_seq), test_input->options[i]);
 		if (i < test_input->options_count - 1) {
-			append_to_str(opt_seq, sizeof(opt_seq), ", ");
+			str_append_no_realloc(opt_seq, sizeof(opt_seq), ", ");
 		}
 	}
-	append_to_str(opt_seq, sizeof(opt_seq), "]");
+	str_append_no_realloc(opt_seq, sizeof(opt_seq), "]");
 	cs_snprintf(msg, msg_len,
 		    "%sTestInput { arch: %s, options: %s, addr: 0x%" PRIx64
 		    ", bytes: %s }",
@@ -210,12 +211,12 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 		// Either all in op_str or split in mnemonic and op_str
 		char asm_text[256] = { 0 };
 		if (insns[i].mnemonic[0] != '\0') {
-			append_to_str(asm_text, sizeof(asm_text),
+			str_append_no_realloc(asm_text, sizeof(asm_text),
 				      insns[i].mnemonic);
-			append_to_str(asm_text, sizeof(asm_text), " ");
+			str_append_no_realloc(asm_text, sizeof(asm_text), " ");
 		}
 		if (insns[i].op_str[0] != '\0') {
-			append_to_str(asm_text, sizeof(asm_text),
+			str_append_no_realloc(asm_text, sizeof(asm_text),
 				      insns[i].op_str);
 		}
 		if (!compare_asm_text(asm_text, expec_data->asm_text,

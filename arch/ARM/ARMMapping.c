@@ -935,6 +935,7 @@ static void ARM_set_mem_access(MCInst *MI, bool status)
 #endif
 	} else {
 		// done, select the next operand slot
+		ARM_check_safe_inc();
 		ARM_inc_op_count(MI);
 	}
 }
@@ -1160,6 +1161,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			unsigned Reg =
 				MCOperand_getReg(MCInst_getOperand(MI, i));
 
+			ARM_check_safe_inc();
 			ARM_get_detail_op(MI, 0)->type = ARM_OP_REG;
 			ARM_get_detail_op(MI, 0)->reg = Reg;
 			ARM_get_detail_op(MI, 0)->access = access;
@@ -1173,7 +1175,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		unsigned CondBit0 = Firstcond & 1;
 		unsigned NumTZ = CountTrailingZeros_32(Mask);
 		unsigned Pos, e;
-		ARM_PredBlockMask PredMask = 0;
+		ARM_PredBlockMask PredMask = ARM_PredBlockMaskInvalid;
 
 		// Check the documentation of ARM_PredBlockMask how the bits are set.
 		for (Pos = 3, e = NumTZ; Pos > e; --Pos) {
@@ -1192,7 +1194,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_VPTMask: {
 		unsigned Mask = MCInst_getOpVal(MI, OpNum);
 		unsigned NumTZ = CountTrailingZeros_32(Mask);
-		ARM_PredBlockMask PredMask = 0;
+		ARM_PredBlockMask PredMask = ARM_PredBlockMaskInvalid;
 
 		// Check the documentation of ARM_PredBlockMask how the bits are set.
 		for (unsigned Pos = 3, e = NumTZ; Pos > e; --Pos) {
@@ -1661,6 +1663,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		int32_t OffImm = MCInst_getOpVal(MI, OpNum);
 		if (OffImm == INT32_MIN)
 			OffImm = 0;
+		ARM_check_safe_inc();
 		ARM_get_detail_op(MI, 0)->type = ARM_OP_MEM;
 		ARM_get_detail_op(MI, 0)->mem.base = ARM_REG_PC;
 		ARM_get_detail_op(MI, 0)->mem.index = ARM_REG_INVALID;
@@ -1683,6 +1686,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	}
 	case ARM_OP_GROUP_SetendOperand: {
 		bool be = MCInst_getOpVal(MI, OpNum) != 0;
+		ARM_check_safe_inc();
 		if (be) {
 			ARM_get_detail_op(MI, 0)->type = ARM_OP_SETEND;
 			ARM_get_detail_op(MI, 0)->setend = ARM_SETEND_BE;
@@ -1793,6 +1797,7 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 		if (AlwaysPrintImm0)
 			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
 
+		ARM_check_safe_inc();
 		cs_arm_op *Op = ARM_get_detail_op(MI, 0);
 		Op->type = ARM_OP_MEM;
 		Op->mem.base = MCInst_getOpVal(MI, OpNum);
@@ -1932,7 +1937,7 @@ void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
 	if (!detail_is_set(MI))
 		return;
 
-	assert(ARM_get_detail(MI)->op_count < MAX_ARM_OPS);
+	ARM_check_safe_inc();
 
 	cs_arm_op op;
 	ARM_setup_op(&op);
@@ -1942,7 +1947,6 @@ void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
 
 	cs_arm_op *ops = ARM_get_detail(MI)->operands;
 	int i = ARM_get_detail(MI)->op_count;
-	assert(i < MAX_ARM_OPS);
 	for (; i > 0 && i > index; --i) {
 		ops[i] = ops[i - 1];
 	}
@@ -1957,8 +1961,7 @@ void ARM_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 {
 	if (!detail_is_set(MI))
 		return;
-
-	assert(ARM_get_detail(MI)->op_count < MAX_ARM_OPS);
+	ARM_check_safe_inc();
 
 	cs_arm_op op;
 	ARM_setup_op(&op);
@@ -1968,7 +1971,6 @@ void ARM_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 
 	cs_arm_op *ops = ARM_get_detail(MI)->operands;
 	int i = ARM_get_detail(MI)->op_count;
-	assert(i < MAX_ARM_OPS);
 	for (; i > 0 && i > index; --i) {
 		ops[i] = ops[i - 1];
 	}
@@ -1982,6 +1984,7 @@ void ARM_set_detail_op_reg(MCInst *MI, unsigned OpNum, arm_reg Reg)
 {
 	if (!detail_is_set(MI))
 		return;
+	ARM_check_safe_inc();
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
@@ -1998,6 +2001,7 @@ void ARM_set_detail_op_imm(MCInst *MI, unsigned OpNum, arm_op_type ImmType,
 {
 	if (!detail_is_set(MI))
 		return;
+	ARM_check_safe_inc();
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
 	assert(ImmType == ARM_OP_IMM || ImmType == ARM_OP_PIMM ||
@@ -2107,12 +2111,14 @@ void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
 {
 	if (!detail_is_set(MI))
 		return;
+	ARM_check_safe_inc();
+
 	ARM_get_detail_op(MI, 0)->type = type;
 	switch (type) {
 	default:
 		assert(0 && "Unknown system operand type.");
 	case ARM_OP_SYSREG:
-		ARM_get_detail_op(MI, 0)->sysop.reg.mclasssysreg = Val;
+		ARM_get_detail_op(MI, 0)->sysop.reg.mclasssysreg = Val; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
 		break;
 	case ARM_OP_BANKEDREG:
 		ARM_get_detail_op(MI, 0)->sysop.reg.bankedreg = Val;
@@ -2121,7 +2127,7 @@ void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
 	case ARM_OP_CPSR:
 		ARM_get_detail_op(MI, 0)->reg =
 			type == ARM_OP_SPSR ? ARM_REG_SPSR : ARM_REG_CPSR;
-		ARM_get_detail_op(MI, 0)->sysop.psr_bits = Val;
+		ARM_get_detail_op(MI, 0)->sysop.psr_bits = Val; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
 		break;
 	}
 	ARM_get_detail_op(MI, 0)->sysop.sysm = Sysm;
@@ -2136,6 +2142,8 @@ void ARM_set_detail_op_float(MCInst *MI, unsigned OpNum, uint64_t Imm)
 {
 	if (!detail_is_set(MI))
 		return;
+	ARM_check_safe_inc();
+
 	ARM_get_detail_op(MI, 0)->type = ARM_OP_FP;
 	ARM_get_detail_op(MI, 0)->fp = ARM_AM_getFPImmFloat(Imm);
 	ARM_inc_op_count(MI);

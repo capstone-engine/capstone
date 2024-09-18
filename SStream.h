@@ -40,6 +40,16 @@ do { \
 
 void SStream_Init(SStream *ss);
 
+const char *SStream_replc(const SStream *ss, char elem, char repl);
+
+void SStream_replc_str(SStream *ss, char chr, const char *rstr);
+
+const char *SStream_rbuf(const SStream *ss);
+
+void SStream_extract_mnem_opstr(const SStream *ss, char *mnem_buf, size_t mnem_buf_size, char *op_str_buf, size_t op_str_buf_size);
+
+void SStream_trimls(SStream *ss);
+
 void SStream_Flush(SStream *ss, FILE *file);
 
 void SStream_Open(SStream *ss);

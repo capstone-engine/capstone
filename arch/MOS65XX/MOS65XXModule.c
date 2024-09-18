@@ -55,7 +55,7 @@ cs_err MOS65XX_option(cs_struct *handle, cs_opt_type type, size_t value)
 			info->long_m = value & CS_MODE_MOS65XX_65816_LONG_M ? 1 : 0;
 			info->long_x = value & CS_MODE_MOS65XX_65816_LONG_X ? 1 : 0;
 
-			handle->mode = (cs_mode)value;
+			handle->mode = (cs_mode)value; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
 			break;
 		case CS_OPT_SYNTAX:
 			switch(value) {

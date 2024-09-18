@@ -277,8 +277,8 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 		case TRICORE_JA_b:
 		case TRICORE_JLA_b:
 			// = {disp24[23:20], 7’b0000000, disp24[19:0], 1’b0};
-			res = ((wrapping_u32(disp) & 0xf00000) << 28) |
-			      ((wrapping_u32(disp) & 0xfffff) << 1);
+			res = ((wrapping_u32(disp) & 0xf00000ULL) << 28) |
+			      ((wrapping_u32(disp) & 0xfffffULL) << 1);
 			break;
 		case TRICORE_J_b:
 		case TRICORE_JL_b:
@@ -346,7 +346,7 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O)
 		int64_t res = 0;
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_CALL_sb:
-			disp = DISP1(8);
+			res = DISP1(8);
 			break;
 		case TRICORE_J_sb:
 		case TRICORE_JNZ_sb:

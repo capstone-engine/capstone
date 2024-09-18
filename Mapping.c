@@ -150,7 +150,10 @@ void map_implicit_reads(MCInst *MI, const insn_map *imap)
 			return;
 		}
 		detail->regs_read[detail->regs_read_count++] = reg;
-		reg = imap[Opcode].regs_use[++i];
+		if (i + 1 < MAX_IMPL_R_REGS) {
+			// Select next one
+			reg = imap[Opcode].regs_use[++i];
+		}
 	}
 #endif // CAPSTONE_DIET
 }
@@ -175,7 +178,10 @@ void map_implicit_writes(MCInst *MI, const insn_map *imap)
 			return;
 		}
 		detail->regs_write[detail->regs_write_count++] = reg;
-		reg = imap[Opcode].regs_mod[++i];
+		if (i + 1 < MAX_IMPL_W_REGS) {
+			// Select next one
+			reg = imap[Opcode].regs_mod[++i];
+		}
 	}
 #endif // CAPSTONE_DIET
 }
@@ -348,7 +354,7 @@ DEFINE_get_detail_op(systemz, SystemZ);
 /// 			So it can be toggled between disas() calls.
 bool map_use_alias_details(const MCInst *MI) {
 	assert(MI);
-	return !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
+	return (MI->csh->detail_opt & CS_OPT_ON) && !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
 }
 
 /// Sets the setDetailOps flag to @p Val.

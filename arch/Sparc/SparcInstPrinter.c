@@ -73,7 +73,7 @@ static void set_mem_access(MCInst *MI, bool status)
 	}
 }
 
-void Sparc_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
+void Sparc_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *mci)
 {
 	if (((cs_struct *)ud)->detail_opt != CS_OPT_ON)
 		return;
@@ -81,8 +81,10 @@ void Sparc_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
 	// fix up some instructions
 	if (insn->id == SPARC_INS_CASX) {
 		// first op is actually a memop, not regop
+		uint8_t base = (uint8_t)insn->detail->sparc.operands[0].reg;
+		memset(&insn->detail->sparc.operands[0], 0, sizeof(cs_sparc_op));
 		insn->detail->sparc.operands[0].type = SPARC_OP_MEM;
-		insn->detail->sparc.operands[0].mem.base = (uint8_t)insn->detail->sparc.operands[0].reg;
+		insn->detail->sparc.operands[0].mem.base = base;
 		insn->detail->sparc.operands[0].mem.disp = 0;
 	}
 }
@@ -333,7 +335,7 @@ static void printCCOperand(MCInst *MI, int opNum, SStream *O)
 	SStream_concat0(O, SPARCCondCodeToString((sparc_cc)CC));
 
 	if (MI->csh->detail_opt)
-		MI->flat_insn->detail->sparc.cc = (sparc_cc)CC;
+		MI->flat_insn->detail->sparc.cc = (sparc_cc)CC; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
 }
 
 

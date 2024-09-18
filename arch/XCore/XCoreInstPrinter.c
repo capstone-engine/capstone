@@ -16,11 +16,6 @@
 
 #ifdef CAPSTONE_HAS_XCORE
 
-#ifdef _MSC_VER
-#pragma warning(disable : 4996)			// disable MSVC's warning on strcpy()
-#pragma warning(disable : 28719)		// disable MSVC's warning on strcpy()
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,7 +31,7 @@
 
 static const char *getRegisterName(unsigned RegNo);
 
-void XCore_post_printer(csh ud, cs_insn *insn, char *insn_asm, MCInst *mci)
+void XCore_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *mci)
 {
 	/*
 	   if (((cs_struct *)ud)->detail != CS_OPT_ON)
@@ -51,7 +46,7 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 	char *p, *p2;
 	char tmp[128];
 
-	strcpy(tmp, code); // safe because code is way shorter than 128 bytes
+	strncpy(tmp, code, sizeof(tmp) - 1); // safe because code is way shorter than 128 bytes
 
 	// find the first space
 	p = strchr(tmp, ' ');
@@ -167,8 +162,10 @@ static void set_mem_access(MCInst *MI, bool status, int reg)
 		} else {
 			// the last op should be the memory base
 			MI->flat_insn->detail->xcore.op_count--;
+			uint8_t base = MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg;
+			memset(&MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count], 0, sizeof(cs_xcore_op));
 			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_MEM;
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = (uint8_t)MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg;
+			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = base;
 			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.index = XCORE_REG_INVALID;
 			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.disp = 0;
 			if (reg > 0)

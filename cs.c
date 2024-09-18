@@ -1,9 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
-#ifdef _MSC_VER
-#pragma warning(disable:4996)			// disable MSVC's warning on strcpy()
-#pragma warning(disable:28719)		// disable MSVC's warning on strcpy()
-#endif
+
+#include "SStream.h"
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <Availability.h>
 #include <libkern/libkern.h>
@@ -866,35 +864,14 @@ static int str_replace(char *result, char *target, const char *str1, char *str2)
 }
 #endif
 
-/// The asm string sometimes has a leading space or tab.
-/// Here we remove it.
-static void fixup_asm_string(char *asm_str) {
-	if (!asm_str) {
-		return;
-	}
-	int i = 0;
-	int k = 0;
-	bool text_reached = (asm_str[0] != ' ' && asm_str[0] != '\t');
-	while (asm_str[i]) {
-		if (!text_reached && (asm_str[i] == ' ' || asm_str[i] == '\t')) {
-			++i;
-			text_reached = true;
-			continue;
-		}
-		asm_str[k] = asm_str[i];
-		++k, ++i;
-	}
-	asm_str[k] = '\0';
-}
-
 // fill insn with mnemonic & operands info
-static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCInst *mci,
+static void fill_insn(struct cs_struct *handle, cs_insn *insn, SStream *OS, MCInst *mci,
 		PostPrinter_t postprinter, const uint8_t *code)
 {
 #ifndef CAPSTONE_DIET
-	char *sp, *mnem;
+	char *sp;
 #endif
-	fixup_asm_string(buffer);
+	SStream_trimls(OS);
 	uint16_t copy_size = MIN(sizeof(insn->bytes), insn->size);
 
 	// fill the instruction bytes.
@@ -909,22 +886,16 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 
 	// post printer handles some corner cases (hacky)
 	if (postprinter)
-		postprinter((csh)handle, insn, buffer, mci);
+		postprinter((csh)handle, insn, OS, mci);
 
 #ifndef CAPSTONE_DIET
-	mnem = insn->mnemonic;
-	// memset(mnem, 0, CS_MNEMONIC_SIZE);
-	for (sp = buffer; *sp; sp++) {
-		if (*sp == ' '|| *sp == '\t')
-			break;
+	memset(insn->mnemonic, '\0', sizeof(insn->mnemonic));
+	memset(insn->op_str, '\0', sizeof(insn->op_str));
+	SStream_extract_mnem_opstr(OS, insn->mnemonic, sizeof(insn->mnemonic), insn->op_str, sizeof(insn->op_str));
+	for (sp = insn->mnemonic; *sp; sp++) {
 		if (*sp == '|')	// lock|rep prefix for x86
 			*sp = ' ';
-		// copy to @mnemonic
-		*mnem = *sp;
-		mnem++;
 	}
-
-	*mnem = '\0';
 
 	// we might have customized mnemonic
 	if (handle->mnem_list) {
@@ -944,17 +915,6 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 			tmp = tmp->next;
 		}
 	}
-
-	// copy @op_str
-	if (*sp) {
-		// find the next non-space char
-		sp++;
-		for (; ((*sp == ' ') || (*sp == '\t')); sp++);
-		strncpy(insn->op_str, sp, sizeof(insn->op_str) - 1);
-		insn->op_str[sizeof(insn->op_str) - 1] = '\0';
-	} else
-		insn->op_str[0] = '\0';
-
 #endif
 }
 
@@ -1279,7 +1239,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			handle->insn_id(handle, insn_cache, mci.Opcode);
 
 			handle->printer(&mci, &ss, handle->printer_info);
-			fill_insn(handle, insn_cache, ss.buffer, &mci, handle->post_printer, buffer);
+			fill_insn(handle, insn_cache, &ss, &mci, handle->post_printer, buffer);
 
 			// adjust for pseudo opcode (X86)
 			if (handle->arch == CS_ARCH_X86 && insn_cache->id != X86_INS_VCMP)
@@ -1485,7 +1445,7 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 
 		handle->printer(&mci, &ss, handle->printer_info);
 
-		fill_insn(handle, insn, ss.buffer, &mci, handle->post_printer, *code);
+		fill_insn(handle, insn, &ss, &mci, handle->post_printer, *code);
 
 		// adjust for pseudo opcode (X86)
 		if (handle->arch == CS_ARCH_X86)

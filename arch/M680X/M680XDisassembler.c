@@ -1125,7 +1125,7 @@ static void reg_bits_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		add_insn_group(MI->flat_insn->detail, M680X_GRP_RET);
 
 	for (bit_index = 0; bit_index < 8; ++bit_index) {
-		if (reg_bits & (1 << bit_index))
+		if (reg_bits & (1 << bit_index) && reg_to_reg_ids)
 			add_reg_operand(info, reg_to_reg_ids[bit_index]);
 	}
 }
@@ -1680,7 +1680,7 @@ static void indexedS16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	uint16_t offset = 0;
 
 	read_word(info, &offset, *address);
-	address += 2;
+	*address += 2;
 
 	add_indexed_operand(info, M680X_REG_S, false, 0, M680X_OFFSET_BITS_16,
 		offset, false);
@@ -1774,7 +1774,7 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_RELATIVE;
 
-	op->rel.offset = (post_byte & 0x10) ? 0xff00 | rel : rel;
+	op->rel.offset = (post_byte & 0x10) ? (int16_t) (0xff00 | rel) : rel;
 
 	op->rel.address = *address + op->rel.offset;
 

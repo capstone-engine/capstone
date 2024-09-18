@@ -766,13 +766,13 @@ static DecodeStatus DecodeRRInstruction(MCInst *Inst, unsigned Insn,
 				status = DecodeRegisterClass(Inst, s2, &desc->OpInfo[1],
 							     Decoder);
 				break;
+			}
 			default:
 				status = DecodeRegisterClass(Inst, s1, &desc->OpInfo[1],
 							     Decoder);
 			}
-			if (status != MCDisassembler_Success)
-				return status;
-			}
+		if (status != MCDisassembler_Success)
+			return status;
 		}
 	}
 

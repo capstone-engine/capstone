@@ -401,7 +401,11 @@ unsigned int platform_len(void) {
 
 // get platform entry encoded n (first byte for input data of OSS fuzz)
 unsigned int get_platform_entry(uint8_t n) {
-	return n % platform_len();
+	unsigned len = platform_len();
+	if (len == 0) {
+		return 0;
+	}
+	return n % len;
 }
 
 // get cstoolname from encoded n (first byte for input data of OSS fuzz)

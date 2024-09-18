@@ -1736,7 +1736,8 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI,\
       NumToSkip |= (*Ptr++) << 8;\
       NumToSkip |= (*Ptr++) << 16;\
 \
-      MCInst TmpMI;\
+      MCInst TmpMI = { 0 }; \
+      MCInst_Init(&TmpMI, CS_ARCH_RISCV); \
       MCInst_setOpcode(&TmpMI, Opc);\
       bool DecodeComplete = false;\
       S = decoder(S, DecodeIdx, insn, &TmpMI, Address, DisAsm, &DecodeComplete);\

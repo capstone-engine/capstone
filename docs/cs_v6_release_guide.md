@@ -338,7 +338,7 @@ Additionally, you can now choose between the alias details and the real details.
 If you always want the real instruction detail decoded (also for alias instructions),
 you can enable the option with
 ```
-cs_option(handle, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL);
+cs_option(handle, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL | CS_OPT_ON);
 ```
 
 For the `cstool` you can enable it with the `-r` flag.

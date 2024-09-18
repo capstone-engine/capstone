@@ -240,6 +240,10 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 		printf("\timm_count: %u\n", count);
 		for (i = 1; i < count + 1; i++) {
 			int index = cs_op_index(ud, ins, X86_OP_IMM, i);
+			if (index < 0) {
+				printf("Operand was not found!\n");
+				break;
+			}
 			printf("\t\timms[%u]: 0x%" PRIx64 "\n", i, x86->operands[index].imm);
 		}
 	}

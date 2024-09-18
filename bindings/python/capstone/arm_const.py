@@ -21,6 +21,8 @@ ARMCC_UNDEF = 15
 ARMVCC_None = 0
 ARMVCC_Then = 1
 ARMVCC_Else = 2
+
+ARM_PredBlockMaskInvalid = 0
 ARM_T = 0x8
 ARM_TT = 0x4
 ARM_TE = 0xc

@@ -125,6 +125,7 @@ typedef enum VPTCodes {
 ///   Txy = xy10
 ///   Txyz = xyz1
 typedef enum PredBlockMask {
+  ARM_PredBlockMaskInvalid = 0,
   ARM_T = 0x8, // 0b1000
   ARM_TT = 0x4, // 0b0100
   ARM_TE = 0xc, // 0b1100
@@ -890,7 +891,7 @@ typedef struct cs_arm_op {
 	int8_t neon_lane;
 } cs_arm_op;
 
-#define MAX_ARM_OPS 36
+#define NUM_ARM_OPS 36
 
 /// Instruction structure
 typedef struct cs_arm {
@@ -910,7 +911,7 @@ typedef struct cs_arm {
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
 
-	cs_arm_op operands[MAX_ARM_OPS];	///< operands for this instruction.
+	cs_arm_op operands[NUM_ARM_OPS];	///< operands for this instruction.
 } cs_arm;
 
 /// ARM instruction

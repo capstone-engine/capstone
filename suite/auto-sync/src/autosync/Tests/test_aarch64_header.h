@@ -37,7 +37,7 @@ typedef enum aarch64_op_type_upper {
 	AARCH64_OP_SYSALIASIII, // Comment
 } aarch64_op_type_upper;
 
-#define MAX_AARCH64_OPS 8
+#define NUM_AARCH64_OPS 8
 
 /// Instruction structure
 typedef struct cs_aarch64 {
@@ -50,7 +50,7 @@ typedef struct cs_aarch64 {
   /// or 0 when instruction has no operand.
   uint8_t op_count;
 
-  cs_aarch64_op operands[MAX_AARCH64_OPS]; ///< operands for this instruction.
+  cs_aarch64_op operands[NUM_AARCH64_OPS]; ///< operands for this instruction.
 } cs_aarch64;
 
 #endif
