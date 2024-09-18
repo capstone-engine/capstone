@@ -595,7 +595,7 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 		const char *disp_off = NULL;
 		disp_off = strstr(OS->buffer, " za");
 		if (disp_off) {
-			aarch64_sysop sysop;
+			aarch64_sysop sysop = { 0 };
 			sysop.alias.svcr = AARCH64_SVCR_SVCRZA;
 			sysop.sub_type = AARCH64_OP_SVCR;
 			AArch64_insert_detail_op_sys(MI, -1, sysop,
@@ -604,7 +604,7 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 		}
 		disp_off = strstr(OS->buffer, " sm");
 		if (disp_off) {
-			aarch64_sysop sysop;
+			aarch64_sysop sysop = { 0 };
 			sysop.alias.svcr = AARCH64_SVCR_SVCRSM;
 			sysop.sub_type = AARCH64_OP_SVCR;
 			AArch64_insert_detail_op_sys(MI, -1, sysop,
@@ -1384,7 +1384,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	}
 	case AArch64_OP_GROUP_BarriernXSOption: {
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		const AArch64DBnXS_DBnXS *DB =
 			AArch64DBnXS_lookupDBnXSByEncoding(Val);
 		if (DB)
@@ -1398,7 +1398,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_BarrierOption: {
 		unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 		unsigned Opcode = MCInst_getOpcode(MI);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 
 		if (Opcode == AArch64_ISB) {
 			const AArch64ISB_ISB *ISB =
@@ -1434,7 +1434,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		break;
 	}
 	case AArch64_OP_GROUP_BTIHintOp: {
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		unsigned btihintop = MCInst_getOpVal(MI, OpNum) ^ 32;
 		const AArch64BTIHint_BTI *BTI =
 			AArch64BTIHint_lookupBTIByEncoding(btihintop);
@@ -1523,6 +1523,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 						  (int) (AARCH64_REG_ZAD0 + I));
 			AArch64_inc_op_count(MI);
 		}
+		AArch64_get_detail(MI)->is_doing_sme = false;
 		break;
 	}
 	case AArch64_OP_GROUP_MRSSystemRegister:
@@ -1541,7 +1542,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 
 		if (Reg && !isValidSysReg)
 			Reg = AArch64SysReg_lookupSysRegByName(Reg->AltName);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		// If Reg is NULL it is a generic system register.
 		if (Reg)
 			sysop.reg = Reg->SysReg;
@@ -1560,7 +1561,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned psbhintop = MCInst_getOpVal(MI, OpNum);
 		const AArch64PSBHint_PSB *PSB =
 			AArch64PSBHint_lookupPSBByEncoding(psbhintop);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		if (PSB)
 			sysop.alias = PSB->SysAlias;
 		else
@@ -1574,7 +1575,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned prfop = MCInst_getOpVal(MI, OpNum);
 		const AArch64PRFM_PRFM *PRFM =
 			AArch64PRFM_lookupPRFMByEncoding(prfop);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		if (PRFM)
 			sysop.alias = PRFM->SysAlias;
 		else
@@ -1611,7 +1612,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		unsigned svcrop = MCInst_getOpVal(MI, OpNum);
 		const AArch64SVCR_SVCR *SVCR =
 			AArch64SVCR_lookupSVCRByEncoding(svcrop);
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		if (SVCR)
 			sysop.alias = SVCR->SysAlias;
 		else
@@ -1629,7 +1630,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM, Val);
 			break;
 		}
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		sysop.alias = Pat->SysAlias;
 		sysop.sub_type = AARCH64_OP_SVEPREDPAT;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop,
@@ -1646,7 +1647,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 				Val);
 		if (!Pat)
 			break;
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		sysop.alias = Pat->SysAlias;
 		sysop.sub_type = AARCH64_OP_SVEVECLENSPECIFIER;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop,
@@ -1667,7 +1668,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_SystemPStateField: {
 		unsigned Val = MCInst_getOpVal(MI, OpNum);
 
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		const AArch64PState_PStateImm0_15 *PStateImm15 =
 			AArch64PState_lookupPStateImm0_15ByEncoding(Val);
 		const AArch64PState_PStateImm0_1 *PStateImm1 =
@@ -1881,7 +1882,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 	case AArch64_OP_GROUP_PrefetchOp_1: {
 		bool IsSVEPrefetch = (bool)temp_arg_0;
 		unsigned prfop = MCInst_getOpVal(MI, (OpNum));
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		if (IsSVEPrefetch) {
 			const AArch64SVEPRFM_SVEPRFM *PRFM =
 				AArch64SVEPRFM_lookupSVEPRFMByEncoding(prfop);
@@ -2036,7 +2037,7 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 		const AArch64ExactFPImm_ExactFPImm *Imm1Desc =
 			AArch64ExactFPImm_lookupExactFPImmByEnum(ImmIs1);
 		unsigned Val = MCInst_getOpVal(MI, (OpNum));
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		sysop.imm = Val ? Imm1Desc->SysImm : Imm0Desc->SysImm;
 		sysop.sub_type = AARCH64_OP_EXACTFPIMM;
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AARCH64_OP_SYSIMM);
@@ -2474,6 +2475,8 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 {
 	if (!detail_is_set(MI))
 		return;
+	AArch64_check_safe_inc();
+
 	if (Reg == AARCH64_REG_ZA ||
 	    (Reg >= AARCH64_REG_ZAB0 && Reg < AARCH64_REG_ZT0)) {
 		// A tile register should be treated as SME operand.
@@ -2519,6 +2522,7 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 {
 	if (!detail_is_set(MI))
 		return;
+	AArch64_check_safe_inc();
 
 	if (AArch64_get_detail(MI)->is_doing_sme) {
 		assert(map_get_op_type(MI, OpNum) & CS_OP_BOUND);
@@ -2553,6 +2557,7 @@ void AArch64_set_detail_op_imm_range(MCInst *MI, unsigned OpNum,
 {
 	if (!detail_is_set(MI))
 		return;
+	AArch64_check_safe_inc();
 
 	if (AArch64_get_detail(MI)->is_doing_sme) {
 		assert(map_get_op_type(MI, OpNum) & CS_OP_BOUND);
@@ -2585,6 +2590,7 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 {
 	if (!detail_is_set(MI))
 		return;
+	AArch64_check_safe_inc();
 	assert(map_get_op_type(MI, OpNum) & CS_OP_MEM);
 
 	AArch64_set_mem_access(MI, true);
@@ -2670,6 +2676,8 @@ void AArch64_set_detail_op_float(MCInst *MI, unsigned OpNum, float Val)
 {
 	if (!detail_is_set(MI))
 		return;
+	AArch64_check_safe_inc();
+
 	AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_FP;
 	AArch64_get_detail_op(MI, 0)->fp = Val;
 	AArch64_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
@@ -2683,6 +2691,8 @@ void AArch64_set_detail_op_sys(MCInst *MI, unsigned OpNum, aarch64_sysop sys_op,
 {
 	if (!detail_is_set(MI))
 		return;
+	AArch64_check_safe_inc();
+
 	AArch64_get_detail_op(MI, 0)->type = type;
 	AArch64_get_detail_op(MI, 0)->sysop = sys_op;
 	AArch64_inc_op_count(MI);
@@ -2691,6 +2701,7 @@ void AArch64_set_detail_op_sys(MCInst *MI, unsigned OpNum, aarch64_sysop sys_op,
 void AArch64_set_detail_op_pred(MCInst *MI, unsigned OpNum) {
 	if (!detail_is_set(MI))
 		return;
+	AArch64_check_safe_inc();
 
 	if (AArch64_get_detail_op(MI, 0)->type == AARCH64_OP_INVALID) {
 		setup_pred_operand(MI);
@@ -2718,6 +2729,8 @@ void AArch64_set_detail_op_sme(MCInst *MI, unsigned OpNum,
 {
 	if (!detail_is_set(MI))
 		return;
+	AArch64_check_safe_inc();
+
 	AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_SME;
 	switch (part) {
 	default:
@@ -2794,9 +2807,9 @@ static void insert_op(MCInst *MI, unsigned index, cs_aarch64_op op)
 		return;
 	}
 
+	AArch64_check_safe_inc();
 	cs_aarch64_op *ops = AArch64_get_detail(MI)->operands;
 	int i = AArch64_get_detail(MI)->op_count;
-	assert(i < MAX_AARCH64_OPS);
 	if (index == -1) {
 		ops[i] = op;
 		AArch64_inc_op_count(MI);
@@ -2818,7 +2831,7 @@ void AArch64_insert_detail_op_float_at(MCInst *MI, unsigned index, double val,
 	if (!detail_is_set(MI))
 		return;
 
-	assert(AArch64_get_detail(MI)->op_count < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	cs_aarch64_op op;
 	AArch64_setup_op(&op);
@@ -2838,7 +2851,7 @@ void AArch64_insert_detail_op_reg_at(MCInst *MI, unsigned index,
 	if (!detail_is_set(MI))
 		return;
 
-	assert(AArch64_get_detail(MI)->op_count < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	cs_aarch64_op op;
 	AArch64_setup_op(&op);
@@ -2856,8 +2869,7 @@ void AArch64_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Imm)
 {
 	if (!detail_is_set(MI))
 		return;
-
-	assert(AArch64_get_detail(MI)->op_count < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	cs_aarch64_op op;
 	AArch64_setup_op(&op);
@@ -2873,7 +2885,7 @@ void AArch64_insert_detail_op_sys(MCInst *MI, unsigned index, aarch64_sysop sys_
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	cs_aarch64_op op;
 	AArch64_setup_op(&op);
@@ -2887,7 +2899,7 @@ void AArch64_insert_detail_op_sme(MCInst *MI, unsigned index, aarch64_op_sme sme
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(AArch64_get_detail(MI)->op_count < MAX_AARCH64_OPS);
+	AArch64_check_safe_inc();
 
 	cs_aarch64_op op;
 	AArch64_setup_op(&op);

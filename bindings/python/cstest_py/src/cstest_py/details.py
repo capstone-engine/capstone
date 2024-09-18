@@ -69,7 +69,7 @@ from capstone.mos65xx_const import MOS65XX_OP_REG, MOS65XX_OP_MEM, MOS65XX_OP_IM
 from capstone.riscv_const import RISCV_OP_MEM, RISCV_OP_IMM, RISCV_OP_REG
 from capstone.sh_const import SH_OP_REG, SH_OP_MEM, SH_OP_IMM
 from capstone.sparc_const import SPARC_OP_REG, SPARC_OP_IMM, SPARC_OP_MEM
-from capstone.sysz_const import SYSZ_OP_REG, SYSZ_OP_IMM, SYSZ_OP_MEM
+from capstone.systemz_const import SYSTEMZ_OP_REG, SYSTEMZ_OP_IMM, SYSTEMZ_OP_MEM
 from capstone.tms320c64x_const import (
     TMS320C64X_OP_REG,
     TMS320C64X_OP_REGPAIR,
@@ -245,7 +245,7 @@ def compare_details(insn: CsInsn, expected: dict) -> bool:
     elif "xcore" in expected:
         return test_expected_xcore(actual, expected["xcore"])
     elif "systemz" in expected:
-        return test_expected_sysz(actual, expected["systemz"])
+        return test_expected_SystemZ(actual, expected["systemz"])
     elif "sparc" in expected:
         return test_expected_sparc(actual, expected["sparc"])
     elif "sh" in expected:
@@ -1349,25 +1349,35 @@ def test_expected_mips(actual: CsInsn, expected: dict) -> bool:
     return True
 
 
-def test_expected_sysz(actual: CsInsn, expected: dict) -> bool:
+def test_expected_SystemZ(actual: CsInsn, expected: dict) -> bool:
     if "operands" not in expected:
         return True
     elif not compare_uint32(
         len(actual.operands), len(expected.get("operands")), "operands_count"
     ):
         return False
+    elif not compare_enum(
+        actual.format, expected.get("format"), "format"
+    ):
+        return False
 
     for aop, eop in zip(actual.operands, expected["operands"]):
         if not compare_enum(aop.type, eop.get("type"), "type"):
             return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
 
-        if aop.type == SYSZ_OP_REG:
+        if aop.type == SYSTEMZ_OP_REG:
             if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
                 return False
-        elif aop.type == SYSZ_OP_IMM:
+        elif aop.type == SYSTEMZ_OP_IMM:
             if not compare_int64(aop.imm, eop.get("imm"), "imm"):
                 return False
-        elif aop.type == SYSZ_OP_MEM:
+            if not compare_int64(aop.imm_width, eop.get("imm_width"), "imm_width"):
+                return False
+        elif aop.type == SYSTEMZ_OP_MEM:
+            if not compare_enum(aop.mem.am, eop.get("mem_am"), "mem_am"):
+                return False
             if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
                 return False
             if not compare_reg(

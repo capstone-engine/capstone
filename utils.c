@@ -82,6 +82,56 @@ bool arr_exist(uint16_t *arr, unsigned char max, unsigned int id)
 	return false;
 }
 
+/// @brief Checks if the @id is in the @table. @table has @table_size elements.
+/// @param table The table with the values to compare to.
+/// @param table_size The number elements in the table.
+/// @param id The identifier to search for in the table.
+/// @return True if @id is part of the @table, false otherwise.
+bool arr_exist_int(int *table, size_t table_size, int id)
+{
+	int i;
+	for (i = 0; i < table_size; i++) {
+		if (table[i] == id)
+			return true;
+	}
+
+	return false;
+}
+
+/// Reads 8 bytes in the endian order specified in MI->cs->mode.
+uint64_t readBytes64(MCInst *MI, const uint8_t *Bytes)
+{
+	assert(MI && Bytes);
+	uint64_t Insn;
+	if (MODE_IS_BIG_ENDIAN(MI->csh->mode))
+		Insn = ((uint64_t)Bytes[7] << 0) | ((uint64_t)Bytes[6] << 8) |
+		       ((uint64_t)Bytes[5] << 16) | ((uint64_t)Bytes[4] << 24) |
+					 ((uint64_t)Bytes[3] << 32) | ((uint64_t)Bytes[2] << 40) |
+					 ((uint64_t)Bytes[1] << 48) | ((uint64_t)Bytes[0] << 56);
+	else
+		Insn = ((uint64_t)Bytes[7] << 56) | ((uint64_t)Bytes[6] << 48) |
+		       ((uint64_t)Bytes[5] << 40) | ((uint64_t)Bytes[4] << 32) |
+					 ((uint64_t)Bytes[3] << 24) | ((uint64_t)Bytes[2] << 16) |
+					 ((uint64_t)Bytes[1] << 8) | ((uint64_t)Bytes[0] << 0);
+	return Insn;
+}
+
+/// Reads 6 bytes in the endian order specified in MI->cs->mode.
+uint64_t readBytes48(MCInst *MI, const uint8_t *Bytes)
+{
+	assert(MI && Bytes);
+	uint64_t Insn;
+	if (MODE_IS_BIG_ENDIAN(MI->csh->mode))
+		Insn = ((uint64_t)Bytes[5] << 0) | ((uint64_t)Bytes[4] << 8) |
+		       ((uint64_t)Bytes[3] << 16) | ((uint64_t)Bytes[2] << 24) |
+					 ((uint64_t)Bytes[1] << 32) | ((uint64_t)Bytes[0] << 40);
+	else
+		Insn = ((uint64_t)Bytes[5] << 40) | ((uint64_t)Bytes[4] << 32) |
+					 ((uint64_t)Bytes[3] << 24) | ((uint64_t)Bytes[2] << 16) |
+					 ((uint64_t)Bytes[1] << 8) | ((uint64_t)Bytes[0] << 0);
+	return Insn;
+}
+
 /// Reads 4 bytes in the endian order specified in MI->cs->mode.
 uint32_t readBytes32(MCInst *MI, const uint8_t *Bytes)
 {
@@ -131,36 +181,37 @@ void append_to_str_lower(char *str, size_t str_size, const char *src) {
 	str[i] = '\0';
 }
 
-/// @brief Appends the string @p src to the string @p str. @p src is put to lower case.
-/// @param str The string to append to.
-/// @param str_buf_size Size of buffer @p str.
+/// @brief Appends the string @p src to the string @p dest.
+/// @p dest is can be a stack allocated buffer.
+///
+/// @param dest The string to append to.
+/// @param dest_buf_size Size of buffer @p str.
 /// @param src The string to append.
 /// Does nothing if any of the given strings is NULL.
-void append_to_str(char *str, size_t str_buf_size, const char *src) {
-	if (!str || !src) {
+void str_append_no_realloc(char *dest, size_t dest_buf_size, const char *src) {
+	if (!dest || !src) {
 		return;
 	}
-	if (strlen(str) + strlen(src) + 1 > str_buf_size) {
-		assert("str_size does not match actual string length." && 0);
+	if (strlen(dest) + strlen(src) + 1 > dest_buf_size) {
+		printf("str_size does not match actual string length.\n");
 		return;
 	}
-	strncat(str, src, str_buf_size);
+	strncat(dest, src, dest_buf_size - strlen(dest));
 }
 
 
 /// Allocates memory of strlen(str_a) + strlen(str_b) + 1 chars
 /// and copies all strings into it as str_a + str_b
 /// str_a is passed to realloc and should not be used afterwards.
-/// Returns the result.
+/// Returns the concatenated string.
 /// Returns NULL in case of failure.
 char *str_append(char *str_a, const char *str_b) {
 	if (!str_a || !str_b) {
 		return NULL;
 	}
-	assert(str_a && str_b);
 	size_t asize = strlen(str_a) + strlen(str_b) + 1;
 	str_a = realloc(str_a, asize);
-	strncat(str_a, str_b, asize);
+	strncat(str_a, str_b, asize - strlen(str_a));
 	return str_a;
 }
 

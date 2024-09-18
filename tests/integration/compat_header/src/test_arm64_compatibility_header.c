@@ -7,8 +7,9 @@
 #define CAPSTONE_AARCH64_COMPAT_HEADER
 #include <capstone/capstone.h>
 
-int main(void)
+int arm64(void)
 {
+	printf("\nARM64\n\n");
 	csh handle;
 
 	if (cs_open(CS_ARCH_ARM64, CS_MODE_BIG_ENDIAN, &handle) != CS_ERR_OK) {
@@ -19,7 +20,7 @@ int main(void)
 	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
 	cs_insn *insn;
-	uint8_t bytes[] = "0x1a,0x48,0xa0,0xf8";
+	uint8_t bytes[] = { 0x30, 0x78, 0x31, 0x61 };
 	size_t count =
 		cs_disasm(handle, bytes, sizeof(bytes), 0x1000, 1, &insn);
 	if (count != 1) {
@@ -65,3 +66,5 @@ err:
 	cs_close(&handle);
 	return -1;
 }
+
+#undef CAPSTONE_AARCH64_COMPAT_HEADER

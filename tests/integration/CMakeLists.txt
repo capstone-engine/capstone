@@ -15,3 +15,20 @@ if (CAPSTONE_BUILD_LEGACY_TESTS)
       add_test(NAME "legacy_${TBIN}" COMMAND ${TBIN})
   endforeach()
 endif()
+
+# Compatibility header test
+set(COMPAT_C_TEST_DIR ${TESTS_INTEGRATION_DIR}/compat_header)
+set(COMPAT_C_TEST_SRC_DIR ${COMPAT_C_TEST_DIR}/src)
+set(COMPAT_C_TEST_INC_DIR ${COMPAT_C_TEST_DIR}/include)
+
+include_directories(${COMPAT_C_TEST_INC_DIR} ${PROJECT_SOURCE_DIR}/include)
+
+file(GLOB COMPAT_C_SRC ${COMPAT_C_TEST_SRC_DIR}/*.c)
+add_executable(compat_header_build_test ${COMPAT_C_SRC})
+add_dependencies(compat_header_build_test capstone)
+target_link_libraries(compat_header_build_test PUBLIC capstone)
+
+add_test(NAME integration_compat_headers
+  COMMAND compat_header_build_test
+  WORKING_DIRECTORY ${COMPAT_C_TEST_DIR}
+)

@@ -401,6 +401,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			return;
 		unsigned Val = MCInst_getOpVal(MI, OpNum) << 2;
 		int32_t Imm = SignExtend32(Val, 32);
+		PPC_check_safe_inc();
 		PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
 		PPC_get_detail_op(MI, 0)->imm = Imm;
 		PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
@@ -424,6 +425,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		uint64_t Address = MI->address + Imm;
 		if (IS_32BIT(MI->csh->mode))
 			Address &= 0xffffffff;
+		PPC_check_safe_inc();
 		PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
 		PPC_get_detail_op(MI, 0)->imm = Address;
 		PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
@@ -566,6 +568,7 @@ void PPC_set_detail_op_reg(MCInst *MI, unsigned OpNum, ppc_reg Reg)
 {
 	if (!detail_is_set(MI))
 		return;
+	PPC_check_safe_inc();
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
@@ -581,6 +584,7 @@ void PPC_set_detail_op_imm(MCInst *MI, unsigned OpNum, int64_t Imm)
 {
 	if (!detail_is_set(MI))
 		return;
+	PPC_check_safe_inc();
 	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
 
@@ -594,6 +598,7 @@ void PPC_set_mem_access(MCInst *MI, bool status)
 {
 	if (!detail_is_set(MI))
 		return;
+	PPC_check_safe_inc();
 	if ((!status && !doing_mem(MI)) || (status && doing_mem(MI)))
 		return; // Nothing to do
 
@@ -629,7 +634,7 @@ void PPC_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 
-	assert(PPC_get_detail(MI)->op_count < PPC_NUM_OPS);
+	PPC_check_safe_inc();
 
 	cs_ppc_op op;
 	PPC_setup_op(&op);

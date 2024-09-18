@@ -2852,7 +2852,7 @@ typedef struct {
 	cs_ac_type mem_acc; ///< CGI memory access according to mayLoad and mayStore
 } aarch64_suppl_info;
 
-#define MAX_AARCH64_OPS 8
+#define NUM_AARCH64_OPS 16
 
 /// Instruction structure
 typedef struct cs_aarch64 {
@@ -2865,7 +2865,7 @@ typedef struct cs_aarch64 {
   /// or 0 when instruction has no operand.
   uint8_t op_count;
 
-  cs_aarch64_op operands[MAX_AARCH64_OPS]; ///< operands for this instruction.
+  cs_aarch64_op operands[NUM_AARCH64_OPS]; ///< operands for this instruction.
 } cs_aarch64;
 
 /// AArch64 instruction

@@ -21,7 +21,7 @@ template = {
             'x86.h': 'X86',
             'ppc.h': 'Ppc',
             'sparc.h': 'Sparc',
-            'systemz.h': 'Sysz',
+            'systemz.h': 'Systemz',
             'xcore.h': 'Xcore',
             'tms320c64x.h': 'TMS320C64x',
             'm680x.h': 'M680x',
@@ -31,8 +31,10 @@ template = {
             'comment_close': '',
         },
     'python': {
-            'header': "from . import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OP_FP, CS_OP_PRED, CS_OP_SPECIAL, CS_OP_MEM, CS_OP_MEM_REG, CS_OP_MEM_IMM, UINT16_MAX\n"
-                      "# For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_const.py]\n",
+            'header': (
+                "from . import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OP_FP, CS_OP_PRED, CS_OP_SPECIAL, CS_OP_MEM, CS_OP_MEM_REG, CS_OP_MEM_IMM, UINT16_MAX, UINT8_MAX\n"
+                "# For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_const.py]\n"
+                ),
             'footer': "",
             'line_format': '%s = %s\n',
             'out_file': './python/capstone/%s_const.py',
@@ -44,7 +46,7 @@ template = {
             'x86.h': 'x86',
             'ppc.h': 'ppc',
             'sparc.h': 'sparc',
-            'systemz.h': 'sysz',
+            'systemz.h': 'systemz',
             'xcore.h': 'xcore',
             'tms320c64x.h': 'tms320c64x',
             'm680x.h': 'm680x',
@@ -73,7 +75,7 @@ template = {
             'x86.h': 'x86',
             'ppc.h': 'ppc',
             'sparc.h': 'sparc',
-            'systemz.h': 'sysz',
+            'systemz.h': 'systemz',
             'xcore.h': 'xcore',
             'tms320c64x.h': 'tms320c64x',
             'm680x.h': 'm680x',
@@ -175,7 +177,7 @@ def gen(lang):
 
             if line.startswith('#define '):
                 line = line[8:]     #cut off define
-                xline = re.split('\s+', line, 1)     #split to at most 2 express
+                xline = re.split(r'\s+', line, 1)     #split to at most 2 express
                 if len(xline) != 2:
                     continue
                 if '(' in xline[0] or ')' in xline[0]:      #does it look like a function
@@ -201,7 +203,7 @@ def gen(lang):
                 # hacky: remove type cast (uint64_t)
                 t = t.replace('(uint64_t)', '')
                 t = re.sub(r'\((\d+)ULL << (\d+)\)', r'\1 << \2', t)    # (1ULL<<1) to 1 << 1
-                f = re.split('\s+', t)
+                f = re.split(r'\s+', t)
 
                 if not has_special_arch_prefix(f[0]):
                     continue

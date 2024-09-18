@@ -82,11 +82,12 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 				printf("\t\toperands[%u].type: MASK = %" PRIu8 "\n", i, op->sysop.msr_mask);
 				break;
 			case ARM_OP_BANKEDREG:
-				// FIXME: Printing the name is currenliy not supported if the encodings overlap
+				// FIXME: Printing the name is currently not supported if the encodings overlap
 				// with system registers.
 				printf("\t\toperands[%u].type: BANKEDREG = %" PRIu32 "\n", i, (uint32_t) op->sysop.reg.bankedreg);
 				if (op->sysop.msr_mask != UINT8_MAX)
 					printf("\t\toperands[%u].type: MASK = %" PRIu8 "\n", i, op->sysop.msr_mask);
+				break;
 			case ARM_OP_SPSR:
 			case ARM_OP_CPSR: {
 				const char type = op->type == ARM_OP_SPSR ? 'S' : 'C';

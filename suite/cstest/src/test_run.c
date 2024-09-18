@@ -128,6 +128,7 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 				}
 				opt_arr[opt_idx++] = test_option_map[k].opt;
 				opt_found = true;
+				break;
 			}
 		}
 		if (!opt_found) {
@@ -174,13 +175,7 @@ static bool open_cs_handle(UnitTestState *ustate)
 	} else {
 		ustate->arch_bits = 32;
 	}
-	if (err != CS_ERR_OK) {
-		goto option_error;
-	}
 
-	if (err != CS_ERR_OK) {
-		goto option_error;
-	}
 	for (size_t i = 0; i < options_set; ++i) {
 		err = cs_option(ustate->handle, options[i].type,
 				options[i].val);
@@ -245,6 +240,7 @@ static void cstest_unit_test(void **state)
 				       tcase->input->address, 0, &insns);
 	test_expected_compare(&ustate->handle, tcase->expected, insns,
 			      insns_count, ustate->arch_bits);
+	ustate->decoded_insns += insns_count;
 	cs_free(insns, insns_count);
 }
 
@@ -293,10 +289,19 @@ static void eval_test_cases(TestFile **test_files, TestRunStats *stats)
 			utest_table[tci].test_func = cstest_unit_test;
 		}
 	}
+	assert(tci == stats->tc_total);
 	// Use private function here, because the API takes only constant tables.
 	int failed_tests = _cmocka_run_group_tests(
 		"All test cases", utest_table, stats->tc_total, NULL, NULL);
+	assert(failed_tests >= 0 && "Faulty return value");
+
 	for (size_t i = 0; i < stats->tc_total; ++i) {
+		UnitTestState *ustate = utest_table[i].initial_state;
+		if (!ustate) {
+			// Skipped test case
+			continue;
+		}
+		stats->decoded_insns += ustate->decoded_insns;
 		cs_mem_free((char *)utest_table[i].name);
 		cs_mem_free(utest_table[i].initial_state);
 	}

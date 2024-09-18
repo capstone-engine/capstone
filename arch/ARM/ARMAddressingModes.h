@@ -28,6 +28,7 @@
 #define CS_ARM_ADDRESSINGMODES_H
 
 #include <capstone/platform.h>
+#include "../../cs_priv.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -120,7 +121,11 @@ static inline const char *ARM_AM_getAMSubModeStr(ARM_AM_SubMode Mode)
 ///
 static inline unsigned ARM_AM_rotr32(unsigned Val, unsigned Amt)
 {
-	return (Val >> Amt) | (Val << ((32 - Amt) & 31));
+	CS_ASSERT(Amt >= 32);
+	if (Amt == 32) {
+		return Val;
+	}
+	return (Val >> Amt) | (Val << ((32 - Amt) & 31)); // NOLINT(clang-analyzer-core.BitwiseShift)
 }
 
 /// rotl32 - Rotate a 32-bit unsigned value left by a specified # bits.

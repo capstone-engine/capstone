@@ -8,7 +8,7 @@ extern "C" {
 #include "cs_operand.h"
 #include "platform.h"
 
-#define HPPA_MAX_OPS 5
+#define NUM_HPPA_OPS 5
 #define HPPA_STR_MODIFIER_LEN 8
 #define HPPA_MAX_MODIFIERS_LEN 5
 
@@ -492,7 +492,7 @@ typedef struct cs_hppa {
 	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_hppa_op operands[HPPA_MAX_OPS]; ///< operands for hppa instruction.
+	cs_hppa_op operands[NUM_HPPA_OPS]; ///< operands for hppa instruction.
 } cs_hppa;
 
 /// HPPA modifiers type. Can be string (most of them) or int (uid, sop)

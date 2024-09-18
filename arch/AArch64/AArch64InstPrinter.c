@@ -727,7 +727,7 @@ Search_IC: {
 	    !AArch64_testFeatureList(MI->csh->mode, IC->FeaturesRequired))
 		return false;
 	if (detail_is_set(MI)) {
-		aarch64_sysop sysop;
+		aarch64_sysop sysop = { 0 };
 		sysop.reg = IC->SysReg;
 		sysop.sub_type = AARCH64_OP_IC;
 		AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_SYSREG;
@@ -754,7 +754,7 @@ Search_IC: {
 					   MI->csh->mode, DC->FeaturesRequired))
 				return false;
 			if (detail_is_set(MI)) {
-				aarch64_sysop sysop;
+				aarch64_sysop sysop = { 0 };
 				sysop.alias = DC->SysAlias;
 				sysop.sub_type = AARCH64_OP_DC;
 				AArch64_get_detail_op(MI, 0)->type =
@@ -777,7 +777,7 @@ Search_IC: {
 				return false;
 
 			if (detail_is_set(MI)) {
-				aarch64_sysop sysop;
+				aarch64_sysop sysop = { 0 };
 				sysop.alias = AT->SysAlias;
 				sysop.sub_type = AARCH64_OP_AT;
 				AArch64_get_detail_op(MI, 0)->type =
@@ -799,7 +799,7 @@ Search_IC: {
 			return false;
 
 		if (detail_is_set(MI)) {
-			aarch64_sysop sysop;
+			aarch64_sysop sysop = { 0 };
 			sysop.reg = TLBI->SysReg;
 			sysop.sub_type = AARCH64_OP_TLBI;
 			AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_SYSREG;
@@ -868,7 +868,7 @@ bool printSyspAlias(MCInst *MI, SStream *O)
 			return false;
 
 		if (detail_is_set(MI)) {
-			aarch64_sysop sysop;
+			aarch64_sysop sysop = { 0 };
 			sysop.reg = TLBI->SysReg;
 			sysop.sub_type = AARCH64_OP_TLBI;
 			AArch64_get_detail_op(MI, 0)->type = AARCH64_OP_SYSREG;

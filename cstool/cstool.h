@@ -7,7 +7,7 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins);
 void print_insn_detail_mips(csh handle, cs_insn *ins);
 void print_insn_detail_ppc(csh handle, cs_insn *ins);
 void print_insn_detail_sparc(csh handle, cs_insn *ins);
-void print_insn_detail_sysz(csh handle, cs_insn *ins);
+void print_insn_detail_systemz(csh handle, cs_insn *ins);
 void print_insn_detail_xcore(csh handle, cs_insn *ins);
 void print_insn_detail_m68k(csh handle, cs_insn *ins);
 void print_insn_detail_tms320c64x(csh handle, cs_insn *ins);

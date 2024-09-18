@@ -78,6 +78,7 @@ from autosync.cpptranslator.patches.UseMarkup import UseMarkup
 from autosync.cpptranslator.patches.UsingDeclaration import UsingDeclaration
 from autosync.cpptranslator.TemplateCollector import TemplateCollector
 from autosync.Helper import get_path
+from autosync.cpptranslator.patches.isUInt import IsUInt
 
 
 class TestPatches(unittest.TestCase):
@@ -132,7 +133,7 @@ class TestPatches(unittest.TestCase):
     def test_assert(self):
         patch = Assert(0)
         syntax = b"assert(0 == 0)"
-        self.check_patching_result(patch, syntax, b"")
+        self.check_patching_result(patch, syntax, b"CS_ASSERT((0 == 0));")
 
     def test_bitcaststdarray(self):
         patch = BitCastStdArray(0)
@@ -308,10 +309,20 @@ public:
         syntax = b"MI.getOperand(0);"
         self.check_patching_result(patch, syntax, b"MCInst_getOperand(MI, (0))")
 
-    def test_getoperandregimm(self):
+    def test_getoperandreg(self):
         patch = GetOperandRegImm(0)
         syntax = b"OPERAND.getReg()"
         self.check_patching_result(patch, syntax, b"MCOperand_getReg(OPERAND)")
+
+    def test_getoperandimm(self):
+        patch = GetOperandRegImm(0)
+        syntax = b"OPERAND.getImm()"
+        self.check_patching_result(patch, syntax, b"MCOperand_getImm(OPERAND)")
+
+    def test_getoperandexpr(self):
+        patch = GetOperandRegImm(0)
+        syntax = b"OPERAND.getExpr()"
+        self.check_patching_result(patch, syntax, b"MCOperand_getExpr(OPERAND)")
 
     def test_getregclass(self):
         patch = GetRegClass(0)
@@ -378,10 +389,20 @@ public:
             b"MCOperandInfo_isPredicate(&OpInfo[i])",
         )
 
-    def test_isregimm(self):
+    def test_isreg(self):
         patch = IsOperandRegImm(0)
         syntax = b"OPERAND.isReg()"
         self.check_patching_result(patch, syntax, b"MCOperand_isReg(OPERAND)")
+
+    def test_isimm(self):
+        patch = IsOperandRegImm(0)
+        syntax = b"OPERAND.isImm()"
+        self.check_patching_result(patch, syntax, b"MCOperand_isImm(OPERAND)")
+
+    def test_isexpr(self):
+        patch = IsOperandRegImm(0)
+        syntax = b"OPERAND.isExpr()"
+        self.check_patching_result(patch, syntax, b"MCOperand_isExpr(OPERAND)")
 
     def test_llvmfallthrough(self):
         patch = LLVMFallThrough(0)
@@ -579,3 +600,8 @@ public:
         patch = UsingDeclaration(0)
         syntax = b"using namespace llvm;"
         self.check_patching_result(patch, syntax, b"")
+
+    def test_isuintn(self):
+        patch = IsUInt(0)
+        syntax = b"isUInt<RegUnitBits>(FirstRU);"
+        self.check_patching_result(patch, syntax, b"isUIntN(RegUnitBits, FirstRU)")

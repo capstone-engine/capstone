@@ -122,8 +122,8 @@ struct platform platforms[] = {
 		},
 		{
 				//item 17
-				CS_ARCH_SYSZ,
-				(cs_mode) 0,
+				CS_ARCH_SYSTEMZ,
+				(cs_mode) CS_MODE_BIG_ENDIAN,
 				"SystemZ",
 				"systemz"
 		},
@@ -401,7 +401,11 @@ unsigned int platform_len(void) {
 
 // get platform entry encoded n (first byte for input data of OSS fuzz)
 unsigned int get_platform_entry(uint8_t n) {
-	return n % platform_len();
+	unsigned len = platform_len();
+	if (len == 0) {
+		return 0;
+	}
+	return n % len;
 }
 
 // get cstoolname from encoded n (first byte for input data of OSS fuzz)

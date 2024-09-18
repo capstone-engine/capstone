@@ -13,7 +13,7 @@ from capstone import m68k_const
 from capstone import mips_const
 from capstone import ppc_const
 from capstone import sparc_const
-from capstone import sysz_const
+from capstone import systemz_const
 from capstone import x86_const
 from capstone import xcore_const
 from capstone import tms320c64x_const
@@ -52,7 +52,7 @@ def cs_const_getattr(identifier: str):
     attr = getattr(sparc_const, identifier, None)
     if attr is not None:
         return attr
-    attr = getattr(sysz_const, identifier, None)
+    attr = getattr(systemz_const, identifier, None)
     if attr is not None:
         return attr
     attr = getattr(x86_const, identifier, None)

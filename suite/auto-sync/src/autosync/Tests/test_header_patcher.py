@@ -15,10 +15,6 @@ class TestHeaderPatcher(unittest.TestCase):
             get_path("{HEADER_PATCHER_TEST_INC_FILE}"),
             write_file=False,
         )
-        cls.compat_gen = CompatHeaderBuilder(
-            get_path("{HEADER_GEN_TEST_AARCH64_FILE}"),
-            get_path("{HEADER_GEN_TEST_ARM64_OUT_FILE}"),
-        )
 
     def test_header_patching(self):
         self.hpatcher.patch_header()
@@ -50,9 +46,26 @@ class TestHeaderPatcher(unittest.TestCase):
             ),
         )
 
-    def test_compat_header_gen(self):
-        self.compat_gen.generate_aarch64_compat_header()
+    def test_compat_header_gen_arm64(self):
+        self.compat_gen = CompatHeaderBuilder(
+            get_path("{HEADER_GEN_TEST_AARCH64_FILE}"),
+            get_path("{HEADER_GEN_TEST_ARM64_OUT_FILE}"),
+            "aarch64",
+        )
+        self.compat_gen.generate_v5_compat_header()
         with open(get_path("{HEADER_GEN_TEST_ARM64_FILE}")) as f:
             correct = f.read()
         with open(get_path("{HEADER_GEN_TEST_ARM64_OUT_FILE}")) as f:
+            self.assertEqual(f.read(), correct)
+
+    def test_compat_header_gen_arm64(self):
+        self.compat_gen = CompatHeaderBuilder(
+            get_path("{HEADER_GEN_TEST_SYSTEMZ_FILE}"),
+            get_path("{HEADER_GEN_TEST_SYSZ_OUT_FILE}"),
+            "systemz",
+        )
+        self.compat_gen.generate_v5_compat_header()
+        with open(get_path("{HEADER_GEN_TEST_SYSZ_FILE}")) as f:
+            correct = f.read()
+        with open(get_path("{HEADER_GEN_TEST_SYSZ_OUT_FILE}")) as f:
             self.assertEqual(f.read(), correct)

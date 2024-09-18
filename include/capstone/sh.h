@@ -182,15 +182,8 @@ typedef struct sh_op_mem {
 	uint32_t disp;           /// <= displacement
 } sh_op_mem;
 
-// SH-DSP instcutions define
-typedef enum sh_dsp_insn_type {
-	SH_INS_DSP_INVALID,
-	SH_INS_DSP_DOUBLE,
-	SH_INS_DSP_SINGLE,
-	SH_INS_DSP_PARALLEL,
-} sh_dsp_insn_type;
-
 typedef enum sh_dsp_insn {
+	SH_INS_DSP_INVALID = 0,
 	SH_INS_DSP_NOP = 1,
 	SH_INS_DSP_MOV,
 	SH_INS_DSP_PSHL,

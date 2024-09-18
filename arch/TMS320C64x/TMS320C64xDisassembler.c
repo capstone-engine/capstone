@@ -269,8 +269,8 @@ static DecodeStatus DecodeMemOperandSc(MCInst *Inst, unsigned Val,
 
 	if((base >= TMS320C64X_REG_A0) && (base <= TMS320C64X_REG_A31))
 		base = (base - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
-	else if((base >= TMS320C64X_REG_B0) && (base <= TMS320C64X_REG_B31))
-		base = (base - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
+	// base cannot be a B register, because it was ANDed above with 0x1f.
+	// And the TMS320C64X_REG_B0 > 31
 	basereg = getReg(GPRegsDecoderTable, base);
 	if (basereg ==  ~0U)
 		return MCDisassembler_Fail;
@@ -292,8 +292,8 @@ static DecodeStatus DecodeMemOperandSc(MCInst *Inst, unsigned Val,
 		case 15:
 			if((offset >= TMS320C64X_REG_A0) && (offset <= TMS320C64X_REG_A31))
 				offset = (offset - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
-			else if((offset >= TMS320C64X_REG_B0) && (offset <= TMS320C64X_REG_B31))
-				offset = (offset - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
+			// offset cannot be a B register, because it was ANDed above with 0x1f.
+			// And the TMS320C64X_REG_B0 > 31
 			offsetreg = getReg(GPRegsDecoderTable, offset);
 			if (offsetreg ==  ~0U)
 				return MCDisassembler_Fail;

@@ -1,0 +1,16 @@
+# For z13 and above.
+# RUN: llvm-mc -triple s390x-linux-gnu -mcpu=z13 -show-encoding %s \
+# RUN:   | FileCheck %s
+# RUN: llvm-mc -triple s390x-linux-gnu -mcpu=arch11 -show-encoding %s \
+# RUN:   | FileCheck %s
+
+#CHECK: cdpt	%f0, 0(1), 0                # encoding: [0xed,0x00,0x00,0x00,0x00,0xae]
+#CHECK: cdpt	%f15, 0(1), 0               # encoding: [0xed,0x00,0x00,0x00,0xf0,0xae]
+#CHECK: cdpt	%f0, 0(1), 15               # encoding: [0xed,0x00,0x00,0x00,0x0f,0xae]
+#CHECK: cdpt	%f0, 0(1,%r1), 0            # encoding: [0xed,0x00,0x10,0x00,0x00,0xae]
+
+
+	cdpt	%f0, 0(1), 0
+	cdpt	%f15, 0(1), 0
+	cdpt	%f0, 0(1), 15
+	cdpt	%f0, 0(1,%r1), 0

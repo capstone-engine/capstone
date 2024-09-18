@@ -16,6 +16,7 @@ from shutil import copy2
 
 from tree_sitter import Language, Node, Parser, Tree
 
+from autosync.Targets import ARCH_LLVM_NAMING
 from autosync.cpptranslator.Configurator import Configurator
 from autosync.Helper import (
     bold,
@@ -925,7 +926,7 @@ def parse_args() -> argparse.Namespace:
         "-a",
         dest="arch",
         help="Name of target architecture (ignored with -t option)",
-        choices=["ARM", "PPC", "AArch64", "Alpha", "LoongArch", "Mips"],
+        choices=ARCH_LLVM_NAMING,
         required=True,
     )
     parser.add_argument(

@@ -79,7 +79,7 @@ TestDetailX86 *test_detail_x86_clone(TestDetailX86 *detail)
 	clone->eflags = detail->eflags ? cs_mem_calloc(sizeof(char *),
 						       detail->eflags_count) :
 					 NULL;
-	for (size_t i = 0; i < detail->eflags_count; ++i) {
+	for (size_t i = 0; clone->eflags && i < detail->eflags_count; ++i) {
 		clone->eflags[i] =
 			detail->eflags[i] ? strdup(detail->eflags[i]) : NULL;
 	}
@@ -89,7 +89,7 @@ TestDetailX86 *test_detail_x86_clone(TestDetailX86 *detail)
 		detail->fpu_flags ?
 			cs_mem_calloc(sizeof(char *), detail->fpu_flags_count) :
 			NULL;
-	for (size_t i = 0; i < detail->fpu_flags_count; ++i) {
+	for (size_t i = 0; clone->fpu_flags && i < detail->fpu_flags_count; ++i) {
 		clone->fpu_flags[i] = detail->fpu_flags[i] ?
 					      strdup(detail->fpu_flags[i]) :
 					      NULL;

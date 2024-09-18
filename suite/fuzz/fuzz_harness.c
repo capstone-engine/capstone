@@ -98,7 +98,7 @@ int main(int argc, char **argv)
       "SparcV9"
     },
     {
-      CS_ARCH_SYSZ,
+      CS_ARCH_SYSTEMZ,
       (cs_mode)0,
       "SystemZ"
     },
