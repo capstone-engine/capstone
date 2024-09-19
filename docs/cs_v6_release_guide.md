@@ -79,6 +79,21 @@ For `v7` we can then focus on other big features, like [SAIL](https://github.com
 
 ## New features
 
+These features are only supported by `auto-sync`-enabled architectures.
+
+**More code quality checks**
+
+- `clang-tidy` is now run on all files changed by a PR.
+- ASAN: All tests are now run with the address sanitizer enabled. This includes checking for leaks.
+
+**Instruction formats for PPC, SystemZ, LoongArch**
+
+The instruction encoding formats are added for PPC. They are accessible via `cs_ppc->format`
+(and the equivalently for SystemZ, LoongArch).
+They do follow loosely the ISA formats of instructions but not quite. Unfortunately,
+LLVM doesn't group the instruction formats perfectly aligned with the ISA.
+Nonetheless, we hope this additional information is useful to you.
+
 **LoongArch**
 
 - Architecture support was added (based on LLVM-18).
@@ -120,6 +135,36 @@ Nonetheless, we hope this additional information is useful to you.
 - Updated to LLVM-18
 - Support added for: `NanoMips`, `microMips32r3`, `microMips32r6`, `Mips16`, `Mips I ISA`, `Mips II ISA`, `Mips32 r2 ISA`, `Mips32 r3 ISA`, `Mips32 r5 ISA`, `Mips32 r6 ISA`, `Mips III ISA`, `Mips IV ISA`, `Mips V ISA`, `Mips64 r2 ISA`, `Mips64 r3 ISA`, `Mips64 r5 ISA`, `Mips64 r6 ISA`, `Octeon (cnMIPS)`, `Octeon+ (cnMIPS+)`
 - Support for different register naming style (`CS_OPT_SYNTAX_NO_DOLLAR`, `CS_OPT_SYNTAX_NOREGNAME`)
+- In `capstone.h` new MIPS ISA has been added which can be used by themselves.
+  ```
+  CS_MODE_MIPS16 = CS_MODE_16, ///< Generic mips16
+  CS_MODE_MIPS32 = CS_MODE_32, ///< Generic mips32
+  CS_MODE_MIPS64 = CS_MODE_64, ///< Generic mips64
+  CS_MODE_MICRO = 1 << 4, ///< microMips
+  CS_MODE_MIPS1 = 1 << 5, ///< Mips I ISA Support
+  CS_MODE_MIPS2 = 1 << 6, ///< Mips II ISA Support
+  CS_MODE_MIPS32R2 = 1 << 7, ///< Mips32r2 ISA Support
+  CS_MODE_MIPS32R3 = 1 << 8, ///< Mips32r3 ISA Support
+  CS_MODE_MIPS32R5 = 1 << 9, ///< Mips32r5 ISA Support
+  CS_MODE_MIPS32R6 = 1 << 10, ///< Mips32r6 ISA Support
+  CS_MODE_MIPS3 = 1 << 11, ///< MIPS III ISA Support
+  CS_MODE_MIPS4 = 1 << 12, ///< MIPS IV ISA Support
+  CS_MODE_MIPS5 = 1 << 13, ///< MIPS V ISA Support
+  CS_MODE_MIPS64R2 = 1 << 14, ///< Mips64r2 ISA Support
+  CS_MODE_MIPS64R3 = 1 << 15, ///< Mips64r3 ISA Support
+  CS_MODE_MIPS64R5 = 1 << 16, ///< Mips64r5 ISA Support
+  CS_MODE_MIPS64R6 = 1 << 17, ///< Mips64r6 ISA Support
+  CS_MODE_OCTEON = 1 << 18, ///< Octeon cnMIPS Support
+  CS_MODE_OCTEONP = 1 << 19, ///< Octeon+ cnMIPS Support
+  CS_MODE_NANOMIPS = 1 << 20, ///< Generic nanomips
+  CS_MODE_NMS1 = ((1 << 21) | CS_MODE_NANOMIPS), ///< nanoMips NMS1
+  CS_MODE_I7200 = ((1 << 22) | CS_MODE_NANOMIPS), ///< nanoMips I7200
+  CS_MODE_MICRO32R3 = (CS_MODE_MICRO | CS_MODE_MIPS32R3), ///< microMips32r3
+  CS_MODE_MICRO32R6 = (CS_MODE_MICRO | CS_MODE_MIPS32R6), ///< microMips32r6
+  ```
+  It is also possible to disable floating point support by adding `CS_MODE_MIPS_NOFLOAT`.
+
+- **`CS_MODE_MIPS_PTR64` is now required to decode 64-bit pointers**, like jumps and calls (for example: `jal $t0`).
 
 **RISCV**
 
@@ -218,7 +263,7 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 - TriCore: No support in LLVM.
 - Alpha: No support in LLVM.
 
-- HPPA: No LLVM architecture. Alias are not supported.
+- HPPA: Not a LLVM architecture. Alias are not supported.
 
 ## Breaking changes
 
@@ -380,144 +425,6 @@ sed -i "s|detail->sysz|detail->systemz|g" $1
 
 Write it into `rename.sh` and run it on files with `sh rename.sh <src-file>`
 
-**Note about AArch64**
-
-in `capstone.h` new mips ISA has been added which can be used by themselves.
-
-```
-	CS_MODE_MIPS16 = CS_MODE_16, ///< Generic mips16
-	CS_MODE_MIPS32 = CS_MODE_32, ///< Generic mips32
-	CS_MODE_MIPS64 = CS_MODE_64, ///< Generic mips64
-	CS_MODE_MICRO = 1 << 4, ///< microMips
-	CS_MODE_MIPS1 = 1 << 5, ///< Mips I ISA Support
-	CS_MODE_MIPS2 = 1 << 6, ///< Mips II ISA Support
-	CS_MODE_MIPS32R2 = 1 << 7, ///< Mips32r2 ISA Support
-	CS_MODE_MIPS32R3 = 1 << 8, ///< Mips32r3 ISA Support
-	CS_MODE_MIPS32R5 = 1 << 9, ///< Mips32r5 ISA Support
-	CS_MODE_MIPS32R6 = 1 << 10, ///< Mips32r6 ISA Support
-	CS_MODE_MIPS3 = 1 << 11, ///< MIPS III ISA Support
-	CS_MODE_MIPS4 = 1 << 12, ///< MIPS IV ISA Support
-	CS_MODE_MIPS5 = 1 << 13, ///< MIPS V ISA Support
-	CS_MODE_MIPS64R2 = 1 << 14, ///< Mips64r2 ISA Support
-	CS_MODE_MIPS64R3 = 1 << 15, ///< Mips64r3 ISA Support
-	CS_MODE_MIPS64R5 = 1 << 16, ///< Mips64r5 ISA Support
-	CS_MODE_MIPS64R6 = 1 << 17, ///< Mips64r6 ISA Support
-	CS_MODE_OCTEON = 1 << 18, ///< Octeon cnMIPS Support
-	CS_MODE_OCTEONP = 1 << 19, ///< Octeon+ cnMIPS Support
-	CS_MODE_NANOMIPS = 1 << 20, ///< Generic nanomips 
-	CS_MODE_NMS1 = ((1 << 21) | CS_MODE_NANOMIPS), ///< nanoMips NMS1
-	CS_MODE_I7200 = ((1 << 22) | CS_MODE_NANOMIPS), ///< nanoMips I7200
-	CS_MODE_MICRO32R3 = (CS_MODE_MICRO | CS_MODE_MIPS32R3), ///< microMips32r3
-	CS_MODE_MICRO32R6 = (CS_MODE_MICRO | CS_MODE_MIPS32R6), ///< microMips32r6
-```
-
-It is also possible to disable floating point support by adding `CS_MODE_MIPS_NOFLOAT`.
-
-**`CS_MODE_MIPS_PTR64` is now required to decode 64-bit pointers**, like jumps and calls (for example: `jal $t0`).
-
-## New features
-
-These features are only supported by `auto-sync`-enabled architectures.
-
-**More code quality checks**
-
-- `clang-tidy` is now run on all files changed by a PR.
-- ASAN: All tests are now run with the address sanitizer enabled. This includes checking for leaks.
-
-**Instruction formats for PPC**
-
-The instruction encoding formats are added for PPC. They are accessible via `cs_ppc->format`.
-They do follow loosely the ISA formats of instructions but not quite. Unfortunately,
-LLV doesn't group the instruction formats perfectly aligned with the ISA.
-Nonetheless, we hope this additional information is useful to you.
-
-### Known bugs in the Alpha
-
-**Arch64**
-
-- Access information for `fcvtn` instructions with two vector registers are wrong.
-
-- Some operands have incorrect access attributes set.
-If the same register is used twice in the instruction,
-once for reading and once for writing, those registers are required by the ISA to be the same,
-the details for this register will always be `access = CS_AC_READ_WRITE`.
-There is no distinction for `READ` and `WRITE`.
-
-- Single memory operand _components_ (base register, offset) have no unique access information. Access information from memory operands should always refer to the memory. Not the register or immediate components.
-Meaning, if a memory operand has the `CS_AC_READ` attribute set, it means the memory is read. Not all of it's components.
-
-Please note though, `writeback` registers are correctly added to the `regs_write` list if `cs_reg_access` is called.
-
-These issues will be addressed in the next releases. For a more detailed descriptions see: https://github.com/capstone-engine/capstone/issues/2472#issuecomment-2335226281 (starting at "eor and the others").
-
-### Instruction Alias
-
-Instruction alias are now properly separated from real instructions.
-
-The `cs_insn->is_alias` flag is set, if the decoded instruction is an alias.
-
-The real instruction `id` is still set in `cs_insn->id`.
-The alias `id` is set in `cs_insn->alias_id`.
-
-You can use as `cs_insn_name()` to retrieve the real and the alias name.
-
-Additionally, you can now choose between the alias details and the real details.
-
-If you always want the real instruction detail decoded (also for alias instructions),
-you can enable the option with
-```
-cs_option(handle, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL | CS_OPT_ON);
-```
-
-For the `cstool` you can enable it with the `-r` flag.
-
-Without `-r` you get the `alias` operand set, _if_ the instruction is an alias.
-This is the default behavior:
-
-```
-./cstool -d ppc32be 7a8a2000
- 0  7a 8a 20 00  	rotldi	r10, r20, 4
-	ID: 867 (rldicl)
-	Is alias: 1828 (rotldi) with ALIAS operand set
-	op_count: 3
-		operands[0].type: REG = r10
-		operands[0].access: WRITE
-		operands[1].type: REG = r20
-		operands[1].access: READ
-		operands[2].type: IMM = 0x4
-		operands[2].access: READ
-```
-
-If `-r` is set, you got the real operands. Even if the decoded instruction is an alias:
-
-```
-./cstool -d ppc32be 7a8a2000
- 0  7a 8a 20 00  	rotldi	r10, r20, 4
-	ID: 867 (rldicl)
-	Is alias: 1828 (rotldi) with REAL operand set
-	op_count: 4
-		operands[0].type: REG = r10
-		operands[0].access: WRITE
-		operands[1].type: REG = r20
-		operands[1].access: READ
-		operands[2].type: IMM = 0x4
-		operands[2].access: READ
-		operands[3].type: IMM = 0x0
-		operands[3].access: READ
-
-```
-
-**Note about alias as part of real instruction enum.**
-
-LLVM defines some alias instructions as real instructions.
-This is why you will still find alias instructions being listed in the instruction `enum`.
-This happens due to some LLVM specific edge cases.
-
-Nonetheless, an alias should never be **decoded** as real instruction.
-
-If you find an alias which is decoded as a real instruction, please let us know.
-Such an instruction is ill-defined in LLVM and should be fixed upstream.
-
 ### Refactoring of cstool
 
 `cstool` has been refactored to simplify its usage; before you needed to add extra options in the C code to enable features and recompile, but now you can easily decode instructions with different syntaxes or options, by appending after the arch one of the followings values:
@@ -561,3 +468,22 @@ $ cstool -s arm 0c100097000000008fa2000034213456
  8  8f a2 00 00  andeq    r10, r0, pc, lsl #5
 10  34 21 34 56  shasxpl  r2, r4, r4
 ```
+
+### Known bugs in the Alpha
+
+**Arch64**
+
+- Access information for `fcvtn` instructions with two vector registers are wrong.
+
+- Some operands have incorrect access attributes set.
+If the same register is used twice in the instruction,
+once for reading and once for writing, those registers are required by the ISA to be the same,
+the details for this register will always be `access = CS_AC_READ_WRITE`.
+There is no distinction for `READ` and `WRITE`.
+
+- Single memory operand _components_ (base register, offset) have no unique access information. Access information from memory operands should always refer to the memory. Not the register or immediate components.
+Meaning, if a memory operand has the `CS_AC_READ` attribute set, it means the memory is read. Not all of it's components.
+
+Please note though, `writeback` registers are correctly added to the `regs_write` list if `cs_reg_access` is called.
+
+These issues will be addressed in the next releases. For a more detailed descriptions see: https://github.com/capstone-engine/capstone/issues/2472#issuecomment-2335226281 (starting at "eor and the others").
