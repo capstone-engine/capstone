@@ -171,6 +171,11 @@ Nonetheless, we hope this additional information is useful to you.
 
 - Operands have now read/write access information
 
+**Xtensa**
+
+- Architecture support was added (based on LLVM-18).
+- Support for `CS_OPT_LITBASE`
+
 **UX**
 
 - Instruction alias (see below).
