@@ -1062,3 +1062,7 @@
 !# issue 2418
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
 0x0: 0x86,0xf3,0x00,0x89 == msr cpsr_fc, r6 ; operands[0].type: SYSREG = 144
+
+!# issue 2424
+!# CS_ARCH_SH, CS_MODE_SH2A | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x0: 0x32,0x11,0x92,0x00 == movu.w @(1024,r1),r2 ; operands[0].type: MEM ; operands[0].mem.reg: REG = r1 ; operands[0].mem.disp: 0x400 ; address mode: Register Indirect with Predecrement ; operands[1].type: REG = r2
