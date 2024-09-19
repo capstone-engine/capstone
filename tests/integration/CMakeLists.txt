@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 # Old integration tests.
 if (CAPSTONE_BUILD_LEGACY_TESTS)
   enable_testing()
-  set(TEST_SOURCES test_skipdata.c test_iter.c)
+  set(TEST_SOURCES test_skipdata.c test_iter.c test_litbase.c)
   if(CAPSTONE_X86_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_customized_mnem.c)
   endif()
