@@ -752,20 +752,20 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
                 return False
         elif aop.type == AARCH64_OP_SYSREG:
             if not compare_enum(
-                aop.value.sysop.sub_type, eop.get("sub_type"), "sub_type"
+                aop.sysop.sub_type, eop.get("sub_type"), "sub_type"
             ):
                 return False
             if not compare_uint64(
-                aop.value.sysop.reg.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
+                aop.sysop.reg.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
         elif aop.type == AARCH64_OP_SYSIMM:
             if not compare_enum(
-                aop.value.sysop.sub_type, eop.get("sub_type"), "sub_type"
+                aop.sysop.sub_type, eop.get("sub_type"), "sub_type"
             ):
                 return False
             if not compare_uint64(
-                aop.value.sysop.imm.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
+                aop.sysop.imm.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
             # EXACTFPIMM operands
@@ -775,11 +775,11 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
                 return False
         elif aop.type == AARCH64_OP_SYSALIAS:
             if not compare_enum(
-                aop.value.sysop.sub_type, eop.get("sub_type"), "sub_type"
+                aop.sysop.sub_type, eop.get("sub_type"), "sub_type"
             ):
                 return False
             if not compare_uint64(
-                aop.value.sysop.alias.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
+                aop.sysop.alias.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
         elif aop.type == AARCH64_OP_PRED:
