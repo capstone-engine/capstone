@@ -4958,8 +4958,102 @@ test_cases:
       insns:
       - asm_text: "jalrc  $t9"
 
-  -
-    input:
+  - input:
+      name: "Mips32 jumps with base offset"
+      bytes: [ 0x40, 0x04, 0x04, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS5, CS_OPT_DETAIL ]
+      address: 0x8060b53c
+    expected:
+      insns:
+      # 8060b53c:   40040408  j 0x80101100
+      - asm_text: "j  0x80101100"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_IMM
+                imm: 0x80101100
+
+  - input:
+      name: "Mips32 jumps with base offset (lower limit)"
+      bytes: [ 0x40, 0x04, 0x04, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS5, CS_OPT_DETAIL ]
+      address: 0xFF000000
+    expected:
+      insns:
+      # ff000000:   40040408  j 0xf0101100
+      - asm_text: "j  0xf0101100"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_IMM
+                imm: 0xf0101100
+
+  - input:
+      name: "Mips64 jumps with base offset"
+      bytes: [ 0x40, 0x04, 0x04, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS64R5, CS_OPT_DETAIL ]
+      address: 0x8060b53c
+    expected:
+      insns:
+      # 8060b53c:   40040408  j 0x80101100
+      - asm_text: "j  0x80101100"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_IMM
+                imm: 0x80101100
+
+  - input:
+      name: "Mips64 jumps with base offset (lower limit)"
+      bytes: [ 0x40, 0x04, 0x04, 0x08 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_MIPS64R5, CS_OPT_DETAIL ]
+      address: 0xFF000000
+    expected:
+      insns:
+      # ff000000:   40040408  j 0xf0101100
+      - asm_text: "j  0xf0101100"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_IMM
+                imm: 0xf0101100
+
+  - input:
+      name: "micromips beqz16"
+      bytes: [ 0x8d, 0x7f ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_MICRO, CS_MODE_MIPS32R3, CS_OPT_DETAIL ]
+      address: 0x80600000
+    expected:
+      insns:
+      - asm_text: "beqz16 $v0, 0x805ffffe"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: v0
+              - type: MIPS_OP_IMM
+                imm: 0x805ffffe
+
+  - input:
+      name: "micromips b16"
+      bytes: [ 0xcf, 0xff ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_MICRO, CS_MODE_MIPS32R3, CS_OPT_DETAIL ]
+      address: 0x80600000
+    expected:
+      insns:
+      - asm_text: "b16 0x805ffffe"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_IMM
+                imm: 0x805ffffe
+  - input:
       name: "issue 2471 -- max operands overflow"
       bytes: [ 0xff, 0x00, 0x08, 0xc0 ]
       arch: "CS_ARCH_AARCH64"

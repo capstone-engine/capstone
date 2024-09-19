@@ -296,12 +296,26 @@ static void Mips_set_detail_op_operand(MCInst *MI, unsigned OpNum)
 		printf("Operand type %d not handled!\n", op_type);
 }
 
+static void Mips_set_detail_op_jump(MCInst *MI, unsigned OpNum)
+{
+	cs_op_type op_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
+	if (op_type == CS_OP_IMM) {
+		uint64_t Base = MI->address & ~0x0fffffffull;
+		uint64_t Target = Base | (uint64_t)MCInst_getOpVal(MI, OpNum);
+		Mips_set_detail_op_uimm(MI, OpNum, Target);
+	} else if (op_type == CS_OP_REG) {
+		Mips_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum),
+				       false);
+	} else
+		printf("Operand type %d not handled!\n", op_type);
+}
+
 static void Mips_set_detail_op_branch(MCInst *MI, unsigned OpNum)
 {
 	cs_op_type op_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
 	if (op_type == CS_OP_IMM) {
-		uint64_t Target = (uint64_t)MCInst_getOpVal(MI, OpNum);
-		Mips_set_detail_op_uimm(MI, OpNum, Target + MI->address);
+		uint64_t Target = MI->address + MCInst_getOpVal(MI, OpNum);
+		Mips_set_detail_op_uimm(MI, OpNum, Target);
 	} else if (op_type == CS_OP_REG) {
 		Mips_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum),
 				       false);
@@ -374,9 +388,9 @@ void Mips_add_cs_detail(MCInst *MI, mips_op_group op_group, va_list args)
 		// this is only used by nanoMips.
 		return Mips_set_detail_op_mem_nanomips(MI, OpNum);
 	case Mips_OP_GROUP_BranchOperand:
-		/* fall-thru */
-	case Mips_OP_GROUP_JumpOperand:
 		return Mips_set_detail_op_branch(MI, OpNum);
+	case Mips_OP_GROUP_JumpOperand:
+		return Mips_set_detail_op_jump(MI, OpNum);
 	case Mips_OP_GROUP_Operand:
 		return Mips_set_detail_op_operand(MI, OpNum);
 	case Mips_OP_GROUP_UImm_1_0:
