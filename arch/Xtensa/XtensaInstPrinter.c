@@ -36,6 +36,7 @@
 #include "./priv.h"
 #include "../../Mapping.h"
 #include "XtensaMapping.h"
+#include "../../MathExtras.h"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
@@ -126,13 +127,16 @@ static inline void printL32RTarget(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MC)) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		int64_t InstrOff = Value & 0x3;
-		Value -= InstrOff;
+		int64_t InstrOff = OneExtend32(Value << 2, 14);
 		CS_ASSERT(
 			(Value >= -262144 && Value <= -4) &&
 			"Invalid argument, value must be in ranges [-262144,-4]");
-		Value += ((InstrOff + 0x3) & 0x4) - InstrOff;
 		SStream_concat0(O, ". ");
+		if (MI->csh->LITBASE & 0x1) {
+			Value = (int64_t)(MI->csh->LITBASE & 0x7ff) + InstrOff;
+		} else {
+			Value = (((int64_t)MI->address + 3) & ~0x3) + InstrOff;
+		}
 		printInt64(O, Value);
 	} else if (MCOperand_isExpr(MC))
 		MCExpr_print(MCOperand_getExpr(MC), O, NULL, true);

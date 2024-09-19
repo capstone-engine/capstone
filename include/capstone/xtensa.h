@@ -149,6 +149,7 @@ typedef enum cs_xtensa_op_type {
 	XTENSA_OP_MEM = CS_OP_MEM,	   ///< = (Memory operand).
 	XTENSA_OP_MEM_REG = CS_OP_MEM_REG, ///< = (Memory Register operand).
 	XTENSA_OP_MEM_IMM = CS_OP_MEM_IMM, ///< = (Memory Immediate operand).
+	XTENSA_OP_L32R,			   ///< = (L32R Target)
 } cs_xtensa_op_type;
 
 typedef struct cs_xtensa_op_mem {

@@ -10,7 +10,7 @@
 cs_err Xtensa_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
-	mri = cs_mem_malloc(sizeof(*mri));
+	mri = cs_mem_calloc(1, sizeof(*mri));
 
 	Xtensa_init_mri(mri);
 	ud->printer = Xtensa_printer;
@@ -31,11 +31,16 @@ cs_err Xtensa_global_init(cs_struct *ud)
 
 cs_err Xtensa_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
-	if (type == CS_OPT_SYNTAX)
+	if (type == CS_OPT_SYNTAX) {
 		handle->syntax |= (int)value;
+	}
 
 	if (type == CS_OPT_MODE) {
 		handle->mode |= (cs_mode)value;
+	}
+
+	if (type == CS_OPT_LITBASE) {
+		handle->LITBASE = value;
 	}
 
 	return CS_ERR_OK;

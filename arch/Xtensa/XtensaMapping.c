@@ -36,6 +36,7 @@ static const map_insn_ops insn_operands[] = {
 
 #define GET_REGINFO_MC_DESC
 #include "XtensaGenRegisterInfo.inc"
+#include "../../MathExtras.h"
 
 void Xtensa_init_mri(MCRegisterInfo *mri)
 {
@@ -198,12 +199,19 @@ void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args)
 		xop->mem.base = (int32_t)val;
 	} break;
 	case XTENSA_OP_GROUP_L32RTARGET: {
-		int64_t val = MCOperand_getImm(MCInst_getOperand(MI, (op_num)));
-		int64_t instr_off = val & 0x3;
-		val -= instr_off;
-		val += ((instr_off + 0x3) & 0x4) - instr_off;
-		xop->type = XTENSA_OP_MEM_IMM;
-		xop->mem.base = (int32_t)val;
+		int64_t Value =
+			MCOperand_getImm(MCInst_getOperand(MI, (op_num)));
+		int64_t InstrOff = OneExtend32(Value << 2, 14);
+		CS_ASSERT(
+			(Value >= -262144 && Value <= -4) &&
+			"Invalid argument, value must be in ranges [-262144,-4]");
+		if (MI->csh->LITBASE & 0x1) {
+			Value = (int64_t)(MI->csh->LITBASE & 0x7ff) + InstrOff;
+		} else {
+			Value = (((int64_t)MI->address + 3) & ~0x3) + InstrOff;
+		}
+		xop->type = XTENSA_OP_L32R;
+		xop->imm = (int32_t)Value;
 	} break;
 	case XTENSA_OP_GROUP_MEMOPERAND: {
 		unsigned reg =
