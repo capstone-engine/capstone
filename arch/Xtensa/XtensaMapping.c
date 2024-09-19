@@ -216,11 +216,11 @@ void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args)
 	case XTENSA_OP_GROUP_MEMOPERAND: {
 		unsigned reg =
 			MCOperand_getReg(MCInst_getOperand(MI, (op_num)));
-		int64_t val =
+		int64_t imm8 =
 			MCOperand_getImm(MCInst_getOperand(MI, op_num + 1));
 		xop->type = XTENSA_OP_MEM;
 		xop->mem.base = reg;
-		xop->mem.disp = val;
+		xop->mem.disp = (uint8_t)imm8;
 	} break;
 	}
 
