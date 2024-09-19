@@ -2195,6 +2195,8 @@ bool SH_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		*size = 0;
 		return MCDisassembler_Fail;
 	} else {
+		if (detail)
+			detail->sh = info->op;
 		return MCDisassembler_Success;
 	}		
 }
