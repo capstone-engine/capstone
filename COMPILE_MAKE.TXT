@@ -9,9 +9,9 @@
 This documentation explains how to compile, install & run Capstone on MacOSX,
 Linux, *BSD & Solaris. We also show steps to cross-compile for Microsoft Windows.
 
-To natively compile for Windows using Microsoft Visual Studio, see COMPILE_MSVC.TXT.
+To natively compile for Windows using Microsoft Visual Studio, see BUILDING.md.
 
-To compile using CMake, see COMPILE_CMAKE.TXT.
+To compile using CMake, see BUILDING.md.
 
 To compile using XCode on MacOSX, see xcode/README.md.
 

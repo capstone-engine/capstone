@@ -5,9 +5,9 @@ SPDX-License-Identifier: BSD-3
 
 # Architecture updater - Auto-Sync
 
-`auto-sync` is the architecture update tool for Capstone.
+`Auto-Sync` is the architecture update tool for Capstone.
 Because the architecture modules of Capstone use mostly code from LLVM,
-we need to update this part with every LLVM release. `auto-sync` helps
+we need to update this part with every LLVM release. `Auto-Sync` helps
 with this synchronization between LLVM and Capstone's modules by
 automating most of it.
 
@@ -57,14 +57,14 @@ Just ensure it is in your `PATH` as `llvm-mc` and `FileCheck` (not as `llvm-mc-1
 
 ## Architecture
 
-Please read [ARCHITECTURE.md](https://github.com/capstone-engine/capstone/blob/next/docs/ARCHITECTURE.md) to understand how Auto-Sync works.
+Please read [ARCHITECTURE.md](https://github.com/capstone-engine/capstone/blob/next/docs/ARCHITECTURE.md) to understand how `Auto-Sync` works.
 
 This step is essential! Please don't skip it.
 
 ## Update an architecture
 
-Updating an architecture module to the newest LLVM release, is only possible if it uses Auto-Sync.
-Not all arch-modules support Auto-Sync yet.
+Updating an architecture module to the newest LLVM release, is only possible if it uses `Auto-Sync`.
+Not all arch-modules support `Auto-Sync` yet.
 
 Check if your architecture is supported.
 
@@ -93,6 +93,22 @@ Because the translation is not perfect (maybe it will some day)
 you will get build errors if you try to compile Capstone.
 
 The last step to finish the update is to fix those build errors by hand.
+
+## Refactor an architecture
+
+Not all architecture modules support `Auto-Sync` yet.
+Here is an overview of the steps to add support for it.
+
+<hr>
+
+To refactor one of them to use `Auto-Sync` please follow the [RefactorGuide.md](RefactorGuide.md)
+
+## Adding a new architecture
+
+Adding a new architecture follows the same steps as above. With the exception that you need
+to implement all the Capstone files from scratch.
+
+Check out an `Auto-Sync` supporting architectures for guidance and open an issue if you need help.
 
 ## Additional details
 
@@ -162,60 +178,4 @@ Documentation about the `.inc` file generation is in the [llvm-capstone](https:/
   python3 -m usort format src/autosync
   python3 -m black src/autosync
   ```
-
-## Refactor an architecture for Auto-Sync framework
-
-Not all architecture modules support Auto-Sync yet.
-Here is an overview of the steps to add support for it.
-
-<hr>
-
-To refactor one of them to use `auto-sync`, you need to add it to the configuration.
-
-1. Add the architecture to the supported architectures list in `ASUpdater.py`.
-2. Configure the `CppTranslator` for your architecture (`suite/auto-sync/CppTranslator/arch_config.json`)
-
-Now, manually run the update commands within `ASUpdater.py` but *skip* the `Differ` step:
-
-```
-./Updater/ASUpdater.py -a <ARCH> -s IncGen Translate
-```
-
-The task after this is to:
-
-- Replace leftover C++ syntax with its C equivalent.
-- Implement the `add_cs_detail()` handler in `<ARCH>Mapping` for each operand type.
-- Edit the main header file of the architecture (`include/capstone/<ARCH>.h`) to include the generated enums (see below)
-- Add any missing logic to the translated files.
-- Make it build and write tests.
-- Run the Differ again and always select the old nodes.
-
-**Notes:**
-
-- Some generated enums must be included in the `include/capstone/<ARCH>.h` header.
-At the position where the enum should be inserted, add a comment like this (don't remove the `<>` brackets):
-
-    ```
-    // generate content <FILENAME.inc> begin
-    // generate content <FILENAME.inc> end
-    ```
-
-The update script will insert the content of the `.inc` file at this place.
-
-- If you find yourself fixing the same syntax error multiple times,
-please consider adding a `Patch` to the `CppTranslator` for this case.
-
-- Please check out the implementation of ARM's `add_cs_detail()` before implementing your own.
-
-- Running the `Differ` after everything is done, preserves your version of syntax corrections, and the next user can auto-apply them.
-
-- Sometimes the LLVM code uses a single function from a larger source file.
-It is not worth it to translate the whole file just for this function.
-Bundle those lonely functions in `<ARCH>DisassemblerExtension.c`.
-
-## Adding a new architecture
-
-Adding a new architecture follows the same steps as above. With the exception that you need
-to implement all the Capstone files from scratch.
-
-Check out an `auto-sync` supporting architectures for guidance and open an issue if you need help.
+  
