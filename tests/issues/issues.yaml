@@ -3651,7 +3651,7 @@ test_cases:
                 type: ARM_OP_MEM
                 mem_base: r1
                 mem_index: r3
-                mem_scale: 0
+                mem_scale: -1
                 access: CS_AC_READ
                 subtracted: 1
           regs_read: [ r1, r3 ]
@@ -4090,7 +4090,7 @@ test_cases:
                 type: ARM_OP_MEM
                 mem_base: r2
                 mem_index: r3
-                mem_scale: 0
+                mem_scale: 1
                 shift_type: ARM_SFT_LSL
                 shift_value: 2
           regs_read: [ r2, r3 ]
@@ -5126,6 +5126,105 @@ test_cases:
           regs_read: [ za0.d, za1.d, za2.d, za3.d, za4.d, za5.d, za6.d, za7.d ]
           groups: [ HasSME ]
 
+  -
+    input:
+      address: 0x0
+      name: "issue 2382"
+      bytes: [ 0x42, 0x40 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_THUMB, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "rsbs r0, r0, #0"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: ARM_OP_IMM
+                imm: 0
+                access: CS_AC_READ
+  -
+    input:
+      address: 0x0
+      name: "issue 2281 - Negative memory index register scale not set"
+      bytes: [ 0x02, 0x00, 0x11, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ldr	r0, [r1, -r2]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r1
+                mem_index: r2
+                mem_scale: -1
+                access: CS_AC_READ
+  -
+    input:
+      address: 0x0
+      name: "issue 2281 - Positive memory index register scale not set"
+      bytes: [ 0x02, 0x00, 0x91, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ldr	r0, [r1, r2]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r1
+                mem_index: r2
+                mem_scale: 1
+                access: CS_AC_READ
+  -
+    input:
+      address: 0x0
+      name: "issue 2281 - rrx"
+      bytes: [ 0x61, 0x00, 0x10, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ldr	r0, [r0, -r1, rrx]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r0
+                mem_index: r1
+                mem_scale: -1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_RRX
   -
     input:
       name: "issue 2424"

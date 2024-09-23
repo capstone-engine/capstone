@@ -54,14 +54,12 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 				if (op->mem.index != ARM_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 							i, cs_reg_name(handle, op->mem.index));
-				if (op->mem.scale != 1)
+				if (op->mem.scale != 0)
 					printf("\t\t\toperands[%u].mem.scale: %d\n", i, op->mem.scale);
 				if (op->mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
 				if (op->mem.align != 0)
 					printf("\t\t\toperands[%u].mem.align: 0x%x\n", i, op->mem.align);
-				if (op->mem.lshift != 0)
-					printf("\t\t\toperands[%u].mem.lshift: 0x%x\n", i, op->mem.lshift);
 
 				break;
 			case ARM_OP_PIMM:
@@ -125,14 +123,15 @@ void print_insn_detail_arm(csh handle, cs_insn *ins)
 				break;
 		}
 
-		if (op->shift.type != ARM_SFT_INVALID && op->shift.value) {
-			if (op->shift.type < ARM_SFT_ASR_REG)
+		if (op->shift.type != ARM_SFT_INVALID) {
+			if (op->shift.type < ARM_SFT_REG) {
 				// shift with constant value
 				printf("\t\t\tShift: %u = %u\n", op->shift.type, op->shift.value);
-			else
+			} else {
 				// shift with register
 				printf("\t\t\tShift: %u = %s\n", op->shift.type,
-						cs_reg_name(handle, op->shift.value));
+						op->shift.value > 0 ? cs_reg_name(handle, op->shift.value) : "-");
+			}
 		}
 
 		if (op->vector_index != -1) {

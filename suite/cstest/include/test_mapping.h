@@ -388,7 +388,7 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "ARM_SFT_ROR", .val = ARM_SFT_ROR },
 	{ .str = "ARM_SFT_ROR_REG", .val = ARM_SFT_ROR_REG },
 	{ .str = "ARM_SFT_RRX", .val = ARM_SFT_RRX },
-	{ .str = "ARM_SFT_RRX_REG", .val = ARM_SFT_RRX_REG },
+	{ .str = "ARM_SFT_UXTW", .val = ARM_SFT_UXTW },
 	{ .str = "ARM_T", .val = ARM_T },
 	{ .str = "ARM_TE", .val = ARM_TE },
 	{ .str = "ARM_TEE", .val = ARM_TEE },

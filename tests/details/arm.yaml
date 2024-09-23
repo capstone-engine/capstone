@@ -624,7 +624,8 @@ test_cases:
                 access: CS_AC_WRITE
             post_indexed: -1
           writeback: 1
-          regs_write: [ r11, r15 ]
+          regs_read: [ r13 ]
+          regs_write: [ r13, r11, r15 ]
       -
         asm_text: "tbb [r1, r0]"
         details:
@@ -2289,3 +2290,467 @@ test_cases:
           regs_read: [ cpsr, r1 ]
           regs_write: [ r15 ]
           groups: [ IsARM, jump ]
+  -
+    input:
+      bytes: [ 0x41,0x04,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "asr r0, r1, #8"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ASR
+                shift_value: 8
+  -
+    input:
+      bytes: [ 0x01,0x04,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsl r0, r1, #8"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_LSL
+                shift_value: 8
+  -
+    input:
+      bytes: [ 0x21,0x04,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsr r0, r1, #8"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_LSR
+                shift_value: 8
+  -
+    input:
+      bytes: [ 0x61,0x04,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror r0, r1, #8"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ROR
+                shift_value: 8
+  -
+    input:
+      bytes: [ 0x51,0x02,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "asr r0, r1, r2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ASR_REG
+                shift_value: 75
+  -
+    input:
+      bytes: [ 0x11,0x02,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsl r0, r1, r2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_LSL_REG
+                shift_value: 75
+  -
+    input:
+      bytes: [ 0x31,0x02,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsr r0, r1, r2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_LSR_REG
+                shift_value: 75
+  -
+    input:
+      bytes: [ 0x71,0x02,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror r0, r1, r2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ROR_REG
+                shift_value: 75
+  -
+    input:
+      bytes: [ 0x41,0x04,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "asr r0, r1, #8"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ASR
+                shift_value: 8
+              -
+                type: ARM_OP_IMM
+                imm: 8
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x01,0x04,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsl r0, r1, #8"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_LSL
+                shift_value: 8
+              -
+                type: ARM_OP_IMM
+                imm: 8
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x21,0x04,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsr r0, r1, #8"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_LSR
+                shift_value: 8
+              -
+                type: ARM_OP_IMM
+                imm: 8
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x61,0x04,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror r0, r1, #8"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ROR
+                shift_value: 8
+              -
+                type: ARM_OP_IMM
+                imm: 8
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x51,0x02,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "asr r0, r1, r2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ASR_REG
+                shift_value: 75
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x11,0x02,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsl r0, r1, r2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_LSL_REG
+                shift_value: 75
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x31,0x02,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsr r0, r1, r2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_LSR_REG
+                shift_value: 75
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x71,0x02,0xa0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror r0, r1, r2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ROR_REG
+                shift_value: 75
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x60,0x00,0x80,0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "str r0, [r0, r0, rrx]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: ARM_OP_MEM
+                mem_base: r0
+                mem_index: r0
+                access: CS_AC_WRITE
+                shift_type: ARM_SFT_RRX
+  -
+    input:
+      bytes: [ 0x90,0xfc,0x93,0x0e ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_MCLASS, CS_MODE_V8, CS_MODE_THUMB, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vldrh.u16 q0, [r0, q1, uxtw #1]"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: q0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_MEM
+                mem_base: r0
+                mem_index: q1
+                mem_scale: 1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_UXTW
+                shift_value: 1

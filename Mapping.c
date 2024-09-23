@@ -377,8 +377,13 @@ void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias) {
 	MI->flat_insn->alias_id = Alias;
 }
 
-static inline bool char_ends_mnem(const char c) {
-	return (!c || c == ' ' || c == '\t');
+static inline bool char_ends_mnem(const char c, cs_arch arch) {
+	switch (arch) {
+	default:
+		return (!c || c == ' ' || c == '\t' || c == '.');
+	case CS_ARCH_PPC:
+		return (!c || c == ' ' || c == '\t');
+  }
 }
 
 /// Sets an alternative id for some instruction.
@@ -400,7 +405,7 @@ void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_i
 		++i;
 	}
 	for (; j < sizeof(alias_mnem) - 1; ++j, ++i) {
-		if (char_ends_mnem(asm_str_buf[i]))
+		if (char_ends_mnem(asm_str_buf[i], MI->csh->arch))
 			break;
 		alias_mnem[j] = asm_str_buf[i];
 	}

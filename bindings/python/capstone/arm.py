@@ -7,11 +7,10 @@ from .arm_const import *
 # define the API
 class ArmOpMem(ctypes.Structure):
     _fields_ = (
-        ('base', ctypes.c_uint),
-        ('index', ctypes.c_uint),
+        ('base', ctypes.c_int),
+        ('index', ctypes.c_int),
         ('scale', ctypes.c_int),
         ('disp', ctypes.c_int),
-        ('lshift', ctypes.c_int),
         ('align', ctypes.c_uint),
     )
 

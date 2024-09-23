@@ -277,8 +277,21 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 
 **All `Auto-Sync` architectures**
 
-| Keyword | Change | Justification |
-|---------|--------|---------------|
+| Keyword | Change | Justification | Possible revert |
+|---------|--------|---------------|-----------------|
+| Post-index | Post-index memory access has the disponent now set in the `MEMORY` operand! No longer as separated `reg`/`imm` operand. | The CS memory operand had a field which was there for disponents. Not having it set, for post-index operands was inconsistent. | Edit `ARM_set_detail_op_mem()` and add an immediate operand instead of setting the disponent. |
+| Sign `mem.disp` | `mem.disp` is now always positive and the `subtracted` flag indicates if it should be subtracted. | It was inconsistent before. | Change behavior in `ARM_set_detail_op_mem()` |
+| `ARM_CC` | `ARM_CC` → `ARMCC` and value change | They match the same LLVM enum. Better for LLVM compatibility and code generation. | Change it manually. |
+| `ARMCC_*` | `ARMCC_EQ == 0` but `ARMCC_INVALID != 0` | They match the LLVM enum. Better for LLVM compatibility and code generation. | Change by hand. |
+| System registers | System registers are no longer saved in `cs_arm->reg`, but are separated and have more detail. | System operands follow their own encoding logic. Hence, they should be separated in the details as well. | None |
+| System operands | System operands have now the encoding of LLVM (SYSm value mostly) | See note about system registers. | None |
+| Instruction enum | Multiple instructions which were only alias were removed from the instruction enum. | Alias are always disassembled as their real instructions and an additional field identifies which alias it is. | None |
+| Instruction groups| Instruction groups, which actually were CPU features, were renamed to reflect that. | Names now match the ones in LLVM. Better for code generation. | Replace IDs with macros. |
+| CPU features | CPU features get checked more strictly (`MCLASS`, `V8` etc.) | With many new supported extensions, some instruction bytes decode to a different instruction, depending on the enabled features. Hence, it becomes necessary. | None. |
+| `writeback` | `writeback` member was moved to detail. | More architectures need a `writeback` flag. This is a simplification. | None. |
+| Register alias | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. | Mimic LLVM as close as possible. | Enable `CS_OPT_SYNTAX_CS_REG_ALIAS` option. |
+| Immediate | Immediate values (`arm_op.imm`) type changed to `int64_t` | Prevent loss of precision in some cases. | None. |
+| `mem.lshift` | The `mem.lshift` field was removed. It was not set properly before and just duplicates information in `shift` | Remove faulty and duplicate code. | None. |
 | Instr. alias | Capstone now clearly separates real instructions and their aliases. Previously many aliases were treated as real instructions. See above for details. | This became a simple necessity because CS operates with a copy of the LLVMs decoder without changes to the decoder logic. |
 
 **ARM**
