@@ -2836,10 +2836,10 @@ typedef struct cs_aarch64_op {
 		aarch64_imm_range imm_range; ///< An immediate range
     double fp;		 ///< floating point value for FP operand
     aarch64_op_mem mem;	 ///< base/index/scale/disp value for MEM operand
-		aarch64_sysop sysop; ///< System operand
     aarch64_op_sme sme; ///< SME matrix operand
     aarch64_op_pred pred; ///< Predicate register
   };
+  aarch64_sysop sysop; ///< System operand
 
   /// How is this operand accessed? (READ, WRITE or READ|WRITE)
   /// This field is combined of cs_ac_type.

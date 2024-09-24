@@ -8255,8 +8255,8 @@
 #if defined(GET_INSTRINFO_MC_DESC) || defined(GET_INSTRINFO_CTOR_DTOR)
 typedef struct AArch64InstrTable {
   MCInstrDesc Insts[8232];
-  MCOperandInfo OperandInfo[2330];
-  MCPhysReg ImplicitOps[54];
+  MCOperandInfo OperandInfo[2334];
+  MCPhysReg ImplicitOps[53];
 } AArch64InstrTable;
 
 #endif // defined(GET_INSTRINFO_MC_DESC) || defined(GET_INSTRINFO_CTOR_DTOR)
@@ -8273,11 +8273,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 2, &AArch64Descs.OperandInfo[1104] },  // Inst #8229 = ZIP_VG4_4Z4Z_H
   { 2, &AArch64Descs.OperandInfo[1104] },  // Inst #8228 = ZIP_VG4_4Z4Z_D
   { 2, &AArch64Descs.OperandInfo[1104] },  // Inst #8227 = ZIP_VG4_4Z4Z_B
-  { 3, &AArch64Descs.OperandInfo[2310] },  // Inst #8226 = ZIP_VG2_2ZZZ_S
-  { 3, &AArch64Descs.OperandInfo[2310] },  // Inst #8225 = ZIP_VG2_2ZZZ_Q
-  { 3, &AArch64Descs.OperandInfo[2310] },  // Inst #8224 = ZIP_VG2_2ZZZ_H
-  { 3, &AArch64Descs.OperandInfo[2310] },  // Inst #8223 = ZIP_VG2_2ZZZ_D
-  { 3, &AArch64Descs.OperandInfo[2310] },  // Inst #8222 = ZIP_VG2_2ZZZ_B
+  { 3, &AArch64Descs.OperandInfo[2314] },  // Inst #8226 = ZIP_VG2_2ZZZ_S
+  { 3, &AArch64Descs.OperandInfo[2314] },  // Inst #8225 = ZIP_VG2_2ZZZ_Q
+  { 3, &AArch64Descs.OperandInfo[2314] },  // Inst #8224 = ZIP_VG2_2ZZZ_H
+  { 3, &AArch64Descs.OperandInfo[2314] },  // Inst #8223 = ZIP_VG2_2ZZZ_D
+  { 3, &AArch64Descs.OperandInfo[2314] },  // Inst #8222 = ZIP_VG2_2ZZZ_B
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #8221 = ZIPQ2_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #8220 = ZIPQ2_ZZZ_H
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #8219 = ZIPQ2_ZZZ_D
@@ -8319,14 +8319,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[745] },  // Inst #8183 = ZIP1_PPP_D
   { 3, &AArch64Descs.OperandInfo[745] },  // Inst #8182 = ZIP1_PPP_B
   { 1, &AArch64Descs.OperandInfo[425] },  // Inst #8181 = ZERO_T
-  { 4, &AArch64Descs.OperandInfo[2326] },  // Inst #8180 = ZERO_MXI_VG4_Z
-  { 4, &AArch64Descs.OperandInfo[2326] },  // Inst #8179 = ZERO_MXI_VG4_4Z
-  { 4, &AArch64Descs.OperandInfo[2326] },  // Inst #8178 = ZERO_MXI_VG4_2Z
-  { 4, &AArch64Descs.OperandInfo[2326] },  // Inst #8177 = ZERO_MXI_VG2_Z
-  { 4, &AArch64Descs.OperandInfo[2326] },  // Inst #8176 = ZERO_MXI_VG2_4Z
-  { 4, &AArch64Descs.OperandInfo[2326] },  // Inst #8175 = ZERO_MXI_VG2_2Z
-  { 4, &AArch64Descs.OperandInfo[2326] },  // Inst #8174 = ZERO_MXI_4Z
-  { 4, &AArch64Descs.OperandInfo[2326] },  // Inst #8173 = ZERO_MXI_2Z
+  { 4, &AArch64Descs.OperandInfo[2330] },  // Inst #8180 = ZERO_MXI_VG4_Z
+  { 4, &AArch64Descs.OperandInfo[2330] },  // Inst #8179 = ZERO_MXI_VG4_4Z
+  { 4, &AArch64Descs.OperandInfo[2330] },  // Inst #8178 = ZERO_MXI_VG4_2Z
+  { 4, &AArch64Descs.OperandInfo[2330] },  // Inst #8177 = ZERO_MXI_VG2_Z
+  { 4, &AArch64Descs.OperandInfo[2330] },  // Inst #8176 = ZERO_MXI_VG2_4Z
+  { 4, &AArch64Descs.OperandInfo[2330] },  // Inst #8175 = ZERO_MXI_VG2_2Z
+  { 4, &AArch64Descs.OperandInfo[2330] },  // Inst #8174 = ZERO_MXI_4Z
+  { 4, &AArch64Descs.OperandInfo[2330] },  // Inst #8173 = ZERO_MXI_2Z
   { 1, &AArch64Descs.OperandInfo[0] },  // Inst #8172 = ZERO_M
   { 2, &AArch64Descs.OperandInfo[479] },  // Inst #8171 = XTNv8i8
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #8170 = XTNv8i16
@@ -8344,142 +8344,142 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[253] },  // Inst #8158 = XAR
   { 0, &AArch64Descs.OperandInfo[1] },  // Inst #8157 = XAFLAG
   { 1, &AArch64Descs.OperandInfo[391] },  // Inst #8156 = WRFFR
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8155 = WHILEWR_PXX_S
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8154 = WHILEWR_PXX_H
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8153 = WHILEWR_PXX_D
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8152 = WHILEWR_PXX_B
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8151 = WHILERW_PXX_S
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8150 = WHILERW_PXX_H
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8149 = WHILERW_PXX_D
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8148 = WHILERW_PXX_B
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8147 = WHILELT_PXX_S
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8146 = WHILELT_PXX_H
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8145 = WHILELT_PXX_D
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8144 = WHILELT_PXX_B
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8143 = WHILELT_PWW_S
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8142 = WHILELT_PWW_H
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8141 = WHILELT_PWW_D
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8140 = WHILELT_PWW_B
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8139 = WHILELT_CXX_S
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8138 = WHILELT_CXX_H
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8137 = WHILELT_CXX_D
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8136 = WHILELT_CXX_B
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8135 = WHILELT_2PXX_S
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8134 = WHILELT_2PXX_H
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8133 = WHILELT_2PXX_D
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8132 = WHILELT_2PXX_B
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8131 = WHILELS_PXX_S
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8130 = WHILELS_PXX_H
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8129 = WHILELS_PXX_D
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8128 = WHILELS_PXX_B
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8127 = WHILELS_PWW_S
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8126 = WHILELS_PWW_H
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8125 = WHILELS_PWW_D
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8124 = WHILELS_PWW_B
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8123 = WHILELS_CXX_S
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8122 = WHILELS_CXX_H
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8121 = WHILELS_CXX_D
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8120 = WHILELS_CXX_B
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8119 = WHILELS_2PXX_S
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8118 = WHILELS_2PXX_H
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8117 = WHILELS_2PXX_D
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8116 = WHILELS_2PXX_B
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8115 = WHILELO_PXX_S
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8114 = WHILELO_PXX_H
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8113 = WHILELO_PXX_D
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8112 = WHILELO_PXX_B
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8111 = WHILELO_PWW_S
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8110 = WHILELO_PWW_H
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8109 = WHILELO_PWW_D
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8108 = WHILELO_PWW_B
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8107 = WHILELO_CXX_S
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8106 = WHILELO_CXX_H
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8105 = WHILELO_CXX_D
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8104 = WHILELO_CXX_B
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8103 = WHILELO_2PXX_S
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8102 = WHILELO_2PXX_H
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8101 = WHILELO_2PXX_D
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8100 = WHILELO_2PXX_B
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8099 = WHILELE_PXX_S
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8098 = WHILELE_PXX_H
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8097 = WHILELE_PXX_D
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8096 = WHILELE_PXX_B
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8095 = WHILELE_PWW_S
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8094 = WHILELE_PWW_H
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8093 = WHILELE_PWW_D
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8092 = WHILELE_PWW_B
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8091 = WHILELE_CXX_S
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8090 = WHILELE_CXX_H
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8089 = WHILELE_CXX_D
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8088 = WHILELE_CXX_B
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8087 = WHILELE_2PXX_S
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8086 = WHILELE_2PXX_H
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8085 = WHILELE_2PXX_D
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8084 = WHILELE_2PXX_B
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8083 = WHILEHS_PXX_S
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8082 = WHILEHS_PXX_H
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8081 = WHILEHS_PXX_D
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8080 = WHILEHS_PXX_B
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8079 = WHILEHS_PWW_S
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8078 = WHILEHS_PWW_H
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8077 = WHILEHS_PWW_D
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8076 = WHILEHS_PWW_B
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8075 = WHILEHS_CXX_S
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8074 = WHILEHS_CXX_H
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8073 = WHILEHS_CXX_D
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8072 = WHILEHS_CXX_B
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8071 = WHILEHS_2PXX_S
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8070 = WHILEHS_2PXX_H
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8069 = WHILEHS_2PXX_D
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8068 = WHILEHS_2PXX_B
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8067 = WHILEHI_PXX_S
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8066 = WHILEHI_PXX_H
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8065 = WHILEHI_PXX_D
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8064 = WHILEHI_PXX_B
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8063 = WHILEHI_PWW_S
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8062 = WHILEHI_PWW_H
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8061 = WHILEHI_PWW_D
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8060 = WHILEHI_PWW_B
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8059 = WHILEHI_CXX_S
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8058 = WHILEHI_CXX_H
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8057 = WHILEHI_CXX_D
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8056 = WHILEHI_CXX_B
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8055 = WHILEHI_2PXX_S
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8054 = WHILEHI_2PXX_H
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8053 = WHILEHI_2PXX_D
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8052 = WHILEHI_2PXX_B
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8051 = WHILEGT_PXX_S
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8050 = WHILEGT_PXX_H
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8049 = WHILEGT_PXX_D
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8048 = WHILEGT_PXX_B
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8047 = WHILEGT_PWW_S
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8046 = WHILEGT_PWW_H
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8045 = WHILEGT_PWW_D
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8044 = WHILEGT_PWW_B
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8043 = WHILEGT_CXX_S
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8042 = WHILEGT_CXX_H
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8041 = WHILEGT_CXX_D
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8040 = WHILEGT_CXX_B
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8039 = WHILEGT_2PXX_S
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8038 = WHILEGT_2PXX_H
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8037 = WHILEGT_2PXX_D
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8036 = WHILEGT_2PXX_B
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8035 = WHILEGE_PXX_S
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8034 = WHILEGE_PXX_H
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8033 = WHILEGE_PXX_D
-  { 3, &AArch64Descs.OperandInfo[2323] },  // Inst #8032 = WHILEGE_PXX_B
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8031 = WHILEGE_PWW_S
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8030 = WHILEGE_PWW_H
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8029 = WHILEGE_PWW_D
-  { 3, &AArch64Descs.OperandInfo[2320] },  // Inst #8028 = WHILEGE_PWW_B
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8027 = WHILEGE_CXX_S
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8026 = WHILEGE_CXX_H
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8025 = WHILEGE_CXX_D
-  { 4, &AArch64Descs.OperandInfo[2316] },  // Inst #8024 = WHILEGE_CXX_B
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8023 = WHILEGE_2PXX_S
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8022 = WHILEGE_2PXX_H
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8021 = WHILEGE_2PXX_D
-  { 3, &AArch64Descs.OperandInfo[2313] },  // Inst #8020 = WHILEGE_2PXX_B
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8155 = WHILEWR_PXX_S
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8154 = WHILEWR_PXX_H
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8153 = WHILEWR_PXX_D
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8152 = WHILEWR_PXX_B
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8151 = WHILERW_PXX_S
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8150 = WHILERW_PXX_H
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8149 = WHILERW_PXX_D
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8148 = WHILERW_PXX_B
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8147 = WHILELT_PXX_S
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8146 = WHILELT_PXX_H
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8145 = WHILELT_PXX_D
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8144 = WHILELT_PXX_B
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8143 = WHILELT_PWW_S
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8142 = WHILELT_PWW_H
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8141 = WHILELT_PWW_D
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8140 = WHILELT_PWW_B
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8139 = WHILELT_CXX_S
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8138 = WHILELT_CXX_H
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8137 = WHILELT_CXX_D
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8136 = WHILELT_CXX_B
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8135 = WHILELT_2PXX_S
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8134 = WHILELT_2PXX_H
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8133 = WHILELT_2PXX_D
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8132 = WHILELT_2PXX_B
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8131 = WHILELS_PXX_S
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8130 = WHILELS_PXX_H
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8129 = WHILELS_PXX_D
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8128 = WHILELS_PXX_B
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8127 = WHILELS_PWW_S
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8126 = WHILELS_PWW_H
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8125 = WHILELS_PWW_D
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8124 = WHILELS_PWW_B
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8123 = WHILELS_CXX_S
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8122 = WHILELS_CXX_H
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8121 = WHILELS_CXX_D
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8120 = WHILELS_CXX_B
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8119 = WHILELS_2PXX_S
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8118 = WHILELS_2PXX_H
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8117 = WHILELS_2PXX_D
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8116 = WHILELS_2PXX_B
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8115 = WHILELO_PXX_S
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8114 = WHILELO_PXX_H
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8113 = WHILELO_PXX_D
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8112 = WHILELO_PXX_B
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8111 = WHILELO_PWW_S
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8110 = WHILELO_PWW_H
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8109 = WHILELO_PWW_D
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8108 = WHILELO_PWW_B
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8107 = WHILELO_CXX_S
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8106 = WHILELO_CXX_H
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8105 = WHILELO_CXX_D
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8104 = WHILELO_CXX_B
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8103 = WHILELO_2PXX_S
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8102 = WHILELO_2PXX_H
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8101 = WHILELO_2PXX_D
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8100 = WHILELO_2PXX_B
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8099 = WHILELE_PXX_S
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8098 = WHILELE_PXX_H
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8097 = WHILELE_PXX_D
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8096 = WHILELE_PXX_B
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8095 = WHILELE_PWW_S
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8094 = WHILELE_PWW_H
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8093 = WHILELE_PWW_D
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8092 = WHILELE_PWW_B
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8091 = WHILELE_CXX_S
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8090 = WHILELE_CXX_H
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8089 = WHILELE_CXX_D
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8088 = WHILELE_CXX_B
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8087 = WHILELE_2PXX_S
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8086 = WHILELE_2PXX_H
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8085 = WHILELE_2PXX_D
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8084 = WHILELE_2PXX_B
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8083 = WHILEHS_PXX_S
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8082 = WHILEHS_PXX_H
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8081 = WHILEHS_PXX_D
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8080 = WHILEHS_PXX_B
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8079 = WHILEHS_PWW_S
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8078 = WHILEHS_PWW_H
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8077 = WHILEHS_PWW_D
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8076 = WHILEHS_PWW_B
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8075 = WHILEHS_CXX_S
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8074 = WHILEHS_CXX_H
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8073 = WHILEHS_CXX_D
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8072 = WHILEHS_CXX_B
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8071 = WHILEHS_2PXX_S
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8070 = WHILEHS_2PXX_H
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8069 = WHILEHS_2PXX_D
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8068 = WHILEHS_2PXX_B
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8067 = WHILEHI_PXX_S
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8066 = WHILEHI_PXX_H
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8065 = WHILEHI_PXX_D
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8064 = WHILEHI_PXX_B
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8063 = WHILEHI_PWW_S
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8062 = WHILEHI_PWW_H
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8061 = WHILEHI_PWW_D
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8060 = WHILEHI_PWW_B
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8059 = WHILEHI_CXX_S
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8058 = WHILEHI_CXX_H
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8057 = WHILEHI_CXX_D
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8056 = WHILEHI_CXX_B
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8055 = WHILEHI_2PXX_S
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8054 = WHILEHI_2PXX_H
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8053 = WHILEHI_2PXX_D
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8052 = WHILEHI_2PXX_B
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8051 = WHILEGT_PXX_S
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8050 = WHILEGT_PXX_H
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8049 = WHILEGT_PXX_D
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8048 = WHILEGT_PXX_B
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8047 = WHILEGT_PWW_S
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8046 = WHILEGT_PWW_H
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8045 = WHILEGT_PWW_D
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8044 = WHILEGT_PWW_B
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8043 = WHILEGT_CXX_S
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8042 = WHILEGT_CXX_H
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8041 = WHILEGT_CXX_D
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8040 = WHILEGT_CXX_B
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8039 = WHILEGT_2PXX_S
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8038 = WHILEGT_2PXX_H
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8037 = WHILEGT_2PXX_D
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8036 = WHILEGT_2PXX_B
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8035 = WHILEGE_PXX_S
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8034 = WHILEGE_PXX_H
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8033 = WHILEGE_PXX_D
+  { 3, &AArch64Descs.OperandInfo[2327] },  // Inst #8032 = WHILEGE_PXX_B
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8031 = WHILEGE_PWW_S
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8030 = WHILEGE_PWW_H
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8029 = WHILEGE_PWW_D
+  { 3, &AArch64Descs.OperandInfo[2324] },  // Inst #8028 = WHILEGE_PWW_B
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8027 = WHILEGE_CXX_S
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8026 = WHILEGE_CXX_H
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8025 = WHILEGE_CXX_D
+  { 4, &AArch64Descs.OperandInfo[2320] },  // Inst #8024 = WHILEGE_CXX_B
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8023 = WHILEGE_2PXX_S
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8022 = WHILEGE_2PXX_H
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8021 = WHILEGE_2PXX_D
+  { 3, &AArch64Descs.OperandInfo[2317] },  // Inst #8020 = WHILEGE_2PXX_B
   { 1, &AArch64Descs.OperandInfo[376] },  // Inst #8019 = WFIT
   { 1, &AArch64Descs.OperandInfo[376] },  // Inst #8018 = WFET
   { 2, &AArch64Descs.OperandInfo[1104] },  // Inst #8017 = UZP_VG4_4Z4Z_S
@@ -8487,11 +8487,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 2, &AArch64Descs.OperandInfo[1104] },  // Inst #8015 = UZP_VG4_4Z4Z_H
   { 2, &AArch64Descs.OperandInfo[1104] },  // Inst #8014 = UZP_VG4_4Z4Z_D
   { 2, &AArch64Descs.OperandInfo[1104] },  // Inst #8013 = UZP_VG4_4Z4Z_B
-  { 3, &AArch64Descs.OperandInfo[2310] },  // Inst #8012 = UZP_VG2_2ZZZ_S
-  { 3, &AArch64Descs.OperandInfo[2310] },  // Inst #8011 = UZP_VG2_2ZZZ_Q
-  { 3, &AArch64Descs.OperandInfo[2310] },  // Inst #8010 = UZP_VG2_2ZZZ_H
-  { 3, &AArch64Descs.OperandInfo[2310] },  // Inst #8009 = UZP_VG2_2ZZZ_D
-  { 3, &AArch64Descs.OperandInfo[2310] },  // Inst #8008 = UZP_VG2_2ZZZ_B
+  { 3, &AArch64Descs.OperandInfo[2314] },  // Inst #8012 = UZP_VG2_2ZZZ_S
+  { 3, &AArch64Descs.OperandInfo[2314] },  // Inst #8011 = UZP_VG2_2ZZZ_Q
+  { 3, &AArch64Descs.OperandInfo[2314] },  // Inst #8010 = UZP_VG2_2ZZZ_H
+  { 3, &AArch64Descs.OperandInfo[2314] },  // Inst #8009 = UZP_VG2_2ZZZ_D
+  { 3, &AArch64Descs.OperandInfo[2314] },  // Inst #8008 = UZP_VG2_2ZZZ_B
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #8007 = UZPQ2_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #8006 = UZPQ2_ZZZ_H
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #8005 = UZPQ2_ZZZ_D
@@ -8541,9 +8541,9 @@ static const AArch64InstrTable AArch64Descs = {
   { 7, &AArch64Descs.OperandInfo[664] },  // Inst #7961 = UVDOT_VG4_M4ZZI_HtoD
   { 7, &AArch64Descs.OperandInfo[664] },  // Inst #7960 = UVDOT_VG4_M4ZZI_BtoS
   { 7, &AArch64Descs.OperandInfo[657] },  // Inst #7959 = UVDOT_VG2_M2ZZI_HtoS
-  { 2, &AArch64Descs.OperandInfo[2223] },  // Inst #7958 = UUNPK_VG4_4Z2Z_S
-  { 2, &AArch64Descs.OperandInfo[2223] },  // Inst #7957 = UUNPK_VG4_4Z2Z_H
-  { 2, &AArch64Descs.OperandInfo[2223] },  // Inst #7956 = UUNPK_VG4_4Z2Z_D
+  { 2, &AArch64Descs.OperandInfo[2227] },  // Inst #7958 = UUNPK_VG4_4Z2Z_S
+  { 2, &AArch64Descs.OperandInfo[2227] },  // Inst #7957 = UUNPK_VG4_4Z2Z_H
+  { 2, &AArch64Descs.OperandInfo[2227] },  // Inst #7956 = UUNPK_VG4_4Z2Z_D
   { 2, &AArch64Descs.OperandInfo[641] },  // Inst #7955 = UUNPK_VG2_2ZZ_S
   { 2, &AArch64Descs.OperandInfo[641] },  // Inst #7954 = UUNPK_VG2_2ZZ_H
   { 2, &AArch64Descs.OperandInfo[641] },  // Inst #7953 = UUNPK_VG2_2ZZ_D
@@ -8554,11 +8554,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 2, &AArch64Descs.OperandInfo[639] },  // Inst #7948 = UUNPKHI_ZZ_H
   { 2, &AArch64Descs.OperandInfo[639] },  // Inst #7947 = UUNPKHI_ZZ_D
   { 7, &AArch64Descs.OperandInfo[664] },  // Inst #7946 = USVDOT_VG4_M4ZZI_BToS
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #7945 = USUBWv8i8_v8i16
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #7945 = USUBWv8i8_v8i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7944 = USUBWv8i16_v4i32
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7943 = USUBWv4i32_v2i64
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #7942 = USUBWv4i16_v4i32
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #7941 = USUBWv2i32_v2i64
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #7942 = USUBWv4i16_v4i32
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #7941 = USUBWv2i32_v2i64
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7940 = USUBWv16i8_v8i16
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7939 = USUBWT_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7938 = USUBWT_ZZZ_H
@@ -8578,28 +8578,28 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7924 = USUBLB_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7923 = USUBLB_ZZZ_H
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7922 = USUBLB_ZZZ_D
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #7921 = USRAv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7920 = USRAv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7919 = USRAv4i32_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #7918 = USRAv4i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7917 = USRAv2i64_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #7916 = USRAv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7915 = USRAv16i8_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #7914 = USRAd
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #7921 = USRAv8i8_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7920 = USRAv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7919 = USRAv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #7918 = USRAv4i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7917 = USRAv2i64_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #7916 = USRAv2i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7915 = USRAv16i8_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #7914 = USRAd
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7913 = USRA_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7912 = USRA_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7911 = USRA_ZZI_D
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7910 = USRA_ZZI_B
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #7909 = USQADDv8i8
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #7909 = USQADDv8i8
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #7908 = USQADDv8i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #7907 = USQADDv4i32
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #7906 = USQADDv4i16
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #7906 = USQADDv4i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #7905 = USQADDv2i64
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #7904 = USQADDv2i32
-  { 3, &AArch64Descs.OperandInfo[2231] },  // Inst #7903 = USQADDv1i8
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #7902 = USQADDv1i64
-  { 3, &AArch64Descs.OperandInfo[2228] },  // Inst #7901 = USQADDv1i32
-  { 3, &AArch64Descs.OperandInfo[2225] },  // Inst #7900 = USQADDv1i16
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #7904 = USQADDv2i32
+  { 3, &AArch64Descs.OperandInfo[2235] },  // Inst #7903 = USQADDv1i8
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #7902 = USQADDv1i64
+  { 3, &AArch64Descs.OperandInfo[2232] },  // Inst #7901 = USQADDv1i32
+  { 3, &AArch64Descs.OperandInfo[2229] },  // Inst #7900 = USQADDv1i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #7899 = USQADDv16i8
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7898 = USQADD_ZPmZ_S
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7897 = USQADD_ZPmZ_H
@@ -8635,11 +8635,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7867 = USHLv2i32
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7866 = USHLv1i64
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7865 = USHLv16i8
-  { 3, &AArch64Descs.OperandInfo[2164] },  // Inst #7864 = USHLLv8i8_shift
+  { 3, &AArch64Descs.OperandInfo[2168] },  // Inst #7864 = USHLLv8i8_shift
   { 3, &AArch64Descs.OperandInfo[933] },  // Inst #7863 = USHLLv8i16_shift
   { 3, &AArch64Descs.OperandInfo[933] },  // Inst #7862 = USHLLv4i32_shift
-  { 3, &AArch64Descs.OperandInfo[2164] },  // Inst #7861 = USHLLv4i16_shift
-  { 3, &AArch64Descs.OperandInfo[2164] },  // Inst #7860 = USHLLv2i32_shift
+  { 3, &AArch64Descs.OperandInfo[2168] },  // Inst #7861 = USHLLv4i16_shift
+  { 3, &AArch64Descs.OperandInfo[2168] },  // Inst #7860 = USHLLv2i32_shift
   { 3, &AArch64Descs.OperandInfo[933] },  // Inst #7859 = USHLLv16i8_shift
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #7858 = USHLLT_ZZI_S
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #7857 = USHLLT_ZZI_H
@@ -8659,14 +8659,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 6, &AArch64Descs.OperandInfo[547] },  // Inst #7843 = USDOT_VG2_M2ZZ_BToS
   { 7, &AArch64Descs.OperandInfo[657] },  // Inst #7842 = USDOT_VG2_M2ZZI_BToS
   { 6, &AArch64Descs.OperandInfo[541] },  // Inst #7841 = USDOT_VG2_M2Z2Z_BToS
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #7840 = URSRAv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7839 = URSRAv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7838 = URSRAv4i32_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #7837 = URSRAv4i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7836 = URSRAv2i64_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #7835 = URSRAv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7834 = URSRAv16i8_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #7833 = URSRAd
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #7840 = URSRAv8i8_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7839 = URSRAv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7838 = URSRAv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #7837 = URSRAv4i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7836 = URSRAv2i64_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #7835 = URSRAv2i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7834 = URSRAv16i8_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #7833 = URSRAd
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7832 = URSRA_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7831 = URSRA_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7830 = URSRA_ZZI_D
@@ -8736,7 +8736,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #7766 = UQXTNv4i32
   { 2, &AArch64Descs.OperandInfo[479] },  // Inst #7765 = UQXTNv4i16
   { 2, &AArch64Descs.OperandInfo[479] },  // Inst #7764 = UQXTNv2i32
-  { 2, &AArch64Descs.OperandInfo[2162] },  // Inst #7763 = UQXTNv1i8
+  { 2, &AArch64Descs.OperandInfo[2166] },  // Inst #7763 = UQXTNv1i8
   { 2, &AArch64Descs.OperandInfo[1003] },  // Inst #7762 = UQXTNv1i32
   { 2, &AArch64Descs.OperandInfo[653] },  // Inst #7761 = UQXTNv1i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #7760 = UQXTNv16i8
@@ -8752,7 +8752,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7750 = UQSUBv4i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7749 = UQSUBv2i64
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7748 = UQSUBv2i32
-  { 3, &AArch64Descs.OperandInfo[2101] },  // Inst #7747 = UQSUBv1i8
+  { 3, &AArch64Descs.OperandInfo[2105] },  // Inst #7747 = UQSUBv1i8
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7746 = UQSUBv1i64
   { 3, &AArch64Descs.OperandInfo[996] },  // Inst #7745 = UQSUBv1i32
   { 3, &AArch64Descs.OperandInfo[993] },  // Inst #7744 = UQSUBv1i16
@@ -8774,14 +8774,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7728 = UQSUBR_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7727 = UQSUBR_ZPmZ_B
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #7726 = UQSHRNv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7725 = UQSHRNv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7724 = UQSHRNv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7725 = UQSHRNv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7724 = UQSHRNv4i32_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #7723 = UQSHRNv4i16_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #7722 = UQSHRNv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7721 = UQSHRNv16i8_shift
-  { 3, &AArch64Descs.OperandInfo[2156] },  // Inst #7720 = UQSHRNs
-  { 3, &AArch64Descs.OperandInfo[2153] },  // Inst #7719 = UQSHRNh
-  { 3, &AArch64Descs.OperandInfo[2150] },  // Inst #7718 = UQSHRNb
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7721 = UQSHRNv16i8_shift
+  { 3, &AArch64Descs.OperandInfo[2160] },  // Inst #7720 = UQSHRNs
+  { 3, &AArch64Descs.OperandInfo[2157] },  // Inst #7719 = UQSHRNh
+  { 3, &AArch64Descs.OperandInfo[2154] },  // Inst #7718 = UQSHRNb
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7717 = UQSHRNT_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7716 = UQSHRNT_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7715 = UQSHRNT_ZZI_B
@@ -8800,7 +8800,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7702 = UQSHLv2i64
   { 3, &AArch64Descs.OperandInfo[1106] },  // Inst #7701 = UQSHLv2i32_shift
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7700 = UQSHLv2i32
-  { 3, &AArch64Descs.OperandInfo[2101] },  // Inst #7699 = UQSHLv1i8
+  { 3, &AArch64Descs.OperandInfo[2105] },  // Inst #7699 = UQSHLv1i8
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7698 = UQSHLv1i64
   { 3, &AArch64Descs.OperandInfo[996] },  // Inst #7697 = UQSHLv1i32
   { 3, &AArch64Descs.OperandInfo[993] },  // Inst #7696 = UQSHLv1i16
@@ -8809,7 +8809,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[1112] },  // Inst #7693 = UQSHLs
   { 3, &AArch64Descs.OperandInfo[1109] },  // Inst #7692 = UQSHLh
   { 3, &AArch64Descs.OperandInfo[1106] },  // Inst #7691 = UQSHLd
-  { 3, &AArch64Descs.OperandInfo[2159] },  // Inst #7690 = UQSHLb
+  { 3, &AArch64Descs.OperandInfo[2163] },  // Inst #7690 = UQSHLb
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7689 = UQSHL_ZPmZ_S
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7688 = UQSHL_ZPmZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7687 = UQSHL_ZPmZ_D
@@ -8822,21 +8822,21 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7680 = UQSHLR_ZPmZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7679 = UQSHLR_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7678 = UQSHLR_ZPmZ_B
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #7677 = UQRSHR_VG4_Z4ZI_H
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #7676 = UQRSHR_VG4_Z4ZI_B
-  { 3, &AArch64Descs.OperandInfo[2147] },  // Inst #7675 = UQRSHR_VG2_Z2ZI_H
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #7677 = UQRSHR_VG4_Z4ZI_H
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #7676 = UQRSHR_VG4_Z4ZI_B
+  { 3, &AArch64Descs.OperandInfo[2151] },  // Inst #7675 = UQRSHR_VG2_Z2ZI_H
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #7674 = UQRSHRNv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7673 = UQRSHRNv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7672 = UQRSHRNv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7673 = UQRSHRNv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7672 = UQRSHRNv4i32_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #7671 = UQRSHRNv4i16_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #7670 = UQRSHRNv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #7669 = UQRSHRNv16i8_shift
-  { 3, &AArch64Descs.OperandInfo[2156] },  // Inst #7668 = UQRSHRNs
-  { 3, &AArch64Descs.OperandInfo[2153] },  // Inst #7667 = UQRSHRNh
-  { 3, &AArch64Descs.OperandInfo[2150] },  // Inst #7666 = UQRSHRNb
-  { 3, &AArch64Descs.OperandInfo[2147] },  // Inst #7665 = UQRSHRN_Z2ZI_StoH
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #7664 = UQRSHRN_VG4_Z4ZI_H
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #7663 = UQRSHRN_VG4_Z4ZI_B
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7669 = UQRSHRNv16i8_shift
+  { 3, &AArch64Descs.OperandInfo[2160] },  // Inst #7668 = UQRSHRNs
+  { 3, &AArch64Descs.OperandInfo[2157] },  // Inst #7667 = UQRSHRNh
+  { 3, &AArch64Descs.OperandInfo[2154] },  // Inst #7666 = UQRSHRNb
+  { 3, &AArch64Descs.OperandInfo[2151] },  // Inst #7665 = UQRSHRN_Z2ZI_StoH
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #7664 = UQRSHRN_VG4_Z4ZI_H
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #7663 = UQRSHRN_VG4_Z4ZI_B
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7662 = UQRSHRNT_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7661 = UQRSHRNT_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #7660 = UQRSHRNT_ZZI_B
@@ -8849,7 +8849,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7653 = UQRSHLv4i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7652 = UQRSHLv2i64
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7651 = UQRSHLv2i32
-  { 3, &AArch64Descs.OperandInfo[2101] },  // Inst #7650 = UQRSHLv1i8
+  { 3, &AArch64Descs.OperandInfo[2105] },  // Inst #7650 = UQRSHLv1i8
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7649 = UQRSHLv1i64
   { 3, &AArch64Descs.OperandInfo[996] },  // Inst #7648 = UQRSHLv1i32
   { 3, &AArch64Descs.OperandInfo[993] },  // Inst #7647 = UQRSHLv1i16
@@ -8872,10 +8872,10 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[904] },  // Inst #7630 = UQINCP_XP_H
   { 3, &AArch64Descs.OperandInfo[904] },  // Inst #7629 = UQINCP_XP_D
   { 3, &AArch64Descs.OperandInfo[904] },  // Inst #7628 = UQINCP_XP_B
-  { 3, &AArch64Descs.OperandInfo[2307] },  // Inst #7627 = UQINCP_WP_S
-  { 3, &AArch64Descs.OperandInfo[2307] },  // Inst #7626 = UQINCP_WP_H
-  { 3, &AArch64Descs.OperandInfo[2307] },  // Inst #7625 = UQINCP_WP_D
-  { 3, &AArch64Descs.OperandInfo[2307] },  // Inst #7624 = UQINCP_WP_B
+  { 3, &AArch64Descs.OperandInfo[2311] },  // Inst #7627 = UQINCP_WP_S
+  { 3, &AArch64Descs.OperandInfo[2311] },  // Inst #7626 = UQINCP_WP_H
+  { 3, &AArch64Descs.OperandInfo[2311] },  // Inst #7625 = UQINCP_WP_D
+  { 3, &AArch64Descs.OperandInfo[2311] },  // Inst #7624 = UQINCP_WP_B
   { 4, &AArch64Descs.OperandInfo[578] },  // Inst #7623 = UQINCH_ZPiI
   { 4, &AArch64Descs.OperandInfo[900] },  // Inst #7622 = UQINCH_XPiI
   { 4, &AArch64Descs.OperandInfo[1894] },  // Inst #7621 = UQINCH_WPiI
@@ -8894,10 +8894,10 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[904] },  // Inst #7608 = UQDECP_XP_H
   { 3, &AArch64Descs.OperandInfo[904] },  // Inst #7607 = UQDECP_XP_D
   { 3, &AArch64Descs.OperandInfo[904] },  // Inst #7606 = UQDECP_XP_B
-  { 3, &AArch64Descs.OperandInfo[2307] },  // Inst #7605 = UQDECP_WP_S
-  { 3, &AArch64Descs.OperandInfo[2307] },  // Inst #7604 = UQDECP_WP_H
-  { 3, &AArch64Descs.OperandInfo[2307] },  // Inst #7603 = UQDECP_WP_D
-  { 3, &AArch64Descs.OperandInfo[2307] },  // Inst #7602 = UQDECP_WP_B
+  { 3, &AArch64Descs.OperandInfo[2311] },  // Inst #7605 = UQDECP_WP_S
+  { 3, &AArch64Descs.OperandInfo[2311] },  // Inst #7604 = UQDECP_WP_H
+  { 3, &AArch64Descs.OperandInfo[2311] },  // Inst #7603 = UQDECP_WP_D
+  { 3, &AArch64Descs.OperandInfo[2311] },  // Inst #7602 = UQDECP_WP_B
   { 4, &AArch64Descs.OperandInfo[578] },  // Inst #7601 = UQDECH_ZPiI
   { 4, &AArch64Descs.OperandInfo[900] },  // Inst #7600 = UQDECH_XPiI
   { 4, &AArch64Descs.OperandInfo[1894] },  // Inst #7599 = UQDECH_WPiI
@@ -8918,7 +8918,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7584 = UQADDv4i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7583 = UQADDv2i64
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7582 = UQADDv2i32
-  { 3, &AArch64Descs.OperandInfo[2101] },  // Inst #7581 = UQADDv1i8
+  { 3, &AArch64Descs.OperandInfo[2105] },  // Inst #7581 = UQADDv1i8
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7580 = UQADDv1i64
   { 3, &AArch64Descs.OperandInfo[996] },  // Inst #7579 = UQADDv1i32
   { 3, &AArch64Descs.OperandInfo[993] },  // Inst #7578 = UQADDv1i16
@@ -8941,9 +8941,9 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7561 = UMULLv4i32_v2i64
   { 4, &AArch64Descs.OperandInfo[253] },  // Inst #7560 = UMULLv4i32_indexed
   { 3, &AArch64Descs.OperandInfo[1946] },  // Inst #7559 = UMULLv4i16_v4i32
-  { 4, &AArch64Descs.OperandInfo[2092] },  // Inst #7558 = UMULLv4i16_indexed
+  { 4, &AArch64Descs.OperandInfo[2096] },  // Inst #7558 = UMULLv4i16_indexed
   { 3, &AArch64Descs.OperandInfo[1946] },  // Inst #7557 = UMULLv2i32_v2i64
-  { 4, &AArch64Descs.OperandInfo[2088] },  // Inst #7556 = UMULLv2i32_indexed
+  { 4, &AArch64Descs.OperandInfo[2092] },  // Inst #7556 = UMULLv2i32_indexed
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7555 = UMULLv16i8_v8i16
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7554 = UMULLT_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7553 = UMULLT_ZZZ_H
@@ -8964,15 +8964,15 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7538 = UMULH_ZPmZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7537 = UMULH_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7536 = UMULH_ZPmZ_B
-  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #7535 = UMSUBLrrr
-  { 3, &AArch64Descs.OperandInfo[2082] },  // Inst #7534 = UMOVvi8_idx0
-  { 3, &AArch64Descs.OperandInfo[2079] },  // Inst #7533 = UMOVvi8
-  { 3, &AArch64Descs.OperandInfo[2085] },  // Inst #7532 = UMOVvi64_idx0
+  { 4, &AArch64Descs.OperandInfo[2063] },  // Inst #7535 = UMSUBLrrr
+  { 3, &AArch64Descs.OperandInfo[2086] },  // Inst #7534 = UMOVvi8_idx0
+  { 3, &AArch64Descs.OperandInfo[2083] },  // Inst #7533 = UMOVvi8
+  { 3, &AArch64Descs.OperandInfo[2089] },  // Inst #7532 = UMOVvi64_idx0
   { 3, &AArch64Descs.OperandInfo[1156] },  // Inst #7531 = UMOVvi64
-  { 3, &AArch64Descs.OperandInfo[2082] },  // Inst #7530 = UMOVvi32_idx0
-  { 3, &AArch64Descs.OperandInfo[2079] },  // Inst #7529 = UMOVvi32
-  { 3, &AArch64Descs.OperandInfo[2082] },  // Inst #7528 = UMOVvi16_idx0
-  { 3, &AArch64Descs.OperandInfo[2079] },  // Inst #7527 = UMOVvi16
+  { 3, &AArch64Descs.OperandInfo[2086] },  // Inst #7530 = UMOVvi32_idx0
+  { 3, &AArch64Descs.OperandInfo[2083] },  // Inst #7529 = UMOVvi32
+  { 3, &AArch64Descs.OperandInfo[2086] },  // Inst #7528 = UMOVvi16_idx0
+  { 3, &AArch64Descs.OperandInfo[2083] },  // Inst #7527 = UMOVvi16
   { 6, &AArch64Descs.OperandInfo[709] },  // Inst #7526 = UMOPS_MPPZZ_S
   { 6, &AArch64Descs.OperandInfo[709] },  // Inst #7525 = UMOPS_MPPZZ_HtoS
   { 6, &AArch64Descs.OperandInfo[1150] },  // Inst #7524 = UMOPS_MPPZZ_D
@@ -8981,15 +8981,15 @@ static const AArch64InstrTable AArch64Descs = {
   { 6, &AArch64Descs.OperandInfo[1150] },  // Inst #7521 = UMOPA_MPPZZ_D
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7520 = UMMLA_ZZZ
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7519 = UMMLA
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7518 = UMLSLv8i8_v8i16
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #7518 = UMLSLv8i8_v8i16
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7517 = UMLSLv8i16_v4i32
   { 5, &AArch64Descs.OperandInfo[686] },  // Inst #7516 = UMLSLv8i16_indexed
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7515 = UMLSLv4i32_v2i64
   { 5, &AArch64Descs.OperandInfo[634] },  // Inst #7514 = UMLSLv4i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7513 = UMLSLv4i16_v4i32
-  { 5, &AArch64Descs.OperandInfo[2074] },  // Inst #7512 = UMLSLv4i16_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7511 = UMLSLv2i32_v2i64
-  { 5, &AArch64Descs.OperandInfo[2069] },  // Inst #7510 = UMLSLv2i32_indexed
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #7513 = UMLSLv4i16_v4i32
+  { 5, &AArch64Descs.OperandInfo[2078] },  // Inst #7512 = UMLSLv4i16_indexed
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #7511 = UMLSLv2i32_v2i64
+  { 5, &AArch64Descs.OperandInfo[2073] },  // Inst #7510 = UMLSLv2i32_indexed
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7509 = UMLSLv16i8_v8i16
   { 6, &AArch64Descs.OperandInfo[567] },  // Inst #7508 = UMLSL_VG4_M4ZZ_HtoS
   { 7, &AArch64Descs.OperandInfo[664] },  // Inst #7507 = UMLSL_VG4_M4ZZI_HtoS
@@ -9025,15 +9025,15 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7477 = UMLSLB_ZZZ_D
   { 5, &AArch64Descs.OperandInfo[671] },  // Inst #7476 = UMLSLB_ZZZI_S
   { 5, &AArch64Descs.OperandInfo[1135] },  // Inst #7475 = UMLSLB_ZZZI_D
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7474 = UMLALv8i8_v8i16
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #7474 = UMLALv8i8_v8i16
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7473 = UMLALv8i16_v4i32
   { 5, &AArch64Descs.OperandInfo[686] },  // Inst #7472 = UMLALv8i16_indexed
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7471 = UMLALv4i32_v2i64
   { 5, &AArch64Descs.OperandInfo[634] },  // Inst #7470 = UMLALv4i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7469 = UMLALv4i16_v4i32
-  { 5, &AArch64Descs.OperandInfo[2074] },  // Inst #7468 = UMLALv4i16_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7467 = UMLALv2i32_v2i64
-  { 5, &AArch64Descs.OperandInfo[2069] },  // Inst #7466 = UMLALv2i32_indexed
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #7469 = UMLALv4i16_v4i32
+  { 5, &AArch64Descs.OperandInfo[2078] },  // Inst #7468 = UMLALv4i16_indexed
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #7467 = UMLALv2i32_v2i64
+  { 5, &AArch64Descs.OperandInfo[2073] },  // Inst #7466 = UMLALv2i32_indexed
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7465 = UMLALv16i8_v8i16
   { 6, &AArch64Descs.OperandInfo[567] },  // Inst #7464 = UMLAL_VG4_M4ZZ_HtoS
   { 7, &AArch64Descs.OperandInfo[664] },  // Inst #7463 = UMLAL_VG4_M4ZZI_HtoS
@@ -9100,9 +9100,9 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[680] },  // Inst #7402 = UMIN_VG2_2Z2Z_D
   { 3, &AArch64Descs.OperandInfo[680] },  // Inst #7401 = UMIN_VG2_2Z2Z_B
   { 3, &AArch64Descs.OperandInfo[151] },  // Inst #7400 = UMINXrr
-  { 3, &AArch64Descs.OperandInfo[2066] },  // Inst #7399 = UMINXri
+  { 3, &AArch64Descs.OperandInfo[2070] },  // Inst #7399 = UMINXri
   { 3, &AArch64Descs.OperandInfo[148] },  // Inst #7398 = UMINWrr
-  { 3, &AArch64Descs.OperandInfo[2063] },  // Inst #7397 = UMINWri
+  { 3, &AArch64Descs.OperandInfo[2067] },  // Inst #7397 = UMINWri
   { 2, &AArch64Descs.OperandInfo[520] },  // Inst #7396 = UMINVv8i8v
   { 2, &AArch64Descs.OperandInfo[518] },  // Inst #7395 = UMINVv8i16v
   { 2, &AArch64Descs.OperandInfo[516] },  // Inst #7394 = UMINVv4i32v
@@ -9157,9 +9157,9 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[680] },  // Inst #7345 = UMAX_VG2_2Z2Z_D
   { 3, &AArch64Descs.OperandInfo[680] },  // Inst #7344 = UMAX_VG2_2Z2Z_B
   { 3, &AArch64Descs.OperandInfo[151] },  // Inst #7343 = UMAXXrr
-  { 3, &AArch64Descs.OperandInfo[2066] },  // Inst #7342 = UMAXXri
+  { 3, &AArch64Descs.OperandInfo[2070] },  // Inst #7342 = UMAXXri
   { 3, &AArch64Descs.OperandInfo[148] },  // Inst #7341 = UMAXWrr
-  { 3, &AArch64Descs.OperandInfo[2063] },  // Inst #7340 = UMAXWri
+  { 3, &AArch64Descs.OperandInfo[2067] },  // Inst #7340 = UMAXWri
   { 2, &AArch64Descs.OperandInfo[520] },  // Inst #7339 = UMAXVv8i8v
   { 2, &AArch64Descs.OperandInfo[518] },  // Inst #7338 = UMAXVv8i16v
   { 2, &AArch64Descs.OperandInfo[516] },  // Inst #7337 = UMAXVv4i32v
@@ -9183,7 +9183,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7319 = UMAXP_ZPmZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7318 = UMAXP_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7317 = UMAXP_ZPmZ_B
-  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #7316 = UMADDLrrr
+  { 4, &AArch64Descs.OperandInfo[2063] },  // Inst #7316 = UMADDLrrr
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #7315 = UHSUBv8i8
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7314 = UHSUBv8i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7313 = UHSUBv4i32
@@ -9268,18 +9268,18 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[426] },  // Inst #7234 = UCVTF_ZPmZ_DtoD
   { 2, &AArch64Descs.OperandInfo[1104] },  // Inst #7233 = UCVTF_4Z4Z_StoS
   { 2, &AArch64Descs.OperandInfo[1102] },  // Inst #7232 = UCVTF_2Z2Z_StoS
-  { 2, &AArch64Descs.OperandInfo[2036] },  // Inst #7231 = UCVTFUXSri
+  { 2, &AArch64Descs.OperandInfo[2040] },  // Inst #7231 = UCVTFUXSri
   { 2, &AArch64Descs.OperandInfo[1174] },  // Inst #7230 = UCVTFUXHri
   { 2, &AArch64Descs.OperandInfo[1172] },  // Inst #7229 = UCVTFUXDri
   { 2, &AArch64Descs.OperandInfo[1167] },  // Inst #7228 = UCVTFUWSri
   { 2, &AArch64Descs.OperandInfo[1165] },  // Inst #7227 = UCVTFUWHri
   { 2, &AArch64Descs.OperandInfo[936] },  // Inst #7226 = UCVTFUWDri
-  { 3, &AArch64Descs.OperandInfo[2033] },  // Inst #7225 = UCVTFSXSri
-  { 3, &AArch64Descs.OperandInfo[2030] },  // Inst #7224 = UCVTFSXHri
-  { 3, &AArch64Descs.OperandInfo[2027] },  // Inst #7223 = UCVTFSXDri
-  { 3, &AArch64Descs.OperandInfo[2024] },  // Inst #7222 = UCVTFSWSri
-  { 3, &AArch64Descs.OperandInfo[2021] },  // Inst #7221 = UCVTFSWHri
-  { 3, &AArch64Descs.OperandInfo[2018] },  // Inst #7220 = UCVTFSWDri
+  { 3, &AArch64Descs.OperandInfo[2037] },  // Inst #7225 = UCVTFSXSri
+  { 3, &AArch64Descs.OperandInfo[2034] },  // Inst #7224 = UCVTFSXHri
+  { 3, &AArch64Descs.OperandInfo[2031] },  // Inst #7223 = UCVTFSXDri
+  { 3, &AArch64Descs.OperandInfo[2028] },  // Inst #7222 = UCVTFSWSri
+  { 3, &AArch64Descs.OperandInfo[2025] },  // Inst #7221 = UCVTFSWHri
+  { 3, &AArch64Descs.OperandInfo[2022] },  // Inst #7220 = UCVTFSWDri
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7219 = UCLAMP_ZZZ_S
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7218 = UCLAMP_ZZZ_H
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7217 = UCLAMP_ZZZ_D
@@ -9292,13 +9292,13 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[645] },  // Inst #7210 = UCLAMP_VG2_2Z2Z_H
   { 4, &AArch64Descs.OperandInfo[645] },  // Inst #7209 = UCLAMP_VG2_2Z2Z_D
   { 4, &AArch64Descs.OperandInfo[645] },  // Inst #7208 = UCLAMP_VG2_2Z2Z_B
-  { 4, &AArch64Descs.OperandInfo[2014] },  // Inst #7207 = UBFMXri
-  { 4, &AArch64Descs.OperandInfo[2010] },  // Inst #7206 = UBFMWri
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #7205 = UADDWv8i8_v8i16
+  { 4, &AArch64Descs.OperandInfo[2018] },  // Inst #7207 = UBFMXri
+  { 4, &AArch64Descs.OperandInfo[2014] },  // Inst #7206 = UBFMWri
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #7205 = UADDWv8i8_v8i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7204 = UADDWv8i16_v4i32
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7203 = UADDWv4i32_v2i64
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #7202 = UADDWv4i16_v4i32
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #7201 = UADDWv2i32_v2i64
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #7202 = UADDWv4i16_v4i32
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #7201 = UADDWv2i32_v2i64
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7200 = UADDWv16i8_v8i16
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7199 = UADDWT_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7198 = UADDWT_ZZZ_H
@@ -9333,11 +9333,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7169 = UADDLB_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7168 = UADDLB_ZZZ_H
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7167 = UADDLB_ZZZ_D
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #7166 = UADALPv8i8_v4i16
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #7166 = UADALPv8i8_v4i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #7165 = UADALPv8i16_v4i32
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #7164 = UADALPv4i32_v2i64
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #7163 = UADALPv4i16_v2i32
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #7162 = UADALPv2i32_v1i64
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #7163 = UADALPv4i16_v2i32
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #7162 = UADALPv2i32_v1i64
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #7161 = UADALPv16i8_v8i16
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7160 = UADALP_ZPmZ_S
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #7159 = UADALP_ZPmZ_H
@@ -9374,11 +9374,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7128 = UABA_ZZZ_H
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7127 = UABA_ZZZ_D
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7126 = UABA_ZZZ_B
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7125 = UABALv8i8_v8i16
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #7125 = UABALv8i8_v8i16
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7124 = UABALv8i16_v4i32
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7123 = UABALv4i32_v2i64
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7122 = UABALv4i16_v4i32
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #7121 = UABALv2i32_v2i64
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #7122 = UABALv4i16_v4i32
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #7121 = UABALv2i32_v2i64
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7120 = UABALv16i8_v8i16
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7119 = UABALT_ZZZ_S
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7118 = UABALT_ZZZ_H
@@ -9424,16 +9424,16 @@ static const AArch64InstrTable AArch64Descs = {
   { 1, &AArch64Descs.OperandInfo[376] },  // Inst #7078 = TRCIT
   { 0, &AArch64Descs.OperandInfo[1] },  // Inst #7077 = TCOMMIT
   { 1, &AArch64Descs.OperandInfo[1] },  // Inst #7076 = TCANCEL
-  { 3, &AArch64Descs.OperandInfo[2276] },  // Inst #7075 = TBZX
-  { 3, &AArch64Descs.OperandInfo[2273] },  // Inst #7074 = TBZW
-  { 4, &AArch64Descs.OperandInfo[2303] },  // Inst #7073 = TBXv8i8Two
-  { 4, &AArch64Descs.OperandInfo[2299] },  // Inst #7072 = TBXv8i8Three
-  { 4, &AArch64Descs.OperandInfo[2295] },  // Inst #7071 = TBXv8i8One
-  { 4, &AArch64Descs.OperandInfo[2291] },  // Inst #7070 = TBXv8i8Four
-  { 4, &AArch64Descs.OperandInfo[2287] },  // Inst #7069 = TBXv16i8Two
-  { 4, &AArch64Descs.OperandInfo[2283] },  // Inst #7068 = TBXv16i8Three
+  { 3, &AArch64Descs.OperandInfo[2280] },  // Inst #7075 = TBZX
+  { 3, &AArch64Descs.OperandInfo[2277] },  // Inst #7074 = TBZW
+  { 4, &AArch64Descs.OperandInfo[2307] },  // Inst #7073 = TBXv8i8Two
+  { 4, &AArch64Descs.OperandInfo[2303] },  // Inst #7072 = TBXv8i8Three
+  { 4, &AArch64Descs.OperandInfo[2299] },  // Inst #7071 = TBXv8i8One
+  { 4, &AArch64Descs.OperandInfo[2295] },  // Inst #7070 = TBXv8i8Four
+  { 4, &AArch64Descs.OperandInfo[2291] },  // Inst #7069 = TBXv16i8Two
+  { 4, &AArch64Descs.OperandInfo[2287] },  // Inst #7068 = TBXv16i8Three
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #7067 = TBXv16i8One
-  { 4, &AArch64Descs.OperandInfo[2279] },  // Inst #7066 = TBXv16i8Four
+  { 4, &AArch64Descs.OperandInfo[2283] },  // Inst #7066 = TBXv16i8Four
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7065 = TBX_ZZZ_S
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7064 = TBX_ZZZ_H
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7063 = TBX_ZZZ_D
@@ -9442,32 +9442,32 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7060 = TBXQ_ZZZ_H
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7059 = TBXQ_ZZZ_D
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #7058 = TBXQ_ZZZ_B
-  { 3, &AArch64Descs.OperandInfo[2276] },  // Inst #7057 = TBNZX
-  { 3, &AArch64Descs.OperandInfo[2273] },  // Inst #7056 = TBNZW
-  { 3, &AArch64Descs.OperandInfo[2270] },  // Inst #7055 = TBLv8i8Two
-  { 3, &AArch64Descs.OperandInfo[2267] },  // Inst #7054 = TBLv8i8Three
-  { 3, &AArch64Descs.OperandInfo[2264] },  // Inst #7053 = TBLv8i8One
-  { 3, &AArch64Descs.OperandInfo[2261] },  // Inst #7052 = TBLv8i8Four
-  { 3, &AArch64Descs.OperandInfo[2258] },  // Inst #7051 = TBLv16i8Two
-  { 3, &AArch64Descs.OperandInfo[2255] },  // Inst #7050 = TBLv16i8Three
+  { 3, &AArch64Descs.OperandInfo[2280] },  // Inst #7057 = TBNZX
+  { 3, &AArch64Descs.OperandInfo[2277] },  // Inst #7056 = TBNZW
+  { 3, &AArch64Descs.OperandInfo[2274] },  // Inst #7055 = TBLv8i8Two
+  { 3, &AArch64Descs.OperandInfo[2271] },  // Inst #7054 = TBLv8i8Three
+  { 3, &AArch64Descs.OperandInfo[2268] },  // Inst #7053 = TBLv8i8One
+  { 3, &AArch64Descs.OperandInfo[2265] },  // Inst #7052 = TBLv8i8Four
+  { 3, &AArch64Descs.OperandInfo[2262] },  // Inst #7051 = TBLv16i8Two
+  { 3, &AArch64Descs.OperandInfo[2259] },  // Inst #7050 = TBLv16i8Three
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #7049 = TBLv16i8One
-  { 3, &AArch64Descs.OperandInfo[2252] },  // Inst #7048 = TBLv16i8Four
+  { 3, &AArch64Descs.OperandInfo[2256] },  // Inst #7048 = TBLv16i8Four
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7047 = TBL_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7046 = TBL_ZZZ_H
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7045 = TBL_ZZZ_D
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7044 = TBL_ZZZ_B
-  { 3, &AArch64Descs.OperandInfo[2249] },  // Inst #7043 = TBL_ZZZZ_S
-  { 3, &AArch64Descs.OperandInfo[2249] },  // Inst #7042 = TBL_ZZZZ_H
-  { 3, &AArch64Descs.OperandInfo[2249] },  // Inst #7041 = TBL_ZZZZ_D
-  { 3, &AArch64Descs.OperandInfo[2249] },  // Inst #7040 = TBL_ZZZZ_B
+  { 3, &AArch64Descs.OperandInfo[2253] },  // Inst #7043 = TBL_ZZZZ_S
+  { 3, &AArch64Descs.OperandInfo[2253] },  // Inst #7042 = TBL_ZZZZ_H
+  { 3, &AArch64Descs.OperandInfo[2253] },  // Inst #7041 = TBL_ZZZZ_D
+  { 3, &AArch64Descs.OperandInfo[2253] },  // Inst #7040 = TBL_ZZZZ_B
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7039 = TBLQ_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7038 = TBLQ_ZZZ_H
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7037 = TBLQ_ZZZ_D
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #7036 = TBLQ_ZZZ_B
-  { 5, &AArch64Descs.OperandInfo[2244] },  // Inst #7035 = SYSxt
-  { 5, &AArch64Descs.OperandInfo[2244] },  // Inst #7034 = SYSPxt_XZR
-  { 5, &AArch64Descs.OperandInfo[2239] },  // Inst #7033 = SYSPxt
-  { 5, &AArch64Descs.OperandInfo[2234] },  // Inst #7032 = SYSLxt
+  { 5, &AArch64Descs.OperandInfo[2248] },  // Inst #7035 = SYSxt
+  { 5, &AArch64Descs.OperandInfo[2248] },  // Inst #7034 = SYSPxt_XZR
+  { 5, &AArch64Descs.OperandInfo[2243] },  // Inst #7033 = SYSPxt
+  { 5, &AArch64Descs.OperandInfo[2238] },  // Inst #7032 = SYSLxt
   { 4, &AArch64Descs.OperandInfo[426] },  // Inst #7031 = SXTW_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[426] },  // Inst #7030 = SXTH_ZPmZ_S
   { 4, &AArch64Descs.OperandInfo[426] },  // Inst #7029 = SXTH_ZPmZ_D
@@ -9499,24 +9499,24 @@ static const AArch64InstrTable AArch64Descs = {
   { 7, &AArch64Descs.OperandInfo[657] },  // Inst #7003 = SVDOT_VG2_M2ZZI_HtoS
   { 1, &AArch64Descs.OperandInfo[1] },  // Inst #7002 = SVC
   { 7, &AArch64Descs.OperandInfo[664] },  // Inst #7001 = SUVDOT_VG4_M4ZZI_BToS
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #7000 = SUQADDv8i8
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #7000 = SUQADDv8i8
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #6999 = SUQADDv8i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #6998 = SUQADDv4i32
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #6997 = SUQADDv4i16
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #6997 = SUQADDv4i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #6996 = SUQADDv2i64
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #6995 = SUQADDv2i32
-  { 3, &AArch64Descs.OperandInfo[2231] },  // Inst #6994 = SUQADDv1i8
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #6993 = SUQADDv1i64
-  { 3, &AArch64Descs.OperandInfo[2228] },  // Inst #6992 = SUQADDv1i32
-  { 3, &AArch64Descs.OperandInfo[2225] },  // Inst #6991 = SUQADDv1i16
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #6995 = SUQADDv2i32
+  { 3, &AArch64Descs.OperandInfo[2235] },  // Inst #6994 = SUQADDv1i8
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #6993 = SUQADDv1i64
+  { 3, &AArch64Descs.OperandInfo[2232] },  // Inst #6992 = SUQADDv1i32
+  { 3, &AArch64Descs.OperandInfo[2229] },  // Inst #6991 = SUQADDv1i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #6990 = SUQADDv16i8
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6989 = SUQADD_ZPmZ_S
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6988 = SUQADD_ZPmZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6987 = SUQADD_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6986 = SUQADD_ZPmZ_B
-  { 2, &AArch64Descs.OperandInfo[2223] },  // Inst #6985 = SUNPK_VG4_4Z2Z_S
-  { 2, &AArch64Descs.OperandInfo[2223] },  // Inst #6984 = SUNPK_VG4_4Z2Z_H
-  { 2, &AArch64Descs.OperandInfo[2223] },  // Inst #6983 = SUNPK_VG4_4Z2Z_D
+  { 2, &AArch64Descs.OperandInfo[2227] },  // Inst #6985 = SUNPK_VG4_4Z2Z_S
+  { 2, &AArch64Descs.OperandInfo[2227] },  // Inst #6984 = SUNPK_VG4_4Z2Z_H
+  { 2, &AArch64Descs.OperandInfo[2227] },  // Inst #6983 = SUNPK_VG4_4Z2Z_D
   { 2, &AArch64Descs.OperandInfo[641] },  // Inst #6982 = SUNPK_VG2_2ZZ_S
   { 2, &AArch64Descs.OperandInfo[641] },  // Inst #6981 = SUNPK_VG2_2ZZ_H
   { 2, &AArch64Descs.OperandInfo[641] },  // Inst #6980 = SUNPK_VG2_2ZZ_D
@@ -9599,8 +9599,8 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[578] },  // Inst #6903 = SUBR_ZI_D
   { 4, &AArch64Descs.OperandInfo[578] },  // Inst #6902 = SUBR_ZI_B
   { 4, &AArch64Descs.OperandInfo[465] },  // Inst #6901 = SUBPT_shift
-  { 3, &AArch64Descs.OperandInfo[2220] },  // Inst #6900 = SUBPS
-  { 3, &AArch64Descs.OperandInfo[2220] },  // Inst #6899 = SUBP
+  { 3, &AArch64Descs.OperandInfo[2224] },  // Inst #6900 = SUBPS
+  { 3, &AArch64Descs.OperandInfo[2224] },  // Inst #6899 = SUBP
   { 3, &AArch64Descs.OperandInfo[455] },  // Inst #6898 = SUBHNv8i16_v8i8
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #6897 = SUBHNv8i16_v16i8
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #6896 = SUBHNv4i32_v8i16
@@ -9615,18 +9615,18 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #6887 = SUBHNB_ZZZ_B
   { 4, &AArch64Descs.OperandInfo[438] },  // Inst #6886 = SUBG
   { 3, &AArch64Descs.OperandInfo[462] },  // Inst #6885 = STZGi
-  { 4, &AArch64Descs.OperandInfo[2175] },  // Inst #6884 = STZGPreIndex
-  { 4, &AArch64Descs.OperandInfo[2175] },  // Inst #6883 = STZGPostIndex
+  { 4, &AArch64Descs.OperandInfo[2179] },  // Inst #6884 = STZGPreIndex
+  { 4, &AArch64Descs.OperandInfo[2179] },  // Inst #6883 = STZGPostIndex
   { 2, &AArch64Descs.OperandInfo[743] },  // Inst #6882 = STZGM
   { 3, &AArch64Descs.OperandInfo[462] },  // Inst #6881 = STZ2Gi
-  { 4, &AArch64Descs.OperandInfo[2175] },  // Inst #6880 = STZ2GPreIndex
-  { 4, &AArch64Descs.OperandInfo[2175] },  // Inst #6879 = STZ2GPostIndex
-  { 3, &AArch64Descs.OperandInfo[2217] },  // Inst #6878 = STXRX
-  { 3, &AArch64Descs.OperandInfo[2214] },  // Inst #6877 = STXRW
-  { 3, &AArch64Descs.OperandInfo[2214] },  // Inst #6876 = STXRH
-  { 3, &AArch64Descs.OperandInfo[2214] },  // Inst #6875 = STXRB
-  { 4, &AArch64Descs.OperandInfo[2210] },  // Inst #6874 = STXPX
-  { 4, &AArch64Descs.OperandInfo[2206] },  // Inst #6873 = STXPW
+  { 4, &AArch64Descs.OperandInfo[2179] },  // Inst #6880 = STZ2GPreIndex
+  { 4, &AArch64Descs.OperandInfo[2179] },  // Inst #6879 = STZ2GPostIndex
+  { 3, &AArch64Descs.OperandInfo[2221] },  // Inst #6878 = STXRX
+  { 3, &AArch64Descs.OperandInfo[2218] },  // Inst #6877 = STXRW
+  { 3, &AArch64Descs.OperandInfo[2218] },  // Inst #6876 = STXRH
+  { 3, &AArch64Descs.OperandInfo[2218] },  // Inst #6875 = STXRB
+  { 4, &AArch64Descs.OperandInfo[2214] },  // Inst #6874 = STXPX
+  { 4, &AArch64Descs.OperandInfo[2210] },  // Inst #6873 = STXPW
   { 3, &AArch64Descs.OperandInfo[413] },  // Inst #6872 = STURXi
   { 3, &AArch64Descs.OperandInfo[1488] },  // Inst #6871 = STURWi
   { 3, &AArch64Descs.OperandInfo[1503] },  // Inst #6870 = STURSi
@@ -9756,12 +9756,12 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[1531] },  // Inst #6746 = STNPSi
   { 4, &AArch64Descs.OperandInfo[1527] },  // Inst #6745 = STNPQi
   { 4, &AArch64Descs.OperandInfo[1523] },  // Inst #6744 = STNPDi
-  { 3, &AArch64Descs.OperandInfo[2217] },  // Inst #6743 = STLXRX
-  { 3, &AArch64Descs.OperandInfo[2214] },  // Inst #6742 = STLXRW
-  { 3, &AArch64Descs.OperandInfo[2214] },  // Inst #6741 = STLXRH
-  { 3, &AArch64Descs.OperandInfo[2214] },  // Inst #6740 = STLXRB
-  { 4, &AArch64Descs.OperandInfo[2210] },  // Inst #6739 = STLXPX
-  { 4, &AArch64Descs.OperandInfo[2206] },  // Inst #6738 = STLXPW
+  { 3, &AArch64Descs.OperandInfo[2221] },  // Inst #6743 = STLXRX
+  { 3, &AArch64Descs.OperandInfo[2218] },  // Inst #6742 = STLXRW
+  { 3, &AArch64Descs.OperandInfo[2218] },  // Inst #6741 = STLXRH
+  { 3, &AArch64Descs.OperandInfo[2218] },  // Inst #6740 = STLXRB
+  { 4, &AArch64Descs.OperandInfo[2214] },  // Inst #6739 = STLXPX
+  { 4, &AArch64Descs.OperandInfo[2210] },  // Inst #6738 = STLXPW
   { 3, &AArch64Descs.OperandInfo[1503] },  // Inst #6737 = STLURsi
   { 3, &AArch64Descs.OperandInfo[1500] },  // Inst #6736 = STLURqi
   { 3, &AArch64Descs.OperandInfo[1497] },  // Inst #6735 = STLURhi
@@ -9781,29 +9781,29 @@ static const AArch64InstrTable AArch64Descs = {
   { 2, &AArch64Descs.OperandInfo[1480] },  // Inst #6721 = STLLRW
   { 2, &AArch64Descs.OperandInfo[1480] },  // Inst #6720 = STLLRH
   { 2, &AArch64Descs.OperandInfo[1480] },  // Inst #6719 = STLLRB
-  { 3, &AArch64Descs.OperandInfo[2167] },  // Inst #6718 = STL1
+  { 3, &AArch64Descs.OperandInfo[2171] },  // Inst #6718 = STL1
   { 4, &AArch64Descs.OperandInfo[1519] },  // Inst #6717 = STILPXpre
   { 3, &AArch64Descs.OperandInfo[1477] },  // Inst #6716 = STILPX
   { 4, &AArch64Descs.OperandInfo[1515] },  // Inst #6715 = STILPWpre
   { 3, &AArch64Descs.OperandInfo[1474] },  // Inst #6714 = STILPW
   { 3, &AArch64Descs.OperandInfo[462] },  // Inst #6713 = STGi
-  { 4, &AArch64Descs.OperandInfo[2175] },  // Inst #6712 = STGPreIndex
+  { 4, &AArch64Descs.OperandInfo[2179] },  // Inst #6712 = STGPreIndex
   { 5, &AArch64Descs.OperandInfo[1553] },  // Inst #6711 = STGPpre
   { 5, &AArch64Descs.OperandInfo[1553] },  // Inst #6710 = STGPpost
-  { 4, &AArch64Descs.OperandInfo[2175] },  // Inst #6709 = STGPostIndex
+  { 4, &AArch64Descs.OperandInfo[2179] },  // Inst #6709 = STGPostIndex
   { 4, &AArch64Descs.OperandInfo[1539] },  // Inst #6708 = STGPi
   { 2, &AArch64Descs.OperandInfo[743] },  // Inst #6707 = STGM
-  { 3, &AArch64Descs.OperandInfo[2203] },  // Inst #6706 = ST64BV0
-  { 3, &AArch64Descs.OperandInfo[2203] },  // Inst #6705 = ST64BV
+  { 3, &AArch64Descs.OperandInfo[2207] },  // Inst #6706 = ST64BV0
+  { 3, &AArch64Descs.OperandInfo[2207] },  // Inst #6705 = ST64BV
   { 2, &AArch64Descs.OperandInfo[1472] },  // Inst #6704 = ST64B
-  { 5, &AArch64Descs.OperandInfo[2198] },  // Inst #6703 = ST4i8_POST
-  { 3, &AArch64Descs.OperandInfo[2195] },  // Inst #6702 = ST4i8
-  { 5, &AArch64Descs.OperandInfo[2198] },  // Inst #6701 = ST4i64_POST
-  { 3, &AArch64Descs.OperandInfo[2195] },  // Inst #6700 = ST4i64
-  { 5, &AArch64Descs.OperandInfo[2198] },  // Inst #6699 = ST4i32_POST
-  { 3, &AArch64Descs.OperandInfo[2195] },  // Inst #6698 = ST4i32
-  { 5, &AArch64Descs.OperandInfo[2198] },  // Inst #6697 = ST4i16_POST
-  { 3, &AArch64Descs.OperandInfo[2195] },  // Inst #6696 = ST4i16
+  { 5, &AArch64Descs.OperandInfo[2202] },  // Inst #6703 = ST4i8_POST
+  { 3, &AArch64Descs.OperandInfo[2199] },  // Inst #6702 = ST4i8
+  { 5, &AArch64Descs.OperandInfo[2202] },  // Inst #6701 = ST4i64_POST
+  { 3, &AArch64Descs.OperandInfo[2199] },  // Inst #6700 = ST4i64
+  { 5, &AArch64Descs.OperandInfo[2202] },  // Inst #6699 = ST4i32_POST
+  { 3, &AArch64Descs.OperandInfo[2199] },  // Inst #6698 = ST4i32
+  { 5, &AArch64Descs.OperandInfo[2202] },  // Inst #6697 = ST4i16_POST
+  { 3, &AArch64Descs.OperandInfo[2199] },  // Inst #6696 = ST4i16
   { 4, &AArch64Descs.OperandInfo[1458] },  // Inst #6695 = ST4W_IMM
   { 4, &AArch64Descs.OperandInfo[1454] },  // Inst #6694 = ST4W
   { 4, &AArch64Descs.OperandInfo[1458] },  // Inst #6693 = ST4Q_IMM
@@ -9828,14 +9828,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[1454] },  // Inst #6674 = ST4D
   { 4, &AArch64Descs.OperandInfo[1458] },  // Inst #6673 = ST4B_IMM
   { 4, &AArch64Descs.OperandInfo[1454] },  // Inst #6672 = ST4B
-  { 5, &AArch64Descs.OperandInfo[2190] },  // Inst #6671 = ST3i8_POST
-  { 3, &AArch64Descs.OperandInfo[2187] },  // Inst #6670 = ST3i8
-  { 5, &AArch64Descs.OperandInfo[2190] },  // Inst #6669 = ST3i64_POST
-  { 3, &AArch64Descs.OperandInfo[2187] },  // Inst #6668 = ST3i64
-  { 5, &AArch64Descs.OperandInfo[2190] },  // Inst #6667 = ST3i32_POST
-  { 3, &AArch64Descs.OperandInfo[2187] },  // Inst #6666 = ST3i32
-  { 5, &AArch64Descs.OperandInfo[2190] },  // Inst #6665 = ST3i16_POST
-  { 3, &AArch64Descs.OperandInfo[2187] },  // Inst #6664 = ST3i16
+  { 5, &AArch64Descs.OperandInfo[2194] },  // Inst #6671 = ST3i8_POST
+  { 3, &AArch64Descs.OperandInfo[2191] },  // Inst #6670 = ST3i8
+  { 5, &AArch64Descs.OperandInfo[2194] },  // Inst #6669 = ST3i64_POST
+  { 3, &AArch64Descs.OperandInfo[2191] },  // Inst #6668 = ST3i64
+  { 5, &AArch64Descs.OperandInfo[2194] },  // Inst #6667 = ST3i32_POST
+  { 3, &AArch64Descs.OperandInfo[2191] },  // Inst #6666 = ST3i32
+  { 5, &AArch64Descs.OperandInfo[2194] },  // Inst #6665 = ST3i16_POST
+  { 3, &AArch64Descs.OperandInfo[2191] },  // Inst #6664 = ST3i16
   { 4, &AArch64Descs.OperandInfo[1440] },  // Inst #6663 = ST3W_IMM
   { 4, &AArch64Descs.OperandInfo[1436] },  // Inst #6662 = ST3W
   { 4, &AArch64Descs.OperandInfo[1356] },  // Inst #6661 = ST3Threev8h_POST
@@ -9860,14 +9860,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[1436] },  // Inst #6642 = ST3D
   { 4, &AArch64Descs.OperandInfo[1440] },  // Inst #6641 = ST3B_IMM
   { 4, &AArch64Descs.OperandInfo[1436] },  // Inst #6640 = ST3B
-  { 5, &AArch64Descs.OperandInfo[2182] },  // Inst #6639 = ST2i8_POST
-  { 3, &AArch64Descs.OperandInfo[2179] },  // Inst #6638 = ST2i8
-  { 5, &AArch64Descs.OperandInfo[2182] },  // Inst #6637 = ST2i64_POST
-  { 3, &AArch64Descs.OperandInfo[2179] },  // Inst #6636 = ST2i64
-  { 5, &AArch64Descs.OperandInfo[2182] },  // Inst #6635 = ST2i32_POST
-  { 3, &AArch64Descs.OperandInfo[2179] },  // Inst #6634 = ST2i32
-  { 5, &AArch64Descs.OperandInfo[2182] },  // Inst #6633 = ST2i16_POST
-  { 3, &AArch64Descs.OperandInfo[2179] },  // Inst #6632 = ST2i16
+  { 5, &AArch64Descs.OperandInfo[2186] },  // Inst #6639 = ST2i8_POST
+  { 3, &AArch64Descs.OperandInfo[2183] },  // Inst #6638 = ST2i8
+  { 5, &AArch64Descs.OperandInfo[2186] },  // Inst #6637 = ST2i64_POST
+  { 3, &AArch64Descs.OperandInfo[2183] },  // Inst #6636 = ST2i64
+  { 5, &AArch64Descs.OperandInfo[2186] },  // Inst #6635 = ST2i32_POST
+  { 3, &AArch64Descs.OperandInfo[2183] },  // Inst #6634 = ST2i32
+  { 5, &AArch64Descs.OperandInfo[2186] },  // Inst #6633 = ST2i16_POST
+  { 3, &AArch64Descs.OperandInfo[2183] },  // Inst #6632 = ST2i16
   { 4, &AArch64Descs.OperandInfo[1422] },  // Inst #6631 = ST2W_IMM
   { 4, &AArch64Descs.OperandInfo[1418] },  // Inst #6630 = ST2W
   { 4, &AArch64Descs.OperandInfo[1368] },  // Inst #6629 = ST2Twov8h_POST
@@ -9889,20 +9889,20 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[1422] },  // Inst #6613 = ST2H_IMM
   { 4, &AArch64Descs.OperandInfo[1418] },  // Inst #6612 = ST2H
   { 3, &AArch64Descs.OperandInfo[462] },  // Inst #6611 = ST2Gi
-  { 4, &AArch64Descs.OperandInfo[2175] },  // Inst #6610 = ST2GPreIndex
-  { 4, &AArch64Descs.OperandInfo[2175] },  // Inst #6609 = ST2GPostIndex
+  { 4, &AArch64Descs.OperandInfo[2179] },  // Inst #6610 = ST2GPreIndex
+  { 4, &AArch64Descs.OperandInfo[2179] },  // Inst #6609 = ST2GPostIndex
   { 4, &AArch64Descs.OperandInfo[1422] },  // Inst #6608 = ST2D_IMM
   { 4, &AArch64Descs.OperandInfo[1418] },  // Inst #6607 = ST2D
   { 4, &AArch64Descs.OperandInfo[1422] },  // Inst #6606 = ST2B_IMM
   { 4, &AArch64Descs.OperandInfo[1418] },  // Inst #6605 = ST2B
-  { 5, &AArch64Descs.OperandInfo[2170] },  // Inst #6604 = ST1i8_POST
-  { 3, &AArch64Descs.OperandInfo[2167] },  // Inst #6603 = ST1i8
-  { 5, &AArch64Descs.OperandInfo[2170] },  // Inst #6602 = ST1i64_POST
-  { 3, &AArch64Descs.OperandInfo[2167] },  // Inst #6601 = ST1i64
-  { 5, &AArch64Descs.OperandInfo[2170] },  // Inst #6600 = ST1i32_POST
-  { 3, &AArch64Descs.OperandInfo[2167] },  // Inst #6599 = ST1i32
-  { 5, &AArch64Descs.OperandInfo[2170] },  // Inst #6598 = ST1i16_POST
-  { 3, &AArch64Descs.OperandInfo[2167] },  // Inst #6597 = ST1i16
+  { 5, &AArch64Descs.OperandInfo[2174] },  // Inst #6604 = ST1i8_POST
+  { 3, &AArch64Descs.OperandInfo[2171] },  // Inst #6603 = ST1i8
+  { 5, &AArch64Descs.OperandInfo[2174] },  // Inst #6602 = ST1i64_POST
+  { 3, &AArch64Descs.OperandInfo[2171] },  // Inst #6601 = ST1i64
+  { 5, &AArch64Descs.OperandInfo[2174] },  // Inst #6600 = ST1i32_POST
+  { 3, &AArch64Descs.OperandInfo[2171] },  // Inst #6599 = ST1i32
+  { 5, &AArch64Descs.OperandInfo[2174] },  // Inst #6598 = ST1i16_POST
+  { 3, &AArch64Descs.OperandInfo[2171] },  // Inst #6597 = ST1i16
   { 6, &AArch64Descs.OperandInfo[1402] },  // Inst #6596 = ST1_MXIPXX_V_S
   { 6, &AArch64Descs.OperandInfo[1396] },  // Inst #6595 = ST1_MXIPXX_V_Q
   { 6, &AArch64Descs.OperandInfo[1390] },  // Inst #6594 = ST1_MXIPXX_V_H
@@ -10033,11 +10033,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[1302] },  // Inst #6469 = ST1B_2Z_IMM
   { 4, &AArch64Descs.OperandInfo[1298] },  // Inst #6468 = ST1B_2Z
   { 4, &AArch64Descs.OperandInfo[1294] },  // Inst #6467 = ST1B
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #6466 = SSUBWv8i8_v8i16
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #6466 = SSUBWv8i8_v8i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #6465 = SSUBWv8i16_v4i32
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #6464 = SSUBWv4i32_v2i64
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #6463 = SSUBWv4i16_v4i32
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #6462 = SSUBWv2i32_v2i64
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #6463 = SSUBWv4i16_v4i32
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #6462 = SSUBWv2i32_v2i64
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #6461 = SSUBWv16i8_v8i16
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #6460 = SSUBWT_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #6459 = SSUBWT_ZZZ_H
@@ -10102,14 +10102,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[264] },  // Inst #6400 = SST1B_D_SXTW
   { 4, &AArch64Descs.OperandInfo[268] },  // Inst #6399 = SST1B_D_IMM
   { 4, &AArch64Descs.OperandInfo[264] },  // Inst #6398 = SST1B_D
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6397 = SSRAv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6396 = SSRAv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6395 = SSRAv4i32_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6394 = SSRAv4i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6393 = SSRAv2i64_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6392 = SSRAv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6391 = SSRAv16i8_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6390 = SSRAd
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6397 = SSRAv8i8_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6396 = SSRAv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6395 = SSRAv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6394 = SSRAv4i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6393 = SSRAv2i64_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6392 = SSRAv2i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6391 = SSRAv16i8_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6390 = SSRAd
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6389 = SSRA_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6388 = SSRA_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6387 = SSRA_ZZI_D
@@ -10130,11 +10130,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #6372 = SSHLv2i32
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #6371 = SSHLv1i64
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #6370 = SSHLv16i8
-  { 3, &AArch64Descs.OperandInfo[2164] },  // Inst #6369 = SSHLLv8i8_shift
+  { 3, &AArch64Descs.OperandInfo[2168] },  // Inst #6369 = SSHLLv8i8_shift
   { 3, &AArch64Descs.OperandInfo[933] },  // Inst #6368 = SSHLLv8i16_shift
   { 3, &AArch64Descs.OperandInfo[933] },  // Inst #6367 = SSHLLv4i32_shift
-  { 3, &AArch64Descs.OperandInfo[2164] },  // Inst #6366 = SSHLLv4i16_shift
-  { 3, &AArch64Descs.OperandInfo[2164] },  // Inst #6365 = SSHLLv2i32_shift
+  { 3, &AArch64Descs.OperandInfo[2168] },  // Inst #6366 = SSHLLv4i16_shift
+  { 3, &AArch64Descs.OperandInfo[2168] },  // Inst #6365 = SSHLLv2i32_shift
   { 3, &AArch64Descs.OperandInfo[933] },  // Inst #6364 = SSHLLv16i8_shift
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #6363 = SSHLLT_ZZI_S
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #6362 = SSHLLT_ZZI_H
@@ -10142,14 +10142,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #6360 = SSHLLB_ZZI_S
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #6359 = SSHLLB_ZZI_H
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #6358 = SSHLLB_ZZI_D
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6357 = SRSRAv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6356 = SRSRAv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6355 = SRSRAv4i32_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6354 = SRSRAv4i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6353 = SRSRAv2i64_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6352 = SRSRAv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6351 = SRSRAv16i8_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6350 = SRSRAd
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6357 = SRSRAv8i8_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6356 = SRSRAv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6355 = SRSRAv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6354 = SRSRAv4i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6353 = SRSRAv2i64_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6352 = SRSRAv2i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6351 = SRSRAv16i8_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6350 = SRSRAd
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6349 = SRSRA_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6348 = SRSRA_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6347 = SRSRA_ZZI_D
@@ -10198,14 +10198,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6304 = SRSHLR_ZPmZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6303 = SRSHLR_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6302 = SRSHLR_ZPmZ_B
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6301 = SRIv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6300 = SRIv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6299 = SRIv4i32_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6298 = SRIv4i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6297 = SRIv2i64_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6296 = SRIv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6295 = SRIv16i8_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #6294 = SRId
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6301 = SRIv8i8_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6300 = SRIv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6299 = SRIv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6298 = SRIv4i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6297 = SRIv2i64_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6296 = SRIv2i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6295 = SRIv16i8_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #6294 = SRId
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6293 = SRI_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6292 = SRI_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6291 = SRI_ZZI_D
@@ -10225,7 +10225,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #6277 = SQXTUNv4i32
   { 2, &AArch64Descs.OperandInfo[479] },  // Inst #6276 = SQXTUNv4i16
   { 2, &AArch64Descs.OperandInfo[479] },  // Inst #6275 = SQXTUNv2i32
-  { 2, &AArch64Descs.OperandInfo[2162] },  // Inst #6274 = SQXTUNv1i8
+  { 2, &AArch64Descs.OperandInfo[2166] },  // Inst #6274 = SQXTUNv1i8
   { 2, &AArch64Descs.OperandInfo[1003] },  // Inst #6273 = SQXTUNv1i32
   { 2, &AArch64Descs.OperandInfo[653] },  // Inst #6272 = SQXTUNv1i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #6271 = SQXTUNv16i8
@@ -10240,7 +10240,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #6262 = SQXTNv4i32
   { 2, &AArch64Descs.OperandInfo[479] },  // Inst #6261 = SQXTNv4i16
   { 2, &AArch64Descs.OperandInfo[479] },  // Inst #6260 = SQXTNv2i32
-  { 2, &AArch64Descs.OperandInfo[2162] },  // Inst #6259 = SQXTNv1i8
+  { 2, &AArch64Descs.OperandInfo[2166] },  // Inst #6259 = SQXTNv1i8
   { 2, &AArch64Descs.OperandInfo[1003] },  // Inst #6258 = SQXTNv1i32
   { 2, &AArch64Descs.OperandInfo[653] },  // Inst #6257 = SQXTNv1i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #6256 = SQXTNv16i8
@@ -10256,7 +10256,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #6246 = SQSUBv4i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #6245 = SQSUBv2i64
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #6244 = SQSUBv2i32
-  { 3, &AArch64Descs.OperandInfo[2101] },  // Inst #6243 = SQSUBv1i8
+  { 3, &AArch64Descs.OperandInfo[2105] },  // Inst #6243 = SQSUBv1i8
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #6242 = SQSUBv1i64
   { 3, &AArch64Descs.OperandInfo[996] },  // Inst #6241 = SQSUBv1i32
   { 3, &AArch64Descs.OperandInfo[993] },  // Inst #6240 = SQSUBv1i16
@@ -10278,14 +10278,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6224 = SQSUBR_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6223 = SQSUBR_ZPmZ_B
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6222 = SQSHRUNv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6221 = SQSHRUNv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6220 = SQSHRUNv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6221 = SQSHRUNv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6220 = SQSHRUNv4i32_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6219 = SQSHRUNv4i16_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6218 = SQSHRUNv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6217 = SQSHRUNv16i8_shift
-  { 3, &AArch64Descs.OperandInfo[2156] },  // Inst #6216 = SQSHRUNs
-  { 3, &AArch64Descs.OperandInfo[2153] },  // Inst #6215 = SQSHRUNh
-  { 3, &AArch64Descs.OperandInfo[2150] },  // Inst #6214 = SQSHRUNb
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6217 = SQSHRUNv16i8_shift
+  { 3, &AArch64Descs.OperandInfo[2160] },  // Inst #6216 = SQSHRUNs
+  { 3, &AArch64Descs.OperandInfo[2157] },  // Inst #6215 = SQSHRUNh
+  { 3, &AArch64Descs.OperandInfo[2154] },  // Inst #6214 = SQSHRUNb
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6213 = SQSHRUNT_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6212 = SQSHRUNT_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6211 = SQSHRUNT_ZZI_B
@@ -10293,14 +10293,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #6209 = SQSHRUNB_ZZI_H
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #6208 = SQSHRUNB_ZZI_B
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6207 = SQSHRNv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6206 = SQSHRNv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6205 = SQSHRNv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6206 = SQSHRNv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6205 = SQSHRNv4i32_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6204 = SQSHRNv4i16_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6203 = SQSHRNv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6202 = SQSHRNv16i8_shift
-  { 3, &AArch64Descs.OperandInfo[2156] },  // Inst #6201 = SQSHRNs
-  { 3, &AArch64Descs.OperandInfo[2153] },  // Inst #6200 = SQSHRNh
-  { 3, &AArch64Descs.OperandInfo[2150] },  // Inst #6199 = SQSHRNb
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6202 = SQSHRNv16i8_shift
+  { 3, &AArch64Descs.OperandInfo[2160] },  // Inst #6201 = SQSHRNs
+  { 3, &AArch64Descs.OperandInfo[2157] },  // Inst #6200 = SQSHRNh
+  { 3, &AArch64Descs.OperandInfo[2154] },  // Inst #6199 = SQSHRNb
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6198 = SQSHRNT_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6197 = SQSHRNT_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6196 = SQSHRNT_ZZI_B
@@ -10319,7 +10319,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #6183 = SQSHLv2i64
   { 3, &AArch64Descs.OperandInfo[1106] },  // Inst #6182 = SQSHLv2i32_shift
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #6181 = SQSHLv2i32
-  { 3, &AArch64Descs.OperandInfo[2101] },  // Inst #6180 = SQSHLv1i8
+  { 3, &AArch64Descs.OperandInfo[2105] },  // Inst #6180 = SQSHLv1i8
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #6179 = SQSHLv1i64
   { 3, &AArch64Descs.OperandInfo[996] },  // Inst #6178 = SQSHLv1i32
   { 3, &AArch64Descs.OperandInfo[993] },  // Inst #6177 = SQSHLv1i16
@@ -10328,7 +10328,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[1112] },  // Inst #6174 = SQSHLs
   { 3, &AArch64Descs.OperandInfo[1109] },  // Inst #6173 = SQSHLh
   { 3, &AArch64Descs.OperandInfo[1106] },  // Inst #6172 = SQSHLd
-  { 3, &AArch64Descs.OperandInfo[2159] },  // Inst #6171 = SQSHLb
+  { 3, &AArch64Descs.OperandInfo[2163] },  // Inst #6171 = SQSHLb
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6170 = SQSHL_ZPmZ_S
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6169 = SQSHL_ZPmZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6168 = SQSHL_ZPmZ_D
@@ -10347,7 +10347,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[1112] },  // Inst #6155 = SQSHLUs
   { 3, &AArch64Descs.OperandInfo[1109] },  // Inst #6154 = SQSHLUh
   { 3, &AArch64Descs.OperandInfo[1106] },  // Inst #6153 = SQSHLUd
-  { 3, &AArch64Descs.OperandInfo[2159] },  // Inst #6152 = SQSHLUb
+  { 3, &AArch64Descs.OperandInfo[2163] },  // Inst #6152 = SQSHLUb
   { 4, &AArch64Descs.OperandInfo[614] },  // Inst #6151 = SQSHLU_ZPmI_S
   { 4, &AArch64Descs.OperandInfo[614] },  // Inst #6150 = SQSHLU_ZPmI_H
   { 4, &AArch64Descs.OperandInfo[614] },  // Inst #6149 = SQSHLU_ZPmI_D
@@ -10356,24 +10356,24 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6146 = SQSHLR_ZPmZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6145 = SQSHLR_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #6144 = SQSHLR_ZPmZ_B
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #6143 = SQRSHR_VG4_Z4ZI_H
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #6142 = SQRSHR_VG4_Z4ZI_B
-  { 3, &AArch64Descs.OperandInfo[2147] },  // Inst #6141 = SQRSHR_VG2_Z2ZI_H
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #6140 = SQRSHRU_VG4_Z4ZI_H
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #6139 = SQRSHRU_VG4_Z4ZI_B
-  { 3, &AArch64Descs.OperandInfo[2147] },  // Inst #6138 = SQRSHRU_VG2_Z2ZI_H
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #6143 = SQRSHR_VG4_Z4ZI_H
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #6142 = SQRSHR_VG4_Z4ZI_B
+  { 3, &AArch64Descs.OperandInfo[2151] },  // Inst #6141 = SQRSHR_VG2_Z2ZI_H
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #6140 = SQRSHRU_VG4_Z4ZI_H
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #6139 = SQRSHRU_VG4_Z4ZI_B
+  { 3, &AArch64Descs.OperandInfo[2151] },  // Inst #6138 = SQRSHRU_VG2_Z2ZI_H
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6137 = SQRSHRUNv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6136 = SQRSHRUNv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6135 = SQRSHRUNv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6136 = SQRSHRUNv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6135 = SQRSHRUNv4i32_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6134 = SQRSHRUNv4i16_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6133 = SQRSHRUNv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6132 = SQRSHRUNv16i8_shift
-  { 3, &AArch64Descs.OperandInfo[2156] },  // Inst #6131 = SQRSHRUNs
-  { 3, &AArch64Descs.OperandInfo[2153] },  // Inst #6130 = SQRSHRUNh
-  { 3, &AArch64Descs.OperandInfo[2150] },  // Inst #6129 = SQRSHRUNb
-  { 3, &AArch64Descs.OperandInfo[2147] },  // Inst #6128 = SQRSHRUN_Z2ZI_StoH
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #6127 = SQRSHRUN_VG4_Z4ZI_H
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #6126 = SQRSHRUN_VG4_Z4ZI_B
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6132 = SQRSHRUNv16i8_shift
+  { 3, &AArch64Descs.OperandInfo[2160] },  // Inst #6131 = SQRSHRUNs
+  { 3, &AArch64Descs.OperandInfo[2157] },  // Inst #6130 = SQRSHRUNh
+  { 3, &AArch64Descs.OperandInfo[2154] },  // Inst #6129 = SQRSHRUNb
+  { 3, &AArch64Descs.OperandInfo[2151] },  // Inst #6128 = SQRSHRUN_Z2ZI_StoH
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #6127 = SQRSHRUN_VG4_Z4ZI_H
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #6126 = SQRSHRUN_VG4_Z4ZI_B
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6125 = SQRSHRUNT_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6124 = SQRSHRUNT_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6123 = SQRSHRUNT_ZZI_B
@@ -10381,17 +10381,17 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #6121 = SQRSHRUNB_ZZI_H
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #6120 = SQRSHRUNB_ZZI_B
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6119 = SQRSHRNv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6118 = SQRSHRNv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6117 = SQRSHRNv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6118 = SQRSHRNv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6117 = SQRSHRNv4i32_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6116 = SQRSHRNv4i16_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #6115 = SQRSHRNv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #6114 = SQRSHRNv16i8_shift
-  { 3, &AArch64Descs.OperandInfo[2156] },  // Inst #6113 = SQRSHRNs
-  { 3, &AArch64Descs.OperandInfo[2153] },  // Inst #6112 = SQRSHRNh
-  { 3, &AArch64Descs.OperandInfo[2150] },  // Inst #6111 = SQRSHRNb
-  { 3, &AArch64Descs.OperandInfo[2147] },  // Inst #6110 = SQRSHRN_Z2ZI_StoH
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #6109 = SQRSHRN_VG4_Z4ZI_H
-  { 3, &AArch64Descs.OperandInfo[2144] },  // Inst #6108 = SQRSHRN_VG4_Z4ZI_B
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #6114 = SQRSHRNv16i8_shift
+  { 3, &AArch64Descs.OperandInfo[2160] },  // Inst #6113 = SQRSHRNs
+  { 3, &AArch64Descs.OperandInfo[2157] },  // Inst #6112 = SQRSHRNh
+  { 3, &AArch64Descs.OperandInfo[2154] },  // Inst #6111 = SQRSHRNb
+  { 3, &AArch64Descs.OperandInfo[2151] },  // Inst #6110 = SQRSHRN_Z2ZI_StoH
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #6109 = SQRSHRN_VG4_Z4ZI_H
+  { 3, &AArch64Descs.OperandInfo[2148] },  // Inst #6108 = SQRSHRN_VG4_Z4ZI_B
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6107 = SQRSHRNT_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6106 = SQRSHRNT_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #6105 = SQRSHRNT_ZZI_B
@@ -10404,7 +10404,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #6098 = SQRSHLv4i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #6097 = SQRSHLv2i64
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #6096 = SQRSHLv2i32
-  { 3, &AArch64Descs.OperandInfo[2101] },  // Inst #6095 = SQRSHLv1i8
+  { 3, &AArch64Descs.OperandInfo[2105] },  // Inst #6095 = SQRSHLv1i8
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #6094 = SQRSHLv1i64
   { 3, &AArch64Descs.OperandInfo[996] },  // Inst #6093 = SQRSHLv1i32
   { 3, &AArch64Descs.OperandInfo[993] },  // Inst #6092 = SQRSHLv1i16
@@ -10445,9 +10445,9 @@ static const AArch64InstrTable AArch64Descs = {
   { 5, &AArch64Descs.OperandInfo[629] },  // Inst #6057 = SQRDMLSHv2i32_indexed
   { 4, &AArch64Descs.OperandInfo[676] },  // Inst #6056 = SQRDMLSHv2i32
   { 5, &AArch64Descs.OperandInfo[1145] },  // Inst #6055 = SQRDMLSHv1i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2140] },  // Inst #6054 = SQRDMLSHv1i32
+  { 4, &AArch64Descs.OperandInfo[2144] },  // Inst #6054 = SQRDMLSHv1i32
   { 5, &AArch64Descs.OperandInfo[1140] },  // Inst #6053 = SQRDMLSHv1i16_indexed
-  { 4, &AArch64Descs.OperandInfo[2136] },  // Inst #6052 = SQRDMLSHv1i16
+  { 4, &AArch64Descs.OperandInfo[2140] },  // Inst #6052 = SQRDMLSHv1i16
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #6051 = SQRDMLSH_ZZZ_S
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #6050 = SQRDMLSH_ZZZ_H
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #6049 = SQRDMLSH_ZZZ_D
@@ -10464,9 +10464,9 @@ static const AArch64InstrTable AArch64Descs = {
   { 5, &AArch64Descs.OperandInfo[629] },  // Inst #6038 = SQRDMLAHv2i32_indexed
   { 4, &AArch64Descs.OperandInfo[676] },  // Inst #6037 = SQRDMLAHv2i32
   { 5, &AArch64Descs.OperandInfo[1145] },  // Inst #6036 = SQRDMLAHv1i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2140] },  // Inst #6035 = SQRDMLAHv1i32
+  { 4, &AArch64Descs.OperandInfo[2144] },  // Inst #6035 = SQRDMLAHv1i32
   { 5, &AArch64Descs.OperandInfo[1140] },  // Inst #6034 = SQRDMLAHv1i16_indexed
-  { 4, &AArch64Descs.OperandInfo[2136] },  // Inst #6033 = SQRDMLAHv1i16
+  { 4, &AArch64Descs.OperandInfo[2140] },  // Inst #6033 = SQRDMLAHv1i16
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #6032 = SQRDMLAH_ZZZ_S
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #6031 = SQRDMLAH_ZZZ_H
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #6030 = SQRDMLAH_ZZZ_D
@@ -10486,7 +10486,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 2, &AArch64Descs.OperandInfo[432] },  // Inst #6016 = SQNEGv4i16
   { 2, &AArch64Descs.OperandInfo[430] },  // Inst #6015 = SQNEGv2i64
   { 2, &AArch64Descs.OperandInfo[432] },  // Inst #6014 = SQNEGv2i32
-  { 2, &AArch64Descs.OperandInfo[2099] },  // Inst #6013 = SQNEGv1i8
+  { 2, &AArch64Descs.OperandInfo[2103] },  // Inst #6013 = SQNEGv1i8
   { 2, &AArch64Descs.OperandInfo[432] },  // Inst #6012 = SQNEGv1i64
   { 2, &AArch64Descs.OperandInfo[1001] },  // Inst #6011 = SQNEGv1i32
   { 2, &AArch64Descs.OperandInfo[999] },  // Inst #6010 = SQNEGv1i16
@@ -10522,13 +10522,13 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #5980 = SQDMULLv4i32_v2i64
   { 4, &AArch64Descs.OperandInfo[253] },  // Inst #5979 = SQDMULLv4i32_indexed
   { 3, &AArch64Descs.OperandInfo[1946] },  // Inst #5978 = SQDMULLv4i16_v4i32
-  { 4, &AArch64Descs.OperandInfo[2092] },  // Inst #5977 = SQDMULLv4i16_indexed
+  { 4, &AArch64Descs.OperandInfo[2096] },  // Inst #5977 = SQDMULLv4i16_indexed
   { 3, &AArch64Descs.OperandInfo[1946] },  // Inst #5976 = SQDMULLv2i32_v2i64
-  { 4, &AArch64Descs.OperandInfo[2088] },  // Inst #5975 = SQDMULLv2i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2132] },  // Inst #5974 = SQDMULLv1i64_indexed
-  { 4, &AArch64Descs.OperandInfo[2128] },  // Inst #5973 = SQDMULLv1i32_indexed
-  { 3, &AArch64Descs.OperandInfo[2125] },  // Inst #5972 = SQDMULLi32
-  { 3, &AArch64Descs.OperandInfo[2122] },  // Inst #5971 = SQDMULLi16
+  { 4, &AArch64Descs.OperandInfo[2092] },  // Inst #5975 = SQDMULLv2i32_indexed
+  { 4, &AArch64Descs.OperandInfo[2136] },  // Inst #5974 = SQDMULLv1i64_indexed
+  { 4, &AArch64Descs.OperandInfo[2132] },  // Inst #5973 = SQDMULLv1i32_indexed
+  { 3, &AArch64Descs.OperandInfo[2129] },  // Inst #5972 = SQDMULLi32
+  { 3, &AArch64Descs.OperandInfo[2126] },  // Inst #5971 = SQDMULLi16
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5970 = SQDMULLT_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5969 = SQDMULLT_ZZZ_H
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5968 = SQDMULLT_ZZZ_D
@@ -10578,14 +10578,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 5, &AArch64Descs.OperandInfo[686] },  // Inst #5924 = SQDMLSLv8i16_indexed
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5923 = SQDMLSLv4i32_v2i64
   { 5, &AArch64Descs.OperandInfo[634] },  // Inst #5922 = SQDMLSLv4i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5921 = SQDMLSLv4i16_v4i32
-  { 5, &AArch64Descs.OperandInfo[2074] },  // Inst #5920 = SQDMLSLv4i16_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5919 = SQDMLSLv2i32_v2i64
-  { 5, &AArch64Descs.OperandInfo[2069] },  // Inst #5918 = SQDMLSLv2i32_indexed
-  { 5, &AArch64Descs.OperandInfo[2117] },  // Inst #5917 = SQDMLSLv1i64_indexed
-  { 5, &AArch64Descs.OperandInfo[2112] },  // Inst #5916 = SQDMLSLv1i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2108] },  // Inst #5915 = SQDMLSLi32
-  { 4, &AArch64Descs.OperandInfo[2104] },  // Inst #5914 = SQDMLSLi16
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5921 = SQDMLSLv4i16_v4i32
+  { 5, &AArch64Descs.OperandInfo[2078] },  // Inst #5920 = SQDMLSLv4i16_indexed
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5919 = SQDMLSLv2i32_v2i64
+  { 5, &AArch64Descs.OperandInfo[2073] },  // Inst #5918 = SQDMLSLv2i32_indexed
+  { 5, &AArch64Descs.OperandInfo[2121] },  // Inst #5917 = SQDMLSLv1i64_indexed
+  { 5, &AArch64Descs.OperandInfo[2116] },  // Inst #5916 = SQDMLSLv1i32_indexed
+  { 4, &AArch64Descs.OperandInfo[2112] },  // Inst #5915 = SQDMLSLi32
+  { 4, &AArch64Descs.OperandInfo[2108] },  // Inst #5914 = SQDMLSLi16
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5913 = SQDMLSLT_ZZZ_S
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5912 = SQDMLSLT_ZZZ_H
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5911 = SQDMLSLT_ZZZ_D
@@ -10603,14 +10603,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 5, &AArch64Descs.OperandInfo[686] },  // Inst #5899 = SQDMLALv8i16_indexed
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5898 = SQDMLALv4i32_v2i64
   { 5, &AArch64Descs.OperandInfo[634] },  // Inst #5897 = SQDMLALv4i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5896 = SQDMLALv4i16_v4i32
-  { 5, &AArch64Descs.OperandInfo[2074] },  // Inst #5895 = SQDMLALv4i16_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5894 = SQDMLALv2i32_v2i64
-  { 5, &AArch64Descs.OperandInfo[2069] },  // Inst #5893 = SQDMLALv2i32_indexed
-  { 5, &AArch64Descs.OperandInfo[2117] },  // Inst #5892 = SQDMLALv1i64_indexed
-  { 5, &AArch64Descs.OperandInfo[2112] },  // Inst #5891 = SQDMLALv1i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2108] },  // Inst #5890 = SQDMLALi32
-  { 4, &AArch64Descs.OperandInfo[2104] },  // Inst #5889 = SQDMLALi16
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5896 = SQDMLALv4i16_v4i32
+  { 5, &AArch64Descs.OperandInfo[2078] },  // Inst #5895 = SQDMLALv4i16_indexed
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5894 = SQDMLALv2i32_v2i64
+  { 5, &AArch64Descs.OperandInfo[2073] },  // Inst #5893 = SQDMLALv2i32_indexed
+  { 5, &AArch64Descs.OperandInfo[2121] },  // Inst #5892 = SQDMLALv1i64_indexed
+  { 5, &AArch64Descs.OperandInfo[2116] },  // Inst #5891 = SQDMLALv1i32_indexed
+  { 4, &AArch64Descs.OperandInfo[2112] },  // Inst #5890 = SQDMLALi32
+  { 4, &AArch64Descs.OperandInfo[2108] },  // Inst #5889 = SQDMLALi16
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5888 = SQDMLALT_ZZZ_S
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5887 = SQDMLALT_ZZZ_H
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5886 = SQDMLALT_ZZZ_D
@@ -10668,7 +10668,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #5834 = SQADDv4i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #5833 = SQADDv2i64
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #5832 = SQADDv2i32
-  { 3, &AArch64Descs.OperandInfo[2101] },  // Inst #5831 = SQADDv1i8
+  { 3, &AArch64Descs.OperandInfo[2105] },  // Inst #5831 = SQADDv1i8
   { 3, &AArch64Descs.OperandInfo[476] },  // Inst #5830 = SQADDv1i64
   { 3, &AArch64Descs.OperandInfo[996] },  // Inst #5829 = SQADDv1i32
   { 3, &AArch64Descs.OperandInfo[993] },  // Inst #5828 = SQADDv1i16
@@ -10691,7 +10691,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 2, &AArch64Descs.OperandInfo[432] },  // Inst #5811 = SQABSv4i16
   { 2, &AArch64Descs.OperandInfo[430] },  // Inst #5810 = SQABSv2i64
   { 2, &AArch64Descs.OperandInfo[432] },  // Inst #5809 = SQABSv2i32
-  { 2, &AArch64Descs.OperandInfo[2099] },  // Inst #5808 = SQABSv1i8
+  { 2, &AArch64Descs.OperandInfo[2103] },  // Inst #5808 = SQABSv1i8
   { 2, &AArch64Descs.OperandInfo[432] },  // Inst #5807 = SQABSv1i64
   { 2, &AArch64Descs.OperandInfo[1001] },  // Inst #5806 = SQABSv1i32
   { 2, &AArch64Descs.OperandInfo[999] },  // Inst #5805 = SQABSv1i16
@@ -10704,19 +10704,19 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5798 = SPLICE_ZPZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5797 = SPLICE_ZPZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5796 = SPLICE_ZPZ_B
-  { 3, &AArch64Descs.OperandInfo[2096] },  // Inst #5795 = SPLICE_ZPZZ_S
-  { 3, &AArch64Descs.OperandInfo[2096] },  // Inst #5794 = SPLICE_ZPZZ_H
-  { 3, &AArch64Descs.OperandInfo[2096] },  // Inst #5793 = SPLICE_ZPZZ_D
-  { 3, &AArch64Descs.OperandInfo[2096] },  // Inst #5792 = SPLICE_ZPZZ_B
+  { 3, &AArch64Descs.OperandInfo[2100] },  // Inst #5795 = SPLICE_ZPZZ_S
+  { 3, &AArch64Descs.OperandInfo[2100] },  // Inst #5794 = SPLICE_ZPZZ_H
+  { 3, &AArch64Descs.OperandInfo[2100] },  // Inst #5793 = SPLICE_ZPZZ_D
+  { 3, &AArch64Descs.OperandInfo[2100] },  // Inst #5792 = SPLICE_ZPZZ_B
   { 3, &AArch64Descs.OperandInfo[1946] },  // Inst #5791 = SMULLv8i8_v8i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #5790 = SMULLv8i16_v4i32
   { 4, &AArch64Descs.OperandInfo[1194] },  // Inst #5789 = SMULLv8i16_indexed
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #5788 = SMULLv4i32_v2i64
   { 4, &AArch64Descs.OperandInfo[253] },  // Inst #5787 = SMULLv4i32_indexed
   { 3, &AArch64Descs.OperandInfo[1946] },  // Inst #5786 = SMULLv4i16_v4i32
-  { 4, &AArch64Descs.OperandInfo[2092] },  // Inst #5785 = SMULLv4i16_indexed
+  { 4, &AArch64Descs.OperandInfo[2096] },  // Inst #5785 = SMULLv4i16_indexed
   { 3, &AArch64Descs.OperandInfo[1946] },  // Inst #5784 = SMULLv2i32_v2i64
-  { 4, &AArch64Descs.OperandInfo[2088] },  // Inst #5783 = SMULLv2i32_indexed
+  { 4, &AArch64Descs.OperandInfo[2092] },  // Inst #5783 = SMULLv2i32_indexed
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #5782 = SMULLv16i8_v8i16
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5781 = SMULLT_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5780 = SMULLT_ZZZ_H
@@ -10737,17 +10737,17 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5765 = SMULH_ZPmZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5764 = SMULH_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5763 = SMULH_ZPmZ_B
-  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #5762 = SMSUBLrrr
-  { 3, &AArch64Descs.OperandInfo[2085] },  // Inst #5761 = SMOVvi8to64_idx0
+  { 4, &AArch64Descs.OperandInfo[2063] },  // Inst #5762 = SMSUBLrrr
+  { 3, &AArch64Descs.OperandInfo[2089] },  // Inst #5761 = SMOVvi8to64_idx0
   { 3, &AArch64Descs.OperandInfo[1156] },  // Inst #5760 = SMOVvi8to64
-  { 3, &AArch64Descs.OperandInfo[2082] },  // Inst #5759 = SMOVvi8to32_idx0
-  { 3, &AArch64Descs.OperandInfo[2079] },  // Inst #5758 = SMOVvi8to32
-  { 3, &AArch64Descs.OperandInfo[2085] },  // Inst #5757 = SMOVvi32to64_idx0
+  { 3, &AArch64Descs.OperandInfo[2086] },  // Inst #5759 = SMOVvi8to32_idx0
+  { 3, &AArch64Descs.OperandInfo[2083] },  // Inst #5758 = SMOVvi8to32
+  { 3, &AArch64Descs.OperandInfo[2089] },  // Inst #5757 = SMOVvi32to64_idx0
   { 3, &AArch64Descs.OperandInfo[1156] },  // Inst #5756 = SMOVvi32to64
-  { 3, &AArch64Descs.OperandInfo[2085] },  // Inst #5755 = SMOVvi16to64_idx0
+  { 3, &AArch64Descs.OperandInfo[2089] },  // Inst #5755 = SMOVvi16to64_idx0
   { 3, &AArch64Descs.OperandInfo[1156] },  // Inst #5754 = SMOVvi16to64
-  { 3, &AArch64Descs.OperandInfo[2082] },  // Inst #5753 = SMOVvi16to32_idx0
-  { 3, &AArch64Descs.OperandInfo[2079] },  // Inst #5752 = SMOVvi16to32
+  { 3, &AArch64Descs.OperandInfo[2086] },  // Inst #5753 = SMOVvi16to32_idx0
+  { 3, &AArch64Descs.OperandInfo[2083] },  // Inst #5752 = SMOVvi16to32
   { 6, &AArch64Descs.OperandInfo[709] },  // Inst #5751 = SMOPS_MPPZZ_S
   { 6, &AArch64Descs.OperandInfo[709] },  // Inst #5750 = SMOPS_MPPZZ_HtoS
   { 6, &AArch64Descs.OperandInfo[1150] },  // Inst #5749 = SMOPS_MPPZZ_D
@@ -10756,15 +10756,15 @@ static const AArch64InstrTable AArch64Descs = {
   { 6, &AArch64Descs.OperandInfo[1150] },  // Inst #5746 = SMOPA_MPPZZ_D
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5745 = SMMLA_ZZZ
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5744 = SMMLA
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5743 = SMLSLv8i8_v8i16
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5743 = SMLSLv8i8_v8i16
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5742 = SMLSLv8i16_v4i32
   { 5, &AArch64Descs.OperandInfo[686] },  // Inst #5741 = SMLSLv8i16_indexed
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5740 = SMLSLv4i32_v2i64
   { 5, &AArch64Descs.OperandInfo[634] },  // Inst #5739 = SMLSLv4i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5738 = SMLSLv4i16_v4i32
-  { 5, &AArch64Descs.OperandInfo[2074] },  // Inst #5737 = SMLSLv4i16_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5736 = SMLSLv2i32_v2i64
-  { 5, &AArch64Descs.OperandInfo[2069] },  // Inst #5735 = SMLSLv2i32_indexed
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5738 = SMLSLv4i16_v4i32
+  { 5, &AArch64Descs.OperandInfo[2078] },  // Inst #5737 = SMLSLv4i16_indexed
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5736 = SMLSLv2i32_v2i64
+  { 5, &AArch64Descs.OperandInfo[2073] },  // Inst #5735 = SMLSLv2i32_indexed
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5734 = SMLSLv16i8_v8i16
   { 6, &AArch64Descs.OperandInfo[567] },  // Inst #5733 = SMLSL_VG4_M4ZZ_HtoS
   { 7, &AArch64Descs.OperandInfo[664] },  // Inst #5732 = SMLSL_VG4_M4ZZI_HtoS
@@ -10800,15 +10800,15 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5702 = SMLSLB_ZZZ_D
   { 5, &AArch64Descs.OperandInfo[671] },  // Inst #5701 = SMLSLB_ZZZI_S
   { 5, &AArch64Descs.OperandInfo[1135] },  // Inst #5700 = SMLSLB_ZZZI_D
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5699 = SMLALv8i8_v8i16
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5699 = SMLALv8i8_v8i16
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5698 = SMLALv8i16_v4i32
   { 5, &AArch64Descs.OperandInfo[686] },  // Inst #5697 = SMLALv8i16_indexed
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5696 = SMLALv4i32_v2i64
   { 5, &AArch64Descs.OperandInfo[634] },  // Inst #5695 = SMLALv4i32_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5694 = SMLALv4i16_v4i32
-  { 5, &AArch64Descs.OperandInfo[2074] },  // Inst #5693 = SMLALv4i16_indexed
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5692 = SMLALv2i32_v2i64
-  { 5, &AArch64Descs.OperandInfo[2069] },  // Inst #5691 = SMLALv2i32_indexed
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5694 = SMLALv4i16_v4i32
+  { 5, &AArch64Descs.OperandInfo[2078] },  // Inst #5693 = SMLALv4i16_indexed
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5692 = SMLALv2i32_v2i64
+  { 5, &AArch64Descs.OperandInfo[2073] },  // Inst #5691 = SMLALv2i32_indexed
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5690 = SMLALv16i8_v8i16
   { 6, &AArch64Descs.OperandInfo[567] },  // Inst #5689 = SMLAL_VG4_M4ZZ_HtoS
   { 7, &AArch64Descs.OperandInfo[664] },  // Inst #5688 = SMLAL_VG4_M4ZZI_HtoS
@@ -10875,9 +10875,9 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[680] },  // Inst #5627 = SMIN_VG2_2Z2Z_D
   { 3, &AArch64Descs.OperandInfo[680] },  // Inst #5626 = SMIN_VG2_2Z2Z_B
   { 3, &AArch64Descs.OperandInfo[151] },  // Inst #5625 = SMINXrr
-  { 3, &AArch64Descs.OperandInfo[2066] },  // Inst #5624 = SMINXri
+  { 3, &AArch64Descs.OperandInfo[2070] },  // Inst #5624 = SMINXri
   { 3, &AArch64Descs.OperandInfo[148] },  // Inst #5623 = SMINWrr
-  { 3, &AArch64Descs.OperandInfo[2063] },  // Inst #5622 = SMINWri
+  { 3, &AArch64Descs.OperandInfo[2067] },  // Inst #5622 = SMINWri
   { 2, &AArch64Descs.OperandInfo[520] },  // Inst #5621 = SMINVv8i8v
   { 2, &AArch64Descs.OperandInfo[518] },  // Inst #5620 = SMINVv8i16v
   { 2, &AArch64Descs.OperandInfo[516] },  // Inst #5619 = SMINVv4i32v
@@ -10933,9 +10933,9 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[680] },  // Inst #5569 = SMAX_VG2_2Z2Z_D
   { 3, &AArch64Descs.OperandInfo[680] },  // Inst #5568 = SMAX_VG2_2Z2Z_B
   { 3, &AArch64Descs.OperandInfo[151] },  // Inst #5567 = SMAXXrr
-  { 3, &AArch64Descs.OperandInfo[2066] },  // Inst #5566 = SMAXXri
+  { 3, &AArch64Descs.OperandInfo[2070] },  // Inst #5566 = SMAXXri
   { 3, &AArch64Descs.OperandInfo[148] },  // Inst #5565 = SMAXWrr
-  { 3, &AArch64Descs.OperandInfo[2063] },  // Inst #5564 = SMAXWri
+  { 3, &AArch64Descs.OperandInfo[2067] },  // Inst #5564 = SMAXWri
   { 2, &AArch64Descs.OperandInfo[520] },  // Inst #5563 = SMAXVv8i8v
   { 2, &AArch64Descs.OperandInfo[518] },  // Inst #5562 = SMAXVv8i16v
   { 2, &AArch64Descs.OperandInfo[516] },  // Inst #5561 = SMAXVv4i32v
@@ -10959,7 +10959,7 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5543 = SMAXP_ZPmZ_H
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5542 = SMAXP_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5541 = SMAXP_ZPmZ_B
-  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #5540 = SMADDLrrr
+  { 4, &AArch64Descs.OperandInfo[2063] },  // Inst #5540 = SMADDLrrr
   { 3, &AArch64Descs.OperandInfo[584] },  // Inst #5539 = SM4E_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #5538 = SM4ENCKEY
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5537 = SM4EKEY_ZZZ_S
@@ -10971,14 +10971,14 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[219] },  // Inst #5531 = SM3SS1
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5530 = SM3PARTW2
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5529 = SM3PARTW1
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #5528 = SLIv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #5527 = SLIv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #5526 = SLIv4i32_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #5525 = SLIv4i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #5524 = SLIv2i64_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #5523 = SLIv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #5522 = SLIv16i8_shift
-  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #5521 = SLId
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #5528 = SLIv8i8_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5527 = SLIv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5526 = SLIv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #5525 = SLIv4i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5524 = SLIv2i64_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #5523 = SLIv2i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5522 = SLIv16i8_shift
+  { 4, &AArch64Descs.OperandInfo[2059] },  // Inst #5521 = SLId
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #5520 = SLI_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #5519 = SLI_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #5518 = SLI_ZZI_D
@@ -10998,11 +10998,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5504 = SHSUBR_ZPmZ_D
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5503 = SHSUBR_ZPmZ_B
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #5502 = SHRNv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #5501 = SHRNv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #5500 = SHRNv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5501 = SHRNv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5500 = SHRNv4i32_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #5499 = SHRNv4i16_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #5498 = SHRNv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #5497 = SHRNv16i8_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5497 = SHRNv16i8_shift
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #5496 = SHRNT_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #5495 = SHRNT_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #5494 = SHRNT_ZZI_B
@@ -11043,10 +11043,10 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5459 = SHA256H2rrr
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #5458 = SHA1SU1rr
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5457 = SHA1SU0rrr
-  { 4, &AArch64Descs.OperandInfo[2051] },  // Inst #5456 = SHA1Prrr
-  { 4, &AArch64Descs.OperandInfo[2051] },  // Inst #5455 = SHA1Mrrr
+  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #5456 = SHA1Prrr
+  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #5455 = SHA1Mrrr
   { 2, &AArch64Descs.OperandInfo[1001] },  // Inst #5454 = SHA1Hrr
-  { 4, &AArch64Descs.OperandInfo[2051] },  // Inst #5453 = SHA1Crrr
+  { 4, &AArch64Descs.OperandInfo[2055] },  // Inst #5453 = SHA1Crrr
   { 5, &AArch64Descs.OperandInfo[344] },  // Inst #5452 = SETPTN
   { 5, &AArch64Descs.OperandInfo[344] },  // Inst #5451 = SETPT
   { 5, &AArch64Descs.OperandInfo[344] },  // Inst #5450 = SETPN
@@ -11064,24 +11064,24 @@ static const AArch64InstrTable AArch64Descs = {
   { 5, &AArch64Descs.OperandInfo[344] },  // Inst #5438 = SETGMN
   { 5, &AArch64Descs.OperandInfo[344] },  // Inst #5437 = SETGM
   { 0, &AArch64Descs.OperandInfo[1] },  // Inst #5436 = SETFFR
-  { 1, &AArch64Descs.OperandInfo[2050] },  // Inst #5435 = SETF8
-  { 1, &AArch64Descs.OperandInfo[2050] },  // Inst #5434 = SETF16
+  { 1, &AArch64Descs.OperandInfo[2054] },  // Inst #5435 = SETF8
+  { 1, &AArch64Descs.OperandInfo[2054] },  // Inst #5434 = SETF16
   { 5, &AArch64Descs.OperandInfo[344] },  // Inst #5433 = SETETN
   { 5, &AArch64Descs.OperandInfo[344] },  // Inst #5432 = SETET
   { 5, &AArch64Descs.OperandInfo[344] },  // Inst #5431 = SETEN
   { 5, &AArch64Descs.OperandInfo[344] },  // Inst #5430 = SETE
-  { 4, &AArch64Descs.OperandInfo[2046] },  // Inst #5429 = SEL_ZPZZ_S
-  { 4, &AArch64Descs.OperandInfo[2046] },  // Inst #5428 = SEL_ZPZZ_H
-  { 4, &AArch64Descs.OperandInfo[2046] },  // Inst #5427 = SEL_ZPZZ_D
-  { 4, &AArch64Descs.OperandInfo[2046] },  // Inst #5426 = SEL_ZPZZ_B
-  { 4, &AArch64Descs.OperandInfo[2042] },  // Inst #5425 = SEL_VG4_4ZC4Z4Z_S
-  { 4, &AArch64Descs.OperandInfo[2042] },  // Inst #5424 = SEL_VG4_4ZC4Z4Z_H
-  { 4, &AArch64Descs.OperandInfo[2042] },  // Inst #5423 = SEL_VG4_4ZC4Z4Z_D
-  { 4, &AArch64Descs.OperandInfo[2042] },  // Inst #5422 = SEL_VG4_4ZC4Z4Z_B
-  { 4, &AArch64Descs.OperandInfo[2038] },  // Inst #5421 = SEL_VG2_2ZC2Z2Z_S
-  { 4, &AArch64Descs.OperandInfo[2038] },  // Inst #5420 = SEL_VG2_2ZC2Z2Z_H
-  { 4, &AArch64Descs.OperandInfo[2038] },  // Inst #5419 = SEL_VG2_2ZC2Z2Z_D
-  { 4, &AArch64Descs.OperandInfo[2038] },  // Inst #5418 = SEL_VG2_2ZC2Z2Z_B
+  { 4, &AArch64Descs.OperandInfo[2050] },  // Inst #5429 = SEL_ZPZZ_S
+  { 4, &AArch64Descs.OperandInfo[2050] },  // Inst #5428 = SEL_ZPZZ_H
+  { 4, &AArch64Descs.OperandInfo[2050] },  // Inst #5427 = SEL_ZPZZ_D
+  { 4, &AArch64Descs.OperandInfo[2050] },  // Inst #5426 = SEL_ZPZZ_B
+  { 4, &AArch64Descs.OperandInfo[2046] },  // Inst #5425 = SEL_VG4_4ZC4Z4Z_S
+  { 4, &AArch64Descs.OperandInfo[2046] },  // Inst #5424 = SEL_VG4_4ZC4Z4Z_H
+  { 4, &AArch64Descs.OperandInfo[2046] },  // Inst #5423 = SEL_VG4_4ZC4Z4Z_D
+  { 4, &AArch64Descs.OperandInfo[2046] },  // Inst #5422 = SEL_VG4_4ZC4Z4Z_B
+  { 4, &AArch64Descs.OperandInfo[2042] },  // Inst #5421 = SEL_VG2_2ZC2Z2Z_S
+  { 4, &AArch64Descs.OperandInfo[2042] },  // Inst #5420 = SEL_VG2_2ZC2Z2Z_H
+  { 4, &AArch64Descs.OperandInfo[2042] },  // Inst #5419 = SEL_VG2_2ZC2Z2Z_D
+  { 4, &AArch64Descs.OperandInfo[2042] },  // Inst #5418 = SEL_VG2_2ZC2Z2Z_B
   { 4, &AArch64Descs.OperandInfo[598] },  // Inst #5417 = SEL_PPPP
   { 4, &AArch64Descs.OperandInfo[676] },  // Inst #5416 = SDOTv8i8
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5415 = SDOTv16i8
@@ -11142,18 +11142,18 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[426] },  // Inst #5360 = SCVTF_ZPmZ_DtoD
   { 2, &AArch64Descs.OperandInfo[1104] },  // Inst #5359 = SCVTF_4Z4Z_StoS
   { 2, &AArch64Descs.OperandInfo[1102] },  // Inst #5358 = SCVTF_2Z2Z_StoS
-  { 2, &AArch64Descs.OperandInfo[2036] },  // Inst #5357 = SCVTFUXSri
+  { 2, &AArch64Descs.OperandInfo[2040] },  // Inst #5357 = SCVTFUXSri
   { 2, &AArch64Descs.OperandInfo[1174] },  // Inst #5356 = SCVTFUXHri
   { 2, &AArch64Descs.OperandInfo[1172] },  // Inst #5355 = SCVTFUXDri
   { 2, &AArch64Descs.OperandInfo[1167] },  // Inst #5354 = SCVTFUWSri
   { 2, &AArch64Descs.OperandInfo[1165] },  // Inst #5353 = SCVTFUWHri
   { 2, &AArch64Descs.OperandInfo[936] },  // Inst #5352 = SCVTFUWDri
-  { 3, &AArch64Descs.OperandInfo[2033] },  // Inst #5351 = SCVTFSXSri
-  { 3, &AArch64Descs.OperandInfo[2030] },  // Inst #5350 = SCVTFSXHri
-  { 3, &AArch64Descs.OperandInfo[2027] },  // Inst #5349 = SCVTFSXDri
-  { 3, &AArch64Descs.OperandInfo[2024] },  // Inst #5348 = SCVTFSWSri
-  { 3, &AArch64Descs.OperandInfo[2021] },  // Inst #5347 = SCVTFSWHri
-  { 3, &AArch64Descs.OperandInfo[2018] },  // Inst #5346 = SCVTFSWDri
+  { 3, &AArch64Descs.OperandInfo[2037] },  // Inst #5351 = SCVTFSXSri
+  { 3, &AArch64Descs.OperandInfo[2034] },  // Inst #5350 = SCVTFSXHri
+  { 3, &AArch64Descs.OperandInfo[2031] },  // Inst #5349 = SCVTFSXDri
+  { 3, &AArch64Descs.OperandInfo[2028] },  // Inst #5348 = SCVTFSWSri
+  { 3, &AArch64Descs.OperandInfo[2025] },  // Inst #5347 = SCVTFSWHri
+  { 3, &AArch64Descs.OperandInfo[2022] },  // Inst #5346 = SCVTFSWDri
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5345 = SCLAMP_ZZZ_S
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5344 = SCLAMP_ZZZ_H
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5343 = SCLAMP_ZZZ_D
@@ -11166,8 +11166,8 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[645] },  // Inst #5336 = SCLAMP_VG2_2Z2Z_H
   { 4, &AArch64Descs.OperandInfo[645] },  // Inst #5335 = SCLAMP_VG2_2Z2Z_D
   { 4, &AArch64Descs.OperandInfo[645] },  // Inst #5334 = SCLAMP_VG2_2Z2Z_B
-  { 4, &AArch64Descs.OperandInfo[2014] },  // Inst #5333 = SBFMXri
-  { 4, &AArch64Descs.OperandInfo[2010] },  // Inst #5332 = SBFMWri
+  { 4, &AArch64Descs.OperandInfo[2018] },  // Inst #5333 = SBFMXri
+  { 4, &AArch64Descs.OperandInfo[2014] },  // Inst #5332 = SBFMWri
   { 3, &AArch64Descs.OperandInfo[151] },  // Inst #5331 = SBCXr
   { 3, &AArch64Descs.OperandInfo[148] },  // Inst #5330 = SBCWr
   { 3, &AArch64Descs.OperandInfo[151] },  // Inst #5329 = SBCSXr
@@ -11177,11 +11177,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5325 = SBCLB_ZZZ_S
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5324 = SBCLB_ZZZ_D
   { 0, &AArch64Descs.OperandInfo[1] },  // Inst #5323 = SB
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #5322 = SADDWv8i8_v8i16
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #5322 = SADDWv8i8_v8i16
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #5321 = SADDWv8i16_v4i32
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #5320 = SADDWv4i32_v2i64
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #5319 = SADDWv4i16_v4i32
-  { 3, &AArch64Descs.OperandInfo[2007] },  // Inst #5318 = SADDWv2i32_v2i64
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #5319 = SADDWv4i16_v4i32
+  { 3, &AArch64Descs.OperandInfo[2011] },  // Inst #5318 = SADDWv2i32_v2i64
   { 3, &AArch64Descs.OperandInfo[473] },  // Inst #5317 = SADDWv16i8_v8i16
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5316 = SADDWT_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5315 = SADDWT_ZZZ_H
@@ -11218,11 +11218,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5284 = SADDLBT_ZZZ_S
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5283 = SADDLBT_ZZZ_H
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5282 = SADDLBT_ZZZ_D
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #5281 = SADALPv8i8_v4i16
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #5281 = SADALPv8i8_v4i16
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #5280 = SADALPv8i16_v4i32
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #5279 = SADALPv4i32_v2i64
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #5278 = SADALPv4i16_v2i32
-  { 3, &AArch64Descs.OperandInfo[2004] },  // Inst #5277 = SADALPv2i32_v1i64
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #5278 = SADALPv4i16_v2i32
+  { 3, &AArch64Descs.OperandInfo[2008] },  // Inst #5277 = SADALPv2i32_v1i64
   { 3, &AArch64Descs.OperandInfo[587] },  // Inst #5276 = SADALPv16i8_v8i16
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5275 = SADALP_ZPmZ_S
   { 4, &AArch64Descs.OperandInfo[469] },  // Inst #5274 = SADALP_ZPmZ_H
@@ -11259,11 +11259,11 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5243 = SABA_ZZZ_H
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5242 = SABA_ZZZ_D
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5241 = SABA_ZZZ_B
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5240 = SABALv8i8_v8i16
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5240 = SABALv8i8_v8i16
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5239 = SABALv8i16_v4i32
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5238 = SABALv4i32_v2i64
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5237 = SABALv4i16_v4i32
-  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5236 = SABALv2i32_v2i64
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5237 = SABALv4i16_v4i32
+  { 4, &AArch64Descs.OperandInfo[2004] },  // Inst #5236 = SABALv2i32_v2i64
   { 4, &AArch64Descs.OperandInfo[458] },  // Inst #5235 = SABALv16i8_v8i16
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5234 = SABALT_ZZZ_S
   { 4, &AArch64Descs.OperandInfo[434] },  // Inst #5233 = SABALT_ZZZ_H
@@ -11284,21 +11284,21 @@ static const AArch64InstrTable AArch64Descs = {
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5218 = RSUBHNB_ZZZ_H
   { 3, &AArch64Descs.OperandInfo[452] },  // Inst #5217 = RSUBHNB_ZZZ_B
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #5216 = RSHRNv8i8_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #5215 = RSHRNv8i16_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #5214 = RSHRNv4i32_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5215 = RSHRNv8i16_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5214 = RSHRNv4i32_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #5213 = RSHRNv4i16_shift
   { 3, &AArch64Descs.OperandInfo[925] },  // Inst #5212 = RSHRNv2i32_shift
-  { 4, &AArch64Descs.OperandInfo[1996] },  // Inst #5211 = RSHRNv16i8_shift
+  { 4, &AArch64Descs.OperandInfo[2000] },  // Inst #5211 = RSHRNv16i8_shift
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #5210 = RSHRNT_ZZI_S
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #5209 = RSHRNT_ZZI_H
   { 4, &AArch64Descs.OperandInfo[756] },  // Inst #5208 = RSHRNT_ZZI_B
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #5207 = RSHRNB_ZZI_S
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #5206 = RSHRNB_ZZI_H
   { 3, &AArch64Descs.OperandInfo[618] },  // Inst #5205 = RSHRNB_ZZI_B
-  { 3, &AArch64Descs.OperandInfo[1993] },  // Inst #5204 = RPRFM
+  { 3, &AArch64Descs.OperandInfo[1997] },  // Inst #5204 = RPRFM
   { 3, &AArch64Descs.OperandInfo[151] },  // Inst #5203 = RORVXr
   { 3, &AArch64Descs.OperandInfo[148] },  // Inst #5202 = RORVWr
-  { 3, &AArch64Descs.OperandInfo[1990] },  // Inst #5201 = RMIF
+  { 3, &AArch64Descs.OperandInfo[1994] },  // Inst #5201 = RMIF
   { 2, &AArch64Descs.OperandInfo[639] },  // Inst #5200 = REV_ZZ_S
   { 2, &AArch64Descs.OperandInfo[639] },  // Inst #5199 = REV_ZZ_H
   { 2, &AArch64Descs.OperandInfo[639] },  // Inst #5198 = REV_ZZ_D
@@ -11379,10 +11379,10 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[772] },  // Inst #5123 = RCWSCASPAL
   { 4, &AArch64Descs.OperandInfo[772] },  // Inst #5122 = RCWSCASPA
   { 4, &AArch64Descs.OperandInfo[772] },  // Inst #5121 = RCWSCASP
-  { 4, &AArch64Descs.OperandInfo[764] },  // Inst #5120 = RCWSCASL
-  { 4, &AArch64Descs.OperandInfo[764] },  // Inst #5119 = RCWSCASAL
-  { 4, &AArch64Descs.OperandInfo[764] },  // Inst #5118 = RCWSCASA
-  { 4, &AArch64Descs.OperandInfo[764] },  // Inst #5117 = RCWSCAS
+  { 4, &AArch64Descs.OperandInfo[1990] },  // Inst #5120 = RCWSCASL
+  { 4, &AArch64Descs.OperandInfo[1990] },  // Inst #5119 = RCWSCASAL
+  { 4, &AArch64Descs.OperandInfo[1990] },  // Inst #5118 = RCWSCASA
+  { 4, &AArch64Descs.OperandInfo[1990] },  // Inst #5117 = RCWSCAS
   { 5, &AArch64Descs.OperandInfo[1506] },  // Inst #5116 = RCWCLRSPL
   { 5, &AArch64Descs.OperandInfo[1506] },  // Inst #5115 = RCWCLRSPAL
   { 5, &AArch64Descs.OperandInfo[1506] },  // Inst #5114 = RCWCLRSPA
@@ -11403,10 +11403,10 @@ static const AArch64InstrTable AArch64Descs = {
   { 4, &AArch64Descs.OperandInfo[772] },  // Inst #5099 = RCWCASPAL
   { 4, &AArch64Descs.OperandInfo[772] },  // Inst #5098 = RCWCASPA
   { 4, &AArch64Descs.OperandInfo[772] },  // Inst #5097 = RCWCASP
-  { 4, &AArch64Descs.OperandInfo[764] },  // Inst #5096 = RCWCASL
-  { 4, &AArch64Descs.OperandInfo[764] },  // Inst #5095 = RCWCASAL
-  { 4, &AArch64Descs.OperandInfo[764] },  // Inst #5094 = RCWCASA
-  { 4, &AArch64Descs.OperandInfo[764] },  // Inst #5093 = RCWCAS
+  { 4, &AArch64Descs.OperandInfo[1990] },  // Inst #5096 = RCWCASL
+  { 4, &AArch64Descs.OperandInfo[1990] },  // Inst #5095 = RCWCASAL
+  { 4, &AArch64Descs.OperandInfo[1990] },  // Inst #5094 = RCWCASA
+  { 4, &AArch64Descs.OperandInfo[1990] },  // Inst #5093 = RCWCAS
   { 2, &AArch64Descs.OperandInfo[432] },  // Inst #5092 = RBITv8i8
   { 2, &AArch64Descs.OperandInfo[430] },  // Inst #5091 = RBITv16i8
   { 4, &AArch64Descs.OperandInfo[426] },  // Inst #5090 = RBIT_ZPmZ_S
@@ -16721,8 +16721,8 @@ static const AArch64InstrTable AArch64Descs = {
     /* 748 */ { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
     /* 752 */ { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
     /* 756 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 760 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 764 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 760 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
+    /* 764 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
     /* 768 */ { AArch64_WSeqPairsClassRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_WSeqPairsClassRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_WSeqPairsClassRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
     /* 772 */ { AArch64_XSeqPairsClassRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_XSeqPairsClassRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_XSeqPairsClassRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
     /* 776 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_PCREL, 0 },
@@ -17046,128 +17046,129 @@ static const AArch64InstrTable AArch64Descs = {
     /* 1982 */ { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_MatrixIndexGPR32_12_15RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
     /* 1987 */ { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
     /* 1989 */ { AArch64_PNR_p8to15RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 1990 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
-    /* 1993 */ { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 1996 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2000 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2004 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2007 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2010 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
-    /* 2014 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
-    /* 2018 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2021 */ { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2024 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2027 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2030 */ { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2033 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2036 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2038 */ { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PNR_p8to15RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2042 */ { AArch64_ZPR4Mul4RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PNR_p8to15RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR4Mul4RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR4Mul4RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2046 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2050 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2051 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2055 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2059 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2063 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2066 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2069 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2074 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128_loRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2079 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2082 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, AARCH64_OP_IMPLICIT_IMM_0, 0 },
-    /* 2085 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, AARCH64_OP_IMPLICIT_IMM_0, 0 },
-    /* 2088 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2092 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128_loRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2096 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPR_3bRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2099 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2101 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2104 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2108 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2112 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128_loRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2117 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2122 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2125 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2128 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128_loRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2132 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2136 */ { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2140 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2144 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR4Mul4RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2147 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2150 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2153 */ { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2156 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2159 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2162 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2164 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2167 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2170 */ { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2175 */ { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2179 */ { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2182 */ { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2187 */ { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2190 */ { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2195 */ { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2198 */ { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2203 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64x8ClassRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2206 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_EARLY_CLOBBER }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2210 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_EARLY_CLOBBER }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2214 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_EARLY_CLOBBER }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2217 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_EARLY_CLOBBER }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2220 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2223 */ { AArch64_ZPR4Mul4RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2225 */ { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2228 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2231 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2234 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
-    /* 2239 */ { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { AArch64_XSeqPairsClassRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2244 */ { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2249 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2252 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2255 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2258 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2261 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2264 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2267 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2270 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2273 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_PCREL, 0 },
-    /* 2276 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_PCREL, 0 },
-    /* 2279 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2283 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2287 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2291 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2295 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2299 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2303 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2307 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
-    /* 2310 */ { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2313 */ { AArch64_PPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2316 */ { AArch64_PNR_p8to15RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 2320 */ { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2323 */ { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 2326 */ { AArch64_MPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_MPRRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_MatrixIndexGPR32_8_11RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 1990 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 1994 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
+    /* 1997 */ { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2000 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2004 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2008 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2011 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2014 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
+    /* 2018 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
+    /* 2022 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2025 */ { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2028 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2031 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2034 */ { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2037 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2040 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2042 */ { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PNR_p8to15RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2046 */ { AArch64_ZPR4Mul4RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PNR_p8to15RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR4Mul4RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR4Mul4RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2050 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2054 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2055 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2059 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2063 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2067 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2070 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2073 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2078 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128_loRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2083 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2086 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, AARCH64_OP_IMPLICIT_IMM_0, 0 },
+    /* 2089 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, AARCH64_OP_IMPLICIT_IMM_0, 0 },
+    /* 2092 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2096 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128_loRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2100 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPR_3bRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2103 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2105 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2108 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2112 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2116 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128_loRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2121 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2126 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2129 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2132 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128_loRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2136 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2140 */ { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2144 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2148 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR4Mul4RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2151 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2154 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2157 */ { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2160 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2163 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2166 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2168 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2171 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2174 */ { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2179 */ { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2183 */ { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2186 */ { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2191 */ { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2194 */ { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2199 */ { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2202 */ { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2207 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64x8ClassRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2210 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_EARLY_CLOBBER }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2214 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_EARLY_CLOBBER }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2218 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_EARLY_CLOBBER }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2221 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_EARLY_CLOBBER }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2224 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64spRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2227 */ { AArch64_ZPR4Mul4RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2229 */ { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR16RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2232 */ { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2235 */ { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR8RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2238 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
+    /* 2243 */ { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { AArch64_XSeqPairsClassRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2248 */ { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2253 */ { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPR2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2256 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2259 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2262 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2265 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2268 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2271 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2274 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2277 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_PCREL, 0 },
+    /* 2280 */ { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0, MCOI_OPERAND_PCREL, 0 },
+    /* 2283 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2287 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2291 */ { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2295 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2299 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_FPR128RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2303 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2307 */ { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_QQRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_FPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2311 */ { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
+    /* 2314 */ { AArch64_ZPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_ZPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2317 */ { AArch64_PPR2Mul2RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2320 */ { AArch64_PNR_p8to15RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 2324 */ { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2327 */ { AArch64_PPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_GPR64RegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 2330 */ { AArch64_MPRRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { AArch64_MPRRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { AArch64_MatrixIndexGPR32_8_11RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
   }, {
     /* 0 */
     /* 0 */ AArch64_NZCV,
     /* 1 */ AArch64_SP, AArch64_SP,
-    /* 3 */ AArch64_SP, AArch64_LR,
-    /* 5 */ AArch64_X16, AArch64_SP, AArch64_LR,
-    /* 8 */ AArch64_X9, AArch64_X16, AArch64_X17, AArch64_LR, AArch64_NZCV,
-    /* 13 */ AArch64_X20, AArch64_X16, AArch64_X17, AArch64_LR, AArch64_NZCV,
-    /* 18 */ AArch64_X9, AArch64_X16, AArch64_X17, AArch64_NZCV,
-    /* 22 */ AArch64_FPCR,
-    /* 23 */ AArch64_LR, AArch64_SP, AArch64_LR,
-    /* 26 */ AArch64_SP, AArch64_SP, AArch64_NZCV,
-    /* 29 */ AArch64_X16, AArch64_X17,
-    /* 31 */ AArch64_SP,
-    /* 32 */ AArch64_NZCV, AArch64_LR, AArch64_X0, AArch64_X1,
-    /* 36 */ AArch64_NZCV, AArch64_NZCV,
-    /* 38 */ AArch64_X16, AArch64_X17, AArch64_X17,
-    /* 41 */ AArch64_LR, AArch64_LR,
-    /* 43 */ AArch64_X16, AArch64_X16,
-    /* 45 */ AArch64_LR, AArch64_SP,
-    /* 47 */ AArch64_FPCR, AArch64_NZCV,
-    /* 49 */ AArch64_FFR, AArch64_FFR,
-    /* 51 */ AArch64_FFR, AArch64_NZCV,
-    /* 53 */ AArch64_FFR,
+    /* 3 */ AArch64_LR,
+    /* 4 */ AArch64_X16, AArch64_SP, AArch64_LR,
+    /* 7 */ AArch64_X9, AArch64_X16, AArch64_X17, AArch64_LR, AArch64_NZCV,
+    /* 12 */ AArch64_X20, AArch64_X16, AArch64_X17, AArch64_LR, AArch64_NZCV,
+    /* 17 */ AArch64_X9, AArch64_X16, AArch64_X17, AArch64_NZCV,
+    /* 21 */ AArch64_FPCR,
+    /* 22 */ AArch64_LR, AArch64_SP, AArch64_LR,
+    /* 25 */ AArch64_SP, AArch64_SP, AArch64_NZCV,
+    /* 28 */ AArch64_X16, AArch64_X17,
+    /* 30 */ AArch64_SP,
+    /* 31 */ AArch64_NZCV, AArch64_LR, AArch64_X0, AArch64_X1,
+    /* 35 */ AArch64_NZCV, AArch64_NZCV,
+    /* 37 */ AArch64_X16, AArch64_X17, AArch64_X17,
+    /* 40 */ AArch64_LR, AArch64_LR,
+    /* 42 */ AArch64_X16, AArch64_X16,
+    /* 44 */ AArch64_LR, AArch64_SP,
+    /* 46 */ AArch64_FPCR, AArch64_NZCV,
+    /* 48 */ AArch64_FFR, AArch64_FFR,
+    /* 50 */ AArch64_FFR, AArch64_NZCV,
+    /* 52 */ AArch64_FFR,
   }
 };
 

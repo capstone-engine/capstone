@@ -79,7 +79,7 @@ static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR(
 		"op_str", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL,
 		TestInsnData, op_str, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_UINT("is_alias", CYAML_FLAG_OPTIONAL, TestInsnData,
+	CYAML_FIELD_INT("is_alias", CYAML_FLAG_OPTIONAL, TestInsnData,
 			 is_alias),
 	CYAML_FIELD_INT("alias_id",
 			CYAML_FLAG_SCALAR_PLAIN | CYAML_FLAG_OPTIONAL,

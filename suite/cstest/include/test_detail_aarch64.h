@@ -57,6 +57,7 @@ typedef struct {
 	int8_t imm_range_first;
 	int8_t imm_range_offset;
 	double fp;
+	bool fp_set; /// Only relevant for SysOps with EXACTFPIMM
 	uint64_t sys_raw_val;
 
 	TestDetailAArch64SME *sme;
@@ -103,6 +104,7 @@ static const cyaml_schema_field_t test_detail_aarch64_op_mapping_schema[] = {
 	CYAML_FIELD_INT("imm_range_offset", CYAML_FLAG_OPTIONAL,
 			TestDetailAArch64Op, imm_range_offset),
 	CYAML_FIELD_FLOAT("fp", CYAML_FLAG_OPTIONAL, TestDetailAArch64Op, fp),
+	CYAML_FIELD_BOOL("fp_set", CYAML_FLAG_OPTIONAL, TestDetailAArch64Op, fp_set),
 	CYAML_FIELD_UINT("sys_raw_val", CYAML_FLAG_OPTIONAL,
 			 TestDetailAArch64Op, sys_raw_val),
 	CYAML_FIELD_MAPPING_PTR("sme", CYAML_FLAG_OPTIONAL, TestDetailAArch64Op,

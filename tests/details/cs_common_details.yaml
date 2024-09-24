@@ -309,7 +309,7 @@ test_cases:
           mnemonic: "mrs"
           op_str: "x9, MIDR_EL1"
           details:
-            regs_impl_write: []
+            regs_impl_write: [ ]
             groups: [ privilege ]
         -
           asm_text: "msr SPSel, #0"

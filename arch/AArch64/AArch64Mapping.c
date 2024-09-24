@@ -19,6 +19,24 @@
 #include "AArch64Linkage.h"
 #include "AArch64Mapping.h"
 
+#define CHAR(c) #c[0]
+
+static float aarch64_exact_fp_to_fp(aarch64_exactfpimm exact) {
+	switch (exact) {
+	default:
+		CS_ASSERT(0 && "Not handled.");
+		return 999.0;
+	case AARCH64_EXACTFPIMM_HALF:
+		return 0.5;
+	case AARCH64_EXACTFPIMM_ONE:
+		return 1.0;
+	case AARCH64_EXACTFPIMM_TWO:
+		return 2.0;
+	case AARCH64_EXACTFPIMM_ZERO:
+		return 0.0;
+	}
+}
+
 #ifndef CAPSTONE_DIET
 static const aarch64_reg aarch64_flag_regs[] = {
 	AARCH64_REG_NZCV,
@@ -1747,28 +1765,53 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 			// Shift is handled in printShifter()
 			break;
 		}
+
+	#define SCALE_SET(T) \
+		do { \
+			T Val; \
+			if (CHAR(T) == 'i') /* Signed */ \
+				Val = (int8_t)UnscaledVal * \
+					    (1 << AArch64_AM_getShiftValue(Shift)); \
+			else \
+				Val = (uint8_t)UnscaledVal * \
+					    (1 << AArch64_AM_getShiftValue(Shift)); \
+			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM, Val); \
+		} while (0)
+
 		switch (op_group) {
 		default:
 			assert(0 &&
 			       "Operand group for Imm8OptLsl not handled.");
-		case AArch64_OP_GROUP_Imm8OptLsl_int16_t:
-		case AArch64_OP_GROUP_Imm8OptLsl_int32_t:
-		case AArch64_OP_GROUP_Imm8OptLsl_int64_t:
-		case AArch64_OP_GROUP_Imm8OptLsl_int8_t: {
-			int8_t Val = (int8_t)UnscaledVal *
-				     (1 << AArch64_AM_getShiftValue(Shift));
-			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
-						  Val);
+		case AArch64_OP_GROUP_Imm8OptLsl_int16_t: {
+			SCALE_SET(int16_t);
 			break;
 		}
-		case AArch64_OP_GROUP_Imm8OptLsl_uint16_t:
-		case AArch64_OP_GROUP_Imm8OptLsl_uint32_t:
-		case AArch64_OP_GROUP_Imm8OptLsl_uint64_t:
+		case AArch64_OP_GROUP_Imm8OptLsl_int32_t: {
+			SCALE_SET(int32_t);
+			break;
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_int64_t: {
+			SCALE_SET(int64_t);
+			break;
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_int8_t: {
+			SCALE_SET(int8_t);
+			break;
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_uint16_t: {
+			SCALE_SET(uint16_t);
+			break;
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_uint32_t: {
+			SCALE_SET(uint32_t);
+			break;
+		}
+		case AArch64_OP_GROUP_Imm8OptLsl_uint64_t: {
+			SCALE_SET(uint64_t);
+			break;
+		}
 		case AArch64_OP_GROUP_Imm8OptLsl_uint8_t: {
-			uint8_t Val = (uint8_t)UnscaledVal *
-				      (1 << AArch64_AM_getShiftValue(Shift));
-			AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM,
-						  Val);
+			SCALE_SET(uint8_t);
 			break;
 		}
 		}
@@ -1875,7 +1918,7 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 		unsigned EltSize = temp_arg_0;
 		AArch64_get_detail_op(MI, 0)->vas = EltSize;
 		AArch64_set_detail_op_reg(
-			MI, OpNum, MCInst_getOpVal(MI, OpNum) - AArch64_PN0);
+			MI, OpNum, MCInst_getOpVal(MI, OpNum));
 		break;
 	}
 	case AArch64_OP_GROUP_PrefetchOp_0:
@@ -2483,7 +2526,8 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 		AArch64_set_detail_op_sme(MI, OpNum, AARCH64_SME_MATRIX_TILE,
 					  sme_reg_to_vas(Reg));
 		return;
-	} else if ((Reg >= AARCH64_REG_P0) && (Reg <= AARCH64_REG_P15)) {
+	} else if (((Reg >= AARCH64_REG_P0) && (Reg <= AARCH64_REG_P15)) ||
+	           ((Reg >= AARCH64_REG_PN0) && (Reg <= AARCH64_REG_PN15))) {
 		// SME/SVE predicate register.
 		AArch64_set_detail_op_pred(MI, OpNum);
 		return;
@@ -2695,6 +2739,9 @@ void AArch64_set_detail_op_sys(MCInst *MI, unsigned OpNum, aarch64_sysop sys_op,
 
 	AArch64_get_detail_op(MI, 0)->type = type;
 	AArch64_get_detail_op(MI, 0)->sysop = sys_op;
+	if (sys_op.sub_type == AARCH64_OP_EXACTFPIMM) {
+		AArch64_get_detail_op(MI, 0)->fp = aarch64_exact_fp_to_fp(sys_op.imm.exactfpimm);
+	}
 	AArch64_inc_op_count(MI);
 }
 
@@ -2891,6 +2938,9 @@ void AArch64_insert_detail_op_sys(MCInst *MI, unsigned index, aarch64_sysop sys_
 	AArch64_setup_op(&op);
 	op.type = type;
 	op.sysop = sys_op;
+	if (op.sysop.sub_type == AARCH64_OP_EXACTFPIMM) {
+		op.fp = aarch64_exact_fp_to_fp(op.sysop.imm.exactfpimm);
+	}
 	insert_op(MI, index, op);
 }
 

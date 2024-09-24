@@ -175,6 +175,7 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 				break;
 			case AARCH64_OP_EXACTFPIMM:
 				printf("\t\toperands[%u].subtype EXACTFPIMM = %d\n", i, op->sysop.imm.exactfpimm);
+				printf("\t\toperands[%u].fp = %.1f\n", i, op->fp);
 				break;
 			case AARCH64_OP_DBNXS:
 				printf("\t\toperands[%u].subtype DBNXS = %d\n", i, op->sysop.imm.dbnxs);

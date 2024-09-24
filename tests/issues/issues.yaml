@@ -5125,7 +5125,6 @@ test_cases:
                 vas: AARCH64LAYOUT_VL_D
           regs_read: [ za0.d, za1.d, za2.d, za3.d, za4.d, za5.d, za6.d, za7.d ]
           groups: [ HasSME ]
-
   -
     input:
       address: 0x0
@@ -5246,3 +5245,169 @@ test_cases:
               -
                 type: SH_OP_REG
                 reg: r2
+  -
+    input:
+      name: "issue 2471 -- PNx was register"
+      bytes: [ 0x10, 0x80, 0x40, 0xa1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ld1b	{ z16.b, z20.b, z24.b, z28.b }, pn8/z, [x0]"
+        is_alias: 1
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z16
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z20
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z24
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_REG
+                reg: z28
+                is_list_member: 1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_B
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: pn8
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x0
+                access: CS_AC_READ
+          regs_read: [pn8, x0]
+          regs_write: [z16, z20, z24, z28]
+          groups: [ HasSME2 ]
+  -
+    input:
+      name: "issue 2472 -- Shift immediate is 0"
+      bytes: [ 0x01, 0x21, 0x50, 0x05 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov	z1.h, p0/z, #0x800"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z1
+                access: CS_AC_WRITE
+                vas: AARCH64LAYOUT_VL_H
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p0
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x800
+                access: CS_AC_READ
+          regs_read: [ p0 ]
+          regs_write: [ z1 ]
+          groups: [ HasSVEorSME ]
+  -
+    input:
+      name: "issue 2472 -- Extra fp for EXACTFPIMM"
+      bytes: [ 0x05, 0x84, 0xd8, 0x65 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fadd	z5.d, p1/m, z5.d, #0.5"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: z5
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_PRED
+                pred_reg: p1
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                reg: z5
+                access: CS_AC_READ_WRITE
+                vas: AARCH64LAYOUT_VL_D
+              -
+                type: AARCH64_OP_SYSIMM
+                sub_type: AARCH64_OP_EXACTFPIMM
+                sys_raw_val: 1
+                fp: 0.5
+                fp_set: true
+  -
+    input:
+      name: "issue 2472 -- Incorrectly has NZCV in reg mod list"
+      bytes: [ 0x42, 0xd0, 0x3b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mrs	x2, TPIDR_EL0"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: x2
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_SYSREG
+                sub_type: AARCH64_OP_REG_MRS
+                sys_raw_val: 0xde82
+            update_flags: -1
+          regs_write: [ x2 ]
+          groups: [ privilege ]
+  -
+    input:
+      name: "issue 2472 -- CASAL source operand has incorrectly the WRITE flag set"
+      bytes: [ 0x02, 0xfc, 0xe1, 0x88 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "casal	w1, w2, [x0]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: w1
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_REG
+                reg: w2
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x0
+                access: CS_AC_READ_WRITE
+          regs_read: [ w1, w2, x0 ]
