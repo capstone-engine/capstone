@@ -3311,7 +3311,7 @@ DEFINE_DecodeUImmWithReg(18, 0, 1, Mips_GP_NM);
 static DecodeStatus DecodeSImm32s12(MCInst *Inst, uint32_t Insn,
 				    uint64_t Address, const void *Decoder)
 {
-	uint64_t Imm = (Insn) << 12;
+	uint64_t Imm = ((uint64_t)Insn) << 12;
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
