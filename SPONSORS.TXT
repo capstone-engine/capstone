@@ -1,3 +1,13 @@
+* Version 6 - 2024
+
+Release v6 was sponsored by RizinOrg (https://rizin.re)
+
+----------------------------
+* Version 5 - July 5th, 2023
+
+The TriCore module in release v5 was sponsored by RizinOrg (https://rizin.re)
+
+------------------------------------
 * Version 4.0.1 - January 10th, 2019
 
 Release 4.0.1 was sponsored by the following companies (in no particular order).
