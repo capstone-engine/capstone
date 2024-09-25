@@ -124,7 +124,7 @@ void map_remove_implicit_write(MCInst *MI, uint32_t Reg)
 		if (regs_write[i] == Reg) {
 			MI->flat_insn->detail->regs_write_count--;
 			// The register should exist only once in the list.
-			assert(!shorten_list);
+			CS_ASSERT_RET(!shorten_list);
 			shorten_list = true;
 		}
 	}
@@ -360,7 +360,7 @@ bool map_use_alias_details(const MCInst *MI) {
 /// Sets the setDetailOps flag to @p Val.
 /// If detail == NULLit refuses to set the flag to true.
 void map_set_fill_detail_ops(MCInst *MI, bool Val) {
-	assert(MI);
+	CS_ASSERT_RET(MI);
 	if (!detail_is_set(MI)) {
 		MI->fillDetailOps = false;
 		return;
@@ -371,7 +371,7 @@ void map_set_fill_detail_ops(MCInst *MI, bool Val) {
 
 /// Sets the instruction alias flags and the given alias id.
 void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias) {
-	assert(MI);
+	CS_ASSERT_RET(MI);
 	MI->isAliasInstr = Val;
 	MI->flat_insn->is_alias = Val;
 	MI->flat_insn->alias_id = Alias;

@@ -808,7 +808,7 @@ static DecodeStatus DecodeINSVE_DF(MCInst *MI, uint32_t insn, uint64_t Address,
 		NSize = 1;
 		RegDecoder = DecodeMSA128DRegisterClass;
 	} else
-		assert(0 && "Invalid encoding");
+		CS_ASSERT_RET_VAL(0 && "Invalid encoding", MCDisassembler_Fail);
 
 	// $wd
 	tmp = fieldFromInstruction_4(insn, 6, 5);
@@ -1292,7 +1292,7 @@ static DecodeStatus DecodeDEXT(MCInst *MI, uint32_t Insn, uint64_t Address,
 		Size = Msbd + 1;
 		break;
 	default:
-		assert(0 && "Unknown DEXT instruction!");
+		CS_ASSERT_RET_VAL(0 && "Unknown DEXT instruction!", MCDisassembler_Fail);
 	}
 
 	MCInst_setOpcode(MI, (Mips_DEXT));
@@ -1334,7 +1334,7 @@ static DecodeStatus DecodeDINS(MCInst *MI, uint32_t Insn, uint64_t Address,
 		Size = Msbd + 33 - Pos;
 		break;
 	default:
-		assert(0 && "Unknown DINS instruction!");
+		CS_ASSERT_RET_VAL(0 && "Unknown DINS instruction!", MCDisassembler_Fail);
 	}
 
 	uint32_t Rs = fieldFromInstruction_4(Insn, 21, 5);
@@ -2074,7 +2074,7 @@ static DecodeStatus DecodeCOP0SelRegisterClass(MCInst *Inst, unsigned RegNo,
 			MCInst_setOpcode(Inst, (Mips_MTHC0_NM));
 			break;
 		default:
-			assert(0 && "Unknown instruction!");
+			CS_ASSERT_RET_VAL(0 && "Unknown instruction!", MCDisassembler_Fail);
 		}
 		Reg = getReg(Inst, Mips_COP0RegClassID, RegNo >> 5);
 		MCOperand_CreateReg0(Inst, (Reg));

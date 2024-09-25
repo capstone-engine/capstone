@@ -94,7 +94,7 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
 	if (MCInst_getNumOperands(MI) > 1) {
 		MCOperand *Operand = MCInst_getOperand(MI, (LastOp));
 		if (MCOperand_isExpr(Operand)) {
-			assert(0 && "Expressions not supported.");
+			CS_ASSERT_RET(0 && "Expressions not supported.");
 		}
 	}
 
@@ -248,7 +248,7 @@ void printPredicateOperand(MCInst *MI, unsigned OpNo, SStream *O,
 	if (strcmp(Modifier, "cc") == 0) {
 		switch ((PPC_Predicate)Code) {
 		default:
-			assert(0 && "Invalid predicate code");
+			CS_ASSERT_RET(0 && "Invalid predicate code");
 		case PPC_PRED_LT_MINUS:
 		case PPC_PRED_LT_PLUS:
 		case PPC_PRED_LT:
@@ -291,15 +291,15 @@ void printPredicateOperand(MCInst *MI, unsigned OpNo, SStream *O,
 			return;
 		case PPC_PRED_BIT_SET:
 		case PPC_PRED_BIT_UNSET:
-			assert(0 && "Invalid use of bit predicate code");
+			CS_ASSERT_RET(0 && "Invalid use of bit predicate code");
 		}
-		assert(0 && "Invalid predicate code");
+		CS_ASSERT_RET(0 && "Invalid predicate code");
 	}
 
 	if (strcmp(Modifier, "pm") == 0) {
 		switch ((PPC_Predicate)Code) {
 		default:
-			assert(0 && "Invalid predicate code");
+			CS_ASSERT_RET(0 && "Invalid predicate code");
 		case PPC_PRED_LT:
 		case PPC_PRED_LE:
 		case PPC_PRED_EQ:
@@ -331,9 +331,9 @@ void printPredicateOperand(MCInst *MI, unsigned OpNo, SStream *O,
 			return;
 		case PPC_PRED_BIT_SET:
 		case PPC_PRED_BIT_UNSET:
-			assert(0 && "Invalid use of bit predicate code");
+			CS_ASSERT_RET(0 && "Invalid use of bit predicate code");
 		}
-		assert(0 && "Invalid predicate code");
+		CS_ASSERT_RET(0 && "Invalid predicate code");
 	}
 
 	printOperand(MI, OpNo + 1, O);
@@ -554,7 +554,7 @@ void printcrbitm(MCInst *MI, unsigned OpNo, SStream *O)
 	unsigned RegNo;
 	switch (CCReg) {
 	default:
-		assert(0 && "Unknown CR register");
+		CS_ASSERT_RET(0 && "Unknown CR register");
 	case PPC_CR0:
 		RegNo = 0;
 		break;

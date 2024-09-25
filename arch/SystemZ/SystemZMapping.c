@@ -169,7 +169,6 @@ void SystemZ_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 		printf("Operand group %d not handled\n", op_group);
 		break;
 	case SystemZ_OP_GROUP_Operand: {
-		CS_ASSERT(!(op_type & CS_OP_MEM) && "Mem op passed to prinOperand");
 		cs_op_type secondary_op_type = map_get_op_type(MI, op_num) &
 							 ~(CS_OP_MEM | CS_OP_BOUND);
 		if (secondary_op_type == CS_OP_IMM) {
@@ -179,7 +178,7 @@ void SystemZ_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 			SystemZ_set_detail_op_reg(MI, op_num,
 								MCInst_getOpVal(MI, op_num));
 		} else {
-			assert(0 && "Op type not handled.");
+			CS_ASSERT_RET(0 && "Op type not handled.");
 		}
 		break;
 	}
@@ -189,10 +188,10 @@ void SystemZ_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 		break;
 	}
 	case SystemZ_OP_GROUP_BDAddrOperand:
-		assert(map_get_op_type(MI, (op_num)) & CS_OP_MEM);
-		assert(map_get_op_type(MI, (op_num + 1)) & CS_OP_MEM);
-		assert(MCOperand_isReg(MCInst_getOperand(MI, (op_num))));
-		assert(MCOperand_isImm(MCInst_getOperand(MI, (op_num + 1))));
+		CS_ASSERT_RET(map_get_op_type(MI, (op_num)) & CS_OP_MEM);
+		CS_ASSERT_RET(map_get_op_type(MI, (op_num + 1)) & CS_OP_MEM);
+		CS_ASSERT_RET(MCOperand_isReg(MCInst_getOperand(MI, (op_num))));
+		CS_ASSERT_RET(MCOperand_isImm(MCInst_getOperand(MI, (op_num + 1))));
 		SystemZ_set_detail_op_mem(MI,
 															op_num,
 															MCInst_getOpVal(MI, (op_num)),

@@ -444,7 +444,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		printInt64(O, MCOperand_getImm(Op));
 		SStream_concat0(O, markup(">"));
 	} else {
-		assert(0 && "Expressions are not supported.");
+		CS_ASSERT_RET(0 && "Expressions are not supported.");
 	}
 }
 
@@ -1101,7 +1101,7 @@ void printMSRMaskOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		SStream_concat0(O, "apsr_");
 		switch (Mask) {
 		default:
-			assert(0 && "Unexpected mask value!");
+			CS_ASSERT_RET(0 && "Unexpected mask value!");
 		case 4:
 			SStream_concat0(O, "g");
 			return;
@@ -1232,7 +1232,7 @@ void printCoprocOptionImm(MCInst *MI, unsigned OpNum, SStream *O)
 void printPCLabel(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	// add_cs_detail(MI, ARM_OP_GROUP_PCLabel, OpNum);
-	assert(0 && "Unhandled PC-relative pseudo-instruction!");
+	CS_ASSERT_RET(0 && "Unhandled PC-relative pseudo-instruction!");
 }
 
 #define DEFINE_printAdrLabelOperand(scale) \

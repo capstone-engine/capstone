@@ -101,12 +101,40 @@ extern cs_realloc_t cs_mem_realloc;
 extern cs_free_t cs_mem_free;
 extern cs_vsnprintf_t cs_vsnprintf;
 
-// By defining CAPSTONE_DEBUG assertions can be used.
-// For any release build CAPSTONE_DEBUG has to be undefined.
+/// By defining CAPSTONE_DEBUG assertions can be used.
+/// For the release build the @expr is not included.
 #ifdef CAPSTONE_DEBUG
 #define CS_ASSERT(expr) assert(expr)
 #else
 #define CS_ASSERT(expr)
+#endif
+
+/// If compiled in debug mode it will assert(@expr).
+/// In the release build it will check the @expr and return @val if false.
+#ifdef CAPSTONE_DEBUG
+#define CS_ASSERT_RET_VAL(expr, val) assert(expr)
+#else
+#define CS_ASSERT_RET_VAL(expr, val) \
+do { \
+	if (!(expr)) { \
+		fprintf(stderr, "Hit assert: " #expr "\n"); \
+		return val; \
+	} \
+} while(0)
+#endif
+
+/// If compiled in debug mode it will assert(@expr).
+/// In the release build it will check the @expr and return if false.
+#ifdef CAPSTONE_DEBUG
+#define CS_ASSERT_RET(expr) assert(expr)
+#else
+#define CS_ASSERT_RET(expr) \
+do { \
+	if (!(expr)) { \
+		fprintf(stderr, "Hit assert: " #expr "\n"); \
+		return; \
+	} \
+} while(0)
 #endif
 
 #endif

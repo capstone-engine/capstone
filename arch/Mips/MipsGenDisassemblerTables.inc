@@ -12,6 +12,7 @@
 /* https://github.com/capstone-engine/llvm-capstone */
 
 #include "../../MCInst.h"
+#include "../../cs_priv.h"
 #include "../../LEB128.h"
 
 // Helper function for extracting fields from encoded instructions.
@@ -8303,7 +8304,7 @@ static const uint8_t DecoderTableNanoMips_Conflict_Space16[] = {
 
 static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
   switch (Idx) {
-  default: /* llvm_unreachable("Invalid index!"); */
+  default: CS_ASSERT_RET_VAL(0 && "Invalid index!", false);
   case 0:
     return (Mips_getFeatureBits(Inst->csh->mode, Mips_FeatureMips16));
   case 1:
@@ -8548,7 +8549,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
   *DecodeComplete = true; \
   InsnType tmp; \
   switch (Idx) { \
-  default: /* llvm_unreachable("Invalid index!"); */ \
+  default: CS_ASSERT_RET_VAL(0 && "Invalid index!", MCDisassembler_Fail); \
   case 0: \
     tmp = fieldname(insn, 0, 11); \
     if (!Check(&S, DecodeBranchTarget(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \

@@ -20,17 +20,18 @@
 //
 //===----------------------------------------------------------------------===//
 
+#include <ctype.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <capstone/platform.h>
 
+#include "../../MathExtras.h"
 #include "../../MCAsmInfo.h"
 
 #include "SystemZMapping.h"
 #include "SystemZInstPrinter.h"
-#include "SystemZMCTargetDesc.h"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
@@ -135,7 +136,7 @@ static void printMCOperand(const MCInst *MI, const MCOperand *MO, SStream *O)
 	else if (MCOperand_isExpr(MO))
 		printExpr(O, MCOperand_getExpr(MO)); \
 	else
-		assert(0 && "Invalid operand");
+		CS_ASSERT_RET(0 && "Invalid operand");
 }
 
 void printFormattedRegName(const MCAsmInfo *MAI, MCRegister Reg, SStream *O)
@@ -192,8 +193,6 @@ DEFINE_printUImmOperand(48);
 		} \
 		int64_t Value = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
-		CS_ASSERT( \
-			(CONCAT(isInt, N)(Value) && "Invalid simm argument")); \
 		if (N == 8) \
 			printInt8(markup_OS(O, Markup_Immediate), Value); \
 		else if (N == 16) \

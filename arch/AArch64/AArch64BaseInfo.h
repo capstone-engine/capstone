@@ -924,7 +924,8 @@ typedef enum ID {
 	AArch64PACKey_IB = 1,
 	AArch64PACKey_DA = 2,
 	AArch64PACKey_DB = 3,
-	AArch64PACKey_LAST = AArch64PACKey_DB
+	AArch64PACKey_LAST = AArch64PACKey_DB,
+	AArch64PACKey_INVALID,
 } AArch64PACKey_ID;
 
 // CS namespace end: AArch64PACKey
@@ -935,6 +936,8 @@ typedef enum ID {
 static inline const char *AArch64PACKeyIDToString(AArch64PACKey_ID KeyID)
 {
 	switch (KeyID) {
+	default:
+		break;
 	case AArch64PACKey_IA:
 		return "ia";
 	case AArch64PACKey_IB:
@@ -958,7 +961,7 @@ static inline AArch64PACKey_ID AArch64StringToPACKeyID(const char *Name)
 		return AArch64PACKey_DA;
 	if (strcmp(Name, "db") == 0)
 		return AArch64PACKey_DB;
-	assert(0 && "Invalid PAC key");
+	CS_ASSERT_RET_VAL(0 && "Invalid PAC key", AArch64PACKey_INVALID);
 	return AArch64PACKey_LAST;
 }
 

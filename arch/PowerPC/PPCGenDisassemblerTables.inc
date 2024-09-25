@@ -12,6 +12,7 @@
 /* https://github.com/capstone-engine/llvm-capstone */
 
 #include "../../MCInst.h"
+#include "../../cs_priv.h"
 #include "../../LEB128.h"
 
 // Helper function for extracting fields from encoded instructions.
@@ -7102,7 +7103,7 @@ static const uint8_t DecoderTableSPE32[] = {
 
 static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
   switch (Idx) {
-  default: /* llvm_unreachable("Invalid index!"); */
+  default: CS_ASSERT_RET_VAL(0 && "Invalid index!", false);
   case 0:
     return (PPC_getFeatureBits(Inst->csh->mode, PPC_FeatureISA2_06));
   case 1:
@@ -7144,7 +7145,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
 { \
   InsnType tmp; \
   switch (Idx) { \
-  default: /* llvm_unreachable("Invalid index!"); */ \
+  default: CS_ASSERT_RET_VAL(0 && "Invalid index!", MCDisassembler_Fail); \
   case 0: \
     return S; \
   case 1: \

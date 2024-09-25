@@ -374,7 +374,7 @@ typedef struct cs_systemz_op {
 	uint8_t imm_width; ///< Bit width of the immediate. 0 if not specified.
 } cs_systemz_op;
 
-#define MAX_SYSTEMZ_OPS 6
+#define NUM_SYSTEMZ_OPS 6
 
 // Instruction structure
 typedef struct cs_systemz {
@@ -383,7 +383,7 @@ typedef struct cs_systemz {
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_systemz_op operands[MAX_SYSTEMZ_OPS]; ///< operands for this instruction.
+	cs_systemz_op operands[NUM_SYSTEMZ_OPS]; ///< operands for this instruction.
 } cs_systemz;
 
 /// SystemZ instruction

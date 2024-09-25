@@ -701,7 +701,7 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 						op = MCInst_getOperand(MI,
 								       idx++);
 					}
-					assert(space_reg_idx <
+					CS_ASSERT_RET(space_reg_idx <
 					       ARR_SIZE(space_regs));
 					space_regs[space_reg_idx] =
 						MCOperand_getReg(op);

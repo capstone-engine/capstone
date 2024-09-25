@@ -929,7 +929,7 @@ bool printSyspAlias(MCInst *MI, SStream *O)
 			SStream_concat0(O, ".q"); \
 			break; \
 		default: \
-			assert(0 && "Unsupported element size"); \
+			CS_ASSERT_RET(0 && "Unsupported element size"); \
 		} \
 	}
 DEFINE_printMatrix(64);
@@ -1057,7 +1057,7 @@ void printPostIncOperand(MCInst *MI, unsigned OpNo, unsigned Imm, SStream *O)
 		} else
 			printRegName(O, Reg);
 	} else
-		assert(0 && "unknown operand kind in printPostIncOperand64");
+		CS_ASSERT_RET(0 && "unknown operand kind in printPostIncOperand64");
 }
 
 void printVRegOperand(MCInst *MI, unsigned OpNo, SStream *O)
@@ -1234,7 +1234,7 @@ void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind,
 			SStream_concat1(O, CHAR(Suffix)); \
 			SStream_concat1(O, '\0'); \
 		} else \
-			assert((CHAR(Suffix) == '0') && \
+			CS_ASSERT_RET((CHAR(Suffix) == '0') && \
 			       "Unsupported suffix size"); \
 		bool DoShift = ExtWidth != 8; \
 		if (SignExtend || DoShift || CHAR(SrcRegKind) == 'w') { \
@@ -1285,7 +1285,7 @@ DEFINE_printRegWithShiftExtend(false, 128, x, 0);
 		unsigned Reg = \
 			MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
 		if (Reg < AArch64_PN0 || Reg > AArch64_PN15) \
-			assert(0 && \
+			CS_ASSERT_RET(0 && \
 			       "Unsupported predicate-as-counter register"); \
 		SStream_concat(O, "%s", "pn"); \
 		printUInt32(O, (Reg - AArch64_PN0)); \
@@ -1305,7 +1305,7 @@ DEFINE_printRegWithShiftExtend(false, 128, x, 0);
 			SStream_concat0(O, ".d"); \
 			break; \
 		default: \
-			assert(0 && "Unsupported element size"); \
+			CS_ASSERT_RET(0 && "Unsupported element size"); \
 		} \
 	}
 DEFINE_printPredicateAsCounter(8);
@@ -1507,7 +1507,7 @@ static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride /* = 1 */)
 	while (Stride--) {
 		switch (Reg) {
 		default:
-			assert(0 && "Vector register expected!");
+			CS_ASSERT_RET_VAL(0 && "Vector register expected!", 0);
 		case AArch64_Q0:
 			Reg = AArch64_Q1;
 			break;
@@ -1764,7 +1764,7 @@ static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride /* = 1 */)
 			      CONCAT(AArch64_OP_GROUP_GPRSeqPairsClassOperand, \
 				     size), \
 			      OpNum, size); \
-		assert((size == 64 || size == 32) && \
+		CS_ASSERT_RET((size == 64 || size == 32) && \
 		       "Template parameter must be either 32 or 64"); \
 		unsigned Reg = \
 			MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
@@ -2303,7 +2303,7 @@ void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 	// Pattern has only 1 bit
 	if (Val > 1)
-		assert(0 && "Invalid vector length specifier");
+		CS_ASSERT_RET(0 && "Invalid vector length specifier");
 	const AArch64SVEVecLenSpecifier_SVEVECLENSPECIFIER *Pat =
 		AArch64SVEVecLenSpecifier_lookupSVEVECLENSPECIFIERByEncoding(
 			Val);
@@ -2326,7 +2326,7 @@ void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)
 		case 'q': \
 			break; \
 		default: \
-			assert(0 && "Invalid kind specifier."); \
+			CS_ASSERT_RET(0 && "Invalid kind specifier."); \
 		} \
 \
 		unsigned Reg = \
@@ -2482,7 +2482,7 @@ DEFINE_printSVELogicalImm(int64_t);
 			Base = AArch64_Q0; \
 			break; \
 		default: \
-			assert(0 && "Unsupported width"); \
+			CS_ASSERT_RET(0 && "Unsupported width"); \
 		} \
 		unsigned Reg = \
 			MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \

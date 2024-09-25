@@ -70,7 +70,7 @@ AArch64_AM_getShiftExtendName(AArch64_AM_ShiftExtendType ST)
 {
 	switch (ST) {
 	default:
-		assert(0 && "unhandled shift type!");
+		CS_ASSERT_RET_VAL(0 && "unhandled shift type!", NULL);
 	case AArch64_AM_LSL:
 		return "lsl";
 	case AArch64_AM_LSR:
@@ -141,7 +141,7 @@ static inline unsigned AArch64_AM_getShifterImm(AArch64_AM_ShiftExtendType ST,
 	unsigned STEnc = 0;
 	switch (ST) {
 	default:
-		assert(0 && "Invalid shift requested");
+		CS_ASSERT_RET_VAL(0 && "Invalid shift requested", 0);
 	case AArch64_AM_LSL:
 		STEnc = 0;
 		break;
@@ -175,7 +175,7 @@ static inline AArch64_AM_ShiftExtendType AArch64_AM_getExtendType(unsigned Imm)
 {
 	switch (Imm) {
 	default:
-		assert(0 && "Compiler bug!");
+		CS_ASSERT_RET_VAL(0 && "Compiler bug!", 0);
 	case 0:
 		return AArch64_AM_UXTB;
 	case 1:
@@ -215,7 +215,7 @@ AArch64_AM_getExtendEncoding(AArch64_AM_ShiftExtendType ET)
 {
 	switch (ET) {
 	default:
-		assert(0 && "Invalid extend type requested");
+		CS_ASSERT_RET_VAL(0 && "Invalid extend type requested", 0);
 	case AArch64_AM_UXTB:
 		return 0;
 		break;
@@ -391,7 +391,7 @@ static inline uint64_t AArch64_AM_decodeLogicalImmediate(uint64_t val,
 
 	int len = 31 - countLeadingZeros((N << 6) | (~imms & 0x3f));
 	if (len < 1) {
-		assert(len >= 1 && "Unhandled integer type");
+		CS_ASSERT(len >= 1 && "Unhandled integer type");
 		return 0;
 	}
 

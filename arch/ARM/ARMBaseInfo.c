@@ -38,7 +38,7 @@ const char *get_pred_mask(ARM_PredBlockMask pred_mask)
 {
 	switch (pred_mask) {
 	default:
-		assert(0 && "pred_mask not handled.");
+		CS_ASSERT_RET_VAL(0 && "pred_mask not handled.", NULL);
 	case ARM_T:
 		return "T";
 	case ARM_TT:

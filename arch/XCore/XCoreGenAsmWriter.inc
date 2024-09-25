@@ -418,7 +418,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 
   // Emit the opcode for the instruction.
   uint32_t Bits = OpInfo[MCInst_getOpcode(MI)];
-  // assert(Bits != 0 && "Cannot print this instruction.");
+  CS_ASSERT_RET(Bits != 0 && "Cannot print this instruction.");
 #ifndef CAPSTONE_DIET
   SStream_concat0(O, AsmStrs+(Bits & 2047)-1);
 #endif
@@ -734,7 +734,7 @@ static void printInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 /// for the specified register.
 static const char *getRegisterName(unsigned RegNo)
 {
-  // assert(RegNo && RegNo < 17 && "Invalid register number!");
+  CS_ASSERT_RET_VAL(RegNo && RegNo < 17 && "Invalid register number!", NULL);
 
 #ifndef CAPSTONE_DIET
   static const char AsmStrs[] = {

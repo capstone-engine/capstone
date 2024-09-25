@@ -210,8 +210,8 @@ DEFINE_get_arch_detail(riscv, RISCV);
 DEFINE_get_arch_detail(systemz, SystemZ);
 
 #define DEFINE_check_safe_inc(Arch, ARCH) \
-	static inline void Arch##_check_safe_inc() { \
-		CS_ASSERT(Arch##_get_detail(MI)->op_count + 1 < NUM_##ARCH##_OPS); \
+	static inline void Arch##_check_safe_inc(const MCInst *MI) { \
+		assert(Arch##_get_detail(MI)->op_count + 1 < NUM_##ARCH##_OPS); \
 	}
 
 DEFINE_check_safe_inc(ARM, ARM);

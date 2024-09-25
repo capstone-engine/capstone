@@ -47,7 +47,7 @@ void Alpha_add_cs_detail(MCInst *MI, unsigned OpNum)
 	else if (op_type == CS_OP_REG)
 		Alpha_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum));
 	else
-		assert(0 && "Op type not handled.");
+		CS_ASSERT_RET(0 && "Op type not handled.");
 }
 
 void Alpha_set_detail_op_imm(MCInst *MI, unsigned OpNum, alpha_op_type ImmType,
@@ -55,9 +55,9 @@ void Alpha_set_detail_op_imm(MCInst *MI, unsigned OpNum, alpha_op_type ImmType,
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
-	assert(map_get_op_type(MI, OpNum) == CS_OP_IMM);
-	assert(ImmType == ALPHA_OP_IMM);
+	CS_ASSERT_RET(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
+	CS_ASSERT_RET(map_get_op_type(MI, OpNum) == CS_OP_IMM);
+	CS_ASSERT_RET(ImmType == ALPHA_OP_IMM);
 
 	Alpha_get_detail_op(MI, 0)->type = ImmType;
 	Alpha_get_detail_op(MI, 0)->imm = Imm;
@@ -69,8 +69,8 @@ void Alpha_set_detail_op_reg(MCInst *MI, unsigned OpNum, alpha_op_type Reg)
 {
 	if (!detail_is_set(MI))
 		return;
-	assert(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
-	assert(map_get_op_type(MI, OpNum) == CS_OP_REG);
+	CS_ASSERT_RET(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
+	CS_ASSERT_RET(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
 	Alpha_get_detail_op(MI, 0)->type = ALPHA_OP_REG;
 	Alpha_get_detail_op(MI, 0)->reg = Reg;
