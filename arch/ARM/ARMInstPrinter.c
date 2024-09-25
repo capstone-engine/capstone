@@ -451,7 +451,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
-	if (!MCOperand_isImm(Op) || MI->csh->PrintBranchImmNotAsAddress ||
+	if (!MCOperand_isImm(Op) || !MI->csh->PrintBranchImmAsAddress ||
 	    getUseMarkup()) {
 		printOperand(MI, OpNum, O);
 		return;

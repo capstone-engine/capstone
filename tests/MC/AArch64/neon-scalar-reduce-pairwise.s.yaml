@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0x20, 0xb8, 0xf1, 0x5e ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
     expected:
       insns:
         -
@@ -13,7 +13,7 @@ test_cases:
     input:
       bytes: [ 0x72, 0xd8, 0x30, 0x5e ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
     expected:
       insns:
         -
@@ -23,7 +23,7 @@ test_cases:
     input:
       bytes: [ 0x72, 0xd8, 0x30, 0x5e ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
     expected:
       insns:
         -
@@ -33,7 +33,7 @@ test_cases:
     input:
       bytes: [ 0x53, 0xd8, 0x30, 0x7e ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
     expected:
       insns:
         -
@@ -43,7 +43,7 @@ test_cases:
     input:
       bytes: [ 0x34, 0xd8, 0x70, 0x7e ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64-none-linux-gnu", "neon", "+fullfp16" ]
     expected:
       insns:
         -

@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0x00, 0xf2, 0x1f, 0xd5 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "arm64", "cyclone" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "arm64", "cyclone" ]
     expected:
       insns:
         -

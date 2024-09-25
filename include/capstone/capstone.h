@@ -262,7 +262,7 @@ typedef enum cs_opt_type {
 	CS_OPT_SKIPDATA_SETUP, ///< Setup user-defined function for SKIPDATA option
 	CS_OPT_MNEMONIC,       ///< Customize instruction mnemonic
 	CS_OPT_UNSIGNED,       ///< print immediate operands in unsigned form
-	CS_OPT_NO_BRANCH_OFFSET, ///< ARM, PPC, AArch64, prints branch immediates without offset.
+	CS_OPT_ONLY_OFFSET_BRANCH, ///< ARM, PPC, AArch64: Don't add the branch immediate value to the PC.
 } cs_opt_type;
 
 /// Runtime option value (associated with option type above)

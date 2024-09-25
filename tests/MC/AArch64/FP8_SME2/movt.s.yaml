@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0xe0, 0x03, 0x4f, 0xc0 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+sme-lutv2" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sme2", "+sme-lutv2" ]
     expected:
       insns:
         -
@@ -13,7 +13,7 @@ test_cases:
     input:
       bytes: [ 0xff, 0x33, 0x4f, 0xc0 ]
       arch: "CS_ARCH_AARCH64"
-      options: [ "CS_OPT_NO_BRANCH_OFFSET", "aarch64", "sme2", "+sme-lutv2" ]
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "aarch64", "sme2", "+sme-lutv2" ]
     expected:
       insns:
         -

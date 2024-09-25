@@ -513,7 +513,7 @@ void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo, SStream *O)
 		((unsigned)MCOperand_getImm(MCInst_getOperand(MI, (OpNo)))
 		 << 2),
 		32);
-	if (!MI->csh->PrintBranchImmNotAsAddress) {
+	if (MI->csh->PrintBranchImmAsAddress) {
 		uint64_t Target = Address + Imm;
 		if (!IS_64BIT(MI->csh->mode))
 			Target &= 0xffffffff;
