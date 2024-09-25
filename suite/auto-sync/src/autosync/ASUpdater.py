@@ -60,6 +60,7 @@ class ASUpdater:
                 USteps.INC_GEN,
                 USteps.TRANS,
                 USteps.DIFF,
+                USteps.MC,
                 USteps.PATCH_HEADER,
             ]
         else:

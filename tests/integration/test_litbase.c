@@ -18,13 +18,8 @@ static void print_string_hex(unsigned char *str, size_t len)
 	printf("\t");
 }
 
-static void print_insn(csh handle)
+static void print_insn(cs_insn *insn, size_t count)
 {
-	cs_insn *insn;
-	size_t count;
-
-	count = cs_disasm(handle, (const uint8_t *)DATA, sizeof(DATA) - 1,
-			  0x10000, 2, &insn);
 	if (count) {
 		for (int i = 0; i < count; ++i) {
 			print_string_hex((unsigned char *)DATA,
@@ -37,6 +32,12 @@ static void print_insn(csh handle)
 		printf("ERROR: Failed to disasm given code!\n");
 		abort();
 	}
+}
+
+static void check_insn(cs_insn *insn, const char *mnemonic, const char *op_str)
+{
+	assert(strcmp(insn[0].mnemonic, mnemonic) == 0);
+	assert(strcmp(insn[0].op_str, op_str) == 0);
 }
 
 static void test()
@@ -54,16 +55,28 @@ static void test()
 			return;
 	}
 
+	cs_insn *insn = NULL;
+	size_t count = 0;
+
+	count = cs_disasm(handle, (const uint8_t *)DATA, sizeof(DATA) - 1,
+			  0x10000, 2, &insn);
+
 	// 1. Print out the instruction in default setup.
 	printf("Disassemble xtensa code with PC=0x10000\n");
-	print_insn(handle);
+	check_insn(insn, "l32r", "a1, . 0xc000");
+	check_insn(insn + 1, "l32r", "a1, . 0x10000");
+	print_insn(insn, count);
 
 	// Customized mnemonic JNE to JNZ using CS_OPT_LITBASE option
 	printf("\nNow customize engine to change LITBASA to 0xff001\n");
 	cs_option(handle, CS_OPT_LITBASE, (size_t)0xff001);
+	count = cs_disasm(handle, (const uint8_t *)DATA, sizeof(DATA) - 1,
+			  0x10000, 2, &insn);
 
 	// 2. Now print out the instruction in newly customized setup.
-	print_insn(handle);
+	check_insn(insn, "l32r", "a1, . -0x3fff");
+	check_insn(insn + 1, "l32r", "a1, . -3");
+	print_insn(insn, count);
 
 	// Done
 	cs_close(&handle);

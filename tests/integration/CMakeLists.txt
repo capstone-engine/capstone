@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 # Old integration tests.
 if (CAPSTONE_BUILD_LEGACY_TESTS)
   enable_testing()
-  set(TEST_SOURCES test_skipdata.c test_iter.c test_litbase.c)
+  set(TEST_SOURCES test_skipdata.c test_iter.c)
   if(CAPSTONE_X86_SUPPORT)
     set(TEST_SOURCES ${TEST_SOURCES} test_customized_mnem.c)
   endif()
@@ -32,3 +32,11 @@ add_test(NAME integration_compat_headers
   COMMAND compat_header_build_test
   WORKING_DIRECTORY ${COMPAT_C_TEST_DIR}
 )
+
+set(INTEGRATION_TEST_SRC test_litbase.c)
+foreach(TSRC ${INTEGRATION_TEST_SRC})
+      string(REGEX REPLACE ".c$" "" TBIN ${TSRC})
+      add_executable(${TBIN} "${TESTS_INTEGRATION_DIR}/${TSRC}")
+      target_link_libraries(${TBIN} PRIVATE capstone)
+      add_test(NAME "legintegration_${TBIN}" COMMAND ${TBIN})
+  endforeach()

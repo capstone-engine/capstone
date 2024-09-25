@@ -481,6 +481,7 @@ class MCUpdater:
         log.info("Check prerequisites")
         disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch}")
         test_paths = [disas_tests]
+        # Xtensa only defines assembly tests.
         if self.arch == "Xtensa":
             test_paths.append(self.mc_dir.joinpath(self.arch))
         self.check_prerequisites(test_paths)

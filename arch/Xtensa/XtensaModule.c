@@ -40,7 +40,7 @@ cs_err Xtensa_option(cs_struct *handle, cs_opt_type type, size_t value)
 	}
 
 	if (type == CS_OPT_LITBASE) {
-		handle->LITBASE = value;
+		handle->LITBASE = (uint32_t)value;
 	}
 
 	return CS_ERR_OK;
