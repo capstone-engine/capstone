@@ -637,6 +637,7 @@ int main(int argc, char **argv)
 		address = strtoull(src, &temp, 16);
 		if (temp == src || *temp != '\0' || errno == ERANGE) {
 			fprintf(stderr, "ERROR: invalid address argument, quit!\n");
+			free(assembly);
 			return -2;
 		}
 	}
@@ -670,6 +671,7 @@ int main(int argc, char **argv)
 	if (arch == CS_ARCH_ALL) {
 		fprintf(stderr, "ERROR: Invalid <arch+mode>: \"%s\", quit!\n", choosen_arch);
 		usage(argv[0]);
+		free(assembly);
 		return -1;
 	}
 
@@ -677,6 +679,7 @@ int main(int argc, char **argv)
 		const char *error = cs_strerror(err);
 		fprintf(stderr, "ERROR: Failed on cs_open(): %s\n", error);
 		usage(argv[0]);
+		free(assembly);
 		return -1;
 	}
 
