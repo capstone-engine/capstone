@@ -265,7 +265,7 @@ typedef enum cs_opt_type {
 	CS_OPT_MNEMONIC,       ///< Customize instruction mnemonic
 	CS_OPT_UNSIGNED,       ///< print immediate operands in unsigned form
 	CS_OPT_ONLY_OFFSET_BRANCH, ///< ARM, PPC, AArch64: Don't add the branch immediate value to the PC.
-	CS_OPT_LITBASE, ///< Xtensa, enable LITBASE
+	CS_OPT_LITBASE, ///< Xtensa, set the LITBASE value. LITBASE is set to 0 by default.
 } cs_opt_type;
 
 /// Runtime option value (associated with option type above)
