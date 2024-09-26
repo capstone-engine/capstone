@@ -292,7 +292,7 @@ DecodeStatus Xtensa_LLVM_getInstruction(MCInst *MI, uint16_t *size16,
 	uint64_t size64;
 	DecodeStatus status =
 		getInstruction(MI, &size64, Bytes, BytesSize, Address);
-	assert(size64 < 0xffff);
+	CS_ASSERT_RET_VAL(size64 < 0xffff, MCDisassembler_Fail);
 	*size16 = size64;
 	return status;
 }
