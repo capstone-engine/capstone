@@ -151,7 +151,7 @@ static inline void printImm8_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 		CS_ASSERT(
-			CONCAT(isInt, 8)(Value) &&
+			isIntN(8, Value) &&
 			"Invalid argument, value must be in ranges [-128,127]");
 		printInt64(O, Value);
 	} else {
@@ -166,7 +166,7 @@ static inline void printImm8_sh8_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 		CS_ASSERT(
-			(CONCAT(isInt, 16)(Value) && ((Value & 0xFF) == 0)) &&
+			(isIntN(16, Value) && ((Value & 0xFF) == 0)) &&
 			"Invalid argument, value must be multiples of 256 in range "
 			"[-32768,32512]");
 		printInt64(O, Value);
