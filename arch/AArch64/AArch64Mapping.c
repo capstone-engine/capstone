@@ -2559,6 +2559,18 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 	AArch64_inc_op_count(MI);
 }
 
+/// Check if the previous operand is a memory operand
+/// with only the base register set AND if this base register
+/// is write-back.
+/// This indicates the following immediate is a post-indexed
+/// memory offset.
+static bool prev_is_membase_wb(MCInst *MI) {
+	return AArch64_get_detail(MI)->op_count > 0 &&
+	       AArch64_get_detail_op(MI, -1)->type == AARCH64_OP_MEM &&
+	       AArch64_get_detail_op(MI, -1)->mem.disp == 0 &&
+	       get_detail(MI)->writeback;
+}
+
 /// Adds an immediate AArch64 operand at position OpNum and increases the op_count
 /// by one.
 void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
@@ -2581,7 +2593,7 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 		}
 		return;
 	}
-	if (map_get_op_type(MI, OpNum) & CS_OP_MEM) {
+	if (map_get_op_type(MI, OpNum) & CS_OP_MEM || prev_is_membase_wb(MI)) {
 		AArch64_set_detail_op_mem(MI, OpNum, Imm);
 		return;
 	}
@@ -2635,7 +2647,6 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 	if (!detail_is_set(MI))
 		return;
 	AArch64_check_safe_inc(MI);
-	CS_ASSERT_RET(map_get_op_type(MI, OpNum) & CS_OP_MEM);
 
 	AArch64_set_mem_access(MI, true);
 
@@ -2644,7 +2655,6 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 	default:
 		CS_ASSERT_RET(0 && "Secondary type not supported yet.");
 	case CS_OP_REG: {
-		CS_ASSERT_RET(secondary_type == CS_OP_REG);
 		bool is_index_reg = AArch64_get_detail_op(MI, 0)->mem.base !=
 				    AARCH64_REG_INVALID;
 		if (is_index_reg)
@@ -2666,7 +2676,6 @@ void AArch64_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val)
 		break;
 	}
 	case CS_OP_IMM: {
-		CS_ASSERT_RET(secondary_type == CS_OP_IMM);
 		AArch64_get_detail_op(MI, 0)->mem.disp = Val;
 		break;
 	}
