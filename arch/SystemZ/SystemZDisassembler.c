@@ -381,10 +381,16 @@ static DecodeStatus getInstruction(MCInst *MI, uint16_t *Size, const uint8_t *By
 		Table = DecoderTable16;
 		Inst = readBytes16(MI, Bytes);
 	} else if (Bytes[0] < 0xc0) {
+		if (BytesLen < 4) {
+			return MCDisassembler_Fail;
+		}
 		*Size = 4;
 		Table = DecoderTable32;
 		Inst = readBytes32(MI, Bytes);
 	} else {
+		if (BytesLen < 6) {
+			return MCDisassembler_Fail;
+		}
 		*Size = 6;
 		Table = DecoderTable48;
 		Inst = readBytes48(MI, Bytes);
