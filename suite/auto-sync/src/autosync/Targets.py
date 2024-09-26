@@ -46,4 +46,5 @@ TARGET_TO_DIR_NAME = {
     "LoongArch": "LoongArch",
     "SystemZ": "SystemZ",
     "Mips": "Mips",
+    "Xtensa": "Xtensa",
 }
