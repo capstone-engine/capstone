@@ -174,7 +174,7 @@ class CompatHeaderBuilder:
                         rf"({self.v6_camel}|{self.v6_upper})([\w_]+)", line
                     )
                     entry_name: str = "".join(found[0])
-                    v5_name = entry_name.replace(self.v6_camel, self.v6_camel).replace(
+                    v5_name = entry_name.replace(self.v6_camel, self.v5_upper).replace(
                         self.v6_upper, self.v5_upper
                     )
                     patched_line = re.sub(

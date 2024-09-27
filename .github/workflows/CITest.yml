@@ -130,6 +130,16 @@ jobs:
       run: |
         ctest --test-dir build --output-on-failure -R legacy*
 
+    - name: Comaptibility header generation
+      if: startsWith(matrix.config.build-system, 'cmake')
+      run: |
+        cp ./include/capstone/arm64.h arm64_compat_current.h
+        cp ./include/capstone/systemz_compatibility.h systemz_compat_current.h
+        ./suite/auto-sync/src/autosync/HeaderPatcher.py -c --v6 ./include/capstone/aarch64.h --v5 ./include/capstone/arm64.h
+        ./suite/auto-sync/src/autosync/HeaderPatcher.py -c --v6 ./include/capstone/systemz.h --v5 ./include/capstone/systemz_compatibility.h
+        diff ./include/capstone/arm64.h arm64_compat_current.h &&
+        diff ./include/capstone/systemz_compatibility.h systemz_compat_current.h
+
   Windows:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.name }}
