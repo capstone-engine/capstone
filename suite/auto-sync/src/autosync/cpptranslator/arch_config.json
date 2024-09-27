@@ -14,7 +14,8 @@
             "AArch64InstPrinter.cpp",
             "LoongArchInstPrinter.cpp",
             "MipsInstPrinter.cpp",
-            "SystemZInstPrinter.cpp"
+            "SystemZInstPrinter.cpp",
+            "XtensaInstPrinter.cpp"
           ]
         },
         "InlineToStaticInline": {
