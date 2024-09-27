@@ -56,7 +56,7 @@ static const unsigned ARDecoderTable[] = {
 static DecodeStatus DecodeARRegisterClass(MCInst *Inst, uint64_t RegNo,
 					  uint64_t Address, const void *Decoder)
 {
-	if (RegNo >= sizeof(ARDecoderTable))
+	if (RegNo >= ARR_SIZE(ARDecoderTable))
 		return MCDisassembler_Fail;
 
 	unsigned Reg = ARDecoderTable[RegNo];
@@ -72,7 +72,7 @@ static DecodeStatus DecodeSRRegisterClass(MCInst *Inst, uint64_t RegNo,
 	if (RegNo > 255)
 		return MCDisassembler_Fail;
 
-	for (unsigned i = 0; i + 1 < sizeof(SRDecoderTable); i += 2) {
+	for (unsigned i = 0; i + 1 < ARR_SIZE(SRDecoderTable); i += 2) {
 		if (SRDecoderTable[i + 1] == RegNo) {
 			unsigned Reg = SRDecoderTable[i];
 			MCOperand_CreateReg0(Inst, (Reg));
