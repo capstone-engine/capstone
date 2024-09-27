@@ -12,6 +12,16 @@ typedef enum {
 #include "AArch64GenCSOpGroup.inc"
 } aarch64_op_group;
 
+/// Components of an SME matrix.
+/// Used when an sme operand is set to signal which part should be set.
+typedef enum {
+	AARCH64_SME_MATRIX_TILE,
+	AARCH64_SME_MATRIX_TILE_LIST,
+	AARCH64_SME_MATRIX_SLICE_REG,
+	AARCH64_SME_MATRIX_SLICE_OFF,
+	AARCH64_SME_MATRIX_SLICE_OFF_RANGE,
+} aarch64_sme_op_part;
+
 // return name of register in friendly string
 const char *AArch64_reg_name(csh handle, unsigned int reg);
 

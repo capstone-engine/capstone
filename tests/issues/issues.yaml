@@ -251,7 +251,7 @@ test_cases:
               -
                 type: AARCH64_OP_SME
                 sme:
-                  type: AARCH64_SME_MATRIX_SLICE_REG
+                  type: AARCH64_SME_OP_TILE_VEC
                   tile: za0.s
                   slice_reg: w12
                   slice_offset_imm: 2
