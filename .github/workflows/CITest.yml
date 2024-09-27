@@ -135,6 +135,12 @@ jobs:
       run: |
         ctest --test-dir build --output-on-failure -R legacy*
 
+    - name: Valgrind cstest
+      if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.enable-asan, 'OFF')
+      run: |
+        sudo apt-get install valgrind
+        valgrind cstest tests
+
     - name: Comaptibility header generation
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
