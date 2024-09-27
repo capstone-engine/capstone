@@ -17,6 +17,11 @@ on:
       - "TODO"
   pull_request:
 
+# Stop previous runs on the same branch on new push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   CI: true
 
