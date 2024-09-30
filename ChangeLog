@@ -1,6 +1,237 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-Alpha1: September 30th, 2024
+## **Breaking Changes**
+
+- `ARM64` was renamed to `AArch64` everywhere (compatibility header is provided).
+- `SysZ` was renamed to `SystemZ` everywhere (compatibility header is provided).
+- Changes happened **especially to the PPC, ARM and AArch64 API**, as well as changes to enumeration values and stucts.
+
+**Please be sure to read the [release guide](https://github.com/capstone-engine/capstone/blob/next/docs/cs_v6_release_guide.md) carefully!**
+You can find all the breaking changes and justifications for them!
+
+## What's New
+* LoongArch, HPPA and Alpha support added.
+* AArch64, SystemZ and Mips updated to LLVM 18.
+* NanoMips extension added.
+* ARM and PPC updated to LLVM 16.
+* Exotic PPC PairedSingle extension added.
+* Instruction formats for PPC, SystemZ and LoongArch added.
+* Instruction alias support added.
+* RISCV operand access information added.
+* Testing was rewritten from scratch.
+* All tests are run with the address sanitizer.
+* Several improvements to the API of the ARM, AArch64 and PPC modules.
+
+For an exhaustive list, see the release guide at https://github.com/capstone-engine/capstone/blob/next/docs/cs_v6_release_guide.md
+
+## What's Changed
+* [v6] Move meta-programming macros for ARM64/AArch64 to capstone.h by @Rot127 in https://github.com/capstone-engine/capstone/pull/2201
+* Remove no longer used td files. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2205
+* tricore: fix runtime errors of integer overflow by @imbillow in https://github.com/capstone-engine/capstone/pull/2204
+* Disable maybe-uninitialized warning all together. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2210
+* [ARM] Add alias support by @Rot127 in https://github.com/capstone-engine/capstone/pull/2209
+* [TriCore] Replace one- and sign-extend with MathExtra.h functions. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2212
+* [ARM] Add RET group to pop instructions which write to the PC. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2216
+* V6 release guide by @Rot127 in https://github.com/capstone-engine/capstone/pull/2124
+* Add CS_aarch64 macro without parameter. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2218
+* Fix broken disassembly of floating point immediates on big endian hosts by @huth in https://github.com/capstone-engine/capstone/pull/2222
+* Add Alpha architecture by @R33v0LT in https://github.com/capstone-engine/capstone/pull/2071
+* Ignore JetBrains based IDE data for clean PRs by @rickmark in https://github.com/capstone-engine/capstone/pull/2224
+* Add Big-endian mode for Alpha by @R33v0LT in https://github.com/capstone-engine/capstone/pull/2227
+* Fix typos in COMPILE_CMAKE.TXT by @kobykahane in https://github.com/capstone-engine/capstone/pull/2229
+* LIBDIRARCH does not propagate to Makefile by @YaSuenag in https://github.com/capstone-engine/capstone/pull/2214
+* Fix type punning in `AArch64_AM_isSVEMaskOfIdenticalElements` by @kazarmy in https://github.com/capstone-engine/capstone/pull/2237
+* Raise minimum requirement to VS2017 by @XVilka in https://github.com/capstone-engine/capstone/pull/2228
+* Update docs wit ASUpdater.py script by @Rot127 in https://github.com/capstone-engine/capstone/pull/2217
+* Add autolabeler GitHub Action by @XVilka in https://github.com/capstone-engine/capstone/pull/2239
+* By default compile as universal2 for macOS by @rickmark in https://github.com/capstone-engine/capstone/pull/2221
+* Use `union` in `AArch64_AM_isSVEMaskOfIdenticalElements` type punning fix by @kazarmy in https://github.com/capstone-engine/capstone/pull/2238
+* Fix #2234. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2236
+* Remove comment stating support for multiple `clang-format` versions by @kazarmy in https://github.com/capstone-engine/capstone/pull/2242
+* Fix label assignment for LLVM generated files. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2243
+* Constify Alpha and TriCore by @rth7680 in https://github.com/capstone-engine/capstone/pull/2245
+* Fix compilation with DIET + X86_REDUCE by @oleavr in https://github.com/capstone-engine/capstone/pull/2248
+* Fix warnings when building with CAPSTONE_DIET by @oleavr in https://github.com/capstone-engine/capstone/pull/2249
+* Fix MSVC warning overrides when using non-MSVC toolchains by @oleavr in https://github.com/capstone-engine/capstone/pull/2250
+* Add support for architecture registration by @oleavr in https://github.com/capstone-engine/capstone/pull/2252
+* auto-sync: Fix some tree-sitter queries by @kazarmy in https://github.com/capstone-engine/capstone/pull/2255
+* cstool: Fix ppc_br_hint comparison by @oleavr in https://github.com/capstone-engine/capstone/pull/2254
+* Fix crash on x86 when building with MSVC by @oleavr in https://github.com/capstone-engine/capstone/pull/2253
+* Fix regressions in custom memory allocator support by @oleavr in https://github.com/capstone-engine/capstone/pull/2251
+* Fix compilation with CAPSTONE_X86_REDUCE by @oleavr in https://github.com/capstone-engine/capstone/pull/2256
+* auto-sync BitCastStdArray.py: Transform to `union` instead by @kazarmy in https://github.com/capstone-engine/capstone/pull/2257
+* Make helper functions static to prevent multiple defintions. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2266
+* Drop distutils in python binding by @Xeonacid in https://github.com/capstone-engine/capstone/pull/2271
+* Fix #2233 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2267
+* Fix OOB read and wries by @Rot127 in https://github.com/capstone-engine/capstone/pull/2273
+* [AArch64] Fix incorrect alignment of labels. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2277
+* Makefile: Improve Apple detection by @sevan in https://github.com/capstone-engine/capstone/pull/2263
+* [CMake] Architecture definition fix by @Rot127 in https://github.com/capstone-engine/capstone/pull/2272
+* [PPC] Expose instruction formats by @Rot127 in https://github.com/capstone-engine/capstone/pull/2276
+* Add issue and PR templates by @Rot127 in https://github.com/capstone-engine/capstone/pull/2294
+* Avoid random access values for operands in not-yet-specified instructions. by @mur47x111 in https://github.com/capstone-engine/capstone/pull/2259
+* Remove repetitive words by @majorteach in https://github.com/capstone-engine/capstone/pull/2297
+* Add HPPA(PA-RISC) architecture by @R33v0LT in https://github.com/capstone-engine/capstone/pull/2265
+* Fix invalid comparison with HPPA_OP_INVALID by @R33v0LT in https://github.com/capstone-engine/capstone/pull/2300
+* HPPA dissassembler fix unitialized variables errors by @R33v0LT in https://github.com/capstone-engine/capstone/pull/2309
+* Weaken requirements to document functions. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2324
+* [Auto-Sync] LLVM 18 update by @Rot127 in https://github.com/capstone-engine/capstone/pull/2296
+* chore: remove repetitive words by @careworry in https://github.com/capstone-engine/capstone/pull/2326
+* Fix cstool Makefile for non-C99-defaulting compilers by @thestr4ng3r in https://github.com/capstone-engine/capstone/pull/2315
+* check if decode[idx] is callable by @Ced2911 in https://github.com/capstone-engine/capstone/pull/2322
+* Add eBPF bswap16/32/64 instruction by @chengshuyi in https://github.com/capstone-engine/capstone/pull/2323
+* Add a clang-tidy checks and warnings by @Rot127 in https://github.com/capstone-engine/capstone/pull/2312
+* [next] Fix #2128 by adding missing mapping values. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2335
+* Replace manually compile tree-sitter-cpp with their Python bindings. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2337
+* [next] Fix #2079: Add missing 1 immediate to `rcl` by @Rot127 in https://github.com/capstone-engine/capstone/pull/2330
+* fix typos by @RainRat in https://github.com/capstone-engine/capstone/pull/2344
+* Fix clang tidy by @Rot127 in https://github.com/capstone-engine/capstone/pull/2347
+* Fix pkgconfig file to make #include <capstone/capstone.h> work by @ret2libc in https://github.com/capstone-engine/capstone/pull/2307
+* Rewrite str_replace using snprintf for security and fix clang-tidy by @jiegec in https://github.com/capstone-engine/capstone/pull/2350
+* Clang tidy quality of life by @Rot127 in https://github.com/capstone-engine/capstone/pull/2348
+* [next] Fix #2244: Don't apply pseudo-instr. offset to `vcmp` id by @Rot127 in https://github.com/capstone-engine/capstone/pull/2331
+* chore: fix typos by @xiaoxianBoy in https://github.com/capstone-engine/capstone/pull/2328
+* fix typos by @RainRat in https://github.com/capstone-engine/capstone/pull/2346
+* Replace non-standard 0b(...) literals by @thestr4ng3r in https://github.com/capstone-engine/capstone/pull/2314
+* README: Mention Alpha and HPPA by @XVilka in https://github.com/capstone-engine/capstone/pull/2357
+* Typo and tree-sitter init fix by @Rot127 in https://github.com/capstone-engine/capstone/pull/2358
+* Apply #2360 to next by @Rot127 in https://github.com/capstone-engine/capstone/pull/2361
+* Mapping - return NULL if compiled with DIET by @XVilka in https://github.com/capstone-engine/capstone/pull/2370
+* Fix Warning C4098: void returns value. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2362
+* AArch64 compatibility header by @Rot127 in https://github.com/capstone-engine/capstone/pull/2321
+* Remove python2 leftovers by @twizmwazin in https://github.com/capstone-engine/capstone/pull/2378
+* Restructure auto-sync docs to have them more contained by @Rot127 in https://github.com/capstone-engine/capstone/pull/2355
+* Add test with ASAN enabled. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2313
+* chore: fix some comments by @dufucun in https://github.com/capstone-engine/capstone/pull/2379
+* Use python3 as default interpreter for python scripts by @Rot127 in https://github.com/capstone-engine/capstone/pull/2390
+* fix typos by @RainRat in https://github.com/capstone-engine/capstone/pull/2387
+* Revert "Remove python2 leftovers" by @kabeor in https://github.com/capstone-engine/capstone/pull/2391
+* Initial auto-sync LoongArch support by @jiegec in https://github.com/capstone-engine/capstone/pull/2349
+* Python2 leftovers v2 by @twizmwazin in https://github.com/capstone-engine/capstone/pull/2395
+* AArch64 update to LLVM 18 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2298
+* Add access support for RISC-V by @wxrdnx in https://github.com/capstone-engine/capstone/pull/2393
+* Constify three ARM and AArch64 variables by @rth7680 in https://github.com/capstone-engine/capstone/pull/2399
+* Python/remove deprecated packaging by @twizmwazin in https://github.com/capstone-engine/capstone/pull/2396
+* [PPC] Fix #2401 - incorrect operands in disassembled instructions by @valdaarhun in https://github.com/capstone-engine/capstone/pull/2403
+* [next] Fix typo in AArch64 Python binding by @david942j in https://github.com/capstone-engine/capstone/pull/2413
+* Add release wheel build workflow for all Python versions by @Rot127 in https://github.com/capstone-engine/capstone/pull/2414
+* [next] Fix unintended zero set in Sparc printInst by @david942j in https://github.com/capstone-engine/capstone/pull/2421
+* Fix CI fuzz job yml syntax by @Rot127 in https://github.com/capstone-engine/capstone/pull/2429
+* chore: fix some comments by @luozexuan in https://github.com/capstone-engine/capstone/pull/2432
+* Add Coverity workflow by @Rot127 in https://github.com/capstone-engine/capstone/pull/2437
+* [next] Updates and fixes to the Python wheel builder workflow by @Rot127 in https://github.com/capstone-engine/capstone/pull/2441
+* Add back support for relocatable packages by @mrexodia in https://github.com/capstone-engine/capstone/pull/2431
+* Fix 'make check' for python tests by @hamarituc in https://github.com/capstone-engine/capstone/pull/2439
+* Update and add labels by @Rot127 in https://github.com/capstone-engine/capstone/pull/2446
+* [next] Wheel build fixes: manylinux1, trigger upload on release, Linux AArch64... by @Rot127 in https://github.com/capstone-engine/capstone/pull/2444
+* Use any-glob for labeler. Otherwise it is not checked recursively. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2450
+* Modern Testing by @Rot127 in https://github.com/capstone-engine/capstone/pull/2456
+* Some small fixes for capstone-next by @wargio in https://github.com/capstone-engine/capstone/pull/2460
+* Auto-Sync Mips by @wargio in https://github.com/capstone-engine/capstone/pull/2410
+* SystemZ Auto-Sync refactor by @Rot127 in https://github.com/capstone-engine/capstone/pull/2462
+* Coverity defects by @Rot127 in https://github.com/capstone-engine/capstone/pull/2469
+* [next] SH: Use bitwise OR with mask for sign extension by @lhsazevedo in https://github.com/capstone-engine/capstone/pull/2389
+* [next][SuperH] Fix missing setting detail->sh by @david942j in https://github.com/capstone-engine/capstone/pull/2466
+* Fix jumps and branches on a non-zero PC by @wargio in https://github.com/capstone-engine/capstone/pull/2479
+* Documentation updates by @Rot127 in https://github.com/capstone-engine/capstone/pull/2476
+* ARM fixes by @Rot127 in https://github.com/capstone-engine/capstone/pull/2477
+* AArch64 issues by @Rot127 in https://github.com/capstone-engine/capstone/pull/2473
+* Replace `assert` with `CS_ASSERT` in modules by @Rot127 in https://github.com/capstone-engine/capstone/pull/2478
+* Rename CS_OPT_NO_BRANCH_OFFSET and corresponding flag to better name. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2482
+* Fix Coverity CID 509730: overflow before widen by @wargio in https://github.com/capstone-engine/capstone/pull/2486
+* Update sponsors and remove empty file. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2485
+* Several small fixups by @Rot127 in https://github.com/capstone-engine/capstone/pull/2489
+* Xtensa Support by @imbillow in https://github.com/capstone-engine/capstone/pull/2380
+* LDR offset by @Rot127 in https://github.com/capstone-engine/capstone/pull/2487
+* SystemZ fixes by @Rot127 in https://github.com/capstone-engine/capstone/pull/2488
+* Be ready for V6-Alpha1 by @kabeor in https://github.com/capstone-engine/capstone/pull/2492
+
+## New Contributors
+* @R33v0LT made their first contribution in https://github.com/capstone-engine/capstone/pull/2071
+* @rickmark made their first contribution in https://github.com/capstone-engine/capstone/pull/2224
+* @kobykahane made their first contribution in https://github.com/capstone-engine/capstone/pull/2229
+* @YaSuenag made their first contribution in https://github.com/capstone-engine/capstone/pull/2214
+* @Xeonacid made their first contribution in https://github.com/capstone-engine/capstone/pull/2271
+* @sevan made their first contribution in https://github.com/capstone-engine/capstone/pull/2263
+* @majorteach made their first contribution in https://github.com/capstone-engine/capstone/pull/2297
+* @careworry made their first contribution in https://github.com/capstone-engine/capstone/pull/2326
+* @thestr4ng3r made their first contribution in https://github.com/capstone-engine/capstone/pull/2315
+* @Ced2911 made their first contribution in https://github.com/capstone-engine/capstone/pull/2322
+* @chengshuyi made their first contribution in https://github.com/capstone-engine/capstone/pull/2323
+* @RainRat made their first contribution in https://github.com/capstone-engine/capstone/pull/2344
+* @jiegec made their first contribution in https://github.com/capstone-engine/capstone/pull/2350
+* @xiaoxianBoy made their first contribution in https://github.com/capstone-engine/capstone/pull/2328
+* @dufucun made their first contribution in https://github.com/capstone-engine/capstone/pull/2379
+* @wxrdnx made their first contribution in https://github.com/capstone-engine/capstone/pull/2393
+* @valdaarhun made their first contribution in https://github.com/capstone-engine/capstone/pull/2403
+* @luozexuan made their first contribution in https://github.com/capstone-engine/capstone/pull/2432
+* @wargio made their first contribution in https://github.com/capstone-engine/capstone/pull/2460
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/5.0.3...6.0.0-Alpha1
+--------------------------------
+Version 5.0.2: August 20th, 2024
+
+## What's Changed
+* [v5] Updates and fixes to the Python wheel builder workflow by @Rot127 in https://github.com/capstone-engine/capstone/pull/2440
+* Relocatable package v5 by @mrexodia in https://github.com/capstone-engine/capstone/pull/2447
+* [v5] Wheel build fixes: manylinux1, trigger upload on release, Linux AArch64 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2443
+
+--------------------------------
+Version 5.0.2: August 12th, 2024
+
+## What's Changed
+* [v5] Add meta-programming macros for ARM64/AArch64 name change to capstone.h by @Rot127 in https://github.com/capstone-engine/capstone/pull/2199
+* [v5] Add CS_aarch64 macro without parameter. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2219
+* [v5] python: Fix definition of capstone syntax value option constants by @nmeum in https://github.com/capstone-engine/capstone/pull/2240
+* Constify TriCore by @rth7680 in https://github.com/capstone-engine/capstone/pull/2246
+* Revert constant value of CS_OP_MEM to `v5.0.1` by @Rot127 in https://github.com/capstone-engine/capstone/pull/2275
+* Do not use 0b prefix, not supported on old compilers by @trufae in https://github.com/capstone-engine/capstone/pull/2306
+* Update CMakeLists.txt version (See #2310) by @PerikiyoXD in https://github.com/capstone-engine/capstone/pull/2311
+* [v5] Fix #2128 by adding missing mapping values. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2334
+* [v5] Fix #2079: Add missing 1 immediate to `rcl` by @Rot127 in https://github.com/capstone-engine/capstone/pull/2329
+* [v5] Fix incorrect ID mappings for PPC by @Rot127 in https://github.com/capstone-engine/capstone/pull/2333
+* [v5] Fix #2244: Don't apply pseudo-instr. offset to `vcmp` id by @Rot127 in https://github.com/capstone-engine/capstone/pull/2332
+* Fix comparison using narrow types in loop condition by @trufae in https://github.com/capstone-engine/capstone/pull/2360
+* SH: Use bitwise OR with mask for sign extension by @lhsazevedo in https://github.com/capstone-engine/capstone/pull/2371
+* Remove deprecated packaging and cython by @twizmwazin in https://github.com/capstone-engine/capstone/pull/2400
+* [v5] Fix typo in AArch64 Python binding by @david942j in https://github.com/capstone-engine/capstone/pull/2412
+* Backport python-publish.yml from next by @twizmwazin in https://github.com/capstone-engine/capstone/pull/2408
+* [v5] Add release wheel build workflow for all Python versions by @Rot127 in https://github.com/capstone-engine/capstone/pull/2415
+* [v5] Fix unintended zero set in Sparc printInst by @david942j in https://github.com/capstone-engine/capstone/pull/2420
+* [v5][arm] Consider SpecRegRBit on setting SYSREG by @david942j in https://github.com/capstone-engine/capstone/pull/2422
+* Prepare for release v5.0.2 by @kabeor in https://github.com/capstone-engine/capstone/pull/2425
+
+## New Contributors
+* @nmeum made their first contribution in https://github.com/capstone-engine/capstone/pull/2240
+* @PerikiyoXD made their first contribution in https://github.com/capstone-engine/capstone/pull/2311
+* @lhsazevedo made their first contribution in https://github.com/capstone-engine/capstone/pull/2371
+
+
+--------------------------------
+Version 5.0.1: August 23rd, 2023
+
+## What's Changed
+
+* [ARM] Fix VFP feature check by @Rot127 in https://github.com/capstone-engine/capstone/pull/2090
+* Restore the ARM register naming from v4. by @gerph in https://github.com/capstone-engine/capstone/pull/2108
+* Use OS independent printf formatting. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2109
+* Cherry-pick from next for v5.0.1 by @kabeor in https://github.com/capstone-engine/capstone/pull/2141
+  * Add Python bindings for WASM by @peace-maker https://github.com/capstone-engine/capstone/pull/2095
+  * Sync Python bindings for x86, m68k, and mos65xx by @peace-maker https://github.com/capstone-engine/capstone/pull/2100
+  * Add Python bindings for SH by @peace-maker https://github.com/capstone-engine/capstone/pull/2096
+  * Update Python binding constants by @peace-maker https://github.com/capstone-engine/capstone/pull/2097
+  * Fixing TriCore disasm instructions by @bkoppelmann https://github.com/capstone-engine/capstone/pull/2088
+  * allow absolute CMAKE_INSTALL_*DIR @chayleaf https://github.com/capstone-engine/capstone/pull/2134
+
+## New Contributors
+* @gerph made their first contribution in https://github.com/capstone-engine/capstone/pull/2108
+* @bkoppelmann made their first contribution in https://github.com/capstone-engine/capstone/pull/2088
+* @chayleaf made their first contribution in https://github.com/capstone-engine/capstone/pull/2134
+
+
+-----------------------------
 Version 5.0.0: July 5th, 2023
 
 ## What's Changed
