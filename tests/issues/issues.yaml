@@ -5411,3 +5411,30 @@ test_cases:
                 mem_base: x0
                 access: CS_AC_READ_WRITE
           regs_read: [ w1, w2, x0 ]
+  -
+    input:
+      name: "issue ldr offset as imm: https://github.com/capstone-engine/capstone/issues/2015#issuecomment-2373660217"
+      bytes: [ 0x01, 0xa4, 0x40, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldr	x1, [x0], #0xa"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: x1
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x0
+                mem_disp: 0xa
+                access: CS_AC_READ
+            post_indexed: 1
+          writeback: 1
+          regs_read: [ x0 ]
+          regs_write: [ x0, x1 ]

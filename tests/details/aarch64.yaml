@@ -361,10 +361,7 @@ test_cases:
             -
               type: AARCH64_OP_MEM
               mem_base: sp
-              access: CS_AC_READ
-            -
-              type: AARCH64_OP_IMM
-              imm: 0x3c
+              mem_disp: 0x3c
               access: CS_AC_READ
             post_indexed: 1
             cc: AArch64CC_Invalid
