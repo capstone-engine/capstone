@@ -2772,16 +2772,6 @@ typedef struct aarch64_op_mem {
   int32_t disp;	   ///< displacement/offset value
 } aarch64_op_mem;
 
-/// Components of an SME matrix.
-/// Used when an sme operand is set to signal which part should be set.
-typedef enum {
-	AARCH64_SME_MATRIX_TILE,
-	AARCH64_SME_MATRIX_TILE_LIST,
-	AARCH64_SME_MATRIX_SLICE_REG,
-	AARCH64_SME_MATRIX_SLICE_OFF,
-	AARCH64_SME_MATRIX_SLICE_OFF_RANGE,
-} aarch64_sme_op_part;
-
 typedef enum {
 	AARCH64_SME_OP_INVALID,
 	AARCH64_SME_OP_TILE, ///< SME operand is a single tile.

@@ -2627,18 +2627,13 @@ typedef enum {
 typedef aarch64_op_mem arm64_op_mem;
 
 typedef enum {
-	ARM64_SME_MATRIX_TILE = AARCH64_SME_MATRIX_TILE,
-	ARM64_SME_MATRIX_TILE_LIST = AARCH64_SME_MATRIX_TILE_LIST,
-	ARM64_SME_MATRIX_SLICE_REG = AARCH64_SME_MATRIX_SLICE_REG,
-	ARM64_SME_MATRIX_SLICE_OFF = AARCH64_SME_MATRIX_SLICE_OFF,
-	ARM64_SME_MATRIX_SLICE_OFF_RANGE = AARCH64_SME_MATRIX_SLICE_OFF_RANGE,
-} arm64_sme_op_part;
-
-typedef enum {
 	ARM64_SME_OP_INVALID = AARCH64_SME_OP_INVALID,
 	ARM64_SME_OP_TILE = AARCH64_SME_OP_TILE,
 	ARM64_SME_OP_TILE_VEC = AARCH64_SME_OP_TILE_VEC,
 } arm64_sme_op_type;
+
+#define ARM64_SLICE_IMM_INVALID UINT16_MAX
+#define ARM64_SLICE_IMM_RANGE_INVALID UINT8_MAX
 
 typedef aarch64_imm_range arm64_imm_range;
 
@@ -2650,7 +2645,7 @@ typedef cs_aarch64_op cs_arm64_op;
 
 typedef aarch64_suppl_info arm64_suppl_info;
 
-#define MAX_ARM64_OPS 8
+#define NUM_ARM64_OPS 16
 
 typedef cs_aarch64 cs_arm64;
 
