@@ -27,15 +27,11 @@ You can find all the breaking changes and justifications for them!
 For an exhaustive list, see the release guide at https://github.com/capstone-engine/capstone/blob/next/docs/cs_v6_release_guide.md
 
 ## What's Changed
-* [v6] Move meta-programming macros for ARM64/AArch64 to capstone.h by @Rot127 in https://github.com/capstone-engine/capstone/pull/2201
-* Remove no longer used td files. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2205
 * tricore: fix runtime errors of integer overflow by @imbillow in https://github.com/capstone-engine/capstone/pull/2204
-* Disable maybe-uninitialized warning all together. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2210
 * [ARM] Add alias support by @Rot127 in https://github.com/capstone-engine/capstone/pull/2209
 * [TriCore] Replace one- and sign-extend with MathExtra.h functions. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2212
 * [ARM] Add RET group to pop instructions which write to the PC. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2216
 * V6 release guide by @Rot127 in https://github.com/capstone-engine/capstone/pull/2124
-* Add CS_aarch64 macro without parameter. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2218
 * Fix broken disassembly of floating point immediates on big endian hosts by @huth in https://github.com/capstone-engine/capstone/pull/2222
 * Add Alpha architecture by @R33v0LT in https://github.com/capstone-engine/capstone/pull/2071
 * Ignore JetBrains based IDE data for clean PRs by @rickmark in https://github.com/capstone-engine/capstone/pull/2224
@@ -69,14 +65,12 @@ For an exhaustive list, see the release guide at https://github.com/capstone-eng
 * [AArch64] Fix incorrect alignment of labels. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2277
 * Makefile: Improve Apple detection by @sevan in https://github.com/capstone-engine/capstone/pull/2263
 * [CMake] Architecture definition fix by @Rot127 in https://github.com/capstone-engine/capstone/pull/2272
-* [PPC] Expose instruction formats by @Rot127 in https://github.com/capstone-engine/capstone/pull/2276
 * Add issue and PR templates by @Rot127 in https://github.com/capstone-engine/capstone/pull/2294
 * Avoid random access values for operands in not-yet-specified instructions. by @mur47x111 in https://github.com/capstone-engine/capstone/pull/2259
 * Remove repetitive words by @majorteach in https://github.com/capstone-engine/capstone/pull/2297
 * Add HPPA(PA-RISC) architecture by @R33v0LT in https://github.com/capstone-engine/capstone/pull/2265
 * Fix invalid comparison with HPPA_OP_INVALID by @R33v0LT in https://github.com/capstone-engine/capstone/pull/2300
 * HPPA dissassembler fix unitialized variables errors by @R33v0LT in https://github.com/capstone-engine/capstone/pull/2309
-* Weaken requirements to document functions. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2324
 * [Auto-Sync] LLVM 18 update by @Rot127 in https://github.com/capstone-engine/capstone/pull/2296
 * chore: remove repetitive words by @careworry in https://github.com/capstone-engine/capstone/pull/2326
 * Fix cstool Makefile for non-C99-defaulting compilers by @thestr4ng3r in https://github.com/capstone-engine/capstone/pull/2315
@@ -87,10 +81,8 @@ For an exhaustive list, see the release guide at https://github.com/capstone-eng
 * Replace manually compile tree-sitter-cpp with their Python bindings. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2337
 * [next] Fix #2079: Add missing 1 immediate to `rcl` by @Rot127 in https://github.com/capstone-engine/capstone/pull/2330
 * fix typos by @RainRat in https://github.com/capstone-engine/capstone/pull/2344
-* Fix clang tidy by @Rot127 in https://github.com/capstone-engine/capstone/pull/2347
 * Fix pkgconfig file to make #include <capstone/capstone.h> work by @ret2libc in https://github.com/capstone-engine/capstone/pull/2307
 * Rewrite str_replace using snprintf for security and fix clang-tidy by @jiegec in https://github.com/capstone-engine/capstone/pull/2350
-* Clang tidy quality of life by @Rot127 in https://github.com/capstone-engine/capstone/pull/2348
 * [next] Fix #2244: Don't apply pseudo-instr. offset to `vcmp` id by @Rot127 in https://github.com/capstone-engine/capstone/pull/2331
 * chore: fix typos by @xiaoxianBoy in https://github.com/capstone-engine/capstone/pull/2328
 * fix typos by @RainRat in https://github.com/capstone-engine/capstone/pull/2346
