@@ -236,7 +236,7 @@ UINT16_MAX = 0xffff
 # Capstone C interface
 
 # API version
-CS_API_MAJOR = 5
+CS_API_MAJOR = 6
 CS_API_MINOR = 0
 
 # Package version
