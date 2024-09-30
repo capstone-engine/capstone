@@ -32,3 +32,11 @@ add_test(NAME integration_compat_headers
   COMMAND compat_header_build_test
   WORKING_DIRECTORY ${COMPAT_C_TEST_DIR}
 )
+
+set(INTEGRATION_TEST_SRC test_litbase.c)
+foreach(TSRC ${INTEGRATION_TEST_SRC})
+      string(REGEX REPLACE ".c$" "" TBIN ${TSRC})
+      add_executable(${TBIN} "${TESTS_INTEGRATION_DIR}/${TSRC}")
+      target_link_libraries(${TBIN} PRIVATE capstone)
+      add_test(NAME "integration_${TBIN}" COMMAND ${TBIN})
+  endforeach()

@@ -1,0 +1,120 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x20, 0x17, 0x74 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "extui a1, a2, 7, 8"
+
+  -
+    input:
+      bytes: [ 0x00, 0xab, 0xa1 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "sll a10, a11"
+
+  -
+    input:
+      bytes: [ 0x10, 0x51, 0x11 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "slli a5, a1, 15"
+
+  -
+    input:
+      bytes: [ 0x30, 0xc0, 0xb1 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "sra a12, a3"
+
+  -
+    input:
+      bytes: [ 0x50, 0x80, 0x21 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "srai a8, a5, 0"
+
+  -
+    input:
+      bytes: [ 0x50, 0x34, 0x81 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "src a3, a4, a5"
+
+  -
+    input:
+      bytes: [ 0x70, 0x60, 0x91 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "srl a6, a7"
+
+  -
+    input:
+      bytes: [ 0x40, 0x38, 0x41 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "srli a3, a4, 8"
+
+  -
+    input:
+      bytes: [ 0x00, 0x2e, 0x40 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssa8l a14"
+
+  -
+    input:
+      bytes: [ 0x10, 0x4f, 0x40 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssai 31"
+
+  -
+    input:
+      bytes: [ 0x00, 0x10, 0x40 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssl a0"
+
+  -
+    input:
+      bytes: [ 0x00, 0x02, 0x40 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssr a2"

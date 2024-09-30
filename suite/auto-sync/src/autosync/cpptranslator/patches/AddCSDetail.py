@@ -36,6 +36,8 @@ class AddCSDetail(Patch):
         b"(MCInst*MI,unsignedOpNo,SStream*O,constchar*Modifier)",  # PPC - printPredicateOperand
         b"(MCInst*MI,uint64_tAddress,unsignedOpNo,SStream*O)",  # PPC - printBranchOperand
         b"(MCInst*MI,intOpNum,SStream*O)",  # SystemZ
+        b"(MCInst*MI,intOpNum,SStream*O)",  # Xtensa printOperand parameters.
+        b"(MCInst*MI,intOpNum,SStream*OS)",  # Xtensa printOperand parameters.
     ]
 
     def __init__(self, priority: int, arch: str):
@@ -71,7 +73,14 @@ class AddCSDetail(Patch):
 
         comp = captures[3][0]
         comp = get_text(src, comp.start_byte, comp.end_byte)
-        return b"void " + fcn_id + params + b"{ " + add_cs_detail + comp.strip(b"{")
+        return (
+            b"static inline void "
+            + fcn_id
+            + params
+            + b"{ "
+            + add_cs_detail
+            + comp.strip(b"{")
+        )
 
     def get_add_cs_detail(
         self, src: bytes, fcn_def: Node, fcn_id: bytes, params: bytes
@@ -79,6 +88,8 @@ class AddCSDetail(Patch):
         op_group_enum = (
             self.arch.encode("utf8") + b"_OP_GROUP_" + fcn_id[5:]
         )  # Remove "print" from function id
+        if self.arch == "Xtensa":
+            op_group_enum = op_group_enum.upper()
 
         is_template = fcn_def.prev_sibling.type == "template_parameter_list"
         if b"OpNum" in params:

@@ -147,13 +147,13 @@ static struct {
 	{ "sparcv9", "Sparc v9, big endian", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN | CS_MODE_V9 },
 
 	{ "systemz", "systemz (s390x) - all features", CS_ARCH_SYSTEMZ, CS_MODE_BIG_ENDIAN },
-	{ "systemz_arch8", "(arch8/z10/generic)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH8 | CS_MODE_BIG_ENDIAN },
-	{ "systemz_arch9", "(arch9/z196)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH9 | CS_MODE_BIG_ENDIAN },
-	{ "systemz_arch10", "(arch10/zec12)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH10 | CS_MODE_BIG_ENDIAN },
-	{ "systemz_arch11", "(arch11/z13)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH11 | CS_MODE_BIG_ENDIAN },
-	{ "systemz_arch12", "(arch12/z14)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH12 | CS_MODE_BIG_ENDIAN },
-	{ "systemz_arch13", "(arch13/z15)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH13 | CS_MODE_BIG_ENDIAN },
-	{ "systemz_arch14", "(arch14/z16)\n", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH14 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch8", "(arch8/z10/generic)", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH8 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch9", "(arch9/z196)", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH9 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch10", "(arch10/zec12)", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH10 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch11", "(arch11/z13)", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH11 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch12", "(arch12/z14)", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH12 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch13", "(arch13/z15)", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH13 | CS_MODE_BIG_ENDIAN },
+	{ "systemz_arch14", "(arch14/z16)", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH14 | CS_MODE_BIG_ENDIAN },
 
 	{ "s390x", "SystemZ s390x, big endian", CS_ARCH_SYSTEMZ, CS_MODE_BIG_ENDIAN },
 
@@ -221,6 +221,8 @@ static struct {
 
 	{ "loongarch32", "LoongArch 32-bit", CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH32 },
 	{ "loongarch64", "LoongArch 64-bit", CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64 },
+	{ "xtensa", "Xtensa", CS_ARCH_XTENSA, CS_MODE_XTENSA },
+	{ "xtensabe", "Xtensa, big endian", CS_ARCH_XTENSA, CS_MODE_XTENSA | CS_MODE_BIG_ENDIAN },
 	{ NULL }
 };
 
@@ -422,6 +424,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		case CS_ARCH_LOONGARCH:
 			print_insn_detail_loongarch(handle, ins);
 			break;
+		case CS_ARCH_XTENSA:
+			print_insn_detail_xtensa(handle, ins);
+			break;
 		default: break;
 	}
 
@@ -608,6 +613,10 @@ int main(int argc, char **argv)
 					printf("loongarch=1 ");
 				}
 
+				if (cs_support(CS_ARCH_XTENSA)) {
+					printf("xtensa=1 ");
+				}
+
 				printf("\n");
 				return 0;
 			case 'h':
@@ -637,6 +646,7 @@ int main(int argc, char **argv)
 		address = strtoull(src, &temp, 16);
 		if (temp == src || *temp != '\0' || errno == ERANGE) {
 			fprintf(stderr, "ERROR: invalid address argument, quit!\n");
+			free(assembly);
 			return -2;
 		}
 	}
@@ -670,6 +680,7 @@ int main(int argc, char **argv)
 	if (arch == CS_ARCH_ALL) {
 		fprintf(stderr, "ERROR: Invalid <arch+mode>: \"%s\", quit!\n", choosen_arch);
 		usage(argv[0]);
+		free(assembly);
 		return -1;
 	}
 
@@ -677,6 +688,7 @@ int main(int argc, char **argv)
 		const char *error = cs_strerror(err);
 		fprintf(stderr, "ERROR: Failed on cs_open(): %s\n", error);
 		usage(argv[0]);
+		free(assembly);
 		return -1;
 	}
 

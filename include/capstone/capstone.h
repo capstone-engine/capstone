@@ -102,6 +102,7 @@ typedef enum cs_arch {
 	CS_ARCH_ALPHA, 		///< Alpha architecture
 	CS_ARCH_HPPA, 		///< HPPA architecture
 	CS_ARCH_LOONGARCH, 	///< LoongArch architecture
+	CS_ARCH_XTENSA, 	///< Xtensa architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -221,6 +222,7 @@ typedef enum cs_mode {
 	CS_MODE_SYSTEMZ_Z15 = 1 << 13, ///< Enables features of the Z15 processor
 	CS_MODE_SYSTEMZ_Z16 = 1 << 14, ///< Enables features of the Z16 processor
 	CS_MODE_SYSTEMZ_GENERIC = 1 << 15, ///< Enables features of the generic processor
+	CS_MODE_XTENSA = 1 << 1, ///< Xtensa
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);
@@ -263,6 +265,7 @@ typedef enum cs_opt_type {
 	CS_OPT_MNEMONIC,       ///< Customize instruction mnemonic
 	CS_OPT_UNSIGNED,       ///< print immediate operands in unsigned form
 	CS_OPT_ONLY_OFFSET_BRANCH, ///< ARM, PPC, AArch64: Don't add the branch immediate value to the PC.
+	CS_OPT_LITBASE, ///< Xtensa, set the LITBASE value. LITBASE is set to 0 by default.
 } cs_opt_type;
 
 /// Runtime option value (associated with option type above)
@@ -377,6 +380,7 @@ typedef struct cs_opt_skipdata {
 #include "alpha.h"
 #include "hppa.h"
 #include "loongarch.h"
+#include "xtensa.h"
 
 #define MAX_IMPL_W_REGS 47
 #define MAX_IMPL_R_REGS 20
@@ -433,6 +437,7 @@ typedef struct cs_detail {
 		cs_alpha alpha; ///< Alpha architecture
 		cs_hppa hppa; ///< HPPA architecture
 		cs_loongarch loongarch; ///< LoongArch architecture
+		cs_xtensa xtensa; ///< Xtensa architecture
 	};
 } cs_detail;
 

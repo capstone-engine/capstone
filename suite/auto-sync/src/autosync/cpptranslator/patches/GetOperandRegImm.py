@@ -12,7 +12,7 @@ class GetOperandRegImm(Patch):
     Patch   OPERAND.getReg()
     to      MCOperand_getReg(OPERAND)
 
-    Same for isImm()
+    Same for getImm()|getExpr
     """
 
     def __init__(self, priority: int):

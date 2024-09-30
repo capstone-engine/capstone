@@ -79,6 +79,7 @@ jobs:
           ./src/autosync/ASUpdater.py -d -a LoongArch -s IncGen
           ./src/autosync/ASUpdater.py -d -a Mips -s IncGen
           ./src/autosync/ASUpdater.py -d -a SystemZ -s IncGen
+          ./src/autosync/ASUpdater.py -d -a Xtensa -s IncGen
 
       - name: CppTranslator - Patch tests
         run: |
@@ -96,3 +97,4 @@ jobs:
           ./src/autosync/ASUpdater.py --ci -d -a LoongArch -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a Mips -s Translate
           ./src/autosync/ASUpdater.py --ci -d -a SystemZ -s Translate
+          ./src/autosync/ASUpdater.py --ci -d -a Xtensa -s Translate

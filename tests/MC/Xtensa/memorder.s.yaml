@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xd0, 0x20, 0x00 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "extw"
+
+  -
+    input:
+      bytes: [ 0xc0, 0x20, 0x00 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "memw"

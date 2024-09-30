@@ -81,6 +81,7 @@ struct cs_struct {
 	const uint8_t *regsize_map;	// map to register size (x86-only for now)
 	GetRegisterAccess_t reg_access;
 	struct insn_mnem *mnem_list;	// linked list of customized instruction mnemonic
+	uint32_t LITBASE;
 };
 
 #define MAX_ARCH CS_ARCH_MAX

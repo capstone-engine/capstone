@@ -90,8 +90,12 @@ int main(int argc, char** argv)
             } else if (strcmp(arch, "CS_ARCH_M680X") == 0 && strcmp(mode, "CS_MODE_M680X_6809") == 0) {
                 Data[0] = 24;
             } else if (strcmp(arch, "CS_ARCH_EVM") == 0 && strcmp(mode, "0") == 0) {
-                Data[0] = 25; 
-	    } else if (strcmp(arch, "CS_ARCH_BPF") == 0 && strstr(mode, "CS_MODE_BPF_CLASSIC") != NULL) {
+                Data[0] = 25;
+            } else if (strcmp(arch, "CS_ARCH_XTENSA") == 0 && strcmp(mode, "CS_MODE_XTENSA") == 0) {
+                Data[0] = 26;
+            } else if (strcmp(arch, "CS_ARCH_XTENSA") == 0 && strcmp(mode, "CS_MODE_XTENSA+CS_MODE_BIG_ENDIAN") == 0) {
+                Data[0] = 27;
+            } else if (strcmp(arch, "CS_ARCH_BPF") == 0 && strstr(mode, "CS_MODE_BPF_CLASSIC") != NULL) {
                 Data[0] = 29;
             } else if (strcmp(arch, "CS_ARCH_BPF") == 0 && strstr(mode, "CS_MODE_BPF_EXTENDED") != NULL) {
                 Data[0] = 30;

@@ -224,6 +224,10 @@ class TestFile:
         return str(self.file_path) < str(other.file_path)
 
 
+def exists_and_is_dir(x):
+    return x.exists() and x.is_dir()
+
+
 class MCUpdater:
     """
     The MCUpdater parses all test files of the LLVM MC regression tests.
@@ -291,11 +295,10 @@ class MCUpdater:
         self.multi_mode = multi_mode
 
     def check_prerequisites(self, paths):
-        for path in paths:
-            if not path.exists() or not path.is_dir():
-                raise ValueError(
-                    f"'{path}' does not exits or is not a directory. Cannot generate tests from there."
-                )
+        if all(not exists_and_is_dir(path) for path in paths):
+            raise ValueError(
+                f"'{paths}' does not exits or is not a directory. Cannot generate tests from there."
+            )
         llvm_lit_cfg = get_path("{LLVM_LIT_TEST_DIR}")
         if not llvm_lit_cfg.exists():
             raise ValueError(
@@ -478,9 +481,14 @@ class MCUpdater:
         log.info("Check prerequisites")
         disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch}")
         test_paths = [disas_tests]
+        # Xtensa only defines assembly tests.
+        if self.arch == "Xtensa":
+            test_paths.append(self.mc_dir.joinpath(self.arch))
         self.check_prerequisites(test_paths)
         log.info("Generate MC regression tests")
-        llvm_mc_cmds = self.run_llvm_lit(test_paths)
+        llvm_mc_cmds = self.run_llvm_lit(
+            [path for path in test_paths if exists_and_is_dir(path)]
+        )
         log.info(f"Got {len(llvm_mc_cmds)} llvm-mc commands to run")
         self.test_files = self.build_test_files(llvm_mc_cmds)
         for slink in self.symbolic_links:

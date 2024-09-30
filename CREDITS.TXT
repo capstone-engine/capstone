@@ -87,6 +87,7 @@ david942j: BPF (both classic and extended) architecture.
 fanfuqiang & citypw & porto703 : RISCV architecture.
 Josh "blacktop" Maine: Arm64 architecture improvements.
 Finn Wilkinson: AArch64 update to Armv9.2-a (SME + SVE2 support)
-Billow & Sidneyp : TriCore architecture.
+Billow & Sidneyp: TriCore architecture.
 Dmitry Sibirtsev: Alpha & HPPA architecture.
 Jiajie Chen & Yanglin Xun: LoongArch architecture.
+Billow: Xtensa architecture.

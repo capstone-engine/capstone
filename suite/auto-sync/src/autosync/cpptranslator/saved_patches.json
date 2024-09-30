@@ -3290,5 +3290,179 @@
       "new_hash": "",
       "edit": ""
     }
+  },
+  "XtensaDisassembler.c": {
+    "\"../../SStream.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "2b45d68382f855f8fdc8a7cf177cda2d4dee75318bab9e1304026375ba05284f",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"../../cs_priv.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "9cf77913cc1ba047983eb15f5e6dce657fb26b09f32757f02de5df2cf4023d87",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"XtensaGenInstrInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "7dada799dde9a9ea873fe6933799f19a60273bd85d56804c06e7e87b761c973d",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"priv.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "d09344b441eba2a943ba1323088ec14a8bad410b94e47900e170c51876794892",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DecodeSRRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "21ddebca1aac12b568bfba25e971d02c3166147ff2ba8308e7f95e07bc754e28",
+      "new_hash": "0bfba6491089483244f115b4130ebe5c03d5572c8267bf015f704bb5fd1526a7",
+      "edit": ""
+    },
+    "Xtensa_LLVM_getInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "f62a9a80e3667fa51669fe7fa22da87b1c95bb1235e0840e5455069731ca42d1",
+      "new_hash": "",
+      "edit": ""
+    },
+    "getInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "50b6a904fc89bab054302112bd312dff8befdca7e0fdeebbfdc5d37cb49a2eeb",
+      "new_hash": "9215f65202a5f06de4718f9562adc149b5271358b49ce03be887dde2fdf03a25",
+      "edit": ""
+    },
+    "readInstruction24": {
+      "apply_type": "OLD",
+      "old_hash": "496be4020feedac98bcb88b969c1e9a2013f664120193b45b76ff4a683e12d0d",
+      "new_hash": "2c39773dba873ff597df8420c2a710ecd3604ecb232406dc8b2f20bc3a11e655",
+      "edit": ""
+    },
+    "tryAddingSymbolicOperand": {
+      "apply_type": "OLD",
+      "old_hash": "abfdc1e7fb69748a05a49a9829618b7ff43e913c7a46476c5a5e69151e44872c",
+      "new_hash": "b1a20345c1f90c2ef792825a3ecd379a856dca51240a92c3b9ce3a3685f09e2a",
+      "edit": ""
+    }
+  },
+  "XtensaInstPrinter.c": {
+    "\"../../MCInstPrinter.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "ea06257675896d185a423f8471328a8b98e74c260aad3e2e614d0ef48a744004",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"../../Mapping.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "204ac68dcb32024c325b99a0843719c321ab57c60c41b12adbea497c20b7d436",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"../../SStream.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "2b45d68382f855f8fdc8a7cf177cda2d4dee75318bab9e1304026375ba05284f",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"./priv.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "f5f8c480fe3869886ac96a2b8b2567c6056d7a0054da06433dee8e916abbe752",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"XtensaMapping.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "5dc6afd5c4beb43ecf77407bd50c579ace7cc07013610ee1e72933981da27ee2",
+      "new_hash": "",
+      "edit": ""
+    },
+    "Xtensa_LLVM_getRegisterName": {
+      "apply_type": "OLD",
+      "old_hash": "87e2ae763d6d60ffd9da21d1b70f147c552cb75960b11ae98b8b21fe58bb938c",
+      "new_hash": "",
+      "edit": ""
+    },
+    "Xtensa_LLVM_printInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "1407d0fd0871a19025128731e3438bbff398ff173720e14f58cc1dbc781e5d51",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printBranchTarget": {
+      "apply_type": "NEW",
+      "old_hash": "c91f9d98415c1c413489ef360bc11ebb11b6f9e3b1564d4b57d0577c0a6feaa8",
+      "new_hash": "760223784267d403ac29f9ed51c2a30ff2ef1ddf9679b59db71b741f23c03719",
+      "edit": ""
+    },
+    "printCallOperand": {
+      "apply_type": "NEW",
+      "old_hash": "62f875bf3eae5d3502f03df40ff473ddd838e38c87711a1fb5922d41960e74ed",
+      "new_hash": "5e936d44076c6ab4dfb8bf579b368f7107954dd391ea5f82d489afbe26184985",
+      "edit": ""
+    },
+    "printImm12m_AsmOperand": {
+      "apply_type": "NEW",
+      "old_hash": "a656e5282b4444835dc20ffb645e92c51b5512ed43aabb7c9f2eafa1d2c81a76",
+      "new_hash": "64a9511d7f18e2fce3b4d08179b8cb6681d1e5df195241706a30d00c3ea2288e",
+      "edit": ""
+    },
+    "printImm1_16_AsmOperand": {
+      "apply_type": "NEW",
+      "old_hash": "4a34c1913614bdaee2795f1c94d395b78be60f4d1ae84a0f28ea0e8a573381f9",
+      "new_hash": "c9956b1881ed5107439d2e4606cec93870837a3390436264a6e0c66762b68a5c",
+      "edit": ""
+    },
+    "printImm8_sh8_AsmOperand": {
+      "apply_type": "NEW",
+      "old_hash": "9affee556485b99036667d0fde115610b9b67037c5ffdfedf9f5eb379b89c146",
+      "new_hash": "e4ab93bab36ba4c3436618523e3ff14b330819652e4cada4f19001ad63e92560",
+      "edit": ""
+    },
+    "printJumpTarget": {
+      "apply_type": "NEW",
+      "old_hash": "b3fb61b967ddbdcd4ba31c0d7f6cbdb5b52880eba2d0f3b6961cb8736d65e6e0",
+      "new_hash": "0810cb753da2c503ec8cf969c4fa7bfb9f47fd6a9d66a83eb2c8b0166489512f",
+      "edit": ""
+    },
+    "printL32RTarget": {
+      "apply_type": "NEW",
+      "old_hash": "518eb907a827efe2ae569b32ec9acfda29bd106c28f53a997fa40233c84f5433",
+      "new_hash": "66fcd5c6ce5d625014bffc3c23bdab57a78b467dabfe3bdcb5d67af2cdfc8192",
+      "edit": ""
+    },
+    "printOperand": {
+      "apply_type": "OLD",
+      "old_hash": "1c19f6735e6c56ef62a9ce8eabe0a2f50e530fc6efb505b30de99a28b8299f6c",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printShimm1_31_AsmOperand": {
+      "apply_type": "NEW",
+      "old_hash": "a87790f5ac96dd626e1ae77a2949ff6ca9f3ac042b4ec87069b5b20e5bc43ba6",
+      "new_hash": "0a881b7568ff8a62cbf47caef513cabd32928af5cd182584da59a9be618b6c2e",
+      "edit": ""
+    },
+    "printUimm4_AsmOperand": {
+      "apply_type": "NEW",
+      "old_hash": "d8dbc1a930c08cbb2047c4462f6102ce7a9dc516754ee06d69ed88ceb3624c64",
+      "new_hash": "3ba7c11490ec5eacc67595df5d26db88c4db327dc12c06f91349a29b3a31320c",
+      "edit": ""
+    },
+    "printUimm5_AsmOperand": {
+      "apply_type": "NEW",
+      "old_hash": "0c4dd11b6282b42f5e08458fe206ef5f34e738626f5dbf57521355f96dd820a4",
+      "new_hash": "5c8fe6e58c1463f1556d33c60896696340eb444e5938270d5e23c9df6a1ab4e8",
+      "edit": ""
+    }
+  },
+  "XtensaInstPrinter.h": {
+    "\"priv.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "d09344b441eba2a943ba1323088ec14a8bad410b94e47900e170c51876794892",
+      "new_hash": "",
+      "edit": ""
+    }
   }
 }

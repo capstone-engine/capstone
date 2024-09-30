@@ -142,6 +142,7 @@ DECL_get_detail_op(loongarch, LoongArch);
 DECL_get_detail_op(mips, Mips);
 DECL_get_detail_op(riscv, RISCV);
 DECL_get_detail_op(systemz, SystemZ);
+DECL_get_detail_op(xtensa, Xtensa);
 
 /// Increments the detail->arch.op_count by one.
 #define DEFINE_inc_detail_op_count(arch, ARCH) \
@@ -177,6 +178,8 @@ DEFINE_inc_detail_op_count(riscv, RISCV);
 DEFINE_dec_detail_op_count(riscv, RISCV);
 DEFINE_inc_detail_op_count(systemz, SystemZ);
 DEFINE_dec_detail_op_count(systemz, SystemZ);
+DEFINE_inc_detail_op_count(xtensa, Xtensa);
+DEFINE_dec_detail_op_count(xtensa, Xtensa);
 
 /// Returns true if a memory operand is currently edited.
 static inline bool doing_mem(const MCInst *MI)
@@ -208,6 +211,7 @@ DEFINE_get_arch_detail(loongarch, LoongArch);
 DEFINE_get_arch_detail(mips, Mips);
 DEFINE_get_arch_detail(riscv, RISCV);
 DEFINE_get_arch_detail(systemz, SystemZ);
+DEFINE_get_arch_detail(xtensa, Xtensa);
 
 #define DEFINE_check_safe_inc(Arch, ARCH) \
 	static inline void Arch##_check_safe_inc(const MCInst *MI) { \

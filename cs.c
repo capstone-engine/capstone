@@ -71,6 +71,7 @@
 #include "arch/Alpha/AlphaModule.h"
 #include "arch/HPPA/HPPAModule.h"
 #include "arch/LoongArch/LoongArchModule.h"
+#include "arch/Xtensa/XtensaModule.h"
 
 typedef struct cs_arch_config {
 	// constructor initialization
@@ -255,6 +256,12 @@ typedef struct cs_arch_config {
 		LoongArch_option, \
 		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_LOONGARCH32 | CS_MODE_LOONGARCH64), \
 	}
+#define CS_ARCH_CONFIG_XTENSA \
+	{ \
+		Xtensa_global_init, \
+		Xtensa_option, \
+		~(CS_MODE_XTENSA), \
+	}
 
 #ifdef CAPSTONE_USE_ARCH_REGISTRATION
 static cs_arch_config arch_configs[MAX_ARCH];
@@ -360,8 +367,8 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 	{
 		HPPA_global_init,
 		HPPA_option,
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | CS_MODE_HPPA_11
-		| CS_MODE_HPPA_20 | CS_MODE_HPPA_20W),
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | CS_MODE_HPPA_11 |
+		  CS_MODE_HPPA_20 | CS_MODE_HPPA_20W),
 	},
 #else
 	{ NULL, NULL, 0 },
@@ -371,74 +378,82 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #else
 	{ NULL, NULL, 0 },
 #endif
+#ifdef CAPSTONE_HAS_XTENSA
+	CS_ARCH_CONFIG_XTENSA
+#else
+	{ NULL, NULL, 0 },
+#endif
 };
 
 // bitmask of enabled architectures
 static const uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_ARM
-	| (1 << CS_ARCH_ARM)
+				 | (1 << CS_ARCH_ARM)
 #endif
 #if defined(CAPSTONE_HAS_AARCH64) || defined(CAPSTONE_HAS_ARM64)
-	| (1 << CS_ARCH_AARCH64)
+				 | (1 << CS_ARCH_AARCH64)
 #endif
 #ifdef CAPSTONE_HAS_MIPS
-	| (1 << CS_ARCH_MIPS)
+				 | (1 << CS_ARCH_MIPS)
 #endif
 #ifdef CAPSTONE_HAS_X86
-	| (1 << CS_ARCH_X86)
+				 | (1 << CS_ARCH_X86)
 #endif
 #ifdef CAPSTONE_HAS_POWERPC
-	| (1 << CS_ARCH_PPC)
+				 | (1 << CS_ARCH_PPC)
 #endif
 #ifdef CAPSTONE_HAS_SPARC
-	| (1 << CS_ARCH_SPARC)
+				 | (1 << CS_ARCH_SPARC)
 #endif
 #ifdef CAPSTONE_HAS_SYSTEMZ
-	| (1 << CS_ARCH_SYSTEMZ)
+				 | (1 << CS_ARCH_SYSTEMZ)
 #endif
 #ifdef CAPSTONE_HAS_XCORE
-	| (1 << CS_ARCH_XCORE)
+				 | (1 << CS_ARCH_XCORE)
 #endif
 #ifdef CAPSTONE_HAS_M68K
-	| (1 << CS_ARCH_M68K)
+				 | (1 << CS_ARCH_M68K)
 #endif
 #ifdef CAPSTONE_HAS_TMS320C64X
-	| (1 << CS_ARCH_TMS320C64X)
+				 | (1 << CS_ARCH_TMS320C64X)
 #endif
 #ifdef CAPSTONE_HAS_M680X
-	| (1 << CS_ARCH_M680X)
+				 | (1 << CS_ARCH_M680X)
 #endif
 #ifdef CAPSTONE_HAS_EVM
-	| (1 << CS_ARCH_EVM)
+				 | (1 << CS_ARCH_EVM)
 #endif
 #ifdef CAPSTONE_HAS_MOS65XX
-	| (1 << CS_ARCH_MOS65XX)
+				 | (1 << CS_ARCH_MOS65XX)
 #endif
 #ifdef CAPSTONE_HAS_WASM
-	| (1 << CS_ARCH_WASM)
+				 | (1 << CS_ARCH_WASM)
 #endif
 #ifdef CAPSTONE_HAS_BPF
-	| (1 << CS_ARCH_BPF)
+				 | (1 << CS_ARCH_BPF)
 #endif
 #ifdef CAPSTONE_HAS_RISCV
-	| (1 << CS_ARCH_RISCV)
+				 | (1 << CS_ARCH_RISCV)
 #endif
 #ifdef CAPSTONE_HAS_SH
-	| (1 << CS_ARCH_SH)
+				 | (1 << CS_ARCH_SH)
 #endif
 #ifdef CAPSTONE_HAS_TRICORE
-	| (1 << CS_ARCH_TRICORE)
+				 | (1 << CS_ARCH_TRICORE)
 #endif
 #ifdef CAPSTONE_HAS_ALPHA
-	| (1 << CS_ARCH_ALPHA)
+				 | (1 << CS_ARCH_ALPHA)
 #endif
 #ifdef CAPSTONE_HAS_HPPA
-	| (1 << CS_ARCH_HPPA)
+				 | (1 << CS_ARCH_HPPA)
 #endif
 #ifdef CAPSTONE_HAS_LOONGARCH
-	| (1 << CS_ARCH_LOONGARCH)
+				 | (1 << CS_ARCH_LOONGARCH)
 #endif
-;
+#ifdef CAPSTONE_HAS_XTENSA
+				 | (1 << CS_ARCH_XTENSA)
+#endif
+	;
 #endif
 
 
@@ -670,17 +685,17 @@ bool CAPSTONE_API cs_support(int query)
 {
 	if (query == CS_ARCH_ALL)
 		return all_arch ==
-				    ((1 << CS_ARCH_ARM)  | (1 << CS_ARCH_AARCH64)    |
-				    (1 << CS_ARCH_MIPS)  | (1 << CS_ARCH_X86)        |
-				    (1 << CS_ARCH_PPC)   | (1 << CS_ARCH_SPARC)      |
-				    (1 << CS_ARCH_SYSTEMZ)  | (1 << CS_ARCH_XCORE)      |
-				    (1 << CS_ARCH_M68K)  | (1 << CS_ARCH_TMS320C64X) |
-				    (1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM)        |
-				    (1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX)    |
-				    (1 << CS_ARCH_WASM)  | (1 << CS_ARCH_BPF)        |
-				    (1 << CS_ARCH_SH)    | (1 << CS_ARCH_TRICORE)    |
-				    (1 << CS_ARCH_ALPHA) | (1 << CS_ARCH_HPPA)       |
-				    (1 << CS_ARCH_LOONGARCH));
+		       ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_AARCH64) |
+			(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
+			(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
+			(1 << CS_ARCH_SYSTEMZ) | (1 << CS_ARCH_XCORE) |
+			(1 << CS_ARCH_M68K) | (1 << CS_ARCH_TMS320C64X) |
+			(1 << CS_ARCH_M680X) | (1 << CS_ARCH_EVM) |
+			(1 << CS_ARCH_RISCV) | (1 << CS_ARCH_MOS65XX) |
+			(1 << CS_ARCH_WASM) | (1 << CS_ARCH_BPF) |
+			(1 << CS_ARCH_SH) | (1 << CS_ARCH_TRICORE) |
+			(1 << CS_ARCH_ALPHA) | (1 << CS_ARCH_HPPA) |
+			(1 << CS_ARCH_LOONGARCH) | (1 << CS_ARCH_XTENSA));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -1214,7 +1229,8 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 
 		if (handle->detail_opt) {
 			// allocate memory for @detail pointer
-			insn_cache->detail = cs_mem_malloc(sizeof(cs_detail));
+			insn_cache->detail =
+				cs_mem_calloc(1, sizeof(cs_detail));
 		} else {
 			insn_cache->detail = NULL;
 		}

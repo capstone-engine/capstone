@@ -14,7 +14,8 @@
             "AArch64InstPrinter.cpp",
             "LoongArchInstPrinter.cpp",
             "MipsInstPrinter.cpp",
-            "SystemZInstPrinter.cpp"
+            "SystemZInstPrinter.cpp",
+            "XtensaInstPrinter.cpp"
           ]
         },
         "InlineToStaticInline": {
@@ -239,6 +240,24 @@
       "{CPP_INC_OUT_DIR}/SystemZGenAsmWriter.inc",
       "{LLVM_ROOT}/llvm/lib/Target/SystemZ/Disassembler/SystemZDisassembler.cpp",
       "{LLVM_ROOT}/llvm/lib/Target/SystemZ/MCTargetDesc/SystemZInstPrinter.cpp"
+    ],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": []
+  },
+  "Xtensa": {
+    "files_to_translate": [
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/Xtensa/Disassembler/XtensaDisassembler.cpp",
+        "out": "XtensaDisassembler.c"
+      },
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/Xtensa/MCTargetDesc/XtensaInstPrinter.cpp",
+        "out": "XtensaInstPrinter.c"
+      }
+    ],
+    "files_for_template_search": [
+      "{CPP_INC_OUT_DIR}/XtensaGenDisassemblerTables.inc",
+      "{CPP_INC_OUT_DIR}/XtensaGenAsmWriter.inc"
     ],
     "templates_with_arg_deduction": [],
     "manually_edited_files": []

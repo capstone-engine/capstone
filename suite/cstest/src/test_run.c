@@ -123,7 +123,8 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 					fprintf(stderr,
 						"Too many options given in: '%s'. Maximum is: %" PRId64
 						"\n",
-						opt_str, opt_arr_size);
+						opt_str,
+						(uint64_t)opt_arr_size);
 					return false;
 				}
 				opt_arr[opt_idx++] = test_option_map[k].opt;

@@ -1,0 +1,29 @@
+test_cases:
+  -
+    input:
+      name: "OOB read should be 2 bytes"
+      bytes: [ 0x00 ]
+      arch: "CS_ARCH_SYSTEMZ"
+      options: [ CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns: []
+  -
+    input:
+      name: "OOB read should be 4 bytes"
+      bytes: [ 0xb0, 0xff ]
+      arch: "CS_ARCH_SYSTEMZ"
+      options: [ CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns: []
+  -
+    input:
+      name: "OOB read should be 6 bytes"
+      bytes: [ 0xc0, 0xff, 0xff ]
+      arch: "CS_ARCH_SYSTEMZ"
+      options: [ CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns: []
+

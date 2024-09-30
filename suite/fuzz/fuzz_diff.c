@@ -172,6 +172,18 @@ struct platform platforms[] = {
         (cs_mode)0,
         "EVM"
     },
+    {
+        //item 26
+        CS_ARCH_XTENSA,
+        (cs_mode)CS_MODE_XTENSA,
+        "Xtensa"
+    },
+    {
+        //item 27
+        CS_ARCH_XTENSA,
+        (cs_mode)CS_MODE_XTENSA + CS_MODE_BIG_ENDIAN,
+        "Xtensa (Big-Endian)"
+    },
 };
 
 void LLVMFuzzerInit();

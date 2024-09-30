@@ -107,7 +107,8 @@ class TestPatches(unittest.TestCase):
 
         self.assertGreater(len(captures_bundle), 0)
         for cb in captures_bundle:
-            self.assertEqual(patch.get_patch(cb, syntax, **kwargs), expected)
+            actual = patch.get_patch(cb, syntax, **kwargs)
+            self.assertEqual(actual, expected)
 
     def test_addcsdetail(self):
         patch = AddCSDetail(0, "ARCH")
@@ -115,7 +116,7 @@ class TestPatches(unittest.TestCase):
         self.check_patching_result(
             patch,
             syntax,
-            b"void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNo, SStream *O){ "
+            b"static inline void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNo, SStream *O){ "
             b"add_cs_detail(MI, ARCH_OP_GROUP_ThumbLdrLabelOperand, OpNo); "
             b"int i = OpNo; "
             b"}",
@@ -132,8 +133,8 @@ class TestPatches(unittest.TestCase):
 
     def test_assert(self):
         patch = Assert(0)
-        syntax = b"assert(0 == 0)"
-        self.check_patching_result(patch, syntax, b"CS_ASSERT((0 == 0));")
+        syntax = b"assert(0 == 0);"
+        self.check_patching_result(patch, syntax, b"CS_ASSERT(0 == 0);")
 
     def test_bitcaststdarray(self):
         patch = BitCastStdArray(0)
