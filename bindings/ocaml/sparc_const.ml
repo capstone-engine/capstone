@@ -38,6 +38,8 @@ let _SPARC_HINT_INVALID = 0;;
 let _SPARC_HINT_A = 1 lsl 0;;
 let _SPARC_HINT_PT = 1 lsl 1;;
 let _SPARC_HINT_PN = 1 lsl 2;;
+let _SPARC_HINT_A_PN = _SPARC_HINT_A lor SPARC_HINT_PN;;
+let _SPARC_HINT_A_PT = _SPARC_HINT_A lor SPARC_HINT_PT;;
 
 let _SPARC_OP_INVALID = 0;;
 let _SPARC_OP_REG = 1;;

@@ -397,6 +397,7 @@ let _X86_AVX_RM_RN = 1;;
 let _X86_AVX_RM_RD = 2;;
 let _X86_AVX_RM_RU = 3;;
 let _X86_AVX_RM_RZ = 4;;
+let _X86_PREFIX_0 = 0x0;;
 let _X86_PREFIX_LOCK = 0xf0;;
 let _X86_PREFIX_REP = 0xf3;;
 let _X86_PREFIX_REPE = 0xf3;;

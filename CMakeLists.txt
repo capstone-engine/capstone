@@ -20,7 +20,7 @@ endif()
 cmake_policy(SET CMP0042 NEW)
 
 project(capstone
-    VERSION 5.0
+    VERSION 6.0
 )
 
 set(UNIX_COMPILER_OPTIONS -Werror -Wall -Warray-bounds -Wshift-negative-value -Wreturn-type -Wformat -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context -Wmisleading-indentation)

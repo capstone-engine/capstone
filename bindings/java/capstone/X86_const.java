@@ -400,6 +400,7 @@ public class X86_const {
 	public static final int X86_AVX_RM_RD = 2;
 	public static final int X86_AVX_RM_RU = 3;
 	public static final int X86_AVX_RM_RZ = 4;
+	public static final int X86_PREFIX_0 = 0x0;
 	public static final int X86_PREFIX_LOCK = 0xf0;
 	public static final int X86_PREFIX_REP = 0xf3;
 	public static final int X86_PREFIX_REPE = 0xf3;
