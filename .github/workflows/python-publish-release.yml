@@ -69,7 +69,7 @@ jobs:
   publish:
     needs: [build_wheels]
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' && github.event.prerelease == false && github.event.action == 'published'
+    if: github.event_name == 'release' && github.event.action == 'released'
     permissions:
       id-token: write
     steps:
