@@ -2,13 +2,8 @@
 /* RISC-V Backend By Rodrigo Cortes Porto <porto703@gmail.com> & 
    Shawn Chang <citypw@gmail.com>, HardenedLinux@2018 */
 
-#ifdef CAPSTONE_HAS_RISCV
+//#ifdef CAPSTONE_HAS_RISCV
 
-#include "../../utils.h"
-#include "../../MCRegisterInfo.h"
-#include "RISCVDisassembler.h"
-#include "RISCVInstPrinter.h"
-#include "RISCVMapping.h"
 #include "RISCVModule.h"
 
 cs_err RISCV_global_init(cs_struct * ud)
@@ -42,4 +37,4 @@ cs_err RISCV_option(cs_struct * handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-#endif
+//#endif
