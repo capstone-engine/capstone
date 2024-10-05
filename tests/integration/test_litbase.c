@@ -59,23 +59,23 @@ static void test()
 	size_t count = 0;
 
 	count = cs_disasm(handle, (const uint8_t *)DATA, sizeof(DATA) - 1,
-			  0x10000, 2, &insn);
+			  0x100000, 2, &insn);
 
 	// 1. Print out the instruction in default setup.
-	printf("Disassemble xtensa code with PC=0x10000\n");
-	check_insn(insn, "l32r", "a1, . 0xc000");
-	check_insn(insn + 1, "l32r", "a1, . 0x10000");
+	printf("Disassemble xtensa code with PC=0x100000\n");
+	check_insn(insn, "l32r", "a1, . 0xc0000");
+	check_insn(insn + 1, "l32r", "a1, . 0x100000");
 	print_insn(insn, count);
 
 	// Customized mnemonic JNE to JNZ using CS_OPT_LITBASE option
-	printf("\nNow customize engine to change LITBASA to 0xff001\n");
-	cs_option(handle, CS_OPT_LITBASE, (size_t)0xff001);
+	printf("\nNow customize engine to change LITBASE to 0xfffff001\n");
+	cs_option(handle, CS_OPT_LITBASE, (size_t)0xfffff001);
 	count = cs_disasm(handle, (const uint8_t *)DATA, sizeof(DATA) - 1,
-			  0x10000, 2, &insn);
+			  0x100000, 2, &insn);
 
 	// 2. Now print out the instruction in newly customized setup.
-	check_insn(insn, "l32r", "a1, . -0x3fff");
-	check_insn(insn + 1, "l32r", "a1, . -3");
+	check_insn(insn, "l32r", "a1, . 0xbffff");
+	check_insn(insn + 1, "l32r", "a1, . 0xffffb");
 	print_insn(insn, count);
 
 	// Done
