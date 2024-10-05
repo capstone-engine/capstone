@@ -154,8 +154,8 @@ static DecodeStatus decodeImm8Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeImm8_sh8Operand(MCInst *Inst, uint64_t Imm,
 					  int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
-	MCOperand_CreateImm0(Inst, (SignExtend64((Imm << 8), 16)));
+	CS_ASSERT(isUIntN(16, Imm) && "Invalid immediate");
+	MCOperand_CreateImm0(Inst, (SignExtend64((Imm), 16)));
 	return MCDisassembler_Success;
 }
 
