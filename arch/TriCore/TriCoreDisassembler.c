@@ -1543,6 +1543,7 @@ static inline bool tryGetInstruction16(const uint8_t *code, size_t code_len,
 		return false;
 	}
 	uint16_t insn16 = readBytes16(MI, code);
+	MI->tricore_insn_bytes = insn16;
 	DecodeStatus Result = decodeInstruction_2(decoderTable16, MI, insn16,
 						  address, info, 0);
 	if (Result != MCDisassembler_Fail) {
@@ -1561,6 +1562,7 @@ static inline bool tryGetInstruction32(const uint8_t *code, size_t code_len,
 		return false;
 	}
 	uint32_t insn32 = readBytes32(MI, code);
+	MI->tricore_insn_bytes = insn32;
 	DecodeStatus Result = decodeInstruction_4(decoderTable32, MI, insn32,
 						  address, info, 0);
 	if (Result != MCDisassembler_Fail) {
