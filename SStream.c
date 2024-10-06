@@ -153,6 +153,7 @@ void SStream_Close(SStream *ss) {
 void SStream_concat0(SStream *ss, const char *s)
 {
 #ifndef CAPSTONE_DIET
+	assert(ss && s);
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (s[0] == '\0')
 		return;
@@ -178,6 +179,7 @@ void SStream_concat0(SStream *ss, const char *s)
 void SStream_concat1(SStream *ss, const char c)
 {
 #ifndef CAPSTONE_DIET
+	assert(ss);
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (c == '\0')
 		return;
@@ -201,6 +203,7 @@ void SStream_concat1(SStream *ss, const char c)
 void SStream_concat(SStream *ss, const char *fmt, ...)
 {
 #ifndef CAPSTONE_DIET
+	assert(ss && fmt);
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	va_list ap;
 	int ret;
@@ -220,6 +223,7 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 // print number with prefix #
 void printInt64Bang(SStream *O, int64_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat1(O, '#');
 	printInt64(O, val);
@@ -227,6 +231,7 @@ void printInt64Bang(SStream *O, int64_t val)
 
 void printUInt64Bang(SStream *O, uint64_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat1(O, '#');
 	printUInt64(O, val);
@@ -235,6 +240,7 @@ void printUInt64Bang(SStream *O, uint64_t val)
 // print number
 void printInt64(SStream *O, int64_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
@@ -254,6 +260,7 @@ void printInt64(SStream *O, int64_t val)
 
 void printUInt64(SStream *O, uint64_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	if (val > HEX_THRESHOLD)
 		SStream_concat(O, "0x%"PRIx64, val);
@@ -264,6 +271,7 @@ void printUInt64(SStream *O, uint64_t val)
 // print number in decimal mode
 void printInt32BangDec(SStream *O, int32_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	if (val >= 0)
 		SStream_concat(O, "#%" PRIu32, val);
@@ -277,6 +285,7 @@ void printInt32BangDec(SStream *O, int32_t val)
 
 void printInt32Bang(SStream *O, int32_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat1(O, '#');
 	printInt32(O, val);
@@ -284,6 +293,7 @@ void printInt32Bang(SStream *O, int32_t val)
 
 void printInt8(SStream *O, int8_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
@@ -303,6 +313,7 @@ void printInt8(SStream *O, int8_t val)
 
 void printInt16(SStream *O, int16_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
@@ -322,6 +333,7 @@ void printInt16(SStream *O, int16_t val)
 
 void printInt32(SStream *O, int32_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
@@ -342,6 +354,7 @@ void printInt32(SStream *O, int32_t val)
 
 void printUInt32Bang(SStream *O, uint32_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat1(O, '#');
 	printUInt32(O, val);
@@ -349,6 +362,7 @@ void printUInt32Bang(SStream *O, uint32_t val)
 
 void printUInt32(SStream *O, uint32_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	if (val > HEX_THRESHOLD)
 		SStream_concat(O, "0x%x", val);
@@ -358,18 +372,21 @@ void printUInt32(SStream *O, uint32_t val)
 
 void printFloat(SStream *O, float val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat(O, "%e", val);
 }
 
 void printFloatBang(SStream *O, float val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat(O, "#%e", val);
 }
 
 void printExpr(SStream *O, uint64_t val)
 {
+	assert(O);
 	SSTREAM_RETURN_IF_CLOSED(O);
 	SStream_concat(O, "%"PRIu64, val);
 }
