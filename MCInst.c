@@ -18,6 +18,7 @@
 
 void MCInst_Init(MCInst *inst, cs_arch arch)
 {
+	memset(inst, 0, sizeof(MCInst));
 	// unnecessary to initialize in loop . its expensive and inst->size should be honored
 	inst->Operands[0].Kind = kInvalid;
 	inst->Operands[0].ImmVal = 0;
