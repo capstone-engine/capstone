@@ -330,7 +330,10 @@ void printInt32(SStream *O, int32_t val)
 			SStream_concat(O, "%" PRId32, val);
 	} else {
 		if (val < -HEX_THRESHOLD) {
-			SStream_concat(O, "-0x%" PRIx32, (uint32_t)-val);
+			if (val == INT32_MIN)
+				SStream_concat(O, "-0x%" PRIx32, (uint32_t) INT32_MAX + 1);
+			else
+				SStream_concat(O, "-0x%" PRIx32, (int32_t)-val);
 		} else {
 			SStream_concat(O, "-%" PRIu32, (uint32_t)-val);
 		}

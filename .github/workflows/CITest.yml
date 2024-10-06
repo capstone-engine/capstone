@@ -24,6 +24,9 @@ concurrency:
 
 env:
   CI: true
+  UBSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+  ASAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+  LSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
 
 jobs:
   Linux:
@@ -86,10 +89,10 @@ jobs:
         mkdir build && cd build
         # build static library
         cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} -DCAPSTONE_BUILD_DIET=${diet_build} ..
-        cmake --build . --config Release
+        cmake --build . --config Debug
         # build shared library
         cmake -DCAPSTONE_INSTALL=1 -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ..
-        sudo cmake --build . --config Release --target install
+        sudo cmake --build . --config Debug --target install
 
     - name: Lower number of KASL randomized address bits
       run: |

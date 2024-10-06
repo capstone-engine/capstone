@@ -201,12 +201,12 @@ void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args)
 	case XTENSA_OP_GROUP_L32RTARGET: {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (op_num)));
-		int64_t InstrOff = OneExtend32(Value << 2, 14);
+		int32_t InstrOff = (uint32_t)OneExtend32(Value, 16) << 2;
 		CS_ASSERT(
-			(Value >= -262144 && Value <= -4) &&
+			(InstrOff >= -262144 && InstrOff <= -4) &&
 			"Invalid argument, value must be in ranges [-262144,-4]");
 		if (MI->csh->LITBASE & 0x1) {
-			Value = (int64_t)(MI->csh->LITBASE & 0x7ff) + InstrOff;
+			Value = ((MI->csh->LITBASE & 0xfffff000) >> 12) + InstrOff;
 		} else {
 			Value = (((int64_t)MI->address + 3) & ~0x3) + InstrOff;
 		}

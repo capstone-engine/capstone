@@ -162,7 +162,7 @@ static int extract_16(unsigned word, bool wide)
 
 /* Extract a 21 bit constant.  */
 
-static int extract_21(unsigned word)
+static int32_t extract_21(unsigned word)
 {
 	int val;
 
@@ -177,14 +177,14 @@ static int extract_21(unsigned word)
 	val |= get_insn_field(word, 0, 4);
 	val <<= 2;
 	val |= get_insn_field(word, 7, 8);
-	return SignExtend32(val, 21) << 11;
+	return (uint32_t) SignExtend32(val, 21) << 11;
 }
 
 /* Extract a 12 bit constant from branch instructions.  */
 
-static int extract_12(unsigned word)
+static int32_t extract_12(unsigned word)
 {
-	return SignExtend32(get_insn_field(word, 19, 28) |
+	return (uint32_t) SignExtend32(get_insn_field(word, 19, 28) |
 				    get_insn_field(word, 29, 29) << 10 |
 				    (word & 0x1) << 11,
 			    12)
@@ -194,9 +194,9 @@ static int extract_12(unsigned word)
 /* Extract a 17 bit constant from branch instructions, returning the
    19 bit signed value.  */
 
-static int extract_17(unsigned word)
+static int32_t extract_17(unsigned word)
 {
-	return SignExtend32(get_insn_field(word, 19, 28) |
+	return (uint32_t) SignExtend32(get_insn_field(word, 19, 28) |
 				    get_insn_field(word, 29, 29) << 10 |
 				    get_insn_field(word, 11, 15) << 11 |
 				    (word & 0x1) << 16,
@@ -204,9 +204,9 @@ static int extract_17(unsigned word)
 	       << 2;
 }
 
-static int extract_22(unsigned word)
+static int32_t extract_22(unsigned word)
 {
-	return SignExtend32(get_insn_field(word, 19, 28) |
+	return (uint32_t) SignExtend32(get_insn_field(word, 19, 28) |
 				    get_insn_field(word, 29, 29) << 10 |
 				    get_insn_field(word, 11, 15) << 11 |
 				    get_insn_field(word, 6, 10) << 16 |

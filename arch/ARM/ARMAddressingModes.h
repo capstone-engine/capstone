@@ -769,9 +769,9 @@ static inline float ARM_AM_getFPImmFloat(unsigned Imm)
 {
 	// We expect an 8-bit binary encoding of a floating-point number here.
 
-	uint8_t Sign = (Imm >> 7) & 0x1;
-	uint8_t Exp = (Imm >> 4) & 0x7;
-	uint8_t Mantissa = Imm & 0xf;
+	uint32_t Sign = (Imm >> 7) & 0x1;
+	uint32_t Exp = (Imm >> 4) & 0x7;
+	uint32_t Mantissa = Imm & 0xf;
 
 	//   8-bit FP    IEEE Float Encoding
 	//   abcd efgh   aBbbbbbc defgh000 00000000 00000000
