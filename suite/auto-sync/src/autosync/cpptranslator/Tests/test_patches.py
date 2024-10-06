@@ -117,7 +117,7 @@ class TestPatches(unittest.TestCase):
             patch,
             syntax,
             b"static inline void printThumbLdrLabelOperand(MCInst *MI, unsigned OpNo, SStream *O){ "
-            b"add_cs_detail(MI, ARCH_OP_GROUP_ThumbLdrLabelOperand, OpNo); "
+            b"ARCH_add_cs_detail_0(MI, ARCH_OP_GROUP_ThumbLdrLabelOperand, OpNo); "
             b"int i = OpNo; "
             b"}",
         )
