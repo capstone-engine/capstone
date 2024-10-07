@@ -28,139 +28,161 @@ ARM:
   - cstool/cstool_arm.c
   - include/capstone/arm.h
   - suite/MC/ARM/**
-  - tests/test_arm.c
+  - tests/MC/ARM/**
+  - tests/details/arm.yaml
 
 AArch64:
   - arch/AArch64/**
   - cstool/cstool_aarch64.c
   - include/capstone/aarch64.h
+  - include/capstone/arm64.h
   - suite/MC/AArch64/**
-  - tests/test_aarch64.c
+  - tests/MC/AArch64/**
+  - tests/details/aarch64.yaml
 
 Alpha:
   - arch/Alpha/**
   - cstool/cstool_alpha.c
   - include/capstone/alpha.h
   - suite/MC/Alpha/**
-  - tests/test_alpha.c
+  - tests/MC/Alpha/**
+  - tests/details/alpha.yaml
 
 BPF:
   - arch/BPF/**
   - cstool/cstool_bpf.c
   - include/capstone/bpf.h
   - suite/MC/BPF/**
-  - tests/test_bpf.c
+  - tests/MC/BPF/**
+  - tests/details/bpf.yaml
 
 EVM:
   - arch/EVM/**
   - cstool/cstool_evm.c
   - include/capstone/evm.h
-  - tests/test_evm.c
+  - tests/details/evm.yaml
 
 HPPA:
   - arch/HPPA/**
   - cstool/cstool_hppa.c
   - include/capstone/hppa.h
   - suite/MC/HPPA/**
-  - tests/test_hppa.c
+  - tests/MC/HPPA/**
+  - tests/details/hppa.yaml
 
 LoongArch:
   - arch/LoongArch/**
   - cstool/cstool_loongarch.c
   - include/capstone/loongarch.h
   - suite/MC/LoongArch/**
-  - tests/test_loongarch.c
+  - tests/MC/LoongArch/**
+  - tests/details/loongarch.yaml
 
 M680X:
   - arch/M680X/**
   - cstool/cstool_m680x.c
   - include/capstone/m680x.h
-  - tests/test_m680x.c
+  - tests/details/m680x.yaml
 
 M68K:
   - arch/M68K/**
   - cstool/cstool_m68k.c
   - include/capstone/m68k.h
-  - tests/test_m68k.c
+  - tests/details/m68k.yaml
 
 MOS65XX:
   - arch/MOS65XX/**
   - cstool/cstool_mos65xx.c
   - include/capstone/mos65xx.h
-  - tests/test_mos65xx.c
+  - tests/details/mos65xx.yaml
 
 Mips:
   - arch/Mips/**
   - cstool/cstool_mips.c
   - include/capstone/mips.h
   - suite/MC/Mips/**
-  - tests/test_mips.c
+  - tests/MC/Mips/**
+  - tests/details/mips.yaml
 
 PowerPC:
   - arch/PowerPC/**
   - cstool/cstool_powerpc.c
   - include/capstone/ppc.h
   - suite/MC/PowerPC/**
-  - tests/test_powerpc.c
+  - tests/MC/PowerPC/**
+  - tests/details/ppc.yaml
 
 RISCV:
   - arch/RISCV/**
   - cstool/cstool_riscv.c
   - include/capstone/riscv.h
   - suite/MC/RISCV/**
-  - tests/test_riscv.c
+  - tests/MC/RISCV/**
+  - tests/details/riscv.yaml
 
 SH:
   - arch/SH/**
   - cstool/cstool_sh.c
   - include/capstone/sh.h
-  - tests/test_sh.c
+  - tests/details/sh.yaml
 
 Sparc:
   - arch/Sparc/**
   - cstool/cstool_sparc.c
   - include/capstone/sparc.h
   - suite/MC/Sparc/**
-  - tests/test_sparc.c
+  - tests/MC/Sparc/**
+  - tests/details/sparc.yaml
 
 SystemZ:
   - arch/SystemZ/**
   - cstool/cstool_systemz.c
   - include/capstone/systemz.h
+  - include/capstone/systemz_compatibility.h
   - suite/MC/SystemZ/**
-  - tests/test_systemz.c
+  - tests/MC/SystemZ/**
+  - tests/details/systemz.yaml
 
 TMS320C64x:
   - arch/TMS320C6x/**
   - cstool/cstool_tms320c64x.c
   - include/capstone/tms320x64x.h
-  - tests/test_tms320c64x.c
+  - tests/details/tms320c64x.yaml
 
 TriCore:
   - arch/TriCore/**
   - cstool/cstool_tricore.c
   - include/capstone/tricore.h
   - suite/MC/Tricore/**
-  - tests/test_tricore.c
+  - tests/MC/Tricore/**
+  - tests/details/tricore.yaml
 
 WASM:
   - arch/WASM/**
   - cstool/cstool_wasm.c
   - include/capstone/wasm.h
-  - tests/test_wasm.c
+  - tests/details/wasm.yaml
 
 X86:
   - arch/X86/**
   - cstool/cstool_x86.c
   - include/capstone/x86.h
   - suite/MC/X86/**
-  - tests/test_x86.c
+  - tests/MC/X86/**
+  - tests/details/x86.yaml
 
 XCore:
   - arch/XCore/**
   - cstool/cstool_xcore.c
   - include/capstone/xcore.h
-  - tests/test_xcore.c
+  - tests/details/xcore.yaml
+
+Xtensa:
+  - arch/Xtensa/**
+  - cstool/cstool_xtensa.c
+  - include/capstone/xtensa.h
+  - tests/MC/Xtensa/**
+  - tests/details/xtensa.yaml
 
 python:
   - bindings/python/**
