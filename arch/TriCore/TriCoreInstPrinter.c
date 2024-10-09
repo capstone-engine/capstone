@@ -255,10 +255,8 @@ static void printOff18Imm(MCInst *MI, int OpNum, SStream *O)
 		printOperand(MI, OpNum, O);
 }
 
-// PC + sext(2 * disp)
-#define DISP1(N) ((int64_t)(MI->address) + SignExtend64(disp * 2, N))
 // PC + sext(disp) * 2
-#define DISP2(N) ((int64_t)(MI->address) + SignExtend64(disp, N) * 2)
+#define DISP_SEXT_2ALIGN(N) ((int64_t)(MI->address) + SignExtend64(disp, N) * 2)
 
 static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 {
@@ -269,19 +267,20 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_CALL_b:
 		case TRICORE_FCALL_b: {
-			res = DISP1(24);
+			res = DISP_SEXT_2ALIGN(24);
 			break;
 		}
 		case TRICORE_CALLA_b:
 		case TRICORE_FCALLA_b:
 		case TRICORE_JA_b:
 		case TRICORE_JLA_b:
-			// = {disp24[23:20], 7’b0000000, disp24[19:0], 1’b0};
-			res = disp << 1;
+			// {disp24[23:20], 7’b0000000, disp24[19:0], 1’b0}
+			res = ((disp & 0xf00000ULL) << 8) |
+			      ((disp & 0xfffffULL) << 1);
 			break;
 		case TRICORE_J_b:
 		case TRICORE_JL_b:
-			res = DISP2(24);
+			res = DISP_SEXT_2ALIGN(24);
 			break;
 		}
 
@@ -300,7 +299,7 @@ static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O)
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_LOOP_brr:
 		case TRICORE_LOOPU_brr:
-			res = DISP1(15);
+			res = DISP_SEXT_2ALIGN(15);
 			break;
 		case TRICORE_JEQ_brc:
 		case TRICORE_JEQ_brr:
@@ -324,7 +323,7 @@ static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O)
 		case TRICORE_JNZ_T_brn:
 		case TRICORE_JZ_A_brr:
 		case TRICORE_JZ_T_brn:
-			res = DISP2(15);
+			res = DISP_SEXT_2ALIGN(15);
 			break;
 		default:
 			// handle other cases, if any
@@ -345,12 +344,12 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O)
 		int64_t res = 0;
 		switch (MCInst_getOpcode(MI)) {
 		case TRICORE_CALL_sb:
-			res = DISP1(8);
+			res = DISP_SEXT_2ALIGN(8);
 			break;
 		case TRICORE_J_sb:
 		case TRICORE_JNZ_sb:
 		case TRICORE_JZ_sb:
-			res = DISP2(8);
+			res = DISP_SEXT_2ALIGN(8);
 			break;
 		default:
 			// handle other cases, if any

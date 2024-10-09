@@ -574,7 +574,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "call #0x7023e8"
+          asm_text: "call #0xff7023e8"
   -
     input:
       bytes: [ 0x91, 0x00, 0x03, 0xfa ]
@@ -1114,7 +1114,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "call #0x702300"
+          asm_text: "call #0xff702300"
   -
     input:
       bytes: [ 0x15, 0xd0, 0xc0, 0xeb ]
@@ -1420,7 +1420,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "call #0x402300"
+          asm_text: "call #0xff402300"
   -
     input:
       bytes: [ 0x3b, 0x00, 0x00, 0xf3 ]
@@ -5047,7 +5047,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "call #0x4023e8"
+          asm_text: "call #0xff4023e8"
   -
     input:
       bytes: [ 0x49, 0xff, 0x0c, 0x0a ]
@@ -7972,7 +7972,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "call #0x102300"
+          asm_text: "call #0xff102300"
   -
     input:
       bytes: [ 0xda, 0x05 ]
