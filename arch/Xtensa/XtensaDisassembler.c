@@ -90,7 +90,7 @@ static bool tryAddingSymbolicOperand(int64_t Value, bool isBranch,
 {
 	//	return Dis->tryAddingSymbolicOperand(MI, Value, Address, isBranch,
 	//					     Offset, /*OpSize=*/0, InstSize);
-	return true;
+	return false;
 }
 
 static DecodeStatus decodeCallOperand(MCInst *Inst, uint64_t Imm,

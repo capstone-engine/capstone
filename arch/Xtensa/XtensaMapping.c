@@ -195,8 +195,8 @@ void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args)
 	case XTENSA_OP_GROUP_CALLOPERAND: {
 		int64_t val =
 			MCOperand_getImm(MCInst_getOperand(MI, op_num)) + 4;
-		xop->type = XTENSA_OP_MEM_IMM;
-		xop->mem.base = (int32_t)val;
+		xop->type = XTENSA_OP_IMM;
+		xop->imm = (int32_t)val;
 	} break;
 	case XTENSA_OP_GROUP_L32RTARGET: {
 		int64_t Value =
