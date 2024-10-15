@@ -146,7 +146,14 @@ class TestFile:
         log.debug(f"llvm-mc result: {mc_output}")
         text_section = 0  # Counts the .text sections
         asm_pat = f"(?P<asm_text>.+)"
-        enc_pat = r"(\[?(?P<full_enc_string>(?P<enc_bytes>((0x[a-fA-F0-9]{1,2}[, ]{0,2}))+)[^, ]?)\]?)"
+        byte_pat = r"0[bx][a-fA-F0-9]+"
+        enc_pat = (
+            r"(\[?(?P<full_enc_string>"
+            + "(?P<enc_bytes>"
+            + rf"({byte_pat}(,\s*))+({byte_pat}|A)"
+            + ")"
+            + ")\]?)"
+        )
 
         dups = []
         for line in mc_output.stdout.splitlines():
@@ -160,7 +167,7 @@ class TestFile:
             if not match:
                 continue
             full_enc_string = match.group("full_enc_string")
-            if not re.search(r"0x[a-fA-F0-9]{1,2}$", full_enc_string[:-1]):
+            if not re.search(rf"{byte_pat}$", full_enc_string[:-1]):
                 log.debug(f"Ignore because symbol injection is needed: {line}")
                 # The encoding string contains symbol information of the form:
                 # [0xc0,0xe0,A,A,A... or similar. We ignore these for now.
