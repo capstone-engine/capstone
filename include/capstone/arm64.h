@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-#include <capstone/aarch64.h>
+#include "aarch64.h"
 #include "cs_operand.h"
 #include "platform.h"
 
