@@ -484,6 +484,9 @@ class MCUpdater:
         # Xtensa only defines assembly tests.
         if self.arch == "Xtensa":
             test_paths.append(self.mc_dir.joinpath(self.arch))
+        # TriCore defines nothing.
+        elif self.arch == "TriCore":
+            return
         self.check_prerequisites(test_paths)
         log.info("Generate MC regression tests")
         llvm_mc_cmds = self.run_llvm_lit(

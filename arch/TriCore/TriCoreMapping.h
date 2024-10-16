@@ -19,11 +19,9 @@ void TriCore_reg_access(const cs_insn *insn, cs_regs regs_read,
 
 void TriCore_set_access(MCInst *MI);
 
-void TriCore_set_instr_map_data(MCInst *MI);
-
-bool TriCore_getInstruction(csh handle, const uint8_t *Bytes, size_t ByteLen,
-			    MCInst *MI, uint16_t *Size, uint64_t Address,
-			    void *Info);
+bool TriCore_disasm(csh handle, const uint8_t *code, size_t code_len,
+		    MCInst *instr, uint16_t *size, uint64_t address,
+		    void *info);
 
 void TriCore_printInst(MCInst *MI, SStream *O, void *Info);
 

@@ -261,5 +261,11 @@
     ],
     "templates_with_arg_deduction": [],
     "manually_edited_files": []
+  },
+  "TriCore": {
+    "files_to_translate": [],
+    "files_for_template_search": [],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": []
   }
 }

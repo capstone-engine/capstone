@@ -119,30 +119,30 @@ static bool fill_mem(MCInst *MI, unsigned int reg, int64_t disp)
 	case TRICORE_INS_LEA:
 	case TRICORE_INS_LHA: {
 		switch (MCInst_getOpcode(MI)) {
-		case TRICORE_LDMST_abs:
-		case TRICORE_LDLCX_abs:
-		case TRICORE_LD_A_abs:
-		case TRICORE_LD_B_abs:
-		case TRICORE_LD_BU_abs:
-		case TRICORE_LD_H_abs:
-		case TRICORE_LD_HU_abs:
-		case TRICORE_LD_D_abs:
-		case TRICORE_LD_DA_abs:
-		case TRICORE_LD_W_abs:
-		case TRICORE_LD_Q_abs:
-		case TRICORE_STLCX_abs:
-		case TRICORE_STUCX_abs:
-		case TRICORE_ST_A_abs:
-		case TRICORE_ST_B_abs:
-		case TRICORE_ST_H_abs:
-		case TRICORE_ST_D_abs:
-		case TRICORE_ST_DA_abs:
-		case TRICORE_ST_W_abs:
-		case TRICORE_ST_Q_abs:
-		case TRICORE_SWAP_A_abs:
-		case TRICORE_SWAP_W_abs:
-		case TRICORE_LEA_abs:
-		case TRICORE_LHA_abs: {
+		case TriCore_LDMST_abs:
+		case TriCore_LDLCX_abs:
+		case TriCore_LD_A_abs:
+		case TriCore_LD_B_abs:
+		case TriCore_LD_BU_abs:
+		case TriCore_LD_H_abs:
+		case TriCore_LD_HU_abs:
+		case TriCore_LD_D_abs:
+		case TriCore_LD_DA_abs:
+		case TriCore_LD_W_abs:
+		case TriCore_LD_Q_abs:
+		case TriCore_STLCX_abs:
+		case TriCore_STUCX_abs:
+		case TriCore_ST_A_abs:
+		case TriCore_ST_B_abs:
+		case TriCore_ST_H_abs:
+		case TriCore_ST_D_abs:
+		case TriCore_ST_DA_abs:
+		case TriCore_ST_W_abs:
+		case TriCore_ST_Q_abs:
+		case TriCore_SWAP_A_abs:
+		case TriCore_SWAP_W_abs:
+		case TriCore_LEA_abs:
+		case TriCore_LHA_abs: {
 			return false;
 		}
 		}
@@ -187,21 +187,21 @@ static void print_sign_ext(MCInst *MI, int OpNum, SStream *O, unsigned n)
 static void off4_fixup(MCInst *MI, int64_t *off4)
 {
 	switch (MCInst_getOpcode(MI)) {
-	case TRICORE_LD_A_slro:
-	case TRICORE_LD_A_sro:
-	case TRICORE_LD_W_slro:
-	case TRICORE_LD_W_sro:
-	case TRICORE_ST_A_sro:
-	case TRICORE_ST_A_ssro:
-	case TRICORE_ST_W_sro:
-	case TRICORE_ST_W_ssro: {
+	case TriCore_LD_A_slro:
+	case TriCore_LD_A_sro:
+	case TriCore_LD_W_slro:
+	case TriCore_LD_W_sro:
+	case TriCore_ST_A_sro:
+	case TriCore_ST_A_ssro:
+	case TriCore_ST_W_sro:
+	case TriCore_ST_W_ssro: {
 		*off4 = *off4 * 4;
 		break;
 	}
-	case TRICORE_LD_H_sro:
-	case TRICORE_LD_H_slro:
-	case TRICORE_ST_H_sro:
-	case TRICORE_ST_H_ssro: {
+	case TriCore_LD_H_sro:
+	case TriCore_LD_H_slro:
+	case TriCore_ST_H_sro:
+	case TriCore_ST_H_ssro: {
 		*off4 = *off4 * 2;
 		break;
 	}
@@ -211,10 +211,10 @@ static void off4_fixup(MCInst *MI, int64_t *off4)
 static void const8_fixup(MCInst *MI, int64_t *const8)
 {
 	switch (MCInst_getOpcode(MI)) {
-	case TRICORE_LD_A_sc:
-	case TRICORE_ST_A_sc:
-	case TRICORE_ST_W_sc:
-	case TRICORE_LD_W_sc: {
+	case TriCore_LD_A_sc:
+	case TriCore_ST_A_sc:
+	case TriCore_ST_W_sc:
+	case TriCore_LD_W_sc: {
 		*const8 = *const8 * 4;
 		break;
 	}
@@ -265,21 +265,21 @@ static void printDisp24Imm(MCInst *MI, int OpNum, SStream *O)
 		int64_t disp = MCOperand_getImm(MO);
 		int64_t res = 0;
 		switch (MCInst_getOpcode(MI)) {
-		case TRICORE_CALL_b:
-		case TRICORE_FCALL_b: {
+		case TriCore_CALL_b:
+		case TriCore_FCALL_b: {
 			res = DISP_SEXT_2ALIGN(24);
 			break;
 		}
-		case TRICORE_CALLA_b:
-		case TRICORE_FCALLA_b:
-		case TRICORE_JA_b:
-		case TRICORE_JLA_b:
+		case TriCore_CALLA_b:
+		case TriCore_FCALLA_b:
+		case TriCore_JA_b:
+		case TriCore_JLA_b:
 			// {disp24[23:20], 7’b0000000, disp24[19:0], 1’b0}
 			res = ((disp & 0xf00000ULL) << 8) |
 			      ((disp & 0xfffffULL) << 1);
 			break;
-		case TRICORE_J_b:
-		case TRICORE_JL_b:
+		case TriCore_J_b:
+		case TriCore_JL_b:
 			res = DISP_SEXT_2ALIGN(24);
 			break;
 		}
@@ -297,32 +297,32 @@ static void printDisp15Imm(MCInst *MI, int OpNum, SStream *O)
 		int64_t disp = MCOperand_getImm(MO);
 		int64_t res = 0;
 		switch (MCInst_getOpcode(MI)) {
-		case TRICORE_LOOP_brr:
-		case TRICORE_LOOPU_brr:
+		case TriCore_LOOP_brr:
+		case TriCore_LOOPU_brr:
 			res = DISP_SEXT_2ALIGN(15);
 			break;
-		case TRICORE_JEQ_brc:
-		case TRICORE_JEQ_brr:
-		case TRICORE_JEQ_A_brr:
-		case TRICORE_JGE_brc:
-		case TRICORE_JGE_brr:
-		case TRICORE_JGE_U_brc:
-		case TRICORE_JGE_U_brr:
-		case TRICORE_JLT_brc:
-		case TRICORE_JLT_brr:
-		case TRICORE_JLT_U_brc:
-		case TRICORE_JLT_U_brr:
-		case TRICORE_JNE_brc:
-		case TRICORE_JNE_brr:
-		case TRICORE_JNE_A_brr:
-		case TRICORE_JNED_brc:
-		case TRICORE_JNED_brr:
-		case TRICORE_JNEI_brc:
-		case TRICORE_JNEI_brr:
-		case TRICORE_JNZ_A_brr:
-		case TRICORE_JNZ_T_brn:
-		case TRICORE_JZ_A_brr:
-		case TRICORE_JZ_T_brn:
+		case TriCore_JEQ_brc:
+		case TriCore_JEQ_brr:
+		case TriCore_JEQ_A_brr:
+		case TriCore_JGE_brc:
+		case TriCore_JGE_brr:
+		case TriCore_JGE_U_brc:
+		case TriCore_JGE_U_brr:
+		case TriCore_JLT_brc:
+		case TriCore_JLT_brr:
+		case TriCore_JLT_U_brc:
+		case TriCore_JLT_U_brr:
+		case TriCore_JNE_brc:
+		case TriCore_JNE_brr:
+		case TriCore_JNE_A_brr:
+		case TriCore_JNED_brc:
+		case TriCore_JNED_brr:
+		case TriCore_JNEI_brc:
+		case TriCore_JNEI_brr:
+		case TriCore_JNZ_A_brr:
+		case TriCore_JNZ_T_brn:
+		case TriCore_JZ_A_brr:
+		case TriCore_JZ_T_brn:
 			res = DISP_SEXT_2ALIGN(15);
 			break;
 		default:
@@ -343,12 +343,12 @@ static void printDisp8Imm(MCInst *MI, int OpNum, SStream *O)
 		int64_t disp = MCOperand_getImm(MO);
 		int64_t res = 0;
 		switch (MCInst_getOpcode(MI)) {
-		case TRICORE_CALL_sb:
+		case TriCore_CALL_sb:
 			res = DISP_SEXT_2ALIGN(8);
 			break;
-		case TRICORE_J_sb:
-		case TRICORE_JNZ_sb:
-		case TRICORE_JZ_sb:
+		case TriCore_J_sb:
+		case TriCore_JNZ_sb:
+		case TriCore_JZ_sb:
 			res = DISP_SEXT_2ALIGN(8);
 			break;
 		default:
@@ -369,31 +369,31 @@ static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O)
 		int64_t disp = MCOperand_getImm(MO);
 		int64_t res = 0;
 		switch (MCInst_getOpcode(MI)) {
-		case TRICORE_JEQ_sbc1:
-		case TRICORE_JEQ_sbr1:
-		case TRICORE_JGEZ_sbr:
-		case TRICORE_JGTZ_sbr:
-		case TRICORE_JLEZ_sbr:
-		case TRICORE_JLTZ_sbr:
-		case TRICORE_JNE_sbc1:
-		case TRICORE_JNE_sbr1:
-		case TRICORE_JNZ_sbr:
-		case TRICORE_JNZ_A_sbr:
-		case TRICORE_JNZ_T_sbrn:
-		case TRICORE_JZ_sbr:
-		case TRICORE_JZ_A_sbr:
-		case TRICORE_JZ_T_sbrn:
+		case TriCore_JEQ_sbc1:
+		case TriCore_JEQ_sbr1:
+		case TriCore_JGEZ_sbr:
+		case TriCore_JGTZ_sbr:
+		case TriCore_JLEZ_sbr:
+		case TriCore_JLTZ_sbr:
+		case TriCore_JNE_sbc1:
+		case TriCore_JNE_sbr1:
+		case TriCore_JNZ_sbr:
+		case TriCore_JNZ_A_sbr:
+		case TriCore_JNZ_T_sbrn:
+		case TriCore_JZ_sbr:
+		case TriCore_JZ_A_sbr:
+		case TriCore_JZ_T_sbrn:
 			// PC + zero_ext(disp4) * 2;
 			res = (int64_t)(MI->address) + disp * 2;
 			break;
-		case TRICORE_JEQ_sbc2:
-		case TRICORE_JEQ_sbr2:
-		case TRICORE_JNE_sbc2:
-		case TRICORE_JNE_sbr2:
+		case TriCore_JEQ_sbc2:
+		case TriCore_JEQ_sbr2:
+		case TriCore_JNE_sbc2:
+		case TriCore_JNE_sbr2:
 			// PC + zero_ext(disp4 + 16) * 2;
 			res = (int64_t)(MI->address) + ((disp + 16) * 2);
 			break;
-		case TRICORE_LOOP_sbr:
+		case TriCore_LOOP_sbr:
 			// PC + {27b’111111111111111111111111111, disp4, 0};
 			res = (int64_t)MI->address +
 			      OneExtend32(wrapping_u32(disp) << 1, 5);
@@ -461,11 +461,6 @@ typedef struct {
 	const char *first; // Mnemonic
 	uint64_t second;   // Bits
 } MnemonicBitsInfo;
-
-static void set_mem_access(MCInst *MI, unsigned int access)
-{
-	// TODO: TriCore
-}
 
 #include "TriCoreGenAsmWriter.inc"
 

@@ -1,6 +1,6 @@
-/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* Capstone Disassembly Engine, https://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
-/*    Rot127 <unisono@quyllur.org> 2022-2023 */
+/*    Rot127 <unisono@quyllur.org> 2022-2024 */
 /* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
 
 /* LLVM-commit: <commit> */
@@ -479,6 +479,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2779U,	// PATCHABLE_TYPED_EVENT_CALL
     0U,	// ICALL_BRANCH_FUNNEL
     0U,	// MEMBARRIER
+    0U,	// JUMP_TABLE_DEBUG_INFO
     0U,	// G_ASSERT_SEXT
     0U,	// G_ASSERT_ZEXT
     0U,	// G_ASSERT_ALIGN
@@ -498,6 +499,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_PHI
     0U,	// G_FRAME_INDEX
     0U,	// G_GLOBAL_VALUE
+    0U,	// G_CONSTANT_POOL
     0U,	// G_EXTRACT
     0U,	// G_UNMERGE_VALUES
     0U,	// G_INSERT
@@ -509,6 +511,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_INTTOPTR
     0U,	// G_BITCAST
     0U,	// G_FREEZE
+    0U,	// G_CONSTANT_FOLD_BARRIER
     0U,	// G_INTRINSIC_FPTRUNC_ROUND
     0U,	// G_INTRINSIC_TRUNC
     0U,	// G_INTRINSIC_ROUND
@@ -543,11 +546,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_ATOMICRMW_UINC_WRAP
     0U,	// G_ATOMICRMW_UDEC_WRAP
     0U,	// G_FENCE
+    0U,	// G_PREFETCH
     0U,	// G_BRCOND
     0U,	// G_BRINDIRECT
     0U,	// G_INVOKE_REGION_START
     0U,	// G_INTRINSIC
     0U,	// G_INTRINSIC_W_SIDE_EFFECTS
+    0U,	// G_INTRINSIC_CONVERGENT
+    0U,	// G_INTRINSIC_CONVERGENT_W_SIDE_EFFECTS
     0U,	// G_ANYEXT
     0U,	// G_TRUNC
     0U,	// G_CONSTANT
@@ -604,9 +610,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_FPOWI
     0U,	// G_FEXP
     0U,	// G_FEXP2
+    0U,	// G_FEXP10
     0U,	// G_FLOG
     0U,	// G_FLOG2
     0U,	// G_FLOG10
+    0U,	// G_FLDEXP
+    0U,	// G_FFREXP
     0U,	// G_FNEG
     0U,	// G_FPEXT
     0U,	// G_FPTRUNC
@@ -624,6 +633,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_FMAXNUM_IEEE
     0U,	// G_FMINIMUM
     0U,	// G_FMAXIMUM
+    0U,	// G_GET_FPENV
+    0U,	// G_SET_FPENV
+    0U,	// G_RESET_FPENV
+    0U,	// G_GET_FPMODE
+    0U,	// G_SET_FPMODE
+    0U,	// G_RESET_FPMODE
     0U,	// G_PTR_ADD
     0U,	// G_PTRMASK
     0U,	// G_SMIN
@@ -656,6 +671,8 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_BLOCK_ADDR
     0U,	// G_JUMP_TABLE
     0U,	// G_DYN_STACKALLOC
+    0U,	// G_STACKSAVE
+    0U,	// G_STACKRESTORE
     0U,	// G_STRICT_FADD
     0U,	// G_STRICT_FSUB
     0U,	// G_STRICT_FMUL
@@ -663,6 +680,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_STRICT_FREM
     0U,	// G_STRICT_FMA
     0U,	// G_STRICT_FSQRT
+    0U,	// G_STRICT_FLDEXP
     0U,	// G_READ_REGISTER
     0U,	// G_WRITE_REGISTER
     0U,	// G_MEMCPY
@@ -676,6 +694,8 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_VECREDUCE_FMUL
     0U,	// G_VECREDUCE_FMAX
     0U,	// G_VECREDUCE_FMIN
+    0U,	// G_VECREDUCE_FMAXIMUM
+    0U,	// G_VECREDUCE_FMINIMUM
     0U,	// G_VECREDUCE_ADD
     0U,	// G_VECREDUCE_MUL
     0U,	// G_VECREDUCE_AND
@@ -1757,6 +1777,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// PATCHABLE_TYPED_EVENT_CALL
     0U,	// ICALL_BRANCH_FUNNEL
     0U,	// MEMBARRIER
+    0U,	// JUMP_TABLE_DEBUG_INFO
     0U,	// G_ASSERT_SEXT
     0U,	// G_ASSERT_ZEXT
     0U,	// G_ASSERT_ALIGN
@@ -1776,6 +1797,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_PHI
     0U,	// G_FRAME_INDEX
     0U,	// G_GLOBAL_VALUE
+    0U,	// G_CONSTANT_POOL
     0U,	// G_EXTRACT
     0U,	// G_UNMERGE_VALUES
     0U,	// G_INSERT
@@ -1787,6 +1809,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_INTTOPTR
     0U,	// G_BITCAST
     0U,	// G_FREEZE
+    0U,	// G_CONSTANT_FOLD_BARRIER
     0U,	// G_INTRINSIC_FPTRUNC_ROUND
     0U,	// G_INTRINSIC_TRUNC
     0U,	// G_INTRINSIC_ROUND
@@ -1821,11 +1844,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_ATOMICRMW_UINC_WRAP
     0U,	// G_ATOMICRMW_UDEC_WRAP
     0U,	// G_FENCE
+    0U,	// G_PREFETCH
     0U,	// G_BRCOND
     0U,	// G_BRINDIRECT
     0U,	// G_INVOKE_REGION_START
     0U,	// G_INTRINSIC
     0U,	// G_INTRINSIC_W_SIDE_EFFECTS
+    0U,	// G_INTRINSIC_CONVERGENT
+    0U,	// G_INTRINSIC_CONVERGENT_W_SIDE_EFFECTS
     0U,	// G_ANYEXT
     0U,	// G_TRUNC
     0U,	// G_CONSTANT
@@ -1882,9 +1908,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_FPOWI
     0U,	// G_FEXP
     0U,	// G_FEXP2
+    0U,	// G_FEXP10
     0U,	// G_FLOG
     0U,	// G_FLOG2
     0U,	// G_FLOG10
+    0U,	// G_FLDEXP
+    0U,	// G_FFREXP
     0U,	// G_FNEG
     0U,	// G_FPEXT
     0U,	// G_FPTRUNC
@@ -1902,6 +1931,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_FMAXNUM_IEEE
     0U,	// G_FMINIMUM
     0U,	// G_FMAXIMUM
+    0U,	// G_GET_FPENV
+    0U,	// G_SET_FPENV
+    0U,	// G_RESET_FPENV
+    0U,	// G_GET_FPMODE
+    0U,	// G_SET_FPMODE
+    0U,	// G_RESET_FPMODE
     0U,	// G_PTR_ADD
     0U,	// G_PTRMASK
     0U,	// G_SMIN
@@ -1934,6 +1969,8 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_BLOCK_ADDR
     0U,	// G_JUMP_TABLE
     0U,	// G_DYN_STACKALLOC
+    0U,	// G_STACKSAVE
+    0U,	// G_STACKRESTORE
     0U,	// G_STRICT_FADD
     0U,	// G_STRICT_FSUB
     0U,	// G_STRICT_FMUL
@@ -1941,6 +1978,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_STRICT_FREM
     0U,	// G_STRICT_FMA
     0U,	// G_STRICT_FSQRT
+    0U,	// G_STRICT_FLDEXP
     0U,	// G_READ_REGISTER
     0U,	// G_WRITE_REGISTER
     0U,	// G_MEMCPY
@@ -1954,6 +1992,8 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_VECREDUCE_FMUL
     0U,	// G_VECREDUCE_FMAX
     0U,	// G_VECREDUCE_FMIN
+    0U,	// G_VECREDUCE_FMAXIMUM
+    0U,	// G_VECREDUCE_FMINIMUM
     0U,	// G_VECREDUCE_ADD
     0U,	// G_VECREDUCE_MUL
     0U,	// G_VECREDUCE_AND
@@ -3008,7 +3048,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
 
 /// printInstruction - This method is automatically generated by tablegen
 /// from the instruction set description.
-void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
+static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   SStream_concat0(O, "");
   MnemonicBitsInfo MnemonicInfo = getMnemonic(MI, O);
 
@@ -3018,7 +3058,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   CS_ASSERT_RET(Bits != 0 && "Cannot print this instruction.");
 
   // Fragment 0 encoded into 4 bits for 13 unique commands.
-  switch ((uint32_t)((Bits >> 12) & 15)) {
+  switch ((Bits >> 12) & 15) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
     // DBG_VALUE, DBG_VALUE_LIST, DBG_INSTR_REF, DBG_PHI, DBG_LABEL, BUNDLE, ...
@@ -3092,7 +3132,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 1 encoded into 4 bits for 16 unique commands.
-  switch ((uint32_t)((Bits >> 16) & 15)) {
+  switch ((Bits >> 16) & 15) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
     // ABSDIFS_B_rr_v110, ABSDIFS_H_rr, ABSDIFS_rc, ABSDIFS_rr, ABSDIF_B_rr, ...
@@ -3113,34 +3153,28 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   case 4:
     // CACHEA_I_bo_c, CACHEA_WI_bo_c, CACHEA_W_bo_c, CMPSWAP_W_bo_c, LDMST_bo...
     SStream_concat0(O, "+c]");
-    set_mem_access(MI, false);
     break;
   case 5:
     // CACHEA_I_bo_pos, CACHEA_WI_bo_pos, CACHEA_W_bo_pos, CACHEI_I_bo_pos, C...
     SStream_concat0(O, "+]");
-    set_mem_access(MI, false);
     break;
   case 6:
     // CACHEA_I_bo_r, CACHEA_WI_bo_r, CACHEA_W_bo_r
     SStream_concat0(O, "+r]");
-    set_mem_access(MI, false);
     return;
     break;
   case 7:
     // CMPSWAP_W_bo_r, LDMST_bo_r, ST_A_bo_r, ST_B_bo_r, ST_DA_bo_r, ST_D_bo_...
     SStream_concat0(O, "+r], ");
-    set_mem_access(MI, false);
     break;
   case 8:
     // LD_A_bo_bso, LD_A_bo_c, LD_A_bo_pos, LD_A_bo_r, LD_A_bol, LD_A_slr, LD...
     SStream_concat0(O, ", [");
-    set_mem_access(MI, true);
     printOperand(MI, 1, O);
     break;
   case 9:
     // LD_A_bo_pre, LD_BU_bo_pre, LD_B_bo_pre, LD_DA_bo_pre, LD_D_bo_pre, LD_...
     SStream_concat0(O, ", [+");
-    set_mem_access(MI, true);
     printOperand(MI, 1, O);
     SStream_concat1(O, ']');
     printSExtImm_10(MI, 2, O);
@@ -3149,7 +3183,6 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   case 10:
     // LD_A_slro, LD_A_slro_v110, LD_BU_slro, LD_BU_slro_v110, LD_B_slro_v110...
     SStream_concat0(O, ", [a15]");
-    set_mem_access(MI, true);
     printZExtImm_4(MI, 1, O);
     return;
     break;
@@ -3161,14 +3194,12 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   case 12:
     // ST_A_ssr, ST_A_ssr_v110, ST_B_ssr, ST_B_ssr_v110, ST_H_ssr, ST_H_ssr_v...
     SStream_concat0(O, "], ");
-    set_mem_access(MI, false);
     printOperand(MI, 1, O);
     return;
     break;
   case 13:
     // ST_A_ssr_pos, ST_A_ssr_pos_v110, ST_B_ssr_pos, ST_B_ssr_pos_v110, ST_H...
     SStream_concat0(O, "+], ");
-    set_mem_access(MI, false);
     printOperand(MI, 1, O);
     return;
     break;
@@ -3180,7 +3211,6 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   case 15:
     // SWAPMSK_W_bo_i, SWAP_W_bo_i
     SStream_concat0(O, "+i], ");
-    set_mem_access(MI, false);
     printOperand(MI, 0, O);
     return;
     break;
@@ -3188,7 +3218,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 2 encoded into 5 bits for 19 unique commands.
-  switch ((uint32_t)((Bits >> 20) & 31)) {
+  switch ((Bits >> 20) & 31) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
     // ABSDIFS_B_rr_v110, ABSDIFS_H_rr, ABSDIFS_rc, ABSDIFS_rr, ABSDIF_B_rr, ...
@@ -3248,19 +3278,16 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   case 12:
     // LD_A_bo_c, LD_BU_bo_c, LD_B_bo_c, LD_DA_bo_c, LD_D_bo_c, LD_HU_bo_c, L...
     SStream_concat0(O, "+c]");
-    set_mem_access(MI, false);
     printSExtImm_10(MI, 2, O);
     return;
     break;
   case 13:
     // LD_A_bo_pos, LD_A_slr_post, LD_A_slr_post_v110, LD_BU_bo_pos, LD_BU_sl...
     SStream_concat0(O, "+]");
-    set_mem_access(MI, false);
     break;
   case 14:
     // LD_A_bo_r, LD_BU_bo_r, LD_B_bo_r, LD_DA_bo_r, LD_D_bo_r, LD_HU_bo_r, L...
     SStream_concat0(O, "+r]");
-    set_mem_access(MI, false);
     return;
     break;
   case 15:
@@ -3289,7 +3316,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 3 encoded into 4 bits for 12 unique commands.
-  switch ((uint32_t)((Bits >> 25) & 15)) {
+  switch ((Bits >> 25) & 15) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
     // ABSDIFS_B_rr_v110, ABSDIFS_H_rr, ABSDIFS_rc, ABSDIFS_rr, ABSDIF_B_rr, ...
@@ -3358,7 +3385,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 4 encoded into 4 bits for 14 unique commands.
-  switch ((uint32_t)((Bits >> 29) & 15)) {
+  switch ((Bits >> 29) & 15) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
     // ABSDIFS_B_rr_v110, ABSDIFS_H_rr, ABSDIFS_rc, ABSDIFS_rr, ABSDIF_B_rr, ...
@@ -3440,7 +3467,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 5 encoded into 4 bits for 10 unique commands.
-  switch ((uint32_t)((Bits >> 33) & 15)) {
+  switch ((Bits >> 33) & 15) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
     // ABSDIFS_B_rr_v110, ABSDIFS_H_rr, ABSDIFS_rc, ABSDIFS_rr, ABSDIF_B_rr, ...
@@ -3499,7 +3526,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 6 encoded into 4 bits for 12 unique commands.
-  switch ((uint32_t)((Bits >> 37) & 15)) {
+  switch ((Bits >> 37) & 15) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
     // ADDSC_A_rr, ADDSC_A_rr_v110, DIFSC_A_rr_v110, MULR_H_rr_v110, MULR_Q_r...
@@ -3568,7 +3595,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 
 
   // Fragment 7 encoded into 2 bits for 4 unique commands.
-  switch ((uint32_t)((Bits >> 41) & 3)) {
+  switch ((Bits >> 41) & 3) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
     // DEXTR_rrpw, DEXTR_rrrr, INSERT_rcrr, INSERT_rrrr
@@ -3598,7 +3625,7 @@ void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
 /// getRegisterName - This method is automatically generated by tblgen
 /// from the register set description.  This returns the assembler name
 /// for the specified register.
-const char *getRegisterName(unsigned RegNo) {
+static const char *getRegisterName(unsigned RegNo) {
 #ifndef CAPSTONE_DIET
   CS_ASSERT_RET_VAL(RegNo && RegNo < 61 && "Invalid register number!", NULL);
 
@@ -3672,8 +3699,8 @@ const char *getRegisterName(unsigned RegNo) {
     200, 24, 80, 136, 
   };
 
-  assert (*(AsmStrs+RegAsmOffset[RegNo-1]) &&
-          "Invalid alt name index for register!");
+  CS_ASSERT_RET_VAL(*(AsmStrs+RegAsmOffset[RegNo-1]) &&
+          "Invalid alt name index for register!", NULL);
   return AsmStrs+RegAsmOffset[RegNo-1];
 #else
   return NULL;

@@ -60,7 +60,7 @@ typedef struct cs_tricore {
 
 /// TriCore registers
 typedef enum tricore_reg {
-	// generate content <TriCoreGenCSRegEnum.inc> begin
+	// generated content <TriCoreGenCSRegEnum.inc> begin
 	// clang-format off
 
 	TRICORE_REG_INVALID = 0,
@@ -127,16 +127,15 @@ typedef enum tricore_reg {
 	TRICORE_REG_ENDING, // 61
 
 	// clang-format on
-	// generate content <TriCoreGenCSRegEnum.inc> end
+	// generated content <TriCoreGenCSRegEnum.inc> end
 } tricore_reg;
 
 /// TriCore instruction
 typedef enum tricore_insn {
-	TRICORE_INS_INVALID = 0,
-	// generate content <TriCoreGenCSInsnEnum.inc> begin
+	// generated content <TriCoreGenCSInsnEnum.inc> begin
 	// clang-format off
 
-	TRICORE_INS_XOR_T,
+	TRICORE_INS_INVALID,
 	TRICORE_INS_ABSDIFS_B,
 	TRICORE_INS_ABSDIFS_H,
 	TRICORE_INS_ABSDIFS,
@@ -525,10 +524,11 @@ typedef enum tricore_insn {
 	TRICORE_INS_XOR_LT_U,
 	TRICORE_INS_XOR_LT,
 	TRICORE_INS_XOR_NE,
+	TRICORE_INS_XOR_T,
 	TRICORE_INS_XOR,
 
 	// clang-format on
-	// generate content <TriCoreGenCSInsnEnum.inc> end
+	// generated content <TriCoreGenCSInsnEnum.inc> end
 	TRICORE_INS_ENDING, // <-- mark the end of the list of instructions
 } tricore_insn;
 
@@ -543,21 +543,31 @@ typedef enum tricore_insn_group {
 
 typedef enum tricore_feature_t {
 	TRICORE_FEATURE_INVALID = 0,
-	// generate content <TriCoreGenCSFeatureEnum.inc> begin
+	// generated content <TriCoreGenCSFeatureEnum.inc> begin
 	// clang-format off
 
-	TRICORE_FEATURE_HasV110 = 128,
-	TRICORE_FEATURE_HasV120_UP,
-	TRICORE_FEATURE_HasV130_UP,
-	TRICORE_FEATURE_HasV161,
-	TRICORE_FEATURE_HasV160_UP,
-	TRICORE_FEATURE_HasV131_UP,
-	TRICORE_FEATURE_HasV161_UP,
-	TRICORE_FEATURE_HasV162,
-	TRICORE_FEATURE_HasV162_UP,
+	TRICORE_FEATURE_HASV110 = 128,
+	TRICORE_FEATURE_HASV120,
+	TRICORE_FEATURE_HASV130,
+	TRICORE_FEATURE_HASV131,
+	TRICORE_FEATURE_HASV160,
+	TRICORE_FEATURE_HASV161,
+	TRICORE_FEATURE_HASV162,
+	TRICORE_FEATURE_HASV120_UP,
+	TRICORE_FEATURE_HASV130_UP,
+	TRICORE_FEATURE_HASV131_UP,
+	TRICORE_FEATURE_HASV160_UP,
+	TRICORE_FEATURE_HASV161_UP,
+	TRICORE_FEATURE_HASV162_UP,
+	TRICORE_FEATURE_HASV120_DN,
+	TRICORE_FEATURE_HASV130_DN,
+	TRICORE_FEATURE_HASV131_DN,
+	TRICORE_FEATURE_HASV160_DN,
+	TRICORE_FEATURE_HASV161_DN,
+	TRICORE_FEATURE_HASV162_DN,
 
 	// clang-format on
-	// generate content <TriCoreGenCSFeatureEnum.inc> end
+	// generated content <TriCoreGenCSFeatureEnum.inc> end
 	TRICORE_FEATURE_ENDING, ///< mark the end of the list of features
 } tricore_feature;
 
