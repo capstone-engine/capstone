@@ -5438,3 +5438,71 @@ test_cases:
           writeback: 1
           regs_read: [ x0 ]
           regs_write: [ x0, x1 ]
+  -
+    input:
+      name: "TriCore EA calculation with disponent - #2504"
+      bytes: [ 0xfd,0xc0,0xe2,0x48,
+               0xdd,0x8a,0x2b,0x53,
+               0xdd,0x97,0x3e,0x94,
+               0xdd,0xd6,0x4d,0x85,
+               0x9d,0xcb,0x01,0x42,
+               0x9d,0x56,0xce,0x04,
+               0x9d,0xce,0x71,0x03,
+               0xe1,0xec,0xe3,0xb1,
+               0xe1,0x23,0xf7,0x37,
+               0xe1,0xa1,0x33,0xf7,
+               0xed,0xec,0xe3,0xb1,
+               0xed,0x23,0xf7,0x37,
+               0x6d,0x90,0xa7,0x8e,
+               0xed,0xa1,0x33,0xf7,
+               0x6d,0xb7,0xe0,0xba,
+               0x1b,0x00,0x30,0x00,
+               0x5c,0x56,
+               0x5c,0x97,
+               0x5c,0xc4,
+               0x5c,0xcd ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ CS_OPT_DETAIL, CS_MODE_TRICORE_162 ]
+      address: 0x80000000
+    expected:
+      insns:
+        -
+          asm_text: "loop a12, #0x7fff91c4"
+        -
+          asm_text: "jla #0x8014a656"
+        -
+          asm_text: "jla #0x900f287c"
+        -
+          asm_text: "jla #0xd00d0a9a"
+        -
+          asm_text: "ja #0xc0168402"
+        -
+          asm_text: "ja #0x500c099c"
+        -
+          asm_text: "ja #0xc01c06e2"
+        -
+          asm_text: "fcalla #0xe01963c6"
+        -
+          asm_text: "fcalla #0x20066fee"
+        -
+          asm_text: "fcalla #0xa003ee66"
+        -
+          asm_text: "calla #0xe01963c6"
+        -
+          asm_text: "calla #0x20066fee"
+        -
+          asm_text: "call #0x7f211d7e"
+        -
+          asm_text: "calla #0xa003ee66"
+        -
+          asm_text: "call #0x7f6f75f8"
+        -
+          asm_text: "addi d0, d0, #0x300"
+        -
+          asm_text: "call #0x800000ec"
+        -
+          asm_text: "call #0x7fffff70"
+        -
+          asm_text: "call #0x7fffffcc"
+        -
+          asm_text: "call #0x7fffffe0"
