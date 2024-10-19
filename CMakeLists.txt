@@ -761,16 +761,23 @@ set(ALL_HEADERS
 set_property(GLOBAL PROPERTY VERSION ${PROJECT_VERSION})
 
 ## targets
-add_library(capstone ${ALL_SOURCES} ${ALL_HEADERS})
+add_library(capstone OBJECT ${ALL_SOURCES} ${ALL_HEADERS})
 add_library(capstone::capstone ALIAS capstone)
+add_library(capstone_static STATIC $<TARGET_OBJECTS:capstone>)
+# Use normal capstone name. Otherwise we get libcapstone_static.so
+set_target_properties(capstone_static PROPERTIES OUTPUT_NAME "capstone")
 target_include_directories(capstone PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
 set_property(TARGET capstone PROPERTY C_STANDARD 99)
 
 if(BUILD_SHARED_LIBS)
-    target_compile_definitions(capstone PUBLIC CAPSTONE_SHARED)
-    set_target_properties(capstone PROPERTIES
+    set_property(TARGET capstone PROPERTY POSITION_INDEPENDENT_CODE 1)
+    add_library(capstone_shared SHARED $<TARGET_OBJECTS:capstone>)
+    # Use normal capstone name. Otherwise we get libcapstone_shared.so
+    set_target_properties(capstone_shared PROPERTIES OUTPUT_NAME "capstone")
+    target_compile_definitions(capstone_shared PUBLIC CAPSTONE_SHARED)
+    set_target_properties(capstone_shared PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
     )
@@ -878,12 +885,18 @@ if(CAPSTONE_INSTALL)
         DESTINATION ${CAPSTONE_CMAKE_CONFIG_INSTALL_DIR}
     )
 
-    install(TARGETS capstone
-            EXPORT capstone-targets
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    if(BUILD_SHARED_LIBS)
+        set(LIB_INSTALL_TARGETS capstone_static capstone_shared)
+    else()
+        set(LIB_INSTALL_TARGETS capstone_static)
+    endif()
+
+    install(TARGETS ${LIB_INSTALL_TARGETS}
+        EXPORT capstone-targets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     )
 
     install(EXPORT capstone-targets

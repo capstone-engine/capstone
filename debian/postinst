@@ -1,0 +1,6 @@
+#!/bin/bash
+# postinst script for capstone package
+set -e
+
+# Update the shared library cache
+ldconfig

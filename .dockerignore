@@ -1,0 +1,21 @@
+# Ignore source control directories
+.git
+.svn
+
+# Ignore build directories
+build
+dist
+
+# Ignore dependency directories
+node_modules
+vendor
+
+# Ignore temporary files
+*.log
+*.tmp
+
+# Ignore environment files
+.env
+
+# Ignore tests
+tests
