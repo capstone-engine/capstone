@@ -1,0 +1,8 @@
+Package: capstone
+Version: <version-placeholder>
+Architecture: all
+Maintainer: Rot127 <unisono@quyllur.org>
+Description: Capstone is a lightweight multi-platform, multi-architecture disassembly framework. 
+ Capstone supports the following frameworks; 
+ Alpha, BPF, Ethereum VM, HPPA, LoongArch, M68K, M680X, Mips, MOS65XX, PPC, RISC-V(rv32G/rv64G), 
+ SH, Sparc, SystemZ, TMS320C64X, TriCore, Webassembly, XCore and X86.
