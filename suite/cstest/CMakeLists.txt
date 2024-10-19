@@ -25,8 +25,8 @@ endif()
 set(LIBCYAML_LIB_FILE "${CMAKE_CURRENT_BINARY_DIR}/extern/src/libcyaml_ext/build/${LIBCYAML_VARIANT}/libcyaml.a")
 ExternalProject_Add(libcyaml_ext
     PREFIX extern
-    URL "https://github.com/tlsa/libcyaml/archive/refs/tags/v1.4.1.tar.gz"
-    URL_HASH SHA256=8dbd216e1fce90f9f7cca341e5178710adc76ee360a7793ef867edb28f3e4130
+    URL "https://github.com/tlsa/libcyaml/archive/refs/tags/v1.4.2.tar.gz"
+    URL_HASH SHA256=3211b2a0589ebfe02c563c96adce9246c0787be2af30353becbbd362998d16dc
     DOWNLOAD_EXTRACT_TIMESTAMP true
     CONFIGURE_COMMAND ""
     BUILD_COMMAND make VARIANT=${LIBCYAML_VARIANT} PKG_CONFIG=pkg-config
