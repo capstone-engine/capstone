@@ -254,7 +254,7 @@ class CompatHeaderBuilder:
         for line in v6_lines:
             if re.search(r"^#include", line):
                 if not header_inserted:
-                    output.append(f"#include <capstone/{self.v6_lower}.h>\n")
+                    output.append(f'#include "{self.v6_lower}.h"\n')
                     header_inserted = True
             output.append(line)
         return output

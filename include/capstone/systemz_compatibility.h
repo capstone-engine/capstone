@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-#include <capstone/systemz.h>
+#include "systemz.h"
 #include "platform.h"
 #include "cs_operand.h"
 
