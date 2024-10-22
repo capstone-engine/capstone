@@ -1,0 +1,311 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x37, 0x41, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "ball a1, a3, . +4"
+
+  -
+    input:
+      bytes: [ 0xd7, 0x88, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bany a8, a13, . +4"
+
+  -
+    input:
+      bytes: [ 0x77, 0x58, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bbc a8, a7, . +4"
+
+  -
+    input:
+      bytes: [ 0x7, 0x73, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bbci a3, 16, . +4"
+
+  -
+    input:
+      bytes: [ 0x7, 0x73, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bbci a3, 16, . +4"
+
+  -
+    input:
+      bytes: [ 0x57, 0xdc, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bbs a12, a5, . +4"
+
+  -
+    input:
+      bytes: [ 0x7, 0xf3, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bbsi a3, 16, . +4"
+
+  -
+    input:
+      bytes: [ 0x37, 0xc7, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnall a7, a3, . +4"
+
+  -
+    input:
+      bytes: [ 0x47, 0x2, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnone a2, a4, . +4"
+
+  -
+    input:
+      bytes: [ 0x27, 0x11, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "beq a1, a2, . +4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x1b, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "beq a11, a5, . +4"
+
+  -
+    input:
+      bytes: [ 0x26, 0xf1, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "beqi a1, 256, . +4"
+
+  -
+    input:
+      bytes: [ 0x26, 0xb, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "beqi a11, -1, . +4"
+
+  -
+    input:
+      bytes: [ 0x16, 0x8, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "beqz a8, . +4"
+
+  -
+    input:
+      bytes: [ 0x27, 0xae, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bge a14, a2, . +4"
+
+  -
+    input:
+      bytes: [ 0xe6, 0xb, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgei a11, -1, . +4"
+
+  -
+    input:
+      bytes: [ 0xe6, 0xeb, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgei a11, 128, . +4"
+
+  -
+    input:
+      bytes: [ 0x27, 0xbe, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgeu a14, a2, . +4"
+
+  -
+    input:
+      bytes: [ 0x17, 0xbd, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgeu a13, a1, . +4"
+
+  -
+    input:
+      bytes: [ 0xf6, 0x9, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgeui a9, 32768, . +4"
+
+  -
+    input:
+      bytes: [ 0xf6, 0x17, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgeui a7, 65536, . +4"
+
+  -
+    input:
+      bytes: [ 0xf6, 0xd7, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgeui a7, 64, . +4"
+
+  -
+    input:
+      bytes: [ 0xd6, 0x8, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bgez a8, . +4"
+
+  -
+    input:
+      bytes: [ 0x27, 0x2e, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "blt a14, a2, . +4"
+
+  -
+    input:
+      bytes: [ 0xa6, 0xc, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "blti a12, -1, . +4"
+
+  -
+    input:
+      bytes: [ 0xa6, 0xc0, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "blti a0, 32, . +4"
+
+  -
+    input:
+      bytes: [ 0xb6, 0xb7, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bltui a7, 16, . +4"
+
+  -
+    input:
+      bytes: [ 0x96, 0x6, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bltz a6, . +4"
+
+  -
+    input:
+      bytes: [ 0x47, 0x93, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bne a3, a4, . +4"
+
+  -
+    input:
+      bytes: [ 0x66, 0xa5, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnei a5, 12, . +4"
+
+  -
+    input:
+      bytes: [ 0x56, 0x5, 0x0 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "xtensa" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnez a5, . +4"
+
