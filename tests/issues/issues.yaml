@@ -5506,3 +5506,28 @@ test_cases:
           asm_text: "call #0x7fffffcc"
         -
           asm_text: "call #0x7fffffe0"
+  -
+    input:
+      name: "issue 2458 -- UB on PPC because vargs are not casted (AArch64)"
+      bytes: [ 0x20, 0x48, 0x62, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldr x0, [x1, w2, uxtw]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: x0
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x1
+                mem_index: w2
+                access: CS_AC_READ
+          regs_read: [ x1, w2 ]
+          regs_write: [ x0 ]

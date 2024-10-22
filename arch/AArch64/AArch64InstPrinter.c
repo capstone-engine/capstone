@@ -905,8 +905,9 @@ bool printSyspAlias(MCInst *MI, SStream *O)
 	void CONCAT(printMatrix, EltSize)(MCInst * MI, unsigned OpNum, \
 					  SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_Matrix, EltSize), \
-			      OpNum, EltSize); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_Matrix, EltSize), OpNum, \
+			EltSize); \
 		MCOperand *RegOp = MCInst_getOperand(MI, (OpNum)); \
 \
 		printRegName(O, MCOperand_getReg(RegOp)); \
@@ -941,10 +942,10 @@ DEFINE_printMatrix(0);
 	void CONCAT(printMatrixTileVector, \
 		    IsVertical)(MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
-			      CONCAT(AArch64_OP_GROUP_MatrixTileVector, \
-				     IsVertical), \
-			      OpNum, IsVertical); \
+		AArch64_add_cs_detail_1( \
+			MI, \
+			CONCAT(AArch64_OP_GROUP_MatrixTileVector, IsVertical), \
+			OpNum, IsVertical); \
 		MCOperand *RegOp = MCInst_getOperand(MI, (OpNum)); \
 \
 		const char *RegName = getRegisterName(MCOperand_getReg(RegOp), \
@@ -970,7 +971,7 @@ DEFINE_printMatrixTileVector(1);
 
 void printMatrixTile(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_MatrixTile, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_MatrixTile, OpNum);
 	MCOperand *RegOp = MCInst_getOperand(MI, (OpNum));
 
 	printRegName(O, MCOperand_getReg(RegOp));
@@ -978,7 +979,7 @@ void printMatrixTile(MCInst *MI, unsigned OpNum, SStream *O)
 
 void printSVCROp(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_SVCROp, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_SVCROp, OpNum);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 
 	unsigned svcrop = MCOperand_getImm(MO);
@@ -989,7 +990,7 @@ void printSVCROp(MCInst *MI, unsigned OpNum, SStream *O)
 
 void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_Operand, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_Operand, OpNo);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 	if (MCOperand_isReg(Op)) {
 		unsigned Reg = MCOperand_getReg(Op);
@@ -1006,7 +1007,7 @@ void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 void printImm(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_Imm, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_Imm, OpNo);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 	SStream_concat(O, "%s", markup("<imm:"));
 	printInt64Bang(O, MCOperand_getImm(Op));
@@ -1015,7 +1016,7 @@ void printImm(MCInst *MI, unsigned OpNo, SStream *O)
 
 void printImmHex(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_ImmHex, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_ImmHex, OpNo);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 	SStream_concat(O, "%s", markup("<imm:"));
 	printInt64Bang(O, MCOperand_getImm(Op));
@@ -1025,8 +1026,8 @@ void printImmHex(MCInst *MI, unsigned OpNo, SStream *O)
 #define DEFINE_printSImm(Size) \
 	void CONCAT(printSImm, Size)(MCInst * MI, unsigned OpNo, SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_SImm, Size), OpNo, \
-			      Size); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_SImm, Size), OpNo, Size); \
 		MCOperand *Op = MCInst_getOperand(MI, (OpNo)); \
 		if (Size == 8) { \
 			SStream_concat(O, "%s", markup("<imm:")); \
@@ -1062,7 +1063,7 @@ void printPostIncOperand(MCInst *MI, unsigned OpNo, unsigned Imm, SStream *O)
 
 void printVRegOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_VRegOperand, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_VRegOperand, OpNo);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 
 	unsigned Reg = MCOperand_getReg(Op);
@@ -1071,7 +1072,7 @@ void printVRegOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 void printSysCROperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_SysCROperand, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_SysCROperand, OpNo);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 
 	SStream_concat(O, "%s", "c");
@@ -1081,7 +1082,7 @@ void printSysCROperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 void printAddSubImm(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_AddSubImm, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_AddSubImm, OpNum);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
 		unsigned Val = (MCOperand_getImm(MO) & 0xfff);
@@ -1103,8 +1104,8 @@ void printAddSubImm(MCInst *MI, unsigned OpNum, SStream *O)
 	void CONCAT(printLogicalImm, T)(MCInst * MI, unsigned OpNum, \
 					SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_LogicalImm, T), \
-			      OpNum, sizeof(T)); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_LogicalImm, T), OpNum, sizeof(T)); \
 		uint64_t Val = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		SStream_concat(O, "%s", markup("<imm:")); \
@@ -1119,7 +1120,7 @@ DEFINE_printLogicalImm(int16_t);
 
 void printShifter(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_Shifter, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_Shifter, OpNum);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 	// LSL #0 should not be printed.
 	if (AArch64_AM_getShiftType(Val) == AArch64_AM_LSL &&
@@ -1134,21 +1135,21 @@ void printShifter(MCInst *MI, unsigned OpNum, SStream *O)
 
 void printShiftedRegister(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_ShiftedRegister, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_ShiftedRegister, OpNum);
 	printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))));
 	printShifter(MI, OpNum + 1, O);
 }
 
 void printExtendedRegister(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_ExtendedRegister, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_ExtendedRegister, OpNum);
 	printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))));
 	printArithExtend(MI, OpNum + 1, O);
 }
 
 void printArithExtend(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_ArithExtend, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_ArithExtend, OpNum);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 	AArch64_AM_ShiftExtendType ExtType = AArch64_AM_getArithExtendType(Val);
 	unsigned ShiftVal = AArch64_AM_getArithShiftValue(Val);
@@ -1219,7 +1220,7 @@ void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind,
 			   CONCAT(ExtWidth, CONCAT(SrcRegKind, Suffix))))( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail( \
+		AArch64_add_cs_detail_4( \
 			MI, \
 			CONCAT(CONCAT(CONCAT(CONCAT(AArch64_OP_GROUP_RegWithShiftExtend, \
 						    SignExtend), \
@@ -1278,10 +1279,10 @@ DEFINE_printRegWithShiftExtend(false, 128, x, 0);
 	void CONCAT(printPredicateAsCounter, \
 		    EltSize)(MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
-			      CONCAT(AArch64_OP_GROUP_PredicateAsCounter, \
-				     EltSize), \
-			      OpNum, EltSize); \
+		AArch64_add_cs_detail_1( \
+			MI, \
+			CONCAT(AArch64_OP_GROUP_PredicateAsCounter, EltSize), \
+			OpNum, EltSize); \
 		unsigned Reg = \
 			MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
 		if (Reg < AArch64_PN0 || Reg > AArch64_PN15) \
@@ -1316,7 +1317,7 @@ DEFINE_printPredicateAsCounter(0);
 
 void printCondCode(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_CondCode, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_CondCode, OpNum);
 	AArch64CC_CondCode CC = (AArch64CC_CondCode)MCOperand_getImm(
 		MCInst_getOperand(MI, (OpNum)));
 	SStream_concat0(O, AArch64CC_getCondCodeName(CC));
@@ -1324,7 +1325,7 @@ void printCondCode(MCInst *MI, unsigned OpNum, SStream *O)
 
 void printInverseCondCode(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_InverseCondCode, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_InverseCondCode, OpNum);
 	AArch64CC_CondCode CC = (AArch64CC_CondCode)MCOperand_getImm(
 		MCInst_getOperand(MI, (OpNum)));
 	SStream_concat0(O, AArch64CC_getCondCodeName(
@@ -1333,7 +1334,7 @@ void printInverseCondCode(MCInst *MI, unsigned OpNum, SStream *O)
 
 void printAMNoIndex(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_AMNoIndex, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_AMNoIndex, OpNum);
 	SStream_concat0(O, "[");
 
 	printRegName(O, MCOperand_getReg(MCInst_getOperand(MI, (OpNum))));
@@ -1344,8 +1345,9 @@ void printAMNoIndex(MCInst *MI, unsigned OpNum, SStream *O)
 	void CONCAT(printImmScale, Scale)(MCInst * MI, unsigned OpNum, \
 					  SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_ImmScale, Scale), \
-			      OpNum, Scale); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_ImmScale, Scale), OpNum, \
+			Scale); \
 		SStream_concat(O, "%s", markup("<imm:")); \
 		printInt32Bang(O, Scale *MCOperand_getImm( \
 					  MCInst_getOperand(MI, (OpNum)))); \
@@ -1362,7 +1364,7 @@ DEFINE_printImmScale(3);
 	void CONCAT(printImmRangeScale, CONCAT(Scale, Offset))( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail( \
+		AArch64_add_cs_detail_2( \
 			MI, \
 			CONCAT(CONCAT(AArch64_OP_GROUP_ImmRangeScale, Scale), \
 			       Offset), \
@@ -1408,7 +1410,7 @@ void printAMIndexedWB(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O)
 
 void printRPRFMOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_RPRFMOperand, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_RPRFMOperand, OpNum);
 	unsigned prfop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 	const AArch64PRFM_PRFM *PRFM =
 		AArch64RPRFM_lookupRPRFMByEncoding(prfop);
@@ -1425,10 +1427,10 @@ void printRPRFMOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	void CONCAT(printPrefetchOp, \
 		    IsSVEPrefetch)(MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
-			      CONCAT(AArch64_OP_GROUP_PrefetchOp, \
-				     IsSVEPrefetch), \
-			      OpNum, IsSVEPrefetch); \
+		AArch64_add_cs_detail_1(MI, \
+					CONCAT(AArch64_OP_GROUP_PrefetchOp, \
+					       IsSVEPrefetch), \
+					OpNum, IsSVEPrefetch); \
 		unsigned prfop = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		if (IsSVEPrefetch) { \
@@ -1458,7 +1460,7 @@ DEFINE_printPrefetchOp(true);
 
 void printPSBHintOp(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_PSBHintOp, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_PSBHintOp, OpNum);
 	unsigned psbhintop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 	const AArch64PSBHint_PSB *PSB =
 		AArch64PSBHint_lookupPSBByEncoding(psbhintop);
@@ -1474,7 +1476,7 @@ void printPSBHintOp(MCInst *MI, unsigned OpNum, SStream *O)
 
 void printBTIHintOp(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_BTIHintOp, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_BTIHintOp, OpNum);
 	unsigned btihintop = MCOperand_getImm(MCInst_getOperand(MI, (OpNum))) ^
 			     32;
 	const AArch64BTIHint_BTI *BTI =
@@ -1490,7 +1492,7 @@ void printBTIHintOp(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printFPImmOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_FPImmOperand, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_FPImmOperand, OpNum);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	float FPImm = MCOperand_isDFPImm(MO) ?
 			      BitsToDouble(MCOperand_getImm(MO)) :
@@ -1760,10 +1762,11 @@ static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride /* = 1 */)
 	void CONCAT(printGPRSeqPairsClassOperand, \
 		    size)(MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
-			      CONCAT(AArch64_OP_GROUP_GPRSeqPairsClassOperand, \
-				     size), \
-			      OpNum, size); \
+		AArch64_add_cs_detail_1( \
+			MI, \
+			CONCAT(AArch64_OP_GROUP_GPRSeqPairsClassOperand, \
+			       size), \
+			OpNum, size); \
 		CS_ASSERT_RET((size == 64 || size == 32) && \
 		       "Template parameter must be either 32 or 64"); \
 		unsigned Reg = \
@@ -1787,7 +1790,7 @@ DEFINE_printGPRSeqPairsClassOperand(64);
 	void CONCAT(printMatrixIndex, Scale)(MCInst * MI, unsigned OpNum, \
 					     SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_MatrixIndex, Scale), \
+		AArch64_add_cs_detail_1(MI, CONCAT(AArch64_OP_GROUP_MatrixIndex, Scale), \
 			      OpNum, Scale); \
 		printInt64(O, Scale *MCOperand_getImm( \
 				      MCInst_getOperand(MI, (OpNum)))); \
@@ -1798,7 +1801,7 @@ DEFINE_printMatrixIndex(1);
 
 void printMatrixTileList(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_MatrixTileList, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_MatrixTileList, OpNum);
 	unsigned MaxRegs = 8;
 	unsigned RegMask = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 
@@ -1957,7 +1960,8 @@ void printVectorList(MCInst *MI, unsigned OpNum, SStream *O,
 
 void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_ImplicitlyTypedVectorList, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_ImplicitlyTypedVectorList,
+				OpNum);
 	printVectorList(MI, OpNum, O, "");
 }
 
@@ -1965,11 +1969,12 @@ void printImplicitlyTypedVectorList(MCInst *MI, unsigned OpNum, SStream *O)
 	void CONCAT(printTypedVectorList, CONCAT(NumLanes, LaneKind))( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
-			      CONCAT(CONCAT(AArch64_OP_GROUP_TypedVectorList, \
-					    NumLanes), \
-				     LaneKind), \
-			      OpNum, NumLanes, CHAR(LaneKind)); \
+		AArch64_add_cs_detail_2( \
+			MI, \
+			CONCAT(CONCAT(AArch64_OP_GROUP_TypedVectorList, \
+				      NumLanes), \
+			       LaneKind), \
+			OpNum, NumLanes, CHAR(LaneKind)); \
 		if (CHAR(LaneKind) == '0') { \
 			printVectorList(MI, OpNum, O, ""); \
 			return; \
@@ -2003,8 +2008,9 @@ DEFINE_printTypedVectorList(0, 0);
 	void CONCAT(printVectorIndex, Scale)(MCInst * MI, unsigned OpNum, \
 					     SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_VectorIndex, Scale), \
-			      OpNum, Scale); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_VectorIndex, Scale), \
+			OpNum, Scale); \
 		SStream_concat(O, "%s", "["); \
 		printUInt64(O, Scale *MCOperand_getImm( \
 				       MCInst_getOperand(MI, (OpNum)))); \
@@ -2015,7 +2021,7 @@ DEFINE_printVectorIndex(8);
 
 void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_AlignedLabel, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_AlignedLabel, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 
 	// If the label has already been resolved to an immediate offset (say, when
@@ -2037,7 +2043,7 @@ void printAlignedLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 
 void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_AdrLabel, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_AdrLabel, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 
 	// If the label has already been resolved to an immediate offset (say, when
@@ -2059,7 +2065,7 @@ void printAdrLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 
 void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_AdrpLabel, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_AdrpLabel, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 
 	// If the label has already been resolved to an immediate offset (say, when
@@ -2080,7 +2086,7 @@ void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 }
 
 void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O) {
-	add_cs_detail(MI, AArch64_OP_GROUP_AdrAdrpLabel, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_AdrAdrpLabel, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 
   // If the label has already been resolved to an immediate offset (say, when
@@ -2106,7 +2112,7 @@ void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 
 void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_BarrierOption, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_BarrierOption, OpNo);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	unsigned Opcode = MCInst_getOpcode(MI);
 
@@ -2132,7 +2138,7 @@ void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 
 void printBarriernXSOption(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_BarriernXSOption, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_BarriernXSOption, OpNo);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 
 	const char *Name;
@@ -2174,7 +2180,7 @@ static const AArch64SysReg_SysReg *lookupSysReg(unsigned Val, bool Read,
 
 void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_MRSSystemRegister, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_MRSSystemRegister, OpNo);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 
 	// Horrible hack for the one register that has identical encodings but
@@ -2205,7 +2211,7 @@ void printMRSSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 
 void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_MSRSystemRegister, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_MSRSystemRegister, OpNo);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 
 	// Horrible hack for the one register that has identical encodings but
@@ -2236,7 +2242,7 @@ void printMSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 
 void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_SystemPStateField, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_SystemPStateField, OpNo);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 
 	const AArch64PState_PStateImm0_15 *PStateImm15 =
@@ -2259,7 +2265,7 @@ void printSystemPStateField(MCInst *MI, unsigned OpNo, SStream *O)
 
 void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_SIMDType10Operand, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_SIMDType10Operand, OpNo);
 	unsigned RawVal = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	uint64_t Val = AArch64_AM_decodeAdvSIMDModImmType10(RawVal);
 	SStream_concat(O, "%s#%#016llx", markup("<imm:"), Val);
@@ -2270,7 +2276,7 @@ void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 	static void CONCAT(printComplexRotationOp, CONCAT(Angle, Remainder))( \
 		MCInst * MI, unsigned OpNo, SStream *O) \
 	{ \
-		add_cs_detail( \
+		AArch64_add_cs_detail_2( \
 			MI, \
 			CONCAT(CONCAT(AArch64_OP_GROUP_ComplexRotationOp, \
 				      Angle), \
@@ -2287,7 +2293,7 @@ DEFINE_printComplexRotationOp(90, 0);
 
 void printSVEPattern(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_SVEPattern, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_SVEPattern, OpNum);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 	const AArch64SVEPredPattern_SVEPREDPAT *Pat =
 		AArch64SVEPredPattern_lookupSVEPREDPATByEncoding(Val);
@@ -2299,7 +2305,7 @@ void printSVEPattern(MCInst *MI, unsigned OpNum, SStream *O)
 
 void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_SVEVecLenSpecifier, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_SVEVecLenSpecifier, OpNum);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
 	// Pattern has only 1 bit
 	if (Val > 1)
@@ -2315,8 +2321,9 @@ void printSVEVecLenSpecifier(MCInst *MI, unsigned OpNum, SStream *O)
 	void CONCAT(printSVERegOp, suffix)(MCInst * MI, unsigned OpNum, \
 					   SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_SVERegOp, suffix), \
-			      OpNum, CHAR(suffix)); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_SVERegOp, suffix), OpNum, \
+			CHAR(suffix)); \
 		switch (CHAR(suffix)) { \
 		case '0': \
 		case 'b': \
@@ -2394,8 +2401,8 @@ DEFINE_isSignedType(uint64_t);
 	void CONCAT(printImm8OptLsl, T)(MCInst * MI, unsigned OpNum, \
 					SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_Imm8OptLsl, T), \
-			      OpNum, sizeof(T)); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_Imm8OptLsl, T), OpNum, sizeof(T)); \
 		unsigned UnscaledVal = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		unsigned Shift = \
@@ -2434,8 +2441,9 @@ DEFINE_printImm8OptLsl(uint32_t);
 	void CONCAT(printSVELogicalImm, T)(MCInst * MI, unsigned OpNum, \
 					   SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_SVELogicalImm, T), \
-			      OpNum, sizeof(T)); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_SVELogicalImm, T), OpNum, \
+			sizeof(T)); \
 		typedef T SignedT; \
 		typedef CONCATS(u, T) UnsignedT; \
 \
@@ -2462,8 +2470,9 @@ DEFINE_printSVELogicalImm(int64_t);
 	void CONCAT(printZPRasFPR, Width)(MCInst * MI, unsigned OpNum, \
 					  SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(AArch64_OP_GROUP_ZPRasFPR, Width), \
-			      OpNum, Width); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_ZPRasFPR, Width), OpNum, \
+			Width); \
 		unsigned Base; \
 		switch (Width) { \
 		case 8: \
@@ -2498,7 +2507,7 @@ DEFINE_printZPRasFPR(128);
 	void CONCAT(printExactFPImm, CONCAT(ImmIs0, ImmIs1))( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail( \
+		AArch64_add_cs_detail_2( \
 			MI, \
 			CONCAT(CONCAT(AArch64_OP_GROUP_ExactFPImm, ImmIs0), \
 			       ImmIs1), \
@@ -2519,14 +2528,14 @@ DEFINE_printExactFPImm(AArch64ExactFPImm_half, AArch64ExactFPImm_two);
 
 void printGPR64as32(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_GPR64as32, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_GPR64as32, OpNum);
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
 	printRegName(O, getWRegFromXReg(Reg));
 }
 
 void printGPR64x8(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_GPR64x8, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_GPR64x8, OpNum);
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
 	printRegName(O,
 		     MCRegisterInfo_getSubReg(MI->MRI, Reg, AArch64_x8sub_0));
@@ -2534,7 +2543,7 @@ void printGPR64x8(MCInst *MI, unsigned OpNum, SStream *O)
 
 void printSyspXzrPair(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, AArch64_OP_GROUP_SyspXzrPair, OpNum);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_SyspXzrPair, OpNum);
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
 
 	SStream_concat(O, "%s%s", getRegisterName(Reg, AArch64_NoRegAltName),

@@ -1281,13 +1281,29 @@ void AArch64_set_mem_access(MCInst *MI, bool status)
 	}
 }
 
+/// Common prefix for all AArch64_add_cs_detail_* functions
+static bool add_cs_detail_begin(MCInst *MI, unsigned op_num)
+{
+	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
+		return false;
+
+	if (AArch64_get_detail(MI)->is_doing_sme) {
+		// Unset the flag if there is no bound operand anymore.
+		if (!(map_get_op_type(MI, op_num) & CS_OP_BOUND)) {
+			AArch64_get_detail(MI)->is_doing_sme = false;
+			AArch64_inc_op_count(MI);
+		}
+	}
+	return true;
+}
+
 /// Fills cs_detail with the data of the operand.
 /// This function handles operands which's original printer function has no
 /// specialities.
-static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
+void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 				  unsigned OpNum)
 {
-	if (!detail_is_set(MI))
+	if (!add_cs_detail_begin(MI, OpNum))
 		return;
 
 	// Fill cs_detail
@@ -1501,7 +1517,7 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 		break;
 	case AArch64_OP_GROUP_ImplicitlyTypedVectorList:
 		// The TypedVectorList implements the logic of implicitly typed operand.
-		add_cs_detail(MI, AArch64_OP_GROUP_TypedVectorList_0_b, OpNum,
+		AArch64_add_cs_detail_2(MI, AArch64_OP_GROUP_TypedVectorList_0_b, OpNum,
 			      0, 0);
 		break;
 	case AArch64_OP_GROUP_InverseCondCode: {
@@ -1724,10 +1740,10 @@ static void add_cs_detail_general(MCInst *MI, aarch64_op_group op_group,
 /// Fills cs_detail with the data of the operand.
 /// This function handles operands which original printer function is a template
 /// with one argument.
-static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
+void AArch64_add_cs_detail_1(MCInst *MI, aarch64_op_group op_group,
 				     unsigned OpNum, uint64_t temp_arg_0)
 {
-	if (!detail_is_set(MI))
+	if (!add_cs_detail_begin(MI, OpNum))
 		return;
 	switch (op_group) {
 	default:
@@ -2052,11 +2068,11 @@ static void add_cs_detail_template_1(MCInst *MI, aarch64_op_group op_group,
 /// Fills cs_detail with the data of the operand.
 /// This function handles operands which original printer function is a template
 /// with two arguments.
-static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
+void AArch64_add_cs_detail_2(MCInst *MI, aarch64_op_group op_group,
 				     unsigned OpNum, uint64_t temp_arg_0,
 				     uint64_t temp_arg_1)
 {
-	if (!detail_is_set(MI))
+	if (!add_cs_detail_begin(MI, OpNum))
 		return;
 	switch (op_group) {
 	default:
@@ -2235,12 +2251,12 @@ static void add_cs_detail_template_2(MCInst *MI, aarch64_op_group op_group,
 /// Fills cs_detail with the data of the operand.
 /// This function handles operands which original printer function is a template
 /// with four arguments.
-static void add_cs_detail_template_4(MCInst *MI, aarch64_op_group op_group,
+void AArch64_add_cs_detail_4(MCInst *MI, aarch64_op_group op_group,
 				     unsigned OpNum, uint64_t temp_arg_0,
 				     uint64_t temp_arg_1, uint64_t temp_arg_2,
 				     uint64_t temp_arg_3)
 {
-	if (!detail_is_set(MI))
+	if (!add_cs_detail_begin(MI, OpNum))
 		return;
 	switch (op_group) {
 	default:
@@ -2297,216 +2313,6 @@ static void add_cs_detail_template_4(MCInst *MI, aarch64_op_group op_group,
 
 		AArch64_set_detail_shift_ext(MI, OpNum, SignExtend, DoShift,
 					     ExtWidth, SrcRegKind);
-		break;
-	}
-	}
-}
-
-void AArch64_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
-			   va_list args)
-{
-	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
-		return;
-
-	unsigned op_num = va_arg(args, unsigned);
-	if (AArch64_get_detail(MI)->is_doing_sme) {
-		// Unset the flag if there is no bound operand anymore.
-		if (!(map_get_op_type(MI, op_num) & CS_OP_BOUND)) {
-			AArch64_get_detail(MI)->is_doing_sme = false;
-			AArch64_inc_op_count(MI);
-		}
-	}
-
-	switch (op_group) {
-	default:
-		printf("Operand group %d not handled\n", op_group);
-		break;
-	case AArch64_OP_GROUP_AddSubImm:
-	case AArch64_OP_GROUP_AdrLabel:
-	case AArch64_OP_GROUP_AdrpLabel:
-	case AArch64_OP_GROUP_AdrAdrpLabel:
-	case AArch64_OP_GROUP_AlignedLabel:
-	case AArch64_OP_GROUP_AMNoIndex:
-	case AArch64_OP_GROUP_ArithExtend:
-	case AArch64_OP_GROUP_BarriernXSOption:
-	case AArch64_OP_GROUP_BarrierOption:
-	case AArch64_OP_GROUP_BTIHintOp:
-	case AArch64_OP_GROUP_CondCode:
-	case AArch64_OP_GROUP_ExtendedRegister:
-	case AArch64_OP_GROUP_FPImmOperand:
-	case AArch64_OP_GROUP_GPR64as32:
-	case AArch64_OP_GROUP_GPR64x8:
-	case AArch64_OP_GROUP_Imm:
-	case AArch64_OP_GROUP_ImmHex:
-	case AArch64_OP_GROUP_ImplicitlyTypedVectorList:
-	case AArch64_OP_GROUP_InverseCondCode:
-	case AArch64_OP_GROUP_MatrixTile:
-	case AArch64_OP_GROUP_MatrixTileList:
-	case AArch64_OP_GROUP_MRSSystemRegister:
-	case AArch64_OP_GROUP_MSRSystemRegister:
-	case AArch64_OP_GROUP_Operand:
-	case AArch64_OP_GROUP_PSBHintOp:
-	case AArch64_OP_GROUP_RPRFMOperand:
-	case AArch64_OP_GROUP_ShiftedRegister:
-	case AArch64_OP_GROUP_Shifter:
-	case AArch64_OP_GROUP_SIMDType10Operand:
-	case AArch64_OP_GROUP_SVCROp:
-	case AArch64_OP_GROUP_SVEPattern:
-	case AArch64_OP_GROUP_SVEVecLenSpecifier:
-	case AArch64_OP_GROUP_SysCROperand:
-	case AArch64_OP_GROUP_SyspXzrPair:
-	case AArch64_OP_GROUP_SystemPStateField:
-	case AArch64_OP_GROUP_VRegOperand: {
-		add_cs_detail_general(MI, op_group, op_num);
-		break;
-	}
-	case AArch64_OP_GROUP_GPRSeqPairsClassOperand_32:
-	case AArch64_OP_GROUP_GPRSeqPairsClassOperand_64:
-	case AArch64_OP_GROUP_Imm8OptLsl_int16_t:
-	case AArch64_OP_GROUP_Imm8OptLsl_int32_t:
-	case AArch64_OP_GROUP_Imm8OptLsl_int64_t:
-	case AArch64_OP_GROUP_Imm8OptLsl_int8_t:
-	case AArch64_OP_GROUP_Imm8OptLsl_uint16_t:
-	case AArch64_OP_GROUP_Imm8OptLsl_uint32_t:
-	case AArch64_OP_GROUP_Imm8OptLsl_uint64_t:
-	case AArch64_OP_GROUP_Imm8OptLsl_uint8_t:
-	case AArch64_OP_GROUP_ImmScale_16:
-	case AArch64_OP_GROUP_ImmScale_2:
-	case AArch64_OP_GROUP_ImmScale_3:
-	case AArch64_OP_GROUP_ImmScale_32:
-	case AArch64_OP_GROUP_ImmScale_4:
-	case AArch64_OP_GROUP_ImmScale_8:
-	case AArch64_OP_GROUP_LogicalImm_int16_t:
-	case AArch64_OP_GROUP_LogicalImm_int32_t:
-	case AArch64_OP_GROUP_LogicalImm_int64_t:
-	case AArch64_OP_GROUP_LogicalImm_int8_t:
-	case AArch64_OP_GROUP_Matrix_0:
-	case AArch64_OP_GROUP_Matrix_16:
-	case AArch64_OP_GROUP_Matrix_32:
-	case AArch64_OP_GROUP_Matrix_64:
-	case AArch64_OP_GROUP_MatrixIndex_0:
-	case AArch64_OP_GROUP_MatrixIndex_1:
-	case AArch64_OP_GROUP_MatrixIndex_8:
-	case AArch64_OP_GROUP_MatrixTileVector_0:
-	case AArch64_OP_GROUP_MatrixTileVector_1:
-	case AArch64_OP_GROUP_PostIncOperand_1:
-	case AArch64_OP_GROUP_PostIncOperand_12:
-	case AArch64_OP_GROUP_PostIncOperand_16:
-	case AArch64_OP_GROUP_PostIncOperand_2:
-	case AArch64_OP_GROUP_PostIncOperand_24:
-	case AArch64_OP_GROUP_PostIncOperand_3:
-	case AArch64_OP_GROUP_PostIncOperand_32:
-	case AArch64_OP_GROUP_PostIncOperand_4:
-	case AArch64_OP_GROUP_PostIncOperand_48:
-	case AArch64_OP_GROUP_PostIncOperand_6:
-	case AArch64_OP_GROUP_PostIncOperand_64:
-	case AArch64_OP_GROUP_PostIncOperand_8:
-	case AArch64_OP_GROUP_PredicateAsCounter_0:
-	case AArch64_OP_GROUP_PredicateAsCounter_16:
-	case AArch64_OP_GROUP_PredicateAsCounter_32:
-	case AArch64_OP_GROUP_PredicateAsCounter_64:
-	case AArch64_OP_GROUP_PredicateAsCounter_8:
-	case AArch64_OP_GROUP_PrefetchOp_0:
-	case AArch64_OP_GROUP_PrefetchOp_1:
-	case AArch64_OP_GROUP_SImm_16:
-	case AArch64_OP_GROUP_SImm_8:
-	case AArch64_OP_GROUP_SVELogicalImm_int16_t:
-	case AArch64_OP_GROUP_SVELogicalImm_int32_t:
-	case AArch64_OP_GROUP_SVELogicalImm_int64_t:
-	case AArch64_OP_GROUP_SVERegOp_0:
-	case AArch64_OP_GROUP_SVERegOp_b:
-	case AArch64_OP_GROUP_SVERegOp_d:
-	case AArch64_OP_GROUP_SVERegOp_h:
-	case AArch64_OP_GROUP_SVERegOp_q:
-	case AArch64_OP_GROUP_SVERegOp_s:
-	case AArch64_OP_GROUP_UImm12Offset_1:
-	case AArch64_OP_GROUP_UImm12Offset_16:
-	case AArch64_OP_GROUP_UImm12Offset_2:
-	case AArch64_OP_GROUP_UImm12Offset_4:
-	case AArch64_OP_GROUP_UImm12Offset_8:
-	case AArch64_OP_GROUP_VectorIndex_1:
-	case AArch64_OP_GROUP_VectorIndex_8:
-	case AArch64_OP_GROUP_ZPRasFPR_128:
-	case AArch64_OP_GROUP_ZPRasFPR_16:
-	case AArch64_OP_GROUP_ZPRasFPR_32:
-	case AArch64_OP_GROUP_ZPRasFPR_64:
-	case AArch64_OP_GROUP_ZPRasFPR_8: {
-		uint64_t temp_arg_0 = va_arg(args, uint64_t);
-		add_cs_detail_template_1(MI, op_group, op_num, temp_arg_0);
-		break;
-	}
-	case AArch64_OP_GROUP_ComplexRotationOp_180_90:
-	case AArch64_OP_GROUP_ComplexRotationOp_90_0:
-	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_half_AArch64ExactFPImm_one:
-	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_half_AArch64ExactFPImm_two:
-	case AArch64_OP_GROUP_ExactFPImm_AArch64ExactFPImm_zero_AArch64ExactFPImm_one:
-	case AArch64_OP_GROUP_ImmRangeScale_2_1:
-	case AArch64_OP_GROUP_ImmRangeScale_4_3:
-	case AArch64_OP_GROUP_MemExtend_w_128:
-	case AArch64_OP_GROUP_MemExtend_w_16:
-	case AArch64_OP_GROUP_MemExtend_w_32:
-	case AArch64_OP_GROUP_MemExtend_w_64:
-	case AArch64_OP_GROUP_MemExtend_w_8:
-	case AArch64_OP_GROUP_MemExtend_x_128:
-	case AArch64_OP_GROUP_MemExtend_x_16:
-	case AArch64_OP_GROUP_MemExtend_x_32:
-	case AArch64_OP_GROUP_MemExtend_x_64:
-	case AArch64_OP_GROUP_MemExtend_x_8:
-	case AArch64_OP_GROUP_TypedVectorList_0_b:
-	case AArch64_OP_GROUP_TypedVectorList_0_d:
-	case AArch64_OP_GROUP_TypedVectorList_0_h:
-	case AArch64_OP_GROUP_TypedVectorList_0_q:
-	case AArch64_OP_GROUP_TypedVectorList_0_s:
-	case AArch64_OP_GROUP_TypedVectorList_0_0:
-	case AArch64_OP_GROUP_TypedVectorList_16_b:
-	case AArch64_OP_GROUP_TypedVectorList_1_d:
-	case AArch64_OP_GROUP_TypedVectorList_2_d:
-	case AArch64_OP_GROUP_TypedVectorList_2_s:
-	case AArch64_OP_GROUP_TypedVectorList_4_h:
-	case AArch64_OP_GROUP_TypedVectorList_4_s:
-	case AArch64_OP_GROUP_TypedVectorList_8_b:
-	case AArch64_OP_GROUP_TypedVectorList_8_h: {
-		uint64_t temp_arg_0 = va_arg(args, uint64_t);
-		uint64_t temp_arg_1 = va_arg(args, uint64_t);
-		add_cs_detail_template_2(MI, op_group, op_num, temp_arg_0,
-					 temp_arg_1);
-		break;
-	}
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_128_x_0:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_16_w_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_16_w_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_16_x_0:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_16_x_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_16_x_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_32_w_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_32_w_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_32_x_0:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_32_x_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_32_x_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_64_w_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_64_w_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_64_x_0:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_64_x_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_64_x_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_8_w_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_8_w_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_8_x_0:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_8_x_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_0_8_x_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_1_16_w_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_1_16_w_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_1_32_w_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_1_32_w_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_1_64_w_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_1_64_w_s:
-	case AArch64_OP_GROUP_RegWithShiftExtend_1_8_w_d:
-	case AArch64_OP_GROUP_RegWithShiftExtend_1_8_w_s: {
-		uint64_t temp_arg_0 = va_arg(args, uint64_t);
-		uint64_t temp_arg_1 = va_arg(args, uint64_t);
-		uint64_t temp_arg_2 = va_arg(args, uint64_t);
-		uint64_t temp_arg_3 = va_arg(args, uint64_t);
-		add_cs_detail_template_4(MI, op_group, op_num, temp_arg_0,
-					 temp_arg_1, temp_arg_2, temp_arg_3);
 		break;
 	}
 	}
