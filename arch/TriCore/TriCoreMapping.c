@@ -191,6 +191,10 @@ bool TriCore_disasm(csh handle, const uint8_t *code, size_t code_len,
 		    MCInst *instr, uint16_t *size, uint64_t address, void *info)
 {
 	instr->MRI = (MCRegisterInfo *)info;
+	if (instr->flat_insn->detail) {
+		memset(instr->flat_insn->detail, 0, sizeof(cs_detail));
+	}
+
 	bool res = TriCore_LLVM_getInstruction(handle, code, code_len, instr,
 					       size, address);
 	if (!res)
