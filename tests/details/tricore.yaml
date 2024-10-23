@@ -95,7 +95,8 @@ test_cases:
         details:
           tricore:
             operands:
+              - type: TRICORE_OP_REG
+                reg: d15
               -
                 type: TRICORE_OP_IMM
                 imm: 0x1
-
