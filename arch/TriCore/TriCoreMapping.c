@@ -208,6 +208,89 @@ void TriCore_reg_access(const cs_insn *insn, cs_regs regs_read,
 #endif
 }
 
+static void insert_op(MCInst *MI, unsigned index, cs_tricore_op op)
+{
+	if (!detail_is_set(MI)) {
+		return;
+	}
+
+	TriCore_check_safe_inc(MI);
+	cs_tricore_op *ops = TriCore_get_detail(MI)->operands;
+	int i = TriCore_get_detail(MI)->op_count;
+	if (index == -1) {
+		ops[i] = op;
+		TriCore_inc_op_count(MI);
+		return;
+	}
+	for (; i > 0 && i > index; --i) {
+		ops[i] = ops[i - 1];
+	}
+	ops[index] = op;
+	TriCore_inc_op_count(MI);
+}
+
+/// Inserts a register to the detail operands at @index.
+/// If @index == -1, it pushes the operand to the end of the ops array.
+/// Already present operands are moved.
+static void TriCore_insert_detail_op_reg_at(MCInst *MI, unsigned index,
+				     tricore_reg Reg, cs_ac_type access)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	TriCore_check_safe_inc(MI);
+
+	cs_tricore_op op = { 0 };
+	op.type = TRICORE_OP_REG;
+	op.reg = Reg;
+	op.access = access;
+
+	insert_op(MI, index, op);
+}
+
+static void add_non_alias_details(MCInst *MI)
+{
+	// To figure out which instructions require additional d15 and a15 registers
+	// simply check the switch case in TriCoreGenAsmWriter.inc::printInstruction().
+	uint32_t Bits = MI->tricore_insn_bytes;
+	switch((uint32_t)((Bits >> 16) & 15)) {
+	default:
+		break;
+	case 1:
+		// op[1?] middle = d15
+		TriCore_insert_detail_op_reg_at(MI, 1, TRICORE_REG_D15, CS_AC_WRITE);
+		break;
+	case 10:
+		// op[-1] = [a5]
+		break;
+	case 11:
+		// op[-1] = a15
+		TriCore_insert_detail_op_reg_at(MI, -1, TRICORE_REG_A15, CS_AC_WRITE);
+		break;
+	case 14:
+		// op[-1] = d15
+		TriCore_insert_detail_op_reg_at(MI, -1, TRICORE_REG_D15, CS_AC_WRITE);
+		break;
+	}
+
+	switch ((uint32_t)((Bits >> 25) & 0xf)) {
+	default:
+		break;
+	case 2:
+		// ops[1] = d15
+		TriCore_insert_detail_op_reg_at(MI, 1, TRICORE_REG_D15, CS_AC_WRITE);
+		break;
+	case 10:
+		// ops[-1] = a15
+		TriCore_insert_detail_op_reg_at(MI, -1, TRICORE_REG_A15, CS_AC_WRITE);
+		break;
+	case 11:
+		// ops[-1] = d15
+		TriCore_insert_detail_op_reg_at(MI, -1, TRICORE_REG_D15, CS_AC_WRITE);
+		break;
+	}
+}
+
 bool TriCore_getInstruction(csh handle, const uint8_t *Bytes, size_t ByteLen,
 			    MCInst *MI, uint16_t *Size, uint64_t Address,
 			    void *Info)
@@ -219,6 +302,7 @@ bool TriCore_getInstruction(csh handle, const uint8_t *Bytes, size_t ByteLen,
 void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	TriCore_LLVM_printInst(MI, MI->address, O);
+	add_non_alias_details(MI);
 }
 
 const char *TriCore_getRegisterName(csh handle, unsigned int RegNo)

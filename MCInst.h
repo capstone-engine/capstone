@@ -137,6 +137,7 @@ struct MCInst {
 	bool fillDetailOps; // If set, detail->operands gets filled.
 	hppa_ext hppa_ext;	///< for HPPA operand. Contains info about modifiers and their effect on the instruction
 	MCAsmInfo MAI; ///< The equivalent to MCAsmInfo in LLVM. It holds flags relevant for the asm style to print.
+	uint32_t tricore_insn_bytes; ///< Instruction bytes of a TriCore instruction.
 };
 
 void MCInst_Init(MCInst *inst, cs_arch arch);
