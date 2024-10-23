@@ -918,11 +918,12 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, SStream *OS, MCIn
 		struct insn_mnem *tmp = handle->mnem_list;
 		while(tmp) {
 			if (tmp->insn.id == insn->id) {
-				char str[CS_MNEMONIC_SIZE];
+				char str[CS_MNEMONIC_SIZE] = { 0 };
 
 				if (!str_replace(str, insn->mnemonic, cs_insn_name((csh)handle, insn->id), tmp->insn.mnemonic)) {
 					// copy result to mnemonic
-					(void)strncpy(insn->mnemonic, str, sizeof(insn->mnemonic) - 1);
+					CS_ASSERT_RET(sizeof(insn->mnemonic) == sizeof(str));
+					(void)memcpy(insn->mnemonic, str, sizeof(insn->mnemonic));
 					insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
 				}
 
