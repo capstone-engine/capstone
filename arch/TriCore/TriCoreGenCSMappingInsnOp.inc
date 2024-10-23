@@ -2969,8 +2969,10 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* off16 */
   { 0 }
 }},
-{ /* TRICORE_LD_A_sc (596) - TRICORE_INS_LD_A - ld.a a15, [sp]$const8 */
+{ /* TRICORE_LD_A_sc (596) - TRICORE_INS_LD_A - ld.a $dst, [$r]$const8 */
 {
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* dst */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* r */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* const8 */
   { 0 }
 }},

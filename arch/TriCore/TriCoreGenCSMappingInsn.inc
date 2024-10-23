@@ -4509,10 +4509,10 @@
   #endif
 },
 {
-  /* ld.a a15, [sp]$const8 */
+  /* ld.a $dst, [$r]$const8 */
   TriCore_LD_A_sc /* 596 */, TRICORE_INS_LD_A,
   #ifndef CAPSTONE_DIET
-    { 0 }, { TRICORE_REG_A15, 0 }, { TRICORE_FEATURE_HASV120_UP, 0 }, 0, 0, {{ 0 }}
+    { 0 }, { 0 }, { TRICORE_FEATURE_HASV120_UP, 0 }, 0, 0, {{ 0 }}
 
   #endif
 },

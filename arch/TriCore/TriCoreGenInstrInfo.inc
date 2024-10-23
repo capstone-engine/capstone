@@ -1319,7 +1319,7 @@
 typedef struct TriCoreInstrTable {
   MCInstrDesc Insts[1295];
   MCOperandInfo OperandInfo[346];
-  MCPhysReg ImplicitOps[4];
+  MCPhysReg ImplicitOps[3];
 } TriCoreInstrTable;
 
 #endif // defined(GET_INSTRINFO_MC_DESC) || defined(GET_INSTRINFO_CTOR_DTOR)
@@ -2029,7 +2029,7 @@ static const TriCoreInstrTable TriCoreDescs = {
   { 2, &TriCoreDescs.OperandInfo[173] },  // Inst #599 = LD_A_slr_post_v110
   { 2, &TriCoreDescs.OperandInfo[173] },  // Inst #598 = LD_A_slr_post
   { 2, &TriCoreDescs.OperandInfo[173] },  // Inst #597 = LD_A_slr
-  { 1, &TriCoreDescs.OperandInfo[0] },  // Inst #596 = LD_A_sc
+  { 3, &TriCoreDescs.OperandInfo[148] },  // Inst #596 = LD_A_sc
   { 3, &TriCoreDescs.OperandInfo[148] },  // Inst #595 = LD_A_bol
   { 2, &TriCoreDescs.OperandInfo[279] },  // Inst #594 = LD_A_bo_r
   { 3, &TriCoreDescs.OperandInfo[148] },  // Inst #593 = LD_A_bo_pre
@@ -2743,7 +2743,6 @@ static const TriCoreInstrTable TriCoreDescs = {
     /* 0 */
     /* 0 */ TriCore_PSW,
     /* 1 */ TriCore_A10, TriCore_A11,
-    /* 3 */ TriCore_A15,
   }
 };
 
