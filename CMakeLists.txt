@@ -570,24 +570,22 @@ if(CAPSTONE_RISCV_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_RISCV)
     set(SOURCES_RISCV
         arch/RISCV/RISCVDisassembler.c
-        arch/RISCV/RISCVInstPrinter.c
-        arch/RISCV/RISCVMapping.c
+        arch/RISCV/RISCVDetails.c
         arch/RISCV/RISCVModule.c
     )
     set(HEADERS_RISCV
-        arch/RISCV/RISCVBaseInfo.h
+        arch/RISCV/riscv_ast.gen.inc
+        arch/RISCV/riscv_decode.gen.inc
+        arch/RISCV/riscv_ast2str.gen.inc
+        arch/RISCV/riscv_ast2str_tbls.gen.inc
+        "include/capstone/riscv_insn.gen.inc"
+        arch/RISCV/riscv_insn_mapping.gen.inc
+
+        arch/RISCV/RISCVDetails.h
         arch/RISCV/RISCVDisassembler.h
-        arch/RISCV/RISCVInstPrinter.h
-        arch/RISCV/RISCVMapping.h
+        arch/RISCV/riscv_helpers_ast2str.h
+        arch/RISCV/riscv_helpers_rvconf.h
         arch/RISCV/RISCVModule.h
-        arch/RISCV/RISCVGenAsmWriter.inc
-        arch/RISCV/RISCVGenDisassemblerTables.inc
-        arch/RISCV/RISCVGenInsnNameMaps.inc
-        arch/RISCV/RISCVGenInstrInfo.inc
-        arch/RISCV/RISCVGenRegisterInfo.inc
-        arch/RISCV/RISCVGenSubtargetInfo.inc
-        arch/RISCV/RISCVMappingInsn.inc
-        arch/RISCV/RISCVMappingInsnOp.inc
     )
 endif()
 

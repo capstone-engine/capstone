@@ -1,0 +1,3044 @@
+#ifndef __Riscv_ast2str_tbls_gen_inc__
+#define __Riscv_ast2str_tbls_gen_inc__
+#include <stdint.h>
+
+#include <stddef.h>
+
+#include "riscv_ast.gen.inc"
+#include <string.h>
+
+void utype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_LUI: {
+    *s = "lui";
+    *len = 3;
+    break;
+  }
+  case RISCV_AUIPC: {
+    *s = "auipc";
+    *len = 5;
+    break;
+  }
+  }
+}
+void reg_name(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case 0x08: {
+    *s = "fp";
+    *len = 2;
+    break;
+  }
+  case 0x15: {
+    *s = "s5";
+    *len = 2;
+    break;
+  }
+  case 0x01: {
+    *s = "ra";
+    *len = 2;
+    break;
+  }
+  case 0x06: {
+    *s = "t1";
+    *len = 2;
+    break;
+  }
+  case 0x09: {
+    *s = "s1";
+    *len = 2;
+    break;
+  }
+  case 0x10: {
+    *s = "a6";
+    *len = 2;
+    break;
+  }
+  case 0x1B: {
+    *s = "s11";
+    *len = 3;
+    break;
+  }
+  case 0x1C: {
+    *s = "t3";
+    *len = 2;
+    break;
+  }
+  case 0x16: {
+    *s = "s6";
+    *len = 2;
+    break;
+  }
+  case 0x00: {
+    *s = "zero";
+    *len = 4;
+    break;
+  }
+  case 0x0A: {
+    *s = "a0";
+    *len = 2;
+    break;
+  }
+  case 0x1A: {
+    *s = "s10";
+    *len = 3;
+    break;
+  }
+  case 0x17: {
+    *s = "s7";
+    *len = 2;
+    break;
+  }
+  case 0x0C: {
+    *s = "a2";
+    *len = 2;
+    break;
+  }
+  case 0x18: {
+    *s = "s8";
+    *len = 2;
+    break;
+  }
+  case 0x02: {
+    *s = "sp";
+    *len = 2;
+    break;
+  }
+  case 0x1F: {
+    *s = "t6";
+    *len = 2;
+    break;
+  }
+  case 0x0B: {
+    *s = "a1";
+    *len = 2;
+    break;
+  }
+  case 0x07: {
+    *s = "t2";
+    *len = 2;
+    break;
+  }
+  case 0x13: {
+    *s = "s3";
+    *len = 2;
+    break;
+  }
+  case 0x04: {
+    *s = "tp";
+    *len = 2;
+    break;
+  }
+  case 0x19: {
+    *s = "s9";
+    *len = 2;
+    break;
+  }
+  case 0x12: {
+    *s = "s2";
+    *len = 2;
+    break;
+  }
+  case 0x14: {
+    *s = "s4";
+    *len = 2;
+    break;
+  }
+  case 0x0E: {
+    *s = "a4";
+    *len = 2;
+    break;
+  }
+  case 0x1E: {
+    *s = "t5";
+    *len = 2;
+    break;
+  }
+  case 0x11: {
+    *s = "a7";
+    *len = 2;
+    break;
+  }
+  case 0x03: {
+    *s = "gp";
+    *len = 2;
+    break;
+  }
+  case 0x05: {
+    *s = "t0";
+    *len = 2;
+    break;
+  }
+  case 0x1D: {
+    *s = "t4";
+    *len = 2;
+    break;
+  }
+  case 0x0D: {
+    *s = "a3";
+    *len = 2;
+    break;
+  }
+  case 0x0F: {
+    *s = "a5";
+    *len = 2;
+    break;
+  }
+  }
+}
+void btype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_BGEU: {
+    *s = "bgeu";
+    *len = 4;
+    break;
+  }
+  case RISCV_BLT: {
+    *s = "blt";
+    *len = 3;
+    break;
+  }
+  case RISCV_BGE: {
+    *s = "bge";
+    *len = 3;
+    break;
+  }
+  case RISCV_BLTU: {
+    *s = "bltu";
+    *len = 4;
+    break;
+  }
+  case RISCV_BNE: {
+    *s = "bne";
+    *len = 3;
+    break;
+  }
+  case RISCV_BEQ: {
+    *s = "beq";
+    *len = 3;
+    break;
+  }
+  }
+}
+void itype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_ANDI: {
+    *s = "andi";
+    *len = 4;
+    break;
+  }
+  case RISCV_ADDI: {
+    *s = "addi";
+    *len = 4;
+    break;
+  }
+  case RISCV_XORI: {
+    *s = "xori";
+    *len = 4;
+    break;
+  }
+  case RISCV_SLTI: {
+    *s = "slti";
+    *len = 4;
+    break;
+  }
+  case RISCV_ORI: {
+    *s = "ori";
+    *len = 3;
+    break;
+  }
+  case RISCV_SLTIU: {
+    *s = "sltiu";
+    *len = 5;
+    break;
+  }
+  }
+}
+void shiftiop_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_SRAI: {
+    *s = "srai";
+    *len = 4;
+    break;
+  }
+  case RISCV_SRLI: {
+    *s = "srli";
+    *len = 4;
+    break;
+  }
+  case RISCV_SLLI: {
+    *s = "slli";
+    *len = 4;
+    break;
+  }
+  }
+}
+void rtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_SLL: {
+    *s = "sll";
+    *len = 3;
+    break;
+  }
+  case RISCV_SRL: {
+    *s = "srl";
+    *len = 3;
+    break;
+  }
+  case RISCV_SLTU: {
+    *s = "sltu";
+    *len = 4;
+    break;
+  }
+  case RISCV_ADD: {
+    *s = "add";
+    *len = 3;
+    break;
+  }
+  case RISCV_XOR: {
+    *s = "xor";
+    *len = 3;
+    break;
+  }
+  case RISCV_SLT: {
+    *s = "slt";
+    *len = 3;
+    break;
+  }
+  case RISCV_AND: {
+    *s = "and";
+    *len = 3;
+    break;
+  }
+  case RISCV_OR: {
+    *s = "or";
+    *len = 2;
+    break;
+  }
+  case RISCV_SRA: {
+    *s = "sra";
+    *len = 3;
+    break;
+  }
+  case RISCV_SUB: {
+    *s = "sub";
+    *len = 3;
+    break;
+  }
+  }
+}
+void size_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_BYTE: {
+    *s = "b";
+    *len = 1;
+    break;
+  }
+  case RISCV_WORD: {
+    *s = "w";
+    *len = 1;
+    break;
+  }
+  case RISCV_DOUBLE: {
+    *s = "d";
+    *len = 1;
+    break;
+  }
+  case RISCV_HALF: {
+    *s = "h";
+    *len = 1;
+    break;
+  }
+  }
+}
+void rtypew_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_SRAW: {
+    *s = "sraw";
+    *len = 4;
+    break;
+  }
+  case RISCV_SUBW: {
+    *s = "subw";
+    *len = 4;
+    break;
+  }
+  case RISCV_SLLW: {
+    *s = "sllw";
+    *len = 4;
+    break;
+  }
+  case RISCV_SRLW: {
+    *s = "srlw";
+    *len = 4;
+    break;
+  }
+  case RISCV_ADDW: {
+    *s = "addw";
+    *len = 4;
+    break;
+  }
+  }
+}
+void shiftiwop_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_SRLIW: {
+    *s = "srliw";
+    *len = 5;
+    break;
+  }
+  case RISCV_SLLIW: {
+    *s = "slliw";
+    *len = 5;
+    break;
+  }
+  case RISCV_SRAIW: {
+    *s = "sraiw";
+    *len = 5;
+    break;
+  }
+  }
+}
+void amo_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_AMOMIN: {
+    *s = "amomin";
+    *len = 6;
+    break;
+  }
+  case RISCV_AMOXOR: {
+    *s = "amoxor";
+    *len = 6;
+    break;
+  }
+  case RISCV_AMOADD: {
+    *s = "amoadd";
+    *len = 6;
+    break;
+  }
+  case RISCV_AMOOR: {
+    *s = "amoor";
+    *len = 5;
+    break;
+  }
+  case RISCV_AMOSWAP: {
+    *s = "amoswap";
+    *len = 7;
+    break;
+  }
+  case RISCV_AMOMAX: {
+    *s = "amomax";
+    *len = 6;
+    break;
+  }
+  case RISCV_AMOMINU: {
+    *s = "amominu";
+    *len = 7;
+    break;
+  }
+  case RISCV_AMOAND: {
+    *s = "amoand";
+    *len = 6;
+    break;
+  }
+  case RISCV_AMOMAXU: {
+    *s = "amomaxu";
+    *len = 7;
+    break;
+  }
+  }
+}
+void creg_name(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case 0x7: {
+    *s = "a5";
+    *len = 2;
+    break;
+  }
+  case 0x5: {
+    *s = "a3";
+    *len = 2;
+    break;
+  }
+  case 0x1: {
+    *s = "s1";
+    *len = 2;
+    break;
+  }
+  case 0x3: {
+    *s = "a1";
+    *len = 2;
+    break;
+  }
+  case 0x2: {
+    *s = "a0";
+    *len = 2;
+    break;
+  }
+  case 0x4: {
+    *s = "a2";
+    *len = 2;
+    break;
+  }
+  case 0x6: {
+    *s = "a4";
+    *len = 2;
+    break;
+  }
+  case 0x0: {
+    *s = "s0";
+    *len = 2;
+    break;
+  }
+  }
+}
+void csr_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_CSRRS: {
+    *s = "csrrs";
+    *len = 5;
+    break;
+  }
+  case RISCV_CSRRW: {
+    *s = "csrrw";
+    *len = 5;
+    break;
+  }
+  case RISCV_CSRRC: {
+    *s = "csrrc";
+    *len = 5;
+    break;
+  }
+  }
+}
+void freg_name(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case 0x08: {
+    *s = "fs0";
+    *len = 3;
+    break;
+  }
+  case 0x15: {
+    *s = "fs5";
+    *len = 3;
+    break;
+  }
+  case 0x01: {
+    *s = "ft1";
+    *len = 3;
+    break;
+  }
+  case 0x06: {
+    *s = "ft6";
+    *len = 3;
+    break;
+  }
+  case 0x09: {
+    *s = "fs1";
+    *len = 3;
+    break;
+  }
+  case 0x10: {
+    *s = "fa6";
+    *len = 3;
+    break;
+  }
+  case 0x1B: {
+    *s = "fs11";
+    *len = 4;
+    break;
+  }
+  case 0x1C: {
+    *s = "ft8";
+    *len = 3;
+    break;
+  }
+  case 0x16: {
+    *s = "fs6";
+    *len = 3;
+    break;
+  }
+  case 0x00: {
+    *s = "ft0";
+    *len = 3;
+    break;
+  }
+  case 0x0A: {
+    *s = "fa0";
+    *len = 3;
+    break;
+  }
+  case 0x1A: {
+    *s = "fs10";
+    *len = 4;
+    break;
+  }
+  case 0x17: {
+    *s = "fs7";
+    *len = 3;
+    break;
+  }
+  case 0x0C: {
+    *s = "fa2";
+    *len = 3;
+    break;
+  }
+  case 0x18: {
+    *s = "fs8";
+    *len = 3;
+    break;
+  }
+  case 0x02: {
+    *s = "ft2";
+    *len = 3;
+    break;
+  }
+  case 0x1F: {
+    *s = "ft11";
+    *len = 4;
+    break;
+  }
+  case 0x0B: {
+    *s = "fa1";
+    *len = 3;
+    break;
+  }
+  case 0x07: {
+    *s = "ft7";
+    *len = 3;
+    break;
+  }
+  case 0x13: {
+    *s = "fs3";
+    *len = 3;
+    break;
+  }
+  case 0x04: {
+    *s = "ft4";
+    *len = 3;
+    break;
+  }
+  case 0x19: {
+    *s = "fs9";
+    *len = 3;
+    break;
+  }
+  case 0x12: {
+    *s = "fs2";
+    *len = 3;
+    break;
+  }
+  case 0x14: {
+    *s = "fs4";
+    *len = 3;
+    break;
+  }
+  case 0x0E: {
+    *s = "fa4";
+    *len = 3;
+    break;
+  }
+  case 0x1E: {
+    *s = "ft10";
+    *len = 4;
+    break;
+  }
+  case 0x11: {
+    *s = "fa7";
+    *len = 3;
+    break;
+  }
+  case 0x03: {
+    *s = "ft3";
+    *len = 3;
+    break;
+  }
+  case 0x05: {
+    *s = "ft5";
+    *len = 3;
+    break;
+  }
+  case 0x1D: {
+    *s = "ft9";
+    *len = 3;
+    break;
+  }
+  case 0x0D: {
+    *s = "fa3";
+    *len = 3;
+    break;
+  }
+  case 0x0F: {
+    *s = "fa5";
+    *len = 3;
+    break;
+  }
+  }
+}
+void f_madd_type_mnemonic_S(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FMADD_S: {
+    *s = "fmadd.s";
+    *len = 7;
+    break;
+  }
+  case RISCV_FNMADD_S: {
+    *s = "fnmadd.s";
+    *len = 8;
+    break;
+  }
+  case RISCV_FNMSUB_S: {
+    *s = "fnmsub.s";
+    *len = 8;
+    break;
+  }
+  case RISCV_FMSUB_S: {
+    *s = "fmsub.s";
+    *len = 7;
+    break;
+  }
+  }
+}
+void frm_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_RM_RNE: {
+    *s = "rne";
+    *len = 3;
+    break;
+  }
+  case RISCV_RM_RTZ: {
+    *s = "rtz";
+    *len = 3;
+    break;
+  }
+  case RISCV_RM_RDN: {
+    *s = "rdn";
+    *len = 3;
+    break;
+  }
+  case RISCV_RM_RMM: {
+    *s = "rmm";
+    *len = 3;
+    break;
+  }
+  case RISCV_RM_RUP: {
+    *s = "rup";
+    *len = 3;
+    break;
+  }
+  case RISCV_RM_DYN: {
+    *s = "dyn";
+    *len = 3;
+    break;
+  }
+  }
+}
+void f_bin_rm_type_mnemonic_S(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FDIV_S: {
+    *s = "fdiv.s";
+    *len = 6;
+    break;
+  }
+  case RISCV_FADD_S: {
+    *s = "fadd.s";
+    *len = 6;
+    break;
+  }
+  case RISCV_FMUL_S: {
+    *s = "fmul.s";
+    *len = 6;
+    break;
+  }
+  case RISCV_FSUB_S: {
+    *s = "fsub.s";
+    *len = 6;
+    break;
+  }
+  }
+}
+void f_madd_type_mnemonic_D(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FMSUB_D: {
+    *s = "fmsub.d";
+    *len = 7;
+    break;
+  }
+  case RISCV_FNMSUB_D: {
+    *s = "fnmsub.d";
+    *len = 8;
+    break;
+  }
+  case RISCV_FNMADD_D: {
+    *s = "fnmadd.d";
+    *len = 8;
+    break;
+  }
+  case RISCV_FMADD_D: {
+    *s = "fmadd.d";
+    *len = 7;
+    break;
+  }
+  }
+}
+void f_bin_rm_type_mnemonic_D(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FMUL_D: {
+    *s = "fmul.d";
+    *len = 6;
+    break;
+  }
+  case RISCV_FADD_D: {
+    *s = "fadd.d";
+    *len = 6;
+    break;
+  }
+  case RISCV_FSUB_D: {
+    *s = "fsub.d";
+    *len = 6;
+    break;
+  }
+  case RISCV_FDIV_D: {
+    *s = "fdiv.d";
+    *len = 6;
+    break;
+  }
+  }
+}
+void zba_rtypeuw_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_SH1ADDUW: {
+    *s = "sh1add.uw";
+    *len = 9;
+    break;
+  }
+  case RISCV_SH2ADDUW: {
+    *s = "sh2add.uw";
+    *len = 9;
+    break;
+  }
+  case RISCV_ADDUW: {
+    *s = "add.uw";
+    *len = 6;
+    break;
+  }
+  case RISCV_SH3ADDUW: {
+    *s = "sh3add.uw";
+    *len = 9;
+    break;
+  }
+  }
+}
+void zba_rtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_SH3ADD: {
+    *s = "sh3add";
+    *len = 6;
+    break;
+  }
+  case RISCV_SH2ADD: {
+    *s = "sh2add";
+    *len = 6;
+    break;
+  }
+  case RISCV_SH1ADD: {
+    *s = "sh1add";
+    *len = 6;
+    break;
+  }
+  }
+}
+void zbb_rtypew_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_RORW: {
+    *s = "rorw";
+    *len = 4;
+    break;
+  }
+  case RISCV_ROLW: {
+    *s = "rolw";
+    *len = 4;
+    break;
+  }
+  }
+}
+void zbb_rtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_ROR: {
+    *s = "ror";
+    *len = 3;
+    break;
+  }
+  case RISCV_MAXU: {
+    *s = "maxu";
+    *len = 4;
+    break;
+  }
+  case RISCV_MIN: {
+    *s = "min";
+    *len = 3;
+    break;
+  }
+  case RISCV_MAX: {
+    *s = "max";
+    *len = 3;
+    break;
+  }
+  case RISCV_ANDN: {
+    *s = "andn";
+    *len = 4;
+    break;
+  }
+  case RISCV_ORN: {
+    *s = "orn";
+    *len = 3;
+    break;
+  }
+  case RISCV_XNOR: {
+    *s = "xnor";
+    *len = 4;
+    break;
+  }
+  case RISCV_MINU: {
+    *s = "minu";
+    *len = 4;
+    break;
+  }
+  case RISCV_ROL: {
+    *s = "rol";
+    *len = 3;
+    break;
+  }
+  }
+}
+void zbb_extop_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_SEXTH: {
+    *s = "sext.h";
+    *len = 6;
+    break;
+  }
+  case RISCV_ZEXTH: {
+    *s = "zext.h";
+    *len = 6;
+    break;
+  }
+  case RISCV_SEXTB: {
+    *s = "sext.b";
+    *len = 6;
+    break;
+  }
+  }
+}
+void zbs_iop_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_BCLRI: {
+    *s = "bclri";
+    *len = 5;
+    break;
+  }
+  case RISCV_BINVI: {
+    *s = "binvi";
+    *len = 5;
+    break;
+  }
+  case RISCV_BSETI: {
+    *s = "bseti";
+    *len = 5;
+    break;
+  }
+  case RISCV_BEXTI: {
+    *s = "bexti";
+    *len = 5;
+    break;
+  }
+  }
+}
+void zbs_rtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_BEXT: {
+    *s = "bext";
+    *len = 4;
+    break;
+  }
+  case RISCV_BINV: {
+    *s = "binv";
+    *len = 4;
+    break;
+  }
+  case RISCV_BSET: {
+    *s = "bset";
+    *len = 4;
+    break;
+  }
+  case RISCV_BCLR: {
+    *s = "bclr";
+    *len = 4;
+    break;
+  }
+  }
+}
+void f_bin_rm_type_mnemonic_H(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FDIV_H: {
+    *s = "fdiv.h";
+    *len = 6;
+    break;
+  }
+  case RISCV_FADD_H: {
+    *s = "fadd.h";
+    *len = 6;
+    break;
+  }
+  case RISCV_FMUL_H: {
+    *s = "fmul.h";
+    *len = 6;
+    break;
+  }
+  case RISCV_FSUB_H: {
+    *s = "fsub.h";
+    *len = 6;
+    break;
+  }
+  }
+}
+void f_madd_type_mnemonic_H(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FNMSUB_H: {
+    *s = "fnmsub.h";
+    *len = 8;
+    break;
+  }
+  case RISCV_FMSUB_H: {
+    *s = "fmsub.h";
+    *len = 7;
+    break;
+  }
+  case RISCV_FNMADD_H: {
+    *s = "fnmadd.h";
+    *len = 8;
+    break;
+  }
+  case RISCV_FMADD_H: {
+    *s = "fmadd.h";
+    *len = 7;
+    break;
+  }
+  }
+}
+void zbkb_rtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_PACKH: {
+    *s = "packh";
+    *len = 5;
+    break;
+  }
+  case RISCV_PACK: {
+    *s = "pack";
+    *len = 4;
+    break;
+  }
+  }
+}
+void zicond_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_CZERO_EQZ: {
+    *s = "czero.eqz";
+    *len = 9;
+    break;
+  }
+  case RISCV_CZERO_NEZ: {
+    *s = "czero.nez";
+    *len = 9;
+    break;
+  }
+  }
+}
+void sew_flag(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case 0x1: {
+    *s = "e16";
+    *len = 3;
+    break;
+  }
+  case 0x3: {
+    *s = "e64";
+    *len = 3;
+    break;
+  }
+  case 0x2: {
+    *s = "e32";
+    *len = 3;
+    break;
+  }
+  case 0x0: {
+    *s = "e8";
+    *len = 2;
+    break;
+  }
+  }
+}
+void vvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VV_VSSRA: {
+    *s = "vssra.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VV_VXOR: {
+    *s = "vxor.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_VV_VSMUL: {
+    *s = "vsmul.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VV_VAND: {
+    *s = "vand.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_VV_VSSUB: {
+    *s = "vssub.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VV_VSUB: {
+    *s = "vsub.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_VV_VSLL: {
+    *s = "vsll.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_VV_VSSRL: {
+    *s = "vssrl.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VV_VSADD: {
+    *s = "vsadd.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VV_VSSUBU: {
+    *s = "vssubu.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_VV_VMAX: {
+    *s = "vmax.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_VV_VADD: {
+    *s = "vadd.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_VV_VSRL: {
+    *s = "vsrl.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_VV_VMAXU: {
+    *s = "vmaxu.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VV_VRGATHER: {
+    *s = "vrgather.vv";
+    *len = 11;
+    break;
+  }
+  case RISCV_VV_VSRA: {
+    *s = "vsra.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_VV_VRGATHEREI16: {
+    *s = "vrgatherei16.vv";
+    *len = 15;
+    break;
+  }
+  case RISCV_VV_VMINU: {
+    *s = "vminu.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VV_VSADDU: {
+    *s = "vsaddu.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_VV_VMIN: {
+    *s = "vmin.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_VV_VOR: {
+    *s = "vor.vv";
+    *len = 6;
+    break;
+  }
+  }
+}
+void vreg_name(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case 0x08: {
+    *s = "v8";
+    *len = 2;
+    break;
+  }
+  case 0x15: {
+    *s = "v21";
+    *len = 3;
+    break;
+  }
+  case 0x01: {
+    *s = "v1";
+    *len = 2;
+    break;
+  }
+  case 0x06: {
+    *s = "v6";
+    *len = 2;
+    break;
+  }
+  case 0x09: {
+    *s = "v9";
+    *len = 2;
+    break;
+  }
+  case 0x10: {
+    *s = "v16";
+    *len = 3;
+    break;
+  }
+  case 0x1B: {
+    *s = "v27";
+    *len = 3;
+    break;
+  }
+  case 0x1C: {
+    *s = "v28";
+    *len = 3;
+    break;
+  }
+  case 0x16: {
+    *s = "v22";
+    *len = 3;
+    break;
+  }
+  case 0x00: {
+    *s = "v0";
+    *len = 2;
+    break;
+  }
+  case 0x0A: {
+    *s = "v10";
+    *len = 3;
+    break;
+  }
+  case 0x1A: {
+    *s = "v26";
+    *len = 3;
+    break;
+  }
+  case 0x17: {
+    *s = "v23";
+    *len = 3;
+    break;
+  }
+  case 0x0C: {
+    *s = "v12";
+    *len = 3;
+    break;
+  }
+  case 0x18: {
+    *s = "v24";
+    *len = 3;
+    break;
+  }
+  case 0x02: {
+    *s = "v2";
+    *len = 2;
+    break;
+  }
+  case 0x1F: {
+    *s = "v31";
+    *len = 3;
+    break;
+  }
+  case 0x0B: {
+    *s = "v11";
+    *len = 3;
+    break;
+  }
+  case 0x07: {
+    *s = "v7";
+    *len = 2;
+    break;
+  }
+  case 0x13: {
+    *s = "v19";
+    *len = 3;
+    break;
+  }
+  case 0x04: {
+    *s = "v4";
+    *len = 2;
+    break;
+  }
+  case 0x19: {
+    *s = "v25";
+    *len = 3;
+    break;
+  }
+  case 0x12: {
+    *s = "v18";
+    *len = 3;
+    break;
+  }
+  case 0x14: {
+    *s = "v20";
+    *len = 3;
+    break;
+  }
+  case 0x0E: {
+    *s = "v14";
+    *len = 3;
+    break;
+  }
+  case 0x1E: {
+    *s = "v30";
+    *len = 3;
+    break;
+  }
+  case 0x11: {
+    *s = "v17";
+    *len = 3;
+    break;
+  }
+  case 0x03: {
+    *s = "v3";
+    *len = 2;
+    break;
+  }
+  case 0x05: {
+    *s = "v5";
+    *len = 2;
+    break;
+  }
+  case 0x1D: {
+    *s = "v29";
+    *len = 3;
+    break;
+  }
+  case 0x0D: {
+    *s = "v13";
+    *len = 3;
+    break;
+  }
+  case 0x0F: {
+    *s = "v15";
+    *len = 3;
+    break;
+  }
+  }
+}
+void nvstype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_NVS_VNSRL: {
+    *s = "vnsrl.wv";
+    *len = 8;
+    break;
+  }
+  case RISCV_NVS_VNSRA: {
+    *s = "vnsra.wv";
+    *len = 8;
+    break;
+  }
+  }
+}
+void nvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_NV_VNCLIP: {
+    *s = "vnclip.wv";
+    *len = 9;
+    break;
+  }
+  case RISCV_NV_VNCLIPU: {
+    *s = "vnclipu.wv";
+    *len = 10;
+    break;
+  }
+  }
+}
+void vxtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VX_VSRA: {
+    *s = "vsra.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_VX_VOR: {
+    *s = "vor.vx";
+    *len = 6;
+    break;
+  }
+  case RISCV_VX_VADD: {
+    *s = "vadd.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_VX_VSADDU: {
+    *s = "vsaddu.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_VX_VMAX: {
+    *s = "vmax.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_VX_VSSRA: {
+    *s = "vssra.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VX_VXOR: {
+    *s = "vxor.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_VX_VSSRL: {
+    *s = "vssrl.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VX_VRSUB: {
+    *s = "vrsub.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VX_VSUB: {
+    *s = "vsub.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_VX_VSADD: {
+    *s = "vsadd.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VX_VSSUBU: {
+    *s = "vssubu.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_VX_VMIN: {
+    *s = "vmin.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_VX_VSLL: {
+    *s = "vsll.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_VX_VSMUL: {
+    *s = "vsmul.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VX_VMINU: {
+    *s = "vminu.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VX_VMAXU: {
+    *s = "vmaxu.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VX_VAND: {
+    *s = "vand.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_VX_VSSUB: {
+    *s = "vssub.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VX_VSRL: {
+    *s = "vsrl.vx";
+    *len = 7;
+    break;
+  }
+  }
+}
+void nxstype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_NXS_VNSRA: {
+    *s = "vnsra.wx";
+    *len = 8;
+    break;
+  }
+  case RISCV_NXS_VNSRL: {
+    *s = "vnsrl.wx";
+    *len = 8;
+    break;
+  }
+  }
+}
+void nxtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_NX_VNCLIP: {
+    *s = "vnclip.wx";
+    *len = 9;
+    break;
+  }
+  case RISCV_NX_VNCLIPU: {
+    *s = "vnclipu.wx";
+    *len = 10;
+    break;
+  }
+  }
+}
+void vxsg_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VX_VSLIDEDOWN: {
+    *s = "vslidedown.vx";
+    *len = 13;
+    break;
+  }
+  case RISCV_VX_VSLIDEUP: {
+    *s = "vslideup.vx";
+    *len = 11;
+    break;
+  }
+  case RISCV_VX_VRGATHER: {
+    *s = "vrgather.vx";
+    *len = 11;
+    break;
+  }
+  }
+}
+void vitype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VI_VSRL: {
+    *s = "vsrl.vi";
+    *len = 7;
+    break;
+  }
+  case RISCV_VI_VAND: {
+    *s = "vand.vi";
+    *len = 7;
+    break;
+  }
+  case RISCV_VI_VXOR: {
+    *s = "vxor.vi";
+    *len = 7;
+    break;
+  }
+  case RISCV_VI_VSADD: {
+    *s = "vsadd.vi";
+    *len = 8;
+    break;
+  }
+  case RISCV_VI_VSRA: {
+    *s = "vsra.vi";
+    *len = 7;
+    break;
+  }
+  case RISCV_VI_VSSRL: {
+    *s = "vssrl.vi";
+    *len = 8;
+    break;
+  }
+  case RISCV_VI_VSADDU: {
+    *s = "vsaddu.vi";
+    *len = 9;
+    break;
+  }
+  case RISCV_VI_VSLL: {
+    *s = "vsll.vi";
+    *len = 7;
+    break;
+  }
+  case RISCV_VI_VRSUB: {
+    *s = "vrsub.vi";
+    *len = 8;
+    break;
+  }
+  case RISCV_VI_VADD: {
+    *s = "vadd.vi";
+    *len = 7;
+    break;
+  }
+  case RISCV_VI_VOR: {
+    *s = "vor.vi";
+    *len = 6;
+    break;
+  }
+  case RISCV_VI_VSSRA: {
+    *s = "vssra.vi";
+    *len = 8;
+    break;
+  }
+  }
+}
+void nistype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_NIS_VNSRL: {
+    *s = "vnsrl.wi";
+    *len = 8;
+    break;
+  }
+  case RISCV_NIS_VNSRA: {
+    *s = "vnsra.wi";
+    *len = 8;
+    break;
+  }
+  }
+}
+void nitype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_NI_VNCLIPU: {
+    *s = "vnclipu.wi";
+    *len = 10;
+    break;
+  }
+  case RISCV_NI_VNCLIP: {
+    *s = "vnclip.wi";
+    *len = 9;
+    break;
+  }
+  }
+}
+void visg_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VI_VRGATHER: {
+    *s = "vrgather.vi";
+    *len = 11;
+    break;
+  }
+  case RISCV_VI_VSLIDEDOWN: {
+    *s = "vslidedown.vi";
+    *len = 13;
+    break;
+  }
+  case RISCV_VI_VSLIDEUP: {
+    *s = "vslideup.vi";
+    *len = 11;
+    break;
+  }
+  }
+}
+void simm_string(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case 0x01: {
+    *s = "2";
+    *len = 1;
+    break;
+  }
+  case 0x07: {
+    *s = "8";
+    *len = 1;
+    break;
+  }
+  case 0x00: {
+    *s = "1";
+    *len = 1;
+    break;
+  }
+  case 0x03: {
+    *s = "4";
+    *len = 1;
+    break;
+  }
+  }
+}
+void mvvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_MVV_VDIV: {
+    *s = "vdiv.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_MVV_VREMU: {
+    *s = "vremu.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVV_VAADDU: {
+    *s = "vaaddu.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_MVV_VMULHSU: {
+    *s = "vmulhsu.vv";
+    *len = 10;
+    break;
+  }
+  case RISCV_MVV_VASUB: {
+    *s = "vasub.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVV_VMULHU: {
+    *s = "vmulhu.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_MVV_VDIVU: {
+    *s = "vdivu.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVV_VMULH: {
+    *s = "vmulh.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVV_VAADD: {
+    *s = "vaadd.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVV_VMUL: {
+    *s = "vmul.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_MVV_VREM: {
+    *s = "vrem.vv";
+    *len = 7;
+    break;
+  }
+  case RISCV_MVV_VASUBU: {
+    *s = "vasubu.vv";
+    *len = 9;
+    break;
+  }
+  }
+}
+void mvvmatype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_MVV_VMACC: {
+    *s = "vmacc.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVV_VNMSUB: {
+    *s = "vnmsub.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_MVV_VNMSAC: {
+    *s = "vnmsac.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_MVV_VMADD: {
+    *s = "vmadd.vv";
+    *len = 8;
+    break;
+  }
+  }
+}
+void wvvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_WVV_VSUBU: {
+    *s = "vwsubu.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_WVV_VWMULSU: {
+    *s = "vwmulsu.vv";
+    *len = 10;
+    break;
+  }
+  case RISCV_WVV_VADD: {
+    *s = "vwadd.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_WVV_VWMUL: {
+    *s = "vwmul.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_WVV_VADDU: {
+    *s = "vwaddu.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_WVV_VWMULU: {
+    *s = "vwmulu.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_WVV_VSUB: {
+    *s = "vwsub.vv";
+    *len = 8;
+    break;
+  }
+  }
+}
+void wvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_WV_VSUB: {
+    *s = "vwsub.wv";
+    *len = 8;
+    break;
+  }
+  case RISCV_WV_VADDU: {
+    *s = "vwaddu.wv";
+    *len = 9;
+    break;
+  }
+  case RISCV_WV_VSUBU: {
+    *s = "vwsubu.wv";
+    *len = 9;
+    break;
+  }
+  case RISCV_WV_VADD: {
+    *s = "vwadd.wv";
+    *len = 8;
+    break;
+  }
+  }
+}
+void wmvvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_WMVV_VWMACCU: {
+    *s = "vwmaccu.vv";
+    *len = 10;
+    break;
+  }
+  case RISCV_WMVV_VWMACCSU: {
+    *s = "vwmaccsu.vv";
+    *len = 11;
+    break;
+  }
+  case RISCV_WMVV_VWMACC: {
+    *s = "vwmacc.vv";
+    *len = 9;
+    break;
+  }
+  }
+}
+void vext2type_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VEXT2_SVF2: {
+    *s = "vsext.vf2";
+    *len = 9;
+    break;
+  }
+  case RISCV_VEXT2_ZVF2: {
+    *s = "vzext.vf2";
+    *len = 9;
+    break;
+  }
+  }
+}
+void vext4type_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VEXT4_ZVF4: {
+    *s = "vzext.vf4";
+    *len = 9;
+    break;
+  }
+  case RISCV_VEXT4_SVF4: {
+    *s = "vsext.vf4";
+    *len = 9;
+    break;
+  }
+  }
+}
+void vext8type_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VEXT8_SVF8: {
+    *s = "vsext.vf8";
+    *len = 9;
+    break;
+  }
+  case RISCV_VEXT8_ZVF8: {
+    *s = "vzext.vf8";
+    *len = 9;
+    break;
+  }
+  }
+}
+void mvxtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_MVX_VMUL: {
+    *s = "vmul.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_MVX_VREM: {
+    *s = "vrem.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_MVX_VMULH: {
+    *s = "vmulh.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVX_VDIV: {
+    *s = "vdiv.vx";
+    *len = 7;
+    break;
+  }
+  case RISCV_MVX_VAADDU: {
+    *s = "vaaddu.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_MVX_VSLIDE1DOWN: {
+    *s = "vslide1down.vx";
+    *len = 14;
+    break;
+  }
+  case RISCV_MVX_VMULHSU: {
+    *s = "vmulhsu.vx";
+    *len = 10;
+    break;
+  }
+  case RISCV_MVX_VSLIDE1UP: {
+    *s = "vslide1up.vx";
+    *len = 12;
+    break;
+  }
+  case RISCV_MVX_VMULHU: {
+    *s = "vmulhu.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_MVX_VASUBU: {
+    *s = "vasubu.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_MVX_VREMU: {
+    *s = "vremu.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVX_VDIVU: {
+    *s = "vdivu.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVX_VAADD: {
+    *s = "vaadd.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVX_VASUB: {
+    *s = "vasub.vx";
+    *len = 8;
+    break;
+  }
+  }
+}
+void mvxmatype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_MVX_VNMSAC: {
+    *s = "vnmsac.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_MVX_VMADD: {
+    *s = "vmadd.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVX_VMACC: {
+    *s = "vmacc.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_MVX_VNMSUB: {
+    *s = "vnmsub.vx";
+    *len = 9;
+    break;
+  }
+  }
+}
+void wvxtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_WVX_VSUB: {
+    *s = "vwsub.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_WVX_VADDU: {
+    *s = "vwaddu.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_WVX_VADD: {
+    *s = "vwadd.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_WVX_VSUBU: {
+    *s = "vwsubu.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_WVX_VWMULSU: {
+    *s = "vwmulsu.vx";
+    *len = 10;
+    break;
+  }
+  case RISCV_WVX_VWMUL: {
+    *s = "vwmul.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_WVX_VWMULU: {
+    *s = "vwmulu.vx";
+    *len = 9;
+    break;
+  }
+  }
+}
+void wxtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_WX_VSUB: {
+    *s = "vwsub.wx";
+    *len = 8;
+    break;
+  }
+  case RISCV_WX_VSUBU: {
+    *s = "vwsubu.wx";
+    *len = 9;
+    break;
+  }
+  case RISCV_WX_VADD: {
+    *s = "vwadd.wx";
+    *len = 8;
+    break;
+  }
+  case RISCV_WX_VADDU: {
+    *s = "vwaddu.wx";
+    *len = 9;
+    break;
+  }
+  }
+}
+void wmvxtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_WMVX_VWMACCU: {
+    *s = "vwmaccu.vx";
+    *len = 10;
+    break;
+  }
+  case RISCV_WMVX_VWMACCSU: {
+    *s = "vwmaccsu.vx";
+    *len = 11;
+    break;
+  }
+  case RISCV_WMVX_VWMACCUS: {
+    *s = "vwmaccus.vx";
+    *len = 11;
+    break;
+  }
+  case RISCV_WMVX_VWMACC: {
+    *s = "vwmacc.vx";
+    *len = 9;
+    break;
+  }
+  }
+}
+void fvvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FVV_VSGNJ: {
+    *s = "vfsgnj.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_FVV_VMIN: {
+    *s = "vfmin.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_FVV_VDIV: {
+    *s = "vfdiv.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_FVV_VMAX: {
+    *s = "vfmax.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_FVV_VADD: {
+    *s = "vfadd.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_FVV_VSUB: {
+    *s = "vfsub.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_FVV_VSGNJN: {
+    *s = "vfsgnjn.vv";
+    *len = 10;
+    break;
+  }
+  case RISCV_FVV_VSGNJX: {
+    *s = "vfsgnjx.vv";
+    *len = 10;
+    break;
+  }
+  case RISCV_FVV_VMUL: {
+    *s = "vfmul.vv";
+    *len = 8;
+    break;
+  }
+  }
+}
+void fvvmatype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FVV_VNMSAC: {
+    *s = "vfnmsac.vv";
+    *len = 10;
+    break;
+  }
+  case RISCV_FVV_VMACC: {
+    *s = "vfmacc.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_FVV_VNMSUB: {
+    *s = "vfnmsub.vv";
+    *len = 10;
+    break;
+  }
+  case RISCV_FVV_VMSAC: {
+    *s = "vfmsac.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_FVV_VMADD: {
+    *s = "vfmadd.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_FVV_VMSUB: {
+    *s = "vfmsub.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_FVV_VNMACC: {
+    *s = "vfnmacc.vv";
+    *len = 10;
+    break;
+  }
+  case RISCV_FVV_VNMADD: {
+    *s = "vfnmadd.vv";
+    *len = 10;
+    break;
+  }
+  }
+}
+void fwvvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FWVV_VADD: {
+    *s = "vfwadd.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_FWVV_VSUB: {
+    *s = "vfwsub.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_FWVV_VMUL: {
+    *s = "vfwmul.vv";
+    *len = 9;
+    break;
+  }
+  }
+}
+void fwvvmatype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FWVV_VMSAC: {
+    *s = "vfwmsac.vv";
+    *len = 10;
+    break;
+  }
+  case RISCV_FWVV_VNMACC: {
+    *s = "vfwnmacc.vv";
+    *len = 11;
+    break;
+  }
+  case RISCV_FWVV_VNMSAC: {
+    *s = "vfwnmsac.vv";
+    *len = 11;
+    break;
+  }
+  case RISCV_FWVV_VMACC: {
+    *s = "vfwmacc.vv";
+    *len = 10;
+    break;
+  }
+  }
+}
+void fwvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FWV_VADD: {
+    *s = "vfwadd.wv";
+    *len = 9;
+    break;
+  }
+  case RISCV_FWV_VSUB: {
+    *s = "vfwsub.wv";
+    *len = 9;
+    break;
+  }
+  }
+}
+void vfunary0_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FV_CVT_F_X: {
+    *s = "vfcvt.f.x.v";
+    *len = 11;
+    break;
+  }
+  case RISCV_FV_CVT_X_F: {
+    *s = "vfcvt.x.f.v";
+    *len = 11;
+    break;
+  }
+  case RISCV_FV_CVT_XU_F: {
+    *s = "vfcvt.xu.f.v";
+    *len = 12;
+    break;
+  }
+  case RISCV_FV_CVT_RTZ_XU_F: {
+    *s = "vfcvt.rtz.xu.f.v";
+    *len = 16;
+    break;
+  }
+  case RISCV_FV_CVT_RTZ_X_F: {
+    *s = "vfcvt.rtz.x.f.v";
+    *len = 15;
+    break;
+  }
+  case RISCV_FV_CVT_F_XU: {
+    *s = "vfcvt.f.xu.v";
+    *len = 12;
+    break;
+  }
+  }
+}
+void vfwunary0_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FWV_CVT_F_X: {
+    *s = "vfwcvt.f.x.v";
+    *len = 12;
+    break;
+  }
+  case RISCV_FWV_CVT_F_XU: {
+    *s = "vfwcvt.f.xu.v";
+    *len = 13;
+    break;
+  }
+  case RISCV_FWV_CVT_F_F: {
+    *s = "vfwcvt.f.f.v";
+    *len = 12;
+    break;
+  }
+  case RISCV_FWV_CVT_X_F: {
+    *s = "vfwcvt.x.f.v";
+    *len = 12;
+    break;
+  }
+  case RISCV_FWV_CVT_RTZ_XU_F: {
+    *s = "vfwcvt.rtz.xu.f.v";
+    *len = 17;
+    break;
+  }
+  case RISCV_FWV_CVT_RTZ_X_F: {
+    *s = "vfwcvt.rtz.x.f.v";
+    *len = 16;
+    break;
+  }
+  case RISCV_FWV_CVT_XU_F: {
+    *s = "vfwcvt.xu.f.v";
+    *len = 13;
+    break;
+  }
+  }
+}
+void vfnunary0_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FNV_CVT_F_F: {
+    *s = "vfncvt.f.f.w";
+    *len = 12;
+    break;
+  }
+  case RISCV_FNV_CVT_RTZ_XU_F: {
+    *s = "vfncvt.rtz.xu.f.w";
+    *len = 17;
+    break;
+  }
+  case RISCV_FNV_CVT_F_XU: {
+    *s = "vfncvt.f.xu.w";
+    *len = 13;
+    break;
+  }
+  case RISCV_FNV_CVT_F_X: {
+    *s = "vfncvt.f.x.w";
+    *len = 12;
+    break;
+  }
+  case RISCV_FNV_CVT_RTZ_X_F: {
+    *s = "vfncvt.rtz.x.f.w";
+    *len = 16;
+    break;
+  }
+  case RISCV_FNV_CVT_XU_F: {
+    *s = "vfncvt.xu.f.w";
+    *len = 13;
+    break;
+  }
+  case RISCV_FNV_CVT_X_F: {
+    *s = "vfncvt.x.f.w";
+    *len = 12;
+    break;
+  }
+  case RISCV_FNV_CVT_ROD_F_F: {
+    *s = "vfncvt.rod.f.f.w";
+    *len = 16;
+    break;
+  }
+  }
+}
+void vfunary1_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FVV_VCLASS: {
+    *s = "vfclass.v";
+    *len = 9;
+    break;
+  }
+  case RISCV_FVV_VREC7: {
+    *s = "vfrec7.v";
+    *len = 8;
+    break;
+  }
+  case RISCV_FVV_VRSQRT7: {
+    *s = "vfrsqrt7.v";
+    *len = 10;
+    break;
+  }
+  case RISCV_FVV_VSQRT: {
+    *s = "vfsqrt.v";
+    *len = 8;
+    break;
+  }
+  }
+}
+void fvftype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VF_VMIN: {
+    *s = "vfmin.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VF_VSGNJ: {
+    *s = "vfsgnj.vf";
+    *len = 9;
+    break;
+  }
+  case RISCV_VF_VSLIDE1UP: {
+    *s = "vfslide1up.vf";
+    *len = 13;
+    break;
+  }
+  case RISCV_VF_VRSUB: {
+    *s = "vfrsub.vf";
+    *len = 9;
+    break;
+  }
+  case RISCV_VF_VADD: {
+    *s = "vfadd.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VF_VSGNJX: {
+    *s = "vfsgnjx.vf";
+    *len = 10;
+    break;
+  }
+  case RISCV_VF_VDIV: {
+    *s = "vfdiv.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VF_VSUB: {
+    *s = "vfsub.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VF_VRDIV: {
+    *s = "vfrdiv.vf";
+    *len = 9;
+    break;
+  }
+  case RISCV_VF_VMUL: {
+    *s = "vfmul.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VF_VSGNJN: {
+    *s = "vfsgnjn.vf";
+    *len = 10;
+    break;
+  }
+  case RISCV_VF_VMAX: {
+    *s = "vfmax.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VF_VSLIDE1DOWN: {
+    *s = "vfslide1down.vf";
+    *len = 15;
+    break;
+  }
+  }
+}
+void fvfmatype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VF_VNMADD: {
+    *s = "vfnmadd.vf";
+    *len = 10;
+    break;
+  }
+  case RISCV_VF_VMSUB: {
+    *s = "vfmsub.vf";
+    *len = 9;
+    break;
+  }
+  case RISCV_VF_VMACC: {
+    *s = "vfmacc.vf";
+    *len = 9;
+    break;
+  }
+  case RISCV_VF_VMADD: {
+    *s = "vfmadd.vf";
+    *len = 9;
+    break;
+  }
+  case RISCV_VF_VNMSAC: {
+    *s = "vfnmsac.vf";
+    *len = 10;
+    break;
+  }
+  case RISCV_VF_VMSAC: {
+    *s = "vfmsac.vf";
+    *len = 9;
+    break;
+  }
+  case RISCV_VF_VNMACC: {
+    *s = "vfnmacc.vf";
+    *len = 10;
+    break;
+  }
+  case RISCV_VF_VNMSUB: {
+    *s = "vfnmsub.vf";
+    *len = 10;
+    break;
+  }
+  }
+}
+void fwvftype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FWVF_VADD: {
+    *s = "vfwadd.vf";
+    *len = 9;
+    break;
+  }
+  case RISCV_FWVF_VSUB: {
+    *s = "vfwsub.vf";
+    *len = 9;
+    break;
+  }
+  case RISCV_FWVF_VMUL: {
+    *s = "vfwmul.vf";
+    *len = 9;
+    break;
+  }
+  }
+}
+void fwvfmatype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FWVF_VNMACC: {
+    *s = "vfwnmacc.vf";
+    *len = 11;
+    break;
+  }
+  case RISCV_FWVF_VMACC: {
+    *s = "vfwmacc.vf";
+    *len = 10;
+    break;
+  }
+  case RISCV_FWVF_VNMSAC: {
+    *s = "vfwnmsac.vf";
+    *len = 11;
+    break;
+  }
+  case RISCV_FWVF_VMSAC: {
+    *s = "vfwmsac.vf";
+    *len = 10;
+    break;
+  }
+  }
+}
+void fwftype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FWF_VSUB: {
+    *s = "vfwsub.wf";
+    *len = 9;
+    break;
+  }
+  case RISCV_FWF_VADD: {
+    *s = "vfwadd.wf";
+    *len = 9;
+    break;
+  }
+  }
+}
+void nfields_string(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case 0x7: {
+    *s = "seg8";
+    *len = 4;
+    break;
+  }
+  case 0x5: {
+    *s = "seg6";
+    *len = 4;
+    break;
+  }
+  case 0x1: {
+    *s = "seg2";
+    *len = 4;
+    break;
+  }
+  case 0x3: {
+    *s = "seg4";
+    *len = 4;
+    break;
+  }
+  case 0x2: {
+    *s = "seg3";
+    *len = 4;
+    break;
+  }
+  case 0x4: {
+    *s = "seg5";
+    *len = 4;
+    break;
+  }
+  case 0x6: {
+    *s = "seg7";
+    *len = 4;
+    break;
+  }
+  case 0x0: {
+    *s = "";
+    *len = 0;
+    break;
+  }
+  }
+}
+void vlewidth_bitsnumberstr(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VLE16: {
+    *s = "16";
+    *len = 2;
+    break;
+  }
+  case RISCV_VLE32: {
+    *s = "32";
+    *len = 2;
+    break;
+  }
+  case RISCV_VLE64: {
+    *s = "64";
+    *len = 2;
+    break;
+  }
+  case RISCV_VLE8: {
+    *s = "8";
+    *len = 1;
+    break;
+  }
+  }
+}
+void vmtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VLM: {
+    *s = "vlm.v";
+    *len = 5;
+    break;
+  }
+  case RISCV_VSM: {
+    *s = "vsm.v";
+    *len = 5;
+    break;
+  }
+  }
+}
+void mmtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_MM_VMANDN: {
+    *s = "vmandn.mm";
+    *len = 9;
+    break;
+  }
+  case RISCV_MM_VMOR: {
+    *s = "vmor.mm";
+    *len = 7;
+    break;
+  }
+  case RISCV_MM_VMXOR: {
+    *s = "vmxor.mm";
+    *len = 8;
+    break;
+  }
+  case RISCV_MM_VMNOR: {
+    *s = "vmnor.mm";
+    *len = 8;
+    break;
+  }
+  case RISCV_MM_VMORN: {
+    *s = "vmorn.mm";
+    *len = 8;
+    break;
+  }
+  case RISCV_MM_VMAND: {
+    *s = "vmand.mm";
+    *len = 8;
+    break;
+  }
+  case RISCV_MM_VMXNOR: {
+    *s = "vmxnor.mm";
+    *len = 9;
+    break;
+  }
+  case RISCV_MM_VMNAND: {
+    *s = "vmnand.mm";
+    *len = 9;
+    break;
+  }
+  }
+}
+void vvmtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VVM_VMADC: {
+    *s = "vmadc.vvm";
+    *len = 9;
+    break;
+  }
+  case RISCV_VVM_VMSBC: {
+    *s = "vmsbc.vvm";
+    *len = 9;
+    break;
+  }
+  }
+}
+void vvmctype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VVMC_VMADC: {
+    *s = "vmadc.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VVMC_VMSBC: {
+    *s = "vmsbc.vv";
+    *len = 8;
+    break;
+  }
+  }
+}
+void vvmstype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VVMS_VSBC: {
+    *s = "vsbc.vvm";
+    *len = 8;
+    break;
+  }
+  case RISCV_VVMS_VADC: {
+    *s = "vadc.vvm";
+    *len = 8;
+    break;
+  }
+  }
+}
+void vvcmptype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VVCMP_VMSEQ: {
+    *s = "vmseq.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VVCMP_VMSLTU: {
+    *s = "vmsltu.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_VVCMP_VMSLE: {
+    *s = "vmsle.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VVCMP_VMSLEU: {
+    *s = "vmsleu.vv";
+    *len = 9;
+    break;
+  }
+  case RISCV_VVCMP_VMSNE: {
+    *s = "vmsne.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_VVCMP_VMSLT: {
+    *s = "vmslt.vv";
+    *len = 8;
+    break;
+  }
+  }
+}
+void vxmtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VXM_VMSBC: {
+    *s = "vmsbc.vxm";
+    *len = 9;
+    break;
+  }
+  case RISCV_VXM_VMADC: {
+    *s = "vmadc.vxm";
+    *len = 9;
+    break;
+  }
+  }
+}
+void vxmctype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VXMC_VMSBC: {
+    *s = "vmsbc.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VXMC_VMADC: {
+    *s = "vmadc.vx";
+    *len = 8;
+    break;
+  }
+  }
+}
+void vxmstype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VXMS_VADC: {
+    *s = "vadc.vxm";
+    *len = 8;
+    break;
+  }
+  case RISCV_VXMS_VSBC: {
+    *s = "vsbc.vxm";
+    *len = 8;
+    break;
+  }
+  }
+}
+void vxcmptype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VXCMP_VMSLTU: {
+    *s = "vmsltu.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_VXCMP_VMSLEU: {
+    *s = "vmsleu.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_VXCMP_VMSNE: {
+    *s = "vmsne.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VXCMP_VMSGT: {
+    *s = "vmsgt.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VXCMP_VMSEQ: {
+    *s = "vmseq.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VXCMP_VMSGTU: {
+    *s = "vmsgtu.vx";
+    *len = 9;
+    break;
+  }
+  case RISCV_VXCMP_VMSLT: {
+    *s = "vmslt.vx";
+    *len = 8;
+    break;
+  }
+  case RISCV_VXCMP_VMSLE: {
+    *s = "vmsle.vx";
+    *len = 8;
+    break;
+  }
+  }
+}
+void vimtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VIM_VMADC: {
+    *s = "vmadc.vim";
+    *len = 9;
+    break;
+  }
+  }
+}
+void vimctype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VIMC_VMADC: {
+    *s = "vmadc.vi";
+    *len = 8;
+    break;
+  }
+  }
+}
+void vimstype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VIMS_VADC: {
+    *s = "vadc.vim";
+    *len = 8;
+    break;
+  }
+  }
+}
+void vicmptype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VICMP_VMSEQ: {
+    *s = "vmseq.vi";
+    *len = 8;
+    break;
+  }
+  case RISCV_VICMP_VMSGTU: {
+    *s = "vmsgtu.vi";
+    *len = 9;
+    break;
+  }
+  case RISCV_VICMP_VMSLEU: {
+    *s = "vmsleu.vi";
+    *len = 9;
+    break;
+  }
+  case RISCV_VICMP_VMSLE: {
+    *s = "vmsle.vi";
+    *len = 8;
+    break;
+  }
+  case RISCV_VICMP_VMSNE: {
+    *s = "vmsne.vi";
+    *len = 8;
+    break;
+  }
+  case RISCV_VICMP_VMSGT: {
+    *s = "vmsgt.vi";
+    *len = 8;
+    break;
+  }
+  }
+}
+void fvvmtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FVVM_VMFNE: {
+    *s = "vmfne.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_FVVM_VMFEQ: {
+    *s = "vmfeq.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_FVVM_VMFLT: {
+    *s = "vmflt.vv";
+    *len = 8;
+    break;
+  }
+  case RISCV_FVVM_VMFLE: {
+    *s = "vmfle.vv";
+    *len = 8;
+    break;
+  }
+  }
+}
+void fvfmtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_VFM_VMFNE: {
+    *s = "vmfne.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VFM_VMFGT: {
+    *s = "vmfgt.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VFM_VMFLT: {
+    *s = "vmflt.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VFM_VMFEQ: {
+    *s = "vmfeq.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VFM_VMFLE: {
+    *s = "vmfle.vf";
+    *len = 8;
+    break;
+  }
+  case RISCV_VFM_VMFGE: {
+    *s = "vmfge.vf";
+    *len = 8;
+    break;
+  }
+  }
+}
+void rivvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_IVV_VWREDSUMU: {
+    *s = "vwredsumu.vs";
+    *len = 12;
+    break;
+  }
+  case RISCV_IVV_VWREDSUM: {
+    *s = "vwredsum.vs";
+    *len = 11;
+    break;
+  }
+  }
+}
+void rmvvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_MVV_VREDAND: {
+    *s = "vredand.vs";
+    *len = 10;
+    break;
+  }
+  case RISCV_MVV_VREDXOR: {
+    *s = "vredxor.vs";
+    *len = 10;
+    break;
+  }
+  case RISCV_MVV_VREDOR: {
+    *s = "vredor.vs";
+    *len = 9;
+    break;
+  }
+  case RISCV_MVV_VREDMIN: {
+    *s = "vredmin.vs";
+    *len = 10;
+    break;
+  }
+  case RISCV_MVV_VREDMAXU: {
+    *s = "vredmaxu.vs";
+    *len = 11;
+    break;
+  }
+  case RISCV_MVV_VREDMINU: {
+    *s = "vredminu.vs";
+    *len = 11;
+    break;
+  }
+  case RISCV_MVV_VREDSUM: {
+    *s = "vredsum.vs";
+    *len = 10;
+    break;
+  }
+  case RISCV_MVV_VREDMAX: {
+    *s = "vredmax.vs";
+    *len = 10;
+    break;
+  }
+  }
+}
+void rfvvtype_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_FVV_VFWREDOSUM: {
+    *s = "vfwredosum.vs";
+    *len = 13;
+    break;
+  }
+  case RISCV_FVV_VFREDOSUM: {
+    *s = "vfredosum.vs";
+    *len = 12;
+    break;
+  }
+  case RISCV_FVV_VFREDUSUM: {
+    *s = "vfredusum.vs";
+    *len = 12;
+    break;
+  }
+  case RISCV_FVV_VFREDMIN: {
+    *s = "vfredmin.vs";
+    *len = 11;
+    break;
+  }
+  case RISCV_FVV_VFWREDUSUM: {
+    *s = "vfwredusum.vs";
+    *len = 13;
+    break;
+  }
+  case RISCV_FVV_VFREDMAX: {
+    *s = "vfredmax.vs";
+    *len = 11;
+    break;
+  }
+  }
+}
+void cbop_mnemonic(uint64_t member, char **s, size_t *len) {
+  switch (member) {
+  case RISCV_CBO_INVAL: {
+    *s = "cbo.inval";
+    *len = 9;
+    break;
+  }
+  case RISCV_CBO_CLEAN: {
+    *s = "cbo.clean";
+    *len = 9;
+    break;
+  }
+  case RISCV_CBO_FLUSH: {
+    *s = "cbo.flush";
+    *len = 9;
+    break;
+  }
+  }
+}
+
+#endif
