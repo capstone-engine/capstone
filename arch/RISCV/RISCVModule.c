@@ -4,29 +4,36 @@
 
 #ifdef CAPSTONE_HAS_RISCV
 
-#include "../../utils.h"
-#include "../../MCRegisterInfo.h"
-#include "RISCVDisassembler.h"
-#include "RISCVInstPrinter.h"
-#include "RISCVMapping.h"
 #include "RISCVModule.h"
+
+void noop_printer(MCInst *MI, SStream *OS, void *info) {
+
+}
+
+void noop_postprinter(csh handle, cs_insn *, SStream *mnem, MCInst *mci) {
+
+}
+
+const char *noop_getname(csh handle, unsigned int id) { 
+	return ""; 
+}
+
+void noop_getid(cs_struct *h, cs_insn *insn, unsigned int id) {
+
+}
 
 cs_err RISCV_global_init(cs_struct * ud)
 {
-	MCRegisterInfo *mri;
-	mri = cs_mem_malloc(sizeof(*mri));
+	ud->printer = noop_printer;
+	ud->printer_info = NULL;
+	ud->getinsn_info = NULL;
+	ud->disasm = riscv_get_instruction;
+	ud->post_printer = noop_postprinter;
 
-	RISCV_init(mri);
-	ud->printer = RISCV_printInst;
-	ud->printer_info = mri;
-	ud->getinsn_info = mri;
-	ud->disasm = RISCV_getInstruction;
-	ud->post_printer = NULL;
-
-	ud->reg_name = RISCV_reg_name;
-	ud->insn_id = RISCV_get_insn_id;
-	ud->insn_name = RISCV_insn_name;
-	ud->group_name = RISCV_group_name;
+	ud->reg_name = noop_getname;
+	ud->insn_id = noop_getid;
+	ud->insn_name = noop_getname;
+	ud->group_name = noop_getname;
 
 	return CS_ERR_OK;
 }

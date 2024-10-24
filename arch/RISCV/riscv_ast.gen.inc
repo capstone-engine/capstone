@@ -1,0 +1,2221 @@
+#ifndef __Riscv_ast_gen_inc__
+#define __Riscv_ast_gen_inc__
+#include <stdint.h>
+
+#include <stddef.h>
+
+#include <string.h>
+
+enum { RISCV_false = 0, RISCV_true = 1 };
+struct ast {
+  enum {
+    RISCV_ILLEGAL,
+    RISCV_C_ILLEGAL,
+    RISCV_UTYPE,
+    RISCV_JAL,
+    RISCV_JALR,
+    RISCV_BTYPE,
+    RISCV_ITYPE,
+    RISCV_SHIFTIOP,
+    RISCV_RTYPE,
+    RISCV_LOAD,
+    RISCV_STORE,
+    RISCV_ADDIW,
+    RISCV_RTYPEW,
+    RISCV_SHIFTIWOP,
+    RISCV_FENCE,
+    RISCV_FENCE_TSO,
+    RISCV_ECALL,
+    RISCV_MRET,
+    RISCV_SRET,
+    RISCV_EBREAK,
+    RISCV_WFI,
+    RISCV_SFENCE_VMA,
+    RISCV_FENCEI,
+    RISCV_LOADRES,
+    RISCV_STORECON,
+    RISCV_AMO,
+    RISCV_C_NOP,
+    RISCV_C_ADDI4SPN,
+    RISCV_C_LW,
+    RISCV_C_LD,
+    RISCV_C_SW,
+    RISCV_C_SD,
+    RISCV_C_ADDI,
+    RISCV_C_JAL,
+    RISCV_C_ADDIW,
+    RISCV_C_LI,
+    RISCV_C_ADDI16SP,
+    RISCV_C_LUI,
+    RISCV_C_SRLI,
+    RISCV_C_SRAI,
+    RISCV_C_ANDI,
+    RISCV_C_SUB,
+    RISCV_C_XOR,
+    RISCV_C_OR,
+    RISCV_C_AND,
+    RISCV_C_SUBW,
+    RISCV_C_ADDW,
+    RISCV_C_J,
+    RISCV_C_BEQZ,
+    RISCV_C_BNEZ,
+    RISCV_C_SLLI,
+    RISCV_C_LWSP,
+    RISCV_C_LDSP,
+    RISCV_C_SWSP,
+    RISCV_C_SDSP,
+    RISCV_C_JR,
+    RISCV_C_JALR,
+    RISCV_C_MV,
+    RISCV_C_EBREAK,
+    RISCV_C_ADD,
+    RISCV_MUL,
+    RISCV_DIV,
+    RISCV_REM,
+    RISCV_MULW,
+    RISCV_DIVW,
+    RISCV_REMW,
+    RISCV_CSR,
+    RISCV_C_NOP_HINT,
+    RISCV_C_ADDI_HINT,
+    RISCV_C_LI_HINT,
+    RISCV_C_LUI_HINT,
+    RISCV_C_MV_HINT,
+    RISCV_C_ADD_HINT,
+    RISCV_C_SLLI_HINT,
+    RISCV_C_SRLI_HINT,
+    RISCV_C_SRAI_HINT,
+    RISCV_FENCE_RESERVED,
+    RISCV_FENCEI_RESERVED,
+    RISCV_LOAD_FP,
+    RISCV_STORE_FP,
+    RISCV_F_MADD_TYPE_S,
+    RISCV_F_BIN_RM_TYPE_S,
+    RISCV_F_UN_RM_TYPE_S,
+    RISCV_F_BIN_TYPE_S,
+    RISCV_F_UN_TYPE_S,
+    RISCV_C_FLWSP,
+    RISCV_C_FSWSP,
+    RISCV_C_FLW,
+    RISCV_C_FSW,
+    RISCV_F_MADD_TYPE_D,
+    RISCV_F_BIN_RM_TYPE_D,
+    RISCV_F_UN_RM_TYPE_D,
+    RISCV_F_BIN_TYPE_D,
+    RISCV_F_UN_TYPE_D,
+    RISCV_C_FLDSP,
+    RISCV_C_FSDSP,
+    RISCV_C_FLD,
+    RISCV_C_FSD,
+    RISCV_SINVAL_VMA,
+    RISCV_SFENCE_W_INVAL,
+    RISCV_SFENCE_INVAL_IR,
+    RISCV_SLLIUW,
+    RISCV_ZBA_RTYPEUW,
+    RISCV_ZBA_RTYPE,
+    RISCV_RORIW,
+    RISCV_RORI,
+    RISCV_ZBB_RTYPEW,
+    RISCV_ZBB_RTYPE,
+    RISCV_ZBB_EXTOP,
+    RISCV_REV8,
+    RISCV_ORCB,
+    RISCV_CPOP,
+    RISCV_CPOPW,
+    RISCV_CLZ,
+    RISCV_CLZW,
+    RISCV_CTZ,
+    RISCV_CTZW,
+    RISCV_CLMUL,
+    RISCV_CLMULH,
+    RISCV_CLMULR,
+    RISCV_ZBS_IOP,
+    RISCV_ZBS_RTYPE,
+    RISCV_C_LBU,
+    RISCV_C_LHU,
+    RISCV_C_LH,
+    RISCV_C_SB,
+    RISCV_C_SH,
+    RISCV_C_ZEXT_B,
+    RISCV_C_SEXT_B,
+    RISCV_C_ZEXT_H,
+    RISCV_C_SEXT_H,
+    RISCV_C_ZEXT_W,
+    RISCV_C_NOT,
+    RISCV_C_MUL,
+    RISCV_F_BIN_RM_TYPE_H,
+    RISCV_F_MADD_TYPE_H,
+    RISCV_F_BIN_TYPE_H,
+    RISCV_F_UN_RM_TYPE_H,
+    RISCV_F_UN_TYPE_H,
+    RISCV_FLI_H,
+    RISCV_FLI_S,
+    RISCV_FLI_D,
+    RISCV_FMINM_H,
+    RISCV_FMAXM_H,
+    RISCV_FMINM_S,
+    RISCV_FMAXM_S,
+    RISCV_FMINM_D,
+    RISCV_FMAXM_D,
+    RISCV_FROUND_H,
+    RISCV_FROUNDNX_H,
+    RISCV_FROUND_S,
+    RISCV_FROUNDNX_S,
+    RISCV_FROUND_D,
+    RISCV_FROUNDNX_D,
+    RISCV_FMVH_X_D,
+    RISCV_FMVP_D_X,
+    RISCV_FLEQ_H,
+    RISCV_FLTQ_H,
+    RISCV_FLEQ_S,
+    RISCV_FLTQ_S,
+    RISCV_FLEQ_D,
+    RISCV_FLTQ_D,
+    RISCV_FCVTMOD_W_D,
+    RISCV_SHA256SIG0,
+    RISCV_SHA256SIG1,
+    RISCV_SHA256SUM0,
+    RISCV_SHA256SUM1,
+    RISCV_AES32ESMI,
+    RISCV_AES32ESI,
+    RISCV_AES32DSMI,
+    RISCV_AES32DSI,
+    RISCV_SHA512SIG0L,
+    RISCV_SHA512SIG0H,
+    RISCV_SHA512SIG1L,
+    RISCV_SHA512SIG1H,
+    RISCV_SHA512SUM0R,
+    RISCV_SHA512SUM1R,
+    RISCV_AES64KS1I,
+    RISCV_AES64KS2,
+    RISCV_AES64IM,
+    RISCV_AES64ESM,
+    RISCV_AES64ES,
+    RISCV_AES64DSM,
+    RISCV_AES64DS,
+    RISCV_SHA512SIG0,
+    RISCV_SHA512SIG1,
+    RISCV_SHA512SUM0,
+    RISCV_SHA512SUM1,
+    RISCV_SM3P0,
+    RISCV_SM3P1,
+    RISCV_SM4ED,
+    RISCV_SM4KS,
+    RISCV_ZBKB_RTYPE,
+    RISCV_ZBKB_PACKW,
+    RISCV_ZIP,
+    RISCV_UNZIP,
+    RISCV_BREV8,
+    RISCV_XPERM8,
+    RISCV_XPERM4,
+    RISCV_ZICOND_RTYPE,
+    RISCV_VSETVLI,
+    RISCV_VSETVL,
+    RISCV_VSETIVLI,
+    RISCV_VVTYPE,
+    RISCV_NVSTYPE,
+    RISCV_NVTYPE,
+    RISCV_MASKTYPEV,
+    RISCV_MOVETYPEV,
+    RISCV_VXTYPE,
+    RISCV_NXSTYPE,
+    RISCV_NXTYPE,
+    RISCV_VXSG,
+    RISCV_MASKTYPEX,
+    RISCV_MOVETYPEX,
+    RISCV_VITYPE,
+    RISCV_NISTYPE,
+    RISCV_NITYPE,
+    RISCV_VISG,
+    RISCV_MASKTYPEI,
+    RISCV_MOVETYPEI,
+    RISCV_VMVRTYPE,
+    RISCV_MVVTYPE,
+    RISCV_MVVMATYPE,
+    RISCV_WVVTYPE,
+    RISCV_WVTYPE,
+    RISCV_WMVVTYPE,
+    RISCV_VEXT2TYPE,
+    RISCV_VEXT4TYPE,
+    RISCV_VEXT8TYPE,
+    RISCV_VMVXS,
+    RISCV_MVVCOMPRESS,
+    RISCV_MVXTYPE,
+    RISCV_MVXMATYPE,
+    RISCV_WVXTYPE,
+    RISCV_WXTYPE,
+    RISCV_WMVXTYPE,
+    RISCV_VMVSX,
+    RISCV_FVVTYPE,
+    RISCV_FVVMATYPE,
+    RISCV_FWVVTYPE,
+    RISCV_FWVVMATYPE,
+    RISCV_FWVTYPE,
+    RISCV_VFUNARY0,
+    RISCV_VFWUNARY0,
+    RISCV_VFNUNARY0,
+    RISCV_VFUNARY1,
+    RISCV_VFMVFS,
+    RISCV_FVFTYPE,
+    RISCV_FVFMATYPE,
+    RISCV_FWVFTYPE,
+    RISCV_FWVFMATYPE,
+    RISCV_FWFTYPE,
+    RISCV_VFMERGE,
+    RISCV_VFMV,
+    RISCV_VFMVSF,
+    RISCV_VLSEGTYPE,
+    RISCV_VLSEGFFTYPE,
+    RISCV_VSSEGTYPE,
+    RISCV_VLSSEGTYPE,
+    RISCV_VSSSEGTYPE,
+    RISCV_VLUXSEGTYPE,
+    RISCV_VLOXSEGTYPE,
+    RISCV_VSUXSEGTYPE,
+    RISCV_VSOXSEGTYPE,
+    RISCV_VLRETYPE,
+    RISCV_VSRETYPE,
+    RISCV_VMTYPE,
+    RISCV_MMTYPE,
+    RISCV_VCPOP_M,
+    RISCV_VFIRST_M,
+    RISCV_VMSBF_M,
+    RISCV_VMSIF_M,
+    RISCV_VMSOF_M,
+    RISCV_VIOTA_M,
+    RISCV_VID_V,
+    RISCV_VVMTYPE,
+    RISCV_VVMCTYPE,
+    RISCV_VVMSTYPE,
+    RISCV_VVCMPTYPE,
+    RISCV_VXMTYPE,
+    RISCV_VXMCTYPE,
+    RISCV_VXMSTYPE,
+    RISCV_VXCMPTYPE,
+    RISCV_VIMTYPE,
+    RISCV_VIMCTYPE,
+    RISCV_VIMSTYPE,
+    RISCV_VICMPTYPE,
+    RISCV_FVVMTYPE,
+    RISCV_FVFMTYPE,
+    RISCV_RIVVTYPE,
+    RISCV_RMVVTYPE,
+    RISCV_RFVVTYPE,
+    RISCV_ZICBOM,
+    RISCV_ZICBOZ
+  } ast_node_type;
+  union {
+    uint32_t illegal;
+    uint16_t c_illegal;
+    struct {
+      uint32_t imm /* bits : 20 */;
+      uint8_t rd /* bits : 5 */;
+      enum uop { RISCV_LUI, RISCV_AUIPC } op;
+    } utype;
+    struct {
+      uint32_t imm /* bits : 21 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_jal;
+    struct {
+      uint16_t imm /* bits : 12 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_jalr;
+    struct {
+      uint16_t imm /* bits : 13 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum bop {
+        RISCV_BEQ,
+        RISCV_BNE,
+        RISCV_BLT,
+        RISCV_BGE,
+        RISCV_BLTU,
+        RISCV_BGEU
+      } op;
+    } btype;
+    struct {
+      uint16_t imm /* bits : 12 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum iop {
+        RISCV_ADDI,
+        RISCV_SLTI,
+        RISCV_SLTIU,
+        RISCV_XORI,
+        RISCV_ORI,
+        RISCV_ANDI
+      } op;
+    } itype;
+    struct {
+      uint8_t shamt /* bits : 6 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum sop { RISCV_SLLI, RISCV_SRLI, RISCV_SRAI } op;
+    } shiftiop;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum rop {
+        RISCV_ADD,
+        RISCV_SUB,
+        RISCV_SLL,
+        RISCV_SLT,
+        RISCV_SLTU,
+        RISCV_XOR,
+        RISCV_SRL,
+        RISCV_SRA,
+        RISCV_OR,
+        RISCV_AND
+      } op;
+    } rtype;
+    struct {
+      uint16_t imm /* bits : 12 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      uint8_t is_unsigned /* bits : 1 */;
+      enum word_width {
+        RISCV_BYTE,
+        RISCV_HALF,
+        RISCV_WORD,
+        RISCV_DOUBLE
+      } width;
+      uint8_t aq /* bits : 1 */;
+      uint8_t rl /* bits : 1 */;
+    } load;
+    struct {
+      uint16_t imm /* bits : 12 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum word_width width;
+      uint8_t aq /* bits : 1 */;
+      uint8_t rl /* bits : 1 */;
+    } store;
+    struct {
+      uint16_t imm /* bits : 12 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } addiw;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum ropw {
+        RISCV_ADDW,
+        RISCV_SUBW,
+        RISCV_SLLW,
+        RISCV_SRLW,
+        RISCV_SRAW
+      } op;
+    } rtypew;
+    struct {
+      uint8_t shamt /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum sopw { RISCV_SLLIW, RISCV_SRLIW, RISCV_SRAIW } op;
+    } shiftiwop;
+    struct {
+      uint8_t pred /* bits : 4 */;
+      uint8_t succ /* bits : 4 */;
+    } fence;
+    struct {
+      uint8_t pred /* bits : 4 */;
+      uint8_t succ /* bits : 4 */;
+    } fence_tso;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rs2 /* bits : 5 */;
+    } sfence_vma;
+    struct {
+      uint8_t aq /* bits : 1 */;
+      uint8_t rl /* bits : 1 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum word_width width;
+      uint8_t rd /* bits : 5 */;
+    } loadres;
+    struct {
+      uint8_t aq /* bits : 1 */;
+      uint8_t rl /* bits : 1 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum word_width width;
+      uint8_t rd /* bits : 5 */;
+    } storecon;
+    struct {
+      enum amoop {
+        RISCV_AMOSWAP,
+        RISCV_AMOADD,
+        RISCV_AMOXOR,
+        RISCV_AMOAND,
+        RISCV_AMOOR,
+        RISCV_AMOMIN,
+        RISCV_AMOMAX,
+        RISCV_AMOMINU,
+        RISCV_AMOMAXU
+      } op;
+      uint8_t aq /* bits : 1 */;
+      uint8_t rl /* bits : 1 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum word_width width;
+      uint8_t rd /* bits : 5 */;
+    } amo;
+    struct {
+      uint8_t rdc /* bits : 3 */;
+      uint8_t nzimm;
+    } c_addi4spn;
+    struct {
+      uint8_t uimm /* bits : 5 */;
+      uint8_t rsc /* bits : 3 */;
+      uint8_t rdc /* bits : 3 */;
+    } c_lw;
+    struct {
+      uint8_t uimm /* bits : 5 */;
+      uint8_t rsc /* bits : 3 */;
+      uint8_t rdc /* bits : 3 */;
+    } c_ld;
+    struct {
+      uint8_t uimm /* bits : 5 */;
+      uint8_t rsc1 /* bits : 3 */;
+      uint8_t rsc2 /* bits : 3 */;
+    } c_sw;
+    struct {
+      uint8_t uimm /* bits : 5 */;
+      uint8_t rsc1 /* bits : 3 */;
+      uint8_t rsc2 /* bits : 3 */;
+    } c_sd;
+    struct {
+      uint8_t nzi /* bits : 6 */;
+      uint8_t rsd /* bits : 5 */;
+    } c_addi;
+    uint16_t c_jal /* bits : 11 */;
+    struct {
+      uint8_t imm /* bits : 6 */;
+      uint8_t rsd /* bits : 5 */;
+    } c_addiw;
+    struct {
+      uint8_t imm /* bits : 6 */;
+      uint8_t rd /* bits : 5 */;
+    } c_li;
+    uint8_t c_addi16sp /* bits : 6 */;
+    struct {
+      uint8_t imm /* bits : 6 */;
+      uint8_t rd /* bits : 5 */;
+    } c_lui;
+    struct {
+      uint8_t shamt /* bits : 6 */;
+      uint8_t rsd /* bits : 3 */;
+    } c_srli;
+    struct {
+      uint8_t shamt /* bits : 6 */;
+      uint8_t rsd /* bits : 3 */;
+    } c_srai;
+    struct {
+      uint8_t imm /* bits : 6 */;
+      uint8_t rsd /* bits : 3 */;
+    } c_andi;
+    struct {
+      uint8_t rsd /* bits : 3 */;
+      uint8_t rs2 /* bits : 3 */;
+    } c_sub;
+    struct {
+      uint8_t rsd /* bits : 3 */;
+      uint8_t rs2 /* bits : 3 */;
+    } c_xor;
+    struct {
+      uint8_t rsd /* bits : 3 */;
+      uint8_t rs2 /* bits : 3 */;
+    } c_or;
+    struct {
+      uint8_t rsd /* bits : 3 */;
+      uint8_t rs2 /* bits : 3 */;
+    } c_and;
+    struct {
+      uint8_t rsd /* bits : 3 */;
+      uint8_t rs2 /* bits : 3 */;
+    } c_subw;
+    struct {
+      uint8_t rsd /* bits : 3 */;
+      uint8_t rs2 /* bits : 3 */;
+    } c_addw;
+    uint16_t c_j /* bits : 11 */;
+    struct {
+      uint8_t imm;
+      uint8_t rs /* bits : 3 */;
+    } c_beqz;
+    struct {
+      uint8_t imm;
+      uint8_t rs /* bits : 3 */;
+    } c_bnez;
+    struct {
+      uint8_t shamt /* bits : 6 */;
+      uint8_t rsd /* bits : 5 */;
+    } c_slli;
+    struct {
+      uint8_t uimm /* bits : 6 */;
+      uint8_t rd /* bits : 5 */;
+    } c_lwsp;
+    struct {
+      uint8_t uimm /* bits : 6 */;
+      uint8_t rd /* bits : 5 */;
+    } c_ldsp;
+    struct {
+      uint8_t uimm /* bits : 6 */;
+      uint8_t rs2 /* bits : 5 */;
+    } c_swsp;
+    struct {
+      uint8_t uimm /* bits : 6 */;
+      uint8_t rs2 /* bits : 5 */;
+    } c_sdsp;
+    uint8_t c_jr /* bits : 5 */;
+    uint8_t c_jalr /* bits : 5 */;
+    struct {
+      uint8_t rd /* bits : 5 */;
+      uint8_t rs2 /* bits : 5 */;
+    } c_mv;
+    struct {
+      uint8_t rsd /* bits : 5 */;
+      uint8_t rs2 /* bits : 5 */;
+    } c_add;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      struct mul_op {
+        uint8_t high /* bits : 1 */;
+        uint8_t signed_rs1 /* bits : 1 */;
+        uint8_t signed_rs2 /* bits : 1 */;
+      } mul_op;
+    } mul;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      uint8_t s /* bits : 1 */;
+    } div;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      uint8_t s /* bits : 1 */;
+    } rem;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } mulw;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      uint8_t s /* bits : 1 */;
+    } divw;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      uint8_t s /* bits : 1 */;
+    } remw;
+    struct {
+      uint16_t csr /* bits : 12 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      uint8_t is_imm /* bits : 1 */;
+      enum csrop { RISCV_CSRRW, RISCV_CSRRS, RISCV_CSRRC } op;
+    } csr;
+    uint8_t c_nop_hint /* bits : 6 */;
+    uint8_t c_addi_hint /* bits : 5 */;
+    uint8_t c_li_hint /* bits : 6 */;
+    uint8_t c_lui_hint /* bits : 6 */;
+    uint8_t c_mv_hint /* bits : 5 */;
+    uint8_t c_add_hint /* bits : 5 */;
+    struct {
+      uint8_t shamt /* bits : 6 */;
+      uint8_t rsd /* bits : 5 */;
+    } c_slli_hint;
+    uint8_t c_srli_hint /* bits : 3 */;
+    uint8_t c_srai_hint /* bits : 3 */;
+    struct {
+      uint8_t fm /* bits : 4 */;
+      uint8_t pred /* bits : 4 */;
+      uint8_t succ /* bits : 4 */;
+      uint8_t rs /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } fence_reserved;
+    struct {
+      uint16_t imm /* bits : 12 */;
+      uint8_t rs /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } fencei_reserved;
+    struct {
+      uint16_t imm /* bits : 12 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum word_width width;
+    } load_fp;
+    struct {
+      uint16_t imm /* bits : 12 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum word_width width;
+    } store_fp;
+    struct {
+      uint8_t rs3 /* bits : 5 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode {
+        RISCV_RM_RNE,
+        RISCV_RM_RTZ,
+        RISCV_RM_RDN,
+        RISCV_RM_RUP,
+        RISCV_RM_RMM,
+        RISCV_RM_DYN
+      } rm;
+      uint8_t rd /* bits : 5 */;
+      enum f_madd_op_S {
+        RISCV_FMADD_S,
+        RISCV_FMSUB_S,
+        RISCV_FNMSUB_S,
+        RISCV_FNMADD_S
+      } op;
+    } f_madd_type_s;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+      enum f_bin_rm_op_S {
+        RISCV_FADD_S,
+        RISCV_FSUB_S,
+        RISCV_FMUL_S,
+        RISCV_FDIV_S
+      } op;
+    } f_bin_rm_type_s;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+      enum f_un_rm_op_S {
+        RISCV_FSQRT_S,
+        RISCV_FCVT_W_S,
+        RISCV_FCVT_WU_S,
+        RISCV_FCVT_S_W,
+        RISCV_FCVT_S_WU,
+        RISCV_FCVT_L_S,
+        RISCV_FCVT_LU_S,
+        RISCV_FCVT_S_L,
+        RISCV_FCVT_S_LU
+      } fcvt_s_lu;
+    } f_un_rm_type_s;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum f_bin_op_S {
+        RISCV_FSGNJ_S,
+        RISCV_FSGNJN_S,
+        RISCV_FSGNJX_S,
+        RISCV_FMIN_S,
+        RISCV_FMAX_S,
+        RISCV_FEQ_S,
+        RISCV_FLT_S,
+        RISCV_FLE_S
+      } fle_s;
+    } f_bin_type_s;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum f_un_op_S { RISCV_FCLASS_S, RISCV_FMV_X_W, RISCV_FMV_W_X } fmv_w_x;
+    } f_un_type_s;
+    struct {
+      uint8_t imm /* bits : 6 */;
+      uint8_t rd /* bits : 5 */;
+    } c_flwsp;
+    struct {
+      uint8_t uimm /* bits : 6 */;
+      uint8_t rs2 /* bits : 5 */;
+    } c_fswsp;
+    struct {
+      uint8_t uimm /* bits : 5 */;
+      uint8_t rsc /* bits : 3 */;
+      uint8_t rdc /* bits : 3 */;
+    } c_flw;
+    struct {
+      uint8_t uimm /* bits : 5 */;
+      uint8_t rsc1 /* bits : 3 */;
+      uint8_t rsc2 /* bits : 3 */;
+    } c_fsw;
+    struct {
+      uint8_t rs3 /* bits : 5 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+      enum f_madd_op_D {
+        RISCV_FMADD_D,
+        RISCV_FMSUB_D,
+        RISCV_FNMSUB_D,
+        RISCV_FNMADD_D
+      } op;
+    } f_madd_type_d;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+      enum f_bin_rm_op_D {
+        RISCV_FADD_D,
+        RISCV_FSUB_D,
+        RISCV_FMUL_D,
+        RISCV_FDIV_D
+      } op;
+    } f_bin_rm_type_d;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+      enum f_un_rm_op_D {
+        RISCV_FSQRT_D,
+        RISCV_FCVT_W_D,
+        RISCV_FCVT_WU_D,
+        RISCV_FCVT_D_W,
+        RISCV_FCVT_D_WU,
+        RISCV_FCVT_S_D,
+        RISCV_FCVT_D_S,
+        RISCV_FCVT_L_D,
+        RISCV_FCVT_LU_D,
+        RISCV_FCVT_D_L,
+        RISCV_FCVT_D_LU
+      } fcvt_d_lu;
+    } f_un_rm_type_d;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum f_bin_op_D {
+        RISCV_FSGNJ_D,
+        RISCV_FSGNJN_D,
+        RISCV_FSGNJX_D,
+        RISCV_FMIN_D,
+        RISCV_FMAX_D,
+        RISCV_FEQ_D,
+        RISCV_FLT_D,
+        RISCV_FLE_D
+      } fle_d;
+    } f_bin_type_d;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum f_un_op_D { RISCV_FCLASS_D, RISCV_FMV_X_D, RISCV_FMV_D_X } fmv_d_x;
+    } f_un_type_d;
+    struct {
+      uint8_t uimm /* bits : 6 */;
+      uint8_t rd /* bits : 5 */;
+    } c_fldsp;
+    struct {
+      uint8_t uimm /* bits : 6 */;
+      uint8_t rs2 /* bits : 5 */;
+    } c_fsdsp;
+    struct {
+      uint8_t uimm /* bits : 5 */;
+      uint8_t rsc /* bits : 3 */;
+      uint8_t rdc /* bits : 3 */;
+    } c_fld;
+    struct {
+      uint8_t uimm /* bits : 5 */;
+      uint8_t rsc1 /* bits : 3 */;
+      uint8_t rsc2 /* bits : 3 */;
+    } c_fsd;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rs2 /* bits : 5 */;
+    } sinval_vma;
+    struct {
+      uint8_t shamt /* bits : 6 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_slliuw;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum bropw_zba {
+        RISCV_ADDUW,
+        RISCV_SH1ADDUW,
+        RISCV_SH2ADDUW,
+        RISCV_SH3ADDUW
+      } op;
+    } zba_rtypeuw;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum brop_zba { RISCV_SH1ADD, RISCV_SH2ADD, RISCV_SH3ADD } op;
+    } zba_rtype;
+    struct {
+      uint8_t shamt /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_roriw;
+    struct {
+      uint8_t shamt /* bits : 6 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_rori;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum bropw_zbb { RISCV_ROLW, RISCV_RORW } op;
+    } zbb_rtypew;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum brop_zbb {
+        RISCV_ANDN,
+        RISCV_ORN,
+        RISCV_XNOR,
+        RISCV_MAX,
+        RISCV_MAXU,
+        RISCV_MIN,
+        RISCV_MINU,
+        RISCV_ROL,
+        RISCV_ROR
+      } op;
+    } zbb_rtype;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum extop_zbb { RISCV_SEXTB, RISCV_SEXTH, RISCV_ZEXTH } op;
+    } zbb_extop;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_rev8;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_orcb;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_cpop;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_cpopw;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_clz;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_clzw;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_ctz;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_ctzw;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_clmul;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_clmulh;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_clmulr;
+    struct {
+      uint8_t shamt /* bits : 6 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum biop_zbs { RISCV_BCLRI, RISCV_BEXTI, RISCV_BINVI, RISCV_BSETI } op;
+    } zbs_iop;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum brop_zbs { RISCV_BCLR, RISCV_BEXT, RISCV_BINV, RISCV_BSET } op;
+    } zbs_rtype;
+    struct {
+      uint8_t uimm /* bits : 2 */;
+      uint8_t rdc /* bits : 3 */;
+      uint8_t rs1c /* bits : 3 */;
+    } c_lbu;
+    struct {
+      uint8_t uimm /* bits : 2 */;
+      uint8_t rdc /* bits : 3 */;
+      uint8_t rs1c /* bits : 3 */;
+    } c_lhu;
+    struct {
+      uint8_t uimm /* bits : 2 */;
+      uint8_t rdc /* bits : 3 */;
+      uint8_t rs1c /* bits : 3 */;
+    } c_lh;
+    struct {
+      uint8_t uimm /* bits : 2 */;
+      uint8_t rs1c /* bits : 3 */;
+      uint8_t rs2c /* bits : 3 */;
+    } c_sb;
+    struct {
+      uint8_t uimm /* bits : 2 */;
+      uint8_t rs1c /* bits : 3 */;
+      uint8_t rs2c /* bits : 3 */;
+    } c_sh;
+    uint8_t c_zext_b /* bits : 3 */;
+    uint8_t c_sext_b /* bits : 3 */;
+    uint8_t c_zext_h /* bits : 3 */;
+    uint8_t c_sext_h /* bits : 3 */;
+    uint8_t c_zext_w /* bits : 3 */;
+    uint8_t c_not /* bits : 3 */;
+    struct {
+      uint8_t rsdc /* bits : 3 */;
+      uint8_t rs2c /* bits : 3 */;
+    } c_mul;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+      enum f_bin_rm_op_H {
+        RISCV_FADD_H,
+        RISCV_FSUB_H,
+        RISCV_FMUL_H,
+        RISCV_FDIV_H
+      } op;
+    } f_bin_rm_type_h;
+    struct {
+      uint8_t rs3 /* bits : 5 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+      enum f_madd_op_H {
+        RISCV_FMADD_H,
+        RISCV_FMSUB_H,
+        RISCV_FNMSUB_H,
+        RISCV_FNMADD_H
+      } op;
+    } f_madd_type_h;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum f_bin_op_H {
+        RISCV_FSGNJ_H,
+        RISCV_FSGNJN_H,
+        RISCV_FSGNJX_H,
+        RISCV_FMIN_H,
+        RISCV_FMAX_H,
+        RISCV_FEQ_H,
+        RISCV_FLT_H,
+        RISCV_FLE_H
+      } fle_h;
+    } f_bin_type_h;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+      enum f_un_rm_op_H {
+        RISCV_FSQRT_H,
+        RISCV_FCVT_W_H,
+        RISCV_FCVT_WU_H,
+        RISCV_FCVT_H_W,
+        RISCV_FCVT_H_WU,
+        RISCV_FCVT_H_S,
+        RISCV_FCVT_H_D,
+        RISCV_FCVT_S_H,
+        RISCV_FCVT_D_H,
+        RISCV_FCVT_L_H,
+        RISCV_FCVT_LU_H,
+        RISCV_FCVT_H_L,
+        RISCV_FCVT_H_LU
+      } fcvt_h_lu;
+    } f_un_rm_type_h;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum f_un_op_H { RISCV_FCLASS_H, RISCV_FMV_X_H, RISCV_FMV_H_X } fmv_h_x;
+    } f_un_type_h;
+    struct {
+      uint8_t constantidx /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fli_h;
+    struct {
+      uint8_t constantidx /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fli_s;
+    struct {
+      uint8_t constantidx /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fli_d;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fminm_h;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fmaxm_h;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fminm_s;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fmaxm_s;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fminm_d;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fmaxm_d;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fround_h;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+    } riscv_froundnx_h;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fround_s;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+    } riscv_froundnx_s;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fround_d;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      enum rounding_mode rm;
+      uint8_t rd /* bits : 5 */;
+    } riscv_froundnx_d;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fmvh_x_d;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fmvp_d_x;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fleq_h;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fltq_h;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fleq_s;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fltq_s;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fleq_d;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fltq_d;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_fcvtmod_w_d;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha256sig0;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha256sig1;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha256sum0;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha256sum1;
+    struct {
+      uint8_t bs /* bits : 2 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes32esmi;
+    struct {
+      uint8_t bs /* bits : 2 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes32esi;
+    struct {
+      uint8_t bs /* bits : 2 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes32dsmi;
+    struct {
+      uint8_t bs /* bits : 2 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes32dsi;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha512sig0l;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha512sig0h;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha512sig1l;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha512sig1h;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha512sum0r;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha512sum1r;
+    struct {
+      uint8_t rnum /* bits : 4 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes64ks1i;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes64ks2;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes64im;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes64esm;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes64es;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes64dsm;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } aes64ds;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha512sig0;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha512sig1;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha512sum0;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sha512sum1;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sm3p0;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sm3p1;
+    struct {
+      uint8_t bs /* bits : 2 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sm4ed;
+    struct {
+      uint8_t bs /* bits : 2 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } sm4ks;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum brop_zbkb { RISCV_PACK, RISCV_PACKH } op;
+    } zbkb_rtype;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } zbkb_packw;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_zip;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_unzip;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_brev8;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_xperm8;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } riscv_xperm4;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+      enum zicondop { RISCV_CZERO_EQZ, RISCV_CZERO_NEZ } riscv_czero_nez;
+    } zicond_rtype;
+    struct {
+      uint8_t ma /* bits : 1 */;
+      uint8_t ta /* bits : 1 */;
+      uint8_t sew /* bits : 3 */;
+      uint8_t lmul /* bits : 3 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } vsetvli;
+    struct {
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } vsetvl;
+    struct {
+      uint8_t ma /* bits : 1 */;
+      uint8_t ta /* bits : 1 */;
+      uint8_t sew /* bits : 3 */;
+      uint8_t lmul /* bits : 3 */;
+      uint8_t uimm /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } vsetivli;
+    struct {
+      enum vvfunct6 {
+        RISCV_VV_VADD,
+        RISCV_VV_VSUB,
+        RISCV_VV_VMINU,
+        RISCV_VV_VMIN,
+        RISCV_VV_VMAXU,
+        RISCV_VV_VMAX,
+        RISCV_VV_VAND,
+        RISCV_VV_VOR,
+        RISCV_VV_VXOR,
+        RISCV_VV_VRGATHER,
+        RISCV_VV_VRGATHEREI16,
+        RISCV_VV_VSADDU,
+        RISCV_VV_VSADD,
+        RISCV_VV_VSSUBU,
+        RISCV_VV_VSSUB,
+        RISCV_VV_VSLL,
+        RISCV_VV_VSMUL,
+        RISCV_VV_VSRL,
+        RISCV_VV_VSRA,
+        RISCV_VV_VSSRL,
+        RISCV_VV_VSSRA
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vvtype;
+    struct {
+      enum nvsfunct6 { RISCV_NVS_VNSRL, RISCV_NVS_VNSRA } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } nvstype;
+    struct {
+      enum nvfunct6 { RISCV_NV_VNCLIPU, RISCV_NV_VNCLIP } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } nvtype;
+    struct {
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } masktypev;
+    struct {
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } movetypev;
+    struct {
+      enum vxfunct6 {
+        RISCV_VX_VADD,
+        RISCV_VX_VSUB,
+        RISCV_VX_VRSUB,
+        RISCV_VX_VMINU,
+        RISCV_VX_VMIN,
+        RISCV_VX_VMAXU,
+        RISCV_VX_VMAX,
+        RISCV_VX_VAND,
+        RISCV_VX_VOR,
+        RISCV_VX_VXOR,
+        RISCV_VX_VSADDU,
+        RISCV_VX_VSADD,
+        RISCV_VX_VSSUBU,
+        RISCV_VX_VSSUB,
+        RISCV_VX_VSLL,
+        RISCV_VX_VSMUL,
+        RISCV_VX_VSRL,
+        RISCV_VX_VSRA,
+        RISCV_VX_VSSRL,
+        RISCV_VX_VSSRA
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vxtype;
+    struct {
+      enum nxsfunct6 { RISCV_NXS_VNSRL, RISCV_NXS_VNSRA } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } nxstype;
+    struct {
+      enum nxfunct6 { RISCV_NX_VNCLIPU, RISCV_NX_VNCLIP } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } nxtype;
+    struct {
+      enum vxsgfunct6 {
+        RISCV_VX_VSLIDEUP,
+        RISCV_VX_VSLIDEDOWN,
+        RISCV_VX_VRGATHER
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vxsg;
+    struct {
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } masktypex;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } movetypex;
+    struct {
+      enum vifunct6 {
+        RISCV_VI_VADD,
+        RISCV_VI_VRSUB,
+        RISCV_VI_VAND,
+        RISCV_VI_VOR,
+        RISCV_VI_VXOR,
+        RISCV_VI_VSADDU,
+        RISCV_VI_VSADD,
+        RISCV_VI_VSLL,
+        RISCV_VI_VSRL,
+        RISCV_VI_VSRA,
+        RISCV_VI_VSSRL,
+        RISCV_VI_VSSRA
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vitype;
+    struct {
+      enum nisfunct6 { RISCV_NIS_VNSRL, RISCV_NIS_VNSRA } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } nistype;
+    struct {
+      enum nifunct6 { RISCV_NI_VNCLIPU, RISCV_NI_VNCLIP } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } nitype;
+    struct {
+      enum visgfunct6 {
+        RISCV_VI_VSLIDEUP,
+        RISCV_VI_VSLIDEDOWN,
+        RISCV_VI_VRGATHER
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } visg;
+    struct {
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } masktypei;
+    struct {
+      uint8_t vd /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+    } movetypei;
+    struct {
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vmvrtype;
+    struct {
+      enum mvvfunct6 {
+        RISCV_MVV_VAADDU,
+        RISCV_MVV_VAADD,
+        RISCV_MVV_VASUBU,
+        RISCV_MVV_VASUB,
+        RISCV_MVV_VMUL,
+        RISCV_MVV_VMULH,
+        RISCV_MVV_VMULHU,
+        RISCV_MVV_VMULHSU,
+        RISCV_MVV_VDIVU,
+        RISCV_MVV_VDIV,
+        RISCV_MVV_VREMU,
+        RISCV_MVV_VREM
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } mvvtype;
+    struct {
+      enum mvvmafunct6 {
+        RISCV_MVV_VMACC,
+        RISCV_MVV_VNMSAC,
+        RISCV_MVV_VMADD,
+        RISCV_MVV_VNMSUB
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } mvvmatype;
+    struct {
+      enum wvvfunct6 {
+        RISCV_WVV_VADD,
+        RISCV_WVV_VSUB,
+        RISCV_WVV_VADDU,
+        RISCV_WVV_VSUBU,
+        RISCV_WVV_VWMUL,
+        RISCV_WVV_VWMULU,
+        RISCV_WVV_VWMULSU
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } wvvtype;
+    struct {
+      enum wvfunct6 {
+        RISCV_WV_VADD,
+        RISCV_WV_VSUB,
+        RISCV_WV_VADDU,
+        RISCV_WV_VSUBU
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } wvtype;
+    struct {
+      enum wmvvfunct6 {
+        RISCV_WMVV_VWMACCU,
+        RISCV_WMVV_VWMACC,
+        RISCV_WMVV_VWMACCSU
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } wmvvtype;
+    struct {
+      enum vext2funct6 { RISCV_VEXT2_ZVF2, RISCV_VEXT2_SVF2 } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vext2type;
+    struct {
+      enum vext4funct6 { RISCV_VEXT4_ZVF4, RISCV_VEXT4_SVF4 } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vext4type;
+    struct {
+      enum vext8funct6 { RISCV_VEXT8_ZVF8, RISCV_VEXT8_SVF8 } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vext8type;
+    struct {
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } vmvxs;
+    struct {
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } mvvcompress;
+    struct {
+      enum mvxfunct6 {
+        RISCV_MVX_VAADDU,
+        RISCV_MVX_VAADD,
+        RISCV_MVX_VASUBU,
+        RISCV_MVX_VASUB,
+        RISCV_MVX_VSLIDE1UP,
+        RISCV_MVX_VSLIDE1DOWN,
+        RISCV_MVX_VMUL,
+        RISCV_MVX_VMULH,
+        RISCV_MVX_VMULHU,
+        RISCV_MVX_VMULHSU,
+        RISCV_MVX_VDIVU,
+        RISCV_MVX_VDIV,
+        RISCV_MVX_VREMU,
+        RISCV_MVX_VREM
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } mvxtype;
+    struct {
+      enum mvxmafunct6 {
+        RISCV_MVX_VMACC,
+        RISCV_MVX_VNMSAC,
+        RISCV_MVX_VMADD,
+        RISCV_MVX_VNMSUB
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } mvxmatype;
+    struct {
+      enum wvxfunct6 {
+        RISCV_WVX_VADD,
+        RISCV_WVX_VSUB,
+        RISCV_WVX_VADDU,
+        RISCV_WVX_VSUBU,
+        RISCV_WVX_VWMUL,
+        RISCV_WVX_VWMULU,
+        RISCV_WVX_VWMULSU
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } wvxtype;
+    struct {
+      enum wxfunct6 {
+        RISCV_WX_VADD,
+        RISCV_WX_VSUB,
+        RISCV_WX_VADDU,
+        RISCV_WX_VSUBU
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } wxtype;
+    struct {
+      enum wmvxfunct6 {
+        RISCV_WMVX_VWMACCU,
+        RISCV_WMVX_VWMACC,
+        RISCV_WMVX_VWMACCUS,
+        RISCV_WMVX_VWMACCSU
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } wmvxtype;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vmvsx;
+    struct {
+      enum fvvfunct6 {
+        RISCV_FVV_VADD,
+        RISCV_FVV_VSUB,
+        RISCV_FVV_VMIN,
+        RISCV_FVV_VMAX,
+        RISCV_FVV_VSGNJ,
+        RISCV_FVV_VSGNJN,
+        RISCV_FVV_VSGNJX,
+        RISCV_FVV_VDIV,
+        RISCV_FVV_VMUL
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fvvtype;
+    struct {
+      enum fvvmafunct6 {
+        RISCV_FVV_VMADD,
+        RISCV_FVV_VNMADD,
+        RISCV_FVV_VMSUB,
+        RISCV_FVV_VNMSUB,
+        RISCV_FVV_VMACC,
+        RISCV_FVV_VNMACC,
+        RISCV_FVV_VMSAC,
+        RISCV_FVV_VNMSAC
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fvvmatype;
+    struct {
+      enum fwvvfunct6 {
+        RISCV_FWVV_VADD,
+        RISCV_FWVV_VSUB,
+        RISCV_FWVV_VMUL
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fwvvtype;
+    struct {
+      enum fwvvmafunct6 {
+        RISCV_FWVV_VMACC,
+        RISCV_FWVV_VNMACC,
+        RISCV_FWVV_VMSAC,
+        RISCV_FWVV_VNMSAC
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fwvvmatype;
+    struct {
+      enum fwvfunct6 { RISCV_FWV_VADD, RISCV_FWV_VSUB } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fwvtype;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      enum vfunary0 {
+        RISCV_FV_CVT_XU_F,
+        RISCV_FV_CVT_X_F,
+        RISCV_FV_CVT_F_XU,
+        RISCV_FV_CVT_F_X,
+        RISCV_FV_CVT_RTZ_XU_F,
+        RISCV_FV_CVT_RTZ_X_F
+      } vfunary0;
+      uint8_t vd /* bits : 5 */;
+    } vfunary0;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      enum vfwunary0 {
+        RISCV_FWV_CVT_XU_F,
+        RISCV_FWV_CVT_X_F,
+        RISCV_FWV_CVT_F_XU,
+        RISCV_FWV_CVT_F_X,
+        RISCV_FWV_CVT_F_F,
+        RISCV_FWV_CVT_RTZ_XU_F,
+        RISCV_FWV_CVT_RTZ_X_F
+      } vfwunary0;
+      uint8_t vd /* bits : 5 */;
+    } vfwunary0;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      enum vfnunary0 {
+        RISCV_FNV_CVT_XU_F,
+        RISCV_FNV_CVT_X_F,
+        RISCV_FNV_CVT_F_XU,
+        RISCV_FNV_CVT_F_X,
+        RISCV_FNV_CVT_F_F,
+        RISCV_FNV_CVT_ROD_F_F,
+        RISCV_FNV_CVT_RTZ_XU_F,
+        RISCV_FNV_CVT_RTZ_X_F
+      } vfnunary0;
+      uint8_t vd /* bits : 5 */;
+    } vfnunary0;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      enum vfunary1 {
+        RISCV_FVV_VSQRT,
+        RISCV_FVV_VRSQRT7,
+        RISCV_FVV_VREC7,
+        RISCV_FVV_VCLASS
+      } vfunary1;
+      uint8_t vd /* bits : 5 */;
+    } vfunary1;
+    struct {
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } vfmvfs;
+    struct {
+      enum fvffunct6 {
+        RISCV_VF_VADD,
+        RISCV_VF_VSUB,
+        RISCV_VF_VMIN,
+        RISCV_VF_VMAX,
+        RISCV_VF_VSGNJ,
+        RISCV_VF_VSGNJN,
+        RISCV_VF_VSGNJX,
+        RISCV_VF_VDIV,
+        RISCV_VF_VRDIV,
+        RISCV_VF_VMUL,
+        RISCV_VF_VRSUB,
+        RISCV_VF_VSLIDE1UP,
+        RISCV_VF_VSLIDE1DOWN
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fvftype;
+    struct {
+      enum fvfmafunct6 {
+        RISCV_VF_VMADD,
+        RISCV_VF_VNMADD,
+        RISCV_VF_VMSUB,
+        RISCV_VF_VNMSUB,
+        RISCV_VF_VMACC,
+        RISCV_VF_VNMACC,
+        RISCV_VF_VMSAC,
+        RISCV_VF_VNMSAC
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fvfmatype;
+    struct {
+      enum fwvffunct6 {
+        RISCV_FWVF_VADD,
+        RISCV_FWVF_VSUB,
+        RISCV_FWVF_VMUL
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fwvftype;
+    struct {
+      enum fwvfmafunct6 {
+        RISCV_FWVF_VMACC,
+        RISCV_FWVF_VNMACC,
+        RISCV_FWVF_VMSAC,
+        RISCV_FWVF_VNMSAC
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fwvfmatype;
+    struct {
+      enum fwffunct6 { RISCV_FWF_VADD, RISCV_FWF_VSUB } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fwftype;
+    struct {
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vfmerge;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vfmv;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vfmvsf;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t vm /* bits : 1 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum vlewidth { RISCV_VLE8, RISCV_VLE16, RISCV_VLE32, RISCV_VLE64 } width;
+      uint8_t vd /* bits : 5 */;
+    } vlsegtype;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t vm /* bits : 1 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum vlewidth width;
+      uint8_t vd /* bits : 5 */;
+    } vlsegfftype;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t vm /* bits : 1 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum vlewidth width;
+      uint8_t vs3 /* bits : 5 */;
+    } vssegtype;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t vm /* bits : 1 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum vlewidth width;
+      uint8_t vd /* bits : 5 */;
+    } vlssegtype;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t vm /* bits : 1 */;
+      uint8_t rs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum vlewidth width;
+      uint8_t vs3 /* bits : 5 */;
+    } vsssegtype;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum vlewidth width;
+      uint8_t vd /* bits : 5 */;
+    } vluxsegtype;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum vlewidth width;
+      uint8_t vd /* bits : 5 */;
+    } vloxsegtype;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum vlewidth width;
+      uint8_t vs3 /* bits : 5 */;
+    } vsuxsegtype;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum vlewidth width;
+      uint8_t vs3 /* bits : 5 */;
+    } vsoxsegtype;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t rs1 /* bits : 5 */;
+      enum vlewidth width;
+      uint8_t vd /* bits : 5 */;
+    } vlretype;
+    struct {
+      uint8_t nf /* bits : 3 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vs3 /* bits : 5 */;
+    } vsretype;
+    struct {
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd_or_vs3 /* bits : 5 */;
+      enum vmlsop { RISCV_VLM, RISCV_VSM } op;
+    } vmtype;
+    struct {
+      enum mmfunct6 {
+        RISCV_MM_VMAND,
+        RISCV_MM_VMNAND,
+        RISCV_MM_VMANDN,
+        RISCV_MM_VMXOR,
+        RISCV_MM_VMOR,
+        RISCV_MM_VMNOR,
+        RISCV_MM_VMORN,
+        RISCV_MM_VMXNOR
+      } funct6;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } mmtype;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } vcpop_m;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rd /* bits : 5 */;
+    } vfirst_m;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vmsbf_m;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vmsif_m;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vmsof_m;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } viota_m;
+    struct {
+      uint8_t vm /* bits : 1 */;
+      uint8_t vd /* bits : 5 */;
+    } vid_v;
+    struct {
+      enum vvmfunct6 { RISCV_VVM_VMADC, RISCV_VVM_VMSBC } funct6;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vvmtype;
+    struct {
+      enum vvmcfunct6 { RISCV_VVMC_VMADC, RISCV_VVMC_VMSBC } funct6;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vvmctype;
+    struct {
+      enum vvmsfunct6 { RISCV_VVMS_VADC, RISCV_VVMS_VSBC } funct6;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vvmstype;
+    struct {
+      enum vvcmpfunct6 {
+        RISCV_VVCMP_VMSEQ,
+        RISCV_VVCMP_VMSNE,
+        RISCV_VVCMP_VMSLTU,
+        RISCV_VVCMP_VMSLT,
+        RISCV_VVCMP_VMSLEU,
+        RISCV_VVCMP_VMSLE
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vvcmptype;
+    struct {
+      enum vxmfunct6 { RISCV_VXM_VMADC, RISCV_VXM_VMSBC } funct6;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vxmtype;
+    struct {
+      enum vxmcfunct6 { RISCV_VXMC_VMADC, RISCV_VXMC_VMSBC } funct6;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vxmctype;
+    struct {
+      enum vxmsfunct6 { RISCV_VXMS_VADC, RISCV_VXMS_VSBC } funct6;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vxmstype;
+    struct {
+      enum vxcmpfunct6 {
+        RISCV_VXCMP_VMSEQ,
+        RISCV_VXCMP_VMSNE,
+        RISCV_VXCMP_VMSLTU,
+        RISCV_VXCMP_VMSLT,
+        RISCV_VXCMP_VMSLEU,
+        RISCV_VXCMP_VMSLE,
+        RISCV_VXCMP_VMSGTU,
+        RISCV_VXCMP_VMSGT
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vxcmptype;
+    struct {
+      enum vimfunct6 { RISCV_VIM_VMADC } funct6;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vimtype;
+    struct {
+      enum vimcfunct6 { RISCV_VIMC_VMADC } funct6;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vimctype;
+    struct {
+      enum vimsfunct6 { RISCV_VIMS_VADC } funct6;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vimstype;
+    struct {
+      enum vicmpfunct6 {
+        RISCV_VICMP_VMSEQ,
+        RISCV_VICMP_VMSNE,
+        RISCV_VICMP_VMSLEU,
+        RISCV_VICMP_VMSLE,
+        RISCV_VICMP_VMSGTU,
+        RISCV_VICMP_VMSGT
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t simm /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } vicmptype;
+    struct {
+      enum fvvmfunct6 {
+        RISCV_FVVM_VMFEQ,
+        RISCV_FVVM_VMFLE,
+        RISCV_FVVM_VMFLT,
+        RISCV_FVVM_VMFNE
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fvvmtype;
+    struct {
+      enum fvfmfunct6 {
+        RISCV_VFM_VMFEQ,
+        RISCV_VFM_VMFLE,
+        RISCV_VFM_VMFLT,
+        RISCV_VFM_VMFNE,
+        RISCV_VFM_VMFGT,
+        RISCV_VFM_VMFGE
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t rs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } fvfmtype;
+    struct {
+      enum rivvfunct6 { RISCV_IVV_VWREDSUMU, RISCV_IVV_VWREDSUM } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } rivvtype;
+    struct {
+      enum rmvvfunct6 {
+        RISCV_MVV_VREDSUM,
+        RISCV_MVV_VREDAND,
+        RISCV_MVV_VREDOR,
+        RISCV_MVV_VREDXOR,
+        RISCV_MVV_VREDMINU,
+        RISCV_MVV_VREDMIN,
+        RISCV_MVV_VREDMAXU,
+        RISCV_MVV_VREDMAX
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } rmvvtype;
+    struct {
+      enum rfvvfunct6 {
+        RISCV_FVV_VFREDOSUM,
+        RISCV_FVV_VFREDUSUM,
+        RISCV_FVV_VFREDMAX,
+        RISCV_FVV_VFREDMIN,
+        RISCV_FVV_VFWREDOSUM,
+        RISCV_FVV_VFWREDUSUM
+      } funct6;
+      uint8_t vm /* bits : 1 */;
+      uint8_t vs2 /* bits : 5 */;
+      uint8_t vs1 /* bits : 5 */;
+      uint8_t vd /* bits : 5 */;
+    } rfvvtype;
+    struct {
+      enum cbop_zicbom {
+        RISCV_CBO_CLEAN,
+        RISCV_CBO_FLUSH,
+        RISCV_CBO_INVAL
+      } cbop;
+      uint8_t rs1 /* bits : 5 */;
+    } riscv_zicbom;
+    uint8_t riscv_zicboz /* bits : 5 */;
+  } ast_node;
+};
+
+#endif
