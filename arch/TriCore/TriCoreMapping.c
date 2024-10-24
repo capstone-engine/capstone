@@ -18,26 +18,27 @@
 
 #include "TriCoreGenInstrInfo.inc"
 
-static const insn_map insns[] = {
-	// dummy item
-	{ 0,
-	  0,
-#ifndef CAPSTONE_DIET
-	  { 0 },
-	  { 0 },
-	  { 0 },
-	  0,
-	  0
-#endif
-	},
+static const name_map group_name_maps[] = {
+	{ TRICORE_GRP_INVALID, "invalid" },
+	{ TRICORE_GRP_CALL, "call" },
+	{ TRICORE_GRP_JUMP, "jump" },
+#include "TriCoreGenCSFeatureName.inc"
+};
 
+static const insn_map mapping_insns[] = {
 #include "TriCoreGenCSMappingInsn.inc"
 };
 
-void TriCore_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
-{
-	// Not used. Information is set after disassembly.
-}
+static const map_insn_ops insn_operands[] = {
+#include "TriCoreGenCSMappingInsnOp.inc"
+};
+
+static const char *const insn_names[] = {
+#include "TriCoreGenCSMappingInsnName.inc"
+};
+
+// special alias insn
+static const name_map alias_insn_names[] = { { 0, NULL } };
 
 #ifndef CAPSTONE_DIET
 static const tricore_reg flag_regs[] = { TRICORE_REG_PSW };
@@ -46,9 +47,12 @@ static const tricore_reg flag_regs[] = { TRICORE_REG_PSW };
 static inline void check_updates_flags(MCInst *MI)
 {
 #ifndef CAPSTONE_DIET
-	if (!MI->flat_insn->detail)
+	if (!detail_is_set(MI)) {
 		return;
-	cs_detail *detail = MI->flat_insn->detail;
+	}
+
+	cs_detail *detail = get_detail(MI);
+
 	for (int i = 0; i < detail->regs_write_count; ++i) {
 		if (detail->regs_write[i] == 0)
 			return;
@@ -62,40 +66,32 @@ static inline void check_updates_flags(MCInst *MI)
 #endif // CAPSTONE_DIET
 }
 
-void TriCore_set_instr_map_data(MCInst *MI)
+static void set_instr_map_data(MCInst *MI)
 {
-	map_cs_id(MI, insns, ARR_SIZE(insns));
-	map_implicit_reads(MI, insns);
-	map_implicit_writes(MI, insns);
+#ifndef CAPSTONE_DIET
+	map_cs_id(MI, mapping_insns, ARR_SIZE(mapping_insns));
+	map_implicit_reads(MI, mapping_insns);
+	map_implicit_writes(MI, mapping_insns);
+	map_groups(MI, mapping_insns);
 	check_updates_flags(MI);
-	map_groups(MI, insns);
+#endif
 }
 
-#ifndef CAPSTONE_DIET
-
-static const char * const insn_names[] = {
-	NULL,
-
-#include "TriCoreGenCSMappingInsnName.inc"
-};
-
-// special alias insn
-static const name_map alias_insn_names[] = { { 0, NULL } };
-#endif
+void TriCore_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
+{
+	// Not used. Information is set after disassembly.
+}
 
 const char *TriCore_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	unsigned int i;
-
 	if (id >= TRICORE_INS_ENDING)
 		return NULL;
 
-	// handle special alias first
-	for (i = 0; i < ARR_SIZE(alias_insn_names); i++) {
-		if (alias_insn_names[i].id == id)
-			return alias_insn_names[i].name;
-	}
+	const char *alias_name =
+		id2name(alias_insn_names, ARR_SIZE(alias_insn_names), id);
+	if (alias_name)
+		return alias_name;
 
 	return insn_names[id];
 #else
@@ -103,41 +99,24 @@ const char *TriCore_insn_name(csh handle, unsigned int id)
 #endif
 }
 
-#ifndef CAPSTONE_DIET
-static const name_map group_name_maps[] = {
-	{ TRICORE_GRP_INVALID, NULL },
-	{ TRICORE_GRP_CALL, "call" },
-	{ TRICORE_GRP_JUMP, "jump" },
-};
-#endif
-
 const char *TriCore_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= TRICORE_GRP_ENDING)
-		return NULL;
-
-	return group_name_maps[id].name;
+	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 #else
 	return NULL;
 #endif
 }
 
-#ifndef CAPSTONE_DIET
-static const map_insn_ops insn_operands[] = {
-#include "TriCoreGenCSMappingInsnOp.inc"
-};
-#endif
-
 void TriCore_set_access(MCInst *MI)
 {
 #ifndef CAPSTONE_DIET
-	if (!(MI->csh->detail_opt == CS_OPT_ON && MI->flat_insn->detail))
+	if (!detail_is_set(MI))
 		return;
 
 	CS_ASSERT_RET(MI->Opcode < ARR_SIZE(insn_operands));
 
-	cs_detail *detail = MI->flat_insn->detail;
+	cs_detail *detail = get_detail(MI);
 	cs_tricore *tc = &(detail->tricore);
 	for (int i = 0; i < tc->op_count; ++i) {
 		cs_ac_type ac = map_get_op_access(MI, i);
@@ -208,16 +187,25 @@ void TriCore_reg_access(const cs_insn *insn, cs_regs regs_read,
 #endif
 }
 
-bool TriCore_getInstruction(csh handle, const uint8_t *Bytes, size_t ByteLen,
-			    MCInst *MI, uint16_t *Size, uint64_t Address,
-			    void *Info)
+bool TriCore_disasm(csh handle, const uint8_t *code, size_t code_len,
+		    MCInst *instr, uint16_t *size, uint64_t address, void *info)
 {
-	return TriCore_LLVM_getInstruction(handle, Bytes, ByteLen, MI, Size,
-					   Address, Info);
+	instr->MRI = (MCRegisterInfo *)info;
+	if (instr->flat_insn->detail) {
+		memset(instr->flat_insn->detail, 0, sizeof(cs_detail));
+	}
+
+	bool res = TriCore_LLVM_getInstruction(handle, code, code_len, instr,
+					       size, address);
+	if (!res)
+		return res;
+	set_instr_map_data(instr);
+	return res;
 }
 
 void TriCore_printInst(MCInst *MI, SStream *O, void *Info)
 {
+	MI->MRI = Info;
 	TriCore_LLVM_printInst(MI, MI->address, O);
 }
 

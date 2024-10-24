@@ -95,7 +95,532 @@ test_cases:
         details:
           tricore:
             operands:
+              - type: TRICORE_OP_REG
+                reg: d15
               -
                 type: TRICORE_OP_IMM
                 imm: 0x1
-
+  - input:
+      bytes: [ 0x12, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "add d0, d15, d0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_READ
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x1a, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "add d15, d0, d0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xaa, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "cmov d0, d15, #0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_READ
+                - type: TRICORE_OP_IMM
+                  imm: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x2a, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "cmov d0, d15, d0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_READ
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xea, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "cmovn d0, d15, #0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_READ
+                - type: TRICORE_OP_IMM
+                  imm: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x6a, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "cmovn d0, d15, d0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_READ
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xee, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "jnz d15, #0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_WRITE # fixme: should be read
+                - type: TRICORE_OP_IMM
+                  imm: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x6e, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "jz d15, #0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_WRITE # fixme: should be read
+                - type: TRICORE_OP_IMM
+                  imm: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xd8, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ld.a a15, [sp]#0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: a15
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_MEM
+                  mem_base: sp
+                  mem_disp: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xc8, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ld.a a0, [a15]#0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: a0
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_MEM
+                  mem_base: a15
+                  mem_disp: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xcc, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ld.a a15, [a0]#0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: a15
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_MEM
+                  mem_base: a0
+                  mem_disp: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x08, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ld.bu d0, [a15]#0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_MEM
+                  mem_base: a15
+                  mem_disp: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x0c, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ld.bu d15, [a0]#0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_MEM
+                  mem_base: a0
+                  mem_disp: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x88, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ld.h d0, [a15]#0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_MEM
+                  mem_base: a15
+                  mem_disp: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x8c, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ld.h d15, [a0]#0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_MEM
+                  mem_base: a0
+                  mem_disp: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x58, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ld.w d15, [sp]#0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_MEM
+                  mem_base: sp
+                  mem_disp: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x48, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ld.w d0, [a15]#0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_MEM
+                  mem_base: a15
+                  mem_disp: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x4c, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ld.w d15, [a0]#0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_MEM
+                  mem_base: a0
+                  mem_disp: 0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xf8, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "st.a [sp]#0, a15"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_MEM
+                  mem_base: sp
+                  mem_disp: 0
+                  access: CS_AC_READ # fixme: should be write
+                - type: TRICORE_OP_REG
+                  reg: a15
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xec, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "st.a [a0]#0, a15"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_MEM
+                  mem_base: a0
+                  mem_disp: 0
+                  access: CS_AC_READ # fixme: should be write
+                - type: TRICORE_OP_REG
+                  reg: a15
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xe8, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "st.a [a15]#0, a0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_MEM
+                  mem_base: a15
+                  mem_disp: 0
+                  access: CS_AC_READ # fixme: should be write
+                - type: TRICORE_OP_REG
+                  reg: a0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x2c, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "st.b [a0]#0, d15"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_MEM
+                  mem_base: a0
+                  mem_disp: 0
+                  access: CS_AC_READ # fixme: should be write
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x28, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "st.b [a15]#0, d0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_MEM
+                  mem_base: a15
+                  mem_disp: 0
+                  access: CS_AC_READ # fixme: should be write
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xac, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "st.h [a0]#0, d15"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_MEM
+                  mem_base: a0
+                  mem_disp: 0
+                  access: CS_AC_READ # fixme: should be write
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0xa8, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "st.h [a15]#0, d0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_MEM
+                  mem_base: a15
+                  mem_disp: 0
+                  access: CS_AC_READ # fixme: should be write
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x78, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "st.w [sp]#0, d15"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_MEM
+                  mem_base: sp
+                  mem_disp: 0
+                  access: CS_AC_READ # fixme: should be write
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x6c, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "st.w [a0]#0, d15"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_MEM
+                  mem_base: a0
+                  mem_disp: 0
+                  access: CS_AC_READ # fixme: should be write
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x68, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "st.w [a15]#0, d0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_MEM
+                  mem_base: a15
+                  mem_disp: 0
+                  access: CS_AC_READ # fixme: should be write
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x52, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "sub d0, d15, d0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_READ
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ
+  - input:
+      bytes: [ 0x5a, 0x0 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_162, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "sub d15, d0, d0"
+          details:
+            tricore:
+              operands:
+                - type: TRICORE_OP_REG
+                  reg: d15
+                  access: CS_AC_WRITE
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ
+                - type: TRICORE_OP_REG
+                  reg: d0
+                  access: CS_AC_READ

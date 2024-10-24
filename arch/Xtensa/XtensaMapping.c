@@ -24,7 +24,7 @@ static const name_map group_name_maps[] = {
 #include "XtensaGenCSFeatureName.inc"
 };
 
-const insn_map mapping_insns[] = {
+static const insn_map mapping_insns[] = {
 #include "XtensaGenCSMappingInsn.inc"
 };
 
