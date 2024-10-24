@@ -55,7 +55,8 @@ endif()
 # to configure the options specify them in the command line or change them in the cmake UI.
 # Don't edit the makefile!
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
-option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" ${BUILD_SHARED_LIBS})
+option(BUILD_STATIC_LIBS "Build static library" ON)
+option(BUILD_STATIC_RUNTIME "Embed static MSVC runtime (Windows only). Always set if BUILD_SHARED_LIBS=ON" ${BUILD_SHARED_LIBS})
 option(CAPSTONE_BUILD_MACOS_THIN "Disable universal2 builds on macOS" OFF)
 option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_LEGACY_TESTS "Build legacy tests" ${PROJECT_IS_TOP_LEVEL})
@@ -68,6 +69,10 @@ option(CAPSTONE_DEBUG "Whether to enable extra debug assertions (enabled with CM
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 option(ENABLE_ASAN "Enable address sanitizer" OFF)
 option(ENABLE_COVERAGE "Enable test coverage" OFF)
+
+if (NOT BUILD_SHARED_LIBS AND NOT BUILD_STATIC_LIBS)
+    FATAL_ERROR("BUILD_SHARED_LIBS and BUILD_STATIC_LIBS are both unset. Nothing to build.")
+endif()
 
 if (ENABLE_ASAN)
     message("Enabling ASAN")
@@ -154,7 +159,7 @@ if(CAPSTONE_DEBUG OR CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 # Force static runtime libraries
-if(CAPSTONE_BUILD_STATIC_RUNTIME)
+if(BUILD_STATIC_RUNTIME)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
@@ -761,19 +766,34 @@ set(ALL_HEADERS
 set_property(GLOBAL PROPERTY VERSION ${PROJECT_VERSION})
 
 ## targets
-add_library(capstone ${ALL_SOURCES} ${ALL_HEADERS})
-add_library(capstone::capstone ALIAS capstone)
+add_library(capstone OBJECT ${ALL_SOURCES} ${ALL_HEADERS})
+set_property(TARGET capstone PROPERTY C_STANDARD 99)
 target_include_directories(capstone PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
-set_property(TARGET capstone PROPERTY C_STANDARD 99)
+
+if(BUILD_STATIC_LIBS)
+    add_library(capstone_static STATIC $<TARGET_OBJECTS:capstone>)
+    # Use normal capstone name. Otherwise we get libcapstone_static.a
+    set_target_properties(capstone_static PROPERTIES OUTPUT_NAME "capstone")
+    target_include_directories(capstone_static PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    )
+endif()
 
 if(BUILD_SHARED_LIBS)
-    target_compile_definitions(capstone PUBLIC CAPSTONE_SHARED)
-    set_target_properties(capstone PROPERTIES
+    set_property(TARGET capstone PROPERTY POSITION_INDEPENDENT_CODE 1)
+    add_library(capstone_shared SHARED $<TARGET_OBJECTS:capstone>)
+    # Use normal capstone name. Otherwise we get libcapstone_shared.so
+    set_target_properties(capstone_shared PROPERTIES OUTPUT_NAME "capstone")
+    set_target_properties(capstone_shared PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
     )
+    target_include_directories(capstone_shared PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    )
+    target_compile_definitions(capstone PUBLIC CAPSTONE_SHARED)
 endif()
 
 # Fuzzer if this is moved to it's own CMakeLists.txt (as it should be)
@@ -878,12 +898,20 @@ if(CAPSTONE_INSTALL)
         DESTINATION ${CAPSTONE_CMAKE_CONFIG_INSTALL_DIR}
     )
 
-    install(TARGETS capstone
-            EXPORT capstone-targets
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    if(BUILD_SHARED_LIBS)
+        set(LIB_INSTALL_TARGETS capstone_shared)
+    endif()
+
+    if (BUILD_STATIC_LIBS)
+        set(LIB_INSTALL_TARGETS ${LIB_INSTALL_TARGETS} capstone_static)
+    endif()
+
+    install(TARGETS ${LIB_INSTALL_TARGETS}
+        EXPORT capstone-targets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     )
 
     install(EXPORT capstone-targets
