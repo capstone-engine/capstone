@@ -1706,6 +1706,26 @@ typedef enum arm_insn_group {
 	ARM_GRP_ENDING,
 } arm_insn_group;
 
+#ifdef CAPSTONE_ARM_COMPAT_HEADER
+#define arm_cc ARMCC_CondCodes
+#define ARM_CC_EQ ARMCC_EQ
+#define ARM_CC_NE ARMCC_NE
+#define ARM_CC_HS ARMCC_HS
+#define ARM_CC_LO ARMCC_LO
+#define ARM_CC_MI ARMCC_MI
+#define ARM_CC_PL ARMCC_PL
+#define ARM_CC_VS ARMCC_VS
+#define ARM_CC_VC ARMCC_VC
+#define ARM_CC_HI ARMCC_HI
+#define ARM_CC_LS ARMCC_LS
+#define ARM_CC_GE ARMCC_GE
+#define ARM_CC_LT ARMCC_LT
+#define ARM_CC_GT ARMCC_GT
+#define ARM_CC_LE ARMCC_LE
+#define ARM_CC_AL ARMCC_AL
+#define ARM_CC_INVALID ARMCC_Invalid
+#endif
+
 #ifdef __cplusplus
 }
 #endif

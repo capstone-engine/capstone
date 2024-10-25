@@ -9,6 +9,43 @@ import re
 
 from pathlib import Path
 
+AARCH64_CC_MACROS = [
+    "\n",
+    "#define arm64_cc AArch64CC_CondCode\n",
+    "#define ARM64_CC_EQ AArch64CC_EQ\n",
+    "#define ARM64_CC_NE AArch64CC_NE\n",
+    "#define ARM64_CC_HS AArch64CC_HS\n",
+    "#define ARM64_CC_LO AArch64CC_LO\n",
+    "#define ARM64_CC_MI AArch64CC_MI\n",
+    "#define ARM64_CC_PL AArch64CC_PL\n",
+    "#define ARM64_CC_VS AArch64CC_VS\n",
+    "#define ARM64_CC_VC AArch64CC_VC\n",
+    "#define ARM64_CC_HI AArch64CC_HI\n",
+    "#define ARM64_CC_LS AArch64CC_LS\n",
+    "#define ARM64_CC_GE AArch64CC_GE\n",
+    "#define ARM64_CC_LT AArch64CC_LT\n",
+    "#define ARM64_CC_GT AArch64CC_GT\n",
+    "#define ARM64_CC_LE AArch64CC_LE\n",
+    "#define ARM64_CC_AL AArch64CC_AL\n",
+    "#define ARM64_CC_INVALID AArch64CC_Invalid\n",
+    "#define ARM64_VAS_INVALID AARCH64LAYOUT_VL_INVALID\n",
+    "#define ARM64_VAS_16B AARCH64LAYOUT_VL_16B\n",
+    "#define ARM64_VAS_8B AARCH64LAYOUT_VL_8B\n",
+    "#define ARM64_VAS_4B AARCH64LAYOUT_VL_4B\n",
+    "#define ARM64_VAS_1B AARCH64LAYOUT_VL_1B\n",
+    "#define ARM64_VAS_8H AARCH64LAYOUT_VL_8H\n",
+    "#define ARM64_VAS_4H AARCH64LAYOUT_VL_4H\n",
+    "#define ARM64_VAS_2H AARCH64LAYOUT_VL_2H\n",
+    "#define ARM64_VAS_1H AARCH64LAYOUT_VL_1H\n",
+    "#define ARM64_VAS_4S AARCH64LAYOUT_VL_4S\n",
+    "#define ARM64_VAS_2S AARCH64LAYOUT_VL_2S\n",
+    "#define ARM64_VAS_1S AARCH64LAYOUT_VL_1S\n",
+    "#define ARM64_VAS_2D AARCH64LAYOUT_VL_2D\n",
+    "#define ARM64_VAS_1D AARCH64LAYOUT_VL_1D\n",
+    "#define ARM64_VAS_1Q AARCH64LAYOUT_VL_1Q\n",
+    "#define arm64_vas AArch64Layout_VectorLayout\n",
+]
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -259,6 +296,10 @@ class CompatHeaderBuilder:
             output.append(line)
         return output
 
+    def add_cc_macros(self, v6_lines: list[str]) -> list[str]:
+        v6_lines += AARCH64_CC_MACROS
+        return v6_lines
+
     def generate_v5_compat_header(self) -> bool:
         """
         Translates the aarch64.h header into the arm64.h header and renames all aarch64 occurrences.
@@ -275,6 +316,8 @@ class CompatHeaderBuilder:
         patched = self.replace_v6_prefix(patched)
         patched = self.replace_include_guards(patched)
         patched = self.inject_v6_header(patched)
+        if self.v6_lower == "aarch64":
+            patched = self.add_cc_macros(patched)
 
         with open(self.v5, "w+") as f:
             f.writelines(patched)

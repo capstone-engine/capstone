@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+#define CAPSTONE_ARM_COMPAT_HEADER
 #define CAPSTONE_AARCH64_COMPAT_HEADER
 #include <capstone/capstone.h>
 
@@ -55,6 +56,12 @@ int arm64(void)
 		fprintf(stderr, "Immediate wrong.\n");
 		goto err;
 	}
+	arm64_cc test_cc64 = insn[0].detail->arm64.cc + ARM64_CC_GE;
+	arm_cc test_cc = insn[0].detail->arm.cc + ARM_CC_LE;
+	printf("test_cc64 = %" PRId32 " test_cc = %" PRId32 "\n", test_cc64, test_cc);
+
+	arm64_vas test_vas = insn[0].detail->arm64.operands[0].vas + ARM64_VAS_16B;
+	printf("test_vas = %" PRId32 "\n", test_vas);
 
 	cs_free(insn, count);
 	cs_close(&handle);
