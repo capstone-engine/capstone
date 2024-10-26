@@ -1422,7 +1422,7 @@ void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 		const AArch64DBnXS_DBnXS *DB =
 			AArch64DBnXS_lookupDBnXSByEncoding(Val);
 		if (DB)
-			sysop.imm = DB->SysImm;
+			sysop.imm.dbnxs = (aarch64_dbnxs) DB->SysImm.dbnxs;
 		else
 			sysop.imm.raw_val = Val;
 		sysop.sub_type = AARCH64_OP_DBNXS;
@@ -1438,7 +1438,7 @@ void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 			const AArch64ISB_ISB *ISB =
 				AArch64ISB_lookupISBByEncoding(Val);
 			if (ISB)
-				sysop.alias = ISB->SysAlias;
+				sysop.alias.isb = (aarch64_isb) ISB->SysAlias.isb;
 			else
 				sysop.alias.raw_val = Val;
 			sysop.sub_type = AARCH64_OP_ISB;
@@ -1448,7 +1448,7 @@ void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 			const AArch64TSB_TSB *TSB =
 				AArch64TSB_lookupTSBByEncoding(Val);
 			if (TSB)
-				sysop.alias = TSB->SysAlias;
+				sysop.alias.tsb = (aarch64_tsb) TSB->SysAlias.tsb;
 			else
 				sysop.alias.raw_val = Val;
 			sysop.sub_type = AARCH64_OP_TSB;
@@ -1458,7 +1458,7 @@ void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 			const AArch64DB_DB *DB =
 				AArch64DB_lookupDBByEncoding(Val);
 			if (DB)
-				sysop.alias = DB->SysAlias;
+				sysop.alias.db = (aarch64_db) DB->SysAlias.db;
 			else
 				sysop.alias.raw_val = Val;
 			sysop.sub_type = AARCH64_OP_DB;
@@ -1473,7 +1473,7 @@ void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 		const AArch64BTIHint_BTI *BTI =
 			AArch64BTIHint_lookupBTIByEncoding(btihintop);
 		if (BTI)
-			sysop.alias = BTI->SysAlias;
+			sysop.alias.bti = (aarch64_bti) BTI->SysAlias.bti;
 		else
 			sysop.alias.raw_val = btihintop;
 		sysop.sub_type = AARCH64_OP_BTI;
@@ -1579,7 +1579,7 @@ void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 		aarch64_sysop sysop = { 0 };
 		// If Reg is NULL it is a generic system register.
 		if (Reg)
-			sysop.reg = Reg->SysReg;
+			sysop.reg.sysreg = (aarch64_sysreg) Reg->SysReg.sysreg;
 		else {
 			sysop.reg.raw_val = Val;
 		}
@@ -1597,7 +1597,7 @@ void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 			AArch64PSBHint_lookupPSBByEncoding(psbhintop);
 		aarch64_sysop sysop = { 0 };
 		if (PSB)
-			sysop.alias = PSB->SysAlias;
+			sysop.alias.psb = (aarch64_psb) PSB->SysAlias.psb;
 		else
 			sysop.alias.raw_val = psbhintop;
 		sysop.sub_type = AARCH64_OP_PSB;
@@ -1611,7 +1611,7 @@ void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 			AArch64PRFM_lookupPRFMByEncoding(prfop);
 		aarch64_sysop sysop = { 0 };
 		if (PRFM)
-			sysop.alias = PRFM->SysAlias;
+			sysop.alias.prfm = (aarch64_prfm) PRFM->SysAlias.prfm;
 		else
 			sysop.alias.raw_val = prfop;
 		sysop.sub_type = AARCH64_OP_PRFM;
@@ -1648,7 +1648,7 @@ void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 			AArch64SVCR_lookupSVCRByEncoding(svcrop);
 		aarch64_sysop sysop = { 0 };
 		if (SVCR)
-			sysop.alias = SVCR->SysAlias;
+			sysop.alias.svcr = (aarch64_svcr) SVCR->SysAlias.svcr;
 		else
 			sysop.alias.raw_val = svcrop;
 		sysop.sub_type = AARCH64_OP_SVCR;
