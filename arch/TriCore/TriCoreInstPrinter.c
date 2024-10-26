@@ -402,8 +402,7 @@ static void printDisp4Imm(MCInst *MI, int OpNum, SStream *O)
 		case TRICORE_LOOP_sbr:
 			// {27b’111111111111111111111111111, disp4, 0};
 			disp = (int32_t)MI->address +
-			       ((0x7ffffff << 5) |
-				(disp << 1));
+			       ((0x7ffffff << 5) | (disp << 1));
 			break;
 		default:
 			// handle other cases, if any
@@ -449,10 +448,11 @@ static void printOExtImm_4(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MO)) {
 		uint32_t imm = MCOperand_getImm(MO);
 		// {27b’111111111111111111111111111, disp4, 0};
-		imm = 0xffffffe0 | (imm << 1);
+		int32_t off = (int32_t)(0xffffffe0 | (imm << 1));
+		uint32_t target = (int32_t)MI->address + off;
 
-		printInt32Bang(O, imm);
-		fill_imm(MI, imm);
+		printUInt32(O, target);
+		fill_imm(MI, (int32_t)target);
 	} else
 		printOperand(MI, OpNum, O);
 }
