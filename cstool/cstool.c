@@ -240,6 +240,10 @@ static struct {
 	{ "esp32", "Xtensa ESP32", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32 },
 	{ "esp32s2", "Xtensa ESP32S2", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32S2 },
 	{ "esp8266", "Xtensa ESP8266", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP8266 },
+
+	{ "arc", "ARC Little-Endian", CS_ARCH_ARC, CS_MODE_LITTLE_ENDIAN },
+	{ "arcbe", "ARC Big-Endian", CS_ARCH_ARC, CS_MODE_BIG_ENDIAN },
+
 	{ NULL }
 };
 
@@ -325,6 +329,7 @@ static const char *get_arch_name(cs_arch arch)
 	case CS_ARCH_ALPHA: return "Alpha";
 	case CS_ARCH_HPPA: return "HPPA";
 	case CS_ARCH_LOONGARCH: return "LoongArch";
+	case CS_ARCH_ARC: return "ARC";
 	default: return NULL;
 	}
 }
@@ -358,6 +363,11 @@ static void usage(char *prog)
 			}
 		}
 		printf(")\n");
+	}
+
+	if (cs_support(CS_ARCH_ARC)) {
+		printf("        arc         arc little endian\n");
+		printf("        arcbe       arc big endian\n");
 	}
 
 	printf("\nExtra options:\n");
@@ -443,6 +453,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 			break;
 		case CS_ARCH_XTENSA:
 			print_insn_detail_xtensa(handle, ins);
+			break;
+		case CS_ARCH_ARC:
+			print_insn_detail_arc(handle, ins);
 			break;
 		default: break;
 	}
@@ -632,6 +645,10 @@ int main(int argc, char **argv)
 
 				if (cs_support(CS_ARCH_XTENSA)) {
 					printf("xtensa=1 ");
+				}
+
+				if (cs_support(CS_ARCH_ARC)) {
+					printf("arc=1 ");
 				}
 
 				printf("\n");

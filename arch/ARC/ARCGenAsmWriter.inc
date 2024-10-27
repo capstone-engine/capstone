@@ -1022,7 +1022,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat0(O, ", ");
     printOperand(MI, 2, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, Address, 0, O);
+    printOperand(MI, 0, O);
     return;
     break;
   case 3:
@@ -1035,7 +1035,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 5:
     // BEQ_S, BGE_S, BGT_S, BHI_S, BHS_S, BL, BLE_S, BLO_S, BLS_S, BLT_S, BL_...
-    printOperand(MI, Address, 0, O);
+    printOperand(MI, 0, O);
     return;
     break;
   case 6:
@@ -1046,14 +1046,14 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat0(O, ", ");
     printOperand(MI, 2, O);
     SStream_concat0(O, ", ");
-    printOperand(MI, Address, 0, O);
+    printOperand(MI, 0, O);
     return;
     break;
   case 7:
     // Bcc
     printPredicateOperand(MI, 1, O);
     SStream_concat0(O, "\t");
-    printOperand(MI, Address, 0, O);
+    printOperand(MI, 0, O);
     return;
     break;
   case 8:
@@ -1098,7 +1098,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   case 4:
     // BREQ_S, BRNE_S
     SStream_concat0(O, ", 0, ");
-    printOperand(MI, Address, 1, O);
+    printOperand(MI, 1, O);
     return;
     break;
   case 5:

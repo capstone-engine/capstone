@@ -12,6 +12,7 @@ TARGETS_LLVM_NAMING = [
     "Mips",
     "Xtensa",
     "TriCore",
+    "ARC"
 ]
 
 # Names of the target architecture as they are used in code and pretty much everywhere else.
@@ -36,6 +37,7 @@ TARGET_TO_IN_CODE_NAME = {
     "LoongArch": "LoongArch",
     "SystemZ": "SystemZ",
     "Mips": "Mips",
+    "ARC": "ARC",
     "Xtensa": "Xtensa",
     "TriCore": "TriCore",
     "ARCH": "ARCH",  # For testing

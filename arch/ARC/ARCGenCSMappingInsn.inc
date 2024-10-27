@@ -1910,7 +1910,7 @@
 },
 {
   /* # ADJCALLSTACKDOWN $amt, $amt2 */
-  ARC_ADJCALLSTACKDOWN /* 271 */, ARC_INS_#,
+  ARC_ADJCALLSTACKDOWN /* 271 */, ARC_INS_SHEBANG,
   #ifndef CAPSTONE_DIET
     { ARC_REG_SP, 0 }, { ARC_REG_SP, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -1918,7 +1918,7 @@
 },
 {
   /* # ADJCALLSTACKUP $amt1 */
-  ARC_ADJCALLSTACKUP /* 272 */, ARC_INS_#,
+  ARC_ADJCALLSTACKUP /* 272 */, ARC_INS_SHEBANG,
   #ifndef CAPSTONE_DIET
     { ARC_REG_SP, 0 }, { ARC_REG_SP, 0 }, { 0 }, 0, 0, {{ 0 }}
 

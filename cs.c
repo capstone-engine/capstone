@@ -72,6 +72,7 @@
 #include "arch/HPPA/HPPAModule.h"
 #include "arch/LoongArch/LoongArchModule.h"
 #include "arch/Xtensa/XtensaModule.h"
+#include "arch/ARC/ARCModule.h"
 
 typedef struct cs_arch_config {
 	// constructor initialization
@@ -266,6 +267,13 @@ typedef struct cs_arch_config {
 		  CS_MODE_XTENSA_ESP8266), \
 	}
 
+#define CS_ARCH_CONFIG_ARC \
+	{ \
+		ARC_global_init, \
+		ARC_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
+	}
+
 #ifdef CAPSTONE_USE_ARCH_REGISTRATION
 static cs_arch_config arch_configs[MAX_ARCH];
 static uint32_t all_arch;
@@ -386,6 +394,11 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #else
 	{ NULL, NULL, 0 },
 #endif
+#ifdef CAPSTONE_HAS_ARC
+	CS_ARCH_CONFIG_ARC,
+#else
+	{ NULL, NULL, 0 },
+#endif
 };
 
 // bitmask of enabled architectures
@@ -456,7 +469,10 @@ static const uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_XTENSA
 				 | (1 << CS_ARCH_XTENSA)
 #endif
-	;
+#ifdef CAPSTONE_HAS_ARC
+				 | (1 << CS_ARCH_ARC)
+#endif
+;
 #endif
 
 
@@ -684,11 +700,20 @@ void CAPSTONE_API cs_arch_register_loongarch(void)
 }
 
 CAPSTONE_EXPORT
+void CAPSTONE_API cs_arch_register_arc(void)
+{
+#if defined(CAPSTONE_USE_ARCH_REGISTRATION) && defined(CAPSTONE_HAS_ARC)
+	CS_ARCH_REGISTER(ARC);
+#endif
+}
+
+
+CAPSTONE_EXPORT
 bool CAPSTONE_API cs_support(int query)
 {
 	if (query == CS_ARCH_ALL)
 		return all_arch ==
-		       ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_AARCH64) |
+		    ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_AARCH64) |
 			(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
 			(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
 			(1 << CS_ARCH_SYSTEMZ) | (1 << CS_ARCH_XCORE) |
@@ -698,7 +723,8 @@ bool CAPSTONE_API cs_support(int query)
 			(1 << CS_ARCH_WASM) | (1 << CS_ARCH_BPF) |
 			(1 << CS_ARCH_SH) | (1 << CS_ARCH_TRICORE) |
 			(1 << CS_ARCH_ALPHA) | (1 << CS_ARCH_HPPA) |
-			(1 << CS_ARCH_LOONGARCH) | (1 << CS_ARCH_XTENSA));
+			(1 << CS_ARCH_LOONGARCH) | (1 << CS_ARCH_XTENSA) | 
+			(1 << CS_ARCH_ARC));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -1009,6 +1035,9 @@ static uint8_t skipdata_size(cs_struct *handle)
 			return 4;
 		case CS_ARCH_LOONGARCH:
 			// LoongArch alignment is 4.
+			return 4;
+		case CS_ARCH_ARC:
+			// ARC alignment is 4.
 			return 4;
 	}
 }
@@ -1764,6 +1793,11 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 				if (insn->detail->loongarch.operands[i].type == (loongarch_op_type)op_type)
 					count++;
 			break;
+		case CS_ARCH_ARC:
+			for (i = 0; i < insn->detail->arc.op_count; i++)
+				if (insn->detail->arc.operands[i].type == (arc_op_type)op_type)
+					count++;
+			break;
 	}
 
 	return count;
@@ -1966,6 +2000,14 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		case CS_ARCH_LOONGARCH:
 			for (i = 0; i < insn->detail->loongarch.op_count; i++) {
 				if (insn->detail->loongarch.operands[i].type == (loongarch_op_type)op_type)
+					count++;
+				if (count == post)
+					return i;
+			}
+			break;
+		case CS_ARCH_ARC:
+			for (i = 0; i < insn->detail->arc.op_count; i++) {
+				if (insn->detail->arc.operands[i].type == (arc_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

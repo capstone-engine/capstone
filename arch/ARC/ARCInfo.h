@@ -33,7 +33,7 @@
 // Enums corresponding to ARC condition codes
 // CS namespace begin: ARCCC
 
-typedef enum CondCode {
+typedef enum ARCCondCode {
 	ARCCC_AL = 0x0,
 	ARCCC_EQ = 0x1,
 	ARCCC_NE = 0x2,

@@ -38,9 +38,6 @@ class FieldFromInstr(Patch):
         ffi_first_arg_text = get_text(
             src, ffi_first_arg.start_byte, ffi_first_arg.end_byte
         ).decode("utf8")
-        # print(get_text(
-        #     src, ffi_first_arg.start_byte-20, ffi_first_arg.end_byte+20
-        # ).decode("utf8"))
 
         # Determine width of instruction by the variable name.
         if ffi_first_arg_text[-2:] == "32":
@@ -50,12 +47,12 @@ class FieldFromInstr(Patch):
         else:
             # Get the Val/Inst parameter.
             # Its type determines the instruction width.
-            if len(param_list_caller.named_children) != 1:
+            try:
                 inst_param: Node = param_list_caller.named_children[1]
-            else:
+            except:
                 inst_param: Node = param_list_caller.named_children[0]
+                
             inst_param_text = get_text(src, inst_param.start_byte, inst_param.end_byte)
-            # print(inst_param_text)
 
             # Search for the 'Inst' parameter and determine its type
             # and with it the width of the instruction.

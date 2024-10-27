@@ -29,18 +29,22 @@
 #include <stdlib.h>
 #include <capstone/platform.h>
 
+#include "ARCInfo.h"
+#include "../../SStream.h"
+#include "../../MCInst.h"
+#include "../../MCInstPrinter.h"
+
+#include "ARCInfo.h"
+#include "ARCInstPrinter.h"
+#include "ARCLinkage.h"
+#include "ARCMapping.h"
+
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
 #define DEBUG_TYPE "asm-printer"
 
 #include "ARCGenAsmWriter.inc"
-
-// template <class T> static const char *BadConditionCode(T cc)
-// {
-// 	LLVM_DEBUG(dbgs() << "Unknown condition code passed: " << cc << "\n");
-// 	return "{unknown-cc}";
-// }
 
 static const char *ARCBRCondCodeToString(ARCCC_BRCondCode BRCC)
 {
@@ -58,7 +62,7 @@ static const char *ARCBRCondCodeToString(ARCCC_BRCondCode BRCC)
 	case ARCCC_BRHS:
 		return "hs";
 	}
-	return BadConditionCode(BRCC);
+	assert(0 && "Unknown condition code passed");
 }
 
 static const char *ARCCondCodeToString(ARCCC_CondCode CC)
@@ -101,97 +105,108 @@ static const char *ARCCondCodeToString(ARCCC_CondCode CC)
 	case ARCCC_Z:
 		return "z";
 	}
-	return BadConditionCode(CC);
+	assert(0 && "Unknown condition code passed");
 }
 
 void printRegName(SStream *OS, MCRegister Reg)
 {
-	SStream_concat0(OS, StringRef(getRegisterName(Reg)).lower());
+	SStream_concat0(OS, getRegisterName(Reg));
 }
 
-void printInst(MCInst *MI, uint64_t Address, StringRef Annot, SStream *O)
+void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 {
 	printInstruction(MI, Address, O);
-	;
 }
 
-static void printExpr(const MCExpr *Expr, const MCAsmInfo *MAI, SStream *OS)
-{
-	int Offset = 0;
-	const MCSymbolRefExpr *SRE;
+// static void printExpr(const MCExpr *Expr, const MCAsmInfo *MAI, SStream *OS)
+// {
+// 	int Offset = 0;
+// 	const MCSymbolRefExpr *SRE;
 
-	if (const auto *CE = (MCConstantExpr)(Expr)) {
-		SStream_concat0(OS, "0x");
-		OS.write_hex(CE->getValue());
-		return;
-	}
+// 	if (const auto *CE = (MCConstantExpr)(Expr)) {
+// 		SStream_concat0(OS, "0x");
+// 		OS.write_hex(CE->getValue());
+// 		return;
+// 	}
 
-	if (const auto *BE = (MCBinaryExpr)(Expr)) {
-		SRE = (MCSymbolRefExpr)(BE->getLHS());
-		const auto *CE = (MCConstantExpr)(BE->getRHS());
+// 	if (const auto *BE = (MCBinaryExpr)(Expr)) {
+// 		SRE = (MCSymbolRefExpr)(BE->getLHS());
+// 		const auto *CE = (MCConstantExpr)(BE->getRHS());
+// 		CS_ASSERT(
+// 			(SRE && CE && "Binary expression must be sym+const."));
+// 		Offset = CE->getValue();
+// 	} else {
+// 		SRE = (MCSymbolRefExpr)(Expr);
+// 		CS_ASSERT((SRE && "Unexpected MCExpr type."));
+// 	}
+// 	CS_ASSERT((SRE->getKind() == MCSymbolRefExpr_VK_None));
 
-		Offset = CE->getValue();
-	} else {
-		SRE = (MCSymbolRefExpr)(Expr);
-	}
+// 	// Symbols are prefixed with '@'
+// 	SStream_concat0(OS, "@");
 
-	// Symbols are prefixed with '@'
-	SStream_concat0(OS, "@");
+// 	// SRE->getSymbol().print(OS, MAI);
 
-	SRE->getSymbol().print(OS, MAI);
+// 	if (Offset) {
+// 		if (Offset > 0)
+// 			SStream_concat0(OS, "+");
 
-	if (Offset) {
-		if (Offset > 0)
-			SStream_concat0(OS, "+");
-
-		SStream_concat0(OS, Offset);
-	}
-}
+// 		SStream_concat0(OS, Offset);
+// 	}
+// }
 
 void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
+	add_cs_detail(MI, ARC_OP_GROUP_Operand, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isReg(Op)) {
 		printRegName(O, MCOperand_getReg(Op));
 		return;
 	}
 
-	if (MCOperand_isImm(Op)) {
-		SStream_concat0(O, MCOperand_getImm(Op));
+	if (MCOperand_isImm(Op) || MCOperand_isExpr(Op)) {
+		printInt64(O, MCOperand_getImm(Op));
 		return;
 	}
 
-	printExpr(Op.getExpr(), &MAI, O);
+	// CS_ASSERT((MCOperand_isExpr(Op) &&
+	// 	   "unknown operand kind in printOperand"));
+	// printExpr(MCOperand_getExpr(Op), &MAI, O);
 }
 
 void printMemOperandRI(MCInst *MI, unsigned OpNum, SStream *O)
 {
+	add_cs_detail(MI, ARC_OP_GROUP_MemOperandRI, OpNum);
 	MCOperand *base = MCInst_getOperand(MI, (OpNum));
 	MCOperand *offset = MCInst_getOperand(MI, (OpNum + 1));
-
+	CS_ASSERT((MCOperand_isReg(base) && "Base should be register."));
+	CS_ASSERT((MCOperand_isImm(offset) && "Offset should be immediate."));
 	printRegName(O, MCOperand_getReg(base));
 	SStream_concat(O, "%s", ",");
-	SStream_concat0(O, MCOperand_getImm(offset));
+	printInt64(O, MCOperand_getImm(offset));
 }
 
 void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
+	add_cs_detail(MI, ARC_OP_GROUP_PredicateOperand, OpNum);
 
+	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
+	CS_ASSERT((MCOperand_isImm(Op) && "Predicate operand is immediate."));
 	SStream_concat0(
 		O, ARCCondCodeToString((ARCCC_CondCode)MCOperand_getImm(Op)));
 }
 
 void printBRCCPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
+	add_cs_detail(MI, ARC_OP_GROUP_BRCCPredicateOperand, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
-
+	CS_ASSERT((MCOperand_isImm(Op) && "Predicate operand is immediate."));
 	SStream_concat0(O, ARCBRCondCodeToString(
 				   (ARCCC_BRCondCode)MCOperand_getImm(Op)));
 }
 
 void printCCOperand(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, ARC_OP_GROUP_CCOperand, OpNum);
 	SStream_concat0(O, ARCCondCodeToString((ARCCC_CondCode)MCOperand_getImm(
 				   MCInst_getOperand(MI, (OpNum)))));
 }
@@ -203,17 +218,18 @@ void printU6ShiftedBy(unsigned ShiftBy, MCInst *MI, int OpNum, SStream *O)
 		unsigned Value = MCOperand_getImm(MO);
 		unsigned Value2 = Value >> ShiftBy;
 		if (Value2 > 0x3F || (Value2 << ShiftBy != Value)) {
-			SStream_concat(
-				errs(), "%s%s%s%s",
-				"!!! Instruction has out-of-range U6 immediate operand:\n",
-				"    Opcode is ", MCInst_getOpcode(MI),
-				"; operand value is ");
-			SStream_concat0(errs(), Value);
-			if (ShiftBy) {
-				SStream_concat(errs(), "%s%s", " scaled by ",
-					       (1 << ShiftBy));
-				SStream_concat0(errs(), "\n");
-			}
+			// SStream_concat(
+			// 	errs(), "%s%s%s%s",
+			// 	"!!! Instruction has out-of-range U6 immediate operand:\n",
+			// 	"    Opcode is ", MCInst_getOpcode(MI),
+			// 	"; operand value is ");
+			// SStream_concat0(errs(), Value);
+			// if (ShiftBy) {
+			// 	SStream_concat(errs(), "%s%s", " scaled by ",
+			// 		       (1 << ShiftBy));
+			// 	SStream_concat0(errs(), "\n");
+			// }
+			CS_ASSERT((false && "instruction has wrong format"));
 		}
 	}
 	printOperand(MI, OpNum, O);
@@ -221,5 +237,17 @@ void printU6ShiftedBy(unsigned ShiftBy, MCInst *MI, int OpNum, SStream *O)
 
 void printU6(MCInst *MI, int OpNum, SStream *O)
 {
+	add_cs_detail(MI, ARC_OP_GROUP_U6, OpNum);
 	printU6ShiftedBy(0, MI, OpNum, O);
+}
+
+void ARC_LLVM_printInst(MCInst *MI, uint64_t Address, const char *Annot,
+			      SStream *O)
+{
+	printInst(MI, Address, Annot, O);
+}
+
+const char *ARC_LLVM_getRegisterName(unsigned RegNo)
+{
+	return getRegisterName(RegNo);
 }

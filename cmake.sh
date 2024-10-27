@@ -66,6 +66,9 @@ case $1 in
   LOONGARCH)
     ARCH=LOONGARCH
     ;;
+  ARC)
+    ARCH=ARC
+    ;;
   *)
     ;;
 esac

@@ -85,6 +85,9 @@ int main()
 	if (cs_support(CS_ARCH_XTENSA)) {
 		printf("xtensa=1 ");
 	}
+	if (cs_support(CS_ARCH_ARC)) {
+		printf("arc=1 ");
+	}
 	printf("\n");
 
 	return 0;
