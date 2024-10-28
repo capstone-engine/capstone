@@ -58,7 +58,7 @@ typedef struct {
 	int8_t imm_range_offset;
 	double fp;
 	bool fp_set; /// Only relevant for SysOps with EXACTFPIMM
-	uint64_t sys_raw_val;
+	int sys_raw_val;
 
 	TestDetailAArch64SME *sme;
 

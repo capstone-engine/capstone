@@ -52,14 +52,14 @@ class AArch64SysOpSysReg(ctypes.Union):
         ('sysreg', ctypes.c_uint),
         ('tlbi', ctypes.c_uint),
         ('ic', ctypes.c_uint),
-        ('raw_val', ctypes.c_uint64),
+        ('raw_val', ctypes.c_int),
     )
 
 class AArch64SysOpSysImm(ctypes.Union):
     _fields_ = (
         ('dbnxs', ctypes.c_uint),
         ('exactfpimm', ctypes.c_uint),
-        ('raw_val', ctypes.c_uint64),
+        ('raw_val', ctypes.c_int),
     )
 
 class AArch64SysOpSysAlias(ctypes.Union):
@@ -79,7 +79,7 @@ class AArch64SysOpSysAlias(ctypes.Union):
         ('bti', ctypes.c_uint),
         ('svepredpat', ctypes.c_uint),
         ('sveveclenspecifier', ctypes.c_uint),
-        ('raw_val', ctypes.c_uint64),
+        ('raw_val', ctypes.c_int),
     )
 class AArch64SysOp(ctypes.Structure):
     _fields_ = (

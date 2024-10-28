@@ -755,7 +755,7 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
                 aop.sysop.sub_type, eop.get("sub_type"), "sub_type"
             ):
                 return False
-            if not compare_uint64(
+            if not compare_int32(
                 aop.sysop.reg.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
@@ -764,7 +764,7 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
                 aop.sysop.sub_type, eop.get("sub_type"), "sub_type"
             ):
                 return False
-            if not compare_uint64(
+            if not compare_int32(
                 aop.sysop.imm.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
@@ -778,7 +778,7 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
                 aop.sysop.sub_type, eop.get("sub_type"), "sub_type"
             ):
                 return False
-            if not compare_uint64(
+            if not compare_int32(
                 aop.sysop.alias.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
