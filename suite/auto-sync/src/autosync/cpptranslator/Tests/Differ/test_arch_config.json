@@ -26,6 +26,14 @@
       {
         "in": "{DIFFER_TEST_OLD_SRC_DIR}/diff_test_file.c",
         "out": "diff_test_file.c"
+      },
+      {
+        "in": "{DIFFER_TEST_OLD_SRC_DIR}/diff_test_file_patching_new.c",
+        "out": "diff_test_file_patching_new.c"
+      },
+      {
+        "in": "{DIFFER_TEST_OLD_SRC_DIR}/diff_test_file_patching_replace.c",
+        "out": "diff_test_file_patching_replace.c"
       }
     ],
     "files_for_template_search": [],

@@ -12,9 +12,9 @@ import sys
 import tempfile
 from enum import StrEnum
 from pathlib import Path
-from shutil import copy2
+from shutil import copyfile
 
-from tree_sitter import Language, Node, Parser, Tree
+from tree_sitter import Language, Node, Parser, Tree, Point
 
 from autosync.Targets import ARCH_LLVM_NAMING
 from autosync.cpptranslator.Configurator import Configurator
@@ -38,20 +38,22 @@ class PatchCoord:
 
     start_byte: int
     end_byte: int
-    start_point: tuple[int, int]
-    end_point: tuple[int, int]
+    start_point: Point
+    end_point: Point
 
     def __init__(
         self,
         start_byte: int,
         end_byte: int,
-        start_point: tuple[int, int],
-        end_point: tuple[int, int],
+        start_point: Point,
+        end_point: Point,
+        inserted: bool = False,
     ):
         self.start_byte = start_byte
         self.end_byte = end_byte
         self.start_point = start_point
         self.end_point = end_point
+        self.inserted = inserted  # True, if the PatchCoordinates point to a position not occupied by a node.
 
     def __lt__(self, other):
         if not (
@@ -161,20 +163,19 @@ class Differ:
     Then, we extract all nodes of a specific type out of this AST.
     Which nodes specifically is defined in "arch_config.json::General::nodes_to_diff".
 
-    These nodes (old and new separately) are than sorted descending by their coordinates.
-    Meaning, nodes at the end in the file come first.
+    These nodes (old and new separately) are then sorted descending by their coordinates.
+    Meaning, nodes at the end of the files come first.
     The identifiers of those nodes are saved in a single list.
-    Now we iterate over this list of identifiers. Now we make decisions:
+    Now we iterate over this list of identifiers and make decisions:
 
-    The node id is present as:
-        old node & new node     => Text matches?
+    The node id is present in:
+        old and new file        => Text matches?
                                     yes => Continue
-                                    no  => Add new node as Patch (see below)
-        only old node           => We save all consecutive old nodes, which have _no_ equivalent new node
-                                    and add them as single patch
-        only new node           => Add patch
+                                    no  => Patch node (see below)
+        only in one file        => Insert node at a suitable point (documented below in code).
+    A node is never removed from a file. This is the responsibility of the user when doing clean up.
 
-    Now we have the patch. We have a persistence file which saved previous decisions, on which patch to choose.
+    Now we have the patch. We have a persistence file which previous decisions, on which patch to choose.
     We take the node text of the old and new node (or only from a single one) and compare them to our previous decision.
     If the text of the nodes didn't change since the last run, we auto-apply the patch.
     Otherwise, the user decides:
@@ -182,31 +183,29 @@ class Differ:
         - Choose the new node text
         - Open the editor to edit the patch and apply it.
         - Use the stored previous decision.
-        - Select always the old nodes.
-        - Go back and decide on node before.
+        - Select always the old nodes from now on.
+        - Go back and decide on the node before.
 
     Each decision is saved to the persistence file for later.
-
-    Last (optional) step is to write the patches to the new file.
-    Please note that we always write to the new file in the current version.
     """
 
     ts_cpp_lang: Language = None
     parser: Parser = None
     translated_files: [Path]
-    diff_dest_files: [Path] = list()
+    patched_file_paths: dict[str:Path] = dict()
     old_files: [Path]
     conf_arch: dict
     conf_general: dict
     tree: Tree = None
     persistence_filepath: Path
-    saved_patches: dict = None
+    saved_patches: dict = (
+        None  # Saved patches, indexed by old file names and node identifiers.
+    )
     patches: list[Patch]
 
-    current_patch: Patch
     cur_old_node: Node | None = None
     cur_new_node: Node | None = None
-    cur_nid: str = None
+    cur_nid: str = ""
 
     def __init__(
         self,
@@ -214,6 +213,7 @@ class Differ:
         no_auto_apply: bool,
         testing: bool = False,
         check_saved: bool = False,
+        edit_old_file: bool = True,
     ):
         self.configurator = configurator
         self.no_auto_apply = no_auto_apply
@@ -225,9 +225,13 @@ class Differ:
         self.differ = dl.Differ()
         self.testing = testing
         self.check_saved = check_saved
+        self.edit_old_file = (
+            edit_old_file  # If true, the changes are written to the old file.
+        )
+        self.user_choices = list()
 
-        self.diff_out_dir = get_path("{CPP_TRANSLATOR_DIFF_OUT_DIR}")
         if self.testing:
+            self.diff_out_dir = get_path("{DIFFER_TEST_OUTPUT_DIR}")
             t_out_dir: Path = get_path("{DIFFER_TEST_NEW_SRC_DIR}")
             self.translated_files = [
                 t_out_dir.joinpath(sp["out"])
@@ -239,6 +243,7 @@ class Differ:
             ]
             self.load_persistence_file()
         else:
+            self.diff_out_dir = get_path("{CPP_TRANSLATOR_DIFF_OUT_DIR}")
             t_out_dir: Path = get_path("{CPP_TRANSLATOR_TRANSLATION_OUT_DIR}")
             self.translated_files = [
                 t_out_dir.joinpath(sp["out"])
@@ -278,6 +283,9 @@ class Differ:
                 exit(1)
 
     def save_to_persistence_file(self) -> None:
+        if self.testing:
+            print("Testing: Skip saving to persistent file...")
+            return
         print("\nSave choices...\n")
         with open(self.persistence_filepath, "w") as f:
             json.dump(self.saved_patches, f, indent=2)
@@ -298,10 +306,11 @@ class Differ:
         """
         log.info("Copy files for editing")
         diff_dir: Path = self.diff_out_dir
-        for f in self.translated_files:
+        to_copy = self.old_files if self.edit_old_file else self.translated_files
+        for f in to_copy:
             dest = diff_dir.joinpath(f.name)
-            copy2(f, dest)
-            self.diff_dest_files.append(dest)
+            copyfile(f, dest)
+            self.patched_file_paths[f.name] = dest
 
     def get_diff_intro_msg(
         self,
@@ -313,12 +322,17 @@ class Differ:
     ) -> str:
         color_new = self.conf_general["diff_color_new"]
         color_old = self.conf_general["diff_color_old"]
+        written_to = (
+            bold("OLD FILE", color_old)
+            if self.edit_old_file
+            else bold("NEW FILE", color_new)
+        )
         return (
             f"{bold(f'Diffing files - {current}/{total}')} \n\n"
             + f"{bold('NEW FILE: ', color_new)} {str(new_filename)}\n"
             + f"{bold('OLD FILE: ', color_old)} {str(old_filename)}\n\n"
             + f"{bold('Diffs to process: ')} {num_diffs}\n\n"
-            + f"{bold('Changes get written to: ')} {bold('NEW FILE', color_new)}\n"
+            + f"{bold('Changes are written to: ')} {written_to}\n"
         )
 
     def get_diff_node_id(self, node: Node) -> bytes:
@@ -471,7 +485,10 @@ class Differ:
         self, saved_diff_present: bool, saved_choice: ApplyType
     ) -> ApplyType:
         while True:
-            choice = self.print_prompt(saved_diff_present, saved_choice)
+            if len(self.user_choices) > 0:
+                choice = self.user_choices.pop(0)
+            else:
+                choice = self.print_prompt(saved_diff_present, saved_choice)
             if choice not in ["O", "o", "n", "e", "E", "s", "p", "q", "?", "help"]:
                 print(f"{bold(choice)} is not valid.")
                 self.print_prompt_help(saved_diff_present, saved_choice)
@@ -531,37 +548,29 @@ class Differ:
     def add_patch(
         self,
         apply_type: ApplyType,
-        consec_old: int,
         old_filepath: Path,
         patch_coord: PatchCoord,
         saved_patch: dict | None = None,
         edited_text: bytes | None = None,
     ) -> None:
-        self.current_patch = self.create_patch(
-            patch_coord, apply_type, saved_patch, edited_text
-        )
-        self.persist_patch(old_filepath, self.current_patch)
-        if consec_old > 1:
-            # Two or more old nodes are not present in the new file.
-            # Merge them to one patch.
-            self.patches[-1].merge(self.current_patch)
-        else:
-            self.patches.append(self.current_patch)
+        patch = self.create_patch(patch_coord, apply_type, saved_patch, edited_text)
+        self.persist_patch(old_filepath, patch)
+        self.patches.append(patch)
 
     def diff_nodes(
         self,
         old_filepath: Path,
-        new_nodes: dict[bytes, Node],
-        old_nodes: dict[bytes, Node],
+        new_nodes: dict[str, Node],
+        old_nodes: dict[str, Node],
     ) -> list[Patch]:
         """
         Asks the user for each different node, which version should be written.
-        It writes the choice to a file, so the previous choice can be applied again if nothing changed.
+        It saves the choice to a file, so the previous choice can be applied again if nothing changed.
         """
         # Sort list of nodes descending.
         # This is necessary because
         #   a) we need to apply the patches backwards (starting from the end of the file,
-        #      so the coordinates in the file don't change, when replace text).
+        #      so the coordinates in the file don't change when replacing text).
         #   b) If there is an old node, which is not present in the new file, we search for
         #      a node which is adjacent (random node order wouldn't allow this).
         new_nodes = {
@@ -579,24 +588,16 @@ class Differ:
 
         # Collect all node ids of this file
         node_ids = set()
-        for new_node_id, old_node_id in zip(new_nodes.keys(), old_nodes.keys()):
-            node_ids.add(new_node_id)
-            node_ids.add(old_node_id)
-
-        # The initial patch coordinates point after the last node in the file.
-        n0 = new_nodes[list(new_nodes.keys())[0]]
-        PatchCoord(n0.end_byte, n0.end_byte, n0.end_point, n0.end_point)
+        for n in list(new_nodes.keys()) + list(old_nodes.keys()):
+            node_ids.add(n)
 
         node_ids = sorted(node_ids)
         self.patches = list()
         matching_nodes_count = 0
-        # Counts the number of _consecutive_ old nodes which have no equivalent new node.
-        # They will be merged to a single patch later
-        consec_old = 0
         choice: ApplyType | None = None
         idx = 0
         while idx < len(node_ids):
-            self.cur_nid = node_ids[idx]
+            self.cur_nid: str = node_ids[idx]
             self.cur_new_node = (
                 None if self.cur_nid not in new_nodes else new_nodes[self.cur_nid]
             )
@@ -604,18 +605,18 @@ class Differ:
                 None if self.cur_nid not in old_nodes else old_nodes[self.cur_nid]
             )
 
-            n = (
+            new_node_text = (
                 self.cur_new_node.text.decode("utf8").splitlines()
                 if self.cur_new_node
                 else [""]
             )
-            o = (
+            old_node_text = (
                 self.cur_old_node.text.decode("utf8").splitlines()
                 if self.cur_old_node
                 else [""]
             )
 
-            diff_lines = list(self.differ.compare(o, n))
+            diff_lines = list(self.differ.compare(old_node_text, new_node_text))
             if self.no_difference(diff_lines):
                 log.info(
                     f"{bold('Patch:')} {idx + 1}/{len(node_ids)} - Nodes {bold(self.cur_nid)} match."
@@ -624,35 +625,7 @@ class Differ:
                 idx += 1
                 continue
 
-            if self.cur_new_node:
-                consec_old = 0
-                # We always write to the new file. So we always take he coordinates form it.
-                patch_coord = PatchCoord.get_coordinates_from_node(self.cur_new_node)
-            else:
-                consec_old += 1
-                # If the old node has no equivalent new node,
-                # we search for the next adjacent old node which exist also in new nodes.
-                # The single old node is insert before the found new one.
-                old_node_ids = list(old_nodes.keys())
-                j = old_node_ids.index(self.cur_nid)
-                while j >= 0 and (old_node_ids[j] not in new_nodes.keys()):
-                    j -= 1
-                if j < 0 or old_node_ids[j] not in new_nodes.keys():
-                    # No new node exists before the old node.
-                    # So just put it to the very beginning.
-                    ref_end_byte = 1
-                    ref_start_point = (1, 0)
-                else:
-                    ref_new: Node = new_nodes[old_node_ids[j]]
-                    ref_end_byte = ref_new.start_byte
-                    ref_start_point = ref_new.start_point
-                # We always write to the new file. So we always take he coordinates form it.
-                patch_coord = PatchCoord(
-                    ref_end_byte - 1,
-                    ref_end_byte - 1,
-                    ref_start_point,
-                    ref_start_point,
-                )
+            patch_coord = self.determine_patch_coordinates(new_nodes, old_nodes)
 
             save_exists = False
             saved: dict | None = None
@@ -664,7 +637,7 @@ class Differ:
                 save_exists = True
                 if self.saved_patch_matches(saved) and not self.no_auto_apply:
                     apply_type = ApplyType(saved["apply_type"])
-                    self.add_patch(apply_type, consec_old, old_filepath, patch_coord)
+                    self.add_patch(apply_type, old_filepath, patch_coord)
                     log.info(
                         f"{bold('Patch:')} {idx + 1}/{len(node_ids)} - Auto apply patch for {bold(self.cur_nid)}"
                     )
@@ -672,7 +645,7 @@ class Differ:
                     continue
 
             if choice == ApplyType.OLD_ALL:
-                self.add_patch(ApplyType.OLD, consec_old, old_filepath, patch_coord)
+                self.add_patch(ApplyType.OLD, old_filepath, patch_coord)
                 idx += 1
                 continue
 
@@ -685,17 +658,19 @@ class Differ:
                     # No data in old node. Skip
                     idx += 1
                     continue
-                self.add_patch(ApplyType.OLD, consec_old, old_filepath, patch_coord)
+                self.add_patch(ApplyType.OLD, old_filepath, patch_coord)
             elif choice == ApplyType.NEW:
-                # Already in file. Only save patch.
-                self.persist_patch(old_filepath, self.create_patch(patch_coord, choice))
+                if not self.cur_new_node:
+                    # No data in old node. Skip
+                    idx += 1
+                    continue
+                self.add_patch(ApplyType.NEW, old_filepath, patch_coord)
             elif choice == ApplyType.SAVED:
                 if not save_exists:
                     print(bold("Save does not exist."))
                     continue
                 self.add_patch(
                     saved["apply_type"],
-                    consec_old,
                     old_filepath,
                     patch_coord,
                     saved_patch=saved,
@@ -713,7 +688,7 @@ class Differ:
                 input("Press enter to continue...\n")
                 continue
             elif choice == ApplyType.OLD_ALL:
-                self.add_patch(ApplyType.OLD, consec_old, old_filepath, patch_coord)
+                self.add_patch(ApplyType.OLD, old_filepath, patch_coord)
             elif choice == ApplyType.EDIT:
                 edited_text = self.edit_patch(diff_lines)
                 if not edited_text:
@@ -733,18 +708,80 @@ class Differ:
         log.info(f"Number of matching nodes = {matching_nodes_count}")
         return self.patches
 
-    def diff(self) -> None:
+    def determine_patch_coordinates(
+        self, new_nodes: dict[str, Node], old_nodes: dict[str, Node]
+    ):
+        # The node to be replaced is Node-PATCHED and part of File-PATCHED
+        # The other node is called Node-SRC and is part of File-SRC
+
+        if self.edit_old_file and self.cur_old_node:
+            # File-PATCHED = old file. Because we patch the old file.
+            patch_coord = PatchCoord.get_coordinates_from_node(self.cur_old_node)
+            return patch_coord
+        elif not self.edit_old_file and self.cur_new_node:
+            # File-PATCHED = new file. Because we patch the new file.
+            patch_coord = PatchCoord.get_coordinates_from_node(self.cur_new_node)
+            return patch_coord
+
+        # In this case there is no Node-PATCHED. So we don't know the PatchCoordinates.
+        # We have to insert Node-SRC at another point in the File-PATCHED.
+        # If the Node-SRC has no equivalent node in the FILE-PATCHED,
+        # we search for another Node-SRC also existing in File-PATCHED.
+        # The Node-SRC is insert before the equivalent node in File-PATCHED.
+        #
+        # Example:
+        #
+        # File-PATCHED       | File-SRC
+        # -------------------|-----------------
+        # ...                | ...
+        # <none>             | Node-SRC
+        # Node-PATCHED-fcn() | Node-SRC-fcn()
+        # ...                | ...
+        #
+        # Node-SRC is inserted before Node-PATCHED-fcn(). Because these
+        # are the nodes both files share.
+
+        patch_nodes = old_nodes if self.edit_old_file else new_nodes
+        src_nodes = new_nodes if self.edit_old_file else old_nodes
+
+        src_node_ids = list(src_nodes.keys())
+        j = src_node_ids.index(self.cur_nid)
+        while j >= 0 and (src_node_ids[j] not in patch_nodes.keys()):
+            j -= 1
+
+        if j < 0 or src_node_ids[j] not in patch_nodes.keys():
+            # No shared node before Node-SRC as reference.
+            # So put it to the very beginning of the file.
+            # The user should move it.
+            ref_end_byte = 1
+            ref_start_point = (1, 0)
+        else:
+            ref_new: Node = patch_nodes[src_node_ids[j]]
+            ref_end_byte = ref_new.start_byte
+            ref_start_point = ref_new.start_point
+        patch_coord = PatchCoord(
+            ref_end_byte - 1,
+            ref_end_byte - 1,
+            ref_start_point,
+            ref_start_point,
+            inserted=True,
+        )
+        return patch_coord
+
+    def diff(self, user_choices: list[str] | None = None) -> None:
         """
         Diffs certain nodes from the newly translated and old source files to each other.
         The user then selects which diff should be written to the new file.
         """
 
+        if user_choices:
+            self.user_choices = user_choices
         # We do not write to the translated files directly.
         self.copy_files()
         new_file = dict()
         old_file = dict()
         i = 0
-        for old_filepath, new_filepath in zip(self.old_files, self.diff_dest_files):
+        for old_filepath, new_filepath in zip(self.old_files, self.translated_files):
             new_file[i] = dict()
             new_file[i]["filepath"] = new_filepath
             new_file[i]["nodes"] = self.parse_file(new_filepath)
@@ -763,11 +800,15 @@ class Differ:
             print_prominent_info(
                 self.get_diff_intro_msg(
                     old_filepath, new_filepath, k + 1, i, diffs_to_process
-                )
+                ),
+                wait_for_user=(not self.testing),
             )
             if diffs_to_process == 0:
                 continue
-            patches[new_filepath] = self.diff_nodes(
+            patch_file_path = (
+                old_filepath.name if self.edit_old_file else new_filepath.name
+            )
+            patches[self.patched_file_paths[patch_file_path]] = self.diff_nodes(
                 old_filepath, new_file[k]["nodes"], old_file[k]["nodes"]
             )
         self.patch_files(patches)
@@ -793,10 +834,15 @@ class Differ:
                 else:
                     print_prominent_warning(f"No data for {patch.apply} defined.")
                     return
+                if patch.coord.inserted:
+                    # The patch doesn't replace a previous node.
+                    # So we wrap it in new lines to make it easier to fix later.
+                    data = b"\n" + data + b"\n"
                 src = src[:start_byte] + data + src[end_byte:]
             with open(filepath, "wb") as f:
                 f.write(src)
-        run_clang_format(list(file_patches.keys()))
+        if not self.testing:
+            run_clang_format(list(file_patches.keys()))
         return
 
     def edit_patch(self, diff_lines: list[str]) -> bytes | None:
@@ -950,9 +996,6 @@ def parse_args() -> argparse.Namespace:
 
 
 if __name__ == "__main__":
-    if not sys.hexversion >= 0x030B00F0:
-        log.fatal("Python >= v3.11 required.")
-        exit(1)
     args = parse_args()
     log.basicConfig(
         level=convert_loglevel(args.verbosity),

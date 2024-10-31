@@ -22,6 +22,7 @@ class TestHeaderPatcher(unittest.TestCase):
             configurator.get_parser(), configurator.get_cpp_lang(), [], []
         )
         cls.differ = Differ(configurator, testing=True, no_auto_apply=True)
+        cls.maxDiff = 10000
 
     def check_persistence(self, nid, expected, apply_type, edited_text):
         new_node: Node = self.new_nodes[nid] if nid in self.new_nodes else None
@@ -104,3 +105,13 @@ class TestHeaderPatcher(unittest.TestCase):
         }
         edited_text: bytes = b"aaaaaaa\n\n\n\n\n91928"
         self.check_persistence(nid, expected, ApplyType.EDIT, edited_text)
+
+    def test_patching(self):
+        self.differ.diff(user_choices=list("nnnnnnnnnnnnnnnnnnnnnnnnn"))
+        for efile in get_path("{DIFFER_TEST_EXPECTED_DIR}").iterdir():
+            with open(efile) as f:
+                expected = f.read()
+            with open(get_path("{DIFFER_TEST_OUTPUT_DIR}").joinpath(efile.name)) as f:
+                actual = f.read()
+            print(f"Compare {efile}")
+            self.assertEqual(expected, actual)
