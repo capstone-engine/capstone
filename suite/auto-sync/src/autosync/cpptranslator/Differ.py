@@ -693,9 +693,11 @@ class Differ:
                 edited_text = self.edit_patch(diff_lines)
                 if not edited_text:
                     continue
-                self.persist_patch(
+                self.add_patch(
+                    ApplyType.EDIT,
                     old_filepath,
-                    self.create_patch(patch_coord, choice, edited_text=edited_text),
+                    patch_coord,
+                    edited_text=edited_text,
                 )
             elif choice == ApplyType.PREVIOUS:
                 if idx == 0:
@@ -838,7 +840,10 @@ class Differ:
                     # The patch doesn't replace a previous node.
                     # So we wrap it in new lines to make it easier to fix later.
                     data = b"\n" + data + b"\n"
-                src = src[:start_byte] + data + src[end_byte:]
+                prefix = src[:start_byte] if src[:start_byte] else b""
+                middle = data if data else b""
+                postfix = src[end_byte:] if src[end_byte:] else b""
+                src = prefix + middle + postfix
             with open(filepath, "wb") as f:
                 f.write(src)
         if not self.testing:
@@ -863,7 +868,6 @@ class Differ:
                 if self.get_separator_line() in line:
                     break
                 edited_text += line
-        tmp_file.close()
         return edited_text
 
     @staticmethod
