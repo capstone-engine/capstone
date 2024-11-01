@@ -305,8 +305,8 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 	switch (Opcode) {
 	default:
 		return;
-	case ARM_t2MOVsra_flag:
-	case ARM_t2MOVsrl_flag:
+	case ARM_t2MOVsra_glue:
+	case ARM_t2MOVsrl_glue:
 		ARM_insert_detail_op_imm_at(MI, 2, 1, CS_AC_READ);
 		break;
 	case ARM_VCMPEZD:

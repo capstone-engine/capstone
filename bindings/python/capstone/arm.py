@@ -24,6 +24,7 @@ class ArmSysopReg(ctypes.Union):
     _fields_ = (
         ('mclasssysreg', ctypes.c_uint),
         ('bankedreg', ctypes.c_uint),
+        ('raw_val', ctypes.c_int),
     )
 
 class ArmOpSysop(ctypes.Structure):

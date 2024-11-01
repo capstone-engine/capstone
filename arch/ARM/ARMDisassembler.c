@@ -3,8 +3,8 @@
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
 /* Automatically translated source file from LLVM. */
 
-/* LLVM-commit: 464bda7750a3ba9e23823fc707d7e7b6fc38438d */
-/* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
 
 /* Only small edits allowed. */
 /* For multiple similar edits, please create a Patch for the translator. */
@@ -24,6 +24,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+#include <capstone/platform.h>
 
 #include "../../LEB128.h"
 #include "../../MCDisassembler.h"
@@ -34,10 +36,10 @@
 #include "../../MathExtras.h"
 #include "../../cs_priv.h"
 #include "../../utils.h"
-#include "ARMLinkage.h"
 #include "ARMAddressingModes.h"
 #include "ARMBaseInfo.h"
 #include "ARMDisassemblerExtension.h"
+#include "ARMLinkage.h"
 #include "ARMMapping.h"
 
 #define GET_INSTRINFO_MC_DESC
@@ -45,27 +47,6 @@
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
-
-#define DEBUG_TYPE "arm-disassembler"
-
-// Handles the condition code status of instructions in IT blocks
-;
-
-;
-
-/// ARM disassembler for all ARM platforms.;
-static DecodeStatus getInstruction(csh ud, const uint8_t *Bytes, size_t ByteLen,
-				   MCInst *MI, uint16_t *Size, uint64_t Address,
-				   void *Info);
-DecodeStatus getARMInstruction(csh ud, const uint8_t *Bytes, size_t ByteLen,
-			       MCInst *MI, uint16_t *Size, uint64_t Address,
-			       void *Info);
-DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t ByteLen,
-				 MCInst *MI, uint16_t *Size, uint64_t Address,
-				 void *Info);
-DecodeStatus AddThumbPredicate(MCInst *);
-void UpdateThumbVFPPredicate(DecodeStatus, MCInst *);
-;
 
 // end anonymous namespace
 
@@ -305,11 +286,11 @@ static DecodeStatus DecodeMveAddrModeRQ(MCInst *Inst, unsigned Insn,
 	static DecodeStatus CONCAT(DecodeMveAddrModeQ, shift)( \
 		MCInst * Inst, unsigned Insn, uint64_t Address, \
 		const void *Decoder);
-DECLARE_DecodeMveAddrModeQ(2) DECLARE_DecodeMveAddrModeQ(3)
+DECLARE_DecodeMveAddrModeQ(2);
+DECLARE_DecodeMveAddrModeQ(3);
 
-	static DecodeStatus
-	DecodeCoprocessor(MCInst *Inst, unsigned Insn, uint64_t Address,
-			  const void *Decoder);
+static DecodeStatus DecodeCoprocessor(MCInst *Inst, unsigned Insn,
+				      uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeMemBarrierOption(MCInst *Inst, unsigned Insn,
 					   uint64_t Address,
 					   const void *Decoder);
@@ -420,31 +401,33 @@ static DecodeStatus DecodeT2Imm8(MCInst *Inst, unsigned Val, uint64_t Address,
 							unsigned Val, \
 							uint64_t Address, \
 							const void *Decoder);
-DECLARE_DecodeT2Imm7(0) DECLARE_DecodeT2Imm7(1) DECLARE_DecodeT2Imm7(2)
+DECLARE_DecodeT2Imm7(0);
+DECLARE_DecodeT2Imm7(1);
+DECLARE_DecodeT2Imm7(2);
 
-	static DecodeStatus
-	DecodeT2AddrModeImm8(MCInst *Inst, unsigned Val, uint64_t Address,
-			     const void *Decoder);
+static DecodeStatus DecodeT2AddrModeImm8(MCInst *Inst, unsigned Val,
+					 uint64_t Address, const void *Decoder);
 #define DECLARE_DecodeTAddrModeImm7(shift) \
 	static DecodeStatus CONCAT(DecodeTAddrModeImm7, shift)( \
 		MCInst * Inst, unsigned Val, uint64_t Address, \
 		const void *Decoder);
-DECLARE_DecodeTAddrModeImm7(0) DECLARE_DecodeTAddrModeImm7(1)
+DECLARE_DecodeTAddrModeImm7(0);
+DECLARE_DecodeTAddrModeImm7(1);
 
 #define DECLARE_DecodeT2AddrModeImm7(shift, WriteBack) \
 	static DecodeStatus CONCAT(DecodeT2AddrModeImm7, \
 				   CONCAT(shift, WriteBack))( \
 		MCInst * Inst, unsigned Val, uint64_t Address, \
 		const void *Decoder);
-	DECLARE_DecodeT2AddrModeImm7(0, 0) DECLARE_DecodeT2AddrModeImm7(1, 0)
-		DECLARE_DecodeT2AddrModeImm7(2, 0)
-			DECLARE_DecodeT2AddrModeImm7(0, 1)
-				DECLARE_DecodeT2AddrModeImm7(1, 1)
-					DECLARE_DecodeT2AddrModeImm7(2, 1)
+DECLARE_DecodeT2AddrModeImm7(0, 0);
+DECLARE_DecodeT2AddrModeImm7(1, 0);
+DECLARE_DecodeT2AddrModeImm7(2, 0);
+DECLARE_DecodeT2AddrModeImm7(0, 1);
+DECLARE_DecodeT2AddrModeImm7(1, 1);
+DECLARE_DecodeT2AddrModeImm7(2, 1);
 
-						static DecodeStatus
-	DecodeThumbAddSPImm(MCInst *Inst, uint16_t Val, uint64_t Address,
-			    const void *Decoder);
+static DecodeStatus DecodeThumbAddSPImm(MCInst *Inst, uint16_t Val,
+					uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeThumbAddSPReg(MCInst *Inst, uint16_t Insn,
 					uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeThumbCPS(MCInst *Inst, uint16_t Insn,
@@ -501,18 +484,16 @@ static DecodeStatus DecodeForVMRSandVMSR(MCInst *Inst, unsigned Val,
 		CONCAT(isSigned, CONCAT(isNeg, CONCAT(zeroPermitted, size))))( \
 		MCInst * Inst, unsigned val, uint64_t Address, \
 		const void *Decoder);
-DECLARE_DecodeBFLabelOperand(false, false, false,
-			     4) DECLARE_DecodeBFLabelOperand(true, false, true,
-							     18)
-	DECLARE_DecodeBFLabelOperand(true, false, true, 12)
-		DECLARE_DecodeBFLabelOperand(true, false, true, 16)
-			DECLARE_DecodeBFLabelOperand(false, true, true, 11)
-				DECLARE_DecodeBFLabelOperand(false, false, true,
-							     11)
+DECLARE_DecodeBFLabelOperand(false, false, false, 4);
+DECLARE_DecodeBFLabelOperand(true, false, true, 18);
+DECLARE_DecodeBFLabelOperand(true, false, true, 12);
+DECLARE_DecodeBFLabelOperand(true, false, true, 16);
+DECLARE_DecodeBFLabelOperand(false, true, true, 11);
+DECLARE_DecodeBFLabelOperand(false, false, true, 11);
 
-					static DecodeStatus
-	DecodeBFAfterTargetOperand(MCInst *Inst, unsigned val, uint64_t Address,
-				   const void *Decoder);
+static DecodeStatus DecodeBFAfterTargetOperand(MCInst *Inst, unsigned val,
+					       uint64_t Address,
+					       const void *Decoder);
 static DecodeStatus DecodePredNoALOperand(MCInst *Inst, unsigned Val,
 					  uint64_t Address,
 					  const void *Decoder);
@@ -547,47 +528,47 @@ static DecodeStatus DecodeRestrictedFPPredicateOperand(MCInst *Inst,
 	static DecodeStatus CONCAT(DecodeVSTRVLDR_SYSREG, Writeback)( \
 		MCInst * Inst, unsigned Insn, uint64_t Address, \
 		const void *Decoder);
-DECLARE_DecodeVSTRVLDR_SYSREG(false) DECLARE_DecodeVSTRVLDR_SYSREG(true)
+DECLARE_DecodeVSTRVLDR_SYSREG(false);
+DECLARE_DecodeVSTRVLDR_SYSREG(true);
 
 #define DECLARE_DecodeMVE_MEM_1_pre(shift) \
 	static DecodeStatus CONCAT(DecodeMVE_MEM_1_pre, shift)( \
 		MCInst * Inst, unsigned Val, uint64_t Address, \
 		const void *Decoder);
-	DECLARE_DecodeMVE_MEM_1_pre(0) DECLARE_DecodeMVE_MEM_1_pre(1)
+DECLARE_DecodeMVE_MEM_1_pre(0);
+DECLARE_DecodeMVE_MEM_1_pre(1);
 
 #define DECLARE_DecodeMVE_MEM_2_pre(shift) \
 	static DecodeStatus CONCAT(DecodeMVE_MEM_2_pre, shift)( \
 		MCInst * Inst, unsigned Val, uint64_t Address, \
 		const void *Decoder);
-		DECLARE_DecodeMVE_MEM_2_pre(0) DECLARE_DecodeMVE_MEM_2_pre(
-			1) DECLARE_DecodeMVE_MEM_2_pre(2)
+DECLARE_DecodeMVE_MEM_2_pre(0);
+DECLARE_DecodeMVE_MEM_2_pre(1);
+DECLARE_DecodeMVE_MEM_2_pre(2);
 
 #define DECLARE_DecodeMVE_MEM_3_pre(shift) \
 	static DecodeStatus CONCAT(DecodeMVE_MEM_3_pre, shift)( \
 		MCInst * Inst, unsigned Val, uint64_t Address, \
 		const void *Decoder);
-			DECLARE_DecodeMVE_MEM_3_pre(
-				2) DECLARE_DecodeMVE_MEM_3_pre(3)
+DECLARE_DecodeMVE_MEM_3_pre(2);
+DECLARE_DecodeMVE_MEM_3_pre(3);
 
 #define DECLARE_DecodePowerTwoOperand(MinLog, MaxLog) \
 	static DecodeStatus CONCAT(DecodePowerTwoOperand, \
 				   CONCAT(MinLog, MaxLog))( \
 		MCInst * Inst, unsigned Val, uint64_t Address, \
 		const void *Decoder);
-				DECLARE_DecodePowerTwoOperand(0, 3)
+DECLARE_DecodePowerTwoOperand(0, 3);
 
 #define DECLARE_DecodeMVEPairVectorIndexOperand(start) \
 	static DecodeStatus CONCAT(DecodeMVEPairVectorIndexOperand, start)( \
 		MCInst * Inst, unsigned Val, uint64_t Address, \
 		const void *Decoder);
-					DECLARE_DecodeMVEPairVectorIndexOperand(
-						2)
-						DECLARE_DecodeMVEPairVectorIndexOperand(
-							0)
+DECLARE_DecodeMVEPairVectorIndexOperand(2);
+DECLARE_DecodeMVEPairVectorIndexOperand(0);
 
-							static DecodeStatus
-	DecodeMVEVMOVQtoDReg(MCInst *Inst, unsigned Insn, uint64_t Address,
-			     const void *Decoder);
+static DecodeStatus DecodeMVEVMOVQtoDReg(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeMVEVMOVDRegtoQ(MCInst *Inst, unsigned Insn,
 					 uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeMVEVCVTt1fp(MCInst *Inst, unsigned Insn,
@@ -599,24 +580,17 @@ typedef DecodeStatus OperandDecoder(MCInst *Inst, unsigned Val,
 				   CONCAT(scalar, predicate_decoder))( \
 		MCInst * Inst, unsigned Insn, uint64_t Address, \
 		const void *Decoder);
-DECLARE_DecodeMVEVCMP(false, DecodeRestrictedIPredicateOperand) DECLARE_DecodeMVEVCMP(
-	false, DecodeRestrictedUPredicateOperand)
-	DECLARE_DecodeMVEVCMP(false, DecodeRestrictedSPredicateOperand)
-		DECLARE_DecodeMVEVCMP(true, DecodeRestrictedIPredicateOperand)
-			DECLARE_DecodeMVEVCMP(true,
-					      DecodeRestrictedUPredicateOperand)
-				DECLARE_DecodeMVEVCMP(
-					true, DecodeRestrictedSPredicateOperand)
-					DECLARE_DecodeMVEVCMP(
-						false,
-						DecodeRestrictedFPPredicateOperand)
-						DECLARE_DecodeMVEVCMP(
-							true,
-							DecodeRestrictedFPPredicateOperand)
+DECLARE_DecodeMVEVCMP(false, DecodeRestrictedIPredicateOperand);
+DECLARE_DecodeMVEVCMP(false, DecodeRestrictedUPredicateOperand);
+DECLARE_DecodeMVEVCMP(false, DecodeRestrictedSPredicateOperand);
+DECLARE_DecodeMVEVCMP(true, DecodeRestrictedIPredicateOperand);
+DECLARE_DecodeMVEVCMP(true, DecodeRestrictedUPredicateOperand);
+DECLARE_DecodeMVEVCMP(true, DecodeRestrictedSPredicateOperand);
+DECLARE_DecodeMVEVCMP(false, DecodeRestrictedFPPredicateOperand);
+DECLARE_DecodeMVEVCMP(true, DecodeRestrictedFPPredicateOperand);
 
-							static DecodeStatus
-	DecodeMveVCTP(MCInst *Inst, unsigned Insn, uint64_t Address,
-		      const void *Decoder);
+static DecodeStatus DecodeMveVCTP(MCInst *Inst, unsigned Insn, uint64_t Address,
+				  const void *Decoder);
 static DecodeStatus DecodeMVEVPNOT(MCInst *Inst, unsigned Insn,
 				   uint64_t Address, const void *Decoder);
 static DecodeStatus DecodeMVEOverlappingLongShift(MCInst *Inst, unsigned Insn,
@@ -659,45 +633,7 @@ static DecodeStatus checkDecodedInstruction(MCInst *MI, uint32_t Insn,
 	}
 }
 
-static DecodeStatus getInstruction(csh ud, const uint8_t *Bytes,
-				   size_t BytesLen, MCInst *MI, uint16_t *Size,
-				   uint64_t Address, void *Info)
-{
-	DecodeStatus Result = MCDisassembler_Fail;
-	if (MI->csh->mode & CS_MODE_THUMB)
-		Result = getThumbInstruction(ud, Bytes, BytesLen, MI, Size,
-					     Address, Info);
-	else
-		Result = getARMInstruction(ud, Bytes, BytesLen, MI, Size,
-					   Address, Info);
-	MCInst_handleWriteback(MI, ARMInsts, ARR_SIZE(ARMInsts));
-	return Result;
-}
-
-static inline uint32_t endianSensitiveOpcode32(MCInst *MI, const uint8_t *Bytes)
-{
-	uint32_t Insn;
-	if (MODE_IS_BIG_ENDIAN(MI->csh->mode))
-		Insn = (Bytes[3] << 0) | (Bytes[2] << 8) | (Bytes[1] << 16) |
-		       ((uint32_t)Bytes[0] << 24);
-	else
-		Insn = ((uint32_t)Bytes[3] << 24) | (Bytes[2] << 16) |
-		       (Bytes[1] << 8) | (Bytes[0] << 0);
-	return Insn;
-}
-
-static inline uint16_t endianSensitiveOpcode16(MCInst *MI, const uint8_t *Bytes)
-{
-	uint16_t Insn;
-	if (MODE_IS_BIG_ENDIAN(MI->csh->mode))
-		Insn = (Bytes[0] << 8) | Bytes[1];
-	else
-		Insn = (Bytes[1] << 8) | Bytes[0];
-
-	return Insn;
-}
-
-DecodeStatus getARMInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
+static DecodeStatus getARMInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 			       MCInst *MI, uint16_t *Size, uint64_t Address,
 			       void *Info)
 {
@@ -708,11 +644,11 @@ DecodeStatus getARMInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 	}
 
 	// Encoded as a 32-bit word in the stream.
-	uint32_t Insn = endianSensitiveOpcode32(MI, Bytes);
+	uint32_t Insn = readBytes32(MI, Bytes);
 
 	// Calling the auto-generated decoder function.
 	DecodeStatus Result =
-		decodeInstruction_4(DecoderTableARM32, MI, Insn, Address);
+		decodeInstruction_4(DecoderTableARM32, MI, Insn, Address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 		return checkDecodedInstruction(MI, Insn, Result);
@@ -736,7 +672,7 @@ DecodeStatus getARMInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 	for (int i = 0; i < (sizeof(Tables) / sizeof(Tables[0])); ++i) {
 		MCInst_clear(MI);
 		DecodeTable Table = Tables[i];
-		Result = decodeInstruction_4(Table.P, MI, Insn, Address);
+		Result = decodeInstruction_4(Table.P, MI, Insn, Address, NULL);
 		if (Result != MCDisassembler_Fail) {
 			*Size = 4;
 			// Add a fake predicate operand, because we share these instruction
@@ -748,7 +684,7 @@ DecodeStatus getARMInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		}
 	}
 
-	Result = decodeInstruction_4(DecoderTableCoProc32, MI, Insn, Address);
+	Result = decodeInstruction_4(DecoderTableCoProc32, MI, Insn, Address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 		return checkDecodedInstruction(MI, Insn, Result);
@@ -757,8 +693,6 @@ DecodeStatus getARMInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 	*Size = 4;
 	return MCDisassembler_Fail;
 }
-
-extern const MCInstrDesc ARMInsts[];
 
 /// tryAddingSymbolicOperand - trys to add a symbolic operand in place of the
 /// immediate Value in the MCInst.  The immediate Value has had any PC
@@ -804,8 +738,8 @@ static void tryAddingPcLoadReferenceComment(uint64_t Address, int Value,
 // that as a post-pass.
 static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 {
-	const MCOperandInfo *OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
-	unsigned short NumOps = ARMInsts[MCInst_getOpcode(MI)].NumOperands;
+	const MCOperandInfo *OpInfo = ARMDescs.Insts[MCInst_getOpcode(MI)].OpInfo;
+	unsigned short NumOps = ARMDescs.Insts[MCInst_getOpcode(MI)].NumOperands;
 	unsigned i;
 
 	for (i = 0; i < NumOps; ++i) {
@@ -828,8 +762,8 @@ static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 
 static bool isVectorPredicable(unsigned Opcode)
 {
-	const MCOperandInfo *OpInfo = ARMInsts[Opcode].OpInfo;
-	unsigned short NumOps = ARMInsts[Opcode].NumOperands;
+	const MCOperandInfo *OpInfo = ARMDescs.Insts[Opcode].OpInfo;
+	unsigned short NumOps = ARMDescs.Insts[Opcode].NumOperands;
 	for (unsigned i = 0; i < NumOps; ++i) {
 		if (ARM_isVpred(OpInfo[i].OperandType))
 			return true;
@@ -908,8 +842,8 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 		VPTBlock_advanceVPTState(&(MI->csh->VPTBlock));
 	}
 
-	const MCOperandInfo *OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
-	unsigned short NumOps = ARMInsts[MCInst_getOpcode(MI)].NumOperands;
+	const MCOperandInfo *OpInfo = ARMDescs.Insts[MCInst_getOpcode(MI)].OpInfo;
+	unsigned short NumOps = ARMDescs.Insts[MCInst_getOpcode(MI)].NumOperands;
 
 	unsigned i;
 	for (i = 0; i < NumOps; ++i) {
@@ -918,7 +852,7 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 			break;
 	}
 
-	if (MCInst_isPredicable(&ARMInsts[MCInst_getOpcode(MI)])) {
+	if (MCInst_isPredicable(&ARMDescs.Insts[MCInst_getOpcode(MI)])) {
 		MCInst_insert0(MI, i, MCOperand_CreateImm1(MI, (CC)));
 
 		if (CC == ARMCC_AL)
@@ -950,10 +884,12 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 		MCInst_insert0(MI, VCCPos + 2, MCOperand_CreateReg1(MI, (0)));
 		if (OpInfo[VCCPos].OperandType == ARM_OP_VPRED_R) {
 			int TiedOp = MCOperandInfo_getOperandConstraint(
-				&ARMInsts[MCInst_getOpcode(MI)], VCCPos + 3,
+				&ARMDescs.Insts[MCInst_getOpcode(MI)], VCCPos + 3,
 				MCOI_TIED_TO);
-			CS_ASSERT_RET_VAL(TiedOp >= 0 &&
-			       "Inactive register in vpred_r is not tied to an output!", MCDisassembler_Fail);
+			CS_ASSERT_RET_VAL(
+				TiedOp >= 0 &&
+					"Inactive register in vpred_r is not tied to an output!",
+				MCDisassembler_Fail);
 			// Copy the operand to ensure it's not invalidated when MI grows.
 			MCOperand Op = *MCInst_getOperand(MI, TiedOp);
 			MCInst_insert0(MI, VCCPos + 3, &Op);
@@ -970,7 +906,7 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 // mode, the auto-generated decoder will give them an (incorrect)
 // predicate operand.  We need to rewrite these operands based on the IT
 // context as a post-pass.
-void UpdateThumbVFPPredicate(DecodeStatus S, MCInst *MI)
+static void UpdateThumbVFPPredicate(DecodeStatus S, MCInst *MI)
 {
 	unsigned CC;
 	CC = ITBlock_getITCC(&(MI->csh->ITBlock));
@@ -983,13 +919,13 @@ void UpdateThumbVFPPredicate(DecodeStatus S, MCInst *MI)
 		VPTBlock_advanceVPTState(&(MI->csh->VPTBlock));
 	}
 
-	const MCOperandInfo *OpInfo = ARMInsts[MCInst_getOpcode(MI)].OpInfo;
-	unsigned short NumOps = ARMInsts[MCInst_getOpcode(MI)].NumOperands;
+	const MCOperandInfo *OpInfo = ARMDescs.Insts[MCInst_getOpcode(MI)].OpInfo;
+	unsigned short NumOps = ARMDescs.Insts[MCInst_getOpcode(MI)].NumOperands;
 	for (unsigned i = 0; i < NumOps; ++i) {
 		if (MCOperandInfo_isPredicate(&OpInfo[i])) {
 			if (CC != ARMCC_AL &&
 			    !MCInst_isPredicable(
-				    &ARMInsts[MCInst_getOpcode(MI)]))
+				    &ARMDescs.Insts[MCInst_getOpcode(MI)]))
 				Check(&S, MCDisassembler_SoftFail);
 			MCOperand_setImm(MCInst_getOperand(MI, i), CC);
 
@@ -1005,7 +941,7 @@ void UpdateThumbVFPPredicate(DecodeStatus S, MCInst *MI)
 	}
 }
 
-DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
+static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 				 MCInst *MI, uint16_t *Size, uint64_t Address,
 				 void *Info)
 {
@@ -1015,9 +951,9 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		return MCDisassembler_Fail;
 	}
 
-	uint16_t Insn16 = endianSensitiveOpcode16(MI, Bytes);
+	uint16_t Insn16 = readBytes16(MI, Bytes);
 	DecodeStatus Result =
-		decodeInstruction_2(DecoderTableThumb16, MI, Insn16, Address);
+		decodeInstruction_2(DecoderTableThumb16, MI, Insn16, Address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 2;
 		Check(&Result, AddThumbPredicate(MI));
@@ -1025,7 +961,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 	}
 
 	Result = decodeInstruction_2(DecoderTableThumbSBit16, MI, Insn16,
-				     Address);
+				     Address, NULL);
 	if (Result) {
 		*Size = 2;
 		bool InITBlock = ITBlock_instrInITBlock(&(MI->csh->ITBlock));
@@ -1034,7 +970,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		return Result;
 	}
 
-	Result = decodeInstruction_2(DecoderTableThumb216, MI, Insn16, Address);
+	Result = decodeInstruction_2(DecoderTableThumb216, MI, Insn16, Address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 2;
 
@@ -1071,9 +1007,9 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		return MCDisassembler_Fail;
 	}
 	uint32_t Insn32 = (uint32_t)Insn16 << 16 |
-			  endianSensitiveOpcode16(MI, Bytes + 2);
+			  readBytes16(MI, Bytes + 2);
 
-	Result = decodeInstruction_4(DecoderTableMVE32, MI, Insn32, Address);
+	Result = decodeInstruction_4(DecoderTableMVE32, MI, Insn32, Address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 
@@ -1094,7 +1030,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		return Result;
 	}
 
-	Result = decodeInstruction_4(DecoderTableThumb32, MI, Insn32, Address);
+	Result = decodeInstruction_4(DecoderTableThumb32, MI, Insn32, Address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 		bool InITBlock = ITBlock_instrInITBlock(&(MI->csh->ITBlock));
@@ -1103,7 +1039,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		return Result;
 	}
 
-	Result = decodeInstruction_4(DecoderTableThumb232, MI, Insn32, Address);
+	Result = decodeInstruction_4(DecoderTableThumb232, MI, Insn32, Address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 		Check(&Result, AddThumbPredicate(MI));
@@ -1112,7 +1048,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 
 	if (fieldFromInstruction_4(Insn32, 28, 4) == 0xE) {
 		Result = decodeInstruction_4(DecoderTableVFP32, MI, Insn32,
-					     Address);
+					     Address, NULL);
 		if (Result != MCDisassembler_Fail) {
 			*Size = 4;
 			UpdateThumbVFPPredicate(Result, MI);
@@ -1120,7 +1056,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		}
 	}
 
-	Result = decodeInstruction_4(DecoderTableVFPV832, MI, Insn32, Address);
+	Result = decodeInstruction_4(DecoderTableVFPV832, MI, Insn32, Address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 		return Result;
@@ -1128,7 +1064,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 
 	if (fieldFromInstruction_4(Insn32, 28, 4) == 0xE) {
 		Result = decodeInstruction_4(DecoderTableNEONDup32, MI, Insn32,
-					     Address);
+					     Address, NULL);
 		if (Result != MCDisassembler_Fail) {
 			*Size = 4;
 			Check(&Result, AddThumbPredicate(MI));
@@ -1141,7 +1077,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		NEONLdStInsn &= 0xF0FFFFFF;
 		NEONLdStInsn |= 0x04000000;
 		Result = decodeInstruction_4(DecoderTableNEONLoadStore32, MI,
-					     NEONLdStInsn, Address);
+					     NEONLdStInsn, Address, NULL);
 		if (Result != MCDisassembler_Fail) {
 			*Size = 4;
 			Check(&Result, AddThumbPredicate(MI));
@@ -1156,7 +1092,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 				4;	    // Move bit 28 to bit 24
 		NEONDataInsn |= 0x12000000; // Set bits 28 and 25
 		Result = decodeInstruction_4(DecoderTableNEONData32, MI,
-					     NEONDataInsn, Address);
+					     NEONDataInsn, Address, NULL);
 		if (Result != MCDisassembler_Fail) {
 			*Size = 4;
 			Check(&Result, AddThumbPredicate(MI));
@@ -1169,7 +1105,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 				  4;	      // Move bit 28 to bit 24
 		NEONCryptoInsn |= 0x12000000; // Set bits 28 and 25
 		Result = decodeInstruction_4(DecoderTablev8Crypto32, MI,
-					     NEONCryptoInsn, Address);
+					     NEONCryptoInsn, Address, NULL);
 		if (Result != MCDisassembler_Fail) {
 			*Size = 4;
 			return Result;
@@ -1178,7 +1114,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		uint32_t NEONv8Insn = Insn32;
 		NEONv8Insn &= 0xF3FFFFFF; // Clear bits 27-26
 		Result = decodeInstruction_4(DecoderTablev8NEON32, MI,
-					     NEONv8Insn, Address);
+					     NEONv8Insn, Address, NULL);
 		if (Result != MCDisassembler_Fail) {
 			*Size = 4;
 			return Result;
@@ -1189,7 +1125,7 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 	const uint8_t *DecoderTable = ARM_isCDECoproc(Coproc, MI) ?
 					      DecoderTableThumb2CDE32 :
 					      DecoderTableThumb2CoProc32;
-	Result = decodeInstruction_4(DecoderTable, MI, Insn32, Address);
+	Result = decodeInstruction_4(DecoderTable, MI, Insn32, Address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 		Check(&Result, AddThumbPredicate(MI));
@@ -1198,6 +1134,21 @@ DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 
 	*Size = 0;
 	return MCDisassembler_Fail;
+}
+
+static DecodeStatus getInstruction(csh ud, const uint8_t *Bytes,
+				   size_t BytesLen, MCInst *MI, uint16_t *Size,
+				   uint64_t Address, void *Info)
+{
+	DecodeStatus Result = MCDisassembler_Fail;
+	if (MI->csh->mode & CS_MODE_THUMB)
+		Result = getThumbInstruction(ud, Bytes, BytesLen, MI, Size,
+					     Address, Info);
+	else
+		Result = getARMInstruction(ud, Bytes, BytesLen, MI, Size,
+					   Address, Info);
+	MCInst_handleWriteback(MI, ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
+	return Result;
 }
 
 static const uint16_t GPRDecoderTable[] = { ARM_R0,  ARM_R1, ARM_R2,  ARM_R3,
@@ -1562,7 +1513,7 @@ static DecodeStatus DecodePredicateOperand(MCInst *Inst, unsigned Val,
 	if (MCInst_getOpcode(Inst) == ARM_tBcc && Val == 0xE)
 		return MCDisassembler_Fail;
 	if (Val != ARMCC_AL &&
-	    !MCInst_isPredicable(&ARMInsts[MCInst_getOpcode(Inst)]))
+	    !MCInst_isPredicable(&ARMDescs.Insts[MCInst_getOpcode(Inst)]))
 		Check(&S, MCDisassembler_SoftFail);
 	MCOperand_CreateImm0(Inst, (Val));
 	if (Val == ARMCC_AL) {
@@ -4598,11 +4549,12 @@ static DecodeStatus DecodeT2Imm8(MCInst *Inst, unsigned Val, uint64_t Address,
 \
 		return MCDisassembler_Success; \
 	}
-DEFINE_DecodeT2Imm7(0) DEFINE_DecodeT2Imm7(1) DEFINE_DecodeT2Imm7(2)
+DEFINE_DecodeT2Imm7(0);
+DEFINE_DecodeT2Imm7(1);
+DEFINE_DecodeT2Imm7(2);
 
-	static DecodeStatus
-	DecodeT2AddrModeImm8(MCInst *Inst, unsigned Val, uint64_t Address,
-			     const void *Decoder)
+static DecodeStatus DecodeT2AddrModeImm8(MCInst *Inst, unsigned Val,
+					 uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
 
@@ -4667,7 +4619,8 @@ DEFINE_DecodeT2Imm7(0) DEFINE_DecodeT2Imm7(1) DEFINE_DecodeT2Imm7(2)
 \
 		return S; \
 	}
-DEFINE_DecodeTAddrModeImm7(0) DEFINE_DecodeTAddrModeImm7(1)
+DEFINE_DecodeTAddrModeImm7(0);
+DEFINE_DecodeTAddrModeImm7(1);
 
 #define DEFINE_DecodeT2AddrModeImm7(shift, WriteBack) \
 	static DecodeStatus CONCAT(DecodeT2AddrModeImm7, \
@@ -4692,15 +4645,15 @@ DEFINE_DecodeTAddrModeImm7(0) DEFINE_DecodeTAddrModeImm7(1)
 \
 		return S; \
 	}
-	DEFINE_DecodeT2AddrModeImm7(0, 0) DEFINE_DecodeT2AddrModeImm7(1, 0)
-		DEFINE_DecodeT2AddrModeImm7(2, 0)
-			DEFINE_DecodeT2AddrModeImm7(0, 1)
-				DEFINE_DecodeT2AddrModeImm7(1, 1)
-					DEFINE_DecodeT2AddrModeImm7(2, 1)
+DEFINE_DecodeT2AddrModeImm7(0, 0);
+DEFINE_DecodeT2AddrModeImm7(1, 0);
+DEFINE_DecodeT2AddrModeImm7(2, 0);
+DEFINE_DecodeT2AddrModeImm7(0, 1);
+DEFINE_DecodeT2AddrModeImm7(1, 1);
+DEFINE_DecodeT2AddrModeImm7(2, 1);
 
-						static DecodeStatus
-	DecodeT2LdStPre(MCInst *Inst, unsigned Insn, uint64_t Address,
-			const void *Decoder)
+static DecodeStatus DecodeT2LdStPre(MCInst *Inst, unsigned Insn,
+				    uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
 
@@ -4897,11 +4850,11 @@ static DecodeStatus DecodeMveAddrModeRQ(MCInst *Inst, unsigned Insn,
 \
 		return S; \
 	}
-DEFINE_DecodeMveAddrModeQ(2) DEFINE_DecodeMveAddrModeQ(3)
+DEFINE_DecodeMveAddrModeQ(2);
+DEFINE_DecodeMveAddrModeQ(3);
 
-	static DecodeStatus
-	DecodeThumbBLXOffset(MCInst *Inst, unsigned Val, uint64_t Address,
-			     const void *Decoder)
+static DecodeStatus DecodeThumbBLXOffset(MCInst *Inst, unsigned Val,
+					 uint64_t Address, const void *Decoder)
 {
 	// Val is passed in as S:J1:J2:imm10H:imm10L:'0'
 	// Note only one trailing zero not two.  Also the J1 and J2 values are from
@@ -6136,7 +6089,8 @@ static DecodeStatus DecodeT2Adr(MCInst *Inst, uint32_t Insn, uint64_t Address,
 	if (sign1 != sign2)
 		return MCDisassembler_Fail;
 	const unsigned Rd = fieldFromInstruction_4(Insn, 8, 4);
-
+	CS_ASSERT(MCInst_getNumOperands(Inst) == 0 &&
+		  "We should receive an empty Inst");
 	DecodeStatus S = DecoderGPRRegisterClass(Inst, Rd, Address, Decoder);
 
 	unsigned Val = fieldFromInstruction_4(Insn, 0, 8);
@@ -6515,18 +6469,16 @@ static DecodeStatus DecodeForVMRSandVMSR(MCInst *Inst, unsigned Val,
 					     (isNeg ? -DecVal : DecVal)); \
 		return S; \
 	}
-DEFINE_DecodeBFLabelOperand(false, false, false, 4)
-	DEFINE_DecodeBFLabelOperand(true, false, true,
-				    18) DEFINE_DecodeBFLabelOperand(true, false,
-								    true, 12)
-		DEFINE_DecodeBFLabelOperand(true, false, true, 16)
-			DEFINE_DecodeBFLabelOperand(false, true, true, 11)
-				DEFINE_DecodeBFLabelOperand(false, false, true,
-							    11)
+DEFINE_DecodeBFLabelOperand(false, false, false, 4);
+DEFINE_DecodeBFLabelOperand(true, false, true, 18);
+DEFINE_DecodeBFLabelOperand(true, false, true, 12);
+DEFINE_DecodeBFLabelOperand(true, false, true, 16);
+DEFINE_DecodeBFLabelOperand(false, true, true, 11);
+DEFINE_DecodeBFLabelOperand(false, false, true, 11);
 
-					static DecodeStatus
-	DecodeBFAfterTargetOperand(MCInst *Inst, unsigned Val, uint64_t Address,
-				   const void *Decoder)
+static DecodeStatus DecodeBFAfterTargetOperand(MCInst *Inst, unsigned Val,
+					       uint64_t Address,
+					       const void *Decoder)
 {
 	uint64_t LocImm = MCOperand_getImm(MCInst_getOperand(Inst, (0)));
 	Val = LocImm + (2 << Val);
@@ -6598,7 +6550,7 @@ static DecodeStatus DecodeLOLoop(MCInst *Inst, unsigned Insn, uint64_t Address,
 				 SBZMask = 0x00300FFE;
 			if ((Insn & ~SBZMask) != CanonicalLCTP)
 				return MCDisassembler_Fail; // a mandatory bit is wrong: hard
-					// fail
+							    // fail
 			if (Insn != CanonicalLCTP)
 				Check(&S,
 				      MCDisassembler_SoftFail); // an SBZ bit is wrong: soft fail
@@ -6962,12 +6914,14 @@ static unsigned FixedRegForVSTRVLDR_SYSREG(unsigned Opcode)
 \
 		return S; \
 	}
-DEFINE_DecodeVSTRVLDR_SYSREG(false) DEFINE_DecodeVSTRVLDR_SYSREG(true)
+DEFINE_DecodeVSTRVLDR_SYSREG(false);
+DEFINE_DecodeVSTRVLDR_SYSREG(true);
 
-	static inline DecodeStatus
-	DecodeMVE_MEM_pre(MCInst *Inst, unsigned Val, uint64_t Address,
-			  const void *Decoder, unsigned Rn,
-			  OperandDecoder RnDecoder, OperandDecoder AddrDecoder)
+static inline DecodeStatus DecodeMVE_MEM_pre(MCInst *Inst, unsigned Val,
+					     uint64_t Address,
+					     const void *Decoder, unsigned Rn,
+					     OperandDecoder RnDecoder,
+					     OperandDecoder AddrDecoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
 
@@ -6995,7 +6949,8 @@ DEFINE_DecodeVSTRVLDR_SYSREG(false) DEFINE_DecodeVSTRVLDR_SYSREG(true)
 					 DecodetGPRRegisterClass, \
 					 CONCAT(DecodeTAddrModeImm7, shift)); \
 	}
-DEFINE_DecodeMVE_MEM_1_pre(0) DEFINE_DecodeMVE_MEM_1_pre(1)
+DEFINE_DecodeMVE_MEM_1_pre(0);
+DEFINE_DecodeMVE_MEM_1_pre(1);
 
 #define DEFINE_DecodeMVE_MEM_2_pre(shift) \
 	static DecodeStatus CONCAT(DecodeMVE_MEM_2_pre, shift)( \
@@ -7008,8 +6963,9 @@ DEFINE_DecodeMVE_MEM_1_pre(0) DEFINE_DecodeMVE_MEM_1_pre(1)
 					 CONCAT(DecodeT2AddrModeImm7, \
 						CONCAT(shift, 1))); \
 	}
-	DEFINE_DecodeMVE_MEM_2_pre(0) DEFINE_DecodeMVE_MEM_2_pre(
-		1) DEFINE_DecodeMVE_MEM_2_pre(2)
+DEFINE_DecodeMVE_MEM_2_pre(0);
+DEFINE_DecodeMVE_MEM_2_pre(1);
+DEFINE_DecodeMVE_MEM_2_pre(2);
 
 #define DEFINE_DecodeMVE_MEM_3_pre(shift) \
 	static DecodeStatus CONCAT(DecodeMVE_MEM_3_pre, shift)( \
@@ -7021,7 +6977,8 @@ DEFINE_DecodeMVE_MEM_1_pre(0) DEFINE_DecodeMVE_MEM_1_pre(1)
 					 DecodeMQPRRegisterClass, \
 					 CONCAT(DecodeMveAddrModeQ, shift)); \
 	}
-		DEFINE_DecodeMVE_MEM_3_pre(2) DEFINE_DecodeMVE_MEM_3_pre(3)
+DEFINE_DecodeMVE_MEM_3_pre(2);
+DEFINE_DecodeMVE_MEM_3_pre(3);
 
 #define DEFINE_DecodePowerTwoOperand(MinLog, MaxLog) \
 	static DecodeStatus CONCAT(DecodePowerTwoOperand, \
@@ -7037,7 +6994,7 @@ DEFINE_DecodeMVE_MEM_1_pre(0) DEFINE_DecodeMVE_MEM_1_pre(1)
 		MCOperand_CreateImm0(Inst, (1LL << Val)); \
 		return S; \
 	}
-			DEFINE_DecodePowerTwoOperand(0, 3)
+DEFINE_DecodePowerTwoOperand(0, 3);
 
 #define DEFINE_DecodeMVEPairVectorIndexOperand(start) \
 	static DecodeStatus CONCAT(DecodeMVEPairVectorIndexOperand, start)( \
@@ -7050,12 +7007,11 @@ DEFINE_DecodeMVE_MEM_1_pre(0) DEFINE_DecodeMVE_MEM_1_pre(1)
 \
 		return S; \
 	}
-				DEFINE_DecodeMVEPairVectorIndexOperand(2)
-					DEFINE_DecodeMVEPairVectorIndexOperand(0)
+DEFINE_DecodeMVEPairVectorIndexOperand(2);
+DEFINE_DecodeMVEPairVectorIndexOperand(0);
 
-						static DecodeStatus
-	DecodeMVEVMOVQtoDReg(MCInst *Inst, unsigned Insn, uint64_t Address,
-			     const void *Decoder)
+static DecodeStatus DecodeMVEVMOVQtoDReg(MCInst *Inst, unsigned Insn,
+					 uint64_t Address, const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
 	unsigned Rt = fieldFromInstruction_4(Insn, 0, 4);
@@ -7261,24 +7217,17 @@ static DecodeStatus DecodeMVEVCVTt1fp(MCInst *Inst, unsigned Insn,
 \
 		return S; \
 	}
-DEFINE_DecodeMVEVCMP(false, DecodeRestrictedIPredicateOperand) DEFINE_DecodeMVEVCMP(
-	false, DecodeRestrictedUPredicateOperand)
-	DEFINE_DecodeMVEVCMP(false, DecodeRestrictedSPredicateOperand)
-		DEFINE_DecodeMVEVCMP(true, DecodeRestrictedIPredicateOperand)
-			DEFINE_DecodeMVEVCMP(true,
-					     DecodeRestrictedUPredicateOperand)
-				DEFINE_DecodeMVEVCMP(
-					true, DecodeRestrictedSPredicateOperand)
-					DEFINE_DecodeMVEVCMP(
-						false,
-						DecodeRestrictedFPPredicateOperand)
-						DEFINE_DecodeMVEVCMP(
-							true,
-							DecodeRestrictedFPPredicateOperand)
+DEFINE_DecodeMVEVCMP(false, DecodeRestrictedIPredicateOperand);
+DEFINE_DecodeMVEVCMP(false, DecodeRestrictedUPredicateOperand);
+DEFINE_DecodeMVEVCMP(false, DecodeRestrictedSPredicateOperand);
+DEFINE_DecodeMVEVCMP(true, DecodeRestrictedIPredicateOperand);
+DEFINE_DecodeMVEVCMP(true, DecodeRestrictedUPredicateOperand);
+DEFINE_DecodeMVEVCMP(true, DecodeRestrictedSPredicateOperand);
+DEFINE_DecodeMVEVCMP(false, DecodeRestrictedFPPredicateOperand);
+DEFINE_DecodeMVEVCMP(true, DecodeRestrictedFPPredicateOperand);
 
-							static DecodeStatus
-	DecodeMveVCTP(MCInst *Inst, unsigned Insn, uint64_t Address,
-		      const void *Decoder)
+static DecodeStatus DecodeMveVCTP(MCInst *Inst, unsigned Insn, uint64_t Address,
+				  const void *Decoder)
 {
 	DecodeStatus S = MCDisassembler_Success;
 	MCOperand_CreateReg0(Inst, (ARM_VPR));

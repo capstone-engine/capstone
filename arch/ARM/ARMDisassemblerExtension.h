@@ -26,8 +26,6 @@ void ITBlock_advanceITState(ARM_ITBlock *it);
 
 void ITBlock_setITState(ARM_ITBlock *it, char Firstcond, char Mask);
 
-bool Check(DecodeStatus *Out, DecodeStatus In);
-
 bool isValidCoprocessorNumber(MCInst *Inst, unsigned Num);
 
 bool ARM_isVpred(arm_op_type op);

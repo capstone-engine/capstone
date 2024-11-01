@@ -109,25 +109,6 @@ void VPTBlock_setVPTState(ARM_VPTBlock *VPT, char Mask)
 	VPTBlock_push_back(VPT, ARMVCC_Then);
 }
 
-/// ThumbDisassembler - Thumb disassembler for all Thumb platforms.
-
-bool Check(DecodeStatus *Out, DecodeStatus In)
-{
-	switch (In) {
-	case MCDisassembler_Success:
-		// Out stays the same.
-		return true;
-	case MCDisassembler_SoftFail:
-		*Out = In;
-		return true;
-	case MCDisassembler_Fail:
-		*Out = In;
-		return false;
-	default: // never reached
-		return false;
-	}
-}
-
 // Imported from ARMBaseInstrInfo.h
 //
 /// isValidCoprocessorNumber - decide whether an explicit coprocessor

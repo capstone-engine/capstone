@@ -3,8 +3,8 @@
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
 /* Automatically translated source file from LLVM. */
 
-/* LLVM-commit: 464bda7750a3ba9e23823fc707d7e7b6fc38438d */
-/* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
 
 /* Only small edits allowed. */
 /* For multiple similar edits, please create a Patch for the translator. */
@@ -24,6 +24,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+#include <capstone/arm.h>
 #include <capstone/platform.h>
 
 #include "../../Mapping.h"
@@ -61,6 +62,7 @@ static const char *getRegisterName(unsigned RegNo, unsigned AltIdx);
 unsigned translateShiftImm(unsigned imm)
 {
 	// lsr #32 and asr #32 exist, but should be encoded as a 0.
+	CS_ASSERT((imm & ~0x1f) == 0 && "Invalid shift encoding");
 
 	if (imm == 0)
 		return 32;
@@ -68,7 +70,7 @@ unsigned translateShiftImm(unsigned imm)
 }
 
 /// Prints the shift value with an immediate value.
-static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
+static inline void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
 			     unsigned ShImm, bool UseMarkup)
 {
 	add_cs_detail(MI, ARM_OP_GROUP_RegImmShift, ShOpc, ShImm);
@@ -76,6 +78,7 @@ static void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
 		return;
 	SStream_concat0(O, ", ");
 
+	CS_ASSERT(!(ShOpc == ARM_AM_ror && !ShImm) && "Cannot have ror #0");
 	SStream_concat0(O, ARM_AM_getShiftOpcStr(ShOpc));
 
 	if (ShOpc != ARM_AM_rrx) {
@@ -107,7 +110,7 @@ static void printRegName(SStream *OS, unsigned RegNo)
 	SStream_concat0(OS, markup(">"));
 }
 
-static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
+static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	add_cs_detail(MI, ARM_OP_GROUP_Operand, OpNo);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));

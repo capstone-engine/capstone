@@ -3,8 +3,8 @@
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
 /* Automatically translated source file from LLVM. */
 
-/* LLVM-commit: 464bda7750a3ba9e23823fc707d7e7b6fc38438d */
-/* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
 
 /* Only small edits allowed. */
 /* For multiple similar edits, please create a Patch for the translator. */
@@ -27,19 +27,18 @@
 #ifndef CS_ARM_ADDRESSINGMODES_H
 #define CS_ARM_ADDRESSINGMODES_H
 
-#include <capstone/platform.h>
 #include "../../cs_priv.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <capstone/platform.h>
 
-#include "../../MathExtras.h"
 #include <assert.h>
+#include "../../MathExtras.h"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
 /// ARM_AM - ARM Addressing Mode Stuff
+// CS namespace begin: ARM_AM
+
 typedef enum ShiftOpc {
 	ARM_AM_no_shift = 0,
 	ARM_AM_asr,
@@ -117,24 +116,6 @@ static inline const char *ARM_AM_getAMSubModeStr(ARM_AM_SubMode Mode)
 	}
 }
 
-/// rotr32 - Rotate a 32-bit unsigned value right by a specified # bits.
-///
-static inline unsigned ARM_AM_rotr32(unsigned Val, unsigned Amt)
-{
-	CS_ASSERT(Amt <= 32);
-	if (Amt == 32) {
-		return Val;
-	}
-	return (Val >> Amt) | (Val << ((32 - Amt) & 31)); // NOLINT(clang-analyzer-core.BitwiseShift)
-}
-
-/// rotl32 - Rotate a 32-bit unsigned value left by a specified # bits.
-///
-static inline unsigned ARM_AM_rotl32(unsigned Val, unsigned Amt)
-{
-	return (Val << Amt) | (Val >> ((32 - Amt) & 31));
-}
-
 //===--------------------------------------------------------------------===//
 // Addressing Mode #1: shift_operand with registers
 //===--------------------------------------------------------------------===//
@@ -148,7 +129,22 @@ static inline unsigned ARM_AM_rotl32(unsigned Val, unsigned Amt)
 // This is stored three operands [rega, regb, opc].  The first is the base
 // reg, the second is the shift amount (or reg0 if not present or imm).  The
 // third operand encodes the shift opcode and the imm if a reg isn't present.
-//
+static inline unsigned ARM_AM_rotr32(unsigned Val, unsigned Amt)
+{
+	CS_ASSERT(Amt <= 32);
+	if (Amt == 32) {
+		return Val;
+	}
+	return (Val >> Amt) |
+	       (Val << ((32 - Amt) &
+			31)); // NOLINT(clang-analyzer-core.BitwiseShift)
+}
+
+static inline unsigned ARM_AM_rotl32(unsigned Val, unsigned Amt)
+{
+	return (Val << Amt) | (Val >> ((32 - Amt) & 31));
+}
+
 static inline unsigned ARM_AM_getSORegOpc(ARM_AM_ShiftOpc ShOp, unsigned Imm)
 {
 	return ShOp | (Imm << 3);
@@ -447,6 +443,8 @@ static inline bool ARM_AM_isT2SOImmTwoPartVal(unsigned Imm)
 
 static inline unsigned ARM_AM_getT2SOImmTwoPartFirst(unsigned Imm)
 {
+	CS_ASSERT(ARM_AM_isT2SOImmTwoPartVal(Imm) &&
+		  "Immedate cannot be encoded as two part immediate!");
 	// Try a shifter operand as one part
 	unsigned V = ARM_AM_rotr32(~255, ARM_AM_getT2SOImmValRotate(Imm)) & Imm;
 	// If the rest is encodable as an immediate, then return it.
@@ -458,7 +456,7 @@ static inline unsigned ARM_AM_getT2SOImmTwoPartFirst(unsigned Imm)
 		return Imm & 0xff00ff00U;
 
 	// The other splat is all that's left as an option.
-
+	CS_ASSERT(ARM_AM_getT2SOImmValSplatVal(Imm & 0x00ff00ffU) != -1);
 	return Imm & 0x00ff00ffU;
 }
 
@@ -467,7 +465,8 @@ static inline unsigned ARM_AM_getT2SOImmTwoPartSecond(unsigned Imm)
 	// Mask out the first hunk
 	Imm ^= ARM_AM_getT2SOImmTwoPartFirst(Imm);
 	// Return what's left
-
+	CS_ASSERT(ARM_AM_getT2SOImmVal(Imm) != -1 &&
+		  "Unable to encode second part of T2 two part SO immediate");
 	return Imm;
 }
 
@@ -492,6 +491,7 @@ static inline unsigned ARM_AM_getT2SOImmTwoPartSecond(unsigned Imm)
 static inline unsigned ARM_AM_getAM2Opc(ARM_AM_AddrOpc Opc, unsigned Imm12,
 					ARM_AM_ShiftOpc SO, unsigned IdxMode)
 {
+	CS_ASSERT(Imm12 < (1 << 12) && "Imm too large!");
 	bool isSub = Opc == ARM_AM_sub;
 	return Imm12 | ((int)isSub << 12) | (SO << 13) | (IdxMode << 16);
 }
@@ -715,6 +715,7 @@ static inline uint64_t ARM_AM_decodeVMOVModImm(unsigned ModImm,
 // Generic validation for single-byte immediate (0X00, 00X0, etc).
 static inline bool ARM_AM_isNEONBytesplat(unsigned Value, unsigned Size)
 {
+	CS_ASSERT(Size >= 1 && Size <= 4 && "Invalid size");
 	unsigned count = 0;
 	for (unsigned i = 0; i < Size; ++i) {
 		if (Value & 0xff)
@@ -736,6 +737,7 @@ static inline bool ARM_AM_isNEONi16splat(unsigned Value)
 // Encode NEON 16 bits Splat immediate for instructions like VBIC/VORR
 static inline unsigned ARM_AM_encodeNEONi16splat(unsigned Value)
 {
+	CS_ASSERT(ARM_AM_isNEONi16splat(Value) && "Invalid NEON splat value");
 	if (Value >= 0x100)
 		Value = (Value >> 8) | 0xa00;
 	else
@@ -753,6 +755,7 @@ static inline bool ARM_AM_isNEONi32splat(unsigned Value)
 /// Encode NEON 32 bits Splat immediate for instructions like VBIC/VORR.
 static inline unsigned ARM_AM_encodeNEONi32splat(unsigned Value)
 {
+	CS_ASSERT(ARM_AM_isNEONi32splat(Value) && "Invalid NEON splat value");
 	if (Value >= 0x100 && Value <= 0xff00)
 		Value = (Value >> 8) | 0x200;
 	else if (Value > 0xffff && Value <= 0xff0000)
