@@ -244,16 +244,9 @@ void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDescTable, unsign
 	const MCInstrDesc *InstDesc = NULL;
 	const MCOperandInfo *OpInfo = NULL;
 	unsigned short NumOps = 0;
-	if (MI->csh->arch == CS_ARCH_ARM) {
-		// Uses old (pre LLVM 18) indexing method.
-		InstDesc = &InstDescTable[MCInst_getOpcode(MI)];
-		OpInfo = InstDescTable[MCInst_getOpcode(MI)].OpInfo;
-		NumOps = InstDescTable[MCInst_getOpcode(MI)].NumOperands;
-	} else {
-		InstDesc = MCInstrDesc_get(MCInst_getOpcode(MI), InstDescTable, tbl_size);
-		OpInfo = MCInstrDesc_get(MCInst_getOpcode(MI), InstDescTable, tbl_size)->OpInfo;
-		NumOps = MCInstrDesc_get(MCInst_getOpcode(MI), InstDescTable, tbl_size)->NumOperands;
-	}
+	InstDesc = MCInstrDesc_get(MCInst_getOpcode(MI), InstDescTable, tbl_size);
+	OpInfo = InstDesc->OpInfo;
+	NumOps = InstDesc->NumOperands;
 
 	for (unsigned i = 0; i < NumOps; ++i) {
 		if (MCOperandInfo_isTiedToOp(&OpInfo[i])) {

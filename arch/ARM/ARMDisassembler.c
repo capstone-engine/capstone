@@ -738,8 +738,10 @@ static void tryAddingPcLoadReferenceComment(uint64_t Address, int Value,
 // that as a post-pass.
 static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 {
-	const MCOperandInfo *OpInfo = ARMDescs.Insts[MCInst_getOpcode(MI)].OpInfo;
-	unsigned short NumOps = ARMDescs.Insts[MCInst_getOpcode(MI)].NumOperands;
+	const MCInstrDesc *Desc =
+		MCInstrDesc_get(MCInst_getOpcode(MI), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
+	const MCOperandInfo *OpInfo = Desc->OpInfo;
+	unsigned short NumOps = Desc->NumOperands;
 	unsigned i;
 
 	for (i = 0; i < NumOps; ++i) {
@@ -762,8 +764,10 @@ static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 
 static bool isVectorPredicable(unsigned Opcode)
 {
-	const MCOperandInfo *OpInfo = ARMDescs.Insts[Opcode].OpInfo;
-	unsigned short NumOps = ARMDescs.Insts[Opcode].NumOperands;
+	const MCInstrDesc *Desc =
+		MCInstrDesc_get(Opcode, ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
+	const MCOperandInfo *OpInfo = Desc->OpInfo;
+	unsigned short NumOps = Desc->NumOperands;
 	for (unsigned i = 0; i < NumOps; ++i) {
 		if (ARM_isVpred(OpInfo[i].OperandType))
 			return true;
@@ -841,9 +845,11 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 		VCC = VPTBlock_getVPTPred(&(MI->csh->VPTBlock));
 		VPTBlock_advanceVPTState(&(MI->csh->VPTBlock));
 	}
+	const MCInstrDesc *Desc =
+		MCInstrDesc_get(MCInst_getOpcode(MI), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
 
-	const MCOperandInfo *OpInfo = ARMDescs.Insts[MCInst_getOpcode(MI)].OpInfo;
-	unsigned short NumOps = ARMDescs.Insts[MCInst_getOpcode(MI)].NumOperands;
+	const MCOperandInfo *OpInfo = Desc->OpInfo;
+	unsigned short NumOps = Desc->NumOperands;
 
 	unsigned i;
 	for (i = 0; i < NumOps; ++i) {
@@ -852,7 +858,7 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 			break;
 	}
 
-	if (MCInst_isPredicable(&ARMDescs.Insts[MCInst_getOpcode(MI)])) {
+	if (MCInst_isPredicable(Desc)) {
 		MCInst_insert0(MI, i, MCOperand_CreateImm1(MI, (CC)));
 
 		if (CC == ARMCC_AL)
@@ -884,7 +890,7 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 		MCInst_insert0(MI, VCCPos + 2, MCOperand_CreateReg1(MI, (0)));
 		if (OpInfo[VCCPos].OperandType == ARM_OP_VPRED_R) {
 			int TiedOp = MCOperandInfo_getOperandConstraint(
-				&ARMDescs.Insts[MCInst_getOpcode(MI)], VCCPos + 3,
+				Desc, VCCPos + 3,
 				MCOI_TIED_TO);
 			CS_ASSERT_RET_VAL(
 				TiedOp >= 0 &&
@@ -919,13 +925,14 @@ static void UpdateThumbVFPPredicate(DecodeStatus S, MCInst *MI)
 		VPTBlock_advanceVPTState(&(MI->csh->VPTBlock));
 	}
 
-	const MCOperandInfo *OpInfo = ARMDescs.Insts[MCInst_getOpcode(MI)].OpInfo;
-	unsigned short NumOps = ARMDescs.Insts[MCInst_getOpcode(MI)].NumOperands;
+	const MCInstrDesc *Desc =
+		MCInstrDesc_get(MCInst_getOpcode(MI), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
+	const MCOperandInfo *OpInfo = Desc->OpInfo;
+	unsigned short NumOps = Desc->NumOperands;
 	for (unsigned i = 0; i < NumOps; ++i) {
 		if (MCOperandInfo_isPredicate(&OpInfo[i])) {
 			if (CC != ARMCC_AL &&
-			    !MCInst_isPredicable(
-				    &ARMDescs.Insts[MCInst_getOpcode(MI)]))
+			    !MCInst_isPredicable(Desc))
 				Check(&S, MCDisassembler_SoftFail);
 			MCOperand_setImm(MCInst_getOperand(MI, i), CC);
 
@@ -1512,8 +1519,11 @@ static DecodeStatus DecodePredicateOperand(MCInst *Inst, unsigned Val,
 	// AL predicate is not allowed on Thumb1 branches.
 	if (MCInst_getOpcode(Inst) == ARM_tBcc && Val == 0xE)
 		return MCDisassembler_Fail;
-	if (Val != ARMCC_AL &&
-	    !MCInst_isPredicable(&ARMDescs.Insts[MCInst_getOpcode(Inst)]))
+
+	const MCInstrDesc *Desc =
+		MCInstrDesc_get(MCInst_getOpcode(Inst), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
+
+	if (Val != ARMCC_AL && !MCInst_isPredicable(Desc))
 		Check(&S, MCDisassembler_SoftFail);
 	MCOperand_CreateImm0(Inst, (Val));
 	if (Val == ARMCC_AL) {
