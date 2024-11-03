@@ -580,9 +580,7 @@ static DecodeStatus decodeL32ROperand(MCInst *Inst, uint64_t Imm,
 				      int64_t Address, const void *Decoder)
 {
 	CS_ASSERT(isUIntN(16, Imm) && "Invalid immediate");
-	MCOperand_CreateImm0(
-		Inst,
-		(SignExtend64(((Imm << 2) + 0x40000 + (Address & 0x3)), 17)));
+	MCOperand_CreateImm0(Inst, OneExtend64(Imm << 2, 18));
 	return MCDisassembler_Success;
 }
 

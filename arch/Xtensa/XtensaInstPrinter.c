@@ -148,16 +148,8 @@ static inline void printL32RTarget(MCInst *MI, int OpNum, SStream *O)
 	Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_L32RTarget, OpNum);
 	MCOperand *MC = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MC)) {
-		int64_t Value =
-			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		int64_t InstrOff = Value & 0x3;
-		Value -= InstrOff;
-		CS_ASSERT(
-			(Value >= -262144 && Value <= -4) &&
-			"Invalid argument, value must be in ranges [-262144,-4]");
-		Value += ((InstrOff + 0x3) & 0x4) - InstrOff;
 		SStream_concat0(O, ". ");
-		printInt64(O, Value);
+		printInt64(O, Xtensa_L32R_Value(MI, OpNum));
 	} else if (MCOperand_isExpr(MC))
 		CS_ASSERT_RET(0 && "unimplemented expr printing");
 	else

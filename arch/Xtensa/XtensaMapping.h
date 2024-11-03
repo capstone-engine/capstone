@@ -10,6 +10,8 @@ typedef enum {
 #include "XtensaGenCSOpGroup.inc"
 } xtensa_op_group;
 
+int64_t Xtensa_L32R_Value(MCInst *MI, int op_num);
+
 void Xtensa_init_mri(MCRegisterInfo *mri);
 void Xtensa_printer(MCInst *MI, SStream *OS, void *info);
 bool Xtensa_disasm(csh handle, const uint8_t *code, size_t code_len,

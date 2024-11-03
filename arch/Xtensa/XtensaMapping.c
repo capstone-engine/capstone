@@ -162,6 +162,20 @@ void Xtensa_reg_access(const cs_insn *insn, cs_regs regs_read,
 }
 #endif
 
+int64_t Xtensa_L32R_Value(MCInst *MI, int op_num)
+{
+	int64_t InstrOff = MCOperand_getImm(MCInst_getOperand(MI, (op_num)));
+	CS_ASSERT((InstrOff >= -262144 && InstrOff <= -4) &&
+		  "Invalid argument, value must be in ranges [-262144,-4]");
+	int64_t Value = 0;
+	if (MI->csh->LITBASE & 0x1) {
+		Value = (MI->csh->LITBASE & 0xfffff000) + InstrOff;
+	} else {
+		Value = (((int64_t)MI->address + 3) & ~0x3) + InstrOff;
+	}
+	return Value;
+}
+
 void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 {
 	if (!detail_is_set(MI)) {
@@ -203,20 +217,8 @@ void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 		xop->imm = (int32_t)val;
 	} break;
 	case Xtensa_OP_GROUP_L32RTarget: {
-		int64_t Value =
-			MCOperand_getImm(MCInst_getOperand(MI, (op_num)));
-		int32_t InstrOff = (uint32_t)OneExtend32(Value, 16) << 2;
-		CS_ASSERT(
-			(InstrOff >= -262144 && InstrOff <= -4) &&
-			"Invalid argument, value must be in ranges [-262144,-4]");
-		if (MI->csh->LITBASE & 0x1) {
-			Value = ((MI->csh->LITBASE & 0xfffff000) >> 12) +
-				InstrOff;
-		} else {
-			Value = (((int64_t)MI->address + 3) & ~0x3) + InstrOff;
-		}
 		xop->type = XTENSA_OP_L32R;
-		xop->imm = (int32_t)Value;
+		xop->imm = (int32_t)Xtensa_L32R_Value(MI, op_num);
 	} break;
 	case Xtensa_OP_GROUP_MemOperand: {
 		unsigned reg =
