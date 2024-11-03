@@ -164,6 +164,10 @@ void Xtensa_reg_access(const cs_insn *insn, cs_regs regs_read,
 
 void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 {
+	if (!detail_is_set(MI)) {
+		return;
+	}
+
 	cs_xtensa_op *xop = Xtensa_get_detail_op(MI, 0);
 	switch (op_group) {
 	case Xtensa_OP_GROUP_Operand: {

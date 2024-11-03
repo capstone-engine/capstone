@@ -65,7 +65,6 @@ static void printOperand(MCInst *MI, const int op_num, SStream *O)
 	else
 		CS_ASSERT("Invalid operand");
 }
-
 static inline void printMemOperand(MCInst *MI, int OpNum, SStream *OS)
 {
 	Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_MemOperand, OpNum);
@@ -681,6 +680,31 @@ static inline void printOffset_64_16_AsmOperand(MCInst *MI, int OpNum,
 		printOperand(MI, OpNum, O);
 }
 
+#define IMPL_printImmOperand(N, L, H, S) \
+	static void printImmOperand_##N(MCInst *MI, int OpNum, SStream *O) \
+	{ \
+		Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_ImmOperand_##N, \
+				       OpNum); \
+		MCOperand *MC = MCInst_getOperand(MI, (OpNum)); \
+		if (MCOperand_isImm(MC)) { \
+			int64_t Value = MCOperand_getImm(MC); \
+			CS_ASSERT((Value >= L && Value <= H && \
+				   ((Value % S) == 0)) && \
+				  "Invalid argument"); \
+			printInt64(O, Value); \
+		} else { \
+			printOperand(MI, OpNum, O); \
+		} \
+	}
+
+IMPL_printImmOperand(minus64_56_8, -64, 56, 8);
+IMPL_printImmOperand(minus32_28_4, -32, 28, 4);
+IMPL_printImmOperand(minus16_47_1, -16, 47, 1);
+IMPL_printImmOperand(minus16_14_2, -16, 14, 2);
+IMPL_printImmOperand(0_56_8, 0, 56, 8);
+IMPL_printImmOperand(0_3_1, 0, 3, 1);
+IMPL_printImmOperand(0_63_1, 0, 63, 1);
+
 #include "XtensaGenAsmWriter.inc"
 
 static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
@@ -713,4 +737,9 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
 void Xtensa_LLVM_printInstruction(MCInst *MI, uint64_t Address, SStream *O)
 {
 	printInst(MI, Address, NULL, O);
+}
+
+const char *Xtensa_LLVM_getRegisterName(unsigned RegNo)
+{
+	return getRegisterName(RegNo);
 }

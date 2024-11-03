@@ -913,12 +913,8 @@ static DecodeStatus readInstruction16(MCInst *MI, const uint8_t *Bytes,
 		return MCDisassembler_Fail;
 	}
 
-	if (!IsLittleEndian) {
-		CS_ASSERT(0 && "Big-endian mode currently is not supported!");
-	} else {
-		*Insn = readBytes16(MI, Bytes);
-		*Size = 2;
-	}
+	*Insn = readBytes16(MI, Bytes);
+	*Size = 2;
 
 	return MCDisassembler_Success;
 }
@@ -935,14 +931,10 @@ static DecodeStatus readInstruction24(MCInst *MI, const uint8_t *Bytes,
 		return MCDisassembler_Fail;
 	}
 
-	if (!IsLittleEndian) {
-		CS_ASSERT("Big-endian mode currently is not supported!");
-	} else {
-		if (CheckTIE && (Bytes[0] & 0x8) != 0)
-			return MCDisassembler_Fail;
-		*Insn = readBytes24(MI, Bytes);
-		*Size = 3;
-	}
+	if (CheckTIE && (Bytes[0] & 0x8) != 0)
+		return MCDisassembler_Fail;
+	*Insn = readBytes24(MI, Bytes);
+	*Size = 3;
 
 	return MCDisassembler_Success;
 }
@@ -959,14 +951,10 @@ static DecodeStatus readInstruction32(MCInst *MI, const uint8_t *Bytes,
 		return MCDisassembler_Fail;
 	}
 
-	if (!IsLittleEndian) {
-		CS_ASSERT("Big-endian mode currently is not supported!");
-	} else {
-		if ((Bytes[0] & 0x8) == 0)
-			return MCDisassembler_Fail;
-		*Insn = readBytes32(MI, Bytes);
-		*Size = 4;
-	}
+	if ((Bytes[0] & 0x8) == 0)
+		return MCDisassembler_Fail;
+	*Insn = readBytes32(MI, Bytes);
+	*Size = 4;
 
 	return MCDisassembler_Success;
 }
@@ -983,13 +971,9 @@ static DecodeStatus readInstructionN(const uint8_t *Bytes, size_t BytesLen,
 		return MCDisassembler_Fail;
 	}
 
-	if (!IsLittleEndian) {
-		CS_ASSERT("Big-endian mode currently is not supported!");
-	} else {
-		*Insn = 0;
-		for (unsigned i = 0; i < InstSize; i++)
-			*Insn |= (Bytes[i] << 8 * i);
-	}
+	*Insn = 0;
+	for (unsigned i = 0; i < InstSize; i++)
+		*Insn |= (Bytes[i] << 8 * i);
 
 	*Size = InstSize;
 	return MCDisassembler_Success;
@@ -1020,13 +1004,14 @@ static bool hasESP32S3Ops()
 {
 	return true;
 }
-
 static bool hasHIFI3()
 {
 	return true;
 }
-DecodeStatus getInstruction(MCInst *MI, uint64_t *Size, const uint8_t *Bytes,
-			    size_t BytesLen, uint64_t Address, SStream *CS)
+
+static DecodeStatus getInstruction(MCInst *MI, uint64_t *Size,
+				   const uint8_t *Bytes, size_t BytesLen,
+				   uint64_t Address)
 {
 	uint64_t Insn;
 	DecodeStatus Result;
@@ -1103,4 +1088,16 @@ DecodeStatus getInstruction(MCInst *MI, uint64_t *Size, const uint8_t *Bytes,
 			return Result;
 	}
 	return Result;
+}
+
+DecodeStatus Xtensa_LLVM_getInstruction(MCInst *MI, uint16_t *size16,
+					const uint8_t *Bytes,
+					unsigned BytesSize, uint64_t Address)
+{
+	uint64_t size64;
+	DecodeStatus status =
+		getInstruction(MI, &size64, Bytes, BytesSize, Address);
+	CS_ASSERT_RET_VAL(size64 < 0xffff, MCDisassembler_Fail);
+	*size16 = size64;
+	return status;
 }

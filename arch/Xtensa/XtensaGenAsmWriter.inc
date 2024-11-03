@@ -7901,8 +7901,8 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 11:
     // AE_MOVI
-    printImmOperand_-16_47_1(MI, 1, O);
-    return;
+	  printImmOperand_minus16_47_1(MI, 1, O);
+	  return;
     break;
   case 12:
     // AE_MULA16X4, AE_MULAF16X4SS, AE_MULAFD24X2_FIR_H, AE_MULAFD24X2_FIR_L,...
@@ -8119,13 +8119,13 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 14:
     // AE_L16M_I, AE_L16_I, AE_S16M_L_I, AE_S16_0_I
-    printImmOperand_-16_14_2(MI, 2, O);
-    return;
+	  printImmOperand_minus16_14_2(MI, 2, O);
+	  return;
     break;
   case 15:
     // AE_L16M_IU, AE_L16_IP, AE_S16M_L_IU, AE_S16_0_IP
-    printImmOperand_-16_14_2(MI, 3, O);
-    return;
+	  printImmOperand_minus16_14_2(MI, 3, O);
+	  return;
     break;
   case 16:
     // AE_L16M_XC, AE_L16M_XU, AE_L16X2M_XC, AE_L16X2M_XU, AE_L16X4_XC, AE_L1...
@@ -8133,18 +8133,18 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 17:
     // AE_L16X2M_I, AE_L32F24_I, AE_L32M_I, AE_L32_I, AE_S16X2M_I, AE_S24RA64...
-    printImmOperand_-32_28_4(MI, 2, O);
-    return;
+	  printImmOperand_minus32_28_4(MI, 2, O);
+	  return;
     break;
   case 18:
     // AE_L16X2M_IU, AE_L32F24_IP, AE_L32M_IU, AE_L32_IP, AE_S16X2M_IU, AE_S2...
-    printImmOperand_-32_28_4(MI, 3, O);
-    return;
+	  printImmOperand_minus32_28_4(MI, 3, O);
+	  return;
     break;
   case 19:
     // AE_L16X4_I, AE_L32X2F24_I, AE_L32X2_I, AE_L64_I, AE_LALIGN64_I, AE_S16...
-    printImmOperand_-64_56_8(MI, 2, O);
-    return;
+	  printImmOperand_minus64_56_8(MI, 2, O);
+	  return;
     break;
   case 20:
     // AE_L16X4_IP, AE_L32X2F24_IP, AE_L32X2_IP, AE_S16X4_IP, AE_S32X2F24_IP,...
@@ -8153,8 +8153,8 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     break;
   case 21:
     // AE_L64_IP, AE_S64_IP
-    printImmOperand_-64_56_8(MI, 3, O);
-    return;
+	  printImmOperand_minus64_56_8(MI, 3, O);
+	  return;
     break;
   case 22:
     // AE_LA16X4_IC, AE_LA16X4_IP, AE_LA16X4_RIC, AE_LA16X4_RIP, AE_LA24X2_IC...
