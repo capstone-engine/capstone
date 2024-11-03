@@ -1,0 +1,15 @@
+test_cases:
+  - input:
+      bytes: [ 0x60, 0x51, 0x60 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "abs a5, a6"
+          details:
+            xtensa:
+              operands:
+                - type: XTENSA_OP_REG
+                  reg: a5
+                - type: XTENSA_OP_REG
+                  reg: a6

@@ -127,6 +127,9 @@ TestDetail *test_detail_clone(TestDetail *detail)
 	if (detail->m68k) {
 		clone->m68k = test_detail_m68k_clone(detail->m68k);
 	}
+	if (detail->xtensa) {
+		clone->xtensa = test_detail_xtensa_clone(detail->xtensa);
+	}
 
 	return clone;
 }
@@ -403,6 +406,10 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	if (expected->m68k) {
 		return test_expected_m68k(handle, &actual->m68k,
 					  expected->m68k);
+	}
+	if (expected->xtensa) {
+		return test_expected_xtensa(handle, &actual->xtensa,
+					    expected->xtensa);
 	}
 	return true;
 }

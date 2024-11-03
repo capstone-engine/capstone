@@ -55,6 +55,7 @@ static void printRegName(SStream *O, MCRegister Reg)
 
 static void printOperand(MCInst *MI, const int op_num, SStream *O)
 {
+	Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_Operand, op_num);
 	MCOperand *MC = MCInst_getOperand(MI, (op_num));
 	if (MCOperand_isReg(MC))
 		SStream_concat0(O, getRegisterName(MCOperand_getReg(MC)));
