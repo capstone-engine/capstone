@@ -90,8 +90,6 @@ class AddCSDetail(Patch):
         op_group_enum = (
             self.arch.encode("utf8") + b"_OP_GROUP_" + fcn_id[5:]
         )  # Remove "print" from function id
-        if self.arch == "Xtensa":
-            op_group_enum = op_group_enum.upper()
 
         is_template = fcn_def.prev_sibling.type == "template_parameter_list"
         if b"OpNum" in params:

@@ -10,8 +10,8 @@ from autosync.cpptranslator.TemplateCollector import TemplateCollector
 
 class IsUInt(Patch):
     """
-    Patch   isUInt<N>(...)
-    to      isUInt(..., N)
+    Patch   isUInt|isInt<N>(...)
+    to      isUInt|isInt(..., N)
     """
 
     def __init__(self, priority: int):
@@ -21,7 +21,7 @@ class IsUInt(Patch):
         return (
             "(call_expression"
             "    (template_function"
-            '         ((identifier) @id (#eq? @id "isUInt"))'
+            '         ((identifier) @id (#match? @id "isUInt|isInt"))'
             "         ((template_argument_list) @templ_args)"
             "    )"
             "    ((argument_list) @arg_list)"

@@ -162,12 +162,11 @@ void Xtensa_reg_access(const cs_insn *insn, cs_regs regs_read,
 }
 #endif
 
-void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args)
+void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 {
-	int op_num = va_arg(args, int);
 	cs_xtensa_op *xop = Xtensa_get_detail_op(MI, 0);
 	switch (op_group) {
-	case XTENSA_OP_GROUP_OPERAND: {
+	case Xtensa_OP_GROUP_Operand: {
 		const MCOperand *MC = MCInst_getOperand(MI, op_num);
 		if (MCOperand_isReg(MC)) {
 			xop->type = XTENSA_OP_REG;
@@ -177,28 +176,29 @@ void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args)
 			xop->imm = MC->ImmVal;
 		}
 	} break;
-	case XTENSA_OP_GROUP_IMM8_ASMOPERAND:
-	case XTENSA_OP_GROUP_IMM8_SH8_ASMOPERAND:
-	case XTENSA_OP_GROUP_UIMM5_ASMOPERAND:
-	case XTENSA_OP_GROUP_B4CONST_ASMOPERAND:
-	case XTENSA_OP_GROUP_B4CONSTU_ASMOPERAND:
-	case XTENSA_OP_GROUP_IMM1_16_ASMOPERAND:
-	case XTENSA_OP_GROUP_IMM12M_ASMOPERAND:
-	case XTENSA_OP_GROUP_SHIMM1_31_ASMOPERAND:
-	case XTENSA_OP_GROUP_UIMM4_ASMOPERAND: {
+	case Xtensa_OP_GROUP_Imm8_AsmOperand:
+	case Xtensa_OP_GROUP_Imm8_sh8_AsmOperand:
+	case Xtensa_OP_GROUP_Uimm5_AsmOperand:
+	case Xtensa_OP_GROUP_B4const_AsmOperand:
+	case Xtensa_OP_GROUP_B4constu_AsmOperand:
+	case Xtensa_OP_GROUP_Imm1_16_AsmOperand:
+	case Xtensa_OP_GROUP_Imm12m_AsmOperand:
+	case Xtensa_OP_GROUP_Shimm0_31_AsmOperand:
+	case Xtensa_OP_GROUP_Shimm1_31_AsmOperand:
+	case Xtensa_OP_GROUP_Uimm4_AsmOperand: {
 		int64_t val = MCOperand_getImm(MCInst_getOperand(MI, op_num));
 		xop->type = XTENSA_OP_IMM;
 		xop->imm = (int32_t)val;
 	} break;
-	case XTENSA_OP_GROUP_BRANCHTARGET:
-	case XTENSA_OP_GROUP_JUMPTARGET:
-	case XTENSA_OP_GROUP_CALLOPERAND: {
+	case Xtensa_OP_GROUP_BranchTarget:
+	case Xtensa_OP_GROUP_JumpTarget:
+	case Xtensa_OP_GROUP_CallOperand: {
 		int64_t val =
 			MCOperand_getImm(MCInst_getOperand(MI, op_num)) + 4;
 		xop->type = XTENSA_OP_IMM;
 		xop->imm = (int32_t)val;
 	} break;
-	case XTENSA_OP_GROUP_L32RTARGET: {
+	case Xtensa_OP_GROUP_L32RTarget: {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (op_num)));
 		int32_t InstrOff = (uint32_t)OneExtend32(Value, 16) << 2;
@@ -206,14 +206,15 @@ void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args)
 			(InstrOff >= -262144 && InstrOff <= -4) &&
 			"Invalid argument, value must be in ranges [-262144,-4]");
 		if (MI->csh->LITBASE & 0x1) {
-			Value = ((MI->csh->LITBASE & 0xfffff000) >> 12) + InstrOff;
+			Value = ((MI->csh->LITBASE & 0xfffff000) >> 12) +
+				InstrOff;
 		} else {
 			Value = (((int64_t)MI->address + 3) & ~0x3) + InstrOff;
 		}
 		xop->type = XTENSA_OP_L32R;
 		xop->imm = (int32_t)Value;
 	} break;
-	case XTENSA_OP_GROUP_MEMOPERAND: {
+	case Xtensa_OP_GROUP_MemOperand: {
 		unsigned reg =
 			MCOperand_getReg(MCInst_getOperand(MI, (op_num)));
 		int64_t imm8 =
@@ -222,6 +223,9 @@ void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args)
 		xop->mem.base = reg;
 		xop->mem.disp = (uint8_t)imm8;
 	} break;
+	default:
+		CS_ASSERT(0 && "Invalid operand group");
+		break;
 	}
 
 	xop->access = map_get_op_access(MI, op_num);

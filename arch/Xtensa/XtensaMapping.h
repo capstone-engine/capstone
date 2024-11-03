@@ -24,16 +24,6 @@ void Xtensa_reg_access(const cs_insn *insn, cs_regs regs_read,
 		       uint8_t *regs_write_count);
 #endif
 
-void Xtensa_add_cs_detail(MCInst *MI, xtensa_op_group op_group, va_list args);
-
-static inline void add_cs_detail(MCInst *MI, xtensa_op_group op_group, ...)
-{
-	if (!detail_is_set(MI))
-		return;
-	va_list args;
-	va_start(args, op_group);
-	Xtensa_add_cs_detail(MI, op_group, args);
-	va_end(args);
-}
+void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num);
 
 #endif
