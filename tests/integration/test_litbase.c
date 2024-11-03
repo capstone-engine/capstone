@@ -74,8 +74,8 @@ static void test()
 			  0x100000, 2, &insn);
 
 	// 2. Now print out the instruction in newly customized setup.
-	check_insn(insn, "l32r", "a1, . 0xbffff");
-	check_insn(insn + 1, "l32r", "a1, . 0xffffb");
+	check_insn(insn, "l32r", "a1, . 0xfffbf000");
+	check_insn(insn + 1, "l32r", "a1, . 0xffffeffc");
 	print_insn(insn, count);
 
 	// Done
