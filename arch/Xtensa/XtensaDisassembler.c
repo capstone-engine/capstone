@@ -68,7 +68,7 @@ static DecodeStatus DecodeAE_DRRegisterClass(MCInst *Inst, uint64_t RegNo,
 					     uint64_t Address,
 					     const void *Decoder)
 {
-	if (RegNo >= sizeof(AE_DRDecoderTable))
+	if (RegNo >= ARR_SIZE(AE_DRDecoderTable))
 		return MCDisassembler_Fail;
 
 	unsigned Reg = AE_DRDecoderTable[RegNo];
@@ -80,7 +80,7 @@ static DecodeStatus DecodeAE_VALIGNRegisterClass(MCInst *Inst, uint64_t RegNo,
 						 uint64_t Address,
 						 const void *Decoder)
 {
-	if (RegNo >= sizeof(AE_VALIGNDecoderTable))
+	if (RegNo >= ARR_SIZE(AE_VALIGNDecoderTable))
 		return MCDisassembler_Fail;
 
 	unsigned Reg = AE_VALIGNDecoderTable[RegNo];
@@ -106,7 +106,7 @@ static const unsigned QRDecoderTable[] = { Xtensa_Q0, Xtensa_Q1, Xtensa_Q2,
 static DecodeStatus DecodeQRRegisterClass(MCInst *Inst, uint64_t RegNo,
 					  uint64_t Address, const void *Decoder)
 {
-	if (RegNo >= sizeof(QRDecoderTable))
+	if (RegNo >= ARR_SIZE(QRDecoderTable))
 		return MCDisassembler_Fail;
 
 	unsigned Reg = QRDecoderTable[RegNo];
@@ -124,7 +124,7 @@ static DecodeStatus DecodeFPRRegisterClass(MCInst *Inst, uint64_t RegNo,
 					   uint64_t Address,
 					   const void *Decoder)
 {
-	if (RegNo >= sizeof(FPRDecoderTable))
+	if (RegNo >= ARR_SIZE(FPRDecoderTable))
 		return MCDisassembler_Fail;
 
 	unsigned Reg = FPRDecoderTable[RegNo];
@@ -183,7 +183,7 @@ static DecodeStatus DecodeBR4RegisterClass(MCInst *Inst, uint64_t RegNo,
 static DecodeStatus DecodeBRRegisterClass(MCInst *Inst, uint64_t RegNo,
 					  uint64_t Address, const void *Decoder)
 {
-	if (RegNo >= sizeof(BRDecoderTable))
+	if (RegNo >= ARR_SIZE(BRDecoderTable))
 		return MCDisassembler_Fail;
 
 	unsigned Reg = BRDecoderTable[RegNo];
@@ -197,7 +197,7 @@ static const unsigned MRDecoderTable[] = { Xtensa_M0, Xtensa_M1, Xtensa_M2,
 static DecodeStatus DecodeMRRegisterClass(MCInst *Inst, uint64_t RegNo,
 					  uint64_t Address, const void *Decoder)
 {
-	if (RegNo >= sizeof(MRDecoderTable))
+	if (RegNo >= ARR_SIZE(MRDecoderTable))
 		return MCDisassembler_Fail;
 
 	unsigned Reg = MRDecoderTable[RegNo];
@@ -473,7 +473,7 @@ static DecodeStatus DecodeSRRegisterClass(MCInst *Inst, uint64_t RegNo,
 	if (RegNo > 255)
 		return MCDisassembler_Fail;
 
-	for (unsigned i = 0; i < sizeof(SRDecoderTable); i += 2) {
+	for (unsigned i = 0; i < ARR_SIZE(SRDecoderTable); i += 2) {
 		if (SRDecoderTable[i + 1] == RegNo) {
 			unsigned Reg = SRDecoderTable[i];
 
@@ -500,7 +500,7 @@ static DecodeStatus DecodeURRegisterClass(MCInst *Inst, uint64_t RegNo,
 	if (RegNo > 255)
 		return MCDisassembler_Fail;
 
-	for (unsigned i = 0; i < sizeof(URDecoderTable); i += 2) {
+	for (unsigned i = 0; i < ARR_SIZE(URDecoderTable); i += 2) {
 		if (URDecoderTable[i + 1] == RegNo) {
 			unsigned Reg = URDecoderTable[i];
 
