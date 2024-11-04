@@ -419,7 +419,7 @@ public:
     def test_llvmdebug(self):
         patch = LLVM_DEBUG(0)
         syntax = b'LLVM_DEBUG(dbgs() << "Error msg")'
-        self.check_patching_result(patch, syntax, b'')
+        self.check_patching_result(patch, syntax, b"")
 
     def test_methodtofunctions(self):
         patch = MethodToFunction(0)

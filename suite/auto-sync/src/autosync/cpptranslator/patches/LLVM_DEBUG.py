@@ -18,8 +18,7 @@ class LLVM_DEBUG(Patch):
         super().__init__(priority)
 
     def get_search_pattern(self) -> str:
-        return (
-            '''
+        return """
             (call_expression (
                (identifier) @fcn_name (#eq? @fcn_name "LLVM_DEBUG")
                (argument_list (
@@ -28,8 +27,7 @@ class LLVM_DEBUG(Patch):
                        (string_literal) @err_msg
                    ))
                ))
-            )) @llvm_debug'''
-        )
+            )) @llvm_debug"""
 
     def get_main_capture_name(self) -> str:
         return "llvm_debug"
