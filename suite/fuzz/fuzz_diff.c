@@ -175,14 +175,20 @@ struct platform platforms[] = {
     {
         //item 26
         CS_ARCH_XTENSA,
-        (cs_mode)CS_MODE_XTENSA,
-        "Xtensa"
+        (cs_mode)CS_MODE_XTENSA_ESP32,
+        "Xtensa ESP32"
     },
     {
         //item 27
         CS_ARCH_XTENSA,
-        (cs_mode)CS_MODE_XTENSA + CS_MODE_BIG_ENDIAN,
-        "Xtensa (Big-Endian)"
+        (cs_mode)CS_MODE_XTENSA_ESP32S2,
+        "Xtensa ESP32S2"
+    },
+    {
+        //item 28
+        CS_ARCH_XTENSA,
+        (cs_mode)CS_MODE_XTENSA_ESP8266,
+        "Xtensa ESP8266"
     },
 };
 

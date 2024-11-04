@@ -249,7 +249,7 @@ bool CheckRegister(MCInst *Inst, unsigned RegNo)
 	bool IsESP32S2 = false;
 	bool Res = true;
 
-	//	 Assume that CPU is esp32 by default
+	// Assume that CPU is esp32 by default
 	if ((Inst->csh->mode & CS_MODE_XTENSA_ESP32)) {
 		NumIntLevels = 6;
 		NumTimers = 3;

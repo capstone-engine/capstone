@@ -45,7 +45,7 @@ static void test()
 	csh handle;
 	cs_err err;
 
-	err = cs_open(CS_ARCH_XTENSA, CS_MODE_XTENSA, &handle);
+	err = cs_open(CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32, &handle);
 	if (err) {
 		if (cs_support(CS_ARCH_XTENSA)) {
 			printf("Failed on cs_open() with error returned: %u\n",
