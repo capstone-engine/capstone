@@ -59,6 +59,12 @@ static void set_instr_map_data(MCInst *MI)
 	map_implicit_reads(MI, mapping_insns);
 	map_implicit_writes(MI, mapping_insns);
 	map_groups(MI, mapping_insns);
+
+	const xtensa_suppl_info *suppl_info =
+		map_get_suppl_info(MI, mapping_insns);
+	if (suppl_info) {
+		Xtensa_get_detail(MI)->format = suppl_info->form;
+	}
 #endif
 }
 

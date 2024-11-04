@@ -1681,6 +1681,10 @@ typedef enum {
 	// generated content <XtensaGenCSInsnFormatsEnum.inc> end
 } xtensa_insn_form;
 
+typedef struct {
+	xtensa_insn_form form;
+} xtensa_suppl_info;
+
 typedef enum cs_xtensa_op_type {
 	XTENSA_OP_INVALID = CS_OP_INVALID, ///< = (Uninitialized).
 	XTENSA_OP_REG = CS_OP_REG,	   ///< = (Register operand).
@@ -1712,6 +1716,7 @@ typedef struct cs_xtensa_operand {
 typedef struct cs_xtensa {
 	uint8_t op_count;
 	cs_xtensa_op operands[MAX_XTENSA_OPS];
+	xtensa_insn_form format;
 } cs_xtensa;
 
 #ifdef __cplusplus

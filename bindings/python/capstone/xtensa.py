@@ -45,6 +45,7 @@ class CsXtensa(ctypes.Structure):
     _fields_ = (
         ("op_count", ctypes.c_uint8),
         ("operands", XtensaOp * 8),
+        ("format", ctypes.c_uint32),
     )
 
 
