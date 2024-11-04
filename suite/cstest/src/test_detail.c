@@ -228,7 +228,9 @@ void test_detail_free(TestDetail *detail)
 	if (detail->m68k) {
 		test_detail_m68k_free(detail->m68k);
 	}
-
+	if (detail->xtensa) {
+		test_detail_xtensa_free(detail->xtensa);
+	}
 	cs_mem_free(detail);
 }
 
