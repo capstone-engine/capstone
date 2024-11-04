@@ -27,7 +27,7 @@ jobs:
     - name: Build
       run: |
         mkdir build && cd build
-        CC=clang cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_SHARED_LIBS=1 ..
+        CC=clang cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCAPSTONE_BUILD_SHARED_LIBS=1 ..
         CC=clang sudo cmake --build . --config Release
         cd ..
 

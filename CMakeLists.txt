@@ -54,9 +54,9 @@ endif()
 
 # to configure the options specify them in the command line or change them in the cmake UI.
 # Don't edit the makefile!
-option(BUILD_SHARED_LIBS "Build shared library" OFF)
-option(BUILD_STATIC_LIBS "Build static library" ON)
-option(BUILD_STATIC_RUNTIME "Embed static MSVC runtime (Windows only). Always set if BUILD_SHARED_LIBS=ON" ${BUILD_SHARED_LIBS})
+option(CAPSTONE_BUILD_SHARED_LIBS "Build shared library" OFF)
+option(CAPSTONE_BUILD_STATIC_LIBS "Build static library" ON)
+option(CAPSTONE_BUILD_STATIC_MSVC_RUNTIME "Embed static MSVC runtime (Windows only). Always set if CAPSTONE_BUILD_SHARED_LIBS=ON" ${CAPSTONE_BUILD_SHARED_LIBS})
 option(CAPSTONE_BUILD_MACOS_THIN "Disable universal2 builds on macOS" OFF)
 option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_LEGACY_TESTS "Build legacy tests" ${PROJECT_IS_TOP_LEVEL})
@@ -70,8 +70,8 @@ option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 option(ENABLE_ASAN "Enable address sanitizer" OFF)
 option(ENABLE_COVERAGE "Enable test coverage" OFF)
 
-if (NOT BUILD_SHARED_LIBS AND NOT BUILD_STATIC_LIBS)
-    FATAL_ERROR("BUILD_SHARED_LIBS and BUILD_STATIC_LIBS are both unset. Nothing to build.")
+if (NOT CAPSTONE_BUILD_SHARED_LIBS AND NOT CAPSTONE_BUILD_STATIC_LIBS)
+    FATAL_ERROR("CAPSTONE_BUILD_SHARED_LIBS and CAPSTONE_BUILD_STATIC_LIBS are both unset. Nothing to build.")
 endif()
 
 if (ENABLE_ASAN)
@@ -159,7 +159,7 @@ if(CAPSTONE_DEBUG OR CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 # Force static runtime libraries
-if(BUILD_STATIC_RUNTIME)
+if(CAPSTONE_BUILD_STATIC_MSVC_RUNTIME)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
@@ -772,7 +772,7 @@ target_include_directories(capstone PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
 
-if(BUILD_STATIC_LIBS)
+if(CAPSTONE_BUILD_STATIC_LIBS)
     add_library(capstone_static STATIC $<TARGET_OBJECTS:capstone>)
     # Use normal capstone name. Otherwise we get libcapstone_static.a
     set_target_properties(capstone_static PROPERTIES OUTPUT_NAME "capstone")
@@ -781,7 +781,7 @@ if(BUILD_STATIC_LIBS)
     )
 endif()
 
-if(BUILD_SHARED_LIBS)
+if(CAPSTONE_BUILD_SHARED_LIBS)
     set_property(TARGET capstone PROPERTY POSITION_INDEPENDENT_CODE 1)
     add_library(capstone_shared SHARED $<TARGET_OBJECTS:capstone>)
     # Use normal capstone name. Otherwise we get libcapstone_shared.so
@@ -898,11 +898,11 @@ if(CAPSTONE_INSTALL)
         DESTINATION ${CAPSTONE_CMAKE_CONFIG_INSTALL_DIR}
     )
 
-    if(BUILD_SHARED_LIBS)
+    if(CAPSTONE_BUILD_SHARED_LIBS)
         set(LIB_INSTALL_TARGETS capstone_shared)
     endif()
 
-    if (BUILD_STATIC_LIBS)
+    if (CAPSTONE_BUILD_STATIC_LIBS)
         set(LIB_INSTALL_TARGETS ${LIB_INSTALL_TARGETS} capstone_static)
     endif()
 

@@ -67,7 +67,9 @@ without having to compile Capstone multiple times.
 
 Capstone allows some more customization via the following options:
 
-- `BUILD_SHARED_LIBS`: Build shared libraries.
+- `CAPSTONE_BUILD_SHARED_LIBS`: Build shared libraries.
+- `CAPSTONE_BUILD_STATIC_LIBS`: Build static libraries (`ON` by default).
+- `CAPSTONE_BUILD_STATIC_MSVC_RUNTIME`: (Windows only) - Build with static MSVC runtime. Always set if `CAPSTONE_BUILD_SHARED_LIBS=ON`.
 - `CAPSTONE_BUILD_CSTOOL`: Enable/disable build of `cstool`. Default is enabled if build runs from the repository root.
 - `CAPSTONE_USE_SYS_DYN_MEM`: change this to OFF to use your own dynamic memory management.
 - `CAPSTONE_BUILD_MACOS_THIN`: MacOS only. Disables universal2 build. So you only get the binary for you processor architecture.

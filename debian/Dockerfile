@@ -17,7 +17,7 @@ WORKDIR /capstone/
 
 # Using cmake, see BUILDING.md file
 # For debug build change "Release" to "Debug"
-RUN cmake -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=1
+RUN cmake -B build -DCMAKE_BUILD_TYPE=Release -DCAPSTONE_BUILD_SHARED_LIBS=1
 RUN cmake --build build
 
 # List files before cmake install
