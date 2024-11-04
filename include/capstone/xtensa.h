@@ -1657,6 +1657,30 @@ typedef enum xtensa_feature {
 	XTENSA_GRP_ENDING, ///< mark the end of the list of features
 } xtensa_feature;
 
+/// Xtensa instruction formats. To get details about them please
+/// refer to `XtensaInstrFormats.td` in LLVM.
+typedef enum {
+	XTENSA_INSN_FORM_INVALID = 0,
+	// generated content <XtensaGenCSInsnFormatsEnum.inc> begin
+	// clang-format off
+
+	XTENSA_INSN_FORM_RRR,
+	XTENSA_INSN_FORM_RRI8,
+	XTENSA_INSN_FORM_RRRN,
+	XTENSA_INSN_FORM_AEINST24,
+	XTENSA_INSN_FORM_BRI12,
+	XTENSA_INSN_FORM_CALL,
+	XTENSA_INSN_FORM_CALLX,
+	XTENSA_INSN_FORM_EE_INST24,
+	XTENSA_INSN_FORM_RRI4,
+	XTENSA_INSN_FORM_RI16,
+	XTENSA_INSN_FORM_RI7,
+	XTENSA_INSN_FORM_RSR,
+
+	// clang-format on
+	// generated content <XtensaGenCSInsnFormatsEnum.inc> end
+} xtensa_insn_form;
+
 typedef enum cs_xtensa_op_type {
 	XTENSA_OP_INVALID = CS_OP_INVALID, ///< = (Uninitialized).
 	XTENSA_OP_REG = CS_OP_REG,	   ///< = (Register operand).
