@@ -332,34 +332,6 @@ static inline void printImm64n_4n_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 		printOperand(MI, OpNum, O);
 }
 
-//static inline void printOffset8m8_AsmOperand(MCInst *MI, int OpNum, SStream *O)
-//{
-//	Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_Offset8m8_AsmOperand, OpNum);
-//	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
-//		int64_t Value =
-//			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-//		CS_ASSERT((Value >= 0 && Value <= 255) &&
-//			  "Invalid argument, value must be in range [0,255]");
-//		printInt64(O, Value);
-//	} else
-//		printOperand(MI, OpNum, O);
-//}
-
-//static inline void printOffset8m16_AsmOperand(MCInst *MI, int OpNum, SStream *O)
-//{
-//	Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_Offset8m16_AsmOperand,
-//			       OpNum);
-//	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
-//		int64_t Value =
-//			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-//		CS_ASSERT(
-//			(Value >= 0 && Value <= 510 && ((Value & 0x1) == 0)) &&
-//			"Invalid argument, value must be multiples of two in range [0,510]");
-//		printInt64(O, Value);
-//	} else
-//		printOperand(MI, OpNum, O);
-//}
-
 static inline void printOffset8m32_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_Offset8m32_AsmOperand,
@@ -374,21 +346,6 @@ static inline void printOffset8m32_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	} else
 		printOperand(MI, OpNum, O);
 }
-
-//static inline void printOffset4m32_AsmOperand(MCInst *MI, int OpNum, SStream *O)
-//{
-//	Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_Offset4m32_AsmOperand,
-//			       OpNum);
-//	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
-//		int64_t Value =
-//			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-//		CS_ASSERT(
-//			(Value >= 0 && Value <= 60 && ((Value & 0x3) == 0)) &&
-//			"Invalid argument, value must be multiples of four in range [0,60]");
-//		printInt64(O, Value);
-//	} else
-//		printOperand(MI, OpNum, O);
-//}
 
 static inline void printEntry_Imm12_AsmOperand(MCInst *MI, int OpNum,
 					       SStream *O)

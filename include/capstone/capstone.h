@@ -222,7 +222,9 @@ typedef enum cs_mode {
 	CS_MODE_SYSTEMZ_Z15 = 1 << 13, ///< Enables features of the Z15 processor
 	CS_MODE_SYSTEMZ_Z16 = 1 << 14, ///< Enables features of the Z16 processor
 	CS_MODE_SYSTEMZ_GENERIC = 1 << 15, ///< Enables features of the generic processor
-	CS_MODE_XTENSA = 1 << 1, ///< Xtensa
+	CS_MODE_XTENSA_ESP32 = 1 << 1,	 ///< Xtensa ESP32
+	CS_MODE_XTENSA_ESP32S2 = 1 << 2, ///< Xtensa ESP32S2
+	CS_MODE_XTENSA_ESP8266 = 1 << 3, ///< Xtensa ESP328266
 } cs_mode;
 
 typedef void* (CAPSTONE_API *cs_malloc_t)(size_t size);

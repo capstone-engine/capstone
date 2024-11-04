@@ -1,4 +1,5 @@
 # Copyright © 2022 Rot127 <unisono@quyllur.org>
+# Copyright © 2024 Billow <billow.fun@gmail.com>
 # SPDX-License-Identifier: BSD-3
 
 from tree_sitter import Node
@@ -18,10 +19,16 @@ class LLVM_DEBUG(Patch):
 
     def get_search_pattern(self) -> str:
         return (
-            "(call_expression ("
-            '   (identifier) @fcn_name (#eq? @fcn_name "LLVM_DEBUG")'
-            "   (argument_list) @err_msg"
-            ")) @llvm_unreachable"
+            '''
+            (call_expression (
+               (identifier) @fcn_name (#eq? @fcn_name "LLVM_DEBUG")
+               (argument_list (
+                   (binary_expression (
+                       (call_expression)
+                       (string_literal) @err_msg
+                   ))
+               ))
+            )) @llvm_debug'''
         )
 
     def get_main_capture_name(self) -> str:

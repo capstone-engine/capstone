@@ -1,4 +1,5 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
+// Copyright © 2024 Billow <billow.fun@gmail.com>
 // SPDX-License-Identifier: BSD-3
 
 #ifndef TEST_DETAIL_XTENSA_H

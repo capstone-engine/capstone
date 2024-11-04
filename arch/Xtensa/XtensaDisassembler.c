@@ -240,7 +240,7 @@ bool Xtensa_getFeatureBits(unsigned int mode, unsigned int feature)
 }
 
 // Verify SR and UR
-bool CheckRegister(unsigned RegNo)
+bool CheckRegister(MCInst *Inst, unsigned RegNo)
 {
 	unsigned NumIntLevels = 0;
 	unsigned NumTimers = 0;
@@ -248,23 +248,22 @@ bool CheckRegister(unsigned RegNo)
 	bool IsESP32 = false;
 	bool IsESP32S2 = false;
 	bool Res = true;
-	MCInst *Inst = NULL;
 
-	// Assume that CPU is esp32 by default
-	//	if ((CPU == "esp32") || (CPU == "")) {
-	NumIntLevels = 6;
-	NumTimers = 3;
-	NumMiscSR = 4;
-	IsESP32 = true;
-	//	} else if (CPU == "esp32s2") {
-	//		NumIntLevels = 6;
-	//		NumTimers = 3;
-	//		NumMiscSR = 4;
-	//		IsESP32S2 = true;
-	//	} else if (CPU == "esp8266") {
-	//		NumIntLevels = 2;
-	//		NumTimers = 1;
-	//	}
+	//	 Assume that CPU is esp32 by default
+	if ((Inst->csh->mode & CS_MODE_XTENSA_ESP32)) {
+		NumIntLevels = 6;
+		NumTimers = 3;
+		NumMiscSR = 4;
+		IsESP32 = true;
+	} else if (Inst->csh->mode & CS_MODE_XTENSA_ESP32S2) {
+		NumIntLevels = 6;
+		NumTimers = 3;
+		NumMiscSR = 4;
+		IsESP32S2 = true;
+	} else if (Inst->csh->mode & CS_MODE_XTENSA_ESP8266) {
+		NumIntLevels = 2;
+		NumTimers = 1;
+	}
 
 	switch (RegNo) {
 	case Xtensa_LBEG:
@@ -478,7 +477,7 @@ static DecodeStatus DecodeSRRegisterClass(MCInst *Inst, uint64_t RegNo,
 		if (SRDecoderTable[i + 1] == RegNo) {
 			unsigned Reg = SRDecoderTable[i];
 
-			if (!CheckRegister(Reg))
+			if (!CheckRegister(Inst, Reg))
 				return MCDisassembler_Fail;
 
 			MCOperand_CreateReg0(Inst, (Reg));
@@ -505,7 +504,7 @@ static DecodeStatus DecodeURRegisterClass(MCInst *Inst, uint64_t RegNo,
 		if (URDecoderTable[i + 1] == RegNo) {
 			unsigned Reg = URDecoderTable[i];
 
-			if (!CheckRegister(Reg))
+			if (!CheckRegister(Inst, Reg))
 				return MCDisassembler_Fail;
 
 			MCOperand_CreateReg0(Inst, (Reg));
