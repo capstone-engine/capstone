@@ -200,23 +200,51 @@ void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 			xop->imm = MC->ImmVal;
 		}
 	} break;
+	case Xtensa_OP_GROUP_Imm1_16_AsmOperand:
+	case Xtensa_OP_GROUP_Imm1n_15_AsmOperand:
+	case Xtensa_OP_GROUP_Imm7_22_AsmOperand:
 	case Xtensa_OP_GROUP_Imm8_AsmOperand:
 	case Xtensa_OP_GROUP_Imm8_sh8_AsmOperand:
-	case Xtensa_OP_GROUP_Uimm5_AsmOperand:
-	case Xtensa_OP_GROUP_B4const_AsmOperand:
-	case Xtensa_OP_GROUP_B4constu_AsmOperand:
-	case Xtensa_OP_GROUP_Imm1_16_AsmOperand:
+	case Xtensa_OP_GROUP_Imm8n_7_AsmOperand:
+	case Xtensa_OP_GROUP_Imm12_AsmOperand:
 	case Xtensa_OP_GROUP_Imm12m_AsmOperand:
+	case Xtensa_OP_GROUP_Imm32n_95_AsmOperand:
+	case Xtensa_OP_GROUP_Imm64n_4n_AsmOperand:
+	case Xtensa_OP_GROUP_ImmOperand_minus32_28_4:
+	case Xtensa_OP_GROUP_Uimm5_AsmOperand:
+	case Xtensa_OP_GROUP_Uimm4_AsmOperand:
 	case Xtensa_OP_GROUP_Shimm0_31_AsmOperand:
 	case Xtensa_OP_GROUP_Shimm1_31_AsmOperand:
-	case Xtensa_OP_GROUP_Uimm4_AsmOperand: {
+	case Xtensa_OP_GROUP_B4const_AsmOperand:
+	case Xtensa_OP_GROUP_B4constu_AsmOperand:
+	case Xtensa_OP_GROUP_ImmOperand_minus16_14_2:
+	case Xtensa_OP_GROUP_ImmOperand_minus64_56_8:
+	case Xtensa_OP_GROUP_ImmOperand_0_56_8:
+	case Xtensa_OP_GROUP_ImmOperand_minus16_47_1:
+	case Xtensa_OP_GROUP_ImmOperand_0_3_1:
+	case Xtensa_OP_GROUP_ImmOperand_0_63_1:
+	case Xtensa_OP_GROUP_Entry_Imm12_AsmOperand:
+	case Xtensa_OP_GROUP_Offset8m32_AsmOperand:
+	case Xtensa_OP_GROUP_Select_4_AsmOperand:
+	case Xtensa_OP_GROUP_Select_2_AsmOperand:
+	case Xtensa_OP_GROUP_Select_8_AsmOperand:
+	case Xtensa_OP_GROUP_Offset_16_16_AsmOperand:
+	case Xtensa_OP_GROUP_Offset_256_8_AsmOperand:
+	case Xtensa_OP_GROUP_Offset_256_16_AsmOperand:
+	case Xtensa_OP_GROUP_Offset_256_4_AsmOperand:
+	case Xtensa_OP_GROUP_Select_16_AsmOperand:
+	case Xtensa_OP_GROUP_Offset_128_2_AsmOperand:
+	case Xtensa_OP_GROUP_Offset_128_1_AsmOperand:
+	case Xtensa_OP_GROUP_Offset_64_16_AsmOperand:
+	case Xtensa_OP_GROUP_Select_256_AsmOperand: {
 		int64_t val = MCOperand_getImm(MCInst_getOperand(MI, op_num));
 		xop->type = XTENSA_OP_IMM;
 		xop->imm = (int32_t)val;
 	} break;
 	case Xtensa_OP_GROUP_BranchTarget:
 	case Xtensa_OP_GROUP_JumpTarget:
-	case Xtensa_OP_GROUP_CallOperand: {
+	case Xtensa_OP_GROUP_CallOperand:
+	case Xtensa_OP_GROUP_LoopTarget: {
 		int64_t val =
 			MCOperand_getImm(MCInst_getOperand(MI, op_num)) + 4;
 		xop->type = XTENSA_OP_IMM;
@@ -235,9 +263,6 @@ void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 		xop->mem.base = reg;
 		xop->mem.disp = (uint8_t)imm8;
 	} break;
-	default:
-		CS_ASSERT(0 && "Invalid operand group");
-		break;
 	}
 
 	xop->access = map_get_op_access(MI, op_num);
