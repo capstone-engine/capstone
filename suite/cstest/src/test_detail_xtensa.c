@@ -22,12 +22,14 @@ void test_detail_xtensa_free(TestDetailXtensa *detail)
 		test_detail_xtensa_op_free(detail->operands[i]);
 	}
 	cs_mem_free(detail->operands);
+	cs_mem_free(detail->format);
 	cs_mem_free(detail);
 }
 
 TestDetailXtensa *test_detail_xtensa_clone(const TestDetailXtensa *detail)
 {
 	TestDetailXtensa *clone = test_detail_xtensa_new();
+	clone->format = detail->format ? strdup(detail->format) : NULL;
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
 		clone->operands = cs_mem_calloc(sizeof(TestDetailXtensaOp *),
@@ -77,6 +79,7 @@ bool test_expected_xtensa(csh *handle, const cs_xtensa *actual,
 {
 	assert(handle && actual && expected);
 
+	compare_enum_ret(actual->format, expected->format, false);
 	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	for (size_t i = 0; i < actual->op_count; ++i) {
 		const cs_xtensa_op *op = &actual->operands[i];

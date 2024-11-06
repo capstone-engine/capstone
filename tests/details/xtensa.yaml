@@ -1,6 +1,6 @@
 test_cases:
   - input:
-      bytes: [ 0x60, 0x51, 0x60 ]
+      bytes: [ 0x60, 0x51, 0x60, 0x1a, 0x23 ]
       arch: "CS_ARCH_XTENSA"
       options: [ CS_OPT_DETAIL ]
     expected:
@@ -8,8 +8,25 @@ test_cases:
         - asm_text: "abs a5, a6"
           details:
             xtensa:
+              format: XTENSA_INSN_FORM_RRR
               operands:
                 - type: XTENSA_OP_REG
                   reg: a5
+                  access: CS_AC_WRITE
                 - type: XTENSA_OP_REG
                   reg: a6
+                  access: CS_AC_READ
+        - asm_text: "add.n a2, a3, a1"
+          details:
+            xtensa:
+              format: XTENSA_INSN_FORM_RRRN
+              operands:
+                - type: XTENSA_OP_REG
+                  reg: a2
+                  access: CS_AC_WRITE
+                - type: XTENSA_OP_REG
+                  reg: a3
+                  access: CS_AC_READ
+                - type: XTENSA_OP_REG
+                  reg: a1
+                  access: CS_AC_READ

@@ -1679,6 +1679,7 @@ typedef enum {
 
 	// clang-format on
 	// generated content <XtensaGenCSInsnFormatsEnum.inc> end
+	XTENSA_INSN_FORM_MAX,
 } xtensa_insn_form;
 
 typedef struct {

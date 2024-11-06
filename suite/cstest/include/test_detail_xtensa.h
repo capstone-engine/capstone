@@ -44,6 +44,7 @@ static const cyaml_schema_value_t test_detail_xtensa_op_schema = {
 typedef struct {
 	TestDetailXtensaOp **operands;
 	uint32_t operands_count;
+	char *format;
 } TestDetailXtensa;
 
 static const cyaml_schema_field_t test_detail_xtensa_mapping_schema[] = {
@@ -51,6 +52,9 @@ static const cyaml_schema_field_t test_detail_xtensa_mapping_schema[] = {
 		"operands", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 		TestDetailXtensa, operands, &test_detail_xtensa_op_schema, 0,
 		CYAML_UNLIMITED), // 0-MAX options
+	CYAML_FIELD_STRING_PTR("format",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailXtensa, format, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_END
 };
 
