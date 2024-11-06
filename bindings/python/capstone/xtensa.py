@@ -8,7 +8,7 @@ from .xtensa_const import *
 class XtensaOpMem(ctypes.Structure):
     _fields_ = (
         ("base", ctypes.c_uint8),
-        ("disp", ctypes.c_uint8),
+        ("disp", ctypes.c_int32),
     )
 
 
