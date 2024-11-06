@@ -51,7 +51,7 @@ void print_insn_detail_xtensa(csh handle, cs_insn *ins)
 		else if (op->type == CS_OP_MEM)
 			printf("\t\toperands[%u].type: MEM\n"
 			       "\t\t\t.mem.base: REG = %s\n"
-			       "\t\t\t.mem.disp: 0x%" PRIx8 "\n",
+			       "\t\t\t.mem.disp: 0x%" PRIx32 "\n",
 			       i, cs_reg_name(handle, op->mem.base),
 			       op->mem.disp);
 		else if (op->type == XTENSA_OP_L32R) {

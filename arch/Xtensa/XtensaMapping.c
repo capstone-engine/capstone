@@ -261,7 +261,7 @@ void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 			MCOperand_getImm(MCInst_getOperand(MI, op_num + 1));
 		xop->type = XTENSA_OP_MEM;
 		xop->mem.base = reg;
-		xop->mem.disp = (uint8_t)imm8;
+		xop->mem.disp = (int32_t)imm8;
 	} break;
 	}
 

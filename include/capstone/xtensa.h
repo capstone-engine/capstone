@@ -1698,7 +1698,7 @@ typedef enum cs_xtensa_op_type {
 
 typedef struct cs_xtensa_op_mem {
 	uint8_t base;
-	uint8_t disp;
+	int32_t disp;
 } cs_xtensa_op_mem;
 
 typedef struct cs_xtensa_operand {

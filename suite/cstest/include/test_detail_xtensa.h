@@ -16,7 +16,7 @@ typedef struct {
 	char *reg;
 	int32_t imm;
 	char *mem_base;
-	uint8_t mem_disp;
+	int32_t mem_disp;
 } TestDetailXtensaOp;
 
 static const cyaml_schema_field_t test_detail_xtensa_op_mapping_schema[] = {

@@ -53,10 +53,8 @@ static void printRegName(SStream *O, MCRegister Reg)
 	SStream_concat0(O, getRegisterName(Reg));
 }
 
-static void printOperand(MCInst *MI, const int op_num, SStream *O)
+static void printOp(MCInst *MI, MCOperand *MC, SStream *O)
 {
-	Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_Operand, op_num);
-	MCOperand *MC = MCInst_getOperand(MI, (op_num));
 	if (MCOperand_isReg(MC))
 		SStream_concat0(O, getRegisterName(MCOperand_getReg(MC)));
 	else if (MCOperand_isImm(MC))
@@ -66,13 +64,20 @@ static void printOperand(MCInst *MI, const int op_num, SStream *O)
 	else
 		CS_ASSERT("Invalid operand");
 }
+
+static void printOperand(MCInst *MI, const int op_num, SStream *O)
+{
+	Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_Operand, op_num);
+	printOp(MI, MCInst_getOperand(MI, op_num), O);
+}
+
 static inline void printMemOperand(MCInst *MI, int OpNum, SStream *OS)
 {
 	Xtensa_add_cs_detail_0(MI, Xtensa_OP_GROUP_MemOperand, OpNum);
 	SStream_concat0(OS, getRegisterName(MCOperand_getReg(
 				    MCInst_getOperand(MI, (OpNum)))));
 	SStream_concat0(OS, ", ");
-	printOperand(MI, OpNum + 1, OS);
+	printOp(MI, MCInst_getOperand(MI, OpNum + 1), OS);
 }
 
 static inline void printBranchTarget(MCInst *MI, int OpNum, SStream *OS)

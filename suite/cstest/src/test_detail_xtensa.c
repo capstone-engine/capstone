@@ -102,7 +102,7 @@ bool test_expected_xtensa(csh *handle, const cs_xtensa *actual,
 		case XTENSA_OP_MEM:
 			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
 					false);
-			compare_uint8_ret(op->mem.disp, eop->mem_disp, false);
+			compare_int32_ret(op->mem.disp, eop->mem_disp, false);
 			break;
 		}
 	}
