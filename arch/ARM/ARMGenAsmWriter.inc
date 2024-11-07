@@ -9946,14 +9946,17 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   case 1:
     // VLD1LNdAsm_16, VLD1LNdWB_fixed_Asm_16, VLD1LNdWB_register_Asm_16, VLD2...
     SStream_concat0(O, ".16\t");
+    ARM_add_vector_size(MI, 16);
     break;
   case 2:
     // VLD1LNdAsm_32, VLD1LNdWB_fixed_Asm_32, VLD1LNdWB_register_Asm_32, VLD2...
     SStream_concat0(O, ".32\t");
+    ARM_add_vector_size(MI, 32);
     break;
   case 3:
     // VLD1LNdAsm_8, VLD1LNdWB_fixed_Asm_8, VLD1LNdWB_register_Asm_8, VLD2LNd...
     SStream_concat0(O, ".8\t");
+    ARM_add_vector_size(MI, 8);
     break;
   case 4:
     // t2LDRB_OFFSET_imm, t2LDRB_POST_imm, t2LDRB_PRE_imm, t2LDRH_OFFSET_imm,...
@@ -10089,6 +10092,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   case 30:
     // MVE_VCTP64, MVE_VSTRD64_qi, MVE_VSTRD64_qi_pre, MVE_VSTRD64_rq, MVE_VS...
     SStream_concat0(O, ".64\t");
+    ARM_add_vector_size(MI, 64);
     break;
   case 31:
     // MVE_VCVTf16f32bh, MVE_VCVTf16f32th, VCVTBSH, VCVTTSH, VCVTf2h
@@ -10272,14 +10276,17 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   case 54:
     // VLD1LNd16, VLD1LNd16_UPD, VLD2LNd16, VLD2LNd16_UPD, VLD2LNq16, VLD2LNq...
     SStream_concat0(O, ".16\t{");
+    ARM_add_vector_size(MI, 16);
     break;
   case 55:
     // VLD1LNd32, VLD1LNd32_UPD, VLD2LNd32, VLD2LNd32_UPD, VLD2LNq32, VLD2LNq...
     SStream_concat0(O, ".32\t{");
+    ARM_add_vector_size(MI, 32);
     break;
   case 56:
     // VLD1LNd8, VLD1LNd8_UPD, VLD2LNd8, VLD2LNd8_UPD, VLD3DUPd8, VLD3DUPd8_U...
     SStream_concat0(O, ".8\t{");
+    ARM_add_vector_size(MI, 8);
     break;
   case 57:
     // VLDR_FPCXTNS_off, VLDR_FPCXTNS_post, VLDR_FPCXTNS_pre, VMSR_FPCXTNS, V...
