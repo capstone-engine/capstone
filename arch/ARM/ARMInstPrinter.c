@@ -25,6 +25,7 @@
 //===----------------------------------------------------------------------===//
 
 #include <capstone/arm.h>
+
 #include <capstone/platform.h>
 
 #include "../../Mapping.h"
@@ -32,6 +33,7 @@
 #include "../../MCInstPrinter.h"
 #include "../../MCRegisterInfo.h"
 #include "../../SStream.h"
+
 #include "ARMAddressingModes.h"
 #include "ARMBaseInfo.h"
 #include "ARMDisassemblerExtension.h"
@@ -70,8 +72,9 @@ unsigned translateShiftImm(unsigned imm)
 }
 
 /// Prints the shift value with an immediate value.
-static inline void printRegImmShift(MCInst *MI, SStream *O, ARM_AM_ShiftOpc ShOpc,
-			     unsigned ShImm, bool UseMarkup)
+static inline void printRegImmShift(MCInst *MI, SStream *O,
+				    ARM_AM_ShiftOpc ShOpc, unsigned ShImm,
+				    bool UseMarkup)
 {
 	add_cs_detail(MI, ARM_OP_GROUP_RegImmShift, ShOpc, ShImm);
 	if (ShOpc == ARM_AM_no_shift || (ShOpc == ARM_AM_lsl && !ShImm))
@@ -418,9 +421,8 @@ static inline void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op,
 DEFINE_printAddrMode3Operand(false);
 DEFINE_printAddrMode3Operand(true);
 
-	static inline void printAddrMode3OffsetOperand(MCInst *MI,
-						       unsigned OpNum,
-						       SStream *O)
+static inline void printAddrMode3OffsetOperand(MCInst *MI, unsigned OpNum,
+					       SStream *O)
 {
 	add_cs_detail(MI, ARM_OP_GROUP_AddrMode3OffsetOperand, OpNum);
 	MCOperand *MO1 = MCInst_getOperand(MI, (OpNum));

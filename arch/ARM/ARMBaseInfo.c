@@ -77,7 +77,8 @@ const char *get_pred_mask(ARM_PredBlockMask pred_mask)
 #define GET_MCLASSSYSREG_IMPL
 #include "ARMGenSystemRegister.inc"
 
-const ARMSysReg_MClassSysReg *ARMSysReg_lookupMClassSysRegBy12bitSYSmValue(unsigned SYSm)
+const ARMSysReg_MClassSysReg *
+ARMSysReg_lookupMClassSysRegBy12bitSYSmValue(unsigned SYSm)
 {
 	return ARMSysReg_lookupMClassSysRegByM1Encoding12(SYSm);
 }

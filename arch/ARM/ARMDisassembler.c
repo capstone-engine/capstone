@@ -39,6 +39,7 @@
 #include "ARMAddressingModes.h"
 #include "ARMBaseInfo.h"
 #include "ARMDisassemblerExtension.h"
+
 #include "ARMLinkage.h"
 #include "ARMMapping.h"
 
@@ -602,6 +603,7 @@ static DecodeStatus DecodeT2AddSubSPImm(MCInst *Inst, unsigned Insn,
 #include "ARMGenDisassemblerTables.inc"
 
 // Post-decoding checks
+
 static DecodeStatus checkDecodedInstruction(MCInst *MI, uint32_t Insn,
 					    DecodeStatus Result)
 {
@@ -633,9 +635,10 @@ static DecodeStatus checkDecodedInstruction(MCInst *MI, uint32_t Insn,
 	}
 }
 
-static DecodeStatus getARMInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
-			       MCInst *MI, uint16_t *Size, uint64_t Address,
-			       void *Info)
+static DecodeStatus getARMInstruction(csh ud, const uint8_t *Bytes,
+				      size_t BytesLen, MCInst *MI,
+				      uint16_t *Size, uint64_t Address,
+				      void *Info)
 {
 	// We want to read exactly 4 bytes of data.
 	if (BytesLen < 4) {
@@ -684,7 +687,8 @@ static DecodeStatus getARMInstruction(csh ud, const uint8_t *Bytes, size_t Bytes
 		}
 	}
 
-	Result = decodeInstruction_4(DecoderTableCoProc32, MI, Insn, Address, NULL);
+	Result = decodeInstruction_4(DecoderTableCoProc32, MI, Insn, Address,
+				     NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 		return checkDecodedInstruction(MI, Insn, Result);
@@ -738,8 +742,8 @@ static void tryAddingPcLoadReferenceComment(uint64_t Address, int Value,
 // that as a post-pass.
 static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 {
-	const MCInstrDesc *Desc =
-		MCInstrDesc_get(MCInst_getOpcode(MI), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
+	const MCInstrDesc *Desc = MCInstrDesc_get(
+		MCInst_getOpcode(MI), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
 	const MCOperandInfo *OpInfo = Desc->OpInfo;
 	unsigned short NumOps = Desc->NumOperands;
 	unsigned i;
@@ -764,8 +768,8 @@ static void AddThumb1SBit(MCInst *MI, bool InITBlock)
 
 static bool isVectorPredicable(unsigned Opcode)
 {
-	const MCInstrDesc *Desc =
-		MCInstrDesc_get(Opcode, ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
+	const MCInstrDesc *Desc = MCInstrDesc_get(Opcode, ARMDescs.Insts,
+						  ARR_SIZE(ARMDescs.Insts));
 	const MCOperandInfo *OpInfo = Desc->OpInfo;
 	unsigned short NumOps = Desc->NumOperands;
 	for (unsigned i = 0; i < NumOps; ++i) {
@@ -845,8 +849,8 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 		VCC = VPTBlock_getVPTPred(&(MI->csh->VPTBlock));
 		VPTBlock_advanceVPTState(&(MI->csh->VPTBlock));
 	}
-	const MCInstrDesc *Desc =
-		MCInstrDesc_get(MCInst_getOpcode(MI), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
+	const MCInstrDesc *Desc = MCInstrDesc_get(
+		MCInst_getOpcode(MI), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
 
 	const MCOperandInfo *OpInfo = Desc->OpInfo;
 	unsigned short NumOps = Desc->NumOperands;
@@ -890,8 +894,7 @@ DecodeStatus AddThumbPredicate(MCInst *MI)
 		MCInst_insert0(MI, VCCPos + 2, MCOperand_CreateReg1(MI, (0)));
 		if (OpInfo[VCCPos].OperandType == ARM_OP_VPRED_R) {
 			int TiedOp = MCOperandInfo_getOperandConstraint(
-				Desc, VCCPos + 3,
-				MCOI_TIED_TO);
+				Desc, VCCPos + 3, MCOI_TIED_TO);
 			CS_ASSERT_RET_VAL(
 				TiedOp >= 0 &&
 					"Inactive register in vpred_r is not tied to an output!",
@@ -925,14 +928,13 @@ static void UpdateThumbVFPPredicate(DecodeStatus S, MCInst *MI)
 		VPTBlock_advanceVPTState(&(MI->csh->VPTBlock));
 	}
 
-	const MCInstrDesc *Desc =
-		MCInstrDesc_get(MCInst_getOpcode(MI), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
+	const MCInstrDesc *Desc = MCInstrDesc_get(
+		MCInst_getOpcode(MI), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
 	const MCOperandInfo *OpInfo = Desc->OpInfo;
 	unsigned short NumOps = Desc->NumOperands;
 	for (unsigned i = 0; i < NumOps; ++i) {
 		if (MCOperandInfo_isPredicate(&OpInfo[i])) {
-			if (CC != ARMCC_AL &&
-			    !MCInst_isPredicable(Desc))
+			if (CC != ARMCC_AL && !MCInst_isPredicable(Desc))
 				Check(&S, MCDisassembler_SoftFail);
 			MCOperand_setImm(MCInst_getOperand(MI, i), CC);
 
@@ -948,9 +950,10 @@ static void UpdateThumbVFPPredicate(DecodeStatus S, MCInst *MI)
 	}
 }
 
-static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
-				 MCInst *MI, uint16_t *Size, uint64_t Address,
-				 void *Info)
+static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes,
+					size_t BytesLen, MCInst *MI,
+					uint16_t *Size, uint64_t Address,
+					void *Info)
 {
 	// We want to read exactly 2 bytes of data.
 	if (BytesLen < 2) {
@@ -959,8 +962,8 @@ static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t Byt
 	}
 
 	uint16_t Insn16 = readBytes16(MI, Bytes);
-	DecodeStatus Result =
-		decodeInstruction_2(DecoderTableThumb16, MI, Insn16, Address, NULL);
+	DecodeStatus Result = decodeInstruction_2(DecoderTableThumb16, MI,
+						  Insn16, Address, NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 2;
 		Check(&Result, AddThumbPredicate(MI));
@@ -977,7 +980,8 @@ static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t Byt
 		return Result;
 	}
 
-	Result = decodeInstruction_2(DecoderTableThumb216, MI, Insn16, Address, NULL);
+	Result = decodeInstruction_2(DecoderTableThumb216, MI, Insn16, Address,
+				     NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 2;
 
@@ -1013,10 +1017,10 @@ static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t Byt
 		*Size = 0;
 		return MCDisassembler_Fail;
 	}
-	uint32_t Insn32 = (uint32_t)Insn16 << 16 |
-			  readBytes16(MI, Bytes + 2);
+	uint32_t Insn32 = (uint32_t)Insn16 << 16 | readBytes16(MI, Bytes + 2);
 
-	Result = decodeInstruction_4(DecoderTableMVE32, MI, Insn32, Address, NULL);
+	Result = decodeInstruction_4(DecoderTableMVE32, MI, Insn32, Address,
+				     NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 
@@ -1037,7 +1041,8 @@ static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t Byt
 		return Result;
 	}
 
-	Result = decodeInstruction_4(DecoderTableThumb32, MI, Insn32, Address, NULL);
+	Result = decodeInstruction_4(DecoderTableThumb32, MI, Insn32, Address,
+				     NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 		bool InITBlock = ITBlock_instrInITBlock(&(MI->csh->ITBlock));
@@ -1046,7 +1051,8 @@ static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t Byt
 		return Result;
 	}
 
-	Result = decodeInstruction_4(DecoderTableThumb232, MI, Insn32, Address, NULL);
+	Result = decodeInstruction_4(DecoderTableThumb232, MI, Insn32, Address,
+				     NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 		Check(&Result, AddThumbPredicate(MI));
@@ -1063,7 +1069,8 @@ static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes, size_t Byt
 		}
 	}
 
-	Result = decodeInstruction_4(DecoderTableVFPV832, MI, Insn32, Address, NULL);
+	Result = decodeInstruction_4(DecoderTableVFPV832, MI, Insn32, Address,
+				     NULL);
 	if (Result != MCDisassembler_Fail) {
 		*Size = 4;
 		return Result;
@@ -1520,8 +1527,9 @@ static DecodeStatus DecodePredicateOperand(MCInst *Inst, unsigned Val,
 	if (MCInst_getOpcode(Inst) == ARM_tBcc && Val == 0xE)
 		return MCDisassembler_Fail;
 
-	const MCInstrDesc *Desc =
-		MCInstrDesc_get(MCInst_getOpcode(Inst), ARMDescs.Insts, ARR_SIZE(ARMDescs.Insts));
+	const MCInstrDesc *Desc = MCInstrDesc_get(MCInst_getOpcode(Inst),
+						  ARMDescs.Insts,
+						  ARR_SIZE(ARMDescs.Insts));
 
 	if (Val != ARMCC_AL && !MCInst_isPredicable(Desc))
 		Check(&S, MCDisassembler_SoftFail);
@@ -6560,7 +6568,7 @@ static DecodeStatus DecodeLOLoop(MCInst *Inst, unsigned Insn, uint64_t Address,
 				 SBZMask = 0x00300FFE;
 			if ((Insn & ~SBZMask) != CanonicalLCTP)
 				return MCDisassembler_Fail; // a mandatory bit is wrong: hard
-							    // fail
+					// fail
 			if (Insn != CanonicalLCTP)
 				Check(&S,
 				      MCDisassembler_SoftFail); // an SBZ bit is wrong: soft fail
