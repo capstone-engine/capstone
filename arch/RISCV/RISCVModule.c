@@ -6,14 +6,6 @@
 
 #include "RISCVModule.h"
 
-void noop_printer(MCInst *MI, SStream *OS, void *info) {
-
-}
-
-void noop_postprinter(csh handle, cs_insn *, SStream *mnem, MCInst *mci) {
-
-}
-
 const char *noop_getname(csh handle, unsigned int id) { 
 	return ""; 
 }
@@ -24,11 +16,11 @@ void noop_getid(cs_struct *h, cs_insn *insn, unsigned int id) {
 
 cs_err RISCV_global_init(cs_struct * ud)
 {
-	ud->printer = noop_printer;
+	ud->printer = riscv_printer;
 	ud->printer_info = NULL;
 	ud->getinsn_info = NULL;
 	ud->disasm = riscv_get_instruction;
-	ud->post_printer = noop_postprinter;
+	ud->post_printer = NULL;
 
 	ud->reg_name = noop_getname;
 	ud->insn_id = noop_getid;

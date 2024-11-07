@@ -3,7 +3,6 @@
 
 #include "riscv_decode.gen.inc"
 #include "riscv_insn_mapping.gen.inc"
-#include "riscv_ast2str.gen.inc"
 
 bool riscv_get_instruction(csh handle, 
                     const uint8_t *code, size_t code_len, MCInst *instr, 
@@ -24,27 +23,6 @@ bool riscv_get_instruction(csh handle,
         insn->address = address;
         *size = insn->size;
         memcpy(insn->bytes, code, insn->size);
-
-        char instruction_as_str[RISCV_MAX_INSTRUCTION_STR_LEN];
-        riscv_conf conf;
-        conf.sys_enable_fdext = NULL;
-        conf.sys_enable_zfinx = NULL;
-
-        ast2str(&instruction, instruction_as_str, &conf);
-
-        char *curr = instruction_as_str;
-        uint16_t mnemonic_len = 0;
-        while (*curr != ' ') {
-            mnemonic_len++;
-            curr++;
-        }
-        uint16_t operand_len = 0;
-        while (*curr) {
-            operand_len++;
-            curr++;
-        }
-        memcpy(insn->mnemonic, instruction_as_str, mnemonic_len);
-        memcpy(insn->op_str, instruction_as_str + mnemonic_len + 1, operand_len);
         return true;
     } else {
 

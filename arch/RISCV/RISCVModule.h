@@ -6,6 +6,7 @@
 
 #include "../../utils.h"
 #include "RISCVDisassembler.h"
+#include "RISCVPrinter.h"
 
 cs_err RISCV_global_init(cs_struct * ud);
 cs_err RISCV_option(cs_struct * handle, cs_opt_type type, size_t value);

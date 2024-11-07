@@ -576,6 +576,7 @@ if(CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVDisassembler.c
         arch/RISCV/RISCVDetails.c
         arch/RISCV/RISCVModule.c
+        arch/RISCV/RISCVPrinter.c
     )
     set(HEADERS_RISCV
         arch/RISCV/riscv_ast.gen.inc
@@ -590,6 +591,7 @@ if(CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/riscv_helpers_ast2str.h
         arch/RISCV/riscv_helpers_rvconf.h
         arch/RISCV/RISCVModule.h
+        arch/RISCV/RISCVPrinter.h
     )
 endif()
 
