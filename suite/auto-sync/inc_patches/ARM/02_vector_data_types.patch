@@ -1,0 +1,344 @@
+diff --git a/arch/ARM/ARMGenAsmWriter.inc b/arch/ARM/ARMGenAsmWriter.inc
+index 69194e4e..33fa7815 100644
+--- a/arch/ARM/ARMGenAsmWriter.inc
++++ b/arch/ARM/ARMGenAsmWriter.inc
+@@ -10086,93 +10086,93 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
+     SStream_concat0(O, ".i8\t");
+     ARM_add_vector_data(MI, ARM_VECTORDATA_I8);
+     break;
+   case 30:
+     // MVE_VCTP64, MVE_VSTRD64_qi, MVE_VSTRD64_qi_pre, MVE_VSTRD64_rq, MVE_VS...
+     SStream_concat0(O, ".64\t");
+     break;
+   case 31:
+     // MVE_VCVTf16f32bh, MVE_VCVTf16f32th, VCVTBSH, VCVTTSH, VCVTf2h
+     SStream_concat0(O, ".f16.f32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F16_F32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F16F32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     break;
+   case 32:
+     // MVE_VCVTf16s16_fix, MVE_VCVTf16s16n, VCVTs2hd, VCVTs2hq, VCVTxs2hd, VC...
+     SStream_concat0(O, ".f16.s16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F16_S16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F16S16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 33:
+     // MVE_VCVTf16u16_fix, MVE_VCVTf16u16n, VCVTu2hd, VCVTu2hq, VCVTxu2hd, VC...
+     SStream_concat0(O, ".f16.u16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F16_U16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F16U16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 34:
+     // MVE_VCVTf32f16bh, MVE_VCVTf32f16th, VCVTBHS, VCVTTHS, VCVTh2f
+     SStream_concat0(O, ".f32.f16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F32_F16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F32F16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     return;
+     break;
+   case 35:
+     // MVE_VCVTf32s32_fix, MVE_VCVTf32s32n, VCVTs2fd, VCVTs2fq, VCVTxs2fd, VC...
+     SStream_concat0(O, ".f32.s32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F32_S32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F32S32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 36:
+     // MVE_VCVTf32u32_fix, MVE_VCVTf32u32n, VCVTu2fd, VCVTu2fq, VCVTxu2fd, VC...
+     SStream_concat0(O, ".f32.u32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F32_U32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F32U32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 37:
+     // MVE_VCVTs16f16_fix, MVE_VCVTs16f16a, MVE_VCVTs16f16m, MVE_VCVTs16f16n,...
+     SStream_concat0(O, ".s16.f16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_S16_F16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_S16F16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 38:
+     // MVE_VCVTs32f32_fix, MVE_VCVTs32f32a, MVE_VCVTs32f32m, MVE_VCVTs32f32n,...
+     SStream_concat0(O, ".s32.f32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_S32_F32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_S32F32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 39:
+     // MVE_VCVTu16f16_fix, MVE_VCVTu16f16a, MVE_VCVTu16f16m, MVE_VCVTu16f16n,...
+     SStream_concat0(O, ".u16.f16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_U16_F16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_U16F16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 40:
+     // MVE_VCVTu32f32_fix, MVE_VCVTu32f32a, MVE_VCVTu32f32m, MVE_VCVTu32f32n,...
+     SStream_concat0(O, ".u32.f32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_U32_F32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_U32F32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 41:
+     // MVE_VLD20_16, MVE_VLD20_32, MVE_VLD20_8, MVE_VLD21_16, MVE_VLD21_32, M...
+     printAddrMode7Operand(MI, 2, O);
+     return;
+     break;
+   case 42:
+@@ -10221,57 +10221,57 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
+     return;
+     break;
+   case 48:
+     // RFEDA_UPD, RFEDB_UPD, RFEIA_UPD, RFEIB_UPD
+     SStream_concat1(O, '!');
+     return;
+     break;
+   case 49:
+     // VCVTBDH, VCVTTDH
+     SStream_concat0(O, ".f16.f64\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F16_F64);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F16F64);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 2, O);
+     return;
+     break;
+   case 50:
+     // VCVTBHD, VCVTTHD
+     SStream_concat0(O, ".f64.f16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F64_F16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F64F16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     return;
+     break;
+   case 51:
+     // VCVTDS
+     SStream_concat0(O, ".f64.f32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F64_F32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F64F32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     return;
+     break;
+   case 52:
+     // VCVTSD
+     SStream_concat0(O, ".f32.f64\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F32_F64);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F32F64);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     return;
+     break;
+   case 53:
+     // VJCVT, VTOSIRD, VTOSIZD, VTOSLD
+     SStream_concat0(O, ".s32.f64\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_S32_F64);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_S32F64);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 54:
+     // VLD1LNd16, VLD1LNd16_UPD, VLD2LNd16, VLD2LNd16_UPD, VLD2LNq16, VLD2LNq...
+     SStream_concat0(O, ".16\t{");
+     break;
+   case 55:
+     // VLD1LNd32, VLD1LNd32_UPD, VLD2LNd32, VLD2LNd32_UPD, VLD2LNq32, VLD2LNq...
+@@ -10332,157 +10332,157 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
+   case 67:
+     // VQADDsv1i64, VQADDsv2i64, VQMOVNsuv2i32, VQMOVNsv2i32, VQRSHLsv1i64, V...
+     SStream_concat0(O, ".s64\t");
+     ARM_add_vector_data(MI, ARM_VECTORDATA_S64);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     break;
+   case 68:
+     // VSHTOD
+     SStream_concat0(O, ".f64.s16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F64_S16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F64S16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     SStream_concat0(O, ", ");
+     printFBits16(MI, 2, O);
+     return;
+     break;
+   case 69:
+     // VSHTOS
+     SStream_concat0(O, ".f32.s16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F32_S16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F32S16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     SStream_concat0(O, ", ");
+     printFBits16(MI, 2, O);
+     return;
+     break;
+   case 70:
+     // VSITOD, VSLTOD
+     SStream_concat0(O, ".f64.s32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F64_S32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F64S32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 71:
+     // VSITOH, VSLTOH
+     SStream_concat0(O, ".f16.s32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F16_S32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F16S32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 72:
+     // VTOSHD
+     SStream_concat0(O, ".s16.f64\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_S16_F64);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_S16F64);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     SStream_concat0(O, ", ");
+     printFBits16(MI, 2, O);
+     return;
+     break;
+   case 73:
+     // VTOSHS
+     SStream_concat0(O, ".s16.f32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_S16_F32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_S16F32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     SStream_concat0(O, ", ");
+     printFBits16(MI, 2, O);
+     return;
+     break;
+   case 74:
+     // VTOSIRH, VTOSIZH, VTOSLH
+     SStream_concat0(O, ".s32.f16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_S32_F16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_S32F16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 75:
+     // VTOUHD
+     SStream_concat0(O, ".u16.f64\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_U16_F64);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_U16F64);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     SStream_concat0(O, ", ");
+     printFBits16(MI, 2, O);
+     return;
+     break;
+   case 76:
+     // VTOUHS
+     SStream_concat0(O, ".u16.f32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_U16_F32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_U16F32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     SStream_concat0(O, ", ");
+     printFBits16(MI, 2, O);
+     return;
+     break;
+   case 77:
+     // VTOUIRD, VTOUIZD, VTOULD
+     SStream_concat0(O, ".u32.f64\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_U32_F64);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_U32F64);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 78:
+     // VTOUIRH, VTOUIZH, VTOULH
+     SStream_concat0(O, ".u32.f16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_U32_F16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_U32F16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 79:
+     // VUHTOD
+     SStream_concat0(O, ".f64.u16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F64_U16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F64U16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     SStream_concat0(O, ", ");
+     printFBits16(MI, 2, O);
+     return;
+     break;
+   case 80:
+     // VUHTOS
+     SStream_concat0(O, ".f32.u16\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F32_U16);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F32U16);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     SStream_concat0(O, ", ");
+     printFBits16(MI, 2, O);
+     return;
+     break;
+   case 81:
+     // VUITOD, VULTOD
+     SStream_concat0(O, ".f64.u32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F64_U32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F64U32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 82:
+     // VUITOH, VULTOH
+     SStream_concat0(O, ".f16.u32\t");
+-    ARM_add_vector_data(MI, ARM_VECTORDATA_F16_U32);
++    ARM_add_vector_data(MI, ARM_VECTORDATA_F16U32);
+     printOperand(MI, 0, O);
+     SStream_concat0(O, ", ");
+     printOperand(MI, 1, O);
+     break;
+   case 83:
+     // t2ADCrr, t2ADCrs, t2ADDri, t2ADDrr, t2ADDrs, t2ADDspImm, t2ADR, t2ANDr...
+     SStream_concat0(O, ".w\t");
+     break;
+   case 84:
+     // t2SRSDB, t2SRSIA
