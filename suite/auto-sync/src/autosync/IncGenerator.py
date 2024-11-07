@@ -127,9 +127,13 @@ class IncGenerator:
                     log.fatal("Generation failed")
                     raise e
 
+    def has_inc_patches(self) -> bool:
+        patch_dir = self.patches_dir_path.joinpath(self.arch)
+        return patch_dir.exists()
+
     def apply_patches(self) -> None:
         """
-        Applies a all patches of inc files.
+        Applies all patches of inc files.
         Files must be moved to their arch/<ARCH> directory before.
         """
         patch_dir = self.patches_dir_path.joinpath(self.arch)
@@ -139,10 +143,9 @@ class IncGenerator:
         for patch in patch_dir.iterdir():
             try:
                 subprocess.run(
-                    ["git", "apply", str(patch)],
+                    ["git", "apply", "-C4", "--recount", str(patch)],
                     check=True,
                 )
+                log.info(f"Applied inc patch {patch.name}")
             except subprocess.CalledProcessError as e:
-                log.warning(f"Patch {patch.name} did not apply correctly!")
-                log.warning(f"git apply returned: {e}")
-                return
+                log.warning(f".inc patch {patch.name} did not apply correctly!")

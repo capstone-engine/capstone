@@ -182,6 +182,10 @@ class ASUpdater:
         if USteps.MC in self.steps:
             self.mc_updater.gen_all()
         if not self.write:
+            if self.inc_generator.has_inc_patches():
+                log.warning(
+                    f"Patches to inc files are only applied with the -w flag. This wasn't done. Find them in {get_path("{INC_PATCH_DIR}")}"
+                )
             # Done
             exit(0)
 
@@ -194,6 +198,7 @@ class ASUpdater:
                 continue
             self.copy_files(file, self.arch_dir)
             i += 1
+        self.inc_generator.apply_patches()
         log.info(f"Copied {i} files")
 
         i = 0
