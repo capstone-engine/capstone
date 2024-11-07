@@ -56,15 +56,6 @@ class PatchCoord:
         self.inserted = inserted  # True, if the PatchCoordinates point to a position not occupied by a node.
 
     def __lt__(self, other):
-        if not (
-            (self.start_byte <= other.start_byte and self.end_byte <= other.end_byte)
-            or (self.start_byte >= other.start_byte and self.end_byte >= other.end_byte)
-        ):
-            raise IndexError(
-                f"Coordinates overlap. No comparison possible.\n"
-                f"a.start_byte = {self.start_byte} a.end_byte = {self.end_byte}\n"
-                f"b.start_byte = {other.start_byte} b.end_byte = {other.end_byte}\n"
-            )
         return self.end_byte < other.start_byte
 
     def __str__(self) -> str:
@@ -130,18 +121,6 @@ class Patch:
         backup[self.node_id]["new_hash"] = self.new_hash
         backup[self.node_id]["edit"] = self.edit.decode("utf8") if self.edit else ""
         return backup
-
-    def merge(self, other) -> None:
-        """
-        Merge two patches to one. Necessary if two old nodes are not present in the new file.
-        And therefore share PatchCoordinates.
-        """
-        if other.new:
-            raise ValueError("This patch should not have a .new set.")
-        if not other.old:
-            raise ValueError("No data in .old")
-        self.old = other.old + self.old
-        self.old_hash = get_sha256(self.old)
 
     def __lt__(self, other):
         try:
