@@ -104,6 +104,14 @@ static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, uint64_t RegNo,
 	return decodeRegisterClass(Inst, RegNo, FRegs);
 }
 
+static DecodeStatus DecodeFpRCRegisterClass(MCInst *Inst, uint64_t RegNo,
+					    uint64_t Address, const void *Decoder)
+{
+	if (RegNo > 30 || (RegNo & 1))
+		return MCDisassembler_Fail;
+	return decodeRegisterClass(Inst, RegNo >> 1, FpRegs);
+}
+
 static DecodeStatus DecodeVFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 					    uint64_t Address,
 					    const void *Decoder)
@@ -257,29 +265,39 @@ static DecodeStatus DecodeQFRCRegisterClass(MCInst *Inst, uint64_t RegNo,
 				   N)(MCInst * Inst, uint64_t Imm, \
 				      int64_t Address, const void *Decoder) \
 	{ \
+		if (!isUIntN(N, Imm)) \
+			return MCDisassembler_Fail; \
 		MCOperand_CreateImm0(Inst, (Imm)); \
 		return MCDisassembler_Success; \
 	}
-DEFINE_decodeUImmOperand(5) DEFINE_decodeUImmOperand(16)
-	DEFINE_decodeUImmOperand(6) DEFINE_decodeUImmOperand(10)
-		DEFINE_decodeUImmOperand(8) DEFINE_decodeUImmOperand(7)
-			DEFINE_decodeUImmOperand(12)
+DEFINE_decodeUImmOperand(1);
+DEFINE_decodeUImmOperand(2);
+DEFINE_decodeUImmOperand(3);
+DEFINE_decodeUImmOperand(4);
+DEFINE_decodeUImmOperand(5);
+DEFINE_decodeUImmOperand(6);
+DEFINE_decodeUImmOperand(7);
+DEFINE_decodeUImmOperand(8);
+DEFINE_decodeUImmOperand(10);
+DEFINE_decodeUImmOperand(12);
+DEFINE_decodeUImmOperand(16);
 
 #define DEFINE_decodeSImmOperand(N) \
 	static DecodeStatus CONCAT(decodeSImmOperand, \
 				   N)(MCInst * Inst, uint64_t Imm, \
 				      int64_t Address, const void *Decoder) \
 	{ \
-		MCOperand_CreateImm0(Inst, (SignExtend64(Imm, N))); \
+		if (!isUIntN(N, Imm)) \
+			return MCDisassembler_Fail; \
+		MCOperand_CreateImm0(Inst, (SignExtend64((Imm), N))); \
 		return MCDisassembler_Success; \
 	}
-				DEFINE_decodeSImmOperand(16)
-					DEFINE_decodeSImmOperand(5)
-						DEFINE_decodeSImmOperand(34)
+DEFINE_decodeSImmOperand(16);
+DEFINE_decodeSImmOperand(5);
+DEFINE_decodeSImmOperand(34);
 
-							static DecodeStatus
-	decodeImmZeroOperand(MCInst *Inst, uint64_t Imm, int64_t Address,
-			     const void *Decoder)
+static DecodeStatus decodeImmZeroOperand(MCInst *Inst, uint64_t Imm,
+					 int64_t Address, const void *Decoder)
 {
 	if (Imm != 0)
 		return MCDisassembler_Fail;
@@ -297,158 +315,65 @@ static DecodeStatus decodeVSRpEvenOperands(MCInst *Inst, uint64_t RegNo,
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus decodeMemRIOperands(MCInst *Inst, uint64_t Imm,
-					int64_t Address, const void *Decoder)
-{
-	// Decode the memri field (imm, reg), which has the low 16-bits as the
-	// displacement and the next 5 bits as the register #.
-
-	uint64_t Base = Imm >> 16;
-	uint64_t Disp = Imm & 0xFFFF;
-
-	switch (MCInst_getOpcode(Inst)) {
-	default:
-		break;
-	case PPC_LBZU:
-	case PPC_LHAU:
-	case PPC_LHZU:
-	case PPC_LWZU:
-	case PPC_LFSU:
-	case PPC_LFDU:
-		// Add the tied output operand.
-		MCOperand_CreateReg0(Inst, (RRegsNoR0[Base]));
-		break;
-	case PPC_STBU:
-	case PPC_STHU:
-	case PPC_STWU:
-	case PPC_STFSU:
-	case PPC_STFDU:
-		MCInst_insert0(Inst, 0,
-			       MCOperand_CreateReg1(Inst, RRegsNoR0[Base]));
-		break;
-	}
-
-	MCOperand_CreateImm0(Inst, (SignExtend64(Disp, 16)));
-	MCOperand_CreateReg0(Inst, (RRegsNoR0[Base]));
-	return MCDisassembler_Success;
-}
-
-static DecodeStatus decodeMemRIXOperands(MCInst *Inst, uint64_t Imm,
-					 int64_t Address, const void *Decoder)
-{
-	// Decode the memrix field (imm, reg), which has the low 14-bits as the
-	// displacement and the next 5 bits as the register #.
-
-	uint64_t Base = Imm >> 14;
-	uint64_t Disp = Imm & 0x3FFF;
-
-	if (MCInst_getOpcode(Inst) == PPC_LDU)
-		// Add the tied output operand.
-		MCOperand_CreateReg0(Inst, (RRegsNoR0[Base]));
-	else if (MCInst_getOpcode(Inst) == PPC_STDU)
-		MCInst_insert0(Inst, 0,
-			       MCOperand_CreateReg1(Inst, RRegsNoR0[Base]));
-
-	MCOperand_CreateImm0(Inst, (SignExtend64(Disp << 2, 16)));
-	MCOperand_CreateReg0(Inst, (RRegsNoR0[Base]));
-	return MCDisassembler_Success;
-}
-
-static DecodeStatus decodeMemRIHashOperands(MCInst *Inst, uint64_t Imm,
-					    int64_t Address,
-					    const void *Decoder)
-{
-	// Decode the memrix field for a hash store or hash check operation.
-	// The field is composed of a register and an immediate value that is 6 bits
-	// and covers the range -8 to -512. The immediate is always negative and 2s
-	// complement which is why we sign extend a 7 bit value.
-	const uint64_t Base = Imm >> 6;
-	const int64_t Disp = SignExtend64((Imm & 0x3F) + 64, 7) * 8;
-
-	MCOperand_CreateImm0(Inst, (Disp));
-	MCOperand_CreateReg0(Inst, (RRegs[Base]));
-	return MCDisassembler_Success;
-}
-
-static DecodeStatus decodeMemRIX16Operands(MCInst *Inst, uint64_t Imm,
-					   int64_t Address, const void *Decoder)
-{
-	// Decode the memrix16 field (imm, reg), which has the low 12-bits as the
-	// displacement with 16-byte aligned, and the next 5 bits as the register #.
-
-	uint64_t Base = Imm >> 12;
-	uint64_t Disp = Imm & 0xFFF;
-
-	MCOperand_CreateImm0(Inst, (SignExtend64(Disp << 4, 16)));
-	MCOperand_CreateReg0(Inst, (RRegsNoR0[Base]));
-	return MCDisassembler_Success;
-}
-
-static DecodeStatus decodeMemRI34PCRelOperands(MCInst *Inst, uint64_t Imm,
-					       int64_t Address,
-					       const void *Decoder)
-{
-	// Decode the memri34_pcrel field (imm, reg), which has the low 34-bits as
-	// the displacement, and the next 5 bits as an immediate 0.
-	uint64_t Base = Imm >> 34;
-	uint64_t Disp = Imm & 0x3FFFFFFFFUL;
-
-	MCOperand_CreateImm0(Inst, (SignExtend64(Disp, 34)));
-	return decodeImmZeroOperand(Inst, Base, Address, Decoder);
-}
-
-static DecodeStatus decodeMemRI34Operands(MCInst *Inst, uint64_t Imm,
+static DecodeStatus decodeDispSPE8Operand(MCInst *Inst, uint64_t Imm,
 					  int64_t Address, const void *Decoder)
 {
-	// Decode the memri34 field (imm, reg), which has the low 34-bits as the
-	// displacement, and the next 5 bits as the register #.
-	uint64_t Base = Imm >> 34;
-	uint64_t Disp = Imm & 0x3FFFFFFFFUL;
+	// Decode the dispSPE8 field, which has 5-bits, 8-byte aligned.
 
-	MCOperand_CreateImm0(Inst, (SignExtend64(Disp, 34)));
-	MCOperand_CreateReg0(Inst, (RRegsNoR0[Base]));
-	return MCDisassembler_Success;
-}
-
-static DecodeStatus decodeSPE8Operands(MCInst *Inst, uint64_t Imm,
-				       int64_t Address, const void *Decoder)
-{
-	// Decode the spe8disp field (imm, reg), which has the low 5-bits as the
-	// displacement with 8-byte aligned, and the next 5 bits as the register #.
-
-	uint64_t Base = Imm >> 5;
 	uint64_t Disp = Imm & 0x1F;
 
 	MCOperand_CreateImm0(Inst, (Disp << 3));
-	MCOperand_CreateReg0(Inst, (RRegsNoR0[Base]));
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus decodeSPE4Operands(MCInst *Inst, uint64_t Imm,
-				       int64_t Address, const void *Decoder)
+static DecodeStatus decodeDispSPE4Operand(MCInst *Inst, uint64_t Imm,
+					  int64_t Address, const void *Decoder)
 {
-	// Decode the spe4disp field (imm, reg), which has the low 5-bits as the
-	// displacement with 4-byte aligned, and the next 5 bits as the register #.
+	// Decode the dispSPE8 field, which has 5-bits, 4-byte aligned.
 
-	uint64_t Base = Imm >> 5;
 	uint64_t Disp = Imm & 0x1F;
 
 	MCOperand_CreateImm0(Inst, (Disp << 2));
-	MCOperand_CreateReg0(Inst, (RRegsNoR0[Base]));
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus decodeSPE2Operands(MCInst *Inst, uint64_t Imm,
-				       int64_t Address, const void *Decoder)
+static DecodeStatus decodeDispSPE2Operand(MCInst *Inst, uint64_t Imm,
+					  int64_t Address, const void *Decoder)
 {
-	// Decode the spe2disp field (imm, reg), which has the low 5-bits as the
-	// displacement with 2-byte aligned, and the next 5 bits as the register #.
+	// Decode the dispSPE8 field, which has 5-bits, 2-byte aligned.
 
-	uint64_t Base = Imm >> 5;
 	uint64_t Disp = Imm & 0x1F;
-
 	MCOperand_CreateImm0(Inst, (Disp << 1));
-	MCOperand_CreateReg0(Inst, (RRegsNoR0[Base]));
+	return MCDisassembler_Success;
+}
+
+static DecodeStatus decodeDispRIXOperand(MCInst *Inst, uint64_t Imm,
+					 int64_t Address, const void *Decoder)
+{
+	// The rix displacement is an immediate shifted by 2
+	MCOperand_CreateImm0(Inst, (SignExtend64((Imm << 2), 16)));
+	return MCDisassembler_Success;
+}
+
+static DecodeStatus decodeDispRIX16Operand(MCInst *Inst, uint64_t Imm,
+					   int64_t Address, const void *Decoder)
+{
+	// The rix16 displacement has 12-bits which are shifted by 4.
+	MCOperand_CreateImm0(Inst, (SignExtend64((Imm << 4), 16)));
+	return MCDisassembler_Success;
+}
+
+static DecodeStatus decodeDispRIHashOperand(MCInst *Inst, uint64_t Imm,
+					    int64_t Address,
+					    const void *Decoder)
+{
+	// Decode the disp field for a hash store or hash check operation.
+	// The field is composed of an immediate value that is 6 bits
+	// and covers the range -8 to -512. The immediate is always negative and 2s
+	// complement which is why we sign extend a 7 bit value.
+	const int64_t Disp = SignExtend64(((Imm & 0x3F) + 64), 7) * 8;
+
+	MCOperand_CreateImm0(Inst, (Disp));
 	return MCDisassembler_Success;
 }
 
@@ -486,7 +411,7 @@ DecodeStatus getInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		uint32_t BaseInst = readBytes32(MI, Bytes + 4);
 		uint64_t Inst = BaseInst | (uint64_t)Prefix << 32;
 		DecodeStatus result =
-			decodeInstruction_4(DecoderTable64, MI, Inst, Address);
+			decodeInstruction_4(DecoderTable64, MI, Inst, Address, NULL);
 		if (result != MCDisassembler_Fail) {
 			*Size = 8;
 			return result;
@@ -505,22 +430,22 @@ DecodeStatus getInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 
 	if (PPC_getFeatureBits(MI->csh->mode, PPC_FeatureQPX)) {
 		DecodeStatus result = decodeInstruction_4(DecoderTableQPX32, MI,
-							  Inst, Address);
+							  Inst, Address, NULL);
 		if (result != MCDisassembler_Fail)
 			return result;
 	} else if (PPC_getFeatureBits(MI->csh->mode, PPC_FeatureSPE)) {
 		DecodeStatus result = decodeInstruction_4(DecoderTableSPE32, MI,
-							  Inst, Address);
+							  Inst, Address, NULL);
 		if (result != MCDisassembler_Fail)
 			return result;
 	} else if (PPC_getFeatureBits(MI->csh->mode, PPC_FeaturePS)) {
 		DecodeStatus result = decodeInstruction_4(DecoderTablePS32, MI,
-							  Inst, Address);
+							  Inst, Address, NULL);
 		if (result != MCDisassembler_Fail)
 			return result;
 	}
 
-	return decodeInstruction_4(DecoderTable32, MI, Inst, Address);
+	return decodeInstruction_4(DecoderTable32, MI, Inst, Address, NULL);
 }
 
 DecodeStatus PPC_LLVM_getInstruction(csh handle, const uint8_t *Bytes,

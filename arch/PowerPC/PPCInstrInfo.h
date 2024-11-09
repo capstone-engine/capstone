@@ -6,8 +6,6 @@
 
 #include "PPCMCTargetDesc.h"
 
-extern const MCInstrDesc PPCInsts[];
-
 static bool isVFRegister(unsigned Reg)
 {
 	return Reg >= PPC_VF0 && Reg <= PPC_VF31;

@@ -462,11 +462,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 	}
 }
 
-/// Fills cs_detail with the data of the operand.
-/// Calls to this function should not be added by hand! Please checkout the
-/// patch `AddCSDetail` of the CppTranslator.
-void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
-{
+void PPC_add_cs_detail_1(MCInst *MI, ppc_op_group op_group, unsigned OpNum, const char *Modifier) {
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 
@@ -475,8 +471,6 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 		printf("Operand group %d not handled!\n", op_group);
 		return;
 	case PPC_OP_GROUP_PredicateOperand: {
-		unsigned OpNum = va_arg(args, unsigned);
-		const char *Modifier = va_arg(args, const char *);
 		if ((strcmp(Modifier, "cc") == 0) ||
 		    (strcmp(Modifier, "pm") == 0)) {
 			unsigned Val = MCInst_getOpVal(MI, OpNum);
@@ -494,6 +488,21 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 		}
 		return;
 	}
+	}
+}
+
+/// Fills cs_detail with the data of the operand.
+/// Calls to this function should not be added by hand! Please checkout the
+/// patch `AddCSDetail` of the CppTranslator.
+void PPC_add_cs_detail_0(MCInst *MI, ppc_op_group op_group, unsigned OpNo)
+{
+	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
+		return;
+
+	switch (op_group) {
+	default:
+		printf("Operand group %d not handled!\n", op_group);
+		return;
 	case PPC_OP_GROUP_S12ImmOperand:
 	case PPC_OP_GROUP_Operand:
 	case PPC_OP_GROUP_MemRegReg:
@@ -521,8 +530,7 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 	case PPC_OP_GROUP_U12ImmOperand:
 	case PPC_OP_GROUP_U7ImmOperand:
 	case PPC_OP_GROUP_ATBitsAsHint: {
-		unsigned OpNum = va_arg(args, unsigned);
-		add_cs_detail_general(MI, op_group, OpNum);
+		add_cs_detail_general(MI, op_group, OpNo);
 		return;
 	}
 	}

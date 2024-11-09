@@ -5,7 +5,6 @@
 
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
-#include "PPCInstPrinter.h"
 #include "PPCMapping.h"
 #include "PPCModule.h"
 

@@ -323,7 +323,6 @@ if(CAPSTONE_PPC_SUPPORT)
     )
     set(HEADERS_PPC
         arch/PowerPC/PPCInstrInfo.h
-        arch/PowerPC/PPCInstPrinter.h
         arch/PowerPC/PPCLinkage.h
         arch/PowerPC/PPCMapping.h
         arch/PowerPC/PPCMCTargetDesc.h
