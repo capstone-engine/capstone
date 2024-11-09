@@ -11,7 +11,7 @@ import subprocess as sp
 
 from pathlib import Path
 
-from autosync.Targets import TARGETS_LLVM_NAMING
+from autosync.Targets import TARGETS_LLVM_NAMING, TARGET_TO_DIR_NAME
 from autosync.Helper import convert_loglevel, get_path
 
 
@@ -256,6 +256,7 @@ class MCUpdater:
     ):
         self.symbolic_links = list()
         self.arch = arch
+        self.arch_dir_name = TARGET_TO_DIR_NAME[self.arch]
         self.test_dir_link_prefix = f"test_dir_{arch}_"
         self.mc_dir = mc_dir
         self.excluded = excluded if excluded else list()
@@ -479,7 +480,7 @@ class MCUpdater:
 
     def gen_all(self):
         log.info("Check prerequisites")
-        disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch}")
+        disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch_dir_name}")
         test_paths = [disas_tests]
         # Xtensa only defines assembly tests.
         if self.arch == "Xtensa":
