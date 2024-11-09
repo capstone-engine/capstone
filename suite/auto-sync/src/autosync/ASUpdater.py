@@ -184,7 +184,7 @@ class ASUpdater:
         if not self.write:
             if self.inc_generator.has_inc_patches():
                 log.warning(
-                    f"Patches to inc files are only applied with the -w flag. This wasn't done. Find them in {get_path("{INC_PATCH_DIR}")}"
+                    f"Patches to inc files are only applied with the -w flag. This wasn't done. Find them in {get_path('{INC_PATCH_DIR}')}"
                 )
             # Done
             exit(0)
