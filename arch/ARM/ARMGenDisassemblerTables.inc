@@ -16853,7 +16853,7 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
   case 1:
     return (!ARM_getFeatureBits(Inst->csh->mode, ARM_ModeThumb) && ARM_getFeatureBits(Inst->csh->mode, ARM_HasV6Ops));
   case 2:
-    return (!ARM_getFeatureBits(Inst->csh->mode, ARM_ModeThumb) && ARM_getFeatureBits(Inst->csh->mode, ARM_FeatureCRC));
+    return (!ARM_getFeatureBits(Inst->csh->mode, ARM_ModeThumb) && ARM_getFeatureBits(Inst->csh->mode, ARM_HasV8Ops) && ARM_getFeatureBits(Inst->csh->mode, ARM_FeatureCRC));
   case 3:
     return (!ARM_getFeatureBits(Inst->csh->mode, ARM_ModeThumb) && ARM_getFeatureBits(Inst->csh->mode, ARM_HasV5TEOps));
   case 4:
@@ -16987,7 +16987,7 @@ static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
   case 68:
     return ((ARM_getFeatureBits(Inst->csh->mode, ARM_ModeThumb) && ARM_getFeatureBits(Inst->csh->mode, ARM_FeatureThumb2)) && ARM_getFeatureBits(Inst->csh->mode, ARM_HasV7Ops) && ARM_getFeatureBits(Inst->csh->mode, ARM_FeatureMP));
   case 69:
-    return ((ARM_getFeatureBits(Inst->csh->mode, ARM_ModeThumb) && ARM_getFeatureBits(Inst->csh->mode, ARM_FeatureThumb2)) && ARM_getFeatureBits(Inst->csh->mode, ARM_FeatureCRC));
+    return ((ARM_getFeatureBits(Inst->csh->mode, ARM_ModeThumb) && ARM_getFeatureBits(Inst->csh->mode, ARM_FeatureThumb2)) && ARM_getFeatureBits(Inst->csh->mode, ARM_HasV8Ops) && ARM_getFeatureBits(Inst->csh->mode, ARM_FeatureCRC));
   case 70:
     return ((ARM_getFeatureBits(Inst->csh->mode, ARM_ModeThumb) && ARM_getFeatureBits(Inst->csh->mode, ARM_FeatureThumb2)) && ARM_getFeatureBits(Inst->csh->mode, ARM_HasV8_1MMainlineOps) && ARM_getFeatureBits(Inst->csh->mode, ARM_FeaturePACBTI));
   case 71:

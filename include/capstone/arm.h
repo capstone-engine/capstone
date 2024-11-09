@@ -894,6 +894,10 @@ typedef struct cs_arm_op {
 	int8_t neon_lane;
 } cs_arm_op;
 
+typedef struct {
+	cs_ac_type mem_acc; ///< CGI memory access according to mayLoad and mayStore
+} arm_suppl_info;
+
 #define NUM_ARM_OPS 36
 
 /// Instruction structure

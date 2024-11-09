@@ -767,12 +767,32 @@ void ARM_check_updates_flags(MCInst *MI)
 #endif // CAPSTONE_DIET
 }
 
+void ARM_check_mem_access_validity(MCInst *MI)
+{
+#ifndef CAPSTONE_DIET
+	if (!detail_is_set(MI))
+		return;
+	const arm_suppl_info *suppl = map_get_suppl_info(MI, arm_insns);
+	if (suppl->mem_acc == CS_AC_INVALID) {
+		return;
+	}
+	cs_detail *detail = get_detail(MI);
+	for (int i = 0; i < detail->arm.op_count; ++i) {
+		if (detail->arm.operands[i].type == ARM_OP_MEM && detail->arm.operands[i].access != suppl->mem_acc) {
+			detail->arm.operands[i].access = suppl->mem_acc;
+			return;
+		}
+	}
+#endif // CAPSTONE_DIET
+}
+
 void ARM_set_instr_map_data(MCInst *MI)
 {
 	map_cs_id(MI, arm_insns, ARR_SIZE(arm_insns));
 	map_implicit_reads(MI, arm_insns);
 	map_implicit_writes(MI, arm_insns);
 	ARM_check_updates_flags(MI);
+	ARM_check_mem_access_validity(MI);
 	map_groups(MI, arm_insns);
 }
 
