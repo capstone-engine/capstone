@@ -510,14 +510,6 @@ DEFINE_printMveAddrModeRQOperand(3);
 DEFINE_printMveAddrModeRQOperand(1);
 DEFINE_printMveAddrModeRQOperand(2);
 
-static inline void printLdStmModeOperand(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	add_cs_detail(MI, ARM_OP_GROUP_LdStmModeOperand, OpNum);
-	ARM_AM_SubMode Mode = ARM_AM_getAM4SubMode(
-		MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
-	SStream_concat0(O, ARM_AM_getAMSubModeStr(Mode));
-}
-
 #define DEFINE_printAddrMode5Operand(AlwaysPrintImm0) \
 	static inline void CONCAT(printAddrMode5Operand, AlwaysPrintImm0)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
@@ -913,12 +905,6 @@ static inline void printCoprocOptionImm(MCInst *MI, unsigned OpNum, SStream *O)
 	SStream_concat0(O, "}");
 }
 
-static inline void printPCLabel(MCInst *MI, unsigned OpNum, SStream *O)
-{
-	// add_cs_detail(MI, ARM_OP_GROUP_PCLabel, OpNum);
-	CS_ASSERT_RET(0 && "Unhandled PC-relative pseudo-instruction!");
-}
-
 #define DEFINE_printAdrLabelOperand(scale) \
 	static inline void CONCAT(printAdrLabelOperand, scale)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
@@ -952,7 +938,6 @@ DEFINE_printAdrLabelOperand(2);
 	{ \
 		CONCAT(printAdrLabelOperand, scale)(MI, OpNum, O); \
 	}
-DEFINE_printAdrLabelOperandAddr(0);
 DEFINE_printAdrLabelOperandAddr(2);
 
 static inline void printThumbS4ImmOperand(MCInst *MI, unsigned OpNum,
