@@ -15,29 +15,6 @@ jobs:
       with:
         submodules: true
 
-    - name: Build Debian Package
-      working-directory: ./packages/deb
-      run: ./setup.sh ${{ github.event.release.tag_name }}
-
-    - name: Run sanity checks on the Debian package
-      working-directory: ./packages/deb
-      run: |
-        ./check_capstone.sh ./libcapstone-dev.deb ${{ github.event.release.tag_name }}
-
-    - name: Rename Debian package
-      working-directory: ./packages/deb
-      run: |
-        dpkg-name libcapstone-dev.deb
-
-    - name: Upload debian package to release
-      uses: softprops/action-gh-release@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.event.release.tag_name }}
-        files: |
-          ./packages/deb/*.deb
-
     - name: Create archive
       id: archive
       run: |

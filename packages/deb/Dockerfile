@@ -1,8 +1,7 @@
 ARG VERSION=""
 
-# Assume this is run from capstone/debian directory
 # Run in the root of the repo
-# docker build -f ./debian/Dockerfile -t packager .
+# docker build -f ./packages/deb/Dockerfile -t packager .
 FROM debian:bookworm-slim
 
 # Install necessary tools for packaging
@@ -35,7 +34,7 @@ RUN cmake --install build --prefix /package-root/usr/
 # RUN find / -type f > /after-install.txt
 
 # Create DEBIAN directory and control file
-COPY ./debian/control /package-root/DEBIAN/control
+COPY ./packages/deb/control /package-root/DEBIAN/control
 
 # Update capstone.pc file with the correct version and remove archs field
 # Update control file with the correct version
@@ -45,7 +44,7 @@ RUN sed -i "s/^Version:.*/Version: ${VERSION}/" /package-root/usr/lib/pkgconfig/
 RUN sed -i "/^archs=/d" /package-root/usr/lib/pkgconfig/capstone.pc
 
 # Add triggers script to run ldconfig after installation
-COPY ./debian/triggers /package-root/DEBIAN/triggers
+COPY ./packages/deb/triggers /package-root/DEBIAN/triggers
 
 # Build the package
 RUN fakeroot dpkg-deb --build /package-root /libcapstone-dev.deb
