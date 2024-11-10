@@ -67,14 +67,21 @@ template = {
             'comment_close': '',
         },
     'ocaml': {
-            'header': "(* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_const.ml] *)\n",
+            'header': (
+                "(* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [%s_const.ml] *)\n"
+                "let _CS_OP_INVALID, _CS_OP_REG, _CS_OP_IMM, _CS_OP_FP, _CS_OP_PRED,"
+                " _CS_OP_SPECIAL, _CS_OP_MEM, _CS_OP_MEM_REG, _CS_OP_MEM_IMM"
+                " = Capstone.(_CS_OP_INVALID, _CS_OP_REG, _CS_OP_IMM, _CS_OP_FP, _CS_OP_PRED,"
+                " _CS_OP_SPECIAL, _CS_OP_MEM, _CS_OP_MEM_REG, _CS_OP_MEM_IMM)\n"
+                ),
             'footer': "",
             'line_format': 'let _%s = %s;;\n',
-            'out_file': './ocaml/%s_const.ml',
+            'out_file': './ocaml/src/%s_const.ml',
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'arm',
-            'mips.h': 'mips',
+            'aarch64.h': ['AArch64', 'AARCH64'],
             'm68k.h': 'm68k',
+            'mips.h': 'mips',
             'x86.h': 'x86',
             'ppc.h': 'ppc',
             'sparc.h': 'sparc',
@@ -84,6 +91,15 @@ template = {
             'm680x.h': 'm680x',
             'evm.h': 'evm',
             'wasm.h': 'wasm',
+            'mos65xx.h': 'mos65xx',
+            'bpf.h': 'bpf',
+            'riscv.h': 'riscv',
+            'sh.h': 'sh',
+            'tricore.h': ['TRICORE', 'TriCore'],
+            'alpha.h': ['ALPHA', 'Alpha'],
+            'hppa.h': 'hppa',
+            'loongarch.h': 'loongarch',
+            'xtensa.h': 'xtensa',
             'comment_open': '(*',
             'comment_close': ' *)',
         },
@@ -246,9 +262,15 @@ def gen(lang):
                         # ocaml uses lsl for '<<', lor for '|'
                         rhs = rhs.replace('<<', ' lsl ')
                         rhs = rhs.replace('|', ' lor ')
+                        # ocaml has no UINT8_MAX, UINT16_MAX
+                        rhs = rhs.replace('UINT8_MAX', '0xFF')
+                        rhs = rhs.replace('UINT16_MAX', '0xFFFF')
+                        # To allow easy tokenisation
+                        rhs = rhs.replace('+', ' + ')
                         # ocaml variable has _ as prefix
-                        if rhs[0].isalpha():
-                            rhs = '_' + rhs
+                        for rhs_token in rhs.split():
+                            if rhs_token.isidentifier() and rhs_token != 'lsl' and rhs_token != 'lor':
+                                rhs = rhs.replace(rhs_token, '_' + rhs_token)
 
                 if lang == 'swift':
                     value = eval(rhs, None, values)
