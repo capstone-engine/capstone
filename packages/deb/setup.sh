@@ -7,8 +7,8 @@ get_os_version() {
 }
 
 # Check if the script is running in the ./debian folder
-if [[ $(basename "$PWD") != "debian" ]]; then
-    echo "ERROR: Script must be run from the ./debian directory"
+if [[ $(basename "$PWD") != "deb" ]]; then
+    echo "ERROR: Script must be run from the ./deb directory"
     exit 1
 fi
 
