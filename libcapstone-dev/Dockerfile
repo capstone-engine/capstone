@@ -22,43 +22,40 @@ RUN cmake -B build -DCMAKE_BUILD_TYPE=Release -DCAPSTONE_BUILD_SHARED_LIBS=1
 RUN cmake --build build
 
 # List files before cmake install
-RUN find / -type f > /before-install.txt
+# RUN find / -type f > /before-install.txt
 
 # Run cmake install, by default everything goes into /usr/local
 RUN cmake --install build
 
 # List files after cmake install
-RUN find / -type f > /after-install.txt
+# RUN find / -type f > /after-install.txt
 
 # Make directories as needed
-ARG LIBCAPSTONE_NAME
-RUN mkdir -p /package-root/usr/lib/x86_64-linux-gnu/
-RUN mkdir -p /package-root/usr/share/doc/${LIBCAPSTONE_NAME}
+RUN mkdir -p /package-root/usr/include/capstone/
+RUN mkdir -p /package-root/usr/lib/x86_64-linux-gnu/pkgconfig/
+RUN mkdir -p /package-root/usr/share/doc/libcapstone-dev/
 
-# TODO: at the moment, I get /usr/local/lib/libcapstone.so.6.0
-# My question is, where is the .so.6.0 being populated? Should a fix be made to only have a .5, .6, etc?
-# With that said, I will have to assume the version based as an argument is correct in populating the control file
-
-# Copy files to the package root
-RUN cp -r /usr/local/lib/libcapstone.so* /package-root/usr/lib/x86_64-linux-gnu/
-# RUN cp /usr/share/doc/${LIBCAPSTONE_NAME}
+# Copy /usr/local/include/capstone/ to /package-root/usr/local/include/capstone/ and all other cases
+RUN cp -r /usr/local/include/capstone/* /package-root/usr/include/capstone/
+RUN cp -r /usr/local/lib/pkgconfig/capstone* /package-root/usr/lib/x86_64-linux-gnu/pkgconfig/
+RUN cp -r /usr/local/lib/libcapstone.a /package-root/usr/lib/x86_64-linux-gnu/
+# Need libcapstone.a too
 
 # Create DEBIAN directory and control file
-COPY ./libcapstone/control /package-root/DEBIAN/control
+COPY ./libcapstone-dev/control /package-root/DEBIAN/control
 
 # Update capstone.pc file with the correct version and remove archs field
 # Update control file with the correct version
+# TODO, I think pkgconfig needs to point from /usr/local to /usr?
 ARG VERSION
 ARG LIBCAPSTONE_NAME
 RUN sed -i "s/^Version:.*/Version: ${VERSION}/" /package-root/DEBIAN/control
-RUN sed -i "s/Package: libcapstone<major-version-placeholder>/Package: ${LIBCAPSTONE_NAME}/" /package-root/DEBIAN/control
-
-# Add postinst script to run ldconfig after installation
-COPY ./debian/postinst /package-root/DEBIAN/postinst
-RUN chmod 755 /package-root/DEBIAN/postinst
+RUN sed -i "s/^Version:.*/Version: ${VERSION}/" /package-root/usr/lib/x86_64-linux-gnu/pkgconfig/capstone.pc
+RUN sed -i "s/Depends: <libcapstone-name> (= <version-placeholder>)/Depends: ${LIBCAPSTONE_NAME} (= ${VERSION})/" /package-root/DEBIAN/control
+RUN sed -i "/^archs=/d" /package-root/usr/lib/x86_64-linux-gnu/pkgconfig/capstone.pc
 
 # Build the package
-RUN fakeroot dpkg-deb --build /package-root /${LIBCAPSTONE_NAME}.deb
+RUN fakeroot dpkg-deb --build /package-root /libcapstone-dev.deb
 
 # The user can now extract the .deb file from the container with something like
 # docker run --rm -v $(pwd):/out packager bash -c "cp /libcapstone-dev.deb /out"

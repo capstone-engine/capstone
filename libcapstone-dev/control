@@ -1,0 +1,20 @@
+Package: libcapstone-dev
+Version: <version-placeholder>
+Architecture: amd64
+Priority: optional
+Section: universe/libdevel
+Source: capstone
+Origin: Ubuntu
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Original-Maintainer: Debian Security Tools <team+pkg-security@tracker.debian.org>
+Bugs: https://bugs.launchpad.net/ubuntu/+filebug
+Installed-Size: 8255 kB
+Depends: <libcapstone-name> (= <version-placeholder>)
+Homepage: https://www.capstone-engine.org/
+Download-Size: 795 kB
+APT-Sources: http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages
+Description: lightweight multi-architecture disassembly framework - devel files
+ Capstone is a lightweight multi-platform, multi-architecture disassembly
+ framework.
+ .
+ These are the development headers and libraries.

@@ -1,6 +1,6 @@
 Package: libcapstone<major-version-placeholder>
 Version: <version-placeholder>
-Architecture: all
+Architecture: amd64
 Priority: optional
 Section: universe/libs
 Source: capstone
