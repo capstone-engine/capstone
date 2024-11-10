@@ -1,0 +1,34 @@
+Package: libcapstone<major-version-placeholder>
+Version: <version-placeholder>
+Architecture: all
+Priority: optional
+Section: universe/libs
+Source: capstone
+Origin: Ubuntu
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Original-Maintainer: Debian Security Tools <team+pkg-security@tracker.debian.org>
+Bugs: https://bugs.launchpad.net/ubuntu/+filebug
+Installed-Size: 6623 kB
+Depends: libc6 (>= 2.14)
+Homepage: https://www.capstone-engine.org/
+Download-Size: 664 kB
+APT-Sources: http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages
+Description: lightweight multi-architecture disassembly framework - library
+ Capstone is a lightweight multi-platform, multi-architecture disassembly
+ framework.
+ .
+ Features:
+  - Support hardware architectures: ARM, ARM64 (aka ARMv8), Mips, PowerPC &
+ Intel.
+  - Clean/simple/lightweight/intuitive architecture-neutral API.
+  - Provide details on disassembled instructions (called "decomposer" by some
+ others).
+  - Provide some semantics of the disassembled instruction, such as list of
+ implicit registers read & written.
+  - Implemented in pure C language, with bindings for Java, OCaml and Python
+ ready to use and Ruby, C#, GO & Vala available on git repos.
+  - Native support for Windows & *nix (with OS X, Linux, *BSD & Solaris
+ confirmed).
+  - Thread-safe by design.
+  - Special support for embedding into firmware or OS kernel.
+  - Distributed under the open source BSD license.
