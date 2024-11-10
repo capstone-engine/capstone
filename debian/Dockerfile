@@ -15,16 +15,13 @@ RUN mkdir /capstone
 COPY . /capstone
 WORKDIR /capstone/ 
 
-# Using cmake, see BUILDING.md file
-# For debug build change "Release" to "Debug"
-RUN cmake -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=1
-RUN cmake --build build
+# Run cmake install, by default everything goes into /usr/local
+RUN make.sh
 
 # List files before cmake install
 # RUN find / -type f > /before-install.txt
 
-# Run cmake install, by default everything goes into /usr/local
-RUN cmake --install build
+RUN make.sh install
 
 # List files after cmake install
 # RUN find / -type f > /after-install.txt
