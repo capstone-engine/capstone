@@ -18,7 +18,7 @@ TEMP_DIR=$(mktemp -d)
 dpkg-deb -x "$DEB_FILE" "$TEMP_DIR"
 
 # Path to the capstone.pc file
-CAPSTONE_PC="$TEMP_DIR/usr/local/lib/pkgconfig/capstone.pc"
+CAPSTONE_PC="$TEMP_DIR/usr/lib/pkgconfig/capstone.pc"
 
 # Check if the capstone.pc file exists
 if [[ ! -f "$CAPSTONE_PC" ]]; then
@@ -48,7 +48,7 @@ if [[ "$ACTUAL_VERSION" != "$EXPECTED_VERSION" ]]; then
 fi
 
 # Check if libcapstone.a is included in the package
-LIBCAPSTONE_A="$TEMP_DIR/usr/local/lib/libcapstone.a"
+LIBCAPSTONE_A="$TEMP_DIR/usr/lib/libcapstone.a"
 if [[ ! -f "$LIBCAPSTONE_A" ]]; then
   echo "libcapstone.a not found in the package!"
   rm -rf "$TEMP_DIR"
@@ -56,7 +56,7 @@ if [[ ! -f "$LIBCAPSTONE_A" ]]; then
 fi
 
 # Check if libcapstone.so is included in the package
-LIBCAPSTONE_SO="$TEMP_DIR/usr/local/lib/libcapstone.so"
+LIBCAPSTONE_SO="$TEMP_DIR/usr/lib/libcapstone.so"
 if [[ ! -f "$LIBCAPSTONE_SO" ]]; then
   echo "libcapstone.so not found in the package!"
   rm -rf "$TEMP_DIR"

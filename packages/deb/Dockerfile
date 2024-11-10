@@ -10,10 +10,10 @@ RUN apt-get -qq update && \
     DEBIAN_FRONTEND=noninteractive apt-get -qq install -y \
         fakeroot dpkg-dev dos2unix cmake
 
-# Copy your project files into the container
+# Copy project files into the container
 RUN mkdir /capstone
 COPY . /capstone
-WORKDIR /capstone/ 
+WORKDIR /capstone/
 
 # Using cmake, see BUILDING.md file
 # For debug build change "Release" to "Debug"
@@ -23,22 +23,16 @@ RUN cmake --build build
 # List files before cmake install
 # RUN find / -type f > /before-install.txt
 
-# Run cmake install, by default everything goes into /usr/local
-RUN cmake --install build
+# Make directories as needed
+RUN mkdir -p /package-root/usr/include/capstone/
+RUN mkdir -p /package-root/usr/lib/pkgconfig/
+RUN mkdir -p /package-root/usr/bin/
+
+# Run cmake install
+RUN cmake --install build --prefix /package-root/usr/
 
 # List files after cmake install
 # RUN find / -type f > /after-install.txt
-
-# Make directories as needed
-RUN mkdir -p /package-root/usr/local/include/capstone/
-RUN mkdir -p /package-root/usr/local/lib/pkgconfig/
-RUN mkdir -p /package-root/usr/local/bin/
-
-# Copy /usr/local/include/capstone/ to /package-root/usr/local/include/capstone/ and all other cases
-RUN cp -r /usr/local/include/capstone/* /package-root/usr/local/include/capstone/
-RUN cp -r /usr/local/lib/libcapstone* /package-root/usr/local/lib/
-RUN cp -r /usr/local/lib/pkgconfig/capstone* /package-root/usr/local/lib/pkgconfig/
-RUN cp -r /usr/local/bin/cstool /package-root/usr/local/bin/
 
 # Create DEBIAN directory and control file
 COPY ./debian/control /package-root/DEBIAN/control
@@ -47,12 +41,11 @@ COPY ./debian/control /package-root/DEBIAN/control
 # Update control file with the correct version
 ARG VERSION
 RUN sed -i "s/^Version:.*/Version: ${VERSION}/" /package-root/DEBIAN/control
-RUN sed -i "s/^Version:.*/Version: ${VERSION}/" /package-root/usr/local/lib/pkgconfig/capstone.pc
-RUN sed -i "/^archs=/d" /package-root/usr/local/lib/pkgconfig/capstone.pc
+RUN sed -i "s/^Version:.*/Version: ${VERSION}/" /package-root/usr/lib/pkgconfig/capstone.pc
+RUN sed -i "/^archs=/d" /package-root/usr/lib/pkgconfig/capstone.pc
 
-# Add postinst script to run ldconfig after installation
-COPY ./debian/postinst /package-root/DEBIAN/postinst
-RUN chmod 755 /package-root/DEBIAN/postinst
+# Add triggers script to run ldconfig after installation
+COPY ./debian/triggers /package-root/DEBIAN/triggers
 
 # Build the package
 RUN fakeroot dpkg-deb --build /package-root /libcapstone-dev.deb
