@@ -180,6 +180,9 @@ void LoongArch_rewrite_memory_operand(MCInst *MI)
 
 	const loongarch_suppl_info *suppl_info =
 		map_get_suppl_info(MI, loongarch_insns);
+	if (!suppl_info)
+		return;
+
 	if (suppl_info->memory_access == CS_AC_INVALID) {
 		// not memory instruction
 		return;

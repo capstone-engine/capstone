@@ -211,7 +211,7 @@ static DecodeStatus DecodeMR01RegisterClass(MCInst *Inst, uint64_t RegNo,
 					    uint64_t Address,
 					    const void *Decoder)
 {
-	if (RegNo > 2)
+	if (RegNo >= ARR_SIZE(MR01DecoderTable))
 		return MCDisassembler_Fail;
 
 	unsigned Reg = MR01DecoderTable[RegNo];
@@ -970,7 +970,7 @@ static DecodeStatus readInstructionN(const uint8_t *Bytes, size_t BytesLen,
 
 	*Insn = 0;
 	for (unsigned i = 0; i < InstSize; i++)
-		*Insn |= (Bytes[i] << 8 * i);
+		*Insn |= (uint64_t)(Bytes[i]) << (8 * i);
 
 	*Size = InstSize;
 	return MCDisassembler_Success;
