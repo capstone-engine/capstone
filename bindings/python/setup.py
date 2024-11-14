@@ -85,6 +85,7 @@ def copy_sources():
 
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.[ch]")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.m[dk]")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.in")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "LICENSES/*")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.TXT")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "ChangeLog")))
