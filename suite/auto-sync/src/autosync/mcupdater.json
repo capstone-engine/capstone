@@ -11,10 +11,6 @@
     },
     "mandatory_options":
     {
-        "SystemZ":
-        [
-            "CS_MODE_BIG_ENDIAN"
-        ],
         "Mips":
         [
             "CS_OPT_SYNTAX_NOREGNAME"
@@ -22,7 +18,6 @@
         "PPC":
         [
             "CS_OPT_ONLY_OFFSET_BRANCH",
-            "CS_MODE_BIG_ENDIAN",
             "CS_OPT_SYNTAX_NOREGNAME"
             
         ],
@@ -34,6 +29,11 @@
         [
             "CS_OPT_ONLY_OFFSET_BRANCH"
         ]
+    },
+    "default_endianess":
+    {
+        "SystemZ": "CS_MODE_BIG_ENDIAN",
+        "PPC": "CS_MODE_BIG_ENDIAN"
     },
     "remove_options":
     {

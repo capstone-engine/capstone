@@ -277,6 +277,11 @@ class MCUpdater:
             if self.arch in self.conf["mandatory_options"]
             else list()
         )
+        self.default_endianess: str = (
+            self.conf["default_endianess"][self.arch]
+            if self.arch in self.conf["default_endianess"]
+            else ""
+        )
         self.remove_options: str = (
             self.conf["remove_options"][self.arch]
             if self.arch in self.conf["remove_options"]
@@ -376,6 +381,17 @@ class MCUpdater:
                 new_options.extend(self.replace_option_map[opt])
             else:
                 new_options.append(opt)
+        if (
+            not any(
+                [
+                    True
+                    for x in new_options
+                    if x in ["CS_MODE_BIG_ENDIAN", "CS_MODE_LITTLE_ENDIAN"]
+                ]
+            )
+            and self.default_endianess
+        ):
+            new_options.append(self.default_endianess)
         return new_options
 
     def build_test_files(self, mc_cmds: list[LLVM_MC_Command]) -> list[TestFile]:
