@@ -34,6 +34,10 @@ cs_err PPC_option(cs_struct *handle, cs_opt_type type, size_t value)
 		handle->syntax = (int)value;
 
 	if (type == CS_OPT_MODE) {
+		if (value == CS_MODE_LITTLE_ENDIAN) {
+			handle->mode = handle->mode & ~CS_MODE_BIG_ENDIAN;
+			return CS_ERR_OK;
+		}
 		handle->mode |= (cs_mode)value;
 	}
 
