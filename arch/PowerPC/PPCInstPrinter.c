@@ -445,10 +445,7 @@ static inline void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		return;
 	}
 
-	printInt32(O, SignExtend32(((unsigned)MCOperand_getImm(
-					    MCInst_getOperand(MI, (OpNo)))
-				    << 2),
-				   32));
+	printUInt64(O, ((unsigned)MCOperand_getImm(MCInst_getOperand(MI, (OpNo))) << 2));
 }
 
 static inline void printcrbitm(MCInst *MI, unsigned OpNo, SStream *O)

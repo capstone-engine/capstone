@@ -31,7 +31,7 @@ test_cases:
               bo_set: true
               pred_ctr: PPC_PRED_NZ
       -
-        asm_text: "bdztla 4*cr5+eq, 0xff14"
+        asm_text: "bdztla 4*cr5+eq, 0xffffff14"
         details:
          ppc:
             operands:
@@ -41,7 +41,7 @@ test_cases:
                 access: CS_AC_READ
               -
                 type: PPC_OP_IMM
-                imm: 0xff14
+                imm: 0xffffff14
                 access: CS_AC_READ
             bc:
               bi: 22

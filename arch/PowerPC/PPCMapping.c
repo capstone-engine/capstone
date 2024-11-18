@@ -402,10 +402,9 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			// Handled in printOperand()
 			return;
 		unsigned Val = MCInst_getOpVal(MI, OpNum) << 2;
-		int32_t Imm = SignExtend32(Val, 32);
 		PPC_check_safe_inc(MI);
 		PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
-		PPC_get_detail_op(MI, 0)->imm = Imm;
+		PPC_get_detail_op(MI, 0)->imm = Val;
 		PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 		PPC_inc_op_count(MI);
 		break;
