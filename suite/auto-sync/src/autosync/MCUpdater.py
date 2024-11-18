@@ -373,7 +373,7 @@ class MCUpdater:
             if opt in self.remove_options:
                 continue
             elif opt in self.replace_option_map:
-                new_options.append(self.replace_option_map[opt])
+                new_options.extend(self.replace_option_map[opt])
             else:
                 new_options.append(opt)
         return new_options
