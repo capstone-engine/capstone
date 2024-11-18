@@ -4,6 +4,7 @@
 
 #include "Mapping.h"
 #include "capstone/capstone.h"
+#include "cs_priv.h"
 #include "utils.h"
 
 // create a cache for fast id lookup
@@ -40,9 +41,13 @@ unsigned short insn_find(const insn_map *insns, unsigned int max,
 // Returns the id or -1 if not found.
 int name2id(const name_map *map, int max, const char *name)
 {
+	CS_ASSERT_RET_VAL(map && name, -1);
 	int i;
 
 	for (i = 0; i < max; i++) {
+		if (!map[i].name) {
+			return -1;
+		}
 		if (!strcmp(map[i].name, name)) {
 			return map[i].id;
 		}
