@@ -38,6 +38,7 @@ TARGET_TO_IN_CODE_NAME = {
     "Mips": "Mips",
     "Xtensa": "Xtensa",
     "TriCore": "TriCore",
+    "ARCH": "ARCH",  # For testing
 }
 
 # Maps the name from ARCH_LLVM_NAMING to the directory name in LLVM
@@ -51,4 +52,5 @@ TARGET_TO_DIR_NAME = {
     "Mips": "Mips",
     "Xtensa": "Xtensa",
     "TriCore": "TriCore",
+    "ARCH": "ARCH",  # For testing
 }
