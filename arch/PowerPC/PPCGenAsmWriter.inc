@@ -3704,12 +3704,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     16891U,	// PROBED_STACKALLOC_32
     17312U,	// PROBED_STACKALLOC_64
     39576U,	// PSC_DCBZL
-    2214632081U,	// PSQ_L
-    2214638244U,	// PSQ_LU
+    1006672529U,	// PSQ_L
+    1006678692U,	// PSQ_LU
     2147532122U,	// PSQ_LUX
     2147531306U,	// PSQ_LX
-    2214638033U,	// PSQ_ST
-    2214638308U,	// PSQ_STU
+    1006678481U,	// PSQ_ST
+    1006678756U,	// PSQ_STU
     2147532181U,	// PSQ_STUX
     2147532025U,	// PSQ_STX
     3087044462U,	// PSTB
@@ -3918,7 +3918,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147528203U,	// QVFXXMADDS
     2147520929U,	// QVFXXNPMADD
     2147528178U,	// QVFXXNPMADDS
-    1006671748U,	// QVGPCI
+    1040226180U,	// QVGPCI
     134266135U,	// QVLFCDUX
     134254050U,	// QVLFCDUXA
     134265067U,	// QVLFCDX
@@ -4250,8 +4250,8 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     33496U,	// SUBFME_rec
     2147524542U,	// SUBFO
     2147517837U,	// SUBFO_rec
-    1040232400U,	// SUBFUS
-    1040222283U,	// SUBFUS_rec
+    1073786832U,	// SUBFUS
+    1073776715U,	// SUBFUS_rec
     38093U,	// SUBFZE
     38093U,	// SUBFZE8
     40885U,	// SUBFZE8O
@@ -4481,18 +4481,18 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2449521573U,	// VINSBRX
     2449521257U,	// VINSBVLX
     2449521635U,	// VINSBVRX
-    1073779489U,	// VINSD
+    1107333921U,	// VINSD
     2449521221U,	// VINSDLX
     2449521607U,	// VINSDRX
-    1073778532U,	// VINSERTB
+    1107332964U,	// VINSERTB
     2449511287U,	// VINSERTD
-    1073780422U,	// VINSERTH
+    1107334854U,	// VINSERTH
     2449520471U,	// VINSERTW
     2449521230U,	// VINSHLX
     2449521616U,	// VINSHRX
     2449521290U,	// VINSHVLX
     2449521668U,	// VINSHVRX
-    1073788683U,	// VINSW
+    1107343115U,	// VINSW
     2449521334U,	// VINSWLX
     2449521712U,	// VINSWRX
     2449521312U,	// VINSWVLX
@@ -5044,8 +5044,8 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1097318U,	// XXSETACCZW
     2147522996U,	// XXSLDWI
     2147522996U,	// XXSLDWIs
-    1107343582U,	// XXSPLTI32DX
-    1140887189U,	// XXSPLTIB
+    1140898014U,	// XXSPLTI32DX
+    1174441621U,	// XXSPLTIB
     41446U,	// XXSPLTIDP
     46460U,	// XXSPLTIW
     2147530564U,	// XXSPLTW
@@ -6731,12 +6731,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// PROBED_STACKALLOC_32
     0U,	// PROBED_STACKALLOC_64
     0U,	// PSC_DCBZL
-    48U,	// PSQ_L
-    48U,	// PSQ_LU
+    0U,	// PSQ_L
+    0U,	// PSQ_LU
     10256U,	// PSQ_LUX
     10256U,	// PSQ_LX
-    48U,	// PSQ_ST
-    48U,	// PSQ_STU
+    0U,	// PSQ_ST
+    0U,	// PSQ_STU
     10256U,	// PSQ_STUX
     10256U,	// PSQ_STX
     3U,	// PSTB
@@ -7039,12 +7039,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// RLDICR_32
     0U,	// RLDICR_rec
     0U,	// RLDIC_rec
-    52U,	// RLDIMI
-    52U,	// RLDIMI_rec
-    56U,	// RLWIMI
-    56U,	// RLWIMI8
-    56U,	// RLWIMI8_rec
-    56U,	// RLWIMI_rec
+    48U,	// RLDIMI
+    48U,	// RLDIMI_rec
+    52U,	// RLWIMI
+    52U,	// RLWIMI8
+    52U,	// RLWIMI8_rec
+    52U,	// RLWIMI_rec
     41476U,	// RLWINM
     41476U,	// RLWINM8
     41476U,	// RLWINM8_rec
@@ -7368,10 +7368,10 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     144U,	// VAVGUW
     144U,	// VBPERMD
     144U,	// VBPERMQ
-    60U,	// VCFSX
+    56U,	// VCFSX
     3U,	// VCFSX_0
     144U,	// VCFUGED
-    60U,	// VCFUX
+    56U,	// VCFUX
     3U,	// VCFUX_0
     144U,	// VCIPHER
     144U,	// VCIPHERLAST
@@ -7439,9 +7439,9 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     152U,	// VCNTMBD
     152U,	// VCNTMBH
     152U,	// VCNTMBW
-    60U,	// VCTSXS
+    56U,	// VCTSXS
     3U,	// VCTSXS_0
-    60U,	// VCTUXS
+    56U,	// VCTUXS
     3U,	// VCTUXS_0
     0U,	// VCTZB
     0U,	// VCTZD
@@ -7477,13 +7477,13 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1040U,	// VEXTDUWVLX
     1040U,	// VEXTDUWVRX
     0U,	// VEXTRACTBM
-    64U,	// VEXTRACTD
+    60U,	// VEXTRACTD
     0U,	// VEXTRACTDM
     0U,	// VEXTRACTHM
     0U,	// VEXTRACTQM
-    64U,	// VEXTRACTUB
-    64U,	// VEXTRACTUH
-    64U,	// VEXTRACTUW
+    60U,	// VEXTRACTUB
+    60U,	// VEXTRACTUH
+    60U,	// VEXTRACTUW
     0U,	// VEXTRACTWM
     0U,	// VEXTSB2D
     0U,	// VEXTSB2Ds
@@ -7503,7 +7503,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     144U,	// VEXTUWLX
     144U,	// VEXTUWRX
     0U,	// VGBBD
-    68U,	// VGNB
+    64U,	// VGNB
     172U,	// VINSBLX
     172U,	// VINSBRX
     172U,	// VINSBVLX
@@ -7512,9 +7512,9 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     172U,	// VINSDLX
     172U,	// VINSDRX
     0U,	// VINSERTB
-    64U,	// VINSERTD
+    60U,	// VINSERTD
     0U,	// VINSERTH
-    64U,	// VINSERTW
+    60U,	// VINSERTW
     172U,	// VINSHLX
     172U,	// VINSHRX
     172U,	// VINSHVLX
@@ -7664,14 +7664,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     144U,	// VSLQ
     144U,	// VSLV
     144U,	// VSLW
-    60U,	// VSPLTB
-    60U,	// VSPLTBs
-    60U,	// VSPLTH
-    60U,	// VSPLTHs
+    56U,	// VSPLTB
+    56U,	// VSPLTBs
+    56U,	// VSPLTH
+    56U,	// VSPLTHs
     0U,	// VSPLTISB
     0U,	// VSPLTISH
     0U,	// VSPLTISW
-    60U,	// VSPLTW
+    56U,	// VSPLTW
     144U,	// VSR
     144U,	// VSRAB
     144U,	// VSRAD
@@ -7863,9 +7863,9 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     144U,	// XSSUBSP
     144U,	// XSTDIVDP
     0U,	// XSTSQRTDP
-    72U,	// XSTSTDCDP
-    72U,	// XSTSTDCQP
-    72U,	// XSTSTDCSP
+    68U,	// XSTSTDCDP
+    68U,	// XSTSTDCQP
+    68U,	// XSTSTDCSP
     0U,	// XSXEXPDP
     0U,	// XSXEXPQP
     0U,	// XSXSIGDP
@@ -8021,8 +8021,8 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// XVTLSBB
     0U,	// XVTSQRTDP
     0U,	// XVTSQRTSP
-    72U,	// XVTSTDCDP
-    72U,	// XVTSTDCSP
+    68U,	// XVTSTDCDP
+    68U,	// XVTSTDCSP
     0U,	// XVXEXPDP
     0U,	// XVXEXPSP
     0U,	// XVXSIGDP
@@ -8036,12 +8036,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// XXBRQ
     0U,	// XXBRW
     9232U,	// XXEVAL
-    76U,	// XXEXTRACTUW
-    80U,	// XXGENPCVBM
-    80U,	// XXGENPCVDM
-    80U,	// XXGENPCVHM
-    80U,	// XXGENPCVWM
-    84U,	// XXINSERTW
+    72U,	// XXEXTRACTUW
+    76U,	// XXGENPCVBM
+    76U,	// XXGENPCVDM
+    76U,	// XXGENPCVHM
+    76U,	// XXGENPCVWM
+    80U,	// XXINSERTW
     144U,	// XXLAND
     144U,	// XXLANDC
     144U,	// XXLEQV
@@ -8077,13 +8077,13 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// XXSPLTIW
     32U,	// XXSPLTW
     32U,	// XXSPLTWs
-    88U,	// gBC
-    92U,	// gBCA
+    84U,	// gBC
+    88U,	// gBCA
     0U,	// gBCAat
     144U,	// gBCCTR
     144U,	// gBCCTRL
-    88U,	// gBCL
-    92U,	// gBCLA
+    84U,	// gBCL
+    88U,	// gBCLA
     0U,	// gBCLAat
     144U,	// gBCLR
     144U,	// gBCLRL
@@ -11454,7 +11454,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   }
 
 
-  // Fragment 2 encoded into 6 bits for 35 unique commands.
+  // Fragment 2 encoded into 6 bits for 36 unique commands.
   switch ((Bits >> 25) & 63) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
@@ -11468,6 +11468,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   case 2:
     // LAx, EVLDD, EVLDH, EVLDW, EVLHHESPLAT, EVLHHOSSPLAT, EVLHHOUSPLAT, EVL...
     printMemRegImm(MI, 1, O);
+    return;
     break;
   case 3:
     // SUBPCIS, LI, LI8, LIS, LIS8
@@ -11608,11 +11609,20 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 30:
+    // PSQ_L, PSQ_LU, PSQ_ST, PSQ_STU
+    printMemRegImmPS(MI, 1, O);
+    SStream_concat0(O, ", ");
+    printU1ImmOperand(MI, 3, O);
+    SStream_concat0(O, ", ");
+    printU3ImmOperand(MI, 4, O);
+    return;
+    break;
+  case 31:
     // QVGPCI
     printU12ImmOperand(MI, 1, O);
     return;
     break;
-  case 31:
+  case 32:
     // SUBFUS, SUBFUS_rec
     printU1ImmOperand(MI, 3, O);
     SStream_concat0(O, ", ");
@@ -11621,21 +11631,21 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 2, O);
     return;
     break;
-  case 32:
+  case 33:
     // VINSD, VINSERTB, VINSERTH, VINSW
     printOperand(MI, 3, O);
     SStream_concat0(O, ", ");
     printU4ImmOperand(MI, 2, O);
     return;
     break;
-  case 33:
+  case 34:
     // XXSPLTI32DX
     printU1ImmOperand(MI, 2, O);
     SStream_concat0(O, ", ");
     printOperand(MI, 3, O);
     return;
     break;
-  case 34:
+  case 35:
     // XXSPLTIB
     printU8ImmOperand(MI, 1, O);
     return;
@@ -11647,7 +11657,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   switch ((Bits >> 31) & 7) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
-    // BUILD_UACC, DCBTCT, DCBTDS, DCBTSTCT, DCBTSTDS, LAx, ADDME, ADDME8, AD...
+    // BUILD_UACC, DCBTCT, DCBTDS, DCBTSTCT, DCBTSTDS, ADDME, ADDME8, ADDME8O...
     return;
     break;
   case 1:
@@ -11691,7 +11701,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
   }
 
 
-  // Fragment 4 encoded into 5 bits for 24 unique commands.
+  // Fragment 4 encoded into 5 bits for 23 unique commands.
   switch ((Bits >> 34) & 31) {
   default: CS_ASSERT_RET(0 && "Invalid command number.");
   case 0:
@@ -11748,20 +11758,13 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 3, O);
     break;
   case 12:
-    // PSQ_L, PSQ_LU, PSQ_ST, PSQ_STU
-    printU1ImmOperand(MI, 3, O);
-    SStream_concat0(O, ", ");
-    printU3ImmOperand(MI, 4, O);
-    return;
-    break;
-  case 13:
     // RLDIMI, RLDIMI_rec
     printU6ImmOperand(MI, 3, O);
     SStream_concat0(O, ", ");
     printU6ImmOperand(MI, 4, O);
     return;
     break;
-  case 14:
+  case 13:
     // RLWIMI, RLWIMI8, RLWIMI8_rec, RLWIMI_rec
     printU5ImmOperand(MI, 3, O);
     SStream_concat0(O, ", ");
@@ -11770,47 +11773,47 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printU5ImmOperand(MI, 5, O);
     return;
     break;
-  case 15:
+  case 14:
     // VCFSX, VCFUX, VCTSXS, VCTUXS, VSPLTB, VSPLTBs, VSPLTH, VSPLTHs, VSPLTW
     printU5ImmOperand(MI, 1, O);
     return;
     break;
-  case 16:
+  case 15:
     // VEXTRACTD, VEXTRACTUB, VEXTRACTUH, VEXTRACTUW, VINSERTD, VINSERTW
     printU4ImmOperand(MI, 1, O);
     return;
     break;
-  case 17:
+  case 16:
     // VGNB
     printU3ImmOperand(MI, 2, O);
     return;
     break;
-  case 18:
+  case 17:
     // XSTSTDCDP, XSTSTDCQP, XSTSTDCSP, XVTSTDCDP, XVTSTDCSP
     printU7ImmOperand(MI, 1, O);
     return;
     break;
-  case 19:
+  case 18:
     // XXEXTRACTUW
     printU4ImmOperand(MI, 2, O);
     return;
     break;
-  case 20:
+  case 19:
     // XXGENPCVBM, XXGENPCVDM, XXGENPCVHM, XXGENPCVWM
     printS5ImmOperand(MI, 2, O);
     return;
     break;
-  case 21:
+  case 20:
     // XXINSERTW
     printU4ImmOperand(MI, 3, O);
     return;
     break;
-  case 22:
+  case 21:
     // gBC, gBCL
     printBranchOperand(MI, Address, 2, O);
     return;
     break;
-  case 23:
+  case 22:
     // gBCA, gBCLA
     printAbsBranchOperand(MI, 2, O);
     return;
