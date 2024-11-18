@@ -138,7 +138,7 @@ typedef struct cs_arch_config {
 		PPC_global_init, \
 		PPC_option, \
 		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_BIG_ENDIAN \
-				| CS_MODE_QPX | CS_MODE_PS | CS_MODE_BOOKE), \
+				| CS_MODE_QPX | CS_MODE_PS | CS_MODE_BOOKE | CS_MODE_SPE), \
 	}
 #define CS_ARCH_CONFIG_SPARC \
 	{ \
