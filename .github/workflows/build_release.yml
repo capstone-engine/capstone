@@ -14,31 +14,8 @@ jobs:
     - uses: actions/checkout@v4
       with:
         submodules: true
-    
-    - name: Make setup.sh and check_capstone.sh are executable
-      run: |
-        chmod +x debian/setup.sh
-        chmod +x debian/check_capstone.sh
 
-    - name: Build Debian Package
-      working-directory: ./debian
-      run: ./setup.sh ${{ github.event.release.tag_name }}
-
-    - name: Run sanity checks on the Debian package
-      working-directory: ./debian
-      run: |
-        ./check_capstone.sh ./libcapstone-dev.deb ${{ github.event.release.tag_name }}
-
-    - name: Upload debian package to release
-      uses: softprops/action-gh-release@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.event.release.tag_name }}
-        files: |
-          ./debian/*.deb
-
-    - name: archive
+    - name: Create archive
       id: archive
       run: |
         VERSION=${{ github.event.release.tag_name }}

@@ -45,7 +45,7 @@ static void test()
 	csh handle;
 	cs_err err;
 
-	err = cs_open(CS_ARCH_XTENSA, CS_MODE_XTENSA, &handle);
+	err = cs_open(CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32, &handle);
 	if (err) {
 		if (cs_support(CS_ARCH_XTENSA)) {
 			printf("Failed on cs_open() with error returned: %u\n",
@@ -74,8 +74,8 @@ static void test()
 			  0x100000, 2, &insn);
 
 	// 2. Now print out the instruction in newly customized setup.
-	check_insn(insn, "l32r", "a1, . 0xbffff");
-	check_insn(insn + 1, "l32r", "a1, . 0xffffb");
+	check_insn(insn, "l32r", "a1, . 0xfffbf000");
+	check_insn(insn + 1, "l32r", "a1, . 0xffffeffc");
 	print_insn(insn, count);
 
 	// Done

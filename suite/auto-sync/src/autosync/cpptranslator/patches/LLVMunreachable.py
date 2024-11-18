@@ -30,5 +30,5 @@ class LLVMUnreachable(Patch):
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
         err_msg = captures[2][0]
         err_msg = get_text(src, err_msg.start_byte, err_msg.end_byte).strip(b"()")
-        res = b"assert(0 && " + err_msg + b")"
+        res = b"CS_ASSERT(0 && " + err_msg + b")"
         return res

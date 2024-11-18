@@ -14,4 +14,7 @@
 #define GET_INSTRINFO_ENUM
 #include "XtensaGenInstrInfo.inc"
 
+#define GET_SUBTARGETINFO_ENUM
+#include "XtensaGenSubtargetInfo.inc"
+
 #endif //CAPSTONE_PRIV_H

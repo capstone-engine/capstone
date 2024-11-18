@@ -119,13 +119,18 @@ int main(int argc, char **argv)
     },
     {
         CS_ARCH_XTENSA,
-        (cs_mode)CS_MODE_XTENSA,
-        "Xtensa"
+        (cs_mode)CS_MODE_XTENSA_ESP32,
+        "Xtensa ESP32"
     },
     {
         CS_ARCH_XTENSA,
-        (cs_mode)CS_MODE_XTENSA + CS_MODE_BIG_ENDIAN,
-        "Xtensa (Big-Endian)"
+        (cs_mode)CS_MODE_XTENSA_ESP32S2,
+        "Xtensa ESP32S2"
+    },
+    {
+        CS_ARCH_XTENSA,
+        (cs_mode)CS_MODE_XTENSA_ESP8266,
+        "Xtensa ESP8266"
     },
   };
 

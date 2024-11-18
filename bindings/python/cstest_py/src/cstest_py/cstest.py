@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import argparse
 import logging
-import subprocess as sp
 import sys
 import os
 import yaml
@@ -405,34 +404,16 @@ class CSTest:
         self.stats.print_evaluate()
 
 
-def get_repo_root() -> str | None:
-    res = sp.run(["git", "rev-parse", "--show-toplevel"], capture_output=True)
-    if res.stderr:
-        log.error("Could not get repository root directory.")
-        return None
-    return res.stdout.decode("utf8").strip()
-
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="Python CSTest",
-        description="Pyton binding cstest implementation.",
+        description="Python binding cstest implementation.",
     )
-    repo_root = get_repo_root()
-    if repo_root:
-        parser.add_argument(
-            dest="search_dir",
-            help="Directory to search for .yaml test files.",
-            default=Path(f"{repo_root}/tests/"),
-            type=Path,
-        )
-    else:
-        parser.add_argument(
-            dest="search_dir",
-            help="Directory to search for .yaml test files.",
-            required=True,
-            type=Path,
-        )
+    parser.add_argument(
+        dest="search_dir",
+        help="Directory to search for .yaml test files.",
+        type=Path,
+    )
     parser.add_argument(
         "-e",
         dest="exclude",

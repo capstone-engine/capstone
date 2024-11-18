@@ -260,7 +260,8 @@ typedef struct cs_arch_config {
 	{ \
 		Xtensa_global_init, \
 		Xtensa_option, \
-		~(CS_MODE_XTENSA), \
+		~(CS_MODE_XTENSA_ESP32 | CS_MODE_XTENSA_ESP32S2 | \
+		  CS_MODE_XTENSA_ESP8266), \
 	}
 
 #ifdef CAPSTONE_USE_ARCH_REGISTRATION

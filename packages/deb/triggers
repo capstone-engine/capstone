@@ -1,0 +1,2 @@
+# Trigger ldconfig after install
+activate-noawait ldconfig

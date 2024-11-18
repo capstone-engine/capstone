@@ -1,0 +1,26 @@
+name: Build Debian Package
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: true
+
+    - name: Build Debian Package
+      working-directory: ./packages/deb
+      run: ./setup.sh "$(git describe --tags --abbrev=0)"
+
+    - name: Run sanity checks on the Debian package
+      working-directory: ./packages/deb
+      run: |
+        ./check_capstone.sh ./libcapstone-dev.deb "$(git describe --tags --abbrev=0)"
+
+    - uses: actions/upload-artifact@v4
+      with:
+        path: ./packages/deb/libcapstone-dev.deb

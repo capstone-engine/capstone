@@ -221,8 +221,9 @@ static struct {
 
 	{ "loongarch32", "LoongArch 32-bit", CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH32 },
 	{ "loongarch64", "LoongArch 64-bit", CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64 },
-	{ "xtensa", "Xtensa", CS_ARCH_XTENSA, CS_MODE_XTENSA },
-	{ "xtensabe", "Xtensa, big endian", CS_ARCH_XTENSA, CS_MODE_XTENSA | CS_MODE_BIG_ENDIAN },
+	{ "esp32", "Xtensa ESP32", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32 },
+	{ "esp32s2", "Xtensa ESP32S2", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32S2 },
+	{ "esp8266", "Xtensa ESP8266", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP8266 },
 	{ NULL }
 };
 

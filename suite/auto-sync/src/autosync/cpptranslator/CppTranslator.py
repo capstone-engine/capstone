@@ -50,6 +50,7 @@ from autosync.cpptranslator.patches.IsPredicate import IsPredicate
 from autosync.cpptranslator.patches.IsRegImm import IsOperandRegImm
 from autosync.cpptranslator.patches.LLVMFallThrough import LLVMFallThrough
 from autosync.cpptranslator.patches.LLVMunreachable import LLVMUnreachable
+from autosync.cpptranslator.patches.LLVM_DEBUG import LLVM_DEBUG
 from autosync.cpptranslator.patches.MethodToFunctions import MethodToFunction
 from autosync.cpptranslator.patches.MethodTypeQualifier import MethodTypeQualifier
 from autosync.cpptranslator.patches.NamespaceAnon import NamespaceAnon
@@ -153,6 +154,7 @@ class Translator:
         Assert.__name__: 0,  # ◁─────────┐ The llvm_unreachable calls are replaced with asserts.
         LLVMUnreachable.__name__: 1,  # ─┘ Those assert should stay.
         LLVMFallThrough.__name__: 0,
+        LLVM_DEBUG.__name__: 0,
         DeclarationInConditionalClause.__name__: 0,
         StreamOperations.__name__: 0,
         OutStreamParam.__name__: 0,  # ◁──────┐ add_cs_detail() is added to printOperand functions with a certain
@@ -323,6 +325,8 @@ class Translator:
                     patch = ConstMCInstParameter(p)
                 case LLVMUnreachable.__name__:
                     patch = LLVMUnreachable(p)
+                case LLVM_DEBUG.__name__:
+                    patch = LLVM_DEBUG(p)
                 case ClassConstructorDef.__name__:
                     patch = ClassConstructorDef(p)
                 case ConstMCOperand.__name__:
@@ -434,7 +438,8 @@ class Translator:
                     else:
                         # A capture which is part of the main capture.
                         # Add it to the bundle.
-                        captures_bundle[-1].append(q)
+                        if len(captures_bundle) > 0:
+                            captures_bundle[-1].append(q)
 
                 log.debug(
                     f"Patch {patch.__class__.__name__} (to patch: {len(captures_bundle)})."

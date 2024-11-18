@@ -46,6 +46,7 @@ from autosync.cpptranslator.patches.IsOptionalDef import IsOptionalDef
 from autosync.cpptranslator.patches.IsPredicate import IsPredicate
 from autosync.cpptranslator.patches.IsRegImm import IsOperandRegImm
 from autosync.cpptranslator.patches.LLVMFallThrough import LLVMFallThrough
+from autosync.cpptranslator.patches.LLVM_DEBUG import LLVM_DEBUG
 from autosync.cpptranslator.patches.LLVMunreachable import LLVMUnreachable
 from autosync.cpptranslator.patches.Override import Override
 from autosync.cpptranslator.patches.MethodToFunctions import MethodToFunction
@@ -413,7 +414,12 @@ public:
     def test_llvmunreachable(self):
         patch = LLVMUnreachable(0)
         syntax = b'llvm_unreachable("Error msg")'
-        self.check_patching_result(patch, syntax, b'assert(0 && "Error msg")')
+        self.check_patching_result(patch, syntax, b'CS_ASSERT(0 && "Error msg")')
+
+    def test_llvmdebug(self):
+        patch = LLVM_DEBUG(0)
+        syntax = b'LLVM_DEBUG(dbgs() << "Error msg")'
+        self.check_patching_result(patch, syntax, b"")
 
     def test_methodtofunctions(self):
         patch = MethodToFunction(0)

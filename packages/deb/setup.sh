@@ -6,9 +6,9 @@ get_os_version() {
     lsb_release -i -s 2>/dev/null
 }
 
-# Check if the script is running in the ./debian folder
-if [[ $(basename "$PWD") != "debian" ]]; then
-    echo "ERROR: Script must be run from the ./debian directory"
+# Check if the script is running in the ./packages/deb folder
+if [[ $(basename "$PWD") != "deb" ]]; then
+    echo "ERROR: Script must be run from the ./deb directory"
     exit 1
 fi
 
@@ -40,8 +40,8 @@ if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
 fi
 
 # Now build the packager container from that
-pushd ../
-docker build -f ./debian/Dockerfile -t packager --build-arg VERSION="${version}" .
+pushd ../../
+docker build -f ./packages/deb/Dockerfile -t packager --build-arg VERSION="${version}" .
 popd
 
 # Copy deb file out of container to host

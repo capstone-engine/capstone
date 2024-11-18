@@ -5,10 +5,8 @@
 
 # Typing for Python3.8
 from __future__ import annotations
-
 import sys
 import subprocess as sp
-
 from pathlib import Path
 
 
@@ -34,13 +32,7 @@ def check(cmd: list[str], expected_stdout: str, expected_stderr: str, fail_msg: 
 
 
 def run_tests(cmd: str):
-    p = (
-        sp.run(["git", "rev-parse", "--show-toplevel"], check=True, capture_output=True)
-        .stdout.decode("utf8")
-        .strip()
-    )
-    path = Path(p).joinpath("suite").joinpath("cstest").joinpath("test")
-
+    path = Path(__file__).parent.resolve()
     cmd = cmd.split(" ")
     check(
         cmd + [f"{path.joinpath('empty_test_file.yaml')}"],

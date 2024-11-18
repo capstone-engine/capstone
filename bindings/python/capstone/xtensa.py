@@ -8,7 +8,7 @@ from .xtensa_const import *
 class XtensaOpMem(ctypes.Structure):
     _fields_ = (
         ("base", ctypes.c_uint8),
-        ("disp", ctypes.c_uint8),
+        ("disp", ctypes.c_int32),
     )
 
 
@@ -45,6 +45,7 @@ class CsXtensa(ctypes.Structure):
     _fields_ = (
         ("op_count", ctypes.c_uint8),
         ("operands", XtensaOp * 8),
+        ("format", ctypes.c_uint32),
     )
 
 

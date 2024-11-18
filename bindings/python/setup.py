@@ -1,26 +1,17 @@
-#!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2024 Antelox <anteloxrce@gmail.com>
+# SPDX-License-Identifier: BSD-3
 
 import glob
+import logging
 import os
 import shutil
 import sys
-import platform
-
-import logging
 from setuptools import setup
-from sysconfig import get_platform
-from setuptools.command.build import build
+from setuptools.command.build_py import build_py
 from setuptools.command.sdist import sdist
-from setuptools.command.bdist_egg import bdist_egg
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
-
-SYSTEM = sys.platform
-
-# adapted from commit e504b81 of Nguyen Tan Cong
-# Reference: https://docs.python.org/2/library/platform.html#cross-platform
-IS_64BITS = sys.maxsize > 2**32
 
 # are we building from the repository or from a source distribution?
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -28,6 +19,7 @@ LIBS_DIR = os.path.join(ROOT_DIR, 'capstone', 'lib')
 HEADERS_DIR = os.path.join(ROOT_DIR, 'capstone', 'include')
 SRC_DIR = os.path.join(ROOT_DIR, 'src')
 BUILD_DIR = SRC_DIR if os.path.exists(SRC_DIR) else os.path.join(ROOT_DIR, '../..')
+BUILD_PYTHON = os.path.join(BUILD_DIR, 'build_python')
 
 # Parse version from pkgconfig.mk
 VERSION_DATA = {}
@@ -50,8 +42,8 @@ with open(os.path.join(BUILD_DIR, 'pkgconfig.mk')) as fp:
         VERSION_DATA[k] = v
 
 if 'PKG_MAJOR' not in VERSION_DATA or \
-        'PKG_MINOR' not in VERSION_DATA or \
-        'PKG_EXTRA' not in VERSION_DATA:
+    'PKG_MINOR' not in VERSION_DATA or \
+    'PKG_EXTRA' not in VERSION_DATA:
     raise Exception("Malformed pkgconfig.mk")
 
 if 'PKG_TAG' in VERSION_DATA:
@@ -59,10 +51,10 @@ if 'PKG_TAG' in VERSION_DATA:
 else:
     VERSION = '{PKG_MAJOR}.{PKG_MINOR}.{PKG_EXTRA}'.format(**VERSION_DATA)
 
-if SYSTEM == 'darwin':
+if sys.platform == 'darwin':
     VERSIONED_LIBRARY_FILE = "libcapstone.{PKG_MAJOR}.dylib".format(**VERSION_DATA)
     LIBRARY_FILE = "libcapstone.dylib"
-elif SYSTEM in ('win32', 'cygwin'):
+elif sys.platform in ('win32', 'cygwin'):
     VERSIONED_LIBRARY_FILE = "capstone.dll"
     LIBRARY_FILE = "capstone.dll"
 else:
@@ -76,7 +68,8 @@ def clean_bins():
 
 
 def copy_sources():
-    """Copy the C sources into the source directory.
+    """
+    Copy the C sources into the source directory.
     This rearranges the source files under the python distribution
     directory.
     """
@@ -91,11 +84,11 @@ def copy_sources():
     shutil.copytree(os.path.join(BUILD_DIR, "include"), os.path.join(SRC_DIR, "include"))
 
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.[ch]")))
-
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.m[dk]")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.in")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "LICENSES/*")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "README")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.TXT")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "RELEASE_NOTES")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "ChangeLog")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "CMakeLists.txt")))
 
     for filename in src:
@@ -125,84 +118,63 @@ def build_libraries():
         shutil.copy(os.path.join(ROOT_DIR, 'prebuilt', LIBRARY_FILE), LIBS_DIR)
         return
 
-    os.chdir(BUILD_DIR)
+    if not os.path.exists(BUILD_PYTHON):
+        os.mkdir(BUILD_PYTHON)
 
-    # Windows build: this process requires few things:
-    #    - MSVC installed
-    #    - Run this command in an environment setup for MSVC
-    if not os.path.exists("build_py"):
-        os.mkdir("build_py")
-    os.chdir("build_py")
-    print("Build Directory: {}\n".format(os.getcwd()))
-    # Only build capstone.dll / libcapstone.dylib
-    if SYSTEM in ('win32', 'cygwin'):
-        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DCAPSTONE_BUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_STATIC_LIBS=OFF -DCAPSTONE_BUILD_LEGACY_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+    logger.info("Build Directory: {}\n".format(BUILD_PYTHON))
+
+    conf = 'Debug' if int(os.getenv('DEBUG', 0)) else 'Release'
+    cmake_args = ['cmake',
+                  '-DCAPSTONE_BUILD_SHARED_LIBS=ON',
+                  '-DCAPSTONE_BUILD_STATIC_LIBS=OFF',
+                  '-DCAPSTONE_BUILD_LEGACY_TESTS=OFF',
+                  '-DCAPSTONE_BUILD_CSTOOL=OFF'
+                  ]
+    cmake_build = ['cmake',
+                   '--build',
+                   '.'
+                   ]
+    os.chdir(BUILD_PYTHON)
+
+    if sys.platform in ('win32', 'cygwin'):
+        # Windows build: this process requires few things:
+        #    - MSVC installed
+        #    - Run this command in an environment setup for MSVC
+        cmake_args += ['-DCMAKE_BUILD_TYPE=' + conf,
+                       '-G "NMake Makefiles"'
+                       ]
     elif 'AFL_NOOPT' in os.environ:
         # build for test_corpus
-        os.system('cmake -DCAPSTONE_BUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_LEGACY_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF ..')
+        pass
     else:
-        os.system('cmake -DCMAKE_BUILD_TYPE=Release -DCAPSTONE_BUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_LEGACY_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "Unix Makefiles" ..')
-    os.system("cmake --build .")
+        cmake_args += ['-DCMAKE_BUILD_TYPE=' + conf,
+                       '-G "Unix Makefiles"'
+                       ]
+        cmake_build += ['-j', str(os.getenv("THREADS", "4"))]
+
+    os.system(' '.join(cmake_args + ['..']))
+    os.system(' '.join(cmake_build))
 
     shutil.copy(VERSIONED_LIBRARY_FILE, os.path.join(LIBS_DIR, LIBRARY_FILE))
     os.chdir(cwd)
 
 
-class custom_sdist(sdist):
+class CustomSDist(sdist):
     def run(self):
         clean_bins()
         copy_sources()
-        return sdist.run(self)
+        return super().run()
 
 
-class custom_build(build):
+class CustomBuild(build_py):
     def run(self):
         if 'LIBCAPSTONE_PATH' in os.environ:
             logger.info('Skipping building C extensions since LIBCAPSTONE_PATH is set')
         else:
             logger.info('Building C extensions')
             build_libraries()
-        return build.run(self)
+        return super().run()
 
-
-class custom_bdist_egg(bdist_egg):
-    def run(self):
-        self.run_command('build')
-        return bdist_egg.run(self)
-
-
-cmdclass = {}
-cmdclass['build'] = custom_build
-cmdclass['sdist'] = custom_sdist
-cmdclass['bdist_egg'] = custom_bdist_egg
-
-try:
-    from setuptools.command.develop import develop
-
-    class custom_develop(develop):
-        def run(self):
-            logger.info("Building C extensions")
-            build_libraries()
-            return develop.run(self)
-
-    cmdclass['develop'] = custom_develop
-except ImportError:
-    print("Proper 'develop' support unavailable.")
-
-if 'bdist_wheel' in sys.argv and '--plat-name' not in sys.argv:
-    # Inject the platform identifier into argv.
-    # Platform tags are described here:
-    # https://packaging.python.org/en/latest/specifications/platform-compatibility-tags
-    #
-    # I couldn't really find out in time why we need to inject the platform here?
-    # The cibuildwheel doesn't need it for the Windows job. But for Mac and Linux.
-    # This here is very dirty and will maybe break in the future.
-    # Sorry if this is the case and you read this.
-    # See: https://github.com/capstone-engine/capstone/issues/2445
-    idx = sys.argv.index('bdist_wheel') + 1
-    sys.argv.insert(idx, '--plat-name')
-    name = get_platform()
-    sys.argv.insert(idx + 1, name.replace('.', '_').replace('-', '_'))
 
 setup(
     provides=['capstone'],
@@ -218,14 +190,18 @@ setup(
     python_requires='>=3.8',
     classifiers=[
         'License :: OSI Approved :: BSD License',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
     ],
-    cmdclass=cmdclass,
-    zip_safe=False,
-    include_package_data=True,
+    cmdclass={'build_py': CustomBuild, 'sdist': CustomSDist},
     package_data={
         "capstone": ["lib/*", "include/capstone/*"],
     },
+    has_ext_modules=lambda: True,  # It's not a Pure Python wheel
     install_requires=[
         "importlib_resources;python_version<'3.9'",
     ],

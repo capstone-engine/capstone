@@ -381,15 +381,21 @@ struct platform platforms[] = {
 		},
 		{
 				CS_ARCH_XTENSA,
-				CS_MODE_XTENSA,
-				"XTENSA",
-				"xtensa"
+				CS_MODE_XTENSA_ESP32,
+				"XTENSA ESP32",
+				"esp32"
 		},
 		{
 				CS_ARCH_XTENSA,
-				CS_MODE_XTENSA + CS_MODE_BIG_ENDIAN,
-				"XTENSA (Big-Endian)",
-				"xtensabe"
+				CS_MODE_XTENSA_ESP32S2,
+				"XTENSA ESP32S2",
+				"esp32s2"
+		},
+		{
+				CS_ARCH_XTENSA,
+				CS_MODE_XTENSA_ESP8266,
+				"XTENSA ESP8266",
+				"esp8266"
 		},
 	// dummy entry to mark the end of this array.
 		// DO NOT DELETE THIS
