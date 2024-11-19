@@ -421,7 +421,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		}
 
 		CS_ASSERT_RET((op_type & CS_OP_MEM) ==
-		       0); // doing_mem should have been true.
+			      0); // doing_mem should have been true.
 
 		if (op_type == CS_OP_REG)
 			PPC_set_detail_op_reg(MI, OpNum,
@@ -565,7 +565,9 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 	}
 }
 
-void PPC_add_cs_detail_1(MCInst *MI, ppc_op_group op_group, unsigned OpNum, const char *Modifier) {
+void PPC_add_cs_detail_1(MCInst *MI, ppc_op_group op_group, unsigned OpNum,
+			 const char *Modifier)
+{
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 
@@ -654,12 +656,14 @@ void PPC_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val,
 	case CS_OP_REG:
 		if (is_off_reg) {
 			PPC_get_detail_op(MI, 0)->mem.offset = Val;
-			if (PPC_get_detail_op(MI, 0)->mem.base != PPC_REG_INVALID)
+			if (PPC_get_detail_op(MI, 0)->mem.base !=
+			    PPC_REG_INVALID)
 				set_mem_access(MI, false);
-		}	else {
+		} else {
 			PPC_get_detail_op(MI, 0)->mem.base = Val;
 			if (MCInst_opIsTying(MI, OpNum))
-				map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+				map_add_implicit_write(
+					MI, MCInst_getOpVal(MI, OpNum));
 		}
 		break;
 	case CS_OP_IMM:
