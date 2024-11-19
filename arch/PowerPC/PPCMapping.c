@@ -1,7 +1,6 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
-#include "capstone/ppc.h"
 #ifdef CAPSTONE_HAS_POWERPC
 
 #include <stdio.h> // debug
@@ -337,17 +336,16 @@ bool PPC_getInstruction(csh handle, const uint8_t *bytes, size_t bytes_len,
 
 bool PPC_getFeatureBits(unsigned int mode, unsigned int feature)
 {
-	if ((feature == PPC_FeatureQPX) && (mode & CS_MODE_QPX) != 0) {
-		return true;
-	} else if ((feature == PPC_FeatureSPE) && (mode & CS_MODE_SPE) != 0) {
-		return true;
-	} else if ((feature == PPC_FeatureBookE) &&
-		   (mode & CS_MODE_BOOKE) != 0) {
-		return true;
-	} else if ((feature == PPC_FeaturePS) && (mode & CS_MODE_PS) != 0) {
-		return true;
-	} else if ((feature == PPC_FeatureModernAIXAs || feature == PPC_AIXOS) && (mode & CS_MODE_AIX_OS) != 0) {
-		return true;
+	if (feature == PPC_FeatureQPX) {
+		return (mode & CS_MODE_QPX) != 0;
+	} else if (feature == PPC_FeatureSPE) {
+		return (mode & CS_MODE_SPE) != 0;
+	} else if (feature == PPC_FeatureBookE) {
+		return (mode & CS_MODE_BOOKE) != 0;
+	} else if (feature == PPC_FeaturePS) {
+		return (mode & CS_MODE_PS) != 0;
+	} else if ((feature == PPC_FeatureModernAIXAs || feature == PPC_AIXOS)) {
+		return (mode & CS_MODE_AIX_OS) != 0;
 	}
 
 	if (mode & CS_MODE_PWR7) {
