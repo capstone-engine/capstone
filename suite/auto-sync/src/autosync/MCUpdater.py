@@ -345,10 +345,10 @@ class MCUpdater:
                 write_mode = "w+"
             filename.parent.mkdir(parents=True, exist_ok=True)
             if self.multi_mode and filename.exists():
-                raise ValueError(
-                    f"The following file exists already: {filename}\n"
-                    "This is not allowed in multi-mode."
+                log.warning(
+                    f"The following file exists already: {filename}. This is might indicate a blind spot in testing."
                 )
+                overwritten += 1
             elif not self.multi_mode and filename.exists():
                 log.debug(f"Overwrite: {filename}")
                 overwritten += 1
@@ -370,6 +370,7 @@ class MCUpdater:
                 f"You have to use multi-mode to write them into distinct files.\n"
                 f"The current setting will only keep the last one written.\n"
                 f"See also: https://github.com/capstone-engine/capstone/issues/1992"
+                "If you already used multi-mode, there possibly is a blind spot for testing."
             )
 
     def build_test_options(self, options):
