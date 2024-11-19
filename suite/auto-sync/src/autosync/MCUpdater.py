@@ -356,6 +356,7 @@ class MCUpdater:
                 f.write(test.get_cs_testfile_content(only_test=(write_mode == "a")))
                 log.debug(f"Write {filename}")
             files_written.add(filename)
+        print()
         log.info(
             f"Got {len(self.test_files)} test files.\n"
             f"\t\tProcessed {file_cnt} files with {test_cnt} test cases.\n"

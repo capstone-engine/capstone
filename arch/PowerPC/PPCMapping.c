@@ -16,6 +16,97 @@
 #include "PPCMapping.h"
 #include "PPCMCTargetDesc.h"
 
+static int P7InheritableFeatures[] = {
+	PPC_DirectivePwr7,     PPC_FeatureAltivec,
+	PPC_FeatureVSX,	       PPC_FeatureMFOCRF,
+	PPC_FeatureFCPSGN,     PPC_FeatureFSqrt,
+	PPC_FeatureFRE,	       PPC_FeatureFRES,
+	PPC_FeatureFRSQRTE,    PPC_FeatureFRSQRTES,
+	PPC_FeatureRecipPrec,  PPC_FeatureSTFIWX,
+	PPC_FeatureLFIWAX,     PPC_FeatureFPRND,
+	PPC_FeatureFPCVT,      PPC_FeatureISEL,
+	PPC_FeaturePOPCNTD,    PPC_FeatureCMPB,
+	PPC_FeatureLDBRX,      PPC_Feature64Bit,
+	PPC_FeatureBPERMD,     PPC_FeatureExtDiv,
+	PPC_FeatureMFTB,       PPC_DeprecatedDST,
+	PPC_FeatureTwoConstNR, PPC_FeatureUnalignedFloats,
+	PPC_FeatureISA2_06, INT_MAX
+};
+
+static int *P7Features[] = { P7InheritableFeatures };
+
+// Power8
+static int P8AdditionalFeatures[] = { PPC_DirectivePwr8,
+				      PPC_FeatureP8Altivec,
+				      PPC_FeatureP8Vector,
+				      PPC_FeatureP8Crypto,
+				      PPC_FeatureHTM,
+				      PPC_FeatureDirectMove,
+				      PPC_FeatureICBT,
+				      PPC_FeaturePartwordAtomic,
+				      PPC_FeatureQuadwordAtomic,
+				      PPC_FeaturePredictableSelectIsExpensive,
+				      PPC_FeatureISA2_07,
+				      PPC_FeatureCRBits, INT_MAX };
+
+static int P8SpecificFeatures[] = { PPC_FeatureAddiLoadFusion,
+				    PPC_FeatureAddisLoadFusion, INT_MAX };
+
+static int *P8Features[] = { P7InheritableFeatures, P8AdditionalFeatures,
+			     P8SpecificFeatures };
+
+static int P9AdditionalFeatures[] = { PPC_DirectivePwr9,
+				      PPC_FeatureP9Altivec,
+				      PPC_FeatureP9Vector,
+				      PPC_FeaturePPCPreRASched,
+				      PPC_FeaturePPCPostRASched,
+				      PPC_FeatureISA3_0,
+				      PPC_FeaturePredictableSelectIsExpensive, INT_MAX };
+
+static int P9SpecificFeatures[] = { PPC_FeatureVectorsUseTwoUnits, INT_MAX };
+
+static int *P9Features[] = { P7InheritableFeatures, P8AdditionalFeatures,
+			     P9AdditionalFeatures, P9SpecificFeatures };
+
+static int P10AdditionalFeatures[] = { PPC_FeatureStoreFusion,
+				       PPC_FeatureAddLogicalFusion,
+				       PPC_FeatureLogicalAddFusion,
+				       PPC_FeatureLogicalFusion,
+				       PPC_FeatureArithAddFusion,
+				       PPC_FeatureSha3Fusion,
+				       PPC_DirectivePwr10,
+				       PPC_FeatureISA3_1,
+				       PPC_FeaturePrefixInstrs,
+				       PPC_FeaturePCRelativeMemops,
+				       PPC_FeatureP10Vector,
+				       PPC_FeatureMMA,
+				       PPC_FeaturePairedVectorMemops,
+				       PPC_FeatureFastMFLR, INT_MAX };
+
+static int *P10Features[] = { P7InheritableFeatures, P8AdditionalFeatures,
+			      P9AdditionalFeatures, P10AdditionalFeatures };
+
+static int FutureAdditionalFeatures[] = { PPC_FeatureISAFuture, INT_MAX };
+
+static int *FutureFeatures[] = {
+	P7InheritableFeatures, P8AdditionalFeatures,	 P9AdditionalFeatures,
+	P10AdditionalFeatures, FutureAdditionalFeatures
+};
+
+#define matches_any(feature, feature_set) \
+	do { \
+		for (size_t i = 0; i < ARR_SIZE(feature_set); ++i) { \
+			size_t j = 0; \
+			while (feature_set[i][j] != INT_MAX) { \
+				if (feature == feature_set[i][j]) { \
+					return true; \
+				} \
+				++j; \
+			} \
+		} \
+		return false; \
+	} while (0)
+
 #define GET_REGINFO_MC_DESC
 #include "PPCGenRegisterInfo.inc"
 
@@ -246,23 +337,34 @@ bool PPC_getInstruction(csh handle, const uint8_t *bytes, size_t bytes_len,
 
 bool PPC_getFeatureBits(unsigned int mode, unsigned int feature)
 {
-	if ((feature == PPC_FeatureQPX) && (mode & CS_MODE_QPX) == 0) {
-		return false;
-	} else if ((feature == PPC_FeatureSPE) && (mode & CS_MODE_SPE) == 0) {
-		return false;
+	if ((feature == PPC_FeatureQPX) && (mode & CS_MODE_QPX) != 0) {
+		return true;
+	} else if ((feature == PPC_FeatureSPE) && (mode & CS_MODE_SPE) != 0) {
+		return true;
 	} else if ((feature == PPC_FeatureBookE) &&
-		   (mode & CS_MODE_BOOKE) == 0) {
-		return false;
-	} else if ((feature == PPC_FeaturePS) && (mode & CS_MODE_PS) == 0) {
-		return false;
+		   (mode & CS_MODE_BOOKE) != 0) {
+		return true;
+	} else if ((feature == PPC_FeaturePS) && (mode & CS_MODE_PS) != 0) {
+		return true;
+	} else if ((feature == PPC_FeatureModernAIXAs || feature == PPC_AIXOS) && (mode & CS_MODE_AIX_OS) != 0) {
+		return true;
 	}
 
-	// No AIX support for now.
-	if (feature == PPC_FeatureModernAIXAs || feature == PPC_AIXOS)
-		return false;
-	// TODO Make it optional
-	if (feature == PPC_FeatureMSYNC)
-		return false;
+	if (mode & CS_MODE_PWR7) {
+		matches_any(feature, P7Features);
+	}
+	if (mode & CS_MODE_PWR8) {
+		matches_any(feature, P8Features);
+	}
+	if (mode & CS_MODE_PWR9) {
+		matches_any(feature, P9Features);
+	}
+	if (mode & CS_MODE_PWR10) {
+		matches_any(feature, P10Features);
+	}
+	if (mode & CS_MODE_PPC_ISA_FUTURE) {
+		matches_any(feature, FutureFeatures);
+	}
 
 	// By default support everything
 	return true;

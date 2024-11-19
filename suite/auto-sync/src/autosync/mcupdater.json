@@ -117,8 +117,14 @@
         "PPC": {
             "powerpc64-unknown-unknown": ["CS_MODE_BIG_ENDIAN", "CS_MODE_64"],
             "powerpc64-unknown-linux": ["CS_MODE_BIG_ENDIAN", "CS_MODE_64"],
-            "powerpc64-unknown-aix-gnu": ["CS_MODE_BIG_ENDIAN", "CS_MODE_64"],
-            "powerpc64le-unknown-unknown": ["CS_MODE_LITTLE_ENDIAN", "CS_MODE_64"]
+            "powerpc64-unknown-aix-gnu": ["CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_AIX_OS"],
+            "powerpc64le-unknown-unknown": ["CS_MODE_LITTLE_ENDIAN", "CS_MODE_64"],
+            "powerpc64_ibm_aix_xcoff": ["CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_AIX_OS"],
+            "pwr7": ["CS_MODE_PWR7"],
+            "pwr8": ["CS_MODE_PWR8"],
+            "pwr9": ["CS_MODE_PWR9"],
+            "pwr10": ["CS_MODE_PWR10"],
+            "pwr10": ["CS_MODE_PWR10"]
         }
     }
 }
