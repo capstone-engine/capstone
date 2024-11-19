@@ -126,7 +126,7 @@
             "pwr10": ["CS_MODE_PWR10"],
             "future": ["CS_MODE_PPC_ISA_FUTURE"],
             "modern-aix-as": ["CS_MODE_AIX_OS"],
-            "e500_spe": ["CS_MODE_SPE"]
+            "spe": ["CS_MODE_SPE"]
         }
     }
 }
