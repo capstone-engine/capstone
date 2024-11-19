@@ -1,0 +1,230 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xf0, 0x82, 0x17, 0x12 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmxxextfdmr512 1, 2, 34, 0"
+
+  -
+    input:
+      bytes: [ 0xf0, 0x83, 0x17, 0x12 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmxxextfdmr512 1, 2, 34, 1"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x80, 0x47, 0x90 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmxxextfdmr256 3, 8, 0"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x81, 0x4f, 0x90 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmxxextfdmr256 3, 8, 3"
+
+  -
+    input:
+      bytes: [ 0xf0, 0x82, 0x17, 0x52 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmxxinstfdmr512 1, 2, 34, 0"
+
+  -
+    input:
+      bytes: [ 0xf0, 0x83, 0x17, 0x52 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmxxinstfdmr512 1, 2, 34, 1"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x80, 0x47, 0x94 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmxxinstfdmr256 3, 8, 0"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x81, 0x4f, 0x94 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmxxinstfdmr256 3, 8, 3"
+
+  -
+    input:
+      bytes: [ 0x7d, 0x82, 0x01, 0x62 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmsetdmrz 3"
+
+  -
+    input:
+      bytes: [ 0x7e, 0x06, 0xa1, 0x62 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmmr 4, 5"
+
+  -
+    input:
+      bytes: [ 0x7f, 0x07, 0xe1, 0x62 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmxor 6, 7"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x64, 0x28, 0x90 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "subfus 3, 0, 4, 5"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x64, 0x2c, 0x90 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "subfus 3, 1, 4, 5"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x64, 0x28, 0x91 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "subfus. 3, 0, 4, 5"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x64, 0x2c, 0x91 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "subfus. 3, 1, 4, 5"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x21, 0x14, 0x1a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lxvrl 1, 1, 2"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x03, 0x24, 0x5a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lxvrll 0, 3, 4"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x40, 0x0d, 0x1a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stxvrl 2, 0, 1"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x61, 0x2d, 0x5a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stxvrll 3, 1, 5"
+
+  -
+    input:
+      bytes: [ 0x7c, 0xc1, 0x2c, 0x9a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lxvprl 6, 1, 5"
+
+  -
+    input:
+      bytes: [ 0x7c, 0xc2, 0x0c, 0xda ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lxvprll 6, 2, 1"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x01, 0x15, 0x9a ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stxvprl 0, 1, 2"
+
+  -
+    input:
+      bytes: [ 0x7c, 0xc0, 0x0d, 0xda ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "powerpc-unknown-aix-gnu", "CS_MODE_PPC_ISA_FUTURE", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stxvprll 6, 0, 1"
