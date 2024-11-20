@@ -212,7 +212,8 @@ class TestFile:
     def get_multi_mode_filename(self) -> Path:
         filename = self.file_path.stem
         parent = self.file_path.parent
-        detailed_name = f"{filename}_{'_'.join(self.opts)}.txt"
+        prefix_less_opts = [re.sub(r"CS_(OPT|MODE)_", "", o).lower() for o in self.opts]
+        detailed_name = f"{filename}_{'_'.join(prefix_less_opts)}.txt"
         detailed_name = re.sub(r"[+-]", "_", detailed_name)
         out_path = parent.joinpath(detailed_name)
         return Path(out_path)
