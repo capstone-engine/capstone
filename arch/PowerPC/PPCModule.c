@@ -39,6 +39,9 @@ cs_err PPC_option(cs_struct *handle, cs_opt_type type, size_t value)
 			return CS_ERR_OK;
 		}
 		handle->mode |= (cs_mode)value;
+		if (value & CS_MODE_MSYNC) {
+			handle->mode |= (cs_mode)CS_MODE_BOOKE;
+		}
 	}
 
 	return CS_ERR_OK;

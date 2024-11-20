@@ -674,7 +674,7 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
 	     MCInst_getOpcode(MI) == PPC_DCBTST) &&
 	    (!PPC_getFeatureBits(MI->csh->mode, PPC_FeatureModernAIXAs))) {
 		unsigned char TH = MCOperand_getImm(MCInst_getOperand(MI, (0)));
-		SStream_concat0(O, "\tdcbt");
+		SStream_concat0(O, "dcbt");
 		if (MCInst_getOpcode(MI) == PPC_DCBTST)
 			SStream_concat0(O, "st");
 		if (TH == 16)
@@ -684,7 +684,7 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
 		bool IsBookE =
 			PPC_getFeatureBits(MI->csh->mode, PPC_FeatureBookE);
 		if (IsBookE && TH != 0 && TH != 16) {
-			SStream_concat(O, "%s", (unsigned int)TH);
+			printUInt32(O, (unsigned int)TH);
 			SStream_concat0(O, ", ");
 			PPC_set_detail_op_imm(MI, 0, TH);
 		}
@@ -706,7 +706,7 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
 	if (MCInst_getOpcode(MI) == PPC_DCBF) {
 		unsigned char L = MCOperand_getImm(MCInst_getOperand(MI, (0)));
 		if (!L || L == 1 || L == 3 || L == 4 || L == 6) {
-			SStream_concat0(O, "\tdcb");
+			SStream_concat0(O, "dcb");
 			if (L != 6)
 				SStream_concat0(O, "f");
 			if (L == 1)

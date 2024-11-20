@@ -1,6 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
+#include "capstone/capstone.h"
 #ifdef CAPSTONE_HAS_POWERPC
 
 #include <stdio.h> // debug
@@ -346,11 +347,12 @@ bool PPC_getFeatureBits(unsigned int mode, unsigned int feature)
 		return (mode & CS_MODE_BOOKE) != 0;
 	} else if (feature == PPC_FeaturePS) {
 		return (mode & CS_MODE_PS) != 0;
-	} else if ((feature == PPC_FeatureModernAIXAs ||
-		    feature == PPC_AIXOS)) {
-		return (mode & CS_MODE_AIX_OS) != 0;
+	} else if (feature == PPC_FeatureModernAIXAs) {
+		return (mode & CS_MODE_MODERN_AIX_AS) != 0;
+	} else if (feature == PPC_AIXOS) {
+		return (mode & CS_MODE_AIX_OS) != 0 || (mode & CS_MODE_MODERN_AIX_AS) != 0;
 	} else if (feature == PPC_FeatureMSYNC) {
-		return false;
+		return (mode & CS_MODE_MSYNC) != 0;
 	}
 	if ((mode & (CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 | CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE)) == 0) {
 		// By default support everything
