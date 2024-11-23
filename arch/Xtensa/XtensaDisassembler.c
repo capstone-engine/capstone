@@ -225,10 +225,10 @@ static DecodeStatus DecodeMR23RegisterClass(MCInst *Inst, uint64_t RegNo,
 					    uint64_t Address,
 					    const void *Decoder)
 {
-	if ((RegNo < 2) || (RegNo > 3))
+	if (RegNo >= ARR_SIZE(MR23DecoderTable))
 		return MCDisassembler_Fail;
 
-	unsigned Reg = MR23DecoderTable[RegNo - 2];
+	unsigned Reg = MR23DecoderTable[RegNo];
 	MCOperand_CreateReg0(Inst, (Reg));
 	return MCDisassembler_Success;
 }
@@ -977,21 +977,6 @@ static DecodeStatus readInstructionN(const uint8_t *Bytes, size_t BytesLen,
 }
 
 #include "XtensaGenDisassemblerTables.inc"
-
-FieldFromInstruction(fieldFromInstruction_2, uint64_t);
-DecodeToMCInst(decodeToMCInst_2, fieldFromInstruction_2, uint64_t);
-DecodeInstruction(decodeInstruction_2, fieldFromInstruction_2, decodeToMCInst_2,
-		  uint64_t);
-
-FieldFromInstruction(fieldFromInstruction_4, uint64_t);
-DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint64_t);
-DecodeInstruction(decodeInstruction_4, fieldFromInstruction_4, decodeToMCInst_4,
-		  uint64_t);
-
-FieldFromInstruction(fieldFromInstruction_6, uint64_t);
-DecodeToMCInst(decodeToMCInst_6, fieldFromInstruction_6, uint64_t);
-DecodeInstruction(decodeInstruction_6, fieldFromInstruction_6, decodeToMCInst_6,
-		  uint64_t);
 
 static bool hasDensity()
 {

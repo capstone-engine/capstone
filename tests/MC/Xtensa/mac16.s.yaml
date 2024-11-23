@@ -1,0 +1,97 @@
+test_cases:
+  - input:
+      bytes: [ 0x04,0x01,0x34 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mul.ad.ll	a1, m2"
+  - input:
+      bytes: [ 0x14,0x02,0x74 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mul.aa.ll a2, a1"
+  - input:
+      bytes: [ 0x14,0x00,0x64 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mul.da.ll m0, a1"
+  - input:
+      bytes: [ 0x04,0x00,0x24 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mul.dd.ll m0, m2"
+  - input:
+      bytes: [ 0x04,0x01,0x38 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mula.ad.ll	a1, m2"
+  - input:
+      bytes: [ 0x14,0x02,0x78 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mula.aa.ll a2, a1"
+  - input:
+      bytes: [ 0x14,0x00,0x68 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mula.da.ll m0, a1"
+  - input:
+      bytes: [ 0x04,0x00,0x28 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mula.dd.ll m0, m2"
+  - input:
+      bytes: [ 0x14,0x00,0x58 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mula.da.ll.lddec m0, a0, m0, a1"
+  - input:
+      bytes: [ 0x14,0x00,0x48 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mula.da.ll.ldinc m0, a0, m0, a1"
+  - input:
+      bytes: [ 0x04,0x00,0x18 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mula.dd.ll.lddec m0, a0, m0, m2"
+  - input:
+      bytes: [ 0x04,0x00,0x08 ]
+      arch: "xtensa"
+      options: [ ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mula.dd.ll.ldinc m0, a0, m0, m2"
