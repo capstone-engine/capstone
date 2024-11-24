@@ -180,7 +180,7 @@ def gen(lang):
 
             if line.startswith('#define '):
                 line = line[8:]     #cut off define
-                xline = re.split(r'\s+', line, 1)     #split to at most 2 express
+                xline = re.split(r'\s+', line, maxsplit=1)     #split to at most 2 express
                 if len(xline) != 2:
                     continue
                 if '(' in xline[0] or ')' in xline[0]:      #does it look like a function
