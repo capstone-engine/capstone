@@ -1,7 +1,45 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-Alpha2: November 24th, 2024
+
+## What's Changed
+* Update changelog for V6.0.0-Alpha1 by @kabeor in https://github.com/capstone-engine/capstone/pull/2493
+* Remove irrelevant changes. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2495
+* Fixing UB santizer, `LITBASE` and assert errors. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2499
+* Update labeler with Xtensa and v6 files. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2500
+* Add hard asserts to all SStream functions and memset MCInst. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2501
+* Only trigger on released action. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2497
+* Fix cstest build with Ninja by @thestr4ng3r in https://github.com/capstone-engine/capstone/pull/2506
+* Tricore EA calculation by @Rot127 in https://github.com/capstone-engine/capstone/pull/2504
+* Update libcyaml dependency in cstest to 1.4.2 by @thestr4ng3r in https://github.com/capstone-engine/capstone/pull/2508
+* xtensa: Fix Branch Target by @imbillow in https://github.com/capstone-engine/capstone/pull/2516
+* Fix #2509. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2510
+* AArch64: Replace vararg add_cs_detail by multiple concrete functions by @thestr4ng3r in https://github.com/capstone-engine/capstone/pull/2507
+* Fix stringop-truncation warning some compilers raise. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2522
+* Adds ARM and AArch64 compatibility macros for the CC/VAS enums by @Rot127 in https://github.com/capstone-engine/capstone/pull/2525
+* Fix endianess issue during assignment. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2528
+* This time actually fix big endian issue. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2530
+* tricore: fixes #2474 by @imbillow in https://github.com/capstone-engine/capstone/pull/2523
+* Change CI to create Debian Package to Release by @AndrewQuijano in https://github.com/capstone-engine/capstone/pull/2521
+* Rename cmake build arguments by @Rot127 in https://github.com/capstone-engine/capstone/pull/2534
+* xtensa: update to espressif/llvm-project by @imbillow in https://github.com/capstone-engine/capstone/pull/2533
+* fix coverity by @imbillow in https://github.com/capstone-engine/capstone/pull/2546
+* Move debian package generation to a dispatch only workflow by @Rot127 in https://github.com/capstone-engine/capstone/pull/2543
+* Python package building rework by @Antelox in https://github.com/capstone-engine/capstone/pull/2538
+* Auto-Sync reproducability + ARM update by @Rot127 in https://github.com/capstone-engine/capstone/pull/2532
+* fix xtensa DecodeMR23RegisterClass and add tests for MAC16 instru… by @imbillow in https://github.com/capstone-engine/capstone/pull/2551
+* Prepare for update by @kabeor in https://github.com/capstone-engine/capstone/pull/2552
+
+## New Contributors
+* @AndrewQuijano made their first contribution in https://github.com/capstone-engine/capstone/pull/2521
+* @Antelox made their first contribution in https://github.com/capstone-engine/capstone/pull/2538
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/6.0.0-Alpha1...6.0.0-Alpha2
+
+-----------------------------
 Version 6.0.0-Alpha1: September 30th, 2024
+
 ## **Breaking Changes**
 
 - `ARM64` was renamed to `AArch64` everywhere (compatibility header is provided).
@@ -162,6 +200,7 @@ For an exhaustive list, see the release guide at https://github.com/capstone-eng
 * @wargio made their first contribution in https://github.com/capstone-engine/capstone/pull/2460
 
 **Full Changelog**: https://github.com/capstone-engine/capstone/compare/5.0.3...6.0.0-Alpha1
+
 --------------------------------
 Version 5.0.2: August 20th, 2024
 
