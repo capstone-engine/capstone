@@ -16,6 +16,7 @@ let _ARMCC_GT = 12;;
 let _ARMCC_LE = 13;;
 let _ARMCC_AL = 14;;
 let _ARMCC_UNDEF = 15;;
+let _ARMCC_Invalid = 16;;
 
 let _ARMVCC_None = 0;;
 let _ARMVCC_Then = 1;;

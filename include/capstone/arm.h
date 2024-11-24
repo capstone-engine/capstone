@@ -40,6 +40,7 @@ typedef enum CondCodes {
   ARMCC_LE, // Less than or equal         <, ==, or unordered
   ARMCC_AL, // Always (unconditional)     Always (unconditional)
   ARMCC_UNDEF = 15, // Undefined
+  ARMCC_Invalid = 16, // Invalid
 } ARMCC_CondCodes;
 
 inline static ARMCC_CondCodes ARMCC_getOppositeCondition(ARMCC_CondCodes CC)

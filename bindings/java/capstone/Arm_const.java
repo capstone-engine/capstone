@@ -19,6 +19,7 @@ public class Arm_const {
 	public static final int ARMCC_LE = 13;
 	public static final int ARMCC_AL = 14;
 	public static final int ARMCC_UNDEF = 15;
+	public static final int ARMCC_Invalid = 16;
 
 	public static final int ARMVCC_None = 0;
 	public static final int ARMVCC_Then = 1;
