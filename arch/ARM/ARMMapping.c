@@ -1848,8 +1848,10 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_AddrMode5FP16Operand_0: {
 		bool AlwaysPrintImm0 = temp_arg_0;
 
-		if (AlwaysPrintImm0)
+		if (AlwaysPrintImm0) {
+			get_detail(MI)->writeback = true;
 			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+		}
 
 		ARM_check_safe_inc(MI);
 		cs_arm_op *Op = ARM_get_detail_op(MI, 0);

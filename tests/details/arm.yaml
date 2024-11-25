@@ -2754,3 +2754,34 @@ test_cases:
                 access: CS_AC_READ
                 shift_type: ARM_SFT_UXTW
                 shift_value: 1
+  -
+    input:
+      bytes: [ 0x2f, 0x6c, 0x64, 0x2d ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stclhs p12, c6, [r4, #-0xbc]!"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_PIMM
+                imm: 12
+                access: CS_AC_READ
+              -
+                type: ARM_OP_CIMM
+                imm: 6
+                access: CS_AC_READ
+              -
+                type: ARM_OP_MEM
+                mem_base: r4
+                mem_disp: 0xbc
+                access: CS_AC_WRITE
+                subtracted: 1
+            cc: ARMCC_HS
+          writeback: 1
+          regs_read: [ cpsr, r4 ]
+          regs_write: [ r4 ]
