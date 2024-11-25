@@ -2785,3 +2785,43 @@ test_cases:
           writeback: 1
           regs_read: [ cpsr, r4 ]
           regs_write: [ r4 ]
+  -
+    input:
+      bytes: [ 0x00, 0x0a, 0x33, 0xf9 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rfedb	r3!"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_MEM
+                mem_base: r3
+                access: CS_AC_READ
+          writeback: 1
+          regs_read: [ r3 ]
+          regs_write: [ r3 ]
+  -
+    input:
+      bytes: [ 0x00, 0x0a, 0x13, 0xf9 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rfedb	r3"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_MEM
+                mem_base: r3
+                access: CS_AC_READ
+          writeback: -1
+          regs_read: [ r3 ]
+          regs_write: [ ]

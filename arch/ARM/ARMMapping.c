@@ -565,6 +565,20 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 		}
 		break;
 	}
+	case ARM_RFEDA_UPD:
+	case ARM_RFEDB_UPD:
+	case ARM_RFEIA_UPD:
+	case ARM_RFEIB_UPD:
+		get_detail(MI)->writeback = true;
+		// fallthrough
+	case ARM_RFEDA:
+	case ARM_RFEDB:
+	case ARM_RFEIA:
+	case ARM_RFEIB: {
+		arm_reg base_reg = ARM_get_detail_op(MI, -1)->reg;
+		ARM_get_detail_op(MI, -1)->type = ARM_OP_MEM;
+		ARM_get_detail_op(MI, -1)->mem.base = base_reg;
+	}
 	}
 }
 
