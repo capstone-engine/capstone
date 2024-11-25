@@ -26955,7 +26955,7 @@
 },
 {
   /* vscclrm{$p}	$regs */
-  ARM_VSCCLRMD /* 3449 */, ARM_INS_VSCCLRM_,
+  ARM_VSCCLRMD /* 3449 */, ARM_INS_VSCCLRM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { ARM_FEATURE_HASV8_1MMAINLINE, ARM_FEATURE_HAS8MSECEXT, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
@@ -26963,7 +26963,7 @@
 },
 {
   /* vscclrm{$p}	$regs */
-  ARM_VSCCLRMS /* 3450 */, ARM_INS_VSCCLRM_,
+  ARM_VSCCLRMS /* 3450 */, ARM_INS_VSCCLRM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { ARM_FEATURE_HASV8_1MMAINLINE, ARM_FEATURE_HAS8MSECEXT, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
@@ -31147,7 +31147,7 @@
 },
 {
   /* adr{$p}.w	$Rd, $addr */
-  ARM_t2ADR /* 3989 */, ARM_INS_ADR_,
+  ARM_t2ADR /* 3989 */, ARM_INS_ADR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { ARM_FEATURE_ISTHUMB2, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
@@ -34319,7 +34319,7 @@
 },
 {
   /* adr{$p}	$Rd, $addr */
-  ARM_tADR /* 4386 */, ARM_INS_ADR_,
+  ARM_tADR /* 4386 */, ARM_INS_ADR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { ARM_FEATURE_ISTHUMB, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 

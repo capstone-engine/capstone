@@ -577,7 +577,7 @@
   "vrsqrts", // ARM_INS_VRSQRTS
   "vrsra", // ARM_INS_VRSRA
   "vrsubhn", // ARM_INS_VRSUBHN
-  "vscclrm_", // ARM_INS_VSCCLRM_
+  "vscclrm", // ARM_INS_VSCCLRM
   "vsdot", // ARM_INS_VSDOT
   "vseleq", // ARM_INS_VSELEQ
   "vselge", // ARM_INS_VSELGE
@@ -608,7 +608,6 @@
   "vuzp", // ARM_INS_VUZP
   "vzip", // ARM_INS_VZIP
   "addw", // ARM_INS_ADDW
-  "adr_", // ARM_INS_ADR_
   "aut", // ARM_INS_AUT
   "autg", // ARM_INS_AUTG
   "bfl", // ARM_INS_BFL
