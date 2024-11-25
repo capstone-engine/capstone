@@ -47,6 +47,12 @@ static struct {
 		CS_ARCH_MIPS, CS_ARCH_MAX }, 0, CS_MODE_MIPS_NOFLOAT },
 	{ "+ptr64", "Enables 64-bit pointers support", {
 		CS_ARCH_MIPS, CS_ARCH_MAX }, 0, CS_MODE_MIPS_PTR64 },
+	{ "+thumb", "Enables Thumb mode for ARM.", {
+		CS_ARCH_ARM, CS_ARCH_MAX }, 0, CS_MODE_THUMB },
+	{ "+m", "Enables the M extension for ARM.", {
+		CS_ARCH_ARM, CS_ARCH_MAX }, 0, CS_MODE_MCLASS },
+	{ "+v8", "Sets the ARM version to v8+", {
+		CS_ARCH_ARM, CS_ARCH_MAX }, 0, CS_MODE_V8 },
 	{ NULL }
 };
 
@@ -59,15 +65,6 @@ static struct {
 	{ "arm", "ARM, little endian", CS_ARCH_ARM, CS_MODE_ARM },
 	{ "armle", "ARM, little endian", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_LITTLE_ENDIAN },
 	{ "armbe", "ARM, big endian", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_BIG_ENDIAN },
-	{ "armv8", "ARM v8", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8 },
-	{ "armv8be", "ARM v8, big endian", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_V8 | CS_MODE_BIG_ENDIAN },
-	{ "cortexm", "ARM Cortex-M Thumb", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_MCLASS },
-	{ "cortexmv8", "ARM Cortex-M Thumb, v8", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_MCLASS | CS_MODE_V8 },
-	{ "thumb", "ARM Thumb mode, little endian", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB },
-	{ "thumble", "ARM Thumb mode, little endian", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_LITTLE_ENDIAN },
-	{ "thumbbe", "ARM Thumb mode, big endian", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN },
-	{ "thumbv8", "ARM Thumb v8", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_V8 },
-	{ "thumbv8be", "ARM Thumb v8, big endian", CS_ARCH_ARM, CS_MODE_ARM | CS_MODE_THUMB | CS_MODE_V8 | CS_MODE_BIG_ENDIAN },
 
 	{ "aarch64", "AArch64", CS_ARCH_AARCH64, CS_MODE_LITTLE_ENDIAN },
 	{ "aarch64be", "AArch64, big endian", CS_ARCH_AARCH64, CS_MODE_BIG_ENDIAN },
