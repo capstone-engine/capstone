@@ -447,6 +447,36 @@ sed -i "s|detail->sysz|detail->systemz|g" $1
 
 Write it into `rename.sh` and run it on files with `sh rename.sh <src-file>`
 
+#### Python binding compatibility
+
+The Python bindings were changed to match the renamed architectures. To allow using the old `ARM64_*` and `SYSZ_*` constants in scripts running against Capstone v6+, compatibility modules can be imported, which monkey-patch the modules to export the same constants with the old name as well. The compatibility module has to be imported **before** anything else from capstone.
+
+To load the ARM64 constants, which were moved to the `capstone.aarch64` module, import the old `capstone.arm64` module first explicitly:
+
+```python
+# First import legacy compatibility module using old `arm64` name instead of `aarch64`.
+import capstone.arm64
+# Then import anything else from capstone
+import capstone # from capstone import *
+
+# capstone.CS_ARCH_ARM64
+# capstone.arm64.ARM64_INS_FDIV
+```
+
+To use the old `SYSZ_*` constants, import the `capstone.sysz_const` module first:
+
+```python
+# First import legacy compatibility module using old `sysz_const` name instead of `systemz_const`.
+import capstone.sysz_const
+# Then import anything else from capstone.
+import capstone # from capstone import *
+
+# capstone.CS_ARCH_SYSZ
+# capstone.systemz.SYSZ_REG_V3
+```
+
+To update your code to use the new constant names, use the `sed` replacement guide to replace the enum names from the C API above. There is no compatibility layer for type identifiers and detail names.
+
 ### Refactoring of cstool
 
 `cstool` has been refactored to simplify its usage; before you needed to add extra options in the C code to enable features and recompile, but now you can easily decode instructions with different syntaxes or options, by appending after the arch one of the followings values:

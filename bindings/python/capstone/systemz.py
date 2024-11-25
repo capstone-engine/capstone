@@ -2,6 +2,7 @@
 
 import ctypes
 from . import copy_ctypes_list
+from .systemz_const import *
 
 # define the API
 class SystemZOpMem(ctypes.Structure):
