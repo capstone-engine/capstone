@@ -20,8 +20,8 @@ all_tests = (
 )
 
 
-# ## Test class Cs
-def test_class():
+# Test arm64 and sysz compatibility layer
+def test_compatibility():
     for arch, mode, code, comment in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
@@ -30,9 +30,10 @@ def test_class():
 
         try:
             md = Cs(arch, mode)
+            md.detail = True
 
             for insn in md.disasm(code, 0x1000):
-                print("0x%x:\t%s\t%s" % (insn.address, insn.mnemonic, insn.op_str))
+                print("0x%x:\t%s\t%s\t(cc: %s)" % (insn.address, insn.mnemonic, insn.op_str, insn.cc))
 
             print("0x%x:" % (insn.address + insn.size))
             print()
@@ -54,4 +55,4 @@ def test_class():
 
 
 if __name__ == "__main__":
-    test_class()
+    test_compatibility()

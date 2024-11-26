@@ -8,4 +8,4 @@ import test_compatibility_layer
 test_lite.test_class()
 test_skipdata.test_class()
 test_customized_mnem.test()
-test_compatibility_layer.test_class()
+test_compatibility_layer.test_compatibility()
