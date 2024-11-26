@@ -22,6 +22,7 @@ all_tests = (
 
 # Test arm64 and sysz compatibility layer
 def test_compatibility():
+    errors = []
     for arch, mode, code, comment in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
@@ -39,6 +40,7 @@ def test_compatibility():
             print()
         except CsError as e:
             print("ERROR: %s" % e)
+            errors.append(str(e))
 
     # Test ARM64_ constants
     print("arm64.ARM64_CC_AL = %d" % capstone.arm64.ARM64_CC_AL)
@@ -52,7 +54,10 @@ def test_compatibility():
     print("systemz.SYSZ_INS_LG = %d" % capstone.systemz.SYSZ_INS_LG)
     print("systemz.SYSTEMZ_INS_LG = %d" % capstone.systemz.SYSTEMZ_INS_LG)
     assert capstone.systemz.SYSZ_INS_LG == capstone.systemz.SYSTEMZ_INS_LG
+    return errors
 
 
 if __name__ == "__main__":
-    test_compatibility()
+    if test_compatibility():
+        print("Some errors happened. Please check the output")
+        exit(1)

@@ -71,6 +71,7 @@ def test_cs_disasm_quick():
 
 # ## Test class Cs
 def test_class():
+    errors = []
     for (arch, mode, code, comment, syntax) in all_tests:
         print('*' * 16)
         print("Platform: %s" % comment)
@@ -90,9 +91,13 @@ def test_class():
             print()
         except CsError as e:
             print("ERROR: %s" % e)
+            errors.append(str(e))
+    return errors
 
 
 # test_cs_disasm_quick()
 # print "*" * 40
 if __name__ == '__main__':
-    test_class()
+    if test_class():
+        print("Some errors happened. Please check the output")
+        exit(1)

@@ -18,6 +18,7 @@ def print_insn(md, code):
 
 
 def test():
+    errors = []
     try:
         md = Cs(CS_ARCH_X86, CS_MODE_32)
 
@@ -33,7 +34,11 @@ def test():
         print_insn(md, X86_CODE32)
     except CsError as e:
         print("ERROR: %s" % e)
+        errors.append(str(e))
+    return errors
 
 
 if __name__ == '__main__':
-    test()
+    if test():
+        print("Some errors happened. Please check the output")
+        exit(1)
