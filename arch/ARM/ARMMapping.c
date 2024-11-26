@@ -647,6 +647,7 @@ void ARM_check_mem_access_validity(MCInst *MI)
 	if (!detail_is_set(MI))
 		return;
 	const arm_suppl_info *suppl = map_get_suppl_info(MI, arm_insns);
+	CS_ASSERT_RET(suppl);
 	if (suppl->mem_acc == CS_AC_INVALID) {
 		return;
 	}
