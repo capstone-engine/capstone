@@ -6,6 +6,7 @@ import capstone.arm64
 import capstone.sysz_const
 from capstone import *
 import capstone.aarch64
+import capstone.arm
 import capstone.systemz
 from xprint import to_hex
 
@@ -54,6 +55,15 @@ def test_compatibility():
     print("systemz.SYSZ_INS_LG = %d" % capstone.systemz.SYSZ_INS_LG)
     print("systemz.SYSTEMZ_INS_LG = %d" % capstone.systemz.SYSTEMZ_INS_LG)
     assert capstone.systemz.SYSZ_INS_LG == capstone.systemz.SYSTEMZ_INS_LG
+
+    # Test ARM_CC_ constants
+    print("arm.ARM_CC_MI = %d" % capstone.arm.ARM_CC_MI)
+    print("arm.ARMCC_MI = %d" % capstone.arm.ARMCC_MI)
+    assert capstone.arm.ARM_CC_MI == capstone.arm.ARMCC_MI
+    print("arm.ARM_CC_INVALID = %d" % capstone.arm.ARM_CC_INVALID)
+    print("arm.ARMCC_Invalid = %d" % capstone.arm.ARMCC_Invalid)
+    assert capstone.arm.ARM_CC_INVALID == capstone.arm.ARMCC_Invalid
+
     return errors
 
 
