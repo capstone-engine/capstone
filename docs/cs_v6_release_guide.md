@@ -449,9 +449,11 @@ Write it into `rename.sh` and run it on files with `sh rename.sh <src-file>`
 
 #### Python binding compatibility
 
-The Python bindings were changed to match the renamed architectures. To allow using the old `ARM64_*` and `SYSZ_*` constants in scripts running against Capstone v6+, compatibility modules can be imported, which monkey-patch the modules to export the same constants with the old name as well. The compatibility module has to be imported **before** anything else from capstone.
+The Python bindings were changed to match the renamed architectures. Thus the `capstone.arm64` module was moved to `capstone.aarch64` and the `capstone.sysz_const` module was moved to `capstone.systemz_const`. The constants and class names were renamed from `ARM64_*` to `AARCH64_*` and `SYSZ_*` to `SYSTEMZ_*` similarly (see above).
 
-To load the ARM64 constants, which were moved to the `capstone.aarch64` module, import the old `capstone.arm64` module first explicitly:
+To allow using the old `ARM64_*` and `SYSZ_*` constants in scripts running against Capstone v6+, compatibility modules can be imported. They monkey-patch Capstone to export the same constants with the old name as well during runtime. The compatibility module has to be imported **before** anything else from Capstone.
+
+To load the ARM64 constants import the old `capstone.arm64` module first:
 
 ```python
 # First import legacy compatibility module using old `arm64` name instead of `aarch64`.
@@ -463,7 +465,7 @@ import capstone # from capstone import *
 # capstone.arm64.ARM64_INS_FDIV
 ```
 
-To use the old `SYSZ_*` constants, import the `capstone.sysz_const` module first:
+To use the old `SYSZ_*` constants import the `capstone.sysz_const` module first:
 
 ```python
 # First import legacy compatibility module using old `sysz_const` name instead of `systemz_const`.
@@ -475,7 +477,11 @@ import capstone # from capstone import *
 # capstone.systemz.SYSZ_REG_V3
 ```
 
-To update your code to use the new constant names, use the `sed` replacement guide to replace the enum names from the C API above. There is no compatibility layer for type identifiers and detail names.
+To update your code to use the new constant names, use the `sed` replacement guide to replace the enum names from the C API above.
+
+**Compatibility for detail**
+
+There is no compatibility layer for type identifiers and detail names at the moment.
 
 ### Refactoring of cstool
 
