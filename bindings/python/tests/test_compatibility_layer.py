@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Copyright © 2024 Peace-Maker <peacemakerctf@gmail.com>
+# SPDX-License-Identifier: BSD-3
 
 import capstone.arm64
 import capstone.sysz_const
