@@ -14706,42 +14706,42 @@
 {
 	X86_PUSHCS16, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+	{ X86_REG_CS, 0 }, { X86_REG_SP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHCS32, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+	{ X86_REG_CS, 0 }, { X86_REG_ESP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHDS16, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+	{ X86_REG_DS, 0 }, { X86_REG_SP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHDS32, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+	{ X86_REG_DS, 0 }, { X86_REG_ESP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHES16, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+	{ X86_REG_ES, 0 }, { X86_REG_SP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHES32, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+	{ X86_REG_ES, 0 }, { X86_REG_ESP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
@@ -14769,56 +14769,56 @@
 {
 	X86_PUSHFS16, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_FS, 0 }, { X86_REG_SP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHFS32, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+	{ X86_REG_FS, 0 }, { X86_REG_ESP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHFS64, X86_INS_PUSH, 1,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_MODE64, 0 }, 0, 0
+	{ X86_REG_FS, 0 }, { X86_REG_RSP, 0 }, { X86_GRP_MODE64, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHGS16, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_GS, 0 }, { X86_REG_SP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHGS32, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+	{ X86_REG_GS, 0 }, { X86_REG_ESP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHGS64, X86_INS_PUSH, 1,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_MODE64, 0 }, 0, 0
+	{ X86_REG_GS, 0 }, { X86_REG_RSP, 0 }, { X86_GRP_MODE64, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHSS16, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+	{ X86_REG_SS, 0 }, { X86_REG_SP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_PUSHSS32, X86_INS_PUSH, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
+	{ X86_REG_SS, 0 }, { X86_REG_ESP, 0 }, { X86_GRP_NOT64BITMODE, 0 }, 0, 0
 #endif
 },
 
