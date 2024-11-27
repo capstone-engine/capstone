@@ -443,7 +443,7 @@ test_cases:
                 imm: 0x1107
                 size: 4
           regs_read: [ esp, eip ]
-          regs_write: [ esp ]
+          regs_write: [ esp, eip ]
       -
         asm_text: "je 0x103a"
         details:
@@ -767,7 +767,7 @@ test_cases:
                 imm: 0xdeadcf18
                 size: 4
           regs_read: [ esp, eip ]
-          regs_write: [ esp ]
+          regs_write: [ esp, eip ]
       -
         asm_text: "je 0x103a"
         details:
@@ -1092,7 +1092,7 @@ test_cases:
                 imm: 0xdeadcf18
                 size: 4
           regs_read: [ esp, eip ]
-          regs_write: [ esp ]
+          regs_write: [ esp, eip ]
       -
         asm_text: "je 0x103a"
         details:
@@ -1221,7 +1221,7 @@ test_cases:
                 imm: -0x21523109
                 size: 8
           regs_read: [ rsp, rip ]
-          regs_write: [ rsp ]
+          regs_write: [ rsp, rip ]
       -
         asm_text: "je 0x1019"
         details:

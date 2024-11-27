@@ -3936,7 +3936,7 @@ test_cases:
                 imm: 0xfffff6e8
                 size: 4
           regs_read: [ esp, eip ]
-          regs_write: [ esp ]
+          regs_write: [ esp, eip ]
           groups: [ call, branch_relative, not64bitmode ]
   -
     input:
