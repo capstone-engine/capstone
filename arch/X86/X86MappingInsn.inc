@@ -5200,7 +5200,7 @@
 {
 	X86_ENTER, X86_INS_ENTER, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_EBP, X86_REG_ESP, 0 }, { X86_REG_EBP, X86_REG_ESP, 0 }, { 0 }, 0, 0
 #endif
 },
 
