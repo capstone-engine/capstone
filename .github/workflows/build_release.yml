@@ -11,9 +11,32 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: true
+
+    - name: Make setup.sh and check_capstone.sh are executable
+      run: |
+        chmod +x ./packages/deb/setup.sh
+        chmod +x ./packages/deb/check_capstone.sh
+      
+    - name: Build Debian Package
+      working-directory: ./packages/deb
+      run: ./setup.sh ${{ github.event.release.tag_name }}
+  
+    - name: Run sanity checks on the Debian package
+      working-directory: ./packages/deb
+      run: |
+        ./check_capstone.sh ./libcapstone-dev_${{ github.event.release.tag_name }}_amd64.deb
+    
+    - name: Upload debian package to release
+      uses: softprops/action-gh-release@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.event.release.tag_name }}
+        files: |
+          ./packages/deb/*.deb
 
     - name: archive
       id: archive
@@ -27,24 +50,15 @@ jobs:
         TARBALL=$PKGNAME.tar.xz
         tar cJf $TARBALL $PKGNAME
         sha256sum $TARBALL > $SHASUM
-        echo "::set-output name=tarball::$TARBALL"
-        echo "::set-output name=shasum::$SHASUM"
-    - name: upload tarball
-      uses: actions/upload-release-asset@v1
+        echo "tarball=$TARBALL" >> $GITHUB_OUTPUT
+        echo "shasum=$SHASUM" >> $GITHUB_OUTPUT
+      
+    - name: Upload tarball and shasum to release
+      uses: softprops/action-gh-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./${{ steps.archive.outputs.tarball }}
-        asset_name: ${{ steps.archive.outputs.tarball }}
-        asset_content_type: application/gzip
-
-    - name: upload shasum
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./${{ steps.archive.outputs.shasum }}
-        asset_name: ${{ steps.archive.outputs.shasum }}
-        asset_content_type: text/plain
+        tag_name: ${{ github.event.release.tag_name }}
+        files: |
+          ${{ steps.archive.outputs.tarball }}
+          ${{ steps.archive.outputs.shasum }}

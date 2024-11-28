@@ -1,0 +1,25 @@
+Package: libcapstone-dev
+Source: capstone
+Version: <version-placeholder>
+Architecture: amd64
+Maintainer: Rot127 <unisono@quyllur.org>
+Original-Maintainer: Debian Security Tools <team+pkg-security@tracker.debian.org>
+Installed-Size: <size-in-kb>
+Depends: libc6 (>= 2.2.5)
+Section: libdevel
+Priority: optional
+Multi-Arch: same
+Homepage: https://www.capstone-engine.org/
+Description: lightweight multi-architecture disassembly framework - devel files
+ Capstone is a lightweight multi-platform, multi-architecture disassembly
+ framework. These are the development headers and libraries.
+ Features:
+ - Support hardware architectures: AArch64, ARM, Alpha, BPF, EVM, HPPA, LongArch, M680X, M68K, MOS65XX, Mips, PowerPC, RISCV, SH, Sparc, SystemZ, TMS320C64x, TriCore, WASM, x86, XCore.
+ - Clean/simple/lightweight/intuitive architecture-neutral API.
+ - Provide details on disassembled instructions (called "decomposer" by some
+ others).
+ - Provide some semantics of the disassembled instruction, such as list of
+ implicit registers read & written.
+ - Thread-safe by design.
+ - Special support for embedding into firmware or OS kernel.
+ - Distributed under the open source BSD license.
