@@ -1039,9 +1039,9 @@ test_cases:
           details:
               groups: [ alu ]
         -
-          asm_text: "ldb [0x0]"
-          mnemonic: ldb
-          op_str: "[0x0]"
+          asm_text: "ldabsb [skb+0x0]"
+          mnemonic: ldabsb
+          op_str: "[skb+0x0]"
           details:
             regs_write: [ r0 ]
             groups: [ load ]

@@ -9,6 +9,7 @@
 #include "BPFConstants.h"
 #include "BPFDisassembler.h"
 #include "BPFMapping.h"
+#include "../../Mapping.h"
 #include "../../cs_priv.h"
 
 static uint16_t read_u16(cs_struct *ud, const uint8_t *code)
@@ -179,8 +180,8 @@ static bool decodeLoad(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 	/* eBPF mode */
 	/*
 	 * - IMM: lddw dst, imm64
-	 * - ABS: ld{w,h,b,dw} [k]
-	 * - IND: ld{w,h,b,dw} [src+k]
+	 * - ABS: ld{w,h,b} [k]
+	 * - IND: ld{w,h,b} [src]
 	 * - MEM: ldx{w,h,b,dw} dst, [src+off]
 	 */
 	if (BPF_CLASS(bpf->op) == BPF_CLASS_LD) {
@@ -196,7 +197,6 @@ static bool decodeLoad(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 			return true;
 		case BPF_MODE_IND:
 			CHECK_READABLE_AND_PUSH(ud, MI, bpf->src);
-			MCOperand_CreateImm0(MI, bpf->k);
 			return true;
 		}
 		return false;
@@ -298,7 +298,7 @@ static bool decodeALU(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		return true;
 	if (BPF_OP(bpf->op) == BPF_ALU_END) {
 		/* bpf->k must be one of 16, 32, 64 */
-		MCInst_setOpcode(MI, MCInst_getOpcode(MI) | ((uint32_t)bpf->k << 4));
+		bpf->op |= ((uint32_t)bpf->k << 4);
 		return true;
 	}
 
@@ -336,6 +336,7 @@ static bool decodeJump(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		if (BPF_OP(bpf->op) > BPF_JUMP_JSLE)
 			return false;
 
+		/* JMP32 has no CALL/EXIT instruction */
 		/* No operands for exit */
 		if (BPF_OP(bpf->op) == BPF_JUMP_EXIT)
 			return bpf->op == (BPF_CLASS_JMP | BPF_JUMP_EXIT);
@@ -355,7 +356,11 @@ static bool decodeJump(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		if (BPF_OP(bpf->op) == BPF_JUMP_JA) {
 			if (BPF_SRC(bpf->op) != BPF_SRC_K)
 				return false;
-			MCOperand_CreateImm0(MI, bpf->offset);
+			if (BPF_CLASS(bpf->op) == BPF_CLASS_JMP)
+				MCOperand_CreateImm0(MI, bpf->offset);
+			else
+				MCOperand_CreateImm0(MI, bpf->k);
+
 			return true;
 		}
 
@@ -407,7 +412,6 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 	}
 
 	MCInst_clear(MI);
-	MCInst_setOpcode(MI, bpf->op);
 
 	switch (BPF_CLASS(bpf->op)) {
 	default: /* should never happen */
@@ -423,10 +427,11 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 	case BPF_CLASS_JMP:
 		return decodeJump(ud, MI, bpf);
 	case BPF_CLASS_RET:
-		/* eBPF doesn't have this class */
+	/* case BPF_CLASS_JMP32: */
 		if (EBPF_MODE(ud))
-			return false;
-		return decodeReturn(ud, MI, bpf);
+			return decodeJump(ud, MI, bpf);
+		else
+			return decodeReturn(ud, MI, bpf);
 	case BPF_CLASS_MISC:
 	/* case BPF_CLASS_ALU64: */
 		if (EBPF_MODE(ud))
@@ -434,6 +439,356 @@ static bool getInstruction(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 		else
 			return decodeMISC(ud, MI, bpf);
 	}
+
+}
+
+static bpf_insn op2insn_ld_cbpf(unsigned opcode)
+{
+// Check for regular load instructions
+#define REG_LOAD_CASE(c) case BPF_SIZE_##c: \
+		if (BPF_CLASS(opcode) == BPF_CLASS_LD) \
+			return BPF_INS_LD##c; \
+		else \
+			return BPF_INS_LDX##c;
+
+	switch (BPF_SIZE(opcode)) {
+	REG_LOAD_CASE(W);
+	REG_LOAD_CASE(H);
+	REG_LOAD_CASE(B);
+	REG_LOAD_CASE(DW);
+	}
+#undef REG_LOAD_CASE
+
+	return BPF_INS_INVALID;
+}
+
+static bpf_insn op2insn_ld_ebpf(unsigned opcode)
+{ 
+// Check for packet load instructions
+#define PACKET_LOAD_CASE(c) case BPF_SIZE_##c: \
+		if (BPF_MODE(opcode) == BPF_MODE_ABS) \
+			return BPF_INS_LDABS##c; \
+		else if (BPF_MODE(opcode) == BPF_MODE_IND) \
+			return BPF_INS_LDIND##c; \
+		else \
+			return BPF_INS_INVALID;
+
+	if (BPF_CLASS(opcode) == BPF_CLASS_LD) {
+		switch (BPF_SIZE(opcode)) {
+		PACKET_LOAD_CASE(W);
+		PACKET_LOAD_CASE(H);
+		PACKET_LOAD_CASE(B);
+		}
+	}
+#undef PACKET_LOAD_CASE
+
+	// If it's not a packet load instruction, it must be a regular load instruction
+	return op2insn_ld_cbpf(opcode);
+}
+
+static bpf_insn op2insn_st(unsigned opcode)
+{
+	/*
+	 * - BPF_STX | BPF_XADD | BPF_{W,DW}
+	 * - BPF_ST* | BPF_MEM | BPF_{W,H,B,DW}
+	 */
+
+	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_W))
+		return BPF_INS_XADDW;
+	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_DW))
+		return BPF_INS_XADDDW;
+
+	/* should be BPF_MEM */
+#define CASE(c) case BPF_SIZE_##c: \
+		if (BPF_CLASS(opcode) == BPF_CLASS_ST) \
+			return BPF_INS_ST##c; \
+		else \
+			return BPF_INS_STX##c;
+	switch (BPF_SIZE(opcode)) {
+	CASE(W);
+	CASE(H);
+	CASE(B);
+	CASE(DW);
+	}
+#undef CASE
+
+	return BPF_INS_INVALID;
+}
+static bpf_insn op2insn_alu(unsigned opcode)
+{
+	/* Endian is a special case */
+	if (BPF_OP(opcode) == BPF_ALU_END) {
+		if (BPF_CLASS(opcode) == BPF_CLASS_ALU64) {
+			switch (opcode ^ BPF_CLASS_ALU64 ^ BPF_ALU_END ^ BPF_SRC_LITTLE) {
+			case (16 << 4):
+				return BPF_INS_BSWAP16;
+			case (32 << 4):
+				return BPF_INS_BSWAP32;
+			case (64 << 4):
+				return BPF_INS_BSWAP64;
+			default:
+				return BPF_INS_INVALID;
+			}
+		}
+
+		switch (opcode ^ BPF_CLASS_ALU ^ BPF_ALU_END) {
+		case BPF_SRC_LITTLE | (16 << 4):
+			return BPF_INS_LE16;
+		case BPF_SRC_LITTLE | (32 << 4):
+			return BPF_INS_LE32;
+		case BPF_SRC_LITTLE | (64 << 4):
+			return BPF_INS_LE64;
+		case BPF_SRC_BIG | (16 << 4):
+			return BPF_INS_BE16;
+		case BPF_SRC_BIG | (32 << 4):
+			return BPF_INS_BE32;
+		case BPF_SRC_BIG | (64 << 4):
+			return BPF_INS_BE64;
+		}
+		return BPF_INS_INVALID;
+	}
+
+#define CASE(c) case BPF_ALU_##c: \
+		if (BPF_CLASS(opcode) == BPF_CLASS_ALU) \
+			return BPF_INS_##c; \
+		else \
+			return BPF_INS_##c##64;
+
+	switch (BPF_OP(opcode)) {
+	CASE(ADD);
+	CASE(SUB);
+	CASE(MUL);
+	CASE(DIV);
+	CASE(OR);
+	CASE(AND);
+	CASE(LSH);
+	CASE(RSH);
+	CASE(NEG);
+	CASE(MOD);
+	CASE(XOR);
+	CASE(MOV);
+	CASE(ARSH);
+	}
+#undef CASE
+
+	return BPF_INS_INVALID;
+}
+
+static bpf_insn op2insn_jmp(unsigned opcode)
+{
+	if (opcode == (BPF_CLASS_JMP | BPF_JUMP_CALL | BPF_SRC_X)) {
+		return BPF_INS_CALLX;
+	}
+
+#define CASE(c) case BPF_JUMP_##c: \
+		if (BPF_CLASS(opcode) == BPF_CLASS_JMP) \
+			return BPF_INS_##c; \
+		else \
+			return BPF_INS_##c##32;
+
+#define SPEC_CASE(c) case BPF_JUMP_##c: \
+		if (BPF_CLASS(opcode) == BPF_CLASS_JMP) \
+			return BPF_INS_##c; \
+		else \
+			return BPF_INS_INVALID;
+
+	switch (BPF_OP(opcode)) {
+	case BPF_JUMP_JA:
+	if (BPF_CLASS(opcode) == BPF_CLASS_JMP)
+		return BPF_INS_JA;
+	else
+		return BPF_INS_JAL;
+	CASE(JEQ);
+	CASE(JGT);
+	CASE(JGE);
+	CASE(JSET);
+	CASE(JNE);
+	CASE(JSGT);
+	CASE(JSGE);
+	SPEC_CASE(CALL);
+	SPEC_CASE(EXIT);
+	CASE(JLT);
+	CASE(JLE);
+	CASE(JSLT);
+	CASE(JSLE);
+	}
+#undef SPEC_CASE
+#undef CASE
+
+	return BPF_INS_INVALID;
+}
+
+#ifndef CAPSTONE_DIET
+static void update_regs_access(const cs_struct *ud, cs_detail *detail,
+		bpf_insn insn_id, unsigned int opcode)
+{
+	if (insn_id == BPF_INS_INVALID)
+		return;
+#define PUSH_READ(r) do { \
+		detail->regs_read[detail->regs_read_count] = r; \
+		detail->regs_read_count++; \
+	} while (0)
+#define PUSH_WRITE(r) do { \
+		detail->regs_write[detail->regs_write_count] = r; \
+		detail->regs_write_count++; \
+	} while (0)
+	/*
+	 * In eBPF mode, only these instructions have implicit registers access:
+	 * - legacy ld{w,h,b,dw} * // w: r0
+	 * - exit // r: r0
+	 */
+	if (EBPF_MODE(ud)) {
+		switch (insn_id) {
+		default:
+			break;
+		case BPF_INS_LDABSW:
+		case BPF_INS_LDABSH:
+		case BPF_INS_LDABSB:
+		case BPF_INS_LDINDW:
+		case BPF_INS_LDINDH:
+		case BPF_INS_LDINDB:
+		case BPF_INS_LDDW:
+			if (BPF_MODE(opcode) == BPF_MODE_ABS || BPF_MODE(opcode) == BPF_MODE_IND) {
+				PUSH_WRITE(BPF_REG_R0);
+			}
+			break;
+		case BPF_INS_EXIT:
+			PUSH_READ(BPF_REG_R0);
+			break;
+		}
+		return;
+	}
+
+	/* cBPF mode */
+	switch (BPF_CLASS(opcode)) {
+	default:
+		break;
+	case BPF_CLASS_LD:
+		PUSH_WRITE(BPF_REG_A);
+		break;
+	case BPF_CLASS_LDX:
+		PUSH_WRITE(BPF_REG_X);
+		break;
+	case BPF_CLASS_ST:
+		PUSH_READ(BPF_REG_A);
+		break;
+	case BPF_CLASS_STX:
+		PUSH_READ(BPF_REG_X);
+		break;
+	case BPF_CLASS_ALU:
+		PUSH_READ(BPF_REG_A);
+		PUSH_WRITE(BPF_REG_A);
+		break;
+	case BPF_CLASS_JMP:
+		if (insn_id != BPF_INS_JA) // except the unconditional jump
+			PUSH_READ(BPF_REG_A);
+		break;
+	/* case BPF_CLASS_RET: */
+	case BPF_CLASS_MISC:
+		if (insn_id == BPF_INS_TAX) {
+			PUSH_READ(BPF_REG_A);
+			PUSH_WRITE(BPF_REG_X);
+		}
+		else {
+			PUSH_READ(BPF_REG_X);
+			PUSH_WRITE(BPF_REG_A);
+		}
+		break;
+	}
+}
+#endif
+
+static bool setFinalOpcode(const cs_struct* ud, MCInst *insnr, const bpf_internal* bpf) {
+	bpf_insn id = BPF_INS_INVALID;
+#ifndef CAPSTONE_DIET
+	cs_detail *detail;
+	bpf_insn_group grp;
+
+	detail = get_detail(insnr);
+ #define PUSH_GROUP(grp) do { \
+		if (detail) { \
+			detail->groups[detail->groups_count] = grp; \
+			detail->groups_count++; \
+		} \
+	} while(0)
+#else
+ #define PUSH_GROUP(grp) do {} while(0)
+#endif
+	
+	const uint16_t opcode = bpf->op;
+	switch (BPF_CLASS(opcode)) {
+	default:	// will never happen
+		break;
+	case BPF_CLASS_LD:
+	case BPF_CLASS_LDX:
+		if (EBPF_MODE(ud))
+			id = op2insn_ld_ebpf(opcode);
+		else
+			id = op2insn_ld_cbpf(opcode);
+		PUSH_GROUP(BPF_GRP_LOAD);
+		break;
+	case BPF_CLASS_ST:
+	case BPF_CLASS_STX:
+		id = op2insn_st(opcode);
+		PUSH_GROUP(BPF_GRP_STORE);
+		break;
+	case BPF_CLASS_ALU:
+		id = op2insn_alu(opcode);
+		PUSH_GROUP(BPF_GRP_ALU);
+		break;
+	case BPF_CLASS_JMP:
+		id = op2insn_jmp(opcode);
+#ifndef CAPSTONE_DIET
+		grp = BPF_GRP_JUMP;
+		if (id == BPF_INS_CALL || id == BPF_INS_CALLX)
+			grp = BPF_GRP_CALL;
+		else if (id == BPF_INS_EXIT)
+			grp = BPF_GRP_RETURN;
+		PUSH_GROUP(grp);
+#endif
+		break;
+	case BPF_CLASS_RET:
+	/* case BPF_CLASS_JMP32: */
+		if (EBPF_MODE(ud)) {
+			id = op2insn_jmp(opcode);
+#ifndef CAPSTONE_DIET
+			PUSH_GROUP(BPF_GRP_JUMP);
+#endif
+		} else {
+			id = BPF_INS_RET;
+			PUSH_GROUP(BPF_GRP_RETURN);
+		}
+		break;
+	// BPF_CLASS_MISC and BPF_CLASS_ALU64 have exactly same value
+	case BPF_CLASS_MISC:
+	/* case BPF_CLASS_ALU64: */
+		if (EBPF_MODE(ud)) {
+			// ALU64 in eBPF
+			id = op2insn_alu(opcode);
+			PUSH_GROUP(BPF_GRP_ALU);
+		}
+		else {
+			if (BPF_MISCOP(opcode) == BPF_MISCOP_TXA)
+				id = BPF_INS_TXA;
+			else
+				id = BPF_INS_TAX;
+			PUSH_GROUP(BPF_GRP_MISC);
+		}
+		break;
+	}
+
+	if (id == BPF_INS_INVALID)
+		return false;
+
+	MCInst_setOpcodePub(insnr, id);
+#undef PUSH_GROUP
+
+#ifndef CAPSTONE_DIET
+	if (detail) {
+		update_regs_access(ud, detail, id, opcode);
+	}
+#endif
+	return true;
 }
 
 bool BPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
@@ -449,10 +804,12 @@ bool BPF_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		bpf = fetch_cbpf(cs, code, code_len);
 	if (bpf == NULL)
 		return false;
-	if (!getInstruction(cs, instr, bpf)) {
+	if (!getInstruction(cs, instr, bpf) ||
+			!setFinalOpcode(cs, instr, bpf)) {
 		cs_mem_free(bpf);
 		return false;
 	}
+	MCInst_setOpcode(instr, bpf->op); 
 
 	*size = bpf->insn_size;
 	cs_mem_free(bpf);

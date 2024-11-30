@@ -84,7 +84,7 @@ test_cases:
           regs_read: [ r2 ]
           regs_write: [ r2 ]
       -
-        asm_text: "ldb [0x0]"
+        asm_text: "ldabsb [skb+0x0]"
         details:
           groups: [ BPF_GRP_LOAD ]
           bpf:

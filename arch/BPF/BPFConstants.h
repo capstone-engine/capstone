@@ -16,6 +16,7 @@
 #define BPF_CLASS_ALU	0x04
 #define BPF_CLASS_JMP	0x05
 #define BPF_CLASS_RET	0x06	///< cBPF only
+#define BPF_CLASS_JMP32	0x06	///< eBPF only
 #define BPF_CLASS_MISC	0x07	///< cBPF only
 #define BPF_CLASS_ALU64	0x07	///< eBPF only
 
@@ -73,8 +74,8 @@
 #define BPF_MODE(code) ((code) & 0xe0)
 ///< Mode modifier
 #define BPF_MODE_IMM	0x00	///< used for 32-bit mov in cBPF and 64-bit in eBPF
-#define BPF_MODE_ABS	0x20
-#define BPF_MODE_IND	0x40
+#define BPF_MODE_ABS	0x20	///< absolute indexing of socket buffer. eBPF only, but deprecated in new versions
+#define BPF_MODE_IND	0x40	///< indirect indexing of socket buffer. eBPF only, but deprecated in new versions
 #define BPF_MODE_MEM	0x60
 #define BPF_MODE_LEN	0x80	///< cBPF only, reserved in eBPF
 #define BPF_MODE_MSH	0xa0	///< cBPF only, reserved in eBPF

@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jmp +0xb071"
+          asm_text: "ja -0x4f8f"
   -
     input:
       bytes: [ 0x07, 0x76, 0x01, 0x28, 0xc4, 0x09, 0xfe, 0x8b ]
@@ -115,7 +115,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldw [0xca1a41da]"
+          asm_text: "ldabsw [skb+0xca1a41da]"
   -
     input:
       bytes: [ 0x24, 0xb6, 0x69, 0x66, 0xe3, 0xef, 0xec, 0x25 ]
@@ -151,7 +151,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldh [0xd0b48e8]"
+          asm_text: "ldabsh [skb+0xd0b48e8]"
   -
     input:
       bytes: [ 0x2c, 0x78, 0x03, 0xf6, 0x29, 0x29, 0x15, 0xfc ]
@@ -169,7 +169,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jgt r8, r1, +0xfd5b"
+          asm_text: "jgt r8, r1, -0x2a5"
   -
     input:
       bytes: [ 0x2f, 0x77, 0xc7, 0xa4, 0x4c, 0x32, 0x73, 0x2a ]
@@ -187,7 +187,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldb [0x4b7c6685]"
+          asm_text: "ldabsb [skb+0x4b7c6685]"
   -
     input:
       bytes: [ 0x34, 0x46, 0x49, 0x33, 0xe1, 0x72, 0xd4, 0xcb ]
@@ -205,7 +205,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jge r5, 0x3da1375b, +0xb942"
+          asm_text: "jge r5, 0x3da1375b, -0x46be"
   -
     input:
       bytes: [ 0x37, 0x84, 0xd8, 0xba, 0x3b, 0x84, 0x55, 0x1f ]
@@ -215,24 +215,6 @@ test_cases:
       insns:
         -
           asm_text: "div64 r4, 0x1f55843b"
-  -
-    input:
-      bytes: [ 0x38, 0x8e, 0x3f, 0xd7, 0x1c, 0x3e, 0x3a, 0x7b ]
-      arch: "CS_ARCH_BPF"
-      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
-    expected:
-      insns:
-        -
-          asm_text: "lddw [0x7b3a3e1c]"
-  -
-    input:
-      bytes: [ 0x3d, 0x1a, 0xc3, 0x9b, 0x88, 0xa2, 0x3f, 0x65 ]
-      arch: "CS_ARCH_BPF"
-      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
-    expected:
-      insns:
-        -
-          asm_text: "jge r10, r1, +0x9bc3"
   -
     input:
       bytes: [ 0x3f, 0x36, 0x99, 0x32, 0x7e, 0x07, 0x59, 0x7a ]
@@ -250,7 +232,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldw [r9+0xc4d7e76b]"
+          asm_text: "ldindw [skb+r9]"
   -
     input:
       bytes: [ 0x44, 0x16, 0xf7, 0x98, 0xf7, 0x02, 0x92, 0x94 ]
@@ -268,7 +250,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jset r2, 0x1e2de714, +0xf2a2"
+          asm_text: "jset r2, 0x1e2de714, -0xd5e"
   -
     input:
       bytes: [ 0x47, 0x36, 0xf4, 0xd5, 0xbe, 0x04, 0x58, 0x4d ]
@@ -286,7 +268,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldh [r7+0xd5a0eeb]"
+          asm_text: "ldindh [skb+r7]"
   -
     input:
       bytes: [ 0x4c, 0x81, 0x0a, 0x66, 0xfc, 0x32, 0x61, 0xc4 ]
@@ -322,7 +304,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldb [r3+0x6cd17004]"
+          asm_text: "ldindb [skb+r3]"
   -
     input:
       bytes: [ 0x54, 0x40, 0x0a, 0x6a, 0x4a, 0xe8, 0xab, 0xfb ]
@@ -340,7 +322,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jne r9, 0x96c8bc90, +0x80a3"
+          asm_text: "jne r9, 0x96c8bc90, -0x7f5d"
   -
     input:
       bytes: [ 0x57, 0x30, 0x12, 0xe9, 0x7c, 0x06, 0x82, 0x27 ]
@@ -350,15 +332,6 @@ test_cases:
       insns:
         -
           asm_text: "and64 r0, 0x2782067c"
-  -
-    input:
-      bytes: [ 0x58, 0x6d, 0xf1, 0x05, 0xd3, 0x50, 0x4b, 0xc0 ]
-      arch: "CS_ARCH_BPF"
-      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
-    expected:
-      insns:
-        -
-          asm_text: "lddw [r6+0xc04b50d3]"
   -
     input:
       bytes: [ 0x5c, 0x02, 0x95, 0xb2, 0xbd, 0x3f, 0x38, 0x37 ]
@@ -394,7 +367,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldxw r8, [r2+0xedb2]"
+          asm_text: "ldxw r8, [r2-0x124e]"
   -
     input:
       bytes: [ 0x62, 0xa5, 0xdf, 0xe0, 0x14, 0x7d, 0x95, 0x78 ]
@@ -403,7 +376,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stw [r5+0xe0df], 0x78957d14"
+          asm_text: "stw [r5-0x1f21], 0x78957d14"
   -
     input:
       bytes: [ 0x63, 0x77, 0x2f, 0xcf, 0x76, 0xb7, 0xd3, 0xfa ]
@@ -412,7 +385,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stxw [r7+0xcf2f], r7"
+          asm_text: "stxw [r7-0x30d1], r7"
   -
     input:
       bytes: [ 0x64, 0x68, 0xc1, 0xf4, 0x88, 0x92, 0xd2, 0xeb ]
@@ -430,7 +403,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jsgt r8, 0xf88fbe87, +0xe197"
+          asm_text: "jsgt r8, 0xf88fbe87, -0x1e69"
   -
     input:
       bytes: [ 0x67, 0x00, 0xd7, 0xc0, 0x05, 0xb0, 0xf6, 0x74 ]
@@ -448,7 +421,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldxh r4, [r1+0x8ec7]"
+          asm_text: "ldxh r4, [r1-0x7139]"
   -
     input:
       bytes: [ 0x6a, 0xb5, 0xbc, 0x8c, 0x4f, 0x5c, 0x94, 0x01 ]
@@ -457,7 +430,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sth [r5+0x8cbc], 0x1945c4f"
+          asm_text: "sth [r5-0x7344], 0x1945c4f"
   -
     input:
       bytes: [ 0x6b, 0x34, 0x58, 0xf5, 0xc8, 0x27, 0x9e, 0x14 ]
@@ -466,7 +439,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stxh [r4+0xf558], r3"
+          asm_text: "stxh [r4-0xaa8], r3"
   -
     input:
       bytes: [ 0x6c, 0x21, 0x10, 0x48, 0x01, 0x3e, 0x6e, 0xf8 ]
@@ -484,7 +457,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jsgt r8, r3, +0xe369"
+          asm_text: "jsgt r8, r3, -0x1c97"
   -
     input:
       bytes: [ 0x6f, 0x64, 0x49, 0xd6, 0x07, 0xa9, 0x93, 0x13 ]
@@ -502,7 +475,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldxb r0, [r10+0xfbeb]"
+          asm_text: "ldxb r0, [r10-0x415]"
   -
     input:
       bytes: [ 0x72, 0xe2, 0xc1, 0x1b, 0x25, 0x2f, 0x4a, 0xdc ]
@@ -763,7 +736,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jle r9, r1, +0xe880"
+          asm_text: "jle r9, r1, -0x1780"
   -
     input:
       bytes: [ 0xbf, 0x86, 0x55, 0x58, 0xb2, 0x6d, 0x14, 0x03 ]
@@ -790,7 +763,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jslt r2, 0x4fcec0ba, +0xe4eb"
+          asm_text: "jslt r2, 0x4fcec0ba, -0x1b15"
   -
     input:
       bytes: [ 0xc7, 0xe8, 0xba, 0xff, 0x1f, 0xef, 0xc0, 0x88 ]
@@ -817,7 +790,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jslt r0, r9, +0x8867"
+          asm_text: "jslt r0, r9, -0x7799"
   -
     input:
       bytes: [ 0xcf, 0x82, 0xe1, 0xcd, 0xbe, 0xc3, 0x2d, 0x7c ]
@@ -844,7 +817,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jsle r9, 0xe5b0fd50, +0xb2f6"
+          asm_text: "jsle r9, 0xe5b0fd50, -0x4d0a"
   -
     input:
       bytes: [ 0xdc, 0xb2, 0xa3, 0x50, 0x20, 0x00, 0x00, 0x00 ]
@@ -862,7 +835,16 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jsle r5, r9, +0xb1bf"
+          asm_text: "jsle r5, r9, -0x4e41"
+  -
+    input:
+      bytes: [ 0x2d, 0x18, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jgt r8, r1, +0x7"
   -
     input:
       bytes: [ 0x8d, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00 ]
@@ -872,3 +854,111 @@ test_cases:
       insns:
         -
           asm_text: "callx r2"
+
+  - input:
+      bytes: [ 0x06, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jal -0xa46e0bd"
+
+  - input:
+      bytes: [ 0x16, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jeq32 r7, -0xa46e0bd, -0x33f1"
+
+  - input:
+      bytes: [ 0x26, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jgt32 r7, -0xa46e0bd, -0x33f1"
+
+  - input:
+      bytes: [ 0x36, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jge32 r7, -0xa46e0bd, -0x33f1"
+
+  - input:
+      bytes: [ 0x46, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jset32 r7, -0xa46e0bd, -0x33f1"
+
+  - input:
+      bytes: [ 0x56, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jne32 r7, -0xa46e0bd, -0x33f1"
+
+  - input:
+      bytes: [ 0x66, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jsgt32 r7, -0xa46e0bd, -0x33f1"
+
+  - input:
+      bytes: [ 0x76, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jsge32 r7, -0xa46e0bd, -0x33f1"
+
+  - input:
+      bytes: [ 0xa6, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jlt32 r7, -0xa46e0bd, -0x33f1"
+
+  - input:
+      bytes: [ 0xb6, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jle32 r7, -0xa46e0bd, -0x33f1"
+
+  - input:
+      bytes: [ 0xc6, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jslt32 r7, -0xa46e0bd, -0x33f1"
+
+  - input:
+      bytes: [ 0xd6, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jsle32 r7, -0xa46e0bd, -0x33f1"

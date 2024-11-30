@@ -81,6 +81,12 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 	{ BPF_INS_LDXH, "ldxh" },
 	{ BPF_INS_LDXB, "ldxb" },
 	{ BPF_INS_LDXDW, "ldxdw" },
+	{ BPF_INS_LDABSW, "ldabsw" },
+	{ BPF_INS_LDABSH, "ldabsh" },
+	{ BPF_INS_LDABSB, "ldabsb" },
+	{ BPF_INS_LDINDW, "ldindw" },
+	{ BPF_INS_LDINDH, "ldindh" },
+	{ BPF_INS_LDINDB, "ldindb" },
 
 	{ BPF_INS_STW, "stw" },
 	{ BPF_INS_STH, "sth" },
@@ -93,7 +99,7 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 	{ BPF_INS_XADDW, "xaddw" },
 	{ BPF_INS_XADDDW, "xadddw" },
 
-	{ BPF_INS_JMP, "jmp" },
+	{ BPF_INS_JA, "ja" },
 	{ BPF_INS_JEQ, "jeq" },
 	{ BPF_INS_JGT, "jgt" },
 	{ BPF_INS_JGE, "jge" },
@@ -108,6 +114,19 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 	{ BPF_INS_JLE, "jle" },
 	{ BPF_INS_JSLT, "jslt" },
 	{ BPF_INS_JSLE,	"jsle" },
+
+	{ BPF_INS_JAL, "jal" },
+	{ BPF_INS_JEQ32, "jeq32" },
+	{ BPF_INS_JGT32, "jgt32" },
+	{ BPF_INS_JGE32, "jge32" },
+	{ BPF_INS_JSET32, "jset32" },
+	{ BPF_INS_JNE32, "jne32" },
+	{ BPF_INS_JSGT32, "jsgt32" },
+	{ BPF_INS_JSGE32,"jsge32" },
+	{ BPF_INS_JLT32, "jlt32" },
+	{ BPF_INS_JLE32, "jle32" },
+	{ BPF_INS_JSLT32, "jslt32" },
+	{ BPF_INS_JSLE32, "jsle32" },
 
 	{ BPF_INS_RET, "ret" },
 
@@ -162,302 +181,9 @@ const char *BPF_reg_name(csh handle, unsigned int reg)
 #endif
 }
 
-static bpf_insn op2insn_ld(unsigned opcode)
+void BPF_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-#define CASE(c) case BPF_SIZE_##c: \
-		if (BPF_CLASS(opcode) == BPF_CLASS_LD) \
-			return BPF_INS_LD##c; \
-		else \
-			return BPF_INS_LDX##c;
-
-	switch (BPF_SIZE(opcode)) {
-	CASE(W);
-	CASE(H);
-	CASE(B);
-	CASE(DW);
-	}
-#undef CASE
-
-	return BPF_INS_INVALID;
-}
-
-static bpf_insn op2insn_st(unsigned opcode)
-{
-	/*
-	 * - BPF_STX | BPF_XADD | BPF_{W,DW}
-	 * - BPF_ST* | BPF_MEM | BPF_{W,H,B,DW}
-	 */
-
-	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_W))
-		return BPF_INS_XADDW;
-	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_DW))
-		return BPF_INS_XADDDW;
-
-	/* should be BPF_MEM */
-#define CASE(c) case BPF_SIZE_##c: \
-		if (BPF_CLASS(opcode) == BPF_CLASS_ST) \
-			return BPF_INS_ST##c; \
-		else \
-			return BPF_INS_STX##c;
-	switch (BPF_SIZE(opcode)) {
-	CASE(W);
-	CASE(H);
-	CASE(B);
-	CASE(DW);
-	}
-#undef CASE
-
-	return BPF_INS_INVALID;
-}
-
-static bpf_insn op2insn_alu(unsigned opcode)
-{
-	/* Endian is a special case */
-	if (BPF_OP(opcode) == BPF_ALU_END) {
-		if (BPF_CLASS(opcode) == BPF_CLASS_ALU64) {
-			switch (opcode ^ BPF_CLASS_ALU64 ^ BPF_ALU_END ^ BPF_SRC_LITTLE) {
-			case (16 << 4):
-				return BPF_INS_BSWAP16;
-			case (32 << 4):
-				return BPF_INS_BSWAP32;
-			case (64 << 4):
-				return BPF_INS_BSWAP64;
-			default:
-				return BPF_INS_INVALID;
-			}
-		}
-
-		switch (opcode ^ BPF_CLASS_ALU ^ BPF_ALU_END) {
-		case BPF_SRC_LITTLE | (16 << 4):
-			return BPF_INS_LE16;
-		case BPF_SRC_LITTLE | (32 << 4):
-			return BPF_INS_LE32;
-		case BPF_SRC_LITTLE | (64 << 4):
-			return BPF_INS_LE64;
-		case BPF_SRC_BIG | (16 << 4):
-			return BPF_INS_BE16;
-		case BPF_SRC_BIG | (32 << 4):
-			return BPF_INS_BE32;
-		case BPF_SRC_BIG | (64 << 4):
-			return BPF_INS_BE64;
-		}
-		return BPF_INS_INVALID;
-	}
-
-#define CASE(c) case BPF_ALU_##c: \
-		if (BPF_CLASS(opcode) == BPF_CLASS_ALU) \
-			return BPF_INS_##c; \
-		else \
-			return BPF_INS_##c##64;
-
-	switch (BPF_OP(opcode)) {
-	CASE(ADD);
-	CASE(SUB);
-	CASE(MUL);
-	CASE(DIV);
-	CASE(OR);
-	CASE(AND);
-	CASE(LSH);
-	CASE(RSH);
-	CASE(NEG);
-	CASE(MOD);
-	CASE(XOR);
-	CASE(MOV);
-	CASE(ARSH);
-	}
-#undef CASE
-
-	return BPF_INS_INVALID;
-}
-
-static bpf_insn op2insn_jmp(unsigned opcode)
-{
-	if (opcode == (BPF_CLASS_JMP | BPF_JUMP_CALL | BPF_SRC_X)) {
-		return BPF_INS_CALLX;
-	}
-
-#define CASE(c) case BPF_JUMP_##c: return BPF_INS_##c
-	switch (BPF_OP(opcode)) {
-	case BPF_JUMP_JA:
-		return BPF_INS_JMP;
-	CASE(JEQ);
-	CASE(JGT);
-	CASE(JGE);
-	CASE(JSET);
-	CASE(JNE);
-	CASE(JSGT);
-	CASE(JSGE);
-	CASE(CALL);
-	CASE(EXIT);
-	CASE(JLT);
-	CASE(JLE);
-	CASE(JSLT);
-	CASE(JSLE);
-	}
-#undef CASE
-
-	return BPF_INS_INVALID;
-}
-
-#ifndef CAPSTONE_DIET
-static void update_regs_access(cs_struct *ud, cs_detail *detail,
-		bpf_insn insn_id, unsigned int opcode)
-{
-	if (insn_id == BPF_INS_INVALID)
-		return;
-#define PUSH_READ(r) do { \
-		detail->regs_read[detail->regs_read_count] = r; \
-		detail->regs_read_count++; \
-	} while (0)
-#define PUSH_WRITE(r) do { \
-		detail->regs_write[detail->regs_write_count] = r; \
-		detail->regs_write_count++; \
-	} while (0)
-	/*
-	 * In eBPF mode, only these instructions have implicit registers access:
-	 * - legacy ld{w,h,b,dw} * // w: r0
-	 * - exit // r: r0
-	 */
-	if (EBPF_MODE(ud)) {
-		switch (insn_id) {
-		default:
-			break;
-		case BPF_INS_LDW:
-		case BPF_INS_LDH:
-		case BPF_INS_LDB:
-		case BPF_INS_LDDW:
-			if (BPF_MODE(opcode) == BPF_MODE_ABS || BPF_MODE(opcode) == BPF_MODE_IND) {
-				PUSH_WRITE(BPF_REG_R0);
-			}
-			break;
-		case BPF_INS_EXIT:
-			PUSH_READ(BPF_REG_R0);
-			break;
-		}
-		return;
-	}
-
-	/* cBPF mode */
-	switch (BPF_CLASS(opcode)) {
-	default:
-		break;
-	case BPF_CLASS_LD:
-		PUSH_WRITE(BPF_REG_A);
-		break;
-	case BPF_CLASS_LDX:
-		PUSH_WRITE(BPF_REG_X);
-		break;
-	case BPF_CLASS_ST:
-		PUSH_READ(BPF_REG_A);
-		break;
-	case BPF_CLASS_STX:
-		PUSH_READ(BPF_REG_X);
-		break;
-	case BPF_CLASS_ALU:
-		PUSH_READ(BPF_REG_A);
-		PUSH_WRITE(BPF_REG_A);
-		break;
-	case BPF_CLASS_JMP:
-		if (insn_id != BPF_INS_JMP) // except the unconditional jump
-			PUSH_READ(BPF_REG_A);
-		break;
-	/* case BPF_CLASS_RET: */
-	case BPF_CLASS_MISC:
-		if (insn_id == BPF_INS_TAX) {
-			PUSH_READ(BPF_REG_A);
-			PUSH_WRITE(BPF_REG_X);
-		}
-		else {
-			PUSH_READ(BPF_REG_X);
-			PUSH_WRITE(BPF_REG_A);
-		}
-		break;
-	}
-}
-#endif
-
-/*
- * 1. Convert opcode(id) to BPF_INS_*
- * 2. Set regs_read/regs_write/groups
- */
-void BPF_get_insn_id(cs_struct *ud, cs_insn *insn, unsigned int opcode)
-{
-	// No need to care the mode (cBPF or eBPF) since all checks has be done in
-	// BPF_getInstruction, we can simply map opcode to BPF_INS_*.
-	bpf_insn id = BPF_INS_INVALID;
-#ifndef CAPSTONE_DIET
-	cs_detail *detail;
-	bpf_insn_group grp;
-
-	detail = insn->detail;
- #define PUSH_GROUP(grp) do { \
-		if (detail) { \
-			detail->groups[detail->groups_count] = grp; \
-			detail->groups_count++; \
-		} \
-	} while(0)
-#else
- #define PUSH_GROUP(grp) do {} while(0)
-#endif
-
-	switch (BPF_CLASS(opcode)) {
-	default:	// will never happen
-		break;
-	case BPF_CLASS_LD:
-	case BPF_CLASS_LDX:
-		id = op2insn_ld(opcode);
-		PUSH_GROUP(BPF_GRP_LOAD);
-		break;
-	case BPF_CLASS_ST:
-	case BPF_CLASS_STX:
-		id = op2insn_st(opcode);
-		PUSH_GROUP(BPF_GRP_STORE);
-		break;
-	case BPF_CLASS_ALU:
-		id = op2insn_alu(opcode);
-		PUSH_GROUP(BPF_GRP_ALU);
-		break;
-	case BPF_CLASS_JMP:
-		id = op2insn_jmp(opcode);
-#ifndef CAPSTONE_DIET
-		grp = BPF_GRP_JUMP;
-		if (id == BPF_INS_CALL || id == BPF_INS_CALLX)
-			grp = BPF_GRP_CALL;
-		else if (id == BPF_INS_EXIT)
-			grp = BPF_GRP_RETURN;
-		PUSH_GROUP(grp);
-#endif
-		break;
-	case BPF_CLASS_RET:
-		id = BPF_INS_RET;
-		PUSH_GROUP(BPF_GRP_RETURN);
-		break;
-	// BPF_CLASS_MISC and BPF_CLASS_ALU64 have exactly same value
-	case BPF_CLASS_MISC:
-	/* case BPF_CLASS_ALU64: */
-		if (EBPF_MODE(ud)) {
-			// ALU64 in eBPF
-			id = op2insn_alu(opcode);
-			PUSH_GROUP(BPF_GRP_ALU);
-		}
-		else {
-			if (BPF_MISCOP(opcode) == BPF_MISCOP_TXA)
-				id = BPF_INS_TXA;
-			else
-				id = BPF_INS_TAX;
-			PUSH_GROUP(BPF_GRP_MISC);
-		}
-		break;
-	}
-
-	insn->id = id;
-#undef PUSH_GROUP
-
-#ifndef CAPSTONE_DIET
-	if (detail) {
-		update_regs_access(ud, detail, id, opcode);
-	}
-#endif
+	// Not used by BPF. Information is set after disassembly.
 }
 
 static void sort_and_uniq(cs_regs arr, uint8_t n, uint8_t *new_n)

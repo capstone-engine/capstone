@@ -34,7 +34,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jmp +0xd52cc837"
+          asm_text: "ja +0xd52cc837"
   -
     input:
       bytes: [ 0x06, 0x00, 0xa7, 0x84, 0x25, 0x40, 0x28, 0x1c ]

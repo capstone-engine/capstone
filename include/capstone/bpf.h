@@ -78,6 +78,8 @@ typedef struct cs_bpf_op {
 		uint32_t ext;	///< cBPF's extension (not eBPF)
 	};
 
+	bool is_signed;	///< is this operand signed? (used mem, imm and off operands)
+	bool is_pkt;	///< is this operand referring to packet data? (used in MEM operand)
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// This field is combined of cs_ac_type.
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
@@ -144,6 +146,13 @@ typedef enum bpf_insn {
 	BPF_INS_LDXH,	///< eBPF only
 	BPF_INS_LDXB,	///< eBPF only
 	BPF_INS_LDXDW,	///< eBPF only
+	///< Packet data access
+	BPF_INS_LDABSW,	///< eBPF only
+	BPF_INS_LDABSH,	///< eBPF only
+	BPF_INS_LDABSB,	///< eBPF only
+	BPF_INS_LDINDW,	///< eBPF only
+	BPF_INS_LDINDH,	///< eBPF only
+	BPF_INS_LDINDB,	///< eBPF only
 
 	///< Store
 	BPF_INS_STW,	///< eBPF only
@@ -158,7 +167,7 @@ typedef enum bpf_insn {
 	BPF_INS_XADDDW,	///< eBPF only
 
 	///< Jump
-	BPF_INS_JMP,
+	BPF_INS_JA,
 	BPF_INS_JEQ,
 	BPF_INS_JGT,
 	BPF_INS_JGE,
@@ -173,6 +182,20 @@ typedef enum bpf_insn {
 	BPF_INS_JLE,	///< eBPF only
 	BPF_INS_JSLT,	///< eBPF only
 	BPF_INS_JSLE,	///< eBPF only
+
+	///< Jump32, eBPF only
+	BPF_INS_JAL,
+	BPF_INS_JEQ32, 
+	BPF_INS_JGT32, 
+	BPF_INS_JGE32, 
+	BPF_INS_JSET32,
+	BPF_INS_JNE32, 
+	BPF_INS_JSGT32,
+	BPF_INS_JSGE32,
+	BPF_INS_JLT32, 
+	BPF_INS_JLE32, 
+	BPF_INS_JSLT32,
+	BPF_INS_JSLE32,
 
 	///< Return, cBPF only
 	BPF_INS_RET,
