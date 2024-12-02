@@ -42,6 +42,7 @@ __all__ = [
     'CS_ARCH_HPPA',
     'CS_ARCH_LOONGARCH',
     'CS_ARCH_XTENSA',
+    'CS_ARCH_ARC',
     'CS_ARCH_ALL',
 
     'CS_MODE_LITTLE_ENDIAN',
@@ -270,7 +271,8 @@ CS_ARCH_ALPHA = 18
 CS_ARCH_HPPA = 19
 CS_ARCH_LOONGARCH = 20
 CS_ARCH_XTENSA = 21
-CS_ARCH_MAX = 21
+CS_ARCH_ARC = 22
+CS_ARCH_MAX = 22
 CS_ARCH_ALL = 0xFFFF
 
 # disasm mode
@@ -563,7 +565,7 @@ def copy_ctypes_list(src):
 
 # Weird import placement because these modules are needed by the below code but need the above functions
 from . import arm, aarch64, m68k, mips, ppc, sparc, systemz, x86, xcore, tms320c64x, m680x, evm, mos65xx, wasm, bpf, \
-    riscv, sh, tricore, alpha, hppa, loongarch, xtensa
+    riscv, sh, tricore, alpha, hppa, loongarch, arc, xtensa
 
 
 class _cs_arch(ctypes.Union):
@@ -590,6 +592,7 @@ class _cs_arch(ctypes.Union):
         ('hppa', hppa.CsHPPA),
         ('loongarch', loongarch.CsLoongArch),
         ('xtensa', xtensa.CsXtensa),
+        ('arc', arc.CsARC),
     )
 
 
@@ -974,6 +977,8 @@ class CsInsn(object):
             (self.operands) = hppa.get_arch_info(self._raw.detail.contents.arch.hppa)
         elif arch == CS_ARCH_LOONGARCH:
             (self.format, self.operands) = loongarch.get_arch_info(self._raw.detail.contents.arch.loongarch)
+        elif arch == CS_ARCH_ARC:
+            (self.operands) = arc.get_arch_info(self._raw.detail.contents.arch.arc)
         elif arch == CS_ARCH_XTENSA:
             (self.operands) = xtensa.get_arch_info(self._raw.detail.contents.arch.xtensa)
 
@@ -1450,7 +1455,8 @@ def debug():
         "m680x": CS_ARCH_M680X, 'evm': CS_ARCH_EVM, 'mos65xx': CS_ARCH_MOS65XX,
         'bpf': CS_ARCH_BPF, 'riscv': CS_ARCH_RISCV, 'tricore': CS_ARCH_TRICORE,
         'wasm': CS_ARCH_WASM, 'sh': CS_ARCH_SH, 'alpha': CS_ARCH_ALPHA,
-        'hppa': CS_ARCH_HPPA, 'loongarch': CS_ARCH_LOONGARCH, 'xtensa': CS_ARCH_XTENSA
+        'hppa': CS_ARCH_HPPA, 'loongarch': CS_ARCH_LOONGARCH, 'xtensa': CS_ARCH_XTENSA, 
+        'arc': CS_ARCH_ARC
     }
 
     all_archs = ""

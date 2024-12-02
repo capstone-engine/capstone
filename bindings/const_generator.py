@@ -8,7 +8,7 @@ INCL_DIR = '../include/capstone/'
 
 include = ['arm.h', 'aarch64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h', 'systemz.h', 'xcore.h',
            'tms320c64x.h', 'm680x.h', 'evm.h', 'mos65xx.h', 'wasm.h', 'bpf.h', 'riscv.h', 'sh.h', 'tricore.h',
-           'alpha.h', 'hppa.h', 'loongarch.h', 'xtensa.h']
+           'alpha.h', 'hppa.h', 'loongarch.h', 'arc.h', 'xtensa.h']
 
 template = {
     'java': {
@@ -63,6 +63,7 @@ template = {
             'hppa.h': 'hppa',
             'loongarch.h': 'loongarch',
             'xtensa.h': 'xtensa',
+            'arc.h': 'arc',
             'comment_open': '#',
             'comment_close': '',
         },
