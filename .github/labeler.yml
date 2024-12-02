@@ -48,6 +48,13 @@ Alpha:
   - tests/MC/Alpha/**
   - tests/details/alpha.yaml
 
+ARC:
+- arch/ARC/*
+- cstool/cstool_arc.c
+- include/capstone/arc.h
+- suite/MC/ARC/*
+- tests/test_arc.c
+
 BPF:
   - arch/BPF/**
   - cstool/cstool_bpf.c
