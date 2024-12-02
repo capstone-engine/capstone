@@ -79,6 +79,7 @@ tests/test_riscv
 tests/test_sh
 tests/test_alpha
 tests/test_hppa
+tests/test_arc
 
 # regress binaries
 suite/regress/invalid_read_in_print_operand

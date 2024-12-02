@@ -718,6 +718,23 @@ if(CAPSTONE_XTENSA_SUPPORT)
     )
 endif()
 
+if (CAPSTONE_ARC_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_ARC)
+    set(SOURCES_ARC
+            arch/ARC/ARCDisassembler.c
+            arch/ARC/ARCInstPrinter.c
+            arch/ARC/ARCMapping.c
+            arch/ARC/ARCModule.c
+            )
+    set(HEADERS_ARC
+            arch/ARC/ARCInstPrinter.h
+            arch/ARC/ARCMapping.h
+            arch/ARC/ARCModule.h
+            arch/ARC/ARCLinkage.h
+            )
+    set(TEST_SOURCES ${TEST_SOURCES} test_arc.c)
+endif ()
+
 if (CAPSTONE_OSXKERNEL_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_OSXKERNEL)
 endif()

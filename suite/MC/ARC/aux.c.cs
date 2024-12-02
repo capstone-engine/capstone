@@ -1,0 +1,3 @@
+# CS_ARCH_ARC, CS_MODE_LITTLE_ENDIAN, None
+
+0x6a,0x20,0x00,0x04 = lr     %r0, [0x10]
