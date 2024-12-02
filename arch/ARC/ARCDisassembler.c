@@ -229,7 +229,7 @@ static void DecodeSymbolicOperandOff(MCInst *Inst, uint64_t Address,
 				   B)(MCInst * Inst, unsigned InsnS, \
 				      uint64_t Address, const void *Decoder) \
 	{ \
-		assert(B > 0 && "field is empty"); \
+		CS_ASSERT(B > 0 && "field is empty"); \
 		DecodeSymbolicOperandOff(Inst, Address, \
 					 SignExtend32((InsnS), B), Decoder); \
 		return MCDisassembler_Success; \
@@ -244,10 +244,10 @@ DEFINE_DecodeBranchTargetS(9);
 
 #define DEFINE_DecodeSignedOperand(B) \
 	static DecodeStatus CONCAT(DecodeSignedOperand, B)( \
-		MCInst * Inst, unsigned InsnS, uint64_t /*Address*/, \
-		const void * /*Decoder*/) \
+		MCInst * Inst, unsigned InsnS, uint64_t Address, \
+		const void * Decoder) \
 	{ \
-		assert(B > 0 && "field is empty"); \
+		CS_ASSERT(B > 0 && "field is empty"); \
 		MCOperand_CreateImm0( \
 			Inst, SignExtend32(maskTrailingOnes32(B) & \
 						    InsnS, 32) \
@@ -261,10 +261,10 @@ DEFINE_DecodeSignedOperand(12);
 
 #define DEFINE_DecodeFromCyclicRange(B) \
 	static DecodeStatus CONCAT(DecodeFromCyclicRange, B)( \
-		MCInst * Inst, unsigned InsnS, uint64_t /*Address*/, \
-		const void * /*Decoder*/) \
+		MCInst * Inst, unsigned InsnS, uint64_t Address, \
+		const void * Decoder) \
 	{ \
-		assert(B > 0 && "field is empty"); \
+		CS_ASSERT(B > 0 && "field is empty"); \
 		const unsigned max = (1u << B) - 1; \
 		MCOperand_CreateImm0(Inst, (InsnS < max ? (int)(InsnS) : -1)); \
 		return MCDisassembler_Success; \
