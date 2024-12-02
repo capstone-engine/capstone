@@ -1,5 +1,7 @@
 
 
+#ifdef CAPSTONE_HAS_ARC
+
 #include <stdio.h>
 #include <string.h>
 
@@ -327,3 +329,5 @@ void ARC_add_cs_detail(MCInst *MI, int /* arc_op_group */ op_group,
 	// 	break;
 	// }
 }
+
+#endif

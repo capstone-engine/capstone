@@ -1,4 +1,6 @@
 
+#ifndef CS_ARC_MAP_H
+#define CS_ARC_MAP_H
 
 #include "../../include/capstone/capstone.h"
 #include "../../utils.h"
@@ -32,6 +34,8 @@ bool ARC_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 
 // cs_detail related functions
 void ARC_init_cs_detail(MCInst *MI);
+void ARC_set_detail_op_imm(MCInst *MI, unsigned OpNum,
+				 arc_op_type ImmType, int64_t Imm);
 void ARC_add_cs_detail(MCInst *MI, int /* arc_op_group */ op_group,
 			     va_list args);
 static inline void add_cs_detail(MCInst *MI,
@@ -44,3 +48,5 @@ static inline void add_cs_detail(MCInst *MI,
 	ARC_add_cs_detail(MI, op_group, args);
 	va_end(args);
 }
+
+#endif

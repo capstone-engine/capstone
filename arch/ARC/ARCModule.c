@@ -1,4 +1,4 @@
-// #ifdef CAPSTONE_HAS_ARC
+#ifdef CAPSTONE_HAS_ARC
 
 #include <capstone/capstone.h>
 
@@ -46,4 +46,4 @@ cs_err ARC_option(cs_struct *handle, cs_opt_type type, size_t value)
 	return CS_ERR_OK;
 }
 
-// #endif
+#endif

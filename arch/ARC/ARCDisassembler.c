@@ -25,6 +25,8 @@
 ///
 //===----------------------------------------------------------------------===//
 
+#ifdef CAPSTONE_HAS_ARC
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -42,7 +44,7 @@
 #define DEBUG_TYPE "arc-disassembler"
 
 /// A disassembler class for ARC.
-DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
+static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
 			    size_t BytesLen, uint64_t Address,
 			    SStream *CStream);
 
@@ -395,7 +397,7 @@ static DecodeStatus DecodeSOPwithRS12(MCInst *Inst, uint64_t Insn,
 	return MCDisassembler_Success;
 }
 
-DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
+static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
 			    size_t BytesLen, uint64_t Address, SStream *cStream)
 {
 	DecodeStatus Result;
@@ -464,15 +466,4 @@ DecodeStatus ARC_LLVM_getInstruction(MCInst *MI, uint64_t *Size,
 	return getInstruction(MI, Size, Bytes, BytesLen, Address, CS);
 }
 
-
-// static void *createARCDisassembler(const Target *T, MCContext *Ctx)
-// {
-// 	return new ARCDisassembler(STI, Ctx, T.createMCInstrInfo());
-// }
-
-// extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeARCDisassembler()
-// {
-// 	// Register the disassembler.
-// 	TargetRegistry_RegisterMCDisassembler(getTheARCTarget(),
-// 					      createARCDisassembler);
-// }
+#endif

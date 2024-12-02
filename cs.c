@@ -1037,8 +1037,9 @@ static uint8_t skipdata_size(cs_struct *handle)
 			// LoongArch alignment is 4.
 			return 4;
 		case CS_ARCH_ARC:
-			// ARC alignment is 4.
-			return 4;
+			// ARC instruction's length can be 2, 4, 6 or 8 bytes,
+			// therefore, skip 2 bytes
+			return 2;
 	}
 }
 

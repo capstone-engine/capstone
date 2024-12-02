@@ -24,6 +24,8 @@
 //
 //===----------------------------------------------------------------------===//
 
+#ifdef CAPSTONE_HAS_ARC
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -62,7 +64,8 @@ static const char *ARCBRCondCodeToString(ARCCC_BRCondCode BRCC)
 	case ARCCC_BRHS:
 		return "hs";
 	}
-	assert(0 && "Unknown condition code passed");
+	CS_ASSERT(0 && "Unknown condition code passed");
+	return "";
 }
 
 static const char *ARCCondCodeToString(ARCCC_CondCode CC)
@@ -105,56 +108,21 @@ static const char *ARCCondCodeToString(ARCCC_CondCode CC)
 	case ARCCC_Z:
 		return "z";
 	}
-	assert(0 && "Unknown condition code passed");
+	CS_ASSERT(0 && "Unknown condition code passed");
+	return "";
 }
 
-void printRegName(SStream *OS, MCRegister Reg)
+static void printRegName(SStream *OS, MCRegister Reg)
 {
 	SStream_concat0(OS, getRegisterName(Reg));
 }
 
-void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
+static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 {
 	printInstruction(MI, Address, O);
 }
 
-// static void printExpr(const MCExpr *Expr, const MCAsmInfo *MAI, SStream *OS)
-// {
-// 	int Offset = 0;
-// 	const MCSymbolRefExpr *SRE;
-
-// 	if (const auto *CE = (MCConstantExpr)(Expr)) {
-// 		SStream_concat0(OS, "0x");
-// 		OS.write_hex(CE->getValue());
-// 		return;
-// 	}
-
-// 	if (const auto *BE = (MCBinaryExpr)(Expr)) {
-// 		SRE = (MCSymbolRefExpr)(BE->getLHS());
-// 		const auto *CE = (MCConstantExpr)(BE->getRHS());
-// 		CS_ASSERT(
-// 			(SRE && CE && "Binary expression must be sym+const."));
-// 		Offset = CE->getValue();
-// 	} else {
-// 		SRE = (MCSymbolRefExpr)(Expr);
-// 		CS_ASSERT((SRE && "Unexpected MCExpr type."));
-// 	}
-// 	CS_ASSERT((SRE->getKind() == MCSymbolRefExpr_VK_None));
-
-// 	// Symbols are prefixed with '@'
-// 	SStream_concat0(OS, "@");
-
-// 	// SRE->getSymbol().print(OS, MAI);
-
-// 	if (Offset) {
-// 		if (Offset > 0)
-// 			SStream_concat0(OS, "+");
-
-// 		SStream_concat0(OS, Offset);
-// 	}
-// }
-
-void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
+static void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARC_OP_GROUP_Operand, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
@@ -167,13 +135,14 @@ void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		printInt64(O, MCOperand_getImm(Op));
 		return;
 	}
-
-	// CS_ASSERT((MCOperand_isExpr(Op) &&
-	// 	   "unknown operand kind in printOperand"));
-	// printExpr(MCOperand_getExpr(Op), &MAI, O);
 }
 
-void printMemOperandRI(MCInst *MI, unsigned OpNum, SStream *O)
+static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
+{
+	printOperand(MI, OpNum, O);
+}
+
+static void printMemOperandRI(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARC_OP_GROUP_MemOperandRI, OpNum);
 	MCOperand *base = MCInst_getOperand(MI, (OpNum));
@@ -185,7 +154,7 @@ void printMemOperandRI(MCInst *MI, unsigned OpNum, SStream *O)
 	printInt64(O, MCOperand_getImm(offset));
 }
 
-void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
+static void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARC_OP_GROUP_PredicateOperand, OpNum);
 
@@ -195,7 +164,7 @@ void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		O, ARCCondCodeToString((ARCCC_CondCode)MCOperand_getImm(Op)));
 }
 
-void printBRCCPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
+static void printBRCCPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARC_OP_GROUP_BRCCPredicateOperand, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
@@ -204,14 +173,14 @@ void printBRCCPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 				   (ARCCC_BRCondCode)MCOperand_getImm(Op)));
 }
 
-void printCCOperand(MCInst *MI, int OpNum, SStream *O)
+static void printCCOperand(MCInst *MI, int OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARC_OP_GROUP_CCOperand, OpNum);
 	SStream_concat0(O, ARCCondCodeToString((ARCCC_CondCode)MCOperand_getImm(
 				   MCInst_getOperand(MI, (OpNum)))));
 }
 
-void printU6ShiftedBy(unsigned ShiftBy, MCInst *MI, int OpNum, SStream *O)
+static void printU6ShiftedBy(unsigned ShiftBy, MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
@@ -235,7 +204,7 @@ void printU6ShiftedBy(unsigned ShiftBy, MCInst *MI, int OpNum, SStream *O)
 	printOperand(MI, OpNum, O);
 }
 
-void printU6(MCInst *MI, int OpNum, SStream *O)
+static void printU6(MCInst *MI, int OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARC_OP_GROUP_U6, OpNum);
 	printU6ShiftedBy(0, MI, OpNum, O);
@@ -251,3 +220,5 @@ const char *ARC_LLVM_getRegisterName(unsigned RegNo)
 {
 	return getRegisterName(RegNo);
 }
+
+#endif

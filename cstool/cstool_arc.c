@@ -31,19 +31,6 @@ void print_insn_detail_arc(csh handle, cs_insn *ins)
 			printf("\t\toperands[%u].type: IMM = 0x%lx\n", i,
 			       (long)op->imm);
 			break;
-		// case LOONGARCH_OP_MEM:
-		// 	printf("\t\toperands[%u].type: MEM\n", i);
-		// 	if (op->mem.base != LOONGARCH_REG_INVALID)
-		// 		printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-		// 		       i, cs_reg_name(handle, op->mem.base));
-		// 	if (op->mem.index != LOONGARCH_REG_INVALID)
-		// 		printf("\t\t\toperands[%u].mem.index: REG = %s\n",
-		// 		       i, cs_reg_name(handle, op->mem.index));
-		// 	if (op->mem.disp != 0)
-		// 		printf("\t\t\toperands[%u].mem.disp: 0x%lx\n",
-		// 		       i, (long)op->mem.disp);
-
-		// 	break;
 		}
 
 		access = op->access;
