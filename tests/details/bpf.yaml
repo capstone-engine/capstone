@@ -94,7 +94,7 @@ test_cases:
                 mem_disp: 0x0
           regs_write: [ r0 ]
       -
-        asm_text: "xadddw [r10+0x100], r3"
+        asm_text: "aadd64 [r10+0x100], r3"
         details:
           groups: [ BPF_GRP_STORE ]
           bpf:

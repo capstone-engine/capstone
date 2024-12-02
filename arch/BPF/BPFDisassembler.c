@@ -229,8 +229,7 @@ static bool decodeStore(cs_struct *ud, MCInst *MI, bpf_internal *bpf)
 	}
 
 	/* eBPF */
-
-	if (BPF_MODE(bpf->op) == BPF_MODE_XADD) {
+	if (BPF_MODE(bpf->op) == BPF_MODE_ATOMIC) {
 		if (BPF_CLASS(bpf->op) != BPF_CLASS_STX)
 			return false;
 		if (BPF_SIZE(bpf->op) != BPF_SIZE_W && BPF_SIZE(bpf->op) != BPF_SIZE_DW)
@@ -486,17 +485,48 @@ static bpf_insn op2insn_ld_ebpf(unsigned opcode)
 	return op2insn_ld_cbpf(opcode);
 }
 
-static bpf_insn op2insn_st(unsigned opcode)
+static bpf_insn op2insn_st(unsigned opcode, const uint32_t imm)
 {
 	/*
-	 * - BPF_STX | BPF_XADD | BPF_{W,DW}
+	 * - BPF_STX | ALU atomic operations | BPF_{W,DW}
+	 * - BPF_STX | Complex atomic operations | BPF_{DW}
 	 * - BPF_ST* | BPF_MEM | BPF_{W,H,B,DW}
 	 */
 
-	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_W))
-		return BPF_INS_XADDW;
-	if (opcode == (BPF_CLASS_STX | BPF_MODE_XADD | BPF_SIZE_DW))
-		return BPF_INS_XADDDW;
+/* During parsing we already checked to make sure the size is D/DW and 
+ * mode is STX and not ST, so we don't need to check again*/
+#define ALU_CASE_REG(c) case BPF_ALU_##c: \
+		if (BPF_SIZE(opcode) == BPF_SIZE_W) \
+			return BPF_INS_A##c; \
+		else \
+			return BPF_INS_A##c##64;
+
+#define ALU_CASE_FETCH(c) case BPF_ALU_##c | BPF_MODE_FETCH: \
+		if (BPF_SIZE(opcode) == BPF_SIZE_W) \
+			return BPF_INS_AF##c; \
+		else \
+			return BPF_INS_AF##c##64;
+
+#define COMPLEX_CASE(c) case BPF_ATOMIC_##c | BPF_MODE_FETCH: \
+		if (BPF_SIZE(opcode) == BPF_SIZE_DW) \
+			return BPF_INS_A##c##64;
+
+	if (BPF_MODE(opcode) == BPF_MODE_ATOMIC) {
+		switch (imm) {
+		ALU_CASE_REG(ADD);
+		ALU_CASE_REG(OR);
+		ALU_CASE_REG(AND);
+		ALU_CASE_REG(XOR);
+		ALU_CASE_FETCH(ADD);
+		ALU_CASE_FETCH(OR);
+		ALU_CASE_FETCH(AND);
+		ALU_CASE_FETCH(XOR);
+		COMPLEX_CASE(XCHG);
+		COMPLEX_CASE(CMPXCHG);
+		default: // Could only be reached if complex atomic operation is used without fetch modifier, or not as DW  
+			return BPF_INS_INVALID;
+		}
+	}
 
 	/* should be BPF_MEM */
 #define CASE(c) case BPF_SIZE_##c: \
@@ -514,7 +544,7 @@ static bpf_insn op2insn_st(unsigned opcode)
 
 	return BPF_INS_INVALID;
 }
-static bpf_insn op2insn_alu(unsigned opcode)
+static bpf_insn op2insn_alu(unsigned opcode, const uint16_t off, const bool is_ebpf)
 {
 	/* Endian is a special case */
 	if (BPF_OP(opcode) == BPF_ALU_END) {
@@ -548,27 +578,57 @@ static bpf_insn op2insn_alu(unsigned opcode)
 		return BPF_INS_INVALID;
 	}
 
-#define CASE(c) case BPF_ALU_##c: \
+#define CASE(c) case BPF_ALU_##c: CASE_IF(c)
+
+#define CASE_IF(c) do { \
 		if (BPF_CLASS(opcode) == BPF_CLASS_ALU) \
 			return BPF_INS_##c; \
 		else \
-			return BPF_INS_##c##64;
+			return BPF_INS_##c##64; \
+		} while (0)
+
 
 	switch (BPF_OP(opcode)) {
 	CASE(ADD);
 	CASE(SUB);
 	CASE(MUL);
-	CASE(DIV);
 	CASE(OR);
 	CASE(AND);
 	CASE(LSH);
 	CASE(RSH);
 	CASE(NEG);
-	CASE(MOD);
 	CASE(XOR);
-	CASE(MOV);
 	CASE(ARSH);
+	case BPF_ALU_DIV:
+		if (!is_ebpf || off == 0)
+			CASE_IF(DIV);
+		else if (off == 1)
+			CASE_IF(SDIV);
+		else
+			return BPF_INS_INVALID;
+	case BPF_ALU_MOD:
+		if (!is_ebpf || off == 0)
+			CASE_IF(MOD);
+		else if (off == 1)
+			CASE_IF(SMOD);
+		else
+			return BPF_INS_INVALID;
+	case BPF_ALU_MOV:
+		/* BPF_CLASS_ALU can have: mov, mov8s, mov16s
+		 * BPF_CLASS_ALU64 can have: mov, mov8s, mov16s, mov32s
+		 * */
+		if (off == 0)
+			CASE_IF(MOV);
+		else if (off == 8)
+			CASE_IF(MOVSB);
+		else if (off == 16)
+			CASE_IF(MOVSH);
+		else if (off == 32 && BPF_CLASS(opcode) == BPF_CLASS_ALU64)
+			return BPF_INS_MOVSW64;
+		else
+			return BPF_INS_INVALID;
 	}
+#undef CASE_IF
 #undef CASE
 
 	return BPF_INS_INVALID;
@@ -729,11 +789,11 @@ static bool setFinalOpcode(const cs_struct* ud, MCInst *insnr, const bpf_interna
 		break;
 	case BPF_CLASS_ST:
 	case BPF_CLASS_STX:
-		id = op2insn_st(opcode);
+		id = op2insn_st(opcode, bpf->k);
 		PUSH_GROUP(BPF_GRP_STORE);
 		break;
 	case BPF_CLASS_ALU:
-		id = op2insn_alu(opcode);
+		id = op2insn_alu(opcode, bpf->offset, EBPF_MODE(ud));
 		PUSH_GROUP(BPF_GRP_ALU);
 		break;
 	case BPF_CLASS_JMP:
@@ -764,7 +824,7 @@ static bool setFinalOpcode(const cs_struct* ud, MCInst *insnr, const bpf_interna
 	/* case BPF_CLASS_ALU64: */
 		if (EBPF_MODE(ud)) {
 			// ALU64 in eBPF
-			id = op2insn_alu(opcode);
+			id = op2insn_alu(opcode, bpf->offset, true);
 			PUSH_GROUP(BPF_GRP_ALU);
 		}
 		else {

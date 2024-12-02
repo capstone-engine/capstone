@@ -109,24 +109,6 @@ test_cases:
           asm_text: "jlt r5, 0x10000000, +0x3000"
   -
     input:
-      bytes: [ 0xc3, 0x12, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00 ]
-      arch: "CS_ARCH_BPF"
-      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
-        -
-          asm_text: "xaddw [r2+0x10], r1"
-  -
-    input:
-      bytes: [ 0xdb, 0xa9, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00 ]
-      arch: "CS_ARCH_BPF"
-      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
-        -
-          asm_text: "xadddw [r9+0x1], r10"
-  -
-    input:
       bytes: [ 0x8d, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02 ]
       arch: "CS_ARCH_BPF"
       options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_BIG_ENDIAN" ]

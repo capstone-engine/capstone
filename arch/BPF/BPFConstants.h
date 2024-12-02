@@ -54,6 +54,10 @@
 #define BPF_JUMP_JSLT	0xc0	///< eBPF only: signed '<'
 #define BPF_JUMP_JSLE	0xd0	///< eBPF only: signed '<='
 
+///< Types of complex atomic instructions
+#define BPF_ATOMIC_XCHG	0xe0	///< eBPF only: atomic exchange
+#define BPF_ATOMIC_CMPXCHG	0xf0	///< eBPF only: atomic compare and exchange
+
 #define BPF_SRC(code) ((code) & 0x08)
 #define BPF_RVAL(code) ((code) & 0x18) /* cBPF only: for return types */
 ///< Source operand
@@ -79,7 +83,11 @@
 #define BPF_MODE_MEM	0x60
 #define BPF_MODE_LEN	0x80	///< cBPF only, reserved in eBPF
 #define BPF_MODE_MSH	0xa0	///< cBPF only, reserved in eBPF
-#define BPF_MODE_XADD	0xc0	///< eBPF only: exclusive add
+#define BPF_MODE_ATOMIC 0xc0	///< eBPF only: atomic operations. Originally BPF_MODE_XADD
+
+#define BPF_MODE_FETCH	0x01	///< eBPF only: overwrite 'src' with what was in the modified mem address before it was modified.
+				/// NOTE: in contrast to regular modifiers, this one is encoded in the 'imm' field, not opcode! 
+				/// Must be used for BPF_XCHG and BPF_CMPXCHG. Optional for the other atomic operations. 
 
 #define BPF_MISCOP(code) ((code) & 0x80)
 ///< Operation of misc

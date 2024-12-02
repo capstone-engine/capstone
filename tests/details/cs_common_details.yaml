@@ -1046,8 +1046,8 @@ test_cases:
             regs_write: [ r0 ]
             groups: [ load ]
         -
-          asm_text: "xadddw [r10+0x100], r3"
-          mnemonic: xadddw
+          asm_text: "aadd64 [r10+0x100], r3"
+          mnemonic: aadd64
           op_str: "[r10+0x100], r3"
           details:
             groups: [ store ]
