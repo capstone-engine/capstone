@@ -28,6 +28,7 @@ from capstone import tricore_const
 from capstone import alpha_const
 from capstone import hppa_const
 from capstone import loongarch_const
+from capstone import arc_const
 
 
 def cs_const_getattr(identifier: str):
@@ -95,6 +96,9 @@ def cs_const_getattr(identifier: str):
     if attr is not None:
         return attr
     attr = getattr(loongarch_const, identifier, None)
+    if attr is not None:
+        return attr
+    attr = getattr(arc_const, identifier, None)
     if attr is not None:
         return attr
     raise ValueError(f"Python capstone doesn't have the constant: {identifier}")

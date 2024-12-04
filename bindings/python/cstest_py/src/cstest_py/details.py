@@ -32,6 +32,11 @@ from capstone.loongarch_const import (
     LOONGARCH_OP_MEM,
 )
 
+from capstone.arc_const import (
+    ARC_OP_REG,
+    ARC_OP_IMM,
+)
+
 from capstone.m680x_const import (
     M680X_OP_REGISTER,
     M680X_OP_IMMEDIATE,
@@ -270,6 +275,8 @@ def compare_details(insn: CsInsn, expected: dict) -> bool:
         return test_expected_x86(actual, expected["x86"])
     elif "m68k" in expected:
         return test_expected_m68k(actual, expected["m68k"])
+    elif "arc" in expected:
+        return test_expected_arc(actual, expected["arc"])
 
     return True
 
@@ -1524,6 +1531,30 @@ def test_expected_wasm(actual: CsInsn, expected: dict) -> bool:
                 eop.get("brt_default_target"),
                 "brt_default_target",
             ):
+                return False
+        else:
+            raise ValueError("Operand type not handled.")
+    return True
+
+def test_expected_arc(actual: CsInsn, expected: dict) -> bool:
+    if "operands" not in expected:
+        return True
+    elif not compare_uint32(
+        len(actual.operands), len(expected.get("operands")), "operands_count"
+    ):
+        return False
+
+    for aop, eop in zip(actual.operands, expected["operands"]):
+        if not compare_enum(aop.type, eop.get("type"), "type"):
+            return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+
+        if aop.type == ARC_OP_REG:
+            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
+                return False
+        elif aop.type == ARC_OP_IMM:
+            if not compare_int32(aop.imm, eop.get("imm"), "imm"):
                 return False
         else:
             raise ValueError("Operand type not handled.")
