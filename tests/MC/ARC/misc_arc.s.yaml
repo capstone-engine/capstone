@@ -1,0 +1,490 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x8a, 0x20, 0xff, 0x0f ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov %r0, -1"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x24, 0x80, 0x0f, 0x00, 0x00, 0xff, 0x7f ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov %r4, 32767"
+
+  -
+    input:
+      bytes: [ 0xca, 0x22, 0x81, 0x01 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.eq %r2, %r6"
+
+  -
+    input:
+      bytes: [ 0x0a, 0x25, 0x80, 0x10 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov %r13, %r2"
+
+  -
+    input:
+      bytes: [ 0x4a, 0x21, 0x00, 0x05 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov %r1, 20"
+
+  -
+    input:
+      bytes: [ 0xca, 0x20, 0x21, 0x08 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.eq %r0, 32"
+
+  -
+    input:
+      bytes: [ 0xca, 0x20, 0x22, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.ne %r0, 0"
+
+  -
+    input:
+      bytes: [ 0xca, 0x20, 0x21, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.eq %r0, 0"
+
+  -
+    input:
+      bytes: [ 0xca, 0x26, 0x2b, 0x04 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.lt %r6, 16"
+
+  -
+    input:
+      bytes: [ 0xca, 0x27, 0xec, 0x17 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.le %r15, 31"
+
+  -
+    input:
+      bytes: [ 0xca, 0x20, 0x29, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.gt %r0, 0"
+
+  -
+    input:
+      bytes: [ 0xca, 0x26, 0x2a, 0x04 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.ge %r6, 16"
+
+  -
+    input:
+      bytes: [ 0xca, 0x27, 0xe3, 0x17 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.p %r15, 31"
+
+  -
+    input:
+      bytes: [ 0xca, 0x20, 0x24, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.n %r0, 0"
+
+  -
+    input:
+      bytes: [ 0xca, 0x26, 0x27, 0x04 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.vs %r6, 16"
+
+  -
+    input:
+      bytes: [ 0xca, 0x27, 0xef, 0x17 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.pnz %r15, 31"
+
+  -
+    input:
+      bytes: [ 0x4a, 0x20, 0x00, 0x80 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.f %r0, 0"
+
+  -
+    input:
+      bytes: [ 0x4a, 0x26, 0x00, 0x84 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.f %r6, 16"
+
+  -
+    input:
+      bytes: [ 0x4a, 0x27, 0xc0, 0x97 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.f %r15, 31"
+
+  -
+    input:
+      bytes: [ 0xca, 0x20, 0x21, 0x80 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.eq.f %r0, 0"
+
+  -
+    input:
+      bytes: [ 0xca, 0x26, 0x2b, 0x84 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.lt.f %r6, 16"
+
+  -
+    input:
+      bytes: [ 0xca, 0x27, 0xec, 0x97 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.le.f %r15, 31"
+
+  -
+    input:
+      bytes: [ 0xca, 0x20, 0x29, 0x80 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.gt.f %r0, 0"
+
+  -
+    input:
+      bytes: [ 0xca, 0x26, 0x2a, 0x84 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.ge.f %r6, 16"
+
+  -
+    input:
+      bytes: [ 0xca, 0x27, 0xe3, 0x97 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.p.f %r15, 31"
+
+  -
+    input:
+      bytes: [ 0xca, 0x20, 0x24, 0x80 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.n.f %r0, 0"
+
+  -
+    input:
+      bytes: [ 0xca, 0x26, 0x27, 0x84 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.vs.f %r6, 16"
+
+  -
+    input:
+      bytes: [ 0xca, 0x27, 0xef, 0x97 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov.pnz.f %r15, 31"
+
+  -
+    input:
+      bytes: [ 0xfc, 0x1c, 0xc8, 0xb6 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "st.aw %fp, [%sp,-4]"
+
+  -
+    input:
+      bytes: [ 0x04, 0x14, 0x1b, 0x34 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ld.ab %fp, [%sp,4]"
+
+  -
+    input:
+      bytes: [ 0x16, 0x08, 0xcf, 0xff ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "bl -2028"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x25, 0x80, 0x92 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp %r13, %r10"
+
+  -
+    input:
+      bytes: [ 0x4c, 0x26, 0x00, 0x90 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp %r14, 0"
+
+  -
+    input:
+      bytes: [ 0x4c, 0x27, 0x40, 0xa0 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp %r23, 1"
+
+  -
+    input:
+      bytes: [ 0x22, 0x20, 0x40, 0x05 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jl [%r21]"
+
+  -
+    input:
+      bytes: [ 0x22, 0x20, 0x80, 0x0f, 0x00, 0x00, 0x39, 0x30 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jl 12345"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0xc0, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "j [%r3]"
+
+  -
+    input:
+      bytes: [ 0x20, 0x20, 0x80, 0x0f, 0x00, 0x00, 0x39, 0x30 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "j 12345"
+
+  -
+    input:
+      bytes: [ 0x38, 0x23, 0x43, 0x30 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "seteq %r3, %fp, %r1"
+
+  -
+    input:
+      bytes: [ 0x78, 0x23, 0x43, 0x34 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "seteq %r3, %fp, 17"
+
+  -
+    input:
+      bytes: [ 0xb8, 0x23, 0xff, 0x3f,  ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "seteq %fp, %fp, -1"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x28, 0x13, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "fls %r0, %r0"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x28, 0x13, 0x80 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "fls.f %r0, %r0"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x28, 0x12, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ffs %r0, %r0"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x28, 0x12, 0x80 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ffs.f %r0, %r0"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x2f, 0xd2, 0x13 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ffs %r15, %r15"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x2f, 0xd2, 0x93 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ffs.f %r15, %r15"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x2e, 0xc1, 0x27 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "norm %r22, %blink"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x2f, 0x88, 0x04 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "normh %r7, %r18"

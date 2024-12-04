@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x3d, 0x0a, 0x12, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "brlt %r2, 0, 60"
+
+  -
+    input:
+      bytes: [ 0x91, 0x0a, 0x04, 0x91 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "brlo %r10, %r4, -112"
+
+  -
+    input:
+      bytes: [ 0x2d, 0x0a, 0x40, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "breq %r2, %r1, 44"
+
+  -
+    input:
+      bytes: [ 0xf1, 0x08, 0x11, 0x80 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "brne %r0, 0, -16"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0a, 0x05, 0x02 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "brhs %r2, %r8, 38"
+
+  -
+    input:
+      bytes: [ 0x30, 0x01, 0x02, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "bne 304"
+
+  -
+    input:
+      bytes: [ 0x0c, 0x01, 0x01, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "beq 268"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x01, 0x0d, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "bhi 416"
+
+  -
+    input:
+      bytes: [ 0xbd, 0x07, 0xcf, 0xff ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "b -68"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x9e, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "b 4096"

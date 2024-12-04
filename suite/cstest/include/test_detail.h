@@ -32,6 +32,7 @@
 #include "test_detail_x86.h"
 #include "test_detail_m68k.h"
 #include "test_detail_xtensa.h"
+#include "test_detail_arc.h"
 #include "test_compare.h"
 #include <capstone/capstone.h>
 #include <cyaml/cyaml.h>
@@ -61,6 +62,7 @@ typedef struct {
 	TestDetailX86 *x86;
 	TestDetailM68K *m68k;
 	TestDetailXtensa *xtensa;
+	TestDetailARC *arc;
 
 	char **regs_read;
 	uint8_t regs_read_count;
@@ -150,6 +152,9 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR(
 		"xtensa", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		xtensa, test_detail_xtensa_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR(
+		"arc", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
+		arc, test_detail_arc_mapping_schema),
 	CYAML_FIELD_SEQUENCE("regs_read",
 			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			     TestDetail, regs_read, &single_string_schema, 0, 255),

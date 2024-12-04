@@ -58,7 +58,9 @@ class FieldFromInstr(Patch):
             # and with it the width of the instruction.
             inst_type = inst_param_text.split(b" ")[0]
             if inst_type:
-                if inst_type in [b"unsigned", b"uint32_t"]:
+                if inst_type in [b"uint64_t"]:
+                    inst_width = b"8"
+                elif inst_type in [b"unsigned", b"uint32_t"]:
                     inst_width = b"4"
                 elif inst_type in [b"uint16_t"]:
                     inst_width = b"2"
