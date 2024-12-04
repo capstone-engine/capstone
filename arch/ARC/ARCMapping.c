@@ -220,7 +220,9 @@ void ARC_add_cs_detail(MCInst *MI, int op_group,
 
 	unsigned OpNum = va_arg(args, unsigned);
 	cs_op_type op_type = map_get_op_type(MI, OpNum);
-
+	cs_op_type base_op_type = op_type;
+	cs_op_type offset_op_type;
+	printf("op_group: %d\n", op_group);
 	// Fill cs_detail
 	switch (op_group) {
 	default:
@@ -244,14 +246,12 @@ void ARC_add_cs_detail(MCInst *MI, int op_group,
 			assert(0 && "Op type not handled.");
 		break;
 	case ARC_OP_GROUP_MemOperandRI:
-		cs_op_type base_op_type = op_type;
-		cs_op_type offset_op_type = map_get_op_type(MI, OpNum+1);
 		if (base_op_type == CS_OP_REG) {
 			ARC_set_detail_op_reg(MI, OpNum,
 						    MCInst_getOpVal(MI, OpNum));
 		} else
 			assert(0 && "Op type not handled.");
-
+		offset_op_type = map_get_op_type(MI, OpNum+1);
 		if (offset_op_type == CS_OP_IMM) {
 			ARC_set_detail_op_imm(MI, OpNum+1, ARC_OP_IMM,
 						    MCInst_getOpVal(MI, OpNum+1));
