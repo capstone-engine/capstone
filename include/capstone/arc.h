@@ -17,7 +17,6 @@ typedef enum arc_op_type {
 	ARC_OP_INVALID = CS_OP_INVALID, ///< Invalid
 	ARC_OP_REG = CS_OP_REG,	      ///< Register operand
 	ARC_OP_IMM = CS_OP_IMM,	      ///< Immediate operand
-	ARC_OP_MEM = CS_OP_MEM,	      ///< Memory operand
 } arc_op_type;
 
 // /// Instruction's operand referring to memory
