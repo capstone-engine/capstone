@@ -361,12 +361,6 @@ typedef enum arc_insn_group {
 	ARC_GRP_CALL, ///< = CS_GRP_CALL
 	/// all return instructions
 	ARC_GRP_RET, ///< = CS_GRP_RET
-	/// all interrupt instructions (int+syscall)
-	ARC_GRP_INT, ///< = CS_GRP_INT
-	/// all interrupt return instructions
-	ARC_GRP_IRET, ///< = CS_GRP_IRET
-	/// all privileged instructions
-	ARC_GRP_PRIVILEGE, ///< = CS_GRP_PRIVILEGE
 	/// all relative branching instructions
 	ARC_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 

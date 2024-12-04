@@ -271,7 +271,7 @@ typedef struct cs_arch_config {
 	{ \
 		ARC_global_init, \
 		ARC_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
+		~(CS_MODE_LITTLE_ENDIAN), \
 	}
 
 #ifdef CAPSTONE_USE_ARCH_REGISTRATION

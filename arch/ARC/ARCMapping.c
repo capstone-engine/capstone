@@ -67,9 +67,6 @@ static const name_map group_name_maps[] = {
 	{ ARC_GRP_JUMP, "jump" },
 	{ ARC_GRP_CALL, "call" },
 	{ ARC_GRP_RET, "return" },
-	{ ARC_GRP_INT, "int" },
-	{ ARC_GRP_IRET, "iret" },
-	{ ARC_GRP_PRIVILEGE, "privilege" },
 	{ ARC_GRP_BRANCH_RELATIVE, "branch_relative" },
 
 };
@@ -117,20 +114,6 @@ void ARC_reg_access(const cs_insn *insn, cs_regs regs_read,
 				write_count++;
 			}
 			break;
-		// case ARC_OP_MEM:
-		// 	// registers appeared in memory references always being read
-		// 	if ((op->mem.base != ARC_REG_INVALID) &&
-		// 	    !arr_exist(regs_read, read_count, op->mem.base)) {
-		// 		regs_read[read_count] = (uint16_t)op->mem.base;
-		// 		read_count++;
-		// 	}
-		// 	if ((insn->detail->writeback) &&
-		// 	    (op->mem.base != ARC_REG_INVALID) &&
-		// 	    !arr_exist(regs_write, write_count, op->mem.base)) {
-		// 		regs_write[write_count] =
-		// 			(uint16_t)op->mem.base;
-		// 		write_count++;
-		// 	}
 		default:
 			break;
 		}
@@ -166,75 +149,6 @@ bool ARC_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 	return Result;
 }
 
-/// Adds group to the instruction which are not defined in LLVM.
-static void ARC_add_cs_groups(MCInst *MI)
-{
-	// if (!MI->flat_insn->detail)
-	// 	return;
-	// unsigned Opcode = MI->flat_insn->id;
-	// cs_loongarch *loongarch = &(MI->flat_insn->detail->loongarch);
-	// switch (Opcode) {
-	// default:
-	// 	return;
-	// case LOONGARCH_INS_BL:
-	// 	add_group(MI, LOONGARCH_GRP_CALL);
-	// 	break;
-	// case LOONGARCH_INS_JIRL:
-	// 	if (loongarch->op_count == 3 &&
-	// 	    loongarch->operands[0].reg == LOONGARCH_REG_RA) {
-	// 		// call: jirl ra, rj, offs16
-	// 		add_group(MI, LOONGARCH_GRP_CALL);
-	// 	} else if (loongarch->op_count == 0) {
-	// 		// ret
-	// 		add_group(MI, LOONGARCH_GRP_RET);
-	// 	} else if (loongarch->op_count == 1) {
-	// 		// jr rj
-	// 		add_group(MI, LOONGARCH_GRP_JUMP);
-	// 	}
-	// 	break;
-	// case LOONGARCH_INS_B:
-	// case LOONGARCH_INS_BCEQZ:
-	// case LOONGARCH_INS_BEQ:
-	// case LOONGARCH_INS_BEQZ:
-	// case LOONGARCH_INS_BGE:
-	// case LOONGARCH_INS_BGEU:
-	// case LOONGARCH_INS_BLT:
-	// case LOONGARCH_INS_BLTU:
-	// case LOONGARCH_INS_BNE:
-	// case LOONGARCH_INS_BNEZ:
-	// 	add_group(MI, LOONGARCH_GRP_JUMP);
-	// 	add_group(MI, LOONGARCH_GRP_BRANCH_RELATIVE);
-	// 	break;
-	// case LOONGARCH_INS_SYSCALL:
-	// 	add_group(MI, LOONGARCH_GRP_INT);
-	// 	break;
-	// case LOONGARCH_INS_ERTN:
-	// 	add_group(MI, LOONGARCH_GRP_IRET);
-	// 	add_group(MI, LOONGARCH_GRP_PRIVILEGE);
-	// 	break;
-	// case LOONGARCH_INS_CSRXCHG:
-	// case LOONGARCH_INS_CACOP:
-	// case LOONGARCH_INS_LDDIR:
-	// case LOONGARCH_INS_LDPTE:
-	// case LOONGARCH_INS_IOCSRRD_B:
-	// case LOONGARCH_INS_IOCSRRD_H:
-	// case LOONGARCH_INS_IOCSRRD_W:
-	// case LOONGARCH_INS_IOCSRRD_D:
-	// case LOONGARCH_INS_IOCSRWR_B:
-	// case LOONGARCH_INS_IOCSRWR_H:
-	// case LOONGARCH_INS_IOCSRWR_W:
-	// case LOONGARCH_INS_IOCSRWR_D:
-	// case LOONGARCH_INS_TLBCLR:
-	// case LOONGARCH_INS_TLBFLUSH:
-	// case LOONGARCH_INS_TLBSRCH:
-	// case LOONGARCH_INS_TLBRD:
-	// case LOONGARCH_INS_TLBWR:
-	// case LOONGARCH_INS_INVTLB:
-	// 	add_group(MI, LOONGARCH_GRP_PRIVILEGE);
-	// 	break;
-	// }
-}
-
 void ARC_printer(MCInst *MI, SStream *O,
 		       void * /* MCRegisterInfo* */ info)
 {
@@ -242,7 +156,7 @@ void ARC_printer(MCInst *MI, SStream *O,
 	MI->MRI = MRI;
 
 	ARC_LLVM_printInst(MI, MI->address, "", O);
-	ARC_add_cs_groups(MI);
+	// ARC_add_cs_groups(MI);
 }
 
 void ARC_setup_op(cs_arc_op *op)
@@ -275,6 +189,7 @@ void ARC_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 {
 	if (!detail_is_set(MI))
 		return;
+	ARC_check_safe_inc();
 	assert((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_IMM);
 	assert(ImmType == ARC_OP_IMM);
 
@@ -288,6 +203,7 @@ void ARC_set_detail_op_reg(MCInst *MI, unsigned OpNum, arc_reg Reg)
 {
 	if (!detail_is_set(MI))
 		return;
+	ARC_check_safe_inc();
 	assert((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
 
 	ARC_get_detail_op(MI, 0)->type = ARC_OP_REG;
@@ -296,38 +212,74 @@ void ARC_set_detail_op_reg(MCInst *MI, unsigned OpNum, arc_reg Reg)
 	ARC_inc_op_count(MI);
 }
 
-void ARC_add_cs_detail(MCInst *MI, int /* arc_op_group */ op_group,
+void ARC_add_cs_detail(MCInst *MI, int op_group,
 			     va_list args)
 {
 	if (!detail_is_set(MI))
 		return;
 
-	// unsigned OpNum = va_arg(args, unsigned);
-	// Handle memory operands later
-	// cs_op_type op_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
+	unsigned OpNum = va_arg(args, unsigned);
+	cs_op_type op_type = map_get_op_type(MI, OpNum);
 
-	// // Fill cs_detail
-	// switch (op_group) {
-	// default:
-	// 	printf("ERROR: Operand group %d not handled!\n", op_group);
-	// 	assert(0);
-	// case ARC_OP_GROUP_OPERAND:
-	// 	if (op_type == CS_OP_IMM) {
-	// 		ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
-	// 					    MCInst_getOpVal(MI, OpNum));
-	// 	} else if (op_type == CS_OP_REG) {
-	// 		ARC_set_detail_op_reg(MI, OpNum,
-	// 					    MCInst_getOpVal(MI, OpNum));
-	// 	} else
-	// 		assert(0 && "Op type not handled.");
-	// 	break;
-	// case ARC_OP_GROUP_ATOMICMEMOP:
-	// 	assert(op_type == CS_OP_REG);
-	// 	// converted to MEM operand later in LoongArch_rewrite_memory_operand
-	// 	ARC_set_detail_op_reg(MI, OpNum,
-	// 				    MCInst_getOpVal(MI, OpNum));
-	// 	break;
-	// }
+	// Fill cs_detail
+	switch (op_group) {
+	default:
+		printf("ERROR: Operand group %d not handled!\n", op_group);
+		assert(0);
+	case ARC_OP_GROUP_Operand:
+		if (op_type == CS_OP_IMM) {
+			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
+						    MCInst_getOpVal(MI, OpNum));
+		} else if (op_type == CS_OP_REG) {
+			ARC_set_detail_op_reg(MI, OpNum,
+						    MCInst_getOpVal(MI, OpNum));
+		} else
+			assert(0 && "Op type not handled.");
+		break;
+	case ARC_OP_GROUP_PredicateOperand:
+		if (op_type == CS_OP_IMM) {
+			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
+						    MCInst_getOpVal(MI, OpNum));
+		} else
+			assert(0 && "Op type not handled.");
+		break;
+	case ARC_OP_GROUP_MemOperandRI:
+		cs_op_type base_op_type = op_type;
+		cs_op_type offset_op_type = map_get_op_type(MI, OpNum+1);
+		if (base_op_type == CS_OP_REG) {
+			ARC_set_detail_op_reg(MI, OpNum,
+						    MCInst_getOpVal(MI, OpNum));
+		} else
+			assert(0 && "Op type not handled.");
+
+		if (offset_op_type == CS_OP_IMM) {
+			ARC_set_detail_op_imm(MI, OpNum+1, ARC_OP_IMM,
+						    MCInst_getOpVal(MI, OpNum+1));
+		} else
+			assert(0 && "Op type not handled.");
+		break;
+	case ARC_OP_GROUP_BRCCPredicateOperand:
+		if (op_type == CS_OP_IMM) {
+			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
+						    MCInst_getOpVal(MI, OpNum));
+		} else
+			assert(0 && "Op type not handled.");
+		break;
+	case ARC_OP_GROUP_CCOperand:
+		if (op_type == CS_OP_IMM) {
+			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
+						    MCInst_getOpVal(MI, OpNum));
+		} else
+			assert(0 && "Op type not handled.");
+		break;
+	case ARC_OP_GROUP_U6:
+		if (op_type == CS_OP_IMM) {
+			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
+						    MCInst_getOpVal(MI, OpNum));
+		} else
+			assert(0 && "Op type not handled.");
+		break;		
+	}
 }
 
 #endif

@@ -205,22 +205,11 @@ static DecodeStatus DecodeMEMrs9(MCInst *Inst, unsigned Insn, uint64_t Address,
 	return MCDisassembler_Success;
 }
 
-// static bool DecodeSymbolicOperand(MCInst *Inst, uint64_t Address,
-// 				  uint64_t Value, const void *Decoder)
-// {
-// 	// static const uint64_t AtLeast = 2;
-// 	return (NULL != Decoder 
-// 	    // && Decoder->tryAddingSymbolicOperand(Inst, Value, Address, true, 0,
-// 		// 				  AtLeast, 0)
-// 		   );
-// }
-
 static void DecodeSymbolicOperandOff(MCInst *Inst, uint64_t Address,
 				     uint64_t Offset, const void *Decoder)
 {
 	uint64_t NextAddress = Address + Offset;
 
-	// if (!DecodeSymbolicOperand(Inst, Address, NextAddress, Decoder))
 	MCOperand_CreateImm0(Inst, (NextAddress));
 }
 
@@ -250,7 +239,7 @@ DEFINE_DecodeBranchTargetS(9);
 		CS_ASSERT(B > 0 && "field is empty"); \
 		MCOperand_CreateImm0( \
 			Inst, SignExtend32(maskTrailingOnes32(B) & \
-						    InsnS, 32) \
+						    InsnS, B) \
 					    ); \
 		return MCDisassembler_Success; \
 	}
@@ -278,7 +267,6 @@ static DecodeStatus DecodeStLImmInstruction(MCInst *Inst, uint64_t Insn,
 	unsigned SrcC, DstB, LImm;
 	DstB = decodeBField(Insn);
 	if (DstB != 62) {
-		;
 		return MCDisassembler_Fail;
 	}
 	SrcC = decodeCField(Insn);

@@ -31,7 +31,6 @@
 #include <stdlib.h>
 #include <capstone/platform.h>
 
-#include "ARCInfo.h"
 #include "../../SStream.h"
 #include "../../MCInst.h"
 #include "../../MCInstPrinter.h"
@@ -132,7 +131,7 @@ static void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 
 	if (MCOperand_isImm(Op) || MCOperand_isExpr(Op)) {
-		printInt64(O, MCOperand_getImm(Op));
+		SStream_concat(O, "%" PRId64, MCOperand_getImm(Op));
 		return;
 	}
 }
@@ -187,17 +186,6 @@ static void printU6ShiftedBy(unsigned ShiftBy, MCInst *MI, int OpNum, SStream *O
 		unsigned Value = MCOperand_getImm(MO);
 		unsigned Value2 = Value >> ShiftBy;
 		if (Value2 > 0x3F || (Value2 << ShiftBy != Value)) {
-			// SStream_concat(
-			// 	errs(), "%s%s%s%s",
-			// 	"!!! Instruction has out-of-range U6 immediate operand:\n",
-			// 	"    Opcode is ", MCInst_getOpcode(MI),
-			// 	"; operand value is ");
-			// SStream_concat0(errs(), Value);
-			// if (ShiftBy) {
-			// 	SStream_concat(errs(), "%s%s", " scaled by ",
-			// 		       (1 << ShiftBy));
-			// 	SStream_concat0(errs(), "\n");
-			// }
 			CS_ASSERT((false && "instruction has wrong format"));
 		}
 	}
