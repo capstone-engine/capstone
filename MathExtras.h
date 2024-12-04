@@ -497,7 +497,7 @@ static inline uint32_t get_insn_bit(uint32_t insn, uint8_t bit)
 /// bits set to 0.  Only unsigned types are allowed.
 static inline uint32_t maskTrailingOnes32(uint32_t N) 
 {
-	const unsigned Bits = __CHAR_BIT__ * sizeof(uint32_t);
+	const unsigned Bits = CHAR_BIT * sizeof(uint32_t);
 	return N == 0 ? 0 : (((uint32_t) -1) >> (Bits - N));
 }
 
