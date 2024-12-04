@@ -16,7 +16,7 @@ disasm engine for binary analysis and reversing in the security community.
 Created by Nguyen Anh Quynh, then developed and maintained by a small community,
 Capstone offers some unparalleled features:
 
-- Support multiple hardware architectures: ARM, AArch64, Alpha, BPF, Ethereum VM,
+- Support multiple hardware architectures: ARM, AArch64, Alpha, ARC, BPF, Ethereum VM,
   LoongArch, HP PA-RISC (HPPA), M68K, M680X, Mips, MOS65XX, PPC, RISC-V(rv32G/rv64G), SH,
   Sparc, SystemZ, TMS320C64X, TriCore, Webassembly, XCore and X86 (16, 32, 64), Xtensa.
 

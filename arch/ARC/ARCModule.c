@@ -1,3 +1,6 @@
+/* Capstone Disassembly Engine */
+/* By Dmitry Sibirtsev <sibirtsevdl@gmail.com>, 2024 */
+
 #ifdef CAPSTONE_HAS_ARC
 
 #include <capstone/capstone.h>

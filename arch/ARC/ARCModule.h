@@ -1,3 +1,6 @@
+/* Capstone Disassembly Engine */
+/* By Dmitry Sibirtsev <sibirtsevdl@gmail.com>, 2024 */
+
 #ifndef CS_ARC_MODULE_H
 #define CS_ARC_MODULE_H
 
