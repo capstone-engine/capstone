@@ -360,6 +360,7 @@ typedef struct cs_opt_skipdata {
 	/// BPF:       8 bytes.
 	/// TriCore:   2 bytes.
 	/// LoongArch: 4 bytes.
+	/// ARC: 	   2 bytes.
 	cs_skipdata_cb_t callback; 	// default value is NULL
 
 	/// User-defined data to be passed to @callback function pointer.

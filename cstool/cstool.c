@@ -242,7 +242,6 @@ static struct {
 	{ "esp8266", "Xtensa ESP8266", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP8266 },
 
 	{ "arc", "ARC Little-Endian", CS_ARCH_ARC, CS_MODE_LITTLE_ENDIAN },
-	{ "arcbe", "ARC Big-Endian", CS_ARCH_ARC, CS_MODE_BIG_ENDIAN },
 
 	{ NULL }
 };

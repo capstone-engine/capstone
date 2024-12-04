@@ -239,6 +239,7 @@ DEFINE_check_safe_inc(RISCV, RISCV);
 DEFINE_check_safe_inc(SystemZ, SYSTEMZ);
 DEFINE_check_safe_inc(Mips, MIPS);
 DEFINE_check_safe_inc(BPF, BPF);
+DEFINE_check_safe_inc(ARC, ARC);
 
 static inline bool detail_is_set(const MCInst *MI)
 {

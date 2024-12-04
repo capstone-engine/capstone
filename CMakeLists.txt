@@ -699,7 +699,6 @@ if (CAPSTONE_LOONGARCH_SUPPORT)
             arch/LoongArch/LoongArchModule.h
             arch/LoongArch/LoongArchLinkage.h
             )
-    set(TEST_SOURCES ${TEST_SOURCES} test_loongarch.c)
 endif ()
 
 if(CAPSTONE_XTENSA_SUPPORT)
@@ -732,7 +731,6 @@ if (CAPSTONE_ARC_SUPPORT)
             arch/ARC/ARCModule.h
             arch/ARC/ARCLinkage.h
             )
-    set(TEST_SOURCES ${TEST_SOURCES} test_arc.c)
 endif ()
 
 if (CAPSTONE_OSXKERNEL_SUPPORT)
