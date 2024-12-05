@@ -41,6 +41,7 @@ TARGET_TO_IN_CODE_NAME = {
     "ARC": "ARC",
     "Xtensa": "Xtensa",
     "TriCore": "TriCore",
+    "ARC": "ARC",
     "ARCH": "ARCH",  # For testing
 }
 
@@ -55,5 +56,6 @@ TARGET_TO_DIR_NAME = {
     "Mips": "Mips",
     "Xtensa": "Xtensa",
     "TriCore": "TriCore",
+    "ARC": "ARC",
     "ARCH": "ARCH",  # For testing
 }
