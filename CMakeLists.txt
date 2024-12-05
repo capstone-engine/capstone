@@ -21,9 +21,16 @@ cmake_policy(SET CMP0042 NEW)
 # Enable support for MSVC_RUNTIME_LIBRARY
 cmake_policy(SET CMP0091 NEW)
 
-project(capstone
-    VERSION 5.0.3
-)
+# Check if VERSION is provided externally, otherwise default to 5.0.3
+if(NOT DEFINED PROJECT_VERSION)
+    set(PROJECT_VERSION "5.0.3")
+endif()
+
+# Extract the major, minor, and patch versions
+string(REGEX MATCH "^[0-9]+\\.[0-9]+\\.[0-9]+" PROJECT_VERSION_BASE ${PROJECT_VERSION})
+
+# Set the project version without the pre-release identifier
+project(capstone VERSION ${PROJECT_VERSION_BASE})
 
 if (MSVC)
     add_compile_options(/W1 /w14189)
@@ -35,7 +42,8 @@ endif()
 # to configure the options specify them in in the command line or change them in the cmake UI.
 # Don't edit the makefile!
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
-option(CAPSTONE_BUILD_STATIC_RUNTIME "Embed static runtime" ${BUILD_SHARED_LIBS})
+option(BUILD_STATIC_LIBS "Build static library" ON)
+option(BUILD_STATIC_RUNTIME "Embed static MSVC runtime (Windows only). Always set if BUILD_SHARED_LIBS=ON" ${BUILD_SHARED_LIBS})
 option(CAPSTONE_BUILD_MACOS_THIN "Disable universal2 builds on macOS" OFF)
 option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_TESTS "Build tests" ${PROJECT_IS_TOP_LEVEL})
@@ -45,6 +53,10 @@ option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
+
+if (NOT BUILD_SHARED_LIBS AND NOT BUILD_STATIC_LIBS)
+    FATAL_ERROR("BUILD_SHARED_LIBS and BUILD_STATIC_LIBS are both unset. Nothing to build.")
+endif()
 
 set(SUPPORTED_ARCHITECTURES ARM ARM64 M68K MIPS PPC SPARC SYSZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE)
 set(SUPPORTED_ARCHITECTURE_LABELS ARM ARM64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore)
@@ -109,7 +121,7 @@ if(CAPSTONE_DEBUG)
 endif()
 
 # Force static runtime libraries
-if(CAPSTONE_BUILD_STATIC_RUNTIME)
+if(BUILD_STATIC_RUNTIME)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
@@ -631,19 +643,33 @@ set(ALL_HEADERS
 set_property(GLOBAL PROPERTY VERSION ${PROJECT_VERSION})
 
 ## targets
-add_library(capstone ${ALL_SOURCES} ${ALL_HEADERS})
-add_library(capstone::capstone ALIAS capstone)
+add_library(capstone OBJECT ${ALL_SOURCES} ${ALL_HEADERS})
+set_property(TARGET capstone PROPERTY C_STANDARD 99)
 target_include_directories(capstone PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
-set_property(TARGET capstone PROPERTY C_STANDARD 99)
+if(BUILD_STATIC_LIBS)
+    add_library(capstone_static STATIC $<TARGET_OBJECTS:capstone>)
+    # Use normal capstone name. Otherwise we get libcapstone_static.a
+    set_target_properties(capstone_static PROPERTIES OUTPUT_NAME "capstone")
+    target_include_directories(capstone_static PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    )
+endif()
 
 if(BUILD_SHARED_LIBS)
-    target_compile_definitions(capstone PUBLIC CAPSTONE_SHARED)
-    set_target_properties(capstone PROPERTIES
+    set_property(TARGET capstone PROPERTY POSITION_INDEPENDENT_CODE 1)
+    add_library(capstone_shared SHARED $<TARGET_OBJECTS:capstone>)
+    # Use normal capstone name. Otherwise we get libcapstone_shared.so
+    set_target_properties(capstone_shared PROPERTIES OUTPUT_NAME "capstone")
+    set_target_properties(capstone_shared PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
     )
+    target_include_directories(capstone_shared PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    )
+    target_compile_definitions(capstone PUBLIC CAPSTONE_SHARED)
 endif()
 
 if(CAPSTONE_BUILD_TESTS)
@@ -712,7 +738,6 @@ source_group("Include\\TriCore" FILES ${HEADERS_TRICORE})
 ## installation
 if(CAPSTONE_INSTALL)
     include(GNUInstallDirs)
-
     install(FILES ${HEADERS_COMMON} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone)
 
     # Support absolute installation paths (discussion: https://github.com/NixOS/nixpkgs/issues/144170)
@@ -753,12 +778,20 @@ if(CAPSTONE_INSTALL)
         DESTINATION ${CAPSTONE_CMAKE_CONFIG_INSTALL_DIR}
     )
 
-    install(TARGETS capstone
-            EXPORT capstone-targets
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    if(BUILD_SHARED_LIBS)
+        set(LIB_INSTALL_TARGETS capstone_shared)
+    endif()
+
+    if (BUILD_STATIC_LIBS)
+        set(LIB_INSTALL_TARGETS ${LIB_INSTALL_TARGETS} capstone_static)
+    endif()
+
+    install(TARGETS ${LIB_INSTALL_TARGETS}
+        EXPORT capstone-targets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     )
 
     install(EXPORT capstone-targets

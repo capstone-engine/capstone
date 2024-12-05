@@ -10,4 +10,3 @@ URL: https://www.capstone-engine.org/
 archive=${libdir}/libcapstone.a
 Libs: -L${libdir} -lcapstone
 Cflags: -I${includedir}/capstone
-archs=@CAPSTONE_ARCHITECTURES@

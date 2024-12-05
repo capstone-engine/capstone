@@ -62,15 +62,12 @@ else:
 if SYSTEM == 'darwin':
     VERSIONED_LIBRARY_FILE = "libcapstone.{PKG_MAJOR}.dylib".format(**VERSION_DATA)
     LIBRARY_FILE = "libcapstone.dylib"
-    STATIC_LIBRARY_FILE = 'libcapstone.a'
 elif SYSTEM in ('win32', 'cygwin'):
     VERSIONED_LIBRARY_FILE = "capstone.dll"
     LIBRARY_FILE = "capstone.dll"
-    STATIC_LIBRARY_FILE = None
 else:
     VERSIONED_LIBRARY_FILE = "libcapstone.so.{PKG_MAJOR}".format(**VERSION_DATA)
     LIBRARY_FILE = "libcapstone.so"
-    STATIC_LIBRARY_FILE = 'libcapstone.a'
 
 def clean_bins():
     shutil.rmtree(LIBS_DIR, ignore_errors=True)
@@ -124,12 +121,9 @@ def build_libraries():
     shutil.copytree(os.path.join(BUILD_DIR, 'include', 'capstone'), os.path.join(HEADERS_DIR, 'capstone'))
 
     # if prebuilt libraries are available, use those and cancel build
-    if os.path.exists(os.path.join(ROOT_DIR, 'prebuilt', LIBRARY_FILE)) and \
-            (not STATIC_LIBRARY_FILE or os.path.exists(os.path.join(ROOT_DIR, 'prebuilt', STATIC_LIBRARY_FILE))):
+    if os.path.exists(os.path.join(ROOT_DIR, 'prebuilt', LIBRARY_FILE)):
         logger.info('Using prebuilt libraries')
         shutil.copy(os.path.join(ROOT_DIR, 'prebuilt', LIBRARY_FILE), LIBS_DIR)
-        if STATIC_LIBRARY_FILE is not None:
-            shutil.copy(os.path.join(ROOT_DIR, 'prebuilt', STATIC_LIBRARY_FILE), LIBS_DIR)
         return
 
     os.chdir(BUILD_DIR)
@@ -145,8 +139,8 @@ def build_libraries():
         os.chdir("build")
         print("Build Directory: {}\n".format(os.getcwd()))
         # Only build capstone.dll / libcapstone.dylib
-        if SYSTEM == "win32":
-            os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
+        if SYSTEM in ('win32', 'cygwin'):
+            os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=OFF -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "NMake Makefiles" ..')
         else:
             os.system('cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_TESTS=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -G "Unix Makefiles" ..')
         os.system("cmake --build .")
@@ -154,10 +148,6 @@ def build_libraries():
         os.system("CAPSTONE_BUILD_CORE_ONLY=yes bash ./make.sh")
 
     shutil.copy(VERSIONED_LIBRARY_FILE, os.path.join(LIBS_DIR, LIBRARY_FILE))
-
-    # only copy static library if it exists (it's a build option)
-    if STATIC_LIBRARY_FILE and os.path.exists(STATIC_LIBRARY_FILE):
-        shutil.copy(STATIC_LIBRARY_FILE, LIBS_DIR)
     os.chdir(cwd)
 
 
