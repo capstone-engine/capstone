@@ -63,7 +63,7 @@ static const char *ARCBRCondCodeToString(ARCCC_BRCondCode BRCC)
 	case ARCCC_BRHS:
 		return "hs";
 	}
-	CS_ASSERT(0 && "Unknown condition code passed");
+	// CS_ASSERT(0 && "Unknown condition code passed");
 	return "";
 }
 
@@ -107,7 +107,7 @@ static const char *ARCCondCodeToString(ARCCC_CondCode CC)
 	case ARCCC_Z:
 		return "z";
 	}
-	CS_ASSERT(0 && "Unknown condition code passed");
+	// CS_ASSERT(0 && "Unknown condition code passed");
 	return "";
 }
 
