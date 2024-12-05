@@ -417,6 +417,7 @@ def get_Xtensa_includes(filename: str) -> bytes:
         case _:
             return b""
 
+
 def get_ARC_includes(filename: str) -> bytes:
     match filename:
         case "ARCDisassembler.cpp":
@@ -439,10 +440,7 @@ def get_ARC_includes(filename: str) -> bytes:
                 + b'#include "ARCMapping.h"\n'
             )
         case "ARCInstPrinter.h":
-            return (
-                b'#include "../../SStream.h"\n'
-                + b'#include "../../MCInst.h"\n'
-            )
+            return b'#include "../../SStream.h"\n' + b'#include "../../MCInst.h"\n'
     log.fatal(f"No includes given for ARC source file: {filename}")
     exit(1)
 

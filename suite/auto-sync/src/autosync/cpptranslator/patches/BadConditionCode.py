@@ -21,7 +21,7 @@ class BadConditionCode(Patch):
             "    (call_expression "
             '        (identifier) @fcn_name (#eq? @fcn_name "BadConditionCode")'
             "        (argument_list)"
-            "    )" 
+            "    )"
             ") @bad_condition_code"
         )
 
