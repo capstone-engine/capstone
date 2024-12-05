@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7c, 0x00, 0x27, 0xa4 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbld 4"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x00, 0x27, 0xe4 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbli 4"

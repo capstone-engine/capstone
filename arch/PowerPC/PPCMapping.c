@@ -1,7 +1,7 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
 
-#include "capstone/ppc.h"
+#include "capstone/capstone.h"
 #ifdef CAPSTONE_HAS_POWERPC
 
 #include <stdio.h> // debug
@@ -15,6 +15,99 @@
 #include "PPCLinkage.h"
 #include "PPCMapping.h"
 #include "PPCMCTargetDesc.h"
+
+static int P7InheritableFeatures[] = {
+	PPC_DirectivePwr7,     PPC_FeatureAltivec,
+	PPC_FeatureVSX,	       PPC_FeatureMFOCRF,
+	PPC_FeatureFCPSGN,     PPC_FeatureFSqrt,
+	PPC_FeatureFRE,	       PPC_FeatureFRES,
+	PPC_FeatureFRSQRTE,    PPC_FeatureFRSQRTES,
+	PPC_FeatureRecipPrec,  PPC_FeatureSTFIWX,
+	PPC_FeatureLFIWAX,     PPC_FeatureFPRND,
+	PPC_FeatureFPCVT,      PPC_FeatureISEL,
+	PPC_FeaturePOPCNTD,    PPC_FeatureCMPB,
+	PPC_FeatureLDBRX,      PPC_Feature64Bit,
+	PPC_FeatureBPERMD,     PPC_FeatureExtDiv,
+	PPC_FeatureMFTB,       PPC_DeprecatedDST,
+	PPC_FeatureTwoConstNR, PPC_FeatureUnalignedFloats,
+	PPC_FeatureISA2_06,    INT_MAX
+};
+
+static int *P7Features[] = { P7InheritableFeatures };
+
+// Power8
+static int P8AdditionalFeatures[] = { PPC_DirectivePwr8,
+				      PPC_FeatureP8Altivec,
+				      PPC_FeatureP8Vector,
+				      PPC_FeatureP8Crypto,
+				      PPC_FeatureHTM,
+				      PPC_FeatureDirectMove,
+				      PPC_FeatureICBT,
+				      PPC_FeaturePartwordAtomic,
+				      PPC_FeatureQuadwordAtomic,
+				      PPC_FeaturePredictableSelectIsExpensive,
+				      PPC_FeatureISA2_07,
+				      PPC_FeatureCRBits,
+				      INT_MAX };
+
+static int P8SpecificFeatures[] = { PPC_FeatureAddiLoadFusion,
+				    PPC_FeatureAddisLoadFusion, INT_MAX };
+
+static int *P8Features[] = { P7InheritableFeatures, P8AdditionalFeatures,
+			     P8SpecificFeatures };
+
+static int P9AdditionalFeatures[] = { PPC_DirectivePwr9,
+				      PPC_FeatureP9Altivec,
+				      PPC_FeatureP9Vector,
+				      PPC_FeaturePPCPreRASched,
+				      PPC_FeaturePPCPostRASched,
+				      PPC_FeatureISA3_0,
+				      PPC_FeaturePredictableSelectIsExpensive,
+				      INT_MAX };
+
+static int P9SpecificFeatures[] = { PPC_FeatureVectorsUseTwoUnits, INT_MAX };
+
+static int *P9Features[] = { P7InheritableFeatures, P8AdditionalFeatures,
+			     P9AdditionalFeatures, P9SpecificFeatures };
+
+static int P10AdditionalFeatures[] = { PPC_FeatureStoreFusion,
+				       PPC_FeatureAddLogicalFusion,
+				       PPC_FeatureLogicalAddFusion,
+				       PPC_FeatureLogicalFusion,
+				       PPC_FeatureArithAddFusion,
+				       PPC_FeatureSha3Fusion,
+				       PPC_DirectivePwr10,
+				       PPC_FeatureISA3_1,
+				       PPC_FeaturePrefixInstrs,
+				       PPC_FeaturePCRelativeMemops,
+				       PPC_FeatureP10Vector,
+				       PPC_FeatureMMA,
+				       PPC_FeaturePairedVectorMemops,
+				       PPC_FeatureFastMFLR,
+				       INT_MAX };
+
+static int *P10Features[] = { P7InheritableFeatures, P8AdditionalFeatures,
+			      P9AdditionalFeatures, P10AdditionalFeatures };
+
+static int FutureAdditionalFeatures[] = { PPC_FeatureISAFuture, INT_MAX };
+
+static int *FutureFeatures[] = { P7InheritableFeatures, P8AdditionalFeatures,
+				 P9AdditionalFeatures, P10AdditionalFeatures,
+				 FutureAdditionalFeatures };
+
+static inline bool is_feature_of(int feature, int **feature_set, int set_size)
+{
+	for (size_t i = 0; i < set_size; ++i) {
+		size_t j = 0;
+		while (feature_set[i][j] != INT_MAX) {
+			if (feature == feature_set[i][j]) {
+				return true;
+			}
+			++j;
+		}
+	}
+	return false;
+}
 
 #define GET_REGINFO_MC_DESC
 #include "PPCGenRegisterInfo.inc"
@@ -82,7 +175,9 @@ static const name_map group_name_maps[] = {
 	{ PPC_GRP_INVALID, NULL },
 	{ PPC_GRP_JUMP, "jump" },
 	{ PPC_GRP_CALL, "call" },
+	{ PPC_GRP_RET, "ret" },
 	{ PPC_GRP_INT, "int" },
+	{ PPC_GRP_IRET, "iret" },
 	{ PPC_GRP_PRIVILEGE, "privilege" },
 	{ PPC_GRP_BRANCH_RELATIVE, "branch_relative" },
 
@@ -244,23 +339,41 @@ bool PPC_getInstruction(csh handle, const uint8_t *bytes, size_t bytes_len,
 
 bool PPC_getFeatureBits(unsigned int mode, unsigned int feature)
 {
-	if ((feature == PPC_FeatureQPX) && (mode & CS_MODE_QPX) == 0) {
-		return false;
-	} else if ((feature == PPC_FeatureSPE) && (mode & CS_MODE_SPE) == 0) {
-		return false;
-	} else if ((feature == PPC_FeatureBookE) &&
-		   (mode & CS_MODE_BOOKE) == 0) {
-		return false;
-	} else if ((feature == PPC_FeaturePS) && (mode & CS_MODE_PS) == 0) {
-		return false;
+	if (feature == PPC_FeatureQPX) {
+		return (mode & CS_MODE_QPX) != 0;
+	} else if (feature == PPC_FeatureSPE) {
+		return (mode & CS_MODE_SPE) != 0;
+	} else if (feature == PPC_FeatureBookE) {
+		return (mode & CS_MODE_BOOKE) != 0;
+	} else if (feature == PPC_FeaturePS) {
+		return (mode & CS_MODE_PS) != 0;
+	} else if (feature == PPC_FeatureModernAIXAs) {
+		return (mode & CS_MODE_MODERN_AIX_AS) != 0;
+	} else if (feature == PPC_AIXOS) {
+		return (mode & CS_MODE_AIX_OS) != 0 || (mode & CS_MODE_MODERN_AIX_AS) != 0;
+	} else if (feature == PPC_FeatureMSYNC) {
+		return (mode & CS_MODE_MSYNC) != 0;
+	}
+	if ((mode & (CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 | CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE)) == 0) {
+		// By default support everything
+		return true;
 	}
 
-	// No AIX support for now.
-	if (feature == PPC_FeatureModernAIXAs || feature == PPC_AIXOS)
-		return false;
-	// TODO Make it optional
-	if (feature == PPC_FeatureMSYNC)
-		return false;
+	if (is_feature_of(feature, P7Features, ARR_SIZE(P7Features))) {
+		return (mode & (CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 | CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE));
+	}
+	if (is_feature_of(feature, P8Features, ARR_SIZE(P8Features))) {
+		return (mode & (CS_MODE_PWR8 | CS_MODE_PWR9 | CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE));
+	}
+	if (is_feature_of(feature, P9Features, ARR_SIZE(P9Features))) {
+		return (mode & (CS_MODE_PWR9 | CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE));
+	}
+	if (is_feature_of(feature, P10Features, ARR_SIZE(P10Features))) {
+		return (mode & (CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE));
+	}
+	if (is_feature_of(feature, FutureFeatures, ARR_SIZE(FutureFeatures))) {
+		return (mode & CS_MODE_PPC_ISA_FUTURE);
+	}
 
 	// By default support everything
 	return true;
@@ -317,7 +430,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		}
 
 		CS_ASSERT_RET((op_type & CS_OP_MEM) ==
-		       0); // doing_mem should have been true.
+			      0); // doing_mem should have been true.
 
 		if (op_type == CS_OP_REG)
 			PPC_set_detail_op_reg(MI, OpNum,
@@ -400,10 +513,9 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			// Handled in printOperand()
 			return;
 		unsigned Val = MCInst_getOpVal(MI, OpNum) << 2;
-		int32_t Imm = SignExtend32(Val, 32);
 		PPC_check_safe_inc(MI);
 		PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
-		PPC_get_detail_op(MI, 0)->imm = Imm;
+		PPC_get_detail_op(MI, 0)->imm = Val;
 		PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 		PPC_inc_op_count(MI);
 		break;
@@ -462,10 +574,8 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 	}
 }
 
-/// Fills cs_detail with the data of the operand.
-/// Calls to this function should not be added by hand! Please checkout the
-/// patch `AddCSDetail` of the CppTranslator.
-void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
+void PPC_add_cs_detail_1(MCInst *MI, ppc_op_group op_group, unsigned OpNum,
+			 const char *Modifier)
 {
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
@@ -475,8 +585,6 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 		printf("Operand group %d not handled!\n", op_group);
 		return;
 	case PPC_OP_GROUP_PredicateOperand: {
-		unsigned OpNum = va_arg(args, unsigned);
-		const char *Modifier = va_arg(args, const char *);
 		if ((strcmp(Modifier, "cc") == 0) ||
 		    (strcmp(Modifier, "pm") == 0)) {
 			unsigned Val = MCInst_getOpVal(MI, OpNum);
@@ -494,6 +602,21 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 		}
 		return;
 	}
+	}
+}
+
+/// Fills cs_detail with the data of the operand.
+/// Calls to this function should not be added by hand! Please checkout the
+/// patch `AddCSDetail` of the CppTranslator.
+void PPC_add_cs_detail_0(MCInst *MI, ppc_op_group op_group, unsigned OpNo)
+{
+	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
+		return;
+
+	switch (op_group) {
+	default:
+		printf("Operand group %d not handled!\n", op_group);
+		return;
 	case PPC_OP_GROUP_S12ImmOperand:
 	case PPC_OP_GROUP_Operand:
 	case PPC_OP_GROUP_MemRegReg:
@@ -521,8 +644,7 @@ void PPC_add_cs_detail(MCInst *MI, ppc_op_group op_group, va_list args)
 	case PPC_OP_GROUP_U12ImmOperand:
 	case PPC_OP_GROUP_U7ImmOperand:
 	case PPC_OP_GROUP_ATBitsAsHint: {
-		unsigned OpNum = va_arg(args, unsigned);
-		add_cs_detail_general(MI, op_group, OpNum);
+		add_cs_detail_general(MI, op_group, OpNo);
 		return;
 	}
 	}
@@ -543,12 +665,14 @@ void PPC_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val,
 	case CS_OP_REG:
 		if (is_off_reg) {
 			PPC_get_detail_op(MI, 0)->mem.offset = Val;
-			if (PPC_get_detail_op(MI, 0)->mem.base != PPC_REG_INVALID)
+			if (PPC_get_detail_op(MI, 0)->mem.base !=
+			    PPC_REG_INVALID)
 				set_mem_access(MI, false);
-		}	else {
+		} else {
 			PPC_get_detail_op(MI, 0)->mem.base = Val;
 			if (MCInst_opIsTying(MI, OpNum))
-				map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+				map_add_implicit_write(
+					MI, MCInst_getOpVal(MI, OpNum));
 		}
 		break;
 	case CS_OP_IMM:

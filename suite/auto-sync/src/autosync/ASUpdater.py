@@ -51,6 +51,7 @@ class ASUpdater:
         wait_for_user: bool = True,
     ) -> None:
         self.arch = arch
+        self.arch_dir_name = TARGET_TO_DIR_NAME[self.arch]
         self.write = write
         self.no_clean_build = no_clean
         self.inc_list = inc_list
@@ -218,7 +219,7 @@ class ASUpdater:
 
         # MC tests
         i = 0
-        mc_dir = get_path("{MC_DIR}").joinpath(self.arch)
+        mc_dir = get_path("{MC_DIR}").joinpath(self.arch_dir_name)
         log.info(f"Copy MC test files to {mc_dir}")
         for file in get_path("{MCUPDATER_OUT_DIR}").iterdir():
             self.copy_files(file, mc_dir)

@@ -132,6 +132,14 @@ typedef enum cs_mode {
 	CS_MODE_SPE = 1 << 5, ///< Signal Processing Engine mode (PPC)
 	CS_MODE_BOOKE = 1 << 6, ///< Book-E mode (PPC)
 	CS_MODE_PS = 1 << 7, ///< Paired-singles mode (PPC)
+	CS_MODE_AIX_OS = 1 << 8, ///< PowerPC AIX-OS
+	CS_MODE_PWR7 = 1 << 9, ///< Power 7
+	CS_MODE_PWR8 = 1 << 10, ///< Power 8
+	CS_MODE_PWR9 = 1 << 11, ///< Power 9
+	CS_MODE_PWR10 = 1 << 12, ///< Power 10
+	CS_MODE_PPC_ISA_FUTURE = 1 << 13, ///< Power ISA Future
+	CS_MODE_MODERN_AIX_AS = 1 << 14, ///< PowerPC AIX-OS with modern assembly
+	CS_MODE_MSYNC = 1 << 15, ///< PowerPC Has only the msync instruction instead of sync. Implies BOOKE
 	CS_MODE_M68K_000 = 1 << 1, ///< M68K 68000 mode
 	CS_MODE_M68K_010 = 1 << 2, ///< M68K 68010 mode
 	CS_MODE_M68K_020 = 1 << 3, ///< M68K 68020 mode

@@ -85,9 +85,6 @@
         "in": "{LLVM_ROOT}/llvm/lib/Target/PowerPC/MCTargetDesc/PPCInstPrinter.cpp",
         "out": "PPCInstPrinter.c"
       },{
-        "in": "{LLVM_ROOT}/llvm/lib/Target/PowerPC/MCTargetDesc/PPCInstPrinter.h",
-        "out": "PPCInstPrinter.h"
-      },{
         "in": "{LLVM_ROOT}/llvm/lib/Target/PowerPC/MCTargetDesc/PPCMCTargetDesc.h",
         "out": "PPCMCTargetDesc.h"
       },{

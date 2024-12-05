@@ -565,6 +565,20 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 		}
 		break;
 	}
+	case ARM_RFEDA_UPD:
+	case ARM_RFEDB_UPD:
+	case ARM_RFEIA_UPD:
+	case ARM_RFEIB_UPD:
+		get_detail(MI)->writeback = true;
+		// fallthrough
+	case ARM_RFEDA:
+	case ARM_RFEDB:
+	case ARM_RFEIA:
+	case ARM_RFEIB: {
+		arm_reg base_reg = ARM_get_detail_op(MI, -1)->reg;
+		ARM_get_detail_op(MI, -1)->type = ARM_OP_MEM;
+		ARM_get_detail_op(MI, -1)->mem.base = base_reg;
+	}
 	}
 }
 
@@ -627,6 +641,26 @@ static void ARM_post_index_detection(MCInst *MI)
 	ARM_dec_op_count(MI);
 }
 
+void ARM_check_mem_access_validity(MCInst *MI)
+{
+#ifndef CAPSTONE_DIET
+	if (!detail_is_set(MI))
+		return;
+	const arm_suppl_info *suppl = map_get_suppl_info(MI, arm_insns);
+	CS_ASSERT_RET(suppl);
+	if (suppl->mem_acc == CS_AC_INVALID) {
+		return;
+	}
+	cs_detail *detail = get_detail(MI);
+	for (int i = 0; i < detail->arm.op_count; ++i) {
+		if (detail->arm.operands[i].type == ARM_OP_MEM && detail->arm.operands[i].access != suppl->mem_acc) {
+			detail->arm.operands[i].access = suppl->mem_acc;
+			return;
+		}
+	}
+#endif // CAPSTONE_DIET
+}
+
 /// Decodes the asm string for a given instruction
 /// and fills the detail information about the instruction and its operands.
 void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
@@ -639,6 +673,7 @@ void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map) - 1);
 	ARM_add_not_defined_ops(MI);
 	ARM_post_index_detection(MI);
+	ARM_check_mem_access_validity(MI);
 	ARM_add_cs_groups(MI);
 	int syntax_opt = MI->csh->syntax;
 	if (syntax_opt & CS_OPT_SYNTAX_CS_REG_ALIAS)
@@ -767,32 +802,12 @@ void ARM_check_updates_flags(MCInst *MI)
 #endif // CAPSTONE_DIET
 }
 
-void ARM_check_mem_access_validity(MCInst *MI)
-{
-#ifndef CAPSTONE_DIET
-	if (!detail_is_set(MI))
-		return;
-	const arm_suppl_info *suppl = map_get_suppl_info(MI, arm_insns);
-	if (suppl->mem_acc == CS_AC_INVALID) {
-		return;
-	}
-	cs_detail *detail = get_detail(MI);
-	for (int i = 0; i < detail->arm.op_count; ++i) {
-		if (detail->arm.operands[i].type == ARM_OP_MEM && detail->arm.operands[i].access != suppl->mem_acc) {
-			detail->arm.operands[i].access = suppl->mem_acc;
-			return;
-		}
-	}
-#endif // CAPSTONE_DIET
-}
-
 void ARM_set_instr_map_data(MCInst *MI)
 {
 	map_cs_id(MI, arm_insns, ARR_SIZE(arm_insns));
 	map_implicit_reads(MI, arm_insns);
 	map_implicit_writes(MI, arm_insns);
 	ARM_check_updates_flags(MI);
-	ARM_check_mem_access_validity(MI);
 	map_groups(MI, arm_insns);
 }
 
@@ -1848,8 +1863,10 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_AddrMode5FP16Operand_0: {
 		bool AlwaysPrintImm0 = temp_arg_0;
 
-		if (AlwaysPrintImm0)
+		if (AlwaysPrintImm0) {
+			get_detail(MI)->writeback = true;
 			map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+		}
 
 		ARM_check_safe_inc(MI);
 		cs_arm_op *Op = ARM_get_detail_op(MI, 0);

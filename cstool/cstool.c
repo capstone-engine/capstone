@@ -53,6 +53,20 @@ static struct {
 		CS_ARCH_ARM, CS_ARCH_MAX }, 0, CS_MODE_MCLASS },
 	{ "+v8", "Sets the ARM version to v8+", {
 		CS_ARCH_ARM, CS_ARCH_MAX }, 0, CS_MODE_V8 },
+	{ "+aix", "Enables AIX OS assembly", {
+		CS_ARCH_PPC, CS_ARCH_MAX }, 0, CS_MODE_AIX_OS },
+	{ "+booke", "Enables BOOKE extension", {
+		CS_ARCH_PPC, CS_ARCH_MAX }, 0, CS_MODE_BOOKE },
+	{ "+maix", "Enables Modern AIX assembly", {
+		CS_ARCH_PPC, CS_ARCH_MAX }, 0, CS_MODE_MODERN_AIX_AS },
+	{ "+msync", "Has only the msync instruction instead of sync. Implies BookE.", {
+		CS_ARCH_PPC, CS_ARCH_MAX }, 0, CS_MODE_MSYNC },
+	{ "+qpx", "Enables QPX extension", {
+		CS_ARCH_PPC, CS_ARCH_MAX }, 0, CS_MODE_QPX },
+	{ "+ps", "Enables PS extension", {
+		CS_ARCH_PPC, CS_ARCH_MAX }, 0, CS_MODE_PS },
+	{ "+spe", "Enables SPE extension", {
+		CS_ARCH_PPC, CS_ARCH_MAX }, 0, CS_MODE_SPE },
 	{ NULL }
 };
 
@@ -131,14 +145,18 @@ static struct {
 
 	{ "ppc32", "PowerPC 32-bit, little endian", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_LITTLE_ENDIAN },
 	{ "ppc32be", "PowerPC 32-bit, big endian", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_BIG_ENDIAN },
-	{ "ppc32qpx", "PowerPC 32-bit, qpx, little endian", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_QPX | CS_MODE_LITTLE_ENDIAN },
-	{ "ppc32beqpx", "PowerPC 32-bit, qpx, big endian", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_QPX | CS_MODE_BIG_ENDIAN },
-	{ "ppc32ps", "PowerPC 32-bit, ps, little endian", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_PS | CS_MODE_LITTLE_ENDIAN },
-	{ "ppc32beps", "PowerPC 32-bit, ps, big endian", CS_ARCH_PPC, CS_MODE_32 | CS_MODE_PS | CS_MODE_BIG_ENDIAN },
 	{ "ppc64", "PowerPC 64-bit, little endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_LITTLE_ENDIAN },
 	{ "ppc64be", "PowerPC 64-bit, big endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN },
-	{ "ppc64qpx", "PowerPC 64-bit, qpx, little endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_QPX | CS_MODE_LITTLE_ENDIAN },
-	{ "ppc64beqpx", "PowerPC 64-bit, qpx, big endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_QPX | CS_MODE_BIG_ENDIAN },
+	{ "ppc64pwr7", "PowerPC 64-bit, Power7 (ISA v2.06), little endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PWR7 | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc64bepwr7", "PowerPC 64-bit, Power7 (ISA v2.06), big endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PWR7 | CS_MODE_BIG_ENDIAN },
+	{ "ppc64pwr8", "PowerPC 64-bit, Power8 (ISA v2.07), little endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PWR8 | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc64bepwr8", "PowerPC 64-bit, Power8 (ISA v2.07), big endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PWR8 | CS_MODE_BIG_ENDIAN },
+	{ "ppc64pwr9", "PowerPC 64-bit, Power9 (ISA v3.0), little endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PWR9 | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc64bepwr9", "PowerPC 64-bit, Power9 (ISA v3.0), big endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PWR9 | CS_MODE_BIG_ENDIAN },
+	{ "ppc64pwr10", "PowerPC 64-bit, Power10 (ISA v3.1), little endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PWR10 | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc64bepwr10", "PowerPC 64-bit, Power10 (ISA v3.1), big endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PWR10 | CS_MODE_BIG_ENDIAN },
+	{ "ppc64FutureISA", "PowerPC 64-bit, Future ISA, little endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PPC_ISA_FUTURE | CS_MODE_LITTLE_ENDIAN },
+	{ "ppc64beFutureISA", "PowerPC 64-bit, Future ISA, big endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PPC_ISA_FUTURE | CS_MODE_BIG_ENDIAN },
 
 	{ "sparc", "Sparc, big endian", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN },
 	{ "sparcv9", "Sparc v9, big endian", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN | CS_MODE_V9 },

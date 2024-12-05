@@ -24,7 +24,7 @@ test_cases:
                 type: ARM_OP_MEM
                 mem_base: r0
                 mem_index: r6
-                access: CS_AC_READ_WRITE
+                access: CS_AC_READ
             post_indexed: 1
             vector_size: 32
           writeback: 1
@@ -54,7 +54,7 @@ test_cases:
               -
                 type: ARM_OP_MEM
                 mem_base: r2
-                access: CS_AC_READ_WRITE
+                access: CS_AC_READ
             post_indexed: -1
             vector_size: 16
           writeback: 1
@@ -1787,7 +1787,7 @@ test_cases:
               -
                 type: ARM_OP_MEM
                 mem_base: r4
-                access: CS_AC_READ_WRITE
+                access: CS_AC_READ
           writeback: 1
           regs_read: [ r4 ]
           regs_write: [ r4, d0, d2, d4 ]
@@ -2048,7 +2048,7 @@ test_cases:
                 type: ARM_OP_MEM
                 mem_base: r4
                 mem_align: 0x80
-                access: CS_AC_READ_WRITE
+                access: CS_AC_READ
           writeback: 1
           regs_read: [ d0, d2, d4, d6, r4 ]
           regs_write: [ r4, d0, d2, d4, d6 ]
@@ -2754,3 +2754,74 @@ test_cases:
                 access: CS_AC_READ
                 shift_type: ARM_SFT_UXTW
                 shift_value: 1
+  -
+    input:
+      bytes: [ 0x2f, 0x6c, 0x64, 0x2d ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stclhs p12, c6, [r4, #-0xbc]!"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_PIMM
+                imm: 12
+                access: CS_AC_READ
+              -
+                type: ARM_OP_CIMM
+                imm: 6
+                access: CS_AC_READ
+              -
+                type: ARM_OP_MEM
+                mem_base: r4
+                mem_disp: 0xbc
+                access: CS_AC_WRITE
+                subtracted: 1
+            cc: ARMCC_HS
+          writeback: 1
+          regs_read: [ cpsr, r4 ]
+          regs_write: [ r4 ]
+  -
+    input:
+      bytes: [ 0x00, 0x0a, 0x33, 0xf9 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rfedb	r3!"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_MEM
+                mem_base: r3
+                access: CS_AC_READ
+          writeback: 1
+          regs_read: [ r3 ]
+          regs_write: [ r3 ]
+  -
+    input:
+      bytes: [ 0x00, 0x0a, 0x13, 0xf9 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rfedb	r3"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_MEM
+                mem_base: r3
+                access: CS_AC_READ
+          writeback: -1
+          regs_read: [ r3 ]
+          regs_write: [ ]

@@ -143,9 +143,10 @@ class IncGenerator:
         for patch in patch_dir.iterdir():
             try:
                 subprocess.run(
-                    ["git", "apply", "-C4", "--recount", str(patch)],
+                    ["git", "apply", "-v", "--recount", str(patch)],
                     check=True,
                 )
                 log.info(f"Applied inc patch {patch.name}")
             except subprocess.CalledProcessError as e:
                 log.warning(f".inc patch {patch.name} did not apply correctly!")
+                log.warning(f"Error:\n{e.output}")

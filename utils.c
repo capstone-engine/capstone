@@ -244,7 +244,7 @@ char *byte_seq_to_str(uint8_t *bytes, size_t len)
 	char *s = calloc(sizeof(char), 32);
 	for (size_t i = 0; i < len; ++i) {
 		cs_snprintf(single_byte, sizeof(single_byte), "0x%02" PRIx8 "%s",
-			    bytes[i], i == len - 1 ? "" : ",");
+			    bytes[i], i == len - 1 ? "" : ", ");
 		s = str_append(s, single_byte);
 		if (!s) {
 			return NULL;

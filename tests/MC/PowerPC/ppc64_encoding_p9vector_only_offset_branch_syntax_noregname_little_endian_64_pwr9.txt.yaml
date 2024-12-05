@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x66, 0x1b, 0xc0, 0x7c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_LITTLE_ENDIAN", "CS_MODE_64", "CS_MODE_PWR9" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtvsrdd 6, 0, 3"

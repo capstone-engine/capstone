@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7c, 0x72, 0x2a, 0x86 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfdcr 3, 178"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x72, 0x2b, 0x86 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtdcr 178, 3"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x43, 0x07, 0x64 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbrehi 2, 3"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x43, 0x0f, 0x64 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbrelo 2, 3"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x43, 0x07, 0xa4 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbwehi 2, 3"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x43, 0x0f, 0xa4 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbwelo 2, 3"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x43, 0x0f, 0x24 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbsx 2, 3, 1"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x43, 0x0f, 0x25 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "tlbsx. 2, 3, 1"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x05, 0x33, 0x8c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "dccci 5, 6"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x05, 0x37, 0x8c ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_64", "CS_MODE_PWR7" ]
+    expected:
+      insns:
+        -
+          asm_text: "iccci 5, 6"

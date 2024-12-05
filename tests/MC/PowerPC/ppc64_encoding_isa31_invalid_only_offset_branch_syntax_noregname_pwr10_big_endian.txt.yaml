@@ -1,0 +1,190 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x38, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi 1, 2, -1"
+
+  -
+    input:
+      bytes: [ 0x88, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lbz 1, -1(2)"
+
+  -
+    input:
+      bytes: [ 0xc8, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lfd 1, -1(2)"
+
+  -
+    input:
+      bytes: [ 0xa8, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lha 1, -1(2)"
+
+  -
+    input:
+      bytes: [ 0xa0, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lhz 1, -1(2)"
+
+  -
+    input:
+      bytes: [ 0x80, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lwz 1, -1(2)"
+
+  -
+    input:
+      bytes: [ 0x98, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stb 1, -1(2)"
+
+  -
+    input:
+      bytes: [ 0xd8, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stfd 1, -1(2)"
+
+  -
+    input:
+      bytes: [ 0xd0, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stfs 1, -1(2)"
+
+  -
+    input:
+      bytes: [ 0xb0, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sth 1, -1(2)"
+
+  -
+    input:
+      bytes: [ 0x90, 0x22, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stw 1, -1(2)"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x23, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lq 1, 0(3)"
+
+  -
+    input:
+      bytes: [ 0xa4, 0x23, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lhzu 1, 0(3)"
+
+  -
+    input:
+      bytes: [ 0xa8, 0x23, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lha 1, 0(3)"
+
+  -
+    input:
+      bytes: [ 0xac, 0x23, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lhau 1, 0(3)"
+
+  -
+    input:
+      bytes: [ 0xcb, 0xe3, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lfd 31, -1(3)"
+
+  -
+    input:
+      bytes: [ 0xb8, 0x23, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lmw 1, 0(3)"
+
+  -
+    input:
+      bytes: [ 0xbc, 0x23, 0x00, 0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stmw 1, 0(3)"
+
+  -
+    input:
+      bytes: [ 0xdb, 0xe3, 0xff, 0xff ]
+      arch: "CS_ARCH_PPC"
+      options: [ "CS_OPT_ONLY_OFFSET_BRANCH", "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_PWR10", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stfd 31, -1(3)"

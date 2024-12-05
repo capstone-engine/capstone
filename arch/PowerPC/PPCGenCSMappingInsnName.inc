@@ -1,10 +1,10 @@
-/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* Capstone Disassembly Engine, https://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
-/*    Rot127 <unisono@quyllur.org> 2022-2023 */
+/*    Rot127 <unisono@quyllur.org> 2022-2024 */
 /* Automatically generated file by Capstone's LLVM TableGen Disassembler Backend. */
 
-/* LLVM-commit: 464bda7750a3ba9e23823fc707d7e7b6fc38438d */
-/* LLVM-tag: llvmorg-16.0.2-5-g464bda7750a3 */
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
 
 /* Do not edit. */
 
@@ -37,6 +37,7 @@
   "insrdi", // PPC_INS_INSRDI
   "insrwi", // PPC_INS_INSRWI
   "la", // PPC_INS_LA
+  "psubi", // PPC_INS_PSUBI
   "rlwimi", // PPC_INS_RLWIMI
   "rlwinm", // PPC_INS_RLWINM
   "rlwnm", // PPC_INS_RLWNM
@@ -57,6 +58,7 @@
   "adde", // PPC_INS_ADDE
   "addeo", // PPC_INS_ADDEO
   "addex", // PPC_INS_ADDEX
+  "addg6s", // PPC_INS_ADDG6S
   "addi", // PPC_INS_ADDI
   "addic", // PPC_INS_ADDIC
   "addis", // PPC_INS_ADDIS
@@ -98,6 +100,8 @@
   "brh", // PPC_INS_BRH
   "brinc", // PPC_INS_BRINC
   "brw", // PPC_INS_BRW
+  "cbcdtd", // PPC_INS_CBCDTD
+  "cdtbcd", // PPC_INS_CDTBCD
   "cfuged", // PPC_INS_CFUGED
   "clrbhrb", // PPC_INS_CLRBHRB
   "cmpb", // PPC_INS_CMPB
@@ -128,6 +132,8 @@
   "cror", // PPC_INS_CROR
   "crorc", // PPC_INS_CRORC
   "crxor", // PPC_INS_CRXOR
+  "dadd", // PPC_INS_DADD
+  "daddq", // PPC_INS_DADDQ
   "darn", // PPC_INS_DARN
   "dcba", // PPC_INS_DCBA
   "dcbfep", // PPC_INS_DCBFEP
@@ -141,6 +147,26 @@
   "dcbzl", // PPC_INS_DCBZL
   "dcbzlep", // PPC_INS_DCBZLEP
   "dccci", // PPC_INS_DCCCI
+  "dcffix", // PPC_INS_DCFFIX
+  "dcffixq", // PPC_INS_DCFFIXQ
+  "dcffixqq", // PPC_INS_DCFFIXQQ
+  "dcmpo", // PPC_INS_DCMPO
+  "dcmpoq", // PPC_INS_DCMPOQ
+  "dcmpu", // PPC_INS_DCMPU
+  "dcmpuq", // PPC_INS_DCMPUQ
+  "dctdp", // PPC_INS_DCTDP
+  "dctfix", // PPC_INS_DCTFIX
+  "dctfixq", // PPC_INS_DCTFIXQ
+  "dctfixqq", // PPC_INS_DCTFIXQQ
+  "dctqpq", // PPC_INS_DCTQPQ
+  "ddedpd", // PPC_INS_DDEDPD
+  "ddedpdq", // PPC_INS_DDEDPDQ
+  "ddiv", // PPC_INS_DDIV
+  "ddivq", // PPC_INS_DDIVQ
+  "denbcd", // PPC_INS_DENBCD
+  "denbcdq", // PPC_INS_DENBCDQ
+  "diex", // PPC_INS_DIEX
+  "diexq", // PPC_INS_DIEXQ
   "divd", // PPC_INS_DIVD
   "divde", // PPC_INS_DIVDE
   "divdeo", // PPC_INS_DIVDEO
@@ -159,17 +185,49 @@
   "divwuo", // PPC_INS_DIVWUO
   "dmmr", // PPC_INS_DMMR
   "dmsetdmrz", // PPC_INS_DMSETDMRZ
+  "dmul", // PPC_INS_DMUL
+  "dmulq", // PPC_INS_DMULQ
   "dmxor", // PPC_INS_DMXOR
   "dmxxextfdmr256", // PPC_INS_DMXXEXTFDMR256
   "dmxxextfdmr512", // PPC_INS_DMXXEXTFDMR512
   "dmxxinstfdmr256", // PPC_INS_DMXXINSTFDMR256
   "dmxxinstfdmr512", // PPC_INS_DMXXINSTFDMR512
+  "dqua", // PPC_INS_DQUA
+  "dquai", // PPC_INS_DQUAI
+  "dquaiq", // PPC_INS_DQUAIQ
+  "dquaq", // PPC_INS_DQUAQ
+  "drdpq", // PPC_INS_DRDPQ
+  "drintn", // PPC_INS_DRINTN
+  "drintnq", // PPC_INS_DRINTNQ
+  "drintx", // PPC_INS_DRINTX
+  "drintxq", // PPC_INS_DRINTXQ
+  "drrnd", // PPC_INS_DRRND
+  "drrndq", // PPC_INS_DRRNDQ
+  "drsp", // PPC_INS_DRSP
+  "dscli", // PPC_INS_DSCLI
+  "dscliq", // PPC_INS_DSCLIQ
+  "dscri", // PPC_INS_DSCRI
+  "dscriq", // PPC_INS_DSCRIQ
   "dss", // PPC_INS_DSS
   "dssall", // PPC_INS_DSSALL
   "dst", // PPC_INS_DST
   "dstst", // PPC_INS_DSTST
   "dststt", // PPC_INS_DSTSTT
   "dstt", // PPC_INS_DSTT
+  "dsub", // PPC_INS_DSUB
+  "dsubq", // PPC_INS_DSUBQ
+  "dtstdc", // PPC_INS_DTSTDC
+  "dtstdcq", // PPC_INS_DTSTDCQ
+  "dtstdg", // PPC_INS_DTSTDG
+  "dtstdgq", // PPC_INS_DTSTDGQ
+  "dtstex", // PPC_INS_DTSTEX
+  "dtstexq", // PPC_INS_DTSTEXQ
+  "dtstsf", // PPC_INS_DTSTSF
+  "dtstsfi", // PPC_INS_DTSTSFI
+  "dtstsfiq", // PPC_INS_DTSTSFIQ
+  "dtstsfq", // PPC_INS_DTSTSFQ
+  "dxex", // PPC_INS_DXEX
+  "dxexq", // PPC_INS_DXEXQ
   "efdabs", // PPC_INS_EFDABS
   "efdadd", // PPC_INS_EFDADD
   "efdcfs", // PPC_INS_EFDCFS
@@ -522,6 +580,8 @@
   "lhzu", // PPC_INS_LHZU
   "lhzux", // PPC_INS_LHZUX
   "lhzx", // PPC_INS_LHZX
+  "li", // PPC_INS_LI
+  "lis", // PPC_INS_LIS
   "lmw", // PPC_INS_LMW
   "lq", // PPC_INS_LQ
   "lqarx", // PPC_INS_LQARX
@@ -658,6 +718,7 @@
   "paddi", // PPC_INS_PADDI
   "pdepd", // PPC_INS_PDEPD
   "pextd", // PPC_INS_PEXTD
+  "pla", // PPC_INS_PLA
   "plbz", // PPC_INS_PLBZ
   "pld", // PPC_INS_PLD
   "plfd", // PPC_INS_PLFD
@@ -882,6 +943,7 @@
   "rldicr", // PPC_INS_RLDICR
   "rldimi", // PPC_INS_RLDIMI
   "sc", // PPC_INS_SC
+  "scv", // PPC_INS_SCV
   "setb", // PPC_INS_SETB
   "setbc", // PPC_INS_SETBC
   "setbcr", // PPC_INS_SETBCR
@@ -1006,6 +1068,7 @@
   "tlbia", // PPC_INS_TLBIA
   "tlbie", // PPC_INS_TLBIE
   "tlbiel", // PPC_INS_TLBIEL
+  "tlbilx", // PPC_INS_TLBILX
   "tlbivax", // PPC_INS_TLBIVAX
   "tlbld", // PPC_INS_TLBLD
   "tlbli", // PPC_INS_TLBLI
