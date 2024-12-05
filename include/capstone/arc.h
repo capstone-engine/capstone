@@ -41,12 +41,14 @@ typedef struct cs_arc_op {
 	enum cs_ac_type access;
 } cs_arc_op;
 
+#define NUM_ARC_OPS 8
+
 /// Instruction structure
 typedef struct cs_arc {
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_arc_op operands[8]; ///< operands for this instruction.
+	cs_arc_op operands[NUM_ARC_OPS]; ///< operands for this instruction.
 } cs_arc;
 
 /// ARC registers

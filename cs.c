@@ -390,7 +390,7 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 	{ NULL, NULL, 0 },
 #endif
 #ifdef CAPSTONE_HAS_XTENSA
-	CS_ARCH_CONFIG_XTENSA
+	CS_ARCH_CONFIG_XTENSA,
 #else
 	{ NULL, NULL, 0 },
 #endif

@@ -190,7 +190,7 @@ void ARC_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 {
 	if (!detail_is_set(MI))
 		return;
-	ARC_check_safe_inc();
+	ARC_check_safe_inc(MI);
 	assert((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_IMM);
 	assert(ImmType == ARC_OP_IMM);
 
@@ -204,7 +204,7 @@ void ARC_set_detail_op_reg(MCInst *MI, unsigned OpNum, arc_reg Reg)
 {
 	if (!detail_is_set(MI))
 		return;
-	ARC_check_safe_inc();
+	ARC_check_safe_inc(MI);
 	assert((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
 
 	ARC_get_detail_op(MI, 0)->type = ARC_OP_REG;

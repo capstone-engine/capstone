@@ -291,8 +291,6 @@ class Translator:
                     patch = Assert(p)
                 case LLVMFallThrough.__name__:
                     patch = LLVMFallThrough(p)
-                case LLVMDebug.__name__:
-                    patch = LLVMDebug(p)
                 case BadConditionCode.__name__:
                     patch = BadConditionCode(p)
                 case DeclarationInConditionalClause.__name__:

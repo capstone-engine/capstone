@@ -47,11 +47,7 @@ class FieldFromInstr(Patch):
         else:
             # Get the Val/Inst parameter.
             # Its type determines the instruction width.
-            try:
-                inst_param: Node = param_list_caller.named_children[1]
-            except:
-                inst_param: Node = param_list_caller.named_children[0]
-                
+            inst_param: Node = param_list_caller.named_children[1]  
             inst_param_text = get_text(src, inst_param.start_byte, inst_param.end_byte)
 
             # Search for the 'Inst' parameter and determine its type
