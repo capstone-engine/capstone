@@ -55,7 +55,7 @@ jobs:
           cd vendor/llvm_root
           mkdir build
           cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug ../llvm
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=ARC ../llvm
           cmake --build . --target llvm-tblgen --config Debug
           cd ../../../
 
