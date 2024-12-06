@@ -115,10 +115,17 @@ class ASUpdater:
                 # Save the path. This file should not be moved.
                 patched.append(file)
         if self.arch == "AArch64":
-            # Update the compatibility header
             builder = CompatHeaderBuilder(
                 v6=main_header,
                 v5=get_path("{CS_INCLUDE_DIR}").joinpath(f"arm64.h"),
+                arch="aarch64"
+            )
+            builder.generate_v5_compat_header()
+        elif self.arch == "AArch64":
+            builder = CompatHeaderBuilder(
+                v6=main_header,
+                v5=get_path("{CS_INCLUDE_DIR}").joinpath(f"systemz_compatibility.h"),
+                arch="systemz"
             )
             builder.generate_v5_compat_header()
         return patched
