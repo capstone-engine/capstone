@@ -37,6 +37,8 @@
   "insrdi", // PPC_INS_INSRDI
   "insrwi", // PPC_INS_INSRWI
   "la", // PPC_INS_LA
+  "li", // PPC_INS_LI
+  "lis", // PPC_INS_LIS
   "psubi", // PPC_INS_PSUBI
   "rlwimi", // PPC_INS_RLWIMI
   "rlwinm", // PPC_INS_RLWINM
@@ -580,8 +582,6 @@
   "lhzu", // PPC_INS_LHZU
   "lhzux", // PPC_INS_LHZUX
   "lhzx", // PPC_INS_LHZX
-  "li", // PPC_INS_LI
-  "lis", // PPC_INS_LIS
   "lmw", // PPC_INS_LMW
   "lq", // PPC_INS_LQ
   "lqarx", // PPC_INS_LQARX
