@@ -1496,3 +1496,219 @@ test_cases:
               -
                 type: PPC_OP_IMM
                 imm: 0x4
+  -
+    input:
+      bytes: [ 0x7c,0x1a,0x0f,0x6a ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sthcix	r0, r26, r1"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_READ
+              -
+                type: PPC_OP_MEM
+                mem_base: r26
+                mem_offset: r1
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x4d,0xe4,0x23,0x82 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "crmove 4*cr3+un, 4*cr1+lt"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: "15"
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: "4"
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x7c,0x12,0x01,0x20 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mtocrf 0x20, r0"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: cr2
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x7c,0x47,0xb1,0x20 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mtcrf	0x7b, r2"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_IMM
+                imm: 0x7b
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: r2
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x7d,0x70,0x80,0x26 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mfocrf r11, 8"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r11
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_REG
+                reg: cr4
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x3e,0xc0,0x00,0x00 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lis r22, 0"
+        is_alias: 1
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r22
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_IMM
+                imm: 0
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x38,0x00,0x00,0x01 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "li r0, 1"
+        is_alias: 1
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_IMM
+                imm: 1
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x7c,0x1a,0x0e,0xea ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldcix r0, r26, r1"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_MEM
+                mem_base: r26
+                mem_offset: r1
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x7c,0x1a,0x0e,0x2a ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lwzcix r0, r26, r1"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_MEM
+                mem_base: r26
+                mem_offset: r1
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [ 0x7c,0x1a,0x0e,0x6a ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lhzcix r0, r26, r1"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_MEM
+                mem_base: r26
+                mem_offset: r1
+                access: CS_AC_READ
