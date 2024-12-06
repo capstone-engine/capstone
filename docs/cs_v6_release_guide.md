@@ -176,6 +176,14 @@ Nonetheless, we hope this additional information is useful to you.
 - Architecture support was added (based on LLVM-18).
 - Support for `LITBASE`. Set the `LITBASE` with `cs_option(handle, CS_OPT_LITBASE, litbase_value)`.
 
+**BPF**
+
+- Added support for eBPF `ATOMIC` class instructions (using Linux mnemonics, not GNU ones. E.g. `acmpxchg64` instead of `axchg`)
+- Added support for eBPF signed `ALU` class instructions (`sdiv`, `smod`, `movs` variants. E.g. `smod r9, 0xc9d1d20b`)
+- Added support for eBPF `JMP32` class instructions (E.g. `jslt32 r7, -0xa46e0bd, -0x33f1`)
+- Updated the syntax for eBPF legacy packet instructions (similar to LLVM mnemonics, not GNU ones (E.g. `ldabsw [skb-0x8]`). `skb` is the socket buffer.
+- Corrected the signedness interpretation of `immidiate` and `offset` operands
+
 **UX**
 
 - Instruction alias (see below).
