@@ -339,6 +339,7 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | Instruction alias | Many instruction alias (e.g. `BF`) were removed from the instruction enum (see new alias feature below). | Alias information is provided separately in their own fields. |
 | `crx` | `ppc_ops_crx` was removed. | It was never used in the first place. |
 | `(RA\|0)` | The `(RA\|0)` cases (see ISA for details) for which `0` is used, the `PPC_REG_ZERO` register is used. The register name of it is `0`. | Mimics LLVM behavior. |
+| `cr` `un/so` bit. | The verbose condition register names changes the `so` bit name to `un`. Just as LLVM does. | Mimics LLVM behavior. |
 
 **Mips**
 
