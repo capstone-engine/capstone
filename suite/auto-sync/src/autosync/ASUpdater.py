@@ -118,14 +118,14 @@ class ASUpdater:
             builder = CompatHeaderBuilder(
                 v6=main_header,
                 v5=get_path("{CS_INCLUDE_DIR}").joinpath(f"arm64.h"),
-                arch="aarch64"
+                arch="aarch64",
             )
             builder.generate_v5_compat_header()
         elif self.arch == "AArch64":
             builder = CompatHeaderBuilder(
                 v6=main_header,
                 v5=get_path("{CS_INCLUDE_DIR}").joinpath(f"systemz_compatibility.h"),
-                arch="systemz"
+                arch="systemz",
             )
             builder.generate_v5_compat_header()
         return patched
