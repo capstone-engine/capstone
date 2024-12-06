@@ -5531,3 +5531,52 @@ test_cases:
                 access: CS_AC_READ
           regs_read: [ x1, w2 ]
           regs_write: [ x0 ]
+  -
+    input:
+      name: "issue 2572 - Missing access of memory operand"
+      bytes: [ 0x00, 0x10, 0x40, 0xb8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldur	w0, [x0, #1]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: w0
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x0
+                mem_disp: 0x1
+                access: CS_AC_READ
+          regs_read: [ x0 ]
+          regs_write: [ w0 ]
+  -
+    input:
+      name: "issue 2572 - Missing access of memory operand"
+      bytes: [ 0x9f, 0xf1, 0x0f, 0x78 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sturh wzr, [x12, #255]"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: wzr
+                access: CS_AC_READ
+              -
+                type: AARCH64_OP_MEM
+                mem_base: x12
+                mem_disp: 255
+                access: CS_AC_WRITE
+          regs_read: [ wzr, x12 ]

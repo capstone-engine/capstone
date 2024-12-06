@@ -32598,7 +32598,7 @@
   /* ldapurb	$Rt, [$Rn, $offset] */
   AArch64_LDAPURBi /* 4254 */, AARCH64_INS_LDAPURB,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -32606,7 +32606,7 @@
   /* ldapurh	$Rt, [$Rn, $offset] */
   AArch64_LDAPURHi /* 4255 */, AARCH64_INS_LDAPURH,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -32614,7 +32614,7 @@
   /* ldapursb	$Rt, [$Rn, $offset] */
   AArch64_LDAPURSBWi /* 4256 */, AARCH64_INS_LDAPURSB,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -32622,7 +32622,7 @@
   /* ldapursb	$Rt, [$Rn, $offset] */
   AArch64_LDAPURSBXi /* 4257 */, AARCH64_INS_LDAPURSB,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -32630,7 +32630,7 @@
   /* ldapursh	$Rt, [$Rn, $offset] */
   AArch64_LDAPURSHWi /* 4258 */, AARCH64_INS_LDAPURSH,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -32638,7 +32638,7 @@
   /* ldapursh	$Rt, [$Rn, $offset] */
   AArch64_LDAPURSHXi /* 4259 */, AARCH64_INS_LDAPURSH,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -32646,7 +32646,7 @@
   /* ldapursw	$Rt, [$Rn, $offset] */
   AArch64_LDAPURSWi /* 4260 */, AARCH64_INS_LDAPURSW,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -32654,7 +32654,7 @@
   /* ldapur	$Rt, [$Rn, $offset] */
   AArch64_LDAPURXi /* 4261 */, AARCH64_INS_LDAPUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -32686,7 +32686,7 @@
   /* ldapur	$Rt, [$Rn, $offset] */
   AArch64_LDAPURi /* 4265 */, AARCH64_INS_LDAPUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35430,7 +35430,7 @@
   /* ldurb	$Rt, [$Rn, $offset] */
   AArch64_LDURBBi /* 4608 */, AARCH64_INS_LDURB,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35438,7 +35438,7 @@
   /* ldur	$Rt, [$Rn, $offset] */
   AArch64_LDURBi /* 4609 */, AARCH64_INS_LDUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35446,7 +35446,7 @@
   /* ldur	$Rt, [$Rn, $offset] */
   AArch64_LDURDi /* 4610 */, AARCH64_INS_LDUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35454,7 +35454,7 @@
   /* ldurh	$Rt, [$Rn, $offset] */
   AArch64_LDURHHi /* 4611 */, AARCH64_INS_LDURH,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35462,7 +35462,7 @@
   /* ldur	$Rt, [$Rn, $offset] */
   AArch64_LDURHi /* 4612 */, AARCH64_INS_LDUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35470,7 +35470,7 @@
   /* ldur	$Rt, [$Rn, $offset] */
   AArch64_LDURQi /* 4613 */, AARCH64_INS_LDUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35478,7 +35478,7 @@
   /* ldursb	$Rt, [$Rn, $offset] */
   AArch64_LDURSBWi /* 4614 */, AARCH64_INS_LDURSB,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35486,7 +35486,7 @@
   /* ldursb	$Rt, [$Rn, $offset] */
   AArch64_LDURSBXi /* 4615 */, AARCH64_INS_LDURSB,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35494,7 +35494,7 @@
   /* ldursh	$Rt, [$Rn, $offset] */
   AArch64_LDURSHWi /* 4616 */, AARCH64_INS_LDURSH,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35502,7 +35502,7 @@
   /* ldursh	$Rt, [$Rn, $offset] */
   AArch64_LDURSHXi /* 4617 */, AARCH64_INS_LDURSH,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35510,7 +35510,7 @@
   /* ldursw	$Rt, [$Rn, $offset] */
   AArch64_LDURSWi /* 4618 */, AARCH64_INS_LDURSW,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35518,7 +35518,7 @@
   /* ldur	$Rt, [$Rn, $offset] */
   AArch64_LDURSi /* 4619 */, AARCH64_INS_LDUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35526,7 +35526,7 @@
   /* ldur	$Rt, [$Rn, $offset] */
   AArch64_LDURWi /* 4620 */, AARCH64_INS_LDUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -35534,7 +35534,7 @@
   /* ldur	$Rt, [$Rn, $offset] */
   AArch64_LDURXi /* 4621 */, AARCH64_INS_LDUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_READ }}
 
   #endif
 },
@@ -52398,7 +52398,7 @@
   /* stlurb	$Rt, [$Rn, $offset] */
   AArch64_STLURBi /* 6729 */, AARCH64_INS_STLURB,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -52406,7 +52406,7 @@
   /* stlurh	$Rt, [$Rn, $offset] */
   AArch64_STLURHi /* 6730 */, AARCH64_INS_STLURH,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -52414,7 +52414,7 @@
   /* stlur	$Rt, [$Rn, $offset] */
   AArch64_STLURWi /* 6731 */, AARCH64_INS_STLUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -52422,7 +52422,7 @@
   /* stlur	$Rt, [$Rn, $offset] */
   AArch64_STLURXi /* 6732 */, AARCH64_INS_STLUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASRCPC_IMMO, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -53478,7 +53478,7 @@
   /* sturb	$Rt, [$Rn, $offset] */
   AArch64_STURBBi /* 6864 */, AARCH64_INS_STURB,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -53486,7 +53486,7 @@
   /* stur	$Rt, [$Rn, $offset] */
   AArch64_STURBi /* 6865 */, AARCH64_INS_STUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -53494,7 +53494,7 @@
   /* stur	$Rt, [$Rn, $offset] */
   AArch64_STURDi /* 6866 */, AARCH64_INS_STUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -53502,7 +53502,7 @@
   /* sturh	$Rt, [$Rn, $offset] */
   AArch64_STURHHi /* 6867 */, AARCH64_INS_STURH,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -53510,7 +53510,7 @@
   /* stur	$Rt, [$Rn, $offset] */
   AArch64_STURHi /* 6868 */, AARCH64_INS_STUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -53518,7 +53518,7 @@
   /* stur	$Rt, [$Rn, $offset] */
   AArch64_STURQi /* 6869 */, AARCH64_INS_STUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -53526,7 +53526,7 @@
   /* stur	$Rt, [$Rn, $offset] */
   AArch64_STURSi /* 6870 */, AARCH64_INS_STUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_FEATURE_HASFPARMV8, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -53534,7 +53534,7 @@
   /* stur	$Rt, [$Rn, $offset] */
   AArch64_STURWi /* 6871 */, AARCH64_INS_STUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
@@ -53542,7 +53542,7 @@
   /* stur	$Rt, [$Rn, $offset] */
   AArch64_STURXi /* 6872 */, AARCH64_INS_STUR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_WRITE }}
 
   #endif
 },
