@@ -11,4 +11,3 @@ archive=${libdir}/libcapstone.a
 Libs: -L${libdir} -lcapstone
 Libs.private: -L${libdir} -l:libcapstone.a
 Cflags: -I${includedir} -I${includedir}/capstone
-archs=@CAPSTONE_ARCHITECTURES@

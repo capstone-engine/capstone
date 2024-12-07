@@ -1,3 +1,7 @@
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2024 Andrew Quijano
+# Contact: andrewquijano92@gmail.com
+
 # !/bin/bash
 set -eu
 
@@ -33,10 +37,10 @@ if [[ "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     version=${version:1}
 fi
 
-# Check if the version follows the format X.Y.Z, e. g. 1.5.1 or 1.9.1
-if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-    echo "ERROR: Version must be in the format X.Y.Z"
-    exit 1
+# Check if the version follows the format for Debian Packages
+if [[ ! "$version" =~ ^[0-9]+(.[0-9]+)*(-[A-Za-z0-9]+)?$ ]]; then
+  echo "ERROR: Version must be in a valid Debian package format"
+  exit 1
 fi
 
 # Now build the packager container from that
@@ -45,7 +49,7 @@ docker build -f ./packages/deb/Dockerfile -t packager --build-arg VERSION="${ver
 popd
 
 # Copy deb file out of container to host
-docker run --rm -v $(pwd):/out packager bash -c "cp /libcapstone-dev.deb /out"
+docker run --rm -v $(pwd):/out packager bash -c "cp /*.deb /out"
 
 # Check which files existed before and after 'make install' was executed.
 # docker run --rm -v $(pwd):/out packager bash -c "cp /before-install.txt /out"

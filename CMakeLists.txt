@@ -19,9 +19,16 @@ endif()
 # https://cmake.org/cmake/help/latest/policy/CMP0042.html
 cmake_policy(SET CMP0042 NEW)
 
-project(capstone
-    VERSION 6.0
-)
+# Check if VERSION is provided externally, otherwise default to 6.0.0
+if(NOT DEFINED PROJECT_VERSION)
+    set(PROJECT_VERSION "6.0.0")
+endif()
+
+# Extract the major, minor, and patch versions
+string(REGEX MATCH "^[0-9]+\\.[0-9]+\\.[0-9]+" PROJECT_VERSION_BASE ${PROJECT_VERSION})
+
+# Set the project version without the pre-release identifier
+project(capstone VERSION ${PROJECT_VERSION_BASE})
 
 set(UNIX_COMPILER_OPTIONS -Werror -Wall -Warray-bounds -Wshift-negative-value -Wreturn-type -Wformat -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context -Wmisleading-indentation)
 
@@ -855,7 +862,6 @@ source_group("Include\\Xtensa" FILES ${HEADERS_XTENSA})
 ## installation
 if(CAPSTONE_INSTALL)
     include(GNUInstallDirs)
-
     install(FILES ${HEADERS_COMMON} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone)
     install(FILES ${HEADERS_INC} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/capstone/inc)
 
