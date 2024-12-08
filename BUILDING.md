@@ -89,3 +89,14 @@ X86_REDUCE, run "cmake" with: `-DCAPSTONE_USE_SYS_DYN_MEM=0`, `-DCAPSTONE_BUILD_
 - `ENABLE_ASAN`: Compiles Capstone with the address sanitizer.
 - `ENABLE_COVERAGE`: Generate coverage files.
 - `CAPSTONE_BUILD_LEGACY_TESTS`: Build some legacy integration tests.
+
+## Building cstest
+
+`cstest` is build together with Capstone by adding the flag `-DCAPSTONE_BUILD_CSTEST`.
+
+The build requires `libyaml`. It is a fairly common package and should be provided by your package manager.
+
+_Note:_ Currently `cstest` us only supported on Linux.
+
+If you run another operation system, please install `cstest_py`.
+See `bindings/python/BUILDING.md` for instructions.

@@ -8,7 +8,19 @@
 pip install bindings/python/
 ```
 
-2. The tests directory contains some test code to show how to use the Capstone API.
+2. Building cstest_py
+
+To run the disassembler tests you can install `cstest_py` as alternative to the normal `cstest`.
+In contrast to `cstest`, `cstest_py` also runs on Windows and Mac.
+
+Install with:
+```
+pip install bindings/python/cstest_py/
+```
+
+It requires the bindings of course.
+
+3. The tests directory contains some test code to show how to use the Capstone API.
 
 - test_lite.py
   Similarly to test_basic.py, but this code shows how to use disasm_lite(), a lighter
