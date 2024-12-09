@@ -127,12 +127,10 @@ static void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isReg(Op)) {
 		printRegName(O, MCOperand_getReg(Op));
-		return;
-	}
-
-	if (MCOperand_isImm(Op) || MCOperand_isExpr(Op)) {
+	} else if (MCOperand_isImm(Op)) {
 		SStream_concat(O, "%" PRId64, MCOperand_getImm(Op));
-		return;
+	} else if (MCOperand_isExpr(Op)) {
+		printExpr(O, MCOperand_getExpr(Op));
 	}
 }
 

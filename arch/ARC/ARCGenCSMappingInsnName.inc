@@ -12,7 +12,7 @@
 /* https://github.com/capstone-engine/llvm-capstone */
 
   "invalid", // ARC_INS_INVALID
-  "#", // ARC_INS_#
+  "#", // ARC_INS_HASH
   "pbr", // ARC_INS_PBR
   "error_fls", // ARC_INS_ERROR_FLS
   "error_ffs", // ARC_INS_ERROR_FFS

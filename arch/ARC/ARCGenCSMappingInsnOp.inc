@@ -824,13 +824,13 @@
 {{{ /* ARC_G_UBFX (270) - ARC_INS_INVALID -  */
  0
 }}},
-{ /* ARC_ADJCALLSTACKDOWN (271) - ARC_INS_# - # ADJCALLSTACKDOWN $amt, $amt2 */
+{ /* ARC_ADJCALLSTACKDOWN (271) - ARC_INS_HASH - # ADJCALLSTACKDOWN $amt, $amt2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* amt */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* amt2 */
   { 0 }
 }},
-{ /* ARC_ADJCALLSTACKUP (272) - ARC_INS_# - # ADJCALLSTACKUP $amt1 */
+{ /* ARC_ADJCALLSTACKUP (272) - ARC_INS_HASH - # ADJCALLSTACKUP $amt1 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* amt1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* amt2 */
@@ -2898,7 +2898,7 @@
 }},
 { /* ARC_POP_S_r (584) - ARC_INS_POP_S - pop_s	$b3 */
 {
-  { CS_OP_INVALID, CS_AC_WRITE, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
   { 0 }
 }},
 { /* ARC_PUSH_S_BLINK (585) - ARC_INS_PUSH_S - push_s	%blink */
@@ -2907,7 +2907,7 @@
 }},
 { /* ARC_PUSH_S_r (586) - ARC_INS_PUSH_S - push_s	$b3 */
 {
-  { CS_OP_INVALID, CS_AC_READ, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
   { 0 }
 }},
 { /* ARC_ROR_cc_f_rru6 (587) - ARC_INS_ROR_ - ror.${cc}.f	$A, $B, $U6 */
@@ -3224,7 +3224,7 @@
 }},
 { /* ARC_SP_ADD_S (631) - ARC_INS_ADD_S - add_s	$b3, %sp, $u7 */
 {
-  { CS_OP_INVALID, CS_AC_WRITE, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u7 */
   { 0 }
 }},
@@ -3235,25 +3235,25 @@
 }},
 { /* ARC_SP_LDB_S (633) - ARC_INS_LDB_S - ldb_s	$b3, [%sp, $u7] */
 {
-  { CS_OP_INVALID, CS_AC_WRITE, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u7 */
   { 0 }
 }},
 { /* ARC_SP_LD_S (634) - ARC_INS_LD_S - ld_s	$b3, [%sp, $u7] */
 {
-  { CS_OP_INVALID, CS_AC_WRITE, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u7 */
   { 0 }
 }},
 { /* ARC_SP_STB_S (635) - ARC_INS_STB_S - stb_s	$b3, [%sp, $u7] */
 {
-  { CS_OP_INVALID, CS_AC_READ, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u7 */
   { 0 }
 }},
 { /* ARC_SP_ST_S (636) - ARC_INS_ST_S - st_s	$b3, [%sp, $u7] */
 {
-  { CS_OP_INVALID, CS_AC_READ, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u7 */
   { 0 }
 }},
