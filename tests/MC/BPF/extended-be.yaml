@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldabsh [skb+0xfa0000ff]"
+          asm_text: "ldabsh [skb-0x5ffff01]"
   -
     input:
       bytes: [ 0x40, 0x10, 0x00, 0x00, 0xcc, 0x00, 0x00, 0x00 ]

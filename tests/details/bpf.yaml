@@ -134,4 +134,47 @@ test_cases:
                 type: BPF_OP_OFF
                 off: 0x217
           regs_read: [ r3 ]
+  -
+    input:
+      bytes: [ 0x28, 0x00, 0x00, 0x00, 0xff, 0x00, 0x00, 0xfa, 0x07, 0x76, 0x01, 0x28, 0xff, 0xff, 0xff, 0xff, 0x85, 0xd3, 0xa5, 0xe2, 0xff, 0xff, 0xff, 0xff ]
+      arch: "bpf"
+      options: [ CS_OPT_DETAIL, CS_MODE_BPF_EXTENDED ]
+      address: 0x0
+    expected:
+      insns:
+      - 
+        asm_text: "ldabsh [skb-0x5ffff01]"
+        details:
+          groups: [ BPF_GRP_LOAD ]
+          bpf:
+            operands:
+              -
+                type: BPF_OP_MEM
+                mem_disp: 0xfa0000ff
+                is_pkt: 1
+                is_signed: 1
+      -
+        asm_text: "add64 r6, 0xffffffff"
+        details:
+          groups: [ BPF_GRP_ALU ]
+          bpf:
+            operands:
+              - 
+                type: BPF_OP_REG
+                reg: r6
+              - 
+                type: BPF_OP_IMM
+                imm: 0xffffffff
+                is_signed: -1
+      - 
+        asm_text: "call	-0x1"
+        details:
+          groups: [ BPF_GRP_CALL ]
+          bpf:
+            operands:
+              - 
+                type: BPF_OP_IMM
+                imm: 0xffffffff
+                is_signed: 1
+
 

@@ -331,6 +331,22 @@ void printInt16(SStream *ss, int16_t val)
 	}
 }
 
+void printInt16HexOffset(SStream *ss, int16_t val)
+{
+	assert(ss);
+	SSTREAM_RETURN_IF_CLOSED(ss);
+	if (val >= 0) {
+		SStream_concat(ss, "+0x%" PRIx16, val);
+	} else {
+		if (val == INT16_MIN)
+			SStream_concat(ss, "-0x%" PRIx16,
+				       (uint16_t)INT16_MAX + 1);
+		else
+			SStream_concat(ss, "-0x%" PRIx16, (int16_t)-val);
+	}
+}
+
+
 void printInt32(SStream *ss, int32_t val)
 {
 	assert(ss);
@@ -349,6 +365,36 @@ void printInt32(SStream *ss, int32_t val)
 		} else {
 			SStream_concat(ss, "-%" PRIu32, (uint32_t)-val);
 		}
+	}
+}
+
+void printInt32HexOffset(SStream *ss, int32_t val)
+{
+	assert(ss);
+	SSTREAM_RETURN_IF_CLOSED(ss);
+	if (val >= 0) {
+		SStream_concat(ss, "+0x%" PRIx32, val);
+	} else {
+		if (val == INT32_MIN)
+			SStream_concat(ss, "-0x%" PRIx32,
+				       (uint32_t)INT32_MAX + 1);
+		else
+			SStream_concat(ss, "-0x%" PRIx32, (int32_t)-val);
+	}
+}
+
+void printInt32Hex(SStream *ss, int32_t val)
+{
+	assert(ss);
+	SSTREAM_RETURN_IF_CLOSED(ss);
+	if (val >= 0) {
+		SStream_concat(ss, "0x%" PRIx32, val);
+	} else {
+		if (val == INT32_MIN)
+			SStream_concat(ss, "-0x%" PRIx32,
+				       (uint32_t)INT32_MAX + 1);
+		else
+			SStream_concat(ss, "-0x%" PRIx32, (int32_t)-val);
 	}
 }
 

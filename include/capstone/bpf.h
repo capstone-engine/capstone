@@ -1,5 +1,7 @@
 /* Capstone Disassembly Engine */
 /* BPF Backend by david942j <david942j@gmail.com>, 2019 */
+/* SPDX-FileCopyrightText: 2024 Roee Toledano <roeetoledano10@gmail.com> */
+/* SPDX-License-Identifier: BSD-3 */
 
 #ifndef CAPSTONE_BPF_H
 #define CAPSTONE_BPF_H
@@ -11,9 +13,10 @@ extern "C" {
 #include "platform.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
+#pragma warning(disable : 4201)
 #endif
 
+#define NUM_BPF_OPS 3
 /// Operand type for instruction's operands
 typedef enum bpf_op_type {
 	BPF_OP_INVALID = 0,
@@ -22,9 +25,9 @@ typedef enum bpf_op_type {
 	BPF_OP_IMM,
 	BPF_OP_OFF,
 	BPF_OP_MEM,
-	BPF_OP_MMEM,	///< M[k] in cBPF
-	BPF_OP_MSH,	///< corresponds to cBPF's BPF_MSH mode
-	BPF_OP_EXT,	///< cBPF's extension (not eBPF)
+	BPF_OP_MMEM, ///< M[k] in cBPF
+	BPF_OP_MSH,  ///< corresponds to cBPF's BPF_MSH mode
+	BPF_OP_EXT,  ///< cBPF's extension (not eBPF)
 } bpf_op_type;
 
 /// BPF registers
@@ -54,8 +57,8 @@ typedef enum bpf_reg {
 /// Instruction's operand referring to memory
 /// This is associated with BPF_OP_MEM operand type above
 typedef struct bpf_op_mem {
-	bpf_reg base;	///< base register
-	uint32_t disp;	///< offset value
+	bpf_reg base;  ///< base register
+	uint32_t disp; ///< offset value
 } bpf_op_mem;
 
 typedef enum bpf_ext_type {
@@ -71,15 +74,15 @@ typedef struct cs_bpf_op {
 		uint8_t reg;	///< register value for REG operand
 		uint64_t imm;	///< immediate value IMM operand
 		uint32_t off;	///< offset value, used in jump & call
-		bpf_op_mem mem;	///< base/disp value for MEM operand
+		bpf_op_mem mem; ///< base/disp value for MEM operand
 		/* cBPF only */
-		uint32_t mmem;	///< M[k] in cBPF
-		uint32_t msh;	///< corresponds to cBPF's BPF_MSH mode
-		uint32_t ext;	///< cBPF's extension (not eBPF)
+		uint32_t mmem; ///< M[k] in cBPF
+		uint32_t msh;  ///< corresponds to cBPF's BPF_MSH mode
+		uint32_t ext;  ///< cBPF's extension (not eBPF)
 	};
 
-	bool is_signed;	///< is this operand signed? (used mem, imm and off operands)
-	bool is_pkt;	///< is this operand referring to packet data? (used in MEM operand)
+	bool is_signed; ///< is this operand signed? It is set for memory, immediate and offset operands.
+	bool is_pkt; ///< is this operand referring to packet data? It is set for memory operands.
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// This field is combined of cs_ac_type.
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
@@ -110,10 +113,10 @@ typedef enum bpf_insn {
 	BPF_INS_MOD,
 	BPF_INS_SMOD,
 	BPF_INS_XOR,
-	BPF_INS_MOV,	///< eBPF only
-	BPF_INS_MOVSB,	///< eBPF only
-	BPF_INS_MOVSH,	///< eBPF only
-	BPF_INS_ARSH,	///< eBPF only
+	BPF_INS_MOV,   ///< eBPF only
+	BPF_INS_MOVSB, ///< eBPF only
+	BPF_INS_MOVSH, ///< eBPF only
+	BPF_INS_ARSH,  ///< eBPF only
 
 	///< ALU64, eBPF only
 	BPF_INS_ADD64,
@@ -147,21 +150,21 @@ typedef enum bpf_insn {
 	BPF_INS_BSWAP64,
 
 	///< Load
-	BPF_INS_LDW,	///< eBPF only
+	BPF_INS_LDW,   ///< eBPF only
 	BPF_INS_LDH,
 	BPF_INS_LDB,
-	BPF_INS_LDDW,	///< eBPF only: load 64-bit imm
-	BPF_INS_LDXW,	///< eBPF only
-	BPF_INS_LDXH,	///< eBPF only
-	BPF_INS_LDXB,	///< eBPF only
-	BPF_INS_LDXDW,	///< eBPF only
+	BPF_INS_LDDW,  ///< eBPF only: load 64-bit imm
+	BPF_INS_LDXW,  ///< eBPF only
+	BPF_INS_LDXH,  ///< eBPF only
+	BPF_INS_LDXB,  ///< eBPF only
+	BPF_INS_LDXDW, ///< eBPF only
 	///< Packet data access
-	BPF_INS_LDABSW,	///< eBPF only
-	BPF_INS_LDABSH,	///< eBPF only
-	BPF_INS_LDABSB,	///< eBPF only
-	BPF_INS_LDINDW,	///< eBPF only
-	BPF_INS_LDINDH,	///< eBPF only
-	BPF_INS_LDINDB,	///< eBPF only
+	BPF_INS_LDABSW, ///< eBPF only
+	BPF_INS_LDABSH, ///< eBPF only
+	BPF_INS_LDABSB, ///< eBPF only
+	BPF_INS_LDINDW, ///< eBPF only
+	BPF_INS_LDINDH, ///< eBPF only
+	BPF_INS_LDINDB, ///< eBPF only
 
 	///< Store
 	BPF_INS_STW,	///< eBPF only
@@ -173,7 +176,7 @@ typedef enum bpf_insn {
 	BPF_INS_STXB,	///< eBPF only
 	BPF_INS_STXDW,	///< eBPF only
 	BPF_INS_XADDW,	///< eBPF only
-	BPF_INS_XADDDW,	///< eBPF only
+	BPF_INS_XADDDW, ///< eBPF only
 
 	///< Jump
 	BPF_INS_JA,
@@ -181,28 +184,28 @@ typedef enum bpf_insn {
 	BPF_INS_JGT,
 	BPF_INS_JGE,
 	BPF_INS_JSET,
-	BPF_INS_JNE,	///< eBPF only
-	BPF_INS_JSGT,	///< eBPF only
-	BPF_INS_JSGE,	///< eBPF only
-	BPF_INS_CALL,	///< eBPF only
-	BPF_INS_CALLX,	///< eBPF only
-	BPF_INS_EXIT,	///< eBPF only
-	BPF_INS_JLT,	///< eBPF only
-	BPF_INS_JLE,	///< eBPF only
-	BPF_INS_JSLT,	///< eBPF only
-	BPF_INS_JSLE,	///< eBPF only
+	BPF_INS_JNE,   ///< eBPF only
+	BPF_INS_JSGT,  ///< eBPF only
+	BPF_INS_JSGE,  ///< eBPF only
+	BPF_INS_CALL,  ///< eBPF only
+	BPF_INS_CALLX, ///< eBPF only
+	BPF_INS_EXIT,  ///< eBPF only
+	BPF_INS_JLT,   ///< eBPF only
+	BPF_INS_JLE,   ///< eBPF only
+	BPF_INS_JSLT,  ///< eBPF only
+	BPF_INS_JSLE,  ///< eBPF only
 
 	///< Jump32, eBPF only
 	BPF_INS_JAL,
-	BPF_INS_JEQ32, 
-	BPF_INS_JGT32, 
-	BPF_INS_JGE32, 
+	BPF_INS_JEQ32,
+	BPF_INS_JGT32,
+	BPF_INS_JGE32,
 	BPF_INS_JSET32,
-	BPF_INS_JNE32, 
+	BPF_INS_JNE32,
 	BPF_INS_JSGT32,
 	BPF_INS_JSGE32,
-	BPF_INS_JLT32, 
-	BPF_INS_JLE32, 
+	BPF_INS_JLT32,
+	BPF_INS_JLE32,
 	BPF_INS_JSLT32,
 	BPF_INS_JSLE32,
 
@@ -238,10 +241,10 @@ typedef enum bpf_insn {
 	BPF_INS_ENDING,
 
 	// alias instructions
-	BPF_INS_LD = BPF_INS_LDW,	///< cBPF only
-	BPF_INS_LDX = BPF_INS_LDXW,	///< cBPF only
-	BPF_INS_ST = BPF_INS_STW,	///< cBPF only
-	BPF_INS_STX = BPF_INS_STXW,	///< cBPF only
+	BPF_INS_LD = BPF_INS_LDW,   ///< cBPF only
+	BPF_INS_LDX = BPF_INS_LDXW, ///< cBPF only
+	BPF_INS_ST = BPF_INS_STW,   ///< cBPF only
+	BPF_INS_STX = BPF_INS_STXW, ///< cBPF only
 } bpf_insn;
 
 /// Group of BPF instructions

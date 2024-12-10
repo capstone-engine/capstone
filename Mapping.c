@@ -348,6 +348,7 @@ DEFINE_get_detail_op(mips, Mips);
 DEFINE_get_detail_op(riscv, RISCV);
 DEFINE_get_detail_op(systemz, SystemZ);
 DEFINE_get_detail_op(xtensa, Xtensa);
+DEFINE_get_detail_op(bpf, BPF);
 
 /// Returns true if for this architecture the
 /// alias operands should be filled.

@@ -27,6 +27,8 @@ class BPFOp(ctypes.Structure):
         ('type', ctypes.c_uint),
         ('value', BPFOpValue),
         ('access', ctypes.c_uint8),
+        ('is_signed', ctypes.c_bool),
+        ('is_pkt', ctypes.c_bool),
     )
 
     @property
@@ -56,7 +58,6 @@ class BPFOp(ctypes.Structure):
     @property
     def ext(self):
         return self.value.ext
-
 
 class CsBPF(ctypes.Structure):
     _fields_ = (

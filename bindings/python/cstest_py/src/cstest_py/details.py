@@ -1192,6 +1192,10 @@ def test_expected_bpf(actual: CsInsn, expected: dict) -> bool:
             return False
         if not compare_enum(aop.access, eop.get("access"), "access"):
             return False
+        if not compare_tbool(aop.is_pkt, eop.get("is_pkt"), "is_pkt"):
+            return False
+        if not compare_tbool(aop.is_signed, eop.get("is_signed"), "is_signed"):
+            return False
 
         if aop.type == BPF_OP_REG:
             if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):

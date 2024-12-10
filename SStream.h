@@ -73,7 +73,11 @@ void printInt32Bang(SStream *O, int32_t val);
 
 void printInt8(SStream *O, int8_t val);
 void printInt16(SStream *O, int16_t val);
+void printInt16HexOffset(SStream *O, int16_t val);
+
 void printInt32(SStream *O, int32_t val);
+void printInt32Hex(SStream *ss, int32_t val);
+void printInt32HexOffset(SStream *ss, int32_t val);
 
 void printUInt32Bang(SStream *O, uint32_t val);
 

@@ -20,6 +20,8 @@ typedef struct {
 	char *ext;
 	char *mem_base;
 	uint32_t mem_disp;
+	tbool is_pkt;
+	tbool is_signed;
 } TestDetailBPFOp;
 
 static const cyaml_schema_field_t test_detail_bpf_op_mapping_schema[] = {
@@ -30,17 +32,21 @@ static const cyaml_schema_field_t test_detail_bpf_op_mapping_schema[] = {
 			       TestDetailBPFOp, access, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailBPFOp, reg, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_INT("imm", CYAML_FLAG_OPTIONAL, TestDetailBPFOp, imm),
-	CYAML_FIELD_INT("off", CYAML_FLAG_OPTIONAL, TestDetailBPFOp, off),
-	CYAML_FIELD_INT("mmem", CYAML_FLAG_OPTIONAL, TestDetailBPFOp, mmem),
-	CYAML_FIELD_INT("msh", CYAML_FLAG_OPTIONAL, TestDetailBPFOp, msh),
+	CYAML_FIELD_UINT("imm", CYAML_FLAG_OPTIONAL, TestDetailBPFOp, imm),
+	CYAML_FIELD_UINT("off", CYAML_FLAG_OPTIONAL, TestDetailBPFOp, off),
+	CYAML_FIELD_UINT("mmem", CYAML_FLAG_OPTIONAL, TestDetailBPFOp, mmem),
+	CYAML_FIELD_UINT("msh", CYAML_FLAG_OPTIONAL, TestDetailBPFOp, msh),
 	CYAML_FIELD_STRING_PTR("ext", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailBPFOp, ext, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("mem_base",
 			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailBPFOp, mem_base, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_INT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailBPFOp,
+	CYAML_FIELD_UINT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailBPFOp,
 			mem_disp),
+	CYAML_FIELD_TBOOL("is_pkt", CYAML_FLAG_OPTIONAL, TestDetailBPFOp,
+			 is_pkt),
+	CYAML_FIELD_TBOOL("is_signed", CYAML_FLAG_OPTIONAL, TestDetailBPFOp,
+			 is_signed),
 	CYAML_FIELD_END
 };
 

@@ -61,6 +61,8 @@ TestDetailBPFOp *test_detail_bpf_op_clone(const TestDetailBPFOp *op)
 	clone->ext = op->ext ? strdup(op->ext) : NULL;
 	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
 	clone->mem_disp = op->mem_disp;
+	clone->is_pkt = op->is_pkt;
+	clone->is_signed = op->is_signed;
 
 	return clone;
 }
@@ -89,6 +91,8 @@ bool test_expected_bpf(csh *handle, const cs_bpf *actual,
 		TestDetailBPFOp *eop = expected->operands[i];
 		compare_enum_ret(op->type, eop->type, false);
 		compare_enum_ret(op->access, eop->access, false);
+		compare_tbool_ret(op->is_pkt, eop->is_pkt, false);
+		compare_tbool_ret(op->is_signed, eop->is_signed, false);
 		switch (op->type) {
 		default:
 			fprintf(stderr,

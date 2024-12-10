@@ -115,7 +115,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldabsw [skb+0xca1a41da]"
+          asm_text: "ldabsw [skb-0x35e5be26]"
   -
     input:
       bytes: [ 0x24, 0xb6, 0x69, 0x66, 0xe3, 0xef, 0xec, 0x25 ]
@@ -971,6 +971,43 @@ test_cases:
       insns:
         -
           asm_text: "jsle32 r7, -0xa46e0bd, -0x33f1"
+  -
+    input:
+      bytes: [ 0x37, 0x84, 0x01, 0x00, 0x3b, 0x84, 0x55, 0x1f ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sdiv64 r4, 0x1f55843b"
+  -
+    input:
+      bytes: [ 0x34, 0x46, 0x01, 0x00, 0xe1, 0x72, 0xd4, 0xcb ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sdiv r6, 0xcbd472e1"
+  -
+    input:
+      bytes: [ 0x94, 0x39, 0x01, 0x00, 0x0b, 0xd2, 0xd1, 0xc9 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "smod r9, 0xc9d1d20b"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x35, 0x01, 0x00, 0xd6, 0x70, 0xd9, 0x5e ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "smod64 r5, r3"
 
   - input:
       bytes: [ 0xbf, 0x31, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00 ]
