@@ -7,13 +7,13 @@ from .bpf_const import *
 
 class BPFOpMem(ctypes.Structure):
     _fields_ = (
-        ('base', ctypes.c_uint8),
+        ('base', ctypes.c_int),
         ('disp', ctypes.c_int32),
     )
 
 class BPFOpValue(ctypes.Union):
     _fields_ = (
-        ('reg', ctypes.c_uint8),
+        ('reg', ctypes.c_int),
         ('imm', ctypes.c_uint64),
         ('off', ctypes.c_uint32),
         ('mem', BPFOpMem),
@@ -26,9 +26,9 @@ class BPFOp(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', BPFOpValue),
-        ('access', ctypes.c_uint8),
         ('is_signed', ctypes.c_bool),
         ('is_pkt', ctypes.c_bool),
+        ('access', ctypes.c_uint8),
     )
 
     @property

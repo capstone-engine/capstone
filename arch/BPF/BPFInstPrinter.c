@@ -8,6 +8,7 @@
 #include "BPFConstants.h"
 #include "BPFInstPrinter.h"
 #include "BPFMapping.h"
+#include "../../Mapping.h"
 
 static cs_bpf_op *expand_bpf_operands(cs_bpf *bpf)
 {
@@ -348,7 +349,7 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
  * */
 void BPF_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 {
-	cs_bpf bpf;
+	cs_bpf bpf = { 0 };
 
 	/* set pubOpcode as instruction id */
 	SStream_concat(O, BPF_insn_name((csh)MI->csh, MCInst_getOpcodePub(MI)));
@@ -362,7 +363,7 @@ void BPF_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 	}
 
 #ifndef CAPSTONE_DIET
-	if (MI->flat_insn->detail) {
+	if (detail_is_set(MI)) {
 		MI->flat_insn->detail->bpf = bpf;
 	}
 #endif

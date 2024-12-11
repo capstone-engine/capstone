@@ -1,9 +1,9 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
-#include "capstone/bpf.h"
 #include "test_compare.h"
 #include "test_detail_bpf.h"
+#include <capstone/bpf.h>
 #include <capstone/capstone.h>
 #include <stdio.h>
 #include <string.h>
