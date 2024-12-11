@@ -1,12 +1,15 @@
 #include "RISCVPrinter.h"
+#include "RISCVAst2Str.gen.inc"
 
 void riscv_printer(MCInst *MI, SStream *OS, void *info) {
-    // FIXME: add the ast struct as a member in the riscv_details
-    //( stringification can't happen unless ast is available)
+    struct ast instruction;
 
-    // char instruction_as_str[RISCV_MAX_INSTRUCTION_STR_LEN];
-    // riscv_conf conf;
-    // conf.sys_enable_fdext = NULL;
-    // conf.sys_enable_zfinx = NULL;
-    // ast2str(&instruction, instruction_as_str, &conf);
+    riscv_conf conf;
+    conf.sys_enable_fdext = NULL;
+    conf.sys_enable_zfinx = NULL;
+    
+    CS_ASSERT(sizeof(struct ast) < 160);
+    memcpy(&instruction, MI->flat_insn->op_str, sizeof(struct ast));
+
+    ast2str(&instruction, OS, &conf);
 }

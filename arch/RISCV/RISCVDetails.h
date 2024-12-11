@@ -1,3 +1,3 @@
 #include "../include/capstone/capstone.h"
 
-bool riscv_fill_size(cs_insn *insn, uint8_t binary);
+int riscv_get_instruction_size(uint8_t first_byte);

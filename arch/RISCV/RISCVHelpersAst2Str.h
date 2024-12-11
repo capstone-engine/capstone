@@ -4,30 +4,30 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "riscv_helpers_rvconf.h"
+#include "../../SStream.h"
+#include "../../cs_priv.h"
+#include "RISCVHelpersRVConf.h"
 
 #define RISCV_TEMP_BUFFER_MAX_LEN 32
 
-#define spc(ps, plen, c)                                                       \
-  *ps = " ";                                                                   \
-  *plen = 1
+#define spc(ss, c) SStream_concat1(ss, ' ')
 
 #define opt_spc spc
 
-#define sep(ps, plen, c)                                                       \
-  *ps = " , ";                                                                 \
-  *plen = 3
+#define sep(ss, c) SStream_concat(ss, " , ")
 
-static inline void hex_bits(uint64_t bitvec, char **s, size_t *len,
-                            uint8_t bvlen_bits, riscv_conf *conf) {
-  char *str = *s;
+static inline void hex_bits(uint64_t bitvec, uint8_t bvlen_bits, SStream *ss,
+                            riscv_conf *conf) {
+  char str[25] = {0};
   uint8_t str_len = bvlen_bits / 4;
   // is not divisible by 4?
   if ((bvlen_bits & 0x3) != 0) {
     str_len++;
   }
   str_len += 2; // for the '0x' in the beginning
-  *len = str_len;
+
+  CS_ASSERT(str_len > 0);
+  CS_ASSERT(str_len < 24);
 
   for (uint8_t i = 0; i < bvlen_bits; i += 4) {
     char digit = (bitvec & 0xF) + 48;
@@ -40,12 +40,13 @@ static inline void hex_bits(uint64_t bitvec, char **s, size_t *len,
   }
   str[0] = '0';
   str[1] = 'x';
+  SStream_concat(ss, "%s", str);
 }
 
 #define DEF_HEX_BITS(n)                                                        \
-  static inline void hex_bits_##n(uint64_t bitvec, char **s, size_t *len,      \
+  static inline void hex_bits_##n(uint64_t bitvec, SStream *ss,                \
                                   riscv_conf *conf) {                          \
-    hex_bits(bitvec, s, len, n, conf);                                         \
+    hex_bits(bitvec, n, ss, conf);                                             \
   }
 
 DEF_HEX_BITS(1)
@@ -81,23 +82,21 @@ DEF_HEX_BITS(30)
 DEF_HEX_BITS(31)
 DEF_HEX_BITS(32)
 
-void hex_bits_signed(uint64_t bitvec, char **s, size_t *len, uint8_t bvlen_bits,
+void hex_bits_signed(uint64_t bitvec, uint8_t bvlen_bits, SStream *ss,
                      riscv_conf *conf) {
   // is not negative ?
   if ((bitvec & (1 << (bvlen_bits - 1))) == 0) {
-    hex_bits(bitvec, s, len, bvlen_bits, conf);
+    hex_bits(bitvec, bvlen_bits, ss, conf);
   } else {
-    char *buff = *s;
-    buff[0] = '-';
-    buff++;
-    hex_bits(~bitvec + 1ULL, &buff, len, bvlen_bits, conf);
+    SStream_concat1(ss, '-');
+    hex_bits(bitvec, bvlen_bits, ss, conf);
   }
 }
 
 #define DEF_HEX_BITS_SIGNED(n)                                                 \
-  static inline void hex_bits_signed_##n(uint64_t bitvec, char **s,            \
-                                         size_t *len, riscv_conf *conf) {      \
-    hex_bits_signed(bitvec, s, len, n, conf);                                  \
+  static inline void hex_bits_signed_##n(uint64_t bitvec, SStream *ss,         \
+                                         riscv_conf *conf) {                   \
+    hex_bits_signed(bitvec, n, ss, conf);                                      \
   }
 
 DEF_HEX_BITS_SIGNED(1);
@@ -134,102 +133,75 @@ DEF_HEX_BITS_SIGNED(31);
 DEF_HEX_BITS_SIGNED(32);
 
 // TODO
-void freg_or_reg_name(uint64_t regidx, char **s, size_t *len,
-                      riscv_conf *conf) {
-  *s = "";
-  *len = 0;
-}
+void freg_or_reg_name(uint64_t regidx, SStream *ss, riscv_conf *conf) {}
 
-void maybe_vmask(uint8_t vm, char **s, size_t *len, riscv_conf *conf) {
+void maybe_vmask(uint8_t vm, SStream *ss, riscv_conf *conf) {
   if (vm) {
-    *s = "";
-    *len = 0;
     return;
   }
-  *s = " , v0.t";
-  *len = 7;
+  SStream_concat(ss, " , v0.t");
 }
 
-void maybe_ta_flag(uint8_t ta, char **s, size_t *len, riscv_conf *conf) {
+void maybe_ta_flag(uint8_t ta, SStream *ss, riscv_conf *conf) {
   if (ta) {
-    *s = "ta";
-    *len = 2;
+    SStream_concat(ss, "ta");
     return;
   }
-  *s = "";
-  *len = 0;
 }
 
-void maybe_ma_flag(uint8_t ma, char **s, size_t *len, riscv_conf *conf) {
+void maybe_ma_flag(uint8_t ma, SStream *ss, riscv_conf *conf) {
   if (ma) {
-    *s = "ma";
-    *len = 2;
+    SStream_concat(ss, "ma");
     return;
   }
-  *s = "";
-  *len = 0;
 }
 
-void maybe_lmul_flag(uint8_t lmul, char **s, size_t *len, riscv_conf *conf) {
+void maybe_lmul_flag(uint8_t lmul, SStream *ss, riscv_conf *conf) {
   switch (lmul) {
   case 0x0:
-    *s = "";
-    *len = 0;
     return;
 
   case 0x5:
-    *s = " , mf8";
-    *len = 6;
+    SStream_concat(ss, " , mf8");
     return;
 
   case 0x6:
-    *s = " , mf4";
-    *len = 6;
+    SStream_concat(ss, " , mf4");
     return;
 
   case 0x7:
-    *s = " , mf2";
-    *len = 6;
+    SStream_concat(ss, " , mf2");
     return;
 
   case 0x1:
-    *s = " , m2";
-    *len = 5;
+    SStream_concat(ss, " , m2");
     return;
 
   case 0x2:
-    *s = " , m4";
-    *len = 5;
+    SStream_concat(ss, " , m4");
     return;
 
   case 0x3:
-    *s = " , m8";
-    *len = 5;
+    SStream_concat(ss, " , m8");
     return;
   }
 }
 
 // TODO
-void csr_name_map(uint32_t csr, char **s, size_t *len, riscv_conf *conf) {
-  *s = "";
-  *len = 0;
-}
+void csr_name_map(uint32_t csr, SStream *ss, riscv_conf *conf) {}
 
-void fence_bits(uint8_t bits, char **s, size_t *len, riscv_conf *conf) {
-  char *buff = *s;
-  int length = 0;
+void fence_bits(uint8_t bits, SStream *ss, riscv_conf *conf) {
   if (bits & 0x8) {
-    buff[length++] = 'i';
+    SStream_concat1(ss, 'i');
   }
   if (bits & 0x4) {
-    buff[length++] = 'o';
+    SStream_concat1(ss, 'o');
   }
   if (bits & 0x2) {
-    buff[length++] = 'r';
+    SStream_concat1(ss, 'r');
   }
   if (bits & 0x1) {
-    buff[length++] = 'w';
+    SStream_concat1(ss, 'w');
   }
-  *len = length;
 }
 #endif

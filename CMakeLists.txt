@@ -579,17 +579,18 @@ if(CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVPrinter.c
     )
     set(HEADERS_RISCV
-        arch/RISCV/riscv_ast.gen.inc
-        arch/RISCV/riscv_decode.gen.inc
-        arch/RISCV/riscv_ast2str.gen.inc
-        arch/RISCV/riscv_ast2str_tbls.gen.inc
-        "include/capstone/riscv_insn.gen.inc"
-        arch/RISCV/riscv_insn_mapping.gen.inc
+        arch/RISCV/RISCVAst.gen.inc
+        arch/RISCV/RISCVDecode.gen.inc
+        arch/RISCV/RISCVDecodeCompressed.gen.inc
+        arch/RISCV/RISCVAst2Str.gen.inc
+        arch/RISCV/RISCVAst2StrTbls.gen.inc
+        arch/RISCV/RISCVInsn.gen.inc
+        arch/RISCV/RISCVInsnMappings.gen.inc
 
         arch/RISCV/RISCVDetails.h
         arch/RISCV/RISCVDisassembler.h
-        arch/RISCV/riscv_helpers_ast2str.h
-        arch/RISCV/riscv_helpers_rvconf.h
+        arch/RISCV/RISCVHelpersAst2Str.h
+        arch/RISCV/RISCVHelpersRVConf.h
         arch/RISCV/RISCVModule.h
         arch/RISCV/RISCVPrinter.h
     )

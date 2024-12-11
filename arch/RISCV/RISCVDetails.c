@@ -17,20 +17,19 @@ The size calculation algorithm according to the RISCV spec:
     5- Otherwise, the instruction size can be determined from other bits further from the first byte.
 
     (The spec actually specifies valid sizes up to 192-bits instructions, even reserving a pattern for
-     instructions beyond 192 bits. In practice, even 48-bits or 64-bits instructions are rare in practice,
+     instructions beyond 192 bits. In practice, even 48-bits or 64-bits instructions are extremly rare,
      and it's not worth complicating the code with a bitvector type to represent bigger instructions.)
 */
-bool riscv_fill_size(cs_insn *insn, uint8_t first_byte) {
+int riscv_get_instruction_size(uint8_t first_byte) {
     if ((first_byte & 0x3) != 0x3) {
-        insn->size = 2;
+        return 2;
     } else if (((first_byte >> 2) & 0x7) != 0x7) {
-        insn->size = 4;
+        return 4;
     } else if (((first_byte >> 5) & 0x1) == 0x0) {
-        insn->size = 6;
+        return 6;
     } else if (((first_byte >> 6) & 0x1) == 0x0) {
-        insn->size = 8;
+        return 8;
     } else {
-        return false;
+        return 0;
     }
-    return true;
 }
