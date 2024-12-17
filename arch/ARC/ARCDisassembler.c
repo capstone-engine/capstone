@@ -200,7 +200,9 @@ static DecodeStatus DecodeMEMrs9(MCInst *Inst, unsigned Insn, uint64_t Address,
 	// We have the 9-bit immediate in the low bits, 6-bit register in high bits.
 	unsigned S9 = Insn & 0x1ff;
 	unsigned R = (Insn & (0x7fff & ~0x1ff)) >> 9;
-	DecodeGPR32RegisterClass(Inst, R, Address, Decoder);
+	if (DecodeGPR32RegisterClass(Inst, R, Address, Decoder) == MCDisassembler_Fail) {
+		return MCDisassembler_Fail;
+	}
 	MCOperand_CreateImm0(Inst, (SignExtend32((S9), 9)));
 	return MCDisassembler_Success;
 }
@@ -270,7 +272,9 @@ static DecodeStatus DecodeStLImmInstruction(MCInst *Inst, uint64_t Insn,
 		return MCDisassembler_Fail;
 	}
 	SrcC = decodeCField(Insn);
-	DecodeGPR32RegisterClass(Inst, SrcC, Address, Decoder);
+	if (DecodeGPR32RegisterClass(Inst, SrcC, Address, Decoder) == MCDisassembler_Fail) {
+		return MCDisassembler_Fail;
+	}
 	LImm = (Insn >> 32);
 	MCOperand_CreateImm0(Inst, (LImm));
 	MCOperand_CreateImm0(Inst, (0));
@@ -289,7 +293,9 @@ static DecodeStatus DecodeLdLImmInstruction(MCInst *Inst, uint64_t Insn,
 		return MCDisassembler_Fail;
 	}
 	DstA = decodeAField(Insn);
-	DecodeGPR32RegisterClass(Inst, DstA, Address, Decoder);
+	if (DecodeGPR32RegisterClass(Inst, DstA, Address, Decoder) == MCDisassembler_Fail) {
+		return MCDisassembler_Fail;
+	}
 	LImm = (Insn >> 32);
 	MCOperand_CreateImm0(Inst, (LImm));
 	MCOperand_CreateImm0(Inst, (0));
@@ -303,9 +309,13 @@ static DecodeStatus DecodeLdRLImmInstruction(MCInst *Inst, uint64_t Insn,
 	unsigned DstA, SrcB;
 	;
 	DstA = decodeAField(Insn);
-	DecodeGPR32RegisterClass(Inst, DstA, Address, Decoder);
+	if (DecodeGPR32RegisterClass(Inst, DstA, Address, Decoder) == MCDisassembler_Fail) {
+		return MCDisassembler_Fail;
+	}
 	SrcB = decodeBField(Insn);
-	DecodeGPR32RegisterClass(Inst, SrcB, Address, Decoder);
+	if (DecodeGPR32RegisterClass(Inst, SrcB, Address, Decoder) == MCDisassembler_Fail) {
+		return MCDisassembler_Fail;
+	}
 	if (decodeCField(Insn) != 62) {
 		;
 		return MCDisassembler_Fail;
@@ -351,7 +361,9 @@ static DecodeStatus DecodeCCRU6Instruction(MCInst *Inst, uint64_t Insn,
 	unsigned DstB;
 	;
 	DstB = decodeBField(Insn);
-	DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder);
+	if (DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder) == MCDisassembler_Fail) {
+		return MCDisassembler_Fail;
+	}
 
 	uint64_t U6Field = fieldFromInstruction_8(Insn, 6, 6);
 	MCOperand_CreateImm0(Inst, (U6Field));
@@ -364,7 +376,9 @@ static DecodeStatus DecodeSOPwithRU6(MCInst *Inst, uint64_t Insn,
 				     uint64_t Address, const void *Decoder)
 {
 	unsigned DstB = decodeBField(Insn);
-	DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder);
+	if (DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder) == MCDisassembler_Fail) {
+		return MCDisassembler_Fail;
+	}
 
 	uint64_t U6 = fieldFromInstruction_8(Insn, 6, 6);
 	MCOperand_CreateImm0(Inst, (U6));
@@ -375,7 +389,9 @@ static DecodeStatus DecodeSOPwithRS12(MCInst *Inst, uint64_t Insn,
 				      uint64_t Address, const void *Decoder)
 {
 	unsigned DstB = decodeBField(Insn);
-	DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder);
+	if (DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder) == MCDisassembler_Fail) {
+		return MCDisassembler_Fail;
+	}
 
 	uint64_t Lower = fieldFromInstruction_8(Insn, 6, 6);
 	uint64_t Upper = fieldFromInstruction_8(Insn, 0, 5);
