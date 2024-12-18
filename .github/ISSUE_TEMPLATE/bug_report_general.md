@@ -17,8 +17,8 @@ Please be as descriptive as possible
 
 | Questions                                | Answers
 |------------------------------------------|--------------------
-| OS/arch/bits                             | Debian arm 64, MacOS AArch64, MacOS x86, Windows x86 etc.
-| Architecture                             | ppc, x86, cortexm, armv8 etc.
+| System Capstone runs on OS/arch/bits     | Debian arm 64, MacOS AArch64, MacOS x86, Windows x86 etc.
+| Capstone module affected                 | ppc, x86, arm, aarch64 etc.
 | Source of Capstone                       | `git clone`, brew, pip, release binaries etc.
 | Version/git commit                       | v5.0.1, <commit hash>
 
