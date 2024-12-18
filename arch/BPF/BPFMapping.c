@@ -107,7 +107,7 @@ static const name_map insn_name_maps[BPF_INS_ENDING] = {
 };
 #endif
 
-inline bool BPF_getFeature(const cs_mode mode, const cs_mode feature)
+bool BPF_getFeature(const cs_mode mode, const cs_mode feature)
 {
 	return (mode & feature);
 }
