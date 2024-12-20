@@ -5,21 +5,21 @@ open Printf
 open Capstone
 open Systemz
 
-let _SYSZ_CODE = "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78";;
+let _SYSTEMZ_CODE = "\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78";;
 
 
 
 let all_tests = [
-	(CS_ARCH_SYSZ, [CS_MODE_LITTLE_ENDIAN], _SYSZ_CODE, "SystemZ");
+	(CS_ARCH_SYSTEMZ, [CS_MODE_LITTLE_ENDIAN], _SYSTEMZ_CODE, "SystemZ");
 ];;
 
 let print_op handle i op =
 	( match op.value with
-	| SYSZ_OP_INVALID _ -> ();	(* this would never happens *)
-	| SYSZ_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name handle reg);
-	| SYSZ_OP_ACREG reg -> printf "\t\top[%d]: ACREG = %u\n" i reg;
-	| SYSZ_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
-	| SYSZ_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
+	| SYSTEMZ_OP_INVALID _ -> ();	(* this would never happens *)
+	| SYSTEMZ_OP_REG reg -> printf "\t\top[%d]: REG = %s\n" i (cs_reg_name handle reg);
+	| SYSTEMZ_OP_ACREG reg -> printf "\t\top[%d]: ACREG = %u\n" i reg;
+	| SYSTEMZ_OP_IMM imm -> printf "\t\top[%d]: IMM = 0x%x\n" i imm;
+	| SYSTEMZ_OP_MEM mem -> ( printf "\t\top[%d]: MEM\n" i;
 		if mem.base != 0 then
 			printf "\t\t\toperands[%u].mem.base: REG = %s\n" i (cs_reg_name handle mem.base);
 		if mem.index != 0 then
@@ -35,7 +35,7 @@ let print_op handle i op =
 
 let print_detail handle insn =
 	match insn.arch with
-	| CS_INFO_SYSZ sysz -> (
+	| CS_INFO_SYSTEMZ sysz -> (
 			(* print all operands info (type & value) *)
 			if (Array.length sysz.operands) > 0 then (
 				printf "\top_count: %d\n" (Array.length sysz.operands);

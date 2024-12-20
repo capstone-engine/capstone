@@ -47,7 +47,7 @@ let print_op handle i op =
 let print_detail handle insn =
 	match insn.arch with
 	| CS_INFO_AARCH64 aarch64 -> (
-			if aarch64.cc != _AARCH64_CC_AL && aarch64.cc != _AARCH64_CC_INVALID then
+			if aarch64.cc != _AArch64CC_AL && aarch64.cc != _AArch64CC_Invalid then
 			printf "\tCode condition: %u\n" aarch64.cc;
 
 			if aarch64.update_flags then

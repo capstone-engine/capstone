@@ -1,29 +1,50 @@
 (* Capstone Disassembly Engine
  * By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 *)
 
-open Arm
 open Aarch64
+open Alpha
+open Arm
+open Bpf
+open Evm
+open Hppa
+open Loongarch
+open M68k
+open M680x
+open Mos65xx
 open Mips
 open Ppc
 open X86
+open Sh
 open Sparc
 open Systemz
+open Tms320c64x
+open Tricore
 open Xcore
-open M680x
+open Xtensa
 
 (* Hardware architectures *)
 type arch =
   | CS_ARCH_ARM
   | CS_ARCH_AARCH64
+  | CS_ARCH_SYSTEMZ
   | CS_ARCH_MIPS
   | CS_ARCH_X86
   | CS_ARCH_PPC
   | CS_ARCH_SPARC
-  | CS_ARCH_SYSZ
   | CS_ARCH_XCORE
   | CS_ARCH_M68K
   | CS_ARCH_TMS320C64X
   | CS_ARCH_M680X
+  | CS_ARCH_EVM
+  | CS_ARCH_MOS66XX
+  | CS_ARCH_WASM
+  | CS_ARCH_BPF
+  | CS_ARCH_SH
+  | CS_ARCH_TRICORE
+  | CS_ARCH_ALPHA
+  | CS_ARCH_HPPA
+  | CS_ARCH_LOONGARCH
+  | CS_ARCH_XTENSA
 
 (* Hardware modes *)
 type mode =
@@ -58,8 +79,6 @@ type mode =
   |	CS_MODE_M680X_CPU12	(* M680X Motorola/Freescale/NXP CPU12 mode *)
   |	CS_MODE_M680X_HCS08	(* M680X Freescale HCS08 mode *)
 
-
-
 (* Runtime option for the disassembled engine *)
 type opt_type =
   |	CS_OPT_SYNTAX		(*  Assembly output syntax *)
@@ -68,7 +87,10 @@ type opt_type =
   |	CS_OPT_MEM		(* User-defined dynamic memory related functions *)
   |	CS_OPT_SKIPDATA		(* Skip data when disassembling. Then engine is in SKIPDATA mode. *)
   |	CS_OPT_SKIPDATA_SETUP 	(* Setup user-defined function for SKIPDATA option *)
-
+  | CS_OPT_MNEMONIC (* Customize instruction mnemonic *)
+  | CS_OPT_UNSIGNED (* Print immediate operands in unsigned form *)
+  | CS_OPT_ONLY_OFFSET_BRANCH (* Do not add the branch immediate value to the PC *)
+  | CS_OPT_LITBASE (* Xtensa, set the LITBASE value *)
 
 (* Common instruction operand access types - to be consistent across all architectures. *)
 (* It is possible to combine access types, for example: CS_AC_READ | CS_AC_WRITE *)
@@ -105,16 +127,26 @@ let _CS_GRP_IRET    = 5;;  (* all interrupt return instructions *)
 let _CS_GRP_PRIVILEGE = 6;;  (* all privileged instructions *)
 
 type cs_arch =
+	| CS_INFO_ALPHA of cs_alpha
 	| CS_INFO_ARM of cs_arm
 	| CS_INFO_AARCH64 of cs_aarch64
+	| CS_INFO_BPF of cs_bpf
+	| CS_INFO_EVM of cs_evm
+	| CS_INFO_HPPA of cs_hppa
+    | CS_INFO_LOONGARCH of cs_loongarch
+	| CS_INFO_M68K of cs_m68k
+	| CS_INFO_M680X of cs_m680x
 	| CS_INFO_MIPS of cs_mips
+	| CS_INFO_MOS66XX of cs_mos65xx
 	| CS_INFO_X86 of cs_x86
 	| CS_INFO_PPC of cs_ppc
+	| CS_INFO_SH of cs_sh
 	| CS_INFO_SPARC of cs_sparc
-	| CS_INFO_SYSZ of cs_sysz
+	| CS_INFO_SYSTEMZ of cs_systemz
+	| CS_INFO_TMS320C64X of cs_tms320c64x
+	| CS_INFO_TRICORE of cs_tricore
 	| CS_INFO_XCORE of cs_xcore
-	| CS_INFO_M680X of cs_m680x
-
+	| CS_INFO_XTENSA of cs_xtensa
 
 type csh = {
 	h: Int64.t;
