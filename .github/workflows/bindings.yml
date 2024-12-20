@@ -1,0 +1,48 @@
+name: Bindings testing
+
+on:
+  - push
+  - pull_request
+
+permissions: read-all
+
+jobs:
+  ocaml:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout tree
+        uses: actions/checkout@v4
+
+      - name: Install Capstone
+        run: |
+          mkdir build && cd build
+          # build static library
+          cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr ..
+          cmake --build . --config Debug
+          sudo cmake --build . --config Debug --target install
+
+      - name: Set-up OCaml
+        uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: 5
+
+      - name: Install Opam dependencies
+        run: opam install . --deps-only --with-test
+        working-directory: bindings/ocaml
+
+      - name: Building OCaml bindings
+        run: opam exec -- dune build
+        working-directory: bindings/ocaml
+
+      - name: Run tests
+        run: opam exec -- dune runtest
+        working-directory: bindings/ocaml
