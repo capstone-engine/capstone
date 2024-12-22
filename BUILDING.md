@@ -12,6 +12,16 @@ cmake --build build
 cmake --install build --prefix "<install-prefix>"
 ```
 
+To create rpm, debian and OSX packages, run the following
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DCAPSTONE_BUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr
+cmake --build build
+cd build
+cpack -G DEB
+cpack -G RPM
+cpack -G DragNDrop
+```
+
 **Windows**
 
 ```bash

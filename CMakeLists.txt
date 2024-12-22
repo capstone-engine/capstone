@@ -24,11 +24,17 @@ if(NOT DEFINED PROJECT_VERSION)
     set(PROJECT_VERSION "6.0.0")
 endif()
 
-# Extract the major, minor, and patch versions
-string(REGEX MATCH "^[0-9]+\\.[0-9]+\\.[0-9]+" PROJECT_VERSION_BASE ${PROJECT_VERSION})
+# Remove the 'v' prefix if it exists and extract the major, minor, and patch versions
+string(REGEX MATCH "^[vV]?([0-9]+\\.[0-9]+\\.[0-9]+)" _ ${PROJECT_VERSION})
+set(PROJECT_VERSION_BASE ${CMAKE_MATCH_1})
+
+# Use PROJECT_VERSION directly for CPack
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 
 # Set the project version without the pre-release identifier
 project(capstone VERSION ${PROJECT_VERSION_BASE})
+# Print the values of PROJECT_VERSION and PROJECT_VERSION_BASE
+message(STATUS "PROJECT_VERSION: ${CPACK_PACKAGE_VERSION} CAPSTONE_VERSION: ${PROJECT_VERSION_BASE}")
 
 set(UNIX_COMPILER_OPTIONS -Werror -Wall -Warray-bounds -Wshift-negative-value -Wreturn-type -Wformat -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context -Wmisleading-indentation)
 
@@ -959,3 +965,7 @@ if(CAPSTONE_BUILD_CSTEST)
     set(TESTS_UNIT_DIR ${PROJECT_SOURCE_DIR}/tests/unit)
     add_subdirectory(${TESTS_UNIT_DIR})
 endif()
+
+# Include CPack
+set(CPACK_PROJECT_CONFIG_FILE "${CMAKE_SOURCE_DIR}/CPackConfig.cmake")
+include(CPackConfig.txt)
