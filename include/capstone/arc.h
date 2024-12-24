@@ -19,21 +19,12 @@ typedef enum arc_op_type {
 	ARC_OP_IMM = CS_OP_IMM,	      ///< Immediate operand
 } arc_op_type;
 
-// /// Instruction's operand referring to memory
-// /// This is associated with ARC_OP_MEM operand type above
-// typedef struct arc_op_mem {
-// 	unsigned int base;  ///< base register
-// 	unsigned int index; ///< index register
-// 	int64_t disp;	    ///< displacement/offset value
-// } arc_op_mem;
-
 /// Instruction operand
 typedef struct cs_arc_op {
 	arc_op_type type;	      //< operand type
 	union {
 		unsigned int reg;     /// register value for REG operand
 		int64_t imm;	      /// immediate value for IMM operand
-		// arc_op_mem mem; /// base/disp value for MEM operand
 	};
 
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)

@@ -1,4 +1,4 @@
-// Copyright © 2024 Rot127 <unisono@quyllur.org>
+// Copyright © 2024 Sibirtsev Dmitry <sibirtsevdl@gmail.com>
 // SPDX-License-Identifier: BSD-3
 
 #include "test_compare.h"

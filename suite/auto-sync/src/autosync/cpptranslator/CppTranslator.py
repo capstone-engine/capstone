@@ -433,15 +433,10 @@ class Translator:
                 # Each patch has a capture which includes the whole subtree searched for.
                 # Additionally, it can include captures within this subtree.
                 # Here we bundle these captures together.
-                # if "template_declaration" in pattern:
-                #     print(self.tree.root_node)
                 query: Query = self.ts_cpp_lang.query(pattern)
                 captures_bundle: [[(Node, str)]] = list()
                 for q in query.captures(self.tree.root_node):
                     if q[1] == patch.get_main_capture_name():
-                        # from autosync.cpptranslator.patches.Helper import get_text
-                        # if patch.get_main_capture_name() == "template_def":
-                        #     print(get_text(self.src, q[0].start_byte, q[0].end_byte).decode())
                         # The main capture the patch is looking for.
                         captures_bundle.append([q])
                     else:

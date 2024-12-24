@@ -4,6 +4,7 @@
 #ifndef CS_ARC_MAP_H
 #define CS_ARC_MAP_H
 
+#include "../../Mapping.h"
 #include "../../include/capstone/capstone.h"
 #include "../../utils.h"
 
@@ -43,7 +44,7 @@ void ARC_add_cs_detail(MCInst *MI, int /* arc_op_group */ op_group,
 static inline void add_cs_detail(MCInst *MI,
 				 int /* arc_op_group */ op_group, ...)
 {
-	if (!MI->flat_insn->detail)
+	if (!detail_is_set(MI))
 		return;
 	va_list args;
 	va_start(args, op_group);

@@ -14,9 +14,9 @@ class ARCOpValue(ctypes.Union):
 
 class ARCOp(ctypes.Structure):
     _fields_ = (
-        ('type', ctypes.c_uint),
+        ('type', ctypes.c_int),
         ('value', ARCOpValue),
-        ('access', ctypes.c_uint8)
+        ('access', ctypes.c_uint)
     )
 
     @property
@@ -33,7 +33,6 @@ class CsARC(ctypes.Structure):
     _fields_ = (
         ('op_count', ctypes.c_uint8),
         ('operands', ARCOp * 8),
-        ('update_flags', ctypes.c_bool),
     )
 
 def get_arch_info(a):

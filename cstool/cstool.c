@@ -364,11 +364,6 @@ static void usage(char *prog)
 		printf(")\n");
 	}
 
-	if (cs_support(CS_ARCH_ARC)) {
-		printf("        arc         arc little endian\n");
-		printf("        arcbe       arc big endian\n");
-	}
-
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -r show detailed information of the real instructions (even for alias)\n");

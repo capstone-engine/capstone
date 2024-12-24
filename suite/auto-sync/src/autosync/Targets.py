@@ -38,7 +38,6 @@ TARGET_TO_IN_CODE_NAME = {
     "LoongArch": "LoongArch",
     "SystemZ": "SystemZ",
     "Mips": "Mips",
-    "ARC": "ARC",
     "Xtensa": "Xtensa",
     "TriCore": "TriCore",
     "ARC": "ARC",
