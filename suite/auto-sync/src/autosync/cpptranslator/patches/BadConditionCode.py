@@ -29,4 +29,4 @@ class BadConditionCode(Patch):
         return "bad_condition_code"
 
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
-        return b"CS_ASSERT(0 && \"Unknown condition code passed\");"
+        return b'CS_ASSERT(0 && "Unknown condition code passed");'

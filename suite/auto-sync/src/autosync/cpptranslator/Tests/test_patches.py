@@ -296,13 +296,13 @@ public:
             syntax,
             b"fieldFromInstruction_4(Val, 0, 4)",
         )
-        
+
         syntax = b"static unsigned function(unsigned Insn) { return fieldFromInstruction(Insn, 6, 6); }"
         self.check_patching_result(
             patch,
             syntax,
             b"fieldFromInstruction_4(Insn, 6, 6)",
-        ) 
+        )
 
     def test_getnumoperands(self):
         patch = GetNumOperands(0)
@@ -620,8 +620,10 @@ public:
         patch = IsUInt(0)
         syntax = b"isUInt<RegUnitBits>(FirstRU);"
         self.check_patching_result(patch, syntax, b"isUIntN(RegUnitBits, FirstRU)")
-        
+
     def test_badconditioncode(self):
         patch = BadConditionCode(0)
         syntax = b"return BadConditionCode(BRCC)"
-        self.check_patching_result(patch, syntax, b"CS_ASSERT(0 && \"Unknown condition code passed\");")
+        self.check_patching_result(
+            patch, syntax, b'CS_ASSERT(0 && "Unknown condition code passed");'
+        )
