@@ -78,7 +78,7 @@ from autosync.cpptranslator.patches.TemplateRefs import TemplateRefs
 from autosync.cpptranslator.patches.UseMarkup import UseMarkup
 from autosync.cpptranslator.patches.UsingDeclaration import UsingDeclaration
 from autosync.cpptranslator.TemplateCollector import TemplateCollector
-from autosync.cpptranslator.BadConditionCode import BadConditionCode
+from autosync.cpptranslator.patches.BadConditionCode import BadConditionCode
 from autosync.Helper import get_path
 from autosync.cpptranslator.patches.isUInt import IsUInt
 
