@@ -7,6 +7,7 @@
 
 #include "../../include/capstone/capstone.h"
 #include "../../utils.h"
+#include "../../Mapping.h"
 
 typedef enum {
 #include "LoongArchGenCSOpGroup.inc"

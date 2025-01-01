@@ -56,9 +56,27 @@ static const char *const insn_name_maps[] = {
 #include "LoongArchGenCSMappingInsnName.inc"
 };
 
+#ifndef CAPSTONE_DIET
+static const name_map insn_alias_mnem_map[] = {
+#include "LoongArchGenCSAliasMnemMap.inc"
+	{ LOONGARCH_INS_ALIAS_END, NULL },
+};
+#endif
+
 const char *LoongArch_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
+	if (id < LOONGARCH_INS_ALIAS_END && id > LOONGARCH_INS_ALIAS_BEGIN) {
+		if (id - LOONGARCH_INS_ALIAS_BEGIN >=
+		    ARR_SIZE(insn_alias_mnem_map))
+			return NULL;
+
+		return insn_alias_mnem_map[id - LOONGARCH_INS_ALIAS_BEGIN - 1]
+			.name;
+	}
+	if (id >= LOONGARCH_INS_ENDING)
+		return NULL;
+
 	if (id < ARR_SIZE(insn_name_maps))
 		return insn_name_maps[id];
 	// not found
@@ -407,11 +425,15 @@ void LoongArch_printer(MCInst *MI, SStream *O,
 {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
 	MI->MRI = MRI;
-
+	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
 	LoongArch_LLVM_printInst(MI, MI->address, "", O);
 
 	LoongArch_rewrite_memory_operand(MI);
 	LoongArch_add_cs_groups(MI);
+#ifndef CAPSTONE_DIET
+	map_set_alias_id(MI, O, insn_alias_mnem_map,
+			 ARR_SIZE(insn_alias_mnem_map));
+#endif
 }
 
 void LoongArch_setup_op(cs_loongarch_op *op)

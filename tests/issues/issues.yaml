@@ -5580,3 +5580,77 @@ test_cases:
                 mem_disp: 255
                 access: CS_AC_WRITE
           regs_read: [ wzr, x12 ]
+
+  - input:
+      name: "loongarch 32 jirl alias with details"
+      bytes: [ 0x20, 0x00, 0x00, 0x4c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH32, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "ret"
+        details:
+          loongarch:
+            operands: []
+          regs_read: []
+
+  - input:
+      name: "loongarch 32 jirl alias with details & real"
+      bytes: [ 0x20, 0x00, 0x00, 0x4c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH32, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "ret"
+        details:
+          loongarch:
+            operands:
+              - type: LOONGARCH_OP_REG
+                reg: zero
+                access: CS_AC_WRITE
+              - type: LOONGARCH_OP_REG
+                reg: ra
+                access: CS_AC_READ
+              - type: LOONGARCH_OP_IMM
+                imm: 0
+                access: CS_AC_READ
+          regs_read: [ ra ]
+
+  - input:
+      name: "loongarch 64 jirl alias with details"
+      bytes: [ 0x20, 0x00, 0x00, 0x4c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "ret"
+        details:
+          loongarch:
+            operands: []
+          regs_read: []
+
+  - input:
+      name: "loongarch 64 jirl alias with details & real"
+      bytes: [ 0x20, 0x00, 0x00, 0x4c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ CS_MODE_LOONGARCH64, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "ret"
+        details:
+          loongarch:
+            operands:
+              - type: LOONGARCH_OP_REG
+                reg: zero
+                access: CS_AC_WRITE
+              - type: LOONGARCH_OP_REG
+                reg: ra
+                access: CS_AC_READ
+              - type: LOONGARCH_OP_IMM
+                imm: 0
+                access: CS_AC_READ
+          regs_read: [ ra ]

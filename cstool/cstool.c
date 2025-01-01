@@ -41,7 +41,7 @@ static struct {
 	{ "+percentage", "Adds % in front of the registers", {
 		CS_ARCH_PPC, CS_ARCH_MAX }, CS_OPT_SYNTAX_PERCENT, 0 },
 	{ "+nodollar", "Removes $ in front of the registers", {
-		CS_ARCH_MIPS, CS_ARCH_MAX }, CS_OPT_SYNTAX_NO_DOLLAR, 0 },
+		CS_ARCH_LOONGARCH, CS_ARCH_MIPS, CS_ARCH_MAX }, CS_OPT_SYNTAX_NO_DOLLAR, 0 },
 	// cs_mode only
 	{ "+nofloat", "Disables floating point support", {
 		CS_ARCH_MIPS, CS_ARCH_MAX }, 0, CS_MODE_MIPS_NOFLOAT },

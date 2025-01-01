@@ -53,9 +53,20 @@
 static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
 		      SStream *O)
 {
-	if (!printAliasInstr(MI, Address, O))
+	bool useAliasDetails = map_use_alias_details(MI);
+	map_set_fill_detail_ops(MI, useAliasDetails);
+
+	bool isAlias = printAliasInstr(MI, Address, O);
+
+	MCInst_setIsAlias(MI, isAlias);
+	if (!isAlias || !useAliasDetails) {
+		map_set_fill_detail_ops(MI, !(isAlias && useAliasDetails));
+		if (isAlias)
+			SStream_Close(O);
 		printInstruction(MI, Address, O);
-	;
+		if (isAlias)
+			SStream_Open(O);
+	}
 }
 
 void LoongArch_LLVM_printInst(MCInst *MI, uint64_t Address, const char *Annot,
@@ -69,9 +80,12 @@ const char *LoongArch_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx)
 	return getRegisterName(RegNo, AltIdx);
 }
 
-static void printRegName(SStream *O, MCRegister Reg)
+static void printRegName(MCInst *MI, SStream *O, MCRegister Reg)
 {
-	SStream_concat1(O, '$');
+	int syntax_opt = MI->csh->syntax;
+	if (!(syntax_opt & CS_OPT_SYNTAX_NO_DOLLAR)) {
+		SStream_concat1(O, '$');
+	}
 	SStream_concat0(O, getRegisterName(Reg, LoongArch_RegAliasName));
 }
 
@@ -81,7 +95,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	MCOperand *MO = MCInst_getOperand(MI, (OpNo));
 
 	if (MCOperand_isReg(MO)) {
-		printRegName(O, MCOperand_getReg(MO));
+		printRegName(MI, O, MCOperand_getReg(MO));
 		return;
 	}
 
@@ -98,5 +112,5 @@ static void printAtomicMemOp(MCInst *MI, unsigned OpNo, SStream *O)
 	add_cs_detail(MI, LOONGARCH_OP_GROUP_ATOMICMEMOP, OpNo);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNo));
 
-	printRegName(O, MCOperand_getReg(MO));
+	printRegName(MI, O, MCOperand_getReg(MO));
 }

@@ -2473,6 +2473,23 @@ typedef enum loongarch_insn {
 	// generated content <LoongArchGenCSInsnEnum.inc> end
 
 	LOONGARCH_INS_ENDING,
+
+	LOONGARCH_INS_ALIAS_BEGIN,
+	// generated content <LoongArchGenCSAliasEnum.inc> begin
+	// clang-format off
+
+	LOONGARCH_INS_ALIAS_LA, // Real instr.: LOONGARCH_PseudoLA_GOT
+	LOONGARCH_INS_ALIAS_LA_GLOBAL, // Real instr.: LOONGARCH_PseudoLA_GOT
+	LOONGARCH_INS_ALIAS_LA_LOCAL, // Real instr.: LOONGARCH_PseudoLA_PCREL
+	LOONGARCH_INS_ALIAS_NOP, // Real instr.: LOONGARCH_ANDI
+	LOONGARCH_INS_ALIAS_MOVE, // Real instr.: LOONGARCH_OR
+	LOONGARCH_INS_ALIAS_RET, // Real instr.: LOONGARCH_JIRL
+	LOONGARCH_INS_ALIAS_JR, // Real instr.: LOONGARCH_JIRL
+
+	// clang-format on
+	// generated content <LoongArchGenCSInsnEnum.inc> end
+	LOONGARCH_INS_ALIAS_END,
+
 } loongarch_insn;
 
 //> Group of LOONGARCH instructions
