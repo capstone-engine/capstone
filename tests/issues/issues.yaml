@@ -5590,6 +5590,7 @@ test_cases:
     expected:
       insns:
       - asm_text: "ret"
+        is_alias: 1
         details:
           loongarch:
             operands: []
@@ -5604,6 +5605,7 @@ test_cases:
     expected:
       insns:
       - asm_text: "ret"
+        is_alias: 1
         details:
           loongarch:
             operands:
@@ -5627,6 +5629,7 @@ test_cases:
     expected:
       insns:
       - asm_text: "ret"
+        is_alias: 1
         details:
           loongarch:
             operands: []
@@ -5641,6 +5644,7 @@ test_cases:
     expected:
       insns:
       - asm_text: "ret"
+        is_alias: 1
         details:
           loongarch:
             operands:
