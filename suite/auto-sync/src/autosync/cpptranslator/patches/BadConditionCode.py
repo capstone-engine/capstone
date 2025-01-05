@@ -1,4 +1,4 @@
-# Copyright © 2024 Dmitry Sibitsev <unisono@quyllur.org>
+# Copyright © 2024 Dmitry Sibitsev <sibirtsevdl@gmail.com>
 # SPDX-License-Identifier: BSD-3
 
 from tree_sitter import Node
@@ -9,7 +9,7 @@ from autosync.cpptranslator.patches.Patch import Patch
 class BadConditionCode(Patch):
     """
     Patch   return BadConditionCode
-    to      assert(0 && "Unknown condition code passed")
+    to      CS_ASSERT(0 && "Unknown condition code passed")
     """
 
     def __init__(self, priority: int):
