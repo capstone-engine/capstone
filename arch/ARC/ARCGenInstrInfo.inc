@@ -742,7 +742,7 @@
 #if defined(GET_INSTRINFO_MC_DESC) || defined(GET_INSTRINFO_CTOR_DTOR)
 typedef struct ARCInstrTable {
   MCInstrDesc Insts[719];
-  MCOperandInfo OperandInfo[204];
+  MCOperandInfo OperandInfo[207];
   MCPhysReg ImplicitOps[9];
 } ARCInstrTable;
 
@@ -814,35 +814,35 @@ static const ARCInstrTable ARCDescs = {
   { 3, &ARCDescs.OperandInfo[169] },  // Inst #662 = ST_S_OFF
   { 3, &ARCDescs.OperandInfo[153] },  // Inst #661 = ST_DI_rs9
   { 3, &ARCDescs.OperandInfo[150] },  // Inst #660 = ST_DI_limm
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #659 = ST_DI_AW_rs9
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #658 = ST_DI_AB_rs9
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #657 = ST_AW_rs9
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #656 = ST_AB_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #659 = ST_DI_AW_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #658 = ST_DI_AB_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #657 = ST_AW_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #656 = ST_AB_rs9
   { 3, &ARCDescs.OperandInfo[153] },  // Inst #655 = STH_rs9
   { 3, &ARCDescs.OperandInfo[150] },  // Inst #654 = STH_limm
   { 3, &ARCDescs.OperandInfo[169] },  // Inst #653 = STH_S_OFF
   { 3, &ARCDescs.OperandInfo[153] },  // Inst #652 = STH_DI_rs9
   { 3, &ARCDescs.OperandInfo[150] },  // Inst #651 = STH_DI_limm
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #650 = STH_DI_AW_rs9
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #649 = STH_DI_AB_rs9
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #648 = STH_AW_rs9
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #647 = STH_AB_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #650 = STH_DI_AW_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #649 = STH_DI_AB_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #648 = STH_AW_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #647 = STH_AB_rs9
   { 3, &ARCDescs.OperandInfo[153] },  // Inst #646 = STB_rs9
   { 3, &ARCDescs.OperandInfo[150] },  // Inst #645 = STB_limm
   { 3, &ARCDescs.OperandInfo[169] },  // Inst #644 = STB_S_OFF
   { 3, &ARCDescs.OperandInfo[153] },  // Inst #643 = STB_DI_rs9
   { 3, &ARCDescs.OperandInfo[150] },  // Inst #642 = STB_DI_limm
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #641 = STB_DI_AW_rs9
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #640 = STB_DI_AB_rs9
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #639 = STB_AW_rs9
-  { 4, &ARCDescs.OperandInfo[200] },  // Inst #638 = STB_AB_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #641 = STB_DI_AW_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #640 = STB_DI_AB_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #639 = STB_AW_rs9
+  { 4, &ARCDescs.OperandInfo[203] },  // Inst #638 = STB_AB_rs9
   { 1, &ARCDescs.OperandInfo[0] },  // Inst #637 = SP_SUB_SP_S
-  { 2, &ARCDescs.OperandInfo[13] },  // Inst #636 = SP_ST_S
-  { 2, &ARCDescs.OperandInfo[13] },  // Inst #635 = SP_STB_S
-  { 2, &ARCDescs.OperandInfo[13] },  // Inst #634 = SP_LD_S
-  { 2, &ARCDescs.OperandInfo[13] },  // Inst #633 = SP_LDB_S
+  { 2, &ARCDescs.OperandInfo[201] },  // Inst #636 = SP_ST_S
+  { 2, &ARCDescs.OperandInfo[201] },  // Inst #635 = SP_STB_S
+  { 2, &ARCDescs.OperandInfo[201] },  // Inst #634 = SP_LD_S
+  { 2, &ARCDescs.OperandInfo[201] },  // Inst #633 = SP_LDB_S
   { 1, &ARCDescs.OperandInfo[0] },  // Inst #632 = SP_ADD_SP_S
-  { 2, &ARCDescs.OperandInfo[13] },  // Inst #631 = SP_ADD_S
+  { 2, &ARCDescs.OperandInfo[201] },  // Inst #631 = SP_ADD_S
   { 2, &ARCDescs.OperandInfo[148] },  // Inst #630 = SEXH_rr
   { 2, &ARCDescs.OperandInfo[148] },  // Inst #629 = SEXH_f_rr
   { 2, &ARCDescs.OperandInfo[148] },  // Inst #628 = SEXB_rr
@@ -887,9 +887,9 @@ static const ARCInstrTable ARCDescs = {
   { 3, &ARCDescs.OperandInfo[160] },  // Inst #589 = ROR_f_rrlimm
   { 4, &ARCDescs.OperandInfo[156] },  // Inst #588 = ROR_cc_rru6
   { 4, &ARCDescs.OperandInfo[156] },  // Inst #587 = ROR_cc_f_rru6
-  { 1, &ARCDescs.OperandInfo[0] },  // Inst #586 = PUSH_S_r
+  { 1, &ARCDescs.OperandInfo[200] },  // Inst #586 = PUSH_S_r
   { 0, &ARCDescs.OperandInfo[1] },  // Inst #585 = PUSH_S_BLINK
-  { 1, &ARCDescs.OperandInfo[0] },  // Inst #584 = POP_S_r
+  { 1, &ARCDescs.OperandInfo[200] },  // Inst #584 = POP_S_r
   { 0, &ARCDescs.OperandInfo[1] },  // Inst #583 = POP_S_BLINK
   { 2, &ARCDescs.OperandInfo[176] },  // Inst #582 = PCL_LD
   { 3, &ARCDescs.OperandInfo[169] },  // Inst #581 = OR_rru6
@@ -1541,7 +1541,9 @@ static const ARCInstrTable ARCDescs = {
     /* 188 */ { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(1) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
     /* 192 */ { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 },
     /* 196 */ { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { -1, 0|(1<<MCOI_Predicate), MCOI_OPERAND_UNKNOWN, 0 }, { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
-    /* 200 */ { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 200 */ { -1, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 201 */ { -1, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 203 */ { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { ARC_GPR32RegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
   }, {
     /* 0 */
     /* 0 */ ARC_SP, ARC_SP,

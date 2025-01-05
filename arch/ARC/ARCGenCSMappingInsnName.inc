@@ -12,7 +12,7 @@
 /* https://github.com/capstone-engine/llvm-capstone */
 
   "invalid", // ARC_INS_INVALID
-  "#", // ARC_INS_HASH
+  "h", // ARC_INS_h
   "pbr", // ARC_INS_PBR
   "error_fls", // ARC_INS_ERROR_FLS
   "error_ffs", // ARC_INS_ERROR_FFS
@@ -20,24 +20,19 @@
   "STB_FAR", // ARC_INS_STB_FAR
   "STH_FAR", // ARC_INS_STH_FAR
   "ST_FAR", // ARC_INS_ST_FAR
-  "adc_", // ARC_INS_ADC_
-  "adc_f", // ARC_INS_ADC_F
   "adc", // ARC_INS_ADC
+  "adc_f", // ARC_INS_ADC_F
   "add_s", // ARC_INS_ADD_S
-  "add_", // ARC_INS_ADD_
-  "add_f", // ARC_INS_ADD_F
   "add", // ARC_INS_ADD
-  "and_", // ARC_INS_AND_
-  "and_f", // ARC_INS_AND_F
+  "add_f", // ARC_INS_ADD_F
   "and", // ARC_INS_AND
+  "and_f", // ARC_INS_AND_F
   "asl_s", // ARC_INS_ASL_S
-  "asl_", // ARC_INS_ASL_
-  "asl_f", // ARC_INS_ASL_F
   "asl", // ARC_INS_ASL
+  "asl_f", // ARC_INS_ASL_F
   "asr_s", // ARC_INS_ASR_S
-  "asr_", // ARC_INS_ASR_
-  "asr_f", // ARC_INS_ASR_F
   "asr", // ARC_INS_ASR
+  "asr_f", // ARC_INS_ASR_F
   "bclr_s", // ARC_INS_BCLR_S
   "beq_s", // ARC_INS_BEQ_S
   "bge_s", // ARC_INS_BGE_S
@@ -141,49 +136,37 @@
   "ld", // ARC_INS_LD
   "leave_s", // ARC_INS_LEAVE_S
   "lr", // ARC_INS_LR
-  "lsr_", // ARC_INS_LSR_
-  "lsr_f", // ARC_INS_LSR_F
   "lsr", // ARC_INS_LSR
-  "max_", // ARC_INS_MAX_
-  "max_f", // ARC_INS_MAX_F
+  "lsr_f", // ARC_INS_LSR_F
   "max", // ARC_INS_MAX
-  "min_", // ARC_INS_MIN_
-  "min_f", // ARC_INS_MIN_F
+  "max_f", // ARC_INS_MAX_F
   "min", // ARC_INS_MIN
+  "min_f", // ARC_INS_MIN_F
   "mov_s_ne", // ARC_INS_MOV_S_NE
-  "mov_", // ARC_INS_MOV_
-  "mov_f", // ARC_INS_MOV_F
   "mov", // ARC_INS_MOV
-  "mpymu_", // ARC_INS_MPYMU_
-  "mpymu_f", // ARC_INS_MPYMU_F
+  "mov_f", // ARC_INS_MOV_F
   "mpymu", // ARC_INS_MPYMU
-  "mpym_", // ARC_INS_MPYM_
-  "mpym_f", // ARC_INS_MPYM_F
+  "mpymu_f", // ARC_INS_MPYMU_F
   "mpym", // ARC_INS_MPYM
-  "mpy_", // ARC_INS_MPY_
-  "mpy_f", // ARC_INS_MPY_F
+  "mpym_f", // ARC_INS_MPYM_F
   "mpy", // ARC_INS_MPY
+  "mpy_f", // ARC_INS_MPY_F
   "normh_f", // ARC_INS_NORMH_F
   "normh", // ARC_INS_NORMH
   "norm_f", // ARC_INS_NORM_F
   "norm", // ARC_INS_NORM
-  "or_", // ARC_INS_OR_
-  "or_f", // ARC_INS_OR_F
   "or", // ARC_INS_OR
+  "or_f", // ARC_INS_OR_F
   "pop_s", // ARC_INS_POP_S
   "push_s", // ARC_INS_PUSH_S
-  "ror_", // ARC_INS_ROR_
-  "ror_f", // ARC_INS_ROR_F
   "ror", // ARC_INS_ROR
-  "rsub_", // ARC_INS_RSUB_
-  "rsub_f", // ARC_INS_RSUB_F
+  "ror_f", // ARC_INS_ROR_F
   "rsub", // ARC_INS_RSUB
-  "sbc_", // ARC_INS_SBC_
-  "sbc_f", // ARC_INS_SBC_F
+  "rsub_f", // ARC_INS_RSUB_F
   "sbc", // ARC_INS_SBC
-  "seteq_", // ARC_INS_SETEQ_
-  "seteq_f", // ARC_INS_SETEQ_F
+  "sbc_f", // ARC_INS_SBC_F
   "seteq", // ARC_INS_SETEQ
+  "seteq_f", // ARC_INS_SETEQ_F
   "sexb_f", // ARC_INS_SEXB_F
   "sexb", // ARC_INS_SEXB
   "sexh_f", // ARC_INS_SEXH_F
@@ -209,18 +192,13 @@
   "st_di_aw", // ARC_INS_ST_DI_AW
   "st_di", // ARC_INS_ST_DI
   "st", // ARC_INS_ST
-  "sub1_", // ARC_INS_SUB1_
-  "sub1_f", // ARC_INS_SUB1_F
   "sub1", // ARC_INS_SUB1
-  "sub2_", // ARC_INS_SUB2_
-  "sub2_f", // ARC_INS_SUB2_F
+  "sub1_f", // ARC_INS_SUB1_F
   "sub2", // ARC_INS_SUB2
-  "sub3_", // ARC_INS_SUB3_
-  "sub3_f", // ARC_INS_SUB3_F
+  "sub2_f", // ARC_INS_SUB2_F
   "sub3", // ARC_INS_SUB3
-  "sub_", // ARC_INS_SUB_
-  "sub_f", // ARC_INS_SUB_F
+  "sub3_f", // ARC_INS_SUB3_F
   "sub", // ARC_INS_SUB
-  "xor_", // ARC_INS_XOR_
-  "xor_f", // ARC_INS_XOR_F
+  "sub_f", // ARC_INS_SUB_F
   "xor", // ARC_INS_XOR
+  "xor_f", // ARC_INS_XOR_F

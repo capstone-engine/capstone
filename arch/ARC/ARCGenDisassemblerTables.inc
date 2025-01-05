@@ -12,6 +12,7 @@
 /* https://github.com/capstone-engine/llvm-capstone */
 
 #include "../../MCInst.h"
+#include "../../cs_priv.h"
 #include "../../LEB128.h"
 
 // Helper function for extracting fields from encoded instructions.
@@ -1206,7 +1207,7 @@ static const uint8_t DecoderTable64[] = {
 };
 
 static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
-  return true;
+  CS_ASSERT_RET_VAL(0 && "Invalid index!", false);
 }
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
@@ -1216,7 +1217,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
   *DecodeComplete = true; \
   InsnType tmp; \
   switch (Idx) { \
-  default: /* llvm_unreachable("Invalid index!"); */ \
+  default: CS_ASSERT_RET_VAL(0 && "Invalid index!", MCDisassembler_Fail); \
   case 0: \
     if (!Check(&S, DecodeMoveHRegInstruction(MI, insn, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
@@ -1760,6 +1761,9 @@ static DecodeStatus fname(const uint8_t DecodeTable[], MCInst *MI, \
         /* Decoding complete. */ \
         return S; \
       } else { \
+        /* LLVM uses a MCInst on the stack, but for our use case, */ \
+        /* it is enough for now to reset the op counter. */ \
+        MCInst_clear(MI); \
         /* If the decoding was incomplete, skip. */ \
         Ptr += NumToSkip; \
         /* Reset decode status. This also drops a SoftFail status that could be */ \
@@ -1796,4 +1800,4 @@ DecodeToMCInst(decodeToMCInst_4, fieldFromInstruction_4, uint32_t)
 DecodeInstruction(decodeInstruction_4, fieldFromInstruction_4, decodeToMCInst_4, uint32_t)
 FieldFromInstruction(fieldFromInstruction_8, uint64_t)
 DecodeToMCInst(decodeToMCInst_8, fieldFromInstruction_8, uint64_t)
-DecodeInstruction(decodeInstruction, fieldFromInstruction_8, decodeToMCInst_8, uint64_t)
+DecodeInstruction(decodeInstruction_8, fieldFromInstruction_8, decodeToMCInst_8, uint64_t)

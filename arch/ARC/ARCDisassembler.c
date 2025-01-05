@@ -424,7 +424,7 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 			uint64_t Insn64;
 			if (!readInstruction64(Bytes, BytesLen, Address, Size, &Insn64))
 				return MCDisassembler_Fail;
-			Result = decodeInstruction(DecoderTable64, Instr,
+			Result = decodeInstruction_8(DecoderTable64, Instr,
 						   Insn64, Address, NULL);
 			if (MCDisassembler_Success == Result) {
 				;
@@ -444,7 +444,7 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 			uint64_t Insn48;
 			if (!readInstruction48(Bytes, BytesLen, Address, Size, &Insn48))
 				return MCDisassembler_Fail;
-			Result = decodeInstruction(DecoderTable48, Instr,
+			Result = decodeInstruction_8(DecoderTable48, Instr,
 						   Insn48, Address, NULL);
 			if (MCDisassembler_Success == Result) {
 				;

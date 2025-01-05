@@ -824,13 +824,13 @@
 {{{ /* ARC_G_UBFX (270) - ARC_INS_INVALID -  */
  0
 }}},
-{ /* ARC_ADJCALLSTACKDOWN (271) - ARC_INS_HASH - # ADJCALLSTACKDOWN $amt, $amt2 */
+{ /* ARC_ADJCALLSTACKDOWN (271) - ARC_INS_h - # ADJCALLSTACKDOWN $amt, $amt2 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* amt */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* amt2 */
   { 0 }
 }},
-{ /* ARC_ADJCALLSTACKUP (272) - ARC_INS_HASH - # ADJCALLSTACKUP $amt1 */
+{ /* ARC_ADJCALLSTACKUP (272) - ARC_INS_h - # ADJCALLSTACKUP $amt1 */
 {
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* amt1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* amt2 */
@@ -892,7 +892,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* addr - i32imm */
   { 0 }
 }},
-{ /* ARC_ADC_cc_f_rru6 (281) - ARC_INS_ADC_ - adc.${cc}.f	$A, $B, $U6 */
+{ /* ARC_ADC_cc_f_rru6 (281) - ARC_INS_ADC - adc.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -900,7 +900,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_ADC_cc_rru6 (282) - ARC_INS_ADC_ - adc.$cc	$A, $B, $U6 */
+{ /* ARC_ADC_cc_rru6 (282) - ARC_INS_ADC - adc.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -1015,7 +1015,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u7 */
   { 0 }
 }},
-{ /* ARC_ADD_cc_f_rru6 (299) - ARC_INS_ADD_ - add.${cc}.f	$A, $B, $U6 */
+{ /* ARC_ADD_cc_f_rru6 (299) - ARC_INS_ADD - add.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -1023,7 +1023,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_ADD_cc_rru6 (300) - ARC_INS_ADD_ - add.$cc	$A, $B, $U6 */
+{ /* ARC_ADD_cc_rru6 (300) - ARC_INS_ADD - add.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -1087,7 +1087,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_AND_cc_f_rru6 (309) - ARC_INS_AND_ - and.${cc}.f	$A, $B, $U6 */
+{ /* ARC_AND_cc_f_rru6 (309) - ARC_INS_AND - and.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -1095,7 +1095,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_AND_cc_rru6 (310) - ARC_INS_AND_ - and.$cc	$A, $B, $U6 */
+{ /* ARC_AND_cc_rru6 (310) - ARC_INS_AND - and.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -1172,7 +1172,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u5 */
   { 0 }
 }},
-{ /* ARC_ASL_cc_f_rru6 (321) - ARC_INS_ASL_ - asl.${cc}.f	$A, $B, $U6 */
+{ /* ARC_ASL_cc_f_rru6 (321) - ARC_INS_ASL - asl.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -1180,7 +1180,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_ASL_cc_rru6 (322) - ARC_INS_ASL_ - asl.$cc	$A, $B, $U6 */
+{ /* ARC_ASL_cc_rru6 (322) - ARC_INS_ASL - asl.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -1257,7 +1257,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u5 */
   { 0 }
 }},
-{ /* ARC_ASR_cc_f_rru6 (333) - ARC_INS_ASR_ - asr.${cc}.f	$A, $B, $U6 */
+{ /* ARC_ASR_cc_f_rru6 (333) - ARC_INS_ASR - asr.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -1265,7 +1265,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_ASR_cc_rru6 (334) - ARC_INS_ASR_ - asr.$cc	$A, $B, $U6 */
+{ /* ARC_ASR_cc_rru6 (334) - ARC_INS_ASR - asr.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2275,7 +2275,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u5 */
   { 0 }
 }},
-{ /* ARC_LSR_cc_f_rru6 (495) - ARC_INS_LSR_ - lsr.${cc}.f	$A, $B, $U6 */
+{ /* ARC_LSR_cc_f_rru6 (495) - ARC_INS_LSR - lsr.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2283,7 +2283,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_LSR_cc_rru6 (496) - ARC_INS_LSR_ - lsr.$cc	$A, $B, $U6 */
+{ /* ARC_LSR_cc_rru6 (496) - ARC_INS_LSR - lsr.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2347,7 +2347,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_MAX_cc_f_rru6 (505) - ARC_INS_MAX_ - max.${cc}.f	$A, $B, $U6 */
+{ /* ARC_MAX_cc_f_rru6 (505) - ARC_INS_MAX - max.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2355,7 +2355,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_MAX_cc_rru6 (506) - ARC_INS_MAX_ - max.$cc	$A, $B, $U6 */
+{ /* ARC_MAX_cc_rru6 (506) - ARC_INS_MAX - max.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2419,7 +2419,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_MIN_cc_f_rru6 (515) - ARC_INS_MIN_ - min.${cc}.f	$A, $B, $U6 */
+{ /* ARC_MIN_cc_f_rru6 (515) - ARC_INS_MIN - min.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2427,7 +2427,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_MIN_cc_rru6 (516) - ARC_INS_MIN_ - min.$cc	$A, $B, $U6 */
+{ /* ARC_MIN_cc_rru6 (516) - ARC_INS_MIN - min.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2520,7 +2520,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u8 */
   { 0 }
 }},
-{ /* ARC_MOV_cc (530) - ARC_INS_MOV_ - mov.$cc	$B, $C */
+{ /* ARC_MOV_cc (530) - ARC_INS_MOV - mov.$cc	$B, $C */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* C */
@@ -2528,7 +2528,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* cc - i32imm */
   { 0 }
 }},
-{ /* ARC_MOV_cc_f_ru6 (531) - ARC_INS_MOV_ - mov.${cc}.f	$B, $C */
+{ /* ARC_MOV_cc_f_ru6 (531) - ARC_INS_MOV - mov.${cc}.f	$B, $C */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* C */
@@ -2536,7 +2536,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B2 */
   { 0 }
 }},
-{ /* ARC_MOV_cc_ru6 (532) - ARC_INS_MOV_ - mov.$cc	$B, $C */
+{ /* ARC_MOV_cc_ru6 (532) - ARC_INS_MOV - mov.$cc	$B, $C */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* C */
@@ -2574,7 +2574,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_MPYMU_cc_f_rru6 (538) - ARC_INS_MPYMU_ - mpymu.${cc}.f	$A, $B, $U6 */
+{ /* ARC_MPYMU_cc_f_rru6 (538) - ARC_INS_MPYMU - mpymu.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2582,7 +2582,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_MPYMU_cc_rru6 (539) - ARC_INS_MPYMU_ - mpymu.$cc	$A, $B, $U6 */
+{ /* ARC_MPYMU_cc_rru6 (539) - ARC_INS_MPYMU - mpymu.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2646,7 +2646,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_MPYM_cc_f_rru6 (548) - ARC_INS_MPYM_ - mpym.${cc}.f	$A, $B, $U6 */
+{ /* ARC_MPYM_cc_f_rru6 (548) - ARC_INS_MPYM - mpym.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2654,7 +2654,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_MPYM_cc_rru6 (549) - ARC_INS_MPYM_ - mpym.$cc	$A, $B, $U6 */
+{ /* ARC_MPYM_cc_rru6 (549) - ARC_INS_MPYM - mpym.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2718,7 +2718,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_MPY_cc_f_rru6 (558) - ARC_INS_MPY_ - mpy.${cc}.f	$A, $B, $U6 */
+{ /* ARC_MPY_cc_f_rru6 (558) - ARC_INS_MPY - mpy.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2726,7 +2726,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_MPY_cc_rru6 (559) - ARC_INS_MPY_ - mpy.$cc	$A, $B, $U6 */
+{ /* ARC_MPY_cc_rru6 (559) - ARC_INS_MPY - mpy.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2814,7 +2814,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* C */
   { 0 }
 }},
-{ /* ARC_OR_cc_f_rru6 (572) - ARC_INS_OR_ - or.${cc}.f	$A, $B, $U6 */
+{ /* ARC_OR_cc_f_rru6 (572) - ARC_INS_OR - or.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2822,7 +2822,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_OR_cc_rru6 (573) - ARC_INS_OR_ - or.$cc	$A, $B, $U6 */
+{ /* ARC_OR_cc_rru6 (573) - ARC_INS_OR - or.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2910,7 +2910,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_iAny, CS_DATA_TYPE_LAST } }, /* b3 */
   { 0 }
 }},
-{ /* ARC_ROR_cc_f_rru6 (587) - ARC_INS_ROR_ - ror.${cc}.f	$A, $B, $U6 */
+{ /* ARC_ROR_cc_f_rru6 (587) - ARC_INS_ROR - ror.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2918,7 +2918,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_ROR_cc_rru6 (588) - ARC_INS_ROR_ - ror.$cc	$A, $B, $U6 */
+{ /* ARC_ROR_cc_rru6 (588) - ARC_INS_ROR - ror.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2982,7 +2982,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_RSUB_cc_f_rru6 (597) - ARC_INS_RSUB_ - rsub.${cc}.f	$A, $B, $U6 */
+{ /* ARC_RSUB_cc_f_rru6 (597) - ARC_INS_RSUB - rsub.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -2990,7 +2990,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_RSUB_cc_rru6 (598) - ARC_INS_RSUB_ - rsub.$cc	$A, $B, $U6 */
+{ /* ARC_RSUB_cc_rru6 (598) - ARC_INS_RSUB - rsub.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3054,7 +3054,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_SBC_cc_f_rru6 (607) - ARC_INS_SBC_ - sbc.${cc}.f	$A, $B, $U6 */
+{ /* ARC_SBC_cc_f_rru6 (607) - ARC_INS_SBC - sbc.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3062,7 +3062,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_SBC_cc_rru6 (608) - ARC_INS_SBC_ - sbc.$cc	$A, $B, $U6 */
+{ /* ARC_SBC_cc_rru6 (608) - ARC_INS_SBC - sbc.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3126,7 +3126,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_SETEQ_cc_f_rru6 (617) - ARC_INS_SETEQ_ - seteq.${cc}.f	$A, $B, $U6 */
+{ /* ARC_SETEQ_cc_f_rru6 (617) - ARC_INS_SETEQ - seteq.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3134,7 +3134,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_SETEQ_cc_rru6 (618) - ARC_INS_SETEQ_ - seteq.$cc	$A, $B, $U6 */
+{ /* ARC_SETEQ_cc_rru6 (618) - ARC_INS_SETEQ - seteq.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3468,7 +3468,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* addr - anonymous_7198 */
   { 0 }
 }},
-{ /* ARC_SUB1_cc_f_rru6 (666) - ARC_INS_SUB1_ - sub1.${cc}.f	$A, $B, $U6 */
+{ /* ARC_SUB1_cc_f_rru6 (666) - ARC_INS_SUB1 - sub1.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3476,7 +3476,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_SUB1_cc_rru6 (667) - ARC_INS_SUB1_ - sub1.$cc	$A, $B, $U6 */
+{ /* ARC_SUB1_cc_rru6 (667) - ARC_INS_SUB1 - sub1.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3540,7 +3540,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_SUB2_cc_f_rru6 (676) - ARC_INS_SUB2_ - sub2.${cc}.f	$A, $B, $U6 */
+{ /* ARC_SUB2_cc_f_rru6 (676) - ARC_INS_SUB2 - sub2.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3548,7 +3548,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_SUB2_cc_rru6 (677) - ARC_INS_SUB2_ - sub2.$cc	$A, $B, $U6 */
+{ /* ARC_SUB2_cc_rru6 (677) - ARC_INS_SUB2 - sub2.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3612,7 +3612,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_SUB3_cc_f_rru6 (686) - ARC_INS_SUB3_ - sub3.${cc}.f	$A, $B, $U6 */
+{ /* ARC_SUB3_cc_f_rru6 (686) - ARC_INS_SUB3 - sub3.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3620,7 +3620,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_SUB3_cc_rru6 (687) - ARC_INS_SUB3_ - sub3.$cc	$A, $B, $U6 */
+{ /* ARC_SUB3_cc_rru6 (687) - ARC_INS_SUB3 - sub3.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3704,7 +3704,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* u5 */
   { 0 }
 }},
-{ /* ARC_SUB_cc_f_rru6 (699) - ARC_INS_SUB_ - sub.${cc}.f	$A, $B, $U6 */
+{ /* ARC_SUB_cc_f_rru6 (699) - ARC_INS_SUB - sub.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3712,7 +3712,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_SUB_cc_rru6 (700) - ARC_INS_SUB_ - sub.$cc	$A, $B, $U6 */
+{ /* ARC_SUB_cc_rru6 (700) - ARC_INS_SUB - sub.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3776,7 +3776,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
   { 0 }
 }},
-{ /* ARC_XOR_cc_f_rru6 (709) - ARC_INS_XOR_ - xor.${cc}.f	$A, $B, $U6 */
+{ /* ARC_XOR_cc_f_rru6 (709) - ARC_INS_XOR - xor.${cc}.f	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */
@@ -3784,7 +3784,7 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* B */
   { 0 }
 }},
-{ /* ARC_XOR_cc_rru6 (710) - ARC_INS_XOR_ - xor.$cc	$A, $B, $U6 */
+{ /* ARC_XOR_cc_rru6 (710) - ARC_INS_XOR - xor.$cc	$A, $B, $U6 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* A */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* U6 */

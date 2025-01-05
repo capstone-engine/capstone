@@ -227,7 +227,7 @@ void ARC_add_cs_detail(MCInst *MI, int op_group,
 	switch (op_group) {
 	default:
 		printf("ERROR: Operand group %d not handled!\n", op_group);
-		assert(0);
+		CS_ASSERT_RET(0);
 	case ARC_OP_GROUP_Operand:
 		if (op_type == CS_OP_IMM) {
 			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,

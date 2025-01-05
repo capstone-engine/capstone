@@ -1910,7 +1910,7 @@
 },
 {
   /* # ADJCALLSTACKDOWN $amt, $amt2 */
-  ARC_ADJCALLSTACKDOWN /* 271 */, ARC_INS_SHEBANG,
+  ARC_ADJCALLSTACKDOWN /* 271 */, ARC_INS_h,
   #ifndef CAPSTONE_DIET
     { ARC_REG_SP, 0 }, { ARC_REG_SP, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -1918,7 +1918,7 @@
 },
 {
   /* # ADJCALLSTACKUP $amt1 */
-  ARC_ADJCALLSTACKUP /* 272 */, ARC_INS_SHEBANG,
+  ARC_ADJCALLSTACKUP /* 272 */, ARC_INS_h,
   #ifndef CAPSTONE_DIET
     { ARC_REG_SP, 0 }, { ARC_REG_SP, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -1990,7 +1990,7 @@
 },
 {
   /* adc.${cc}.f	$A, $B, $U6 */
-  ARC_ADC_cc_f_rru6 /* 281 */, ARC_INS_ADC_,
+  ARC_ADC_cc_f_rru6 /* 281 */, ARC_INS_ADC,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -1998,7 +1998,7 @@
 },
 {
   /* adc.$cc	$A, $B, $U6 */
-  ARC_ADC_cc_rru6 /* 282 */, ARC_INS_ADC_,
+  ARC_ADC_cc_rru6 /* 282 */, ARC_INS_ADC,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -2134,7 +2134,7 @@
 },
 {
   /* add.${cc}.f	$A, $B, $U6 */
-  ARC_ADD_cc_f_rru6 /* 299 */, ARC_INS_ADD_,
+  ARC_ADD_cc_f_rru6 /* 299 */, ARC_INS_ADD,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -2142,7 +2142,7 @@
 },
 {
   /* add.$cc	$A, $B, $U6 */
-  ARC_ADD_cc_rru6 /* 300 */, ARC_INS_ADD_,
+  ARC_ADD_cc_rru6 /* 300 */, ARC_INS_ADD,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -2214,7 +2214,7 @@
 },
 {
   /* and.${cc}.f	$A, $B, $U6 */
-  ARC_AND_cc_f_rru6 /* 309 */, ARC_INS_AND_,
+  ARC_AND_cc_f_rru6 /* 309 */, ARC_INS_AND,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -2222,7 +2222,7 @@
 },
 {
   /* and.$cc	$A, $B, $U6 */
-  ARC_AND_cc_rru6 /* 310 */, ARC_INS_AND_,
+  ARC_AND_cc_rru6 /* 310 */, ARC_INS_AND,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -2310,7 +2310,7 @@
 },
 {
   /* asl.${cc}.f	$A, $B, $U6 */
-  ARC_ASL_cc_f_rru6 /* 321 */, ARC_INS_ASL_,
+  ARC_ASL_cc_f_rru6 /* 321 */, ARC_INS_ASL,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -2318,7 +2318,7 @@
 },
 {
   /* asl.$cc	$A, $B, $U6 */
-  ARC_ASL_cc_rru6 /* 322 */, ARC_INS_ASL_,
+  ARC_ASL_cc_rru6 /* 322 */, ARC_INS_ASL,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -2406,7 +2406,7 @@
 },
 {
   /* asr.${cc}.f	$A, $B, $U6 */
-  ARC_ASR_cc_f_rru6 /* 333 */, ARC_INS_ASR_,
+  ARC_ASR_cc_f_rru6 /* 333 */, ARC_INS_ASR,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -2414,7 +2414,7 @@
 },
 {
   /* asr.$cc	$A, $B, $U6 */
-  ARC_ASR_cc_rru6 /* 334 */, ARC_INS_ASR_,
+  ARC_ASR_cc_rru6 /* 334 */, ARC_INS_ASR,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -3702,7 +3702,7 @@
 },
 {
   /* lsr.${cc}.f	$A, $B, $U6 */
-  ARC_LSR_cc_f_rru6 /* 495 */, ARC_INS_LSR_,
+  ARC_LSR_cc_f_rru6 /* 495 */, ARC_INS_LSR,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -3710,7 +3710,7 @@
 },
 {
   /* lsr.$cc	$A, $B, $U6 */
-  ARC_LSR_cc_rru6 /* 496 */, ARC_INS_LSR_,
+  ARC_LSR_cc_rru6 /* 496 */, ARC_INS_LSR,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -3782,7 +3782,7 @@
 },
 {
   /* max.${cc}.f	$A, $B, $U6 */
-  ARC_MAX_cc_f_rru6 /* 505 */, ARC_INS_MAX_,
+  ARC_MAX_cc_f_rru6 /* 505 */, ARC_INS_MAX,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -3790,7 +3790,7 @@
 },
 {
   /* max.$cc	$A, $B, $U6 */
-  ARC_MAX_cc_rru6 /* 506 */, ARC_INS_MAX_,
+  ARC_MAX_cc_rru6 /* 506 */, ARC_INS_MAX,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -3862,7 +3862,7 @@
 },
 {
   /* min.${cc}.f	$A, $B, $U6 */
-  ARC_MIN_cc_f_rru6 /* 515 */, ARC_INS_MIN_,
+  ARC_MIN_cc_f_rru6 /* 515 */, ARC_INS_MIN,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -3870,7 +3870,7 @@
 },
 {
   /* min.$cc	$A, $B, $U6 */
-  ARC_MIN_cc_rru6 /* 516 */, ARC_INS_MIN_,
+  ARC_MIN_cc_rru6 /* 516 */, ARC_INS_MIN,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -3982,7 +3982,7 @@
 },
 {
   /* mov.$cc	$B, $C */
-  ARC_MOV_cc /* 530 */, ARC_INS_MOV_,
+  ARC_MOV_cc /* 530 */, ARC_INS_MOV,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -3990,7 +3990,7 @@
 },
 {
   /* mov.${cc}.f	$B, $C */
-  ARC_MOV_cc_f_ru6 /* 531 */, ARC_INS_MOV_,
+  ARC_MOV_cc_f_ru6 /* 531 */, ARC_INS_MOV,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -3998,7 +3998,7 @@
 },
 {
   /* mov.$cc	$B, $C */
-  ARC_MOV_cc_ru6 /* 532 */, ARC_INS_MOV_,
+  ARC_MOV_cc_ru6 /* 532 */, ARC_INS_MOV,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4046,7 +4046,7 @@
 },
 {
   /* mpymu.${cc}.f	$A, $B, $U6 */
-  ARC_MPYMU_cc_f_rru6 /* 538 */, ARC_INS_MPYMU_,
+  ARC_MPYMU_cc_f_rru6 /* 538 */, ARC_INS_MPYMU,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4054,7 +4054,7 @@
 },
 {
   /* mpymu.$cc	$A, $B, $U6 */
-  ARC_MPYMU_cc_rru6 /* 539 */, ARC_INS_MPYMU_,
+  ARC_MPYMU_cc_rru6 /* 539 */, ARC_INS_MPYMU,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4126,7 +4126,7 @@
 },
 {
   /* mpym.${cc}.f	$A, $B, $U6 */
-  ARC_MPYM_cc_f_rru6 /* 548 */, ARC_INS_MPYM_,
+  ARC_MPYM_cc_f_rru6 /* 548 */, ARC_INS_MPYM,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4134,7 +4134,7 @@
 },
 {
   /* mpym.$cc	$A, $B, $U6 */
-  ARC_MPYM_cc_rru6 /* 549 */, ARC_INS_MPYM_,
+  ARC_MPYM_cc_rru6 /* 549 */, ARC_INS_MPYM,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4206,7 +4206,7 @@
 },
 {
   /* mpy.${cc}.f	$A, $B, $U6 */
-  ARC_MPY_cc_f_rru6 /* 558 */, ARC_INS_MPY_,
+  ARC_MPY_cc_f_rru6 /* 558 */, ARC_INS_MPY,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4214,7 +4214,7 @@
 },
 {
   /* mpy.$cc	$A, $B, $U6 */
-  ARC_MPY_cc_rru6 /* 559 */, ARC_INS_MPY_,
+  ARC_MPY_cc_rru6 /* 559 */, ARC_INS_MPY,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4318,7 +4318,7 @@
 },
 {
   /* or.${cc}.f	$A, $B, $U6 */
-  ARC_OR_cc_f_rru6 /* 572 */, ARC_INS_OR_,
+  ARC_OR_cc_f_rru6 /* 572 */, ARC_INS_OR,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4326,7 +4326,7 @@
 },
 {
   /* or.$cc	$A, $B, $U6 */
-  ARC_OR_cc_rru6 /* 573 */, ARC_INS_OR_,
+  ARC_OR_cc_rru6 /* 573 */, ARC_INS_OR,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4438,7 +4438,7 @@
 },
 {
   /* ror.${cc}.f	$A, $B, $U6 */
-  ARC_ROR_cc_f_rru6 /* 587 */, ARC_INS_ROR_,
+  ARC_ROR_cc_f_rru6 /* 587 */, ARC_INS_ROR,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4446,7 +4446,7 @@
 },
 {
   /* ror.$cc	$A, $B, $U6 */
-  ARC_ROR_cc_rru6 /* 588 */, ARC_INS_ROR_,
+  ARC_ROR_cc_rru6 /* 588 */, ARC_INS_ROR,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4518,7 +4518,7 @@
 },
 {
   /* rsub.${cc}.f	$A, $B, $U6 */
-  ARC_RSUB_cc_f_rru6 /* 597 */, ARC_INS_RSUB_,
+  ARC_RSUB_cc_f_rru6 /* 597 */, ARC_INS_RSUB,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4526,7 +4526,7 @@
 },
 {
   /* rsub.$cc	$A, $B, $U6 */
-  ARC_RSUB_cc_rru6 /* 598 */, ARC_INS_RSUB_,
+  ARC_RSUB_cc_rru6 /* 598 */, ARC_INS_RSUB,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4598,7 +4598,7 @@
 },
 {
   /* sbc.${cc}.f	$A, $B, $U6 */
-  ARC_SBC_cc_f_rru6 /* 607 */, ARC_INS_SBC_,
+  ARC_SBC_cc_f_rru6 /* 607 */, ARC_INS_SBC,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4606,7 +4606,7 @@
 },
 {
   /* sbc.$cc	$A, $B, $U6 */
-  ARC_SBC_cc_rru6 /* 608 */, ARC_INS_SBC_,
+  ARC_SBC_cc_rru6 /* 608 */, ARC_INS_SBC,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4678,7 +4678,7 @@
 },
 {
   /* seteq.${cc}.f	$A, $B, $U6 */
-  ARC_SETEQ_cc_f_rru6 /* 617 */, ARC_INS_SETEQ_,
+  ARC_SETEQ_cc_f_rru6 /* 617 */, ARC_INS_SETEQ,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -4686,7 +4686,7 @@
 },
 {
   /* seteq.$cc	$A, $B, $U6 */
-  ARC_SETEQ_cc_rru6 /* 618 */, ARC_INS_SETEQ_,
+  ARC_SETEQ_cc_rru6 /* 618 */, ARC_INS_SETEQ,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -5070,7 +5070,7 @@
 },
 {
   /* sub1.${cc}.f	$A, $B, $U6 */
-  ARC_SUB1_cc_f_rru6 /* 666 */, ARC_INS_SUB1_,
+  ARC_SUB1_cc_f_rru6 /* 666 */, ARC_INS_SUB1,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -5078,7 +5078,7 @@
 },
 {
   /* sub1.$cc	$A, $B, $U6 */
-  ARC_SUB1_cc_rru6 /* 667 */, ARC_INS_SUB1_,
+  ARC_SUB1_cc_rru6 /* 667 */, ARC_INS_SUB1,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -5150,7 +5150,7 @@
 },
 {
   /* sub2.${cc}.f	$A, $B, $U6 */
-  ARC_SUB2_cc_f_rru6 /* 676 */, ARC_INS_SUB2_,
+  ARC_SUB2_cc_f_rru6 /* 676 */, ARC_INS_SUB2,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -5158,7 +5158,7 @@
 },
 {
   /* sub2.$cc	$A, $B, $U6 */
-  ARC_SUB2_cc_rru6 /* 677 */, ARC_INS_SUB2_,
+  ARC_SUB2_cc_rru6 /* 677 */, ARC_INS_SUB2,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -5230,7 +5230,7 @@
 },
 {
   /* sub3.${cc}.f	$A, $B, $U6 */
-  ARC_SUB3_cc_f_rru6 /* 686 */, ARC_INS_SUB3_,
+  ARC_SUB3_cc_f_rru6 /* 686 */, ARC_INS_SUB3,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -5238,7 +5238,7 @@
 },
 {
   /* sub3.$cc	$A, $B, $U6 */
-  ARC_SUB3_cc_rru6 /* 687 */, ARC_INS_SUB3_,
+  ARC_SUB3_cc_rru6 /* 687 */, ARC_INS_SUB3,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -5334,7 +5334,7 @@
 },
 {
   /* sub.${cc}.f	$A, $B, $U6 */
-  ARC_SUB_cc_f_rru6 /* 699 */, ARC_INS_SUB_,
+  ARC_SUB_cc_f_rru6 /* 699 */, ARC_INS_SUB,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -5342,7 +5342,7 @@
 },
 {
   /* sub.$cc	$A, $B, $U6 */
-  ARC_SUB_cc_rru6 /* 700 */, ARC_INS_SUB_,
+  ARC_SUB_cc_rru6 /* 700 */, ARC_INS_SUB,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -5414,7 +5414,7 @@
 },
 {
   /* xor.${cc}.f	$A, $B, $U6 */
-  ARC_XOR_cc_f_rru6 /* 709 */, ARC_INS_XOR_,
+  ARC_XOR_cc_f_rru6 /* 709 */, ARC_INS_XOR,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { ARC_REG_STATUS32, 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -5422,7 +5422,7 @@
 },
 {
   /* xor.$cc	$A, $B, $U6 */
-  ARC_XOR_cc_rru6 /* 710 */, ARC_INS_XOR_,
+  ARC_XOR_cc_rru6 /* 710 */, ARC_INS_XOR,
   #ifndef CAPSTONE_DIET
     { ARC_REG_STATUS32, 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
