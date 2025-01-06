@@ -1,7 +1,7 @@
 test_cases:
   -
     input:
-      bytes: [ 0x4b, 0x00, 0x00, 0x00 ]
+      bytes: [ 0x4b, 0x00, 0x01, 0x00 ]
       arch: "CS_ARCH_TRICORE"
       options: [ "CS_MODE_TRICORE_131" ]
     expected:

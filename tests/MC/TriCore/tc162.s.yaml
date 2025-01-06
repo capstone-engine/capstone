@@ -1036,7 +1036,7 @@ test_cases:
           asm_text: "cmovn d0, d15, #0"
   -
     input:
-      bytes: [ 0x4b, 0x00, 0x00, 0x00 ]
+      bytes: [ 0x4b, 0x00, 0x01, 0x00 ]
       arch: "CS_ARCH_TRICORE"
       options: [ "CS_MODE_TRICORE_162" ]
     expected:

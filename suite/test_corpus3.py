@@ -81,6 +81,7 @@ def test_file(fname):
         "CS_MODE_TRICORE_160": CS_MODE_TRICORE_160,
         "CS_MODE_TRICORE_161": CS_MODE_TRICORE_161,
         "CS_MODE_TRICORE_162": CS_MODE_TRICORE_162,
+        "CS_MODE_TRICORE_180": CS_MODE_TRICORE_180,
         "CS_MODE_BIG_ENDIAN+CS_MODE_QPX": CS_MODE_BIG_ENDIAN+CS_MODE_QPX,
         "CS_MODE_HPPA_11": CS_MODE_HPPA_11,
         "CS_MODE_HPPA_20": CS_MODE_HPPA_20,
@@ -134,6 +135,7 @@ def test_file(fname):
         ("CS_ARCH_ALPHA", "CS_MODE_BIG_ENDIAN"): 56,
         ("CS_ARCH_HPPA", "CS_MODE_HPPA_11+CS_MODE_BIG_ENDIAN"): 57,
         ("CS_ARCH_HPPA", "CS_MODE_HPPA_20+CS_MODE_BIG_ENDIAN"): 58,
+        ("CS_ARCH_TRICORE", "CS_MODE_TRICORE_180"): 59,
     }
 
     # if not option in ('', 'None'):

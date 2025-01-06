@@ -22,6 +22,8 @@
   "abss.h", // TRICORE_INS_ABSS_H
   "abss", // TRICORE_INS_ABSS
   "abs.b", // TRICORE_INS_ABS_B
+  "abs.df", // TRICORE_INS_ABS_DF
+  "abs.f", // TRICORE_INS_ABS_F
   "abs.h", // TRICORE_INS_ABS_H
   "abs", // TRICORE_INS_ABS
   "addc", // TRICORE_INS_ADDC
@@ -39,6 +41,7 @@
   "addx", // TRICORE_INS_ADDX
   "add.a", // TRICORE_INS_ADD_A
   "add.b", // TRICORE_INS_ADD_B
+  "add.df", // TRICORE_INS_ADD_DF
   "add.f", // TRICORE_INS_ADD_F
   "add.h", // TRICORE_INS_ADD_H
   "add", // TRICORE_INS_ADD
@@ -84,6 +87,7 @@
   "cmovn", // TRICORE_INS_CMOVN
   "cmov", // TRICORE_INS_CMOV
   "cmpswap.w", // TRICORE_INS_CMPSWAP_W
+  "cmp.df", // TRICORE_INS_CMP_DF
   "cmp.f", // TRICORE_INS_CMP_F
   "crc32b.w", // TRICORE_INS_CRC32B_W
   "crc32l.w", // TRICORE_INS_CRC32L_W
@@ -95,8 +99,19 @@
   "csub", // TRICORE_INS_CSUB
   "debug", // TRICORE_INS_DEBUG
   "dextr", // TRICORE_INS_DEXTR
+  "dftof", // TRICORE_INS_DFTOF
+  "dftoin", // TRICORE_INS_DFTOIN
+  "dftoiz", // TRICORE_INS_DFTOIZ
+  "dftoi", // TRICORE_INS_DFTOI
+  "dftolz", // TRICORE_INS_DFTOLZ
+  "dftol", // TRICORE_INS_DFTOL
+  "dftoulz", // TRICORE_INS_DFTOULZ
+  "dftoul", // TRICORE_INS_DFTOUL
+  "dftouz", // TRICORE_INS_DFTOUZ
+  "dftou", // TRICORE_INS_DFTOU
   "difsc.a", // TRICORE_INS_DIFSC_A
   "disable", // TRICORE_INS_DISABLE
+  "div.df", // TRICORE_INS_DIV_DF
   "div.f", // TRICORE_INS_DIV_F
   "div.u", // TRICORE_INS_DIV_U
   "div", // TRICORE_INS_DIV
@@ -125,7 +140,9 @@
   "fcalli", // TRICORE_INS_FCALLI
   "fcall", // TRICORE_INS_FCALL
   "fret", // TRICORE_INS_FRET
+  "ftodf", // TRICORE_INS_FTODF
   "ftohp", // TRICORE_INS_FTOHP
+  "ftoin", // TRICORE_INS_FTOIN
   "ftoiz", // TRICORE_INS_FTOIZ
   "ftoi", // TRICORE_INS_FTOI
   "ftoq31z", // TRICORE_INS_FTOQ31Z
@@ -141,6 +158,7 @@
   "insn.t", // TRICORE_INS_INSN_T
   "ins.t", // TRICORE_INS_INS_T
   "isync", // TRICORE_INS_ISYNC
+  "itodf", // TRICORE_INS_ITODF
   "itof", // TRICORE_INS_ITOF
   "ixmax.u", // TRICORE_INS_IXMAX_U
   "ixmax", // TRICORE_INS_IXMAX
@@ -188,6 +206,7 @@
   "lha", // TRICORE_INS_LHA
   "loopu", // TRICORE_INS_LOOPU
   "loop", // TRICORE_INS_LOOP
+  "ltodf", // TRICORE_INS_LTODF
   "lt.a", // TRICORE_INS_LT_A
   "lt.b", // TRICORE_INS_LT_B
   "lt.bu", // TRICORE_INS_LT_BU
@@ -218,6 +237,7 @@
   "madds.q", // TRICORE_INS_MADDS_Q
   "madds.u", // TRICORE_INS_MADDS_U
   "madds", // TRICORE_INS_MADDS
+  "madd.df", // TRICORE_INS_MADD_DF
   "madd.f", // TRICORE_INS_MADD_F
   "madd.h", // TRICORE_INS_MADD_H
   "madd.q", // TRICORE_INS_MADD_Q
@@ -225,6 +245,8 @@
   "madd", // TRICORE_INS_MADD
   "max.b", // TRICORE_INS_MAX_B
   "max.bu", // TRICORE_INS_MAX_BU
+  "max.df", // TRICORE_INS_MAX_DF
+  "max.f", // TRICORE_INS_MAX_F
   "max.h", // TRICORE_INS_MAX_H
   "max.hu", // TRICORE_INS_MAX_HU
   "max.u", // TRICORE_INS_MAX_U
@@ -232,6 +254,8 @@
   "mfcr", // TRICORE_INS_MFCR
   "min.b", // TRICORE_INS_MIN_B
   "min.bu", // TRICORE_INS_MIN_BU
+  "min.df", // TRICORE_INS_MIN_DF
+  "min.f", // TRICORE_INS_MIN_F
   "min.h", // TRICORE_INS_MIN_H
   "min.hu", // TRICORE_INS_MIN_HU
   "min.u", // TRICORE_INS_MIN_U
@@ -265,6 +289,7 @@
   "msubs.q", // TRICORE_INS_MSUBS_Q
   "msubs.u", // TRICORE_INS_MSUBS_U
   "msubs", // TRICORE_INS_MSUBS
+  "msub.df", // TRICORE_INS_MSUB_DF
   "msub.f", // TRICORE_INS_MSUB_F
   "msub.h", // TRICORE_INS_MSUB_H
   "msub.q", // TRICORE_INS_MSUB_Q
@@ -279,6 +304,7 @@
   "mulr.q", // TRICORE_INS_MULR_Q
   "muls.u", // TRICORE_INS_MULS_U
   "muls", // TRICORE_INS_MULS
+  "mul.df", // TRICORE_INS_MUL_DF
   "mul.f", // TRICORE_INS_MUL_F
   "mul.h", // TRICORE_INS_MUL_H
   "mul.q", // TRICORE_INS_MUL_Q
@@ -286,6 +312,8 @@
   "mul", // TRICORE_INS_MUL
   "nand.t", // TRICORE_INS_NAND_T
   "nand", // TRICORE_INS_NAND
+  "neg.df", // TRICORE_INS_NEG_DF
+  "neg.f", // TRICORE_INS_NEG_F
   "nez.a", // TRICORE_INS_NEZ_A
   "ne.a", // TRICORE_INS_NE_A
   "ne", // TRICORE_INS_NE
@@ -311,6 +339,7 @@
   "parity", // TRICORE_INS_PARITY
   "popcnt.w", // TRICORE_INS_POPCNT_W
   "q31tof", // TRICORE_INS_Q31TOF
+  "qseed.df", // TRICORE_INS_QSEED_DF
   "qseed.f", // TRICORE_INS_QSEED_F
   "restore", // TRICORE_INS_RESTORE
   "ret", // TRICORE_INS_RET
@@ -372,6 +401,7 @@
   "subx", // TRICORE_INS_SUBX
   "sub.a", // TRICORE_INS_SUB_A
   "sub.b", // TRICORE_INS_SUB_B
+  "sub.df", // TRICORE_INS_SUB_DF
   "sub.f", // TRICORE_INS_SUB_F
   "sub.h", // TRICORE_INS_SUB_H
   "sub", // TRICORE_INS_SUB
@@ -388,8 +418,10 @@
   "tlbprobe.i", // TRICORE_INS_TLBPROBE_I
   "trapsv", // TRICORE_INS_TRAPSV
   "trapv", // TRICORE_INS_TRAPV
+  "ultodf", // TRICORE_INS_ULTODF
   "unpack", // TRICORE_INS_UNPACK
   "updfl", // TRICORE_INS_UPDFL
+  "utodf", // TRICORE_INS_UTODF
   "utof", // TRICORE_INS_UTOF
   "wait", // TRICORE_INS_WAIT
   "xnor.t", // TRICORE_INS_XNOR_T

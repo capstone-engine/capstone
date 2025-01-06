@@ -380,6 +380,12 @@ struct platform platforms[] = {
 				"tc162"
 		},
 		{
+				CS_ARCH_TRICORE,
+				CS_MODE_32 | CS_MODE_BIG_ENDIAN | CS_MODE_TRICORE_180,
+				"TRICORE",
+				"tc180"
+		},
+		{
 				CS_ARCH_XTENSA,
 				CS_MODE_XTENSA_ESP32,
 				"XTENSA ESP32",

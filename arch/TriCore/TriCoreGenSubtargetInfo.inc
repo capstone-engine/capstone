@@ -22,17 +22,19 @@ enum {
   TriCore_HasV160Ops = 4,
   TriCore_HasV161Ops = 5,
   TriCore_HasV162Ops = 6,
-  TriCore_TRICORE_PCP = 7,
-  TriCore_TRICORE_PCP2 = 8,
-  TriCore_TRICORE_RIDER_A = 9,
-  TriCore_TRICORE_V1_1 = 10,
-  TriCore_TRICORE_V1_2 = 11,
-  TriCore_TRICORE_V1_3 = 12,
-  TriCore_TRICORE_V1_3_1 = 13,
-  TriCore_TRICORE_V1_6 = 14,
-  TriCore_TRICORE_V1_6_1 = 15,
-  TriCore_TRICORE_V1_6_2 = 16,
-  TriCore_NumSubtargetFeatures = 17
+  TriCore_HasV180Ops = 7,
+  TriCore_TRICORE_PCP = 8,
+  TriCore_TRICORE_PCP2 = 9,
+  TriCore_TRICORE_RIDER_A = 10,
+  TriCore_TRICORE_V1_1 = 11,
+  TriCore_TRICORE_V1_2 = 12,
+  TriCore_TRICORE_V1_3 = 13,
+  TriCore_TRICORE_V1_3_1 = 14,
+  TriCore_TRICORE_V1_6 = 15,
+  TriCore_TRICORE_V1_6_1 = 16,
+  TriCore_TRICORE_V1_6_2 = 17,
+  TriCore_TRICORE_V1_8_0 = 18,
+  TriCore_NumSubtargetFeatures = 19
 };
 #endif // GET_SUBTARGETINFO_ENUM
 

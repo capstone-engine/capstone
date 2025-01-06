@@ -233,6 +233,7 @@ static struct {
 	{ "tc160", "Tricore V1.6", CS_ARCH_TRICORE, CS_MODE_TRICORE_160 },
 	{ "tc161", "Tricore V1.6.1", CS_ARCH_TRICORE, CS_MODE_TRICORE_161 },
 	{ "tc162", "Tricore V1.6.2", CS_ARCH_TRICORE, CS_MODE_TRICORE_162 },
+	{ "tc180", "Tricore V1.8.0", CS_ARCH_TRICORE, CS_MODE_TRICORE_180 },
 
 	{ "loongarch32", "LoongArch 32-bit", CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH32 },
 	{ "loongarch64", "LoongArch 64-bit", CS_ARCH_LOONGARCH, CS_MODE_LOONGARCH64 },
