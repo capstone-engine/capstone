@@ -15,20 +15,21 @@ jobs:
       with:
         submodules: true
 
-    - name: Make setup.sh and check_capstone.sh are executable
+    - name: Configure CMake and build the project
       run: |
-        chmod +x ./packages/deb/setup.sh
-        chmod +x ./packages/deb/check_capstone.sh
-      
-    - name: Build Debian Package
-      working-directory: ./packages/deb
-      run: ./setup.sh ${{ github.event.release.tag_name }}
-  
-    - name: Run sanity checks on the Debian package
-      working-directory: ./packages/deb
+        cmake -B build \
+        -DPROJECT_VERSION=${{ github.event.release.tag_name }} \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=1 \
+        -DCMAKE_INSTALL_PREFIX=/usr
+        cmake --build build
+
+    - name: Package DEB and RPM package
       run: |
-        ./check_capstone.sh ./libcapstone-dev_${{ github.event.release.tag_name }}_amd64.deb
-    
+        cd build
+        cpack -G DEB
+        cpack -G RPM
+
     - name: Upload debian package to release
       uses: softprops/action-gh-release@v2
       env:
@@ -36,7 +37,8 @@ jobs:
       with:
         tag_name: ${{ github.event.release.tag_name }}
         files: |
-          ./packages/deb/*.deb
+          ./build/*.deb
+          ./build/*.rpm
 
     - name: archive
       id: archive
