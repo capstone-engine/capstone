@@ -309,3 +309,43 @@ test_cases:
       insns:
         -
           asm_text: "ftodf e2, d5"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x04, 0x02, 0x22 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_180" ]
+    expected:
+      insns:
+        -
+          asm_text: "div64 e2, e4, e0"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x04, 0x12, 0x22 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_180" ]
+    expected:
+      insns:
+        -
+          asm_text: "div64.u e2, e4, e0"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x04, 0x42, 0x23 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_180" ]
+    expected:
+      insns:
+        -
+          asm_text: "rem64 e2, e4, e0"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x04, 0x52, 0x23 ]
+      arch: "CS_ARCH_TRICORE"
+      options: [ "CS_MODE_TRICORE_180" ]
+    expected:
+      insns:
+        -
+          asm_text: "rem64.u e2, e4, e0"

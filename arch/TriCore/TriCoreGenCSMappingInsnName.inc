@@ -111,6 +111,8 @@
   "dftou", // TRICORE_INS_DFTOU
   "difsc.a", // TRICORE_INS_DIFSC_A
   "disable", // TRICORE_INS_DISABLE
+  "div64.u", // TRICORE_INS_DIV64_U
+  "div64", // TRICORE_INS_DIV64
   "div.df", // TRICORE_INS_DIV_DF
   "div.f", // TRICORE_INS_DIV_F
   "div.u", // TRICORE_INS_DIV_U
@@ -341,6 +343,8 @@
   "q31tof", // TRICORE_INS_Q31TOF
   "qseed.df", // TRICORE_INS_QSEED_DF
   "qseed.f", // TRICORE_INS_QSEED_F
+  "rem64.u", // TRICORE_INS_REM64_U
+  "rem64", // TRICORE_INS_REM64
   "restore", // TRICORE_INS_RESTORE
   "ret", // TRICORE_INS_RET
   "rfe", // TRICORE_INS_RFE
