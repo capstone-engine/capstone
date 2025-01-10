@@ -360,7 +360,7 @@ typedef struct cs_x86 {
 	/// AVX Suppress all Exception
 	bool avx_sae;
 
-	/// AVX static rounding mode
+	/// AVX embedded rounding mode
 	x86_avx_rm avx_rm;
 
 	
