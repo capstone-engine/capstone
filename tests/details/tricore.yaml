@@ -624,3 +624,631 @@ test_cases:
                 - type: TRICORE_OP_REG
                   reg: d0
                   access: CS_AC_READ
+
+  - input:
+      bytes: [ 0x6b, 0x04, 0x22, 0x02 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "add.df e0, e2, e4"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x6b, 0x04, 0x32, 0x02 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "sub.df e0, e2, e4"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x6b, 0x20, 0x62, 0x64 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "madd.df e6, e4, e0, e2"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e6
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x6b, 0x20, 0x72, 0x64 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "msub.df e6, e4, e0, e2"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e6
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x42, 0x42, 0x00 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "mul.df e0, e2, e4"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x20, 0x52, 0x40 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "div.df e4, e0, e2"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x20, 0x02, 0x40 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "cmp.df d4, e0, e2"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d4
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x20, 0x22, 0x43 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "max.df e4, e0, e2"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x20, 0x32, 0x43 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "min.df e4, e0, e2"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x20, 0x31, 0x43 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "min.f d4, d0, d2"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d4
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: d0
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: d2
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x20, 0x21, 0x43 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "max.f d4, d0, d2"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d4
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: d0
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: d2
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x0a, 0x02, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "dftoi d2, e10"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e10
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x0a, 0x32, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "dftoiz d2, e10"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e10
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x0a, 0x72, 0x23 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "dftoin d2, e10"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e10
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x0a, 0x71, 0x23 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "ftoin d2, d10"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: d10
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x0a, 0x22, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "dftou d2, e10"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e10
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x0a, 0x72, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "dftouz d2, e10"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e10
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x00, 0xa2, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "dftol e2, e0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x00, 0xe2, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "dftoul e2, e0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x00, 0xf2, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "dftoulz e2, e0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x01, 0x01, 0x43 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "abs.f d4, d1"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d4
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: d1
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x02, 0x02, 0x43 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "abs.df e4, e2"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x0a, 0xb2, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "dftolz e2, e10"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e10
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x0a, 0x12, 0x23 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "neg.df e2, e10"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e10
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x0a, 0x11, 0x23 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "neg.f d2, d10"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: d10
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x00, 0x92, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "qseed.df e2, e0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x00, 0x42, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "itodf e2, d0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: d0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x00, 0x62, 0x21 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "utodf e2, d0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: d0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x00, 0x62, 0x22 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "ltodf e2, e0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x00, 0x72, 0x22 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "ultodf e2, e0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x02, 0x82, 0x12 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "dftof d1, e2"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: d1
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x05, 0x92, 0x22 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "ftodf e2, d5"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: d5
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x04, 0x02, 0x22 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "div64 e2, e4, e0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x04, 0x12, 0x22 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "div64.u e2, e4, e0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x04, 0x42, 0x23 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "rem64 e2, e4, e0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
+  - input:
+      bytes: [ 0x4b, 0x04, 0x52, 0x23 ]
+      arch: CS_ARCH_TRICORE
+      options: [ CS_MODE_TRICORE_180, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      - asm_text: "rem64.u e2, e4, e0"
+        details:
+          tricore:
+            operands:
+            - type: TRICORE_OP_REG
+              reg: e2
+              access: CS_AC_WRITE
+            - type: TRICORE_OP_REG
+              reg: e4
+              access: CS_AC_READ
+            - type: TRICORE_OP_REG
+              reg: e0
+              access: CS_AC_READ
