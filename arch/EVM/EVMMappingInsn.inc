@@ -1,5 +1,6 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh, 2018 */
+/* By Andelf, 2025 */
 
 { 0, 0, 0 }, // STOP
 { 2, 1, 3 }, // ADD
@@ -28,9 +29,9 @@
 { 2, 1, 3 }, // XOR
 { 1, 1, 3 }, // NOT
 { 2, 1, 3 }, // BYTE
-{ 0, 0, 0xffffffff }, // unused
-{ 0, 0, 0xffffffff }, // unused
-{ 0, 0, 0xffffffff }, // unused
+{ 2, 1, 3 }, // SHL
+{ 2, 1, 3 }, // SHR
+{ 2, 1, 3 }, // SAR
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
 { 2, 1, 30 }, // SHA3
@@ -71,11 +72,11 @@
 { 0, 1, 2 }, // NUMBER
 { 0, 1, 2 }, // DIFFICULTY
 { 0, 1, 2 }, // GASLIMIT
-{ 0, 0, 0xffffffff }, // unused
-{ 0, 0, 0xffffffff }, // unused
-{ 0, 0, 0xffffffff }, // unused
-{ 0, 0, 0xffffffff }, // unused
-{ 0, 0, 0xffffffff }, // unused
+{ 0, 1, 2 }, // CHAINID
+{ 0, 1, 5 }, // SELFBALANCE
+{ 0, 1, 2 }, // BASEFEE
+{ 0, 1, 3 }, // BLOBHASH
+{ 0, 1, 2 }, // BLOBBASEFEE
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
@@ -93,10 +94,10 @@
 { 0, 1, 2 }, // MSIZE
 { 0, 1, 2 }, // GAS
 { 0, 0, 1 }, // JUMPDEST
-{ 0, 0, 0xffffffff }, // unused
-{ 0, 0, 0xffffffff }, // unused
-{ 0, 0, 0xffffffff }, // unused
-{ 0, 0, 0xffffffff }, // unused
+{ 1, 1, 100 }, // TLOAD
+{ 2, 0, 100 }, // TSTORE
+{ 3, 0, 3 }, // MCOPY
+{ 0, 1, 3 }, // PUSH0
 { 0, 1, 3 }, // PUSH1
 { 0, 1, 3 }, // PUSH2
 { 0, 1, 3 }, // PUSH3
@@ -242,18 +243,18 @@
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
 { 3, 1, 32000 }, // CREATE
-{ 7, 1, 40 }, // CALL
-{ 7, 1, 40 }, // CALLCODE
+{ 7, 1, 100 }, // CALL
+{ 7, 1, 100 }, // CALLCODE
 { 2, 0, 0 }, // RETURN
-{ 6, 1, 40 }, // DELEGATECALL
-{ 7, 1, 40 }, // CALLBLACKBOX
+{ 6, 1, 100 }, // DELEGATECALL
+{ 4, 1, 32000 }, // CREATE2
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
-{ 6, 1, 40 }, // STATICCALL
+{ 6, 1, 100 }, // STATICCALL
 { 0, 0, 0xffffffff }, // unused
 { 0, 0, 0xffffffff }, // unused
 { 2, 0, 0 }, // REVERT
 { 0, 0, 0xffffffff }, // unused
-{ 1, 0, 0 }, // SUICIDE
+{ 1, 0, 5000 }, // SELFDESTRUCT

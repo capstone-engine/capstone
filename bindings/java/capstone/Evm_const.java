@@ -26,6 +26,9 @@ public class Evm_const {
 	public static final int EVM_INS_XOR = 24;
 	public static final int EVM_INS_NOT = 25;
 	public static final int EVM_INS_BYTE = 26;
+	public static final int EVM_INS_SHL = 27;
+	public static final int EVM_INS_SHR = 28;
+	public static final int EVM_INS_SAR = 29;
 	public static final int EVM_INS_SHA3 = 32;
 	public static final int EVM_INS_ADDRESS = 48;
 	public static final int EVM_INS_BALANCE = 49;
@@ -48,6 +51,11 @@ public class Evm_const {
 	public static final int EVM_INS_NUMBER = 67;
 	public static final int EVM_INS_DIFFICULTY = 68;
 	public static final int EVM_INS_GASLIMIT = 69;
+	public static final int EVM_INS_CHAINID = 70;
+	public static final int EVM_INS_SELFBALANCE = 71;
+	public static final int EVM_INS_BASEFEE = 72;
+	public static final int EVM_INS_BLOBHASH = 73;
+	public static final int EVM_INS_BLOBBASEFEE = 74;
 	public static final int EVM_INS_POP = 80;
 	public static final int EVM_INS_MLOAD = 81;
 	public static final int EVM_INS_MSTORE = 82;
@@ -60,6 +68,10 @@ public class Evm_const {
 	public static final int EVM_INS_MSIZE = 89;
 	public static final int EVM_INS_GAS = 90;
 	public static final int EVM_INS_JUMPDEST = 91;
+	public static final int EVM_INS_TLOAD = 92;
+	public static final int EVM_INS_TSTORE = 93;
+	public static final int EVM_INS_MCOPY = 94;
+	public static final int EVM_INS_PUSH0 = 95;
 	public static final int EVM_INS_PUSH1 = 96;
 	public static final int EVM_INS_PUSH2 = 97;
 	public static final int EVM_INS_PUSH3 = 98;
@@ -134,10 +146,10 @@ public class Evm_const {
 	public static final int EVM_INS_CALLCODE = 242;
 	public static final int EVM_INS_RETURN = 243;
 	public static final int EVM_INS_DELEGATECALL = 244;
-	public static final int EVM_INS_CALLBLACKBOX = 245;
+	public static final int EVM_INS_CREATE2 = 245;
 	public static final int EVM_INS_STATICCALL = 250;
 	public static final int EVM_INS_REVERT = 253;
-	public static final int EVM_INS_SUICIDE = 255;
+	public static final int EVM_INS_SELFDESTRUCT = 255;
 	public static final int EVM_INS_INVALID = 512;
 	public static final int EVM_INS_ENDING = 513;
 

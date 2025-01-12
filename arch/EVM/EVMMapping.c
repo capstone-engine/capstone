@@ -1,5 +1,6 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh, 2018 */
+/* By Andelf, 2025 */
 
 #ifdef CAPSTONE_HAS_EVM
 
@@ -73,9 +74,9 @@ static const name_map insn_name_maps[256] = {
 	{ EVM_INS_XOR, "xor" },
 	{ EVM_INS_NOT, "not" },
 	{ EVM_INS_BYTE, "byte" },
-	{ EVM_INS_INVALID, NULL },
-	{ EVM_INS_INVALID, NULL },
-	{ EVM_INS_INVALID, NULL },
+	{ EVM_INS_SHL, "shl" },
+	{ EVM_INS_SHR, "shr" },
+	{ EVM_INS_SAR, "sar" },
 	{ EVM_INS_INVALID, NULL },
 	{ EVM_INS_INVALID, NULL },
 	{ EVM_INS_SHA3, "sha3" },
@@ -116,11 +117,11 @@ static const name_map insn_name_maps[256] = {
 	{ EVM_INS_NUMBER, "number" },
 	{ EVM_INS_DIFFICULTY, "difficulty" },
 	{ EVM_INS_GASLIMIT, "gaslimit" },
-	{ EVM_INS_INVALID, NULL },
-	{ EVM_INS_INVALID, NULL },
-	{ EVM_INS_INVALID, NULL },
-	{ EVM_INS_INVALID, NULL },
-	{ EVM_INS_INVALID, NULL },
+	{ EVM_INS_CHAINID, "chainid" },
+	{ EVM_INS_SELFBALANCE, "selfbalance" },
+	{ EVM_INS_BASEFEE, "basefee" },
+	{ EVM_INS_BLOBHASH, "blobhash" },
+	{ EVM_INS_BLOBBASEFEE, "blobbasefee" },
 	{ EVM_INS_INVALID, NULL },
 	{ EVM_INS_INVALID, NULL },
 	{ EVM_INS_INVALID, NULL },
@@ -138,10 +139,10 @@ static const name_map insn_name_maps[256] = {
 	{ EVM_INS_MSIZE, "msize" },
 	{ EVM_INS_GAS, "gas" },
 	{ EVM_INS_JUMPDEST, "jumpdest" },
-	{ EVM_INS_INVALID, NULL },
-	{ EVM_INS_INVALID, NULL },
-	{ EVM_INS_INVALID, NULL },
-	{ EVM_INS_INVALID, NULL },
+	{ EVM_INS_TLOAD, "tload" },
+	{ EVM_INS_TSTORE, "tstore" },
+	{ EVM_INS_MCOPY, "mcopy" },
+	{ EVM_INS_PUSH0, "push0" },
 	{ EVM_INS_PUSH1, "push1" },
 	{ EVM_INS_PUSH2, "push2" },
 	{ EVM_INS_PUSH3, "push3" },
@@ -291,7 +292,7 @@ static const name_map insn_name_maps[256] = {
 	{ EVM_INS_CALLCODE, "callcode" },
 	{ EVM_INS_RETURN, "return" },
 	{ EVM_INS_DELEGATECALL, "delegatecall" },
-	{ EVM_INS_CALLBLACKBOX, "callblackbox" },
+	{ EVM_INS_CREATE2, "create2" },
 	{ EVM_INS_INVALID, NULL },
 	{ EVM_INS_INVALID, NULL },
 	{ EVM_INS_INVALID, NULL },
@@ -301,7 +302,7 @@ static const name_map insn_name_maps[256] = {
 	{ EVM_INS_INVALID, NULL },
 	{ EVM_INS_REVERT, "revert" },
 	{ EVM_INS_INVALID, NULL },
-	{ EVM_INS_SUICIDE, "suicide" },
+	{ EVM_INS_SELFDESTRUCT, "selfdestruct" },
 };
 #endif
 

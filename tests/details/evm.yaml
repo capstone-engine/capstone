@@ -21,4 +21,197 @@ test_cases:
             pop: 1
             fee: 2
           groups: [ EVM_GRP_STACK_READ ]
-
+  -
+    input:
+      bytes: [ 0x60, 0x80, 0x60, 0x40, 0x52, 0x60, 0x04, 0x36, 0x10, 0x61, 0x00, 0x2c, 0x57, 0x5f, 0x35 ]
+      arch: "evm"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "push1 80"
+        details:
+          evm:
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "push1 40"
+        details:
+          evm:
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "mstore"
+        details:
+          evm:
+            pop: 2
+            fee: 3
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_MEM_WRITE ]
+      -
+        asm_text: "push1 04"
+        details:
+          evm:
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "calldatasize"
+        details:
+          evm:
+            push: 1
+            fee: 2
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "lt"
+        details:
+          evm:
+            pop: 2
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "push2 002c"
+        details:
+          evm:
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "jumpi"
+        details:
+          evm:
+            pop: 2
+            fee: 10
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_JUMP ]
+      -
+        asm_text: "push0"
+        details:
+          evm:
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "calldataload"
+        details:
+          evm:
+            pop: 1
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_STACK_WRITE ]
+  -
+    input:
+      bytes: [ 0x5b, 0x5f, 0x1c, 0x47, 0x46, 0x15, 0x90, 0x20, 0x54, 0x42, 0x1a, 0x6d, 0x15, 0xc1, 0xfd, 0xdc, 0xd5, 0x55, 0x64, 0x73, 0x6f, 0x6c, 0x63, 0x43, 0x00, 0x08, 0x00, 0x33, 0xff ]
+      arch: "evm"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jumpdest"
+        details:
+          evm:
+            fee: 1
+      -
+        asm_text: "push0"
+        details:
+          evm:
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "shr"
+        details:
+          evm:
+            pop: 2
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_STACK_WRITE, EVM_GRP_MATH ]
+      -
+        asm_text: "selfbalance"
+        details:
+          evm:
+            push: 1
+            fee: 5
+          groups: [ EVM_GRP_STACK_WRITE ] 
+      -
+        asm_text: "chainid"
+        details:
+          evm:
+            push: 1
+            fee: 2
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "iszero"
+        details:
+          evm:
+            pop: 1
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "swap1"
+        details:
+          evm:
+            pop: 2
+            push: 2
+            fee: 3
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "sha3"
+        details:
+          evm:
+            pop: 2
+            push: 1
+            fee: 30
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "sload"
+        details:
+          evm:
+            pop: 1
+            push: 1
+            fee: 50
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_STACK_WRITE, EVM_GRP_STORE_READ ]
+      -
+        asm_text: "timestamp"
+        details:
+          evm:
+            push: 1
+            fee: 2
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "byte"
+        details:
+          evm:
+            pop: 2
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "push14 15c1fddcd55564736f6c63430008"
+        details:
+          evm:
+            push: 1
+            fee: 3
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "stop"
+        details:
+          groups: [ EVM_GRP_HALT ]
+      -
+        asm_text: "caller"
+        details:
+          evm:
+            push: 1
+            fee: 2
+          groups: [ EVM_GRP_STACK_WRITE ]
+      -
+        asm_text: "selfdestruct"
+        details:
+          evm:
+            pop: 1
+            fee: 5000
+          groups: [ EVM_GRP_STACK_READ, EVM_GRP_HALT ]
