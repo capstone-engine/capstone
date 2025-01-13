@@ -203,7 +203,6 @@ bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature)
 	}
 	case CS_MODE_TRICORE_180: {
 		return feature == TriCore_HasV180Ops;
-		return true;
 	}
 	default:
 		return false;
