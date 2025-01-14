@@ -149,9 +149,9 @@ public class Evm_const {
 	public static final int EVM_INS_CREATE2 = 245;
 	public static final int EVM_INS_STATICCALL = 250;
 	public static final int EVM_INS_REVERT = 253;
+	public static final int EVM_INS_INVALID = 254;
 	public static final int EVM_INS_SELFDESTRUCT = 255;
-	public static final int EVM_INS_INVALID = 512;
-	public static final int EVM_INS_ENDING = 513;
+	public static final int EVM_INS_ENDING = 256;
 
 	public static final int EVM_GRP_INVALID = 0;
 	public static final int EVM_GRP_JUMP = 1;

@@ -170,9 +170,9 @@ typedef enum evm_insn {
 	EVM_INS_CREATE2 = 245,
 	EVM_INS_STATICCALL = 250,
 	EVM_INS_REVERT = 253,
+	EVM_INS_INVALID = 254,
 	EVM_INS_SELFDESTRUCT = 255, // originally called SUICIDE
 
-	EVM_INS_INVALID = 512,
 	EVM_INS_ENDING,   // <-- mark the end of the list of instructions
 } evm_insn;
 
