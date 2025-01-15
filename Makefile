@@ -195,7 +195,7 @@ DEP_SYSZ += $(wildcard arch/SystemZ/SystemZ*.inc)
 
 LIBOBJ_SYSZ =
 ifneq (,$(findstring systemz,$(CAPSTONE_ARCHS)))
-	CFLAGS += -DCAPSTONE_HAS_SYSZ
+	CFLAGS += -DCAPSTONE_HAS_SYSTEMZ
 	LIBSRC_SYSZ += $(wildcard arch/SystemZ/SystemZ*.c)
 	LIBOBJ_SYSZ += $(LIBSRC_SYSZ:%.c=$(OBJDIR)/%.o)
 endif
