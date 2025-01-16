@@ -1,7 +1,17 @@
 This file details the changelog of Capstone.
 
 --------------------------------
-Version 5.0.2: August 20th, 2024
+Version 5.0.4: January 16th, 2025
+
+## What's Changed
+* [v5][SuperH] Fix missing setting detail->sh by @david942j in https://github.com/capstone-engine/capstone/pull/2465
+* tricore: fixes #2386 in v5 by @imbillow in https://github.com/capstone-engine/capstone/pull/2527
+* Creating a functional Debian Package for Capstone v5 by @AndrewQuijano in https://github.com/capstone-engine/capstone/pull/2569
+* Duplicate of #2590 for v5 Branch by @AndrewQuijano in https://github.com/capstone-engine/capstone/pull/2596
+* Update version to v5.0.4 by @kabeor in https://github.com/capstone-engine/capstone/pull/2604
+
+--------------------------------
+Version 5.0.3: August 20th, 2024
 
 ## What's Changed
 * [v5] Updates and fixes to the Python wheel builder workflow by @Rot127 in https://github.com/capstone-engine/capstone/pull/2440
