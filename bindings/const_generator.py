@@ -237,7 +237,7 @@ def gen(lang):
 
             if line.startswith('#define '):
                 line = line[8:]     #cut off define
-                xline = re.split('\s+', line, 1)     #split to at most 2 express
+                xline = re.split(r'\s+', line, 1)     #split to at most 2 express
                 if len(xline) != 2:
                     continue
                 if '(' in xline[0] or ')' in xline[0]:      #does it look like a function
@@ -261,7 +261,7 @@ def gen(lang):
                 # hacky: remove type cast (uint64_t)
                 t = t.replace('(uint64_t)', '')
                 t = re.sub(r'\((\d+)ULL << (\d+)\)', r'\1 << \2', t)    # (1ULL<<1) to 1 << 1
-                f = re.split('\s+', t)
+                f = re.split(r'\s+', t)
 
                 if not is_with_prefix(f[0]):
                     continue
