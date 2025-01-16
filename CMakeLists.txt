@@ -21,23 +21,9 @@ cmake_policy(SET CMP0042 NEW)
 # Enable support for MSVC_RUNTIME_LIBRARY
 cmake_policy(SET CMP0091 NEW)
 
-# Check if VERSION is provided externally, otherwise default to 5.0.3
-if(NOT DEFINED PROJECT_VERSION)
-    set(PROJECT_VERSION "5.0.4")
-endif()
-
-# Use PROJECT_VERSION directly for CPack
-set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
-
-# Remove the 'v' prefix if it exists and extract the major, minor, and patch versions
-string(REGEX MATCH "^[vV]?([0-9]+\\.[0-9]+\\.[0-9]+)" _ ${PROJECT_VERSION})
-set(PROJECT_VERSION_BASE ${CMAKE_MATCH_1})
-
-# Print the values of PROJECT_VERSION and PROJECT_VERSION_BASE
-message(STATUS "PROJECT_VERSION: ${CPACK_PACKAGE_VERSION} CAPSTONE_VERSION: ${PROJECT_VERSION_BASE}")
-
-# Set the project version without the pre-release identifier
-project(capstone VERSION ${PROJECT_VERSION_BASE})
+project(capstone
+    VERSION 5.0.4
+)
 
 if (MSVC)
     add_compile_options(/W1 /w14189)
