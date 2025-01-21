@@ -1,0 +1,18 @@
+#ifndef CAPSTONE_VERSION_H
+#define CAPSTONE_VERSION_H
+
+// Capstone API version
+#define CS_API_MAJOR @PROJECT_VERSION_MAJOR@
+#define CS_API_MINOR @PROJECT_VERSION_MINOR@
+#define CS_VERSION_EXTRA @PROJECT_VERSION_PATCH@
+
+// Version for bleeding edge code of the Github's "next" branch.
+// Use this if you want the absolutely latest development code.
+// This version number will be bumped up whenever we have a new major change.
+#define CS_NEXT_VERSION CS_API_MAJOR + 1
+
+// Capstone package version
+#define CS_VERSION_MAJOR CS_API_MAJOR
+#define CS_VERSION_MINOR CS_API_MINOR
+
+#endif // CAPSTONE_VERSION_H

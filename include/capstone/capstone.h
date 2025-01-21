@@ -3,6 +3,7 @@
 
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2016 */
+#include "version.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -46,20 +47,6 @@ extern "C" {
 #pragma message("WARNING: You need to implement CAPSTONE_DEPRECATED for this compiler")
 #define CAPSTONE_DEPRECATED
 #endif
-
-// Capstone API version
-#define CS_API_MAJOR 6
-#define CS_API_MINOR 0
-
-// Version for bleeding edge code of the Github's "next" branch.
-// Use this if you want the absolutely latest development code.
-// This version number will be bumped up whenever we have a new major change.
-#define CS_NEXT_VERSION 7
-
-// Capstone package version
-#define CS_VERSION_MAJOR CS_API_MAJOR
-#define CS_VERSION_MINOR CS_API_MINOR
-#define CS_VERSION_EXTRA 0
 
 /// Macro to create combined version which can be compared to
 /// result of cs_version() API.
