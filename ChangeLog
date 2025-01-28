@@ -1,6 +1,47 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-RC1: January 29th, 2025
+
+## What's Changed
+* Update Changelog Version to 6.0.0-Alpha2 by @kabeor in https://github.com/capstone-engine/capstone/pull/2553
+* PPC LLVM 18 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2540
+* Arm regressions by @Rot127 in https://github.com/capstone-engine/capstone/pull/2556
+* Python bindings: Enable more archs + bump cibuildwheel action to the v2.22.0 by @Antelox in https://github.com/capstone-engine/capstone/pull/2558
+* Add arm64 and sysz compatibility layer to Python bindings by @peace-maker in https://github.com/capstone-engine/capstone/pull/2559
+* Make thumb, v8 and m-class positional cstool arguments. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2557
+* Small arm64 compat header fixes by @satk0 in https://github.com/capstone-engine/capstone/pull/2563
+* PPC regressions by @Rot127 in https://github.com/capstone-engine/capstone/pull/2575
+* Fix 2572 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2574
+* Clean up the cstest documentation and build instructions. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2580
+* Update BPF arch by @Roeegg2 in https://github.com/capstone-engine/capstone/pull/2568
+* x86: update read/write registers for transfer instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2578
+* cstest: use DOWNLOAD_EXTRACT_TIMESTAMP conditionally by @hainest in https://github.com/capstone-engine/capstone/pull/2581
+* Capstone v6 now supports Debian Packaging by @AndrewQuijano in https://github.com/capstone-engine/capstone/pull/2579
+* Fix complex atomic instructions handling by @Roeegg2 in https://github.com/capstone-engine/capstone/pull/2584
+* Fix linking issue on Windows. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2587
+* Clarify between machine used vs. Capstone module affected. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2586
+* Fix LoongArch aliases and CS_OPT_SYNTAX_NO_DOLLAR support by @wargio in https://github.com/capstone-engine/capstone/pull/2594
+* Update Actions by @AndrewQuijano in https://github.com/capstone-engine/capstone/pull/2593
+* Downgrade labeler to v4 again due to failing CI. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2598
+* Delete Travis by @AndrewQuijano in https://github.com/capstone-engine/capstone/pull/2600
+* Implement CPack for Debian/RPM by @AndrewQuijano in https://github.com/capstone-engine/capstone/pull/2590
+* Add tricore tc1.8 instructions by @Changqing-JING in https://github.com/capstone-engine/capstone/pull/2595
+* Apply new EVM opcode updates by @andelf in https://github.com/capstone-engine/capstone/pull/2602
+* Fix SystemZ macro in Makefile by @Changqing-JING in https://github.com/capstone-engine/capstone/pull/2603
+* Rebased #2570 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2614
+
+## New Contributors
+* @satk0 made their first contribution in https://github.com/capstone-engine/capstone/pull/2563
+* @Roeegg2 made their first contribution in https://github.com/capstone-engine/capstone/pull/2568
+* @hainest made their first contribution in https://github.com/capstone-engine/capstone/pull/2578
+* @Changqing-JING made their first contribution in https://github.com/capstone-engine/capstone/pull/2595
+* @andelf made their first contribution in https://github.com/capstone-engine/capstone/pull/2602
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/6.0.0-Alpha2...6.0.0-RC1
+
+
+-----------------------------
 Version 6.0.0-Alpha2: November 24th, 2024
 
 ## What's Changed
