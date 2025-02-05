@@ -622,15 +622,6 @@ test_cases:
           asm_text: "bisr #0"
   -
     input:
-      bytes: [ 0xad, 0x00, 0x20, 0x00 ]
-      arch: "CS_ARCH_TRICORE"
-      options: [ "CS_MODE_TRICORE_161" ]
-    expected:
-      insns:
-        -
-          asm_text: "bisr #0"
-  -
-    input:
       bytes: [ 0x4b, 0x00, 0x10, 0x00 ]
       arch: "CS_ARCH_TRICORE"
       options: [ "CS_MODE_TRICORE_161" ]
@@ -5551,7 +5542,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "nor d0"
+          asm_text: "not d0"
   -
     input:
       bytes: [ 0x0f, 0x00, 0xb0, 0x00 ]

@@ -1711,28 +1711,6 @@ static bool getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		}
 		break;
 	}
-	case CS_MODE_TRICORE_161: {
-		if (decodeInstruction2_or_4(code, code_len, MI, size, address,
-					    NULL, DecoderTablev16132)) {
-			return true;
-		}
-		break;
-	}
-	case CS_MODE_TRICORE_162: {
-		if (decodeInstruction2_or_4(code, code_len, MI, size, address,
-					    DecoderTablev16216,
-					    DecoderTablev16232)) {
-			return true;
-		}
-		break;
-	}
-	case CS_MODE_TRICORE_180: {
-		if (decodeInstruction2_or_4(code, code_len, MI, size, address,
-					    NULL, DecoderTablev16232)) {
-			return true;
-		}
-		break;
-	}
 	default:
 		break;
 	}

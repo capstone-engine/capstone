@@ -3745,15 +3745,6 @@ test_cases:
           asm_text: "nop"
   -
     input:
-      bytes: [ 0x36, 0x00 ]
-      arch: "CS_ARCH_TRICORE"
-      options: [ "CS_MODE_TRICORE_110" ]
-    expected:
-      insns:
-        -
-          asm_text: "nor d0"
-  -
-    input:
       bytes: [ 0x0f, 0x00, 0xb0, 0x00 ]
       arch: "CS_ARCH_TRICORE"
       options: [ "CS_MODE_TRICORE_110" ]

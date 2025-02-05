@@ -788,7 +788,6 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     33559039U,	// AND_srr
     33559039U,	// AND_srr_v110
     9868U,	// BISR_rc
-    9868U,	// BISR_rc_v161
     13964U,	// BISR_sc
     13964U,	// BISR_sc_v110
     4640U,	// BMERGAE_rr_v110
@@ -1495,9 +1494,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     5985U,	// NOR_T
     536876674U,	// NOR_rc
     5762U,	// NOR_rr
-    333442U,	// NOR_sr
-    333442U,	// NOR_sr_v110
-    333793U,	// NOT_sr_v162
+    333793U,	// NOT_sr
     5938U,	// ORN_T
     536876460U,	// ORN_rc
     5548U,	// ORN_rr
@@ -2122,7 +2119,6 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// AND_srr
     0U,	// AND_srr_v110
     0U,	// BISR_rc
-    0U,	// BISR_rc_v161
     0U,	// BISR_sc
     0U,	// BISR_sc_v110
     0U,	// BMERGAE_rr_v110
@@ -2829,9 +2825,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1U,	// NOR_T
     0U,	// NOR_rc
     0U,	// NOR_rr
-    0U,	// NOR_sr
-    0U,	// NOR_sr_v110
-    0U,	// NOT_sr_v162
+    0U,	// NOT_sr
     1U,	// ORN_T
     0U,	// ORN_rc
     0U,	// ORN_rr
@@ -3142,7 +3136,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     printOperand(MI, 0, O);
     break;
   case 2:
-    // BISR_rc, BISR_rc_v161, SYSCALL_rc
+    // BISR_rc, SYSCALL_rc
     printSExtImm_9(MI, 0, O);
     return;
     break;

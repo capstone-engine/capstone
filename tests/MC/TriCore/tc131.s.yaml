@@ -5290,7 +5290,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "nor d0"
+          asm_text: "not d0"
   -
     input:
       bytes: [ 0x0f, 0x00, 0xb0, 0x00 ]
