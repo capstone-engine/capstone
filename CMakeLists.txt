@@ -75,6 +75,7 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_LEGACY_TESTS "Build legacy tests" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTEST "Build cstest" OFF)
+option(CAPSTONE_BUILD_FUZZER "Build the fuzzer" OFF)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 option(CAPSTONE_USE_ARCH_REGISTRATION "Use explicit architecture registration" OFF)
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
@@ -832,8 +833,10 @@ endif()
 # Simply because it builds the fuzzer there again with hard-coded paths.
 # See: https://github.com/google/oss-fuzz/blob/master/projects/capstone/build.sh
 # and: https://github.com/capstone-engine/capstone/issues/2454
-add_executable(fuzz_disasm ${PROJECT_SOURCE_DIR}/suite/fuzz/onefile.c ${PROJECT_SOURCE_DIR}/suite/fuzz/fuzz_disasm.c ${PROJECT_SOURCE_DIR}/suite/fuzz/platform.c)
-target_link_libraries(fuzz_disasm PRIVATE capstone)
+if (CAPSTONE_BUILD_FUZZER)
+    add_executable(fuzz_disasm ${PROJECT_SOURCE_DIR}/suite/fuzz/onefile.c ${PROJECT_SOURCE_DIR}/suite/fuzz/fuzz_disasm.c ${PROJECT_SOURCE_DIR}/suite/fuzz/platform.c)
+    target_link_libraries(fuzz_disasm PRIVATE capstone)
+endif()
 
 source_group("Source\\Engine" FILES ${SOURCES_ENGINE})
 source_group("Source\\ARM" FILES ${SOURCES_ARM})

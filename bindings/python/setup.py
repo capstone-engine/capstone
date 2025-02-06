@@ -82,14 +82,17 @@ def copy_sources():
 
     shutil.copytree(os.path.join(BUILD_DIR, "arch"), os.path.join(SRC_DIR, "arch"))
     shutil.copytree(os.path.join(BUILD_DIR, "include"), os.path.join(SRC_DIR, "include"))
+    shutil.copytree(os.path.join(BUILD_DIR, "LICENSES"), os.path.join(SRC_DIR, "LICENSES"))
 
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.[ch]")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.m[dk]")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.in")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "LICENSES/*")))
-    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.TXT")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "SPONSORS.TXT")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "CREDITS.TXT")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "ChangeLog")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "CMakeLists.txt")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "CPackConfig.txt")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "CPackConfig.cmake")))
 
     for filename in src:
         outpath = os.path.join(SRC_DIR, os.path.basename(filename))

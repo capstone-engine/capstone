@@ -264,6 +264,14 @@ jobs:
           name: sdist-archive
           path: bindings/python/dist/*.tar.gz
 
+      - name: Test build with sdist
+        run: |
+          TMP_DIR=$(mktemp -d)
+          tar -xf bindings/python/dist/*.tar.gz -C $TMP_DIR/
+          cd $TMP_DIR/capstone-*/src
+          cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCAPSTONE_BUILD_CSTEST=OFF -DCAPSTONE_BUILD_CSTOOL=OFF -B build
+          cmake --build build
+
   publish:
     needs: [ build_wheels_always, build_wheels_all, make_sdist ]
     environment: pypi

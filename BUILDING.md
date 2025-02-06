@@ -82,6 +82,7 @@ Capstone allows some more customization via the following options:
 - `CAPSTONE_BUILD_STATIC_LIBS`: Build static libraries (`ON` by default).
 - `CAPSTONE_BUILD_STATIC_MSVC_RUNTIME`: (Windows only) - Build with static MSVC runtime. Always set if `CAPSTONE_BUILD_SHARED_LIBS=ON`.
 - `CAPSTONE_BUILD_CSTOOL`: Enable/disable build of `cstool`. Default is enabled if build runs from the repository root.
+- `CAPSTONE_BUILD_FUZZER`: Build the fuzzer in `suite/fuzz`.
 - `CAPSTONE_USE_SYS_DYN_MEM`: change this to OFF to use your own dynamic memory management.
 - `CAPSTONE_BUILD_MACOS_THIN`: MacOS only. Disables universal2 build. So you only get the binary for you processor architecture.
 - `CAPSTONE_BUILD_DIET`: change this to ON to make the binaries more compact.
