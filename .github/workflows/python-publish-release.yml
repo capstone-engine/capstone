@@ -21,6 +21,11 @@ jobs:
         uses: docker/setup-qemu-action@v3
         with:
           platforms: all
+          # Temporary fix due to
+          # https://github.com/pypa/cibuildwheel/issues/2257
+          # https://github.com/docker/setup-qemu-action/issues/188
+          # https://github.com/tonistiigi/binfmt/issues/215
+          image: tonistiigi/binfmt:qemu-v8.1.5
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.20.0
