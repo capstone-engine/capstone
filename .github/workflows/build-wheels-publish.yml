@@ -52,11 +52,9 @@ jobs:
           # x86_64 - musllinux
           - { os: ubuntu-latest, arch: x86_64, cibw_build: 'cp38-musllinux* cp313-musllinux*', cibw_skip: '' }
           # aarch64 - manylinux
-          # Disabled for now due to: https://github.com/capstone-engine/capstone/issues/2615
-          # - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp38-manylinux* cp313-manylinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp38-manylinux* cp313-manylinux*', cibw_skip: '' }
           # aarch64 - musllinux
-          # Disabled for now due to: https://github.com/capstone-engine/capstone/issues/2615
-          # - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp38-musllinux* cp313-musllinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp38-musllinux* cp313-musllinux*', cibw_skip: '' }
           # macos - x86_64
           - { os: macos-13, arch: x86_64, cibw_build: 'cp38* cp313*', cibw_skip: '' }
           # macos - arm64
@@ -108,6 +106,12 @@ jobs:
       - name: '🛠️ Set up QEMU'
         if: runner.os == 'Linux' && matrix.arch != 'x86_64'
         uses: docker/setup-qemu-action@v3
+        with:
+          # Temporary fix due to
+          # https://github.com/pypa/cibuildwheel/issues/2257
+          # https://github.com/docker/setup-qemu-action/issues/188
+          # https://github.com/tonistiigi/binfmt/issues/215
+          image: tonistiigi/binfmt:qemu-v8.1.5
 
       - name: '🚧 cibuildwheel run'
         uses: pypa/cibuildwheel@v2.22.0
@@ -164,17 +168,15 @@ jobs:
           - { os: ubuntu-latest, arch: x86_64, cibw_build: 'cp311-musllinux*', cibw_skip: '' }
           - { os: ubuntu-latest, arch: x86_64, cibw_build: 'cp312-musllinux*', cibw_skip: '' }
           # aarch64 - manylinux
-          # Disabled for now due to: https://github.com/capstone-engine/capstone/issues/2615
-          # - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp39-manylinux*', cibw_skip: '' }
-          # - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp310-manylinux*', cibw_skip: '' }
-          # - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp311-manylinux*', cibw_skip: '' }
-          # - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp312-manylinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp39-manylinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp310-manylinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp311-manylinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp312-manylinux*', cibw_skip: '' }
           # aarch64 - musllinux
-          # Disabled for now due to: https://github.com/capstone-engine/capstone/issues/2615
-          # - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp39-musllinux*', cibw_skip: '' }
-          # - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp310-musllinux*', cibw_skip: '' }
-          # - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp311-musllinux*', cibw_skip: '' }
-          # - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp312-musllinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp39-musllinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp310-musllinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp311-musllinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: aarch64, cibw_build: 'cp312-musllinux*', cibw_skip: '' }
           # macos - x86_64
           - { os: macos-13, arch: x86_64, cibw_build: 'cp*', cibw_skip: '*36* *37* *38* *313*' }
           # macos - arm64
@@ -220,6 +222,12 @@ jobs:
       - name: '🛠️ Set up QEMU'
         if: runner.os == 'Linux' && matrix.arch != 'x86_64'
         uses: docker/setup-qemu-action@v3
+        with:
+          # Temporary fix due to
+          # https://github.com/pypa/cibuildwheel/issues/2257
+          # https://github.com/docker/setup-qemu-action/issues/188
+          # https://github.com/tonistiigi/binfmt/issues/215
+          image: tonistiigi/binfmt:qemu-v8.1.5
 
       - name: '🚧 cibuildwheel run'
         uses: pypa/cibuildwheel@v2.22.0
