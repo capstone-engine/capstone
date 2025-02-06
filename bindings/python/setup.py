@@ -89,6 +89,7 @@ def copy_sources():
     shutil.copytree(os.path.join(BUILD_DIR, "include"), os.path.join(SRC_DIR, "include"))
 
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.[ch]")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "*.in")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "*.mk")))
 
     src.extend(glob.glob(os.path.join(BUILD_DIR, "Makefile")))
@@ -99,6 +100,8 @@ def copy_sources():
     src.extend(glob.glob(os.path.join(BUILD_DIR, "make.sh")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "CMakeLists.txt")))
     src.extend(glob.glob(os.path.join(BUILD_DIR, "pkgconfig.mk")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "CPackConfig.txt")))
+    src.extend(glob.glob(os.path.join(BUILD_DIR, "CPackConfig.cmake")))
 
     for filename in src:
         outpath = os.path.join(SRC_DIR, os.path.basename(filename))
