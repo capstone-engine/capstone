@@ -255,9 +255,10 @@ jobs:
 
       - name: Build SDist
         run: |
-          cd bindings/python
           python3 -m pip install -U pip build
-          python3 -m build --sdist
+          python3 -m build --sdist bindings/python
+          python3 -m pip install bindings/python/dist/*.tar.gz
+          python3 -c 'import capstone; print(f"Capstone version installed from sdist: {capstone.__version__}")'
 
       - uses: actions/upload-artifact@v4
         with:
