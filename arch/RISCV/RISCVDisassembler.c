@@ -1,5 +1,5 @@
 #include "RISCVDisassembler.h"
-#include "RISCVDetails.h"
+#include "RISCVHelpers.h"
 
 #include "RISCVDecode.gen.inc"
 #include "RISCVDecodeCompressed.gen.inc"
@@ -14,11 +14,14 @@ bool riscv_get_instruction(csh handle,
 
     int sz = riscv_get_instruction_size(code[0]);
 
+    RVContext ctx;
+    riscv_init_riscv_context(&ctx);
+
     struct ast instruction;
     if (sz == 2) {
-        decode_compressed(&instruction, readBytes16(instr, code));
+        decode_compressed(&instruction, readBytes16(instr, code), &ctx);
     } else if (sz == 4) {
-        decode(&instruction, readBytes32(instr, code));
+        decode(&instruction, readBytes32(instr, code), &ctx);
     } else {
         printf("RISCVDisassembler.c: Invalid Size %d, RISCV Instructions Are Either 2 Or 4 Bytes\n", sz);
         return false;

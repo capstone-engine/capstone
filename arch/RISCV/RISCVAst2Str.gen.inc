@@ -3,10 +3,10 @@
 /* (see https://github.com/rizinorg/capstone-autosync-sail)*/
 /* from the sail model of RISC-V*/
 /* (see https://github.com/riscv/sail-riscv) @ version
- * 0b9c639f19da48734cbf14b61f6ad200b7c70de9.*/
+ * 8a75b297b116a1ffd8c62e98a7f43e2d93761d15.*/
 /* DO NOT MODIFY THIS CODE MANUALLY. ANY MANUAL EDITS ARE OVERWRITTEN.*/
 /* ------------------------------------------------------------------- */
-/* Copyright © 2024 moste00 <ubermenchun@gmail.com>*/
+/* Copyright © 2024-2025 moste00 <ubermenchun@gmail.com>*/
 /* SPDX-License-Identifier: BSD-3-Clause*/
 /*=======================================================================*/
 
@@ -17,11 +17,11 @@
 #include <string.h>
 
 #include "RISCVAst.gen.inc"
+#include "RISCVAst2StrHelpers.h"
 #include "RISCVAst2StrTbls.gen.inc"
-#include "RISCVHelpersAst2Str.h"
 #include "../../SStream.h"
 
-static void ast2str(struct ast *tree, SStream *ss, riscv_conf *conf) {
+static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
   switch (tree->ast_node_type) {
   case RISCV_UTYPE:
     utype_mnemonic(tree->ast_node.utype.op, ss);

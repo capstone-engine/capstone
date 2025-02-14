@@ -205,10 +205,10 @@ typedef enum riscv_reg {
 /* (see https://github.com/rizinorg/capstone-autosync-sail)*/
 /* from the sail model of RISC-V*/
 /* (see https://github.com/riscv/sail-riscv) @ version
- * 0b9c639f19da48734cbf14b61f6ad200b7c70de9.*/
+ * 8a75b297b116a1ffd8c62e98a7f43e2d93761d15.*/
 /* DO NOT MODIFY THIS CODE MANUALLY. ANY MANUAL EDITS ARE OVERWRITTEN.*/
 /* ------------------------------------------------------------------- */
-/* Copyright © 2024 moste00 <ubermenchun@gmail.com>*/
+/* Copyright © 2024-2025 moste00 <ubermenchun@gmail.com>*/
 /* SPDX-License-Identifier: BSD-3-Clause*/
 /*=======================================================================*/
 
@@ -1183,6 +1183,7 @@ enum riscv_insn {
   RISCV_INSN_MVX_VAADD,
 };
 #endif
+
 
 //> Group of RISCV instructions
 typedef enum riscv_insn_group {

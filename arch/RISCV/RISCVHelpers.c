@@ -1,4 +1,4 @@
-#include "RISCVDetails.h"
+#include "RISCVHelpers.h"
 
 /*
 The size calculation algorithm according to the RISCV spec:
@@ -32,4 +32,35 @@ int riscv_get_instruction_size(uint8_t first_byte) {
     } else {
         return 0;
     }
+}
+
+RVBool true_callback() {
+    return 1;
+}
+
+RVBool false_callback() {
+    return 0;
+}
+
+// for now, just trivially enable everything
+// TODO: make this configurable using whatever options mechanism capstone offers
+void riscv_init_riscv_context(RVContext *ctx) {
+  ctx->sys_enable_fdext = true_callback;
+  ctx->sys_enable_zfinx = true_callback;
+  ctx->sys_enable_sstx  = true_callback;
+  ctx->sys_enable_svinval = true_callback;
+  ctx->sys_enable_zcb = true_callback;
+  ctx->sys_enable_zicbom  = true_callback;
+  ctx->sys_enable_zicboz  = true_callback; 
+
+  ctx->xlen = 64;
+  ctx->xlen_bytes = 8;
+  ctx->flen = 64;
+
+  ctx->misa = 0xFFFFFFFF;
+  ctx->mstatus = ~0ULL;
+
+  // constants
+  ctx->zreg = 0x00;
+  ctx->sp = 0x02;
 }

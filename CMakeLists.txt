@@ -574,7 +574,7 @@ if(CAPSTONE_RISCV_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_RISCV)
     set(SOURCES_RISCV
         arch/RISCV/RISCVDisassembler.c
-        arch/RISCV/RISCVDetails.c
+        arch/RISCV/RISCVHelpers.c
         arch/RISCV/RISCVModule.c
         arch/RISCV/RISCVPrinter.c
     )
@@ -587,10 +587,10 @@ if(CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVInsn.gen.inc
         arch/RISCV/RISCVInsnMappings.gen.inc
 
-        arch/RISCV/RISCVDetails.h
+        arch/RISCV/RISCVHelpers.h
         arch/RISCV/RISCVDisassembler.h
-        arch/RISCV/RISCVHelpersAst2Str.h
-        arch/RISCV/RISCVHelpersRVConf.h
+        arch/RISCV/RISCVAst2StrHelpers.h
+        arch/RISCV/RISCVRVContextHelpers.h
         arch/RISCV/RISCVModule.h
         arch/RISCV/RISCVPrinter.h
     )
