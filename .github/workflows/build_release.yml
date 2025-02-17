@@ -15,32 +15,7 @@ jobs:
       with:
         submodules: true
 
-    - name: Configure CMake and build the project
-      run: |
-        cmake -B build \
-        -DPROJECT_VERSION=${{ github.event.release.tag_name }} \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=1 \
-        -DCMAKE_INSTALL_PREFIX=/usr
-        cmake --build build
-
-    - name: Package DEB and RPM package
-      run: |
-        cd build
-        cpack -G DEB
-        cpack -G RPM
-
-    - name: Upload debian package to release
-      uses: softprops/action-gh-release@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.event.release.tag_name }}
-        files: |
-          ./build/*.deb
-          ./build/*.rpm
-
-    - name: archive
+    - name: Create archive
       id: archive
       run: |
         VERSION=${{ github.event.release.tag_name }}
@@ -64,3 +39,28 @@ jobs:
         files: |
           ${{ steps.archive.outputs.tarball }}
           ${{ steps.archive.outputs.shasum }}
+
+    - name: Configure CMake and build the packages
+      run: |
+        cmake -B build \
+        -DPROJECT_VERSION=${{ github.event.release.tag_name }} \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=1 \
+        -DCMAKE_INSTALL_PREFIX=/usr
+        cmake --build build
+
+    - name: Package DEB and RPM package
+      run: |
+        cd build
+        cpack -G DEB
+        cpack -G RPM
+
+    - name: Upload debian package to release
+      uses: softprops/action-gh-release@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.event.release.tag_name }}
+        files: |
+          ./build/*.deb
+          ./build/*.rpm
