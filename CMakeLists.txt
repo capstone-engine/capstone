@@ -988,5 +988,7 @@ if(CAPSTONE_BUILD_CSTEST)
 endif()
 
 # Include CPack
-set(CPACK_PROJECT_CONFIG_FILE "${PROJECT_SOURCE_DIR}/CPackConfig.cmake")
-include(CPackConfig.txt)
+if(PROJECT_IS_TOP_LEVEL)
+    set(CPACK_PROJECT_CONFIG_FILE "${PROJECT_SOURCE_DIR}/CPackConfig.cmake")
+    include(CPackConfig.txt)
+endif()
