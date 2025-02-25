@@ -5658,3 +5658,41 @@ test_cases:
                 imm: 0
                 access: CS_AC_READ
           regs_read: [ ra ]
+  - input:
+      name: "RISCV - #2632 - Memory operand type was 3 instead of 0x80"
+      bytes: [ 0x0c, 0xc2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_OPT_DETAIL, CS_MODE_RISCV32, CS_MODE_RISCVC ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "c.sw	a1, 0(a2)"
+        details:
+          riscv:
+            operands:
+              - type: CS_OP_REG
+                reg: a1
+                access: CS_AC_READ
+              - type: CS_OP_MEM
+                mem_base: a2
+                access: CS_AC_WRITE
+  -
+    input:
+      name: "x86 - issue #2632 - Memory operand type was 3 instead of 0x80"
+      bytes: [ 0x4c, 0x89, 0x65, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov	qword ptr [rbp - 0x38], r12"
+        details:
+          x86:
+            operands:
+              -
+                type: CS_OP_MEM
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
