@@ -40,11 +40,10 @@ let _SPARC_HINT_PT = 1 lsl 1;;
 let _SPARC_HINT_PN = 1 lsl 2;;
 let _SPARC_HINT_A_PN = _SPARC_HINT_A lor SPARC_HINT_PN;;
 let _SPARC_HINT_A_PT = _SPARC_HINT_A lor SPARC_HINT_PT;;
-
-let _SPARC_OP_INVALID = 0;;
-let _SPARC_OP_REG = 1;;
-let _SPARC_OP_IMM = 2;;
-let _SPARC_OP_MEM = 3;;
+let _SPARC_OP_INVALID = _CS_OP_INVALID;;
+let _SPARC_OP_REG = _CS_OP_REG;;
+let _SPARC_OP_IMM = _CS_OP_IMM;;
+let _SPARC_OP_MEM = _CS_OP_MEM;;
 
 let _SPARC_REG_INVALID = 0;;
 let _SPARC_REG_F0 = 1;;

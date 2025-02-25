@@ -14,15 +14,13 @@ extern "C" {
 
 /// Operand type for instruction's operands
 typedef enum hppa_op_type {
-	HPPA_OP_INVALID = 0,
-
-	HPPA_OP_REG,
-	HPPA_OP_IMM,
-	HPPA_OP_IDX_REG,
-	HPPA_OP_DISP,
-	HPPA_OP_MEM,
-	HPPA_OP_TARGET,
-
+	HPPA_OP_INVALID = CS_OP_INVALID,
+	HPPA_OP_REG = CS_OP_REG,
+	HPPA_OP_IMM = CS_OP_IMM,
+	HPPA_OP_IDX_REG = CS_OP_SPECIAL + 0,
+	HPPA_OP_DISP = CS_OP_SPECIAL + 1,
+	HPPA_OP_TARGET = CS_OP_SPECIAL + 2,
+	HPPA_OP_MEM = CS_OP_MEM,
 } hppa_op_type;
 
 //> HPPA registers

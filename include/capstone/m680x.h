@@ -9,6 +9,7 @@ extern "C" {
 #endif
 
 #include "platform.h"
+#include "cs_operand.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
@@ -53,14 +54,14 @@ typedef enum m680x_reg {
 
 /// Operand type for instruction's operands
 typedef enum m680x_op_type {
-	M680X_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
-	M680X_OP_REGISTER,    ///< = Register operand.
-	M680X_OP_IMMEDIATE,   ///< = Immediate operand.
-	M680X_OP_INDEXED,     ///< = Indexed addressing operand.
-	M680X_OP_EXTENDED,    ///< = Extended addressing operand.
-	M680X_OP_DIRECT,      ///< = Direct addressing operand.
-	M680X_OP_RELATIVE,    ///< = Relative addressing operand.
-	M680X_OP_CONSTANT,    ///< = constant operand (Displayed as number only).
+	M680X_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
+	M680X_OP_REGISTER = CS_OP_REG,    ///< = Register operand.
+	M680X_OP_IMMEDIATE = CS_OP_IMM,   ///< = Immediate operand.
+	M680X_OP_INDEXED = CS_OP_SPECIAL + 0,     ///< = Indexed addressing operand.
+	M680X_OP_EXTENDED = CS_OP_SPECIAL + 1,    ///< = Extended addressing operand.
+	M680X_OP_DIRECT = CS_OP_SPECIAL + 2,      ///< = Direct addressing operand.
+	M680X_OP_RELATIVE = CS_OP_SPECIAL + 3,    ///< = Relative addressing operand.
+	M680X_OP_CONSTANT = CS_OP_SPECIAL + 4,    ///< = constant operand (Displayed as number only).
 				///< Used e.g. for a bit index or page number.
 } m680x_op_type;
 

@@ -10,17 +10,18 @@ extern "C" {
 
 #include <stdint.h>
 #include "platform.h"
+#include "cs_operand.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
 #endif
 
 typedef enum tms320c64x_op_type {
-	TMS320C64X_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
-	TMS320C64X_OP_REG, ///< = CS_OP_REG (Register operand).
-	TMS320C64X_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
-	TMS320C64X_OP_MEM, ///< = CS_OP_MEM (Memory operand).
-	TMS320C64X_OP_REGPAIR = 64, ///< Register pair for double word ops
+	TMS320C64X_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
+	TMS320C64X_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
+	TMS320C64X_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	TMS320C64X_OP_REGPAIR = CS_OP_SPECIAL + 0, ///< Register pair for double word ops
+	TMS320C64X_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } tms320c64x_op_type;
 
 typedef enum tms320c64x_mem_disp {

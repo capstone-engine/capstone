@@ -14,6 +14,7 @@ extern "C" {
 #endif
 
 #include "platform.h"
+#include "cs_operand.h"
 
 // GCC MIPS toolchain has a default macro called "mips" which breaks
 // compilation
@@ -25,10 +26,10 @@ extern "C" {
 
 //> Operand type for instruction's operands
 typedef enum riscv_op_type {
-	RISCV_OP_INVALID = 0, // = CS_OP_INVALID (Uninitialized).
-	RISCV_OP_REG, // = CS_OP_REG (Register operand).
-	RISCV_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	RISCV_OP_MEM, // = CS_OP_MEM (Memory operand).
+	RISCV_OP_INVALID = CS_OP_INVALID, // = CS_OP_INVALID (Uninitialized).
+	RISCV_OP_REG = CS_OP_REG, // = CS_OP_REG (Register operand).
+	RISCV_OP_IMM = CS_OP_IMM, // = CS_OP_IMM (Immediate operand).
+	RISCV_OP_MEM = CS_OP_MEM, // = CS_OP_MEM (Memory operand).
 } riscv_op_type;
 
 // Instruction's operand referring to memory

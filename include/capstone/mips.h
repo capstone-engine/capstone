@@ -9,6 +9,7 @@ extern "C" {
 #endif
 
 #include "platform.h"
+#include "cs_operand.h"
 
 // GCC MIPS toolchain has a default macro called "mips" which breaks
 // compilation
@@ -20,10 +21,10 @@ extern "C" {
 
 /// Operand type for instruction's operands
 typedef enum mips_op_type {
-	MIPS_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
-	MIPS_OP_REG, ///< = CS_OP_REG (Register operand).
-	MIPS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
-	MIPS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
+	MIPS_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
+	MIPS_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
+	MIPS_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	MIPS_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } mips_op_type;
 
 /// MIPS registers

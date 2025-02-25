@@ -329,11 +329,10 @@ public class X86_const {
 	public static final int X86_FPU_FLAGS_TEST_C1 = 1<<17;
 	public static final int X86_FPU_FLAGS_TEST_C2 = 1<<18;
 	public static final int X86_FPU_FLAGS_TEST_C3 = 1<<19;
-
-	public static final int X86_OP_INVALID = 0;
-	public static final int X86_OP_REG = 1;
-	public static final int X86_OP_IMM = 2;
-	public static final int X86_OP_MEM = 3;
+	public static final int X86_OP_INVALID = CS_OP_INVALID;
+	public static final int X86_OP_REG = CS_OP_REG;
+	public static final int X86_OP_IMM = CS_OP_IMM;
+	public static final int X86_OP_MEM = CS_OP_MEM;
 
 	public static final int X86_XOP_CC_INVALID = 0;
 	public static final int X86_XOP_CC_LT = 1;

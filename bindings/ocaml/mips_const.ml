@@ -1,9 +1,8 @@
 (* For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [mips_const.ml] *)
-
-let _MIPS_OP_INVALID = 0;;
-let _MIPS_OP_REG = 1;;
-let _MIPS_OP_IMM = 2;;
-let _MIPS_OP_MEM = 3;;
+let _MIPS_OP_INVALID = _CS_OP_INVALID;;
+let _MIPS_OP_REG = _CS_OP_REG;;
+let _MIPS_OP_IMM = _CS_OP_IMM;;
+let _MIPS_OP_MEM = _CS_OP_MEM;;
 
 let _MIPS_REG_INVALID = 0;;
 let _MIPS_REG_AT = 1;;

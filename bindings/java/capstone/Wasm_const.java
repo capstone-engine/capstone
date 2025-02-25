@@ -2,16 +2,15 @@
 package capstone;
 
 public class Wasm_const {
-
-	public static final int WASM_OP_INVALID = 0;
-	public static final int WASM_OP_NONE = 1;
-	public static final int WASM_OP_INT7 = 2;
-	public static final int WASM_OP_VARUINT32 = 3;
-	public static final int WASM_OP_VARUINT64 = 4;
-	public static final int WASM_OP_UINT32 = 5;
-	public static final int WASM_OP_UINT64 = 6;
-	public static final int WASM_OP_IMM = 7;
-	public static final int WASM_OP_BRTABLE = 8;
+	public static final int WASM_OP_INVALID = CS_OP_INVALID;
+	public static final int WASM_OP_IMM = CS_OP_IMM;
+	public static final int WASM_OP_NONE = CS_OP_SPECIAL+0;
+	public static final int WASM_OP_INT7 = CS_OP_SPECIAL+1;
+	public static final int WASM_OP_VARUINT32 = CS_OP_SPECIAL+2;
+	public static final int WASM_OP_VARUINT64 = CS_OP_SPECIAL+3;
+	public static final int WASM_OP_UINT32 = CS_OP_SPECIAL+4;
+	public static final int WASM_OP_UINT64 = CS_OP_SPECIAL+5;
+	public static final int WASM_OP_BRTABLE = CS_OP_SPECIAL+6;
 	public static final int WASM_INS_UNREACHABLE = 0x0;
 	public static final int WASM_INS_NOP = 0x1;
 	public static final int WASM_INS_BLOCK = 0x2;

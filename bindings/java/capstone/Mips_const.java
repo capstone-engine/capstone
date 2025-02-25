@@ -2,11 +2,10 @@
 package capstone;
 
 public class Mips_const {
-
-	public static final int MIPS_OP_INVALID = 0;
-	public static final int MIPS_OP_REG = 1;
-	public static final int MIPS_OP_IMM = 2;
-	public static final int MIPS_OP_MEM = 3;
+	public static final int MIPS_OP_INVALID = CS_OP_INVALID;
+	public static final int MIPS_OP_REG = CS_OP_REG;
+	public static final int MIPS_OP_IMM = CS_OP_IMM;
+	public static final int MIPS_OP_MEM = CS_OP_MEM;
 
 	public static final int MIPS_REG_INVALID = 0;
 	public static final int MIPS_REG_AT = 1;

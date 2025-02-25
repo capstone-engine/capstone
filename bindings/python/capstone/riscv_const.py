@@ -2,11 +2,10 @@ from . import CS_OP_INVALID, CS_OP_REG, CS_OP_IMM, CS_OP_FP, CS_OP_PRED, CS_OP_S
 # For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT [riscv_const.py]
 
 # Operand type for instruction's operands
-
-RISCV_OP_INVALID = 0
-RISCV_OP_REG = 1
-RISCV_OP_IMM = 2
-RISCV_OP_MEM = 3
+RISCV_OP_INVALID = CS_OP_INVALID
+RISCV_OP_REG = CS_OP_REG
+RISCV_OP_IMM = CS_OP_IMM
+RISCV_OP_MEM = CS_OP_MEM
 
 # RISCV registers
 

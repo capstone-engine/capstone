@@ -27,15 +27,14 @@ public class M680x_const {
 	public static final int M680X_REG_TMP2 = 20;
 	public static final int M680X_REG_TMP3 = 21;
 	public static final int M680X_REG_ENDING = 22;
-
-	public static final int M680X_OP_INVALID = 0;
-	public static final int M680X_OP_REGISTER = 1;
-	public static final int M680X_OP_IMMEDIATE = 2;
-	public static final int M680X_OP_INDEXED = 3;
-	public static final int M680X_OP_EXTENDED = 4;
-	public static final int M680X_OP_DIRECT = 5;
-	public static final int M680X_OP_RELATIVE = 6;
-	public static final int M680X_OP_CONSTANT = 7;
+	public static final int M680X_OP_INVALID = CS_OP_INVALID;
+	public static final int M680X_OP_REGISTER = CS_OP_REG;
+	public static final int M680X_OP_IMMEDIATE = CS_OP_IMM;
+	public static final int M680X_OP_INDEXED = CS_OP_SPECIAL+0;
+	public static final int M680X_OP_EXTENDED = CS_OP_SPECIAL+1;
+	public static final int M680X_OP_DIRECT = CS_OP_SPECIAL+2;
+	public static final int M680X_OP_RELATIVE = CS_OP_SPECIAL+3;
+	public static final int M680X_OP_CONSTANT = CS_OP_SPECIAL+4;
 
 	public static final int M680X_OFFSET_NONE = 0;
 	public static final int M680X_OFFSET_BITS_5 = 5;

@@ -9,6 +9,7 @@ extern "C" {
 #endif
 
 #include "platform.h"
+#include "cs_operand.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable:4201)
@@ -16,10 +17,10 @@ extern "C" {
 
 /// Operand type for instruction's operands
 typedef enum xcore_op_type {
-	XCORE_OP_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
-	XCORE_OP_REG, ///< = CS_OP_REG (Register operand).
-	XCORE_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
-	XCORE_OP_MEM, ///< = CS_OP_MEM (Memory operand).
+	XCORE_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
+	XCORE_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
+	XCORE_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	XCORE_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } xcore_op_type;
 
 /// XCore registers

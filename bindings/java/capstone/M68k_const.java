@@ -73,16 +73,15 @@ public class M68k_const {
 	public static final int M68K_AM_ABSOLUTE_DATA_LONG = 17;
 	public static final int M68K_AM_IMMEDIATE = 18;
 	public static final int M68K_AM_BRANCH_DISPLACEMENT = 19;
-
-	public static final int M68K_OP_INVALID = 0;
-	public static final int M68K_OP_REG = 1;
-	public static final int M68K_OP_IMM = 2;
-	public static final int M68K_OP_MEM = 3;
-	public static final int M68K_OP_FP_SINGLE = 4;
-	public static final int M68K_OP_FP_DOUBLE = 5;
-	public static final int M68K_OP_REG_BITS = 6;
-	public static final int M68K_OP_REG_PAIR = 7;
-	public static final int M68K_OP_BR_DISP = 8;
+	public static final int M68K_OP_INVALID = CS_OP_INVALID;
+	public static final int M68K_OP_REG = CS_OP_REG;
+	public static final int M68K_OP_IMM = CS_OP_IMM;
+	public static final int M68K_OP_FP_SINGLE = CS_OP_SPECIAL+0;
+	public static final int M68K_OP_FP_DOUBLE = CS_OP_SPECIAL+1;
+	public static final int M68K_OP_REG_BITS = CS_OP_SPECIAL+2;
+	public static final int M68K_OP_REG_PAIR = CS_OP_SPECIAL+3;
+	public static final int M68K_OP_BR_DISP = CS_OP_SPECIAL+4;
+	public static final int M68K_OP_MEM = CS_OP_MEM;
 
 	public static final int M68K_OP_BR_DISP_SIZE_INVALID = 0;
 	public static final int M68K_OP_BR_DISP_SIZE_BYTE = 1;

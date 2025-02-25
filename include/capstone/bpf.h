@@ -11,6 +11,7 @@ extern "C" {
 #endif
 
 #include "platform.h"
+#include "cs_operand.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable : 4201)
@@ -19,15 +20,14 @@ extern "C" {
 #define NUM_BPF_OPS 3
 /// Operand type for instruction's operands
 typedef enum bpf_op_type {
-	BPF_OP_INVALID = 0,
-
-	BPF_OP_REG,
-	BPF_OP_IMM,
-	BPF_OP_OFF,
-	BPF_OP_MEM,
-	BPF_OP_MMEM, ///< M[k] in cBPF
-	BPF_OP_MSH,  ///< corresponds to cBPF's BPF_MSH mode
-	BPF_OP_EXT,  ///< cBPF's extension (not eBPF)
+	BPF_OP_INVALID = CS_OP_INVALID,
+	BPF_OP_REG = CS_OP_REG,
+	BPF_OP_IMM = CS_OP_IMM,
+	BPF_OP_OFF = CS_OP_SPECIAL + 0,
+	BPF_OP_MSH = CS_OP_SPECIAL + 1,  ///< corresponds to cBPF's BPF_MSH mode
+	BPF_OP_EXT = CS_OP_SPECIAL + 2,  ///< cBPF's extension (not eBPF)
+	BPF_OP_MMEM = CS_OP_MEM | (CS_OP_SPECIAL + 3), ///< M[k] in cBPF
+	BPF_OP_MEM = CS_OP_MEM,
 } bpf_op_type;
 
 /// BPF registers
