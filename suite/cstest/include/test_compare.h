@@ -170,24 +170,6 @@ typedef int32_t tbool;
 		} \
 	}
 
-/// Compares enum id.
-/// Actual is the value, expected is the enum idetifer as string.
-/// It returns if they mismatch.
-#define compare_enum(actual, expected) \
-	if (expected) { \
-		bool found = false; \
-		uint32_t eval = enum_map_bin_search( \
-			cs_enum_map, ARR_SIZE(cs_enum_map), expected, &found); \
-		if (expected && (actual != eval || !found)) { \
-			fprintf(stderr, \
-				#actual " != " #expected ": %" PRIu32 \
-					" != %s%s\n", \
-				actual, expected, \
-				found ? "" : " <== id not found"); \
-			return; \
-		} \
-	}
-
 /// Checks if all bit flags in @expected are set in @actual.
 /// Actual is the value with all bits set.
 /// @expected is a list the @len enum identifiers as string.

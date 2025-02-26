@@ -206,6 +206,11 @@ static bool compare_asm_text(const char *asm_text, const char *expected,
 	return false;
 }
 
+static bool ids_match(uint32_t actual, const char *expected) {
+       compare_enum_ret(actual, expected, false);
+       return true;
+}
+
 /// Compares the decoded instructions @insns against the @expected values and returns the result.
 void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 			   size_t insns_count, size_t arch_bits)
@@ -233,7 +238,8 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 
 		// Not mandatory fields. If not initialized they should still match.
 		if (expec_data->id) {
-			compare_enum((uint32_t)insns[i].id, expec_data->id);
+			assert_true(ids_match((uint32_t)insns[i].id,
+								expec_data->id));
 		}
 		if (expec_data->is_alias != 0) {
 			if (expec_data->is_alias > 0) {
@@ -243,8 +249,8 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 			}
 		}
 		if (expec_data->alias_id) {
-			compare_enum((uint32_t)insns[i].alias_id,
-					 expec_data->alias_id);
+			assert_true(ids_match((uint32_t)insns[i].alias_id,
+								expec_data->alias_id));
 		}
 		if (expec_data->mnemonic) {
 			assert_string_equal(insns[i].mnemonic,

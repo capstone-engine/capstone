@@ -5745,7 +5745,7 @@ test_cases:
             operands:
               - type: MIPS_OP_REG
                 reg: zero
-                access: CS_AC_WRITE
+                access: CS_AC_READ
               - type: MIPS_OP_REG
                 reg: zero
                 access: CS_AC_READ
@@ -5770,7 +5770,7 @@ test_cases:
             operands:
               - type: MIPS_OP_REG
                 reg: t2
-                access: CS_AC_WRITE
+                access: CS_AC_READ
               - type: MIPS_OP_REG
                 reg: zero
                 access: CS_AC_READ
