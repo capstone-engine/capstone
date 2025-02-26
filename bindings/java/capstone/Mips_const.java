@@ -2113,7 +2113,11 @@ public class Mips_const {
 	public static final int MIPS_INS_ALIAS_MTTLO = 1465;
 	public static final int MIPS_INS_ALIAS_MTTHI = 1466;
 	public static final int MIPS_INS_ALIAS_MTTACX = 1467;
-	public static final int MIPS_INS_ALIAS_END = 1468;
+	public static final int MIPS_INS_ALIAS_B = 1468;
+	public static final int MIPS_INS_ALIAS_BEQZ = 1469;
+	public static final int MIPS_INS_ALIAS_BNEZ = 1470;
+	public static final int MIPS_INS_ALIAS_LI = 1471;
+	public static final int MIPS_INS_ALIAS_END = 1472;
 
 	public static final int MIPS_GRP_INVALID = 0;
 	public static final int MIPS_GRP_JUMP = 1;
