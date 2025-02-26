@@ -58,11 +58,11 @@ static const cyaml_schema_field_t test_input_mapping_schema[] = {
 
 /// Data compared to the produced cs_insn.
 typedef struct {
-	uint32_t id;
+	char *id;
 	char *asm_text;	  // mandatory
 	char *op_str;
 	int32_t is_alias; ///< 0 == not given, >0 == true, <0 == false
-	uint64_t alias_id;
+	char *alias_id;
 	char *mnemonic;
 	TestDetail *details;
 } TestInsnData;
@@ -72,8 +72,8 @@ void test_insn_data_free(TestInsnData *test_insn_data);
 TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data);
 
 static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
-	CYAML_FIELD_UINT("id", CYAML_FLAG_SCALAR_PLAIN | CYAML_FLAG_OPTIONAL,
-			 TestInsnData, id),
+	CYAML_FIELD_STRING_PTR("id", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			 TestInsnData, id, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("asm_text", CYAML_FLAG_POINTER, TestInsnData,
 			       asm_text, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR(
@@ -81,9 +81,9 @@ static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 		TestInsnData, op_str, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("is_alias", CYAML_FLAG_OPTIONAL, TestInsnData,
 			 is_alias),
-	CYAML_FIELD_INT("alias_id",
-			CYAML_FLAG_SCALAR_PLAIN | CYAML_FLAG_OPTIONAL,
-			TestInsnData, alias_id),
+	CYAML_FIELD_STRING_PTR("alias_id",
+			CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			TestInsnData, alias_id, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR(
 		"mnemonic", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL,
 		TestInsnData, mnemonic, 0, CYAML_UNLIMITED),

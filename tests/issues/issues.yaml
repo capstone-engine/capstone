@@ -5703,7 +5703,7 @@ test_cases:
                 reg: zero
                 access: CS_AC_READ
               - type: MIPS_OP_REG
-                imm: a3
+                reg: a3
                 access: CS_AC_READ
 
   - input:

@@ -51,6 +51,7 @@ TestDetailMipsOp *test_detail_mips_op_clone(const TestDetailMipsOp *op)
 	TestDetailMipsOp *clone = test_detail_mips_op_new();
 
 	clone->type = op->type ? strdup(op->type) : NULL;
+	clone->access = op->access ? strdup(op->access) : NULL;
 	clone->reg = op->reg ? strdup(op->reg) : NULL;
 	clone->imm = op->imm;
 	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
@@ -65,6 +66,7 @@ void test_detail_mips_op_free(TestDetailMipsOp *op)
 		return;
 	}
 	cs_mem_free(op->type);
+	cs_mem_free(op->access);
 	cs_mem_free(op->reg);
 	cs_mem_free(op->mem_base);
 	cs_mem_free(op);
@@ -80,6 +82,7 @@ bool test_expected_mips(csh *handle, const cs_mips *actual,
 		const cs_mips_op *op = &actual->operands[i];
 		TestDetailMipsOp *eop = expected->operands[i];
 		compare_enum_ret(op->type, eop->type, false);
+		compare_enum_ret(op->access, eop->access, false);
 		switch (op->type) {
 		default:
 			fprintf(stderr, "sh op type %" PRId32 " not handled.\n",
