@@ -18,6 +18,8 @@ extern "C" {
 #endif
 
 /// AArch64 shift type
+/// Those values do not correspond to the bit values encoded
+/// in the instruction.
 typedef enum aarch64_shifter {
   AARCH64_SFT_INVALID = 0,
   AARCH64_SFT_LSL = 1,
@@ -25,6 +27,11 @@ typedef enum aarch64_shifter {
   AARCH64_SFT_LSR = 3,
   AARCH64_SFT_ASR = 4,
   AARCH64_SFT_ROR = 5,
+  AARCH64_SFT_LSL_REG = 6,
+  AARCH64_SFT_MSL_REG = 7,
+  AARCH64_SFT_LSR_REG = 8,
+  AARCH64_SFT_ASR_REG = 9,
+  AARCH64_SFT_ROR_REG = 10,
 } aarch64_shifter;
 
 /// AArch64 extender type
@@ -2813,7 +2820,10 @@ typedef struct cs_aarch64_op {
   AArch64Layout_VectorLayout vas;    ///< Vector Arrangement Specifier
   struct {
     aarch64_shifter type; ///< shifter type of this operand
-    unsigned int value; ///< shifter value of this operand
+    /// Shift value of this operand.
+    /// If the type indicates a shift with a register this value should be
+    /// interpreted as aarch64_reg.
+    unsigned int value;
   } shift;
   aarch64_extender ext; ///< extender type of this operand
   aarch64_op_type type; ///< operand type

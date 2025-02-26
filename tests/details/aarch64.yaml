@@ -869,3 +869,278 @@ test_cases:
           regs_read: [ zt0, z30, z31 ]
           regs_write: [ z19, z23, z27, z31 ]
           groups: [ HasSME2p1, HasSME_LUTv2 ]
+  -
+    input:
+      bytes: [0x41,0x7c,0x82,0x13]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror	w1, w2, #31"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_ROR
+              shift_value: 31
+          regs_read: [ w2 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x41,0x7c,0x1f,0x53]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsr	w1, w2, #31"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_LSR
+              shift_value: 31
+          regs_read: [ w2 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x41,0x7c,0x1f,0x13]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "asr	w1, w2, #31"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_ASR
+              shift_value: 31
+          regs_read: [ w2 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x41,0x00,0x01,0x53]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsl	w1, w2, #31"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_LSL
+              shift_value: 31
+          regs_read: [ w2 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x41,0x2c,0xc3,0x1a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror	w1, w2, w3"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_ROR_REG
+              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+          regs_read: [ w2, w3 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x41,0x24,0xc3,0x1a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsr	w1, w2, w3"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_LSR_REG
+              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+          regs_read: [ w2, w3 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x41,0x28,0xc3,0x1a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "asr	w1, w2, w3"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_ASR_REG
+              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+          regs_read: [ w2, w3 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x41,0x20,0xc3,0x1a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsl	w1, w2, w3"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_LSL_REG
+              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+          regs_read: [ w2, w3 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x41,0x2c,0xc3,0x1a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror	w1, w2, w3"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_ROR_REG
+              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+          regs_read: [ w2, w3 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x41,0x24,0xc3,0x1a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsr	w1, w2, w3"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_LSR_REG
+              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+          regs_read: [ w2, w3 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x41,0x28,0xc3,0x1a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "asr	w1, w2, w3"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: w2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_ASR_REG
+              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+          regs_read: [ w2, w3 ]
+          regs_write: [ w1 ]

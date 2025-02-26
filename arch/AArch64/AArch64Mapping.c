@@ -369,11 +369,51 @@ static void AArch64_check_updates_flags(MCInst *MI)
 #endif // CAPSTONE_DIET
 }
 
+static aarch64_shifter id_to_shifter(unsigned Opcode) {
+	switch (Opcode) {
+	default:
+		return AARCH64_SFT_INVALID;
+	case AArch64_RORVXr:
+	case AArch64_RORVWr:
+		return AARCH64_SFT_ROR_REG;
+	case AArch64_LSRVXr:
+	case AArch64_LSRVWr:
+		return AARCH64_SFT_LSR_REG;
+	case AArch64_LSLVXr:
+	case AArch64_LSLVWr:
+		return AARCH64_SFT_LSL_REG;
+	case AArch64_ASRVXr:
+	case AArch64_ASRVWr:
+		return AARCH64_SFT_ASR_REG;
+	}
+}
+
 static void add_non_alias_details(MCInst *MI)
 {
 	unsigned Opcode = MCInst_getOpcode(MI);
 	switch (Opcode) {
 	default:
+		break;
+	case AArch64_RORVXr:
+	case AArch64_RORVWr:
+	case AArch64_LSRVXr:
+	case AArch64_LSRVWr:
+	case AArch64_LSLVXr:
+	case AArch64_LSLVWr:
+	case AArch64_ASRVXr:
+	case AArch64_ASRVWr:
+		if (AArch64_get_detail(MI)->op_count != 3) {
+			return;
+		}
+		CS_ASSERT_RET(AArch64_get_detail_op(MI, -1)->type == AARCH64_OP_REG);
+
+		// The shift by register instructions don't set the shift value properly.
+		// Correct it here.
+		uint64_t shift = AArch64_get_detail_op(MI, -1)->reg;
+		cs_aarch64_op *op1 = AArch64_get_detail_op(MI, -2);
+		op1->shift.type = id_to_shifter(Opcode);
+		op1->shift.value = shift;
+		AArch64_dec_op_count(MI);
 		break;
 	case AArch64_FCMPDri:
 	case AArch64_FCMPEDri:
@@ -573,6 +613,19 @@ static void AArch64_add_not_defined_ops(MCInst *MI, const SStream *OS)
 	switch (MI->flat_insn->alias_id) {
 	default:
 		return;
+	case AARCH64_INS_ALIAS_ROR:
+		if (AArch64_get_detail(MI)->op_count != 3) {
+			return;
+		}
+		// The ROR alias doesn't set the shift value properly.
+		// Correct it here.
+		bool reg_shift = AArch64_get_detail_op(MI, -1)->type == AARCH64_OP_REG;
+		uint64_t shift = reg_shift ? AArch64_get_detail_op(MI, -1)->reg : AArch64_get_detail_op(MI, -1)->imm;
+		cs_aarch64_op *op1 = AArch64_get_detail_op(MI, -2);
+		op1->shift.type = reg_shift ? AARCH64_SFT_ROR_REG : AARCH64_SFT_ROR;
+		op1->shift.value = shift;
+		AArch64_dec_op_count(MI);
+		break;
 	case AARCH64_INS_ALIAS_FMOV:
 		if (AArch64_get_detail_op(MI, -1)->type == AARCH64_OP_FP) {
 			break;
@@ -1041,6 +1094,12 @@ void AArch64_reg_access(const cs_insn *insn, cs_regs regs_read,
 			break;
 		default:
 			break;
+		}
+		if (op->shift.type >= AARCH64_SFT_LSL_REG) {
+			if (!arr_exist(regs_read, read_count, op->shift.value)) {
+				regs_read[read_count] = (uint16_t)op->shift.value;
+				read_count++;
+			}
 		}
 	}
 
