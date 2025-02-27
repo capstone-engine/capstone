@@ -1348,6 +1348,12 @@ def test_expected_mips(actual: CsInsn, expected: dict) -> bool:
     for aop, eop in zip(actual.operands, expected["operands"]):
         if not compare_enum(aop.type, eop.get("type"), "type"):
             return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
+        if not compare_tbool(aop.is_reglist, eop.get("is_reglist"), "is_reglist"):
+            return False
+        if not compare_tbool(aop.is_unsigned, eop.get("is_unsigned"), "is_unsigned"):
+            return False
 
         if aop.type == MIPS_OP_REG:
             if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
