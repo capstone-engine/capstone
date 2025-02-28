@@ -21,7 +21,7 @@ from cstest_py.compare import (
     compare_asm_text,
     compare_str,
     compare_tbool,
-    compare_uint32,
+    compare_enum,
 )
 from enum import Enum
 from pathlib import Path
@@ -247,13 +247,13 @@ class TestExpected:
             if not compare_str(a_insn.op_str, e_insn.get("op_str"), "op_str"):
                 return TestResult.FAILED
 
-            if not compare_uint32(a_insn.id, e_insn.get("id"), "id"):
+            if not compare_enum(a_insn.id, e_insn.get("id"), "id"):
                 return TestResult.FAILED
 
             if not compare_tbool(a_insn.is_alias, e_insn.get("is_alias"), "is_alias"):
                 return TestResult.FAILED
 
-            if not compare_uint32(a_insn.alias_id, e_insn.get("alias_id"), "alias_id"):
+            if not compare_enum(a_insn.alias_id, e_insn.get("alias_id"), "alias_id"):
                 return TestResult.FAILED
 
             if not compare_details(a_insn, e_insn.get("details")):

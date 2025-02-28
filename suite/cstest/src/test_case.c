@@ -7,6 +7,7 @@
 #include "cmocka.h"
 #include "test_detail.h"
 #include "test_case.h"
+#include "test_compare.h"
 #include "helper.h"
 #include "../../../utils.h"
 #include <stdio.h>
@@ -97,6 +98,8 @@ void test_insn_data_free(TestInsnData *test_insn_data)
 	cs_mem_free(test_insn_data->asm_text);
 	cs_mem_free(test_insn_data->op_str);
 	cs_mem_free(test_insn_data->mnemonic);
+	cs_mem_free(test_insn_data->id);
+	cs_mem_free(test_insn_data->alias_id);
 	test_detail_free(test_insn_data->details);
 	cs_mem_free(test_insn_data);
 }
@@ -105,9 +108,13 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 {
 	assert(test_insn_data);
 	TestInsnData *tid = test_insn_data_new();
-	tid->alias_id = test_insn_data->alias_id;
+	tid->alias_id = test_insn_data->alias_id ?
+				cs_strdup(test_insn_data->alias_id) :
+				NULL;
+	tid->id = test_insn_data->id ?
+				cs_strdup(test_insn_data->id) :
+				NULL;
 	tid->is_alias = test_insn_data->is_alias;
-	tid->id = test_insn_data->id;
 	tid->mnemonic = test_insn_data->mnemonic ?
 				cs_strdup(test_insn_data->mnemonic) :
 				NULL;
@@ -199,6 +206,11 @@ static bool compare_asm_text(const char *asm_text, const char *expected,
 	return false;
 }
 
+static bool ids_match(uint32_t actual, const char *expected) {
+       compare_enum_ret(actual, expected, false);
+       return true;
+}
+
 /// Compares the decoded instructions @insns against the @expected values and returns the result.
 void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 			   size_t insns_count, size_t arch_bits)
@@ -225,8 +237,9 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 		}
 
 		// Not mandatory fields. If not initialized they should still match.
-		if (expec_data->id != 0) {
-			assert_int_equal(insns[i].id, expec_data->id);
+		if (expec_data->id) {
+			assert_true(ids_match((uint32_t)insns[i].id,
+								expec_data->id));
 		}
 		if (expec_data->is_alias != 0) {
 			if (expec_data->is_alias > 0) {
@@ -235,9 +248,9 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 				assert_false(insns[i].is_alias);
 			}
 		}
-		if (expec_data->alias_id != 0) {
-			assert_int_equal(insns[i].alias_id,
-					 expec_data->alias_id);
+		if (expec_data->alias_id) {
+			assert_true(ids_match((uint32_t)insns[i].alias_id,
+								expec_data->alias_id));
 		}
 		if (expec_data->mnemonic) {
 			assert_string_equal(insns[i].mnemonic,

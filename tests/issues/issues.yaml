@@ -4526,7 +4526,7 @@ test_cases:
       insns:
       -
         asm_text: "vcmpnlesd	xmm3, xmm0, xmm2"
-        id: 797
+        id: X86_INS_VCMP
   -
     input:
       name: "issue 2349"
@@ -5695,4 +5695,148 @@ test_cases:
                 access: CS_AC_WRITE
               -
                 type: X86_OP_REG
+                access: CS_AC_READ
+
+  - input:
+      name: "mipsel64r6 lapc as alias of addiupc with details & real"
+      bytes: [ 0x19, 0x00, 0x40, 0xec ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS64R6, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "lapc $v0, 0x64"
+        id: MIPS_INS_ADDIUPC
+        is_alias: 1
+        alias_id: MIPS_INS_ALIAS_LAPC
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: v0
+                access: CS_AC_WRITE
+              - type: MIPS_OP_IMM
+                imm: 0x64
+                access: CS_AC_READ
+
+  - input:
+      name: "mips2 negu as alias of subu with details & real"
+      bytes: [ 0x00, 0x07, 0x18, 0x23 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS2, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "negu $v1, $a3"
+        id: MIPS_INS_SUBU
+        is_alias: 1
+        alias_id: MIPS_INS_ALIAS_NEGU
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: v1
+                access: CS_AC_WRITE
+              - type: MIPS_OP_REG
+                reg: zero
+                access: CS_AC_READ
+              - type: MIPS_OP_REG
+                reg: a3
+                access: CS_AC_READ
+
+  - input:
+      name: "mips64r6 lapc as alias of addiupc with details & real"
+      bytes: [ 0x19, 0x00, 0x40, 0xec ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS64R6, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "lapc $v0, 0x64"
+        id: MIPS_INS_ADDIUPC
+        is_alias: 1
+        alias_id: MIPS_INS_ALIAS_LAPC
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: v0
+                access: CS_AC_WRITE
+              - type: MIPS_OP_IMM
+                imm: 0x64
+                access: CS_AC_READ
+
+  - input:
+      name: "mips2 b as alias of beq with details & real"
+      bytes: [ 0x10, 0x00, 0x04, 0x8d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS2, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "b 4664"
+        id: MIPS_INS_BEQ
+        is_alias: 1
+        alias_id: MIPS_INS_ALIAS_B
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: zero
+                access: CS_AC_READ
+              - type: MIPS_OP_REG
+                reg: zero
+                access: CS_AC_READ
+              - type: MIPS_OP_IMM
+                imm: 0x1238
+                access: CS_AC_READ
+
+  - input:
+      name: "mips2 beqz as alias of beq with details & real"
+      bytes: [ 0x11, 0x40, 0x04, 0x8d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS2, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "beqz $t2, 0x1238"
+        id: MIPS_INS_BEQ
+        is_alias: 1
+        alias_id: MIPS_INS_ALIAS_BEQZ
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: t2
+                access: CS_AC_READ
+              - type: MIPS_OP_REG
+                reg: zero
+                access: CS_AC_READ
+              - type: MIPS_OP_IMM
+                imm: 0x1238
+                access: CS_AC_READ
+
+  - input:
+      name: "nanomips (i7200) li as alias of addiu with details & real"
+      bytes: [ 0x00, 0x01, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_I7200, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "li $a4, 0"
+        id: MIPS_INS_ADDIU
+        is_alias: 1
+        alias_id: MIPS_INS_ALIAS_LI
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: a4
+                access: CS_AC_WRITE
+              - type: MIPS_OP_REG
+                reg: zero
+                access: CS_AC_READ
+              - type: MIPS_OP_IMM
+                imm: 0
                 access: CS_AC_READ
