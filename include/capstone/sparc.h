@@ -195,7 +195,7 @@ typedef struct cs_sparc_op {
 		sparc_reg reg;	///< register value for REG operand
 		int64_t imm;		///< immediate value for IMM operand
 		sparc_op_mem mem;		///< base/disp value for MEM operand
-	};
+	} v;
 } cs_sparc_op;
 
 /// Instruction structure

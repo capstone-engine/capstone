@@ -453,7 +453,7 @@ typedef struct cs_detail {
 		cs_loongarch loongarch; ///< LoongArch architecture
 		cs_xtensa xtensa; ///< Xtensa architecture
 		cs_arc arc; ///< ARC architecture
-	};
+	} d;
 } cs_detail;
 
 /// Detail information of disassembled instruction

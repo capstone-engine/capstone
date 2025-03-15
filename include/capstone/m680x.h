@@ -122,7 +122,7 @@ typedef struct cs_m680x_op {
 		m680x_op_ext ext;	///< Extended address
 		uint8_t direct_addr;	///<</ Direct address (lower 8-bit)
 		uint8_t const_val;	///< constant value (bit index, page nr.)
-	};
+	} v;
 	uint8_t size;			///< size of this operand (in bytes)
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// This field is combined of cs_ac_type.

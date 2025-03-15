@@ -79,7 +79,7 @@ typedef struct cs_xcore_op {
 		xcore_reg reg;	///< register value for REG operand
 		int32_t imm;		///< immediate value for IMM operand
 		xcore_op_mem mem;		///< base/disp value for MEM operand
-	};
+	} v;
 } cs_xcore_op;
 
 /// Instruction structure

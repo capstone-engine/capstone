@@ -184,7 +184,7 @@ typedef struct cs_mos65xx_op {
 		mos65xx_reg reg;	///< register value for REG operand
 		uint16_t imm;		///< immediate value for IMM operand
 		uint32_t mem;		///< address for MEM operand
-	};
+	} v;
 } cs_mos65xx_op;
 
 /// The MOS65XX address mode and its operands

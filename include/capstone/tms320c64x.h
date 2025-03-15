@@ -59,7 +59,7 @@ typedef struct cs_tms320c64x_op {
 		unsigned int reg;	///< register value for REG operand or first register for REGPAIR operand
 		int32_t imm;		///< immediate value for IMM operand
 		tms320c64x_op_mem mem;		///< base/disp value for MEM operand
-	};
+	} v;
 } cs_tms320c64x_op;
 
 typedef struct cs_tms320c64x {

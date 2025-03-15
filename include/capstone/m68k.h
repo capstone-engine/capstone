@@ -165,7 +165,7 @@ typedef struct cs_m68k_op {
 		float simm; 		    ///< float imm
 		m68k_reg reg;		    ///< register value for REG operand
 		cs_m68k_op_reg_pair reg_pair; ///< register pair in one operand
-	};
+	} v;
 
 	m68k_op_mem mem; 	    ///< data when operand is targeting memory
 	m68k_op_br_disp br_disp; ///< data when operand is a branch displacement
@@ -204,7 +204,7 @@ typedef struct m68k_op_size {
 	union {
 		m68k_cpu_size cpu_size;
 		m68k_fpu_size fpu_size;
-	};
+	} size;
 } m68k_op_size;
 
 /// The M68K instruction and its operands

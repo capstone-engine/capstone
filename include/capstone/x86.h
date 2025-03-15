@@ -281,7 +281,7 @@ typedef struct cs_x86_op {
 		x86_reg reg;	  ///< register value for REG operand
 		int64_t imm;		///< immediate value for IMM operand
 		x86_op_mem mem;		///< base/index/scale/disp value for MEM operand
-	};
+	} v;
 
 	/// size of this operand (in bytes).
 	uint8_t size;
@@ -372,7 +372,7 @@ typedef struct cs_x86 {
 		/// FPU_FLAGS updated by this instruction.
 		/// This can be formed from OR combination of X86_FPU_FLAGS_* symbols in x86.h
 		uint64_t fpu_flags;
-	};
+	} flags;
 
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.

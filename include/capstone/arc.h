@@ -25,7 +25,7 @@ typedef struct cs_arc_op {
 	union {
 		unsigned int reg;     /// register value for REG operand
 		int64_t imm;	      /// immediate value for IMM operand
-	};
+	} v;
 
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.

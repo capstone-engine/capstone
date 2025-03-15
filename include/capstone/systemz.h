@@ -369,7 +369,7 @@ typedef struct cs_systemz_op {
 		systemz_reg reg;		///< register value for REG operand
 		int64_t imm;		///< immediate value for IMM operand
 		systemz_op_mem mem;	///< base/disp value for MEM operand
-	};
+	} v;
 	cs_ac_type access; ///< R/W access of the operand.
 	uint8_t imm_width; ///< Bit width of the immediate. 0 if not specified.
 } cs_systemz_op;

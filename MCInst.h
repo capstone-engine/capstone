@@ -47,7 +47,7 @@ struct MCOperand {
 		uint64_t RegVal;
 		int64_t ImmVal;
 		double FPImmVal;
-	};
+	} v;
 };
 
 bool MCOperand_isValid(const MCOperand *op);

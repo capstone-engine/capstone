@@ -46,7 +46,7 @@ typedef struct cs_riscv_op {
 		unsigned int reg;	// register value for REG operand
 		int64_t imm;		// immediate value for IMM operand
 		riscv_op_mem mem;	// base/disp value for MEM operand
-	};
+	} v;
 	uint8_t access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)
 } cs_riscv_op;
 

@@ -2838,7 +2838,7 @@ typedef struct cs_aarch64_op {
     aarch64_op_mem mem;	 ///< base/index/scale/disp value for MEM operand
     aarch64_op_sme sme; ///< SME matrix operand
     aarch64_op_pred pred; ///< Predicate register
-  };
+  } v;
   aarch64_sysop sysop; ///< System operand
 
   /// How is this operand accessed? (READ, WRITE or READ|WRITE)

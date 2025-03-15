@@ -39,7 +39,7 @@ typedef struct cs_loongarch_op {
 		unsigned int reg;     /// register value for REG operand
 		int64_t imm;	      /// immediate value for IMM operand
 		loongarch_op_mem mem; /// base/disp value for MEM operand
-	};
+	} v;
 
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.

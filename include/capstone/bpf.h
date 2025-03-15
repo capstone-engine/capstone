@@ -79,7 +79,7 @@ typedef struct cs_bpf_op {
 		uint32_t mmem; ///< M[k] in cBPF
 		uint32_t msh;  ///< corresponds to cBPF's BPF_MSH mode
 		uint32_t ext;  ///< cBPF's extension (not eBPF)
-	};
+	} v;
 
 	bool is_signed; ///< is this operand signed? It is set for memory, immediate and offset operands.
 	bool is_pkt; ///< is this operand referring to packet data? It is set for memory operands.

@@ -875,7 +875,7 @@ typedef struct cs_ppc_op {
 		ppc_reg reg;	///< register value for REG operand
 		int64_t imm;	///< immediate value for IMM operand
 		ppc_op_mem mem; ///< base/disp value for MEM operand
-	};
+	} v;
 	cs_ac_type access;
 } cs_ppc_op;
 

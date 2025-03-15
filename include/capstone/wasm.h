@@ -44,7 +44,7 @@ typedef struct cs_wasm_op {
 		uint64_t uint64;
 		uint32_t immediate[2];
 		cs_wasm_brtable brtable;
-	};
+	} v;
 } cs_wasm_op;
 
 /// Instruction structure

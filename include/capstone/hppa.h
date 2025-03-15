@@ -481,7 +481,7 @@ typedef struct cs_hppa_op {
 		hppa_reg reg; ///< register value for REG operand
 		int64_t imm;  ///< immediate value for IMM operand
 		hppa_mem mem;
-	};
+	} v;
 	cs_ac_type access;
 } cs_hppa_op;
 
@@ -505,7 +505,7 @@ typedef struct hppa_modifier {
 	union {
 		char str_mod[HPPA_STR_MODIFIER_LEN];
 		uint32_t int_mod;
-	};
+	} mod;
 
 } hppa_modifier;
 

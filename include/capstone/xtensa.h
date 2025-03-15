@@ -1709,7 +1709,7 @@ typedef struct cs_xtensa_operand {
 		uint8_t reg;
 		int32_t imm;
 		cs_xtensa_op_mem mem;
-	};
+	} v;
 } cs_xtensa_op;
 
 #define MAX_XTENSA_OPS 8

@@ -252,7 +252,7 @@ typedef struct cs_sh_op {
 		sh_reg reg;	    ///< register value for REG operand
 		sh_op_mem mem; 	    ///< data when operand is targeting memory
 		sh_op_dsp dsp;	    ///< dsp instruction
-	};
+	} v;
 } cs_sh_op;
 
 /// SH instruction
