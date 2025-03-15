@@ -4020,5 +4020,525 @@
       "new_hash": "",
       "edit": ""
     }
+  },
+  "SystemZDisassembler.c": {
+    "\"../../MCDisassembler.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "95088ca9052e72e61cf27d421b4db8fc9299b5eb457f8719dfe8ddaadec92b02",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"../../MCFixedLenDisassembler.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "49fefd61d90fd6af85710d80368275035316a6064cd22455b3fc920e8bff1444",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"../../MCInstPrinter.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "ea06257675896d185a423f8471328a8b98e74c260aad3e2e614d0ef48a744004",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"SystemZGenInstrInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "7e358f66ea5edcf416b55236acd909b81f1612164d1c291468bc8389a7bfa382",
+      "edit": ""
+    },
+    "\"SystemZGenRegisterInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "4f645454630ee3ae5e648b5e0af5514f471f58429432e229c860d1f76de8663b",
+      "edit": ""
+    },
+    "\"SystemZGenSubtargetInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "8464e3d39effdfaa5fd359ffd1549e51032c35d47c72b2464fec7b4b760b9521",
+      "edit": ""
+    },
+    "DEFINE_decodePCDBLOperand": {
+      "apply_type": "OLD",
+      "old_hash": "2af9f8e0e4c99a3fe1fc7cac57273f714ac40100d46ddff948fc149cf9c45757",
+      "new_hash": "aabe6a0e3da3238969407ffbc567719a6164042b1d5e3146110a7223b5daf5b4",
+      "edit": ""
+    },
+    "DecodeAR32BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "51fc01fcba14e7a1996effe4673e939cc602859272f6500a3b2ed43f13dc212c",
+      "new_hash": "170acd2140d7c2718b4806c40ba02c2dfc38506d3a6912043e855135230706bc",
+      "edit": ""
+    },
+    "DecodeCR64BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "d7b1cf20e3f192659e8cb1844250f4da14779368c63763c77468106adc5bc453",
+      "new_hash": "d14eaca50c27a20a9239fdc5455406868b94fab8d64e3d0fda8d29723548ce77",
+      "edit": ""
+    },
+    "DecodeFP128BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "a7304336a5af7232416422a476a98187a550b7d03dc0b3d9c7f23d658ddc7084",
+      "new_hash": "36a24d54130f6fd83f177c789c6c1e77212331f7629d9927da189de08f64241c",
+      "edit": ""
+    },
+    "DecodeFP32BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "8a285c67eb3cfe23874cc15125c602f1796ad7989c5703f1c29d559c83645bc6",
+      "new_hash": "99868db2a7d7c80f9f3ea5d33c4c06c77871f17246d707de34d9e8c5d8ce9815",
+      "edit": ""
+    },
+    "DecodeFP64BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "a0f2f2e77313f67a111043857dd6d2bf8c06baa0cd48678fa5e9fae8430eaa21",
+      "new_hash": "2f04f067f5db456a59d176995265c8bfa288858cac8f0f3b18338b3ff3397159",
+      "edit": ""
+    },
+    "DecodeGR128BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "31f2e54559960853464f054fd82829c3d8484d240d4ff0024f1d5cd22f6bbdbc",
+      "new_hash": "61204a6bc6f43a0b54d49d0177f89d0bf9daece912818bc284b19d5426b9122d",
+      "edit": ""
+    },
+    "DecodeGR32BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "183fdccad533ab1995de3faecdefb52943e11fcaf1ad036d5c1aaf59d10e7ecc",
+      "new_hash": "c931cf1a24ed709b208df2d220e2ff118b9e722b04fe4f9f5dc0d54ba112386d",
+      "edit": ""
+    },
+    "DecodeGR64BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "8b96ea538d7185397f57f692b7be338c52ac0e358ebba4a0adbc1c9989e5033b",
+      "new_hash": "619ee74cf7660dcfdf3f5b290aa444c987754dceba59ecb8444538fef3736627",
+      "edit": ""
+    },
+    "DecodeGRH32BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "1c447e0b4a921efc8abe70579c6590a3b44c00aa61c8b9afdfd14945ce8942a4",
+      "new_hash": "179cec0a5ca6858a89ab28d4caaf79b45f74f08fa25f52228fc2457d8a1e762c",
+      "edit": ""
+    },
+    "DecodeVR128BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "7f2e52a9368de3bf6fbe419802bf94e449485585697d844b4f5f7f3e513d58bf",
+      "new_hash": "3e779e8e0cccac8e3a0405d0bacb31eca4608d6ef08f1b627b9060354138708b",
+      "edit": ""
+    },
+    "DecodeVR32BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "d0091018ecf703e99d369bec67cc5cfbf1a3f42a65fb3834cc59f3628ff610ae",
+      "new_hash": "85e5607fcc171fd3df663ceb8e6ac63fd516ab85b2cfb368356c0806fcc9bde2",
+      "edit": ""
+    },
+    "DecodeVR64BitRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "b31c00421915877c0b7cbd213f8e0c70218d112f84f240ad013a70e6727b29d4",
+      "new_hash": "3b9a551664a8bcc0e7c112ed63ba96173f37b30e6249abe63aabf1aa173f1821",
+      "edit": ""
+    },
+    "SystemZ_LLVM_getInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "e67330e18eac2072be70ff06350724c828030e94ec6cbaba0bf79482ce892855",
+      "new_hash": "",
+      "edit": ""
+    },
+    "createSystemZDisassembler": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "5d88b55d92bf427e32e3d2fbb9d6c7ddd9db7bdea2d35b49436f930f7824c47c",
+      "edit": ""
+    },
+    "decodeRegisterClass": {
+      "apply_type": "OLD",
+      "old_hash": "d3a8f0162f4ac2910b01f806d8f9a29047d75f95aeb32883bdf0867c51960a87",
+      "new_hash": "c0c6fe6285e92fc4b95501cd9a03dfcf0d9364f5213d02d5b1a44d66423cc688",
+      "edit": ""
+    },
+    "getInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "a727fb9a896a73813cef0b6d5396b201057e2451e58529012dd7d42f025aa93e",
+      "new_hash": "9cc3a19fae5cf74e8e168e3389da58f6f4a54e80664f8f5b12b7144f983c54a6",
+      "edit": ""
+    },
+    "tryAddingSymbolicOperand": {
+      "apply_type": "OLD",
+      "old_hash": "bd8c61795f74a98fcbedff8da815d15bb1c887d4278c285a541273694af074a6",
+      "new_hash": "8a09727b716b75bec27a4e40f76f0c359a40e26b61bc6532437cf1a59d90712e",
+      "edit": ""
+    }
+  },
+  "SystemZInstPrinter.c": {
+    "\"../../MathExtras.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "c6ce14448320faf6eb6a6386c8917b014947f3ffe02d3741941e3acbb23f408d",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"SystemZGenInstrInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "7e358f66ea5edcf416b55236acd909b81f1612164d1c291468bc8389a7bfa382",
+      "edit": ""
+    },
+    "\"SystemZGenRegisterInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "4f645454630ee3ae5e648b5e0af5514f471f58429432e229c860d1f76de8663b",
+      "edit": ""
+    },
+    "\"SystemZGenSubtargetInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "8464e3d39effdfaa5fd359ffd1549e51032c35d47c72b2464fec7b4b760b9521",
+      "edit": ""
+    },
+    "<ctype.h>": {
+      "apply_type": "OLD",
+      "old_hash": "77ac4f7d890c5401a685787abdba0756af692ee6230f9b047578bc7d88ec99c4",
+      "new_hash": "",
+      "edit": ""
+    },
+    "<stdint.h>": {
+      "apply_type": "OLD",
+      "old_hash": "dd1e65241020275e480c9f023566ad3d27cad42dfac5d4d1b9c176732d1eede5",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DECLARE_printSImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "c5d467b5d2e2938eea8dc237467863f1040d8a867b070a6bab6cbb83979ed88e",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DECLARE_printUImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "2c4f7eeef0092a28cfa70249e7ef1a56fa03b398bd888890f28ba9a174f0914e",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DEFINE_printSImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "2f83b16bee0ec960929cda4b0cb42bc9e0fafd5586de5b285a1d8dbab5eb223b",
+      "new_hash": "f3b477a7fed3563ffc122947e78465743eb0f5caacc3cf0c2724a20f1c4e5d01",
+      "edit": ""
+    },
+    "DEFINE_printUImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "e359c54ab9059fb3678f24c4a3761a0ee993f478bf5a16623427830b818d3822",
+      "new_hash": "537159dd4c0099a3bb1acea859a0b9674e54af78cc5d52db04766e575f9ed4a1",
+      "edit": ""
+    },
+    "SystemZ_LLVM_getRegisterName": {
+      "apply_type": "OLD",
+      "old_hash": "951c63f7533eea1e18ae6ec7918593fd077ad9d012064f5090fcdbc2ba37e9ae",
+      "new_hash": "",
+      "edit": ""
+    },
+    "SystemZ_LLVM_printInstruction": {
+      "apply_type": "OLD",
+      "old_hash": "6350d4103544427f9135467736e313cf2d3dbb7f3b0471caf05bc15409819ba7",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printAddress": {
+      "apply_type": "OLD",
+      "old_hash": "de803c009a2cb5f0c6a99ee72a8cf57acf6daab57cec22a1e004fd5721f9c522",
+      "new_hash": "38596f5e5364e2b47bf4a237bf089cf457ea63a60a556e5229bf58fa4e9a26b1",
+      "edit": ""
+    },
+    "printBDAddrOperand": {
+      "apply_type": "OLD",
+      "old_hash": "8a4702cb7b0458b1661825a919acd433894238a55d99adef98bb5dc26f32dcfa",
+      "new_hash": "6b82250b2b87d79e5b90952f0c44e2b9a01f44d389788c647f0f0366b61920cc",
+      "edit": ""
+    },
+    "printBDLAddrOperand": {
+      "apply_type": "OLD",
+      "old_hash": "53210e38eecf9cb2a6116d5738676ee9bab7e9075e05eee90c655f8844792c1a",
+      "new_hash": "ca0333e8b92e6505b96d6ccbce1c18fb78fb3e6c1eded5a52575ed924e63186a",
+      "edit": ""
+    },
+    "printBDRAddrOperand": {
+      "apply_type": "OLD",
+      "old_hash": "cd3497bf7c7bcc8b92adfaa9d696d21009ea319ea471b0659b0a9038ed4014d3",
+      "new_hash": "91339ee958d93ed2afcbdd07373120b4f52f0caf58efbe15a12814d0675d7d15",
+      "edit": ""
+    },
+    "printBDVAddrOperand": {
+      "apply_type": "OLD",
+      "old_hash": "547a2b77fc309e159746df9cfce42cf0009f3baa171cdea23a10c7cb0ed51b6d",
+      "new_hash": "e665f1ec45eea18993a3ccae8d97ad5c565425ec96c5a94f13c1f778ed5236e3",
+      "edit": ""
+    },
+    "printBDXAddrOperand": {
+      "apply_type": "OLD",
+      "old_hash": "3d62cbb43ffce7ad55e989f99cb733abb7cbe726ee717e37efa286d3dcadb8d8",
+      "new_hash": "18bdf9f41878aafc9feb664f93eaccfad37351942f8a1657c992dc682f960aff",
+      "edit": ""
+    },
+    "printCond4Operand": {
+      "apply_type": "OLD",
+      "old_hash": "fff6d07cf5f027cd52def6ac101822b4d1f7a6a780e0feac31a8912466c97e01",
+      "new_hash": "ac2760e42a5d05e6079237f1d406d00c842a4ed2f51a51ce1613fad229607f2f",
+      "edit": ""
+    },
+    "printFormattedRegName": {
+      "apply_type": "OLD",
+      "old_hash": "5a54783bde39a69a3b6c390e0af0a9bb302fa8a3989efd8f957a88ac4f5d08f5",
+      "new_hash": "f0d6bc4a089c1cf83a092d3d40b9c47d3a236e621f0f81a2e1b2eb50663430b3",
+      "edit": ""
+    },
+    "printInst": {
+      "apply_type": "OLD",
+      "old_hash": "6a05998240d41ab2fe3f4af0a3193ba1d9524f31b86d8f95e6b7228a6906a66c",
+      "new_hash": "2986259211da11757fdefef73de8983bcc3a92dd4a14b944800581da20c2b470",
+      "edit": ""
+    },
+    "printMCOperand": {
+      "apply_type": "OLD",
+      "old_hash": "b6b55f94830fd6a494e8bced4b7745f3aa2503dc17401c1d532fa42d314a7a73",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printMCOperandMAI": {
+      "apply_type": "OLD",
+      "old_hash": "763fc8a42c56f48c87673408407a179b8b28f749ec179bf43aaff1fc4a005de5",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printOperand": {
+      "apply_type": "OLD",
+      "old_hash": "5e383d960dac141756a98c1f4ccb4e1b52990e839d1e1b44225179167ea29577",
+      "new_hash": "",
+      "edit": ""
+    },
+    "printPCRelOperand": {
+      "apply_type": "OLD",
+      "old_hash": "8c5d4f1d27faa51212e9468378e5a96d6e495d414f3860a061a5bf90bec60fc2",
+      "new_hash": "6eb2b517a824dcc383dc4d4faca716f7072bca2f29d992115a5e43fbbbc4bf07",
+      "edit": ""
+    },
+    "printPCRelTLSOperand": {
+      "apply_type": "OLD",
+      "old_hash": "e5e6a65151561857361312d446b457ff39e4ccd0952d9f449c654caaf8b66c43",
+      "new_hash": "60b781d44bd5eda84757a557ae8db06245bcc982f59241610449bf8934522bef",
+      "edit": ""
+    },
+    "printRegName": {
+      "apply_type": "OLD",
+      "old_hash": "f546631efe9f9c0c952b1d89dbfb1f8c16348ff40f3685430b59c3181156488d",
+      "new_hash": "ad43cce98e8ee67e4edabc60dac5a5650bb7062ceb17543c8a234d3635fae395",
+      "edit": ""
+    },
+    "printS16ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "a6b72622122b3cefd4514b0facb69c84f9a1a0690c18d3b747f1479d2e4d5e17",
+      "new_hash": "e416413b302ec8c0970a3e521479daeefa2f15fc0ba95da0c39464f9895b70e7",
+      "edit": ""
+    },
+    "printS32ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "172c0f277f32cf90d9d8f97fd34dc9932961535cd765bc8df6edd90988395135",
+      "new_hash": "8b69df06c8cf22baa2540ad5dcdb91a599f05e80289207b9693643ed2e3dfefe",
+      "edit": ""
+    },
+    "printS8ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "355e179ffb8bbe90d2cab5dc9d002b6a4c9d84233c4a6bbfa4e9ce5dd8a35f9e",
+      "new_hash": "787d632e41b6251c1d32b0f5746a95dc522dc31846fda90d2f7c58d3369850ed",
+      "edit": ""
+    },
+    "printU12ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "1c09c0558910fab7d2d9137adedd6357cfdbeffb02fe56c301c6bb8359da879e",
+      "new_hash": "affd651f5eed01f13bf2589eb176e2547d2c19a3b8264ecfbf9f22dcd9d4648e",
+      "edit": ""
+    },
+    "printU16ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "a28446db487c1557e46d080be7d0c8e63046c3354db764c336cc0d2616193e7e",
+      "new_hash": "2d4db854152ae2e47a2c7f4a554aaf15f92e7738c87129e083dc2df64dda7a6c",
+      "edit": ""
+    },
+    "printU1ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "7d198eaf29b0673dae2aed724bb62da1a1ae80298b8205730e9b09f0d8fdfba2",
+      "new_hash": "888fc105c7310987d0c72afaf62ae17ea40d23b137b29b4636a3e46ce670fd75",
+      "edit": ""
+    },
+    "printU2ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "a28332f4e85ce2ce09eb07d113c556f9782a790ce82680656eced1317683f3f5",
+      "new_hash": "ff3baa8944d5f291faa114359992e8903a464d61f1a54eb74da4d07066219f5e",
+      "edit": ""
+    },
+    "printU32ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "8243499b96f666fb1736a6c9795723e80d239967da773f14c95b7aca6658ae28",
+      "new_hash": "bb5341789b5d38f70bf0f88fa972a3ae9665be049520f9a541105ac3a9367924",
+      "edit": ""
+    },
+    "printU3ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "6414b7bae9c7e8fc088f3163ba556063263007af4080e47d5cca976282e53d50",
+      "new_hash": "94e004515d9ac3ce6a02321b37c5da287db22dd5710e1302ac211673eb467782",
+      "edit": ""
+    },
+    "printU48ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "43775f925d52ae6149ce4dd3f12a45591ebe02509a487adafe9b0633b8439f35",
+      "new_hash": "3b2bc028a15a3f386b493196fc0c3f772de8831b90f1c5bae50adfbf76a25b3b",
+      "edit": ""
+    },
+    "printU4ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "037b455c386b7bcc57d1ff97c36197b32ae84b6c0e1ac36a8319231d8c9c3e40",
+      "new_hash": "20f7c6dbf75e36e8d6e1020e6845c05adecc4f815aadd9982271fc04c3450fe0",
+      "edit": ""
+    },
+    "printU8ImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "9b3ace470c0b75cbbbcb1996a1627cb615ca841f9c8255e865d675af345ba91d",
+      "new_hash": "a2c42d4e5e617c3661c9c0214bd3f232e50f38f9a806e03adf7e323bec96cf78",
+      "edit": ""
+    }
+  },
+  "SystemZInstPrinter.h": {
+    "\"../../MCInstPrinter.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "ea06257675896d185a423f8471328a8b98e74c260aad3e2e614d0ef48a744004",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"../../cs_priv.h\"": {
+      "apply_type": "OLD",
+      "old_hash": "9cf77913cc1ba047983eb15f5e6dce657fb26b09f32757f02de5df2cf4023d87",
+      "new_hash": "",
+      "edit": ""
+    },
+    "DECLARE_printSImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "5688fd8aabd2bc8d41c621869ff9794cdf40037bbe126cb51fe6d9de711f1b93",
+      "edit": ""
+    },
+    "DECLARE_printUImmOperand": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "e82e0c25f2cf0707b7e5d391fc9609506e02e73492eefb517a0bf3764eb9b432",
+      "edit": ""
+    }
+  },
+  "SystemZMCTargetDesc.c": {
+    "SystemZMC_getFirstReg": {
+      "apply_type": "OLD",
+      "old_hash": "75393c39421caa9cd80a10a90a92844d1de035f3d82871d452920e1336c8424e",
+      "new_hash": "",
+      "edit": ""
+    },
+    "createAsmTargetStreamer": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "61aa895324fd74840f4b891ccd16cf98931fb371cbe4c35a0300e52796113a3b",
+      "edit": ""
+    },
+    "createNullTargetStreamer": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "a4e9fc413000d6a2b4116fcf4f911da367a91022f530bb2e9404ee991c2403fd",
+      "edit": ""
+    },
+    "createObjectTargetStreamer": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "2aeb6084afe33e377eaec794b61ba027ec67a12f5384485973380191f2e55510",
+      "edit": ""
+    },
+    "createSystemZMCAsmInfo": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "98221d1de89d0709d5654f8464b4e34ccae0c260fe36144223149ed5d2ed4ba1",
+      "edit": ""
+    },
+    "createSystemZMCInstPrinter": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "7f8512e04a2d35c85df92d79e00a83031d47da6846a109f69d7fb2fe4f618df7",
+      "edit": ""
+    },
+    "createSystemZMCInstrInfo": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "0d0b08b7d21784049cb620cd31ec5b6f97fe7a47d7bc828776e96757ee79b0c6",
+      "edit": ""
+    },
+    "createSystemZMCRegisterInfo": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "257a88c01b8edcf96bfdb70186a89db14b5d80e11eba091513b5a8883e89d0d3",
+      "edit": ""
+    },
+    "createSystemZMCSubtargetInfo": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "50e73713c07e0a0c5e0f43724ba2682f14cf2a114a63fc6fa79d564b97900be1",
+      "edit": ""
+    },
+    "emitConstantPools": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "8cf89eefc69d81e4dc991c43ebdf8d46676fff53d0367838f9f1b3e4a2a1f7e0",
+      "edit": ""
+    },
+    "getFirstReg": {
+      "apply_type": "OLD",
+      "old_hash": "",
+      "new_hash": "eeed978c7036f904fb25f0e1d103f87962ec1c3579f32d4faf6ac249ccfbfb79",
+      "edit": ""
+    }
+  },
+  "SystemZMCTargetDesc.h": {
+    "\"SystemZGenInstrInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "7e358f66ea5edcf416b55236acd909b81f1612164d1c291468bc8389a7bfa382",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"SystemZGenRegisterInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "4f645454630ee3ae5e648b5e0af5514f471f58429432e229c860d1f76de8663b",
+      "new_hash": "",
+      "edit": ""
+    },
+    "\"SystemZGenSubtargetInfo.inc\"": {
+      "apply_type": "OLD",
+      "old_hash": "8464e3d39effdfaa5fd359ffd1549e51032c35d47c72b2464fec7b4b760b9521",
+      "new_hash": "",
+      "edit": ""
+    },
+    "SystemZMC_getRegAsGR32": {
+      "apply_type": "OLD",
+      "old_hash": "ce81b6269680fe38301b487bea55863c86136ae7c357bd54e51c3ae36579023b",
+      "new_hash": "d2c214b934a5efa311784772be352787ead9127f1742d9b1cd6e77b3932bc7f5",
+      "edit": ""
+    },
+    "SystemZMC_getRegAsGR64": {
+      "apply_type": "OLD",
+      "old_hash": "16416329706bfc9890742d3d08d6e722909e912dfc9ce8b5d178ad373bc95152",
+      "new_hash": "4bdf3c34297a10d6b026008227642eb5d9a617b9a27292d3e37b404942624b62",
+      "edit": ""
+    },
+    "SystemZMC_getRegAsGRH32": {
+      "apply_type": "OLD",
+      "old_hash": "e96aaa94a0e44f0df98219b088f0d10d80daf008433d664772141b15a4604f5c",
+      "new_hash": "c827f4b38ec6ea567beaa5073fd5d7ac4bdc89a37e5104e941e59bd907f2f5c7",
+      "edit": ""
+    },
+    "SystemZMC_getRegAsVR128": {
+      "apply_type": "OLD",
+      "old_hash": "ecaf62bc09a335a445940618bd51be82e8252508a36dd817afd025530f806acc",
+      "new_hash": "014af88191f2188cbdd177c22479ffad8482196d765e7dcf5dc8258d2b1679b5",
+      "edit": ""
+    }
   }
 }
