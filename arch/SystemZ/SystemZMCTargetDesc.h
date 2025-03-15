@@ -70,25 +70,25 @@ extern const unsigned SystemZMC_CR64Regs[16];
 unsigned SystemZMC_getFirstReg(unsigned Reg);
 
 // Return the given register as a GR64.
-inline unsigned SystemZMC_getRegAsGR64(unsigned Reg)
+static inline unsigned SystemZMC_getRegAsGR64(unsigned Reg)
 {
 	return SystemZMC_GR64Regs[SystemZMC_getFirstReg(Reg)];
 }
 
 // Return the given register as a low GR32.
-inline unsigned SystemZMC_getRegAsGR32(unsigned Reg)
+static inline unsigned SystemZMC_getRegAsGR32(unsigned Reg)
 {
 	return SystemZMC_GR32Regs[SystemZMC_getFirstReg(Reg)];
 }
 
 // Return the given register as a high GR32.
-inline unsigned SystemZMC_getRegAsGRH32(unsigned Reg)
+static inline unsigned SystemZMC_getRegAsGRH32(unsigned Reg)
 {
 	return SystemZMC_GRH32Regs[SystemZMC_getFirstReg(Reg)];
 }
 
 // Return the given register as a VR128.
-inline unsigned SystemZMC_getRegAsVR128(unsigned Reg)
+static inline unsigned SystemZMC_getRegAsVR128(unsigned Reg)
 {
 	return SystemZMC_VR128Regs[SystemZMC_getFirstReg(Reg)];
 }
