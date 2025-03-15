@@ -50,11 +50,11 @@ TestDetailRISCVOp *test_detail_riscv_op_clone(const TestDetailRISCVOp *op)
 {
 	TestDetailRISCVOp *clone = test_detail_riscv_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
 	clone->mem_disp = op->mem_disp;
 
 	return clone;

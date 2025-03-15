@@ -30,7 +30,7 @@ test_detail_loongarch_clone(const TestDetailLoongArch *detail)
 {
 	TestDetailLoongArch *clone = test_detail_loongarch_new();
 
-	clone->format = detail->format ? strdup(detail->format) : NULL;
+	clone->format = detail->format ? cs_strdup(detail->format) : NULL;
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
 		clone->operands = cs_mem_calloc(sizeof(TestDetailLoongArchOp *),
@@ -54,11 +54,11 @@ test_detail_loongarch_op_clone(const TestDetailLoongArchOp *op)
 {
 	TestDetailLoongArchOp *clone = test_detail_loongarch_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
 	clone->mem_disp = op->mem_disp;
 
 	return clone;

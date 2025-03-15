@@ -16,14 +16,14 @@ TestDetailM680xIdx *test_detail_m680x_idx_clone(const TestDetailM680xIdx *idx)
 {
 	assert(idx);
 	TestDetailM680xIdx *clone = test_detail_m680x_idx_new();
-	clone->base_reg = idx->base_reg ? strdup(idx->base_reg) : NULL;
-	clone->offset_reg = idx->offset_reg ? strdup(idx->offset_reg) : NULL;
+	clone->base_reg = idx->base_reg ? cs_strdup(idx->base_reg) : NULL;
+	clone->offset_reg = idx->offset_reg ? cs_strdup(idx->offset_reg) : NULL;
 	clone->flags = idx->flags_count > 0 ?
 			       cs_mem_calloc(sizeof(char *), idx->flags_count) :
 			       NULL;
 	clone->flags_count = idx->flags_count;
 	for (size_t i = 0; i < clone->flags_count; ++i) {
-		clone->flags[i] = idx->flags[i] ? strdup(idx->flags[i]) : NULL;
+		clone->flags[i] = idx->flags[i] ? cs_strdup(idx->flags[i]) : NULL;
 	}
 	clone->offset = idx->offset;
 	clone->offset_addr = idx->offset_addr;
@@ -77,7 +77,7 @@ TestDetailM680x *test_detail_m680x_clone(const TestDetailM680x *detail)
 			cs_mem_calloc(sizeof(char *), detail->flags_count);
 	}
 	for (size_t i = 0; i < detail->flags_count; ++i) {
-		clone->flags[i] = detail->flags[i] ? strdup(detail->flags[i]) :
+		clone->flags[i] = detail->flags[i] ? cs_strdup(detail->flags[i]) :
 						     NULL;
 	}
 	clone->operands_count = detail->operands_count;
@@ -102,9 +102,9 @@ TestDetailM680xOp *test_detail_m680x_op_clone(const TestDetailM680xOp *op)
 {
 	TestDetailM680xOp *clone = test_detail_m680x_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->idx = op->idx ? test_detail_m680x_idx_clone(op->idx) : NULL;
 	clone->imm = op->imm;
 	clone->rel_address = op->rel_address;

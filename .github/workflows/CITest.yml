@@ -42,7 +42,8 @@ jobs:
               arch: x64,
               build-system: 'make',
               diet-build: 'OFF',
-              enable-asan: 'OFF'
+              enable-asan: 'OFF',
+              c99: 'OFF'
             }
           - {
               name: 'ubuntu-22.04 x64 cmake',
@@ -50,7 +51,8 @@ jobs:
               arch: x64,
               build-system: 'cmake',
               diet-build: 'OFF',
-              enable-asan: 'OFF'
+              enable-asan: 'OFF',
+              c99: 'OFF'
             }
           - {
               name: 'ubuntu-24.04 x64 ASAN',
@@ -58,7 +60,17 @@ jobs:
               arch: x64,
               build-system: 'cmake',
               diet-build: 'OFF',
-              enable-asan: 'ON'
+              enable-asan: 'ON',
+              c99: 'OFF'
+            }
+          - {
+              name: 'ubuntu-24.04 x64 cmake c99',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              enable-asan: 'OFF',
+              c99: 'ON'
             }
 
     steps:
@@ -85,13 +97,14 @@ jobs:
       if: startsWith(matrix.config.build-system, 'cmake')
       env:
         asan: ${{ matrix.config.enable-asan }}
+        C99: ${{ matrix.config.c99 }}
       run: |
         mkdir build && cd build
         # build static library
-        cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} -DCAPSTONE_BUILD_DIET=${diet_build} ..
+        cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} -DCAPSTONE_BUILD_C99=${C99} -DCAPSTONE_BUILD_DIET=${diet_build} ..
         cmake --build . --config Debug
         # build shared library
-        cmake -DCAPSTONE_INSTALL=1 -DCAPSTONE_BUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ..
+        cmake -DCAPSTONE_INSTALL=1 -DCAPSTONE_BUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_C99=${C99} -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ..
         sudo cmake --build . --config Debug --target install
 
     - name: Lower number of KASL randomized address bits

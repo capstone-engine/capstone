@@ -299,7 +299,7 @@ TestCase *test_case_clone(TestCase *test_case)
 	tc->expected = te;
 	tc->skip = test_case->skip;
 	if (tc->skip) {
-		tc->skip_reason = strdup(test_case->skip_reason);
+		tc->skip_reason = cs_strdup(test_case->skip_reason);
 	}
 	return tc;
 }
@@ -331,7 +331,7 @@ TestFile *test_file_clone(TestFile *test_file)
 {
 	assert(test_file);
 	TestFile *tf = test_file_new();
-	tf->filename = test_file->filename ? strdup(test_file->filename) : NULL;
+	tf->filename = test_file->filename ? cs_strdup(test_file->filename) : NULL;
 	tf->test_cases =
 		cs_mem_calloc(sizeof(TestCase *), test_file->test_cases_count);
 

@@ -51,15 +51,15 @@ TestDetailBPFOp *test_detail_bpf_op_clone(const TestDetailBPFOp *op)
 {
 	TestDetailBPFOp *clone = test_detail_bpf_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
 	clone->off = op->off;
 	clone->mmem = op->mmem;
 	clone->msh = op->msh;
-	clone->ext = op->ext ? strdup(op->ext) : NULL;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
+	clone->ext = op->ext ? cs_strdup(op->ext) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
 	clone->mem_disp = op->mem_disp;
 	clone->is_pkt = op->is_pkt;
 	clone->is_signed = op->is_signed;

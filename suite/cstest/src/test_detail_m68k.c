@@ -18,9 +18,9 @@ TestDetailM68KOpMem *test_detail_m68k_op_mem_clone(TestDetailM68KOpMem *mem)
 	assert(mem);
 	TestDetailM68KOpMem *clone = test_detail_m68k_op_mem_new();
 
-	clone->base_reg = mem->base_reg ? strdup(mem->base_reg) : NULL;
-	clone->index_reg = mem->index_reg ? strdup(mem->index_reg) : NULL;
-	clone->in_base_reg = mem->in_base_reg ? strdup(mem->in_base_reg) : NULL;
+	clone->base_reg = mem->base_reg ? cs_strdup(mem->base_reg) : NULL;
+	clone->index_reg = mem->index_reg ? cs_strdup(mem->index_reg) : NULL;
+	clone->in_base_reg = mem->in_base_reg ? cs_strdup(mem->in_base_reg) : NULL;
 	clone->index_size = mem->index_size;
 	clone->disp = mem->disp;
 	clone->in_disp = mem->in_disp;
@@ -68,10 +68,10 @@ TestDetailM68K *test_detail_m68k_clone(TestDetailM68K *detail)
 {
 	TestDetailM68K *clone = test_detail_m68k_new();
 	clone->op_size_type =
-		detail->op_size_type ? strdup(detail->op_size_type) : NULL;
-	clone->op_size_fpu = detail->op_size_fpu ? strdup(detail->op_size_fpu) :
+		detail->op_size_type ? cs_strdup(detail->op_size_type) : NULL;
+	clone->op_size_fpu = detail->op_size_fpu ? cs_strdup(detail->op_size_fpu) :
 						   NULL;
-	clone->op_size_cpu = detail->op_size_cpu ? strdup(detail->op_size_cpu) :
+	clone->op_size_cpu = detail->op_size_cpu ? cs_strdup(detail->op_size_cpu) :
 						   NULL;
 
 	clone->operands_count = detail->operands_count;
@@ -96,11 +96,11 @@ TestDetailM68KOp *test_detail_m68k_op_clone(TestDetailM68KOp *op)
 {
 	TestDetailM68KOp *clone = test_detail_m68k_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
-	clone->reg_pair_0 = op->reg_pair_0 ? strdup(op->reg_pair_0) : NULL;
-	clone->reg_pair_1 = op->reg_pair_1 ? strdup(op->reg_pair_1) : NULL;
-	clone->address_mode = op->address_mode ? strdup(op->address_mode) :
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
+	clone->reg_pair_0 = op->reg_pair_0 ? cs_strdup(op->reg_pair_0) : NULL;
+	clone->reg_pair_1 = op->reg_pair_1 ? cs_strdup(op->reg_pair_1) : NULL;
+	clone->address_mode = op->address_mode ? cs_strdup(op->address_mode) :
 						 NULL;
 
 	clone->imm = op->imm;

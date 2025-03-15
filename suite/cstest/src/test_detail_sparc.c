@@ -31,8 +31,8 @@ TestDetailSparc *test_detail_sparc_clone(const TestDetailSparc *detail)
 	TestDetailSparc *clone = test_detail_sparc_new();
 
 	clone->operands_count = detail->operands_count;
-	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
-	clone->hint = detail->hint ? strdup(detail->hint) : NULL;
+	clone->cc = detail->cc ? cs_strdup(detail->cc) : NULL;
+	clone->hint = detail->hint ? cs_strdup(detail->hint) : NULL;
 	if (detail->operands_count > 0) {
 		clone->operands = cs_mem_calloc(sizeof(TestDetailSparcOp *),
 						detail->operands_count);
@@ -54,11 +54,11 @@ TestDetailSparcOp *test_detail_sparc_op_clone(const TestDetailSparcOp *op)
 {
 	TestDetailSparcOp *clone = test_detail_sparc_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
-	clone->mem_index = op->mem_index ? strdup(op->mem_index) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
+	clone->mem_index = op->mem_index ? cs_strdup(op->mem_index) : NULL;
 	clone->mem_disp = op->mem_disp;
 
 	return clone;

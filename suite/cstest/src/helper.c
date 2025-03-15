@@ -14,6 +14,7 @@
 #include <setjmp.h>
 #include "cmocka.h"
 #include "helper.h"
+#include "../../../utils.h"
 
 void add_str(char **src, const char *format, ...)
 {
@@ -43,7 +44,7 @@ void replace_hex(char *src, size_t src_len)
 
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
-	tmp = strdup(src);
+	tmp = cs_strdup(src);
 	origin = tmp;
 
 	while ((found = strstr(tmp, "0x")) != NULL) {
@@ -52,7 +53,7 @@ void replace_hex(char *src, size_t src_len)
 		value = 0;
 		valid = 0;
 
-		tmp_tmp = strndup(tmp, orig_found - tmp);
+		tmp_tmp = cs_strndup(tmp, orig_found - tmp);
 		while (*found != '\0' && isxdigit(*found)) {
 			valid = 1;
 			if (*found >= 'a' && *found <= 'f')
@@ -97,7 +98,7 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
-	tmp = strdup(src);
+	tmp = cs_strdup(src);
 	origin = tmp;
 
 	while ((found = strstr(tmp, "-")) != NULL) {
@@ -105,7 +106,7 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 		found++;
 		valid = 0;
 
-		value = strdup("-");
+		value = cs_strdup("-");
 		cnt = 2;
 
 		while (*found != '\0' && isdigit(*found)) {
@@ -117,7 +118,7 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 			found++;
 		}
 
-		tmp_tmp = strndup(tmp, orig_found - tmp);
+		tmp_tmp = cs_strndup(tmp, orig_found - tmp);
 		if (valid == 1) {
 			*orig_found = '\0';
 			if (arch_bits == 16) {

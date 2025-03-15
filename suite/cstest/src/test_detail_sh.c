@@ -50,11 +50,11 @@ TestDetailSHOp *test_detail_sh_op_clone(const TestDetailSHOp *op)
 {
 	TestDetailSHOp *clone = test_detail_sh_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
-	clone->mem_reg = op->mem_reg ? strdup(op->mem_reg) : NULL;
-	clone->mem_address = op->mem_address ? strdup(op->mem_address) : NULL;
+	clone->mem_reg = op->mem_reg ? cs_strdup(op->mem_reg) : NULL;
+	clone->mem_address = op->mem_address ? cs_strdup(op->mem_address) : NULL;
 	clone->mem_disp = op->mem_disp;
 
 	return clone;

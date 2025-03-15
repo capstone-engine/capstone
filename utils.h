@@ -25,6 +25,7 @@ unsigned int count_positive8(const unsigned char *list);
 #define MATRIX_SIZE(a) (sizeof(a[0])/sizeof(a[0][0]))
 
 char *cs_strdup(const char *str);
+char *cs_strndup(const char *str, size_t n);
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
@@ -54,4 +55,5 @@ static inline bool is_blank_char(const char c) {
 }
 
 char *byte_seq_to_str(uint8_t *bytes, size_t len);
+
 #endif

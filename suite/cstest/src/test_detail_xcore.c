@@ -50,11 +50,11 @@ TestDetailXCoreOp *test_detail_xcore_op_clone(const TestDetailXCoreOp *op)
 {
 	TestDetailXCoreOp *clone = test_detail_xcore_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
-	clone->mem_index = op->mem_index ? strdup(op->mem_index) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
+	clone->mem_index = op->mem_index ? cs_strdup(op->mem_index) : NULL;
 	clone->mem_disp = op->mem_disp;
 	clone->mem_direct = op->mem_direct;
 

@@ -29,7 +29,7 @@ TestDetailSystemZ *test_detail_systemz_clone(const TestDetailSystemZ *detail)
 {
 	TestDetailSystemZ *clone = test_detail_systemz_new();
 
-	clone->format = detail->format ? strdup(detail->format) : NULL;
+	clone->format = detail->format ? cs_strdup(detail->format) : NULL;
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
 		clone->operands = cs_mem_calloc(sizeof(TestDetailSystemZOp *),
@@ -52,14 +52,14 @@ TestDetailSystemZOp *test_detail_systemz_op_clone(const TestDetailSystemZOp *op)
 {
 	TestDetailSystemZOp *clone = test_detail_systemz_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
 	clone->imm_width = op->imm_width;
-	clone->mem_am = op->mem_am ? strdup(op->mem_am) : NULL;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
-	clone->mem_index = op->mem_index ? strdup(op->mem_index) : NULL;
+	clone->mem_am = op->mem_am ? cs_strdup(op->mem_am) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
+	clone->mem_index = op->mem_index ? cs_strdup(op->mem_index) : NULL;
 	clone->mem_disp = op->mem_disp;
 	clone->mem_length = op->mem_length;
 

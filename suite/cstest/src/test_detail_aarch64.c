@@ -28,7 +28,7 @@ void test_detail_aarch64_free(TestDetailAArch64 *detail)
 TestDetailAArch64 *test_detail_aarch64_clone(TestDetailAArch64 *detail)
 {
 	TestDetailAArch64 *clone = test_detail_aarch64_new();
-	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
+	clone->cc = detail->cc ? cs_strdup(detail->cc) : NULL;
 	clone->update_flags = detail->update_flags;
 	clone->post_indexed = detail->post_indexed;
 
@@ -54,20 +54,20 @@ TestDetailAArch64Op *test_detail_aarch64_op_clone(TestDetailAArch64Op *op)
 {
 	TestDetailAArch64Op *clone = test_detail_aarch64_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->sub_type = op->sub_type ? strdup(op->sub_type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
-	clone->mem_index = op->mem_index ? strdup(op->mem_index) : NULL;
-	clone->shift_type = op->shift_type ? strdup(op->shift_type) : NULL;
-	clone->ext = op->ext ? strdup(op->ext) : NULL;
-	clone->vas = op->vas ? strdup(op->vas) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->sub_type = op->sub_type ? cs_strdup(op->sub_type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
+	clone->mem_index = op->mem_index ? cs_strdup(op->mem_index) : NULL;
+	clone->shift_type = op->shift_type ? cs_strdup(op->shift_type) : NULL;
+	clone->ext = op->ext ? cs_strdup(op->ext) : NULL;
+	clone->vas = op->vas ? cs_strdup(op->vas) : NULL;
 	clone->imm = op->imm;
 	clone->sme = op->sme ? test_detail_aarch64_op_sme_clone(op->sme) : NULL;
-	clone->pred_reg = op->pred_reg ? strdup(op->pred_reg) : NULL;
+	clone->pred_reg = op->pred_reg ? cs_strdup(op->pred_reg) : NULL;
 	clone->pred_vec_select =
-		op->pred_vec_select ? strdup(op->pred_vec_select) : NULL;
+		op->pred_vec_select ? cs_strdup(op->pred_vec_select) : NULL;
 	clone->pred_imm_index = op->pred_imm_index;
 	clone->pred_imm_index_set = op->pred_imm_index_set;
 	clone->mem_disp = op->mem_disp;
@@ -114,9 +114,9 @@ TestDetailAArch64SME *test_detail_aarch64_op_sme_clone(TestDetailAArch64SME *sme
 {
 	TestDetailAArch64SME *clone = test_detail_aarch64_op_sme_new();
 
-	clone->type = sme->type ? strdup(sme->type) : NULL;
-	clone->tile = sme->tile ? strdup(sme->tile) : NULL;
-	clone->slice_reg = sme->slice_reg ? strdup(sme->slice_reg) : NULL;
+	clone->type = sme->type ? cs_strdup(sme->type) : NULL;
+	clone->tile = sme->tile ? cs_strdup(sme->tile) : NULL;
+	clone->slice_reg = sme->slice_reg ? cs_strdup(sme->slice_reg) : NULL;
 	clone->slice_offset_imm = sme->slice_offset_imm;
 	clone->slice_offset_ir_first = sme->slice_offset_ir_first;
 	clone->slice_offset_ir_offset = sme->slice_offset_ir_offset;

@@ -50,7 +50,7 @@ TestDetailWASMOp *test_detail_wasm_op_clone(const TestDetailWASMOp *op)
 {
 	TestDetailWASMOp *clone = test_detail_wasm_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
 	clone->size = op->size;
 	clone->int7 = op->int7;
 	clone->varuint32 = op->varuint32;

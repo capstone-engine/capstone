@@ -65,8 +65,8 @@ static TestFile **parse_test_files(char **tf_paths, uint32_t path_count,
 		assert(files[k]);
 		stats->tc_total += files[k]->test_cases_count;
 		files[k]->filename = strrchr(tf_paths[i], '/') ?
-					     strdup(strrchr(tf_paths[i], '/')) :
-					     strdup(tf_paths[i]);
+					     cs_strdup(strrchr(tf_paths[i], '/')) :
+					     cs_strdup(tf_paths[i]);
 
 		err = cyaml_free(&cyaml_config, &test_file_schema,
 				 test_file_data, 0);

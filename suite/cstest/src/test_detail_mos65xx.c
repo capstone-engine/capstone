@@ -38,7 +38,7 @@ TestDetailMos65xx *test_detail_mos65xx_clone(const TestDetailMos65xx *detail)
 		clone->operands[i] =
 			test_detail_mos65xx_op_clone(detail->operands[i]);
 	}
-	clone->am = detail->am ? strdup(detail->am) : NULL;
+	clone->am = detail->am ? cs_strdup(detail->am) : NULL;
 	clone->modifies_flags = detail->modifies_flags;
 
 	return clone;
@@ -53,8 +53,8 @@ TestDetailMos65xxOp *test_detail_mos65xx_op_clone(const TestDetailMos65xxOp *op)
 {
 	TestDetailMos65xxOp *clone = test_detail_mos65xx_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
 	clone->mem = op->mem;
 

@@ -47,16 +47,16 @@ void test_detail_x86_free(TestDetailX86 *detail)
 TestDetailX86 *test_detail_x86_clone(TestDetailX86 *detail)
 {
 	TestDetailX86 *clone = test_detail_x86_new();
-	clone->sib_index = detail->sib_index ? strdup(detail->sib_index) : NULL;
-	clone->sib_base = detail->sib_base ? strdup(detail->sib_base) : NULL;
-	clone->xop_cc = detail->xop_cc ? strdup(detail->xop_cc) : NULL;
-	clone->sse_cc = detail->sse_cc ? strdup(detail->sse_cc) : NULL;
-	clone->avx_cc = detail->avx_cc ? strdup(detail->avx_cc) : NULL;
-	clone->avx_rm = detail->avx_rm ? strdup(detail->avx_rm) : NULL;
+	clone->sib_index = detail->sib_index ? cs_strdup(detail->sib_index) : NULL;
+	clone->sib_base = detail->sib_base ? cs_strdup(detail->sib_base) : NULL;
+	clone->xop_cc = detail->xop_cc ? cs_strdup(detail->xop_cc) : NULL;
+	clone->sse_cc = detail->sse_cc ? cs_strdup(detail->sse_cc) : NULL;
+	clone->avx_cc = detail->avx_cc ? cs_strdup(detail->avx_cc) : NULL;
+	clone->avx_rm = detail->avx_rm ? cs_strdup(detail->avx_rm) : NULL;
 
 	if (detail->prefix[0]) {
 		for (size_t i = 0; i < ARR_SIZE(clone->prefix); ++i) {
-			clone->prefix[i] = strdup(detail->prefix[i]);
+			clone->prefix[i] = cs_strdup(detail->prefix[i]);
 		}
 	}
 	memcpy(clone->opcode, detail->opcode, sizeof(clone->opcode));
@@ -81,7 +81,7 @@ TestDetailX86 *test_detail_x86_clone(TestDetailX86 *detail)
 					 NULL;
 	for (size_t i = 0; clone->eflags && i < detail->eflags_count; ++i) {
 		clone->eflags[i] =
-			detail->eflags[i] ? strdup(detail->eflags[i]) : NULL;
+			detail->eflags[i] ? cs_strdup(detail->eflags[i]) : NULL;
 	}
 
 	clone->fpu_flags_count = detail->fpu_flags_count;
@@ -91,7 +91,7 @@ TestDetailX86 *test_detail_x86_clone(TestDetailX86 *detail)
 			NULL;
 	for (size_t i = 0; clone->fpu_flags && i < detail->fpu_flags_count; ++i) {
 		clone->fpu_flags[i] = detail->fpu_flags[i] ?
-					      strdup(detail->fpu_flags[i]) :
+					      cs_strdup(detail->fpu_flags[i]) :
 					      NULL;
 	}
 
@@ -118,16 +118,16 @@ TestDetailX86Op *test_detail_x86_op_clone(TestDetailX86Op *op)
 	TestDetailX86Op *clone = test_detail_x86_op_new();
 
 	clone->size = op->size;
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
-	clone->mem_segment = op->mem_segment ? strdup(op->mem_segment) : NULL;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
-	clone->mem_index = op->mem_index ? strdup(op->mem_index) : NULL;
+	clone->mem_segment = op->mem_segment ? cs_strdup(op->mem_segment) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
+	clone->mem_index = op->mem_index ? cs_strdup(op->mem_index) : NULL;
 	clone->mem_scale = op->mem_scale;
 	clone->mem_disp = op->mem_disp;
-	clone->avx_bcast = op->avx_bcast ? strdup(op->avx_bcast) : NULL;
+	clone->avx_bcast = op->avx_bcast ? cs_strdup(op->avx_bcast) : NULL;
 	clone->avx_zero_opmask = op->avx_zero_opmask;
 
 	return clone;

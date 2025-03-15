@@ -61,11 +61,57 @@ static bool test_str_append()
 	return true;
 }
 
+static bool test_cs_strdup()
+{
+	printf("Test test_cs_strdup\n");
+	const char *str_a = "Normal string.";
+	const char *str_b = "";
+	const char *str_c = NULL;
+	char *dup_a = cs_strdup(str_a);
+	CHECK_STR_EQUAL_RET_FALSE(dup_a, str_a);
+
+	char *dup_b = cs_strdup(str_b);
+	CHECK_STR_EQUAL_RET_FALSE(dup_b, str_b);
+
+	char *dup_c = cs_strdup(str_c);
+	CHECK_NULL_RET_FALSE(dup_c);
+
+	free(dup_a);
+	free(dup_b);
+
+	return true;
+}
+
+static bool test_cs_strndup()
+{
+	printf("Test test_cs_strndup\n");
+	const char *str_a = "Normal string.";
+	const char *str_b = "";
+	const char *str_c = NULL;
+	char *dup_a_I = cs_strndup(str_a, 6);
+	CHECK_STR_EQUAL_RET_FALSE(dup_a_I, "Normal");
+	char *dup_a_II = cs_strndup(str_a, strlen(str_a) + 3);
+	CHECK_STR_EQUAL_RET_FALSE(dup_a_II, str_a);
+	free(dup_a_I);
+	free(dup_a_II);
+
+	char *dup_b = cs_strndup(str_b, 4);
+	CHECK_STR_EQUAL_RET_FALSE(dup_b, str_b);
+	free(dup_b);
+
+	char *dup_c = cs_strndup(str_c, 8);
+	CHECK_NULL_RET_FALSE(dup_c);
+
+	return true;
+}
+
 int main()
 {
 	bool result = true;
 	result &= test_str_append();
 	result &= test_str_append_no_realloc();
+	result &= test_cs_strdup();
+	result &= test_cs_strndup();
 
 	if (result) {
 		printf("All tests passed.\n");

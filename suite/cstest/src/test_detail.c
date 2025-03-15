@@ -21,7 +21,7 @@ TestDetail *test_detail_clone(TestDetail *detail)
 			NULL;
 	clone->regs_read_count = detail->regs_read_count;
 	for (size_t i = 0; i < detail->regs_read_count; ++i) {
-		clone->regs_read[i] = strdup(detail->regs_read[i]);
+		clone->regs_read[i] = cs_strdup(detail->regs_read[i]);
 	}
 
 	clone->regs_write = detail->regs_write_count > 0 ?
@@ -30,7 +30,7 @@ TestDetail *test_detail_clone(TestDetail *detail)
 				    NULL;
 	clone->regs_write_count = detail->regs_write_count;
 	for (size_t i = 0; i < detail->regs_write_count; ++i) {
-		clone->regs_write[i] = strdup(detail->regs_write[i]);
+		clone->regs_write[i] = cs_strdup(detail->regs_write[i]);
 	}
 
 	clone->regs_impl_read =
@@ -40,7 +40,7 @@ TestDetail *test_detail_clone(TestDetail *detail)
 			NULL;
 	clone->regs_impl_read_count = detail->regs_impl_read_count;
 	for (size_t i = 0; i < detail->regs_impl_read_count; ++i) {
-		clone->regs_impl_read[i] = strdup(detail->regs_impl_read[i]);
+		clone->regs_impl_read[i] = cs_strdup(detail->regs_impl_read[i]);
 	}
 
 	clone->regs_impl_write =
@@ -50,7 +50,7 @@ TestDetail *test_detail_clone(TestDetail *detail)
 			NULL;
 	clone->regs_impl_write_count = detail->regs_impl_write_count;
 	for (size_t i = 0; i < detail->regs_impl_write_count; ++i) {
-		clone->regs_impl_write[i] = strdup(detail->regs_impl_write[i]);
+		clone->regs_impl_write[i] = cs_strdup(detail->regs_impl_write[i]);
 	}
 
 	clone->groups =
@@ -59,7 +59,7 @@ TestDetail *test_detail_clone(TestDetail *detail)
 			NULL;
 	clone->groups_count = detail->groups_count;
 	for (size_t i = 0; i < detail->groups_count; ++i) {
-		clone->groups[i] = strdup(detail->groups[i]);
+		clone->groups[i] = cs_strdup(detail->groups[i]);
 	}
 
 	if (detail->aarch64) {

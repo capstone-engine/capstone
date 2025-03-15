@@ -35,12 +35,12 @@ TestDetailARM *test_detail_arm_clone(TestDetailARM *detail)
 	TestDetailARM *clone = test_detail_arm_new();
 	clone->update_flags = detail->update_flags;
 	clone->post_indexed = detail->post_indexed;
-	clone->vector_data = detail->vector_data ? strdup(detail->vector_data) : NULL;
-	clone->cps_mode = detail->cps_mode ? strdup(detail->cps_mode) : NULL;
-	clone->cps_flag = detail->cps_flag ? strdup(detail->cps_flag) : NULL;
-	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
-	clone->vcc = detail->vcc ? strdup(detail->vcc) : NULL;
-	clone->mem_barrier = detail->mem_barrier ? strdup(detail->mem_barrier) : NULL;
+	clone->vector_data = detail->vector_data ? cs_strdup(detail->vector_data) : NULL;
+	clone->cps_mode = detail->cps_mode ? cs_strdup(detail->cps_mode) : NULL;
+	clone->cps_flag = detail->cps_flag ? cs_strdup(detail->cps_flag) : NULL;
+	clone->cc = detail->cc ? cs_strdup(detail->cc) : NULL;
+	clone->vcc = detail->vcc ? cs_strdup(detail->vcc) : NULL;
+	clone->mem_barrier = detail->mem_barrier ? cs_strdup(detail->mem_barrier) : NULL;
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
@@ -64,30 +64,30 @@ TestDetailARMOp *test_detail_arm_op_clone(TestDetailARMOp *op)
 {
 	TestDetailARMOp *clone = test_detail_arm_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
-	clone->setend = op->setend ? strdup(op->setend) : NULL;
+	clone->setend = op->setend ? cs_strdup(op->setend) : NULL;
 	clone->pred = op->pred;
 	clone->fp = op->fp;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
-	clone->mem_index = op->mem_index ? strdup(op->mem_index) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
+	clone->mem_index = op->mem_index ? cs_strdup(op->mem_index) : NULL;
 	clone->mem_scale = op->mem_scale;
 	clone->mem_disp = op->mem_disp;
 	clone->mem_align = op->mem_align;
-	clone->sys_reg = op->sys_reg ? strdup(op->sys_reg) : NULL;
+	clone->sys_reg = op->sys_reg ? cs_strdup(op->sys_reg) : NULL;
 	clone->sys_psr_bits_count = op->sys_psr_bits_count;
 	clone->sys_psr_bits =
 		op->sys_psr_bits_count == 0 ?
 			NULL :
 			cs_mem_calloc(sizeof(char *), op->sys_psr_bits_count);
 	for (size_t i = 0; i < op->sys_psr_bits_count; ++i) {
-		clone->sys_psr_bits[i] = strdup(op->sys_psr_bits[i]);
+		clone->sys_psr_bits[i] = cs_strdup(op->sys_psr_bits[i]);
 	}
 	clone->sys_sysm = op->sys_sysm;
 	clone->sys_msr_mask = op->sys_msr_mask;
-	clone->shift_type = op->shift_type ? strdup(op->shift_type) : NULL;
+	clone->shift_type = op->shift_type ? cs_strdup(op->shift_type) : NULL;
 	clone->shift_value = op->shift_value;
 	clone->neon_lane = op->neon_lane;
 	clone->vector_index = op->vector_index;

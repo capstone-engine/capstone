@@ -45,6 +45,9 @@ include(CheckCCompilerFlag)
 check_c_compiler_flag("-Wno-maybe-uninitialized" SUPPORTS_MU)
 check_c_compiler_flag("-Wshadow=local" SUPPORTS_SHADOWING)
 check_c_compiler_flag("-Wsometimes-uninitialized" SUPPORTS_SUNINIT)
+check_c_compiler_flag("-std=c99" SUPPORTS_STD_C99)
+check_c_compiler_flag("-Werror=c99-c11-compat" SUPPORTS_C99_C11_COMPAT)
+check_c_compiler_flag("-Werror=c11-extensions" SUPPORTS_C11_EXTENSIONS)
 
 if (SUPPORTS_MU)
     set(UNIX_COMPILER_OPTIONS ${UNIX_COMPILER_OPTIONS} -Wno-maybe-uninitialized)
@@ -64,7 +67,6 @@ else()
     add_compile_options(${UNIX_COMPILER_OPTIONS})
 endif()
 
-
 # to configure the options specify them in the command line or change them in the cmake UI.
 # Don't edit the makefile!
 option(CAPSTONE_BUILD_SHARED_LIBS "Build shared library" OFF)
@@ -75,6 +77,7 @@ option(CAPSTONE_BUILD_DIET "Build diet library" OFF)
 option(CAPSTONE_BUILD_LEGACY_TESTS "Build legacy tests" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTOOL "Build cstool" ${PROJECT_IS_TOP_LEVEL})
 option(CAPSTONE_BUILD_CSTEST "Build cstest" OFF)
+option(CAPSTONE_BUILD_C99 "Build with -std=c99 standard." OFF)
 option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 option(CAPSTONE_USE_ARCH_REGISTRATION "Use explicit architecture registration" OFF)
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
@@ -98,6 +101,15 @@ if (ENABLE_COVERAGE)
     message("Enabling COVERAGE")
     add_compile_options(--coverage)
     add_link_options(--coverage)
+endif()
+
+if(CAPSTONE_BUILD_C99)
+    add_compile_options(-std=c99)
+    if (SUPPORTS_C99_C11_COMPAT)
+        add_compile_options(-Werror=c99-c11-compat)
+    elseif (SUPPORTS_C11_EXTENSIONS)
+        add_compile_options(-Werror=c11-extensions)
+    endif()
 endif()
 
 # If building for OSX it's best to allow CMake to handle building both architectures

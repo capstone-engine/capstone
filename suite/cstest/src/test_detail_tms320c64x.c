@@ -30,9 +30,9 @@ void test_detail_tms320c64x_free(TestDetailTMS320c64x *detail)
 TestDetailTMS320c64x *test_detail_tms320c64x_clone(TestDetailTMS320c64x *detail)
 {
 	TestDetailTMS320c64x *clone = test_detail_tms320c64x_new();
-	clone->cond_reg = detail->cond_reg ? strdup(detail->cond_reg) : NULL;
+	clone->cond_reg = detail->cond_reg ? cs_strdup(detail->cond_reg) : NULL;
 	clone->cond_zero = detail->cond_zero;
-	clone->funit_unit = detail->funit_unit ? strdup(detail->funit_unit) :
+	clone->funit_unit = detail->funit_unit ? cs_strdup(detail->funit_unit) :
 						 NULL;
 	clone->funit_side = detail->funit_side;
 	clone->funit_side_set = detail->funit_side_set;
@@ -66,20 +66,20 @@ test_detail_tms320c64x_op_clone(TestDetailTMS320c64xOp *op)
 {
 	TestDetailTMS320c64xOp *clone = test_detail_tms320c64x_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
-	clone->reg_pair_0 = op->reg_pair_0 ? strdup(op->reg_pair_0) : NULL;
-	clone->reg_pair_1 = op->reg_pair_1 ? strdup(op->reg_pair_1) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
+	clone->reg_pair_0 = op->reg_pair_0 ? cs_strdup(op->reg_pair_0) : NULL;
+	clone->reg_pair_1 = op->reg_pair_1 ? cs_strdup(op->reg_pair_1) : NULL;
 	clone->imm = op->imm;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
 	clone->mem_scaled = op->mem_scaled;
-	clone->mem_disptype = op->mem_disptype ? strdup(op->mem_disptype) :
+	clone->mem_disptype = op->mem_disptype ? cs_strdup(op->mem_disptype) :
 						 NULL;
-	clone->mem_direction = op->mem_direction ? strdup(op->mem_direction) :
+	clone->mem_direction = op->mem_direction ? cs_strdup(op->mem_direction) :
 						   NULL;
-	clone->mem_modify = op->mem_modify ? strdup(op->mem_modify) : NULL;
+	clone->mem_modify = op->mem_modify ? cs_strdup(op->mem_modify) : NULL;
 	clone->mem_disp_const = op->mem_disp_const;
-	clone->mem_disp_reg = op->mem_disp_reg ? strdup(op->mem_disp_reg) :
+	clone->mem_disp_reg = op->mem_disp_reg ? cs_strdup(op->mem_disp_reg) :
 						 NULL;
 	clone->mem_unit = op->mem_unit;
 

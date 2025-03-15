@@ -16,12 +16,12 @@ TestDetailPPCBC *test_detail_ppc_bc_clone(const TestDetailPPCBC *bc)
 {
 	assert(bc);
 	TestDetailPPCBC *clone = test_detail_ppc_bc_new();
-	clone->bh = bc->bh ? strdup(bc->bh) : NULL;
-	clone->crX = bc->crX ? strdup(bc->crX) : NULL;
-	clone->crX_bit = bc->crX_bit ? strdup(bc->crX_bit) : NULL;
-	clone->hint = bc->hint ? strdup(bc->hint) : NULL;
-	clone->pred_cr = bc->pred_cr ? strdup(bc->pred_cr) : NULL;
-	clone->pred_ctr = bc->pred_ctr ? strdup(bc->pred_ctr) : NULL;
+	clone->bh = bc->bh ? cs_strdup(bc->bh) : NULL;
+	clone->crX = bc->crX ? cs_strdup(bc->crX) : NULL;
+	clone->crX_bit = bc->crX_bit ? cs_strdup(bc->crX_bit) : NULL;
+	clone->hint = bc->hint ? cs_strdup(bc->hint) : NULL;
+	clone->pred_cr = bc->pred_cr ? cs_strdup(bc->pred_cr) : NULL;
+	clone->pred_ctr = bc->pred_ctr ? cs_strdup(bc->pred_ctr) : NULL;
 	clone->bi = bc->bi;
 	clone->bi_set = bc->bi_set;
 	clone->bo = bc->bo;
@@ -65,7 +65,7 @@ void test_detail_ppc_free(TestDetailPPC *detail)
 TestDetailPPC *test_detail_ppc_clone(const TestDetailPPC *detail)
 {
 	TestDetailPPC *clone = test_detail_ppc_new();
-	clone->format = detail->format ? strdup(detail->format) : NULL;
+	clone->format = detail->format ? cs_strdup(detail->format) : NULL;
 	clone->update_cr0 = detail->update_cr0;
 	clone->bc = detail->bc ? test_detail_ppc_bc_clone(detail->bc) : NULL;
 
@@ -91,12 +91,12 @@ TestDetailPPCOp *test_detail_ppc_op_clone(const TestDetailPPCOp *op)
 {
 	TestDetailPPCOp *clone = test_detail_ppc_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
-	clone->mem_offset = op->mem_offset ? strdup(op->mem_offset) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
+	clone->mem_offset = op->mem_offset ? cs_strdup(op->mem_offset) : NULL;
 	clone->mem_disp = op->mem_disp;
 
 	return clone;

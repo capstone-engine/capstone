@@ -36,8 +36,26 @@ unsigned int count_positive8(const unsigned char *list)
 
 char *cs_strdup(const char *str)
 {
+	if (!str) {
+		return NULL;
+	}
 	size_t len = strlen(str) + 1;
-	void *new = cs_mem_malloc(len);
+	void *new = cs_mem_calloc(sizeof(char), len);
+
+	if (new == NULL)
+		return NULL;
+
+	return (char *)memmove(new, str, len);
+}
+
+char *cs_strndup(const char *str, size_t n)
+{
+	if (!str) {
+		return NULL;
+	}
+	size_t len = strlen(str);
+	len = len > n ? n : len;
+	void *new = cs_mem_calloc(sizeof(char), len + 1);
 
 	if (new == NULL)
 		return NULL;

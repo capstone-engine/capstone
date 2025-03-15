@@ -50,9 +50,9 @@ TestDetailAlphaOp *test_detail_alpha_op_clone(const TestDetailAlphaOp *op)
 {
 	TestDetailAlphaOp *clone = test_detail_alpha_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
 
 	return clone;

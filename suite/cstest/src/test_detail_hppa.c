@@ -51,14 +51,14 @@ TestDetailHPPAOp *test_detail_hppa_op_clone(const TestDetailHPPAOp *op)
 {
 	TestDetailHPPAOp *clone = test_detail_hppa_op_new();
 
-	clone->type = op->type ? strdup(op->type) : NULL;
-	clone->access = op->access ? strdup(op->access) : NULL;
-	clone->reg = op->reg ? strdup(op->reg) : NULL;
+	clone->type = op->type ? cs_strdup(op->type) : NULL;
+	clone->access = op->access ? cs_strdup(op->access) : NULL;
+	clone->reg = op->reg ? cs_strdup(op->reg) : NULL;
 	clone->imm = op->imm;
-	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
-	clone->mem_space = op->mem_space ? strdup(op->mem_space) : NULL;
+	clone->mem_base = op->mem_base ? cs_strdup(op->mem_base) : NULL;
+	clone->mem_space = op->mem_space ? cs_strdup(op->mem_space) : NULL;
 	clone->mem_base_access =
-		op->mem_base_access ? strdup(op->mem_base_access) : NULL;
+		op->mem_base_access ? cs_strdup(op->mem_base_access) : NULL;
 
 	return clone;
 }
