@@ -31,7 +31,7 @@ void Alpha_init_cs_detail(MCInst *MI)
 {
 	if (detail_is_set(MI)) {
 		memset(get_detail(MI), 0,
-			   offsetof(cs_detail, alpha) + sizeof(cs_alpha));
+			   offsetof(cs_detail, d.alpha) + sizeof(cs_alpha));
 	}
 }
 
@@ -60,7 +60,7 @@ void Alpha_set_detail_op_imm(MCInst *MI, unsigned OpNum, alpha_op_type ImmType,
 	CS_ASSERT_RET(ImmType == ALPHA_OP_IMM);
 
 	Alpha_get_detail_op(MI, 0)->type = ImmType;
-	Alpha_get_detail_op(MI, 0)->imm = Imm;
+	Alpha_get_detail_op(MI, 0)->v.imm = Imm;
 	Alpha_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	Alpha_inc_op_count(MI);
 }
@@ -73,7 +73,7 @@ void Alpha_set_detail_op_reg(MCInst *MI, unsigned OpNum, alpha_op_type Reg)
 	CS_ASSERT_RET(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
 	Alpha_get_detail_op(MI, 0)->type = ALPHA_OP_REG;
-	Alpha_get_detail_op(MI, 0)->reg = Reg;
+	Alpha_get_detail_op(MI, 0)->v.reg = Reg;
 	Alpha_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	Alpha_inc_op_count(MI);
 }
