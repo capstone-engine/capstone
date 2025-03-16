@@ -131,14 +131,14 @@ static void print_dsp_double(SStream *O, sh_info *info, int xy)
 {
 	char suffix_xy = 'x' + xy;
 	int i;
-	if (info->op.operands[xy].dsp.insn == SH_INS_DSP_NOP) {
-		if ((info->op.operands[0].dsp.insn == SH_INS_DSP_NOP) &&
-		    (info->op.operands[1].dsp.insn == SH_INS_DSP_NOP)) {
+	if (info->op.operands[xy].v.dsp.insn == SH_INS_DSP_NOP) {
+		if ((info->op.operands[0].v.dsp.insn == SH_INS_DSP_NOP) &&
+		    (info->op.operands[1].v.dsp.insn == SH_INS_DSP_NOP)) {
 			SStream_concat(O, "nop%c", suffix_xy);
 		}
 	} else {
 		SStream_concat(O, "mov%c", suffix_xy);
-		switch(info->op.operands[xy].dsp.size) {
+		switch(info->op.operands[xy].v.dsp.size) {
 		case 16:
 			SStream_concat0(O, ".w ");
 			break;
@@ -148,20 +148,20 @@ static void print_dsp_double(SStream *O, sh_info *info, int xy)
 		}
 		
 		for (i = 0; i < 2; i++) {
-			switch(info->op.operands[xy].dsp.operand[i]) {
+			switch(info->op.operands[xy].v.dsp.operand[i]) {
 			default:
 				break;
 			case SH_OP_DSP_REG_IND:
-				SStream_concat(O, "@%s", s_reg_names[info->op.operands[xy].dsp.r[i]]);
+				SStream_concat(O, "@%s", s_reg_names[info->op.operands[xy].v.dsp.r[i]]);
 				break;
 			case SH_OP_DSP_REG_POST:
-				SStream_concat(O, "@%s+", s_reg_names[info->op.operands[xy].dsp.r[i]]);
+				SStream_concat(O, "@%s+", s_reg_names[info->op.operands[xy].v.dsp.r[i]]);
 				break;
 			case SH_OP_DSP_REG_INDEX:
-				SStream_concat(O, "@%s+%s", s_reg_names[info->op.operands[xy].dsp.r[i]], s_reg_names[SH_REG_R8 + xy]);
+				SStream_concat(O, "@%s+%s", s_reg_names[info->op.operands[xy].v.dsp.r[i]], s_reg_names[SH_REG_R8 + xy]);
 				break;
 			case SH_OP_DSP_REG:
-				SStream_concat(O, "%s", s_reg_names[info->op.operands[xy].dsp.r[i]]);
+				SStream_concat(O, "%s", s_reg_names[info->op.operands[xy].v.dsp.r[i]]);
 				break;
 			}
 			if (i == 0)
@@ -213,7 +213,7 @@ static void print_dsp(SStream *O, sh_info *info)
 	case 1:
 		// single transfer
 		SStream_concat0(O, "movs");
-		switch(info->op.operands[0].dsp.size) {
+		switch(info->op.operands[0].v.dsp.size) {
 		case 16:
 			SStream_concat0(O, ".w ");
 			break;
@@ -222,23 +222,23 @@ static void print_dsp(SStream *O, sh_info *info)
 			break;
 		}
 		for (i = 0; i < 2; i++) {
-			switch(info->op.operands[0].dsp.operand[i]) {
+			switch(info->op.operands[0].v.dsp.operand[i]) {
 			default:
 				break;
 			case SH_OP_DSP_REG_PRE:
-				SStream_concat(O, "@-%s", s_reg_names[info->op.operands[0].dsp.r[i]]);
+				SStream_concat(O, "@-%s", s_reg_names[info->op.operands[0].v.dsp.r[i]]);
 				break;
 			case SH_OP_DSP_REG_IND:
-				SStream_concat(O, "@%s", s_reg_names[info->op.operands[0].dsp.r[i]]);
+				SStream_concat(O, "@%s", s_reg_names[info->op.operands[0].v.dsp.r[i]]);
 				break;
 			case SH_OP_DSP_REG_POST:
-				SStream_concat(O, "@%s+", s_reg_names[info->op.operands[0].dsp.r[i]]);
+				SStream_concat(O, "@%s+", s_reg_names[info->op.operands[0].v.dsp.r[i]]);
 				break;
 			case SH_OP_DSP_REG_INDEX:
-				SStream_concat(O, "@%s+%s", s_reg_names[info->op.operands[0].dsp.r[i]],s_reg_names[SH_REG_R8]);
+				SStream_concat(O, "@%s+%s", s_reg_names[info->op.operands[0].v.dsp.r[i]],s_reg_names[SH_REG_R8]);
 				break;
 			case SH_OP_DSP_REG:
-				SStream_concat(O, "%s", s_reg_names[info->op.operands[0].dsp.r[i]]);
+				SStream_concat(O, "%s", s_reg_names[info->op.operands[0].v.dsp.r[i]]);
 			}
 			if (i == 0)
 				SStream_concat0(O, ",");
@@ -249,7 +249,7 @@ static void print_dsp(SStream *O, sh_info *info)
 		print_dsp_double(O, info, 1);
 		break;
 	case 3: // Parallel
-		switch(info->op.operands[2].dsp.cc) {
+		switch(info->op.operands[2].v.dsp.cc) {
 		default:
 			break;
 		case SH_DSP_CC_DCT:
@@ -259,10 +259,10 @@ static void print_dsp(SStream *O, sh_info *info)
 			SStream_concat0(O,"dcf ");
 			break;
 		}
-		switch(info->op.operands[2].dsp.insn) {
+		switch(info->op.operands[2].v.dsp.insn) {
 		case SH_INS_DSP_PSUB_PMULS:
 		case SH_INS_DSP_PADD_PMULS:
-			switch(info->op.operands[2].dsp.insn) {
+			switch(info->op.operands[2].v.dsp.insn) {
 			default:
 				break;
 			case SH_INS_DSP_PSUB_PMULS:
@@ -273,7 +273,7 @@ static void print_dsp(SStream *O, sh_info *info)
 				break;
 			}
 			for (i = 0; i < 6; i++) {
-				SStream_concat(O, "%s", s_reg_names[info->op.operands[2].dsp.r[i]]);
+				SStream_concat(O, "%s", s_reg_names[info->op.operands[2].v.dsp.r[i]]);
 				if ((i % 3) < 2)
 					SStream_concat0(O, ",");
 				if (i == 2)
@@ -282,35 +282,35 @@ static void print_dsp(SStream *O, sh_info *info)
 			break;
 		case SH_INS_DSP_PCLR_PMULS:
 			SStream_concat0(O, s_dsp_insns[SH_INS_DSP_PCLR]);
-			SStream_concat(O, " %s ", s_reg_names[info->op.operands[2].dsp.r[3]]);
+			SStream_concat(O, " %s ", s_reg_names[info->op.operands[2].v.dsp.r[3]]);
 			SStream_concat(O, "%s ", s_dsp_insns[SH_INS_DSP_PMULS]);
 			for (i = 0; i < 3; i++) {
-				SStream_concat(O, "%s", s_reg_names[info->op.operands[2].dsp.r[i]]);
+				SStream_concat(O, "%s", s_reg_names[info->op.operands[2].v.dsp.r[i]]);
 				if (i < 2)
 					SStream_concat0(O, ",");
 			}
 			break;
 			
 		default:
-			SStream_concat0(O, s_dsp_insns[info->op.operands[2].dsp.insn]);
+			SStream_concat0(O, s_dsp_insns[info->op.operands[2].v.dsp.insn]);
 			SStream_concat0(O, " ");
 			for (i = 0; i < 3; i++) {
-				if (info->op.operands[2].dsp.r[i] == SH_REG_INVALID) {
+				if (info->op.operands[2].v.dsp.r[i] == SH_REG_INVALID) {
 					if (i == 0) {
-						SStream_concat(O, "#%d", info->op.operands[2].dsp.imm);
+						SStream_concat(O, "#%d", info->op.operands[2].v.dsp.imm);
 					}
 				} else
-					SStream_concat(O, "%s", s_reg_names[info->op.operands[2].dsp.r[i]]);
-				if (i < 2 && info->op.operands[2].dsp.r[i + 1] != SH_REG_INVALID)
+					SStream_concat(O, "%s", s_reg_names[info->op.operands[2].v.dsp.r[i]]);
+				if (i < 2 && info->op.operands[2].v.dsp.r[i + 1] != SH_REG_INVALID)
 					SStream_concat0(O, ",");
 			}
 		}
 		
-		if (info->op.operands[0].dsp.insn != SH_INS_DSP_NOP) {
+		if (info->op.operands[0].v.dsp.insn != SH_INS_DSP_NOP) {
 			SStream_concat0(O, " ");
 			print_dsp_double(O, info, 0);
 		}
-		if (info->op.operands[1].dsp.insn != SH_INS_DSP_NOP) {
+		if (info->op.operands[1].v.dsp.insn != SH_INS_DSP_NOP) {
 			SStream_concat0(O, " ");
 			print_dsp_double(O, info, 1);
 		}
@@ -390,14 +390,14 @@ void SH_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 		case SH_OP_INVALID:
 			break;
 		case SH_OP_REG:
-			SStream_concat0(O, s_reg_names[info->op.operands[i].reg]);
+			SStream_concat0(O, s_reg_names[info->op.operands[i].v.reg]);
 			break;
 		case SH_OP_IMM:
-			imm = info->op.operands[i].imm;
+			imm = info->op.operands[i].v.imm;
 			SStream_concat(O, "#%d", imm);
 			break;
 		case SH_OP_MEM:
-			PrintMemop(O, &info->op.operands[i].mem);
+			PrintMemop(O, &info->op.operands[i].v.mem);
 			break;
 		}
 		if (i < (info->op.op_count - 1)) {

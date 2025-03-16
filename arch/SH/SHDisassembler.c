@@ -35,7 +35,7 @@ static void set_reg_n(sh_info *info, sh_reg reg, int pos,
 		      enum direction rw, cs_detail *detail)
 {
 	info->op.operands[pos].type = SH_OP_REG;
-	info->op.operands[pos].reg = reg;
+	info->op.operands[pos].v.reg = reg;
 	regs_rw(detail, rw, reg);
 }
 
@@ -51,9 +51,9 @@ static void set_mem_n(sh_info *info, sh_op_mem_type address,
 		      cs_detail *detail)
 {
 	info->op.operands[pos].type = SH_OP_MEM;
-	info->op.operands[pos].mem.address = address;
-	info->op.operands[pos].mem.reg = reg;
-	info->op.operands[pos].mem.disp = disp;
+	info->op.operands[pos].v.mem.address = address;
+	info->op.operands[pos].v.mem.reg = reg;
+	info->op.operands[pos].v.mem.disp = disp;
 	if (sz > 0)
 		info->op.size = sz;
 	switch (address) {
@@ -89,7 +89,7 @@ static void set_imm(sh_info *info, int sign, uint64_t imm)
 	info->op.operands[info->op.op_count].type = SH_OP_IMM;
 	if (sign && imm >= 128)
 		imm = -256 + imm;
-	info->op.operands[info->op.op_count].imm = imm;
+	info->op.operands[info->op.op_count].v.imm = imm;
 	info->op.op_count++;
 }
 
@@ -1560,7 +1560,7 @@ static bool decode_dsp_xy(sh_info *info, int xy, uint16_t code,
 		dir = 1 - ((code >> 4) & 1);
 		sz = (code >> 5) & 1;
 		if (code & 0x0c) {
-			info->op.operands[xy].dsp.insn = SH_INS_DSP_NOP;
+			info->op.operands[xy].v.dsp.insn = SH_INS_DSP_NOP;
 			return MCDisassembler_Success;
 		}
 	} else {
@@ -1568,19 +1568,19 @@ static bool decode_dsp_xy(sh_info *info, int xy, uint16_t code,
 		dir = 1 - ((code >> 5) & 1);
 		sz = (code >> 4) & 1;
 		if (code & 0x03) {
-			info->op.operands[xy].dsp.insn = SH_INS_DSP_NOP;
+			info->op.operands[xy].v.dsp.insn = SH_INS_DSP_NOP;
 			return MCDisassembler_Success;
 		}
 	}
-	info->op.operands[xy].dsp.size = 16 << sz;
-	info->op.operands[xy].dsp.insn = SH_INS_DSP_MOV;
-	info->op.operands[xy].dsp.operand[1 - dir] =
+	info->op.operands[xy].v.dsp.size = 16 << sz;
+	info->op.operands[xy].v.dsp.insn = SH_INS_DSP_MOV;
+	info->op.operands[xy].v.dsp.operand[1 - dir] =
 		SH_OP_DSP_REG_IND + (op - 1);
-	info->op.operands[xy].dsp.operand[dir] = SH_OP_DSP_REG;
-	info->op.operands[xy].dsp.r[1 - dir] = dsp_areg[xy][a];
-	info->op.operands[xy].dsp.size = 16 << sz;
+	info->op.operands[xy].v.dsp.operand[dir] = SH_OP_DSP_REG;
+	info->op.operands[xy].v.dsp.r[1 - dir] = dsp_areg[xy][a];
+	info->op.operands[xy].v.dsp.size = 16 << sz;
 	regs_rw(detail, dir,
-		info->op.operands[xy].dsp.r[dir] = dreg[xy * 2 + dir][d]);
+		info->op.operands[xy].v.dsp.r[dir] = dreg[xy * 2 + dir][d]);
 	switch(op) {
 	case 0x03:
 		regs_read(detail, SH_REG_R8 + xy);
@@ -1624,16 +1624,16 @@ static bool set_dsp_move_d(sh_info *info, int xy, uint16_t code, cs_mode mode, c
 	if (op == 0x00) {
 		if ((a || d || dir) && !(code & 0x0f))
 			return MCDisassembler_Fail;
-		info->op.operands[xy].dsp.insn = SH_INS_DSP_NOP;
+		info->op.operands[xy].v.dsp.insn = SH_INS_DSP_NOP;
 	} else {
-		info->op.operands[xy].dsp.insn = SH_INS_DSP_MOV;
-		info->op.operands[xy].dsp.operand[1 - dir] =
+		info->op.operands[xy].v.dsp.insn = SH_INS_DSP_MOV;
+		info->op.operands[xy].v.dsp.operand[1 - dir] =
 			SH_OP_DSP_REG_IND + (op - 1);
-		info->op.operands[xy].dsp.operand[dir] = SH_OP_DSP_REG;
-		info->op.operands[xy].dsp.r[1 - dir] = SH_REG_R4 + xy * 2 + a;
-		info->op.operands[xy].dsp.size = 16;
+		info->op.operands[xy].v.dsp.operand[dir] = SH_OP_DSP_REG;
+		info->op.operands[xy].v.dsp.r[1 - dir] = SH_REG_R4 + xy * 2 + a;
+		info->op.operands[xy].v.dsp.size = 16;
 		regs_rw(detail, dir,
-			info->op.operands[xy].dsp.r[dir] =
+			info->op.operands[xy].v.dsp.r[dir] =
 			base[dir] + d + dir?(xy * 2):0);
 		switch(op) {
 		case 0x03:
@@ -1656,8 +1656,8 @@ static bool decode_dsp_d(const uint16_t code, MCInst *MI, cs_mode mode,
 	bool ret, dsp_long;
 	MCInst_setOpcode(MI, SH_INS_DSP);
 	if ((code & 0x3ff) == 0) {
-		info->op.operands[0].dsp.insn = 
-			info->op.operands[1].dsp.insn = SH_INS_DSP_NOP;
+		info->op.operands[0].v.dsp.insn = 
+			info->op.operands[1].v.dsp.insn = SH_INS_DSP_NOP;
 		info->op.op_count = 2;
 		return MCDisassembler_Success;
 	}
@@ -1705,24 +1705,24 @@ static bool decode_dsp_s(const uint16_t code, MCInst *MI,
 		return MCDisassembler_Fail;
 		
 	MCInst_setOpcode(MI, SH_INS_DSP);
-	info->op.operands[0].dsp.insn = SH_INS_DSP_MOV;
-	info->op.operands[0].dsp.operand[1 - d] = SH_OP_DSP_REG;
-	info->op.operands[0].dsp.operand[d] = SH_OP_DSP_REG_PRE + opr;
-	info->op.operands[0].dsp.r[1 - d] = regs[ds];
-	info->op.operands[0].dsp.r[d] = SH_REG_R2 + ((as < 2)?(as+2):(as-2));
+	info->op.operands[0].v.dsp.insn = SH_INS_DSP_MOV;
+	info->op.operands[0].v.dsp.operand[1 - d] = SH_OP_DSP_REG;
+	info->op.operands[0].v.dsp.operand[d] = SH_OP_DSP_REG_PRE + opr;
+	info->op.operands[0].v.dsp.r[1 - d] = regs[ds];
+	info->op.operands[0].v.dsp.r[d] = SH_REG_R2 + ((as < 2)?(as+2):(as-2));
 	switch (opr) {
 	case 3:
 		regs_read(detail, SH_REG_R8);
 		/* Fail through */
 	case 1:
-		regs_read(detail, info->op.operands[0].dsp.r[d]);
+		regs_read(detail, info->op.operands[0].v.dsp.r[d]);
 		break;
 	case 0:
 	case 2:
-		regs_write(detail,  info->op.operands[0].dsp.r[d]);
+		regs_write(detail,  info->op.operands[0].v.dsp.r[d]);
 	}
 	regs_rw(detail, d, regs[ds]);
-	info->op.operands[0].dsp.size = 16 << s;
+	info->op.operands[0].v.dsp.size = 16 << s;
 	info->op.op_count = 1;
 	return MCDisassembler_Success;
 }
@@ -1739,14 +1739,14 @@ typedef enum {f_se, f_sf, f_sx, f_sy, f_dg, f_du} dsp_reg_opr;
 static void set_reg_dsp_read(sh_info *info, int pos, dsp_reg_opr f, int r,
 			     cs_detail *detail)
 {
-	info->op.operands[2].dsp.r[pos] = dsp_reg_sd[f][r];
+	info->op.operands[2].v.dsp.r[pos] = dsp_reg_sd[f][r];
 	regs_read(detail, dsp_reg_sd[f][r]);
 }	
 
 static void set_reg_dsp_write_gu(sh_info *info, int pos, dsp_reg_opr f, int r,
 				 cs_detail *detail)
 {
-	info->op.operands[2].dsp.r[pos] = dsp_reg_sd[f][r];
+	info->op.operands[2].v.dsp.r[pos] = dsp_reg_sd[f][r];
 	regs_write(detail, dsp_reg_sd[f][r]);
 }	
 
@@ -1760,23 +1760,23 @@ static const sh_reg regs_dz[] = {
 static void set_reg_dsp_write_z(sh_info *info, int pos, int r,
 				cs_detail *detail)
 {
-	info->op.operands[2].dsp.r[pos] = regs_dz[r];
+	info->op.operands[2].v.dsp.r[pos] = regs_dz[r];
 	regs_write(detail, regs_dz[r]);
 }	
 
 static bool dsp_op_cc_3opr(uint32_t code, sh_info *info, sh_dsp_insn insn,
 			   sh_dsp_insn insn2, cs_detail *detail)
 {
-	info->op.operands[2].dsp.cc = (code >> 8) & 3;
-	if (info->op.operands[2].dsp.cc > 0) {
-		info->op.operands[2].dsp.insn = insn;
+	info->op.operands[2].v.dsp.cc = (code >> 8) & 3;
+	if (info->op.operands[2].v.dsp.cc > 0) {
+		info->op.operands[2].v.dsp.insn = insn;
 	} else {
 		if (insn2 != SH_INS_DSP_INVALID)
-			info->op.operands[2].dsp.insn = insn2;
+			info->op.operands[2].v.dsp.insn = insn2;
 		else
 			return MCDisassembler_Fail;
 	}
-	if (info->op.operands[2].dsp.insn != SH_INS_DSP_PSUBr) {
+	if (info->op.operands[2].v.dsp.insn != SH_INS_DSP_PSUBr) {
 		set_reg_dsp_read(info, 0, f_sx, (code >> 6) & 3, detail);
 		set_reg_dsp_read(info, 1, f_sy, (code >> 4) & 3, detail);
 	} else {
@@ -1793,10 +1793,10 @@ static bool dsp_op_cc_2opr(uint32_t code, sh_info *info, sh_dsp_insn insn,
 {
 	if (((code >> 8) & 3) == 0)
 		return MCDisassembler_Fail;
-	info->op.operands[2].dsp.insn = (sh_dsp_insn) insn;
+	info->op.operands[2].v.dsp.insn = (sh_dsp_insn) insn;
 	set_reg_dsp_read(info, 0, xy, (code >> b) & 3, detail);
 	set_reg_dsp_write_z(info, 2, code & 0x0f, detail);
-	info->op.operands[2].dsp.cc = (code >> 8) & 3;
+	info->op.operands[2].v.dsp.cc = (code >> 8) & 3;
 	info->op.op_count = 3;
 	return MCDisassembler_Success;
 }
@@ -1804,14 +1804,14 @@ static bool dsp_op_cc_2opr(uint32_t code, sh_info *info, sh_dsp_insn insn,
 static bool dsp_op_cc0_2opr(uint32_t code, sh_info *info, sh_dsp_insn insn,
 			    int xy, int b, cs_detail *detail)
 {
-	info->op.operands[2].dsp.insn = (sh_dsp_insn) insn;
+	info->op.operands[2].v.dsp.insn = (sh_dsp_insn) insn;
 	set_reg_dsp_read(info, 0, xy, (code >> b) & 3, detail);
 	set_reg_dsp_write_z(info, 2, code & 0x0f, detail);
-	info->op.operands[2].dsp.cc = (code >> 8) & 3;	
-	if (info->op.operands[2].dsp.cc == 1)
+	info->op.operands[2].v.dsp.cc = (code >> 8) & 3;	
+	if (info->op.operands[2].v.dsp.cc == 1)
 		return MCDisassembler_Fail;
-	if (info->op.operands[2].dsp.cc == 0)
-		info->op.operands[2].dsp.cc = SH_DSP_CC_NONE;
+	if (info->op.operands[2].v.dsp.cc == 0)
+		info->op.operands[2].v.dsp.cc = SH_DSP_CC_NONE;
 	info->op.op_count = 3;
 	return MCDisassembler_Success;
 }
@@ -1833,7 +1833,7 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 				      detail);
 	case 0x01:
 		if (cc == 0) {
-			info->op.operands[2].dsp.insn = SH_INS_DSP_PCMP;
+			info->op.operands[2].v.dsp.insn = SH_INS_DSP_PCMP;
 			set_reg_dsp_read(info, 0, f_sx, sx, detail);
 			set_reg_dsp_read(info, 1, f_sy, sy, detail);
 			info->op.op_count = 3;
@@ -1847,7 +1847,7 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 		switch (sy) {
 		case 0:
 			if(cc == 0) {
-				info->op.operands[2].dsp.insn = SH_INS_DSP_PABS;
+				info->op.operands[2].v.dsp.insn = SH_INS_DSP_PABS;
 				set_reg_dsp_read(info, 0, f_sx, sx, detail);
 				set_reg_dsp_write_z(info, 1, dz, detail);
 				info->op.op_count = 3;
@@ -1866,8 +1866,8 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 		}			
 	case 0x03:
 		if (cc != 0) {
-			info->op.operands[2].dsp.insn = SH_INS_DSP_PCLR;
-			info->op.operands[2].dsp.cc = cc;
+			info->op.operands[2].v.dsp.insn = SH_INS_DSP_PCLR;
+			info->op.operands[2].v.dsp.cc = cc;
 			set_reg_dsp_write_z(info, 0, dz, detail);
 			info->op.op_count = 3;
 			return MCDisassembler_Success;
@@ -1885,7 +1885,7 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 		switch (sy) {
 		case 0:
 			if (cc == 0) {
-				info->op.operands[2].dsp.insn = SH_INS_DSP_PRND;
+				info->op.operands[2].v.dsp.insn = SH_INS_DSP_PRND;
 				set_reg_dsp_read(info, 0, f_sx, sx, detail);
 				set_reg_dsp_write_z(info, 1, dz, detail);
 				info->op.op_count = 3;
@@ -1927,7 +1927,7 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 		switch(sx) {
 		case 0:
 			if (cc == 0) {
-				info->op.operands[2].dsp.insn = SH_INS_DSP_PABS;
+				info->op.operands[2].v.dsp.insn = SH_INS_DSP_PABS;
 				set_reg_dsp_read(info, 0, f_sy, sy, detail);
 				set_reg_dsp_write_z(info, 1, dz, detail);
 				info->op.op_count = 3;
@@ -1946,7 +1946,7 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 		}
 	case 0x0c:
 		if (cc == 0) {
-				info->op.operands[2].dsp.insn
+				info->op.operands[2].v.dsp.insn
 					= SH_INS_DSP_PADDC;
 				set_reg_dsp_read(info, 0, f_sx, sx, detail);
 				set_reg_dsp_read(info, 1, f_sy, sy, detail);
@@ -1967,7 +1967,7 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 		if (cc == 0) {
 			if (sx != 0)
 				return MCDisassembler_Fail;
-			info->op.operands[2].dsp.insn = SH_INS_DSP_PRND;
+			info->op.operands[2].v.dsp.insn = SH_INS_DSP_PRND;
 			set_reg_dsp_read(info, 0, f_sy, sy, detail);
 			set_reg_dsp_write_z(info, 1, dz, detail);
 			info->op.op_count = 3;
@@ -2005,10 +2005,10 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 	case 0x13:
 	case 0x17:
 		if (cc > 0) {
-			info->op.operands[2].dsp.insn = SH_INS_DSP_PSTS;
-			info->op.operands[2].dsp.cc = cc;
+			info->op.operands[2].v.dsp.insn = SH_INS_DSP_PSTS;
+			info->op.operands[2].v.dsp.cc = cc;
 			regs_read(detail, 
-				  info->op.operands[2].dsp.r[0]
+				  info->op.operands[2].v.dsp.r[0]
 				  = SH_REG_MACH + ((code >> 12) & 1));
 			set_reg_dsp_write_z(info, 1, dz, detail);
 			info->op.op_count = 3;
@@ -2025,12 +2025,12 @@ static bool decode_dsp_3op(const uint32_t code, sh_info *info,
 	case 0x1b:
 	case 0x1f:
 		if (cc > 0) {
-			info->op.operands[2].dsp.insn = SH_INS_DSP_PLDS;
-			info->op.operands[2].dsp.cc = cc;
-			info->op.operands[2].dsp.r[0] = regs_dz[dz];
+			info->op.operands[2].v.dsp.insn = SH_INS_DSP_PLDS;
+			info->op.operands[2].v.dsp.cc = cc;
+			info->op.operands[2].v.dsp.r[0] = regs_dz[dz];
 			regs_read(detail, regs_dz[dz]);
 			regs_write(detail, 
-				   info->op.operands[2].dsp.r[1]
+				   info->op.operands[2].v.dsp.r[1]
 				   = SH_REG_MACH + ((code >> 12) & 1));
 			info->op.op_count = 3;
 			return MCDisassembler_Success;
@@ -2057,9 +2057,9 @@ static bool decode_dsp_p(const uint32_t code, MCInst *MI, cs_mode mode,
 	case 0x01:
 		if ((code >> 11) & 1)
 			return MCDisassembler_Fail;
-		info->op.operands[2].dsp.insn
+		info->op.operands[2].v.dsp.insn
 			= SH_INS_DSP_PSHL + ((code >> 12) & 1);
-		info->op.operands[2].dsp.imm = (code >> 4) & 0x7f;
+		info->op.operands[2].v.dsp.imm = (code >> 4) & 0x7f;
 		set_reg_dsp_write_z(info, 1, dz, detail);
 		info->op.op_count = 3;
 		return MCDisassembler_Success;
@@ -2069,7 +2069,7 @@ static bool decode_dsp_p(const uint32_t code, MCInst *MI, cs_mode mode,
 		    ((code >> 4) & 0x0f) >= 2)
 			return MCDisassembler_Fail;
 			
-		info->op.operands[2].dsp.insn
+		info->op.operands[2].v.dsp.insn
 			= SH_INS_DSP_PMULS + ((code >> 4) & 1);
 		set_reg_dsp_read(info, 0, f_se, (code >> 10) & 3, detail);
 		set_reg_dsp_read(info, 1, f_sf, (code >> 8) & 3, detail);
@@ -2081,7 +2081,7 @@ static bool decode_dsp_p(const uint32_t code, MCInst *MI, cs_mode mode,
 		return MCDisassembler_Success;
 	case 0x06:
 	case 0x07:
-		info->op.operands[2].dsp.insn
+		info->op.operands[2].v.dsp.insn
 			= SH_INS_DSP_PSUB_PMULS + ((code >> 12) & 1);
 		set_reg_dsp_read(info, 0, f_sx, (code >> 6) & 3, detail);
 		set_reg_dsp_read(info, 1, f_sy, (code >> 4) & 3, detail);
@@ -2187,7 +2187,7 @@ bool SH_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	}
 
 	if (detail) {
-		memset(detail, 0, offsetof(cs_detail, sh)+sizeof(cs_sh));
+		memset(detail, 0, offsetof(cs_detail, d.sh)+sizeof(cs_sh));
 	}
 	memset(info, 0, sizeof(sh_info));
 	if (sh_disassemble(code, MI, address, handle->mode,
@@ -2196,7 +2196,7 @@ bool SH_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		return MCDisassembler_Fail;
 	} else {
 		if (detail)
-			detail->sh = info->op;
+			detail->d.sh = info->op;
 		return MCDisassembler_Success;
 	}		
 }
