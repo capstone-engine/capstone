@@ -57,12 +57,12 @@ static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 
 	InstructionInfo insinfo = InstructionInfoTable[opinfo.ins];
 
-	detail->mos65xx.am = opinfo.am;
-	detail->mos65xx.modifies_flags = insinfo.modifies_status;
+	detail->d.mos65xx.am = opinfo.am;
+	detail->d.mos65xx.modifies_flags = insinfo.modifies_status;
 	detail->groups_count = 0;
 	detail->regs_read_count = 0;
 	detail->regs_write_count = 0;
-	detail->mos65xx.op_count = 0;
+	detail->d.mos65xx.op_count = 0;
 
 	if (insinfo.group_type != MOS65XX_GRP_INVALID) {
 		detail->groups[detail->groups_count] = insinfo.group_type;
@@ -202,41 +202,41 @@ static void fillDetails(MCInst *MI, struct OpInfo opinfo, int cpu_type)
 		case MOS65XX_AM_IMP:
 			break;
 		case MOS65XX_AM_IMM:
-			detail->mos65xx.operands[detail->mos65xx.op_count].type = MOS65XX_OP_IMM;
-			detail->mos65xx.operands[detail->mos65xx.op_count].imm = MI->Operands[0].ImmVal;
-			detail->mos65xx.op_count++;
+			detail->d.mos65xx.operands[detail->d.mos65xx.op_count].type = MOS65XX_OP_IMM;
+			detail->d.mos65xx.operands[detail->d.mos65xx.op_count].v.imm = MI->Operands[0].v.ImmVal;
+			detail->d.mos65xx.op_count++;
 			break;
 		case MOS65XX_AM_ACC:
-			detail->mos65xx.operands[detail->mos65xx.op_count].type = MOS65XX_OP_REG;
-			detail->mos65xx.operands[detail->mos65xx.op_count].reg = MOS65XX_REG_ACC;
-			detail->mos65xx.op_count++;
+			detail->d.mos65xx.operands[detail->d.mos65xx.op_count].type = MOS65XX_OP_REG;
+			detail->d.mos65xx.operands[detail->d.mos65xx.op_count].v.reg = MOS65XX_REG_ACC;
+			detail->d.mos65xx.op_count++;
 			break;
 		case MOS65XX_AM_REL: {
-			int value = MI->Operands[0].ImmVal;
+			int value = MI->Operands[0].v.ImmVal;
 			if (MI->op1_size == 1)
 				value = 2 + (signed char)value;
 			else
 				value = 3 + (signed short)value;
-			detail->mos65xx.operands[detail->mos65xx.op_count].type = MOS65XX_OP_MEM;
-			detail->mos65xx.operands[detail->mos65xx.op_count].mem = (MI->address + value) & 0xffff;
-			detail->mos65xx.op_count++;
+			detail->d.mos65xx.operands[detail->d.mos65xx.op_count].type = MOS65XX_OP_MEM;
+			detail->d.mos65xx.operands[detail->d.mos65xx.op_count].v.mem = (MI->address + value) & 0xffff;
+			detail->d.mos65xx.op_count++;
 			break;
 		}
 		case MOS65XX_AM_ZP_REL: {
-			int value =	3 + (signed char)MI->Operands[1].ImmVal;
+			int value =	3 + (signed char)MI->Operands[1].v.ImmVal;
 			/* BBR0, zp, rel  and BBS0, zp, rel */
-			detail->mos65xx.operands[detail->mos65xx.op_count].type = MOS65XX_OP_MEM;
-			detail->mos65xx.operands[detail->mos65xx.op_count].mem = MI->Operands[0].ImmVal;
-			detail->mos65xx.operands[detail->mos65xx.op_count+1].type = MOS65XX_OP_MEM;
-			detail->mos65xx.operands[detail->mos65xx.op_count+1].mem = (MI->address + value) & 0xffff;
-			detail->mos65xx.op_count+=2;
+			detail->d.mos65xx.operands[detail->d.mos65xx.op_count].type = MOS65XX_OP_MEM;
+			detail->d.mos65xx.operands[detail->d.mos65xx.op_count].v.mem = MI->Operands[0].v.ImmVal;
+			detail->d.mos65xx.operands[detail->d.mos65xx.op_count+1].type = MOS65XX_OP_MEM;
+			detail->d.mos65xx.operands[detail->d.mos65xx.op_count+1].v.mem = (MI->address + value) & 0xffff;
+			detail->d.mos65xx.op_count+=2;
 			break;
 		}
 		default:
 			for (i = 0; i < MI->size; ++i) {
-				detail->mos65xx.operands[detail->mos65xx.op_count].type = MOS65XX_OP_MEM;
-				detail->mos65xx.operands[detail->mos65xx.op_count].mem = MI->Operands[i].ImmVal;
-				detail->mos65xx.op_count++;
+				detail->d.mos65xx.operands[detail->d.mos65xx.op_count].type = MOS65XX_OP_MEM;
+				detail->d.mos65xx.operands[detail->d.mos65xx.op_count].v.mem = MI->Operands[i].v.ImmVal;
+				detail->d.mos65xx.op_count++;
 			}
 			break;
 	}
@@ -267,7 +267,7 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 			break;
 	}
 
-	value = MI->Operands[0].ImmVal;
+	value = MI->Operands[0].v.ImmVal;
 
 	switch (opinfo.am) {
 		default:
@@ -375,15 +375,15 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 
 		case MOS65XX_AM_BLOCK:
 			SStream_concat(O, " %s%02x, %s%02x",
-				prefix, MI->Operands[0].ImmVal,
-				prefix, MI->Operands[1].ImmVal);
+				prefix, MI->Operands[0].v.ImmVal,
+				prefix, MI->Operands[1].v.ImmVal);
 			break;
 
 		case MOS65XX_AM_ZP_REL:
-			value =	3 + (signed char)MI->Operands[1].ImmVal;
+			value =	3 + (signed char)MI->Operands[1].v.ImmVal;
 			/* BBR0, zp, rel  and BBS0, zp, rel */
 			SStream_concat(O, " %s%02x, %s%04x",
-				prefix, MI->Operands[0].ImmVal,
+				prefix, MI->Operands[0].v.ImmVal,
 				prefix, (MI->address + value) & 0xffff);
 			break;
 
