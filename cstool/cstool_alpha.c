@@ -15,7 +15,7 @@ void print_insn_detail_alpha(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	alpha = &(ins->detail->alpha);
+	alpha = &(ins->detail->d.alpha);
 
 	if (alpha->op_count)
 		printf("\top_count: %u\n", alpha->op_count);
@@ -27,11 +27,11 @@ void print_insn_detail_alpha(csh handle, cs_insn *ins)
 			break;
 		case ALPHA_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s\n", i,
-			       cs_reg_name(handle, op->reg));
+			       cs_reg_name(handle, op->v.reg));
 			break;
 		case ALPHA_OP_IMM:
 			printf("\t\toperands[%u].type: IMM = 0x%x\n", i,
-			       op->imm);
+			       op->v.imm);
 			break;
 		}
 

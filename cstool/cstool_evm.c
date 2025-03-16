@@ -12,7 +12,7 @@ void print_insn_detail_evm(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	evm = &(ins->detail->evm);
+	evm = &(ins->detail->d.evm);
 
 	if (evm->pop)
 		printf("\tPop:     %u\n", evm->pop);

@@ -14,7 +14,7 @@ void print_insn_detail_tms320c64x(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	tms320c64x = &(ins->detail->tms320c64x);
+	tms320c64x = &(ins->detail->d.tms320c64x);
 	if (tms320c64x->op_count)
 		printf("\top_count: %u\n", tms320c64x->op_count);
 
@@ -24,51 +24,51 @@ void print_insn_detail_tms320c64x(csh handle, cs_insn *ins)
 			default:
 				break;
 			case TMS320C64X_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->v.reg));
 				break;
 			case TMS320C64X_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->v.imm);
 				break;
 			case TMS320C64X_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != TMS320C64X_REG_INVALID)
+				if (op->v.mem.base != TMS320C64X_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.base));
+							i, cs_reg_name(handle, op->v.mem.base));
 				printf("\t\t\toperands[%u].mem.disptype: ", i);
-				if(op->mem.disptype == TMS320C64X_MEM_DISP_INVALID) {
+				if(op->v.mem.disptype == TMS320C64X_MEM_DISP_INVALID) {
 					printf("Invalid\n");
-					printf("\t\t\toperands[%u].mem.disp: %u\n", i, op->mem.disp);
+					printf("\t\t\toperands[%u].mem.disp: %u\n", i, op->v.mem.disp);
 				}
-				if(op->mem.disptype == TMS320C64X_MEM_DISP_CONSTANT) {
+				if(op->v.mem.disptype == TMS320C64X_MEM_DISP_CONSTANT) {
 					printf("Constant\n");
-					printf("\t\t\toperands[%u].mem.disp: %u\n", i, op->mem.disp);
+					printf("\t\t\toperands[%u].mem.disp: %u\n", i, op->v.mem.disp);
 				}
-				if(op->mem.disptype == TMS320C64X_MEM_DISP_REGISTER) {
+				if(op->v.mem.disptype == TMS320C64X_MEM_DISP_REGISTER) {
 					printf("Register\n");
-					printf("\t\t\toperands[%u].mem.disp: %s\n", i, cs_reg_name(handle, op->mem.disp));
+					printf("\t\t\toperands[%u].mem.disp: %s\n", i, cs_reg_name(handle, op->v.mem.disp));
 				}
-				printf("\t\t\toperands[%u].mem.unit: %u\n", i, op->mem.unit);
+				printf("\t\t\toperands[%u].mem.unit: %u\n", i, op->v.mem.unit);
 				printf("\t\t\toperands[%u].mem.direction: ", i);
-				if(op->mem.direction == TMS320C64X_MEM_DIR_INVALID)
+				if(op->v.mem.direction == TMS320C64X_MEM_DIR_INVALID)
 					printf("Invalid\n");
-				if(op->mem.direction == TMS320C64X_MEM_DIR_FW)
+				if(op->v.mem.direction == TMS320C64X_MEM_DIR_FW)
 					printf("Forward\n");
-				if(op->mem.direction == TMS320C64X_MEM_DIR_BW)
+				if(op->v.mem.direction == TMS320C64X_MEM_DIR_BW)
 					printf("Backward\n");
 				printf("\t\t\toperands[%u].mem.modify: ", i);
-				if(op->mem.modify == TMS320C64X_MEM_MOD_INVALID)
+				if(op->v.mem.modify == TMS320C64X_MEM_MOD_INVALID)
 					printf("Invalid\n");
-				if(op->mem.modify == TMS320C64X_MEM_MOD_NO)
+				if(op->v.mem.modify == TMS320C64X_MEM_MOD_NO)
 					printf("No\n");
-				if(op->mem.modify == TMS320C64X_MEM_MOD_PRE)
+				if(op->v.mem.modify == TMS320C64X_MEM_MOD_PRE)
 					printf("Pre\n");
-				if(op->mem.modify == TMS320C64X_MEM_MOD_POST)
+				if(op->v.mem.modify == TMS320C64X_MEM_MOD_POST)
 					printf("Post\n");
-				printf("\t\t\toperands[%u].mem.scaled: %u\n", i, op->mem.scaled);
+				printf("\t\t\toperands[%u].mem.scaled: %u\n", i, op->v.mem.scaled);
 
 				break;
 			case TMS320C64X_OP_REGPAIR:
-				printf("\t\toperands[%u].type: REGPAIR = %s:%s\n", i, cs_reg_name(handle, op->reg + 1), cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].type: REGPAIR = %s:%s\n", i, cs_reg_name(handle, op->v.reg + 1), cs_reg_name(handle, op->v.reg));
 				break;
 		}
 	}

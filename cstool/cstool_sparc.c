@@ -15,7 +15,7 @@ void print_insn_detail_sparc(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	sparc = &(ins->detail->sparc);
+	sparc = &(ins->detail->d.sparc);
 	if (sparc->op_count)
 		printf("\top_count: %u\n", sparc->op_count);
 
@@ -25,21 +25,21 @@ void print_insn_detail_sparc(csh handle, cs_insn *ins)
 			default:
 				break;
 			case SPARC_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->v.reg));
 				break;
 			case SPARC_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->v.imm);
 				break;
 			case SPARC_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != X86_REG_INVALID)
+				if (op->v.mem.base != X86_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.index != X86_REG_INVALID)
+							i, cs_reg_name(handle, op->v.mem.base));
+				if (op->v.mem.index != X86_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.index));
-				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+							i, cs_reg_name(handle, op->v.mem.index));
+				if (op->v.mem.disp != 0)
+					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->v.mem.disp);
 
 				break;
 		}

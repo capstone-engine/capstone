@@ -14,7 +14,7 @@ void print_insn_detail_hppa(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	hppa = &ins->detail->hppa;
+	hppa = &ins->detail->d.hppa;
 
 	printf("\top_count: %u\n", hppa->op_count);
 	for (unsigned i = 0; i < hppa->op_count; i++) {
@@ -25,44 +25,44 @@ void print_insn_detail_hppa(csh handle, cs_insn *ins)
 			break;
 		case HPPA_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s\n", i,
-			       cs_reg_name(handle, op->reg));
+			       cs_reg_name(handle, op->v.reg));
 			break;
 		case HPPA_OP_IMM:
-			if (op->imm < 0)
+			if (op->v.imm < 0)
 				printf("\t\toperands[%u].type: IMM = -0x%" PRIx64
 				       "\n",
-				       i, -(op->imm));
+				       i, -(op->v.imm));
 			else
 				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64
 				       "\n",
-				       i, op->imm);
+				       i, op->v.imm);
 			break;
 		case HPPA_OP_IDX_REG:
 			printf("\t\toperands[%u].type: IDX_REG = %s\n", i,
-			       cs_reg_name(handle, op->reg));
+			       cs_reg_name(handle, op->v.reg));
 			break;
 		case HPPA_OP_DISP:
-			if (op->imm < 0)
+			if (op->v.imm < 0)
 				printf("\t\toperands[%u].type: DISP = -0x%" PRIx64
 				       "\n",
-				       i, -(op->imm));
+				       i, -(op->v.imm));
 			else
 				printf("\t\toperands[%u].type: DISP = 0x%" PRIx64
 				       "\n",
-				       i, op->imm);
+				       i, op->v.imm);
 			break;
 		case HPPA_OP_MEM:
 			printf("\t\toperands[%u].type:  MEM\n", i);
-			if (op->mem.space != HPPA_REG_INVALID) {
+			if (op->v.mem.space != HPPA_REG_INVALID) {
 				printf("\t\t\toperands[%u].mem.space: REG = %s\n",
-				       i, cs_reg_name(handle, op->mem.space));
+				       i, cs_reg_name(handle, op->v.mem.space));
 			}
 			printf("\t\t\toperands[%u].mem.base: REG = %s\n", i,
-			       cs_reg_name(handle, op->mem.base));
+			       cs_reg_name(handle, op->v.mem.base));
 			break;
 		case HPPA_OP_TARGET:
 			printf("\t\toperands[%u].type: ", i);
-			target_addr = ins->address + op->imm;
+			target_addr = ins->address + op->v.imm;
 			printf("TARGET = 0x%" PRIx64 "\n", target_addr);
 			break;
 		}

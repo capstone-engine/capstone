@@ -14,7 +14,7 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	riscv = &(ins->detail->riscv);
+	riscv = &(ins->detail->d.riscv);
 	if (riscv->op_count)
 		printf("\top_count: %u\n", riscv->op_count);
 
@@ -24,18 +24,18 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 			default:
 				break;
 			case RISCV_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->v.reg));
 				break;
 			case RISCV_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, (long)op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, (long)op->v.imm);
 				break;
 			case RISCV_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != RISCV_REG_INVALID)
+				if (op->v.mem.base != RISCV_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%lx\n", i, (long)op->mem.disp);
+							i, cs_reg_name(handle, op->v.mem.base));
+				if (op->v.mem.disp != 0)
+					printf("\t\t\toperands[%u].mem.disp: 0x%lx\n", i, (long)op->v.mem.disp);
 
 				break;
 		}

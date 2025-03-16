@@ -93,7 +93,7 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	ppc = &(ins->detail->ppc);
+	ppc = &(ins->detail->d.ppc);
 	if (ppc->op_count)
 		printf("\top_count: %u\n", ppc->op_count);
 
@@ -103,21 +103,21 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins)
 			default:
 				break;
 			case PPC_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->v.reg));
 				break;
 			case PPC_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64"\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%"PRIx64"\n", i, op->v.imm);
 				break;
 			case PPC_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != PPC_REG_INVALID)
+				if (op->v.mem.base != PPC_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.offset != PPC_REG_INVALID)
+							i, cs_reg_name(handle, op->v.mem.base));
+				if (op->v.mem.offset != PPC_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.offset: REG = %s\n", i,
-						cs_reg_name(handle, op->mem.offset));
-				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+						cs_reg_name(handle, op->v.mem.offset));
+				if (op->v.mem.disp != 0)
+					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->v.mem.disp);
 
 				break;
 		}

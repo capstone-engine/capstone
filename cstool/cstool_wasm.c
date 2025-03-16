@@ -12,7 +12,7 @@ void print_insn_detail_wasm(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	wasm = &(ins->detail->wasm);
+	wasm = &(ins->detail->d.wasm);
 	if (wasm->op_count > 0) {
 		unsigned int i;
 
@@ -24,23 +24,23 @@ void print_insn_detail_wasm(csh handle, cs_insn *ins)
 					break;
 				case WASM_OP_INT7:
 					printf("\t\tOperand[%u] type: int7\n", i);
-					printf("\t\tOperand[%u] value: %d\n", i, wasm->operands[i].int7);
+					printf("\t\tOperand[%u] value: %d\n", i, wasm->operands[i].v.int7);
 					break;
 				case WASM_OP_UINT32:
 					printf("\t\tOperand[%u] type: uint32\n", i);
-					printf("\t\tOperand[%u] value: 0x%x\n", i, wasm->operands[i].uint32);
+					printf("\t\tOperand[%u] value: 0x%x\n", i, wasm->operands[i].v.uint32);
 					break;
 				case WASM_OP_UINT64:
 					printf("\t\tOperand[%u] type: uint64\n", i);
-					printf("\t\tOperand[%u] value: 0x%" PRIx64 "\n", i, wasm->operands[i].uint64);
+					printf("\t\tOperand[%u] value: 0x%" PRIx64 "\n", i, wasm->operands[i].v.uint64);
 					break;
 				case WASM_OP_VARUINT32:
 					printf("\t\tOperand[%u] type: varuint32\n", i);
-					printf("\t\tOperand[%u] value: 0x%x\n", i, wasm->operands[i].varuint32);
+					printf("\t\tOperand[%u] value: 0x%x\n", i, wasm->operands[i].v.varuint32);
 					break;
 				case WASM_OP_VARUINT64:
 					printf("\t\tOperand[%u] type: varuint64\n", i);
-					printf("\t\tOperand[%u] value: 0x%" PRIx64 "\n", i, wasm->operands[i].varuint64);
+					printf("\t\tOperand[%u] value: 0x%" PRIx64 "\n", i, wasm->operands[i].v.varuint64);
 					break;
 			}
 

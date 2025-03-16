@@ -68,7 +68,7 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 		return;
 
 	detail = ins->detail;
-	m68k = &detail->m68k;
+	m68k = &detail->d.m68k;
 	if (m68k->op_count)
 		printf("\top_count: %u\n", m68k->op_count);
 
@@ -83,10 +83,10 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 			default:
 				break;
 			case M68K_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->v.reg));
 				break;
 			case M68K_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, (int)op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, (int)op->v.imm);
 				break;
 			case M68K_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
@@ -108,11 +108,11 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 				break;
 			case M68K_OP_FP_SINGLE:
 				printf("\t\toperands[%u].type: FP_SINGLE\n", i);
-				printf("\t\t\toperands[%u].simm: %f\n", i, op->simm);
+				printf("\t\t\toperands[%u].simm: %f\n", i, op->v.simm);
 				break;
 			case M68K_OP_FP_DOUBLE:
 				printf("\t\toperands[%u].type: FP_DOUBLE\n", i);
-				printf("\t\t\toperands[%u].dimm: %lf\n", i, op->dimm);
+				printf("\t\t\toperands[%u].dimm: %lf\n", i, op->v.dimm);
 				break;
 		}
 	}

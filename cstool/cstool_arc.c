@@ -14,7 +14,7 @@ void print_insn_detail_arc(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	arc = &(ins->detail->arc);
+	arc = &(ins->detail->d.arc);
 	if (arc->op_count)
 		printf("\top_count: %u\n", arc->op_count);
 
@@ -25,11 +25,11 @@ void print_insn_detail_arc(csh handle, cs_insn *ins)
 			break;
 		case ARC_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s\n", i,
-			       cs_reg_name(handle, op->reg));
+			       cs_reg_name(handle, op->v.reg));
 			break;
 		case ARC_OP_IMM:
 			printf("\t\toperands[%u].type: IMM = 0x%lx\n", i,
-			       (long)op->imm);
+			       (long)op->v.imm);
 			break;
 		}
 

@@ -59,27 +59,27 @@ void print_insn_detail_sh(csh handle, cs_insn *ins)
 
 	printf("\tgroups_count: %u\n", detail->groups_count);
 
-	for (i = 0; i < detail->sh.op_count; i++) {
-		cs_sh_op* op = &(detail->sh.operands[i]);
+	for (i = 0; i < detail->d.sh.op_count; i++) {
+		cs_sh_op* op = &(detail->d.sh.operands[i]);
 
 		switch((int)op->type) {
 			default:
 				break;
 			case SH_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->v.reg));
 				break;
 			case SH_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, (int)op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, (int)op->v.imm);
 				break;
 			case SH_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.reg != SH_REG_INVALID)
+				if (op->v.mem.reg != SH_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.reg: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.reg));
-				if (op->mem.disp != 0)
+							i, cs_reg_name(handle, op->v.mem.reg));
+				if (op->v.mem.disp != 0)
 					printf("\t\t\toperands[%u].mem.disp: 0x%x\n",
-							i, op->mem.disp);
-				printf("\t\taddress mode: %s\n", s_addressing_modes[op->mem.address]);
+							i, op->v.mem.disp);
+				printf("\t\taddress mode: %s\n", s_addressing_modes[op->v.mem.address]);
 				break;
 		}
 	}

@@ -14,7 +14,7 @@ void print_insn_detail_xcore(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	xcore = &(ins->detail->xcore);
+	xcore = &(ins->detail->d.xcore);
 	if (xcore->op_count)
 		printf("\top_count: %u\n", xcore->op_count);
 
@@ -24,22 +24,22 @@ void print_insn_detail_xcore(csh handle, cs_insn *ins)
 			default:
 				break;
 			case XCORE_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->v.reg));
 				break;
 			case XCORE_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->v.imm);
 				break;
 			case XCORE_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != XCORE_REG_INVALID)
+				if (op->v.mem.base != XCORE_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.index != XCORE_REG_INVALID)
+							i, cs_reg_name(handle, op->v.mem.base));
+				if (op->v.mem.index != XCORE_REG_INVALID)
 					printf("\t\t\toperands[%u].mem.index: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.index));
-				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
-				if (op->mem.direct != 1)
+							i, cs_reg_name(handle, op->v.mem.index));
+				if (op->v.mem.disp != 0)
+					printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->v.mem.disp);
+				if (op->v.mem.direct != 1)
 					printf("\t\t\toperands[%u].mem.direct: -1\n", i);
 
 

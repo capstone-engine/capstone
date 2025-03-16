@@ -18,7 +18,7 @@ void print_insn_detail_loongarch(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	loongarch = &(ins->detail->loongarch);
+	loongarch = &(ins->detail->d.loongarch);
 	if (loongarch->op_count)
 		printf("\top_count: %u\n", loongarch->op_count);
 
@@ -29,23 +29,23 @@ void print_insn_detail_loongarch(csh handle, cs_insn *ins)
 			break;
 		case LOONGARCH_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s\n", i,
-			       cs_reg_name(handle, op->reg));
+			       cs_reg_name(handle, op->v.reg));
 			break;
 		case LOONGARCH_OP_IMM:
 			printf("\t\toperands[%u].type: IMM = 0x%lx\n", i,
-			       (long)op->imm);
+			       (long)op->v.imm);
 			break;
 		case LOONGARCH_OP_MEM:
 			printf("\t\toperands[%u].type: MEM\n", i);
-			if (op->mem.base != LOONGARCH_REG_INVALID)
+			if (op->v.mem.base != LOONGARCH_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-				       i, cs_reg_name(handle, op->mem.base));
-			if (op->mem.index != LOONGARCH_REG_INVALID)
+				       i, cs_reg_name(handle, op->v.mem.base));
+			if (op->v.mem.index != LOONGARCH_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.index: REG = %s\n",
-				       i, cs_reg_name(handle, op->mem.index));
-			if (op->mem.disp != 0)
+				       i, cs_reg_name(handle, op->v.mem.index));
+			if (op->v.mem.disp != 0)
 				printf("\t\t\toperands[%u].mem.disp: 0x%lx\n",
-				       i, (long)op->mem.disp);
+				       i, (long)op->v.mem.disp);
 
 			break;
 		}

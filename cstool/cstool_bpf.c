@@ -19,7 +19,7 @@ void print_insn_detail_bpf(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	bpf = &(ins->detail->bpf);
+	bpf = &(ins->detail->d.bpf);
 
 	printf("\tOperand count: %u\n", bpf->op_count);
 
@@ -31,29 +31,29 @@ void print_insn_detail_bpf(csh handle, cs_insn *ins)
 			printf("INVALID\n");
 			break;
 		case BPF_OP_REG:
-			printf("REG = %s\n", cs_reg_name(handle, op->reg));
+			printf("REG = %s\n", cs_reg_name(handle, op->v.reg));
 			break;
 		case BPF_OP_IMM:
-			printf("IMM = 0x%" PRIx64 "\n", op->imm);
+			printf("IMM = 0x%" PRIx64 "\n", op->v.imm);
 			break;
 		case BPF_OP_OFF:
-			printf("OFF = +0x%x\n", op->off);
+			printf("OFF = +0x%x\n", op->v.off);
 			break;
 		case BPF_OP_MEM:
 			printf("MEM\n");
-			if (op->mem.base != BPF_REG_INVALID)
+			if (op->v.mem.base != BPF_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-						i, cs_reg_name(handle, op->mem.base));
-			printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+						i, cs_reg_name(handle, op->v.mem.base));
+			printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->v.mem.disp);
 			break;
 		case BPF_OP_MMEM:
-			printf("MMEM = M[0x%x]\n", op->mmem);
+			printf("MMEM = M[0x%x]\n", op->v.mmem);
 			break;
 		case BPF_OP_MSH:
-			printf("MSH = 4*([0x%x]&0xf)\n", op->msh);
+			printf("MSH = 4*([0x%x]&0xf)\n", op->v.msh);
 			break;
 		case BPF_OP_EXT:
-			printf("EXT = %s\n", ext_name[op->ext]);
+			printf("EXT = %s\n", ext_name[op->v.ext]);
 			break;
 		}
 	}

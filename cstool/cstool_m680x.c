@@ -52,7 +52,7 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 	if (detail == NULL)
 		return;
 
-	m680x = &detail->m680x;
+	m680x = &detail->d.m680x;
 
 	if (m680x->op_count)
 		printf("\top_count: %u\n", m680x->op_count);
@@ -74,69 +74,69 @@ void print_insn_detail_m680x(csh handle, cs_insn *insn)
 				comment = " (in mnemonic)";
 
 			printf("\t\toperands[%u].type: REGISTER = %s%s\n", i,
-				cs_reg_name(handle, op->reg), comment);
+				cs_reg_name(handle, op->v.reg), comment);
 			break;
 
 		case M680X_OP_CONSTANT:
 			printf("\t\toperands[%u].type: CONSTANT = %u\n", i,
-				op->const_val);
+				op->v.const_val);
 			break;
 
 		case M680X_OP_IMMEDIATE:
 			printf("\t\toperands[%u].type: IMMEDIATE = #%d\n", i,
-				op->imm);
+				op->v.imm);
 			break;
 
 		case M680X_OP_DIRECT:
 			printf("\t\toperands[%u].type: DIRECT = 0x%02x\n", i,
-				op->direct_addr);
+				op->v.direct_addr);
 			break;
 
 		case M680X_OP_EXTENDED:
 			printf("\t\toperands[%u].type: EXTENDED %s = 0x%04x\n",
-				i, op->ext.indirect ? "INDIRECT" : "",
-				op->ext.address);
+				i, op->v.ext.indirect ? "INDIRECT" : "",
+				op->v.ext.address);
 			break;
 
 		case M680X_OP_RELATIVE:
 			printf("\t\toperands[%u].type: RELATIVE = 0x%04x\n", i,
-				op->rel.address);
+				op->v.rel.address);
 			break;
 
 		case M680X_OP_INDEXED:
 			printf("\t\toperands[%u].type: INDEXED%s\n", i,
-				(op->idx.flags & M680X_IDX_INDIRECT) ?
+				(op->v.idx.flags & M680X_IDX_INDIRECT) ?
 				" INDIRECT" : "");
 
-			if (op->idx.base_reg != M680X_REG_INVALID)
+			if (op->v.idx.base_reg != M680X_REG_INVALID)
 				printf("\t\t\tbase register: %s\n",
-					cs_reg_name(handle, op->idx.base_reg));
+					cs_reg_name(handle, op->v.idx.base_reg));
 
-			if (op->idx.offset_reg != M680X_REG_INVALID)
+			if (op->v.idx.offset_reg != M680X_REG_INVALID)
 				printf("\t\t\toffset register: %s\n",
-					cs_reg_name(handle, op->idx.offset_reg));
+					cs_reg_name(handle, op->v.idx.offset_reg));
 
-			if ((op->idx.offset_bits != 0) &&
-				(op->idx.offset_reg == M680X_REG_INVALID) &&
-				!op->idx.inc_dec) {
-				printf("\t\t\toffset: %d\n", op->idx.offset);
+			if ((op->v.idx.offset_bits != 0) &&
+				(op->v.idx.offset_reg == M680X_REG_INVALID) &&
+				!op->v.idx.inc_dec) {
+				printf("\t\t\toffset: %d\n", op->v.idx.offset);
 
-				if (op->idx.base_reg == M680X_REG_PC)
+				if (op->v.idx.base_reg == M680X_REG_PC)
 					printf("\t\t\toffset address: 0x%x\n",
-						op->idx.offset_addr);
+						op->v.idx.offset_addr);
 
 				printf("\t\t\toffset bits: %u\n",
-					op->idx.offset_bits);
+					op->v.idx.offset_bits);
 			}
 
-			if (op->idx.inc_dec) {
-				const char *post_pre = op->idx.flags &
+			if (op->v.idx.inc_dec) {
+				const char *post_pre = op->v.idx.flags &
 					M680X_IDX_POST_INC_DEC ? "post" : "pre";
-				const char *inc_dec = (op->idx.inc_dec > 0) ?
+				const char *inc_dec = (op->v.idx.inc_dec > 0) ?
 					"increment" : "decrement";
 
 				printf("\t\t\t%s %s: %d\n", post_pre, inc_dec,
-					abs(op->idx.inc_dec));
+					abs(op->v.idx.inc_dec));
 			}
 
 			break;

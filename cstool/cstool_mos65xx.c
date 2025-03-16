@@ -72,7 +72,7 @@ void print_insn_detail_mos65xx(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	mos65xx = &(ins->detail->mos65xx);
+	mos65xx = &(ins->detail->d.mos65xx);
 	printf("\taddress mode: %s\n", get_am_name(mos65xx->am));
 	printf("\tmodifies flags: %s\n", mos65xx->modifies_flags ? "true": "false");
 
@@ -85,13 +85,13 @@ void print_insn_detail_mos65xx(csh handle, cs_insn *ins)
 			default:
 				break;
 			case MOS65XX_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
+				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->v.reg));
 				break;
 			case MOS65XX_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%x\n", i, op->v.imm);
 				break;
 			case MOS65XX_OP_MEM:
-				printf("\t\toperands[%u].type: MEM = 0x%x\n", i, op->mem);
+				printf("\t\toperands[%u].type: MEM = 0x%x\n", i, op->v.mem);
 				break;
 		}
 	}

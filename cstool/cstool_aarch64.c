@@ -20,7 +20,7 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	aarch64 = &(ins->detail->aarch64);
+	aarch64 = &(ins->detail->d.aarch64);
 	if (aarch64->op_count)
 		printf("\top_count: %u\n", aarch64->op_count);
 
@@ -31,63 +31,63 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 			printf("\t\tOperand type %" PRId32 " not handled\n", op->type);
 			break;
 		case AARCH64_OP_REG:
-			printf("\t\toperands[%u].type: REG = %s%s\n", i, cs_reg_name(handle, op->reg), op->is_vreg ? " (vreg)" : "");
+			printf("\t\toperands[%u].type: REG = %s%s\n", i, cs_reg_name(handle, op->v.reg), op->is_vreg ? " (vreg)" : "");
 			if (op->is_list_member) {
 				printf("\t\toperands[%u].is_list_member: true\n", i);
 			}
 			break;
 		case AARCH64_OP_IMM:
-			printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
+			printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->v.imm);
 			break;
 		case AARCH64_OP_FP:
 #if defined(_KERNEL_MODE)
 			// Issue #681: Windows kernel does not support formatting float point
 			printf("\t\toperands[%u].type: FP = <float_point_unsupported>\n", i);
 #else
-			printf("\t\toperands[%u].type: FP = %f\n", i, op->fp);
+			printf("\t\toperands[%u].type: FP = %f\n", i, op->v.fp);
 #endif
 			break;
 		case AARCH64_OP_MEM:
 			printf("\t\toperands[%u].type: MEM\n", i);
-			if (op->mem.base != AARCH64_REG_INVALID)
-				printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(handle, op->mem.base));
-			if (op->mem.index != AARCH64_REG_INVALID)
-				printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->mem.index));
-			if (op->mem.disp != 0)
-				printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
-			if (ins->detail->aarch64.post_index)
+			if (op->v.mem.base != AARCH64_REG_INVALID)
+				printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(handle, op->v.mem.base));
+			if (op->v.mem.index != AARCH64_REG_INVALID)
+				printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(handle, op->v.mem.index));
+			if (op->v.mem.disp != 0)
+				printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->v.mem.disp);
+			if (ins->detail->d.aarch64.post_index)
 				printf("\t\t\tpost-indexed: true\n");
 
 			break;
 		case AARCH64_OP_SME:
 			printf("\t\toperands[%u].type: SME_MATRIX\n", i);
-			printf("\t\toperands[%u].sme.type: %d\n", i, op->sme.type);
+			printf("\t\toperands[%u].sme.type: %d\n", i, op->v.sme.type);
 
-			if (op->sme.tile != AARCH64_REG_INVALID)
-				printf("\t\toperands[%u].sme.tile: %s\n", i, cs_reg_name(handle, op->sme.tile));
-			if (op->sme.slice_reg != AARCH64_REG_INVALID)
-				printf("\t\toperands[%u].sme.slice_reg: %s\n", i, cs_reg_name(handle, op->sme.slice_reg));
-			if (op->sme.slice_offset.imm != AARCH64_SLICE_IMM_INVALID || op->sme.slice_offset.imm_range.first != AARCH64_SLICE_IMM_RANGE_INVALID) {
+			if (op->v.sme.tile != AARCH64_REG_INVALID)
+				printf("\t\toperands[%u].sme.tile: %s\n", i, cs_reg_name(handle, op->v.sme.tile));
+			if (op->v.sme.slice_reg != AARCH64_REG_INVALID)
+				printf("\t\toperands[%u].sme.slice_reg: %s\n", i, cs_reg_name(handle, op->v.sme.slice_reg));
+			if (op->v.sme.slice_offset.imm != AARCH64_SLICE_IMM_INVALID || op->v.sme.slice_offset.imm_range.first != AARCH64_SLICE_IMM_RANGE_INVALID) {
 				printf("\t\toperands[%u].sme.slice_offset: ", i);
-				if (op->sme.has_range_offset)
-					printf("%hhd:%hhd\n", op->sme.slice_offset.imm_range.first, op->sme.slice_offset.imm_range.offset);
+				if (op->v.sme.has_range_offset)
+					printf("%hhd:%hhd\n", op->v.sme.slice_offset.imm_range.first, op->v.sme.slice_offset.imm_range.offset);
 				else
-					printf("%d\n", op->sme.slice_offset.imm);
+					printf("%d\n", op->v.sme.slice_offset.imm);
 			}
-			if (op->sme.slice_reg != AARCH64_REG_INVALID || op->sme.slice_offset.imm != AARCH64_SLICE_IMM_INVALID)
-				printf("\t\toperands[%u].sme.is_vertical: %s\n", i, (op->sme.is_vertical ? "true" : "false"));
+			if (op->v.sme.slice_reg != AARCH64_REG_INVALID || op->v.sme.slice_offset.imm != AARCH64_SLICE_IMM_INVALID)
+				printf("\t\toperands[%u].sme.is_vertical: %s\n", i, (op->v.sme.is_vertical ? "true" : "false"));
 			break;
 		case AARCH64_OP_PRED:
 			printf("\t\toperands[%u].type: PREDICATE\n", i);
-			if (op->pred.reg != AARCH64_REG_INVALID)
-				printf("\t\toperands[%u].pred.reg: %s\n", i, cs_reg_name(handle, op->pred.reg));
-			if (op->pred.vec_select != AARCH64_REG_INVALID)
-				printf("\t\toperands[%u].pred.vec_select: %s\n", i, cs_reg_name(handle, op->pred.vec_select));
-			if (op->pred.imm_index != -1)
-				printf("\t\toperands[%u].pred.imm_index: %d\n", i, op->pred.imm_index);
+			if (op->v.pred.reg != AARCH64_REG_INVALID)
+				printf("\t\toperands[%u].pred.reg: %s\n", i, cs_reg_name(handle, op->v.pred.reg));
+			if (op->v.pred.vec_select != AARCH64_REG_INVALID)
+				printf("\t\toperands[%u].pred.vec_select: %s\n", i, cs_reg_name(handle, op->v.pred.vec_select));
+			if (op->v.pred.imm_index != -1)
+				printf("\t\toperands[%u].pred.imm_index: %d\n", i, op->v.pred.imm_index);
 			break;
 		case AARCH64_OP_CIMM:
-			printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->imm);
+			printf("\t\toperands[%u].type: C-IMM = %u\n", i, (int)op->v.imm);
 			break;
 		case AARCH64_OP_SYSREG:
 			printf("\t\toperands[%u].type: SYS REG:\n", i);
@@ -175,7 +175,7 @@ void print_insn_detail_aarch64(csh handle, cs_insn *ins)
 				break;
 			case AARCH64_OP_EXACTFPIMM:
 				printf("\t\toperands[%u].subtype EXACTFPIMM = %d\n", i, op->sysop.imm.exactfpimm);
-				printf("\t\toperands[%u].fp = %.1f\n", i, op->fp);
+				printf("\t\toperands[%u].fp = %.1f\n", i, op->v.fp);
 				break;
 			case AARCH64_OP_DBNXS:
 				printf("\t\toperands[%u].subtype DBNXS = %d\n", i, op->sysop.imm.dbnxs);

@@ -31,7 +31,7 @@ void print_insn_detail_xtensa(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	cs_xtensa *detail = &(ins->detail->xtensa);
+	cs_xtensa *detail = &(ins->detail->d.xtensa);
 
 	if (detail->format && detail->format < XTENSA_INSN_FORM_MAX) {
 		printf("\tformat: %s\n", xtensa_insn_form_strs[detail->format]);
@@ -44,20 +44,20 @@ void print_insn_detail_xtensa(csh handle, cs_insn *ins)
 		cs_xtensa_op *op = &(detail->operands[i]);
 		if (op->type == CS_OP_REG)
 			printf("\t\toperands[%u].type: REG = %s\n", i,
-			       cs_reg_name(handle, op->reg));
+			       cs_reg_name(handle, op->v.reg));
 		else if (op->type == CS_OP_IMM)
 			printf("\t\toperands[%u].type: IMM = 0x%" PRIx32 "\n",
-			       i, op->imm);
+			       i, op->v.imm);
 		else if (op->type == CS_OP_MEM)
 			printf("\t\toperands[%u].type: MEM\n"
 			       "\t\t\t.mem.base: REG = %s\n"
 			       "\t\t\t.mem.disp: 0x%" PRIx32 "\n",
-			       i, cs_reg_name(handle, op->mem.base),
-			       op->mem.disp);
+			       i, cs_reg_name(handle, op->v.mem.base),
+			       op->v.mem.disp);
 		else if (op->type == XTENSA_OP_L32R) {
 			printf("\t\toperands[%u].type: L32R\n"
 			       "\t\t\t.l32r = %" PRIx32 "\n",
-			       i, op->imm);
+			       i, op->v.imm);
 		}
 
 		if (op->access & CS_AC_READ)

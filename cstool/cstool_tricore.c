@@ -14,7 +14,7 @@ void print_insn_detail_tricore(csh handle, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	tricore = &(ins->detail->tricore);
+	tricore = &(ins->detail->d.tricore);
 
 	if (tricore->op_count)
 		printf("\top_count: %u\n", tricore->op_count);
@@ -26,18 +26,18 @@ void print_insn_detail_tricore(csh handle, cs_insn *ins)
 			break;
 		case TRICORE_OP_REG:
 			printf("\t\toperands[%u].type: REG = %s\n", i,
-			       cs_reg_name(handle, op->reg));
+			       cs_reg_name(handle, op->v.reg));
 			break;
 		case TRICORE_OP_IMM:
 			printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n",
-			       i, op->imm);
+			       i, op->v.imm);
 			break;
 		case TRICORE_OP_MEM:
 			printf("\t\toperands[%u].type: MEM\n"
 			       "\t\t\t.mem.base: REG = %s\n"
 			       "\t\t\t.mem.disp: 0x%" PRIx64 "\n",
-			       i, cs_reg_name(handle, op->mem.base),
-			       op->mem.disp);
+			       i, cs_reg_name(handle, op->v.mem.base),
+			       op->v.mem.disp);
 			break;
 		}
 

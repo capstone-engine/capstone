@@ -189,7 +189,7 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 	if (ins->detail == NULL)
 		return;
 
-	x86 = &(ins->detail->x86);
+	x86 = &(ins->detail->d.x86);
 
 	print_string_hex("\tPrefix:", x86->prefix, 4);
 	print_string_hex("\tOpcode:", x86->opcode, 4);
@@ -244,7 +244,7 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 				printf("Operand was not found!\n");
 				break;
 			}
-			printf("\t\timms[%u]: 0x%" PRIx64 "\n", i, x86->operands[index].imm);
+			printf("\t\timms[%u]: 0x%" PRIx64 "\n", i, x86->operands[index].v.imm);
 		}
 	}
 
@@ -257,23 +257,23 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 
 		switch((int)op->type) {
 			case X86_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(ud, op->reg));
+				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(ud, op->v.reg));
 				break;
 			case X86_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
+				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->v.imm);
 				break;
 			case X86_OP_MEM:
 				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.segment != X86_REG_INVALID)
-					printf("\t\t\toperands[%u].mem.segment: REG = %s\n", i, cs_reg_name(ud, op->mem.segment));
-				if (op->mem.base != X86_REG_INVALID)
-					printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(ud, op->mem.base));
-				if (op->mem.index != X86_REG_INVALID)
-					printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(ud, op->mem.index));
-				if (op->mem.scale != 1)
-					printf("\t\t\toperands[%u].mem.scale: %u\n", i, op->mem.scale);
-				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->mem.disp);
+				if (op->v.mem.segment != X86_REG_INVALID)
+					printf("\t\t\toperands[%u].mem.segment: REG = %s\n", i, cs_reg_name(ud, op->v.mem.segment));
+				if (op->v.mem.base != X86_REG_INVALID)
+					printf("\t\t\toperands[%u].mem.base: REG = %s\n", i, cs_reg_name(ud, op->v.mem.base));
+				if (op->v.mem.index != X86_REG_INVALID)
+					printf("\t\t\toperands[%u].mem.index: REG = %s\n", i, cs_reg_name(ud, op->v.mem.index));
+				if (op->v.mem.scale != 1)
+					printf("\t\t\toperands[%u].mem.scale: %u\n", i, op->v.mem.scale);
+				if (op->v.mem.disp != 0)
+					printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->v.mem.disp);
 				break;
 			default:
 				break;
@@ -325,12 +325,12 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 		}
 	}
 
-	if (x86->eflags || x86->fpu_flags) {
+	if (x86->flags.eflags || x86->flags.fpu_flags) {
 		for(i = 0; i < ins->detail->groups_count; i++) {
 			if (ins->detail->groups[i] == X86_GRP_FPU) {
 				printf("\tFPU_FLAGS:");
 				for(i = 0; i <= 63; i++)
-					if (x86->fpu_flags & ((uint64_t)1 << i)) {
+					if (x86->flags.fpu_flags & ((uint64_t)1 << i)) {
 						printf(" %s", get_fpu_flag_name((uint64_t)1 << i));
 					}
 				printf("\n");
@@ -341,7 +341,7 @@ void print_insn_detail_x86(csh ud, cs_mode mode, cs_insn *ins)
 		if (i == ins->detail->groups_count) {
 			printf("\tEFLAGS:");
 			for(i = 0; i <= 63; i++)
-				if (x86->eflags & ((uint64_t)1 << i)) {
+				if (x86->flags.eflags & ((uint64_t)1 << i)) {
 					printf(" %s", get_eflag_name((uint64_t)1 << i));
 				}
 			printf("\n");
