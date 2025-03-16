@@ -114,8 +114,8 @@ static void registerBits(SStream* O, const cs_m68k_op* op)
 
 static void registerPair(SStream* O, const cs_m68k_op* op)
 {
-	SStream_concat(O, "%s:%s", s_reg_names[op->reg_pair.reg_0],
-			s_reg_names[op->reg_pair.reg_1]);
+	SStream_concat(O, "%s:%s", s_reg_names[op->v.reg_pair.reg_0],
+			s_reg_names[op->v.reg_pair.reg_1]);
 }
 
 static void printAddressingMode(SStream* O, unsigned int pc, const cs_m68k* inst, const cs_m68k_op* op)
@@ -130,22 +130,22 @@ static void printAddressingMode(SStream* O, unsigned int pc, const cs_m68k* inst
 					registerPair(O, op);
 					break;
 				case M68K_OP_REG:
-					SStream_concat(O, "%s", s_reg_names[op->reg]);
+					SStream_concat(O, "%s", s_reg_names[op->v.reg]);
 					break;
 				default:
 					break;
 			}
 			break;
 
-		case M68K_AM_REG_DIRECT_DATA: SStream_concat(O, "d%d", (op->reg - M68K_REG_D0)); break;
-		case M68K_AM_REG_DIRECT_ADDR: SStream_concat(O, "a%d", (op->reg - M68K_REG_A0)); break;
-		case M68K_AM_REGI_ADDR: SStream_concat(O, "(a%d)", (op->reg - M68K_REG_A0)); break;
-		case M68K_AM_REGI_ADDR_POST_INC: SStream_concat(O, "(a%d)+", (op->reg - M68K_REG_A0)); break;
-		case M68K_AM_REGI_ADDR_PRE_DEC: SStream_concat(O, "-(a%d)", (op->reg - M68K_REG_A0)); break;
+		case M68K_AM_REG_DIRECT_DATA: SStream_concat(O, "d%d", (op->v.reg - M68K_REG_D0)); break;
+		case M68K_AM_REG_DIRECT_ADDR: SStream_concat(O, "a%d", (op->v.reg - M68K_REG_A0)); break;
+		case M68K_AM_REGI_ADDR: SStream_concat(O, "(a%d)", (op->v.reg - M68K_REG_A0)); break;
+		case M68K_AM_REGI_ADDR_POST_INC: SStream_concat(O, "(a%d)+", (op->v.reg - M68K_REG_A0)); break;
+		case M68K_AM_REGI_ADDR_PRE_DEC: SStream_concat(O, "-(a%d)", (op->v.reg - M68K_REG_A0)); break;
 		case M68K_AM_REGI_ADDR_DISP: SStream_concat(O, "%s$%x(a%d)", op->mem.disp < 0 ? "-" : "", abs(op->mem.disp), (op->mem.base_reg - M68K_REG_A0)); break;
 		case M68K_AM_PCI_DISP: SStream_concat(O, "$%x(pc)", pc + 2 + op->mem.disp); break;
-		case M68K_AM_ABSOLUTE_DATA_SHORT: SStream_concat(O, "$%x.w", op->imm); break;
-		case M68K_AM_ABSOLUTE_DATA_LONG: SStream_concat(O, "$%x.l", op->imm); break;
+		case M68K_AM_ABSOLUTE_DATA_SHORT: SStream_concat(O, "$%x.w", op->v.imm); break;
+		case M68K_AM_ABSOLUTE_DATA_LONG: SStream_concat(O, "$%x.l", op->v.imm); break;
 		case M68K_AM_IMMEDIATE:
 			 if (inst->op_size.type == M68K_SIZE_TYPE_FPU) {
 #if defined(_KERNEL_MODE)
@@ -153,16 +153,16 @@ static void printAddressingMode(SStream* O, unsigned int pc, const cs_m68k* inst
 				 SStream_concat(O, "#<float_point_unsupported>");
 				 break;
 #else
-				 if (inst->op_size.fpu_size == M68K_FPU_SIZE_SINGLE)
-					 SStream_concat(O, "#%f", op->simm);
-				 else if (inst->op_size.fpu_size == M68K_FPU_SIZE_DOUBLE)
-					 SStream_concat(O, "#%f", op->dimm);
+				 if (inst->op_size.size.fpu_size == M68K_FPU_SIZE_SINGLE)
+					 SStream_concat(O, "#%f", op->v.simm);
+				 else if (inst->op_size.size.fpu_size == M68K_FPU_SIZE_DOUBLE)
+					 SStream_concat(O, "#%f", op->v.dimm);
 				 else
 					 SStream_concat(O, "#<unsupported>");
 				 break;
 #endif
 			 }
-			 SStream_concat(O, "#$%x", op->imm);
+			 SStream_concat(O, "#$%x", op->v.imm);
 			 break;
 		case M68K_AM_PCI_INDEX_8_BIT_DISP:
 			SStream_concat(O, "$%x(pc,%s%s.%c)", pc + 2 + op->mem.disp, s_spacing, getRegName(op->mem.index_reg), op->mem.index_size ? 'l' : 'w');
@@ -263,7 +263,7 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 		int regs_write_count = m68k_min(m68k_sizeof_array(detail->regs_write), info->regs_write_count);
 		int groups_count = m68k_min(m68k_sizeof_array(detail->groups), info->groups_count);
 
-		memcpy(&detail->m68k, ext, sizeof(cs_m68k));
+		memcpy(&detail->d.m68k, ext, sizeof(cs_m68k));
 
 		memcpy(&detail->regs_read, &info->regs_read, regs_read_count * sizeof(info->regs_read[0]));
 		detail->regs_read_count = regs_read_count;
@@ -277,7 +277,7 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 
 	if (MI->Opcode == M68K_INS_INVALID) {
 		if (ext->op_count)
-			SStream_concat(O, "dc.w $%x", ext->operands[0].imm);
+			SStream_concat(O, "dc.w $%x", ext->operands[0].v.imm);
 		else
 			SStream_concat(O, "dc.w $<unknown>");
 		return;
@@ -290,7 +290,7 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 			break;
 
 		case M68K_SIZE_TYPE_CPU :
-			switch (ext->op_size.cpu_size) {
+			switch (ext->op_size.size.cpu_size) {
 				case M68K_CPU_SIZE_BYTE: SStream_concat0(O, ".b"); break;
 				case M68K_CPU_SIZE_WORD: SStream_concat0(O, ".w"); break;
 				case M68K_CPU_SIZE_LONG: SStream_concat0(O, ".l"); break;
@@ -299,7 +299,7 @@ void M68K_printInst(MCInst* MI, SStream* O, void* PrinterInfo)
 			break;
 
 		case M68K_SIZE_TYPE_FPU :
-			switch (ext->op_size.fpu_size) {
+			switch (ext->op_size.size.fpu_size) {
 				case M68K_FPU_SIZE_SINGLE: SStream_concat0(O, ".s"); break;
 				case M68K_FPU_SIZE_DOUBLE: SStream_concat0(O, ".d"); break;
 				case M68K_FPU_SIZE_EXTENDED: SStream_concat0(O, ".x"); break;
