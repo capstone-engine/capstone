@@ -14,33 +14,33 @@ void WASM_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 			break;
 
 		case WASM_OP_VARUINT32:
-			SStream_concat(O, "\t0x%x", MI->wasm_data.varuint32);
+			SStream_concat(O, "\t0x%x", MI->wasm_data.v.varuint32);
 			break;
 
 		case WASM_OP_VARUINT64:
-			SStream_concat(O, "\t0x%lx", MI->wasm_data.varuint64);
+			SStream_concat(O, "\t0x%lx", MI->wasm_data.v.varuint64);
 			break;
 
 		case WASM_OP_UINT32:
-			SStream_concat(O, "\t0x%2" PRIx32, MI->wasm_data.uint32);
+			SStream_concat(O, "\t0x%2" PRIx32, MI->wasm_data.v.uint32);
 			break;
 
 		case WASM_OP_UINT64:
-			SStream_concat(O, "\t0x%2" PRIx64, MI->wasm_data.uint64);
+			SStream_concat(O, "\t0x%2" PRIx64, MI->wasm_data.v.uint64);
 			break;
 
 		case WASM_OP_IMM:
-			SStream_concat(O, "\t0x%x, 0x%x", MI->wasm_data.immediate[0], MI->wasm_data.immediate[1]);
+			SStream_concat(O, "\t0x%x, 0x%x", MI->wasm_data.v.immediate[0], MI->wasm_data.v.immediate[1]);
 			break;
 
 		case WASM_OP_INT7:
-			SStream_concat(O, "\t%d", MI->wasm_data.int7);
+			SStream_concat(O, "\t%d", MI->wasm_data.v.int7);
 			break;
 
 		case WASM_OP_BRTABLE:
-			SStream_concat(O, "\t0x%x, [", MI->wasm_data.brtable.length);
-			SStream_concat(O, "0x%x", MI->wasm_data.brtable.address);
-			SStream_concat(O, "], 0x%x", MI->wasm_data.brtable.default_target);
+			SStream_concat(O, "\t0x%x, [", MI->wasm_data.v.brtable.length);
+			SStream_concat(O, "0x%x", MI->wasm_data.v.brtable.address);
+			SStream_concat(O, "], 0x%x", MI->wasm_data.v.brtable.default_target);
 
 			break;
 	}

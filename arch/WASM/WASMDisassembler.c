@@ -388,15 +388,15 @@ static bool read_varuint32(const uint8_t *code, size_t code_len, uint16_t *param
 	}
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_VARUINT32;
-		MI->flat_insn->detail->wasm.operands[0].size= len;
-		MI->flat_insn->detail->wasm.operands[0].varuint32= data;
+		MI->flat_insn->detail->d.wasm.op_count = 1;
+		MI->flat_insn->detail->d.wasm.operands[0].type = WASM_OP_VARUINT32;
+		MI->flat_insn->detail->d.wasm.operands[0].size= len;
+		MI->flat_insn->detail->d.wasm.operands[0].v.varuint32= data;
 	}
 
 	MI->wasm_data.size = len;
 	MI->wasm_data.type = WASM_OP_VARUINT32;
-	MI->wasm_data.uint32 = data;
+	MI->wasm_data.v.uint32 = data;
 	*param_size = len;
 
 	return true;
@@ -418,15 +418,15 @@ static bool read_varuint64(const uint8_t *code, size_t code_len, uint16_t *param
 	}
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_VARUINT64;
-		MI->flat_insn->detail->wasm.operands[0].size = len;
-		MI->flat_insn->detail->wasm.operands[0].varuint64 = data;
+		MI->flat_insn->detail->d.wasm.op_count = 1;
+		MI->flat_insn->detail->d.wasm.operands[0].type = WASM_OP_VARUINT64;
+		MI->flat_insn->detail->d.wasm.operands[0].size = len;
+		MI->flat_insn->detail->d.wasm.operands[0].v.varuint64 = data;
 	}
 
 	MI->wasm_data.size = len;
 	MI->wasm_data.type = WASM_OP_VARUINT64;
-	MI->wasm_data.uint64 = data;
+	MI->wasm_data.v.uint64 = data;
 	*param_size = len;
 
 	return true;
@@ -443,7 +443,7 @@ static bool read_memoryimmediate(const uint8_t *code, size_t code_len, uint16_t 
 	uint32_t data[2];
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.op_count = 2;
+		MI->flat_insn->detail->d.wasm.op_count = 2;
 	}
 
 	data[0] = get_varuint32(code, code_len, &tmp);
@@ -452,25 +452,25 @@ static bool read_memoryimmediate(const uint8_t *code, size_t code_len, uint16_t 
 	}
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_VARUINT32;
-		MI->flat_insn->detail->wasm.operands[0].size = tmp;
-		MI->flat_insn->detail->wasm.operands[0].varuint32 = data[0];
+		MI->flat_insn->detail->d.wasm.operands[0].type = WASM_OP_VARUINT32;
+		MI->flat_insn->detail->d.wasm.operands[0].size = tmp;
+		MI->flat_insn->detail->d.wasm.operands[0].v.varuint32 = data[0];
 	}
 
 	len = tmp;
 	data[1] = get_varuint32(&code[len], code_len - len, &tmp);
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.operands[1].type = WASM_OP_VARUINT32;
-		MI->flat_insn->detail->wasm.operands[1].size = tmp;
-		MI->flat_insn->detail->wasm.operands[1].varuint32 = data[1];
+		MI->flat_insn->detail->d.wasm.operands[1].type = WASM_OP_VARUINT32;
+		MI->flat_insn->detail->d.wasm.operands[1].size = tmp;
+		MI->flat_insn->detail->d.wasm.operands[1].v.varuint32 = data[1];
 	}
 
 	len += tmp;
 	MI->wasm_data.size = len;
 	MI->wasm_data.type = WASM_OP_IMM;
-	MI->wasm_data.immediate[0] = data[0];
-	MI->wasm_data.immediate[1] = data[1];
+	MI->wasm_data.v.immediate[0] = data[0];
+	MI->wasm_data.v.immediate[1] = data[1];
 	*param_size = len;
 
 	return true;
@@ -487,13 +487,13 @@ static bool read_uint32(const uint8_t *code, size_t code_len, uint16_t *param_si
 		return false;
 	}
 
-	get_uint32(code, &(MI->wasm_data.uint32));
+	get_uint32(code, &(MI->wasm_data.v.uint32));
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_UINT32;
-		MI->flat_insn->detail->wasm.operands[0].size = 4;
-		get_uint32(code, &(MI->flat_insn->detail->wasm.operands[0].uint32));
+		MI->flat_insn->detail->d.wasm.op_count = 1;
+		MI->flat_insn->detail->d.wasm.operands[0].type = WASM_OP_UINT32;
+		MI->flat_insn->detail->d.wasm.operands[0].size = 4;
+		get_uint32(code, &(MI->flat_insn->detail->d.wasm.operands[0].v.uint32));
 	}
 
 	MI->wasm_data.size = 4;
@@ -514,13 +514,13 @@ static bool read_uint64(const uint8_t *code, size_t code_len, uint16_t *param_si
 		return false;
 	}
 
-	get_uint64(code, &(MI->wasm_data.uint64));
+	get_uint64(code, &(MI->wasm_data.v.uint64));
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_UINT64;
-		MI->flat_insn->detail->wasm.operands[0].size = 8;
-		get_uint64(code, &(MI->flat_insn->detail->wasm.operands[0].uint64));
+		MI->flat_insn->detail->d.wasm.op_count = 1;
+		MI->flat_insn->detail->d.wasm.operands[0].type = WASM_OP_UINT64;
+		MI->flat_insn->detail->d.wasm.operands[0].size = 8;
+		get_uint64(code, &(MI->flat_insn->detail->d.wasm.operands[0].v.uint64));
 	}
 
 	MI->wasm_data.size = 8;
@@ -548,7 +548,7 @@ static bool read_brtable(const uint8_t *code, size_t code_len, uint16_t *param_s
 	}
 
 	tmp_len += var_len;
-	MI->wasm_data.brtable.length = length;
+	MI->wasm_data.v.brtable.length = length;
 	if (length >= UINT32_MAX - tmp_len) {
 		// integer overflow check
 		return false;
@@ -558,13 +558,13 @@ static bool read_brtable(const uint8_t *code, size_t code_len, uint16_t *param_s
 		return false;
 	}
 	// base address + 1 byte opcode + tmp_len for number of cases = start of targets
-	MI->wasm_data.brtable.address = MI->address + 1 + tmp_len;
+	MI->wasm_data.v.brtable.address = MI->address + 1 + tmp_len;
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_BRTABLE;
-		MI->flat_insn->detail->wasm.operands[0].brtable.length = MI->wasm_data.brtable.length;
-		MI->flat_insn->detail->wasm.operands[0].brtable.address = MI->wasm_data.brtable.address;
+		MI->flat_insn->detail->d.wasm.op_count = 1;
+		MI->flat_insn->detail->d.wasm.operands[0].type = WASM_OP_BRTABLE;
+		MI->flat_insn->detail->d.wasm.operands[0].v.brtable.length = MI->wasm_data.v.brtable.length;
+		MI->flat_insn->detail->d.wasm.operands[0].v.brtable.address = MI->wasm_data.v.brtable.address;
 	}
 
 	// read data
@@ -587,13 +587,13 @@ static bool read_brtable(const uint8_t *code, size_t code_len, uint16_t *param_s
 		return false;
 	}
 
-	MI->wasm_data.brtable.default_target = default_target;
+	MI->wasm_data.v.brtable.default_target = default_target;
 	MI->wasm_data.type = WASM_OP_BRTABLE;
 	*param_size = tmp_len + var_len;
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.operands[0].size = *param_size;
-		MI->flat_insn->detail->wasm.operands[0].brtable.default_target = MI->wasm_data.brtable.default_target;
+		MI->flat_insn->detail->d.wasm.operands[0].size = *param_size;
+		MI->flat_insn->detail->d.wasm.operands[0].v.brtable.default_target = MI->wasm_data.v.brtable.default_target;
 	}
 
 	return true;
@@ -609,16 +609,16 @@ static bool read_varint7(const uint8_t *code, size_t code_len, uint16_t *param_s
 	size_t len = 0;
 
 	MI->wasm_data.type = WASM_OP_INT7;
-	MI->wasm_data.int7 = get_varint7(code, code_len, &len);
+	MI->wasm_data.v.int7 = get_varint7(code, code_len, &len);
 	if (len == -1) {
 		return false;
 	}
 
 	if (MI->flat_insn->detail) {
-		MI->flat_insn->detail->wasm.op_count = 1;
-		MI->flat_insn->detail->wasm.operands[0].type = WASM_OP_INT7;
-		MI->flat_insn->detail->wasm.operands[0].size = 1;
-		MI->flat_insn->detail->wasm.operands[0].int7 = MI->wasm_data.int7;
+		MI->flat_insn->detail->d.wasm.op_count = 1;
+		MI->flat_insn->detail->d.wasm.operands[0].type = WASM_OP_INT7;
+		MI->flat_insn->detail->d.wasm.operands[0].size = 1;
+		MI->flat_insn->detail->d.wasm.operands[0].v.int7 = MI->wasm_data.v.int7;
 	}
 
 	*param_size = len;
@@ -646,7 +646,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	MI->OpcodePub = MI->Opcode = opcode;
 
 	if (MI->flat_insn->detail) {
-		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, wasm)+sizeof(cs_wasm));
+		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, d.wasm)+sizeof(cs_wasm));
 		WASM_get_insn_id((cs_struct *)ud, MI->flat_insn, opcode);
 	}
 
@@ -661,7 +661,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 1;
+				MI->flat_insn->detail->d.wasm.op_count = 1;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_NUMBERIC;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -676,7 +676,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 1;
+				MI->flat_insn->detail->d.wasm.op_count = 1;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_NUMBERIC;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -691,7 +691,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 1;
+				MI->flat_insn->detail->d.wasm.op_count = 1;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_NUMBERIC;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -706,7 +706,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 1;
+				MI->flat_insn->detail->d.wasm.op_count = 1;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_NUMBERIC;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -841,7 +841,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			MI->wasm_data.type = WASM_OP_NONE;
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 0;
+				MI->flat_insn->detail->d.wasm.op_count = 0;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_NUMBERIC;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -855,7 +855,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			MI->wasm_data.type = WASM_OP_NONE;
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 0;
+				MI->flat_insn->detail->d.wasm.op_count = 0;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_PARAMETRIC;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -874,7 +874,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 1;
+				MI->flat_insn->detail->d.wasm.op_count = 1;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_VARIABLE;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -911,7 +911,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 2;
+				MI->flat_insn->detail->d.wasm.op_count = 2;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_MEMORY;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -925,7 +925,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			MI->wasm_data.type = WASM_OP_NONE;
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 0;
+				MI->flat_insn->detail->d.wasm.op_count = 0;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_MEMORY;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -942,7 +942,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			MI->wasm_data.type = WASM_OP_NONE;
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 0;
+				MI->flat_insn->detail->d.wasm.op_count = 0;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_CONTROL;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -959,7 +959,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 1;
+				MI->flat_insn->detail->d.wasm.op_count = 1;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_CONTROL;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -977,7 +977,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 1;
+				MI->flat_insn->detail->d.wasm.op_count = 1;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_CONTROL;
 				MI->flat_insn->detail->groups_count++;
 			}
@@ -992,7 +992,7 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			}
 
 			if (MI->flat_insn->detail) {
-				MI->flat_insn->detail->wasm.op_count = 1;
+				MI->flat_insn->detail->d.wasm.op_count = 1;
 				MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = WASM_GRP_CONTROL;
 				MI->flat_insn->detail->groups_count++;
 			}
