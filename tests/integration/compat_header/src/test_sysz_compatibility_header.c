@@ -43,15 +43,15 @@ int sysz(void)
 	printf("0x%" PRIx64 ":\t%s\t\t%s\n", insn[0].address, insn[0].mnemonic,
 	       insn[0].op_str);
 	printf("A register = %s\n",
-	       cs_reg_name(handle, insn[0].detail->sysz.operands[0].reg));
+	       cs_reg_name(handle, insn[0].detail->d.sysz.operands[0].v.reg));
 	printf("An mem am = %" PRId32 "\n",
-	       insn[0].detail->sysz.operands[1].mem.am);
+	       insn[0].detail->d.sysz.operands[1].v.mem.am);
 	printf("An mem disp = %" PRId64 "\n",
-	       insn[0].detail->sysz.operands[1].mem.disp);
+	       insn[0].detail->d.sysz.operands[1].v.mem.disp);
 	printf("Mem base = %s\n",
-	       cs_reg_name(handle, insn[0].detail->sysz.operands[1].mem.base));
+	       cs_reg_name(handle, insn[0].detail->d.sysz.operands[1].v.mem.base));
 	printf("Mem index = %s\n",
-	       cs_reg_name(handle, insn[0].detail->sysz.operands[1].mem.index));
+	       cs_reg_name(handle, insn[0].detail->d.sysz.operands[1].v.mem.index));
 
 	if (insn[0].address != 0x1000) {
 		fprintf(stderr, "Address wrong.\n");
@@ -65,24 +65,24 @@ int sysz(void)
 		fprintf(stderr, "op_str wrong.\n");
 		goto err;
 	}
-	if (strcmp(cs_reg_name(handle, insn[0].detail->sysz.operands[0].reg),
+	if (strcmp(cs_reg_name(handle, insn[0].detail->d.sysz.operands[0].v.reg),
 		   "r0") != 0) {
 		fprintf(stderr, "register wrong.\n");
 		goto err;
 	}
-	if (((sysz_addr_mode) insn[0].detail->sysz.operands[1].mem.am) != SYSZ_AM_BDX) {
+	if (((sysz_addr_mode) insn[0].detail->d.sysz.operands[1].v.mem.am) != SYSZ_AM_BDX) {
 		fprintf(stderr, "mem.am wrong\n");
 		goto err;
 	}
-	if (insn[0].detail->sysz.operands[1].mem.disp != 0xfff) {
+	if (insn[0].detail->d.sysz.operands[1].v.mem.disp != 0xfff) {
 		fprintf(stderr, "mem.disp wrong\n");
 		goto err;
 	}
-	if (strcmp(cs_reg_name(handle, insn[0].detail->sysz.operands[1].mem.base), "r1") != 0) {
+	if (strcmp(cs_reg_name(handle, insn[0].detail->d.sysz.operands[1].v.mem.base), "r1") != 0) {
 		fprintf(stderr, "mem.base wrong\n");
 		goto err;
 	}
-	if (strcmp(cs_reg_name(handle, insn[0].detail->sysz.operands[1].mem.index), "r15") != 0) {
+	if (strcmp(cs_reg_name(handle, insn[0].detail->d.sysz.operands[1].v.mem.index), "r15") != 0) {
 		fprintf(stderr, "mem.index wrong\n");
 		goto err;
 	}

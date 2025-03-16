@@ -31,9 +31,9 @@ int arm64(void)
 	printf("0x%" PRIx64 ":\t%s\t\t%s\n", insn[0].address, insn[0].mnemonic,
 	       insn[0].op_str);
 	printf("A register = %s\n",
-	       cs_reg_name(handle, insn[0].detail->arm64.operands[0].reg));
+	       cs_reg_name(handle, insn[0].detail->d.arm64.operands[0].v.reg));
 	printf("An imm = 0x%" PRIx64 "\n",
-	       insn[0].detail->arm64.operands[1].imm);
+	       insn[0].detail->d.arm64.operands[1].v.imm);
 
 	if (insn[0].address != 0x1000) {
 		fprintf(stderr, "Address wrong.\n");
@@ -47,20 +47,20 @@ int arm64(void)
 		fprintf(stderr, "op_str wrong.\n");
 		goto err;
 	}
-	if (strcmp(cs_reg_name(handle, insn[0].detail->arm64.operands[0].reg),
+	if (strcmp(cs_reg_name(handle, insn[0].detail->d.arm64.operands[0].v.reg),
 		   "x1") != 0) {
 		fprintf(stderr, "register wrong.\n");
 		goto err;
 	}
-	if (insn[0].detail->arm64.operands[1].imm != 0xf162d) {
+	if (insn[0].detail->d.arm64.operands[1].v.imm != 0xf162d) {
 		fprintf(stderr, "Immediate wrong.\n");
 		goto err;
 	}
-	arm64_cc test_cc64 = insn[0].detail->arm64.cc + ARM64_CC_GE;
-	arm_cc test_cc = insn[0].detail->arm.cc + ARM_CC_LE;
+	arm64_cc test_cc64 = insn[0].detail->d.arm64.cc + ARM64_CC_GE;
+	arm_cc test_cc = insn[0].detail->d.arm.cc + ARM_CC_LE;
 	printf("test_cc64 = %" PRId32 " test_cc = %" PRId32 "\n", test_cc64, test_cc);
 
-	arm64_vas test_vas = insn[0].detail->arm64.operands[0].vas + ARM64_VAS_16B;
+	arm64_vas test_vas = insn[0].detail->d.arm64.operands[0].vas + ARM64_VAS_16B;
 	printf("test_vas = %" PRId32 "\n", test_vas);
 
 	cs_free(insn, count);
