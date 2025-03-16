@@ -119,7 +119,7 @@ void Mips_reg_access(const cs_insn *insn, cs_regs regs_read,
 {
 	uint8_t i;
 	uint8_t read_count, write_count;
-	cs_mips *mips = &(insn->detail->mips);
+	cs_mips *mips = &(insn->detail->d.mips);
 
 	read_count = insn->detail->regs_read_count;
 	write_count = insn->detail->regs_write_count;
@@ -136,28 +136,28 @@ void Mips_reg_access(const cs_insn *insn, cs_regs regs_read,
 		switch ((int)op->type) {
 		case MIPS_OP_REG:
 			if ((op->access & CS_AC_READ) &&
-			    !arr_exist(regs_read, read_count, op->reg)) {
-				regs_read[read_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_read, read_count, op->v.reg)) {
+				regs_read[read_count] = (uint16_t)op->v.reg;
 				read_count++;
 			}
 			if ((op->access & CS_AC_WRITE) &&
-			    !arr_exist(regs_write, write_count, op->reg)) {
-				regs_write[write_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_write, write_count, op->v.reg)) {
+				regs_write[write_count] = (uint16_t)op->v.reg;
 				write_count++;
 			}
 			break;
 		case MIPS_OP_MEM:
 			// registers appeared in memory references always being read
-			if ((op->mem.base != MIPS_REG_INVALID) &&
-			    !arr_exist(regs_read, read_count, op->mem.base)) {
-				regs_read[read_count] = (uint16_t)op->mem.base;
+			if ((op->v.mem.base != MIPS_REG_INVALID) &&
+			    !arr_exist(regs_read, read_count, op->v.mem.base)) {
+				regs_read[read_count] = (uint16_t)op->v.mem.base;
 				read_count++;
 			}
 			if ((insn->detail->writeback) &&
-			    (op->mem.base != MIPS_REG_INVALID) &&
-			    !arr_exist(regs_write, write_count, op->mem.base)) {
+			    (op->v.mem.base != MIPS_REG_INVALID) &&
+			    !arr_exist(regs_write, write_count, op->v.mem.base)) {
 				regs_write[write_count] =
-					(uint16_t)op->mem.base;
+					(uint16_t)op->v.mem.base;
 				write_count++;
 			}
 		default:
@@ -231,7 +231,7 @@ void Mips_init_cs_detail(MCInst *MI)
 		unsigned int i;
 
 		memset(get_detail(MI), 0,
-		       offsetof(cs_detail, mips) + sizeof(cs_mips));
+		       offsetof(cs_detail, d.mips) + sizeof(cs_mips));
 
 		for (i = 0; i < ARR_SIZE(Mips_get_detail(MI)->operands); i++)
 			Mips_setup_op(&Mips_get_detail(MI)->operands[i]);
@@ -245,14 +245,14 @@ static const map_insn_ops insn_operands[] = {
 static void Mips_set_detail_op_mem_reg(MCInst *MI, unsigned OpNum, mips_reg Reg)
 {
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_MEM;
-	Mips_get_detail_op(MI, 0)->mem.base = Reg;
+	Mips_get_detail_op(MI, 0)->v.mem.base = Reg;
 	Mips_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 }
 
 static void Mips_set_detail_op_mem_disp(MCInst *MI, unsigned OpNum, int64_t Imm)
 {
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_MEM;
-	Mips_get_detail_op(MI, 0)->mem.disp = Imm;
+	Mips_get_detail_op(MI, 0)->v.mem.disp = Imm;
 	Mips_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 }
 
@@ -267,7 +267,7 @@ static void Mips_set_detail_op_imm(MCInst *MI, unsigned OpNum, int64_t Imm)
 	}
 
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_IMM;
-	Mips_get_detail_op(MI, 0)->imm = Imm;
+	Mips_get_detail_op(MI, 0)->v.imm = Imm;
 	Mips_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	Mips_inc_op_count(MI);
 }
@@ -283,7 +283,7 @@ static void Mips_set_detail_op_uimm(MCInst *MI, unsigned OpNum, uint64_t Imm)
 	}
 
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_IMM;
-	Mips_get_detail_op(MI, 0)->uimm = Imm;
+	Mips_get_detail_op(MI, 0)->v.uimm = Imm;
 	Mips_get_detail_op(MI, 0)->is_unsigned = true;
 	Mips_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	Mips_inc_op_count(MI);
@@ -302,7 +302,7 @@ static void Mips_set_detail_op_reg(MCInst *MI, unsigned OpNum, mips_reg Reg,
 
 	CS_ASSERT((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_REG;
-	Mips_get_detail_op(MI, 0)->reg = Reg;
+	Mips_get_detail_op(MI, 0)->v.reg = Reg;
 	Mips_get_detail_op(MI, 0)->is_reglist = is_reglist;
 	Mips_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	Mips_inc_op_count(MI);
@@ -369,7 +369,7 @@ static void Mips_set_detail_op_mem_nanomips(MCInst *MI, unsigned OpNum)
 	MCOperand *Op = MCInst_getOperand(MI, OpNum);
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_MEM;
 	// Base is a register, but nanoMips uses the Imm value as register.
-	Mips_get_detail_op(MI, 0)->mem.base = MCOperand_getImm(Op);
+	Mips_get_detail_op(MI, 0)->v.mem.base = MCOperand_getImm(Op);
 	Mips_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 }
 
@@ -480,7 +480,7 @@ void Mips_set_mem_access(MCInst *MI, bool status)
 	if (status) {
 		if (Mips_get_detail(MI)->op_count > 0 &&
 		    Mips_get_detail_op(MI, -1)->type == MIPS_OP_MEM &&
-		    Mips_get_detail_op(MI, -1)->mem.disp == 0) {
+		    Mips_get_detail_op(MI, -1)->v.mem.disp == 0) {
 			// Previous memory operand not done yet. Select it.
 			Mips_dec_op_count(MI);
 			return;
@@ -488,8 +488,8 @@ void Mips_set_mem_access(MCInst *MI, bool status)
 
 		// Init a new one.
 		Mips_get_detail_op(MI, 0)->type = MIPS_OP_MEM;
-		Mips_get_detail_op(MI, 0)->mem.base = MIPS_REG_INVALID;
-		Mips_get_detail_op(MI, 0)->mem.disp = 0;
+		Mips_get_detail_op(MI, 0)->v.mem.base = MIPS_REG_INVALID;
+		Mips_get_detail_op(MI, 0)->v.mem.disp = 0;
 
 #ifndef CAPSTONE_DIET
 		uint8_t access =
