@@ -169,7 +169,7 @@ static void check_pop_return(MCInst *MI) {
 	}
 	for (size_t i = 0; i < ARM_get_detail(MI)->op_count; ++i) {
 		cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
-		if (op->type == ARM_OP_REG && op->reg == ARM_REG_PC) {
+		if (op->type == ARM_OP_REG && op->v.reg == ARM_REG_PC) {
 			add_group(MI, ARM_GRP_RET);
 			return;
 		}
@@ -183,7 +183,7 @@ static void check_writes_to_pc(MCInst *MI) {
 		return;
 	for (size_t i = 0; i < ARM_get_detail(MI)->op_count; ++i) {
 		cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
-		if (op->type == ARM_OP_REG && op->reg == ARM_REG_PC && (op->access & CS_AC_WRITE)) {
+		if (op->type == ARM_OP_REG && op->v.reg == ARM_REG_PC && (op->access & CS_AC_WRITE)) {
 			add_group(MI, ARM_GRP_JUMP);
 			return;
 		}
@@ -575,9 +575,9 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 	case ARM_RFEDB:
 	case ARM_RFEIA:
 	case ARM_RFEIB: {
-		arm_reg base_reg = ARM_get_detail_op(MI, -1)->reg;
+		arm_reg base_reg = ARM_get_detail_op(MI, -1)->v.reg;
 		ARM_get_detail_op(MI, -1)->type = ARM_OP_MEM;
-		ARM_get_detail_op(MI, -1)->mem.base = base_reg;
+		ARM_get_detail_op(MI, -1)->v.mem.base = base_reg;
 	}
 	}
 }
@@ -627,13 +627,13 @@ static void ARM_post_index_detection(MCInst *MI)
 
 	cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
 	cs_arm_op op_next = ARM_get_detail(MI)->operands[i + 1];
-	if (op_next.type == ARM_OP_INVALID || op->mem.disp != 0 || op->mem.index != ARM_REG_INVALID)
+	if (op_next.type == ARM_OP_INVALID || op->v.mem.disp != 0 || op->v.mem.index != ARM_REG_INVALID)
 		return;
 
 	if (op_next.type & CS_OP_IMM)
-		op->mem.disp = op_next.imm;
+		op->v.mem.disp = op_next.v.imm;
 	else if (op_next.type & CS_OP_REG)
-		op->mem.index = op_next.reg;
+		op->v.mem.index = op_next.v.reg;
 
 	op->subtracted = op_next.subtracted;
 	ARM_get_detail(MI)->post_index = true;
@@ -652,9 +652,9 @@ void ARM_check_mem_access_validity(MCInst *MI)
 		return;
 	}
 	cs_detail *detail = get_detail(MI);
-	for (int i = 0; i < detail->arm.op_count; ++i) {
-		if (detail->arm.operands[i].type == ARM_OP_MEM && detail->arm.operands[i].access != suppl->mem_acc) {
-			detail->arm.operands[i].access = suppl->mem_acc;
+	for (int i = 0; i < detail->d.arm.op_count; ++i) {
+		if (detail->d.arm.operands[i].type == ARM_OP_MEM && detail->d.arm.operands[i].access != suppl->mem_acc) {
+			detail->d.arm.operands[i].access = suppl->mem_acc;
 			return;
 		}
 	}
@@ -794,7 +794,7 @@ void ARM_check_updates_flags(MCInst *MI)
 			return;
 		for (int j = 0; j < ARR_SIZE(arm_flag_regs); ++j) {
 			if (detail->regs_write[i] == arm_flag_regs[j]) {
-				detail->arm.update_flags = true;
+				detail->d.arm.update_flags = true;
 				return;
 			}
 		}
@@ -846,7 +846,7 @@ void ARM_reg_access(const cs_insn *insn, cs_regs regs_read,
 {
 	uint8_t i;
 	uint8_t read_count, write_count;
-	cs_arm *arm = &(insn->detail->arm);
+	cs_arm *arm = &(insn->detail->d.arm);
 
 	read_count = insn->detail->regs_read_count;
 	write_count = insn->detail->regs_write_count;
@@ -863,33 +863,33 @@ void ARM_reg_access(const cs_insn *insn, cs_regs regs_read,
 		switch ((int)op->type) {
 		case ARM_OP_REG:
 			if ((op->access & CS_AC_READ) &&
-			    !arr_exist(regs_read, read_count, op->reg)) {
-				regs_read[read_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_read, read_count, op->v.reg)) {
+				regs_read[read_count] = (uint16_t)op->v.reg;
 				read_count++;
 			}
 			if ((op->access & CS_AC_WRITE) &&
-			    !arr_exist(regs_write, write_count, op->reg)) {
-				regs_write[write_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_write, write_count, op->v.reg)) {
+				regs_write[write_count] = (uint16_t)op->v.reg;
 				write_count++;
 			}
 			break;
 		case ARM_OP_MEM:
 			// registers appeared in memory references always being read
-			if ((op->mem.base != ARM_REG_INVALID) &&
-			    !arr_exist(regs_read, read_count, op->mem.base)) {
-				regs_read[read_count] = (uint16_t)op->mem.base;
+			if ((op->v.mem.base != ARM_REG_INVALID) &&
+			    !arr_exist(regs_read, read_count, op->v.mem.base)) {
+				regs_read[read_count] = (uint16_t)op->v.mem.base;
 				read_count++;
 			}
-			if ((op->mem.index != ARM_REG_INVALID) &&
-			    !arr_exist(regs_read, read_count, op->mem.index)) {
-				regs_read[read_count] = (uint16_t)op->mem.index;
+			if ((op->v.mem.index != ARM_REG_INVALID) &&
+			    !arr_exist(regs_read, read_count, op->v.mem.index)) {
+				regs_read[read_count] = (uint16_t)op->v.mem.index;
 				read_count++;
 			}
 			if ((insn->detail->writeback) &&
-			    (op->mem.base != ARM_REG_INVALID) &&
-			    !arr_exist(regs_write, write_count, op->mem.base)) {
+			    (op->v.mem.base != ARM_REG_INVALID) &&
+			    !arr_exist(regs_write, write_count, op->v.mem.base)) {
 				regs_write[write_count] =
-					(uint16_t)op->mem.base;
+					(uint16_t)op->v.mem.base;
 				write_count++;
 			}
 		default:
@@ -916,7 +916,7 @@ void ARM_init_cs_detail(MCInst *MI)
 		unsigned int i;
 
 		memset(get_detail(MI), 0,
-		       offsetof(cs_detail, arm) + sizeof(cs_arm));
+		       offsetof(cs_detail, d.arm) + sizeof(cs_arm));
 
 		for (i = 0; i < ARR_SIZE(ARM_get_detail(MI)->operands); i++)
 			ARM_setup_op(&ARM_get_detail(MI)->operands[i]);
@@ -996,10 +996,10 @@ static void ARM_set_mem_access(MCInst *MI, bool status)
 	set_doing_mem(MI, status);
 	if (status) {
 		ARM_get_detail_op(MI, 0)->type = ARM_OP_MEM;
-		ARM_get_detail_op(MI, 0)->mem.base = ARM_REG_INVALID;
-		ARM_get_detail_op(MI, 0)->mem.index = ARM_REG_INVALID;
-		ARM_get_detail_op(MI, 0)->mem.scale = 1;
-		ARM_get_detail_op(MI, 0)->mem.disp = 0;
+		ARM_get_detail_op(MI, 0)->v.mem.base = ARM_REG_INVALID;
+		ARM_get_detail_op(MI, 0)->v.mem.index = ARM_REG_INVALID;
+		ARM_get_detail_op(MI, 0)->v.mem.scale = 1;
+		ARM_get_detail_op(MI, 0)->v.mem.disp = 0;
 
 #ifndef CAPSTONE_DIET
 		uint8_t access =
@@ -1122,7 +1122,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			ARM_set_mem_access(MI, true);
 		ARM_set_detail_op_mem(MI, OpNum, false, 0,
 				      MCInst_getOpVal(MI, OpNum));
-		ARM_get_detail_op(MI, 0)->mem.align =
+		ARM_get_detail_op(MI, 0)->v.mem.align =
 			MCInst_getOpVal(MI, OpNum + 1) << 3;
 		ARM_set_mem_access(MI, false);
 		break;
@@ -1236,7 +1236,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 
 			ARM_check_safe_inc(MI);
 			ARM_get_detail_op(MI, 0)->type = ARM_OP_REG;
-			ARM_get_detail_op(MI, 0)->reg = Reg;
+			ARM_get_detail_op(MI, 0)->v.reg = Reg;
 			ARM_get_detail_op(MI, 0)->access = access;
 			ARM_inc_op_count(MI);
 		}
@@ -1734,10 +1734,10 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			OffImm = 0;
 		ARM_check_safe_inc(MI);
 		ARM_get_detail_op(MI, 0)->type = ARM_OP_MEM;
-		ARM_get_detail_op(MI, 0)->mem.base = ARM_REG_PC;
-		ARM_get_detail_op(MI, 0)->mem.index = ARM_REG_INVALID;
-		ARM_get_detail_op(MI, 0)->mem.scale = 1;
-		ARM_get_detail_op(MI, 0)->mem.disp = OffImm;
+		ARM_get_detail_op(MI, 0)->v.mem.base = ARM_REG_PC;
+		ARM_get_detail_op(MI, 0)->v.mem.index = ARM_REG_INVALID;
+		ARM_get_detail_op(MI, 0)->v.mem.scale = 1;
+		ARM_get_detail_op(MI, 0)->v.mem.disp = OffImm;
 		ARM_get_detail_op(MI, 0)->access = CS_AC_READ;
 		ARM_inc_op_count(MI);
 		break;
@@ -1758,10 +1758,10 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 		ARM_check_safe_inc(MI);
 		if (be) {
 			ARM_get_detail_op(MI, 0)->type = ARM_OP_SETEND;
-			ARM_get_detail_op(MI, 0)->setend = ARM_SETEND_BE;
+			ARM_get_detail_op(MI, 0)->v.setend = ARM_SETEND_BE;
 		} else {
 			ARM_get_detail_op(MI, 0)->type = ARM_OP_SETEND;
-			ARM_get_detail_op(MI, 0)->setend = ARM_SETEND_LE;
+			ARM_get_detail_op(MI, 0)->v.setend = ARM_SETEND_LE;
 		}
 		ARM_inc_op_count(MI);
 		break;
@@ -1871,10 +1871,10 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 		ARM_check_safe_inc(MI);
 		cs_arm_op *Op = ARM_get_detail_op(MI, 0);
 		Op->type = ARM_OP_MEM;
-		Op->mem.base = MCInst_getOpVal(MI, OpNum);
-		Op->mem.index = ARM_REG_INVALID;
-		Op->mem.scale = 1;
-		Op->mem.disp = 0;
+		Op->v.mem.base = MCInst_getOpVal(MI, OpNum);
+		Op->v.mem.index = ARM_REG_INVALID;
+		Op->v.mem.scale = 1;
+		Op->v.mem.disp = 0;
 		Op->access = CS_AC_READ;
 
 		ARM_AM_AddrOpc SubFlag =
@@ -1884,9 +1884,9 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 
 		if (AlwaysPrintImm0 || ImmOffs || SubFlag == ARM_AM_sub) {
 			if (op_group == ARM_OP_GROUP_AddrMode5FP16Operand_0) {
-				Op->mem.disp = ImmOffs * 2;
+				Op->v.mem.disp = ImmOffs * 2;
 			} else {
-				Op->mem.disp = ImmOffs * 4;
+				Op->v.mem.disp = ImmOffs * 4;
 			}
 			Op->subtracted = SubFlag == ARM_AM_sub;
 		}
@@ -2033,7 +2033,7 @@ void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
 	cs_arm_op op;
 	ARM_setup_op(&op);
 	op.type = ARM_OP_REG;
-	op.reg = Reg;
+	op.v.reg = Reg;
 	op.access = access;
 	insert_op(MI, index, op);
 }
@@ -2051,7 +2051,7 @@ void ARM_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 	cs_arm_op op;
 	ARM_setup_op(&op);
 	op.type = ARM_OP_IMM;
-	op.imm = Val;
+	op.v.imm = Val;
 	op.access = access;
 
 	insert_op(MI, index, op);
@@ -2068,7 +2068,7 @@ void ARM_set_detail_op_reg(MCInst *MI, unsigned OpNum, arm_reg Reg)
 	CS_ASSERT_RET(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
 	ARM_get_detail_op(MI, 0)->type = ARM_OP_REG;
-	ARM_get_detail_op(MI, 0)->reg = Reg;
+	ARM_get_detail_op(MI, 0)->v.reg = Reg;
 	ARM_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	ARM_inc_op_count(MI);
 }
@@ -2087,7 +2087,7 @@ void ARM_set_detail_op_imm(MCInst *MI, unsigned OpNum, arm_op_type ImmType,
 	       ImmType == ARM_OP_CIMM);
 
 	ARM_get_detail_op(MI, 0)->type = ImmType;
-	ARM_get_detail_op(MI, 0)->imm = Imm;
+	ARM_get_detail_op(MI, 0)->v.imm = Imm;
 	ARM_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	ARM_inc_op_count(MI);
 }
@@ -2131,7 +2131,7 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 	case CS_OP_REG: {
 		CS_ASSERT_RET(secondary_type == CS_OP_REG);
 		if (!is_index_reg) {
-			ARM_get_detail_op(MI, 0)->mem.base = Val;
+			ARM_get_detail_op(MI, 0)->v.mem.base = Val;
 			if (MCInst_opIsTying(MI, OpNum) || MCInst_opIsTied(MI, OpNum)) {
 				// Base registers can be writeback registers.
 				// For this they tie an MC operand which has write
@@ -2149,9 +2149,9 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 				MI->flat_insn->detail->writeback = false;
 			}
 		} else {
-			ARM_get_detail_op(MI, 0)->mem.index = Val;
+			ARM_get_detail_op(MI, 0)->v.mem.index = Val;
 		}
-		ARM_get_detail_op(MI, 0)->mem.scale = scale;
+		ARM_get_detail_op(MI, 0)->v.mem.scale = scale;
 
 		break;
 	}
@@ -2159,7 +2159,7 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 		CS_ASSERT_RET(secondary_type == CS_OP_IMM);
 		if (((int32_t)Val) < 0)
 			ARM_get_detail_op(MI, 0)->subtracted = true;
-		ARM_get_detail_op(MI, 0)->mem.disp = ((int64_t)Val < 0) ? -Val :
+		ARM_get_detail_op(MI, 0)->v.mem.disp = ((int64_t)Val < 0) ? -Val :
 									  Val;
 		break;
 	}
@@ -2196,20 +2196,20 @@ void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
 	default:
 		CS_ASSERT_RET(0 && "Unknown system operand type.");
 	case ARM_OP_SYSREG:
-		ARM_get_detail_op(MI, 0)->sysop.reg.mclasssysreg = Val; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
+		ARM_get_detail_op(MI, 0)->v.sysop.reg.mclasssysreg = Val; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
 		break;
 	case ARM_OP_BANKEDREG:
-		ARM_get_detail_op(MI, 0)->sysop.reg.bankedreg = Val;
+		ARM_get_detail_op(MI, 0)->v.sysop.reg.bankedreg = Val;
 		break;
 	case ARM_OP_SPSR:
 	case ARM_OP_CPSR:
-		ARM_get_detail_op(MI, 0)->reg =
+		ARM_get_detail_op(MI, 0)->v.reg =
 			type == ARM_OP_SPSR ? ARM_REG_SPSR : ARM_REG_CPSR;
-		ARM_get_detail_op(MI, 0)->sysop.psr_bits = Val; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
+		ARM_get_detail_op(MI, 0)->v.sysop.psr_bits = Val; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
 		break;
 	}
-	ARM_get_detail_op(MI, 0)->sysop.sysm = Sysm;
-	ARM_get_detail_op(MI, 0)->sysop.msr_mask = Mask;
+	ARM_get_detail_op(MI, 0)->v.sysop.sysm = Sysm;
+	ARM_get_detail_op(MI, 0)->v.sysop.msr_mask = Mask;
 	ARM_get_detail_op(MI, 0)->access = IsOutReg ? CS_AC_WRITE : CS_AC_READ;
 	ARM_inc_op_count(MI);
 }
@@ -2223,7 +2223,7 @@ void ARM_set_detail_op_float(MCInst *MI, unsigned OpNum, uint64_t Imm)
 	ARM_check_safe_inc(MI);
 
 	ARM_get_detail_op(MI, 0)->type = ARM_OP_FP;
-	ARM_get_detail_op(MI, 0)->fp = ARM_AM_getFPImmFloat(Imm);
+	ARM_get_detail_op(MI, 0)->v.fp = ARM_AM_getFPImmFloat(Imm);
 	ARM_inc_op_count(MI);
 }
 
