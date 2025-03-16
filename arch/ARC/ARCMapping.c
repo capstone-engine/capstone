@@ -88,7 +88,7 @@ void ARC_reg_access(const cs_insn *insn, cs_regs regs_read,
 {
 	uint8_t i;
 	uint8_t read_count, write_count;
-	cs_arc *arc = &(insn->detail->arc);
+	cs_arc *arc = &(insn->detail->d.arc);
 
 	read_count = insn->detail->regs_read_count;
 	write_count = insn->detail->regs_write_count;
@@ -105,13 +105,13 @@ void ARC_reg_access(const cs_insn *insn, cs_regs regs_read,
 		switch ((int)op->type) {
 		case ARC_OP_REG:
 			if ((op->access & CS_AC_READ) &&
-			    !arr_exist(regs_read, read_count, op->reg)) {
-				regs_read[read_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_read, read_count, op->v.reg)) {
+				regs_read[read_count] = (uint16_t)op->v.reg;
 				read_count++;
 			}
 			if ((op->access & CS_AC_WRITE) &&
-			    !arr_exist(regs_write, write_count, op->reg)) {
-				regs_write[write_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_write, write_count, op->v.reg)) {
+				regs_write[write_count] = (uint16_t)op->v.reg;
 				write_count++;
 			}
 			break;
@@ -173,7 +173,7 @@ void ARC_init_cs_detail(MCInst *MI)
 	unsigned int i;
 
 	memset(get_detail(MI), 0,
-			offsetof(cs_detail, arc) + sizeof(cs_arc));
+			offsetof(cs_detail, d.arc) + sizeof(cs_arc));
 
 	for (i = 0; i < ARR_SIZE(ARC_get_detail(MI)->operands);
 			i++)
@@ -195,7 +195,7 @@ void ARC_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 	CS_ASSERT(ImmType == ARC_OP_IMM);
 
 	ARC_get_detail_op(MI, 0)->type = ImmType;
-	ARC_get_detail_op(MI, 0)->imm = Imm;
+	ARC_get_detail_op(MI, 0)->v.imm = Imm;
 	ARC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	ARC_inc_op_count(MI);
 }
@@ -208,7 +208,7 @@ void ARC_set_detail_op_reg(MCInst *MI, unsigned OpNum, arc_reg Reg)
 	CS_ASSERT((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
 
 	ARC_get_detail_op(MI, 0)->type = ARC_OP_REG;
-	ARC_get_detail_op(MI, 0)->reg = Reg;
+	ARC_get_detail_op(MI, 0)->v.reg = Reg;
 	ARC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	ARC_inc_op_count(MI);
 }
