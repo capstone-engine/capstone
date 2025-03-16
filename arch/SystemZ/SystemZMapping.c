@@ -307,7 +307,7 @@ void SystemZ_set_detail_op_imm(MCInst *MI, unsigned op_num, int64_t Imm, size_t 
 	CS_ASSERT((map_get_op_type(MI, op_num) & ~CS_OP_MEM) == CS_OP_IMM);
 
 	SystemZ_get_detail_op(MI, 0)->type = SYSTEMZ_OP_IMM;
-	SystemZ_get_detail_op(MI, 0)->imm = Imm;
+	SystemZ_get_detail_op(MI, 0)->v.imm = Imm;
 	SystemZ_get_detail_op(MI, 0)->access = map_get_op_access(MI, op_num);
 	SystemZ_get_detail_op(MI, 0)->imm_width = width;
 	SystemZ_inc_op_count(MI);
@@ -320,7 +320,7 @@ void SystemZ_set_detail_op_reg(MCInst *MI, unsigned op_num, systemz_reg Reg)
 	CS_ASSERT((map_get_op_type(MI, op_num) & ~CS_OP_MEM) == CS_OP_REG);
 
 	SystemZ_get_detail_op(MI, 0)->type = SYSTEMZ_OP_REG;
-	SystemZ_get_detail_op(MI, 0)->reg = Reg;
+	SystemZ_get_detail_op(MI, 0)->v.reg = Reg;
 	SystemZ_get_detail_op(MI, 0)->access = map_get_op_access(MI, op_num);
 	SystemZ_inc_op_count(MI);
 }
@@ -331,30 +331,30 @@ void SystemZ_set_detail_op_mem(MCInst *MI, unsigned op_num, systemz_reg base, in
 		return;
 	SystemZ_get_detail_op(MI, 0)->type = SYSTEMZ_OP_MEM;
 	SystemZ_get_detail_op(MI, 0)->access = map_get_op_access(MI, op_num);
-	SystemZ_get_detail_op(MI, 0)->mem.am = am;
+	SystemZ_get_detail_op(MI, 0)->v.mem.am = am;
 	switch(am) {
 	default:
 		CS_ASSERT(0 && "Address mode not handled\n");
 		break;
 	case SYSTEMZ_AM_BD:
-		SystemZ_get_detail_op(MI, 0)->mem.base = base;
-		SystemZ_get_detail_op(MI, 0)->mem.disp = disp;
+		SystemZ_get_detail_op(MI, 0)->v.mem.base = base;
+		SystemZ_get_detail_op(MI, 0)->v.mem.disp = disp;
 		break;
 	case SYSTEMZ_AM_BDX:
 	case SYSTEMZ_AM_BDV:
-		SystemZ_get_detail_op(MI, 0)->mem.base = base;
-		SystemZ_get_detail_op(MI, 0)->mem.disp = disp;
-		SystemZ_get_detail_op(MI, 0)->mem.index = index;
+		SystemZ_get_detail_op(MI, 0)->v.mem.base = base;
+		SystemZ_get_detail_op(MI, 0)->v.mem.disp = disp;
+		SystemZ_get_detail_op(MI, 0)->v.mem.index = index;
 		break;
 	case SYSTEMZ_AM_BDL:
-		SystemZ_get_detail_op(MI, 0)->mem.base = base;
-		SystemZ_get_detail_op(MI, 0)->mem.disp = disp;
-		SystemZ_get_detail_op(MI, 0)->mem.length = length;
+		SystemZ_get_detail_op(MI, 0)->v.mem.base = base;
+		SystemZ_get_detail_op(MI, 0)->v.mem.disp = disp;
+		SystemZ_get_detail_op(MI, 0)->v.mem.length = length;
 		break;
 	case SYSTEMZ_AM_BDR:
-		SystemZ_get_detail_op(MI, 0)->mem.base = base;
-		SystemZ_get_detail_op(MI, 0)->mem.disp = disp;
-		SystemZ_get_detail_op(MI, 0)->mem.length = length;
+		SystemZ_get_detail_op(MI, 0)->v.mem.base = base;
+		SystemZ_get_detail_op(MI, 0)->v.mem.disp = disp;
+		SystemZ_get_detail_op(MI, 0)->v.mem.length = length;
 		break;
 	}
 	SystemZ_inc_op_count(MI);
