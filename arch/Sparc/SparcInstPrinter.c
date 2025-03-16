@@ -43,16 +43,16 @@ static void printOperand(MCInst *MI, int opNum, SStream *O);
 static void Sparc_add_hint(MCInst *MI, unsigned int hint)
 {
 	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->sparc.hint = hint;
+		MI->flat_insn->detail->d.sparc.hint = hint;
 	}
 }
 
 static void Sparc_add_reg(MCInst *MI, unsigned int reg)
 {
 	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
-		MI->flat_insn->detail->sparc.op_count++;
+		MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].type = SPARC_OP_REG;
+		MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].v.reg = reg;
+		MI->flat_insn->detail->d.sparc.op_count++;
 	}
 }
 
@@ -64,12 +64,12 @@ static void set_mem_access(MCInst *MI, bool status)
 	MI->csh->doing_mem = status;
 
 	if (status) {
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_MEM;
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.base = SPARC_REG_INVALID;
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.disp = 0;
+		MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].type = SPARC_OP_MEM;
+		MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].v.mem.base = SPARC_REG_INVALID;
+		MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].v.mem.disp = 0;
 	} else {
 		// done, create the next operand slot
-		MI->flat_insn->detail->sparc.op_count++;
+		MI->flat_insn->detail->d.sparc.op_count++;
 	}
 }
 
@@ -81,11 +81,11 @@ void Sparc_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *mci)
 	// fix up some instructions
 	if (insn->id == SPARC_INS_CASX) {
 		// first op is actually a memop, not regop
-		uint8_t base = (uint8_t)insn->detail->sparc.operands[0].reg;
-		memset(&insn->detail->sparc.operands[0], 0, sizeof(cs_sparc_op));
-		insn->detail->sparc.operands[0].type = SPARC_OP_MEM;
-		insn->detail->sparc.operands[0].mem.base = base;
-		insn->detail->sparc.operands[0].mem.disp = 0;
+		uint8_t base = (uint8_t)insn->detail->d.sparc.operands[0].v.reg;
+		memset(&insn->detail->d.sparc.operands[0], 0, sizeof(cs_sparc_op));
+		insn->detail->d.sparc.operands[0].type = SPARC_OP_MEM;
+		insn->detail->d.sparc.operands[0].v.mem.base = base;
+		insn->detail->d.sparc.operands[0].v.mem.disp = 0;
 	}
 }
 
@@ -174,14 +174,14 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 
 		if (MI->csh->detail_opt) {
 			if (MI->csh->doing_mem) {
-				if (MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.base)
-					MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.index = (uint8_t)reg;
+				if (MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].v.mem.base)
+					MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].v.mem.index = (uint8_t)reg;
 				else
-					MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.base = (uint8_t)reg;
+					MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].v.mem.base = (uint8_t)reg;
 			} else {
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
-				MI->flat_insn->detail->sparc.op_count++;
+				MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].type = SPARC_OP_REG;
+				MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].v.reg = reg;
+				MI->flat_insn->detail->d.sparc.op_count++;
 			}
 		}
 
@@ -265,11 +265,11 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 
 		if (MI->csh->detail_opt) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.disp = Imm;
+				MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].v.mem.disp = Imm;
 			} else {
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_IMM;
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].imm = Imm;
-				MI->flat_insn->detail->sparc.op_count++;
+				MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].type = SPARC_OP_IMM;
+				MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].v.imm = Imm;
+				MI->flat_insn->detail->d.sparc.op_count++;
 			}
 		}
 	}
@@ -335,7 +335,7 @@ static void printCCOperand(MCInst *MI, int opNum, SStream *O)
 	SStream_concat0(O, SPARCCondCodeToString((sparc_cc)CC));
 
 	if (MI->csh->detail_opt)
-		MI->flat_insn->detail->sparc.cc = (sparc_cc)CC; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
+		MI->flat_insn->detail->d.sparc.cc = (sparc_cc)CC; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
 }
 
 
@@ -375,16 +375,16 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 			case SP_TXCCrr:
 				if (MI->csh->detail_opt) {
 					// skip 'b', 't'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 1);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+					MI->flat_insn->detail->d.sparc.cc = Sparc_map_ICC(instr + 1);
+					MI->flat_insn->detail->d.sparc.hint = Sparc_map_hint(mnem);
 				}
 				break;
 			case SP_BPFCCANT:
 			case SP_BPFCCNT:
 				if (MI->csh->detail_opt) {
 					// skip 'fb'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 2);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+					MI->flat_insn->detail->d.sparc.cc = Sparc_map_FCC(instr + 2);
+					MI->flat_insn->detail->d.sparc.hint = Sparc_map_hint(mnem);
 				}
 				break;
 			case SP_FMOVD_ICC:
@@ -395,8 +395,8 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 			case SP_FMOVS_XCC:
 				if (MI->csh->detail_opt) {
 					// skip 'fmovd', 'fmovq', 'fmovs'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 5);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+					MI->flat_insn->detail->d.sparc.cc = Sparc_map_ICC(instr + 5);
+					MI->flat_insn->detail->d.sparc.hint = Sparc_map_hint(mnem);
 				}
 				break;
 			case SP_MOVICCri:
@@ -405,8 +405,8 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 			case SP_MOVXCCrr:
 				if (MI->csh->detail_opt) {
 					// skip 'mov'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 3);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+					MI->flat_insn->detail->d.sparc.cc = Sparc_map_ICC(instr + 3);
+					MI->flat_insn->detail->d.sparc.hint = Sparc_map_hint(mnem);
 				}
 				break;
 			case SP_V9FMOVD_FCC:
@@ -414,16 +414,16 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 			case SP_V9FMOVS_FCC:
 				if (MI->csh->detail_opt) {
 					// skip 'fmovd', 'fmovq', 'fmovs'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 5);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+					MI->flat_insn->detail->d.sparc.cc = Sparc_map_FCC(instr + 5);
+					MI->flat_insn->detail->d.sparc.hint = Sparc_map_hint(mnem);
 				}
 				break;
 			case SP_V9MOVFCCri:
 			case SP_V9MOVFCCrr:
 				if (MI->csh->detail_opt) {
 					// skip 'mov'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 3);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
+					MI->flat_insn->detail->d.sparc.cc = Sparc_map_FCC(instr + 3);
+					MI->flat_insn->detail->d.sparc.hint = Sparc_map_hint(mnem);
 				}
 				break;
 			default:
@@ -439,9 +439,9 @@ void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
 void Sparc_addReg(MCInst *MI, int reg)
 {
 	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
-		MI->flat_insn->detail->sparc.op_count++;
+		MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].type = SPARC_OP_REG;
+		MI->flat_insn->detail->d.sparc.operands[MI->flat_insn->detail->d.sparc.op_count].v.reg = reg;
+		MI->flat_insn->detail->d.sparc.op_count++;
 	}
 }
 

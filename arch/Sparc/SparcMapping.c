@@ -187,7 +187,7 @@ void Sparc_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			// hint code
 			for (i = 0; i < ARR_SIZE(insn_hints); i++) {
 				if (id == insn_hints[i].id) {
-					insn->detail->sparc.hint = insn_hints[i].hints;
+					insn->detail->d.sparc.hint = insn_hints[i].hints;
 					break;
 				}
 			}
