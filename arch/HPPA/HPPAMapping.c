@@ -406,7 +406,7 @@ void HPPA_reg_access(const cs_insn *insn, cs_regs regs_read,
 {
 	uint8_t read_count = 0;
 	uint8_t write_count = 0;
-	const cs_hppa *hppa = &(insn->detail->hppa);
+	const cs_hppa *hppa = &(insn->detail->d.hppa);
 
 	for (unsigned i = 0; i < hppa->op_count; ++i) {
 		const cs_hppa_op *op = &(hppa->operands[i]);
@@ -414,20 +414,20 @@ void HPPA_reg_access(const cs_insn *insn, cs_regs regs_read,
 		case HPPA_OP_REG:
 		case HPPA_OP_IDX_REG:
 			if (op->access & CS_AC_READ) {
-				regs_read[read_count++] = op->reg;
+				regs_read[read_count++] = op->v.reg;
 			}
 			if (op->access & CS_AC_WRITE) {
-				regs_write[write_count++] = op->reg;
+				regs_write[write_count++] = op->v.reg;
 			}
 			break;
 		case HPPA_OP_MEM:
-			if (op->mem.space != HPPA_REG_INVALID)
-				regs_read[read_count++] = op->mem.space;
-			if (op->mem.base_access & CS_AC_READ) {
-				regs_read[read_count++] = op->mem.base;
+			if (op->v.mem.space != HPPA_REG_INVALID)
+				regs_read[read_count++] = op->v.mem.space;
+			if (op->v.mem.base_access & CS_AC_READ) {
+				regs_read[read_count++] = op->v.mem.base;
 			}
-			if (op->mem.base_access & CS_AC_WRITE) {
-				regs_write[write_count++] = op->mem.base;
+			if (op->v.mem.base_access & CS_AC_WRITE) {
+				regs_write[write_count++] = op->v.mem.base;
 			}
 			break;
 		default:

@@ -222,7 +222,7 @@ static void push_str_modifier(hppa_ext *hppa, const char *modifier)
 		CS_ASSERT_RET(hppa->mod_num <= HPPA_MAX_MODIFIERS_LEN);
 		mod->type = HPPA_MOD_STR;
 		CS_ASSERT_RET(strlen(modifier) < HPPA_STR_MODIFIER_LEN);
-		strncpy(mod->str_mod, modifier, HPPA_STR_MODIFIER_LEN - 1);
+		strncpy(mod->mod.str_mod, modifier, HPPA_STR_MODIFIER_LEN - 1);
 	}
 }
 
@@ -231,7 +231,7 @@ static void push_int_modifier(hppa_ext *hppa, uint64_t modifier)
 	hppa_modifier *mod = &hppa->modifiers[hppa->mod_num++];
 	CS_ASSERT_RET(hppa->mod_num <= HPPA_MAX_MODIFIERS_LEN);
 	mod->type = HPPA_MOD_INT;
-	mod->int_mod = modifier;
+	mod->mod.int_mod = modifier;
 }
 
 static void fill_sysop_insn_name(MCInst *MI, uint32_t insn)
@@ -3816,7 +3816,7 @@ void init_details(MCInst *MI)
 {
 	cs_detail *detail = get_detail(MI);
 	if (detail) {
-		memset(detail, 0, offsetof(cs_detail, hppa) + sizeof(cs_hppa));
+		memset(detail, 0, offsetof(cs_detail, d.hppa) + sizeof(cs_hppa));
 	}
 }
 

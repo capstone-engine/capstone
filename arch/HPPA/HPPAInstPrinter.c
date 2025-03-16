@@ -266,14 +266,14 @@ static void set_op_imm(cs_hppa *hppa, uint64_t val)
 {
 	cs_hppa_op *op = &hppa->operands[hppa->op_count++];
 	op->type = HPPA_OP_IMM;
-	op->imm = val;
+	op->v.imm = val;
 }
 
 static void set_op_reg(cs_hppa *hppa, uint64_t val, cs_ac_type access)
 {
 	cs_hppa_op *op = &hppa->operands[hppa->op_count++];
 	op->type = HPPA_OP_REG;
-	op->reg = val;
+	op->v.reg = val;
 	op->access = access;
 }
 
@@ -281,7 +281,7 @@ static void set_op_idx_reg(cs_hppa *hppa, uint64_t reg)
 {
 	cs_hppa_op *op = &hppa->operands[hppa->op_count++];
 	op->type = HPPA_OP_IDX_REG;
-	op->reg = reg;
+	op->v.reg = reg;
 	op->access = CS_AC_READ;
 }
 
@@ -289,14 +289,14 @@ static void set_op_disp(cs_hppa *hppa, uint64_t val)
 {
 	cs_hppa_op *op = &hppa->operands[hppa->op_count++];
 	op->type = HPPA_OP_DISP;
-	op->imm = val;
+	op->v.imm = val;
 }
 
 static void set_op_target(cs_hppa *hppa, uint64_t val)
 {
 	cs_hppa_op *op = &hppa->operands[hppa->op_count++];
 	op->type = HPPA_OP_TARGET;
-	op->imm = val;
+	op->v.imm = val;
 }
 
 static void set_op_mem(cs_hppa *hppa, uint32_t base, uint32_t space,
@@ -304,9 +304,9 @@ static void set_op_mem(cs_hppa *hppa, uint32_t base, uint32_t space,
 {
 	cs_hppa_op *op = &hppa->operands[hppa->op_count++];
 	op->type = HPPA_OP_MEM;
-	op->mem.base = base;
-	op->mem.space = space;
-	op->mem.base_access = base_access;
+	op->v.mem.base = base;
+	op->v.mem.space = space;
+	op->v.mem.base_access = base_access;
 }
 /* HPPA instruction formats (access)
    i - imm arguments
@@ -596,30 +596,30 @@ static void print_operand(MCInst *MI, SStream *O, const cs_hppa_op *op)
 		SStream_concat(O, "invalid");
 		break;
 	case HPPA_OP_REG:
-		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->reg));
+		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->v.reg));
 		break;
 	case HPPA_OP_IMM:
-		printInt32(O, op->imm);
+		printInt32(O, op->v.imm);
 		break;
 	case HPPA_OP_DISP:
-		printInt32(O, op->imm);
+		printInt32(O, op->v.imm);
 		break;
 	case HPPA_OP_IDX_REG:
-		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->reg));
+		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->v.reg));
 		break;
 	case HPPA_OP_MEM:
 		SStream_concat(O, "(");
-		if (op->mem.space != HPPA_REG_INVALID &&
-		    op->mem.space != HPPA_REG_SR0) {
+		if (op->v.mem.space != HPPA_REG_INVALID &&
+		    op->v.mem.space != HPPA_REG_SR0) {
 			SStream_concat(O, HPPA_reg_name((csh)MI->csh,
-							op->mem.space));
+							op->v.mem.space));
 			SStream_concat(O, ",");
 		}
-		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->mem.base));
+		SStream_concat(O, HPPA_reg_name((csh)MI->csh, op->v.mem.base));
 		SStream_concat(O, ")");
 		break;
 	case HPPA_OP_TARGET:
-		printUInt64(O, MI->address + op->imm);
+		printUInt64(O, MI->address + op->v.imm);
 		break;
 	}
 }
@@ -743,9 +743,9 @@ static void print_modifiers(MCInst *MI, SStream *O)
 	for (uint8_t i = 0; i < hppa_ext->mod_num; ++i) {
 		SStream_concat(O, ",");
 		if (hppa_ext->modifiers[i].type == HPPA_MOD_STR)
-			SStream_concat(O, hppa_ext->modifiers[i].str_mod);
+			SStream_concat(O, hppa_ext->modifiers[i].mod.str_mod);
 		else
-			SStream_concat(O, "%d", hppa_ext->modifiers[i].int_mod);
+			SStream_concat(O, "%d", hppa_ext->modifiers[i].mod.int_mod);
 	}
 }
 
