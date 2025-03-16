@@ -303,7 +303,7 @@ void PPC_init_cs_detail(MCInst *MI)
 {
 	if (!detail_is_set(MI))
 		return;
-	memset(get_detail(MI), 0, offsetof(cs_detail, ppc) + sizeof(cs_ppc));
+	memset(get_detail(MI), 0, offsetof(cs_detail, d.ppc) + sizeof(cs_ppc));
 	PPC_get_detail(MI)->bc.bi = UINT8_MAX;
 	PPC_get_detail(MI)->bc.bo = UINT8_MAX;
 	PPC_get_detail(MI)->bc.crX = PPC_REG_INVALID;
@@ -398,7 +398,7 @@ static void handle_memory_operand(MCInst *MI, unsigned OpNum)
 	// and set the flag appropriately.
 	bool is_off_reg =
 		((op_type == CS_OP_REG) &&
-		 PPC_get_detail_op(MI, 0)->mem.base != PPC_REG_INVALID);
+		 PPC_get_detail_op(MI, 0)->v.mem.base != PPC_REG_INVALID);
 	PPC_set_detail_op_mem(MI, OpNum, MCInst_getOpVal(MI, OpNum),
 			      is_off_reg);
 }
@@ -515,7 +515,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		unsigned Val = MCInst_getOpVal(MI, OpNum) << 2;
 		PPC_check_safe_inc(MI);
 		PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
-		PPC_get_detail_op(MI, 0)->imm = Val;
+		PPC_get_detail_op(MI, 0)->v.imm = Val;
 		PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 		PPC_inc_op_count(MI);
 		break;
@@ -539,7 +539,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 			Address &= 0xffffffff;
 		PPC_check_safe_inc(MI);
 		PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
-		PPC_get_detail_op(MI, 0)->imm = Address;
+		PPC_get_detail_op(MI, 0)->v.imm = Address;
 		PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 		PPC_inc_op_count(MI);
 		break;
@@ -559,7 +559,7 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 
 		MCOperand *Op = MCInst_getOperand(MI, OpNumReg);
 		if (MCOperand_isReg(Op) && MCOperand_getReg(Op) == PPC_R0) {
-			PPC_get_detail_op(MI, 0)->mem.base = PPC_REG_ZERO;
+			PPC_get_detail_op(MI, 0)->v.mem.base = PPC_REG_ZERO;
 			PPC_get_detail_op(MI, 0)->type = PPC_OP_MEM;
 			PPC_get_detail_op(MI, 0)->access =
 				map_get_op_access(MI, OpNum);
@@ -664,20 +664,20 @@ void PPC_set_detail_op_mem(MCInst *MI, unsigned OpNum, uint64_t Val,
 		CS_ASSERT_RET(0 && "Secondary type not supported yet.");
 	case CS_OP_REG:
 		if (is_off_reg) {
-			PPC_get_detail_op(MI, 0)->mem.offset = Val;
-			if (PPC_get_detail_op(MI, 0)->mem.base !=
+			PPC_get_detail_op(MI, 0)->v.mem.offset = Val;
+			if (PPC_get_detail_op(MI, 0)->v.mem.base !=
 			    PPC_REG_INVALID)
 				set_mem_access(MI, false);
 		} else {
-			PPC_get_detail_op(MI, 0)->mem.base = Val;
+			PPC_get_detail_op(MI, 0)->v.mem.base = Val;
 			if (MCInst_opIsTying(MI, OpNum))
 				map_add_implicit_write(
 					MI, MCInst_getOpVal(MI, OpNum));
 		}
 		break;
 	case CS_OP_IMM:
-		PPC_get_detail_op(MI, 0)->mem.disp = Val;
-		if (PPC_get_detail_op(MI, 0)->mem.base != PPC_REG_INVALID)
+		PPC_get_detail_op(MI, 0)->v.mem.disp = Val;
+		if (PPC_get_detail_op(MI, 0)->v.mem.base != PPC_REG_INVALID)
 			set_mem_access(MI, false);
 		break;
 	}
@@ -697,7 +697,7 @@ void PPC_set_detail_op_reg(MCInst *MI, unsigned OpNum, ppc_reg Reg)
 	CS_ASSERT_RET(map_get_op_type(MI, OpNum) == CS_OP_REG);
 
 	PPC_get_detail_op(MI, 0)->type = PPC_OP_REG;
-	PPC_get_detail_op(MI, 0)->reg = Reg;
+	PPC_get_detail_op(MI, 0)->v.reg = Reg;
 	PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	PPC_inc_op_count(MI);
 }
@@ -713,7 +713,7 @@ void PPC_set_detail_op_imm(MCInst *MI, unsigned OpNum, int64_t Imm)
 	CS_ASSERT_RET(map_get_op_type(MI, OpNum) == CS_OP_IMM);
 
 	PPC_get_detail_op(MI, 0)->type = PPC_OP_IMM;
-	PPC_get_detail_op(MI, 0)->imm = Imm;
+	PPC_get_detail_op(MI, 0)->v.imm = Imm;
 	PPC_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	PPC_inc_op_count(MI);
 }
@@ -729,9 +729,9 @@ void PPC_set_mem_access(MCInst *MI, bool status)
 	set_doing_mem(MI, status);
 	if (status) {
 		PPC_get_detail_op(MI, 0)->type = PPC_OP_MEM;
-		PPC_get_detail_op(MI, 0)->mem.base = PPC_REG_INVALID;
-		PPC_get_detail_op(MI, 0)->mem.offset = PPC_REG_INVALID;
-		PPC_get_detail_op(MI, 0)->mem.disp = 0;
+		PPC_get_detail_op(MI, 0)->v.mem.base = PPC_REG_INVALID;
+		PPC_get_detail_op(MI, 0)->v.mem.offset = PPC_REG_INVALID;
+		PPC_get_detail_op(MI, 0)->v.mem.disp = 0;
 
 #ifndef CAPSTONE_DIET
 		uint8_t access =
@@ -763,7 +763,7 @@ void PPC_insert_detail_op_imm_at(MCInst *MI, unsigned index, int64_t Val,
 	cs_ppc_op op;
 	PPC_setup_op(&op);
 	op.type = PPC_OP_IMM;
-	op.imm = Val;
+	op.v.imm = Val;
 	op.access = access;
 
 	cs_ppc_op *ops = PPC_get_detail(MI)->operands;
