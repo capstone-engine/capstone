@@ -299,15 +299,15 @@ bool EVM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		*size = 1;
 
 	if (MI->flat_insn->detail) {
-		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, evm)+sizeof(cs_evm));
+		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, d.evm)+sizeof(cs_evm));
 		EVM_get_insn_id((cs_struct *)ud, MI->flat_insn, opcode);
 
-		if (MI->flat_insn->detail->evm.pop) {
+		if (MI->flat_insn->detail->d.evm.pop) {
 			MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = EVM_GRP_STACK_READ;
 			MI->flat_insn->detail->groups_count++;
 		}
 
-		if (MI->flat_insn->detail->evm.push) {
+		if (MI->flat_insn->detail->d.evm.push) {
 			MI->flat_insn->detail->groups[MI->flat_insn->detail->groups_count] = EVM_GRP_STACK_WRITE;
 			MI->flat_insn->detail->groups_count++;
 		}
