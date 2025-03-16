@@ -134,9 +134,9 @@ bool test_expected_m68k(csh *handle, cs_m68k *actual, TestDetailM68K *expected)
 
 	compare_uint8_ret(actual->op_count, expected->operands_count, false);
 	compare_enum_ret(actual->op_size.type, expected->op_size_type, false);
-	compare_enum_ret(actual->op_size.fpu_size, expected->op_size_fpu,
+	compare_enum_ret(actual->op_size.size.fpu_size, expected->op_size_fpu,
 			 false);
-	compare_enum_ret(actual->op_size.cpu_size, expected->op_size_cpu,
+	compare_enum_ret(actual->op_size.size.cpu_size, expected->op_size_cpu,
 			 false);
 
 	for (size_t i = 0; i < actual->op_count; ++i) {
@@ -151,22 +151,22 @@ bool test_expected_m68k(csh *handle, cs_m68k *actual, TestDetailM68K *expected)
 				op->type);
 			return false;
 		case M68K_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case M68K_OP_REG_PAIR:
-			compare_reg_ret(*handle, op->reg_pair.reg_0,
+			compare_reg_ret(*handle, op->v.reg_pair.reg_0,
 					eop->reg_pair_0, false);
-			compare_reg_ret(*handle, op->reg_pair.reg_1,
+			compare_reg_ret(*handle, op->v.reg_pair.reg_1,
 					eop->reg_pair_1, false);
 			break;
 		case M68K_OP_IMM:
-			compare_uint64_ret(op->imm, eop->imm, false);
+			compare_uint64_ret(op->v.imm, eop->imm, false);
 			break;
 		case M68K_OP_FP_SINGLE:
-			compare_fp_ret(op->simm, eop->simm, false);
+			compare_fp_ret(op->v.simm, eop->simm, false);
 			break;
 		case M68K_OP_FP_DOUBLE:
-			compare_fp_ret(op->dimm, eop->dimm, false);
+			compare_fp_ret(op->v.dimm, eop->dimm, false);
 			break;
 		case M68K_OP_REG_BITS:
 			compare_uint32_ret(op->register_bits,

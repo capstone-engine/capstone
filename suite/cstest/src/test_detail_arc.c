@@ -87,10 +87,10 @@ bool test_expected_arc(csh *handle, const cs_arc *actual,
 				op->type);
 			return false;
 		case ARC_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case ARC_OP_IMM:
-			compare_int64_ret(op->imm, eop->imm, false);
+			compare_int64_ret(op->v.imm, eop->imm, false);
 			break;
 		}
 	}

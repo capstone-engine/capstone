@@ -339,89 +339,89 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 	}
 
 	if (expected->aarch64) {
-		return test_expected_aarch64(handle, &actual->aarch64,
+		return test_expected_aarch64(handle, &actual->d.aarch64,
 					     expected->aarch64);
 	}
 	if (expected->arm) {
-		return test_expected_arm(handle, &actual->arm, expected->arm);
+		return test_expected_arm(handle, &actual->d.arm, expected->arm);
 	}
 	if (expected->ppc) {
-		return test_expected_ppc(handle, &actual->ppc, expected->ppc);
+		return test_expected_ppc(handle, &actual->d.ppc, expected->ppc);
 	}
 	if (expected->tricore) {
-		return test_expected_tricore(handle, &actual->tricore,
+		return test_expected_tricore(handle, &actual->d.tricore,
 					     expected->tricore);
 	}
 	if (expected->alpha) {
-		return test_expected_alpha(handle, &actual->alpha,
+		return test_expected_alpha(handle, &actual->d.alpha,
 					   expected->alpha);
 	}
 	if (expected->bpf) {
-		return test_expected_bpf(handle, &actual->bpf, expected->bpf);
+		return test_expected_bpf(handle, &actual->d.bpf, expected->bpf);
 	}
 	if (expected->hppa) {
-		return test_expected_hppa(handle, &actual->hppa,
+		return test_expected_hppa(handle, &actual->d.hppa,
 					  expected->hppa);
 	}
 	if (expected->xcore) {
-		return test_expected_xcore(handle, &actual->xcore,
+		return test_expected_xcore(handle, &actual->d.xcore,
 					   expected->xcore);
 	}
 	if (expected->systemz) {
-		return test_expected_systemz(handle, &actual->systemz,
+		return test_expected_systemz(handle, &actual->d.systemz,
 					     expected->systemz);
 	}
 	if (expected->sparc) {
-		return test_expected_sparc(handle, &actual->sparc,
+		return test_expected_sparc(handle, &actual->d.sparc,
 					   expected->sparc);
 	}
 	if (expected->sh) {
-		return test_expected_sh(handle, &actual->sh, expected->sh);
+		return test_expected_sh(handle, &actual->d.sh, expected->sh);
 	}
 	if (expected->mips) {
-		return test_expected_mips(handle, &actual->mips,
+		return test_expected_mips(handle, &actual->d.mips,
 					  expected->mips);
 	}
 	if (expected->riscv) {
-		return test_expected_riscv(handle, &actual->riscv,
+		return test_expected_riscv(handle, &actual->d.riscv,
 					   expected->riscv);
 	}
 	if (expected->m680x) {
-		return test_expected_m680x(handle, &actual->m680x,
+		return test_expected_m680x(handle, &actual->d.m680x,
 					   expected->m680x);
 	}
 	if (expected->tms320c64x) {
-		return test_expected_tms320c64x(handle, &actual->tms320c64x,
+		return test_expected_tms320c64x(handle, &actual->d.tms320c64x,
 						expected->tms320c64x);
 	}
 	if (expected->mos65xx) {
-		return test_expected_mos65xx(handle, &actual->mos65xx,
+		return test_expected_mos65xx(handle, &actual->d.mos65xx,
 					     expected->mos65xx);
 	}
 	if (expected->evm) {
-		return test_expected_evm(handle, &actual->evm, expected->evm);
+		return test_expected_evm(handle, &actual->d.evm, expected->evm);
 	}
 	if (expected->loongarch) {
-		return test_expected_loongarch(handle, &actual->loongarch,
+		return test_expected_loongarch(handle, &actual->d.loongarch,
 					       expected->loongarch);
 	}
 	if (expected->wasm) {
-		return test_expected_wasm(handle, &actual->wasm,
+		return test_expected_wasm(handle, &actual->d.wasm,
 					  expected->wasm);
 	}
 	if (expected->x86) {
-		return test_expected_x86(handle, &actual->x86, expected->x86);
+		return test_expected_x86(handle, &actual->d.x86, expected->x86);
 	}
 	if (expected->m68k) {
-		return test_expected_m68k(handle, &actual->m68k,
+		return test_expected_m68k(handle, &actual->d.m68k,
 					  expected->m68k);
 	}
 	if (expected->xtensa) {
-		return test_expected_xtensa(handle, &actual->xtensa,
+		return test_expected_xtensa(handle, &actual->d.xtensa,
 					    expected->xtensa);
 	}
 	if (expected->arc) {
-		return test_expected_arc(handle, &actual->arc,
+		return test_expected_arc(handle, &actual->d.arc,
 					  expected->arc);
 	}
 	return true;

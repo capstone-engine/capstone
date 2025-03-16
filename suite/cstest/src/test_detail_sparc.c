@@ -104,17 +104,17 @@ bool test_expected_sparc(csh *handle, const cs_sparc *actual,
 				op->type);
 			return false;
 		case SPARC_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case SPARC_OP_IMM:
-			compare_int64_ret(op->imm, eop->imm, false);
+			compare_int64_ret(op->v.imm, eop->imm, false);
 			break;
 		case SPARC_OP_MEM:
-			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+			compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
+			compare_reg_ret(*handle, op->v.mem.index, eop->mem_index,
 					false);
-			compare_int32_ret(op->mem.disp, eop->mem_disp, false);
+			compare_int32_ret(op->v.mem.disp, eop->mem_disp, false);
 			break;
 		}
 	}

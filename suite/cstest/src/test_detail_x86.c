@@ -191,9 +191,9 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 		}
 	}
 
-	compare_bit_flags_64_ret(actual->eflags, expected->eflags,
+	compare_bit_flags_64_ret(actual->flags.eflags, expected->eflags,
 				 expected->eflags_count, false);
-	compare_bit_flags_64_ret(actual->fpu_flags, expected->fpu_flags,
+	compare_bit_flags_64_ret(actual->flags.fpu_flags, expected->fpu_flags,
 				 expected->fpu_flags_count, false);
 
 	if (expected->enc_modrm_offset) {
@@ -237,23 +237,23 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 				op->type);
 			return false;
 		case X86_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case X86_OP_IMM:
-			compare_int64_ret(op->imm, eop->imm, false);
+			compare_int64_ret(op->v.imm, eop->imm, false);
 			break;
 		case X86_OP_MEM:
-			compare_reg_ret(*handle, op->mem.segment,
+			compare_reg_ret(*handle, op->v.mem.segment,
 					eop->mem_segment, false);
-			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+			compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
+			compare_reg_ret(*handle, op->v.mem.index, eop->mem_index,
 					false);
 			if (eop->mem_disp) {
-				compare_int64_ret(op->mem.disp, eop->mem_disp, false);
+				compare_int64_ret(op->v.mem.disp, eop->mem_disp, false);
 			}
 			if (eop->mem_scale) {
-				compare_int_ret(op->mem.scale, eop->mem_scale,
+				compare_int_ret(op->v.mem.scale, eop->mem_scale,
 						false);
 			}
 			break;

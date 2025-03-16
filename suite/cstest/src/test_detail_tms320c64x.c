@@ -141,36 +141,36 @@ bool test_expected_tms320c64x(csh *handle, cs_tms320c64x *actual,
 				op->type);
 			return false;
 		case TMS320C64X_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case TMS320C64X_OP_REGPAIR:
-			compare_reg_ret(*handle, op->reg + 1, eop->reg_pair_0,
+			compare_reg_ret(*handle, op->v.reg + 1, eop->reg_pair_0,
 					false);
-			compare_reg_ret(*handle, op->reg, eop->reg_pair_1,
+			compare_reg_ret(*handle, op->v.reg, eop->reg_pair_1,
 					false);
 			break;
 		case TMS320C64X_OP_IMM:
-			compare_int32_ret(op->imm, eop->imm, false);
+			compare_int32_ret(op->v.imm, eop->imm, false);
 			break;
 		case TMS320C64X_OP_MEM:
-			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+			compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-			compare_enum_ret(op->mem.direction, eop->mem_direction,
+			compare_enum_ret(op->v.mem.direction, eop->mem_direction,
 					 false);
-			compare_tbool_ret(op->mem.scaled, eop->mem_scaled,
+			compare_tbool_ret(op->v.mem.scaled, eop->mem_scaled,
 					  false);
-			compare_enum_ret(op->mem.disptype, eop->mem_disptype,
+			compare_enum_ret(op->v.mem.disptype, eop->mem_disptype,
 					 false);
-			if (op->mem.disptype == TMS320C64X_MEM_DISP_REGISTER) {
-				compare_reg_ret(*handle, op->mem.disp,
+			if (op->v.mem.disptype == TMS320C64X_MEM_DISP_REGISTER) {
+				compare_reg_ret(*handle, op->v.mem.disp,
 						eop->mem_disp_reg, false);
 			} else {
-				compare_uint_ret(op->mem.disp,
+				compare_uint_ret(op->v.mem.disp,
 						 eop->mem_disp_const, false);
 			}
-			compare_enum_ret(op->mem.modify, eop->mem_modify,
+			compare_enum_ret(op->v.mem.modify, eop->mem_modify,
 					 false);
-			compare_uint_ret(op->mem.unit, eop->mem_unit, false);
+			compare_uint_ret(op->v.mem.unit, eop->mem_unit, false);
 			break;
 		}
 	}

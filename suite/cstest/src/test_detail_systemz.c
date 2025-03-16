@@ -99,44 +99,44 @@ bool test_expected_systemz(csh *handle, const cs_systemz *actual,
 				op->type);
 			return false;
 		case SYSTEMZ_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case SYSTEMZ_OP_IMM:
-			compare_int64_ret(op->imm, eop->imm, false);
+			compare_int64_ret(op->v.imm, eop->imm, false);
 			compare_uint8_ret(op->imm_width, eop->imm_width, false);
 			break;
 		case SYSTEMZ_OP_MEM:
-			compare_enum_ret(op->mem.am, eop->mem_am, false);
-			switch(op->mem.am) {
+			compare_enum_ret(op->v.mem.am, eop->mem_am, false);
+			switch(op->v.mem.am) {
 			default:
 				assert(0 && "Address mode not handled\n");
 				break;
 			case SYSTEMZ_AM_BD:
-				compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+				compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-				compare_reg_ret(*handle, op->mem.index, eop->mem_index,
+				compare_reg_ret(*handle, op->v.mem.index, eop->mem_index,
 					false);
 				break;
 			case SYSTEMZ_AM_BDX:
 			case SYSTEMZ_AM_BDV:
-				compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+				compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-				compare_int64_ret(op->mem.disp, eop->mem_disp, false);
-				compare_reg_ret(*handle, op->mem.index, eop->mem_index,
+				compare_int64_ret(op->v.mem.disp, eop->mem_disp, false);
+				compare_reg_ret(*handle, op->v.mem.index, eop->mem_index,
 					false);
 				break;
 			case SYSTEMZ_AM_BDL:
-				compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+				compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-				compare_int64_ret(op->mem.disp, eop->mem_disp, false);
-				compare_uint64_ret(op->mem.length, eop->mem_length,
+				compare_int64_ret(op->v.mem.disp, eop->mem_disp, false);
+				compare_uint64_ret(op->v.mem.length, eop->mem_length,
 					   false);
 				break;
 			case SYSTEMZ_AM_BDR:
-				compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+				compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-				compare_int64_ret(op->mem.disp, eop->mem_disp, false);
-				compare_uint64_ret(op->mem.length, eop->mem_length,
+				compare_int64_ret(op->v.mem.disp, eop->mem_disp, false);
+				compare_uint64_ret(op->v.mem.length, eop->mem_length,
 					   false);
 				break;
 			}

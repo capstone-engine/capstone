@@ -91,34 +91,34 @@ bool test_expected_wasm(csh *handle, const cs_wasm *actual,
 				op->type);
 			return false;
 		case WASM_OP_INT7:
-			compare_int8_ret(op->int7, eop->int7, false);
+			compare_int8_ret(op->v.int7, eop->int7, false);
 			break;
 		case WASM_OP_VARUINT32:
-			compare_uint32_ret(op->varuint32, eop->varuint32,
+			compare_uint32_ret(op->v.varuint32, eop->varuint32,
 					   false);
 			break;
 		case WASM_OP_VARUINT64:
-			compare_uint64_ret(op->varuint64, eop->varuint64,
+			compare_uint64_ret(op->v.varuint64, eop->varuint64,
 					   false);
 			break;
 		case WASM_OP_UINT32:
-			compare_uint32_ret(op->uint32, eop->uint32, false);
+			compare_uint32_ret(op->v.uint32, eop->uint32, false);
 			break;
 		case WASM_OP_UINT64:
-			compare_uint64_ret(op->uint64, eop->uint64, false);
+			compare_uint64_ret(op->v.uint64, eop->uint64, false);
 			break;
 		case WASM_OP_IMM:
-			compare_uint32_ret(op->immediate[0], eop->immediate_0,
+			compare_uint32_ret(op->v.immediate[0], eop->immediate_0,
 					   false);
-			compare_uint32_ret(op->immediate[1], eop->immediate_1,
+			compare_uint32_ret(op->v.immediate[1], eop->immediate_1,
 					   false);
 			break;
 		case WASM_OP_BRTABLE:
-			compare_uint32_ret(op->brtable.length, eop->brt_length,
+			compare_uint32_ret(op->v.brtable.length, eop->brt_length,
 					   false);
-			compare_uint32_ret(op->brtable.default_target,
+			compare_uint32_ret(op->v.brtable.default_target,
 					   eop->brt_default_target, false);
-			compare_uint64_ret(op->brtable.address,
+			compare_uint64_ret(op->v.brtable.address,
 					   eop->brt_address, false);
 			break;
 		}

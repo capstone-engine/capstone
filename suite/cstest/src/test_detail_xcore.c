@@ -90,19 +90,19 @@ bool test_expected_xcore(csh *handle, const cs_xcore *actual,
 				op->type);
 			return false;
 		case XCORE_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case XCORE_OP_IMM:
-			compare_int32_ret(op->imm, eop->imm, false);
+			compare_int32_ret(op->v.imm, eop->imm, false);
 			break;
 		case XCORE_OP_MEM:
-			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+			compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
+			compare_reg_ret(*handle, op->v.mem.index, eop->mem_index,
 					false);
-			compare_int_ret(op->mem.disp, eop->mem_disp, false);
+			compare_int_ret(op->v.mem.disp, eop->mem_disp, false);
 			if (eop->mem_direct) {
-				compare_int_ret(op->mem.direct, eop->mem_direct,
+				compare_int_ret(op->v.mem.direct, eop->mem_direct,
 						false);
 			}
 			break;

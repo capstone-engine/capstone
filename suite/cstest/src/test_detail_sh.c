@@ -88,17 +88,17 @@ bool test_expected_sh(csh *handle, const cs_sh *actual,
 				op->type);
 			return false;
 		case SH_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case SH_OP_IMM:
-			compare_uint64_ret(op->imm, eop->imm, false);
+			compare_uint64_ret(op->v.imm, eop->imm, false);
 			break;
 		case SH_OP_MEM:
-			compare_reg_ret(*handle, op->mem.reg, eop->mem_reg,
+			compare_reg_ret(*handle, op->v.mem.reg, eop->mem_reg,
 					false);
-			compare_reg_ret(*handle, op->mem.address,
+			compare_reg_ret(*handle, op->v.mem.address,
 					eop->mem_address, false);
-			compare_int_ret(op->mem.disp, eop->mem_disp, false);
+			compare_int_ret(op->v.mem.disp, eop->mem_disp, false);
 			break;
 		}
 	}

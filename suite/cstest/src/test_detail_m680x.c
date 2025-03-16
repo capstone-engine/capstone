@@ -152,60 +152,60 @@ bool test_expected_m680x(csh *handle, const cs_m680x *actual,
 				op->type);
 			return false;
 		case M680X_OP_REGISTER:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case M680X_OP_IMMEDIATE:
-			compare_int32_ret(op->imm, eop->imm, false);
+			compare_int32_ret(op->v.imm, eop->imm, false);
 			break;
 		case M680X_OP_EXTENDED:
-			compare_uint16_ret(op->ext.address, eop->ext_address,
+			compare_uint16_ret(op->v.ext.address, eop->ext_address,
 					   false);
-			compare_tbool_ret(op->ext.indirect, eop->ext_indirect,
+			compare_tbool_ret(op->v.ext.indirect, eop->ext_indirect,
 					  false);
 			break;
 		case M680X_OP_DIRECT:
 			if (eop->direct_addr_set) {
-				compare_uint8_ret(op->direct_addr,
+				compare_uint8_ret(op->v.direct_addr,
 						  eop->direct_addr, false);
 			} else {
 				assert(eop->direct_addr == 0);
 			}
 			break;
 		case M680X_OP_RELATIVE:
-			compare_uint16_ret(op->rel.address, eop->rel_address,
+			compare_uint16_ret(op->v.rel.address, eop->rel_address,
 					   false);
-			compare_int16_ret(op->rel.offset, eop->rel_offset,
+			compare_int16_ret(op->v.rel.offset, eop->rel_offset,
 					  false);
 			break;
 		case M680X_OP_CONSTANT:
-			compare_uint8_ret(op->const_val, eop->const_val, false);
+			compare_uint8_ret(op->v.const_val, eop->const_val, false);
 			break;
 		case M680X_OP_INDEXED:
 			if (!eop->idx) {
 				break;
 			}
-			compare_reg_ret(*handle, op->idx.base_reg,
+			compare_reg_ret(*handle, op->v.idx.base_reg,
 					eop->idx->base_reg, false);
-			compare_reg_ret(*handle, op->idx.offset_reg,
+			compare_reg_ret(*handle, op->v.idx.offset_reg,
 					eop->idx->offset_reg, false);
 			if (eop->idx->offset) {
-				compare_int16_ret(op->idx.offset,
+				compare_int16_ret(op->v.idx.offset,
 						  eop->idx->offset, false);
 			}
 			if (eop->idx->offset_addr) {
-				compare_uint16_ret(op->idx.offset_addr,
+				compare_uint16_ret(op->v.idx.offset_addr,
 						   eop->idx->offset_addr,
 						   false);
 			}
 			if (eop->idx->offset_bits) {
-				compare_uint8_ret(op->idx.offset_bits,
+				compare_uint8_ret(op->v.idx.offset_bits,
 						  eop->idx->offset_bits, false);
 			}
 			if (eop->idx->inc_dec) {
-				compare_int8_ret(op->idx.inc_dec,
+				compare_int8_ret(op->v.idx.inc_dec,
 						 eop->idx->inc_dec, false);
 			}
-			compare_bit_flags_ret(op->idx.flags, eop->idx->flags,
+			compare_bit_flags_ret(op->v.idx.flags, eop->idx->flags,
 					      eop->idx->flags_count, false);
 			break;
 		}

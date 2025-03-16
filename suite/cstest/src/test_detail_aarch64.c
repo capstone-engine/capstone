@@ -163,19 +163,19 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 				op->type);
 			return false;
 		case AARCH64_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case AARCH64_OP_IMM:
-			compare_int64_ret(op->imm, eop->imm, false);
+			compare_int64_ret(op->v.imm, eop->imm, false);
 			break;
 		case AARCH64_OP_IMM_RANGE:
-			compare_int8_ret(op->imm_range.first,
+			compare_int8_ret(op->v.imm_range.first,
 					 eop->imm_range_first, false);
-			compare_int8_ret(op->imm_range.offset,
+			compare_int8_ret(op->v.imm_range.offset,
 					 eop->imm_range_offset, false);
 			break;
 		case AARCH64_OP_FP:
-			compare_fp_ret(op->fp, eop->fp, false);
+			compare_fp_ret(op->v.fp, eop->fp, false);
 			break;
 		case AARCH64_OP_SYSREG:
 			compare_enum_ret(op->sysop.sub_type, eop->sub_type,
@@ -189,7 +189,7 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 			compare_int_ret(op->sysop.imm.raw_val,
 					   eop->sys_raw_val, false);
 			if (eop->fp_set) {
-				compare_fp_ret(op->fp, eop->fp, false);
+				compare_fp_ret(op->v.fp, eop->fp, false);
 			}
 			break;
 		case AARCH64_OP_SYSALIAS:
@@ -199,40 +199,40 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 					   eop->sys_raw_val, false);
 			break;
 		case AARCH64_OP_MEM:
-			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+			compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
+			compare_reg_ret(*handle, op->v.mem.index, eop->mem_index,
 					false);
-			compare_int32_ret(op->mem.disp, eop->mem_disp, false);
+			compare_int32_ret(op->v.mem.disp, eop->mem_disp, false);
 			break;
 		case AARCH64_OP_PRED:
-			compare_reg_ret(*handle, op->pred.reg, eop->pred_reg,
+			compare_reg_ret(*handle, op->v.pred.reg, eop->pred_reg,
 					false);
-			compare_reg_ret(*handle, op->pred.vec_select, eop->pred_vec_select,
+			compare_reg_ret(*handle, op->v.pred.vec_select, eop->pred_vec_select,
 					false);
 			if (eop->pred_imm_index_set) {
-				compare_int32_ret(op->pred.imm_index, eop->pred_imm_index, false);
+				compare_int32_ret(op->v.pred.imm_index, eop->pred_imm_index, false);
 			} else {
 				assert(eop->pred_imm_index == 0);
 			}
 			break;
 		case AARCH64_OP_SME:
-			compare_enum_ret(op->sme.type, eop->sme->type,
+			compare_enum_ret(op->v.sme.type, eop->sme->type,
 					false);
-			compare_reg_ret(*handle, op->sme.tile, eop->sme->tile,
+			compare_reg_ret(*handle, op->v.sme.tile, eop->sme->tile,
 					false);
-			compare_reg_ret(*handle, op->sme.slice_reg, eop->sme->slice_reg,
+			compare_reg_ret(*handle, op->v.sme.slice_reg, eop->sme->slice_reg,
 					false);
-			compare_tbool_ret(op->sme.has_range_offset, eop->sme->has_range_offset,
+			compare_tbool_ret(op->v.sme.has_range_offset, eop->sme->has_range_offset,
 					false);
-			compare_tbool_ret(op->sme.is_vertical, eop->sme->is_vertical,
+			compare_tbool_ret(op->v.sme.is_vertical, eop->sme->is_vertical,
 					false);
 			if (eop->sme->slice_offset_imm) {
-				compare_int32_ret(op->sme.slice_offset.imm, eop->sme->slice_offset_imm, false);
+				compare_int32_ret(op->v.sme.slice_offset.imm, eop->sme->slice_offset_imm, false);
 			}
 			if (eop->sme->slice_offset_ir_set) {
-				compare_int32_ret(op->sme.slice_offset.imm_range.first, eop->sme->slice_offset_ir_first, false);
-				compare_int32_ret(op->sme.slice_offset.imm_range.offset, eop->sme->slice_offset_ir_offset, false);
+				compare_int32_ret(op->v.sme.slice_offset.imm_range.first, eop->sme->slice_offset_ir_first, false);
+				compare_int32_ret(op->v.sme.slice_offset.imm_range.offset, eop->sme->slice_offset_ir_offset, false);
 			} else {
 				assert(eop->sme->slice_offset_ir_first == 0 && eop->sme->slice_offset_ir_offset == 0);
 			}

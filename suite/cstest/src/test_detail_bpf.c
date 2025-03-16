@@ -100,27 +100,27 @@ bool test_expected_bpf(csh *handle, const cs_bpf *actual,
 				op->type);
 			return false;
 		case BPF_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case BPF_OP_IMM:
-			compare_uint64_ret(op->imm, eop->imm, false);
+			compare_uint64_ret(op->v.imm, eop->imm, false);
 			break;
 		case BPF_OP_OFF:
-			compare_uint32_ret(op->off, eop->off, false);
+			compare_uint32_ret(op->v.off, eop->off, false);
 			break;
 		case BPF_OP_MMEM:
-			compare_uint32_ret(op->mmem, eop->mmem, false);
+			compare_uint32_ret(op->v.mmem, eop->mmem, false);
 			break;
 		case BPF_OP_MSH:
-			compare_uint32_ret(op->msh, eop->msh, false);
+			compare_uint32_ret(op->v.msh, eop->msh, false);
 			break;
 		case BPF_OP_EXT:
-			compare_enum_ret(op->ext, eop->ext, false);
+			compare_enum_ret(op->v.ext, eop->ext, false);
 			break;
 		case BPF_OP_MEM:
-			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+			compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-			compare_uint32_ret(op->mem.disp, eop->mem_disp, false);
+			compare_uint32_ret(op->v.mem.disp, eop->mem_disp, false);
 			break;
 		}
 	}

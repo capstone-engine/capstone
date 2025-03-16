@@ -96,19 +96,19 @@ bool test_expected_hppa(csh *handle, const cs_hppa *actual,
 			return false;
 		case HPPA_OP_REG:
 		case HPPA_OP_IDX_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case HPPA_OP_DISP:
 		case HPPA_OP_IMM:
 		case HPPA_OP_TARGET:
-			compare_int64_ret(op->imm, eop->imm, false);
+			compare_int64_ret(op->v.imm, eop->imm, false);
 			break;
 		case HPPA_OP_MEM:
-			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
+			compare_reg_ret(*handle, op->v.mem.base, eop->mem_base,
 					false);
-			compare_reg_ret(*handle, op->mem.space, eop->mem_space,
+			compare_reg_ret(*handle, op->v.mem.space, eop->mem_space,
 					false);
-			compare_enum_ret(op->mem.base_access,
+			compare_enum_ret(op->v.mem.base_access,
 					 eop->mem_base_access, false);
 			break;
 		}

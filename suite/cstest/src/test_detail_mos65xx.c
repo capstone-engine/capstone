@@ -90,13 +90,13 @@ bool test_expected_mos65xx(csh *handle, const cs_mos65xx *actual,
 				op->type);
 			return false;
 		case MOS65XX_OP_REG:
-			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_reg_ret(*handle, op->v.reg, eop->reg, false);
 			break;
 		case MOS65XX_OP_IMM:
-			compare_uint16_ret(op->imm, eop->imm, false);
+			compare_uint16_ret(op->v.imm, eop->imm, false);
 			break;
 		case MOS65XX_OP_MEM:
-			compare_uint16_ret(op->mem, eop->mem, false);
+			compare_uint16_ret(op->v.mem, eop->mem, false);
 			break;
 		}
 	}
