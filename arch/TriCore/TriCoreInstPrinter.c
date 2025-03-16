@@ -50,8 +50,8 @@ static bool fill_mem(MCInst *MI, unsigned int reg, int64_t disp);
 static inline void set_mem(cs_tricore_op *op, uint8_t base, int64_t disp)
 {
 	op->type |= TRICORE_OP_MEM;
-	op->mem.base = base;
-	op->mem.disp = disp;
+	op->v.mem.base = base;
+	op->v.mem.disp = disp;
 }
 
 static inline void fill_reg(MCInst *MI, uint32_t reg)
@@ -60,7 +60,7 @@ static inline void fill_reg(MCInst *MI, uint32_t reg)
 		return;
 	cs_tricore_op *op = TriCore_get_detail_op(MI, 0);
 	op->type = TRICORE_OP_REG;
-	op->reg = reg;
+	op->v.reg = reg;
 	TriCore_inc_op_count(MI);
 }
 
@@ -71,13 +71,13 @@ static inline void fill_imm(MCInst *MI, int64_t imm)
 	cs_tricore *tricore = TriCore_get_detail(MI);
 	if (tricore->op_count >= 1) {
 		cs_tricore_op *op = TriCore_get_detail_op(MI, -1);
-		if (op->type == TRICORE_OP_REG && fill_mem(MI, op->reg, imm))
+		if (op->type == TRICORE_OP_REG && fill_mem(MI, op->v.reg, imm))
 			return;
 	}
 
 	cs_tricore_op *op = TriCore_get_detail_op(MI, 0);
 	op->type = TRICORE_OP_IMM;
-	op->imm = imm;
+	op->v.imm = imm;
 	tricore->op_count++;
 }
 

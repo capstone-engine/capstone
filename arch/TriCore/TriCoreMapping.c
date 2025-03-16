@@ -58,7 +58,7 @@ static inline void check_updates_flags(MCInst *MI)
 			return;
 		for (int j = 0; j < ARR_SIZE(flag_regs); ++j) {
 			if (detail->regs_write[i] == flag_regs[j]) {
-				detail->tricore.update_flags = true;
+				detail->d.tricore.update_flags = true;
 				return;
 			}
 		}
@@ -117,7 +117,7 @@ void TriCore_set_access(MCInst *MI)
 	CS_ASSERT_RET(MI->Opcode < ARR_SIZE(insn_operands));
 
 	cs_detail *detail = get_detail(MI);
-	cs_tricore *tc = &(detail->tricore);
+	cs_tricore *tc = &(detail->d.tricore);
 	for (int i = 0; i < tc->op_count; ++i) {
 		cs_ac_type ac = map_get_op_access(MI, i);
 		cs_tricore_op *op = &tc->operands[i];
@@ -127,11 +127,11 @@ void TriCore_set_access(MCInst *MI)
 			continue;
 		}
 		if (ac & CS_AC_READ) {
-			detail->regs_read[detail->regs_read_count++] = op->reg;
+			detail->regs_read[detail->regs_read_count++] = op->v.reg;
 		}
 		if (ac & CS_AC_WRITE) {
 			detail->regs_write[detail->regs_write_count++] =
-				op->reg;
+				op->v.reg;
 		}
 	}
 #endif
@@ -154,27 +154,27 @@ void TriCore_reg_access(const cs_insn *insn, cs_regs regs_read,
 	       write_count * sizeof(detail->regs_write[0]));
 
 	// explicit registers
-	cs_tricore *tc = &detail->tricore;
+	cs_tricore *tc = &detail->d.tricore;
 	for (uint8_t i = 0; i < tc->op_count; i++) {
 		cs_tricore_op *op = &(tc->operands[i]);
 		switch ((int)op->type) {
 		case TRICORE_OP_REG:
 			if ((op->access & CS_AC_READ) &&
-			    !arr_exist(regs_read, read_count, op->reg)) {
-				regs_read[read_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_read, read_count, op->v.reg)) {
+				regs_read[read_count] = (uint16_t)op->v.reg;
 				read_count++;
 			}
 			if ((op->access & CS_AC_WRITE) &&
-			    !arr_exist(regs_write, write_count, op->reg)) {
-				regs_write[write_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_write, write_count, op->v.reg)) {
+				regs_write[write_count] = (uint16_t)op->v.reg;
 				write_count++;
 			}
 			break;
 		case TRICORE_OP_MEM:
 			// registers appeared in memory references always being read
-			if ((op->mem.base != ARM_REG_INVALID) &&
-			    !arr_exist(regs_read, read_count, op->mem.base)) {
-				regs_read[read_count] = (uint16_t)op->mem.base;
+			if ((op->v.mem.base != ARM_REG_INVALID) &&
+			    !arr_exist(regs_read, read_count, op->v.mem.base)) {
+				regs_read[read_count] = (uint16_t)op->v.mem.base;
 				read_count++;
 			}
 		default:
