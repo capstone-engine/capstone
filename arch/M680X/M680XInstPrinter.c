@@ -136,17 +136,17 @@ static void printIncDec(bool isPost, SStream *O, m680x_info *info,
 {
 	static const char s_inc_dec[][3] = { "--", "-", "", "+", "++" };
 
-	if (!op->idx.inc_dec)
+	if (!op->v.idx.inc_dec)
 		return;
 
-	if ((!isPost && !(op->idx.flags & M680X_IDX_POST_INC_DEC)) ||
-		(isPost && (op->idx.flags & M680X_IDX_POST_INC_DEC))) {
+	if ((!isPost && !(op->v.idx.flags & M680X_IDX_POST_INC_DEC)) ||
+		(isPost && (op->v.idx.flags & M680X_IDX_POST_INC_DEC))) {
 		const char *prePostfix = "";
 
 		if (info->cpu_type == M680X_CPU_TYPE_CPU12)
-			prePostfix = (op->idx.inc_dec < 0) ? "-" : "+";
-		else if (op->idx.inc_dec >= -2 && (op->idx.inc_dec <= 2)) {
-			prePostfix = (char *)s_inc_dec[op->idx.inc_dec + 2];
+			prePostfix = (op->v.idx.inc_dec < 0) ? "-" : "+";
+		else if (op->v.idx.inc_dec >= -2 && (op->v.idx.inc_dec <= 2)) {
+			prePostfix = (char *)s_inc_dec[op->v.idx.inc_dec + 2];
 		}
 
 		SStream_concat0(O, prePostfix);
@@ -158,73 +158,73 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 {
 	switch (op->type) {
 	case M680X_OP_REGISTER:
-		printRegName(MI->csh, O, op->reg);
+		printRegName(MI->csh, O, op->v.reg);
 		break;
 
 	case M680X_OP_CONSTANT:
-		SStream_concat(O, "%u", op->const_val);
+		SStream_concat(O, "%u", op->v.const_val);
 		break;
 
 	case M680X_OP_IMMEDIATE:
 		if (MI->csh->imm_unsigned)
 			SStream_concat(O, "#%u",
-				get_unsigned(op->imm, op->size));
+				get_unsigned(op->v.imm, op->size));
 		else
-			SStream_concat(O, "#%d", op->imm);
+			SStream_concat(O, "#%d", op->v.imm);
 
 		break;
 
 	case M680X_OP_INDEXED:
-		if (op->idx.flags & M680X_IDX_INDIRECT)
+		if (op->v.idx.flags & M680X_IDX_INDIRECT)
 			SStream_concat0(O, "[");
 
-		if (op->idx.offset_reg != M680X_REG_INVALID)
-			printRegName(MI->csh, O, op->idx.offset_reg);
-		else if (op->idx.offset_bits > 0) {
-			if (op->idx.base_reg == M680X_REG_PC)
-				SStream_concat(O, "$%04x", op->idx.offset_addr);
+		if (op->v.idx.offset_reg != M680X_REG_INVALID)
+			printRegName(MI->csh, O, op->v.idx.offset_reg);
+		else if (op->v.idx.offset_bits > 0) {
+			if (op->v.idx.base_reg == M680X_REG_PC)
+				SStream_concat(O, "$%04x", op->v.idx.offset_addr);
 			else
-				SStream_concat(O, "%d", op->idx.offset);
+				SStream_concat(O, "%d", op->v.idx.offset);
 		}
-		else if (op->idx.inc_dec != 0 &&
+		else if (op->v.idx.inc_dec != 0 &&
 			info->cpu_type == M680X_CPU_TYPE_CPU12)
-			SStream_concat(O, "%d", abs(op->idx.inc_dec));
+			SStream_concat(O, "%d", abs(op->v.idx.inc_dec));
 
-		if (!(op->idx.flags & M680X_IDX_NO_COMMA))
+		if (!(op->v.idx.flags & M680X_IDX_NO_COMMA))
 			SStream_concat(O, ", ");
 
 		printIncDec(false, O, info, op);
 
-		printRegName(MI->csh, O, op->idx.base_reg);
+		printRegName(MI->csh, O, op->v.idx.base_reg);
 
-		if (op->idx.base_reg == M680X_REG_PC &&
-			(op->idx.offset_bits > 0))
+		if (op->v.idx.base_reg == M680X_REG_PC &&
+			(op->v.idx.offset_bits > 0))
 			SStream_concat(O, "r");
 
 		printIncDec(true, O, info, op);
 
-		if (op->idx.flags & M680X_IDX_INDIRECT)
+		if (op->v.idx.flags & M680X_IDX_INDIRECT)
 			SStream_concat(O, "]");
 
 		break;
 
 	case M680X_OP_RELATIVE:
-		SStream_concat(O, "$%04x", op->rel.address);
+		SStream_concat(O, "$%04x", op->v.rel.address);
 		break;
 
 	case M680X_OP_DIRECT:
-		SStream_concat(O, "$%02x", op->direct_addr);
+		SStream_concat(O, "$%02x", op->v.direct_addr);
 		break;
 
 	case M680X_OP_EXTENDED:
-		if (op->ext.indirect)
-			SStream_concat(O, "[$%04x]", op->ext.address);
+		if (op->v.ext.indirect)
+			SStream_concat(O, "[$%04x]", op->v.ext.address);
 		else {
-			if (op->ext.address < 256) {
-				SStream_concat(O, ">$%04x", op->ext.address);
+			if (op->v.ext.address < 256) {
+				SStream_concat(O, ">$%04x", op->v.ext.address);
 			}
 			else {
-				SStream_concat(O, "$%04x", op->ext.address);
+				SStream_concat(O, "$%04x", op->v.ext.address);
 			}
 		}
 
@@ -268,11 +268,11 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	int i;
 
 	if (detail != NULL)
-		memcpy(&detail->m680x, m680x, sizeof(cs_m680x));
+		memcpy(&detail->d.m680x, m680x, sizeof(cs_m680x));
 
 	if (info->insn == M680X_INS_INVLD || info->insn == M680X_INS_ILLGL) {
 		if (m680x->op_count)
-			SStream_concat(O, "fcb $%02x", m680x->operands[0].imm);
+			SStream_concat(O, "fcb $%02x", m680x->operands[0].v.imm);
 		else
 			SStream_concat0(O, "fcb $<unknown>");
 

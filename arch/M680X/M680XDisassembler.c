@@ -356,24 +356,24 @@ static void update_am_reg_list(MCInst *MI, m680x_info *info, cs_m680x_op *op,
 
 	switch (op->type) {
 	case M680X_OP_REGISTER:
-		add_reg_to_rw_list(MI, op->reg, access);
+		add_reg_to_rw_list(MI, op->v.reg, access);
 		break;
 
 	case M680X_OP_INDEXED:
-		add_reg_to_rw_list(MI, op->idx.base_reg, READ);
+		add_reg_to_rw_list(MI, op->v.idx.base_reg, READ);
 
-		if (op->idx.base_reg == M680X_REG_X &&
+		if (op->v.idx.base_reg == M680X_REG_X &&
 			info->cpu->reg_byte_size[M680X_REG_H])
 			add_reg_to_rw_list(MI, M680X_REG_H, READ);
 
 
-		if (op->idx.offset_reg != M680X_REG_INVALID)
-			add_reg_to_rw_list(MI, op->idx.offset_reg, READ);
+		if (op->v.idx.offset_reg != M680X_REG_INVALID)
+			add_reg_to_rw_list(MI, op->v.idx.offset_reg, READ);
 
-		if (op->idx.inc_dec) {
-			add_reg_to_rw_list(MI, op->idx.base_reg, WRITE);
+		if (op->v.idx.inc_dec) {
+			add_reg_to_rw_list(MI, op->v.idx.base_reg, WRITE);
 
-			if (op->idx.base_reg == M680X_REG_X &&
+			if (op->v.idx.base_reg == M680X_REG_X &&
 				info->cpu->reg_byte_size[M680X_REG_H])
 				add_reg_to_rw_list(MI, M680X_REG_H, WRITE);
 		}
@@ -1041,7 +1041,7 @@ static void illegal_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	info->insn = M680X_INS_ILLGL;
 	read_byte(info, &temp8, (*address)++);
-	op0->imm = (int32_t)temp8 & 0xff;
+	op0->v.imm = (int32_t)temp8 & 0xff;
 	op0->type = M680X_OP_IMMEDIATE;
 	op0->size = 1;
 }
@@ -1057,7 +1057,7 @@ static void add_reg_operand(m680x_info *info, m680x_reg reg)
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 
 	op->type = M680X_OP_REGISTER;
-	op->reg = reg;
+	op->v.reg = reg;
 	op->size = info->cpu->reg_byte_size[reg];
 }
 
@@ -1103,7 +1103,7 @@ static void reg_bits_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	read_byte(info, &reg_bits, (*address)++);
 
-	switch (op0->reg) {
+	switch (op0->v.reg) {
 	case M680X_REG_U:
 		reg_to_reg_ids = &reg_u_reg_ids[0];
 		break;
@@ -1187,8 +1187,8 @@ static void add_rel_operand(m680x_info *info, int16_t offset, uint16_t address)
 
 	op->type = M680X_OP_RELATIVE;
 	op->size = 0;
-	op->rel.offset = offset;
-	op->rel.address = address;
+	op->v.rel.offset = offset;
+	op->v.rel.address = address;
 }
 
 static void relative8_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1233,20 +1233,20 @@ static void add_indexed_operand(m680x_info *info, m680x_reg base_reg,
 
 	op->type = M680X_OP_INDEXED;
 	set_operand_size(info, op, 1);
-	op->idx.base_reg = base_reg;
-	op->idx.offset_reg = M680X_REG_INVALID;
-	op->idx.inc_dec = inc_dec;
+	op->v.idx.base_reg = base_reg;
+	op->v.idx.offset_reg = M680X_REG_INVALID;
+	op->v.idx.inc_dec = inc_dec;
 
 	if (inc_dec && post_inc_dec)
-		op->idx.flags |= M680X_IDX_POST_INC_DEC;
+		op->v.idx.flags |= M680X_IDX_POST_INC_DEC;
 
 	if (offset_bits != M680X_OFFSET_NONE) {
-		op->idx.offset = offset;
-		op->idx.offset_addr = 0;
+		op->v.idx.offset = offset;
+		op->v.idx.offset_addr = 0;
 	}
 
-	op->idx.offset_bits = offset_bits;
-	op->idx.flags |= (no_comma ? M680X_IDX_NO_COMMA : 0);
+	op->v.idx.offset_bits = offset_bits;
+	op->v.idx.flags |= (no_comma ? M680X_IDX_NO_COMMA : 0);
 }
 
 // M6800/1/2/3 indexed mode handler
@@ -1283,43 +1283,43 @@ static void indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_INDEXED;
 	set_operand_size(info, op, 1);
-	op->idx.base_reg = g_rr5_to_reg_ids[(post_byte >> 5) & 0x03];
-	op->idx.offset_reg = M680X_REG_INVALID;
+	op->v.idx.base_reg = g_rr5_to_reg_ids[(post_byte >> 5) & 0x03];
+	op->v.idx.offset_reg = M680X_REG_INVALID;
 
 	if (!(post_byte & 0x80)) {
 		// n5,R
 		if ((post_byte & 0x10) == 0x10)
-			op->idx.offset = post_byte | 0xfff0;
+			op->v.idx.offset = post_byte | 0xfff0;
 		else
-			op->idx.offset = post_byte & 0x0f;
+			op->v.idx.offset = post_byte & 0x0f;
 
-		op->idx.offset_addr = op->idx.offset + *address;
-		op->idx.offset_bits = M680X_OFFSET_BITS_5;
+		op->v.idx.offset_addr = op->v.idx.offset + *address;
+		op->v.idx.offset_bits = M680X_OFFSET_BITS_5;
 	}
 	else {
 		if ((post_byte & 0x10) == 0x10)
-			op->idx.flags |= M680X_IDX_INDIRECT;
+			op->v.idx.flags |= M680X_IDX_INDIRECT;
 
 		// indexed addressing
 		switch (post_byte & 0x1f) {
 		case 0x00: // ,R+
-			op->idx.inc_dec = 1;
-			op->idx.flags |= M680X_IDX_POST_INC_DEC;
+			op->v.idx.inc_dec = 1;
+			op->v.idx.flags |= M680X_IDX_POST_INC_DEC;
 			break;
 
 		case 0x11: // [,R++]
 		case 0x01: // ,R++
-			op->idx.inc_dec = 2;
-			op->idx.flags |= M680X_IDX_POST_INC_DEC;
+			op->v.idx.inc_dec = 2;
+			op->v.idx.flags |= M680X_IDX_POST_INC_DEC;
 			break;
 
 		case 0x02: // ,-R
-			op->idx.inc_dec = -1;
+			op->v.idx.inc_dec = -1;
 			break;
 
 		case 0x13: // [,--R]
 		case 0x03: // ,--R
-			op->idx.inc_dec = -2;
+			op->v.idx.inc_dec = -2;
 			break;
 
 		case 0x14: // [,R]
@@ -1328,62 +1328,62 @@ static void indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 		case 0x15: // [B,R]
 		case 0x05: // B,R
-			op->idx.offset_reg = M680X_REG_B;
+			op->v.idx.offset_reg = M680X_REG_B;
 			break;
 
 		case 0x16: // [A,R]
 		case 0x06: // A,R
-			op->idx.offset_reg = M680X_REG_A;
+			op->v.idx.offset_reg = M680X_REG_A;
 			break;
 
 		case 0x1c: // [n8,PCR]
 		case 0x0c: // n8,PCR
-			op->idx.base_reg = M680X_REG_PC;
+			op->v.idx.base_reg = M680X_REG_PC;
 			read_byte_sign_extended(info, &soffset, (*address)++);
-			op->idx.offset_addr = offset + *address;
-			op->idx.offset = soffset;
-			op->idx.offset_bits = M680X_OFFSET_BITS_8;
+			op->v.idx.offset_addr = offset + *address;
+			op->v.idx.offset = soffset;
+			op->v.idx.offset_bits = M680X_OFFSET_BITS_8;
 			break;
 
 		case 0x18: // [n8,R]
 		case 0x08: // n8,R
 			read_byte_sign_extended(info, &soffset, (*address)++);
-			op->idx.offset = soffset;
-			op->idx.offset_bits = M680X_OFFSET_BITS_8;
+			op->v.idx.offset = soffset;
+			op->v.idx.offset_bits = M680X_OFFSET_BITS_8;
 			break;
 
 		case 0x1d: // [n16,PCR]
 		case 0x0d: // n16,PCR
-			op->idx.base_reg = M680X_REG_PC;
+			op->v.idx.base_reg = M680X_REG_PC;
 			read_word(info, &offset, *address);
 			*address += 2;
-			op->idx.offset_addr = offset + *address;
-			op->idx.offset = (int16_t)offset;
-			op->idx.offset_bits = M680X_OFFSET_BITS_16;
+			op->v.idx.offset_addr = offset + *address;
+			op->v.idx.offset = (int16_t)offset;
+			op->v.idx.offset_bits = M680X_OFFSET_BITS_16;
 			break;
 
 		case 0x19: // [n16,R]
 		case 0x09: // n16,R
 			read_word(info, &offset, *address);
 			*address += 2;
-			op->idx.offset = (int16_t)offset;
-			op->idx.offset_bits = M680X_OFFSET_BITS_16;
+			op->v.idx.offset = (int16_t)offset;
+			op->v.idx.offset_bits = M680X_OFFSET_BITS_16;
 			break;
 
 		case 0x1b: // [D,R]
 		case 0x0b: // D,R
-			op->idx.offset_reg = M680X_REG_D;
+			op->v.idx.offset_reg = M680X_REG_D;
 			break;
 
 		case 0x1f: // [n16]
 			op->type = M680X_OP_EXTENDED;
-			op->ext.indirect = true;
-			read_word(info, &op->ext.address, *address);
+			op->v.ext.indirect = true;
+			read_word(info, &op->v.ext.address, *address);
 			*address += 2;
 			break;
 
 		default:
-			op->idx.base_reg = M680X_REG_INVALID;
+			op->v.idx.base_reg = M680X_REG_INVALID;
 			break;
 		}
 	}
@@ -1392,8 +1392,8 @@ static void indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 			(info->insn == M680X_INS_LEAS) ||
 			(info->insn == M680X_INS_LEAX) ||
 			(info->insn == M680X_INS_LEAY)) &&
-		(m680x->operands[0].reg == M680X_REG_X ||
-			(m680x->operands[0].reg == M680X_REG_Y)))
+		(m680x->operands[0].v.reg == M680X_REG_X ||
+			(m680x->operands[0].v.reg == M680X_REG_Y)))
 		// Only LEAX and LEAY modify CC register
 		add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 }
@@ -1419,81 +1419,81 @@ static void indexed12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_INDEXED;
 	set_operand_size(info, op, 1);
-	op->idx.offset_reg = M680X_REG_INVALID;
+	op->v.idx.offset_reg = M680X_REG_INVALID;
 
 	if (!(post_byte & 0x20)) {
 		// n5,R      n5 is a 5-bit signed offset
-		op->idx.base_reg = g_idx12_to_reg_ids[(post_byte >> 6) & 0x03];
+		op->v.idx.base_reg = g_idx12_to_reg_ids[(post_byte >> 6) & 0x03];
 
 		if ((post_byte & 0x10) == 0x10)
-			op->idx.offset = post_byte | 0xfff0;
+			op->v.idx.offset = post_byte | 0xfff0;
 		else
-			op->idx.offset = post_byte & 0x0f;
+			op->v.idx.offset = post_byte & 0x0f;
 
-		op->idx.offset_addr = op->idx.offset + *address;
-		op->idx.offset_bits = M680X_OFFSET_BITS_5;
+		op->v.idx.offset_addr = op->v.idx.offset + *address;
+		op->v.idx.offset_bits = M680X_OFFSET_BITS_5;
 	}
 	else {
 		if ((post_byte & 0xe0) == 0xe0)
-			op->idx.base_reg =
+			op->v.idx.base_reg =
 				g_idx12_to_reg_ids[(post_byte >> 3) & 0x03];
 
 		switch (post_byte & 0xe7) {
 		case 0xe0:
 		case 0xe1: // n9,R
 			read_byte(info, &offset8, (*address)++);
-			op->idx.offset = offset8;
+			op->v.idx.offset = offset8;
 
 			if (post_byte & 0x01) // sign extension
-				op->idx.offset |= 0xff00;
+				op->v.idx.offset |= 0xff00;
 
-			op->idx.offset_bits = M680X_OFFSET_BITS_9;
+			op->v.idx.offset_bits = M680X_OFFSET_BITS_9;
 
-			if (op->idx.base_reg == M680X_REG_PC)
-				op->idx.offset_addr = op->idx.offset + *address;
+			if (op->v.idx.base_reg == M680X_REG_PC)
+				op->v.idx.offset_addr = op->v.idx.offset + *address;
 
 			break;
 
 		case 0xe3: // [n16,R]
-			op->idx.flags |= M680X_IDX_INDIRECT;
+			op->v.idx.flags |= M680X_IDX_INDIRECT;
 
 		// intentionally fall through
 		case 0xe2: // n16,R
-			read_word(info, (uint16_t *)&op->idx.offset, *address);
+			read_word(info, (uint16_t *)&op->v.idx.offset, *address);
 			(*address) += 2;
-			op->idx.offset_bits = M680X_OFFSET_BITS_16;
+			op->v.idx.offset_bits = M680X_OFFSET_BITS_16;
 
-			if (op->idx.base_reg == M680X_REG_PC)
-				op->idx.offset_addr = op->idx.offset + *address;
+			if (op->v.idx.base_reg == M680X_REG_PC)
+				op->v.idx.offset_addr = op->v.idx.offset + *address;
 
 			break;
 
 		case 0xe4: // A,R
 		case 0xe5: // B,R
 		case 0xe6: // D,R
-			op->idx.offset_reg =
+			op->v.idx.offset_reg =
 				g_or12_to_reg_ids[post_byte & 0x03];
 			break;
 
 		case 0xe7: // [D,R]
-			op->idx.offset_reg = M680X_REG_D;
-			op->idx.flags |= M680X_IDX_INDIRECT;
+			op->v.idx.offset_reg = M680X_REG_D;
+			op->v.idx.flags |= M680X_IDX_INDIRECT;
 			break;
 
 		default: // n,-r n,+r n,r- n,r+
 			// PC is not allowed in this mode
-			op->idx.base_reg =
+			op->v.idx.base_reg =
 				g_idx12_to_reg_ids[(post_byte >> 6) & 0x03];
-			op->idx.inc_dec = post_byte & 0x0f;
+			op->v.idx.inc_dec = post_byte & 0x0f;
 
-			if (op->idx.inc_dec & 0x08) // evtl. sign extend value
-				op->idx.inc_dec |= 0xf0;
+			if (op->v.idx.inc_dec & 0x08) // evtl. sign extend value
+				op->v.idx.inc_dec |= 0xf0;
 
-			if (op->idx.inc_dec >= 0)
-				op->idx.inc_dec++;
+			if (op->v.idx.inc_dec >= 0)
+				op->v.idx.inc_dec++;
 
 			if (post_byte & 0x10)
-				op->idx.flags |= M680X_IDX_POST_INC_DEC;
+				op->v.idx.flags |= M680X_IDX_POST_INC_DEC;
 
 			break;
 
@@ -1507,7 +1507,7 @@ static void index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
 
 	op->type = M680X_OP_CONSTANT;
-	read_byte(info, &op->const_val, (*address)++);
+	read_byte(info, &op->v.const_val, (*address)++);
 };
 
 static void direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1517,7 +1517,7 @@ static void direct_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_DIRECT;
 	set_operand_size(info, op, 1);
-	read_byte(info, &op->direct_addr, (*address)++);
+	read_byte(info, &op->v.direct_addr, (*address)++);
 };
 
 static void extended_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1527,7 +1527,7 @@ static void extended_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_EXTENDED;
 	set_operand_size(info, op, 1);
-	read_word(info, &op->ext.address, *address);
+	read_word(info, &op->v.ext.address, *address);
 	*address += 2;
 }
 
@@ -1544,20 +1544,20 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	switch (op->size) {
 	case 1:
 		read_byte_sign_extended(info, &sword, *address);
-		op->imm = sword;
+		op->v.imm = sword;
 		break;
 
 	case 2:
 		read_word(info, &word, *address);
-		op->imm = (int16_t)word;
+		op->v.imm = (int16_t)word;
 		break;
 
 	case 4:
-		read_sdword(info, &op->imm, *address);
+		read_sdword(info, &op->v.imm, *address);
 		break;
 
 	default:
-		op->imm = 0;
+		op->v.imm = 0;
 		CS_ASSERT(0 && "Unexpected immediate byte size");
 	}
 
@@ -1584,12 +1584,12 @@ static void bit_move_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	// operand[1] = bit index in source operand
 	op = &m680x->operands[m680x->op_count++];
 	op->type = M680X_OP_CONSTANT;
-	op->const_val = (post_byte >> 3) & 0x07;
+	op->v.const_val = (post_byte >> 3) & 0x07;
 
 	// operand[2] = bit index in destination operand
 	op = &m680x->operands[m680x->op_count++];
 	op->type = M680X_OP_CONSTANT;
-	op->const_val = post_byte & 0x07;
+	op->v.const_val = post_byte & 0x07;
 
 	direct_hdlr(MI, info, address);
 }
@@ -1623,7 +1623,7 @@ static void opidx_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	// bit index is coded in Opcode
 	op->type = M680X_OP_CONSTANT;
-	op->const_val = (MI->Opcode & 0x0e) >> 1;
+	op->v.const_val = (MI->Opcode & 0x0e) >> 1;
 }
 
 // handler for bit test and branch instruction. Used by M6805.
@@ -1636,7 +1636,7 @@ static void opidx_dir_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	// bit index is coded in Opcode
 	op->type = M680X_OP_CONSTANT;
-	op->const_val = (MI->Opcode & 0x0e) >> 1;
+	op->v.const_val = (MI->Opcode & 0x0e) >> 1;
 	direct_hdlr(MI, info, address);
 	relative8_hdlr(MI, info, address);
 
@@ -1714,14 +1714,14 @@ static void imm_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		uint16_t imm16 = 0;
 
 		read_word(info, &imm16, *address);
-		op->imm = (int16_t)imm16;
+		op->v.imm = (int16_t)imm16;
 		op->size = 2;
 	}
 	else {
 		uint8_t imm8 = 0;
 
 		read_byte(info, &imm8, *address);
-		op->imm = (int8_t)imm8;
+		op->v.imm = (int8_t)imm8;
 		op->size = 1;
 	}
 
@@ -1737,7 +1737,7 @@ static void ext_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	indexed12_hdlr(MI, info, address);
 	read_word(info, &imm16, *address);
 	op0->type = M680X_OP_EXTENDED;
-	op0->ext.address = (int16_t)imm16;
+	op0->v.ext.address = (int16_t)imm16;
 	set_operand_size(info, op0, 1);
 }
 
@@ -1774,9 +1774,9 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_RELATIVE;
 
-	op->rel.offset = (post_byte & 0x10) ? (int16_t) (0xff00 | rel) : rel;
+	op->v.rel.offset = (post_byte & 0x10) ? (int16_t) (0xff00 | rel) : rel;
 
-	op->rel.address = *address + op->rel.offset;
+	op->v.rel.address = *address + op->v.rel.offset;
 
 	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 }
@@ -1828,7 +1828,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 	e_access_mode access_mode;
 
 	if (detail != NULL) {
-		memset(detail, 0, offsetof(cs_detail, m680x)+sizeof(cs_m680x));
+		memset(detail, 0, offsetof(cs_detail, d.m680x)+sizeof(cs_m680x));
 	}
 
 	memset(&insn_description, 0, sizeof(insn_description));
