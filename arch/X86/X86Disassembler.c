@@ -870,43 +870,43 @@ static int reader(const struct reader_info *info, uint8_t *byte, uint64_t addres
 static void update_pub_insn(cs_insn *pub, InternalInstruction *inter)
 {
 	if (inter->vectorExtensionType != 0) {
-		memcpy(pub->detail->x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->detail->x86.opcode));
+		memcpy(pub->detail->d.x86.opcode, inter->vectorExtensionPrefix, sizeof(pub->detail->d.x86.opcode));
 	} else {
 		if (inter->twoByteEscape) {
 			if (inter->threeByteEscape) {
-				pub->detail->x86.opcode[0] = inter->twoByteEscape;
-				pub->detail->x86.opcode[1] = inter->threeByteEscape;
-				pub->detail->x86.opcode[2] = inter->opcode;
+				pub->detail->d.x86.opcode[0] = inter->twoByteEscape;
+				pub->detail->d.x86.opcode[1] = inter->threeByteEscape;
+				pub->detail->d.x86.opcode[2] = inter->opcode;
 			} else {
-				pub->detail->x86.opcode[0] = inter->twoByteEscape;
-				pub->detail->x86.opcode[1] = inter->opcode;
+				pub->detail->d.x86.opcode[0] = inter->twoByteEscape;
+				pub->detail->d.x86.opcode[1] = inter->opcode;
 			}
 		} else {
-				pub->detail->x86.opcode[0] = inter->opcode;
+				pub->detail->d.x86.opcode[0] = inter->opcode;
 		}
 	}
 
-	pub->detail->x86.rex = inter->rexPrefix;
+	pub->detail->d.x86.rex = inter->rexPrefix;
 
-	pub->detail->x86.addr_size = inter->addressSize;
+	pub->detail->d.x86.addr_size = inter->addressSize;
 
-	pub->detail->x86.modrm = inter->orgModRM;
-	pub->detail->x86.encoding.modrm_offset = inter->modRMOffset;
+	pub->detail->d.x86.modrm = inter->orgModRM;
+	pub->detail->d.x86.encoding.modrm_offset = inter->modRMOffset;
 
-	pub->detail->x86.sib = inter->sib;
-	pub->detail->x86.sib_index = x86_map_sib_index(inter->sibIndex);
-	pub->detail->x86.sib_scale = inter->sibScale;
-	pub->detail->x86.sib_base = x86_map_sib_base(inter->sibBase);
+	pub->detail->d.x86.sib = inter->sib;
+	pub->detail->d.x86.sib_index = x86_map_sib_index(inter->sibIndex);
+	pub->detail->d.x86.sib_scale = inter->sibScale;
+	pub->detail->d.x86.sib_base = x86_map_sib_base(inter->sibBase);
 
-	pub->detail->x86.disp = inter->displacement;
+	pub->detail->d.x86.disp = inter->displacement;
 	if (inter->consumedDisplacement) {
-		pub->detail->x86.encoding.disp_offset = inter->displacementOffset;
-		pub->detail->x86.encoding.disp_size = inter->displacementSize;
+		pub->detail->d.x86.encoding.disp_offset = inter->displacementOffset;
+		pub->detail->d.x86.encoding.disp_size = inter->displacementSize;
 	}
 
-	pub->detail->x86.encoding.imm_offset = inter->immediateOffset;
-	if (pub->detail->x86.encoding.imm_size == 0 && inter->immediateOffset != 0)
-		pub->detail->x86.encoding.imm_size = inter->immediateSize;
+	pub->detail->d.x86.encoding.imm_offset = inter->immediateOffset;
+	if (pub->detail->d.x86.encoding.imm_size == 0 && inter->immediateOffset != 0)
+		pub->detail->d.x86.encoding.imm_size = inter->immediateSize;
 }
 
 void X86_init(MCRegisterInfo *MRI)
@@ -959,7 +959,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		//memset(instr->flat_insn->detail, 0, sizeof(cs_detail));
 
 		// 2. Only the part relevant to x86
-		memset(instr->flat_insn->detail, 0, offsetof(cs_detail, x86) + sizeof(cs_x86));
+		memset(instr->flat_insn->detail, 0, offsetof(cs_detail, d.x86) + sizeof(cs_x86));
 
 		// 3. The relevant part except for x86.operands
 		// sizeof(cs_x86) is 0x1c0, sizeof(x86.operands) is 0x180

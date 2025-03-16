@@ -1168,7 +1168,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				case X86_OUT8ir:
 				case X86_OUT16ir:
 				case X86_OUT32ir:
-					if (insn->detail->x86.operands[0].imm == -78) {
+					if (insn->detail->d.x86.operands[0].v.imm == -78) {
 						// Writing to port 0xb2 causes an SMI on most platforms
 						// See: http://cs.gmu.edu/~tr-admin/papers/GMU-CS-TR-2011-8.pdf
 						insn->detail->groups[insn->detail->groups_count] = X86_GRP_INT;
@@ -1986,7 +1986,7 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 
 	// copy normalized prefix[] back to x86.prefix[]
 	if (MI->csh->detail_opt)
-		memcpy(MI->flat_insn->detail->x86.prefix, MI->x86_prefix, ARR_SIZE(MI->x86_prefix));
+		memcpy(MI->flat_insn->detail->d.x86.prefix, MI->x86_prefix, ARR_SIZE(MI->x86_prefix));
 
 	return res;
 }
@@ -1994,10 +1994,10 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 void op_addReg(MCInst *MI, int reg)
 {
 	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_REG;
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].reg = reg;
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->csh->regsize_map[reg];
-		MI->flat_insn->detail->x86.op_count++;
+		MI->flat_insn->detail->d.x86.operands[MI->flat_insn->detail->d.x86.op_count].type = X86_OP_REG;
+		MI->flat_insn->detail->d.x86.operands[MI->flat_insn->detail->d.x86.op_count].v.reg = reg;
+		MI->flat_insn->detail->d.x86.operands[MI->flat_insn->detail->d.x86.op_count].size = MI->csh->regsize_map[reg];
+		MI->flat_insn->detail->d.x86.op_count++;
 	}
 
 	if (MI->op1_size == 0)
@@ -2007,17 +2007,17 @@ void op_addReg(MCInst *MI, int reg)
 void op_addImm(MCInst *MI, int v)
 {
 	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].imm = v;
+		MI->flat_insn->detail->d.x86.operands[MI->flat_insn->detail->d.x86.op_count].type = X86_OP_IMM;
+		MI->flat_insn->detail->d.x86.operands[MI->flat_insn->detail->d.x86.op_count].v.imm = v;
 		// if op_count > 0, then this operand's size is taken from the destination op
 		if (MI->csh->syntax != CS_OPT_SYNTAX_ATT) {
-			if (MI->flat_insn->detail->x86.op_count > 0)
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->flat_insn->detail->x86.operands[0].size;
+			if (MI->flat_insn->detail->d.x86.op_count > 0)
+				MI->flat_insn->detail->d.x86.operands[MI->flat_insn->detail->d.x86.op_count].size = MI->flat_insn->detail->d.x86.operands[0].size;
 			else
-				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].size = MI->imm_size;
+				MI->flat_insn->detail->d.x86.operands[MI->flat_insn->detail->d.x86.op_count].size = MI->imm_size;
 		} else
 			MI->has_imm = true;
-		MI->flat_insn->detail->x86.op_count++;
+		MI->flat_insn->detail->d.x86.op_count++;
 	}
 
 	if (MI->op1_size == 0)
@@ -2027,28 +2027,28 @@ void op_addImm(MCInst *MI, int v)
 void op_addXopCC(MCInst *MI, int v)
 {
 	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->x86.xop_cc = v;
+		MI->flat_insn->detail->d.x86.xop_cc = v;
 	}
 }
 
 void op_addSseCC(MCInst *MI, int v)
 {
 	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->x86.sse_cc = v;
+		MI->flat_insn->detail->d.x86.sse_cc = v;
 	}
 }
 
 void op_addAvxCC(MCInst *MI, int v)
 {
 	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->x86.avx_cc = v;
+		MI->flat_insn->detail->d.x86.avx_cc = v;
 	}
 }
 
 void op_addAvxRoundingMode(MCInst *MI, int v)
 {
 	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->x86.avx_rm = v;
+		MI->flat_insn->detail->d.x86.avx_rm = v;
 	}
 }
 
@@ -2057,14 +2057,14 @@ void op_addAvxZeroOpmask(MCInst *MI)
 {
 	if (MI->csh->detail_opt) {
 		// link with the previous operand
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count - 1].avx_zero_opmask = true;
+		MI->flat_insn->detail->d.x86.operands[MI->flat_insn->detail->d.x86.op_count - 1].avx_zero_opmask = true;
 	}
 }
 
 void op_addAvxSae(MCInst *MI)
 {
 	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->x86.avx_sae = true;
+		MI->flat_insn->detail->d.x86.avx_sae = true;
 	}
 }
 
@@ -2072,7 +2072,7 @@ void op_addAvxBroadcast(MCInst *MI, x86_avx_bcast v)
 {
 	if (MI->csh->detail_opt) {
 		// link with the previous operand
-		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count - 1].avx_bcast = v;
+		MI->flat_insn->detail->d.x86.operands[MI->flat_insn->detail->d.x86.op_count - 1].avx_bcast = v;
 	}
 }
 
@@ -2109,7 +2109,7 @@ void X86_reg_access(const cs_insn *insn,
 {
 	uint8_t i;
 	uint8_t read_count, write_count;
-	cs_x86 *x86 = &(insn->detail->x86);
+	cs_x86 *x86 = &(insn->detail->d.x86);
 
 	read_count = insn->detail->regs_read_count;
 	write_count = insn->detail->regs_write_count;
@@ -2123,27 +2123,27 @@ void X86_reg_access(const cs_insn *insn,
 		cs_x86_op *op = &(x86->operands[i]);
 		switch((int)op->type) {
 			case X86_OP_REG:
-				if ((op->access & CS_AC_READ) && !arr_exist(regs_read, read_count, op->reg)) {
-					regs_read[read_count] = op->reg;
+				if ((op->access & CS_AC_READ) && !arr_exist(regs_read, read_count, op->v.reg)) {
+					regs_read[read_count] = op->v.reg;
 					read_count++;
 				}
-				if ((op->access & CS_AC_WRITE) && !arr_exist(regs_write, write_count, op->reg)) {
-					regs_write[write_count] = op->reg;
+				if ((op->access & CS_AC_WRITE) && !arr_exist(regs_write, write_count, op->v.reg)) {
+					regs_write[write_count] = op->v.reg;
 					write_count++;
 				}
 				break;
 			case X86_OP_MEM:
 				// registers appeared in memory references always being read
-				if ((op->mem.segment != X86_REG_INVALID)) {
-					regs_read[read_count] = op->mem.segment;
+				if ((op->v.mem.segment != X86_REG_INVALID)) {
+					regs_read[read_count] = op->v.mem.segment;
 					read_count++;
 				}
-				if ((op->mem.base != X86_REG_INVALID) && !arr_exist(regs_read, read_count, op->mem.base)) {
-					regs_read[read_count] = op->mem.base;
+				if ((op->v.mem.base != X86_REG_INVALID) && !arr_exist(regs_read, read_count, op->v.mem.base)) {
+					regs_read[read_count] = op->v.mem.base;
 					read_count++;
 				}
-				if ((op->mem.index != X86_REG_INVALID) && !arr_exist(regs_read, read_count, op->mem.index)) {
-					regs_read[read_count] = op->mem.index;
+				if ((op->v.mem.index != X86_REG_INVALID) && !arr_exist(regs_read, read_count, op->v.mem.index)) {
+					regs_read[read_count] = op->v.mem.index;
 					read_count++;
 				}
 			default:
@@ -2236,13 +2236,13 @@ void X86_postprinter(csh handle, cs_insn *insn, SStream *mnem, MCInst *mci) {
 		break;
 	case X86_INS_RCL:
 		// Addmissing 1 immediate
-		if (insn->detail->x86.op_count > 1) {
+		if (insn->detail->d.x86.op_count > 1) {
 			return;
 		}
-		insn->detail->x86.operands[1].imm = 1;
-		insn->detail->x86.operands[1].type = X86_OP_IMM;
-		insn->detail->x86.operands[1].access = CS_AC_READ;
-		insn->detail->x86.op_count++;
+		insn->detail->d.x86.operands[1].v.imm = 1;
+		insn->detail->d.x86.operands[1].type = X86_OP_IMM;
+		insn->detail->d.x86.operands[1].access = CS_AC_READ;
+		insn->detail->d.x86.op_count++;
 		break;
 	}
 }
