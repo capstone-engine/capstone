@@ -93,18 +93,18 @@ static void fixDetailOfEffectiveAddr(MCInst *MI)
 		case RISCV_INS_SD:
 		case RISCV_INS_SH:
 		case RISCV_INS_SW: {
-			CS_ASSERT(3 == MI->flat_insn->detail->riscv.op_count);
+			CS_ASSERT(3 == MI->flat_insn->detail->d.riscv.op_count);
 			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -3)->type);
 			CS_ASSERT(RISCV_OP_IMM == RISCV_get_detail_op(MI, -2)->type);
 			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -1)->type);
 
-			imm = RISCV_get_detail_op(MI, -2)->imm;
-			reg = RISCV_get_detail_op(MI, -1)->reg;
+			imm = RISCV_get_detail_op(MI, -2)->v.imm;
+			reg = RISCV_get_detail_op(MI, -1)->v.reg;
 			access = RISCV_get_detail_op(MI, -1)->access;
 
 			RISCV_get_detail_op(MI, -2)->type = RISCV_OP_MEM;
-			RISCV_get_detail_op(MI, -2)->mem.base = reg;
-			RISCV_get_detail_op(MI, -2)->mem.disp = imm;
+			RISCV_get_detail_op(MI, -2)->v.mem.base = reg;
+			RISCV_get_detail_op(MI, -2)->v.mem.disp = imm;
 			RISCV_get_detail_op(MI, -2)->access = access;
 
 			RISCV_dec_op_count(MI);
@@ -119,15 +119,15 @@ static void fixDetailOfEffectiveAddr(MCInst *MI)
 		case RISCV_INS_LR_D_AQ:
 		case RISCV_INS_LR_D_AQ_RL:
 		case RISCV_INS_LR_D_RL: {
-			CS_ASSERT(2 == MI->flat_insn->detail->riscv.op_count);
+			CS_ASSERT(2 == MI->flat_insn->detail->d.riscv.op_count);
 			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -1)->type);
 			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -2)->type);
 
-			reg = RISCV_get_detail_op(MI, -1)->reg;
+			reg = RISCV_get_detail_op(MI, -1)->v.reg;
 
 			RISCV_get_detail_op(MI, -1)->type = RISCV_OP_MEM;
-			RISCV_get_detail_op(MI, -1)->mem.base = reg;
-			RISCV_get_detail_op(MI, -1)->mem.disp = 0;
+			RISCV_get_detail_op(MI, -1)->v.mem.base = reg;
+			RISCV_get_detail_op(MI, -1)->v.mem.disp = 0;
 
 			break;
 		}
@@ -211,16 +211,16 @@ static void fixDetailOfEffectiveAddr(MCInst *MI)
 		case RISCV_INS_AMOXOR_W_AQ:
 		case RISCV_INS_AMOXOR_W_AQ_RL:
 		case RISCV_INS_AMOXOR_W_RL: {
-			CS_ASSERT(3 == MI->flat_insn->detail->riscv.op_count);
+			CS_ASSERT(3 == MI->flat_insn->detail->d.riscv.op_count);
 			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -3)->type);
 			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -2)->type);
 			CS_ASSERT(RISCV_OP_REG == RISCV_get_detail_op(MI, -1)->type);
 
-			reg = RISCV_get_detail_op(MI, -1)->reg;
+			reg = RISCV_get_detail_op(MI, -1)->v.reg;
 
 			RISCV_get_detail_op(MI, -1)->type = RISCV_OP_MEM;
-			RISCV_get_detail_op(MI, -1)->mem.base = reg;
-			RISCV_get_detail_op(MI, -1)->mem.disp = 0;
+			RISCV_get_detail_op(MI, -1)->v.mem.base = reg;
+			RISCV_get_detail_op(MI, -1)->v.mem.disp = 0;
 
 			break;
 		}
@@ -251,7 +251,7 @@ void RISCV_printInst(MCInst *MI, SStream *O, void *info)
   		//printAnnotation(O, Annot);
 	// fix load/store type insttuction
     	if (MI->csh->detail_opt && 
-	    MI->flat_insn->detail->riscv.need_effective_addr)
+	    MI->flat_insn->detail->d.riscv.need_effective_addr)
 		fixDetailOfEffectiveAddr(MI);
 	
 	return;

@@ -330,7 +330,7 @@ static void markLSInsn(MCInst *MI, uint32_t in)
 	if (0 == (opcode ^ 0x03) || 0 == (opcode ^ 0x07) ||
 		0 == (opcode ^ 0x23) || 0 == (opcode ^ 0x27) ||
 		0 == (opcode ^ 0x2f))
-		MI->flat_insn->detail->riscv.need_effective_addr = true;
+		MI->flat_insn->detail->d.riscv.need_effective_addr = true;
 #undef MASK_LS_INSN
 	return;
 }

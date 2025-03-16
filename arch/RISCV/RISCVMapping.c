@@ -157,13 +157,13 @@ void RISCV_add_cs_detail(MCInst *MI, unsigned OpNum) {
 
 	if (op_type == CS_OP_IMM) {
 		RISCV_get_detail_op(MI, 0)->type = RISCV_OP_IMM;
-		RISCV_get_detail_op(MI, 0)->imm = MCInst_getOpVal(MI, OpNum);
+		RISCV_get_detail_op(MI, 0)->v.imm = MCInst_getOpVal(MI, OpNum);
 		RISCV_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 		RISCV_inc_op_count(MI);
 	}
 	else if (op_type == CS_OP_REG) {
 		RISCV_get_detail_op(MI, 0)->type = RISCV_OP_REG;
-		RISCV_get_detail_op(MI, 0)->reg = MCInst_getOpVal(MI, OpNum);
+		RISCV_get_detail_op(MI, 0)->v.reg = MCInst_getOpVal(MI, OpNum);
 		RISCV_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 		RISCV_inc_op_count(MI);
 	}
