@@ -117,7 +117,7 @@ void Xtensa_reg_access(const cs_insn *insn, cs_regs regs_read,
 {
 	uint8_t i;
 	uint8_t read_count, write_count;
-	cs_xtensa *detail = &(insn->detail->xtensa);
+	cs_xtensa *detail = &(insn->detail->d.xtensa);
 
 	read_count = insn->detail->regs_read_count;
 	write_count = insn->detail->regs_write_count;
@@ -134,28 +134,28 @@ void Xtensa_reg_access(const cs_insn *insn, cs_regs regs_read,
 		switch (op->type) {
 		case XTENSA_OP_REG:
 			if ((op->access & CS_AC_READ) &&
-			    !arr_exist(regs_read, read_count, op->reg)) {
-				regs_read[read_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_read, read_count, op->v.reg)) {
+				regs_read[read_count] = (uint16_t)op->v.reg;
 				read_count++;
 			}
 			if ((op->access & CS_AC_WRITE) &&
-			    !arr_exist(regs_write, write_count, op->reg)) {
-				regs_write[write_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_write, write_count, op->v.reg)) {
+				regs_write[write_count] = (uint16_t)op->v.reg;
 				write_count++;
 			}
 			break;
 		case XTENSA_OP_MEM:
 			// registers appeared in memory references always being read
-			if ((op->mem.base != XTENSA_REG_INVALID) &&
-			    !arr_exist(regs_read, read_count, op->mem.base)) {
-				regs_read[read_count] = (uint16_t)op->mem.base;
+			if ((op->v.mem.base != XTENSA_REG_INVALID) &&
+			    !arr_exist(regs_read, read_count, op->v.mem.base)) {
+				regs_read[read_count] = (uint16_t)op->v.mem.base;
 				read_count++;
 			}
 			if ((insn->detail->writeback) &&
-			    (op->mem.base != XTENSA_REG_INVALID) &&
-			    !arr_exist(regs_write, write_count, op->mem.base)) {
+			    (op->v.mem.base != XTENSA_REG_INVALID) &&
+			    !arr_exist(regs_write, write_count, op->v.mem.base)) {
 				regs_write[write_count] =
-					(uint16_t)op->mem.base;
+					(uint16_t)op->v.mem.base;
 				write_count++;
 			}
 		default:
@@ -194,10 +194,10 @@ void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 		const MCOperand *MC = MCInst_getOperand(MI, op_num);
 		if (MCOperand_isReg(MC)) {
 			xop->type = XTENSA_OP_REG;
-			xop->reg = MC->RegVal;
+			xop->v.reg = MC->v.RegVal;
 		} else if (MCOperand_isImm(MC)) {
 			xop->type = XTENSA_OP_IMM;
-			xop->imm = MC->ImmVal;
+			xop->v.imm = MC->v.ImmVal;
 		}
 	} break;
 	case Xtensa_OP_GROUP_Imm1_16_AsmOperand:
@@ -239,7 +239,7 @@ void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 	case Xtensa_OP_GROUP_Select_256_AsmOperand: {
 		int64_t val = MCOperand_getImm(MCInst_getOperand(MI, op_num));
 		xop->type = XTENSA_OP_IMM;
-		xop->imm = (int32_t)val;
+		xop->v.imm = (int32_t)val;
 	} break;
 	case Xtensa_OP_GROUP_BranchTarget:
 	case Xtensa_OP_GROUP_JumpTarget:
@@ -248,11 +248,11 @@ void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 		int64_t val =
 			MCOperand_getImm(MCInst_getOperand(MI, op_num)) + 4;
 		xop->type = XTENSA_OP_IMM;
-		xop->imm = (int32_t)val;
+		xop->v.imm = (int32_t)val;
 	} break;
 	case Xtensa_OP_GROUP_L32RTarget: {
 		xop->type = XTENSA_OP_L32R;
-		xop->imm = (int32_t)Xtensa_L32R_Value(MI, op_num);
+		xop->v.imm = (int32_t)Xtensa_L32R_Value(MI, op_num);
 	} break;
 	case Xtensa_OP_GROUP_MemOperand: {
 		unsigned reg =
@@ -260,8 +260,8 @@ void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 		int64_t imm8 =
 			MCOperand_getImm(MCInst_getOperand(MI, op_num + 1));
 		xop->type = XTENSA_OP_MEM;
-		xop->mem.base = reg;
-		xop->mem.disp = (int32_t)imm8;
+		xop->v.mem.base = reg;
+		xop->v.mem.disp = (int32_t)imm8;
 	} break;
 	}
 
