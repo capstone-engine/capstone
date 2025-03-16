@@ -362,28 +362,28 @@ static DecodeStatus DecodeCondRegister(MCInst *Inst, unsigned Val,
 	switch(Val) {
 		case 0:
 		case 7:
-			Inst->flat_insn->detail->tms320c64x.condition.reg = TMS320C64X_REG_INVALID;
+			Inst->flat_insn->detail->d.tms320c64x.condition.reg = TMS320C64X_REG_INVALID;
 			break;
 		case 1:
-			Inst->flat_insn->detail->tms320c64x.condition.reg = TMS320C64X_REG_B0;
+			Inst->flat_insn->detail->d.tms320c64x.condition.reg = TMS320C64X_REG_B0;
 			break;
 		case 2:
-			Inst->flat_insn->detail->tms320c64x.condition.reg = TMS320C64X_REG_B1;
+			Inst->flat_insn->detail->d.tms320c64x.condition.reg = TMS320C64X_REG_B1;
 			break;
 		case 3:
-			Inst->flat_insn->detail->tms320c64x.condition.reg = TMS320C64X_REG_B2;
+			Inst->flat_insn->detail->d.tms320c64x.condition.reg = TMS320C64X_REG_B2;
 			break;
 		case 4:
-			Inst->flat_insn->detail->tms320c64x.condition.reg = TMS320C64X_REG_A1;
+			Inst->flat_insn->detail->d.tms320c64x.condition.reg = TMS320C64X_REG_A1;
 			break;
 		case 5:
-			Inst->flat_insn->detail->tms320c64x.condition.reg = TMS320C64X_REG_A2;
+			Inst->flat_insn->detail->d.tms320c64x.condition.reg = TMS320C64X_REG_A2;
 			break;
 		case 6:
-			Inst->flat_insn->detail->tms320c64x.condition.reg = TMS320C64X_REG_A0;
+			Inst->flat_insn->detail->d.tms320c64x.condition.reg = TMS320C64X_REG_A0;
 			break;
 		default:
-			Inst->flat_insn->detail->tms320c64x.condition.reg = TMS320C64X_REG_INVALID;
+			Inst->flat_insn->detail->d.tms320c64x.condition.reg = TMS320C64X_REG_INVALID;
 			ret = MCDisassembler_Fail;
 			break;
 	}
@@ -401,13 +401,13 @@ static DecodeStatus DecodeCondRegisterZero(MCInst *Inst, unsigned Val,
 
 	switch(Val) {
 		case 0:
-			Inst->flat_insn->detail->tms320c64x.condition.zero = 0;
+			Inst->flat_insn->detail->d.tms320c64x.condition.zero = 0;
 			break;
 		case 1:
-			Inst->flat_insn->detail->tms320c64x.condition.zero = 1;
+			Inst->flat_insn->detail->d.tms320c64x.condition.zero = 1;
 			break;
 		default:
-			Inst->flat_insn->detail->tms320c64x.condition.zero = 0;
+			Inst->flat_insn->detail->d.tms320c64x.condition.zero = 0;
 			ret = MCDisassembler_Fail;
 			break;
 	}
@@ -427,10 +427,10 @@ static DecodeStatus DecodeSide(MCInst *Inst, unsigned Val,
 		for(i = 0; i < Inst->size; i++) {
 			op = &Inst->Operands[i];
 			if(op->Kind == kRegister) {
-				if((op->RegVal >= TMS320C64X_REG_A0) && (op->RegVal <= TMS320C64X_REG_A31))
-					op->RegVal = (op->RegVal - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
-				else if((op->RegVal >= TMS320C64X_REG_B0) && (op->RegVal <= TMS320C64X_REG_B31))
-					op->RegVal = (op->RegVal - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
+				if((op->v.RegVal >= TMS320C64X_REG_A0) && (op->v.RegVal <= TMS320C64X_REG_A31))
+					op->v.RegVal = (op->v.RegVal - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
+				else if((op->v.RegVal >= TMS320C64X_REG_B0) && (op->v.RegVal <= TMS320C64X_REG_B31))
+					op->v.RegVal = (op->v.RegVal - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
 			}
 		}
 	}
@@ -440,13 +440,13 @@ static DecodeStatus DecodeSide(MCInst *Inst, unsigned Val,
 
 	switch(Val) {
 		case 0:
-			Inst->flat_insn->detail->tms320c64x.funit.side = 1;
+			Inst->flat_insn->detail->d.tms320c64x.funit.side = 1;
 			break;
 		case 1:
-			Inst->flat_insn->detail->tms320c64x.funit.side = 2;
+			Inst->flat_insn->detail->d.tms320c64x.funit.side = 2;
 			break;
 		default:
-			Inst->flat_insn->detail->tms320c64x.funit.side = 0;
+			Inst->flat_insn->detail->d.tms320c64x.funit.side = 0;
 			ret = MCDisassembler_Fail;
 			break;
 	}
@@ -464,13 +464,13 @@ static DecodeStatus DecodeParallel(MCInst *Inst, unsigned Val,
 
 	switch(Val) {
 		case 0:
-			Inst->flat_insn->detail->tms320c64x.parallel = 0;
+			Inst->flat_insn->detail->d.tms320c64x.parallel = 0;
 			break;
 		case 1:
-			Inst->flat_insn->detail->tms320c64x.parallel = 1;
+			Inst->flat_insn->detail->d.tms320c64x.parallel = 1;
 			break;
 		default:
-			Inst->flat_insn->detail->tms320c64x.parallel = -1;
+			Inst->flat_insn->detail->d.tms320c64x.parallel = -1;
 			ret = MCDisassembler_Fail;
 			break;
 	}
@@ -489,20 +489,20 @@ static DecodeStatus DecodeCrosspathX1(MCInst *Inst, unsigned Val,
 
 	switch(Val) {
 		case 0:
-			Inst->flat_insn->detail->tms320c64x.funit.crosspath = 0;
+			Inst->flat_insn->detail->d.tms320c64x.funit.crosspath = 0;
 			break;
 		case 1:
-			Inst->flat_insn->detail->tms320c64x.funit.crosspath = 1;
+			Inst->flat_insn->detail->d.tms320c64x.funit.crosspath = 1;
 			op = &Inst->Operands[0];
 			if(op->Kind == kRegister) {
-				if((op->RegVal >= TMS320C64X_REG_A0) && (op->RegVal <= TMS320C64X_REG_A31))
-					op->RegVal = (op->RegVal - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
-				else if((op->RegVal >= TMS320C64X_REG_B0) && (op->RegVal <= TMS320C64X_REG_B31))
-					op->RegVal = (op->RegVal - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
+				if((op->v.RegVal >= TMS320C64X_REG_A0) && (op->v.RegVal <= TMS320C64X_REG_A31))
+					op->v.RegVal = (op->v.RegVal - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
+				else if((op->v.RegVal >= TMS320C64X_REG_B0) && (op->v.RegVal <= TMS320C64X_REG_B31))
+					op->v.RegVal = (op->v.RegVal - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
 			}
 			break;
 		default:
-			Inst->flat_insn->detail->tms320c64x.funit.crosspath = -1;
+			Inst->flat_insn->detail->d.tms320c64x.funit.crosspath = -1;
 			ret = MCDisassembler_Fail;
 			break;
 	}
@@ -521,20 +521,20 @@ static DecodeStatus DecodeCrosspathX2(MCInst *Inst, unsigned Val,
 
 	switch(Val) {
 		case 0:
-			Inst->flat_insn->detail->tms320c64x.funit.crosspath = 0;
+			Inst->flat_insn->detail->d.tms320c64x.funit.crosspath = 0;
 			break;
 		case 1:
-			Inst->flat_insn->detail->tms320c64x.funit.crosspath = 1;
+			Inst->flat_insn->detail->d.tms320c64x.funit.crosspath = 1;
 			op = &Inst->Operands[1];
 			if(op->Kind == kRegister) {
-				if((op->RegVal >= TMS320C64X_REG_A0) && (op->RegVal <= TMS320C64X_REG_A31))
-					op->RegVal = (op->RegVal - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
-				else if((op->RegVal >= TMS320C64X_REG_B0) && (op->RegVal <= TMS320C64X_REG_B31))
-					op->RegVal = (op->RegVal - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
+				if((op->v.RegVal >= TMS320C64X_REG_A0) && (op->v.RegVal <= TMS320C64X_REG_A31))
+					op->v.RegVal = (op->v.RegVal - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
+				else if((op->v.RegVal >= TMS320C64X_REG_B0) && (op->v.RegVal <= TMS320C64X_REG_B31))
+					op->v.RegVal = (op->v.RegVal - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
 			}
 			break;
 		default:
-			Inst->flat_insn->detail->tms320c64x.funit.crosspath = -1;
+			Inst->flat_insn->detail->d.tms320c64x.funit.crosspath = -1;
 			ret = MCDisassembler_Fail;
 			break;
 	}
@@ -553,20 +553,20 @@ static DecodeStatus DecodeCrosspathX3(MCInst *Inst, unsigned Val,
 
 	switch(Val) {
 		case 0:
-			Inst->flat_insn->detail->tms320c64x.funit.crosspath = 0;
+			Inst->flat_insn->detail->d.tms320c64x.funit.crosspath = 0;
 			break;
 		case 1:
-			Inst->flat_insn->detail->tms320c64x.funit.crosspath = 2;
+			Inst->flat_insn->detail->d.tms320c64x.funit.crosspath = 2;
 			op = &Inst->Operands[2];
 			if(op->Kind == kRegister) {
-				if((op->RegVal >= TMS320C64X_REG_A0) && (op->RegVal <= TMS320C64X_REG_A31))
-					op->RegVal = (op->RegVal - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
-				else if((op->RegVal >= TMS320C64X_REG_B0) && (op->RegVal <= TMS320C64X_REG_B31))
-					op->RegVal = (op->RegVal - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
+				if((op->v.RegVal >= TMS320C64X_REG_A0) && (op->v.RegVal <= TMS320C64X_REG_A31))
+					op->v.RegVal = (op->v.RegVal - TMS320C64X_REG_A0 + TMS320C64X_REG_B0);
+				else if((op->v.RegVal >= TMS320C64X_REG_B0) && (op->v.RegVal <= TMS320C64X_REG_B31))
+					op->v.RegVal = (op->v.RegVal - TMS320C64X_REG_B0 + TMS320C64X_REG_A0);
 			}
 			break;
 		default:
-			Inst->flat_insn->detail->tms320c64x.funit.crosspath = -1;
+			Inst->flat_insn->detail->d.tms320c64x.funit.crosspath = -1;
 			ret = MCDisassembler_Fail;
 			break;
 	}
@@ -598,7 +598,7 @@ bool TMS320C64x_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	}
 
 	if(MI->flat_insn->detail)
-		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, tms320c64x)+sizeof(cs_tms320c64x));
+		memset(MI->flat_insn->detail, 0, offsetof(cs_detail, d.tms320c64x)+sizeof(cs_tms320c64x));
 
 	insn = (code[3] << 0) | (code[2] << 8) | (code[1] << 16) | ((uint32_t) code[0] << 24);
 	result = decodeInstruction_4(DecoderTable32, MI, insn, address, info, 0);

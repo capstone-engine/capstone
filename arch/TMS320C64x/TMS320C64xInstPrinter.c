@@ -32,7 +32,7 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *m
 	cs_tms320c64x *tms320c64x;
 
 	if (mci->csh->detail_opt) {
-		tms320c64x = &mci->flat_insn->detail->tms320c64x;
+		tms320c64x = &mci->flat_insn->detail->d.tms320c64x;
 
 		for (i = 0; i < insn->detail->groups_count; i++) {
 			switch(insn->detail->groups[i]) {
@@ -144,9 +144,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 
 		if (MI->csh->detail_opt) {
-			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].type = TMS320C64X_OP_REG;
-			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].reg = reg;
-			MI->flat_insn->detail->tms320c64x.op_count++;
+			MI->flat_insn->detail->d.tms320c64x.operands[MI->flat_insn->detail->d.tms320c64x.op_count].type = TMS320C64X_OP_REG;
+			MI->flat_insn->detail->d.tms320c64x.operands[MI->flat_insn->detail->d.tms320c64x.op_count].v.reg = reg;
+			MI->flat_insn->detail->d.tms320c64x.op_count++;
 		}
 	} else if (MCOperand_isImm(Op)) {
 		int64_t Imm = MCOperand_getImm(Op);
@@ -164,9 +164,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		}
 
 		if (MI->csh->detail_opt) {
-			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].type = TMS320C64X_OP_IMM;
-			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].imm = Imm;
-			MI->flat_insn->detail->tms320c64x.op_count++;
+			MI->flat_insn->detail->d.tms320c64x.operands[MI->flat_insn->detail->d.tms320c64x.op_count].type = TMS320C64X_OP_IMM;
+			MI->flat_insn->detail->d.tms320c64x.operands[MI->flat_insn->detail->d.tms320c64x.op_count].v.imm = Imm;
+			MI->flat_insn->detail->d.tms320c64x.op_count++;
 		}
 	}
 }
@@ -233,73 +233,73 @@ static void printMemOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 
 	if (MI->csh->detail_opt) {
-		tms320c64x = &MI->flat_insn->detail->tms320c64x;
+		tms320c64x = &MI->flat_insn->detail->d.tms320c64x;
 
 		tms320c64x->operands[tms320c64x->op_count].type = TMS320C64X_OP_MEM;
-		tms320c64x->operands[tms320c64x->op_count].mem.base = base;
-		tms320c64x->operands[tms320c64x->op_count].mem.disp = offset;
-		tms320c64x->operands[tms320c64x->op_count].mem.unit = unit + 1;
-		tms320c64x->operands[tms320c64x->op_count].mem.scaled = scaled;
+		tms320c64x->operands[tms320c64x->op_count].v.mem.base = base;
+		tms320c64x->operands[tms320c64x->op_count].v.mem.disp = offset;
+		tms320c64x->operands[tms320c64x->op_count].v.mem.unit = unit + 1;
+		tms320c64x->operands[tms320c64x->op_count].v.mem.scaled = scaled;
 		switch(mode) {
 			case 0:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_NO;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_BW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_NO;
 				break;
 			case 1:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_NO;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_FW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_NO;
 				break;
 			case 4:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_NO;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_BW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_NO;
 				break;
 			case 5:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_NO;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_FW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_NO;
 				break;
 			case 8:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_PRE;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_BW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_PRE;
 				break;
 			case 9:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_PRE;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_FW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_PRE;
 				break;
 			case 10:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_POST;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_BW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_POST;
 				break;
 			case 11:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_POST;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_FW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_POST;
 				break;
 			case 12:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_PRE;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_BW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_PRE;
 				break;
 			case 13:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_PRE;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_FW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_PRE;
 				break;
 			case 14:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_POST;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_BW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_POST;
 				break;
 			case 15:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_POST;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_FW;
+				tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_POST;
 				break;
 		}
 		tms320c64x->op_count++;
@@ -319,15 +319,15 @@ static void printMemOperand2(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat(O, "*+%s[0x%x]", getRegisterName(basereg), offset);
 
 	if (MI->csh->detail_opt) {
-		tms320c64x = &MI->flat_insn->detail->tms320c64x;
+		tms320c64x = &MI->flat_insn->detail->d.tms320c64x;
 
 		tms320c64x->operands[tms320c64x->op_count].type = TMS320C64X_OP_MEM;
-		tms320c64x->operands[tms320c64x->op_count].mem.base = basereg;
-		tms320c64x->operands[tms320c64x->op_count].mem.unit = 2;
-		tms320c64x->operands[tms320c64x->op_count].mem.disp = offset;
-		tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-		tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-		tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_NO;
+		tms320c64x->operands[tms320c64x->op_count].v.mem.base = basereg;
+		tms320c64x->operands[tms320c64x->op_count].v.mem.unit = 2;
+		tms320c64x->operands[tms320c64x->op_count].v.mem.disp = offset;
+		tms320c64x->operands[tms320c64x->op_count].v.mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
+		tms320c64x->operands[tms320c64x->op_count].v.mem.direction = TMS320C64X_MEM_DIR_FW;
+		tms320c64x->operands[tms320c64x->op_count].v.mem.modify = TMS320C64X_MEM_MOD_NO;
 		tms320c64x->op_count++;
 	}
 }
@@ -341,10 +341,10 @@ static void printRegPair(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat(O, "%s:%s", getRegisterName(reg + 1), getRegisterName(reg));
 
 	if (MI->csh->detail_opt) {
-		tms320c64x = &MI->flat_insn->detail->tms320c64x;
+		tms320c64x = &MI->flat_insn->detail->d.tms320c64x;
 
 		tms320c64x->operands[tms320c64x->op_count].type = TMS320C64X_OP_REGPAIR;
-		tms320c64x->operands[tms320c64x->op_count].reg = reg;
+		tms320c64x->operands[tms320c64x->op_count].v.reg = reg;
 		tms320c64x->op_count++;
 	}
 }
