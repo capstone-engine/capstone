@@ -118,7 +118,7 @@ void LoongArch_reg_access(const cs_insn *insn, cs_regs regs_read,
 {
 	uint8_t i;
 	uint8_t read_count, write_count;
-	cs_loongarch *loongarch = &(insn->detail->loongarch);
+	cs_loongarch *loongarch = &(insn->detail->d.loongarch);
 
 	read_count = insn->detail->regs_read_count;
 	write_count = insn->detail->regs_write_count;
@@ -135,28 +135,28 @@ void LoongArch_reg_access(const cs_insn *insn, cs_regs regs_read,
 		switch ((int)op->type) {
 		case LOONGARCH_OP_REG:
 			if ((op->access & CS_AC_READ) &&
-			    !arr_exist(regs_read, read_count, op->reg)) {
-				regs_read[read_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_read, read_count, op->v.reg)) {
+				regs_read[read_count] = (uint16_t)op->v.reg;
 				read_count++;
 			}
 			if ((op->access & CS_AC_WRITE) &&
-			    !arr_exist(regs_write, write_count, op->reg)) {
-				regs_write[write_count] = (uint16_t)op->reg;
+			    !arr_exist(regs_write, write_count, op->v.reg)) {
+				regs_write[write_count] = (uint16_t)op->v.reg;
 				write_count++;
 			}
 			break;
 		case LOONGARCH_OP_MEM:
 			// registers appeared in memory references always being read
-			if ((op->mem.base != LOONGARCH_REG_INVALID) &&
-			    !arr_exist(regs_read, read_count, op->mem.base)) {
-				regs_read[read_count] = (uint16_t)op->mem.base;
+			if ((op->v.mem.base != LOONGARCH_REG_INVALID) &&
+			    !arr_exist(regs_read, read_count, op->v.mem.base)) {
+				regs_read[read_count] = (uint16_t)op->v.mem.base;
 				read_count++;
 			}
 			if ((insn->detail->writeback) &&
-			    (op->mem.base != LOONGARCH_REG_INVALID) &&
-			    !arr_exist(regs_write, write_count, op->mem.base)) {
+			    (op->v.mem.base != LOONGARCH_REG_INVALID) &&
+			    !arr_exist(regs_write, write_count, op->v.mem.base)) {
 				regs_write[write_count] =
-					(uint16_t)op->mem.base;
+					(uint16_t)op->v.mem.base;
 				write_count++;
 			}
 		default:
@@ -216,8 +216,8 @@ void LoongArch_rewrite_memory_operand(MCInst *MI)
 	case LOONGARCH_INS_SCREL_D:
 		// last register rj is memory operand
 		LoongArch_get_detail_op(MI, -1)->type = LOONGARCH_OP_MEM;
-		base = LoongArch_get_detail_op(MI, -1)->reg;
-		LoongArch_get_detail_op(MI, -1)->mem.base = base;
+		base = LoongArch_get_detail_op(MI, -1)->v.reg;
+		LoongArch_get_detail_op(MI, -1)->v.mem.base = base;
 		LoongArch_get_detail_op(MI, -1)->access =
 			suppl_info->memory_access;
 		return;
@@ -248,8 +248,8 @@ void LoongArch_rewrite_memory_operand(MCInst *MI)
 	case LOONGARCH_INS_FSTGT_D:
 		// second register rj is memory operand
 		LoongArch_get_detail_op(MI, -2)->type = LOONGARCH_OP_MEM;
-		base = LoongArch_get_detail_op(MI, -2)->reg;
-		LoongArch_get_detail_op(MI, -2)->mem.base = base;
+		base = LoongArch_get_detail_op(MI, -2)->v.reg;
+		LoongArch_get_detail_op(MI, -2)->v.mem.base = base;
 		LoongArch_get_detail_op(MI, -2)->access =
 			suppl_info->memory_access;
 		return;
@@ -280,10 +280,10 @@ void LoongArch_rewrite_memory_operand(MCInst *MI)
 	case LOONGARCH_INSN_FORM_FPFMT2RI12:	 // fld, fst
 		// immediate offset
 		LoongArch_get_detail_op(MI, -2)->type = LOONGARCH_OP_MEM;
-		base = LoongArch_get_detail_op(MI, -2)->reg;
-		LoongArch_get_detail_op(MI, -2)->mem.base = base;
-		LoongArch_get_detail_op(MI, -2)->mem.disp =
-			LoongArch_get_detail_op(MI, -1)->imm;
+		base = LoongArch_get_detail_op(MI, -2)->v.reg;
+		LoongArch_get_detail_op(MI, -2)->v.mem.base = base;
+		LoongArch_get_detail_op(MI, -2)->v.mem.disp =
+			LoongArch_get_detail_op(MI, -1)->v.imm;
 		LoongArch_get_detail_op(MI, -2)->access =
 			suppl_info->memory_access;
 		LoongArch_dec_op_count(MI);
@@ -295,8 +295,8 @@ void LoongArch_rewrite_memory_operand(MCInst *MI)
 			// last register rj is memory operand
 			LoongArch_get_detail_op(MI, -1)->type =
 				LOONGARCH_OP_MEM;
-			base = LoongArch_get_detail_op(MI, -1)->reg;
-			LoongArch_get_detail_op(MI, -1)->mem.base = base;
+			base = LoongArch_get_detail_op(MI, -1)->v.reg;
+			LoongArch_get_detail_op(MI, -1)->v.mem.base = base;
 			LoongArch_get_detail_op(MI, -1)->access =
 				suppl_info->memory_access;
 			break;
@@ -309,10 +309,10 @@ void LoongArch_rewrite_memory_operand(MCInst *MI)
 	case LOONGARCH_INSN_FORM_FMTPRELDX: // preldx
 		// register offset
 		LoongArch_get_detail_op(MI, -2)->type = LOONGARCH_OP_MEM;
-		base = LoongArch_get_detail_op(MI, -2)->reg;
-		LoongArch_get_detail_op(MI, -2)->mem.base = base;
-		LoongArch_get_detail_op(MI, -2)->mem.index =
-			LoongArch_get_detail_op(MI, -1)->reg;
+		base = LoongArch_get_detail_op(MI, -2)->v.reg;
+		LoongArch_get_detail_op(MI, -2)->v.mem.base = base;
+		LoongArch_get_detail_op(MI, -2)->v.mem.index =
+			LoongArch_get_detail_op(MI, -1)->v.reg;
 		LoongArch_get_detail_op(MI, -2)->access =
 			suppl_info->memory_access;
 		LoongArch_dec_op_count(MI);
@@ -357,7 +357,7 @@ static void LoongArch_add_cs_groups(MCInst *MI)
 	if (!MI->flat_insn->detail)
 		return;
 	unsigned Opcode = MI->flat_insn->id;
-	cs_loongarch *loongarch = &(MI->flat_insn->detail->loongarch);
+	cs_loongarch *loongarch = &(MI->flat_insn->detail->d.loongarch);
 	switch (Opcode) {
 	default:
 		return;
@@ -366,7 +366,7 @@ static void LoongArch_add_cs_groups(MCInst *MI)
 		break;
 	case LOONGARCH_INS_JIRL:
 		if (loongarch->op_count == 3 &&
-		    loongarch->operands[0].reg == LOONGARCH_REG_RA) {
+		    loongarch->operands[0].v.reg == LOONGARCH_REG_RA) {
 			// call: jirl ra, rj, offs16
 			add_group(MI, LOONGARCH_GRP_CALL);
 		} else if (loongarch->op_count == 0) {
@@ -448,7 +448,7 @@ void LoongArch_init_cs_detail(MCInst *MI)
 		unsigned int i;
 
 		memset(get_detail(MI), 0,
-		       offsetof(cs_detail, loongarch) + sizeof(cs_loongarch));
+		       offsetof(cs_detail, d.loongarch) + sizeof(cs_loongarch));
 
 		for (i = 0; i < ARR_SIZE(LoongArch_get_detail(MI)->operands);
 		     i++)
@@ -470,7 +470,7 @@ void LoongArch_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 	CS_ASSERT_RET(ImmType == LOONGARCH_OP_IMM);
 
 	LoongArch_get_detail_op(MI, 0)->type = ImmType;
-	LoongArch_get_detail_op(MI, 0)->imm = Imm;
+	LoongArch_get_detail_op(MI, 0)->v.imm = Imm;
 	LoongArch_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	LoongArch_inc_op_count(MI);
 }
@@ -482,7 +482,7 @@ void LoongArch_set_detail_op_reg(MCInst *MI, unsigned OpNum, loongarch_reg Reg)
 	CS_ASSERT_RET((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
 
 	LoongArch_get_detail_op(MI, 0)->type = LOONGARCH_OP_REG;
-	LoongArch_get_detail_op(MI, 0)->reg = Reg;
+	LoongArch_get_detail_op(MI, 0)->v.reg = Reg;
 	LoongArch_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
 	LoongArch_inc_op_count(MI);
 }
