@@ -1698,105 +1698,105 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 			handle->errnum = CS_ERR_HANDLE;
 			return -1;
 		case CS_ARCH_ARM:
-			for (i = 0; i < insn->detail->arm.op_count; i++)
-				if (insn->detail->arm.operands[i].type == (arm_op_type)op_type)
+			for (i = 0; i < insn->detail->d.arm.op_count; i++)
+				if (insn->detail->d.arm.operands[i].type == (arm_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_AARCH64:
-			for (i = 0; i < insn->detail->aarch64.op_count; i++)
-				if (insn->detail->aarch64.operands[i].type == (aarch64_op_type)op_type)
+			for (i = 0; i < insn->detail->d.aarch64.op_count; i++)
+				if (insn->detail->d.aarch64.operands[i].type == (aarch64_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_X86:
-			for (i = 0; i < insn->detail->x86.op_count; i++)
-				if (insn->detail->x86.operands[i].type == (x86_op_type)op_type)
+			for (i = 0; i < insn->detail->d.x86.op_count; i++)
+				if (insn->detail->d.x86.operands[i].type == (x86_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_MIPS:
-			for (i = 0; i < insn->detail->mips.op_count; i++)
-				if (insn->detail->mips.operands[i].type == (mips_op_type)op_type)
+			for (i = 0; i < insn->detail->d.mips.op_count; i++)
+				if (insn->detail->d.mips.operands[i].type == (mips_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_PPC:
-			for (i = 0; i < insn->detail->ppc.op_count; i++)
-				if (insn->detail->ppc.operands[i].type == (ppc_op_type)op_type)
+			for (i = 0; i < insn->detail->d.ppc.op_count; i++)
+				if (insn->detail->d.ppc.operands[i].type == (ppc_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_SPARC:
-			for (i = 0; i < insn->detail->sparc.op_count; i++)
-				if (insn->detail->sparc.operands[i].type == (sparc_op_type)op_type)
+			for (i = 0; i < insn->detail->d.sparc.op_count; i++)
+				if (insn->detail->d.sparc.operands[i].type == (sparc_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_SYSTEMZ:
-			for (i = 0; i < insn->detail->systemz.op_count; i++)
-				if (insn->detail->systemz.operands[i].type == (systemz_op_type)op_type)
+			for (i = 0; i < insn->detail->d.systemz.op_count; i++)
+				if (insn->detail->d.systemz.operands[i].type == (systemz_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_XCORE:
-			for (i = 0; i < insn->detail->xcore.op_count; i++)
-				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
+			for (i = 0; i < insn->detail->d.xcore.op_count; i++)
+				if (insn->detail->d.xcore.operands[i].type == (xcore_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_M68K:
-			for (i = 0; i < insn->detail->m68k.op_count; i++)
-				if (insn->detail->m68k.operands[i].type == (m68k_op_type)op_type)
+			for (i = 0; i < insn->detail->d.m68k.op_count; i++)
+				if (insn->detail->d.m68k.operands[i].type == (m68k_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_TMS320C64X:
-			for (i = 0; i < insn->detail->tms320c64x.op_count; i++)
-				if (insn->detail->tms320c64x.operands[i].type == (tms320c64x_op_type)op_type)
+			for (i = 0; i < insn->detail->d.tms320c64x.op_count; i++)
+				if (insn->detail->d.tms320c64x.operands[i].type == (tms320c64x_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_M680X:
-			for (i = 0; i < insn->detail->m680x.op_count; i++)
-				if (insn->detail->m680x.operands[i].type == (m680x_op_type)op_type)
+			for (i = 0; i < insn->detail->d.m680x.op_count; i++)
+				if (insn->detail->d.m680x.operands[i].type == (m680x_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_EVM:
 			break;
 		case CS_ARCH_MOS65XX:
-			for (i = 0; i < insn->detail->mos65xx.op_count; i++)
-				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
+			for (i = 0; i < insn->detail->d.mos65xx.op_count; i++)
+				if (insn->detail->d.mos65xx.operands[i].type == (mos65xx_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_WASM:
-			for (i = 0; i < insn->detail->wasm.op_count; i++)
-				if (insn->detail->wasm.operands[i].type == (wasm_op_type)op_type)
+			for (i = 0; i < insn->detail->d.wasm.op_count; i++)
+				if (insn->detail->d.wasm.operands[i].type == (wasm_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_BPF:
-			for (i = 0; i < insn->detail->bpf.op_count; i++)
-				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
+			for (i = 0; i < insn->detail->d.bpf.op_count; i++)
+				if (insn->detail->d.bpf.operands[i].type == (bpf_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_RISCV:
-			for (i = 0; i < insn->detail->riscv.op_count; i++)
-				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
+			for (i = 0; i < insn->detail->d.riscv.op_count; i++)
+				if (insn->detail->d.riscv.operands[i].type == (riscv_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_TRICORE:
-			for (i = 0; i < insn->detail->tricore.op_count; i++)
-				if (insn->detail->tricore.operands[i].type == (tricore_op_type)op_type)
+			for (i = 0; i < insn->detail->d.tricore.op_count; i++)
+				if (insn->detail->d.tricore.operands[i].type == (tricore_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_ALPHA:
-			for (i = 0; i < insn->detail->alpha.op_count; i++)
-				if (insn->detail->alpha.operands[i].type == (alpha_op_type)op_type)
+			for (i = 0; i < insn->detail->d.alpha.op_count; i++)
+				if (insn->detail->d.alpha.operands[i].type == (alpha_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_HPPA:
-			for (i = 0; i < insn->detail->hppa.op_count; i++)
-				if (insn->detail->hppa.operands[i].type == (hppa_op_type)op_type)
+			for (i = 0; i < insn->detail->d.hppa.op_count; i++)
+				if (insn->detail->d.hppa.operands[i].type == (hppa_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_LOONGARCH:
-			for (i = 0; i < insn->detail->loongarch.op_count; i++)
-				if (insn->detail->loongarch.operands[i].type == (loongarch_op_type)op_type)
+			for (i = 0; i < insn->detail->d.loongarch.op_count; i++)
+				if (insn->detail->d.loongarch.operands[i].type == (loongarch_op_type)op_type)
 					count++;
 			break;
 		case CS_ARCH_ARC:
-			for (i = 0; i < insn->detail->arc.op_count; i++)
-				if (insn->detail->arc.operands[i].type == (arc_op_type)op_type)
+			for (i = 0; i < insn->detail->d.arc.op_count; i++)
+				if (insn->detail->d.arc.operands[i].type == (arc_op_type)op_type)
 					count++;
 			break;
 	}
@@ -1837,96 +1837,96 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 			handle->errnum = CS_ERR_HANDLE;
 			return -1;
 		case CS_ARCH_ARM:
-			for (i = 0; i < insn->detail->arm.op_count; i++) {
-				if (insn->detail->arm.operands[i].type == (arm_op_type)op_type)
+			for (i = 0; i < insn->detail->d.arm.op_count; i++) {
+				if (insn->detail->d.arm.operands[i].type == (arm_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_AARCH64:
-			for (i = 0; i < insn->detail->aarch64.op_count; i++) {
-				if (insn->detail->aarch64.operands[i].type == (aarch64_op_type)op_type)
+			for (i = 0; i < insn->detail->d.aarch64.op_count; i++) {
+				if (insn->detail->d.aarch64.operands[i].type == (aarch64_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_X86:
-			for (i = 0; i < insn->detail->x86.op_count; i++) {
-				if (insn->detail->x86.operands[i].type == (x86_op_type)op_type)
+			for (i = 0; i < insn->detail->d.x86.op_count; i++) {
+				if (insn->detail->d.x86.operands[i].type == (x86_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_MIPS:
-			for (i = 0; i < insn->detail->mips.op_count; i++) {
-				if (insn->detail->mips.operands[i].type == (mips_op_type)op_type)
+			for (i = 0; i < insn->detail->d.mips.op_count; i++) {
+				if (insn->detail->d.mips.operands[i].type == (mips_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_PPC:
-			for (i = 0; i < insn->detail->ppc.op_count; i++) {
-				if (insn->detail->ppc.operands[i].type == (ppc_op_type)op_type)
+			for (i = 0; i < insn->detail->d.ppc.op_count; i++) {
+				if (insn->detail->d.ppc.operands[i].type == (ppc_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_SPARC:
-			for (i = 0; i < insn->detail->sparc.op_count; i++) {
-				if (insn->detail->sparc.operands[i].type == (sparc_op_type)op_type)
+			for (i = 0; i < insn->detail->d.sparc.op_count; i++) {
+				if (insn->detail->d.sparc.operands[i].type == (sparc_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_SYSTEMZ:
-			for (i = 0; i < insn->detail->systemz.op_count; i++) {
-				if (insn->detail->systemz.operands[i].type == (systemz_op_type)op_type)
+			for (i = 0; i < insn->detail->d.systemz.op_count; i++) {
+				if (insn->detail->d.systemz.operands[i].type == (systemz_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_XCORE:
-			for (i = 0; i < insn->detail->xcore.op_count; i++) {
-				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
+			for (i = 0; i < insn->detail->d.xcore.op_count; i++) {
+				if (insn->detail->d.xcore.operands[i].type == (xcore_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_TRICORE:
-			for (i = 0; i < insn->detail->tricore.op_count; i++) {
-				if (insn->detail->tricore.operands[i].type == (tricore_op_type)op_type)
+			for (i = 0; i < insn->detail->d.tricore.op_count; i++) {
+				if (insn->detail->d.tricore.operands[i].type == (tricore_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_M68K:
-			for (i = 0; i < insn->detail->m68k.op_count; i++) {
-				if (insn->detail->m68k.operands[i].type == (m68k_op_type)op_type)
+			for (i = 0; i < insn->detail->d.m68k.op_count; i++) {
+				if (insn->detail->d.m68k.operands[i].type == (m68k_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_TMS320C64X:
-			for (i = 0; i < insn->detail->tms320c64x.op_count; i++) {
-				if (insn->detail->tms320c64x.operands[i].type == (tms320c64x_op_type)op_type)
+			for (i = 0; i < insn->detail->d.tms320c64x.op_count; i++) {
+				if (insn->detail->d.tms320c64x.operands[i].type == (tms320c64x_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_M680X:
-			for (i = 0; i < insn->detail->m680x.op_count; i++) {
-				if (insn->detail->m680x.operands[i].type == (m680x_op_type)op_type)
+			for (i = 0; i < insn->detail->d.m680x.op_count; i++) {
+				if (insn->detail->d.m680x.operands[i].type == (m680x_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
@@ -1943,72 +1943,72 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 #endif
 			break;
 		case CS_ARCH_MOS65XX:
-			for (i = 0; i < insn->detail->mos65xx.op_count; i++) {
-				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
+			for (i = 0; i < insn->detail->d.mos65xx.op_count; i++) {
+				if (insn->detail->d.mos65xx.operands[i].type == (mos65xx_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_WASM:
-			for (i = 0; i < insn->detail->wasm.op_count; i++) {
-				if (insn->detail->wasm.operands[i].type == (wasm_op_type)op_type)
+			for (i = 0; i < insn->detail->d.wasm.op_count; i++) {
+				if (insn->detail->d.wasm.operands[i].type == (wasm_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_BPF:
-			for (i = 0; i < insn->detail->bpf.op_count; i++) {
-				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
+			for (i = 0; i < insn->detail->d.bpf.op_count; i++) {
+				if (insn->detail->d.bpf.operands[i].type == (bpf_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_RISCV:
-			for (i = 0; i < insn->detail->riscv.op_count; i++) {
-				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
+			for (i = 0; i < insn->detail->d.riscv.op_count; i++) {
+				if (insn->detail->d.riscv.operands[i].type == (riscv_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_SH:
-			for (i = 0; i < insn->detail->sh.op_count; i++) {
-				if (insn->detail->sh.operands[i].type == (sh_op_type)op_type)
+			for (i = 0; i < insn->detail->d.sh.op_count; i++) {
+				if (insn->detail->d.sh.operands[i].type == (sh_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_ALPHA:
-			for (i = 0; i < insn->detail->alpha.op_count; i++) {
-				if (insn->detail->alpha.operands[i].type == (alpha_op_type)op_type)
+			for (i = 0; i < insn->detail->d.alpha.op_count; i++) {
+				if (insn->detail->d.alpha.operands[i].type == (alpha_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_HPPA:
-			for (i = 0; i < insn->detail->hppa.op_count; i++) {
-				if (insn->detail->hppa.operands[i].type == (hppa_op_type)op_type)
+			for (i = 0; i < insn->detail->d.hppa.op_count; i++) {
+				if (insn->detail->d.hppa.operands[i].type == (hppa_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_LOONGARCH:
-			for (i = 0; i < insn->detail->loongarch.op_count; i++) {
-				if (insn->detail->loongarch.operands[i].type == (loongarch_op_type)op_type)
+			for (i = 0; i < insn->detail->d.loongarch.op_count; i++) {
+				if (insn->detail->d.loongarch.operands[i].type == (loongarch_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;
 			}
 			break;
 		case CS_ARCH_ARC:
-			for (i = 0; i < insn->detail->arc.op_count; i++) {
-				if (insn->detail->arc.operands[i].type == (arc_op_type)op_type)
+			for (i = 0; i < insn->detail->d.arc.op_count; i++) {
+				if (insn->detail->d.arc.operands[i].type == (arc_op_type)op_type)
 					count++;
 				if (count == post)
 					return i;

@@ -21,7 +21,7 @@ void MCInst_Init(MCInst *inst, cs_arch arch)
 	memset(inst, 0, sizeof(MCInst));
 	// unnecessary to initialize in loop . its expensive and inst->size should be honored
 	inst->Operands[0].Kind = kInvalid;
-	inst->Operands[0].ImmVal = 0;
+	inst->Operands[0].v.ImmVal = 0;
 
 	inst->Opcode = 0;
 	inst->OpcodePub = 0;
@@ -146,38 +146,38 @@ bool MCOperand_isInst(const MCOperand *op)
 /// getReg - Returns the register number.
 unsigned MCOperand_getReg(const MCOperand *op)
 {
-	return op->RegVal;
+	return op->v.RegVal;
 }
 
 /// setReg - Set the register number.
 void MCOperand_setReg(MCOperand *op, unsigned Reg)
 {
-	op->RegVal = Reg;
+	op->v.RegVal = Reg;
 }
 
 int64_t MCOperand_getImm(const MCOperand *op)
 {
-	return op->ImmVal;
+	return op->v.ImmVal;
 }
 
 int64_t MCOperand_getExpr(const MCOperand *op)
 {
-	return op->ImmVal;
+	return op->v.ImmVal;
 }
 
 void MCOperand_setImm(MCOperand *op, int64_t Val)
 {
-	op->ImmVal = Val;
+	op->v.ImmVal = Val;
 }
 
 double MCOperand_getFPImm(const MCOperand *op)
 {
-	return op->FPImmVal;
+	return op->v.FPImmVal;
 }
 
 void MCOperand_setFPImm(MCOperand *op, double Val)
 {
-	op->FPImmVal = Val;
+	op->v.FPImmVal = Val;
 }
 
 MCOperand *MCOperand_CreateReg1(MCInst *mcInst, unsigned Reg)
@@ -186,7 +186,7 @@ MCOperand *MCOperand_CreateReg1(MCInst *mcInst, unsigned Reg)
 
 	op->MachineOperandType = kRegister;
 	op->Kind = kRegister;
-	op->RegVal = Reg;
+	op->v.RegVal = Reg;
 
 	return op;
 }
@@ -198,7 +198,7 @@ void MCOperand_CreateReg0(MCInst *mcInst, unsigned Reg)
 
 	op->MachineOperandType = kRegister;
 	op->Kind = kRegister;
-	op->RegVal = Reg;
+	op->v.RegVal = Reg;
 }
 
 MCOperand *MCOperand_CreateImm1(MCInst *mcInst, int64_t Val)
@@ -207,7 +207,7 @@ MCOperand *MCOperand_CreateImm1(MCInst *mcInst, int64_t Val)
 
 	op->MachineOperandType = kImmediate;
 	op->Kind = kImmediate;
-	op->ImmVal = Val;
+	op->v.ImmVal = Val;
 
 	return op;
 }
@@ -220,7 +220,7 @@ void MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
 
 	op->MachineOperandType = kImmediate;
 	op->Kind = kImmediate;
-	op->ImmVal = Val;
+	op->v.ImmVal = Val;
 }
 
 /// Check if any operand of the MCInstrDesc is predicable

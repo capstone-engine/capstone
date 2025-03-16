@@ -148,18 +148,18 @@ DECL_get_detail_op(xtensa, Xtensa);
 DECL_get_detail_op(bpf, BPF);
 DECL_get_detail_op(arc, ARC);
 
-/// Increments the detail->arch.op_count by one.
+/// Increments the detail->d.arch.op_count by one.
 #define DEFINE_inc_detail_op_count(arch, ARCH) \
 	static inline void ARCH##_inc_op_count(MCInst *MI) \
 	{ \
-		MI->flat_insn->detail->arch.op_count++; \
+		MI->flat_insn->detail->d.arch.op_count++; \
 	}
 
-/// Decrements the detail->arch.op_count by one.
+/// Decrements the detail->d.arch.op_count by one.
 #define DEFINE_dec_detail_op_count(arch, ARCH) \
 	static inline void ARCH##_dec_op_count(MCInst *MI) \
 	{ \
-		MI->flat_insn->detail->arch.op_count--; \
+		MI->flat_insn->detail->d.arch.op_count--; \
 	}
 
 DEFINE_inc_detail_op_count(arm, ARM);
@@ -201,12 +201,12 @@ static inline void set_doing_mem(const MCInst *MI, bool status)
 	MI->csh->doing_mem = status;
 }
 
-/// Returns detail->arch
+/// Returns detail->d.arch
 #define DEFINE_get_arch_detail(arch, ARCH) \
 	static inline cs_##arch *ARCH##_get_detail(const MCInst *MI) \
 	{ \
 		assert(MI && MI->flat_insn && MI->flat_insn->detail); \
-		return &MI->flat_insn->detail->arch; \
+		return &MI->flat_insn->detail->d.arch; \
 	}
 
 DEFINE_get_arch_detail(arm, ARM);
