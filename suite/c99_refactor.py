@@ -173,7 +173,7 @@ def fix_x86_flags(line: str) -> str:
 
 
 def fix_hppa_mod(line: str) -> str:
-    re_access = rf"modifiers\[(.+\)].(str_mod|int_mod)"
+    re_access = rf"modifiers\[(.+)]\.(str_mod|int_mod)"
     return re.sub(re_access, r"modifiers[\1].mod.\2", line)
 
 
@@ -244,7 +244,7 @@ def main():
         if "x86_flags" in args.unions and "x86" in args.archs:
             line = fix_x86_flags(line)
         if "hppa_mod" in args.unions and "hppa" in args.archs:
-            line = fix_x86_flags(line)
+            line = fix_hppa_mod(line)
         if "m68k_size" in args.unions and "m68k" in args.archs:
             line = fix_m68k_size(line)
         result.append(line)
