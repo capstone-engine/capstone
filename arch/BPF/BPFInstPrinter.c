@@ -21,7 +21,7 @@ static void push_op_reg(cs_bpf *bpf, bpf_op_type val, uint8_t ac_mode)
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_REG;
-	op->reg = val;
+	op->v.reg = val;
 	op->access = ac_mode;
 }
 
@@ -30,7 +30,7 @@ static void push_op_imm(cs_bpf *bpf, uint64_t val, const bool is_signed)
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_IMM;
-	op->imm = val;
+	op->v.imm = val;
 	op->is_signed = is_signed;
 }
 
@@ -39,7 +39,7 @@ static void push_op_off(cs_bpf *bpf, uint32_t val, const bool is_signed)
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_OFF;
-	op->off = val;
+	op->v.off = val;
 	op->is_signed = is_signed;
 }
 
@@ -49,8 +49,8 @@ static void push_op_mem(cs_bpf *bpf, bpf_reg reg, uint32_t val,
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MEM;
-	op->mem.base = reg;
-	op->mem.disp = val;
+	op->v.mem.base = reg;
+	op->v.mem.disp = val;
 	op->is_signed = is_signed;
 	op->is_pkt = is_pkt;
 }
@@ -60,7 +60,7 @@ static void push_op_mmem(cs_bpf *bpf, uint32_t val)
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MMEM;
-	op->mmem = val;
+	op->v.mmem = val;
 }
 
 static void push_op_msh(cs_bpf *bpf, uint32_t val)
@@ -68,7 +68,7 @@ static void push_op_msh(cs_bpf *bpf, uint32_t val)
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_MSH;
-	op->msh = val;
+	op->v.msh = val;
 }
 
 static void push_op_ext(cs_bpf *bpf, bpf_ext_type val)
@@ -76,7 +76,7 @@ static void push_op_ext(cs_bpf *bpf, bpf_ext_type val)
 	cs_bpf_op *op = expand_bpf_operands(bpf);
 
 	op->type = BPF_OP_EXT;
-	op->ext = val;
+	op->v.ext = val;
 }
 
 static void convert_operands(MCInst *MI, cs_bpf *bpf)
@@ -267,19 +267,19 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 		SStream_concat(O, "invalid");
 		break;
 	case BPF_OP_REG:
-		SStream_concat(O, BPF_reg_name((csh)MI->csh, op->reg));
+		SStream_concat(O, BPF_reg_name((csh)MI->csh, op->v.reg));
 		break;
 	case BPF_OP_IMM:
 		if (op->is_signed)
-			printInt32Hex(O, op->imm);
+			printInt32Hex(O, op->v.imm);
 		else
-			SStream_concat(O, "0x%" PRIx64, op->imm);
+			SStream_concat(O, "0x%" PRIx64, op->v.imm);
 		break;
 	case BPF_OP_OFF:
 		if (op->is_signed)
-			printInt16HexOffset(O, op->off);
+			printInt16HexOffset(O, op->v.off);
 		else
-			SStream_concat(O, "+0x%" PRIx32, op->off);
+			SStream_concat(O, "+0x%" PRIx32, op->v.off);
 		break;
 	case BPF_OP_MEM:
 		SStream_concat(O, "[");
@@ -287,53 +287,53 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 		if (op->is_pkt && EBPF_MODE(MI->csh->mode)) {
 			SStream_concat(O, "skb");
 
-			if (op->mem.base != BPF_REG_INVALID)
+			if (op->v.mem.base != BPF_REG_INVALID)
 				SStream_concat(O, "+%s",
 					       BPF_reg_name((csh)MI->csh,
-							    op->mem.base));
+							    op->v.mem.base));
 			else {
 				if (op->is_signed)
-					printInt32HexOffset(O, op->mem.disp);
+					printInt32HexOffset(O, op->v.mem.disp);
 				else
 					SStream_concat(O, "+0x%" PRIx32,
-						       op->mem.disp);
+						       op->v.mem.disp);
 			}
 		} else {
-			if (op->mem.base != BPF_REG_INVALID)
+			if (op->v.mem.base != BPF_REG_INVALID)
 				SStream_concat(O, BPF_reg_name((csh)MI->csh,
-							       op->mem.base));
-			if (op->mem.disp != 0) {
-				if (op->mem.base != BPF_REG_INVALID) {
+							       op->v.mem.base));
+			if (op->v.mem.disp != 0) {
+				if (op->v.mem.base != BPF_REG_INVALID) {
 					// if operation is signed, then it always uses off, not k
 					if (op->is_signed)
 						printInt16HexOffset(
-							O, op->mem.disp);
+							O, op->v.mem.disp);
 					else if (op->is_pkt)
 						SStream_concat(O, "+0x%" PRIx32,
-							       op->mem.disp);
+							       op->v.mem.disp);
 					else
 						SStream_concat(O, "+0x%" PRIx16,
-							       op->mem.disp);
+							       op->v.mem.disp);
 				} else
 					SStream_concat(O, "0x%" PRIx32,
-						       op->mem.disp);
+						       op->v.mem.disp);
 			}
 
-			if (op->mem.base == BPF_REG_INVALID &&
-			    op->mem.disp == 0)
+			if (op->v.mem.base == BPF_REG_INVALID &&
+			    op->v.mem.disp == 0)
 				SStream_concat(O, "0x0");
 		}
 
 		SStream_concat(O, "]");
 		break;
 	case BPF_OP_MMEM:
-		SStream_concat(O, "m[0x%x]", op->mmem);
+		SStream_concat(O, "m[0x%x]", op->v.mmem);
 		break;
 	case BPF_OP_MSH:
-		SStream_concat(O, "4*([0x%x]&0xf)", op->msh);
+		SStream_concat(O, "4*([0x%x]&0xf)", op->v.msh);
 		break;
 	case BPF_OP_EXT:
-		switch (op->ext) {
+		switch (op->v.ext) {
 		case BPF_EXT_LEN:
 			SStream_concat(O, "#len");
 			break;
@@ -345,7 +345,7 @@ static void print_operand(MCInst *MI, struct SStream *O, const cs_bpf_op *op)
 /*
  * 1. human readable mnemonic
  * 2. set pubOpcode (BPF_INSN_*)
- * 3. set detail->bpf.operands
+ * 3. set detail->d.bpf.operands
  * */
 void BPF_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 {
@@ -364,7 +364,7 @@ void BPF_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 
 #ifndef CAPSTONE_DIET
 	if (detail_is_set(MI)) {
-		MI->flat_insn->detail->bpf = bpf;
+		MI->flat_insn->detail->d.bpf = bpf;
 	}
 #endif
 }

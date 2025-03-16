@@ -397,7 +397,7 @@ static bool getInstruction(MCInst *MI, bpf_internal *bpf)
 	detail = MI->flat_insn->detail;
 	// initialize detail
 	if (detail) {
-		memset(detail, 0, offsetof(cs_detail, bpf) + sizeof(cs_bpf));
+		memset(detail, 0, offsetof(cs_detail, d.bpf) + sizeof(cs_bpf));
 	}
 
 	MCInst_clear(MI);

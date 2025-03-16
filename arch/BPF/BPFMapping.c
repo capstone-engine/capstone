@@ -198,7 +198,7 @@ void BPF_reg_access(const cs_insn *insn, cs_regs regs_read,
 {
 	unsigned i;
 	uint8_t read_count, write_count;
-	const cs_bpf *bpf = &(insn->detail->bpf);
+	const cs_bpf *bpf = &(insn->detail->d.bpf);
 
 	read_count = insn->detail->regs_read_count;
 	write_count = insn->detail->regs_write_count;
@@ -216,17 +216,17 @@ void BPF_reg_access(const cs_insn *insn, cs_regs regs_read,
 			break;
 		case BPF_OP_REG:
 			if (op->access & CS_AC_READ) {
-				regs_read[read_count] = op->reg;
+				regs_read[read_count] = op->v.reg;
 				read_count++;
 			}
 			if (op->access & CS_AC_WRITE) {
-				regs_write[write_count] = op->reg;
+				regs_write[write_count] = op->v.reg;
 				write_count++;
 			}
 			break;
 		case BPF_OP_MEM:
-			if (op->mem.base != BPF_REG_INVALID) {
-				regs_read[read_count] = op->mem.base;
+			if (op->v.mem.base != BPF_REG_INVALID) {
+				regs_read[read_count] = op->v.mem.base;
 				read_count++;
 			}
 			break;
