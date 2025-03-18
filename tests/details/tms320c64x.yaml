@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0x01, 0xac, 0x88, 0x40, 0x81, 0xac, 0x88, 0x43, 0x00, 0x00, 0x00, 0x00, 0x02, 0x90, 0x32, 0x96, 0x02, 0x80, 0x46, 0x9e, 0x05, 0x3c, 0x83, 0xe6, 0x0b, 0x0c, 0x8b, 0x24  ]
       arch: "tms320c64x"
-      options: [ CS_OPT_DETAIL ]
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
       address: 0x1000
     expected:
       insns:
@@ -144,4 +144,48 @@ test_cases:
             funit_side_set: true
             parallel: 0
             parallel_set: true
+  -
+    input:
+      bytes: [ 0xa9, 0xff, 0x7f, 0x02 ]
+      name: "Little/big endian test"
+      arch: "tms320c64x"
+      options: [ CS_OPT_DETAIL, CS_MODE_LITTLE_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "mvk.S1	-1, a4	||"
+  -
+    input:
+      bytes: [ 0x02, 0x7f, 0xff, 0xa9 ]
+      name: "Little/big endian test"
+      arch: "tms320c64x"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "mvk.S1	-1, a4	||"
+  -
+    input:
+      bytes: [ 0xa9, 0xff, 0x7f, 0x02 ]
+      name: "Little/big endian test no detail fixup."
+      arch: "tms320c64x"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "mvk -1, a4"
+  -
+    input:
+      bytes: [ 0x02, 0x7f, 0xff, 0xa9 ]
+      name: "Little/big endian test no detail fixup"
+      arch: "tms320c64x"
+      options: [ CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "mvk -1, a4"
 

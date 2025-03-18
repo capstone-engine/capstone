@@ -188,7 +188,7 @@ typedef struct cs_arch_config {
 	{ \
 		TMS320C64x_global_init, \
 		TMS320C64x_option, \
-		~(CS_MODE_BIG_ENDIAN), \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_M680X \
 	{ \

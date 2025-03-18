@@ -178,6 +178,7 @@ static struct {
 	{ "m68k40", "m68k40", CS_ARCH_M68K, CS_MODE_M68K_040 },
 
 	{ "tms320c64x", "tms320c64x, big endian", CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN },
+	{ "tms320c64xle", "tms320c64x, little endian", CS_ARCH_TMS320C64X, CS_MODE_LITTLE_ENDIAN },
 
 	{ "m6800", "m680x, M6800/2", CS_ARCH_M680X, CS_MODE_M680X_6800 },
 	{ "m6801", "m680x, M6801/3", CS_ARCH_M680X, CS_MODE_M680X_6801 },
