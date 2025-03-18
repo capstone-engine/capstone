@@ -33,6 +33,16 @@ cs_err TMS320C64x_global_init(cs_struct *ud)
 
 cs_err TMS320C64x_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
+	switch (type) {
+	case CS_OPT_MODE:
+		handle->mode |= (cs_mode)value;
+		break;
+	case CS_OPT_SYNTAX:
+		handle->syntax |= (int)value;
+		break;
+	default:
+		break;
+	}
 	return CS_ERR_OK;
 }
 

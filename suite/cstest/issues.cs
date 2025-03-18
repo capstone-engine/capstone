@@ -1066,3 +1066,11 @@
 !# issue 2424
 !# CS_ARCH_SH, CS_MODE_SH2A | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0x0: 0x32,0x11,0x92,0x00 == movu.w @(1024,r1),r2 ; operands[0].type: MEM ; operands[0].mem.reg: REG = r1 ; operands[0].mem.disp: 0x400 ; address mode: Register Indirect with Predecrement ; operands[1].type: REG = r2
+
+!# issue 2646
+!# CS_ARCH_TMS320C64X, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL
+0x0: 0xa9,0xff,0x7f,0x02 == mvk.S1 -1, a4 ||
+
+!# issue 2646
+!# CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x0: 0x02,0x7f,0xff,0xa9 == mvk.S1 -1, a4 ||
