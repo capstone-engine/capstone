@@ -62,8 +62,8 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *m
 			SStream_concat(&ss, "[%c%s]|", (tms320c64x->condition.zero == 1) ? '!' : '|', cs_reg_name(ud, tms320c64x->condition.reg));
 
 		// Sorry for all the fixes below. I don't have time to add more helper SStream functions.
-		// Before that they messed around with the private buffer of th stream.
-		// So it is better now. But still not effecient.
+		// Before that they messed around with the private buffer of the stream.
+		// So it is better now. But still not efficient.
 		op_str_ptr = strchr(SStream_rbuf(insn_asm), '\t');
 
 		if ((op_str_ptr != NULL) && (((p2 = strchr(op_str_ptr, '[')) != NULL) || ((p2 = strchr(op_str_ptr, '(')) != NULL))) {
