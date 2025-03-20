@@ -29070,7 +29070,7 @@
   /* hvc	$imm */
   AArch64_HVC /* 3813 */, AARCH64_INS_HVC,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_GRP_CALL, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
@@ -43350,7 +43350,7 @@
   /* smc	$imm */
   AArch64_SMC /* 5598 */, AARCH64_INS_SMC,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { AARCH64_FEATURE_HASEL3, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_GRP_CALL, AARCH64_FEATURE_HASEL3, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },
@@ -54582,7 +54582,7 @@
   /* svc	$imm */
   AArch64_SVC /* 7002 */, AARCH64_INS_SVC,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
+    { 0 }, { 0 }, { AARCH64_GRP_CALL, 0 }, 0, 0, { .aarch64 = { .mem_acc = CS_AC_INVALID }}
 
   #endif
 },

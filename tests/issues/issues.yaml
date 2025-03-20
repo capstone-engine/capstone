@@ -5840,3 +5840,43 @@ test_cases:
               - type: MIPS_OP_IMM
                 imm: 0
                 access: CS_AC_READ
+
+  -
+    input:
+      name: "issue 2630 - missing call group for svc, hvc, smc."
+      bytes: [ 0xc2, 0x00, 0x00, 0xd4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "hvc #0x6"
+        details:
+          groups: [ call ]
+  -
+    input:
+      name: "issue 2630 - missing call group for svc, hvc, smc."
+      bytes: [ 0xe3, 0x00, 0x00, 0xd4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "smc #0x7"
+        details:
+          groups: [ call, HasEL3, privilege ]
+  -
+    input:
+      name: "issue 2630 - missing call group for svc, hvc, smc."
+      bytes: [ 0x01, 0x01, 0x00, 0xd4 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "svc #0x8"
+        details:
+          groups: [ call, int ]
