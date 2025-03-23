@@ -58,7 +58,7 @@ extern "C" {
 // Capstone package version
 #define CS_VERSION_MAJOR CS_API_MAJOR
 #define CS_VERSION_MINOR CS_API_MINOR
-#define CS_VERSION_EXTRA 5
+#define CS_VERSION_EXTRA 6
 
 /// Macro for meta programming.
 /// Meant for projects using Capstone and need to support multiple

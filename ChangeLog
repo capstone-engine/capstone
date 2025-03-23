@@ -1,6 +1,18 @@
 This file details the changelog of Capstone.
 
 --------------------------------
+Version 5.0.6: March 23th, 2025
+
+## What's Changed
+* V5 - Fix sdist build and add CI job for testing it. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2623
+* Build Tarball before DEB/RPM package. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2626
+* Fix cmake error when build with capstone as submodule by @WerWolv in https://github.com/capstone-engine/capstone/pull/2619
+* [v5] Tms32c64x little endian  by @Rot127 in https://github.com/capstone-engine/capstone/pull/2649
+
+## New Contributors
+* @WerWolv made their first contribution in https://github.com/capstone-engine/capstone/pull/2619
+
+--------------------------------
 Version 5.0.5: January 16th, 2025
 
 ## What's Changed

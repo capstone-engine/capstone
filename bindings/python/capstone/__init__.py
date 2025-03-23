@@ -1,6 +1,6 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 import os, sys
-from platform import system
+
 _python2 = sys.version_info[0] < 3
 if _python2:
     range = xrange
@@ -180,7 +180,7 @@ CS_API_MINOR = 0
 # Package version
 CS_VERSION_MAJOR = CS_API_MAJOR
 CS_VERSION_MINOR = CS_API_MINOR
-CS_VERSION_EXTRA = 5
+CS_VERSION_EXTRA = 6
 
 __version__ = "%u.%u.%u" %(CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA)
 
