@@ -395,8 +395,8 @@ static DecodeStatus DecodeSOPwithRS12(MCInst *Inst, uint64_t Insn,
 
 	uint64_t Lower = fieldFromInstruction_8(Insn, 6, 6);
 	uint64_t Upper = fieldFromInstruction_8(Insn, 0, 5);
-	uint64_t Sign = fieldFromInstruction_8(Insn, 5, 1) ? -1 : 1;
-	uint64_t Result = Sign * ((Upper << 6) + Lower);
+	int64_t Sign = fieldFromInstruction_8(Insn, 5, 1) ? -1 : 1;
+	uint64_t Result = (uint64_t)(Sign * (int64_t)((Upper << 6) + Lower));
 	MCOperand_CreateImm0(Inst, (Result));
 	return MCDisassembler_Success;
 }
