@@ -2,7 +2,7 @@
 #define CAPSTONE_RISCV_H
 
 /* Capstone Disassembly Engine */
-/* RISC-V Backend By Rodrigo Cortes Porto <porto703@gmail.com> & 
+/* RISC-V Backend By Rodrigo Cortes Porto <porto703@gmail.com> &
    Shawn Chang <citypw@gmail.com>, HardenedLinux@2018 */
 
 #ifdef __cplusplus
@@ -56,7 +56,7 @@ typedef struct cs_riscv_op {
 typedef struct cs_riscv {
 	// Does this instruction need effective address or not.
 	bool need_effective_addr;
-	// Number of operands of this instruction, 
+	// Number of operands of this instruction,
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 	cs_riscv_op operands[NUM_RISCV_OPS]; // operands for this instruction.
@@ -66,8 +66,8 @@ typedef struct cs_riscv {
 typedef enum riscv_reg {
 	RISCV_REG_INVALID = 0,
 	//> General purpose registers
-	RISCV_REG_X0,			// "zero" 
-	RISCV_REG_ZERO = RISCV_REG_X0, 	// "zero" 
+	RISCV_REG_X0,			// "zero"
+	RISCV_REG_ZERO = RISCV_REG_X0, 	// "zero"
 	RISCV_REG_X1, 			// "ra"
 	RISCV_REG_RA   = RISCV_REG_X1, 	// "ra"
 	RISCV_REG_X2, 			// "sp"
@@ -131,7 +131,7 @@ typedef enum riscv_reg {
 	RISCV_REG_T5   = RISCV_REG_X30,	// "t5"
 	RISCV_REG_X31,			// "t6"
 	RISCV_REG_T6   = RISCV_REG_X31,	// "t6"
-	
+
 	//> Floating-point registers
 	RISCV_REG_F0_32,		// "ft0"
 	RISCV_REG_F0_64,		// "ft0"
@@ -197,7 +197,7 @@ typedef enum riscv_reg {
 	RISCV_REG_F30_64,		// "ft10"
 	RISCV_REG_F31_32,		// "ft11"
 	RISCV_REG_F31_64,		// "ft11"
-	
+
 	RISCV_REG_ENDING,		// <-- mark the end of the list or registers
 } riscv_reg;
 
@@ -476,8 +476,8 @@ typedef enum riscv_insn {
   	RISCV_INS_URET,
   	RISCV_INS_WFI,
   	RISCV_INS_XOR,
-  	RISCV_INS_XORI,	
-	
+  	RISCV_INS_XORI,
+
   	RISCV_INS_ENDING,
 } riscv_insn;
 
@@ -500,7 +500,7 @@ typedef enum riscv_insn_group {
   	RISCV_GRP_PRIVILEGE,	///< = CS_GRP_PRIVILEGE
   	// all relative branching instructions
   	RISCV_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
-  
+
   	// Architecture-specific groups
   	RISCV_GRP_ISRV32 = 128,
   	RISCV_GRP_ISRV64,
@@ -509,21 +509,6 @@ typedef enum riscv_insn_group {
   	RISCV_GRP_HASSTDEXTD,
   	RISCV_GRP_HASSTDEXTF,
   	RISCV_GRP_HASSTDEXTM,
-  	/*
-  	RISCV_GRP_ISRVA,
-  	RISCV_GRP_ISRVC,
-  	RISCV_GRP_ISRVD,
-  	RISCV_GRP_ISRVCD,
-  	RISCV_GRP_ISRVF,
-  	RISCV_GRP_ISRV32C,
-  	RISCV_GRP_ISRV32CF,
-  	RISCV_GRP_ISRVM,
-  	RISCV_GRP_ISRV64A,
-  	RISCV_GRP_ISRV64C,
-  	RISCV_GRP_ISRV64D,
-  	RISCV_GRP_ISRV64F,
-  	RISCV_GRP_ISRV64M,
-  	*/
   	RISCV_GRP_ENDING,
 } riscv_insn_group;
 
