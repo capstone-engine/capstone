@@ -141,8 +141,17 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins)
 		printf("\tBranch:\n");
 		printf("\t\tbi: %u\n", ppc->bc.bi);
 		printf("\t\tbo: %u\n", ppc->bc.bo);
-		if (ppc->bc.bh != PPC_BH_INVALID)
-			printf("\t\tbh: %u\n", ppc->bc.bh);
+		if (ppc->bc.bh != PPC_BH_INVALID) {
+			int bh=-1;
+			switch(ppc->bc.bh) {
+				case PPC_BH_SUBROUTINE_RET: bh=0; break;
+				case PPC_BH_NO_SUBROUTINE_RET: bh=1; break;
+				case PPC_BH_NOT_PREDICTABLE: bh=3; break;
+				case PPC_BH_RESERVED: bh=2; break;
+				case PPC_BH_INVALID: break;
+			}
+			printf("\t\tbh: %u\n", bh);
+    }
 		if (ppc->bc.pred_cr != PPC_PRED_INVALID) {
 			printf("\t\tcrX: %s\n", cs_reg_name(handle, ppc->bc.crX));
 			printf("\t\tpred CR-bit: %s\n", get_pred_name(ppc->bc.pred_cr));
