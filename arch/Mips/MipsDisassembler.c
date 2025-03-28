@@ -236,8 +236,6 @@ bool Mips_getFeatureBits(unsigned int mode, unsigned int feature)
 		}
 		return true;
 	}
-	case Mips_FeatureUseIndirectJumpsHazard:
-		return true;
 	default:
 		return false;
 	}

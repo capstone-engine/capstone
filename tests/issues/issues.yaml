@@ -5880,3 +5880,14 @@ test_cases:
         asm_text: "svc #0x8"
         details:
           groups: [ call, int ]
+  -
+    input:
+      name: "jalr on mips32r2"
+      bytes: [ 0x09, 0xf8, 0x20, 0x03 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS32R2, CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jalr $t9"
