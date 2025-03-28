@@ -5891,3 +5891,15 @@ test_cases:
       insns:
       -
         asm_text: "jalr $t9"
+
+  -
+    input:
+      name: "ddiv on mips64r2"
+      bytes: [ 0x01, 0x11, 0x00, 0x1e ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS64R2, CS_MODE_BIG_ENDIAN, CS_OPT_SYNTAX_NO_DOLLAR ] #, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ddiv $zero, t0, s1"

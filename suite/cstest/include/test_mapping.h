@@ -213,6 +213,8 @@ static const TestOptionMapEntry test_option_map[] = {
 	  .opt = { .type = CS_OPT_SYNTAX, .val = CS_OPT_SYNTAX_CS_REG_ALIAS } },
 	{ .str = "CS_OPT_SYNTAX_PERCENT",
 	  .opt = { .type = CS_OPT_SYNTAX, .val = CS_OPT_SYNTAX_PERCENT } },
+	{ .str = "CS_OPT_SYNTAX_NO_DOLLAR",
+	  .opt = { .type = CS_OPT_SYNTAX, .val = CS_OPT_SYNTAX_NO_DOLLAR } },
 };
 
 static const cs_enum_id_map cs_enum_map[] = {
