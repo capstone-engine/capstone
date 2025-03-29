@@ -422,7 +422,7 @@ test_cases:
           mnemonic: "lw"
           op_str: "$v0, 0($sp)"
           details:
-            groups: [ HasStdEnc, NotInMicroMips, NotNanoMips ]
+            groups: [ NotInMips16Mode, HasDSP ]
         -
           asm_text: "ori $at, $at, 0x3456"
           mnemonic: "ori"

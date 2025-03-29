@@ -507,7 +507,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "bovc $zero, $zero, 12"
+          asm_text: "bnvc $zero, $zero, 12"
 
   -
     input:
@@ -517,7 +517,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "beqzalc $2, 1340"
+          asm_text: "bnezalc $2, 1340"
 
   -
     input:
