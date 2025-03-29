@@ -121,14 +121,20 @@ static void printRegName(MCInst *MI, SStream *OS, MCRegister Reg)
 	SStream_concat0(OS, Mips_LLVM_getRegisterName(Reg, syntax_opt & CS_OPT_SYNTAX_NOREGNAME));
 }
 
-static void patch_cs_printer_no_dollar(SStream *O) {
-	char *dollar = strchr(O->buffer, '$');
-	if (!dollar) {
-		return;
+static void patch_cs_printer(MCInst *MI, SStream *O) {
+	if (MI->csh->syntax & CS_OPT_SYNTAX_NO_DOLLAR) {
+		char *dollar = strchr(O->buffer, '$');
+		if (!dollar) {
+			return;
+		}
+		size_t dollar_len = strlen(dollar + 1);
+		// to include `\0`
+		memmove(dollar, dollar + 1, dollar_len + 1);
 	}
-	size_t dollar_len = strlen(dollar + 1);
-	// to include `\0`
-	memmove(dollar, dollar + 1, dollar_len + 1);
+
+	// replace '# 16 bit inst' to empty.
+	SStream_replc(O, '#', 0);
+	SStream_trimls(O);
 }
 
 static void patch_cs_detail_operand_reg(cs_mips_op *Op, unsigned Reg, unsigned Access) {
@@ -186,17 +192,16 @@ static void patch_cs_details(MCInst *MI) {
 			patch_cs_detail_operand_reg(op0, MIPS_REG_ZERO, CS_AC_WRITE);
 		}
 		return;
-	case Mips_AddiuSpImm16:
+	case Mips_AddiuSpImm16: /// addiu $$sp, imm8
 		/* fall-thru */
-	case Mips_AddiuSpImmX16:
-		/// addiu $sp, imm8
+	case Mips_AddiuSpImmX16: /// addiu $$sp, imm8
 		if (n_ops == 1) {
 			Mips_inc_op_count(MI);
 			op0 = Mips_get_detail_op(MI, -2);
 			op1 = Mips_get_detail_op(MI, -1);
 			// move all details by one and add $sp reg
 			*op1 = *op0;
-			patch_cs_detail_operand_reg(op0, MIPS_REG_SP, CS_AC_WRITE);
+			patch_cs_detail_operand_reg(op0, MIPS_REG_SP, CS_AC_READ_WRITE);
 		}
 		return;
 	case Mips_JrcRa16: /// jrc $ra
@@ -229,9 +234,7 @@ void Mips_LLVM_printInst(MCInst *MI, uint64_t Address, SStream *O) {
 		printInstruction(MI, Address, O);
 	}
 
-	if (MI->csh->syntax & CS_OPT_SYNTAX_NO_DOLLAR) {
-		patch_cs_printer_no_dollar(O);
-	}
+	patch_cs_printer(MI, O);
 	patch_cs_details(MI);
 
 	if (!useAliasDetails) {

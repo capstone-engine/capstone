@@ -101,7 +101,7 @@ static const uint8_t DecoderTable16[] = {
 /* 299 */     MCD_OPC_CheckPredicate, 0, 57, 1, 0, // Skip to: 617
 /* 304 */     MCD_OPC_CheckField, 8, 3, 0, 50, 1, 0, // Skip to: 617
 /* 311 */     MCD_OPC_Decode, 150, 15, 10, // Opcode: JrcRx16
-/* 315 */     MCD_OPC_FilterValue, 7, 41, 1, 0, // Skip to: 617
+/* 315 */     MCD_OPC_FilterValue, 5, 41, 1, 0, // Skip to: 617
 /* 320 */     MCD_OPC_CheckPredicate, 0, 36, 1, 0, // Skip to: 617
 /* 325 */     MCD_OPC_CheckField, 8, 3, 0, 29, 1, 0, // Skip to: 617
 /* 332 */     MCD_OPC_Decode, 149, 15, 10, // Opcode: JrcRa16
@@ -190,7 +190,7 @@ static const uint8_t DecoderTable32[] = {
 /* 97 */      MCD_OPC_CheckField, 27, 5, 30, 167, 1, 0, // Skip to: 527
 /* 104 */     MCD_OPC_CheckField, 5, 3, 0, 160, 1, 0, // Skip to: 527
 /* 111 */     MCD_OPC_Decode, 240, 8, 16, // Opcode: BnezRxImmX16
-/* 115 */     MCD_OPC_FilterValue, 6, 106, 0, 0, // Skip to: 226
+/* 115 */     MCD_OPC_FilterValue, 12, 106, 0, 0, // Skip to: 226
 /* 120 */     MCD_OPC_ExtractField, 27, 5,  // Inst{31-27} ...
 /* 123 */     MCD_OPC_FilterValue, 30, 143, 1, 0, // Skip to: 527
 /* 128 */     MCD_OPC_ExtractField, 16, 5,  // Inst{20-16} ...

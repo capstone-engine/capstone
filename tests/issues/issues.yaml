@@ -5921,3 +5921,60 @@ test_cases:
                 reg: t3
               - type: MIPS_OP_REG
                 reg: a1
+
+  - input:
+      name: "jr/jrc/ ra & div/divu zero on mips16"
+      bytes: [ 0xe8, 0x20,  0xe8, 0xa0,  0xeb, 0x5a,  0xeb, 0x5b,  0x63, 0x1e,  0xf0, 0x64, 0x63, 0x05 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS16, CS_MODE_BIG_ENDIAN, CS_OPT_SYNTAX_NO_DOLLAR, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "jr ra"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: ra
+      - asm_text: "jrc ra"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: ra
+      - asm_text: "div zero, v1, v0"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: zero
+              - type: MIPS_OP_REG
+                reg: v1
+              - type: MIPS_OP_REG
+                reg: v0
+      - asm_text: "divu zero, v1, v0"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: zero
+              - type: MIPS_OP_REG
+                reg: v1
+              - type: MIPS_OP_REG
+                reg: v0
+      - asm_text: "addiu sp, 0x1e"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: sp
+              - type: MIPS_OP_IMM
+                imm: 0x1e
+      - asm_text: "addiu sp, 0x2065"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: sp
+              - type: MIPS_OP_IMM
+                imm: 0x2065
