@@ -145,6 +145,9 @@ static void patch_cs_detail_operand_reg(cs_mips_op *Op, unsigned Reg, unsigned A
 }
 
 static void patch_cs_details(MCInst *MI) {
+	if (!detail_is_set(MI))
+		return;
+
 	cs_mips_op *op0 = NULL, *op1 = NULL, *op2 = NULL;
 	unsigned opcode = MCInst_getOpcode(MI);
 	unsigned n_ops = MCInst_getNumOperands(MI);
