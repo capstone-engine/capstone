@@ -121,6 +121,98 @@ static void printRegName(MCInst *MI, SStream *OS, MCRegister Reg)
 	SStream_concat0(OS, Mips_LLVM_getRegisterName(Reg, syntax_opt & CS_OPT_SYNTAX_NOREGNAME));
 }
 
+static void patch_cs_printer_no_dollar(SStream *O) {
+	char *dollar = strchr(O->buffer, '$');
+	if (!dollar) {
+		return;
+	}
+	size_t dollar_len = strlen(dollar + 1);
+	// to include `\0`
+	memmove(dollar, dollar + 1, dollar_len + 1);
+}
+
+static void patch_cs_detail_operand_reg(cs_mips_op *Op, unsigned Reg, unsigned Access) {
+	Op->type = MIPS_OP_REG;
+	Op->reg = Reg;
+	Op->is_reglist = false;
+	Op->access = Access;
+}
+
+static void patch_cs_details(MCInst *MI) {
+	cs_mips_op *op0 = NULL, *op1 = NULL, *op2 = NULL;
+	unsigned opcode = MCInst_getOpcode(MI);
+	unsigned n_ops = MCInst_getNumOperands(MI);
+
+	switch(opcode) {
+	/* mips r2 to r5 only 64bit */
+	case Mips_DSDIV: /// ddiv $$zero, $rs, $rt
+		/* fall-thru */
+	case Mips_DUDIV: /// ddivu $$zero, $rs, $rt
+		if (n_ops == 2) {
+			Mips_inc_op_count(MI);
+			op0 = Mips_get_detail_op(MI, -3);
+			op1 = Mips_get_detail_op(MI, -2);
+			op2 = Mips_get_detail_op(MI, -1);
+			// move all details by one and add $zero reg
+			*op2 = *op1;
+			*op1 = *op0;
+			patch_cs_detail_operand_reg(op0, MIPS_REG_ZERO_64, CS_AC_WRITE);
+		}
+		return;
+
+	/* mips r2 to r5 only */
+	case Mips_SDIV: /// div $$zero, $rs, $rt
+		/* fall-thru */
+	case Mips_UDIV: /// divu $$zero, $rs, $rt
+		/* fall-thru */
+	/* microMIPS only */
+	case Mips_SDIV_MM: /// div $$zero, $rs, $rt
+		/* fall-thru */
+	case Mips_UDIV_MM: /// divu $$zero, $rs, $rt
+		/* fall-thru */
+
+	/* MIPS16 only */
+	case Mips_DivRxRy16: /// div $$zero, $rx, $ry
+		/* fall-thru */
+	case Mips_DivuRxRy16: /// divu $$zero, $rx, $ry
+		if (n_ops == 2) {
+			Mips_inc_op_count(MI);
+			op0 = Mips_get_detail_op(MI, -3);
+			op1 = Mips_get_detail_op(MI, -2);
+			op2 = Mips_get_detail_op(MI, -1);
+			// move all details by one and add $zero reg
+			*op2 = *op1;
+			*op1 = *op0;
+			patch_cs_detail_operand_reg(op0, MIPS_REG_ZERO, CS_AC_WRITE);
+		}
+		return;
+	case Mips_AddiuSpImm16:
+		/* fall-thru */
+	case Mips_AddiuSpImmX16:
+		/// addiu $sp, imm8
+		if (n_ops == 1) {
+			Mips_inc_op_count(MI);
+			op0 = Mips_get_detail_op(MI, -2);
+			op1 = Mips_get_detail_op(MI, -1);
+			// move all details by one and add $sp reg
+			*op1 = *op0;
+			patch_cs_detail_operand_reg(op0, MIPS_REG_SP, CS_AC_WRITE);
+		}
+		return;
+	case Mips_JrcRa16: /// jrc $ra
+		/* fall-thru */
+	case Mips_JrRa16: /// jr $ra
+		if (n_ops < 1) {
+			Mips_inc_op_count(MI);
+			op0 = Mips_get_detail_op(MI, -1);
+			patch_cs_detail_operand_reg(op0, MIPS_REG_RA, CS_AC_READ);
+		}
+		return;
+	default:
+		return;
+	}
+}
+
 void Mips_LLVM_printInst(MCInst *MI, uint64_t Address, SStream *O) {
 	bool useAliasDetails = map_use_alias_details(MI);
 	if (!useAliasDetails) {
@@ -136,6 +228,11 @@ void Mips_LLVM_printInst(MCInst *MI, uint64_t Address, SStream *O) {
 	} else {
 		printInstruction(MI, Address, O);
 	}
+
+	if (MI->csh->syntax & CS_OPT_SYNTAX_NO_DOLLAR) {
+		patch_cs_printer_no_dollar(O);
+	}
+	patch_cs_details(MI);
 
 	if (!useAliasDetails) {
 		map_set_fill_detail_ops(MI, true);

@@ -5895,11 +5895,29 @@ test_cases:
   -
     input:
       name: "ddiv on mips64r2"
-      bytes: [ 0x01, 0x11, 0x00, 0x1e ]
+      bytes: [ 0x01, 0x11, 0x00, 0x1e, 0x01, 0x65, 0x00, 0x1a ]
       arch: "CS_ARCH_MIPS"
-      options: [ CS_MODE_MIPS64R2, CS_MODE_BIG_ENDIAN, CS_OPT_SYNTAX_NO_DOLLAR ] #, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      options: [ CS_MODE_MIPS64R2, CS_MODE_BIG_ENDIAN, CS_OPT_SYNTAX_NO_DOLLAR, CS_OPT_DETAIL ]
       address: 0x0
     expected:
       insns:
-      -
-        asm_text: "ddiv $zero, t0, s1"
+      - asm_text: "ddiv zero, t0, s1"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: zero
+              - type: MIPS_OP_REG
+                reg: t0
+              - type: MIPS_OP_REG
+                reg: s1
+      - asm_text: "div zero, t3, a1"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: zero
+              - type: MIPS_OP_REG
+                reg: t3
+              - type: MIPS_OP_REG
+                reg: a1
