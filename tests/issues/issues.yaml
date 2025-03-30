@@ -5978,3 +5978,15 @@ test_cases:
                 reg: sp
               - type: MIPS_OP_IMM
                 imm: 0x2065
+  - input:
+      name: "Test mips32 DSP"
+      bytes: [ 0x7e,0x32,0x83,0x11,0x7e,0x53,0x8d,0x11,0x7e,0x74,0x95,0x51,0x7e,0x95,0x9b,0xd1 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS32, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "precrq.qb.ph    $s0, $s1, $s2"
+      - asm_text: "precrq.ph.w     $s1, $s2, $s3"
+      - asm_text: "precrq_rs.ph.w  $s2, $s3, $s4"
+      - asm_text: "precrqu_s.qb.ph $s3, $s4, $s5"
