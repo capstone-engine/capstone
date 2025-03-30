@@ -122,6 +122,10 @@ static void printRegName(MCInst *MI, SStream *OS, MCRegister Reg)
 }
 
 static void patch_cs_printer(MCInst *MI, SStream *O) {
+	// replace '# 16 bit inst' to empty.
+	SStream_replc(O, '#', 0);
+	SStream_trimls(O);
+
 	if (MI->csh->syntax & CS_OPT_SYNTAX_NO_DOLLAR) {
 		char *dollar = strchr(O->buffer, '$');
 		if (!dollar) {
@@ -131,17 +135,13 @@ static void patch_cs_printer(MCInst *MI, SStream *O) {
 		// to include `\0`
 		memmove(dollar, dollar + 1, dollar_len + 1);
 	}
-
-	// replace '# 16 bit inst' to empty.
-	SStream_replc(O, '#', 0);
-	SStream_trimls(O);
 }
 
-static void patch_cs_detail_operand_reg(cs_mips_op *Op, unsigned Reg, unsigned Access) {
-	Op->type = MIPS_OP_REG;
-	Op->reg = Reg;
-	Op->is_reglist = false;
-	Op->access = Access;
+static void patch_cs_detail_operand_reg(cs_mips_op *op, unsigned reg, unsigned access) {
+	op->type = MIPS_OP_REG;
+	op->reg = reg;
+	op->is_reglist = false;
+	op->access = access;
 }
 
 static void patch_cs_details(MCInst *MI) {
@@ -157,16 +157,17 @@ static void patch_cs_details(MCInst *MI) {
 	case Mips_DSDIV: /// ddiv $$zero, $rs, $rt
 		/* fall-thru */
 	case Mips_DUDIV: /// ddivu $$zero, $rs, $rt
-		if (n_ops == 2) {
-			Mips_inc_op_count(MI);
-			op0 = Mips_get_detail_op(MI, -3);
-			op1 = Mips_get_detail_op(MI, -2);
-			op2 = Mips_get_detail_op(MI, -1);
-			// move all details by one and add $zero reg
-			*op2 = *op1;
-			*op1 = *op0;
-			patch_cs_detail_operand_reg(op0, MIPS_REG_ZERO_64, CS_AC_WRITE);
+		if (n_ops != 2) {
+			return;
 		}
+		Mips_inc_op_count(MI);
+		op0 = Mips_get_detail_op(MI, -3);
+		op1 = Mips_get_detail_op(MI, -2);
+		op2 = Mips_get_detail_op(MI, -1);
+		// move all details by one and add $zero reg
+		*op2 = *op1;
+		*op1 = *op0;
+		patch_cs_detail_operand_reg(op0, MIPS_REG_ZERO_64, CS_AC_WRITE);
 		return;
 
 	/* mips r2 to r5 only */
@@ -184,37 +185,40 @@ static void patch_cs_details(MCInst *MI) {
 	case Mips_DivRxRy16: /// div $$zero, $rx, $ry
 		/* fall-thru */
 	case Mips_DivuRxRy16: /// divu $$zero, $rx, $ry
-		if (n_ops == 2) {
-			Mips_inc_op_count(MI);
-			op0 = Mips_get_detail_op(MI, -3);
-			op1 = Mips_get_detail_op(MI, -2);
-			op2 = Mips_get_detail_op(MI, -1);
-			// move all details by one and add $zero reg
-			*op2 = *op1;
-			*op1 = *op0;
-			patch_cs_detail_operand_reg(op0, MIPS_REG_ZERO, CS_AC_WRITE);
+		if (n_ops != 2) {
+			return;
 		}
+		Mips_inc_op_count(MI);
+		op0 = Mips_get_detail_op(MI, -3);
+		op1 = Mips_get_detail_op(MI, -2);
+		op2 = Mips_get_detail_op(MI, -1);
+		// move all details by one and add $zero reg
+		*op2 = *op1;
+		*op1 = *op0;
+		patch_cs_detail_operand_reg(op0, MIPS_REG_ZERO, CS_AC_WRITE);
 		return;
 	case Mips_AddiuSpImm16: /// addiu $$sp, imm8
 		/* fall-thru */
 	case Mips_AddiuSpImmX16: /// addiu $$sp, imm8
-		if (n_ops == 1) {
-			Mips_inc_op_count(MI);
-			op0 = Mips_get_detail_op(MI, -2);
-			op1 = Mips_get_detail_op(MI, -1);
-			// move all details by one and add $sp reg
-			*op1 = *op0;
-			patch_cs_detail_operand_reg(op0, MIPS_REG_SP, CS_AC_READ_WRITE);
+		if (n_ops != 1) {
+			return;
 		}
+		Mips_inc_op_count(MI);
+		op0 = Mips_get_detail_op(MI, -2);
+		op1 = Mips_get_detail_op(MI, -1);
+		// move all details by one and add $sp reg
+		*op1 = *op0;
+		patch_cs_detail_operand_reg(op0, MIPS_REG_SP, CS_AC_READ_WRITE);
 		return;
 	case Mips_JrcRa16: /// jrc $ra
 		/* fall-thru */
 	case Mips_JrRa16: /// jr $ra
-		if (n_ops < 1) {
-			Mips_inc_op_count(MI);
-			op0 = Mips_get_detail_op(MI, -1);
-			patch_cs_detail_operand_reg(op0, MIPS_REG_RA, CS_AC_READ);
+		if (n_ops > 0) {
+			return;
 		}
+		Mips_inc_op_count(MI);
+		op0 = Mips_get_detail_op(MI, -1);
+		patch_cs_detail_operand_reg(op0, MIPS_REG_RA, CS_AC_READ);
 		return;
 	default:
 		return;
