@@ -6003,3 +6003,13 @@ test_cases:
       - asm_text: "addq_s.w    $v1, $a0, $a1"
       - asm_text: "dpaq_s.w.ph $ac1, $a1, $v1"
       - asm_text: "dpaq_sa.l.w $ac2, $a0, $v1"
+
+  - input:
+      name: "Test nanomips BNEC[16] (not available in NMS) - Conflict_Space16"
+      bytes: [ 0xd8, 0xf6 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_NANOMIPS, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "bnec $a3, $s1, 14"
