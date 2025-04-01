@@ -884,9 +884,10 @@ typedef struct {
 	uint8_t bi; ///< BI field of branch condition. UINT8_MAX if invalid.
 	ppc_cr_bit crX_bit; ///< CR field bit to test.
 	ppc_reg crX;	    ///< The CR field accessed.
-	ppc_br_hint hint;   ///< This is the hint encoded into the 'at' bits \
-                           of the BO field. Not to be confused with \
+	ppc_br_hint hint;   /** This is the hint encoded into the 'at' bits
+                           of the BO field. Not to be confused with
                            the BH field.
+                      */
 	ppc_pred pred_cr;   ///< CR-bit branch predicate
 	ppc_pred pred_ctr;  ///< CTR branch predicate
 	ppc_bh bh;	    ///< The BH field hint if any is present.
