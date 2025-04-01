@@ -171,7 +171,7 @@ void print_insn_detail_ppc(csh handle, cs_insn *ins)
 	}
 
 	if (ppc->bc.hint != PPC_BR_NOT_GIVEN)
-		printf("\tBranch hint: %u\n", ppc->bc.hint);
+		printf("\tBranch hint (at bits): %u\n", ppc->bc.hint);
 
 	if (ppc->update_cr0)
 		printf("\tUpdate-CR0: True\n");
