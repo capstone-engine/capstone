@@ -1456,6 +1456,7 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 	bool IsMicroMips = Mips_getFeatureBits(mode, Mips_FeatureMicroMips);
 	bool IsNanoMips = Mips_getFeatureBits(mode, Mips_FeatureNanoMips);
 	bool IsMips32r6 = Mips_getFeatureBits(mode, Mips_FeatureMips32r6);
+	bool IsMips64r6 = Mips_getFeatureBits(mode, Mips_FeatureMips64r6);
 	bool IsMips2 = Mips_getFeatureBits(mode, Mips_FeatureMips2);
 	bool IsMips16 = Mips_getFeatureBits(mode, Mips_FeatureMips16);
 	bool IsCnMips = Mips_getFeatureBits(mode, Mips_FeatureCnMips);
@@ -1662,18 +1663,18 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 			return Result;
 	}
 
-	if (IsMips32r6) {
-		Result = decodeInstruction_4(DecoderTableMips32r6_64r6_Ambiguous32, Instr,
-					     Insn, Address, NULL);
-		if (Result != MCDisassembler_Fail)
-			return Result;
-
+	if (IsMips32r6 || IsMips64r6) {
 		Result = decodeInstruction_4(DecoderTableMips32r6_64r6_BranchZero32, Instr,
 					     Insn, Address, NULL);
 		if (Result != MCDisassembler_Fail)
 			return Result;
 
 		Result = decodeInstruction_4(DecoderTableMips32r6_64r632, Instr,
+					     Insn, Address, NULL);
+		if (Result != MCDisassembler_Fail)
+			return Result;
+
+		Result = decodeInstruction_4(DecoderTableMips32r6_64r6_Ambiguous32, Instr,
 					     Insn, Address, NULL);
 		if (Result != MCDisassembler_Fail)
 			return Result;

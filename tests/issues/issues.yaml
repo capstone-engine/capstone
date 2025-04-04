@@ -5923,6 +5923,62 @@ test_cases:
                 reg: a1
 
   - input:
+      name: "dclo on mips64r6 - Mips32r6_64r632"
+      bytes: [ 0x00, 0xa0, 0x30, 0x53 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS64R6, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "dclo $a2, $a1"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_REG
+                reg: a2
+              - type: MIPS_OP_REG
+                reg: a1
+
+  - input:
+      name: "SIGRIE on mips32r6 - Mips32r6_64r632"
+      bytes: [ 0x04, 0x17, 0x0d, 0x53 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS32R6, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "sigrie 0xd53"
+        details:
+          mips:
+            operands:
+              - type: MIPS_OP_IMM
+                imm: 0xd53
+
+  - input:
+      name: "mips32r6 - Mips32r6_64r6_Ambiguous32"
+      bytes: [ 0x18, 0x01, 0x00, 0x00, 0x18, 0x00, 0x00, 0x00, 0x18, 0x81, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS32R6, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      - asm_text: "blezalc $at, 4100"
+      - asm_text: "blez $zero, 4104"
+      - asm_text: "bgeuc $a0, $at, 4108"
+
+  - input:
+      name: "mips64r6 - Mips32r6_64r6_Ambiguous32"
+      bytes: [ 0x18, 0x01, 0x00, 0x00, 0x18, 0x00, 0x00, 0x00, 0x18, 0x81, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS64R6, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      - asm_text: "blezalc $at, 4100"
+      - asm_text: "blez $zero, 4104"
+      - asm_text: "bgeuc $a0, $at, 4108"
+
+  - input:
       name: "jr/jrc/ ra & div/divu zero on mips16"
       bytes: [ 0xe8, 0x20,  0xe8, 0xa0,  0xeb, 0x5a,  0xeb, 0x5b,  0x63, 0x1e,  0xf0, 0x64, 0x63, 0x05 ]
       arch: "CS_ARCH_MIPS"
@@ -6015,7 +6071,18 @@ test_cases:
       - asm_text: "bnec $a3, $s1, 14"
 
   - input:
-      name: "Test mips32r6 - Conflict_Space16"
+      name: "Test mips64r6 - Mips32r6_64r6_BranchZero32"
+      bytes: [ 0x58, 0x63, 0x00, 0x00, 0x5C, 0x63, 0x00, 0x00 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_MIPS64R6, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "bgezc  $v1, 4"
+      - asm_text: "bltzc  $v1, 8"
+
+  - input:
+      name: "Test mips32r6 - Mips32r6_64r6_BranchZero32"
       bytes: [ 0x58, 0x63, 0x00, 0x00, 0x5C, 0x63, 0x00, 0x00 ]
       arch: "CS_ARCH_MIPS"
       options: [ CS_MODE_MIPS32R6, CS_MODE_BIG_ENDIAN ]
