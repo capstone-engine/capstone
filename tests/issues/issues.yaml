@@ -6025,4 +6025,12 @@ test_cases:
       - asm_text: "bgezc  $v1, 4"
       - asm_text: "bltzc  $v1, 8"
 
-
+  - input:
+      name: "Test nanomips jalrc rd rt is not beqc rd rt 0"
+      bytes: [ 0xd9, 0x90 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_MODE_NANOMIPS, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "jalrc $ra, $t0"

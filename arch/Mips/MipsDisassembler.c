@@ -1497,7 +1497,9 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 		Result = readInstruction16(Bytes, BytesLen, Address, Size,
 						&Insn, IsBigEndian);
 		if (Result != MCDisassembler_Fail) {
-			Result = decodeInstruction_2(DecoderTableNanoMips_Conflict_Space16,
+			// Calling the auto-generated decoder function for NanoMips
+			// 16-bit instructions.
+			Result = decodeInstruction_2(DecoderTableNanoMips16,
 						     Instr, Insn, Address,
 						     NULL);
 			if (Result != MCDisassembler_Fail) {
@@ -1505,9 +1507,7 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 				return Result;
 			}
 
-			// Calling the auto-generated decoder function for NanoMips
-			// 16-bit instructions.
-			Result = decodeInstruction_2(DecoderTableNanoMips16,
+			Result = decodeInstruction_2(DecoderTableNanoMips_Conflict_Space16,
 						     Instr, Insn, Address,
 						     NULL);
 			if (Result != MCDisassembler_Fail) {
