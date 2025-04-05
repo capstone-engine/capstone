@@ -20,7 +20,7 @@ endif()
 cmake_policy(SET CMP0042 NEW)
 
 # Check if VERSION is provided externally, otherwise default to 6.0.0
-if(NOT DEFINED PROJECT_VERSION)
+if(NOT DEFINED PROJECT_VERSION OR PROJECT_VERSION STREQUAL "")
     set(PROJECT_VERSION "6.0.0")
 endif()
 

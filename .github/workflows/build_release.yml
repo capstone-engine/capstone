@@ -64,3 +64,41 @@ jobs:
         files: |
           ./build/*.deb
           ./build/*.rpm
+
+  build_windows:
+    name: build_windows
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Win MSVC 64 dev cmd setup
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+
+    - name: Configure CMake and build the project
+      run: |
+        cmake -B build `
+        -T "ClangCL,host=x64" `
+        -A x64 `
+        -DPROJECT_VERSION=${{ github.event.release.tag_name }} `
+        -DCMAKE_BUILD_TYPE=Release `
+        -DCAPSTONE_BUILD_SHARED_LIBS=1
+        cmake --build build --config Release
+        cmake --install build --config Release
+
+    - name: Package NSIS installer
+      run: |
+        cd build
+        cpack -G NSIS
+
+    - name: Upload NSIS installer to release
+      uses: softprops/action-gh-release@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.event.release.tag_name }}
+        files: |
+          ./build/*.exe
