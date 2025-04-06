@@ -22,10 +22,9 @@ jobs:
         PKGNAME="capstone-$VERSION"
         SHASUM=$PKGNAME.tar.xz.sha256
         mkdir -p /tmp/$PKGNAME
-        mv * /tmp/$PKGNAME
-        mv /tmp/$PKGNAME .
+        rsync -a --exclude=build --exclude='.*' ./ /tmp/$PKGNAME/
         TARBALL=$PKGNAME.tar.xz
-        tar cJf $TARBALL $PKGNAME
+        tar -C /tmp -cJf $TARBALL $PKGNAME
         sha256sum $TARBALL > $SHASUM
         echo "tarball=$TARBALL" >> $GITHUB_OUTPUT
         echo "shasum=$SHASUM" >> $GITHUB_OUTPUT
@@ -83,7 +82,7 @@ jobs:
         cmake -B build `
         -T "ClangCL,host=x64" `
         -A x64 `
-        -DPROJECT_VERSION=${{ github.event.release.tag_name }} `
+        -DPROJECT_VERSION="${{ github.event.release.tag_name }}" `
         -DCMAKE_BUILD_TYPE=Release `
         -DCAPSTONE_BUILD_SHARED_LIBS=1
         cmake --build build --config Release
