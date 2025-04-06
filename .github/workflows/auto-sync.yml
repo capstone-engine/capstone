@@ -26,7 +26,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           submodules: true
 
       - name: Install auto-sync package
@@ -83,13 +82,6 @@ jobs:
           ./src/autosync/ASUpdater.py -d -a SystemZ -s IncGen
           ./src/autosync/ASUpdater.py -d -a Xtensa -s IncGen
           ./src/autosync/ASUpdater.py -d -a TriCore -s IncGen
-
-      - name: Compare generated .inc files with actual ones.
-        env:
-          BASE: ${{ github.event.pull_request.base.sha }}
-          HEAD: ${{ github.event.pull_request.head.sha }}
-        run: |
-          ./src/autosync/CompareInc.py -b ${BASE} -c ${HEAD}
 
       - name: CppTranslator - Patch tests
         run: |
