@@ -1240,3 +1240,85 @@ test_cases:
                 size: 8
             eflags: [  X86_EFLAGS_TEST_ZF ]
           regs_read: [ rflags ]
+  -
+    input:
+      bytes: [ 0xdb, 0xe8 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "fucomi st(0)"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xdb, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0xe8
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: st(0)
+                size: 10
+                access: CS_AC_READ
+          regs_read: [ st(0) ]
+          regs_write: [ rflags ]
+  -
+    input:
+      bytes: [ 0xd8, 0xd1 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "fcom st(1)"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xd8, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0xd1
+            disp: 0x0
+            sib: 0x0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: st(1)
+                size: 10
+                access: CS_AC_READ
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw ]
+  -
+    input:
+      bytes: [ 0xde, 0x14, 0x25, 0x34, 0x12, 0x00, 0x00 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "ficom word ptr [0x1234]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xde, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x14
+            disp: 0x1234
+            sib: 0x25
+            sib_scale: 1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_disp: 0x1234
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ st(0) ]
+          regs_write: [ fpsw ]
