@@ -826,10 +826,10 @@ if(CAPSTONE_BUILD_SHARED_LIBS)
     )
     target_compile_definitions(capstone PUBLIC CAPSTONE_SHARED)
     # Build pdb file for dll on Windows
-    if(WIN32)
+    if(MSVC)
         message("Enabling PDB for Windows")
         set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
-        set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
+        set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG")
     endif()
 endif()
 
@@ -957,7 +957,7 @@ if(CAPSTONE_INSTALL)
             DESTINATION ${CAPSTONE_CMAKE_CONFIG_INSTALL_DIR}
     )
 
-    if (WIN32 AND CAPSTONE_BUILD_SHARED_LIBS)
+    if (MSVC AND CAPSTONE_BUILD_SHARED_LIBS)
         install(FILES
             $<TARGET_PDB_FILE:capstone_shared>
             DESTINATION ${CMAKE_INSTALL_BINDIR}
