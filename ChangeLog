@@ -1,6 +1,42 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-Alpha4: April 11th, 2025
+
+## What's Changed
+* Fix wrong version requirement of tricore instructions by @Changqing-JING in https://github.com/capstone-engine/capstone/pull/2620
+* Python bindings: Switch to ubuntu-24.04-arm runner image by @Antelox in https://github.com/capstone-engine/capstone/pull/2625
+* Build Tarball before DEB/RPM package. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2627
+* Add aliases mapping for MIPS & test for id, alias_id by @wargio in https://github.com/capstone-engine/capstone/pull/2635
+* Add checks for MIPS details on cstest_py by @wargio in https://github.com/capstone-engine/capstone/pull/2640
+* Give the user some guidance where to add missing enumeration values. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2639
+* Python bindings: sdist creation fix + relative test by @Antelox in https://github.com/capstone-engine/capstone/pull/2624
+* cmake: Fix building capstone as sub-project by @imphil in https://github.com/capstone-engine/capstone/pull/2629
+* Update operand type enums of all arch modules to the one in `capstone.h` by @Rot127 in https://github.com/capstone-engine/capstone/pull/2633
+* Enhance shift value and types of shift instructions. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2638
+* Fix #2643 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2645
+* Tms32c64x Little Endian by @Rot127 in https://github.com/capstone-engine/capstone/pull/2648
+* Add call group to svc, smc and hvc. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2651
+* Decode BH field in print_insn_detail_ppc by @hainest in https://github.com/capstone-engine/capstone/pull/2662
+* Remove undefined constants in riscv_const.py (#2660) by @Asphaltt in https://github.com/capstone-engine/capstone/pull/2661
+* Stringify BH fields when printing ppc details by @hainest in https://github.com/capstone-engine/capstone/pull/2663
+* MIPS: Fix MIPS16 decoding, wrong flags and ghost registers by @wargio in https://github.com/capstone-engine/capstone/pull/2665
+* Add a script to compare the inc file content with the lastest generated ones. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2667
+* Mips32r6_64r632 is for both mips32r6 and mips64r6 by @wargio in https://github.com/capstone-engine/capstone/pull/2673
+* Fix nanoMIPS decoding of jalrc by @wargio in https://github.com/capstone-engine/capstone/pull/2672
+* Revert "Add a script to compare the inc file content with the lastest generated ones." by @Rot127 in https://github.com/capstone-engine/capstone/pull/2678
+* Add workflow for building on Windows by @stevenjoezhang in https://github.com/capstone-engine/capstone/pull/2675
+* Update read/written registers for x87 comparison instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2680
+
+## New Contributors
+* @imphil made their first contribution in https://github.com/capstone-engine/capstone/pull/2629
+* @Asphaltt made their first contribution in https://github.com/capstone-engine/capstone/pull/2661
+* @stevenjoezhang made their first contribution in https://github.com/capstone-engine/capstone/pull/2675
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/6.0.0-Alpha3...6.0.0-Alpha4
+
+
+-----------------------------
 Version 6.0.0-Alpha3: January 29th, 2025
 
 ## What's Changed
