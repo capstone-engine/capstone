@@ -67,6 +67,8 @@ static struct {
 		CS_ARCH_PPC, CS_ARCH_MAX }, 0, CS_MODE_PS },
 	{ "+spe", "Enables SPE extension", {
 		CS_ARCH_PPC, CS_ARCH_MAX }, 0, CS_MODE_SPE },
+	{ "+apple", "Enables Apple's proprietary AArch64 instructions (AMX, MUL53, and others).", {
+		CS_ARCH_AARCH64, CS_ARCH_MAX }, 0, CS_MODE_APPLE_PROPRIETARY },
 	{ NULL }
 };
 
@@ -694,13 +696,15 @@ int main(int argc, char **argv)
 			mode |= find_additional_modes(plus, arch);
 
 			err = cs_open(all_archs[i].arch, mode, &handle);
-			if (!err) {
+			if (err == CS_ERR_OK) {
 				enable_additional_options(handle, plus, arch);
 
 				// turn on SKIPDATA mode
 				if (skipdata) {
 					cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
 				}
+			} else {
+				printf("cs_open() failed with: %s\n", cs_strerror(err));
 			}
 			break;
 		}

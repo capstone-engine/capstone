@@ -94,7 +94,7 @@ typedef struct cs_arch_config {
 	{ \
 		AArch64_global_init, \
 		AArch64_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_BIG_ENDIAN), \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_BIG_ENDIAN | CS_MODE_APPLE_PROPRIETARY), \
 	}
 #define CS_ARCH_CONFIG_MIPS \
 	{ \

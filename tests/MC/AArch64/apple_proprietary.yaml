@@ -1,0 +1,252 @@
+test_cases:
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x1f]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldx xzr"
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x00]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldx x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x20]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldy x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x40]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stx x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x60]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sty x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x80]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldz x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0xa0]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stz x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0xc0]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldzi x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0xe0]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stzi x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x11,0x00]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "extrx x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x11,0x20]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "extry x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x11,0x40]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fma64 x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x11,0x60]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fms64 x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x11,0x80]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fma32 x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x11,0xa0]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fms32 x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x11,0xc0]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mac16 x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x11,0xe0]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fma16 x0"
+
+  -
+    input:
+      bytes: [0x00,0x20,0x12,0x00]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fms16 x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x12,0x20]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "set"
+  -
+    input:
+      bytes: [0x00,0x20,0x12,0x21]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "clr"
+  -
+    input:
+      bytes: [0x00,0x20,0x12,0x40]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vecint x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x12,0x60]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vecfp x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x12,0x80]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "matint x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x12,0xa0]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "matfp x0"
+  -
+    input:
+      bytes: [0x00,0x20,0x12,0xc0]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "genlut x0"

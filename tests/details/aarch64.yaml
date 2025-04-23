@@ -991,7 +991,7 @@ test_cases:
               reg: w2
               access: CS_AC_READ
               shift_type: AARCH64_SFT_ROR_REG
-              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+              shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1016,7 +1016,7 @@ test_cases:
               reg: w2
               access: CS_AC_READ
               shift_type: AARCH64_SFT_LSR_REG
-              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+              shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1041,7 +1041,7 @@ test_cases:
               reg: w2
               access: CS_AC_READ
               shift_type: AARCH64_SFT_ASR_REG
-              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+              shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1066,7 +1066,7 @@ test_cases:
               reg: w2
               access: CS_AC_READ
               shift_type: AARCH64_SFT_LSL_REG
-              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+              shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1091,7 +1091,7 @@ test_cases:
               reg: w2
               access: CS_AC_READ
               shift_type: AARCH64_SFT_ROR_REG
-              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+              shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1116,7 +1116,7 @@ test_cases:
               reg: w2
               access: CS_AC_READ
               shift_type: AARCH64_SFT_LSR_REG
-              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+              shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1141,6 +1141,131 @@ test_cases:
               reg: w2
               access: CS_AC_READ
               shift_type: AARCH64_SFT_ASR_REG
-              shift_value: 207 # Absolute number of W3 enum value. Might change with an update.
+              shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x00]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldx x0"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_READ
+          regs_read: [ x0 ]
+          regs_write: [ X ]
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x1f]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldx xzr"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: xzr
+              access: CS_AC_READ
+          regs_read: [ xzr ]
+          regs_write: [ X ]
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x20]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldy x0"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_READ
+          regs_read: [ x0 ]
+          regs_write: [ Y ]
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x40]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stx x0"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_READ
+          regs_read: [ X, x0 ]
+          regs_write: [ ]
+  -
+    input:
+      bytes: [0x00,0x20,0x10,0x60]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sty x0"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_READ
+          regs_read: [ Y, x0 ]
+          regs_write: [ ]
+  -
+    input:
+      bytes: [0x00,0x20,0x12,0x20]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "set"
+        details:
+          aarch64:
+            operands: []
+          regs_read: []
+          regs_write: [ X, Y, Z ]
+  -
+    input:
+      bytes: [0x00,0x20,0x12,0x21]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "clr"
+        details:
+          aarch64:
+            operands: []
+          regs_read: []
+          regs_write: []

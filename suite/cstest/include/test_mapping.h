@@ -70,6 +70,7 @@ static const cs_enum_id_map test_mode_map[] = {
 	{ .str = "CS_MODE_32", .val = CS_MODE_32 },
 	{ .str = "CS_MODE_64", .val = CS_MODE_64 },
 	{ .str = "CS_MODE_AIX_OS", .val = CS_MODE_AIX_OS },
+	{ .str = "CS_MODE_APPLE_PROPRIETARY", .val = CS_MODE_APPLE_PROPRIETARY },
 	{ .str = "CS_MODE_ARM", .val = CS_MODE_ARM },
 	{ .str = "CS_MODE_BIG_ENDIAN", .val = CS_MODE_BIG_ENDIAN },
 	{ .str = "CS_MODE_BOOKE", .val = CS_MODE_BOOKE },

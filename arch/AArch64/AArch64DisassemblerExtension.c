@@ -7,11 +7,14 @@
 
 bool AArch64_getFeatureBits(unsigned int mode, unsigned int feature)
 {
+	if (feature == AArch64_FeatureAMX) {
+		return mode & CS_MODE_APPLE_PROPRIETARY;
+	}
 	// we support everything
 	return true;
 }
 
-/// Tests a NULL terminated array of features if they are enabled.
+/// Tests an NULL terminated array of features if they are enabled. ASAsaa
 bool AArch64_testFeatureList(unsigned int mode, const unsigned int *features)
 {
 	int i = 0;

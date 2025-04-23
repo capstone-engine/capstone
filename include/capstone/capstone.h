@@ -118,6 +118,10 @@ typedef enum cs_arch {
 // in X86 reduce mode.
 #define CS_SUPPORT_X86_REDUCE (CS_ARCH_ALL + 2)
 
+/// The mode bits of the AArch64 ISA (not vendor specific).
+#define CS_MODE_AARCH64_ISA_BITS 0x00fffff8
+#define CS_MODE_VENDOR_AARCH64_BIT0 30
+
 /// Mode type
 typedef enum cs_mode {
 	CS_MODE_LITTLE_ENDIAN = 0,	///< little-endian mode (default mode)
@@ -125,10 +129,15 @@ typedef enum cs_mode {
 	CS_MODE_16 = 1 << 1,	///< 16-bit mode (X86)
 	CS_MODE_32 = 1 << 2,	///< 32-bit mode (X86)
 	CS_MODE_64 = 1 << 3,	///< 64-bit mode (X86, PPC)
+	// ARM
 	CS_MODE_THUMB = 1 << 4,	///< ARM's Thumb mode, including Thumb-2
 	CS_MODE_MCLASS = 1 << 5,	///< ARM's Cortex-M series
 	CS_MODE_V8 = 1 << 6,	///< ARMv8 A32 encodings for ARM
+	// AArch64
+	CS_MODE_APPLE_PROPRIETARY = 1 << CS_MODE_VENDOR_AARCH64_BIT0, ///< Enable Apple proprietary AArch64 instructions like AMX, MUL53, and others.
+	// SPARC
 	CS_MODE_V9 = 1 << 4, ///< SparcV9 mode (Sparc)
+	// PPC
 	CS_MODE_QPX = 1 << 4, ///< Quad Processing eXtensions mode (PPC)
 	CS_MODE_SPE = 1 << 5, ///< Signal Processing Engine mode (PPC)
 	CS_MODE_BOOKE = 1 << 6, ///< Book-E mode (PPC)
