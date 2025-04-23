@@ -10,7 +10,7 @@
 #include "cstool.h"
 
 #ifdef CAPSTONE_AARCH64_COMPAT_HEADER
-#define CS_ARCH_AARCH64 CS_ARCH_ARM
+#define CS_ARCH_AARCH64 CS_ARCH_ARM64
 #endif
 
 void print_string_hex(const char *comment, unsigned char *str, size_t len);
