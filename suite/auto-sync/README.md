@@ -37,14 +37,14 @@ pip install -e .
 
 ```bash
 git clone https://github.com/capstone-engine/llvm-capstone vendor/llvm_root/
-cd llvm-capstone
+cd vendor/llvm_root/llvm-capstone
 git checkout auto-sync
 mkdir build
 cd build
 # You can also build the "Release" version
 cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug ../llvm
 cmake --build . --target llvm-tblgen --config Debug
-cd ../../
+cd <capstone-root>/suite/auto-sync/
 ```
 
 #### Install `llvm-mc` and `FileCheck`
@@ -69,20 +69,20 @@ Not all arch-modules support `Auto-Sync` yet.
 Check if your architecture is supported.
 
 ```
-./src/autosync/ASUpdater.py -h
+ASUpdater -h
 ```
 
 Run the updater
 
 ```
-./src/autosync/ASUpdater.py -a <ARCH>
+ASUpdater -a <ARCH>
 ```
 
 ## Update procedure
 
-1. Run the `ASUpdater.py` script.
+1. Run the `ASUpdater` script.
 2. Compare the functions in `<ARCH>DisassemblerExtension.*` to LLVM (search the function names in the LLVM root)
-and update them if necessary.
+and update them if necessary (some architectures don't have this file).
 3. Try to build Capstone and fix the build errors.
 
 
