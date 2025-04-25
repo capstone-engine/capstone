@@ -179,6 +179,12 @@ void AArch64_add_vas(MCInst *MI, const SStream *OS)
 	if (AArch64_get_detail(MI)->op_count == 0) {
 		return;
 	}
+	if (MCInst_getOpcode(MI) == AArch64_MUL53HI || MCInst_getOpcode(MI) == AArch64_MUL53LO) {
+		// Proprietary Apple instrucions.
+		AArch64_get_detail(MI)->operands[0].vas = AARCH64LAYOUT_VL_2D;
+		AArch64_get_detail(MI)->operands[1].vas = AARCH64LAYOUT_VL_2D;
+		return;
+	}
 
 	// Search for r".[0-9]{1,2}[bhsdq]\W"
 	// with poor mans regex

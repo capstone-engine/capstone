@@ -766,6 +766,8 @@
   "msrr", // AARCH64_INS_MSRR
   "msubpt", // AARCH64_INS_MSUBPT
   "msub", // AARCH64_INS_MSUB
+  "mul53hi", // AARCH64_INS_MUL53HI
+  "mul53lo", // AARCH64_INS_MUL53LO
   "mul", // AARCH64_INS_MUL
   "mvni", // AARCH64_INS_MVNI
   "nands", // AARCH64_INS_NANDS

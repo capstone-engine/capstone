@@ -7,7 +7,7 @@
 
 bool AArch64_getFeatureBits(unsigned int mode, unsigned int feature)
 {
-	if (feature == AArch64_FeatureAMX) {
+	if (feature == AArch64_FeatureAMX || feature == AArch64_FeatureMUL53) {
 		return mode & CS_MODE_APPLE_PROPRIETARY;
 	}
 	// we support everything

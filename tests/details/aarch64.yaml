@@ -1269,3 +1269,61 @@ test_cases:
             operands: []
           regs_read: []
           regs_write: []
+  -
+    input:
+      bytes: [0x00,0x20,0x04,0x01]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mul53hi.2d v1, v0"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: q1
+              access: CS_AC_READ_WRITE
+              vas: AARCH64LAYOUT_VL_2D
+              is_vreg: 1
+            -
+              type: AARCH64_OP_REG
+              reg: q0
+              access: CS_AC_READ
+              vas: AARCH64LAYOUT_VL_2D
+              is_vreg: 1
+          writeback: 1
+          regs_read: [q1, q0]
+          regs_write: [q1]
+          groups: [ HasMUL53 ]
+  -
+    input:
+      bytes: [0x00,0x20,0x00,0x00]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mul53lo.2d v0, v0"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: q0
+              access: CS_AC_READ_WRITE
+              vas: AARCH64LAYOUT_VL_2D
+              is_vreg: 1
+            -
+              type: AARCH64_OP_REG
+              reg: q0
+              access: CS_AC_READ
+              vas: AARCH64LAYOUT_VL_2D
+              is_vreg: 1
+          writeback: 1
+          regs_read: [q0]
+          regs_write: [q0]
+          groups: [ HasMUL53 ]
