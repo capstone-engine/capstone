@@ -1327,3 +1327,85 @@ test_cases:
           regs_read: [q0]
           regs_write: [q0]
           groups: [ HasMUL53 ]
+  -
+    input:
+      bytes: [0x00,0x20,0x14,0x00]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "gexit"
+        details:
+          aarch64:
+            operands: []
+          regs_read: []
+          regs_write: []
+  -
+    input:
+      bytes: [0x00,0x20,0x14,0x22]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "genter #2"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x2
+                access: CS_AC_READ
+          regs_read: []
+          regs_write: []
+  -
+    input:
+      bytes: [0x00,0x20,0x08,0x22]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "wkdmc x1, x2"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: x2
+              access: CS_AC_READ_WRITE
+          writeback: 1
+          regs_read: [ x1, x2 ]
+          regs_write: [ x2 ]
+  -
+    input:
+      bytes: [0x00,0x20,0x0c,0x22]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "wkdmd x1, x2"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: x2
+              access: CS_AC_READ_WRITE
+          writeback: 1
+          regs_read: [ x1, x2 ]
+          regs_write: [ x2 ]

@@ -488,6 +488,8 @@
   "gcsstr", // AARCH64_INS_GCSSTR
   "gcssttr", // AARCH64_INS_GCSSTTR
   "genlut", // AARCH64_INS_GENLUT
+  "genter", // AARCH64_INS_GENTER
+  "gexit", // AARCH64_INS_GEXIT
   "ld1b", // AARCH64_INS_LD1B
   "ld1d", // AARCH64_INS_LD1D
   "ld1h", // AARCH64_INS_LD1H
@@ -1414,6 +1416,8 @@
   "whilelt", // AARCH64_INS_WHILELT
   "whilerw", // AARCH64_INS_WHILERW
   "whilewr", // AARCH64_INS_WHILEWR
+  "wkdmc", // AARCH64_INS_WKDMC
+  "wkdmd", // AARCH64_INS_WKDMD
   "wrffr", // AARCH64_INS_WRFFR
   "xaflag", // AARCH64_INS_XAFLAG
   "xar", // AARCH64_INS_XAR
