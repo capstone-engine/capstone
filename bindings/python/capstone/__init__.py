@@ -54,6 +54,7 @@ __all__ = [
     'CS_MODE_THUMB',
     'CS_MODE_MCLASS',
     'CS_MODE_V8',
+	'CS_MODE_APPLE_PROPRIETARY',
     'CS_MODE_V9',
     'CS_MODE_QPX',
     'CS_MODE_SPE',
@@ -275,6 +276,9 @@ CS_ARCH_ARC = 22
 CS_ARCH_MAX = 22
 CS_ARCH_ALL = 0xFFFF
 
+CS_MODE_AARCH64_ISA_BITS = 0x00fffff8
+CS_MODE_VENDOR_AARCH64_BIT0 = 30
+
 # disasm mode
 CS_MODE_LITTLE_ENDIAN = 0      # little-endian mode (default mode)
 CS_MODE_ARM = 0                # ARM mode
@@ -284,6 +288,7 @@ CS_MODE_64 = (1 << 3)          # 64-bit mode (for X86, PPC)
 CS_MODE_THUMB = (1 << 4)       # ARM's Thumb mode, including Thumb-2
 CS_MODE_MCLASS = (1 << 5)      # ARM's Cortex-M series
 CS_MODE_V8 = (1 << 6)          # ARMv8 A32 encodings for ARM
+CS_MODE_APPLE_PROPRIETARY = (1 << CS_MODE_VENDOR_AARCH64_BIT0)  # Apple proprietary AArch64 instructions like AMX, MUL53, and others.
 CS_MODE_MICRO = (1 << 4)       # MicroMips mode (MIPS architecture)
 CS_MODE_MIPS3 = (1 << 5)       # Mips III ISA
 CS_MODE_MIPS32R6 = (1 << 6)    # Mips32r6 ISA
