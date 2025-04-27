@@ -47,6 +47,7 @@
   "asrd", // AARCH64_INS_ASRD
   "asrr", // AARCH64_INS_ASRR
   "asr", // AARCH64_INS_ASR
+  "at_as1elx", // AARCH64_INS_AT_AS1ELX
   "autda", // AARCH64_INS_AUTDA
   "autdb", // AARCH64_INS_AUTDB
   "autdza", // AARCH64_INS_AUTDZA
@@ -955,6 +956,7 @@
   "sdivr", // AARCH64_INS_SDIVR
   "sdiv", // AARCH64_INS_SDIV
   "sdot", // AARCH64_INS_SDOT
+  "sdsb", // AARCH64_INS_SDSB
   "sel", // AARCH64_INS_SEL
   "set", // AARCH64_INS_SET
   "sete", // AARCH64_INS_SETE

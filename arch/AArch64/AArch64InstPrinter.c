@@ -2110,6 +2110,32 @@ void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 	printUInt64Bang(O, MCOperand_getImm(Op));
 }
 
+/// Not part of upstream LLVM.
+/// Just prints the barrier options as documented in
+/// https://github.com/AsahiLinux/docs/blob/main/docs/hw/cpu/apple-instructions.md
+void printAppleSysBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
+{
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_AppleSysBarrierOption, OpNo);
+	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
+	switch (Val) {
+	default:
+		SStream_concat0(O, "<undefined>");
+		break;
+	case 0:
+		SStream_concat0(O, "osh");
+		break;
+	case 1:
+		SStream_concat0(O, "nsh");
+		break;
+	case 2:
+		SStream_concat0(O, "ish");
+		break;
+	case 3:
+		SStream_concat0(O, "sy");
+		break;
+	}
+}
+
 void printBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_BarrierOption, OpNo);

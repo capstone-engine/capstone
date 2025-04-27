@@ -1494,6 +1494,13 @@ void AArch64_add_cs_detail_0(MCInst *MI, aarch64_op_group op_group,
 		AArch64_set_detail_op_sys(MI, OpNum, sysop, AARCH64_OP_SYSIMM);
 		break;
 	}
+	case AArch64_OP_GROUP_AppleSysBarrierOption: {
+		// Proprietary stuff. We just add the
+		// immediate here.
+		unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
+		AArch64_set_detail_op_imm(MI, OpNum, AARCH64_OP_IMM, Val);
+		break;
+	}
 	case AArch64_OP_GROUP_BarrierOption: {
 		unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, OpNum));
 		unsigned Opcode = MCInst_getOpcode(MI);

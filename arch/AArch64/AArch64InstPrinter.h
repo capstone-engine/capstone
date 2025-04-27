@@ -251,6 +251,7 @@ DECLARE_printVectorIndex(8);
 
 void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum,
 		       SStream *O);
+void printAppleSysBarrierOption(MCInst *MI, unsigned OpNum, SStream *O);
 void printBarrierOption(MCInst *MI, unsigned OpNum, SStream *O);
 void printBarriernXSOption(MCInst *MI, unsigned OpNum, SStream *O);
 void printMSRSystemRegister(MCInst *MI, unsigned OpNum, SStream *O);

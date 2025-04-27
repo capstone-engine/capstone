@@ -1409,3 +1409,99 @@ test_cases:
           writeback: 1
           regs_read: [ x1, x2 ]
           regs_write: [ x2 ]
+  -
+    input:
+      bytes: [0x00,0x20,0x14,0x41]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "at_as1elx x1"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_READ_WRITE
+          writeback: 1
+          regs_read: [ x1 ]
+          regs_write: [ x1 ]
+  -
+    input:
+      bytes: [0x00,0x20,0x14,0x60]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sdsb osh"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_IMM
+              imm: 0
+              access: CS_AC_READ
+          regs_read: []
+          regs_write: []
+  -
+    input:
+      bytes: [0x00,0x20,0x14,0x61]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sdsb nsh"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_IMM
+              imm: 1
+              access: CS_AC_READ
+          regs_read: []
+          regs_write: []
+  -
+    input:
+      bytes: [0x00,0x20,0x14,0x62]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sdsb ish"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_IMM
+              imm: 2
+              access: CS_AC_READ
+          regs_read: []
+          regs_write: []
+  -
+    input:
+      bytes: [0x00,0x20,0x14,0x63]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_APPLE_PROPRIETARY ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sdsb sy"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_IMM
+              imm: 3
+              access: CS_AC_READ
+          regs_read: []
+          regs_write: []
