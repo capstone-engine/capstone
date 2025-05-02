@@ -15,7 +15,7 @@ bool AArch64_getFeatureBits(unsigned int mode, unsigned int feature)
 	return true;
 }
 
-/// Tests an NULL terminated array of features if they are enabled. ASAsaa
+/// Tests a NULL terminated array of features if they are enabled.
 bool AArch64_testFeatureList(unsigned int mode, const unsigned int *features)
 {
 	int i = 0;
