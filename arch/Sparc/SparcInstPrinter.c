@@ -29,12 +29,12 @@
 #include <stdlib.h>
 #include <capstone/platform.h>
 
-#include "SparcInstrInfo.h"
+#include "../../MCInstPrinter.h"
 #include "SparcInstPrinter.h"
 #include "SparcLinkage.h"
 #include "SparcMCTargetDesc.h"
 #include "SparcMapping.h"
-#include "SparcRegisterInfo.h"
+#include "SparcDisassemblerExtension.h"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
@@ -52,29 +52,22 @@
 #define PRINT_ALIAS_INSTR
 #include "SparcGenAsmWriter.inc"
 
-bool isV9()
-{
-	return (STI.hasFeature(Sparc_FeatureV9)) != 0;
-}
-
 void printRegName(SStream *OS, MCRegister Reg)
 {
 	SStream_concat1(OS, '%');
-	SStream_concat0(OS, getRegisterName(Reg));
+	SStream_concat0(OS, getRegisterName(Reg, Sparc_NoRegAltName));
 }
 
-void printRegName(SStream *OS, MCRegister Reg, unsigned AltIdx)
+void printRegNameAlt(SStream *OS, MCRegister Reg, unsigned AltIdx)
 {
 	SStream_concat1(OS, '%');
 	SStream_concat0(OS, getRegisterName(Reg, AltIdx));
 }
 
-void printInst(MCInst *MI, uint64_t Address, StringRef Annot, SStream *O)
+void printInst(MCInst *MI, uint64_t Address, SStream *O)
 {
-	if (!printAliasInstr(MI, Address, O) &&
-	    !printSparcAliasInstr(MI, STI, O))
+	if (!printAliasInstr(MI, Address, O))
 		printInstruction(MI, Address, O);
-	;
 }
 
 bool printSparcAliasInstr(MCInst *MI, SStream *O)
@@ -91,17 +84,17 @@ bool printSparcAliasInstr(MCInst *MI, SStream *O)
 		switch (MCOperand_getReg(MCInst_getOperand(MI, (0)))) {
 		default:
 			return false;
-		case SP_G0: // jmp $addr | ret | retl
+		case Sparc_G0: // jmp $addr | ret | retl
 			if (MCOperand_isImm(MCInst_getOperand(MI, (2))) &&
 			    MCOperand_getImm(MCInst_getOperand(MI, (2))) == 8) {
 				switch (MCOperand_getReg(
 					MCInst_getOperand(MI, (1)))) {
 				default:
 					break;
-				case SP_I7:
+				case Sparc_I7:
 					SStream_concat0(O, "\tret");
 					return true;
-				case SP_O7:
+				case Sparc_O7:
 					SStream_concat0(O, "\tretl");
 					return true;
 				}
@@ -109,7 +102,7 @@ bool printSparcAliasInstr(MCInst *MI, SStream *O)
 			SStream_concat0(O, "\tjmp ");
 			printMemOperand(MI, 1, O);
 			return true;
-		case SP_O7: // call $addr
+		case Sparc_O7: // call $addr
 			SStream_concat0(O, "\tcall ");
 			printMemOperand(MI, 1, O);
 			return true;
@@ -121,9 +114,9 @@ bool printSparcAliasInstr(MCInst *MI, SStream *O)
 	case SP_V9FCMPES:
 	case SP_V9FCMPED:
 	case SP_V9FCMPEQ: {
-		if (isV9(STI) || (MCInst_getNumOperands(MI) != 3) ||
+		if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9) || (MCInst_getNumOperands(MI) != 3) ||
 		    (!MCOperand_isReg(MCInst_getOperand(MI, (0)))) ||
-		    (MCOperand_getReg(MCInst_getOperand(MI, (0))) != SP_FCC0))
+		    (MCOperand_getReg(MCInst_getOperand(MI, (0))) != Sparc_FCC0))
 			return false;
 		// if V8, skip printing %fcc0.
 		switch (MCInst_getOpcode(MI)) {
@@ -161,8 +154,8 @@ void printOperand(MCInst *MI, int opNum, SStream *O)
 
 	if (MCOperand_isReg(MO)) {
 		unsigned Reg = MCOperand_getReg(MO);
-		if (isV9(STI))
-			printRegName(O, Reg, SP_RegNamesStateReg);
+		if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9))
+			printRegNameAlt(O, Reg, Sparc_RegNamesStateReg);
 		else
 			printRegName(O, Reg);
 		return;
@@ -171,7 +164,7 @@ void printOperand(MCInst *MI, int opNum, SStream *O)
 	if (MCOperand_isImm(MO)) {
 		switch (MCInst_getOpcode(MI)) {
 		default:
-			SStream_concat0(O, (int)MCOperand_getImm(MO));
+			printInt32(O, (int)MCOperand_getImm(MO));
 			return;
 
 		case SP_TICCri: // Fall through
@@ -181,14 +174,13 @@ void printOperand(MCInst *MI, int opNum, SStream *O)
 		case SP_TXCCri: // Fall through
 		case SP_TXCCrr: // Fall through
 			// Only seven-bit values up to 127.
-			SStream_concat0(O, ((int)MCOperand_getImm(MO) & 0x7f));
+			printInt8(O, ((int)MCOperand_getImm(MO) & 0x7f));
 			return;
 		}
 	}
 
 	CS_ASSERT(MCOperand_isExpr(MO) &&
 		  "Unknown operand kind in printOperand");
-	MCOperand_getExpr(MO)->print(O, &MAI);
 }
 
 void printMemOperand(MCInst *MI, int opNum, SStream *O)
@@ -197,7 +189,7 @@ void printMemOperand(MCInst *MI, int opNum, SStream *O)
 	MCOperand *Op2 = MCInst_getOperand(MI, (opNum + 1));
 
 	bool PrintedFirstOperand = false;
-	if (MCOperand_isReg(Op1) && MCOperand_getReg(Op1) != SP_G0) {
+	if (MCOperand_isReg(Op1) && MCOperand_getReg(Op1) != Sparc_G0) {
 		printOperand(MI, opNum, O);
 		PrintedFirstOperand = true;
 	}
@@ -206,7 +198,7 @@ void printMemOperand(MCInst *MI, int opNum, SStream *O)
 	// already printed the first one
 	const bool SkipSecondOperand =
 		PrintedFirstOperand &&
-		((MCOperand_isReg(Op2) && MCOperand_getReg(Op2) == SP_G0) ||
+		((MCOperand_isReg(Op2) && MCOperand_getReg(Op2) == Sparc_G0) ||
 		 (MCOperand_isImm(Op2) && MCOperand_getImm(Op2) == 0));
 
 	if (!SkipSecondOperand) {
@@ -242,12 +234,12 @@ void printCCOperand(MCInst *MI, int opNum, SStream *O)
 	case SP_FMOVQ_FCC:
 	case SP_V9FMOVQ_FCC:
 		// Make sure CC is a fp conditional flag.
-		CC = (CC < SPCC_FCC_BEGIN) ? (CC + SPCC_FCC_BEGIN) : CC;
+		CC = (CC < SPARC_CC_FCC_BEGIN) ? (CC + SPARC_CC_FCC_BEGIN) : CC;
 		break;
 	case SP_CBCOND:
 	case SP_CBCONDA:
 		// Make sure CC is a cp conditional flag.
-		CC = (CC < SPCC_CPCC_BEGIN) ? (CC + SPCC_CPCC_BEGIN) : CC;
+		CC = (CC < SPARC_CC_CPCC_BEGIN) ? (CC + SPARC_CC_CPCC_BEGIN) : CC;
 		break;
 	case SP_BPR:
 	case SP_BPRA:
@@ -259,10 +251,10 @@ void printCCOperand(MCInst *MI, int opNum, SStream *O)
 	case SP_FMOVRD:
 	case SP_FMOVRQ:
 		// Make sure CC is a register conditional flag.
-		CC = (CC < SPCC_REG_BEGIN) ? (CC + SPCC_REG_BEGIN) : CC;
+		CC = (CC < SPARC_CC_REG_BEGIN) ? (CC + SPARC_CC_REG_BEGIN) : CC;
 		break;
 	}
-	SStream_concat0(O, SPARCCondCodeToString((SPCC_CondCodes)CC));
+	SStream_concat0(O, SPARCCondCodeToString((sparc_cc)CC));
 }
 
 bool printGetPCX(MCInst *MI, unsigned opNum, SStream *O)
@@ -281,7 +273,7 @@ void printMembarTag(MCInst *MI, int opNum, SStream *O)
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (opNum)));
 
 	if (Imm > 127) {
-		SStream_concat0(O, Imm);
+		printUInt32(O, Imm);
 		return;
 	}
 
@@ -299,9 +291,9 @@ void printASITag(MCInst *MI, int opNum, SStream *O)
 {
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (opNum)));
 	auto ASITag = SparcASITag_lookupASITagByEncoding(Imm);
-	if (isV9(STI) && ASITag) {
+	if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9) && ASITag) {
 		SStream_concat1(O, '#');
 		SStream_concat0(O, ASITag->Name);
 	} else
-		SStream_concat0(O, Imm);
+		printUInt32(O, Imm);
 }

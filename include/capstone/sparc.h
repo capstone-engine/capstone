@@ -21,43 +21,136 @@ extern "C" {
 
 /// Enums corresponding to Sparc condition codes, both icc's and fcc's.
 typedef enum sparc_cc {
-	SPARC_CC_INVALID = 0,	///< invalid CC (default)
 	// Integer condition codes
-	SPARC_CC_ICC_A   =  8+256,  ///< Always
-	SPARC_CC_ICC_N   =  0+256,  ///< Never
-	SPARC_CC_ICC_NE  =  9+256,  ///< Not Equal
-	SPARC_CC_ICC_E   =  1+256,  ///< Equal
-	SPARC_CC_ICC_G   = 10+256,  ///< Greater
-	SPARC_CC_ICC_LE  =  2+256,  ///< Less or Equal
-	SPARC_CC_ICC_GE  = 11+256,  ///< Greater or Equal
-	SPARC_CC_ICC_L   =  3+256,  ///< Less
-	SPARC_CC_ICC_GU  = 12+256,  ///< Greater Unsigned
-	SPARC_CC_ICC_LEU =  4+256,  ///< Less or Equal Unsigned
-	SPARC_CC_ICC_CC  = 13+256,  ///< Carry Clear/Great or Equal Unsigned
-	SPARC_CC_ICC_CS  =  5+256,  ///< Carry Set/Less Unsigned
-	SPARC_CC_ICC_POS = 14+256,  ///< Positive
-	SPARC_CC_ICC_NEG =  6+256,  ///< Negative
-	SPARC_CC_ICC_VC  = 15+256,  ///< Overflow Clear
-	SPARC_CC_ICC_VS  =  7+256,  ///< Overflow Set
+	SPARC_CC_ICC_A = 8,    // Always
+	SPARC_CC_ICC_N = 0,    // Never
+	SPARC_CC_ICC_NE = 9,   // Not Equal
+	SPARC_CC_ICC_E = 1,    // Equal
+	SPARC_CC_ICC_G = 10,   // Greater
+	SPARC_CC_ICC_LE = 2,   // Less or Equal
+	SPARC_CC_ICC_GE = 11,  // Greater or Equal
+	SPARC_CC_ICC_L = 3,    // Less
+	SPARC_CC_ICC_GU = 12,  // Greater Unsigned
+	SPARC_CC_ICC_LEU = 4,  // Less or Equal Unsigned
+	SPARC_CC_ICC_CC = 13,  // Carry Clear/Great or Equal Unsigned
+	SPARC_CC_ICC_CS = 5,   // Carry Set/Less Unsigned
+	SPARC_CC_ICC_POS = 14, // Positive
+	SPARC_CC_ICC_NEG = 6,  // Negative
+	SPARC_CC_ICC_VC = 15,  // Overflow Clear
+	SPARC_CC_ICC_VS = 7,   // Overflow Set
 
-	// Floating condition codes
-	SPARC_CC_FCC_A   =  8+16+256,  ///< Always
-	SPARC_CC_FCC_N   =  0+16+256,  ///< Never
-	SPARC_CC_FCC_U   =  7+16+256,  ///< Unordered
-	SPARC_CC_FCC_G   =  6+16+256,  ///< Greater
-	SPARC_CC_FCC_UG  =  5+16+256,  ///< Unordered or Greater
-	SPARC_CC_FCC_L   =  4+16+256,  ///< Less
-	SPARC_CC_FCC_UL  =  3+16+256,  ///< Unordered or Less
-	SPARC_CC_FCC_LG  =  2+16+256,  ///< Less or Greater
-	SPARC_CC_FCC_NE  =  1+16+256,  ///< Not Equal
-	SPARC_CC_FCC_E   =  9+16+256,  ///< Equal
-	SPARC_CC_FCC_UE  = 10+16+256,  ///< Unordered or Equal
-	SPARC_CC_FCC_GE  = 11+16+256,  ///< Greater or Equal
-	SPARC_CC_FCC_UGE = 12+16+256,  ///< Unordered or Greater or Equal
-	SPARC_CC_FCC_LE  = 13+16+256,  ///< Less or Equal
-	SPARC_CC_FCC_ULE = 14+16+256,  ///< Unordered or Less or Equal
-	SPARC_CC_FCC_O   = 15+16+256,  ///< Ordered
+	SPARC_CC_FCC_BEGIN = 16,
+	SPARC_CC_FCC_A = 8 + SPARC_CC_FCC_BEGIN,    // Always
+	SPARC_CC_FCC_N = 0 + SPARC_CC_FCC_BEGIN,    // Never
+	SPARC_CC_FCC_U = 7 + SPARC_CC_FCC_BEGIN,    // Unordered
+	SPARC_CC_FCC_G = 6 + SPARC_CC_FCC_BEGIN,    // Greater
+	SPARC_CC_FCC_UG = 5 + SPARC_CC_FCC_BEGIN,   // Unordered or Greater
+	SPARC_CC_FCC_L = 4 + SPARC_CC_FCC_BEGIN,    // Less
+	SPARC_CC_FCC_UL = 3 + SPARC_CC_FCC_BEGIN,   // Unordered or Less
+	SPARC_CC_FCC_LG = 2 + SPARC_CC_FCC_BEGIN,   // Less or Greater
+	SPARC_CC_FCC_NE = 1 + SPARC_CC_FCC_BEGIN,   // Not Equal
+	SPARC_CC_FCC_E = 9 + SPARC_CC_FCC_BEGIN,    // Equal
+	SPARC_CC_FCC_UE = 10 + SPARC_CC_FCC_BEGIN,  // Unordered or Equal
+	SPARC_CC_FCC_GE = 11 + SPARC_CC_FCC_BEGIN,  // Greater or Equal
+	SPARC_CC_FCC_UGE = 12 + SPARC_CC_FCC_BEGIN, // Unordered or Greater or Equal
+	SPARC_CC_FCC_LE = 13 + SPARC_CC_FCC_BEGIN,  // Less or Equal
+	SPARC_CC_FCC_ULE = 14 + SPARC_CC_FCC_BEGIN, // Unordered or Less or Equal
+	SPARC_CC_FCC_O = 15 + SPARC_CC_FCC_BEGIN,   // Ordered
+
+	SPARC_CC_CPCC_BEGIN = 32,
+	SPARC_CC_CPCC_A = 8 + SPARC_CC_CPCC_BEGIN, // Always
+	SPARC_CC_CPCC_N = 0 + SPARC_CC_CPCC_BEGIN, // Never
+	SPARC_CC_CPCC_3 = 7 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_2 = 6 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_23 = 5 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_1 = 4 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_13 = 3 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_12 = 2 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_123 = 1 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_0 = 9 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_03 = 10 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_02 = 11 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_023 = 12 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_01 = 13 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_013 = 14 + SPARC_CC_CPCC_BEGIN,
+	SPARC_CC_CPCC_012 = 15 + SPARC_CC_CPCC_BEGIN,
+
+	SPARC_CC_REG_BEGIN = 48,
+	SPARC_CC_REG_Z = 1 + SPARC_CC_REG_BEGIN,   // Is zero
+	SPARC_CC_REG_LEZ = 2 + SPARC_CC_REG_BEGIN, // Less or equal to zero
+	SPARC_CC_REG_LZ = 3 + SPARC_CC_REG_BEGIN,  // Less than zero
+	SPARC_CC_REG_NZ = 5 + SPARC_CC_REG_BEGIN,  // Is not zero
+	SPARC_CC_REG_GZ = 6 + SPARC_CC_REG_BEGIN,  // Greater than zero
+	SPARC_CC_REG_GEZ = 7 + SPARC_CC_REG_BEGIN  // Greater than or equal to zero
 } sparc_cc;
+
+inline static const char *SPARCCondCodeToString(sparc_cc CC) {
+  switch (CC) {
+  case SPARC_CC_ICC_A:   return "a";
+  case SPARC_CC_ICC_N:   return "n";
+  case SPARC_CC_ICC_NE:  return "ne";
+  case SPARC_CC_ICC_E:   return "e";
+  case SPARC_CC_ICC_G:   return "g";
+  case SPARC_CC_ICC_LE:  return "le";
+  case SPARC_CC_ICC_GE:  return "ge";
+  case SPARC_CC_ICC_L:   return "l";
+  case SPARC_CC_ICC_GU:  return "gu";
+  case SPARC_CC_ICC_LEU: return "leu";
+  case SPARC_CC_ICC_CC:  return "cc";
+  case SPARC_CC_ICC_CS:  return "cs";
+  case SPARC_CC_ICC_POS: return "pos";
+  case SPARC_CC_ICC_NEG: return "neg";
+  case SPARC_CC_ICC_VC:  return "vc";
+  case SPARC_CC_ICC_VS:  return "vs";
+  case SPARC_CC_FCC_A:   return "a";
+  case SPARC_CC_FCC_N:   return "n";
+  case SPARC_CC_FCC_U:   return "u";
+  case SPARC_CC_FCC_G:   return "g";
+  case SPARC_CC_FCC_UG:  return "ug";
+  case SPARC_CC_FCC_L:   return "l";
+  case SPARC_CC_FCC_UL:  return "ul";
+  case SPARC_CC_FCC_LG:  return "lg";
+  case SPARC_CC_FCC_NE:  return "ne";
+  case SPARC_CC_FCC_E:   return "e";
+  case SPARC_CC_FCC_UE:  return "ue";
+  case SPARC_CC_FCC_GE:  return "ge";
+  case SPARC_CC_FCC_UGE: return "uge";
+  case SPARC_CC_FCC_LE:  return "le";
+  case SPARC_CC_FCC_ULE: return "ule";
+  case SPARC_CC_FCC_O:   return "o";
+  case SPARC_CC_CPCC_A:   return "a";
+  case SPARC_CC_CPCC_N:   return "n";
+  case SPARC_CC_CPCC_3:   return "3";
+  case SPARC_CC_CPCC_2:   return "2";
+  case SPARC_CC_CPCC_23:  return "23";
+  case SPARC_CC_CPCC_1:   return "1";
+  case SPARC_CC_CPCC_13:  return "13";
+  case SPARC_CC_CPCC_12:  return "12";
+  case SPARC_CC_CPCC_123: return "123";
+  case SPARC_CC_CPCC_0:   return "0";
+  case SPARC_CC_CPCC_03:  return "03";
+  case SPARC_CC_CPCC_02:  return "02";
+  case SPARC_CC_CPCC_023: return "023";
+  case SPARC_CC_CPCC_01:  return "01";
+  case SPARC_CC_CPCC_013: return "013";
+  case SPARC_CC_CPCC_012: return "012";
+  case SPARC_CC_REG_BEGIN:
+    return "invalid";
+  case SPARC_CC_REG_Z:
+    return "z";
+  case SPARC_CC_REG_LEZ:
+    return "lez";
+  case SPARC_CC_REG_LZ:
+    return "lz";
+  case SPARC_CC_REG_NZ:
+    return "nz";
+  case SPARC_CC_REG_GZ:
+    return "gz";
+  case SPARC_CC_REG_GEZ:
+    return "gez";
+  }
+  return "invalid";
+}
 
 /// Branch hint
 typedef enum sparc_hint {
