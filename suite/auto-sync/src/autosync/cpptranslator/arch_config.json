@@ -306,9 +306,6 @@
       },{
         "in": "{LLVM_ROOT}/llvm/lib/Target/Sparc/MCTargetDesc/SparcMCTargetDesc.h",
         "out": "SparcMCTargetDesc.h"
-      },{
-        "in": "{LLVM_ROOT}/llvm/lib/Target/Sparc/MCTargetDesc/SparcPredicates.h",
-        "out": "SparcPredicates.h"
       }
     ],
     "files_for_template_search": [
@@ -316,9 +313,6 @@
       "{LLVM_ROOT}/llvm/lib/Target/Sparc/Disassembler/SparcDisassembler.cpp"
     ],
     "templates_with_arg_deduction": [],
-    "manually_edited_files": [
-      "{LLVM_ROOT}/llvm/lib/Target/Sparc/SparcInstrInfo.h",
-      "{LLVM_ROOT}/llvm/lib/Target/Sparc/SparcRegisterInfo.h"
-    ]
+    "manually_edited_files": []
   }
 }
