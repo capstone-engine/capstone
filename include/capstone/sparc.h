@@ -423,6 +423,48 @@ typedef enum sparc_reg {
 	SPARC_REG_FP = SPARC_REG_I6,
 } sparc_reg;
 
+typedef enum sparc_asi {
+	// generated content <SparcGenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_ASITag> begin
+	// clang-format off
+
+	SPARC_ASITAG_ASI_N = 0x4,
+	SPARC_ASITAG_ASI_NUCLEUS = 0x4,
+	SPARC_ASITAG_ASI_N_L = 0xc,
+	SPARC_ASITAG_ASI_NUCLEUS_LITTLE = 0xc,
+	SPARC_ASITAG_ASI_AIUP = 0x10,
+	SPARC_ASITAG_ASI_AS_IF_USER_PRIMARY = 0x10,
+	SPARC_ASITAG_ASI_AIUS = 0x11,
+	SPARC_ASITAG_ASI_AS_IF_USER_SECONDARY = 0x11,
+	SPARC_ASITAG_ASI_AIUP_L = 0x18,
+	SPARC_ASITAG_ASI_AS_IF_USER_PRIMARY_LITTLE = 0x18,
+	SPARC_ASITAG_ASI_AIUS_L = 0x19,
+	SPARC_ASITAG_ASI_AS_IF_USER_SECONDARY_LITTLE = 0x19,
+	SPARC_ASITAG_ASI_P = 0x80,
+	SPARC_ASITAG_ASI_PRIMARY = 0x80,
+	SPARC_ASITAG_ASI_S = 0x81,
+	SPARC_ASITAG_ASI_SECONDARY = 0x81,
+	SPARC_ASITAG_ASI_PNF = 0x82,
+	SPARC_ASITAG_ASI_PRIMARY_NOFAULT = 0x82,
+	SPARC_ASITAG_ASI_SNF = 0x83,
+	SPARC_ASITAG_ASI_SECONDARY_NOFAULT = 0x83,
+	SPARC_ASITAG_ASI_P_L = 0x88,
+	SPARC_ASITAG_ASI_PRIMARY_LITTLE = 0x88,
+	SPARC_ASITAG_ASI_S_L = 0x89,
+	SPARC_ASITAG_ASI_SECONDARY_LITTLE = 0x89,
+	SPARC_ASITAG_ASI_PNF_L = 0x8a,
+	SPARC_ASITAG_ASI_PRIMARY_NOFAULT_LITTLE = 0x8a,
+	SPARC_ASITAG_ASI_SNF_L = 0x8b,
+	SPARC_ASITAG_ASI_SECONDARY_NOFAULT_LITTLE = 0x8b,
+
+	// clang-format on
+	// generated content <SparcGenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_ASITag> end
+} sparc_asi;
+
+typedef union sparc_sys_imm {
+	sparc_asi asi;
+	unsigned raw_val;
+} sparc_sys_imm;
+
 /// Instruction's operand referring to memory
 /// This is associated with SPARC_OP_MEM operand type above
 typedef struct sparc_op_mem {

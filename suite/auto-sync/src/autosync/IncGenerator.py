@@ -65,13 +65,13 @@ class IncGenerator:
                     os.remove(self.output_dir_c_inc.joinpath(file.name))
                 shutil.move(file, self.output_dir_c_inc)
 
-        if self.arch == "AArch64":
-            # We have to rename the file SystemRegister -> SystemOperands
+        if self.arch == "ARM":
+            # We have to rename the file SystemOperand -> SystemRegister
             sys_ops_table_file = self.output_dir_c_inc.joinpath(
-                "AArch64GenSystemRegister.inc"
+                "ARMGenSystemOperands.inc"
             )
             new_sys_ops_file = self.output_dir_c_inc.joinpath(
-                "AArch64GenSystemOperands.inc"
+                "ARMGenSystemRegister.inc"
             )
             if "SystemOperand" not in self.inc_list:
                 return

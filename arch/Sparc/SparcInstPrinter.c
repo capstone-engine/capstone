@@ -41,12 +41,10 @@
 
 #define DEBUG_TYPE "asm-printer"
 
-// The generated AsmMatcher SparcGenAsmWriter uses "Sparc" as the target
-// namespace. But SPARC backend uses "SP" as its namespace.
-
-// CS namespace begin: Sparc
-
-// CS namespace end: Sparc
+static void printCustomAliasOperand(
+         MCInst *MI, uint64_t Address, unsigned OpIdx,
+         unsigned PrintMethodIdx,
+         SStream *OS);
 
 #define GET_INSTRUCTION_NAME
 #define PRINT_ALIAS_INSTR
@@ -287,10 +285,13 @@ void printMembarTag(MCInst *MI, int opNum, SStream *O)
 	}
 }
 
+#define GET_ASITAG_IMPL
+#include "SparcGenSystemOperands.inc"
+
 void printASITag(MCInst *MI, int opNum, SStream *O)
 {
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (opNum)));
-	auto ASITag = SparcASITag_lookupASITagByEncoding(Imm);
+	const Sparc_ASITag_ASITag *ASITag = Sparc_ASITag_lookupASITagByEncoding(Imm);
 	if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9) && ASITag) {
 		SStream_concat1(O, '#');
 		SStream_concat0(O, ASITag->Name);

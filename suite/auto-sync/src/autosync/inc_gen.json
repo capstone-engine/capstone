@@ -46,7 +46,7 @@
       "name": "SystemOperand",
       "tblgen_arg": "--gen-searchable-tables",
       "inc_name": "",
-      "only_arch": ["AArch64", "ARM"],
+      "only_arch": ["AArch64", "ARM", "Sparc"],
       "lang": ["CCS"]
     }
   ]

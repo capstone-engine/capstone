@@ -1676,13 +1676,13 @@ getRegisterName(unsigned RegNo, unsigned AltIdx) {
 
   switch(AltIdx) {
   default: CS_ASSERT_RET_VAL(0 && "Invalid register alt name index!", NULL);
-  case SP_NoRegAltName:
+  case Sparc_NoRegAltName:
     CS_ASSERT_RET_VAL(*(AsmStrsNoRegAltName+RegAsmOffsetNoRegAltName[RegNo-1]) &&
            "Invalid alt name index for register!", NULL);
     return AsmStrsNoRegAltName+RegAsmOffsetNoRegAltName[RegNo-1];
-  case SP_RegNamesStateReg:
+  case Sparc_RegNamesStateReg:
     if (!*(AsmStrsRegNamesStateReg+RegAsmOffsetRegNamesStateReg[RegNo-1]))
-      return getRegisterName(RegNo, SP_NoRegAltName);
+      return getRegisterName(RegNo, Sparc_NoRegAltName);
     return AsmStrsRegNamesStateReg+RegAsmOffsetRegNamesStateReg[RegNo-1];
   }
 #else
