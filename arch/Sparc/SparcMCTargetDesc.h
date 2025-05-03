@@ -40,23 +40,6 @@
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
-;
-;
-;
-;
-;
-;
-;
-;
-;
-
-MCCodeEmitter *createSparcMCCodeEmitter(const MCInstrInfo *MCII,
-					MCContext *Ctx);
-MCAsmBackend *createSparcAsmBackend(const Target *T, const MCRegisterInfo *MRI,
-				    const MCTargetOptions *Options);
-std_unique_ptr<MCObjectTargetWriter> createSparcELFObjectWriter(bool Is64Bit,
-								uint8_t OSABI);
-
 // Defines symbolic names for Sparc v9 ASI tag names.
 // CS namespace begin: SparcASITag
 
@@ -77,12 +60,15 @@ typedef struct ASITag {
 // register name to register number.
 //
 #define GET_REGINFO_ENUM
+#include "SparcGenRegisterInfo.inc"
 
 // Defines symbolic names for the Sparc instructions.
 //
 #define GET_INSTRINFO_ENUM
 #define GET_INSTRINFO_MC_HELPER_DECLS
+#include "SparcGenInstrInfo.inc"
 
 #define GET_SUBTARGETINFO_ENUM
+#include "SparcGenSubtargetInfo.inc"
 
 #endif
