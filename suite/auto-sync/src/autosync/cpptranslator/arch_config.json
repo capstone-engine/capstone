@@ -15,7 +15,8 @@
             "LoongArchInstPrinter.cpp",
             "MipsInstPrinter.cpp",
             "SystemZInstPrinter.cpp",
-            "XtensaInstPrinter.cpp"
+            "XtensaInstPrinter.cpp",
+            "SparcInstPrinter.cpp"
           ]
         },
         "InlineToStaticInline": {
@@ -290,5 +291,34 @@
     ],
     "templates_with_arg_deduction": [],
     "manually_edited_files": []
+  },
+  "Sparc": {
+    "files_to_translate": [
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/Sparc/Disassembler/SparcDisassembler.cpp",
+        "out": "SparcDisassembler.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/Sparc/MCTargetDesc/SparcInstPrinter.cpp",
+        "out": "SparcInstPrinter.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/Sparc/MCTargetDesc/SparcInstPrinter.h",
+        "out": "SparcInstPrinter.h"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/Sparc/MCTargetDesc/SparcMCTargetDesc.h",
+        "out": "SparcMCTargetDesc.h"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/Sparc/MCTargetDesc/SparcPredicates.h",
+        "out": "SparcPredicates.h"
+      }
+    ],
+    "files_for_template_search": [
+      "{CPP_INC_OUT_DIR}/SparcGenDisassemblerTables.inc",
+      "{LLVM_ROOT}/llvm/lib/Target/Sparc/Disassembler/SparcDisassembler.cpp"
+    ],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": [
+      "{LLVM_ROOT}/llvm/lib/Target/Sparc/SparcInstrInfo.h",
+      "{LLVM_ROOT}/llvm/lib/Target/Sparc/SparcRegisterInfo.h"
+    ]
   }
 }
