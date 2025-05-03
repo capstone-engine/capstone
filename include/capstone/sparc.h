@@ -350,6 +350,8 @@ typedef struct cs_sparc_op {
 	};
 } cs_sparc_op;
 
+#define NUM_SPARC_OPS 4
+
 /// Instruction structure
 typedef struct cs_sparc {
 	sparc_cc cc;	///< code condition for this insn
@@ -357,7 +359,7 @@ typedef struct cs_sparc {
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_sparc_op operands[4]; ///< operands for this instruction.
+	cs_sparc_op operands[NUM_SPARC_OPS]; ///< operands for this instruction.
 } cs_sparc;
 
 /// SPARC instruction

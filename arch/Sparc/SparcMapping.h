@@ -4,7 +4,8 @@
 #ifndef CS_SPARC_MAP_H
 #define CS_SPARC_MAP_H
 
-#include "capstone/capstone.h"
+#include "../../utils.h"
+#include <capstone/capstone.h>
 
 // return name of register in friendly string
 const char *Sparc_reg_name(csh handle, unsigned int reg);

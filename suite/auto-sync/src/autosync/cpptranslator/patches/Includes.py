@@ -452,6 +452,8 @@ def get_sparc_includes(filename: str) -> bytes:
         case "SparcDisassembler.cpp":
             return (
                 b'#include "../../MCDisassembler.h"\n'
+                + b'#include "../../MCFixedLenDisassembler.h"\n'
+                + b'#include "SparcDisassemblerExtension.h"\n'
                 + b'#include "SparcLinkage.h"\n'
                 + b'#include "SparcMapping.h"\n'
                 + b'#include "SparcMCTargetDesc.h"\n'
