@@ -683,7 +683,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // FCCRegs Register Class...
   static const MCPhysReg FCCRegs[] = {
-    SP_FCC0, SP_FCC1, SP_FCC2, SP_FCC3, 
+    Sparc_FCC0, Sparc_FCC1, Sparc_FCC2, Sparc_FCC3, 
   };
 
   // FCCRegs Bit set.
@@ -693,7 +693,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // ASRRegs Register Class...
   static const MCPhysReg ASRRegs[] = {
-    SP_Y, SP_TICK, SP_ASR1, SP_ASR2, SP_ASR3, SP_ASR4, SP_ASR5, SP_ASR6, SP_ASR7, SP_ASR8, SP_ASR9, SP_ASR10, SP_ASR11, SP_ASR12, SP_ASR13, SP_ASR14, SP_ASR15, SP_ASR16, SP_ASR17, SP_ASR18, SP_ASR19, SP_ASR20, SP_ASR21, SP_ASR22, SP_ASR23, SP_ASR24, SP_ASR25, SP_ASR26, SP_ASR27, SP_ASR28, SP_ASR29, SP_ASR30, SP_ASR31, 
+    Sparc_Y, Sparc_TICK, Sparc_ASR1, Sparc_ASR2, Sparc_ASR3, Sparc_ASR4, Sparc_ASR5, Sparc_ASR6, Sparc_ASR7, Sparc_ASR8, Sparc_ASR9, Sparc_ASR10, Sparc_ASR11, Sparc_ASR12, Sparc_ASR13, Sparc_ASR14, Sparc_ASR15, Sparc_ASR16, Sparc_ASR17, Sparc_ASR18, Sparc_ASR19, Sparc_ASR20, Sparc_ASR21, Sparc_ASR22, Sparc_ASR23, Sparc_ASR24, Sparc_ASR25, Sparc_ASR26, Sparc_ASR27, Sparc_ASR28, Sparc_ASR29, Sparc_ASR30, Sparc_ASR31, 
   };
 
   // ASRRegs Bit set.
@@ -703,7 +703,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // CoprocRegs Register Class...
   static const MCPhysReg CoprocRegs[] = {
-    SP_C0, SP_C1, SP_C2, SP_C3, SP_C4, SP_C5, SP_C6, SP_C7, SP_C8, SP_C9, SP_C10, SP_C11, SP_C12, SP_C13, SP_C14, SP_C15, SP_C16, SP_C17, SP_C18, SP_C19, SP_C20, SP_C21, SP_C22, SP_C23, SP_C24, SP_C25, SP_C26, SP_C27, SP_C28, SP_C29, SP_C30, SP_C31, 
+    Sparc_C0, Sparc_C1, Sparc_C2, Sparc_C3, Sparc_C4, Sparc_C5, Sparc_C6, Sparc_C7, Sparc_C8, Sparc_C9, Sparc_C10, Sparc_C11, Sparc_C12, Sparc_C13, Sparc_C14, Sparc_C15, Sparc_C16, Sparc_C17, Sparc_C18, Sparc_C19, Sparc_C20, Sparc_C21, Sparc_C22, Sparc_C23, Sparc_C24, Sparc_C25, Sparc_C26, Sparc_C27, Sparc_C28, Sparc_C29, Sparc_C30, Sparc_C31, 
   };
 
   // CoprocRegs Bit set.
@@ -713,7 +713,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // FPRegs Register Class...
   static const MCPhysReg FPRegs[] = {
-    SP_F0, SP_F1, SP_F2, SP_F3, SP_F4, SP_F5, SP_F6, SP_F7, SP_F8, SP_F9, SP_F10, SP_F11, SP_F12, SP_F13, SP_F14, SP_F15, SP_F16, SP_F17, SP_F18, SP_F19, SP_F20, SP_F21, SP_F22, SP_F23, SP_F24, SP_F25, SP_F26, SP_F27, SP_F28, SP_F29, SP_F30, SP_F31, 
+    Sparc_F0, Sparc_F1, Sparc_F2, Sparc_F3, Sparc_F4, Sparc_F5, Sparc_F6, Sparc_F7, Sparc_F8, Sparc_F9, Sparc_F10, Sparc_F11, Sparc_F12, Sparc_F13, Sparc_F14, Sparc_F15, Sparc_F16, Sparc_F17, Sparc_F18, Sparc_F19, Sparc_F20, Sparc_F21, Sparc_F22, Sparc_F23, Sparc_F24, Sparc_F25, Sparc_F26, Sparc_F27, Sparc_F28, Sparc_F29, Sparc_F30, Sparc_F31, 
   };
 
   // FPRegs Bit set.
@@ -723,7 +723,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // IntRegs Register Class...
   static const MCPhysReg IntRegs[] = {
-    SP_I0, SP_I1, SP_I2, SP_I3, SP_I4, SP_I5, SP_I6, SP_I7, SP_G0, SP_G1, SP_G2, SP_G3, SP_G4, SP_G5, SP_G6, SP_G7, SP_L0, SP_L1, SP_L2, SP_L3, SP_L4, SP_L5, SP_L6, SP_L7, SP_O0, SP_O1, SP_O2, SP_O3, SP_O4, SP_O5, SP_O6, SP_O7, 
+    Sparc_I0, Sparc_I1, Sparc_I2, Sparc_I3, Sparc_I4, Sparc_I5, Sparc_I6, Sparc_I7, Sparc_G0, Sparc_G1, Sparc_G2, Sparc_G3, Sparc_G4, Sparc_G5, Sparc_G6, Sparc_G7, Sparc_L0, Sparc_L1, Sparc_L2, Sparc_L3, Sparc_L4, Sparc_L5, Sparc_L6, Sparc_L7, Sparc_O0, Sparc_O1, Sparc_O2, Sparc_O3, Sparc_O4, Sparc_O5, Sparc_O6, Sparc_O7, 
   };
 
   // IntRegs Bit set.
@@ -733,7 +733,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // GPRIncomingArg Register Class...
   static const MCPhysReg GPRIncomingArg[] = {
-    SP_I0, SP_I1, SP_I2, SP_I3, SP_I4, SP_I5, 
+    Sparc_I0, Sparc_I1, Sparc_I2, Sparc_I3, Sparc_I4, Sparc_I5, 
   };
 
   // GPRIncomingArg Bit set.
@@ -743,7 +743,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // GPROutgoingArg Register Class...
   static const MCPhysReg GPROutgoingArg[] = {
-    SP_O0, SP_O1, SP_O2, SP_O3, SP_O4, SP_O5, 
+    Sparc_O0, Sparc_O1, Sparc_O2, Sparc_O3, Sparc_O4, Sparc_O5, 
   };
 
   // GPROutgoingArg Bit set.
@@ -753,7 +753,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // DFPRegs Register Class...
   static const MCPhysReg DFPRegs[] = {
-    SP_D0, SP_D1, SP_D2, SP_D3, SP_D4, SP_D5, SP_D6, SP_D7, SP_D8, SP_D9, SP_D10, SP_D11, SP_D12, SP_D13, SP_D14, SP_D15, SP_D16, SP_D17, SP_D18, SP_D19, SP_D20, SP_D21, SP_D22, SP_D23, SP_D24, SP_D25, SP_D26, SP_D27, SP_D28, SP_D29, SP_D30, SP_D31, 
+    Sparc_D0, Sparc_D1, Sparc_D2, Sparc_D3, Sparc_D4, Sparc_D5, Sparc_D6, Sparc_D7, Sparc_D8, Sparc_D9, Sparc_D10, Sparc_D11, Sparc_D12, Sparc_D13, Sparc_D14, Sparc_D15, Sparc_D16, Sparc_D17, Sparc_D18, Sparc_D19, Sparc_D20, Sparc_D21, Sparc_D22, Sparc_D23, Sparc_D24, Sparc_D25, Sparc_D26, Sparc_D27, Sparc_D28, Sparc_D29, Sparc_D30, Sparc_D31, 
   };
 
   // DFPRegs Bit set.
@@ -763,7 +763,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // I64Regs Register Class...
   static const MCPhysReg I64Regs[] = {
-    SP_I0, SP_I1, SP_I2, SP_I3, SP_I4, SP_I5, SP_I6, SP_I7, SP_G0, SP_G1, SP_G2, SP_G3, SP_G4, SP_G5, SP_G6, SP_G7, SP_L0, SP_L1, SP_L2, SP_L3, SP_L4, SP_L5, SP_L6, SP_L7, SP_O0, SP_O1, SP_O2, SP_O3, SP_O4, SP_O5, SP_O6, SP_O7, 
+    Sparc_I0, Sparc_I1, Sparc_I2, Sparc_I3, Sparc_I4, Sparc_I5, Sparc_I6, Sparc_I7, Sparc_G0, Sparc_G1, Sparc_G2, Sparc_G3, Sparc_G4, Sparc_G5, Sparc_G6, Sparc_G7, Sparc_L0, Sparc_L1, Sparc_L2, Sparc_L3, Sparc_L4, Sparc_L5, Sparc_L6, Sparc_L7, Sparc_O0, Sparc_O1, Sparc_O2, Sparc_O3, Sparc_O4, Sparc_O5, Sparc_O6, Sparc_O7, 
   };
 
   // I64Regs Bit set.
@@ -773,7 +773,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // PRRegs Register Class...
   static const MCPhysReg PRRegs[] = {
-    SP_TPC, SP_TNPC, SP_TSTATE, SP_TT, SP_TICK, SP_TBA, SP_PSTATE, SP_TL, SP_PIL, SP_CWP, SP_CANSAVE, SP_CANRESTORE, SP_CLEANWIN, SP_OTHERWIN, SP_WSTATE, SP_GL, SP_VER, 
+    Sparc_TPC, Sparc_TNPC, Sparc_TSTATE, Sparc_TT, Sparc_TICK, Sparc_TBA, Sparc_PSTATE, Sparc_TL, Sparc_PIL, Sparc_CWP, Sparc_CANSAVE, Sparc_CANRESTORE, Sparc_CLEANWIN, Sparc_OTHERWIN, Sparc_WSTATE, Sparc_GL, Sparc_VER, 
   };
 
   // PRRegs Bit set.
@@ -783,7 +783,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // CoprocPair Register Class...
   static const MCPhysReg CoprocPair[] = {
-    SP_C0_C1, SP_C2_C3, SP_C4_C5, SP_C6_C7, SP_C8_C9, SP_C10_C11, SP_C12_C13, SP_C14_C15, SP_C16_C17, SP_C18_C19, SP_C20_C21, SP_C22_C23, SP_C24_C25, SP_C26_C27, SP_C28_C29, SP_C30_C31, 
+    Sparc_C0_C1, Sparc_C2_C3, Sparc_C4_C5, Sparc_C6_C7, Sparc_C8_C9, Sparc_C10_C11, Sparc_C12_C13, Sparc_C14_C15, Sparc_C16_C17, Sparc_C18_C19, Sparc_C20_C21, Sparc_C22_C23, Sparc_C24_C25, Sparc_C26_C27, Sparc_C28_C29, Sparc_C30_C31, 
   };
 
   // CoprocPair Bit set.
@@ -793,7 +793,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // IntPair Register Class...
   static const MCPhysReg IntPair[] = {
-    SP_I0_I1, SP_I2_I3, SP_I4_I5, SP_I6_I7, SP_G0_G1, SP_G2_G3, SP_G4_G5, SP_G6_G7, SP_L0_L1, SP_L2_L3, SP_L4_L5, SP_L6_L7, SP_O0_O1, SP_O2_O3, SP_O4_O5, SP_O6_O7, 
+    Sparc_I0_I1, Sparc_I2_I3, Sparc_I4_I5, Sparc_I6_I7, Sparc_G0_G1, Sparc_G2_G3, Sparc_G4_G5, Sparc_G6_G7, Sparc_L0_L1, Sparc_L2_L3, Sparc_L4_L5, Sparc_L6_L7, Sparc_O0_O1, Sparc_O2_O3, Sparc_O4_O5, Sparc_O6_O7, 
   };
 
   // IntPair Bit set.
@@ -803,7 +803,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // LowDFPRegs Register Class...
   static const MCPhysReg LowDFPRegs[] = {
-    SP_D0, SP_D1, SP_D2, SP_D3, SP_D4, SP_D5, SP_D6, SP_D7, SP_D8, SP_D9, SP_D10, SP_D11, SP_D12, SP_D13, SP_D14, SP_D15, 
+    Sparc_D0, Sparc_D1, Sparc_D2, Sparc_D3, Sparc_D4, Sparc_D5, Sparc_D6, Sparc_D7, Sparc_D8, Sparc_D9, Sparc_D10, Sparc_D11, Sparc_D12, Sparc_D13, Sparc_D14, Sparc_D15, 
   };
 
   // LowDFPRegs Bit set.
@@ -813,7 +813,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // I64Regs_and_GPRIncomingArg Register Class...
   static const MCPhysReg I64Regs_and_GPRIncomingArg[] = {
-    SP_I0, SP_I1, SP_I2, SP_I3, SP_I4, SP_I5, 
+    Sparc_I0, Sparc_I1, Sparc_I2, Sparc_I3, Sparc_I4, Sparc_I5, 
   };
 
   // I64Regs_and_GPRIncomingArg Bit set.
@@ -823,7 +823,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // I64Regs_and_GPROutgoingArg Register Class...
   static const MCPhysReg I64Regs_and_GPROutgoingArg[] = {
-    SP_O0, SP_O1, SP_O2, SP_O3, SP_O4, SP_O5, 
+    Sparc_O0, Sparc_O1, Sparc_O2, Sparc_O3, Sparc_O4, Sparc_O5, 
   };
 
   // I64Regs_and_GPROutgoingArg Bit set.
@@ -833,7 +833,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // IntPair_with_sub_even_in_GPRIncomingArg Register Class...
   static const MCPhysReg IntPair_with_sub_even_in_GPRIncomingArg[] = {
-    SP_I0_I1, SP_I2_I3, SP_I4_I5, 
+    Sparc_I0_I1, Sparc_I2_I3, Sparc_I4_I5, 
   };
 
   // IntPair_with_sub_even_in_GPRIncomingArg Bit set.
@@ -843,7 +843,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // IntPair_with_sub_even_in_GPROutgoingArg Register Class...
   static const MCPhysReg IntPair_with_sub_even_in_GPROutgoingArg[] = {
-    SP_O0_O1, SP_O2_O3, SP_O4_O5, 
+    Sparc_O0_O1, Sparc_O2_O3, Sparc_O4_O5, 
   };
 
   // IntPair_with_sub_even_in_GPROutgoingArg Bit set.
@@ -853,7 +853,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // PRRegs_and_ASRRegs Register Class...
   static const MCPhysReg PRRegs_and_ASRRegs[] = {
-    SP_TICK, 
+    Sparc_TICK, 
   };
 
   // PRRegs_and_ASRRegs Bit set.
@@ -863,7 +863,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // QFPRegs Register Class...
   static const MCPhysReg QFPRegs[] = {
-    SP_Q0, SP_Q1, SP_Q2, SP_Q3, SP_Q4, SP_Q5, SP_Q6, SP_Q7, SP_Q8, SP_Q9, SP_Q10, SP_Q11, SP_Q12, SP_Q13, SP_Q14, SP_Q15, 
+    Sparc_Q0, Sparc_Q1, Sparc_Q2, Sparc_Q3, Sparc_Q4, Sparc_Q5, Sparc_Q6, Sparc_Q7, Sparc_Q8, Sparc_Q9, Sparc_Q10, Sparc_Q11, Sparc_Q12, Sparc_Q13, Sparc_Q14, Sparc_Q15, 
   };
 
   // QFPRegs Bit set.
@@ -873,7 +873,7 @@ static const MCRegisterDesc SparcRegDesc[] = { // Descriptors
 
   // LowQFPRegs Register Class...
   static const MCPhysReg LowQFPRegs[] = {
-    SP_Q0, SP_Q1, SP_Q2, SP_Q3, SP_Q4, SP_Q5, SP_Q6, SP_Q7, 
+    Sparc_Q0, Sparc_Q1, Sparc_Q2, Sparc_Q3, Sparc_Q4, Sparc_Q5, Sparc_Q6, Sparc_Q7, 
   };
 
   // LowQFPRegs Bit set.

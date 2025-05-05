@@ -63,6 +63,7 @@ typedef struct {
 // register name to register number.
 //
 #define GET_REGINFO_ENUM
+#define GET_REGINFO_MC_DESC
 #include "SparcGenRegisterInfo.inc"
 
 // Defines symbolic names for the Sparc instructions.

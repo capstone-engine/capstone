@@ -73,8 +73,8 @@ bool printSparcAliasInstr(MCInst *MI, SStream *O)
 	switch (MCInst_getOpcode(MI)) {
 	default:
 		return false;
-	case SP_JMPLrr:
-	case SP_JMPLri: {
+	case Sparc_JMPLrr:
+	case Sparc_JMPLri: {
 		if (MCInst_getNumOperands(MI) != 3)
 			return false;
 		if (!MCOperand_isReg(MCInst_getOperand(MI, (0))))
@@ -106,12 +106,12 @@ bool printSparcAliasInstr(MCInst *MI, SStream *O)
 			return true;
 		}
 	}
-	case SP_V9FCMPS:
-	case SP_V9FCMPD:
-	case SP_V9FCMPQ:
-	case SP_V9FCMPES:
-	case SP_V9FCMPED:
-	case SP_V9FCMPEQ: {
+	case Sparc_V9FCMPS:
+	case Sparc_V9FCMPD:
+	case Sparc_V9FCMPQ:
+	case Sparc_V9FCMPES:
+	case Sparc_V9FCMPED:
+	case Sparc_V9FCMPEQ: {
 		if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9) || (MCInst_getNumOperands(MI) != 3) ||
 		    (!MCOperand_isReg(MCInst_getOperand(MI, (0)))) ||
 		    (MCOperand_getReg(MCInst_getOperand(MI, (0))) != Sparc_FCC0))
@@ -119,22 +119,22 @@ bool printSparcAliasInstr(MCInst *MI, SStream *O)
 		// if V8, skip printing %fcc0.
 		switch (MCInst_getOpcode(MI)) {
 		default:
-		case SP_V9FCMPS:
+		case Sparc_V9FCMPS:
 			SStream_concat0(O, "\tfcmps ");
 			break;
-		case SP_V9FCMPD:
+		case Sparc_V9FCMPD:
 			SStream_concat0(O, "\tfcmpd ");
 			break;
-		case SP_V9FCMPQ:
+		case Sparc_V9FCMPQ:
 			SStream_concat0(O, "\tfcmpq ");
 			break;
-		case SP_V9FCMPES:
+		case Sparc_V9FCMPES:
 			SStream_concat0(O, "\tfcmpes ");
 			break;
-		case SP_V9FCMPED:
+		case Sparc_V9FCMPED:
 			SStream_concat0(O, "\tfcmped ");
 			break;
-		case SP_V9FCMPEQ:
+		case Sparc_V9FCMPEQ:
 			SStream_concat0(O, "\tfcmpeq ");
 			break;
 		}
@@ -165,12 +165,12 @@ void printOperand(MCInst *MI, int opNum, SStream *O)
 			printInt32(O, (int)MCOperand_getImm(MO));
 			return;
 
-		case SP_TICCri: // Fall through
-		case SP_TICCrr: // Fall through
-		case SP_TRAPri: // Fall through
-		case SP_TRAPrr: // Fall through
-		case SP_TXCCri: // Fall through
-		case SP_TXCCrr: // Fall through
+		case Sparc_TICCri: // Fall through
+		case Sparc_TICCrr: // Fall through
+		case Sparc_TRAPri: // Fall through
+		case Sparc_TRAPrr: // Fall through
+		case Sparc_TXCCri: // Fall through
+		case Sparc_TXCCrr: // Fall through
 			// Only seven-bit values up to 127.
 			printInt8(O, ((int)MCOperand_getImm(MO) & 0x7f));
 			return;
@@ -213,41 +213,41 @@ void printCCOperand(MCInst *MI, int opNum, SStream *O)
 	switch (MCInst_getOpcode(MI)) {
 	default:
 		break;
-	case SP_FBCOND:
-	case SP_FBCONDA:
-	case SP_FBCOND_V9:
-	case SP_FBCONDA_V9:
-	case SP_BPFCC:
-	case SP_BPFCCA:
-	case SP_BPFCCNT:
-	case SP_BPFCCANT:
-	case SP_MOVFCCrr:
-	case SP_V9MOVFCCrr:
-	case SP_MOVFCCri:
-	case SP_V9MOVFCCri:
-	case SP_FMOVS_FCC:
-	case SP_V9FMOVS_FCC:
-	case SP_FMOVD_FCC:
-	case SP_V9FMOVD_FCC:
-	case SP_FMOVQ_FCC:
-	case SP_V9FMOVQ_FCC:
+	case Sparc_FBCOND:
+	case Sparc_FBCONDA:
+	case Sparc_FBCOND_V9:
+	case Sparc_FBCONDA_V9:
+	case Sparc_BPFCC:
+	case Sparc_BPFCCA:
+	case Sparc_BPFCCNT:
+	case Sparc_BPFCCANT:
+	case Sparc_MOVFCCrr:
+	case Sparc_V9MOVFCCrr:
+	case Sparc_MOVFCCri:
+	case Sparc_V9MOVFCCri:
+	case Sparc_FMOVS_FCC:
+	case Sparc_V9FMOVS_FCC:
+	case Sparc_FMOVD_FCC:
+	case Sparc_V9FMOVD_FCC:
+	case Sparc_FMOVQ_FCC:
+	case Sparc_V9FMOVQ_FCC:
 		// Make sure CC is a fp conditional flag.
 		CC = (CC < SPARC_CC_FCC_BEGIN) ? (CC + SPARC_CC_FCC_BEGIN) : CC;
 		break;
-	case SP_CBCOND:
-	case SP_CBCONDA:
+	case Sparc_CBCOND:
+	case Sparc_CBCONDA:
 		// Make sure CC is a cp conditional flag.
 		CC = (CC < SPARC_CC_CPCC_BEGIN) ? (CC + SPARC_CC_CPCC_BEGIN) : CC;
 		break;
-	case SP_BPR:
-	case SP_BPRA:
-	case SP_BPRNT:
-	case SP_BPRANT:
-	case SP_MOVRri:
-	case SP_MOVRrr:
-	case SP_FMOVRS:
-	case SP_FMOVRD:
-	case SP_FMOVRQ:
+	case Sparc_BPR:
+	case Sparc_BPRA:
+	case Sparc_BPRNT:
+	case Sparc_BPRANT:
+	case Sparc_MOVRri:
+	case Sparc_MOVRrr:
+	case Sparc_FMOVRS:
+	case Sparc_FMOVRD:
+	case Sparc_FMOVRQ:
 		// Make sure CC is a register conditional flag.
 		CC = (CC < SPARC_CC_REG_BEGIN) ? (CC + SPARC_CC_REG_BEGIN) : CC;
 		break;
