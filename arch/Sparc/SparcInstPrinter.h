@@ -37,11 +37,7 @@
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
-void printRegName(SStream *OS, MCRegister Reg);
-void printRegNameAlt(SStream *OS, MCRegister Reg, unsigned AltIdx);
-void printInst(MCInst *MI, uint64_t Address, SStream *O);
 bool printSparcAliasInstr(MCInst *MI, SStream *OS);
-void printOperand(MCInst *MI, int opNum, SStream *OS);
 void printMemOperand(MCInst *MI, int opNum, SStream *OS);
 void printCCOperand(MCInst *MI, int opNum, SStream *OS);
 bool printGetPCX(MCInst *MI, unsigned OpNo, SStream *OS);

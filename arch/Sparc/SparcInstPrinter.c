@@ -45,24 +45,25 @@ static void printCustomAliasOperand(
          MCInst *MI, uint64_t Address, unsigned OpIdx,
          unsigned PrintMethodIdx,
          SStream *OS);
+static void printOperand(MCInst *MI, int opNum, SStream *O);
 
 #define GET_INSTRUCTION_NAME
 #define PRINT_ALIAS_INSTR
 #include "SparcGenAsmWriter.inc"
 
-void printRegName(SStream *OS, MCRegister Reg)
+static void printRegName(SStream *OS, MCRegister Reg)
 {
 	SStream_concat1(OS, '%');
 	SStream_concat0(OS, getRegisterName(Reg, Sparc_NoRegAltName));
 }
 
-void printRegNameAlt(SStream *OS, MCRegister Reg, unsigned AltIdx)
+static void printRegNameAlt(SStream *OS, MCRegister Reg, unsigned AltIdx)
 {
 	SStream_concat1(OS, '%');
 	SStream_concat0(OS, getRegisterName(Reg, AltIdx));
 }
 
-void printInst(MCInst *MI, uint64_t Address, SStream *O)
+static void printInst(MCInst *MI, uint64_t Address, SStream *O)
 {
 	if (!printAliasInstr(MI, Address, O))
 		printInstruction(MI, Address, O);
@@ -146,7 +147,7 @@ bool printSparcAliasInstr(MCInst *MI, SStream *O)
 	}
 }
 
-void printOperand(MCInst *MI, int opNum, SStream *O)
+static void printOperand(MCInst *MI, int opNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, (opNum));
 
@@ -297,4 +298,16 @@ void printASITag(MCInst *MI, int opNum, SStream *O)
 		SStream_concat0(O, ASITag->Name);
 	} else
 		printUInt32(O, Imm);
+}
+
+
+void Sparc_LLVM_printInst(MCInst *MI, uint64_t Address, const char *Annot,
+			      SStream *O)
+{
+	printInst(MI, Address, O);
+}
+
+const char *Sparc_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx)
+{
+	return getRegisterName(RegNo, AltIdx);
 }

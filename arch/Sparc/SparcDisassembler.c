@@ -244,7 +244,7 @@ static DecodeStatus DecodeSIMM13(MCInst *Inst, unsigned insn, uint64_t Address,
 
 #include "SparcGenDisassemblerTables.inc"
 
-DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
+static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
 			    size_t BytesLen, uint64_t Address, SStream *CStream)
 {
 	uint32_t Insn = 0;
@@ -303,4 +303,13 @@ static DecodeStatus DecodeSIMM13(MCInst *MI, unsigned insn, uint64_t Address,
 	CS_ASSERT(isUIntN(13, insn));
 	MCOperand_CreateImm0(MI, (SignExtend64((insn), 13)));
 	return MCDisassembler_Success;
+}
+
+DecodeStatus Sparc_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
+				     size_t ByteLen, MCInst *MI, uint16_t *Size,
+				     uint64_t Address, void *Info) {
+	uint64_t s = 0;
+	DecodeStatus status = getInstruction(MI, &s, Bytes, ByteLen, Address, NULL);
+	*Size = (uint16_t) s;
+	return status;
 }
