@@ -5,8 +5,6 @@
 
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
-#include "SparcDisassembler.h"
-#include "SparcInstPrinter.h"
 #include "SparcMapping.h"
 #include "SparcModule.h"
 
@@ -15,12 +13,12 @@ cs_err Sparc_global_init(cs_struct *ud)
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
 
-	Sparc_init(mri);
-	ud->printer = Sparc_printInst;
+	Sparc_init_mri(mri);
+	ud->printer = Sparc_printer;
 	ud->printer_info = mri;
 	ud->getinsn_info = mri;
 	ud->disasm = Sparc_getInstruction;
-	ud->post_printer = Sparc_post_printer;
+	ud->post_printer = NULL;
 
 	ud->reg_name = Sparc_reg_name;
 	ud->insn_id = Sparc_get_insn_id;

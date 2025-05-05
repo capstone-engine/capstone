@@ -5,31 +5,25 @@
 #define CS_SPARC_MAP_H
 
 #include "../../utils.h"
+#include "SparcMCTargetDesc.h"
+#include "SparcLinkage.h"
 #include <capstone/capstone.h>
 
 // return name of register in friendly string
 const char *Sparc_reg_name(csh handle, unsigned int reg);
 
+void Sparc_init_mri(MCRegisterInfo *MRI);
+void Sparc_printer(MCInst *MI, SStream *O,
+		       void * /* MCRegisterInfo* */ info);
+bool Sparc_getInstruction(csh handle, const uint8_t *code, size_t code_len,
+			      MCInst *instr, uint16_t *size, uint64_t address,
+			      void *info);
 // given internal insn id, return public instruction info
 void Sparc_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
 const char *Sparc_insn_name(csh handle, unsigned int id);
 
 const char *Sparc_group_name(csh handle, unsigned int id);
-
-// map internal raw register to 'public' register
-sparc_reg Sparc_map_register(unsigned int r);
-
-// map instruction name to instruction ID (public)
-// this is for alias instructions only
-sparc_reg Sparc_map_insn(const char *name);
-
-// map CC string to CC id
-sparc_cc Sparc_map_ICC(const char *name);
-
-sparc_cc Sparc_map_FCC(const char *name);
-
-sparc_hint Sparc_map_hint(const char *name);
 
 #endif
 
