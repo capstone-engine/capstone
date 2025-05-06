@@ -247,13 +247,10 @@ static DecodeStatus DecodeSIMM13(MCInst *Inst, unsigned insn, uint64_t Address,
 static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
 			    size_t BytesLen, uint64_t Address, SStream *CStream)
 {
-	uint32_t Insn = 0;
-	DecodeStatus Result = readBytes32(Instr, Bytes);
-	if (Result == MCDisassembler_Fail)
-		return MCDisassembler_Fail;
+	uint32_t Insn = readBytes32(Instr, Bytes);
 
+	DecodeStatus Result = MCDisassembler_Fail;
 	// Calling the auto-generated decoder function.
-
 	if (Sparc_getFeatureBits(Instr->csh->mode, Sparc_FeatureV9)) {
 		Result = decodeInstruction_4(DecoderTableSparcV932, Instr, Insn,
 					     Address, NULL);
