@@ -370,8 +370,8 @@ class MCUpdater:
                 f"These files contain instructions of several different cpu features.\n"
                 f"You have to use multi-mode to write them into distinct files.\n"
                 f"The current setting will only keep the last one written.\n"
-                f"See also: https://github.com/capstone-engine/capstone/issues/1992"
-                "If you already used multi-mode, there possibly is a blind spot for testing."
+                f"See also: https://github.com/capstone-engine/capstone/issues/1992\n"
+                "If you already used multi-mode (default = yes), there might be a blind spot in testing."
             )
 
     def build_test_options(self, options):
