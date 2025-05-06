@@ -155,7 +155,7 @@ class TestFile:
                 text_section += 1
                 continue
             match = re.search(
-                rf"^\s*{asm_pat}\s*(#|//|@)\s*encoding:\s*{enc_pat}", line
+                rf"^\s*{asm_pat}\s*(#|//|@|!)\s*encoding:\s*{enc_pat}", line
             )
             if not match:
                 continue
