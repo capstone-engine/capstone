@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x24, 0x09 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov 1033, %o1"
+
+  -
+    input:
+      bytes: [ 0x94, 0x10, 0x20, 0x3c ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov 60, %o2"

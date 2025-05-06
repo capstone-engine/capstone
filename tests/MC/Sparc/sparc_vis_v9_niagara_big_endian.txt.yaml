@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xbf, 0xb0, 0x0c, 0x20 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "niagara", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "fzeros %f31"

@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x95, 0xf6, 0x00, 0x16 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN", "leon3" ]
+    expected:
+      insns:
+        -
+          asm_text: "umac %i0, %l6, %o2"
+
+  -
+    input:
+      bytes: [ 0x95, 0xfe, 0x00, 0x16 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN", "leon3" ]
+    expected:
+      insns:
+        -
+          asm_text: "smac %i0, %l6, %o2"

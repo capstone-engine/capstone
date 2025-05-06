@@ -1,510 +1,480 @@
 test_cases:
   -
     input:
-      bytes: [ 0xb1, 0x40, 0x00, 0x00 ]
+      bytes: [ 0x80, 0x00, 0x00, 0x00 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %y, %i0"
+          asm_text: "add %g0, %g0, %g0"
 
   -
     input:
-      bytes: [ 0xb1, 0x40, 0x40, 0x00 ]
+      bytes: [ 0x86, 0x00, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr1, %i0"
+          asm_text: "add %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0x81, 0x86, 0x20, 0x05 ]
+      bytes: [ 0xa0, 0x02, 0x00, 0x09 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 5, %y"
+          asm_text: "add %o0, %o1, %l0"
 
   -
     input:
-      bytes: [ 0x9f, 0x86, 0x00, 0x19 ]
+      bytes: [ 0xa0, 0x02, 0x20, 0x0a ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, %i1, %asr15"
+          asm_text: "add %o0, 10, %l0"
 
   -
     input:
-      bytes: [ 0x81, 0x43, 0xc0, 0x00 ]
+      bytes: [ 0x86, 0x80, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr15, %g0"
+          asm_text: "addcc %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x48, 0x00, 0x00 ]
+      bytes: [ 0x86, 0xc0, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %psr, %i0"
+          asm_text: "addxcc %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x50, 0x00, 0x00 ]
+      bytes: [ 0x86, 0x70, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %wim, %i0"
+          asm_text: "udiv %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x58, 0x00, 0x00 ]
+      bytes: [ 0x86, 0x78, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %tbr, %i0"
+          asm_text: "sdiv %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0x81, 0x8e, 0x20, 0x05 ]
+      bytes: [ 0x86, 0x08, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 5, %psr"
+          asm_text: "and %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0x81, 0x96, 0x20, 0x05 ]
+      bytes: [ 0x86, 0x28, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 5, %wim"
+          asm_text: "andn %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0x81, 0x9e, 0x20, 0x05 ]
+      bytes: [ 0x86, 0x10, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 5, %tbr"
+          asm_text: "or %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0xc1, 0x08, 0xa0, 0x14 ]
+      bytes: [ 0x86, 0x30, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "ld [%g2+20], %fsr"
+          asm_text: "orn %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0xc1, 0x08, 0x80, 0x1d ]
+      bytes: [ 0x86, 0x18, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "ld [%g2+%i5], %fsr"
+          asm_text: "xor %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0xc1, 0x28, 0xa0, 0x14 ]
+      bytes: [ 0x86, 0x38, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "st %fsr, [%g2+20]"
+          asm_text: "xnor %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0xc1, 0x28, 0x80, 0x1d ]
+      bytes: [ 0x86, 0x50, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "st %fsr, [%g2+%i5]"
+          asm_text: "umul %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0xc1, 0x31, 0x80, 0x1a ]
+      bytes: [ 0x86, 0x58, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "std %fq, [%g6+%i2]"
+          asm_text: "smul %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x40, 0x80, 0x00 ]
+      bytes: [ 0x01, 0x00, 0x00, 0x00 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr2, %i0"
+          asm_text: "nop"
 
   -
     input:
-      bytes: [ 0x85, 0x86, 0x20, 0x07 ]
+      bytes: [ 0x21, 0x00, 0x00, 0x0a ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 7, %asr2"
+          asm_text: "sethi 10, %l0"
 
   -
     input:
-      bytes: [ 0xb1, 0x40, 0xc0, 0x00 ]
+      bytes: [ 0x87, 0x28, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr3, %i0"
+          asm_text: "sll %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0x87, 0x86, 0x20, 0x07 ]
+      bytes: [ 0x87, 0x28, 0x60, 0x1f ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 7, %asr3"
+          asm_text: "sll %g1, 31, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x41, 0x00, 0x00 ]
+      bytes: [ 0x87, 0x30, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr4, %i0"
+          asm_text: "srl %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0x89, 0x86, 0x20, 0x07 ]
+      bytes: [ 0x87, 0x30, 0x60, 0x1f ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 7, %asr4"
+          asm_text: "srl %g1, 31, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x41, 0x40, 0x00 ]
+      bytes: [ 0x87, 0x38, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr5, %i0"
+          asm_text: "sra %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0x8b, 0x86, 0x20, 0x07 ]
+      bytes: [ 0x87, 0x38, 0x60, 0x1f ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 7, %asr5"
+          asm_text: "sra %g1, 31, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x41, 0x80, 0x00 ]
+      bytes: [ 0x86, 0x20, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr6, %i0"
+          asm_text: "sub %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0x8d, 0x86, 0x20, 0x07 ]
+      bytes: [ 0x86, 0xa0, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 7, %asr6"
+          asm_text: "subcc %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x41, 0x00, 0x00 ]
+      bytes: [ 0x86, 0xe0, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %tick, %i0"
+          asm_text: "subxcc %g1, %g2, %g3"
 
   -
     input:
-      bytes: [ 0x89, 0x86, 0x20, 0x07 ]
+      bytes: [ 0x86, 0x10, 0x00, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 7, %tick"
+          asm_text: "mov %g1, %g3"
 
   -
     input:
-      bytes: [ 0x81, 0x80, 0x7f, 0xfe ]
+      bytes: [ 0x86, 0x10, 0x20, 0xff ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %g1, -2, %y"
+          asm_text: "mov 255, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x40, 0x00, 0x00 ]
+      bytes: [ 0x83, 0xe8, 0x00, 0x00 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %y, %i0"
+          asm_text: "restore %g0, %g0, %g1"
 
   -
     input:
-      bytes: [ 0xb1, 0x40, 0x40, 0x00 ]
+      bytes: [ 0x86, 0x40, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr1, %i0"
+          asm_text: "addx %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0x81, 0x86, 0x20, 0x05 ]
+      bytes: [ 0x86, 0x60, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 5, %y"
+          asm_text: "subx %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0x9f, 0x86, 0x00, 0x19 ]
+      bytes: [ 0x86, 0xd0, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, %i1, %asr15"
+          asm_text: "umulcc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x48, 0x00, 0x00 ]
+      bytes: [ 0x86, 0xd8, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %psr, %i0"
+          asm_text: "smulcc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x50, 0x00, 0x00 ]
+      bytes: [ 0x87, 0x20, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %wim, %i0"
+          asm_text: "mulscc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x58, 0x00, 0x00 ]
+      bytes: [ 0x87, 0x20, 0xa0, 0xfe ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %tbr, %i0"
+          asm_text: "mulscc %g2, 254, %g3"
 
   -
     input:
-      bytes: [ 0x81, 0x8e, 0x20, 0x05 ]
+      bytes: [ 0x86, 0xf0, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 5, %psr"
+          asm_text: "udivcc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0x81, 0x96, 0x20, 0x05 ]
+      bytes: [ 0x86, 0xf8, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 5, %wim"
+          asm_text: "sdivcc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0x81, 0x9e, 0x20, 0x05 ]
+      bytes: [ 0x86, 0x88, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 5, %tbr"
+          asm_text: "andcc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0xc1, 0x2f, 0x40, 0x00 ]
+      bytes: [ 0x86, 0xa8, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "st %fsr, [%i5]"
+          asm_text: "andncc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0xc1, 0x37, 0x40, 0x11 ]
+      bytes: [ 0x86, 0x90, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "std %fq, [%i5+%l1]"
+          asm_text: "orcc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x40, 0x80, 0x00 ]
+      bytes: [ 0x86, 0xb0, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr2, %i0"
+          asm_text: "orncc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0x85, 0x86, 0x20, 0x07 ]
+      bytes: [ 0x86, 0x98, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 7, %asr2"
+          asm_text: "xorcc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x40, 0xc0, 0x00 ]
+      bytes: [ 0x86, 0xb8, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr3, %i0"
+          asm_text: "xnorcc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0x87, 0x86, 0x20, 0x07 ]
+      bytes: [ 0x87, 0x00, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 7, %asr3"
+          asm_text: "taddcc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x41, 0x00, 0x00 ]
+      bytes: [ 0x87, 0x08, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr4, %i0"
+          asm_text: "tsubcc %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0x89, 0x86, 0x20, 0x07 ]
+      bytes: [ 0x87, 0x10, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "wr %i0, 7, %asr4"
+          asm_text: "taddcctv %g2, %g1, %g3"
 
   -
     input:
-      bytes: [ 0xb1, 0x41, 0x40, 0x00 ]
+      bytes: [ 0x87, 0x18, 0x80, 0x01 ]
       arch: "CS_ARCH_SPARC"
       options: [ "CS_MODE_BIG_ENDIAN" ]
     expected:
       insns:
         -
-          asm_text: "rd %asr5, %i0"
-
-  -
-    input:
-      bytes: [ 0x8b, 0x86, 0x20, 0x07 ]
-      arch: "CS_ARCH_SPARC"
-      options: [ "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
-        -
-          asm_text: "wr %i0, 7, %asr5"
-
-  -
-    input:
-      bytes: [ 0xb1, 0x41, 0x80, 0x00 ]
-      arch: "CS_ARCH_SPARC"
-      options: [ "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
-        -
-          asm_text: "rd %asr6, %i0"
-
-  -
-    input:
-      bytes: [ 0x8d, 0x86, 0x20, 0x07 ]
-      arch: "CS_ARCH_SPARC"
-      options: [ "CS_MODE_BIG_ENDIAN" ]
-    expected:
-      insns:
-        -
-          asm_text: "wr %i0, 7, %asr6"
+          asm_text: "tsubcctv %g2, %g1, %g3"

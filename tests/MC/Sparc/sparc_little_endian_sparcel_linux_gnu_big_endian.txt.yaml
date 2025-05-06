@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x00, 0x40, 0xc0, 0x9f ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "sparcel-linux-gnu", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "call %g1"
