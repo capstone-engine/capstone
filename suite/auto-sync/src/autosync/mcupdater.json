@@ -33,7 +33,8 @@
     "default_endianess":
     {
         "SystemZ": "CS_MODE_BIG_ENDIAN",
-        "PPC": "CS_MODE_BIG_ENDIAN"
+        "PPC": "CS_MODE_BIG_ENDIAN",
+        "Sparc": "CS_MODE_BIG_ENDIAN"
     },
     "remove_options":
     {
@@ -129,6 +130,13 @@
             "modern-aix-as": ["CS_MODE_MODERN_AIX_AS"],
             "spe": ["CS_MODE_SPE"],
             "a2": ["CS_MODE_BOOKE"]
+        },
+        "Sparc": {
+            "sparc": ["CS_MODE_BIG_ENDIAN"],
+            "sparc-unknown-linux": ["CS_MODE_BIG_ENDIAN"],
+            "sparc64-linux-gnu": ["CS_MODE_V9"],
+            "sparcv9": ["CS_MODE_V9"],
+            "sparcv9-unknown-linux": ["CS_MODE_V9"]
         }
     }
 }

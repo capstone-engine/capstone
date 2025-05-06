@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xd4, 0x8e, 0x20, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lduba [%i0+8] %asi, %o2"
+
+  -
+    input:
+      bytes: [ 0xd4, 0x96, 0x20, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lduha [%i0+8] %asi, %o2"
+
+  -
+    input:
+      bytes: [ 0xd4, 0x86, 0x20, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lda [%i0+8] %asi, %o2"
+
+  -
+    input:
+      bytes: [ 0xd4, 0xde, 0x20, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldxa [%i0+8] %asi, %o2"
+
+  -
+    input:
+      bytes: [ 0xd4, 0xee, 0x20, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldstuba [%i0+8] %asi, %o2"
+
+  -
+    input:
+      bytes: [ 0xd4, 0xfe, 0x20, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "swapa [%i0+8] %asi, %o2"
+
+  -
+    input:
+      bytes: [ 0xd4, 0xae, 0x20, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stba %o2, [%i0+8] %asi"
+
+  -
+    input:
+      bytes: [ 0xd4, 0xb6, 0x20, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stha %o2, [%i0+8] %asi"
+
+  -
+    input:
+      bytes: [ 0xd4, 0xa6, 0x20, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sta %o2, [%i0+8] %asi"
+
+  -
+    input:
+      bytes: [ 0xd4, 0xf6, 0x20, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stxa %o2, [%i0+8] %asi"
