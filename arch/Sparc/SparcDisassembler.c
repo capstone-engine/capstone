@@ -247,6 +247,9 @@ static DecodeStatus DecodeSIMM13(MCInst *Inst, unsigned insn, uint64_t Address,
 static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
 			    size_t BytesLen, uint64_t Address, SStream *CStream)
 {
+	if (BytesLen < 4) {
+		return MCDisassembler_Fail;
+	}
 	uint32_t Insn = readBytes32(Instr, Bytes);
 
 	DecodeStatus Result = MCDisassembler_Fail;
