@@ -898,4 +898,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "te %xcc, %g0 + 3"
+          asm_text: "te %xcc, 3"

@@ -65,7 +65,8 @@ static void printRegNameAlt(SStream *OS, MCRegister Reg, unsigned AltIdx)
 
 static void printInst(MCInst *MI, uint64_t Address, SStream *O)
 {
-	if (!printAliasInstr(MI, Address, O))
+	if (!printAliasInstr(MI, Address, O) &&
+		!printSparcAliasInstr(MI, O))
 		printInstruction(MI, Address, O);
 }
 
@@ -278,7 +279,7 @@ void printMembarTag(MCInst *MI, int opNum, SStream *O)
 
 	bool First = true;
 	for (unsigned i = 0; i < sizeof(TagNames); i++) {
-		if (Imm & (1 << i)) {
+		if (Imm & (1ull << i)) {
 			SStream_concat(O, "%s", (First ? "" : " | "));
 			SStream_concat0(O, TagNames[i]);
 			First = false;

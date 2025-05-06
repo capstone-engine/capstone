@@ -7,7 +7,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "membar 15"
+          asm_text: "membar #LoadLoad | #StoreLoad | #LoadStore | #StoreStore"
   -
     input:
       bytes: [ 0x81, 0x43, 0xc0, 0x00 ]
