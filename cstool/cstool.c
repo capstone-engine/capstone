@@ -69,6 +69,8 @@ static struct {
 		CS_ARCH_PPC, CS_ARCH_MAX }, 0, CS_MODE_SPE },
 	{ "+apple", "Enables Apple's proprietary AArch64 instructions (AMX, MUL53, and others).", {
 		CS_ARCH_AARCH64, CS_ARCH_MAX }, 0, CS_MODE_APPLE_PROPRIETARY },
+	{ "+v9", "Enables Sparc v9 instruction set.", {
+		CS_ARCH_SPARC, CS_ARCH_MAX }, 0, CS_MODE_V9 },
 	{ NULL }
 };
 
@@ -161,7 +163,7 @@ static struct {
 	{ "ppc64beFutureISA", "PowerPC 64-bit, Future ISA, big endian", CS_ARCH_PPC, CS_MODE_64 | CS_MODE_PPC_ISA_FUTURE | CS_MODE_BIG_ENDIAN },
 
 	{ "sparc", "Sparc, big endian", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN },
-	{ "sparcv9", "Sparc v9, big endian", CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN | CS_MODE_V9 },
+	{ "sparcle", "Sparc, little endian", CS_ARCH_SPARC, CS_MODE_LITTLE_ENDIAN },
 
 	{ "systemz", "systemz (s390x) - all features", CS_ARCH_SYSTEMZ, CS_MODE_BIG_ENDIAN },
 	{ "systemz_arch8", "(arch8/z10/generic)", CS_ARCH_SYSTEMZ, CS_MODE_SYSTEMZ_ARCH8 | CS_MODE_BIG_ENDIAN },
