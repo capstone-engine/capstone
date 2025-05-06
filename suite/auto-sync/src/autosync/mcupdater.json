@@ -1,4 +1,11 @@
 {
+    "use_assembly_tests": [
+        "Xtensa",
+        "Sparc"
+    ],
+    "exclude_disassembly_tests": [
+        "Xtensa"
+    ],
     "unify_test_cases": [
         "ARM"
     ],

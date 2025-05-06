@@ -347,7 +347,7 @@ class MCUpdater:
             filename.parent.mkdir(parents=True, exist_ok=True)
             if self.multi_mode and filename.exists():
                 log.warning(
-                    f"The following file exists already: {filename}. This is might indicate a blind spot in testing."
+                    f"The following file exists already: {filename}. This indicates a blind spot in testing."
                 )
                 overwritten += 1
             elif not self.multi_mode and filename.exists():
@@ -499,14 +499,14 @@ class MCUpdater:
 
     def gen_all(self):
         log.info("Check prerequisites")
-        disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch_dir_name}")
-        test_paths = [disas_tests]
-        # Xtensa only defines assembly tests.
-        if self.arch == "Xtensa":
+        test_paths = list()
+        if self.arch in self.conf["use_assembly_tests"]:
+            log.info(f"Add assembly tests for {self.arch}")
             test_paths.append(self.mc_dir.joinpath(self.arch))
-        # TriCore defines nothing.
-        elif self.arch == "TriCore":
-            return
+        if self.arch not in self.conf["exclude_disassembly_tests"]:
+            log.info(f"Add disassembly tests for {self.arch}")
+            disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch_dir_name}")
+            test_paths.append(disas_tests)
         self.check_prerequisites(test_paths)
         log.info("Generate MC regression tests")
         llvm_mc_cmds = self.run_llvm_lit(
