@@ -35,6 +35,7 @@ typedef struct insn_map {
 		systemz_suppl_info systemz;
 		arm_suppl_info arm;
 		xtensa_suppl_info xtensa;
+		sparc_suppl_info sparc;
 	} suppl_info; // Supplementary information for each instruction.
 #endif
 } insn_map;

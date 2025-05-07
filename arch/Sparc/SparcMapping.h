@@ -34,6 +34,7 @@ void Sparc_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 				 sparc_op_type ImmType, int64_t Imm);
 void Sparc_set_detail_op_reg(MCInst *MI, unsigned OpNum, sparc_reg Reg);
 void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo);
+void Sparc_set_instr_map_data(MCInst *MI);
 
 #endif
 

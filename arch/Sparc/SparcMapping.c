@@ -30,6 +30,10 @@ void Sparc_set_instr_map_data(MCInst *MI)
 	map_implicit_reads(MI, sparc_insns);
 	map_implicit_writes(MI, sparc_insns);
 	map_groups(MI, sparc_insns);
+	const sparc_suppl_info *suppl_info = map_get_suppl_info(MI, sparc_insns);
+	if (suppl_info) {
+		Sparc_get_detail(MI)->format = suppl_info->form;
+	}
 }
 
 bool Sparc_getInstruction(csh handle, const uint8_t *code, size_t code_len,
@@ -180,13 +184,17 @@ void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 
-	cs_op_type op_type = map_get_op_type(MI, OpNo) & ~CS_OP_MEM;
+	cs_op_type op_type = map_get_op_type(MI, OpNo);
 
 	switch (op_group) {
 	default:
 		printf("Operand group %d not handled!\n", op_group);
 		return;
 	case Sparc_OP_GROUP_Operand:
+		if (op_type & CS_OP_MEM) {
+			// Handled by printMemOperand
+			break;
+		}
 		if (op_type == CS_OP_IMM) {
 			Sparc_set_detail_op_imm(MI, OpNo, SPARC_OP_IMM,
 						    MCInst_getOpVal(MI, OpNo));
@@ -200,7 +208,25 @@ void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 	case Sparc_OP_GROUP_MemOperand:
 	case Sparc_OP_GROUP_GetPCX:
 	case Sparc_OP_GROUP_CCOperand:
-	case Sparc_OP_GROUP_ASITag:
+	case Sparc_OP_GROUP_ASITag: {
+		MCOperand *Op1 = MCInst_getOperand(MI, (OpNo));
+		MCOperand *Op2 = MCInst_getOperand(MI, (OpNo + 1));
+		if (!MCOperand_isReg(Op1) || MCOperand_getReg(Op1) == Sparc_G0) {
+			// Ignored
+			return;
+		}
+		Sparc_get_detail_op(MI, 0)->type = SPARC_OP_MEM;
+		Sparc_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNo);
+		Sparc_get_detail_op(MI, 0)->mem.base = MCOperand_getReg(Op1);
+
+		if (MCOperand_isReg(Op2) && MCOperand_getReg(Op2) != Sparc_G0) {
+			Sparc_get_detail_op(MI, 0)->mem.index = MCOperand_getReg(Op2);
+		} else if (MCOperand_isImm(Op2) && MCOperand_getImm(Op2) != 0) {
+			Sparc_get_detail_op(MI, 0)->mem.disp = MCOperand_getImm(Op2);
+		}
+		Sparc_inc_op_count(MI);
+		break;
+	}
 	case Sparc_OP_GROUP_MembarTag:
 		return;
 	}

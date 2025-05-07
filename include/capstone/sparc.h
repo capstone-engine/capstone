@@ -152,6 +152,36 @@ inline static const char *SPARCCondCodeToString(sparc_cc CC) {
   return "invalid";
 }
 
+/// The instruction formats.
+/// They are only loosely equivalent to the one in the ISA.
+/// Because in LLVM they are not defined one to one.
+typedef enum {
+	// generated content <SparcGenCSInsnFormatsEnum.inc> begin
+	// clang-format off
+
+	SPARC_INSN_FORM_ASMPSEUDOINST,
+	SPARC_INSN_FORM_F3_2,
+	SPARC_INSN_FORM_F3_1_ASI,
+	SPARC_INSN_FORM_F3_3,
+	SPARC_INSN_FORM_F2,
+	SPARC_INSN_FORM_F2_3,
+	SPARC_INSN_FORM_F2_4,
+	SPARC_INSN_FORM_F1,
+	SPARC_INSN_FORM_F3_3U,
+	SPARC_INSN_FORM_F4_3,
+	SPARC_INSN_FORM_F4_4R,
+	SPARC_INSN_FORM_F4_2,
+	SPARC_INSN_FORM_F4_1,
+	SPARC_INSN_FORM_F4_4I,
+	SPARC_INSN_FORM_F3_SI,
+	SPARC_INSN_FORM_F3_SR,
+	SPARC_INSN_FORM_TRAPSP,
+	SPARC_INSN_FORM_F3_3C,
+
+	// clang-format on
+	// generated content <SparcGenCSInsnFormatsEnum.inc> end
+} sparc_insn_form;
+
 /// Branch hint
 typedef enum sparc_hint {
 	SPARC_HINT_INVALID = 0,	///< no hint
@@ -492,11 +522,16 @@ typedef struct cs_sparc_op {
 typedef struct cs_sparc {
 	sparc_cc cc;	///< code condition for this insn
 	sparc_hint hint;	///< branch hint: encoding as bitwise OR of sparc_hint.
+	sparc_insn_form format; ///< The instruction format.
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
 	cs_sparc_op operands[NUM_SPARC_OPS]; ///< operands for this instruction.
 } cs_sparc;
+
+typedef struct {
+	sparc_insn_form form; ///< The instruction format.
+} sparc_suppl_info;
 
 /// SPARC instruction
 typedef enum sparc_insn {
