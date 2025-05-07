@@ -482,9 +482,17 @@ static inline unsigned int countLeadingZeros(int x)
 }
 
 /// \brief Get specified field from 32-bit instruction. Returns bits from the segment [from, to]
+/// The right most bit of insn is bit 31.
 static inline uint32_t get_insn_field(uint32_t insn, uint8_t from, uint8_t to) 
 {
 	return insn >> (31 - to) & ((1 << (to - from + 1)) - 1);
+}
+
+/// \brief Get specified field from 32-bit instruction. Returns bits from the segment [from, to]
+/// The right most bit of insn is bit 0.
+static inline uint32_t get_insn_field_r(uint32_t insn, uint8_t from, uint8_t to)
+{
+	return insn >> from & ((1 << (to - from + 1)) - 1);
 }
 
 /// \brief Get specified bit from 32-bit instruction

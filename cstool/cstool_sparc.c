@@ -45,8 +45,8 @@ void print_insn_detail_sparc(csh handle, cs_insn *ins)
 		}
 	}
 
-	if (sparc->cc != 0)
-		printf("\tCode condition: %u\n", sparc->cc);
+	if (sparc->cc != SPARC_CC_UNDEF)
+		printf("\tCode condition: %s\n", SPARCCondCodeToString(sparc->cc));
 
 	if (sparc->hint != 0)
 		printf("\tHint code: %u\n", sparc->hint);

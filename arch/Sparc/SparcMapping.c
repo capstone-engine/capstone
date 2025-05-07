@@ -14,10 +14,12 @@
 
 void Sparc_init_cs_detail(MCInst *MI)
 {
-	if (detail_is_set(MI)) {
-		memset(get_detail(MI), 0,
-		       offsetof(cs_detail, arm) + sizeof(cs_arm));
+	if (!detail_is_set(MI)) {
+		return;
 	}
+	memset(get_detail(MI), 0,
+	       offsetof(cs_detail, arm) + sizeof(cs_arm));
+	Sparc_get_detail(MI)->cc = SPARC_CC_UNDEF;
 }
 
 const insn_map sparc_insns[] = {
@@ -30,11 +32,86 @@ void Sparc_set_instr_map_data(MCInst *MI)
 	map_implicit_reads(MI, sparc_insns);
 	map_implicit_writes(MI, sparc_insns);
 	map_groups(MI, sparc_insns);
-	const sparc_suppl_info *suppl_info = map_get_suppl_info(MI, sparc_insns);
+	const sparc_suppl_info *suppl_info =
+		map_get_suppl_info(MI, sparc_insns);
 	if (suppl_info) {
 		Sparc_get_detail(MI)->format = suppl_info->form;
 	}
 }
+
+static void Sparc_add_alias_details(MCInst *MI, const uint8_t *Bytes,
+				    size_t BytesLen)
+{
+	if (!Bytes || BytesLen < 4 || !detail_is_set(MI)) {
+		return;
+	}
+	uint32_t insn = readBytes32(MI, Bytes);
+
+	cs_sparc *detail = Sparc_get_detail(MI);
+	switch (detail->format) {
+	default:
+		break;
+	case SPARC_INSN_FORM_F2_2:
+	case SPARC_INSN_FORM_F2_3: {
+		// cond
+		// Alias instructions don't define the conditions as operands.
+		// We need to add them here to the details again.
+		sparc_cc cc = get_insn_field_r(insn, 25, 28);
+		switch (MCInst_getOpcode(MI)) {
+		case Sparc_CBCOND:
+		case Sparc_CBCONDA:
+			cc += SPARC_CC_CPCC_BEGIN;
+			break;
+		case Sparc_FBCOND:
+		case Sparc_FBCONDA:
+		case Sparc_FBCOND_V9:
+		case Sparc_FBCONDA_V9:
+		case Sparc_BPFCC:
+		case Sparc_BPFCCA:
+		case Sparc_BPFCCNT:
+		case Sparc_BPFCCANT:
+		case Sparc_MOVFCCrr:
+		case Sparc_V9MOVFCCrr:
+		case Sparc_MOVFCCri:
+		case Sparc_V9MOVFCCri:
+		case Sparc_FMOVS_FCC:
+		case Sparc_V9FMOVS_FCC:
+		case Sparc_FMOVD_FCC:
+		case Sparc_V9FMOVD_FCC:
+		case Sparc_FMOVQ_FCC:
+		case Sparc_V9FMOVQ_FCC:
+			cc += SPARC_CC_FCC_BEGIN;
+			break;
+		default:
+			break;
+		}
+		Sparc_get_detail(MI)->cc = cc;
+		break;
+	}
+	case SPARC_INSN_FORM_F2_4: {
+		// cond
+		// Alias instructions don't define the conditions as operands.
+		// We need to add them here to the details again.
+		sparc_cc rcc = get_insn_field_r(insn, 25, 27);
+		Sparc_get_detail(MI)->cc = rcc + SPARC_CC_REG_BEGIN;
+		break;
+	}
+	// case SPARC_INSN_FORM_F3_2:
+	// case SPARC_INSN_FORM_F3_1_ASI:
+	// case SPARC_INSN_FORM_F3_3:
+	// case SPARC_INSN_FORM_F3_3U:
+	// case SPARC_INSN_FORM_F3_SI:
+	// case SPARC_INSN_FORM_F3_SR:
+	// case SPARC_INSN_FORM_F3_3C:
+
+	// case SPARC_INSN_FORM_F4_3:
+	// case SPARC_INSN_FORM_F4_4R:
+	// case SPARC_INSN_FORM_F4_2:
+	// case SPARC_INSN_FORM_F4_1:
+	// case SPARC_INSN_FORM_F4_4I:
+	}
+}
+
 
 bool Sparc_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 			MCInst *instr, uint16_t *size, uint64_t address,
@@ -45,6 +122,8 @@ bool Sparc_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 					      size, address,
 					      info) != MCDisassembler_Fail;
 	Sparc_set_instr_map_data(instr);
+
+	Sparc_add_alias_details(instr, code, code_len);
 	return Result;
 }
 
@@ -205,10 +284,31 @@ void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 			CS_ASSERT_RET(0 && "Op type not handled.");
 		}
 		break;
-	case Sparc_OP_GROUP_MemOperand:
-	case Sparc_OP_GROUP_GetPCX:
-	case Sparc_OP_GROUP_CCOperand:
-	case Sparc_OP_GROUP_ASITag: {
+	case Sparc_OP_GROUP_CCOperand: {
+		int CC = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+		switch (MCInst_getOpcode(MI)) {
+		default:
+			CC = (CC < SPARC_CC_FCC_BEGIN) ? (CC + SPARC_CC_FCC_BEGIN) : CC;
+			break;
+		case Sparc_CBCOND:
+		case Sparc_CBCONDA:
+			CC = (CC < SPARC_CC_CPCC_BEGIN) ? (CC + SPARC_CC_CPCC_BEGIN) : CC;
+			break;
+		case Sparc_BPR:
+		case Sparc_BPRA:
+		case Sparc_BPRNT:
+		case Sparc_BPRANT:
+		case Sparc_MOVRri:
+		case Sparc_MOVRrr:
+		case Sparc_FMOVRS:
+		case Sparc_FMOVRD:
+		case Sparc_FMOVRQ:
+			CC = (CC < SPARC_CC_REG_BEGIN) ? (CC + SPARC_CC_REG_BEGIN) : CC;
+			break;
+		}
+		Sparc_get_detail(MI)->cc = CC;
+	}
+	case Sparc_OP_GROUP_MemOperand: {
 		MCOperand *Op1 = MCInst_getOperand(MI, (OpNo));
 		MCOperand *Op2 = MCInst_getOperand(MI, (OpNo + 1));
 		if (!MCOperand_isReg(Op1) || MCOperand_getReg(Op1) == Sparc_G0) {
@@ -227,6 +327,8 @@ void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 		Sparc_inc_op_count(MI);
 		break;
 	}
+	case Sparc_OP_GROUP_ASITag:
+	case Sparc_OP_GROUP_GetPCX:
 	case Sparc_OP_GROUP_MembarTag:
 		return;
 	}

@@ -2217,7 +2217,7 @@
   /* ba $imm22 */
   Sparc_BA /* 311 */, SPARC_INS_BA,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2 }}
+    { 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_2 }}
 
   #endif
 },
@@ -2225,7 +2225,7 @@
   /* b$cond $imm22 */
   Sparc_BCOND /* 312 */, SPARC_INS_B,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_2 }}
 
   #endif
 },
@@ -2233,7 +2233,7 @@
   /* b$cond,a $imm22 */
   Sparc_BCONDA /* 313 */, SPARC_INS_B,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_2 }}
 
   #endif
 },
@@ -2453,7 +2453,7 @@
   /* cb$cond $imm22 */
   Sparc_CBCOND /* 341 */, SPARC_INS_CB,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2 }}
+    { 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_2 }}
 
   #endif
 },
@@ -2461,7 +2461,7 @@
   /* cb$cond,a $imm22 */
   Sparc_CBCONDA /* 342 */, SPARC_INS_CB,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2 }}
+    { 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_2 }}
 
   #endif
 },
@@ -2701,7 +2701,7 @@
   /* fb$cond $imm22 */
   Sparc_FBCOND /* 372 */, SPARC_INS_FB,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_FCC0, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2 }}
+    { SPARC_REG_FCC0, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_2 }}
 
   #endif
 },
@@ -2709,7 +2709,7 @@
   /* fb$cond,a $imm22 */
   Sparc_FBCONDA /* 373 */, SPARC_INS_FB,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_FCC0, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2 }}
+    { SPARC_REG_FCC0, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_2 }}
 
   #endif
 },
@@ -4479,7 +4479,7 @@
   /* nop */
   Sparc_NOP /* 595 */, SPARC_INS_NOP,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F2 }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F2_1 }}
 
   #endif
 },
@@ -4789,7 +4789,7 @@
   /* sethi $imm22, $rd */
   Sparc_SETHIi /* 634 */, SPARC_INS_SETHI,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F2 }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F2_1 }}
 
   #endif
 },
@@ -5723,7 +5723,7 @@
   /* unimp $imm22 */
   Sparc_UNIMP /* 751 */, SPARC_INS_UNIMP,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F2 }}
+    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F2_1 }}
 
   #endif
 },

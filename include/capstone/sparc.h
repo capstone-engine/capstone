@@ -81,7 +81,9 @@ typedef enum sparc_cc {
 	SPARC_CC_REG_LZ = 3 + SPARC_CC_REG_BEGIN,  // Less than zero
 	SPARC_CC_REG_NZ = 5 + SPARC_CC_REG_BEGIN,  // Is not zero
 	SPARC_CC_REG_GZ = 6 + SPARC_CC_REG_BEGIN,  // Greater than zero
-	SPARC_CC_REG_GEZ = 7 + SPARC_CC_REG_BEGIN  // Greater than or equal to zero
+	SPARC_CC_REG_GEZ = 7 + SPARC_CC_REG_BEGIN,  // Greater than or equal to zero
+
+	SPARC_CC_UNDEF = 0xffff,
 } sparc_cc;
 
 inline static const char *SPARCCondCodeToString(sparc_cc CC) {
@@ -135,6 +137,7 @@ inline static const char *SPARCCondCodeToString(sparc_cc CC) {
   case SPARC_CC_CPCC_013: return "013";
   case SPARC_CC_CPCC_012: return "012";
   case SPARC_CC_REG_BEGIN:
+  case SPARC_CC_UNDEF:
     return "invalid";
   case SPARC_CC_REG_Z:
     return "z";
@@ -163,7 +166,7 @@ typedef enum {
 	SPARC_INSN_FORM_F3_2,
 	SPARC_INSN_FORM_F3_1_ASI,
 	SPARC_INSN_FORM_F3_3,
-	SPARC_INSN_FORM_F2,
+	SPARC_INSN_FORM_F2_2,
 	SPARC_INSN_FORM_F2_3,
 	SPARC_INSN_FORM_F2_4,
 	SPARC_INSN_FORM_F1,
@@ -173,6 +176,7 @@ typedef enum {
 	SPARC_INSN_FORM_F4_2,
 	SPARC_INSN_FORM_F4_1,
 	SPARC_INSN_FORM_F4_4I,
+	SPARC_INSN_FORM_F2_1,
 	SPARC_INSN_FORM_F3_SI,
 	SPARC_INSN_FORM_F3_SR,
 	SPARC_INSN_FORM_TRAPSP,
@@ -520,7 +524,7 @@ typedef struct cs_sparc_op {
 
 /// Instruction structure
 typedef struct cs_sparc {
-	sparc_cc cc;	///< code condition for this insn
+	sparc_cc cc;	///< Condition code: only SPARC_CC_ICC_* are set here.
 	sparc_hint hint;	///< branch hint: encoding as bitwise OR of sparc_hint.
 	sparc_insn_form format; ///< The instruction format.
 	/// Number of operands of this instruction,
