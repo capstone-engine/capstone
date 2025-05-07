@@ -120,3 +120,32 @@ test_cases:
                 type: LOONGARCH_OP_IMM
                 imm: 0x0
           groups: [ LOONGARCH_GRP_JUMP ]
+  -
+    input:
+      bytes: [ 0x80, 0x0d, 0x00, 0x40, 0x00, 0xec, 0x0b, 0x54 ]
+      arch: "loongarch"
+      options: [ CS_OPT_DETAIL, CS_MODE_LOONGARCH64]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "beqz	$t0, 0x100c"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: t0
+              -
+                type: LOONGARCH_OP_IMM
+                imm: 0x100c
+          groups: [ LOONGARCH_GRP_JUMP, LOONGARCH_GRP_BRANCH_RELATIVE ]
+      -
+        asm_text: "bl	0x1bf0"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_IMM
+                imm: 0x1bf0
+          groups: [ LOONGARCH_GRP_CALL ]

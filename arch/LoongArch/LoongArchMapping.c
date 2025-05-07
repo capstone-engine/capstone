@@ -324,6 +324,49 @@ void LoongArch_rewrite_memory_operand(MCInst *MI)
 	}
 }
 
+void LoongArch_rewrite_address_operand(MCInst *MI)
+{
+	// rewrite offset immediate operand to absolute address in direct branch instructions
+	// convert e.g.
+	// 0x1000: beqz	$t0, 0x100c
+	// op_count: 2
+	//         operands[0].type: REG = t0
+	//         operands[0].access: READ
+	//         operands[1].type: IMM = 0xc
+	//         operands[1].access: READ
+	// to:
+	// op_count: 2
+	//         operands[0].type: REG = t0
+	//         operands[0].access: READ
+	//         operands[1].type: IMM = 0x100c
+	//         operands[1].access: READ
+
+	if (!detail_is_set(MI))
+		return;
+
+	// handle different types of branch instructions
+	switch (MI->flat_insn->id) {
+	case LOONGARCH_INS_B:
+	case LOONGARCH_INS_BCEQZ:
+	case LOONGARCH_INS_BCNEZ:
+	case LOONGARCH_INS_BEQ:
+	case LOONGARCH_INS_BEQZ:
+	case LOONGARCH_INS_BGE:
+	case LOONGARCH_INS_BGEU:
+	case LOONGARCH_INS_BL:
+	case LOONGARCH_INS_BLT:
+	case LOONGARCH_INS_BLTU:
+	case LOONGARCH_INS_BNE:
+	case LOONGARCH_INS_BNEZ:
+		// last operand is address operand
+		LoongArch_get_detail_op(MI, -1)->imm += MI->address;
+		return;
+
+	default:
+		break;
+	}
+}
+
 void LoongArch_set_instr_map_data(MCInst *MI)
 {
 	map_cs_id(MI, loongarch_insns, ARR_SIZE(loongarch_insns));
@@ -432,6 +475,7 @@ void LoongArch_printer(MCInst *MI, SStream *O,
 	LoongArch_LLVM_printInst(MI, MI->address, "", O);
 
 	LoongArch_rewrite_memory_operand(MI);
+	LoongArch_rewrite_address_operand(MI);
 	LoongArch_add_cs_groups(MI);
 #ifndef CAPSTONE_DIET
 	map_set_alias_id(MI, O, insn_alias_mnem_map,
