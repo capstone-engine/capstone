@@ -9,6 +9,12 @@
 #include "SparcLinkage.h"
 #include <capstone/capstone.h>
 
+typedef enum {
+#include "SparcGenCSOpGroup.inc"
+} sparc_op_group;
+
+void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo);
+
 // return name of register in friendly string
 const char *Sparc_reg_name(csh handle, unsigned int reg);
 
@@ -24,6 +30,10 @@ void Sparc_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 const char *Sparc_insn_name(csh handle, unsigned int id);
 
 const char *Sparc_group_name(csh handle, unsigned int id);
+void Sparc_set_detail_op_imm(MCInst *MI, unsigned OpNum,
+				 sparc_op_type ImmType, int64_t Imm);
+void Sparc_set_detail_op_reg(MCInst *MI, unsigned OpNum, sparc_reg Reg);
+void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo);
 
 #endif
 

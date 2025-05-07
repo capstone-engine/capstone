@@ -8,6 +8,7 @@
 
 #include "../../Mapping.h"
 #include "../../utils.h"
+#include "../../cs_simple_types.h"
 
 #include "SparcMapping.h"
 
@@ -142,6 +143,67 @@ const char *Sparc_group_name(csh handle, unsigned int id)
 #else
 	return NULL;
 #endif
+}
+
+static const map_insn_ops insn_operands[] = {
+#include "SparcGenCSMappingInsnOp.inc"
+};
+
+void Sparc_set_detail_op_imm(MCInst *MI, unsigned OpNum,
+				 sparc_op_type ImmType, int64_t Imm)
+{
+	if (!detail_is_set(MI))
+		return;
+	CS_ASSERT_RET((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_IMM);
+	CS_ASSERT_RET(ImmType == SPARC_OP_IMM);
+
+	Sparc_get_detail_op(MI, 0)->type = ImmType;
+	Sparc_get_detail_op(MI, 0)->imm = Imm;
+	Sparc_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+	Sparc_inc_op_count(MI);
+}
+
+void Sparc_set_detail_op_reg(MCInst *MI, unsigned OpNum, sparc_reg Reg)
+{
+	if (!detail_is_set(MI))
+		return;
+	CS_ASSERT_RET((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
+
+	Sparc_get_detail_op(MI, 0)->type = SPARC_OP_REG;
+	Sparc_get_detail_op(MI, 0)->reg = Reg;
+	Sparc_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+	Sparc_inc_op_count(MI);
+}
+
+void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
+{
+	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
+		return;
+
+	cs_op_type op_type = map_get_op_type(MI, OpNo) & ~CS_OP_MEM;
+
+	switch (op_group) {
+	default:
+		printf("Operand group %d not handled!\n", op_group);
+		return;
+	case Sparc_OP_GROUP_Operand:
+		if (op_type == CS_OP_IMM) {
+			Sparc_set_detail_op_imm(MI, OpNo, SPARC_OP_IMM,
+						    MCInst_getOpVal(MI, OpNo));
+		} else if (op_type == CS_OP_REG) {
+			Sparc_set_detail_op_reg(MI, OpNo,
+						    MCInst_getOpVal(MI, OpNo));
+		} else {
+			CS_ASSERT_RET(0 && "Op type not handled.");
+		}
+		break;
+	case Sparc_OP_GROUP_MemOperand:
+	case Sparc_OP_GROUP_GetPCX:
+	case Sparc_OP_GROUP_CCOperand:
+	case Sparc_OP_GROUP_ASITag:
+	case Sparc_OP_GROUP_MembarTag:
+		return;
+	}
 }
 
 #endif

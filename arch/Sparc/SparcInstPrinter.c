@@ -30,6 +30,7 @@
 #include <capstone/platform.h>
 
 #include "../../MCInstPrinter.h"
+#include "../../Mapping.h"
 #include "SparcInstPrinter.h"
 #include "SparcLinkage.h"
 #include "SparcMCTargetDesc.h"
@@ -65,9 +66,29 @@ static void printRegNameAlt(SStream *OS, MCRegister Reg, unsigned AltIdx)
 
 static void printInst(MCInst *MI, uint64_t Address, SStream *O)
 {
+	bool isAlias = false;
+	bool useAliasDetails = map_use_alias_details(MI);
+	map_set_fill_detail_ops(MI, useAliasDetails);
+
 	if (!printAliasInstr(MI, Address, O) &&
-		!printSparcAliasInstr(MI, O))
+		!printSparcAliasInstr(MI, O)) {
+		MCInst_setIsAlias(MI, false);
+	} else {
+		isAlias = true;
+		MCInst_setIsAlias(MI, isAlias);
+		if (useAliasDetails) {
+			return;
+		}
+	}
+
+	if (!isAlias || !useAliasDetails) {
+		map_set_fill_detail_ops(MI, !(isAlias && useAliasDetails));
+		if (isAlias)
+			SStream_Close(O);
 		printInstruction(MI, Address, O);
+		if (isAlias)
+			SStream_Open(O);
+	}
 }
 
 bool printSparcAliasInstr(MCInst *MI, SStream *O)
@@ -150,6 +171,7 @@ bool printSparcAliasInstr(MCInst *MI, SStream *O)
 
 static void printOperand(MCInst *MI, int opNum, SStream *O)
 {
+	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_Operand, opNum);
 	MCOperand *MO = MCInst_getOperand(MI, (opNum));
 
 	if (MCOperand_isReg(MO)) {
@@ -185,6 +207,7 @@ static void printOperand(MCInst *MI, int opNum, SStream *O)
 
 void printMemOperand(MCInst *MI, int opNum, SStream *O)
 {
+	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_MemOperand, opNum);
 	MCOperand *Op1 = MCInst_getOperand(MI, (opNum));
 	MCOperand *Op2 = MCInst_getOperand(MI, (opNum + 1));
 
@@ -211,6 +234,7 @@ void printMemOperand(MCInst *MI, int opNum, SStream *O)
 
 void printCCOperand(MCInst *MI, int opNum, SStream *O)
 {
+	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_CCOperand, opNum);
 	int CC = (int)MCOperand_getImm(MCInst_getOperand(MI, (opNum)));
 	switch (MCInst_getOpcode(MI)) {
 	default:
@@ -259,12 +283,13 @@ void printCCOperand(MCInst *MI, int opNum, SStream *O)
 
 bool printGetPCX(MCInst *MI, unsigned opNum, SStream *O)
 {
-	CS_ASSERT(0 && "FIXME: Implement SparcInstPrinter::printGetPCX.");
+	printf("FIXME: Implement SparcInstPrinter::printGetPCX.");
 	return true;
 }
 
 void printMembarTag(MCInst *MI, int opNum, SStream *O)
 {
+	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_MembarTag, opNum);
 	static const char *const TagNames[] = { "#LoadLoad",  "#StoreLoad",
 						"#LoadStore", "#StoreStore",
 						"#Lookaside", "#MemIssue",
@@ -292,6 +317,7 @@ void printMembarTag(MCInst *MI, int opNum, SStream *O)
 
 void printASITag(MCInst *MI, int opNum, SStream *O)
 {
+	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_ASITag, opNum);
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (opNum)));
 	const Sparc_ASITag_ASITag *ASITag = Sparc_ASITag_lookupASITagByEncoding(Imm);
 	if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9) && ASITag) {

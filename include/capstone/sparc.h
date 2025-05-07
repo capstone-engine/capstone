@@ -483,6 +483,7 @@ typedef struct cs_sparc_op {
 		int64_t imm;		///< immediate value for IMM operand
 		sparc_op_mem mem;		///< base/disp value for MEM operand
 	};
+	cs_ac_type access; ///< The way the operand is accessed.
 } cs_sparc_op;
 
 #define NUM_SPARC_OPS 4

@@ -38,6 +38,7 @@ class AddCSDetail(Patch):
         b"(MCInst*MI,intOpNum,SStream*O)",  # SystemZ
         b"(MCInst*MI,intOpNum,SStream*O)",  # Xtensa printOperand parameters.
         b"(MCInst*MI,intOpNum,SStream*OS)",  # Xtensa printOperand parameters.
+        b"(MCInst*MI,intopNum,SStream*O)",  # Sparc printOperand parameters.
     ]
 
     def __init__(self, priority: int, arch: str):
