@@ -34,7 +34,7 @@ test_cases:
                 imm: -1
   -
     input:
-      bytes: [ 0x80, 0x80, 0x00, 0x40, 0x63, 0x80, 0xff, 0x02, 0x78, 0x20, 0xc0, 0x29, 0x00, 0x84, 0x00, 0x01, 0x00, 0xa4, 0x14, 0x01  ]
+      bytes: [ 0x80, 0x80, 0x00, 0x40, 0x63, 0x80, 0xff, 0x02, 0x78, 0x20, 0xc0, 0x29, 0x00, 0x84, 0x00, 0x01, 0x00, 0xa4, 0x14, 0x01, 0xed, 0x01, 0x00, 0x4c  ]
       arch: "loongarch"
       options: [ CS_OPT_DETAIL, CS_MODE_LOONGARCH64]
       address: 0x0
@@ -105,3 +105,18 @@ test_cases:
               -
                 type: LOONGARCH_OP_REG
                 reg: zero
+      -
+        asm_text: "jirl	$t1, $t3, 0"
+        details:
+          loongarch:
+            operands:
+              -
+                type: LOONGARCH_OP_REG
+                reg: t1
+              -
+                type: LOONGARCH_OP_REG
+                reg: t3
+              -
+                type: LOONGARCH_OP_IMM
+                imm: 0x0
+          groups: [ LOONGARCH_GRP_JUMP ]

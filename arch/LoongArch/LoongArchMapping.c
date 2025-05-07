@@ -375,6 +375,9 @@ static void LoongArch_add_cs_groups(MCInst *MI)
 		} else if (loongarch->op_count == 1) {
 			// jr rj
 			add_group(MI, LOONGARCH_GRP_JUMP);
+		} else if (loongarch->op_count == 3) {
+			// none of the above, generic jirl
+			add_group(MI, LOONGARCH_GRP_JUMP);
 		}
 		break;
 	case LOONGARCH_INS_B:
