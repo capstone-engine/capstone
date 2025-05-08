@@ -278,9 +278,6 @@ void printCCOperand(MCInst *MI, int opNum, SStream *O)
 		CC = (CC < SPARC_CC_REG_BEGIN) ? (CC + SPARC_CC_REG_BEGIN) : CC;
 		break;
 	}
-	if (detail_is_set(MI)) {
-		Sparc_get_detail(MI)->cc = CC;
-	}
 	SStream_concat0(O, SPARCCondCodeToString((sparc_cc)CC));
 }
 

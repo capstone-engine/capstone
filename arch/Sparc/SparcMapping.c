@@ -38,8 +38,10 @@ void Sparc_set_instr_map_data(MCInst *MI)
 	}
 }
 
-static void Sparc_add_alias_details(MCInst *MI, const uint8_t *Bytes,
-				    size_t BytesLen)
+/// Adds details which are not defined consistently as LLVM operands like
+/// condition codes for alias instructions or branch hint bits.
+static void Sparc_add_bit_details(MCInst *MI, const uint8_t *Bytes,
+				  size_t BytesLen)
 {
 	if (!Bytes || BytesLen < 4 || !detail_is_set(MI)) {
 		return;
@@ -69,6 +71,18 @@ static void Sparc_add_alias_details(MCInst *MI, const uint8_t *Bytes,
 		case Sparc_BPFCCA:
 		case Sparc_BPFCCNT:
 		case Sparc_BPFCCANT:
+			cc += SPARC_CC_FCC_BEGIN;
+			break;
+		default:
+			break;
+		}
+		Sparc_get_detail(MI)->cc = cc;
+		break;
+	}
+	case SPARC_INSN_FORM_F4_2:
+	case SPARC_INSN_FORM_F4_3: {
+		sparc_cc cc = get_insn_field_r(insn, 14, 17);
+		switch (MCInst_getOpcode(MI)) {
 		case Sparc_MOVFCCrr:
 		case Sparc_V9MOVFCCrr:
 		case Sparc_MOVFCCri:
@@ -95,19 +109,27 @@ static void Sparc_add_alias_details(MCInst *MI, const uint8_t *Bytes,
 		Sparc_get_detail(MI)->cc = rcc + SPARC_CC_REG_BEGIN;
 		break;
 	}
-		// case SPARC_INSN_FORM_F3_2:
-		// case SPARC_INSN_FORM_F3_1_ASI:
-		// case SPARC_INSN_FORM_F3_3:
-		// case SPARC_INSN_FORM_F3_3U:
-		// case SPARC_INSN_FORM_F3_SI:
-		// case SPARC_INSN_FORM_F3_SR:
-		// case SPARC_INSN_FORM_F3_3C:
+	case SPARC_INSN_FORM_F4_4R:
+	case SPARC_INSN_FORM_F4_4I: {
+		sparc_cc rcc = get_insn_field_r(insn, 10, 12);
+		Sparc_get_detail(MI)->cc = rcc + SPARC_CC_REG_BEGIN;
+		break;
+	}
+	}
 
-		// case SPARC_INSN_FORM_F4_3:
-		// case SPARC_INSN_FORM_F4_4R:
-		// case SPARC_INSN_FORM_F4_2:
-		// case SPARC_INSN_FORM_F4_1:
-		// case SPARC_INSN_FORM_F4_4I:
+	switch (detail->format) {
+	default:
+		break;
+	case SPARC_INSN_FORM_F2_2:
+		Sparc_get_detail(MI)->hint = get_insn_field_r(insn, 29, 29);
+		break;
+	case SPARC_INSN_FORM_F2_3:
+	case SPARC_INSN_FORM_F2_4:
+		Sparc_get_detail(MI)->hint = get_insn_field_r(insn, 29, 29);
+		Sparc_get_detail(MI)->hint |=
+			get_insn_field_r(insn, 19, 19) == 0 ? SPARC_HINT_PN :
+							      SPARC_HINT_PT;
+		break;
 	}
 }
 
@@ -121,7 +143,7 @@ bool Sparc_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 						info) != MCDisassembler_Fail;
 	Sparc_set_instr_map_data(instr);
 
-	Sparc_add_alias_details(instr, code, code_len);
+	Sparc_add_bit_details(instr, code, code_len);
 	return Result;
 }
 
