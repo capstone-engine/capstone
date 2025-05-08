@@ -3,7 +3,7 @@
 
 #ifdef CAPSTONE_HAS_SPARC
 
-#include <stdio.h>	// debug
+#include <stdio.h> // debug
 #include <string.h>
 
 #include "../../Mapping.h"
@@ -17,8 +17,7 @@ void Sparc_init_cs_detail(MCInst *MI)
 	if (!detail_is_set(MI)) {
 		return;
 	}
-	memset(get_detail(MI), 0,
-	       offsetof(cs_detail, arm) + sizeof(cs_arm));
+	memset(get_detail(MI), 0, offsetof(cs_detail, arm) + sizeof(cs_arm));
 	Sparc_get_detail(MI)->cc = SPARC_CC_UNDEF;
 }
 
@@ -96,31 +95,30 @@ static void Sparc_add_alias_details(MCInst *MI, const uint8_t *Bytes,
 		Sparc_get_detail(MI)->cc = rcc + SPARC_CC_REG_BEGIN;
 		break;
 	}
-	// case SPARC_INSN_FORM_F3_2:
-	// case SPARC_INSN_FORM_F3_1_ASI:
-	// case SPARC_INSN_FORM_F3_3:
-	// case SPARC_INSN_FORM_F3_3U:
-	// case SPARC_INSN_FORM_F3_SI:
-	// case SPARC_INSN_FORM_F3_SR:
-	// case SPARC_INSN_FORM_F3_3C:
+		// case SPARC_INSN_FORM_F3_2:
+		// case SPARC_INSN_FORM_F3_1_ASI:
+		// case SPARC_INSN_FORM_F3_3:
+		// case SPARC_INSN_FORM_F3_3U:
+		// case SPARC_INSN_FORM_F3_SI:
+		// case SPARC_INSN_FORM_F3_SR:
+		// case SPARC_INSN_FORM_F3_3C:
 
-	// case SPARC_INSN_FORM_F4_3:
-	// case SPARC_INSN_FORM_F4_4R:
-	// case SPARC_INSN_FORM_F4_2:
-	// case SPARC_INSN_FORM_F4_1:
-	// case SPARC_INSN_FORM_F4_4I:
+		// case SPARC_INSN_FORM_F4_3:
+		// case SPARC_INSN_FORM_F4_4R:
+		// case SPARC_INSN_FORM_F4_2:
+		// case SPARC_INSN_FORM_F4_1:
+		// case SPARC_INSN_FORM_F4_4I:
 	}
 }
 
-
 bool Sparc_getInstruction(csh handle, const uint8_t *code, size_t code_len,
-			MCInst *instr, uint16_t *size, uint64_t address,
-			void *info)
+			  MCInst *instr, uint16_t *size, uint64_t address,
+			  void *info)
 {
 	Sparc_init_cs_detail(instr);
 	bool Result = Sparc_LLVM_getInstruction(handle, code, code_len, instr,
-					      size, address,
-					      info) != MCDisassembler_Fail;
+						size, address,
+						info) != MCDisassembler_Fail;
 	Sparc_set_instr_map_data(instr);
 
 	Sparc_add_alias_details(instr, code, code_len);
@@ -129,13 +127,11 @@ bool Sparc_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 
 void Sparc_init_mri(MCRegisterInfo *MRI)
 {
-	MCRegisterInfo_InitMCRegisterInfo(MRI, SparcRegDesc,
-					  sizeof(SparcRegDesc), 0, 0,
-					  SparcMCRegisterClasses,
-					  ARR_SIZE(SparcMCRegisterClasses),
-					  0, 0, SparcRegDiffLists, 0,
-					  SparcSubRegIdxLists,
-					  ARR_SIZE(SparcSubRegIdxLists), 0);
+	MCRegisterInfo_InitMCRegisterInfo(
+		MRI, SparcRegDesc, sizeof(SparcRegDesc), 0, 0,
+		SparcMCRegisterClasses, ARR_SIZE(SparcMCRegisterClasses), 0, 0,
+		SparcRegDiffLists, 0, SparcSubRegIdxLists,
+		ARR_SIZE(SparcSubRegIdxLists), 0);
 }
 
 const char *Sparc_reg_name(csh handle, unsigned int reg)
@@ -143,8 +139,7 @@ const char *Sparc_reg_name(csh handle, unsigned int reg)
 	int syntax_opt = ((cs_struct *)(uintptr_t)handle)->syntax;
 
 	if (syntax_opt & CS_OPT_SYNTAX_NOREGNAME) {
-		return Sparc_LLVM_getRegisterName(reg,
-						      Sparc_NoRegAltName);
+		return Sparc_LLVM_getRegisterName(reg, Sparc_NoRegAltName);
 	}
 	return Sparc_LLVM_getRegisterName(reg, Sparc_RegNamesStateReg);
 }
@@ -165,8 +160,7 @@ static const name_map insn_alias_mnem_map[] = {
 };
 #endif
 
-void Sparc_printer(MCInst *MI, SStream *O,
-		       void * /* MCRegisterInfo* */ info)
+void Sparc_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
 	MI->MRI = MRI;
@@ -183,12 +177,10 @@ const char *Sparc_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
 	if (id < SPARC_INS_ALIAS_END && id > SPARC_INS_ALIAS_BEGIN) {
-		if (id - SPARC_INS_ALIAS_BEGIN >=
-		    ARR_SIZE(insn_alias_mnem_map))
+		if (id - SPARC_INS_ALIAS_BEGIN >= ARR_SIZE(insn_alias_mnem_map))
 			return NULL;
 
-		return insn_alias_mnem_map[id - SPARC_INS_ALIAS_BEGIN - 1]
-			.name;
+		return insn_alias_mnem_map[id - SPARC_INS_ALIAS_BEGIN - 1].name;
 	}
 	if (id >= SPARC_INS_ENDING)
 		return NULL;
@@ -232,8 +224,8 @@ static const map_insn_ops insn_operands[] = {
 #include "SparcGenCSMappingInsnOp.inc"
 };
 
-void Sparc_set_detail_op_imm(MCInst *MI, unsigned OpNum,
-				 sparc_op_type ImmType, int64_t Imm)
+void Sparc_set_detail_op_imm(MCInst *MI, unsigned OpNum, sparc_op_type ImmType,
+			     int64_t Imm)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -276,53 +268,37 @@ void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 		}
 		if (op_type == CS_OP_IMM) {
 			Sparc_set_detail_op_imm(MI, OpNo, SPARC_OP_IMM,
-						    MCInst_getOpVal(MI, OpNo));
+						MCInst_getOpVal(MI, OpNo));
 		} else if (op_type == CS_OP_REG) {
 			Sparc_set_detail_op_reg(MI, OpNo,
-						    MCInst_getOpVal(MI, OpNo));
+						MCInst_getOpVal(MI, OpNo));
 		} else {
 			CS_ASSERT_RET(0 && "Op type not handled.");
 		}
 		break;
 	case Sparc_OP_GROUP_CCOperand: {
-		int CC = MCOperand_getImm(MCInst_getOperand(MI, OpNo));
-		switch (MCInst_getOpcode(MI)) {
-		default:
-			CC = (CC < SPARC_CC_FCC_BEGIN) ? (CC + SPARC_CC_FCC_BEGIN) : CC;
-			break;
-		case Sparc_CBCOND:
-		case Sparc_CBCONDA:
-			CC = (CC < SPARC_CC_CPCC_BEGIN) ? (CC + SPARC_CC_CPCC_BEGIN) : CC;
-			break;
-		case Sparc_BPR:
-		case Sparc_BPRA:
-		case Sparc_BPRNT:
-		case Sparc_BPRANT:
-		case Sparc_MOVRri:
-		case Sparc_MOVRrr:
-		case Sparc_FMOVRS:
-		case Sparc_FMOVRD:
-		case Sparc_FMOVRQ:
-			CC = (CC < SPARC_CC_REG_BEGIN) ? (CC + SPARC_CC_REG_BEGIN) : CC;
-			break;
-		}
-		Sparc_get_detail(MI)->cc = CC;
+		// Prevent code duplication by moving this to SparcInstPrinter.c
+		break;
 	}
 	case Sparc_OP_GROUP_MemOperand: {
 		MCOperand *Op1 = MCInst_getOperand(MI, (OpNo));
 		MCOperand *Op2 = MCInst_getOperand(MI, (OpNo + 1));
-		if (!MCOperand_isReg(Op1) || MCOperand_getReg(Op1) == Sparc_G0) {
+		if (!MCOperand_isReg(Op1) ||
+		    MCOperand_getReg(Op1) == Sparc_G0) {
 			// Ignored
 			return;
 		}
 		Sparc_get_detail_op(MI, 0)->type = SPARC_OP_MEM;
-		Sparc_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNo);
+		Sparc_get_detail_op(MI, 0)->access =
+			map_get_op_access(MI, OpNo);
 		Sparc_get_detail_op(MI, 0)->mem.base = MCOperand_getReg(Op1);
 
 		if (MCOperand_isReg(Op2) && MCOperand_getReg(Op2) != Sparc_G0) {
-			Sparc_get_detail_op(MI, 0)->mem.index = MCOperand_getReg(Op2);
+			Sparc_get_detail_op(MI, 0)->mem.index =
+				MCOperand_getReg(Op2);
 		} else if (MCOperand_isImm(Op2) && MCOperand_getImm(Op2) != 0) {
-			Sparc_get_detail_op(MI, 0)->mem.disp = MCOperand_getImm(Op2);
+			Sparc_get_detail_op(MI, 0)->mem.disp =
+				MCOperand_getImm(Op2);
 		}
 		Sparc_inc_op_count(MI);
 		break;
