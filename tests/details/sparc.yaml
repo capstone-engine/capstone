@@ -1,7 +1,7 @@
 test_cases:
   -
     input:
-      bytes: [ 0x80, 0xa0, 0x40, 0x02, 0x85, 0xc2, 0x60, 0x08, 0x85, 0xe8, 0x20, 0x01, 0x81, 0xe8, 0x00, 0x00, 0x90, 0x10, 0x20, 0x01, 0xd5, 0xf6, 0x10, 0x16, 0x21, 0x00, 0x00, 0x0a, 0x86, 0x00, 0x40, 0x02, 0x01, 0x00, 0x00, 0x00, 0x12, 0xbf, 0xff, 0xff, 0x10, 0xbf, 0xff, 0xff, 0xa0, 0x02, 0x00, 0x09, 0x0d, 0xbf, 0xff, 0xff, 0xd4, 0x20, 0x60, 0x00, 0xd4, 0x4e, 0x00, 0x16, 0x2a, 0xc2, 0x80, 0x03  ]
+      bytes: [ 0x80, 0xa0, 0x40, 0x02 ]
       arch: "sparc"
       options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
       address: 0x1000
@@ -18,6 +18,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: g2
+  -
+    input:
+      bytes: [ 0x85, 0xc2, 0x60, 0x08 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "jmpl %o1+8, %g2"
         details:
@@ -30,6 +38,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: g2
+  -
+    input:
+      bytes: [ 0x85, 0xe8, 0x20, 0x01 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "restore %g0, 1, %g2"
         details:
@@ -44,8 +60,24 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: g2
+  -
+    input:
+      bytes: [ 0x81, 0xe8, 0x00, 0x00 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "restore"
+  -
+    input:
+      bytes: [ 0x90, 0x10, 0x20, 0x01 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "mov 1, %o0"
         details:
@@ -57,6 +89,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: o0
+  -
+    input:
+      bytes: [ 0xd5, 0xf6, 0x10, 0x16 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "casx [%i0], %l6, %o2"
         details:
@@ -71,6 +111,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: o2
+  -
+    input:
+      bytes: [ 0x21, 0x00, 0x00, 0x0a ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "sethi 0xa, %l0"
         details:
@@ -82,6 +130,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: l0
+  -
+    input:
+      bytes: [ 0x86, 0x00, 0x40, 0x02 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "add %g1, %g2, %g3"
         details:
@@ -96,8 +152,24 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: g3
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x00, 0x00 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "nop"
+  -
+    input:
+      bytes: [ 0x12, 0xbf, 0xff, 0xff ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "bne 0x1020"
         details:
@@ -107,6 +179,14 @@ test_cases:
                 type: SPARC_OP_IMM
                 imm: 0x1020
             cc: SPARC_CC_ICC_NE
+  -
+    input:
+      bytes: [ 0x10, 0xbf, 0xff, 0xff ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "ba 0x1024"
         details:
@@ -115,6 +195,14 @@ test_cases:
               -
                 type: SPARC_OP_IMM
                 imm: 0x1024
+  -
+    input:
+      bytes: [ 0xa0, 0x02, 0x00, 0x09 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "add %o0, %o1, %l0"
         details:
@@ -129,6 +217,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: l0
+  -
+    input:
+      bytes: [ 0x0d, 0xbf, 0xff, 0xff ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "fbg 0x102c"
         details:
@@ -138,6 +234,14 @@ test_cases:
                 type: SPARC_OP_IMM
                 imm: 0x102c
             cc: SPARC_CC_FCC_G
+  -
+    input:
+      bytes: [ 0xd4, 0x20, 0x60, 0x00 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "st %o2, [%g1]"
         details:
@@ -149,6 +253,14 @@ test_cases:
               -
                 type: SPARC_OP_MEM
                 mem_base: g1
+  -
+    input:
+      bytes: [ 0xd4, 0x4e, 0x00, 0x16 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "ldsb [%i0+%l6], %o2"
         details:
@@ -161,6 +273,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: o2
+  -
+    input:
+      bytes: [ 0x2a, 0xc2, 0x80, 0x03 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "brnz,a,pn %o2, 0x1048"
         details:
@@ -175,7 +295,7 @@ test_cases:
             hint: SPARC_HINT_A_PN
   -
     input:
-      bytes: [ 0x81, 0xa8, 0x0a, 0x24, 0x89, 0xa0, 0x10, 0x20, 0x89, 0xa0, 0x1a, 0x60, 0x89, 0xa0, 0x00, 0xe0  ]
+      bytes: [ 0x81, 0xa8, 0x0a, 0x24 ]
       arch: "sparc"
       options: [ CS_OPT_DETAIL ]
       address: 0x1000
@@ -192,6 +312,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: f4
+  -
+    input:
+      bytes: [ 0x89, 0xa0, 0x10, 0x20 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "fstox %f0, %f4"
         details:
@@ -203,6 +331,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: f4
+  -
+    input:
+      bytes: [ 0x89, 0xa0, 0x1a, 0x60 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "fqtoi %f0, %f4"
         details:
@@ -214,6 +350,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: f4
+  -
+    input:
+      bytes: [ 0x89, 0xa0, 0x00, 0xe0 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "fnegq %f0, %f4"
         details:
