@@ -17,12 +17,15 @@ class SparcOpValue(ctypes.Union):
         ('reg', ctypes.c_uint),
         ('imm', ctypes.c_int64),
         ('mem', SparcOpMem),
+        ('membar_tag', ctypes.c_uint),
+        ('asi', ctypes.c_uint),
     )
 
 class SparcOp(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', SparcOpValue),
+        ('access', ctypes.c_uint8),
     )
 
     @property
@@ -42,6 +45,7 @@ class CsSparc(ctypes.Structure):
     _fields_ = (
         ('cc', ctypes.c_uint),
         ('hint', ctypes.c_uint),
+        ('format', ctypes.c_uint),
         ('op_count', ctypes.c_uint8),
         ('operands', SparcOp * 4),
     )
