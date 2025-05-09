@@ -202,6 +202,8 @@ typedef enum sparc_op_type {
 	SPARC_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
 	SPARC_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
 	SPARC_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
+	SPARC_OP_MEMBAR_TAG = CS_OP_SPECIAL + 0,
+	SPARC_OP_ASI = CS_OP_SPECIAL + 1,
 } sparc_op_type;
 
 /// SPARC registers
@@ -494,6 +496,17 @@ typedef enum sparc_asi {
 	// generated content <SparcGenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_ASITag> end
 } sparc_asi;
 
+typedef enum sparc_membar_tag {
+	SPARC_MEMBAR_TAG_NONE = 0,
+	SPARC_MEMBAR_TAG_LOADLOAD = 1,
+	SPARC_MEMBAR_TAG_STORELOAD = 1 << 1,
+	SPARC_MEMBAR_TAG_LOADSTORE = 1 << 2,
+	SPARC_MEMBAR_TAG_STORESTORE = 1 << 3,
+	SPARC_MEMBAR_TAG_LOOKASIDE = 1 << 4,
+	SPARC_MEMBAR_TAG_MEMISSUE = 1 << 5,
+	SPARC_MEMBAR_TAG_SYNC = 1 << 6,
+} sparc_membar_tag;
+
 typedef union sparc_sys_imm {
 	sparc_asi asi;
 	unsigned raw_val;
@@ -516,6 +529,8 @@ typedef struct cs_sparc_op {
 		sparc_reg reg;	///< register value for REG operand
 		int64_t imm;		///< immediate value for IMM operand
 		sparc_op_mem mem;		///< base/disp value for MEM operand
+		sparc_membar_tag membar_tag; ///< Tag of the MEMBAR instruction.
+		sparc_asi asi; ///< Address space identifier.
 	};
 	cs_ac_type access; ///< The way the operand is accessed.
 } cs_sparc_op;

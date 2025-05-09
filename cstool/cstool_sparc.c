@@ -24,6 +24,12 @@ void print_insn_detail_sparc(csh handle, cs_insn *ins)
 		switch((int)op->type) {
 			default:
 				break;
+			case SPARC_OP_ASI:
+				printf("\t\toperands[%u].type: ASI = 0x%" PRIx64 "\n", i, (uint64_t) op->asi);
+				break;
+			case SPARC_OP_MEMBAR_TAG:
+				printf("\t\toperands[%u].type: MEMBAR TAG = 0x%" PRIx64 "\n", i, (uint64_t) op->membar_tag);
+				break;
 			case SPARC_OP_REG:
 				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
 				break;

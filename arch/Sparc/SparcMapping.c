@@ -281,6 +281,7 @@ void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 
 	switch (op_group) {
 	default:
+	case Sparc_OP_GROUP_GetPCX:
 		printf("Operand group %d not handled!\n", op_group);
 		return;
 	case Sparc_OP_GROUP_Operand:
@@ -299,7 +300,7 @@ void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 		}
 		break;
 	case Sparc_OP_GROUP_CCOperand: {
-		// Prevent code duplication by moving this to SparcInstPrinter.c
+		// Handled in Sparc_add_bit_details().
 		break;
 	}
 	case Sparc_OP_GROUP_MemOperand: {
@@ -326,9 +327,21 @@ void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 		break;
 	}
 	case Sparc_OP_GROUP_ASITag:
-	case Sparc_OP_GROUP_GetPCX:
+		Sparc_get_detail_op(MI, 0)->type = SPARC_OP_ASI;
+		Sparc_get_detail_op(MI, 0)->access =
+			map_get_op_access(MI, OpNo);
+		Sparc_get_detail_op(MI, 0)->asi =
+			MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+		Sparc_inc_op_count(MI);
+		break;
 	case Sparc_OP_GROUP_MembarTag:
-		return;
+		Sparc_get_detail_op(MI, 0)->type = SPARC_OP_MEMBAR_TAG;
+		Sparc_get_detail_op(MI, 0)->access =
+			map_get_op_access(MI, OpNo);
+		Sparc_get_detail_op(MI, 0)->membar_tag =
+			MCOperand_getImm(MCInst_getOperand(MI, OpNo));
+		Sparc_inc_op_count(MI);
+		break;
 	}
 }
 
