@@ -16,6 +16,8 @@ typedef struct {
 	char *mem_base;
 	char *mem_index;
 	int32_t mem_disp;
+	char *asi;
+	char *membar_tag;
 } TestDetailSparcOp;
 
 static const cyaml_schema_field_t test_detail_sparc_op_mapping_schema[] = {
@@ -32,6 +34,12 @@ static const cyaml_schema_field_t test_detail_sparc_op_mapping_schema[] = {
 		TestDetailSparcOp, mem_index, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailSparcOp,
 			mem_disp),
+	CYAML_FIELD_STRING_PTR("asi",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailSparcOp, asi, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR("membar_tag",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailSparcOp, membar_tag, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_END
 };
 
