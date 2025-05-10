@@ -272,6 +272,20 @@ void Sparc_set_detail_op_reg(MCInst *MI, unsigned OpNum, sparc_reg Reg)
 	Sparc_inc_op_count(MI);
 }
 
+static inline bool is_single_reg_mem_case(MCInst *MI, unsigned OpNo)
+{
+	if (map_get_op_type(MI, OpNo) != CS_OP_MEM_REG) {
+		return false;
+	}
+	if (MI->size == 1) {
+		return true;
+	} else if (MI->size > OpNo + 1) {
+		// Next operand is not a memory operand (disponent or index reg).
+		return !(map_get_op_type(MI, OpNo + 1) & SPARC_OP_MEM);
+	}
+	return false;
+}
+
 void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 {
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
@@ -286,7 +300,14 @@ void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 		return;
 	case Sparc_OP_GROUP_Operand:
 		if (op_type & CS_OP_MEM) {
-			// Handled by printMemOperand
+			if (is_single_reg_mem_case(MI, OpNo)) {
+				Sparc_get_detail_op(MI, 0)->type = SPARC_OP_MEM;
+				Sparc_get_detail_op(MI, 0)->mem.base =
+					MCInst_getOpVal(MI, OpNo);
+				Sparc_get_detail_op(MI, 0)->access =
+					map_get_op_access(MI, OpNo);
+				Sparc_inc_op_count(MI);
+			}
 			break;
 		}
 		if (op_type == CS_OP_IMM) {
@@ -298,6 +319,8 @@ void Sparc_add_cs_detail_0(MCInst *MI, sparc_op_group op_group, unsigned OpNo)
 		} else {
 			CS_ASSERT_RET(0 && "Op type not handled.");
 		}
+		Sparc_get_detail_op(MI, 0)->access =
+			map_get_op_access(MI, OpNo);
 		break;
 	case Sparc_OP_GROUP_CCOperand: {
 		// Handled in Sparc_add_bit_details().

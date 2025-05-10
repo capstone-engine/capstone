@@ -93,7 +93,7 @@ test_cases:
     input:
       bytes: [ 0xd5, 0xf6, 0x10, 0x16 ]
       arch: "sparc"
-      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
       address: 0x1000
     expected:
       insns:
@@ -354,7 +354,7 @@ test_cases:
     input:
       bytes: [ 0x89, 0xa0, 0x00, 0xe0 ]
       arch: "sparc"
-      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
       address: 0x1000
     expected:
       insns:
