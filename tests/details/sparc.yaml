@@ -113,6 +113,47 @@ test_cases:
                 reg: o2
   -
     input:
+      bytes: [ 0xd5, 0xe6, 0x10, 0x56 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "casa [%i0] #asi_pnf, %l6, %o2"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_MEM
+                mem_base: i0
+              -
+                type: SPARC_OP_ASI
+                asi: SPARC_ASITAG_ASI_PNF
+              -
+                type: SPARC_OP_REG
+                reg: l6
+              -
+                type: SPARC_OP_REG
+                reg: o2
+  -
+    input:
+      bytes: [ 0x81, 0x43, 0xe0, 0x01 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "membar #LoadLoad"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_MEMBAR_TAG
+                membar_tag: SPARC_MEMBAR_TAG_LOADLOAD
+  -
+    input:
       bytes: [ 0x21, 0x00, 0x00, 0x0a ]
       arch: "sparc"
       options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]

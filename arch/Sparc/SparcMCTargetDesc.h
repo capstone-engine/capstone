@@ -43,6 +43,11 @@
 // Defines symbolic names for Sparc v9 ASI tag names.
 // CS namespace begin: SparcASITag
 
+typedef union sparc_sys_imm {
+	sparc_asi asi;
+	unsigned raw_val;
+} sparc_sys_imm;
+
 typedef struct {
 	const char *Name;
 	sparc_sys_imm imm;

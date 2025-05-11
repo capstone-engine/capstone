@@ -507,11 +507,6 @@ typedef enum sparc_membar_tag {
 	SPARC_MEMBAR_TAG_SYNC = 1 << 6,
 } sparc_membar_tag;
 
-typedef union sparc_sys_imm {
-	sparc_asi asi;
-	unsigned raw_val;
-} sparc_sys_imm;
-
 /// Instruction's operand referring to memory
 /// This is associated with SPARC_OP_MEM operand type above
 typedef struct sparc_op_mem {
