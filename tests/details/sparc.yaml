@@ -334,6 +334,30 @@ test_cases:
                 type: SPARC_OP_IMM
                 imm: 0x1048
             hint: SPARC_HINT_A_PN
+            cc: SPARC_CC_REG_NZ
+          groups: [ jump ]
+  -
+    input:
+      bytes: [ 0x22, 0xc8, 0x40, 0x00 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x10000
+    expected:
+      insns:
+      -
+        asm_text: "brz,a	%g1, 0x10000"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_REG
+                reg: g1
+              -
+                type: SPARC_OP_IMM
+                imm: 0x10000
+            hint: SPARC_HINT_A_PT
+            cc: SPARC_CC_REG_Z
+          groups: [ jump ]
   -
     input:
       bytes: [ 0x81, 0xa8, 0x0a, 0x24 ]
