@@ -1232,6 +1232,9 @@ typedef enum sparc_insn {
 
 	// clang-format on
 	// generated content <SparcGenCSAliasEnum.inc> end
+
+	SPARC_INS_ALIAS_CALL, // Real instr.: SPARC_INS_JMPL
+
 	SPARC_INS_ALIAS_END,
 } sparc_insn;
 

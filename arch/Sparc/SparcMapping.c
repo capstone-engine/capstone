@@ -178,6 +178,7 @@ static const char *const insn_name_maps[] = {
 #ifndef CAPSTONE_DIET
 static const name_map insn_alias_mnem_map[] = {
 #include "SparcGenCSAliasMnemMap.inc"
+	{ SPARC_INS_ALIAS_CALL, "call" },
 	{ SPARC_INS_ALIAS_END, NULL },
 };
 #endif
