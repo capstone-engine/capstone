@@ -17,7 +17,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ld [%i1+-15], %c4"
+          asm_text: "ld [%i1+0x1ff1], %c4"
 
   -
     input:
@@ -177,7 +177,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "std %c4, [%i2+-240]"
+          asm_text: "std %c4, [%i2+0x1f10]"
 
   -
     input:
@@ -277,7 +277,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "std %cq, [%o3+-93]"
+          asm_text: "std %cq, [%o3+0x1fa3]"
 
   -
     input:

@@ -47,7 +47,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "rd %asr15, %g0"
+          asm_text: "stbar" # Checked with llvm-mc
 
   -
     input:
@@ -267,7 +267,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "rd %tick, %i0"
+          asm_text: "rd %asr4, %i0" # Checked with llvm-mc
 
   -
     input:
@@ -277,7 +277,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "wr %i0, 7, %tick"
+          asm_text: "wr %i0, 7, %asr4" # Checked with llvm-mc
 
   -
     input:

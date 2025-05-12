@@ -407,7 +407,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "wr %g0, 5, %asr15"
+          asm_text: "sir 5" # Checked with llvm-mc
 
   -
     input:
@@ -877,7 +877,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "wr %g0, 5, %asr15"
+          asm_text: "sir 5" # Checked with llvm-mc
 
   -
     input:

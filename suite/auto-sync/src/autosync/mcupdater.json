@@ -144,7 +144,8 @@
             "sparc64-linux-gnu": ["CS_MODE_V9"],
             "sparc64-unknown-linux-gnu": ["CS_MODE_V9"],
             "sparcv9": ["CS_MODE_V9"],
-            "sparcv9-unknown-linux": ["CS_MODE_V9"]
+            "sparcv9-unknown-linux": ["CS_MODE_V9"],
+            "sparcel-linux-gnu": ["CS_MODE_LITTLE_ENDIAN"]
         }
     }
 }

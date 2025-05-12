@@ -627,7 +627,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "std %fq, [%o4]"
+          asm_text: "stq %f0, [%o4]" # Checked with llvm-mc
 
   -
     input:
@@ -637,7 +637,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "std %fq, [%l1+62]"
+          asm_text: "stq %f0, [%l1+62]" # Checked with llvm-mc
 
   -
     input:
@@ -647,4 +647,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "std %fq, [%i3+%l7]"
+          asm_text: "stq %f0, [%i3+%l7]" # Checked with llvm-mc

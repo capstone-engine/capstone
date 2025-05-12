@@ -47,7 +47,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "rd %asr15, %g0"
+          asm_text: "stbar" # Assemble test: Checked with llvm-mc
 
   -
     input:
@@ -157,7 +157,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "std %fq, [%g6+%i2]"
+          asm_text: "stq %f0, [%g6+%i2]" # CHecked with llvm-mc
 
   -
     input:
