@@ -392,6 +392,8 @@ static inline bool char_ends_mnem(const char c, cs_arch arch) {
 		return (!c || c == ' ' || c == '\t' || c == '.');
 	case CS_ARCH_PPC:
 		return (!c || c == ' ' || c == '\t');
+	case CS_ARCH_SPARC:
+		return (!c || c == ' ' || c == '\t' || c == ',');
   }
 }
 
