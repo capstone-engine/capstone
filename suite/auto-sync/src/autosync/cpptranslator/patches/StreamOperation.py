@@ -126,8 +126,7 @@ class StreamOperations(Patch):
             if len(query_result) == 0:
                 res += b"SStream_concat0(" + s_name + b", " + last_op_text + b");"
             else:
-                cap = query_result[-1]
-                typ = get_text_from_node(src, cap[1]["typ"])
+                typ = get_text_from_node(src, query_result[0][1]["typ"][-1])
                 match typ:
                     case b"int":
                         res += b"printInt32(" + s_name + b", " + last_op_text + b");"

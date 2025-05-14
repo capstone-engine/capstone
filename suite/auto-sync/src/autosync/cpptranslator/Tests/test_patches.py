@@ -96,14 +96,16 @@ class TestPatches(unittest.TestCase):
             configurator.get_parser(), configurator.get_cpp_lang(), [], []
         )
 
-    def check_patching_result(self, patch, syntax, expected, filename: Path =None):
+    def check_patching_result(self, patch, syntax, expected, filename: Path = None, tree: dict = None):
         kwargs = self.translator.get_patch_kwargs(patch)
         if filename:
             kwargs["filename"] = filename
 
         query: Query = self.ts_cpp_lang.query(patch.get_search_pattern())
+        tree = self.parser.parse(syntax)
+        kwargs["tree"] = tree
         captures_bundle: [[(Node, str)]] = list()
-        for q in query_captures_22_3(query, self.parser.parse(syntax).root_node):
+        for q in query_captures_22_3(query, tree.root_node):
             if q[1] == patch.get_main_capture_name():
                 captures_bundle.append([q])
             else:
@@ -569,6 +571,9 @@ public:
             b"SStream_concat1(OS, 'a');\n"
             b'SStream_concat0(OS, "cccc");',
         )
+
+        syntax = b"{ int y = 1; int x = 1; OS << x; }"
+        self.check_patching_result(patch, syntax, b"printInt32(OS, x);")
 
     def test_templatedeclaration(self):
         patch = TemplateDeclaration(0, self.template_collector)
