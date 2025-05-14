@@ -6,6 +6,7 @@
 
 import unittest
 
+from pathlib import Path
 from tree_sitter import Node, Query
 
 from autosync.cpptranslator import CppTranslator
@@ -95,11 +96,11 @@ class TestPatches(unittest.TestCase):
             configurator.get_parser(), configurator.get_cpp_lang(), [], []
         )
 
-    def check_patching_result(self, patch, syntax, expected, filename=""):
+    def check_patching_result(self, patch, syntax, expected, filename: Path =None):
+        kwargs = self.translator.get_patch_kwargs(patch)
         if filename:
-            kwargs = {"filename": filename}
-        else:
-            kwargs = self.translator.get_patch_kwargs(patch)
+            kwargs["filename"] = filename
+
         query: Query = self.ts_cpp_lang.query(patch.get_search_pattern())
         captures_bundle: [[(Node, str)]] = list()
         for q in query_captures_22_3(query, self.parser.parse(syntax).root_node):
@@ -370,7 +371,7 @@ public:
             b"#include <stdlib.h>\n"
             b"#include <capstone/platform.h>\n\n"
             b"test_output",
-            "filename",
+            filename=Path("filename"),
         )
 
     def test_inlinetostaticinline(self):
