@@ -52,9 +52,9 @@ class BitCastStdArray(Patch):
         array_type: Node = captures[3][0]
         cast_target: bytes = get_text(src, c4.start_byte, c4.end_byte).strip(b"()")
         named_child = array_type.named_children[0].named_children[1].named_children[1]
-        array_templ_args: bytes = (
-            get_text(src, named_child.start_byte, named_child.end_byte).strip(b"<>")
-        )
+        array_templ_args: bytes = get_text(
+            src, named_child.start_byte, named_child.end_byte
+        ).strip(b"<>")
         arr_type = array_templ_args.split(b",")[0]
         arr_len = array_templ_args.split(b",")[1]
         return (

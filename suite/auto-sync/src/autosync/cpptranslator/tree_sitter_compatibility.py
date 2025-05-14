@@ -1,5 +1,6 @@
 from tree_sitter import Node, Query
 
+
 # Queries for the given pattern and converts the query back to the tree-siter v22.3 format.
 # Which is: A list of tuples where the first element is the
 # Node of the capture and the second one is the name.
