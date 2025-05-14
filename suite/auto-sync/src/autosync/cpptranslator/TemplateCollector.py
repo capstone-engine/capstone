@@ -8,6 +8,7 @@ from pathlib import Path
 from tree_sitter import Language, Node, Parser, Query
 
 from autosync.cpptranslator.patches.Helper import get_text
+from autosync.cpptranslator.tree_sitter_compatibility import query_captures_22_3
 
 
 class TemplateRefInstance:
@@ -105,7 +106,7 @@ class TemplateCollector:
             src = x["content"]
             log.debug(f"Search for template references in {path}")
 
-            tree = self.parser.parse(src, keep_text=True)
+            tree = self.parser.parse(src)
             query: Query = self.lang_cpp.query(self.get_template_pattern())
             capture_bundles = self.get_capture_bundles(query, tree)
 
@@ -278,8 +279,8 @@ class TemplateCollector:
 
     @staticmethod
     def get_capture_bundles(query, tree):
-        captures_bundle: [[(Node, str)]] = list()
-        for q in query.captures(tree.root_node):
+        captures_bundle: list[list[tuple[Node, str]]] = list()
+        for q in query_captures_22_3(query, tree.root_node):
             if q[1] == "templ_ref":
                 captures_bundle.append([q])
             else:

@@ -345,7 +345,7 @@ class Differ:
         with open(file) as f:
             content = bytes(f.read(), "utf8")
 
-        tree: Tree = self.parser.parse(content, keep_text=True)
+        tree: Tree = self.parser.parse(content)
 
         node_types_to_diff = [
             n["node_type"] for n in self.conf_general["nodes_to_diff"]

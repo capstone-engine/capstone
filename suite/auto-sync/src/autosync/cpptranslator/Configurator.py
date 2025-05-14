@@ -79,5 +79,4 @@ class Configurator:
 
     def init_parser(self) -> None:
         log.debug("Init parser")
-        self.parser = Parser()
-        self.parser.set_language(self.ts_cpp_lang)
+        self.parser = Parser(self.ts_cpp_lang)

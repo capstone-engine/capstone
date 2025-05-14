@@ -81,6 +81,7 @@ from autosync.cpptranslator.TemplateCollector import TemplateCollector
 from autosync.cpptranslator.patches.BadConditionCode import BadConditionCode
 from autosync.Helper import get_path
 from autosync.cpptranslator.patches.isUInt import IsUInt
+from autosync.cpptranslator.tree_sitter_compatibility import query_captures_22_3
 
 
 class TestPatches(unittest.TestCase):
@@ -101,7 +102,7 @@ class TestPatches(unittest.TestCase):
             kwargs = self.translator.get_patch_kwargs(patch)
         query: Query = self.ts_cpp_lang.query(patch.get_search_pattern())
         captures_bundle: [[(Node, str)]] = list()
-        for q in query.captures(self.parser.parse(syntax, keep_text=True).root_node):
+        for q in query_captures_22_3(query, self.parser.parse(syntax).root_node):
             if q[1] == patch.get_main_capture_name():
                 captures_bundle.append([q])
             else:
