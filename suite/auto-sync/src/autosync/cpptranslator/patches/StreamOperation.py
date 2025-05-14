@@ -110,16 +110,17 @@ class StreamOperations(Patch):
                 (declaration (
                     (primitive_type) @typ
                     (init_declarator 
-                        (identifier) @ident (#eq? @ident "{last_op_text.decode('utf8')}")
+                        (identifier) @ident (#eq? @ident "{last_op_text.decode("utf8")}")
                     )
                 )) @decl
 """
             query = kwargs["ts_cpp_lang"].query(queue_str)
+            query.end_byte_for_pattern(last_op.start_byte)
             root_node = kwargs["tree"].root_node
             query_result = list(
                 filter(
                     lambda x: "typ" in x[1],
-                    query.matches(root_node, end_byte=last_op.start_byte),
+                    query.matches(root_node),
                 )
             )
             if len(query_result) == 0:
