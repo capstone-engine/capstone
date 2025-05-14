@@ -287,7 +287,6 @@ if(CAPSTONE_AARCH64_SUPPORT)
         arch/AArch64/AArch64GenDisassemblerTables.inc
         arch/AArch64/AArch64GenInstrInfo.inc
         arch/AArch64/AArch64GenRegisterInfo.inc
-        arch/AArch64/AArch64GenRegisterName.inc
         arch/AArch64/AArch64GenSubtargetInfo.inc
         arch/AArch64/AArch64GenSystemOperands.inc
         arch/AArch64/AArch64GenCSMappingInsn.inc
