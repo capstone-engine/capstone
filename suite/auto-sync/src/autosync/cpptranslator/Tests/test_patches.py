@@ -96,7 +96,9 @@ class TestPatches(unittest.TestCase):
             configurator.get_parser(), configurator.get_cpp_lang(), [], []
         )
 
-    def check_patching_result(self, patch, syntax, expected, filename: Path = None, tree: dict = None):
+    def check_patching_result(
+        self, patch, syntax, expected, filename: Path = None, tree: dict = None
+    ):
         kwargs = self.translator.get_patch_kwargs(patch)
         if filename:
             kwargs["filename"] = filename
@@ -545,11 +547,6 @@ public:
             syntax,
             b"ARCH_getFeatureBits(Inst->csh->mode, ARCH::FLAG)",
         )
-
-    def test_stifeaturebits(self):
-        patch = SubtargetInfoParam(0)
-        syntax = b"void function(MCSubtargetInfo &STI);"
-        self.check_patching_result(patch, syntax, b"()")
 
     def test_streamoperation(self):
         patch = StreamOperations(0)

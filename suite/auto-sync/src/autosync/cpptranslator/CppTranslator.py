@@ -480,8 +480,8 @@ class Translator:
 
     def get_patch_kwargs(self, patch):
         default_kwargs = dict()
-        default_kwargs ["tree"] = self.tree
-        default_kwargs ["ts_cpp_lang"] = self.ts_cpp_lang
+        default_kwargs["tree"] = self.tree
+        default_kwargs["ts_cpp_lang"] = self.ts_cpp_lang
         if isinstance(patch, Includes) and self.current_src_path_in:
             default_kwargs["filename"] = self.current_src_path_in.name
         return default_kwargs
