@@ -11,5 +11,5 @@
 /* Capstone's LLVM TableGen Backends: */
 /* https://github.com/capstone-engine/llvm-capstone */
 
-  LOONGARCH_OP_GROUP_OPERAND = 0,
-  LOONGARCH_OP_GROUP_ATOMICMEMOP = 1,
+  LoongArch_OP_GROUP_Operand = 0,
+  LoongArch_OP_GROUP_AtomicMemOp = 1,

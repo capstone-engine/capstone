@@ -91,7 +91,7 @@ static void printRegName(MCInst *MI, SStream *O, MCRegister Reg)
 
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, LOONGARCH_OP_GROUP_OPERAND, OpNo);
+	add_cs_detail(MI, LoongArch_OP_GROUP_Operand, OpNo);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNo));
 
 	if (MCOperand_isReg(MO)) {
@@ -134,7 +134,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printAtomicMemOp(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, LOONGARCH_OP_GROUP_ATOMICMEMOP, OpNo);
+	add_cs_detail(MI, LoongArch_OP_GROUP_AtomicMemOp, OpNo);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNo));
 
 	printRegName(MI, O, MCOperand_getReg(MO));

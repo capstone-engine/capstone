@@ -549,7 +549,7 @@ void LoongArch_add_cs_detail(MCInst *MI, int /* loongarch_op_group */ op_group,
 	default:
 		printf("ERROR: Operand group %d not handled!\n", op_group);
 		CS_ASSERT_RET(0);
-	case LOONGARCH_OP_GROUP_OPERAND:
+	case LoongArch_OP_GROUP_Operand:
 		if (op_type == CS_OP_IMM) {
 			LoongArch_set_detail_op_imm(MI, OpNum, LOONGARCH_OP_IMM,
 						    MCInst_getOpVal(MI, OpNum));
@@ -559,7 +559,7 @@ void LoongArch_add_cs_detail(MCInst *MI, int /* loongarch_op_group */ op_group,
 		} else
 			CS_ASSERT_RET(0 && "Op type not handled.");
 		break;
-	case LOONGARCH_OP_GROUP_ATOMICMEMOP:
+	case LoongArch_OP_GROUP_AtomicMemOp:
 		CS_ASSERT_RET(op_type == CS_OP_REG);
 		// converted to MEM operand later in LoongArch_rewrite_memory_operand
 		LoongArch_set_detail_op_reg(MI, OpNum,
