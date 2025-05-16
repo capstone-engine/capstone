@@ -175,13 +175,16 @@ Nonetheless, we hope this additional information is useful to you.
 **Sparc**
 
 - Updated to LLVM-18
-- **Bug fix: Branch instructions are now correctly sign extended, algigned and relative to the current address.**
+- **Bug fix: Branch instructions are now correctly sign extended, aligned and relative to the current address.**
 - V9 must be enabled explicitly now.
 - Alias support added. It is possible to choose between real and alias details.
 - ASI operands are now distinct from immediates.
 - Memory barriers are now distinct from immediates.
 - Operands have now read/write access information.
 - Instruction groups and modes changed to LLVM defined ones. Most notably: `64bit -> HasV9`.
+- The condition codes are now separate between normal, fp, cp or register conditional flags.
+  The flags can be normalized by unsetting the `SPARC_CC_..._BEGIN` bits.
+- The instruction format was added as detail.
 
 **RISCV**
 
