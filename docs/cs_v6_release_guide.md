@@ -172,6 +172,17 @@ Nonetheless, we hope this additional information is useful to you.
 
 - **`CS_MODE_MIPS_PTR64` is now required to decode 64-bit pointers**, like jumps and calls (for example: `jal $t0`).
 
+**Sparc**
+
+- Updated to LLVM-18
+- **Bug fix: Branch instructions are now correctly sign extended, algigned and relative to the current address.**
+- V9 must be enabled explicitly now.
+- Alias support added. It is possible to choose between real and alias details.
+- ASI operands are now distinct from immediates.
+- Memory barriers are now distinct from immediates.
+- Operands have now read/write access information.
+- Instruction groups and modes changed to LLVM defined ones. Most notably: `64bit -> HasV9`.
+
 **RISCV**
 
 - Operands have now read/write access information
