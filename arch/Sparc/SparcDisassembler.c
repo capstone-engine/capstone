@@ -108,7 +108,7 @@ static DecodeStatus DecodeDisp19(MCInst *Inst, uint32_t ImmVal,
 					       uint64_t Address,
 					       const void *Decoder)
 {
-	int64_t BranchTarget = (Address + SignExtend64(ImmVal, 19)) & -4;
+	int64_t BranchTarget = Address + (SignExtend64(ImmVal, 19) * 4);
 	MCOperand_CreateImm0(Inst, BranchTarget);
 	return MCDisassembler_Success;
 }
@@ -117,7 +117,7 @@ static DecodeStatus DecodeDisp16(MCInst *Inst, uint32_t ImmVal,
 					       uint64_t Address,
 					       const void *Decoder)
 {
-	int64_t BranchTarget = (Address + SignExtend64(ImmVal, 16)) & -4;
+	int64_t BranchTarget = Address + (SignExtend64(ImmVal, 16) * 4);
 	MCOperand_CreateImm0(Inst, BranchTarget);
 	return MCDisassembler_Success;
 }
@@ -126,7 +126,7 @@ static DecodeStatus DecodeDisp22(MCInst *Inst, uint32_t ImmVal,
 					       uint64_t Address,
 					       const void *Decoder)
 {
-	int64_t BranchTarget = (Address + SignExtend64(ImmVal, 22)) & -4;
+	int64_t BranchTarget = Address + (SignExtend64(ImmVal, 22) * 4);
 	MCOperand_CreateImm0(Inst, BranchTarget);
 	return MCDisassembler_Success;
 }

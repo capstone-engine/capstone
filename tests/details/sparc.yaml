@@ -323,7 +323,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "brnz,a,pn %o2, 0x1048"
+        asm_text: "brnz,a,pn %o2, 0x1054"
         details:
           sparc:
             operands:
@@ -332,7 +332,7 @@ test_cases:
                 reg: o2
               -
                 type: SPARC_OP_IMM
-                imm: 0x1048
+                imm: 0x1054
             hint: SPARC_HINT_A_PN
             cc: SPARC_CC_REG_NZ
           groups: [ jump ]

@@ -175,7 +175,6 @@ Nonetheless, we hope this additional information is useful to you.
 **Sparc**
 
 - Updated to LLVM-18
-- **Bug fix: Branch instructions are now correctly sign extended, aligned and relative to the current address.**
 - V9 must be enabled explicitly now.
 - Alias support added. It is possible to choose between real and alias details.
 - ASI operands are now distinct from immediates.

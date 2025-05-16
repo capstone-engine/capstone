@@ -804,9 +804,9 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "brnz,a,pn %o2, 0x1000"
+          asm_text: "brnz,a,pn %o2, 0x100c"
           mnemonic: "brnz,a,pn"
-          op_str: "%o2, 0x1000"
+          op_str: "%o2, 0x100c"
           details:
             groups: [ jump ]
   -
