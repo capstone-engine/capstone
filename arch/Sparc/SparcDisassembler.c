@@ -229,7 +229,7 @@ static DecodeStatus DecodePRRegsRegisterClass(MCInst *Inst, unsigned RegNo,
 					      uint64_t Address,
 					      const void *Decoder)
 {
-	if (RegNo >= sizeof(PRRegDecoderTable))
+	if (RegNo >= ARR_SIZE(PRRegDecoderTable))
 		return MCDisassembler_Fail;
 	MCOperand_CreateReg0(Inst, (PRRegDecoderTable[RegNo]));
 	return MCDisassembler_Success;
