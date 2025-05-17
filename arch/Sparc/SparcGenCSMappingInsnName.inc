@@ -29,7 +29,6 @@
   "array16", // SPARC_INS_ARRAY16
   "array32", // SPARC_INS_ARRAY32
   "array8", // SPARC_INS_ARRAY8
-  "ba", // SPARC_INS_BA
   "b", // SPARC_INS_B
   "bmask", // SPARC_INS_BMASK
   "fb", // SPARC_INS_FB

@@ -658,7 +658,6 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     20984289U,	// ARRAY16
     20984042U,	// ARRAY32
     20984313U,	// ARRAY8
-    70203U,	// BA
     2247382U,	// BCOND
     2312918U,	// BCONDA
     87252U,	// BINDri
@@ -1165,7 +1164,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     return;
     break;
   case 1:
-    // ADJCALLSTACKDOWN, ADJCALLSTACKUP, BA, CALL, CMASK16, CMASK32, CMASK8, ...
+    // ADJCALLSTACKDOWN, ADJCALLSTACKUP, CALL, CMASK16, CMASK32, CMASK8, FCMP...
     printOperand(MI, 0, O);
     break;
   case 2:
@@ -1230,7 +1229,7 @@ static void printInstruction(MCInst *MI, uint64_t Address, SStream *O) {
     SStream_concat0(O, ", ");
     break;
   case 1:
-    // ADJCALLSTACKUP, BA, BINDri, BINDrr, CALL, CALLri, CALLrr, CMASK16, CMA...
+    // ADJCALLSTACKUP, BINDri, BINDrr, CALL, CALLri, CALLrr, CMASK16, CMASK32...
     return;
     break;
   case 2:
