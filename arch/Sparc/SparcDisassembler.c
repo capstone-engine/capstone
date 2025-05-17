@@ -316,11 +316,11 @@ static bool tryAddingSymbolicOperand(int64_t Value, bool isBranch,
 static DecodeStatus DecodeCall(MCInst *MI, unsigned insn, uint64_t Address,
 			       const void *Decoder)
 {
-	unsigned tgt = fieldFromInstruction_4(insn, 0, 30);
-	tgt <<= 2;
-	if (!tryAddingSymbolicOperand(tgt + Address, false, Address, 0, 30, MI,
+	unsigned Offset = fieldFromInstruction_4(insn, 0, 30);
+	int64_t CallTarget = Address + (SignExtend64(Offset, 30) * 4);
+	if (!tryAddingSymbolicOperand(CallTarget, false, Address, 0, 30, MI,
 				      Decoder))
-		MCOperand_CreateImm0(MI, (tgt));
+		MCOperand_CreateImm0(MI, CallTarget);
 	return MCDisassembler_Success;
 }
 

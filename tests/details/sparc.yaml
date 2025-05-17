@@ -434,4 +434,19 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: f4
-
+  -
+    input:
+      bytes: [ 0x40, 0x00, 0xb3, 0x12 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x00012d44
+    expected:
+      insns:
+      -
+        asm_text: "call	0x3f98c"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_IMM
+                imm: 0x3f98c
