@@ -59,5 +59,5 @@ class CsSparc(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (a.cc, a.hint, copy_ctypes_list(a.operands[:a.op_count]))
+    return (a.cc, a.hint, a.format, copy_ctypes_list(a.operands[:a.op_count]))
 
