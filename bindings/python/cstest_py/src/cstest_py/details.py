@@ -873,6 +873,8 @@ def test_expected_sparc(actual: CsInsn, expected: dict) -> bool:
     for aop, eop in zip(actual.operands, expected["operands"]):
         if not compare_enum(aop.type, eop.get("type"), "type"):
             return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
 
         if aop.type == SPARC_OP_REG:
             if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
