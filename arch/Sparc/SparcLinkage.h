@@ -1,5 +1,5 @@
-#ifndef CS_ARM_LINKAGE_H
-#define CS_ARM_LINKAGE_H
+#ifndef CS_SPARC_LINKAGE_H
+#define CS_SPARC_LINKAGE_H
 
 // Function definitions to call static LLVM functions.
 
@@ -16,4 +16,4 @@ void Sparc_LLVM_printInstruction(MCInst *MI, SStream *O,
 void Sparc_LLVM_printInst(MCInst *MI, uint64_t Address, const char *Annot,
 			      SStream *O);
 
-#endif // CS_ARM_LINKAGE_H
+#endif // CS_SPARC_LINKAGE_H
