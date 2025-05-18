@@ -583,3 +583,40 @@ test_cases:
                   type: SPARC_OP_REG
                   reg: i0
                   access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x9f, 0xc2, 0x60, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "call %o1+8"
+          is_alias: 1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_MEM
+                  mem_base: o1
+                  mem_disp: 8
+  -
+    input:
+      bytes: [ 0x10, 0xbf, 0xff, 0xe0 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x0001bcf0
+    expected:
+      insns:
+        -
+          asm_text: "ba	0x1bc70"
+          is_alias: 1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  imm: 0x1bc70
+                  access: CS_AC_READ
+              cc: SPARC_CC_ICC_A
+            groups: [ jump ]
