@@ -450,3 +450,136 @@ test_cases:
               -
                 type: SPARC_OP_IMM
                 imm: 0x3f98c
+  -
+    input:
+      bytes: [ 0x83, 0x88, 0x00, 0x17 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "pwr %g0, %l7, %psr"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: g0
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: l7
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: psr
+                  access: CS_AC_WRITE
+            groups: [ HasPWRPSR ]
+  -
+    input:
+      bytes: [ 0xa3, 0x48, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %psr, %l1"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: psr
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: l1
+                  access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x81, 0x96, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %i0, 5, %wim"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: i0
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_IMM
+                  imm: 5
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: wim
+                  access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0xb1, 0x50, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %wim, %i0"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: wim
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: i0
+                  access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x81, 0x9e, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %i0, 5, %tbr"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: i0
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_IMM
+                  imm: 5
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: tbr
+                  access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0xb1, 0x58, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %tbr, %i0"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: tbr
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: i0
+                  access: CS_AC_WRITE

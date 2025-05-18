@@ -183,6 +183,77 @@ static const name_map insn_alias_mnem_map[] = {
 };
 #endif
 
+static void insert_op(MCInst *MI, unsigned index, cs_sparc_op op)
+{
+	if (!detail_is_set(MI)) {
+		return;
+	}
+	Sparc_check_safe_inc(MI);
+
+	cs_sparc_op *ops = Sparc_get_detail(MI)->operands;
+	int i = Sparc_get_detail(MI)->op_count;
+	if (index == -1) {
+		ops[i] = op;
+		Sparc_inc_op_count(MI);
+		return;
+	}
+	for (; i > 0 && i > index; --i) {
+		ops[i] = ops[i - 1];
+	}
+	ops[index] = op;
+	Sparc_inc_op_count(MI);
+}
+
+/// Inserts a register to the detail operands at @index.
+/// Already present operands are moved.
+/// If @index is -1 the operand is appended.
+static void Sparc_insert_detail_op_reg_at(MCInst *MI, unsigned index, sparc_reg Reg,
+				 cs_ac_type access)
+{
+	if (!detail_is_set(MI))
+		return;
+
+	cs_sparc_op op = { 0 };
+	op.type = SPARC_OP_REG;
+	op.reg = Reg;
+	op.access = access;
+	insert_op(MI, index, op);
+}
+
+static void Sparc_add_hardcoded_details(MCInst *MI)
+{
+	if (!detail_is_set(MI)) {
+		return;
+	}
+	switch (MCInst_getOpcode(MI)) {
+	default:
+		return;
+	case Sparc_RDPSR:
+		Sparc_insert_detail_op_reg_at(MI, 0, SPARC_REG_PSR, CS_AC_READ);
+		break;
+	case Sparc_PWRPSRri:
+	case Sparc_PWRPSRrr:
+	case Sparc_WRPSRri:
+	case Sparc_WRPSRrr:
+		Sparc_insert_detail_op_reg_at(MI, -1, SPARC_REG_PSR, CS_AC_WRITE);
+		break;
+	case Sparc_RDWIM:
+		Sparc_insert_detail_op_reg_at(MI, 0, SPARC_REG_WIM, CS_AC_READ);
+		break;
+	case Sparc_WRWIMri:
+	case Sparc_WRWIMrr:
+		Sparc_insert_detail_op_reg_at(MI, -1, SPARC_REG_WIM, CS_AC_WRITE);
+		break;
+	case Sparc_RDTBR:
+		Sparc_insert_detail_op_reg_at(MI, 0, SPARC_REG_TBR, CS_AC_READ);
+		break;
+	case Sparc_WRTBRri:
+	case Sparc_WRTBRrr:
+		Sparc_insert_detail_op_reg_at(MI, -1, SPARC_REG_TBR, CS_AC_WRITE);
+		break;
+	}
+}
+
 void Sparc_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
@@ -193,6 +264,7 @@ void Sparc_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 #ifndef CAPSTONE_DIET
 	map_set_alias_id(MI, O, insn_alias_mnem_map,
 			 ARR_SIZE(insn_alias_mnem_map));
+	Sparc_add_hardcoded_details(MI);
 #endif
 }
 
