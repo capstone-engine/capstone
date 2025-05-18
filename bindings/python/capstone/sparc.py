@@ -40,6 +40,14 @@ class SparcOp(ctypes.Structure):
     def mem(self):
         return self.value.mem
 
+    @property
+    def asi(self):
+        return self.value.asi
+
+    @property
+    def membar_tag(self):
+        return self.value.membar_tag
+
 
 class CsSparc(ctypes.Structure):
     _fields_ = (
