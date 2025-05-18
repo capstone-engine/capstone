@@ -17,7 +17,7 @@ void Sparc_init_cs_detail(MCInst *MI)
 	if (!detail_is_set(MI)) {
 		return;
 	}
-	memset(get_detail(MI), 0, offsetof(cs_detail, arm) + sizeof(cs_arm));
+	memset(get_detail(MI), 0, offsetof(cs_detail, sparc) + sizeof(cs_sparc));
 	Sparc_get_detail(MI)->cc = SPARC_CC_UNDEF;
 }
 
