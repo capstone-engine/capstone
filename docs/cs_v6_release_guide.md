@@ -176,6 +176,7 @@ Nonetheless, we hope this additional information is useful to you.
 
 - Updated to LLVM-18
 - V9 must be enabled explicitly now.
+- Added Little Endian support. Big endian mode must be enabled explicitly now.
 - Alias support added. It is possible to choose between real and alias details.
 - ASI operands are now distinct from immediates.
 - Memory barriers are now distinct from immediates.
