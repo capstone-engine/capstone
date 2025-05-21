@@ -319,3 +319,13 @@ void MCInst_updateWithTmpMI(MCInst *MI, MCInst *TmpMI) {
 	assert(MI->size < MAX_MC_OPS);
 	memcpy(MI->Operands, TmpMI->Operands, sizeof(MI->Operands[0]) * MI->size);
 }
+
+/// @brief Sets the softfail/illegal flag in the cs_insn.
+/// Setting it indicates the instruction can be decoded, but is invalid
+/// due to not allowed operands or an illegal context.
+///
+/// @param MI The MCInst holding the cs_insn currently decoded.
+void MCInst_setSoftFail(MCInst *MI) {
+	assert(MI && MI->flat_insn);
+	MI->flat_insn->illegal = true;
+}

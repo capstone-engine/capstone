@@ -179,4 +179,6 @@ static inline bool MCInst_isAlias(const MCInst *MI) {
 
 void MCInst_updateWithTmpMI(MCInst *MI, MCInst *TmpMI);
 
+void MCInst_setSoftFail(MCInst *MI);
+
 #endif

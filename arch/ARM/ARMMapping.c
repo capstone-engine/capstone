@@ -816,11 +816,14 @@ bool ARM_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 			void *info)
 {
 	ARM_init_cs_detail(instr);
-	bool Result = ARM_LLVM_getInstruction(handle, code, code_len, instr,
+	DecodeStatus Result = ARM_LLVM_getInstruction(handle, code, code_len, instr,
 					      size, address,
-					      info) != MCDisassembler_Fail;
+					      info);
 	ARM_set_instr_map_data(instr);
-	return Result;
+	if (Result == MCDisassembler_SoftFail) {
+		MCInst_setSoftFail(instr);
+	}
+	return Result != MCDisassembler_Fail;
 }
 
 #define GET_REGINFO_MC_DESC

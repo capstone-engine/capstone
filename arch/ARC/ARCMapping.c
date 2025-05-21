@@ -142,12 +142,14 @@ bool ARC_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 {
 	uint64_t temp_size;
 	ARC_init_cs_detail(instr);
-	bool Result = ARC_LLVM_getInstruction(instr, &temp_size, code,
-						    code_len, address, info) !=
-		      MCDisassembler_Fail;
+	DecodeStatus Result = ARC_LLVM_getInstruction(instr, &temp_size, code,
+						    code_len, address, info);
 	ARC_set_instr_map_data(instr);
 	*size = temp_size;
-	return Result;
+	if (Result == MCDisassembler_SoftFail) {
+		MCInst_setSoftFail(instr);
+	}
+	return Result != MCDisassembler_Fail;
 }
 
 void ARC_printer(MCInst *MI, SStream *O,

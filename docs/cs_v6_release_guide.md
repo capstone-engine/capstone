@@ -79,7 +79,12 @@ For `v7` we can then focus on other big features, like [SAIL](https://github.com
 
 ## New features
 
-These features are only supported by `auto-sync`-enabled architectures.
+**LLVM disassembler based modules**
+
+- The `cs_insn.illegal` flag was added. If it is set the instruction is decoded correctly but is considered illegal.
+  This happens for instructions which use invalid operands or are in an illegal context.
+
+**Auto-Sync-enabled modules**
 
 **More code quality checks**
 

@@ -510,6 +510,13 @@ typedef struct cs_insn {
 	/// False: The detail operands are from the real instruction.
 	bool usesAliasDetails;
 
+	/// True: The bytes disassemble to a valid instruction, but it is illegal by ISA definitions.
+	/// For example the instruction uses a register which is not allowed or it appears in
+	/// an invalid context.
+	///
+	/// False: The instruction decoded correctly and is valid.
+	bool illegal;
+
 	/// Pointer to cs_detail.
 	/// NOTE: detail pointer is only valid when both requirements below are met:
 	/// (1) CS_OP_DETAIL = CS_OPT_ON

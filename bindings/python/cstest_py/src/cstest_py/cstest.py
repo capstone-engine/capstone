@@ -253,6 +253,9 @@ class TestExpected:
             if not compare_tbool(a_insn.is_alias, e_insn.get("is_alias"), "is_alias"):
                 return TestResult.FAILED
 
+            if not compare_tbool(a_insn.illegal, e_insn.get("illegal"), "illegal"):
+                return TestResult.FAILED
+
             if not compare_enum(a_insn.alias_id, e_insn.get("alias_id"), "alias_id"):
                 return TestResult.FAILED
 

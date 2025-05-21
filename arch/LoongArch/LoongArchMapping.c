@@ -386,12 +386,14 @@ bool LoongArch_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 {
 	uint64_t temp_size;
 	LoongArch_init_cs_detail(instr);
-	bool Result = LoongArch_LLVM_getInstruction(instr, &temp_size, code,
-						    code_len, address, info) !=
-		      MCDisassembler_Fail;
+	DecodeStatus Result = LoongArch_LLVM_getInstruction(instr, &temp_size, code,
+						    code_len, address, info);
 	LoongArch_set_instr_map_data(instr);
 	*size = temp_size;
-	return Result;
+	if (Result == MCDisassembler_SoftFail) {
+		MCInst_setSoftFail(instr);
+	}
+	return Result != MCDisassembler_Fail;
 }
 
 /// Adds group to the instruction which are not defined in LLVM.

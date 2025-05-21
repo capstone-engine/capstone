@@ -6101,3 +6101,118 @@ test_cases:
     expected:
       insns:
       - asm_text: "jalrc $ra, $t0"
+
+  - input:
+      name: "Add flag for softfail case - #2703 and #1991."
+      bytes: [ 0x07, 0xB0, 0xBD, 0xE8 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "pop	{r0, r1, r2, r12, sp, pc}"
+        illegal: 1
+
+  - input:
+      name: "Add flag for softfail case - #2703 and #1991."
+      bytes: [ 0xf0, 0x00, 0xf0, 0xe7, 0x07, 0xB0, 0xBD, 0xE8, 0xf0, 0x00, 0xf0, 0xe7 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "udf #0"
+        illegal: -1
+      - asm_text: "pop	{r0, r1, r2, r12, sp, pc}"
+        illegal: 1
+      - asm_text: "udf #0"
+        illegal: -1
+  -
+    input:
+      name: "Add flag for softfail case - #2703 and #1991."
+      bytes: [ 0x21, 0x04, 0x03, 0x5e ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov b1, v1.b[1]"
+        illegal: -1
+  -
+    input:
+      name: "Add flag for softfail case - #2703 and #1991."
+      bytes: [ 0x04, 0x11, 0x00, 0x00 ]
+      arch: "CS_ARCH_ARC"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ld %r0, [%r1,4]"
+        illegal: -1
+  -
+    input:
+      name: "Add flag for softfail case - #2703 and #1991."
+      bytes: [ 0x63, 0xb8, 0xb5, 0x2c ]
+      arch: "CS_ARCH_LOONGARCH"
+      options: [ "CS_MODE_LOONGARCH64" ]
+    expected:
+      insns:
+        -
+          asm_text: "xvld $xr3, $sp, -0x292"
+          illegal: -1
+  -
+    input:
+      name: "Add flag for softfail case - #2703 and #1991."
+      bytes: [ 0x03, 0x00, 0x22, 0x40 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addl $1,$2,$3"
+          illegal: -1
+  -
+    input:
+      name: "Add flag for softfail case - #2703 and #1991."
+      bytes: [ 0x41, 0x60, 0x0b, 0xc1 ]
+      arch: "CS_ARCH_MIPS"
+      options: [ "CS_OPT_SYNTAX_NOREGNAME", "CS_MODE_BIG_ENDIAN", "CS_MODE_MIPS32R2" ]
+    expected:
+      insns:
+        -
+          asm_text: "dmt"
+          illegal: -1
+  -
+    input:
+      name: "Add flag for softfail case - #2703 and #1991."
+      bytes: [ 0x37, 0x34, 0x00, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32" ]
+    expected:
+      insns:
+        -
+          asm_text: "lui s0, 3"
+          illegal: -1
+  -
+    input:
+      name: "Add flag for softfail case - #2703 and #1991."
+      bytes: [ 0xfe, 0x0f ]
+      arch: "xcore"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+        -
+          asm_text: "get r11, ed"
+          illegal: -1
+  - input:
+      name: "Add flag for softfail case - #2703 and #1991."
+      bytes: [ 0x18, 0x23 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ ]
+    expected:
+      insns:
+        - asm_text: "l32i.n a1, a3, 8"
+          illegal: -1

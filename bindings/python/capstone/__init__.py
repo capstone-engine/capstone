@@ -625,6 +625,7 @@ class _cs_insn(ctypes.Structure):
         ('op_str', ctypes.c_char * 160),
         ('is_alias', ctypes.c_bool),
         ('usesAliasDetails', ctypes.c_bool),
+        ('illegal', ctypes.c_bool),
         ('detail', ctypes.POINTER(_cs_detail)),
     )
 
@@ -832,6 +833,13 @@ class CsInsn(object):
     @property
     def is_alias(self):
         return self._raw.is_alias
+
+    # return instruction's illegal flag
+    # Set if instruction can be decoded but is invalid
+    # due to context or illegal operands.
+    @property
+    def illegal(self):
+        return self._raw.illegal
 
     # return instruction's alias_id
     @property

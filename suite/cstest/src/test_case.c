@@ -115,6 +115,7 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 				cs_strdup(test_insn_data->id) :
 				NULL;
 	tid->is_alias = test_insn_data->is_alias;
+	tid->illegal = test_insn_data->illegal;
 	tid->mnemonic = test_insn_data->mnemonic ?
 				cs_strdup(test_insn_data->mnemonic) :
 				NULL;
@@ -246,6 +247,13 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 				assert_true(insns[i].is_alias);
 			} else {
 				assert_false(insns[i].is_alias);
+			}
+		}
+		if (expec_data->illegal != 0) {
+			if (expec_data->illegal > 0) {
+				assert_true(insns[i].illegal);
+			} else {
+				assert_false(insns[i].illegal);
 			}
 		}
 		if (expec_data->alias_id) {

@@ -94,10 +94,13 @@ bool SystemZ_getInstruction(csh handle, const uint8_t *bytes, size_t bytes_len,
 {
 	SystemZ_init_cs_detail(MI);
 	MI->MRI = (MCRegisterInfo *)info;
-	DecodeStatus result = SystemZ_LLVM_getInstruction(
+	DecodeStatus Result = SystemZ_LLVM_getInstruction(
 		handle, bytes, bytes_len, MI, size, address, info);
 	SystemZ_set_instr_map_data(MI, bytes, bytes_len);
-	return result != MCDisassembler_Fail;
+	if (Result == MCDisassembler_SoftFail) {
+		MCInst_setSoftFail(MI);
+	}
+	return Result != MCDisassembler_Fail;
 }
 
 // given internal insn id, return public instruction info

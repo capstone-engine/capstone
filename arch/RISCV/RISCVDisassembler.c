@@ -421,11 +421,15 @@ bool RISCV_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 {
   	cs_struct *handle = (cs_struct *)(uintptr_t)ud;
 
-  	return MCDisassembler_Success == 
+		DecodeStatus Result =
 	   	RISCVDisassembler_getInstruction(handle->mode, instr,
 				            	 code, code_len,
 			                    	 size, address,
 			                    	 (MCRegisterInfo *)info);
+	if (Result == MCDisassembler_SoftFail) {
+		MCInst_setSoftFail(instr);
+	}
+	return Result != MCDisassembler_Fail;
 
 }
 

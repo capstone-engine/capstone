@@ -197,14 +197,17 @@ bool Mips_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 	instr->MRI = (MCRegisterInfo *)info;
 	map_set_fill_detail_ops(instr, true);
 
-	bool result = Mips_LLVM_getInstruction(instr, &size64, code, code_len,
+	DecodeStatus Result = Mips_LLVM_getInstruction(instr, &size64, code, code_len,
 					       address,
-					       info) != MCDisassembler_Fail;
-	if (result) {
+					       info);
+	*size = size64;
+	if (Result != MCDisassembler_Fail) {
 		Mips_set_instr_map_data(instr);
 	}
-	*size = size64;
-	return result;
+	if (Result == MCDisassembler_SoftFail) {
+		MCInst_setSoftFail(instr);
+	}
+	return Result != MCDisassembler_Fail;
 }
 
 void Mips_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)

@@ -73,10 +73,13 @@ bool Xtensa_disasm(csh handle, const uint8_t *code, size_t code_len,
 {
 	DecodeStatus res = Xtensa_LLVM_getInstruction(instr, size, code,
 						      code_len, address);
-	if (res == MCDisassembler_Success) {
+	if (res != MCDisassembler_Fail) {
 		set_instr_map_data(instr);
 	}
-	return res == MCDisassembler_Success;
+	if (res == MCDisassembler_SoftFail) {
+		MCInst_setSoftFail(instr);
+	}
+	return res != MCDisassembler_Fail;
 }
 
 const char *Xtensa_reg_name(csh handle, unsigned int id)

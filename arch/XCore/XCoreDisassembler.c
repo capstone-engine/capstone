@@ -747,6 +747,9 @@ bool XCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 	// Calling the auto-generated decoder function.
 	Result = decodeInstruction_2(DecoderTable16, MI, insn16, address, info, 0);
 	if (Result != MCDisassembler_Fail) {
+		if (Result == MCDisassembler_SoftFail) {
+			MCInst_setSoftFail(MI);
+		}
 		*size = 2;
 		return true;
 	}
@@ -758,6 +761,9 @@ bool XCore_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 	// Calling the auto-generated decoder function.
 	Result = decodeInstruction_4(DecoderTable32, MI, insn32, address, info, 0);
 	if (Result != MCDisassembler_Fail) {
+		if (Result == MCDisassembler_SoftFail) {
+			MCInst_setSoftFail(MI);
+		}
 		*size = 4;
 		return true;
 	}

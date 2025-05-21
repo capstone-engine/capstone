@@ -768,7 +768,8 @@ int main(int argc, char **argv)
 				}
 			}
 
-			printf("  %s\t%s\n", insn[i].mnemonic, insn[i].op_str);
+			printf("  %s\t%s%s\n", insn[i].mnemonic, insn[i].op_str,
+			       insn[i].illegal ? "\t; Illegal instruction" : "");
 
 			if (detail_flag) {
 				print_details(handle, arch, mode, &insn[i]);

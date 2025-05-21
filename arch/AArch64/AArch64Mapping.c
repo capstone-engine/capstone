@@ -821,11 +821,14 @@ bool AArch64_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 			    void *info)
 {
 	AArch64_init_cs_detail(MI);
-	bool Result = AArch64_LLVM_getInstruction(handle, code, code_len, MI,
+	DecodeStatus Result = AArch64_LLVM_getInstruction(handle, code, code_len, MI,
 						  size, address,
-						  info) != MCDisassembler_Fail;
+						  info);
 	AArch64_set_instr_map_data(MI);
-	return Result;
+	if (Result == MCDisassembler_SoftFail) {
+		MCInst_setSoftFail(MI);
+	}
+	return Result != MCDisassembler_Fail;
 }
 
 /// Patches the register names with Capstone specific alias.

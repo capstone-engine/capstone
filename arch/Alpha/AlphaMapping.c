@@ -173,10 +173,13 @@ bool Alpha_getInstruction(csh handle, const uint8_t *code,
 								  uint16_t *size, uint64_t address, void *info)
 {
 	Alpha_init_cs_detail(instr);
-	bool Result = Alpha_LLVM_getInstruction(handle, code, code_len, instr, size,
+	DecodeStatus Result = Alpha_LLVM_getInstruction(handle, code, code_len, instr, size,
 									 address, info);
 	Alpha_set_instr_map_data(instr);
-	return Result;
+	if (Result == MCDisassembler_SoftFail) {
+		MCInst_setSoftFail(instr);
+	}
+	return Result != MCDisassembler_Fail;
 }
 
 #endif
