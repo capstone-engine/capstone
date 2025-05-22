@@ -34,7 +34,11 @@ cs_err Sparc_option(cs_struct *handle, cs_opt_type type, size_t value)
 		handle->syntax = (int) value;
 
 	if (type == CS_OPT_MODE) {
-		handle->mode = (cs_mode)value;
+		handle->mode |= (cs_mode)value;
+		if (value & CS_MODE_V9 || value & CS_MODE_64) {
+			// V9 implies 64bit.
+			handle->mode |= (CS_MODE_64 | CS_MODE_V9);
+		}
 	}
 
 	return CS_ERR_OK;
