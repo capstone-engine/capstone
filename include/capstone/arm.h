@@ -303,7 +303,7 @@ typedef enum {
 	ARM_FIELD_CPSR_X = 32,
 	ARM_FIELD_CPSR_S = 64,
 	ARM_FIELD_CPSR_F = 128,
-} arm_spsr_cspr_bits;
+} arm_spsr_cpsr_bits;
 
 // From LLVM docs:
 // The values here come from B9.2.3 of the ARM ARM, where bits 4-0 are SysM field
@@ -855,7 +855,7 @@ typedef struct arm_op_mem {
 
 typedef struct {
   arm_sysop_reg reg; ///< The system or banked register.
-  arm_spsr_cspr_bits psr_bits; ///< SPSR/CPSR bits.
+  arm_spsr_cpsr_bits psr_bits; ///< SPSR/CPSR bits.
   uint16_t sysm; ///< Raw SYSm field. UINT16_MAX if unset.
   uint8_t msr_mask; ///< Mask of MSR instructions. UINT8_MAX if invalid.
 } arm_sysop;
