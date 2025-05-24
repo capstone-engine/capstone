@@ -1505,3 +1505,40 @@ test_cases:
               access: CS_AC_READ
           regs_read: []
           regs_write: []
+  -
+    input:
+      bytes: [0x7f, 0x43, 0x03, 0xd5, 0x7f, 0x45, 0x03, 0xd5, 0x7f, 0x47, 0x03, 0xd5]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "smstart sm"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSALIAS
+              sub_type: AARCH64_OP_SVCR
+              sys_raw_val: 0x1
+          regs_read: []
+          regs_write: []
+      -
+        asm_text: "smstart za"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSALIAS
+              sub_type: AARCH64_OP_SVCR
+              sys_raw_val: 0x2
+          regs_read: []
+          regs_write: []
+      -
+        asm_text: "smstart"
+        details:
+          aarch64:
+            operands: []
+          regs_read: []
+          regs_write: []
