@@ -3,7 +3,7 @@
 /* (see https://github.com/rizinorg/capstone-autosync-sail)*/
 /* from the sail model of RISC-V*/
 /* (see https://github.com/riscv/sail-riscv) @ version
- * 8a75b297b116a1ffd8c62e98a7f43e2d93761d15.*/
+ * dc1155266a1cb6ba2342162601739881b58a1c4e.*/
 /* DO NOT MODIFY THIS CODE MANUALLY. ANY MANUAL EDITS ARE OVERWRITTEN.*/
 /* ------------------------------------------------------------------- */
 /* Copyright © 2024-2025 moste00 <ubermenchun@gmail.com>*/
@@ -16,72 +16,72 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "../../SStream.h"
 #include "RISCVAst.gen.inc"
 #include "RISCVAst2StrHelpers.h"
 #include "RISCVAst2StrTbls.gen.inc"
-#include "../../SStream.h"
 
-static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
+static void ast2str(struct ast *tree, SStream *ss, RVContext *ctx) {
   switch (tree->ast_node_type) {
   case RISCV_UTYPE:
     utype_mnemonic(tree->ast_node.utype.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.utype.rd, ss);
-    sep(ss, conf);
-    hex_bits_signed_20(tree->ast_node.utype.imm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.utype.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_20(tree->ast_node.utype.imm, ss, ctx);
     break;
   case RISCV_JAL:
     SStream_concat(ss, "jal");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_jal.rd, ss);
-    sep(ss, conf);
-    hex_bits_signed_21(tree->ast_node.riscv_jal.imm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_jal.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_21(tree->ast_node.riscv_jal.imm, ss, ctx);
     break;
   case RISCV_JALR:
     SStream_concat(ss, "jalr");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_jalr.rd, ss);
-    sep(ss, conf);
-    hex_bits_signed_12(tree->ast_node.riscv_jalr.imm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_jalr.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_12(tree->ast_node.riscv_jalr.imm, ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.riscv_jalr.rs1, ss);
+    reg_name(tree->ast_node.riscv_jalr.rs1, ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_BTYPE:
     btype_mnemonic(tree->ast_node.btype.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.btype.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.btype.rs2, ss);
-    sep(ss, conf);
-    hex_bits_signed_13(tree->ast_node.btype.imm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.btype.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.btype.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_13(tree->ast_node.btype.imm, ss, ctx);
     break;
   case RISCV_ITYPE:
     itype_mnemonic(tree->ast_node.itype.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.itype.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.itype.rs1, ss);
-    sep(ss, conf);
-    hex_bits_signed_12(tree->ast_node.itype.imm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.itype.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.itype.rs1, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_12(tree->ast_node.itype.imm, ss, ctx);
     break;
   case RISCV_SHIFTIOP:
     shiftiop_mnemonic(tree->ast_node.shiftiop.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.shiftiop.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.shiftiop.rs1, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.shiftiop.shamt, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.shiftiop.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.shiftiop.rs1, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.shiftiop.shamt, ss, ctx);
     break;
   case RISCV_RTYPE:
     rtype_mnemonic(tree->ast_node.rtype.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.rtype.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.rtype.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.rtype.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.rtype.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.rtype.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.rtype.rs2, ss, ctx);
     break;
   case RISCV_LOAD:
     SStream_concat(ss, "l");
@@ -101,12 +101,12 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     } else {
       SStream_concat(ss, "");
     }
-    spc(ss, conf);
-    reg_name(tree->ast_node.load.rd, ss);
-    sep(ss, conf);
-    hex_bits_signed_12(tree->ast_node.load.imm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.load.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_12(tree->ast_node.load.imm, ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.load.rs1, ss);
+    reg_name(tree->ast_node.load.rs1, ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_STORE:
@@ -122,57 +122,57 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     } else {
       SStream_concat(ss, "");
     }
-    spc(ss, conf);
-    reg_name(tree->ast_node.store.rs2, ss);
-    sep(ss, conf);
-    hex_bits_signed_12(tree->ast_node.store.imm, ss, conf);
-    opt_spc(ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.store.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_12(tree->ast_node.store.imm, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, "(");
-    opt_spc(ss, conf);
-    reg_name(tree->ast_node.store.rs1, ss);
-    opt_spc(ss, conf);
+    opt_spc(ss, ctx);
+    reg_name(tree->ast_node.store.rs1, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_ADDIW:
     SStream_concat(ss, "addiw");
-    spc(ss, conf);
-    reg_name(tree->ast_node.addiw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.addiw.rs1, ss);
-    sep(ss, conf);
-    hex_bits_signed_12(tree->ast_node.addiw.imm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.addiw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.addiw.rs1, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_12(tree->ast_node.addiw.imm, ss, ctx);
     break;
   case RISCV_RTYPEW:
     rtypew_mnemonic(tree->ast_node.rtypew.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.rtypew.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.rtypew.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.rtypew.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.rtypew.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.rtypew.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.rtypew.rs2, ss, ctx);
     break;
   case RISCV_SHIFTIWOP:
     shiftiwop_mnemonic(tree->ast_node.shiftiwop.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.shiftiwop.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.shiftiwop.rs1, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.shiftiwop.shamt, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.shiftiwop.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.shiftiwop.rs1, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.shiftiwop.shamt, ss, ctx);
     break;
   case RISCV_FENCE:
     SStream_concat(ss, "fence");
-    spc(ss, conf);
-    fence_bits(tree->ast_node.fence.pred, ss, conf);
-    sep(ss, conf);
-    fence_bits(tree->ast_node.fence.succ, ss, conf);
+    spc(ss, ctx);
+    fence_bits(tree->ast_node.fence.pred, ss, ctx);
+    sep(ss, ctx);
+    fence_bits(tree->ast_node.fence.succ, ss, ctx);
     break;
   case RISCV_FENCE_TSO:
     SStream_concat(ss, "fence.tso");
-    spc(ss, conf);
-    fence_bits(tree->ast_node.fence_tso.pred, ss, conf);
-    sep(ss, conf);
-    fence_bits(tree->ast_node.fence_tso.succ, ss, conf);
+    spc(ss, ctx);
+    fence_bits(tree->ast_node.fence_tso.pred, ss, ctx);
+    sep(ss, ctx);
+    fence_bits(tree->ast_node.fence_tso.succ, ss, ctx);
     break;
   case RISCV_ECALL:
     SStream_concat(ss, "ecall");
@@ -191,10 +191,10 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     break;
   case RISCV_SFENCE_VMA:
     SStream_concat(ss, "sfence.vma");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sfence_vma.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sfence_vma.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sfence_vma.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sfence_vma.rs2, ss, ctx);
     break;
   case RISCV_FENCEI:
     SStream_concat(ss, "fence.i");
@@ -212,11 +212,11 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     } else {
       SStream_concat(ss, "");
     }
-    spc(ss, conf);
-    reg_name(tree->ast_node.loadres.rd, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.loadres.rd, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.loadres.rs1, ss);
+    reg_name(tree->ast_node.loadres.rs1, ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_STORECON:
@@ -232,13 +232,13 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     } else {
       SStream_concat(ss, "");
     }
-    spc(ss, conf);
-    reg_name(tree->ast_node.storecon.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.storecon.rs2, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.storecon.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.storecon.rs2, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.storecon.rs1, ss);
+    reg_name(tree->ast_node.storecon.rs1, ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_AMO:
@@ -255,13 +255,13 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     } else {
       SStream_concat(ss, "");
     }
-    spc(ss, conf);
-    reg_name(tree->ast_node.amo.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.amo.rs2, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.amo.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.amo.rs2, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.amo.rs1, ss);
+    reg_name(tree->ast_node.amo.rs1, ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_C_NOP:
@@ -269,228 +269,228 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     break;
   case RISCV_C_ADDI4SPN:
     SStream_concat(ss, "c.addi4spn");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_addi4spn.rdc, ss);
-    sep(ss, conf);
-    hex_bits_10(tree->ast_node.c_addi4spn.nzimm << 2 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_addi4spn.rdc, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_10(tree->ast_node.c_addi4spn.nzimm << 2 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_C_LW:
     SStream_concat(ss, "c.lw");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_lw.rdc, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_lw.rsc, ss);
-    sep(ss, conf);
-    hex_bits_7(tree->ast_node.c_lw.uimm << 2 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_lw.rdc, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_lw.rsc, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_7(tree->ast_node.c_lw.uimm << 2 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_C_LD:
     SStream_concat(ss, "c.ld");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_ld.rdc, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_ld.rsc, ss);
-    sep(ss, conf);
-    hex_bits_8(tree->ast_node.c_ld.uimm << 3 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_ld.rdc, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_ld.rsc, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_8(tree->ast_node.c_ld.uimm << 3 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_C_SW:
     SStream_concat(ss, "c.sw");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_sw.rsc1, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_sw.rsc2, ss);
-    sep(ss, conf);
-    hex_bits_7(tree->ast_node.c_sw.uimm << 2 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_sw.rsc1, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_sw.rsc2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_7(tree->ast_node.c_sw.uimm << 2 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_C_SD:
     SStream_concat(ss, "c.sd");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_sd.rsc1, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_sd.rsc2, ss);
-    sep(ss, conf);
-    hex_bits_8(tree->ast_node.c_sd.uimm << 3 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_sd.rsc1, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_sd.rsc2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_8(tree->ast_node.c_sd.uimm << 3 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_C_ADDI:
     SStream_concat(ss, "c.addi");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_addi.rsd, ss);
-    sep(ss, conf);
-    hex_bits_signed_6(tree->ast_node.c_addi.nzi, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_addi.rsd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_6(tree->ast_node.c_addi.nzi, ss, ctx);
     break;
   case RISCV_C_JAL:
     SStream_concat(ss, "c.jal");
-    spc(ss, conf);
-    hex_bits_signed_12(tree->ast_node.c_jal << 1 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    hex_bits_signed_12(tree->ast_node.c_jal << 1 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_C_ADDIW:
     SStream_concat(ss, "c.addiw");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_addiw.rsd, ss);
-    sep(ss, conf);
-    hex_bits_signed_6(tree->ast_node.c_addiw.imm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_addiw.rsd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_6(tree->ast_node.c_addiw.imm, ss, ctx);
     break;
   case RISCV_C_LI:
     SStream_concat(ss, "c.li");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_li.rd, ss);
-    sep(ss, conf);
-    hex_bits_signed_6(tree->ast_node.c_li.imm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_li.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_6(tree->ast_node.c_li.imm, ss, ctx);
     break;
   case RISCV_C_ADDI16SP:
     SStream_concat(ss, "c.addi16sp");
-    spc(ss, conf);
-    hex_bits_signed_6(tree->ast_node.c_addi16sp, ss, conf);
+    spc(ss, ctx);
+    hex_bits_signed_6(tree->ast_node.c_addi16sp, ss, ctx);
     break;
   case RISCV_C_LUI:
     SStream_concat(ss, "c.lui");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_lui.rd, ss);
-    sep(ss, conf);
-    hex_bits_signed_6(tree->ast_node.c_lui.imm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_lui.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_6(tree->ast_node.c_lui.imm, ss, ctx);
     break;
   case RISCV_C_SRLI:
     SStream_concat(ss, "c.srli");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_srli.rsd, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_srli.shamt, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_srli.rsd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_srli.shamt, ss, ctx);
     break;
   case RISCV_C_SRAI:
     SStream_concat(ss, "c.srai");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_srai.rsd, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_srai.shamt, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_srai.rsd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_srai.shamt, ss, ctx);
     break;
   case RISCV_C_ANDI:
     SStream_concat(ss, "c.andi");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_andi.rsd, ss);
-    sep(ss, conf);
-    hex_bits_signed_6(tree->ast_node.c_andi.imm, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_andi.rsd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_6(tree->ast_node.c_andi.imm, ss, ctx);
     break;
   case RISCV_C_SUB:
     SStream_concat(ss, "c.sub");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_sub.rsd, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_sub.rs2, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_sub.rsd, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_sub.rs2, ss, ctx);
     break;
   case RISCV_C_XOR:
     SStream_concat(ss, "c.xor");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_xor.rsd, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_xor.rs2, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_xor.rsd, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_xor.rs2, ss, ctx);
     break;
   case RISCV_C_OR:
     SStream_concat(ss, "c.or");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_or.rsd, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_or.rs2, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_or.rsd, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_or.rs2, ss, ctx);
     break;
   case RISCV_C_AND:
     SStream_concat(ss, "c.and");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_and.rsd, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_and.rs2, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_and.rsd, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_and.rs2, ss, ctx);
     break;
   case RISCV_C_SUBW:
     SStream_concat(ss, "c.subw");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_subw.rsd, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_subw.rs2, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_subw.rsd, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_subw.rs2, ss, ctx);
     break;
   case RISCV_C_ADDW:
     SStream_concat(ss, "c.addw");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_addw.rsd, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_addw.rs2, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_addw.rsd, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_addw.rs2, ss, ctx);
     break;
   case RISCV_C_J:
     SStream_concat(ss, "c.j");
-    spc(ss, conf);
-    hex_bits_signed_12(tree->ast_node.c_j << 1 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    hex_bits_signed_12(tree->ast_node.c_j << 1 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_C_BEQZ:
     SStream_concat(ss, "c.beqz");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_beqz.rs, ss);
-    sep(ss, conf);
-    hex_bits_signed_8(tree->ast_node.c_beqz.imm, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_beqz.rs, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_8(tree->ast_node.c_beqz.imm, ss, ctx);
     break;
   case RISCV_C_BNEZ:
     SStream_concat(ss, "c.bnez");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_bnez.rs, ss);
-    sep(ss, conf);
-    hex_bits_signed_8(tree->ast_node.c_bnez.imm, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_bnez.rs, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_8(tree->ast_node.c_bnez.imm, ss, ctx);
     break;
   case RISCV_C_SLLI:
     SStream_concat(ss, "c.slli");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_slli.rsd, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_slli.shamt, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_slli.rsd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_slli.shamt, ss, ctx);
     break;
   case RISCV_C_LWSP:
     SStream_concat(ss, "c.lwsp");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_lwsp.rd, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_lwsp.uimm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_lwsp.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_lwsp.uimm, ss, ctx);
     break;
   case RISCV_C_LDSP:
     SStream_concat(ss, "c.ldsp");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_ldsp.rd, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_ldsp.uimm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_ldsp.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_ldsp.uimm, ss, ctx);
     break;
   case RISCV_C_SWSP:
     SStream_concat(ss, "c.swsp");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_swsp.rs2, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_swsp.uimm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_swsp.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_swsp.uimm, ss, ctx);
     break;
   case RISCV_C_SDSP:
     SStream_concat(ss, "c.sdsp");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_sdsp.rs2, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_sdsp.uimm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_sdsp.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_sdsp.uimm, ss, ctx);
     break;
   case RISCV_C_JR:
     SStream_concat(ss, "c.jr");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_jr, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_jr, ss, ctx);
     break;
   case RISCV_C_JALR:
     SStream_concat(ss, "c.jalr");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_jalr, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_jalr, ss, ctx);
     break;
   case RISCV_C_MV:
     SStream_concat(ss, "c.mv");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_mv.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.c_mv.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_mv.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.c_mv.rs2, ss, ctx);
     break;
   case RISCV_C_EBREAK:
     SStream_concat(ss, "c.ebreak");
     break;
   case RISCV_C_ADD:
     SStream_concat(ss, "c.add");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_add.rsd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.c_add.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.c_add.rsd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.c_add.rs2, ss, ctx);
     break;
   case RISCV_MUL:
     if ((tree->ast_node.mul.mul_op.high == 1) &&
@@ -511,12 +511,12 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
       SStream_concat(ss, "mul");
     } else
       ;
-    spc(ss, conf);
-    reg_name(tree->ast_node.mul.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.mul.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.mul.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.mul.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.mul.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.mul.rs2, ss, ctx);
     break;
   case RISCV_DIV:
     SStream_concat(ss, "div");
@@ -525,12 +525,12 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     } else {
       SStream_concat(ss, "u");
     }
-    spc(ss, conf);
-    reg_name(tree->ast_node.div.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.div.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.div.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.div.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.div.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.div.rs2, ss, ctx);
     break;
   case RISCV_REM:
     SStream_concat(ss, "rem");
@@ -539,21 +539,21 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     } else {
       SStream_concat(ss, "u");
     }
-    spc(ss, conf);
-    reg_name(tree->ast_node.rem.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.rem.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.rem.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.rem.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.rem.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.rem.rs2, ss, ctx);
     break;
   case RISCV_MULW:
     SStream_concat(ss, "mulw");
-    spc(ss, conf);
-    reg_name(tree->ast_node.mulw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.mulw.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.mulw.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.mulw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.mulw.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.mulw.rs2, ss, ctx);
     break;
   case RISCV_DIVW:
     SStream_concat(ss, "div");
@@ -563,12 +563,12 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
       SStream_concat(ss, "u");
     }
     SStream_concat(ss, "w");
-    spc(ss, conf);
-    reg_name(tree->ast_node.divw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.divw.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.divw.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.divw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.divw.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.divw.rs2, ss, ctx);
     break;
   case RISCV_REMW:
     SStream_concat(ss, "rem");
@@ -578,616 +578,356 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
       SStream_concat(ss, "u");
     }
     SStream_concat(ss, "w");
-    spc(ss, conf);
-    reg_name(tree->ast_node.remw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.remw.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.remw.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.remw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.remw.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.remw.rs2, ss, ctx);
     break;
-  case RISCV_CSR:
-    if (tree->ast_node.csr.is_imm == RISCV_true) {
-      csr_mnemonic(tree->ast_node.csr.op, ss);
-      SStream_concat(ss, "i");
-      spc(ss, conf);
-      reg_name(tree->ast_node.csr.rd, ss);
-      sep(ss, conf);
-      csr_name_map(tree->ast_node.csr.csr, ss, conf);
-      sep(ss, conf);
-      hex_bits_5(tree->ast_node.csr.rs1, ss, conf);
-    }
-    if (tree->ast_node.csr.is_imm == RISCV_false) {
-      csr_mnemonic(tree->ast_node.csr.op, ss);
-      spc(ss, conf);
-      reg_name(tree->ast_node.csr.rd, ss);
-      sep(ss, conf);
-      csr_name_map(tree->ast_node.csr.csr, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.csr.rs1, ss);
-    }
+  case RISCV_CSRImm:
+    csr_mnemonic(tree->ast_node.csrimm.op, ss);
+    SStream_concat(ss, "i");
+    spc(ss, ctx);
+    reg_name(tree->ast_node.csrimm.rd, ss, ctx);
+    sep(ss, ctx);
+    csr_name_map(tree->ast_node.csrimm.csr, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.csrimm.imm, ss, ctx);
+    break;
+  case RISCV_CSRReg:
+    csr_mnemonic(tree->ast_node.csrreg.op, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.csrreg.rd, ss, ctx);
+    sep(ss, ctx);
+    csr_name_map(tree->ast_node.csrreg.csr, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.csrreg.rs1, ss, ctx);
     break;
   case RISCV_C_NOP_HINT:
     SStream_concat(ss, "c.nop.hint.");
-    hex_bits_6(tree->ast_node.c_nop_hint, ss, conf);
+    hex_bits_6(tree->ast_node.c_nop_hint, ss, ctx);
     break;
   case RISCV_C_ADDI_HINT:
     SStream_concat(ss, "c.addi.hint.");
-    reg_name(tree->ast_node.c_addi_hint, ss);
+    reg_name(tree->ast_node.c_addi_hint, ss, ctx);
     break;
   case RISCV_C_LI_HINT:
     SStream_concat(ss, "c.li.hint.");
-    hex_bits_6(tree->ast_node.c_li_hint, ss, conf);
+    hex_bits_6(tree->ast_node.c_li_hint, ss, ctx);
     break;
   case RISCV_C_LUI_HINT:
     SStream_concat(ss, "c.lui.hint.");
-    hex_bits_6(tree->ast_node.c_lui_hint, ss, conf);
+    hex_bits_6(tree->ast_node.c_lui_hint, ss, ctx);
     break;
   case RISCV_C_MV_HINT:
     SStream_concat(ss, "c.mv.hint.");
-    reg_name(tree->ast_node.c_mv_hint, ss);
+    reg_name(tree->ast_node.c_mv_hint, ss, ctx);
     break;
   case RISCV_C_ADD_HINT:
     SStream_concat(ss, "c.add.hint.");
-    reg_name(tree->ast_node.c_add_hint, ss);
+    reg_name(tree->ast_node.c_add_hint, ss, ctx);
     break;
   case RISCV_C_SLLI_HINT:
     SStream_concat(ss, "c.slli.hint.");
-    reg_name(tree->ast_node.c_slli_hint.rsd, ss);
+    reg_name(tree->ast_node.c_slli_hint.rsd, ss, ctx);
     SStream_concat(ss, ".");
-    hex_bits_6(tree->ast_node.c_slli_hint.shamt, ss, conf);
+    hex_bits_6(tree->ast_node.c_slli_hint.shamt, ss, ctx);
     break;
   case RISCV_C_SRLI_HINT:
     SStream_concat(ss, "c.srli.hint.");
-    creg_name(tree->ast_node.c_srli_hint, ss);
+    creg_name(tree->ast_node.c_srli_hint, ss, ctx);
     break;
   case RISCV_C_SRAI_HINT:
     SStream_concat(ss, "c.srai.hint.");
-    creg_name(tree->ast_node.c_srai_hint, ss);
+    creg_name(tree->ast_node.c_srai_hint, ss, ctx);
     break;
   case RISCV_FENCE_RESERVED:
     SStream_concat(ss, "fence.reserved.");
-    fence_bits(tree->ast_node.fence_reserved.pred, ss, conf);
+    fence_bits(tree->ast_node.fence_reserved.pred, ss, ctx);
     SStream_concat(ss, ".");
-    fence_bits(tree->ast_node.fence_reserved.succ, ss, conf);
+    fence_bits(tree->ast_node.fence_reserved.succ, ss, ctx);
     SStream_concat(ss, ".");
-    reg_name(tree->ast_node.fence_reserved.rs, ss);
+    reg_name(tree->ast_node.fence_reserved.rs, ss, ctx);
     SStream_concat(ss, ".");
-    reg_name(tree->ast_node.fence_reserved.rd, ss);
+    reg_name(tree->ast_node.fence_reserved.rd, ss, ctx);
     SStream_concat(ss, ".");
-    hex_bits_4(tree->ast_node.fence_reserved.fm, ss, conf);
+    hex_bits_4(tree->ast_node.fence_reserved.fm, ss, ctx);
     break;
   case RISCV_FENCEI_RESERVED:
     SStream_concat(ss, "fence.i.reserved.");
-    reg_name(tree->ast_node.fencei_reserved.rd, ss);
+    reg_name(tree->ast_node.fencei_reserved.rd, ss, ctx);
     SStream_concat(ss, ".");
-    reg_name(tree->ast_node.fencei_reserved.rs, ss);
+    reg_name(tree->ast_node.fencei_reserved.rs, ss, ctx);
     SStream_concat(ss, ".");
-    hex_bits_12(tree->ast_node.fencei_reserved.imm, ss, conf);
+    hex_bits_12(tree->ast_node.fencei_reserved.imm, ss, ctx);
     break;
   case RISCV_LOAD_FP:
     SStream_concat(ss, "fl");
     size_mnemonic(tree->ast_node.load_fp.width, ss);
-    spc(ss, conf);
-    freg_or_reg_name(tree->ast_node.load_fp.rd, ss, conf);
-    sep(ss, conf);
-    hex_bits_signed_12(tree->ast_node.load_fp.imm, ss, conf);
-    opt_spc(ss, conf);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.load_fp.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_12(tree->ast_node.load_fp.imm, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, "(");
-    opt_spc(ss, conf);
-    reg_name(tree->ast_node.load_fp.rs1, ss);
-    opt_spc(ss, conf);
+    opt_spc(ss, ctx);
+    reg_name(tree->ast_node.load_fp.rs1, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_STORE_FP:
     SStream_concat(ss, "fs");
     size_mnemonic(tree->ast_node.store_fp.width, ss);
-    spc(ss, conf);
-    freg_name(tree->ast_node.store_fp.rs2, ss);
-    sep(ss, conf);
-    hex_bits_signed_12(tree->ast_node.store_fp.imm, ss, conf);
-    opt_spc(ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.store_fp.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_signed_12(tree->ast_node.store_fp.imm, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, "(");
-    opt_spc(ss, conf);
-    reg_name(tree->ast_node.store_fp.rs1, ss);
-    opt_spc(ss, conf);
+    opt_spc(ss, ctx);
+    reg_name(tree->ast_node.store_fp.rs1, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_F_MADD_TYPE_S:
     f_madd_type_mnemonic_S(tree->ast_node.f_madd_type_s.op, ss);
-    spc(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_s.rd, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_s.rs1, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_s.rs2, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_s.rs3, ss, conf);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_s.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_s.rs2, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_s.rs3, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.f_madd_type_s.rm, ss);
     break;
   case RISCV_F_BIN_RM_TYPE_S:
     f_bin_rm_type_mnemonic_S(tree->ast_node.f_bin_rm_type_s.op, ss);
-    spc(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_bin_rm_type_s.rd, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_bin_rm_type_s.rs1, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_bin_rm_type_s.rs2, ss, conf);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_rm_type_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_rm_type_s.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_rm_type_s.rs2, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.f_bin_rm_type_s.rm, ss);
     break;
-  case RISCV_F_UN_RM_TYPE_S:
-    if (tree->ast_node.f_un_rm_type_s.fcvt_s_lu == RISCV_FSQRT_S) {
+  case RISCV_F_UN_RM_FF_TYPE_S:
+    if (tree->ast_node.f_un_rm_ff_type_s.fsqrt_s == RISCV_FSQRT_S) {
       SStream_concat(ss, "fsqrt.s");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_s.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_s.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_s.fcvt_s_lu == RISCV_FCVT_W_S) {
-      SStream_concat(ss, "fcvt.w.s");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_s.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_s.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_s.fcvt_s_lu == RISCV_FCVT_WU_S) {
-      SStream_concat(ss, "fcvt.wu.s");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_s.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_s.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_s.fcvt_s_lu == RISCV_FCVT_S_W) {
-      SStream_concat(ss, "fcvt.s.w");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_s.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_s.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_s.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_s.fcvt_s_lu == RISCV_FCVT_S_WU) {
-      SStream_concat(ss, "fcvt.s.wu");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_s.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_s.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_s.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_s.fcvt_s_lu == RISCV_FCVT_L_S) {
-      SStream_concat(ss, "fcvt.l.s");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_s.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_s.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_s.fcvt_s_lu == RISCV_FCVT_LU_S) {
-      SStream_concat(ss, "fcvt.lu.s");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_s.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_s.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_s.fcvt_s_lu == RISCV_FCVT_S_L) {
-      SStream_concat(ss, "fcvt.s.l");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_s.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_s.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_s.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_s.fcvt_s_lu == RISCV_FCVT_S_LU) {
-      SStream_concat(ss, "fcvt.s.lu");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_s.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_s.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_s.rm, ss);
+      spc(ss, ctx);
+      freg_or_reg_name(tree->ast_node.f_un_rm_ff_type_s.rd, ss, ctx);
+      sep(ss, ctx);
+      freg_or_reg_name(tree->ast_node.f_un_rm_ff_type_s.rs1, ss, ctx);
+      sep(ss, ctx);
+      frm_mnemonic(tree->ast_node.f_un_rm_ff_type_s.rm, ss);
     }
     break;
-  case RISCV_F_BIN_TYPE_S:
-    if (tree->ast_node.f_bin_type_s.fle_s == RISCV_FSGNJ_S) {
-      SStream_concat(ss, "fsgnj.s");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_s.fle_s == RISCV_FSGNJN_S) {
-      SStream_concat(ss, "fsgnjn.s");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_s.fle_s == RISCV_FSGNJX_S) {
-      SStream_concat(ss, "fsgnjx.s");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_s.fle_s == RISCV_FMIN_S) {
-      SStream_concat(ss, "fmin.s");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_s.fle_s == RISCV_FMAX_S) {
-      SStream_concat(ss, "fmax.s");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_s.fle_s == RISCV_FEQ_S) {
-      SStream_concat(ss, "feq.s");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_bin_type_s.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_s.fle_s == RISCV_FLT_S) {
-      SStream_concat(ss, "flt.s");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_bin_type_s.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_s.fle_s == RISCV_FLE_S) {
-      SStream_concat(ss, "fle.s");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_bin_type_s.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_s.rs2, ss, conf);
-    }
+  case RISCV_F_UN_RM_FX_TYPE_S:
+    f_un_rm_fx_type_mnemonic_S(tree->ast_node.f_un_rm_fx_type_s.fcvt_lu_s, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.f_un_rm_fx_type_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_un_rm_fx_type_s.rs1, ss, ctx);
+    sep(ss, ctx);
+    frm_mnemonic(tree->ast_node.f_un_rm_fx_type_s.rm, ss);
     break;
-  case RISCV_F_UN_TYPE_S:
-    if (tree->ast_node.f_un_type_s.fmv_w_x == RISCV_FMV_X_W) {
-      SStream_concat(ss, "fmv.x.w");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_type_s.rd, ss);
-      sep(ss, conf);
-      freg_name(tree->ast_node.f_un_type_s.rs1, ss);
-    }
-    if (tree->ast_node.f_un_type_s.fmv_w_x == RISCV_FMV_W_X) {
-      SStream_concat(ss, "fmv.w.x");
-      spc(ss, conf);
-      freg_name(tree->ast_node.f_un_type_s.rd, ss);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_type_s.rs1, ss);
-    }
-    if (tree->ast_node.f_un_type_s.fmv_w_x == RISCV_FCLASS_S) {
-      SStream_concat(ss, "fclass.s");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_type_s.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_type_s.rs1, ss, conf);
-    }
+  case RISCV_F_UN_RM_XF_TYPE_S:
+    f_un_rm_xf_type_mnemonic_S(tree->ast_node.f_un_rm_xf_type_s.fcvt_s_lu, ss);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_un_rm_xf_type_s.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.f_un_rm_xf_type_s.rs1, ss, ctx);
+    sep(ss, ctx);
+    frm_mnemonic(tree->ast_node.f_un_rm_xf_type_s.rm, ss);
+    break;
+  case RISCV_F_BIN_TYPE_F_S:
+    f_bin_type_mnemonic_f_S(tree->ast_node.f_bin_type_f_s.fmax_s, ss);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_type_f_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_type_f_s.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_type_f_s.rs2, ss, ctx);
+    break;
+  case RISCV_F_BIN_TYPE_X_S:
+    f_bin_type_mnemonic_x_S(tree->ast_node.f_bin_type_x_s.fle_s, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.f_bin_type_x_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_type_x_s.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_type_x_s.rs2, ss, ctx);
+    break;
+  case RISCV_F_UN_TYPE_X_S:
+    f_un_type_mnemonic_x_S(tree->ast_node.f_un_type_x_s.fmv_x_w, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.f_un_type_x_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.f_un_type_x_s.rs1, ss, ctx);
+    break;
+  case RISCV_F_UN_TYPE_F_S:
+    f_un_type_mnemonic_f_S(tree->ast_node.f_un_type_f_s.fmv_w_x, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.f_un_type_f_s.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.f_un_type_f_s.rs1, ss, ctx);
     break;
   case RISCV_C_FLWSP:
     SStream_concat(ss, "c.flwsp");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_flwsp.rd, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_flwsp.imm, ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.c_flwsp.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_flwsp.imm, ss, ctx);
     break;
   case RISCV_C_FSWSP:
     SStream_concat(ss, "c.fswsp");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_fswsp.rs2, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_fswsp.uimm, ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.c_fswsp.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_fswsp.uimm, ss, ctx);
     break;
   case RISCV_C_FLW:
     SStream_concat(ss, "c.flw");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_flw.rdc, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_flw.rsc, ss);
-    sep(ss, conf);
-    hex_bits_7(tree->ast_node.c_flw.uimm << 2 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_flw.rdc, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_flw.rsc, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_7(tree->ast_node.c_flw.uimm << 2 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_C_FSW:
     SStream_concat(ss, "c.fsw");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_fsw.rsc1, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_fsw.rsc2, ss);
-    sep(ss, conf);
-    hex_bits_7(tree->ast_node.c_fsw.uimm << 2 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_fsw.rsc1, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_fsw.rsc2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_7(tree->ast_node.c_fsw.uimm << 2 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_F_MADD_TYPE_D:
     f_madd_type_mnemonic_D(tree->ast_node.f_madd_type_d.op, ss);
-    spc(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_d.rd, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_d.rs1, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_d.rs2, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_d.rs3, ss, conf);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_d.rs2, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_d.rs3, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.f_madd_type_d.rm, ss);
     break;
   case RISCV_F_BIN_RM_TYPE_D:
     f_bin_rm_type_mnemonic_D(tree->ast_node.f_bin_rm_type_d.op, ss);
-    spc(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_bin_rm_type_d.rd, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_bin_rm_type_d.rs1, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_bin_rm_type_d.rs2, ss, conf);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_rm_type_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_rm_type_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_rm_type_d.rs2, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.f_bin_rm_type_d.rm, ss);
     break;
-  case RISCV_F_UN_RM_TYPE_D:
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FSQRT_D) {
-      SStream_concat(ss, "fsqrt.d");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FCVT_W_D) {
-      SStream_concat(ss, "fcvt.w.d");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_d.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FCVT_WU_D) {
-      SStream_concat(ss, "fcvt.wu.d");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_d.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FCVT_D_W) {
-      SStream_concat(ss, "fcvt.d.w");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FCVT_D_WU) {
-      SStream_concat(ss, "fcvt.d.wu");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FCVT_L_D) {
-      SStream_concat(ss, "fcvt.l.d");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_d.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FCVT_LU_D) {
-      SStream_concat(ss, "fcvt.lu.d");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_d.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FCVT_D_L) {
-      SStream_concat(ss, "fcvt.d.l");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FCVT_D_LU) {
-      SStream_concat(ss, "fcvt.d.lu");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FCVT_S_D) {
-      SStream_concat(ss, "fcvt.s.d");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_d.fcvt_d_lu == RISCV_FCVT_D_S) {
-      SStream_concat(ss, "fcvt.d.s");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_d.rm, ss);
-    }
+  case RISCV_F_UN_RM_FF_TYPE_D:
+    f_un_rm_ff_type_mnemonic_D(tree->ast_node.f_un_rm_ff_type_d.fcvt_d_s, ss);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_un_rm_ff_type_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_un_rm_ff_type_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    frm_mnemonic(tree->ast_node.f_un_rm_ff_type_d.rm, ss);
     break;
-  case RISCV_F_BIN_TYPE_D:
-    if (tree->ast_node.f_bin_type_d.fle_d == RISCV_FSGNJ_D) {
-      SStream_concat(ss, "fsgnj.d");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_d.fle_d == RISCV_FSGNJN_D) {
-      SStream_concat(ss, "fsgnjn.d");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_d.fle_d == RISCV_FSGNJX_D) {
-      SStream_concat(ss, "fsgnjx.d");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_d.fle_d == RISCV_FMIN_D) {
-      SStream_concat(ss, "fmin.d");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_d.fle_d == RISCV_FMAX_D) {
-      SStream_concat(ss, "fmax.d");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_d.fle_d == RISCV_FEQ_D) {
-      SStream_concat(ss, "feq.d");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_bin_type_d.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_d.fle_d == RISCV_FLT_D) {
-      SStream_concat(ss, "flt.d");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_bin_type_d.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_d.fle_d == RISCV_FLE_D) {
-      SStream_concat(ss, "fle.d");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_bin_type_d.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_d.rs2, ss, conf);
-    }
+  case RISCV_F_UN_RM_FX_TYPE_D:
+    f_un_rm_fx_type_mnemonic_D(tree->ast_node.f_un_rm_fx_type_d.fcvt_lu_d, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.f_un_rm_fx_type_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_un_rm_fx_type_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    frm_mnemonic(tree->ast_node.f_un_rm_fx_type_d.rm, ss);
     break;
-  case RISCV_F_UN_TYPE_D:
-    if (tree->ast_node.f_un_type_d.fmv_d_x == RISCV_FMV_X_D) {
-      SStream_concat(ss, "fmv.x.d");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_type_d.rd, ss);
-      sep(ss, conf);
-      freg_name(tree->ast_node.f_un_type_d.rs1, ss);
-    }
-    if (tree->ast_node.f_un_type_d.fmv_d_x == RISCV_FMV_D_X) {
-      SStream_concat(ss, "fmv.d.x");
-      spc(ss, conf);
-      freg_name(tree->ast_node.f_un_type_d.rd, ss);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_type_d.rs1, ss);
-    }
-    if (tree->ast_node.f_un_type_d.fmv_d_x == RISCV_FCLASS_D) {
-      SStream_concat(ss, "fclass.d");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_type_d.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_type_d.rs1, ss, conf);
-    }
+  case RISCV_F_UN_RM_XF_TYPE_D:
+    f_un_rm_xf_type_mnemonic_D(tree->ast_node.f_un_rm_xf_type_d.fcvt_d_lu, ss);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_un_rm_xf_type_d.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.f_un_rm_xf_type_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    frm_mnemonic(tree->ast_node.f_un_rm_xf_type_d.rm, ss);
+    break;
+  case RISCV_F_BIN_F_TYPE_D:
+    f_bin_f_type_mnemonic_D(tree->ast_node.f_bin_f_type_d.fmax_d, ss);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_f_type_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_f_type_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_f_type_d.rs2, ss, ctx);
+    break;
+  case RISCV_F_BIN_X_TYPE_D:
+    f_bin_x_type_mnemonic_D(tree->ast_node.f_bin_x_type_d.fle_d, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.f_bin_x_type_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_x_type_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_x_type_d.rs2, ss, ctx);
+    break;
+  case RISCV_F_UN_X_TYPE_D:
+    f_un_x_type_mnemonic_D(tree->ast_node.f_un_x_type_d.fmv_x_d, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.f_un_x_type_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.f_un_x_type_d.rs1, ss, ctx);
+    break;
+  case RISCV_F_UN_F_TYPE_D:
+    f_un_f_type_mnemonic_D(tree->ast_node.f_un_f_type_d.fmv_d_x, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.f_un_f_type_d.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.f_un_f_type_d.rs1, ss, ctx);
     break;
   case RISCV_C_FLDSP:
     SStream_concat(ss, "c.fldsp");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_fldsp.rd, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_fldsp.uimm, ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.c_fldsp.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_fldsp.uimm, ss, ctx);
     break;
   case RISCV_C_FSDSP:
     SStream_concat(ss, "c.fsdsp");
-    spc(ss, conf);
-    reg_name(tree->ast_node.c_fsdsp.rs2, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.c_fsdsp.uimm, ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.c_fsdsp.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.c_fsdsp.uimm, ss, ctx);
     break;
   case RISCV_C_FLD:
     SStream_concat(ss, "c.fld");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_fld.rdc, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_fld.rsc, ss);
-    sep(ss, conf);
-    hex_bits_8(tree->ast_node.c_fld.uimm << 3 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_fld.rdc, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_fld.rsc, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_8(tree->ast_node.c_fld.uimm << 3 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_C_FSD:
     SStream_concat(ss, "c.fsd");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_fsd.rsc1, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_fsd.rsc2, ss);
-    sep(ss, conf);
-    hex_bits_8(tree->ast_node.c_fsd.uimm << 3 | 0x0 << 0, ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_fsd.rsc1, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_fsd.rsc2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_8(tree->ast_node.c_fsd.uimm << 3 | 0x0 << 0, ss, ctx);
     break;
   case RISCV_SINVAL_VMA:
     SStream_concat(ss, "sinval.vma");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sinval_vma.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sinval_vma.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sinval_vma.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sinval_vma.rs2, ss, ctx);
     break;
   case RISCV_SFENCE_W_INVAL:
     SStream_concat(ss, "sfence.w.inval");
@@ -1197,1556 +937,1399 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     break;
   case RISCV_SLLIUW:
     SStream_concat(ss, "slli.uw");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_slliuw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_slliuw.rs1, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.riscv_slliuw.shamt, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_slliuw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_slliuw.rs1, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.riscv_slliuw.shamt, ss, ctx);
     break;
   case RISCV_ZBA_RTYPEUW:
     zba_rtypeuw_mnemonic(tree->ast_node.zba_rtypeuw.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.zba_rtypeuw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zba_rtypeuw.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zba_rtypeuw.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zba_rtypeuw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zba_rtypeuw.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zba_rtypeuw.rs2, ss, ctx);
     break;
   case RISCV_ZBA_RTYPE:
     zba_rtype_mnemonic(tree->ast_node.zba_rtype.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.zba_rtype.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zba_rtype.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zba_rtype.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zba_rtype.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zba_rtype.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zba_rtype.rs2, ss, ctx);
     break;
   case RISCV_RORIW:
     SStream_concat(ss, "roriw");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_roriw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_roriw.rs1, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.riscv_roriw.shamt, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_roriw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_roriw.rs1, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.riscv_roriw.shamt, ss, ctx);
     break;
   case RISCV_RORI:
     SStream_concat(ss, "rori");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_rori.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_rori.rs1, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.riscv_rori.shamt, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_rori.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_rori.rs1, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.riscv_rori.shamt, ss, ctx);
     break;
   case RISCV_ZBB_RTYPEW:
     zbb_rtypew_mnemonic(tree->ast_node.zbb_rtypew.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.zbb_rtypew.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbb_rtypew.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbb_rtypew.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zbb_rtypew.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbb_rtypew.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbb_rtypew.rs2, ss, ctx);
     break;
   case RISCV_ZBB_RTYPE:
     zbb_rtype_mnemonic(tree->ast_node.zbb_rtype.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.zbb_rtype.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbb_rtype.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbb_rtype.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zbb_rtype.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbb_rtype.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbb_rtype.rs2, ss, ctx);
     break;
   case RISCV_ZBB_EXTOP:
     zbb_extop_mnemonic(tree->ast_node.zbb_extop.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.zbb_extop.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbb_extop.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zbb_extop.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbb_extop.rs1, ss, ctx);
     break;
   case RISCV_REV8:
     SStream_concat(ss, "rev8");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_rev8.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_rev8.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_rev8.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_rev8.rs1, ss, ctx);
     break;
   case RISCV_ORCB:
     SStream_concat(ss, "orc.b");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_orcb.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_orcb.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_orcb.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_orcb.rs1, ss, ctx);
     break;
   case RISCV_CPOP:
     SStream_concat(ss, "cpop");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_cpop.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_cpop.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_cpop.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_cpop.rs1, ss, ctx);
     break;
   case RISCV_CPOPW:
     SStream_concat(ss, "cpopw");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_cpopw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_cpopw.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_cpopw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_cpopw.rs1, ss, ctx);
     break;
   case RISCV_CLZ:
     SStream_concat(ss, "clz");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_clz.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_clz.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_clz.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_clz.rs1, ss, ctx);
     break;
   case RISCV_CLZW:
     SStream_concat(ss, "clzw");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_clzw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_clzw.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_clzw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_clzw.rs1, ss, ctx);
     break;
   case RISCV_CTZ:
     SStream_concat(ss, "ctz");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_ctz.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_ctz.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_ctz.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_ctz.rs1, ss, ctx);
     break;
   case RISCV_CTZW:
     SStream_concat(ss, "ctzw");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_ctzw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_ctzw.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_ctzw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_ctzw.rs1, ss, ctx);
     break;
   case RISCV_CLMUL:
     SStream_concat(ss, "clmul");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_clmul.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_clmul.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_clmul.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_clmul.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_clmul.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_clmul.rs2, ss, ctx);
     break;
   case RISCV_CLMULH:
     SStream_concat(ss, "clmulh");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_clmulh.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_clmulh.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_clmulh.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_clmulh.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_clmulh.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_clmulh.rs2, ss, ctx);
     break;
   case RISCV_CLMULR:
     SStream_concat(ss, "clmulr");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_clmulr.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_clmulr.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_clmulr.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_clmulr.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_clmulr.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_clmulr.rs2, ss, ctx);
     break;
   case RISCV_ZBS_IOP:
     zbs_iop_mnemonic(tree->ast_node.zbs_iop.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.zbs_iop.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbs_iop.rs1, ss);
-    sep(ss, conf);
-    hex_bits_6(tree->ast_node.zbs_iop.shamt, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zbs_iop.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbs_iop.rs1, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_6(tree->ast_node.zbs_iop.shamt, ss, ctx);
     break;
   case RISCV_ZBS_RTYPE:
     zbs_rtype_mnemonic(tree->ast_node.zbs_rtype.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.zbs_rtype.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbs_rtype.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbs_rtype.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zbs_rtype.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbs_rtype.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbs_rtype.rs2, ss, ctx);
     break;
   case RISCV_C_LBU:
     SStream_concat(ss, "c.lbu");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_lbu.rdc, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.c_lbu.uimm, ss, conf);
-    opt_spc(ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_lbu.rdc, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.c_lbu.uimm, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, "(");
-    opt_spc(ss, conf);
-    creg_name(tree->ast_node.c_lbu.rs1c, ss);
-    opt_spc(ss, conf);
+    opt_spc(ss, ctx);
+    creg_name(tree->ast_node.c_lbu.rs1c, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_C_LHU:
     SStream_concat(ss, "c.lhu");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_lhu.rdc, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.c_lhu.uimm, ss, conf);
-    opt_spc(ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_lhu.rdc, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.c_lhu.uimm, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, "(");
-    opt_spc(ss, conf);
-    creg_name(tree->ast_node.c_lhu.rs1c, ss);
-    opt_spc(ss, conf);
+    opt_spc(ss, ctx);
+    creg_name(tree->ast_node.c_lhu.rs1c, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_C_LH:
     SStream_concat(ss, "c.lh");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_lh.rdc, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.c_lh.uimm, ss, conf);
-    opt_spc(ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_lh.rdc, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.c_lh.uimm, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, "(");
-    opt_spc(ss, conf);
-    creg_name(tree->ast_node.c_lh.rs1c, ss);
-    opt_spc(ss, conf);
+    opt_spc(ss, ctx);
+    creg_name(tree->ast_node.c_lh.rs1c, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_C_SB:
     SStream_concat(ss, "c.sb");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_sb.rs2c, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.c_sb.uimm, ss, conf);
-    opt_spc(ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_sb.rs2c, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.c_sb.uimm, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, "(");
-    opt_spc(ss, conf);
-    creg_name(tree->ast_node.c_sb.rs1c, ss);
-    opt_spc(ss, conf);
+    opt_spc(ss, ctx);
+    creg_name(tree->ast_node.c_sb.rs1c, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_C_SH:
     SStream_concat(ss, "c.sh");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_sh.rs1c, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.c_sh.uimm, ss, conf);
-    opt_spc(ss, conf);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_sh.rs1c, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.c_sh.uimm, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, "(");
-    opt_spc(ss, conf);
-    creg_name(tree->ast_node.c_sh.rs2c, ss);
-    opt_spc(ss, conf);
+    opt_spc(ss, ctx);
+    creg_name(tree->ast_node.c_sh.rs2c, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_C_ZEXT_B:
     SStream_concat(ss, "c.zext.b");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_zext_b, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_zext_b, ss, ctx);
     break;
   case RISCV_C_SEXT_B:
     SStream_concat(ss, "c.sext.b");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_sext_b, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_sext_b, ss, ctx);
     break;
   case RISCV_C_ZEXT_H:
     SStream_concat(ss, "c.zext.h");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_zext_h, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_zext_h, ss, ctx);
     break;
   case RISCV_C_SEXT_H:
     SStream_concat(ss, "c.sext.h");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_sext_h, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_sext_h, ss, ctx);
     break;
   case RISCV_C_ZEXT_W:
     SStream_concat(ss, "c.zext.w");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_zext_w, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_zext_w, ss, ctx);
     break;
   case RISCV_C_NOT:
     SStream_concat(ss, "c.not");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_not, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_not, ss, ctx);
     break;
   case RISCV_C_MUL:
     SStream_concat(ss, "c.mul");
-    spc(ss, conf);
-    creg_name(tree->ast_node.c_mul.rsdc, ss);
-    sep(ss, conf);
-    creg_name(tree->ast_node.c_mul.rs2c, ss);
+    spc(ss, ctx);
+    creg_name(tree->ast_node.c_mul.rsdc, ss, ctx);
+    sep(ss, ctx);
+    creg_name(tree->ast_node.c_mul.rs2c, ss, ctx);
     break;
   case RISCV_F_BIN_RM_TYPE_H:
     f_bin_rm_type_mnemonic_H(tree->ast_node.f_bin_rm_type_h.op, ss);
-    spc(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_bin_rm_type_h.rd, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_bin_rm_type_h.rs1, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_bin_rm_type_h.rs2, ss, conf);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_rm_type_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_rm_type_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_rm_type_h.rs2, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.f_bin_rm_type_h.rm, ss);
     break;
   case RISCV_F_MADD_TYPE_H:
     f_madd_type_mnemonic_H(tree->ast_node.f_madd_type_h.op, ss);
-    spc(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_h.rd, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_h.rs1, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_h.rs2, ss, conf);
-    sep(ss, conf);
-    freg_or_reg_name(tree->ast_node.f_madd_type_h.rs3, ss, conf);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_h.rs2, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_madd_type_h.rs3, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.f_madd_type_h.rm, ss);
     break;
-  case RISCV_F_BIN_TYPE_H:
-    if (tree->ast_node.f_bin_type_h.fle_h == RISCV_FSGNJ_H) {
-      SStream_concat(ss, "fsgnj.h");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_h.fle_h == RISCV_FSGNJN_H) {
-      SStream_concat(ss, "fsgnjn.h");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_h.fle_h == RISCV_FSGNJX_H) {
-      SStream_concat(ss, "fsgnjx.h");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_h.fle_h == RISCV_FMIN_H) {
-      SStream_concat(ss, "fmin.h");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_h.fle_h == RISCV_FMAX_H) {
-      SStream_concat(ss, "fmax.h");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_h.fle_h == RISCV_FEQ_H) {
-      SStream_concat(ss, "feq.h");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_bin_type_h.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_h.fle_h == RISCV_FLT_H) {
-      SStream_concat(ss, "flt.h");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_bin_type_h.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs2, ss, conf);
-    }
-    if (tree->ast_node.f_bin_type_h.fle_h == RISCV_FLE_H) {
-      SStream_concat(ss, "fle.h");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_bin_type_h.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_bin_type_h.rs2, ss, conf);
-    }
+  case RISCV_F_BIN_F_TYPE_H:
+    f_bin_f_type_mnemonic_H(tree->ast_node.f_bin_f_type_h.fmax_h, ss);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_f_type_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_f_type_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_f_type_h.rs2, ss, ctx);
     break;
-  case RISCV_F_UN_RM_TYPE_H:
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FSQRT_H) {
-      SStream_concat(ss, "fsqrt.h");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_W_H) {
-      SStream_concat(ss, "fcvt.w.h");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_h.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_WU_H) {
-      SStream_concat(ss, "fcvt.wu.h");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_h.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_H_W) {
-      SStream_concat(ss, "fcvt.h.w");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_H_WU) {
-      SStream_concat(ss, "fcvt.h.wu");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_L_H) {
-      SStream_concat(ss, "fcvt.l.h");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_h.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_LU_H) {
-      SStream_concat(ss, "fcvt.lu.h");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_h.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_H_L) {
-      SStream_concat(ss, "fcvt.h.l");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_H_LU) {
-      SStream_concat(ss, "fcvt.h.lu");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rd, ss, conf);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_H_S) {
-      SStream_concat(ss, "fcvt.h.s");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_H_D) {
-      SStream_concat(ss, "fcvt.h.d");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_S_H) {
-      SStream_concat(ss, "fcvt.s.h");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
-    if (tree->ast_node.f_un_rm_type_h.fcvt_h_lu == RISCV_FCVT_D_H) {
-      SStream_concat(ss, "fcvt.d.h");
-      spc(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rd, ss, conf);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_rm_type_h.rs1, ss, conf);
-      sep(ss, conf);
-      frm_mnemonic(tree->ast_node.f_un_rm_type_h.rm, ss);
-    }
+  case RISCV_F_BIN_X_TYPE_H:
+    f_bin_x_type_mnemonic_H(tree->ast_node.f_bin_x_type_h.fle_h, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.f_bin_x_type_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_x_type_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_bin_x_type_h.rs2, ss, ctx);
     break;
-  case RISCV_F_UN_TYPE_H:
-    if (tree->ast_node.f_un_type_h.fmv_h_x == RISCV_FMV_X_H) {
-      SStream_concat(ss, "fmv.x.h");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_type_h.rd, ss);
-      sep(ss, conf);
-      freg_name(tree->ast_node.f_un_type_h.rs1, ss);
-    }
-    if (tree->ast_node.f_un_type_h.fmv_h_x == RISCV_FMV_H_X) {
-      SStream_concat(ss, "fmv.h.x");
-      spc(ss, conf);
-      freg_name(tree->ast_node.f_un_type_h.rd, ss);
-      sep(ss, conf);
-      reg_name(tree->ast_node.f_un_type_h.rs1, ss);
-    }
-    if (tree->ast_node.f_un_type_h.fmv_h_x == RISCV_FCLASS_H) {
-      SStream_concat(ss, "fclass.h");
-      spc(ss, conf);
-      reg_name(tree->ast_node.f_un_type_h.rd, ss);
-      sep(ss, conf);
-      freg_or_reg_name(tree->ast_node.f_un_type_h.rs1, ss, conf);
-    }
+  case RISCV_F_UN_RM_FF_TYPE_H:
+    f_un_rm_ff_type_mnemonic_H(tree->ast_node.f_un_rm_ff_type_h.fcvt_d_h, ss);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_un_rm_ff_type_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_un_rm_ff_type_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    frm_mnemonic(tree->ast_node.f_un_rm_ff_type_h.rm, ss);
+    break;
+  case RISCV_F_UN_RM_FX_TYPE_H:
+    f_un_rm_fx_type_mnemonic_H(tree->ast_node.f_un_rm_fx_type_h.fcvt_lu_h, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.f_un_rm_fx_type_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_un_rm_fx_type_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    frm_mnemonic(tree->ast_node.f_un_rm_fx_type_h.rm, ss);
+    break;
+  case RISCV_F_UN_RM_XF_TYPE_H:
+    f_un_rm_xf_type_mnemonic_H(tree->ast_node.f_un_rm_xf_type_h.fcvt_h_lu, ss);
+    spc(ss, ctx);
+    freg_or_reg_name(tree->ast_node.f_un_rm_xf_type_h.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.f_un_rm_xf_type_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    frm_mnemonic(tree->ast_node.f_un_rm_xf_type_h.rm, ss);
+    break;
+  case RISCV_F_UN_F_TYPE_H:
+    f_un_f_type_mnemonic_H(tree->ast_node.f_un_f_type_h.fmv_h_x, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.f_un_f_type_h.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.f_un_f_type_h.rs1, ss, ctx);
+    break;
+  case RISCV_F_UN_X_TYPE_H:
+    f_un_x_type_mnemonic_H(tree->ast_node.f_un_x_type_h.fmv_x_h, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.f_un_x_type_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.f_un_x_type_h.rs1, ss, ctx);
     break;
   case RISCV_FLI_H:
     SStream_concat(ss, "fli.h");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fli_h.rd, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.riscv_fli_h.constantidx, ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fli_h.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.riscv_fli_h.constantidx, ss, ctx);
     break;
   case RISCV_FLI_S:
     SStream_concat(ss, "fli.s");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fli_s.rd, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.riscv_fli_s.constantidx, ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fli_s.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.riscv_fli_s.constantidx, ss, ctx);
     break;
   case RISCV_FLI_D:
     SStream_concat(ss, "fli.d");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fli_d.rd, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.riscv_fli_d.constantidx, ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fli_d.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.riscv_fli_d.constantidx, ss, ctx);
     break;
   case RISCV_FMINM_H:
     SStream_concat(ss, "fminm.h");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fminm_h.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fminm_h.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fminm_h.rs2, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fminm_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fminm_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fminm_h.rs2, ss, ctx);
     break;
   case RISCV_FMAXM_H:
     SStream_concat(ss, "fmaxm.h");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fmaxm_h.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fmaxm_h.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fmaxm_h.rs2, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmaxm_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmaxm_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmaxm_h.rs2, ss, ctx);
     break;
   case RISCV_FMINM_S:
     SStream_concat(ss, "fminm.s");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fminm_s.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fminm_s.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fminm_s.rs2, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fminm_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fminm_s.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fminm_s.rs2, ss, ctx);
     break;
   case RISCV_FMAXM_S:
     SStream_concat(ss, "fmaxm.s");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fmaxm_s.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fmaxm_s.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fmaxm_s.rs2, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmaxm_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmaxm_s.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmaxm_s.rs2, ss, ctx);
     break;
   case RISCV_FMINM_D:
     SStream_concat(ss, "fminm.d");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fminm_d.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fminm_d.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fminm_d.rs2, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fminm_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fminm_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fminm_d.rs2, ss, ctx);
     break;
   case RISCV_FMAXM_D:
     SStream_concat(ss, "fmaxm.d");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fmaxm_d.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fmaxm_d.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fmaxm_d.rs2, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmaxm_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmaxm_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmaxm_d.rs2, ss, ctx);
     break;
   case RISCV_FROUND_H:
     SStream_concat(ss, "fround.h");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fround_h.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fround_h.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fround_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fround_h.rs1, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.riscv_fround_h.rm, ss);
     break;
   case RISCV_FROUNDNX_H:
     SStream_concat(ss, "froundnx.h");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_froundnx_h.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_froundnx_h.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_froundnx_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_froundnx_h.rs1, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.riscv_froundnx_h.rm, ss);
     break;
   case RISCV_FROUND_S:
     SStream_concat(ss, "fround.s");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fround_s.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fround_s.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fround_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fround_s.rs1, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.riscv_fround_s.rm, ss);
     break;
   case RISCV_FROUNDNX_S:
     SStream_concat(ss, "froundnx.s");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_froundnx_s.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_froundnx_s.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_froundnx_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_froundnx_s.rs1, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.riscv_froundnx_s.rm, ss);
     break;
   case RISCV_FROUND_D:
     SStream_concat(ss, "fround.d");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fround_d.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fround_d.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fround_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fround_d.rs1, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.riscv_fround_d.rm, ss);
     break;
   case RISCV_FROUNDNX_D:
     SStream_concat(ss, "froundnx.d");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_froundnx_d.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_froundnx_d.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_froundnx_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_froundnx_d.rs1, ss, ctx);
+    sep(ss, ctx);
     frm_mnemonic(tree->ast_node.riscv_froundnx_d.rm, ss);
     break;
   case RISCV_FMVH_X_D:
     SStream_concat(ss, "fmvh.x.d");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_fmvh_x_d.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fmvh_x_d.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_fmvh_x_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmvh_x_d.rs1, ss, ctx);
     break;
   case RISCV_FMVP_D_X:
     SStream_concat(ss, "fmvp.d.x");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fmvp_d_x.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_fmvp_d_x.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_fmvp_d_x.rs2, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.riscv_fmvp_d_x.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_fmvp_d_x.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_fmvp_d_x.rs2, ss, ctx);
     break;
   case RISCV_FLEQ_H:
     SStream_concat(ss, "fleq.h");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fleq_h.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fleq_h.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fleq_h.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_fleq_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fleq_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fleq_h.rs2, ss, ctx);
     break;
   case RISCV_FLTQ_H:
     SStream_concat(ss, "fltq.h");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fltq_h.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fltq_h.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fltq_h.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_fltq_h.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fltq_h.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fltq_h.rs2, ss, ctx);
     break;
   case RISCV_FLEQ_S:
     SStream_concat(ss, "fleq.s");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fleq_s.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fleq_s.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fleq_s.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_fleq_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fleq_s.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fleq_s.rs2, ss, ctx);
     break;
   case RISCV_FLTQ_S:
     SStream_concat(ss, "fltq.s");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fltq_s.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fltq_s.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fltq_s.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_fltq_s.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fltq_s.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fltq_s.rs2, ss, ctx);
     break;
   case RISCV_FLEQ_D:
     SStream_concat(ss, "fleq.d");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fleq_d.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fleq_d.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fleq_d.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_fleq_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fleq_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fleq_d.rs2, ss, ctx);
     break;
   case RISCV_FLTQ_D:
     SStream_concat(ss, "fltq.d");
-    spc(ss, conf);
-    freg_name(tree->ast_node.riscv_fltq_d.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fltq_d.rs1, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fltq_d.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_fltq_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fltq_d.rs1, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fltq_d.rs2, ss, ctx);
     break;
   case RISCV_FCVTMOD_W_D:
     SStream_concat(ss, "fcvtmod.w.d");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_fcvtmod_w_d.rd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.riscv_fcvtmod_w_d.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_fcvtmod_w_d.rd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.riscv_fcvtmod_w_d.rs1, ss, ctx);
     break;
   case RISCV_SHA256SIG0:
     SStream_concat(ss, "sha256sig0");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha256sig0.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha256sig0.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha256sig0.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha256sig0.rs1, ss, ctx);
     break;
   case RISCV_SHA256SIG1:
     SStream_concat(ss, "sha256sig1");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha256sig1.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha256sig1.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha256sig1.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha256sig1.rs1, ss, ctx);
     break;
   case RISCV_SHA256SUM0:
     SStream_concat(ss, "sha256sum0");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha256sum0.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha256sum0.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha256sum0.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha256sum0.rs1, ss, ctx);
     break;
   case RISCV_SHA256SUM1:
     SStream_concat(ss, "sha256sum1");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha256sum1.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha256sum1.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha256sum1.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha256sum1.rs1, ss, ctx);
     break;
   case RISCV_AES32ESMI:
     SStream_concat(ss, "aes32esmi");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes32esmi.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes32esmi.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes32esmi.rs2, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.aes32esmi.bs, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes32esmi.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes32esmi.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes32esmi.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.aes32esmi.bs, ss, ctx);
     break;
   case RISCV_AES32ESI:
     SStream_concat(ss, "aes32esi");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes32esi.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes32esi.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes32esi.rs2, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.aes32esi.bs, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes32esi.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes32esi.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes32esi.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.aes32esi.bs, ss, ctx);
     break;
   case RISCV_AES32DSMI:
     SStream_concat(ss, "aes32dsmi");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes32dsmi.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes32dsmi.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes32dsmi.rs2, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.aes32dsmi.bs, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes32dsmi.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes32dsmi.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes32dsmi.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.aes32dsmi.bs, ss, ctx);
     break;
   case RISCV_AES32DSI:
     SStream_concat(ss, "aes32dsi");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes32dsi.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes32dsi.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes32dsi.rs2, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.aes32dsi.bs, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes32dsi.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes32dsi.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes32dsi.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.aes32dsi.bs, ss, ctx);
     break;
   case RISCV_SHA512SIG0L:
     SStream_concat(ss, "sha512sig0l");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha512sig0l.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sig0l.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sig0l.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha512sig0l.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sig0l.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sig0l.rs2, ss, ctx);
     break;
   case RISCV_SHA512SIG0H:
     SStream_concat(ss, "sha512sig0h");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha512sig0h.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sig0h.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sig0h.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha512sig0h.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sig0h.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sig0h.rs2, ss, ctx);
     break;
   case RISCV_SHA512SIG1L:
     SStream_concat(ss, "sha512sig1l");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha512sig1l.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sig1l.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sig1l.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha512sig1l.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sig1l.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sig1l.rs2, ss, ctx);
     break;
   case RISCV_SHA512SIG1H:
     SStream_concat(ss, "sha512sig1h");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha512sig1h.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sig1h.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sig1h.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha512sig1h.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sig1h.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sig1h.rs2, ss, ctx);
     break;
   case RISCV_SHA512SUM0R:
     SStream_concat(ss, "sha512sum0r");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha512sum0r.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sum0r.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sum0r.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha512sum0r.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sum0r.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sum0r.rs2, ss, ctx);
     break;
   case RISCV_SHA512SUM1R:
     SStream_concat(ss, "sha512sum1r");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha512sum1r.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sum1r.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sum1r.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha512sum1r.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sum1r.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sum1r.rs2, ss, ctx);
     break;
   case RISCV_AES64KS1I:
     SStream_concat(ss, "aes64ks1i");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes64ks1i.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64ks1i.rs1, ss);
-    sep(ss, conf);
-    hex_bits_4(tree->ast_node.aes64ks1i.rnum, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes64ks1i.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64ks1i.rs1, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_4(tree->ast_node.aes64ks1i.rnum, ss, ctx);
     break;
   case RISCV_AES64KS2:
     SStream_concat(ss, "aes64ks2");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes64ks2.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64ks2.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64ks2.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes64ks2.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64ks2.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64ks2.rs2, ss, ctx);
     break;
   case RISCV_AES64IM:
     SStream_concat(ss, "aes64im");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes64im.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64im.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes64im.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64im.rs1, ss, ctx);
     break;
   case RISCV_AES64ESM:
     SStream_concat(ss, "aes64esm");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes64esm.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64esm.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64esm.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes64esm.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64esm.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64esm.rs2, ss, ctx);
     break;
   case RISCV_AES64ES:
     SStream_concat(ss, "aes64es");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes64es.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64es.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64es.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes64es.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64es.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64es.rs2, ss, ctx);
     break;
   case RISCV_AES64DSM:
     SStream_concat(ss, "aes64dsm");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes64dsm.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64dsm.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64dsm.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes64dsm.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64dsm.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64dsm.rs2, ss, ctx);
     break;
   case RISCV_AES64DS:
     SStream_concat(ss, "aes64ds");
-    spc(ss, conf);
-    reg_name(tree->ast_node.aes64ds.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64ds.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.aes64ds.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.aes64ds.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64ds.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.aes64ds.rs2, ss, ctx);
     break;
   case RISCV_SHA512SIG0:
     SStream_concat(ss, "sha512sig0");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha512sig0.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sig0.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha512sig0.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sig0.rs1, ss, ctx);
     break;
   case RISCV_SHA512SIG1:
     SStream_concat(ss, "sha512sig1");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha512sig1.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sig1.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha512sig1.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sig1.rs1, ss, ctx);
     break;
   case RISCV_SHA512SUM0:
     SStream_concat(ss, "sha512sum0");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha512sum0.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sum0.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha512sum0.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sum0.rs1, ss, ctx);
     break;
   case RISCV_SHA512SUM1:
     SStream_concat(ss, "sha512sum1");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sha512sum1.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sha512sum1.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sha512sum1.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sha512sum1.rs1, ss, ctx);
     break;
   case RISCV_SM3P0:
     SStream_concat(ss, "sm3p0");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sm3p0.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sm3p0.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sm3p0.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sm3p0.rs1, ss, ctx);
     break;
   case RISCV_SM3P1:
     SStream_concat(ss, "sm3p1");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sm3p1.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sm3p1.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sm3p1.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sm3p1.rs1, ss, ctx);
     break;
   case RISCV_SM4ED:
     SStream_concat(ss, "sm4ed");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sm4ed.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sm4ed.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sm4ed.rs2, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.sm4ed.bs, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sm4ed.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sm4ed.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sm4ed.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.sm4ed.bs, ss, ctx);
     break;
   case RISCV_SM4KS:
     SStream_concat(ss, "sm4ks");
-    spc(ss, conf);
-    reg_name(tree->ast_node.sm4ks.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sm4ks.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.sm4ks.rs2, ss);
-    sep(ss, conf);
-    hex_bits_2(tree->ast_node.sm4ks.bs, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.sm4ks.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sm4ks.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.sm4ks.rs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_2(tree->ast_node.sm4ks.bs, ss, ctx);
     break;
   case RISCV_ZBKB_RTYPE:
     zbkb_rtype_mnemonic(tree->ast_node.zbkb_rtype.op, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.zbkb_rtype.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbkb_rtype.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbkb_rtype.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zbkb_rtype.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbkb_rtype.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbkb_rtype.rs2, ss, ctx);
     break;
   case RISCV_ZBKB_PACKW:
     SStream_concat(ss, "packw");
-    spc(ss, conf);
-    reg_name(tree->ast_node.zbkb_packw.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbkb_packw.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zbkb_packw.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zbkb_packw.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbkb_packw.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zbkb_packw.rs2, ss, ctx);
     break;
   case RISCV_ZIP:
     SStream_concat(ss, "zip");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_zip.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_zip.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_zip.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_zip.rs1, ss, ctx);
     break;
   case RISCV_UNZIP:
     SStream_concat(ss, "unzip");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_unzip.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_unzip.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_unzip.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_unzip.rs1, ss, ctx);
     break;
   case RISCV_BREV8:
     SStream_concat(ss, "brev8");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_brev8.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_brev8.rs1, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_brev8.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_brev8.rs1, ss, ctx);
     break;
   case RISCV_XPERM8:
     SStream_concat(ss, "xperm8");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_xperm8.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_xperm8.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_xperm8.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_xperm8.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_xperm8.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_xperm8.rs2, ss, ctx);
     break;
   case RISCV_XPERM4:
     SStream_concat(ss, "xperm4");
-    spc(ss, conf);
-    reg_name(tree->ast_node.riscv_xperm4.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_xperm4.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.riscv_xperm4.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_xperm4.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_xperm4.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.riscv_xperm4.rs2, ss, ctx);
     break;
   case RISCV_ZICOND_RTYPE:
     zicond_mnemonic(tree->ast_node.zicond_rtype.riscv_czero_nez, ss);
-    spc(ss, conf);
-    reg_name(tree->ast_node.zicond_rtype.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zicond_rtype.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.zicond_rtype.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zicond_rtype.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zicond_rtype.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zicond_rtype.rs2, ss, ctx);
     break;
   case RISCV_VSETVLI:
     SStream_concat(ss, "vsetvli");
-    spc(ss, conf);
-    reg_name(tree->ast_node.vsetvli.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vsetvli.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.vsetvli.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vsetvli.rs1, ss, ctx);
+    sep(ss, ctx);
     sew_flag(tree->ast_node.vsetvli.sew, ss);
-    maybe_lmul_flag(tree->ast_node.vsetvli.lmul, ss, conf);
-    maybe_ta_flag(tree->ast_node.vsetvli.ta, ss, conf);
-    maybe_ma_flag(tree->ast_node.vsetvli.ma, ss, conf);
+    maybe_lmul_flag(tree->ast_node.vsetvli.lmul, ss, ctx);
+    ta_flag(tree->ast_node.vsetvli.ta, ss, ctx);
+    ma_flag(tree->ast_node.vsetvli.ma, ss, ctx);
     break;
   case RISCV_VSETVL:
     SStream_concat(ss, "vsetvl");
-    spc(ss, conf);
-    reg_name(tree->ast_node.vsetvl.rd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vsetvl.rs1, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vsetvl.rs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.vsetvl.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vsetvl.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vsetvl.rs2, ss, ctx);
     break;
   case RISCV_VSETIVLI:
     SStream_concat(ss, "vsetivli");
-    spc(ss, conf);
-    reg_name(tree->ast_node.vsetivli.rd, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.vsetivli.uimm, ss, conf);
-    sep(ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.vsetivli.rd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.vsetivli.uimm, ss, ctx);
+    sep(ss, ctx);
     sew_flag(tree->ast_node.vsetivli.sew, ss);
-    maybe_lmul_flag(tree->ast_node.vsetivli.lmul, ss, conf);
-    maybe_ta_flag(tree->ast_node.vsetivli.ta, ss, conf);
-    maybe_ma_flag(tree->ast_node.vsetivli.ma, ss, conf);
+    maybe_lmul_flag(tree->ast_node.vsetivli.lmul, ss, ctx);
+    ta_flag(tree->ast_node.vsetivli.ta, ss, ctx);
+    ma_flag(tree->ast_node.vsetivli.ma, ss, ctx);
     break;
   case RISCV_VVTYPE:
     vvtype_mnemonic(tree->ast_node.vvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.vvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vvtype.vm, ss, ctx);
     break;
   case RISCV_NVSTYPE:
     nvstype_mnemonic(tree->ast_node.nvstype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.nvstype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.nvstype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.nvstype.vs1, ss);
-    maybe_vmask(tree->ast_node.nvstype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.nvstype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.nvstype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.nvstype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.nvstype.vm, ss, ctx);
     break;
   case RISCV_NVTYPE:
     nvtype_mnemonic(tree->ast_node.nvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.nvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.nvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.nvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.nvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.nvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.nvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.nvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.nvtype.vm, ss, ctx);
     break;
   case RISCV_MASKTYPEV:
     SStream_concat(ss, "vmerge.vvm");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.masktypev.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.masktypev.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.masktypev.vs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.masktypev.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.masktypev.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.masktypev.vs1, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "v0");
     break;
   case RISCV_MOVETYPEV:
     SStream_concat(ss, "vmv.v.v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.movetypev.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.movetypev.vs1, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.movetypev.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.movetypev.vs1, ss, ctx);
     break;
   case RISCV_VXTYPE:
     vxtype_mnemonic(tree->ast_node.vxtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vxtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vxtype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vxtype.rs1, ss);
-    maybe_vmask(tree->ast_node.vxtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vxtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vxtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vxtype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vxtype.vm, ss, ctx);
     break;
   case RISCV_NXSTYPE:
     nxstype_mnemonic(tree->ast_node.nxstype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.nxstype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.nxstype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.nxstype.rs1, ss);
-    maybe_vmask(tree->ast_node.nxstype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.nxstype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.nxstype.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.nxstype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.nxstype.vm, ss, ctx);
     break;
   case RISCV_NXTYPE:
     nxtype_mnemonic(tree->ast_node.nxtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.nxtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.nxtype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.nxtype.rs1, ss);
-    maybe_vmask(tree->ast_node.nxtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.nxtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.nxtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.nxtype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.nxtype.vm, ss, ctx);
     break;
   case RISCV_VXSG:
     vxsg_mnemonic(tree->ast_node.vxsg.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vxsg.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vxsg.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vxsg.rs1, ss);
-    maybe_vmask(tree->ast_node.vxsg.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vxsg.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vxsg.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vxsg.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vxsg.vm, ss, ctx);
     break;
   case RISCV_MASKTYPEX:
     SStream_concat(ss, "vmerge.vxm");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.masktypex.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.masktypex.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.masktypex.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.masktypex.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.masktypex.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.masktypex.rs1, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "v0");
     break;
   case RISCV_MOVETYPEX:
     SStream_concat(ss, "vmv.v.x");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.movetypex.vd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.movetypex.rs1, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.movetypex.vd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.movetypex.rs1, ss, ctx);
     break;
   case RISCV_VITYPE:
     vitype_mnemonic(tree->ast_node.vitype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vitype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vitype.vs2, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.vitype.simm, ss, conf);
-    maybe_vmask(tree->ast_node.vitype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vitype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vitype.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.vitype.simm, ss, ctx);
+    maybe_vmask(tree->ast_node.vitype.vm, ss, ctx);
     break;
   case RISCV_NISTYPE:
     nistype_mnemonic(tree->ast_node.nistype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.nistype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.nistype.vs2, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.nistype.simm, ss, conf);
-    maybe_vmask(tree->ast_node.nistype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.nistype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.nistype.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.nistype.simm, ss, ctx);
+    maybe_vmask(tree->ast_node.nistype.vm, ss, ctx);
     break;
   case RISCV_NITYPE:
     nitype_mnemonic(tree->ast_node.nitype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.nitype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.nitype.vs2, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.nitype.simm, ss, conf);
-    maybe_vmask(tree->ast_node.nitype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.nitype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.nitype.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.nitype.simm, ss, ctx);
+    maybe_vmask(tree->ast_node.nitype.vm, ss, ctx);
     break;
   case RISCV_VISG:
     visg_mnemonic(tree->ast_node.visg.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.visg.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.visg.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.visg.simm, ss);
-    maybe_vmask(tree->ast_node.visg.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.visg.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.visg.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.visg.simm, ss, ctx);
+    maybe_vmask(tree->ast_node.visg.vm, ss, ctx);
     break;
   case RISCV_MASKTYPEI:
     SStream_concat(ss, "vmerge.vim");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.masktypei.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.masktypei.vs2, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.masktypei.simm, ss, conf);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.masktypei.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.masktypei.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.masktypei.simm, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "v0");
     break;
   case RISCV_MOVETYPEI:
     SStream_concat(ss, "vmv.v.i");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.movetypei.vd, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.movetypei.simm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.movetypei.vd, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.movetypei.simm, ss, ctx);
     break;
   case RISCV_VMVRTYPE:
     SStream_concat(ss, "vmv");
     simm_string(tree->ast_node.vmvrtype.simm, ss);
     SStream_concat(ss, "r.v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vmvrtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vmvrtype.vs2, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vmvrtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vmvrtype.vs2, ss, ctx);
     break;
   case RISCV_MVVTYPE:
     mvvtype_mnemonic(tree->ast_node.mvvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.mvvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.mvvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.mvvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.mvvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.mvvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.mvvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.mvvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.mvvtype.vm, ss, ctx);
     break;
   case RISCV_MVVMATYPE:
     mvvmatype_mnemonic(tree->ast_node.mvvmatype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.mvvmatype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.mvvmatype.vs1, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.mvvmatype.vs2, ss);
-    maybe_vmask(tree->ast_node.mvvmatype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.mvvmatype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.mvvmatype.vs1, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.mvvmatype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.mvvmatype.vm, ss, ctx);
     break;
   case RISCV_WVVTYPE:
     wvvtype_mnemonic(tree->ast_node.wvvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.wvvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.wvvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.wvvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.wvvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.wvvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.wvvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.wvvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.wvvtype.vm, ss, ctx);
     break;
   case RISCV_WVTYPE:
     wvtype_mnemonic(tree->ast_node.wvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.wvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.wvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.wvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.wvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.wvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.wvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.wvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.wvtype.vm, ss, ctx);
     break;
   case RISCV_WMVVTYPE:
     wmvvtype_mnemonic(tree->ast_node.wmvvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.wmvvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.wmvvtype.vs1, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.wmvvtype.vs2, ss);
-    maybe_vmask(tree->ast_node.wmvvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.wmvvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.wmvvtype.vs1, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.wmvvtype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.wmvvtype.vm, ss, ctx);
     break;
   case RISCV_VEXT2TYPE:
     vext2type_mnemonic(tree->ast_node.vext2type.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vext2type.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vext2type.vs2, ss);
-    maybe_vmask(tree->ast_node.vext2type.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vext2type.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vext2type.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vext2type.vm, ss, ctx);
     break;
   case RISCV_VEXT4TYPE:
     vext4type_mnemonic(tree->ast_node.vext4type.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vext4type.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vext4type.vs2, ss);
-    maybe_vmask(tree->ast_node.vext4type.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vext4type.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vext4type.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vext4type.vm, ss, ctx);
     break;
   case RISCV_VEXT8TYPE:
     vext8type_mnemonic(tree->ast_node.vext8type.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vext8type.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vext8type.vs2, ss);
-    maybe_vmask(tree->ast_node.vext8type.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vext8type.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vext8type.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vext8type.vm, ss, ctx);
     break;
   case RISCV_VMVXS:
     SStream_concat(ss, "vmv.x.s");
-    spc(ss, conf);
-    reg_name(tree->ast_node.vmvxs.rd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vmvxs.vs2, ss);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.vmvxs.rd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vmvxs.vs2, ss, ctx);
     break;
   case RISCV_MVVCOMPRESS:
     SStream_concat(ss, "vcompress.vm");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.mvvcompress.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.mvvcompress.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.mvvcompress.vs1, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.mvvcompress.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.mvvcompress.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.mvvcompress.vs1, ss, ctx);
     break;
   case RISCV_MVXTYPE:
     mvxtype_mnemonic(tree->ast_node.mvxtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.mvxtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.mvxtype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.mvxtype.rs1, ss);
-    maybe_vmask(tree->ast_node.mvxtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.mvxtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.mvxtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.mvxtype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.mvxtype.vm, ss, ctx);
     break;
   case RISCV_MVXMATYPE:
     mvxmatype_mnemonic(tree->ast_node.mvxmatype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.mvxmatype.vd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.mvxmatype.rs1, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.mvxmatype.vs2, ss);
-    maybe_vmask(tree->ast_node.mvxmatype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.mvxmatype.vd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.mvxmatype.rs1, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.mvxmatype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.mvxmatype.vm, ss, ctx);
     break;
   case RISCV_WVXTYPE:
     wvxtype_mnemonic(tree->ast_node.wvxtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.wvxtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.wvxtype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.wvxtype.rs1, ss);
-    maybe_vmask(tree->ast_node.wvxtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.wvxtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.wvxtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.wvxtype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.wvxtype.vm, ss, ctx);
     break;
   case RISCV_WXTYPE:
     wxtype_mnemonic(tree->ast_node.wxtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.wxtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.wxtype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.wxtype.rs1, ss);
-    maybe_vmask(tree->ast_node.wxtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.wxtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.wxtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.wxtype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.wxtype.vm, ss, ctx);
     break;
   case RISCV_WMVXTYPE:
     wmvxtype_mnemonic(tree->ast_node.wmvxtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.wmvxtype.vd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.wmvxtype.rs1, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.wmvxtype.vs2, ss);
-    maybe_vmask(tree->ast_node.wmvxtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.wmvxtype.vd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.wmvxtype.rs1, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.wmvxtype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.wmvxtype.vm, ss, ctx);
     break;
   case RISCV_VMVSX:
     SStream_concat(ss, "vmv.s.x");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vmvsx.vd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vmvsx.rs1, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vmvsx.vd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vmvsx.rs1, ss, ctx);
     break;
   case RISCV_FVVTYPE:
     fvvtype_mnemonic(tree->ast_node.fvvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fvvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fvvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fvvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.fvvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fvvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fvvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fvvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.fvvtype.vm, ss, ctx);
     break;
   case RISCV_FVVMATYPE:
     fvvmatype_mnemonic(tree->ast_node.fvvmatype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fvvmatype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fvvmatype.vs1, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fvvmatype.vs2, ss);
-    maybe_vmask(tree->ast_node.fvvmatype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fvvmatype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fvvmatype.vs1, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fvvmatype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.fvvmatype.vm, ss, ctx);
     break;
   case RISCV_FWVVTYPE:
     fwvvtype_mnemonic(tree->ast_node.fwvvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fwvvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fwvvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fwvvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.fwvvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fwvvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fwvvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fwvvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.fwvvtype.vm, ss, ctx);
     break;
   case RISCV_FWVVMATYPE:
     fwvvmatype_mnemonic(tree->ast_node.fwvvmatype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fwvvmatype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fwvvmatype.vs1, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fwvvmatype.vs2, ss);
-    maybe_vmask(tree->ast_node.fwvvmatype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fwvvmatype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fwvvmatype.vs1, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fwvvmatype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.fwvvmatype.vm, ss, ctx);
     break;
   case RISCV_FWVTYPE:
     fwvtype_mnemonic(tree->ast_node.fwvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fwvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fwvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fwvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.fwvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fwvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fwvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fwvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.fwvtype.vm, ss, ctx);
     break;
   case RISCV_VFUNARY0:
     vfunary0_mnemonic(tree->ast_node.vfunary0.vfunary0, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vfunary0.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vfunary0.vs2, ss);
-    maybe_vmask(tree->ast_node.vfunary0.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vfunary0.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vfunary0.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vfunary0.vm, ss, ctx);
     break;
   case RISCV_VFWUNARY0:
     vfwunary0_mnemonic(tree->ast_node.vfwunary0.vfwunary0, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vfwunary0.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vfwunary0.vs2, ss);
-    maybe_vmask(tree->ast_node.vfwunary0.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vfwunary0.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vfwunary0.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vfwunary0.vm, ss, ctx);
     break;
   case RISCV_VFNUNARY0:
     vfnunary0_mnemonic(tree->ast_node.vfnunary0.vfnunary0, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vfnunary0.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vfnunary0.vs2, ss);
-    maybe_vmask(tree->ast_node.vfnunary0.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vfnunary0.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vfnunary0.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vfnunary0.vm, ss, ctx);
     break;
   case RISCV_VFUNARY1:
     vfunary1_mnemonic(tree->ast_node.vfunary1.vfunary1, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vfunary1.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vfunary1.vs2, ss);
-    maybe_vmask(tree->ast_node.vfunary1.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vfunary1.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vfunary1.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vfunary1.vm, ss, ctx);
     break;
   case RISCV_VFMVFS:
     SStream_concat(ss, "vfmv.f.s");
-    spc(ss, conf);
-    freg_name(tree->ast_node.vfmvfs.rd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vfmvfs.vs2, ss);
+    spc(ss, ctx);
+    freg_name(tree->ast_node.vfmvfs.rd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vfmvfs.vs2, ss, ctx);
     break;
   case RISCV_FVFTYPE:
     fvftype_mnemonic(tree->ast_node.fvftype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fvftype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fvftype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.fvftype.rs1, ss);
-    maybe_vmask(tree->ast_node.fvftype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fvftype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fvftype.vs2, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.fvftype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.fvftype.vm, ss, ctx);
     break;
   case RISCV_FVFMATYPE:
     fvfmatype_mnemonic(tree->ast_node.fvfmatype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fvfmatype.vd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.fvfmatype.rs1, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fvfmatype.vs2, ss);
-    maybe_vmask(tree->ast_node.fvfmatype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fvfmatype.vd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.fvfmatype.rs1, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fvfmatype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.fvfmatype.vm, ss, ctx);
     break;
   case RISCV_FWVFTYPE:
     fwvftype_mnemonic(tree->ast_node.fwvftype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fwvftype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fwvftype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.fwvftype.rs1, ss);
-    maybe_vmask(tree->ast_node.fwvftype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fwvftype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fwvftype.vs2, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.fwvftype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.fwvftype.vm, ss, ctx);
     break;
   case RISCV_FWVFMATYPE:
     fwvfmatype_mnemonic(tree->ast_node.fwvfmatype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fwvfmatype.vd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.fwvfmatype.rs1, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fwvfmatype.vs2, ss);
-    maybe_vmask(tree->ast_node.fwvfmatype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fwvfmatype.vd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.fwvfmatype.rs1, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fwvfmatype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.fwvfmatype.vm, ss, ctx);
     break;
   case RISCV_FWFTYPE:
     fwftype_mnemonic(tree->ast_node.fwftype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fwftype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fwftype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.fwftype.rs1, ss);
-    maybe_vmask(tree->ast_node.fwftype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fwftype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fwftype.vs2, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.fwftype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.fwftype.vm, ss, ctx);
     break;
   case RISCV_VFMERGE:
     SStream_concat(ss, "vfmerge.vfm");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vfmerge.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vfmerge.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vfmerge.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vfmerge.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vfmerge.vs2, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.vfmerge.rs1, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "v0");
     break;
   case RISCV_VFMV:
     SStream_concat(ss, "vfmv.v.f");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vfmv.vd, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vfmv.rs1, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vfmv.vd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.vfmv.rs1, ss, ctx);
     break;
   case RISCV_VFMVSF:
     SStream_concat(ss, "vfmv.s.f");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vfmvsf.vd, ss);
-    sep(ss, conf);
-    freg_name(tree->ast_node.vfmvsf.rs1, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vfmvsf.vd, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.vfmvsf.rs1, ss, ctx);
     break;
   case RISCV_VLSEGTYPE:
     SStream_concat(ss, "vl");
@@ -2754,13 +2337,13 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     SStream_concat(ss, "e");
     vlewidth_bitsnumberstr(tree->ast_node.vlsegtype.width, ss);
     SStream_concat(ss, ".v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vlsegtype.vd, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vlsegtype.vd, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vlsegtype.rs1, ss);
+    reg_name(tree->ast_node.vlsegtype.rs1, ss, ctx);
     SStream_concat(ss, ")");
-    maybe_vmask(tree->ast_node.vlsegtype.vm, ss, conf);
+    maybe_vmask(tree->ast_node.vlsegtype.vm, ss, ctx);
     break;
   case RISCV_VLSEGFFTYPE:
     SStream_concat(ss, "vl");
@@ -2768,13 +2351,13 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     SStream_concat(ss, "e");
     vlewidth_bitsnumberstr(tree->ast_node.vlsegfftype.width, ss);
     SStream_concat(ss, "ff.v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vlsegfftype.vd, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vlsegfftype.vd, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vlsegfftype.rs1, ss);
+    reg_name(tree->ast_node.vlsegfftype.rs1, ss, ctx);
     SStream_concat(ss, ")");
-    maybe_vmask(tree->ast_node.vlsegfftype.vm, ss, conf);
+    maybe_vmask(tree->ast_node.vlsegfftype.vm, ss, ctx);
     break;
   case RISCV_VSSEGTYPE:
     SStream_concat(ss, "vs");
@@ -2782,13 +2365,13 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     SStream_concat(ss, "e");
     vlewidth_bitsnumberstr(tree->ast_node.vssegtype.width, ss);
     SStream_concat(ss, ".v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vssegtype.vs3, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vssegtype.vs3, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vssegtype.rs1, ss);
+    reg_name(tree->ast_node.vssegtype.rs1, ss, ctx);
     SStream_concat(ss, ")");
-    maybe_vmask(tree->ast_node.vssegtype.vm, ss, conf);
+    maybe_vmask(tree->ast_node.vssegtype.vm, ss, ctx);
     break;
   case RISCV_VLSSEGTYPE:
     SStream_concat(ss, "vls");
@@ -2796,15 +2379,15 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     SStream_concat(ss, "e");
     vlewidth_bitsnumberstr(tree->ast_node.vlssegtype.width, ss);
     SStream_concat(ss, ".v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vlssegtype.vd, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vlssegtype.vd, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vlssegtype.rs1, ss);
+    reg_name(tree->ast_node.vlssegtype.rs1, ss, ctx);
     SStream_concat(ss, ")");
-    sep(ss, conf);
-    reg_name(tree->ast_node.vlssegtype.rs2, ss);
-    maybe_vmask(tree->ast_node.vlssegtype.vm, ss, conf);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vlssegtype.rs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vlssegtype.vm, ss, ctx);
     break;
   case RISCV_VSSSEGTYPE:
     SStream_concat(ss, "vss");
@@ -2812,15 +2395,15 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     SStream_concat(ss, "e");
     vlewidth_bitsnumberstr(tree->ast_node.vsssegtype.width, ss);
     SStream_concat(ss, ".v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vsssegtype.vs3, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vsssegtype.vs3, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vsssegtype.rs1, ss);
+    reg_name(tree->ast_node.vsssegtype.rs1, ss, ctx);
     SStream_concat(ss, ")");
-    sep(ss, conf);
-    reg_name(tree->ast_node.vsssegtype.rs2, ss);
-    maybe_vmask(tree->ast_node.vsssegtype.vm, ss, conf);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vsssegtype.rs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vsssegtype.vm, ss, ctx);
     break;
   case RISCV_VLUXSEGTYPE:
     SStream_concat(ss, "vlux");
@@ -2828,15 +2411,15 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     SStream_concat(ss, "ei");
     vlewidth_bitsnumberstr(tree->ast_node.vluxsegtype.width, ss);
     SStream_concat(ss, ".v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vluxsegtype.vd, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vluxsegtype.vd, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vluxsegtype.rs1, ss);
+    reg_name(tree->ast_node.vluxsegtype.rs1, ss, ctx);
     SStream_concat(ss, ")");
-    sep(ss, conf);
-    reg_name(tree->ast_node.vluxsegtype.vs2, ss);
-    maybe_vmask(tree->ast_node.vluxsegtype.vm, ss, conf);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vluxsegtype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vluxsegtype.vm, ss, ctx);
     break;
   case RISCV_VLOXSEGTYPE:
     SStream_concat(ss, "vlox");
@@ -2844,15 +2427,15 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     SStream_concat(ss, "ei");
     vlewidth_bitsnumberstr(tree->ast_node.vloxsegtype.width, ss);
     SStream_concat(ss, ".v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vloxsegtype.vd, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vloxsegtype.vd, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vloxsegtype.rs1, ss);
+    reg_name(tree->ast_node.vloxsegtype.rs1, ss, ctx);
     SStream_concat(ss, ")");
-    sep(ss, conf);
-    reg_name(tree->ast_node.vloxsegtype.vs2, ss);
-    maybe_vmask(tree->ast_node.vloxsegtype.vm, ss, conf);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vloxsegtype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vloxsegtype.vm, ss, ctx);
     break;
   case RISCV_VSUXSEGTYPE:
     SStream_concat(ss, "vsux");
@@ -2860,15 +2443,15 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     SStream_concat(ss, "ei");
     vlewidth_bitsnumberstr(tree->ast_node.vsuxsegtype.width, ss);
     SStream_concat(ss, ".v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vsuxsegtype.vs3, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vsuxsegtype.vs3, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vsuxsegtype.rs1, ss);
+    reg_name(tree->ast_node.vsuxsegtype.rs1, ss, ctx);
     SStream_concat(ss, ")");
-    sep(ss, conf);
-    reg_name(tree->ast_node.vsuxsegtype.vs2, ss);
-    maybe_vmask(tree->ast_node.vsuxsegtype.vm, ss, conf);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vsuxsegtype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vsuxsegtype.vm, ss, ctx);
     break;
   case RISCV_VSOXSEGTYPE:
     SStream_concat(ss, "vsox");
@@ -2876,15 +2459,15 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     SStream_concat(ss, "ei");
     vlewidth_bitsnumberstr(tree->ast_node.vsoxsegtype.width, ss);
     SStream_concat(ss, ".v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vsoxsegtype.vs3, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vsoxsegtype.vs3, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vsoxsegtype.rs1, ss);
+    reg_name(tree->ast_node.vsoxsegtype.rs1, ss, ctx);
     SStream_concat(ss, ")");
-    sep(ss, conf);
-    reg_name(tree->ast_node.vsoxsegtype.vs2, ss);
-    maybe_vmask(tree->ast_node.vsoxsegtype.vm, ss, conf);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vsoxsegtype.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vsoxsegtype.vm, ss, ctx);
     break;
   case RISCV_VLRETYPE:
     SStream_concat(ss, "vl");
@@ -2892,296 +2475,535 @@ static void ast2str(struct ast *tree, SStream *ss, RVContext *conf) {
     SStream_concat(ss, "re");
     vlewidth_bitsnumberstr(tree->ast_node.vlretype.width, ss);
     SStream_concat(ss, ".v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vlretype.vd, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vlretype.vd, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vlretype.rs1, ss);
+    reg_name(tree->ast_node.vlretype.rs1, ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_VSRETYPE:
     SStream_concat(ss, "vs");
     nfields_string(tree->ast_node.vsretype.nf, ss);
     SStream_concat(ss, "r.v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vsretype.vs3, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vsretype.vs3, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vsretype.rs1, ss);
+    reg_name(tree->ast_node.vsretype.rs1, ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_VMTYPE:
     vmtype_mnemonic(tree->ast_node.vmtype.op, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vmtype.vd_or_vs3, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vmtype.vd_or_vs3, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "(");
-    reg_name(tree->ast_node.vmtype.rs1, ss);
+    reg_name(tree->ast_node.vmtype.rs1, ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_MMTYPE:
     mmtype_mnemonic(tree->ast_node.mmtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.mmtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.mmtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.mmtype.vs1, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.mmtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.mmtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.mmtype.vs1, ss, ctx);
     break;
   case RISCV_VCPOP_M:
     SStream_concat(ss, "vpopc.m");
-    spc(ss, conf);
-    reg_name(tree->ast_node.vcpop_m.rd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vcpop_m.vs2, ss);
-    maybe_vmask(tree->ast_node.vcpop_m.vm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.vcpop_m.rd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vcpop_m.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vcpop_m.vm, ss, ctx);
     break;
   case RISCV_VFIRST_M:
     SStream_concat(ss, "vfirst.m");
-    spc(ss, conf);
-    reg_name(tree->ast_node.vfirst_m.rd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vfirst_m.vs2, ss);
-    maybe_vmask(tree->ast_node.vfirst_m.vm, ss, conf);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.vfirst_m.rd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vfirst_m.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vfirst_m.vm, ss, ctx);
     break;
   case RISCV_VMSBF_M:
     SStream_concat(ss, "vmsbf.m");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vmsbf_m.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vmsbf_m.vs2, ss);
-    maybe_vmask(tree->ast_node.vmsbf_m.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vmsbf_m.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vmsbf_m.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vmsbf_m.vm, ss, ctx);
     break;
   case RISCV_VMSIF_M:
     SStream_concat(ss, "vmsif.m");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vmsif_m.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vmsif_m.vs2, ss);
-    maybe_vmask(tree->ast_node.vmsif_m.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vmsif_m.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vmsif_m.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vmsif_m.vm, ss, ctx);
     break;
   case RISCV_VMSOF_M:
     SStream_concat(ss, "vmsof.m");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vmsof_m.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vmsof_m.vs2, ss);
-    maybe_vmask(tree->ast_node.vmsof_m.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vmsof_m.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vmsof_m.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vmsof_m.vm, ss, ctx);
     break;
   case RISCV_VIOTA_M:
     SStream_concat(ss, "viota.m");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.viota_m.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.viota_m.vs2, ss);
-    maybe_vmask(tree->ast_node.viota_m.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.viota_m.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.viota_m.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.viota_m.vm, ss, ctx);
     break;
   case RISCV_VID_V:
     SStream_concat(ss, "vid.v");
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vid_v.vd, ss);
-    maybe_vmask(tree->ast_node.vid_v.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vid_v.vd, ss, ctx);
+    maybe_vmask(tree->ast_node.vid_v.vm, ss, ctx);
     break;
   case RISCV_VVMTYPE:
     vvmtype_mnemonic(tree->ast_node.vvmtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vvmtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vvmtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vvmtype.vs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vvmtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vvmtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vvmtype.vs1, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "v0");
     break;
   case RISCV_VVMCTYPE:
     vvmctype_mnemonic(tree->ast_node.vvmctype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vvmctype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vvmctype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vvmctype.vs1, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vvmctype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vvmctype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vvmctype.vs1, ss, ctx);
     break;
   case RISCV_VVMSTYPE:
     vvmstype_mnemonic(tree->ast_node.vvmstype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vvmstype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vvmstype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vvmstype.vs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vvmstype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vvmstype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vvmstype.vs1, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "v0");
     break;
   case RISCV_VVCMPTYPE:
     vvcmptype_mnemonic(tree->ast_node.vvcmptype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vvcmptype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vvcmptype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vvcmptype.vs1, ss);
-    maybe_vmask(tree->ast_node.vvcmptype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vvcmptype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vvcmptype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vvcmptype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vvcmptype.vm, ss, ctx);
     break;
   case RISCV_VXMTYPE:
     vxmtype_mnemonic(tree->ast_node.vxmtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vxmtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vxmtype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vxmtype.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vxmtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vxmtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vxmtype.rs1, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "v0");
     break;
   case RISCV_VXMCTYPE:
     vxmctype_mnemonic(tree->ast_node.vxmctype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vxmctype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vxmctype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vxmctype.rs1, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vxmctype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vxmctype.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vxmctype.rs1, ss, ctx);
     break;
   case RISCV_VXMSTYPE:
     vxmstype_mnemonic(tree->ast_node.vxmstype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vxmstype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vxmstype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vxmstype.rs1, ss);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vxmstype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vxmstype.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vxmstype.rs1, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "v0");
     break;
   case RISCV_VXCMPTYPE:
     vxcmptype_mnemonic(tree->ast_node.vxcmptype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vxcmptype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vxcmptype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.vxcmptype.rs1, ss);
-    maybe_vmask(tree->ast_node.vxcmptype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vxcmptype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vxcmptype.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vxcmptype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vxcmptype.vm, ss, ctx);
     break;
   case RISCV_VIMTYPE:
     vimtype_mnemonic(tree->ast_node.vimtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vimtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vimtype.vs2, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.vimtype.simm, ss, conf);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vimtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vimtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.vimtype.simm, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "v0");
     break;
   case RISCV_VIMCTYPE:
     vimctype_mnemonic(tree->ast_node.vimctype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vimctype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vimctype.vs2, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.vimctype.simm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vimctype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vimctype.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.vimctype.simm, ss, ctx);
     break;
   case RISCV_VIMSTYPE:
     vimstype_mnemonic(tree->ast_node.vimstype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vimstype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vimstype.vs2, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.vimstype.simm, ss, conf);
-    sep(ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vimstype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vimstype.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.vimstype.simm, ss, ctx);
+    sep(ss, ctx);
     SStream_concat(ss, "v0");
     break;
   case RISCV_VICMPTYPE:
     vicmptype_mnemonic(tree->ast_node.vicmptype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.vicmptype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.vicmptype.vs2, ss);
-    sep(ss, conf);
-    hex_bits_5(tree->ast_node.vicmptype.simm, ss, conf);
-    maybe_vmask(tree->ast_node.vicmptype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vicmptype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vicmptype.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.vicmptype.simm, ss, ctx);
+    maybe_vmask(tree->ast_node.vicmptype.vm, ss, ctx);
     break;
   case RISCV_FVVMTYPE:
     fvvmtype_mnemonic(tree->ast_node.fvvmtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fvvmtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fvvmtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fvvmtype.vs1, ss);
-    maybe_vmask(tree->ast_node.fvvmtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fvvmtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fvvmtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fvvmtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.fvvmtype.vm, ss, ctx);
     break;
   case RISCV_FVFMTYPE:
     fvfmtype_mnemonic(tree->ast_node.fvfmtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.fvfmtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.fvfmtype.vs2, ss);
-    sep(ss, conf);
-    reg_name(tree->ast_node.fvfmtype.rs1, ss);
-    maybe_vmask(tree->ast_node.fvfmtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.fvfmtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.fvfmtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    freg_name(tree->ast_node.fvfmtype.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.fvfmtype.vm, ss, ctx);
     break;
   case RISCV_RIVVTYPE:
     rivvtype_mnemonic(tree->ast_node.rivvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.rivvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.rivvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.rivvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.rivvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.rivvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.rivvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.rivvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.rivvtype.vm, ss, ctx);
     break;
   case RISCV_RMVVTYPE:
     rmvvtype_mnemonic(tree->ast_node.rmvvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.rmvvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.rmvvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.rmvvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.rmvvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.rmvvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.rmvvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.rmvvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.rmvvtype.vm, ss, ctx);
     break;
   case RISCV_RFVVTYPE:
     rfvvtype_mnemonic(tree->ast_node.rfvvtype.funct6, ss);
-    spc(ss, conf);
-    vreg_name(tree->ast_node.rfvvtype.vd, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.rfvvtype.vs2, ss);
-    sep(ss, conf);
-    vreg_name(tree->ast_node.rfvvtype.vs1, ss);
-    maybe_vmask(tree->ast_node.rfvvtype.vm, ss, conf);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.rfvvtype.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.rfvvtype.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.rfvvtype.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.rfvvtype.vm, ss, ctx);
     break;
   case RISCV_ZICBOM:
-    cbop_mnemonic(tree->ast_node.riscv_zicbom.cbop, ss);
-    spc(ss, conf);
+    cbop_mnemonic(tree->ast_node.riscv_zicbom.cbo_inval, ss);
+    spc(ss, ctx);
     SStream_concat(ss, "(");
-    opt_spc(ss, conf);
-    reg_name(tree->ast_node.riscv_zicbom.rs1, ss);
-    opt_spc(ss, conf);
+    opt_spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_zicbom.rs1, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, ")");
     break;
   case RISCV_ZICBOZ:
     SStream_concat(ss, "cbo.zero");
-    spc(ss, conf);
+    spc(ss, ctx);
     SStream_concat(ss, "(");
-    opt_spc(ss, conf);
-    reg_name(tree->ast_node.riscv_zicboz, ss);
-    opt_spc(ss, conf);
+    opt_spc(ss, ctx);
+    reg_name(tree->ast_node.riscv_zicboz, ss, ctx);
+    opt_spc(ss, ctx);
     SStream_concat(ss, ")");
+    break;
+  case RISCV_VANDN_VV:
+    SStream_concat(ss, "vandn.vv");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vandn_vv.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vandn_vv.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vandn_vv.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vandn_vv.vm, ss, ctx);
+    break;
+  case RISCV_VANDN_VX:
+    SStream_concat(ss, "vandn.vx");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vandn_vx.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vandn_vx.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vandn_vx.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vandn_vx.vm, ss, ctx);
+    break;
+  case RISCV_VBREV_V:
+    SStream_concat(ss, "vbrev.v");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vbrev_v.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vbrev_v.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vbrev_v.vm, ss, ctx);
+    break;
+  case RISCV_VBREV8_V:
+    SStream_concat(ss, "vbrev8.v");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vbrev8_v.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vbrev8_v.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vbrev8_v.vm, ss, ctx);
+    break;
+  case RISCV_VREV8_V:
+    SStream_concat(ss, "vrev8.v");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vrev8_v.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vrev8_v.vs2, ss, ctx);
+    maybe_vmask(tree->ast_node.vrev8_v.vm, ss, ctx);
+    break;
+  case RISCV_VCLZ_V:
+    SStream_concat(ss, "vclz.v");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vclz_v.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vclz_v.vs2, ss, ctx);
+    sep(ss, ctx);
+    maybe_vmask(tree->ast_node.vclz_v.vm, ss, ctx);
+    break;
+  case RISCV_VCTZ_V:
+    SStream_concat(ss, "vctz.v");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vctz_v.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vctz_v.vs2, ss, ctx);
+    sep(ss, ctx);
+    maybe_vmask(tree->ast_node.vctz_v.vm, ss, ctx);
+    break;
+  case RISCV_VCPOP_V:
+    SStream_concat(ss, "vcpop.v");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vcpop_v.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vcpop_v.vs2, ss, ctx);
+    sep(ss, ctx);
+    maybe_vmask(tree->ast_node.vcpop_v.vm, ss, ctx);
+    break;
+  case RISCV_VROL_VV:
+    SStream_concat(ss, "vrol.vv");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vrol_vv.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vrol_vv.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vrol_vv.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vrol_vv.vm, ss, ctx);
+    break;
+  case RISCV_VROL_VX:
+    SStream_concat(ss, "vrol.vx");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vrol_vx.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vrol_vx.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vrol_vx.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vrol_vx.vm, ss, ctx);
+    break;
+  case RISCV_VROR_VV:
+    SStream_concat(ss, "vror.vv");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vror_vv.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vror_vv.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vror_vv.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vror_vv.vm, ss, ctx);
+    break;
+  case RISCV_VROR_VX:
+    SStream_concat(ss, "vror.vx");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vror_vx.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vror_vx.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vror_vx.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vror_vx.vm, ss, ctx);
+    break;
+  case RISCV_VROR_VI:
+    SStream_concat(ss, "vror.vi");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vror_vi.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vror_vi.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.vror_vi.uimm, ss, ctx);
+    maybe_vmask(tree->ast_node.vror_vi.vm, ss, ctx);
+    break;
+  case RISCV_VWSLL_VV:
+    SStream_concat(ss, "vwsll.vv");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vwsll_vv.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vwsll_vv.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vwsll_vv.vs1, ss, ctx);
+    sep(ss, ctx);
+    maybe_vmask(tree->ast_node.vwsll_vv.vm, ss, ctx);
+    break;
+  case RISCV_VWSLL_VX:
+    SStream_concat(ss, "vwsll.vx");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vwsll_vx.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vwsll_vx.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vwsll_vx.rs1, ss, ctx);
+    sep(ss, ctx);
+    maybe_vmask(tree->ast_node.vwsll_vx.vm, ss, ctx);
+    break;
+  case RISCV_VWSLL_VI:
+    SStream_concat(ss, "vwsll.vi");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vwsll_vi.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vwsll_vi.vs2, ss, ctx);
+    sep(ss, ctx);
+    hex_bits_5(tree->ast_node.vwsll_vi.uimm, ss, ctx);
+    sep(ss, ctx);
+    maybe_vmask(tree->ast_node.vwsll_vi.vm, ss, ctx);
+    break;
+  case RISCV_VCLMUL_VV:
+    SStream_concat(ss, "vclmul.vv");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vclmul_vv.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vclmul_vv.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vclmul_vv.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vclmul_vv.vm, ss, ctx);
+    break;
+  case RISCV_VCLMUL_VX:
+    SStream_concat(ss, "vclmul.vx");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vclmul_vx.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vclmul_vx.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vclmul_vx.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vclmul_vx.vm, ss, ctx);
+    break;
+  case RISCV_VCLMULH_VV:
+    SStream_concat(ss, "vclmulh.vv");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vclmulh_vv.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vclmulh_vv.vs2, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vclmulh_vv.vs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vclmulh_vv.vm, ss, ctx);
+    break;
+  case RISCV_VCLMULH_VX:
+    SStream_concat(ss, "vclmulh.vx");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vclmulh_vx.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vclmulh_vx.vs2, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.vclmulh_vx.rs1, ss, ctx);
+    maybe_vmask(tree->ast_node.vclmulh_vx.vm, ss, ctx);
+    break;
+  case RISCV_VSHA2MS_VV:
+    SStream_concat(ss, "vsha2ms.vv");
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.vsha2ms_vv.vd, ss, ctx);
+    sep(ss, ctx);
+    vreg_name(tree->ast_node.vsha2ms_vv.vs2, ss, ctx);
+    vreg_name(tree->ast_node.vsha2ms_vv.vs1, ss, ctx);
+    break;
+  case RISCV_ZVKSHA2TYPE:
+    vsha2c_mnemonic(tree->ast_node.zvksha2type.funct6, ss);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.zvksha2type.vd, ss, ctx);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.zvksha2type.vs2, ss, ctx);
+    spc(ss, ctx);
+    vreg_name(tree->ast_node.zvksha2type.vs1, ss, ctx);
+    break;
+  case RISCV_ZIMOP_MOP_R:
+    SStream_concat(ss, "mop.r.");
+    dec_bits_5(tree->ast_node.zimop_mop_r.mop, ss, ctx);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zimop_mop_r.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zimop_mop_r.rs1, ss, ctx);
+    break;
+  case RISCV_ZIMOP_MOP_RR:
+    SStream_concat(ss, "mop.rr.");
+    dec_bits_3(tree->ast_node.zimop_mop_rr.mop, ss, ctx);
+    spc(ss, ctx);
+    reg_name(tree->ast_node.zimop_mop_rr.rd, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zimop_mop_rr.rs1, ss, ctx);
+    sep(ss, ctx);
+    reg_name(tree->ast_node.zimop_mop_rr.rs2, ss, ctx);
+    break;
+  case RISCV_ZCMOP:
+    SStream_concat(ss, "c.mop.");
+    dec_bits_4(tree->ast_node.zcmop << 1 | 0x1 << 0, ss, ctx);
+    break;
+  case RISCV_STOP_FETCHING:
+    SStream_concat(ss, "stop_fetching");
+    break;
+  case RISCV_THREAD_START:
+    SStream_concat(ss, "thread_start");
     break;
   case RISCV_ILLEGAL:
     SStream_concat(ss, "illegal");
-    spc(ss, conf);
-    hex_bits_32(tree->ast_node.illegal, ss, conf);
+    spc(ss, ctx);
+    hex_bits_32(tree->ast_node.illegal, ss, ctx);
     break;
   case RISCV_C_ILLEGAL:
     SStream_concat(ss, "c.illegal");
-    spc(ss, conf);
-    hex_bits_16(tree->ast_node.c_illegal, ss, conf);
+    spc(ss, ctx);
+    hex_bits_16(tree->ast_node.c_illegal, ss, ctx);
     break;
   }
 }

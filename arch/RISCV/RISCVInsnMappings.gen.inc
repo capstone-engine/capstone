@@ -3,7 +3,7 @@
 /* (see https://github.com/rizinorg/capstone-autosync-sail)*/
 /* from the sail model of RISC-V*/
 /* (see https://github.com/riscv/sail-riscv) @ version
- * 8a75b297b116a1ffd8c62e98a7f43e2d93761d15.*/
+ * dc1155266a1cb6ba2342162601739881b58a1c4e.*/
 /* DO NOT MODIFY THIS CODE MANUALLY. ANY MANUAL EDITS ARE OVERWRITTEN.*/
 /* ------------------------------------------------------------------- */
 /* Copyright © 2024-2025 moste00 <ubermenchun@gmail.com>*/
@@ -18,7 +18,7 @@
 
 #include "RISCVInsn.gen.inc"
 
-static const uint16_t to_insn[294][21] = {
+static const uint16_t to_insn[334][21] = {
     [RISCV_REV8] = {RISCV_INSN_REV8},
     [RISCV_WXTYPE] = {RISCV_INSN_WX_VSUBU, RISCV_INSN_WX_VSUB,
                       RISCV_INSN_WX_VADDU, RISCV_INSN_WX_VADD},
@@ -31,14 +31,19 @@ static const uint16_t to_insn[294][21] = {
                      RISCV_INSN_ADD},
     [RISCV_VFMERGE] = {RISCV_INSN_VFMERGE},
     [RISCV_RIVVTYPE] = {RISCV_INSN_IVV_VWREDSUMU, RISCV_INSN_IVV_VWREDSUM},
+    [RISCV_F_BIN_F_TYPE_H] = {RISCV_INSN_FSGNJ_H, RISCV_INSN_FSGNJX_H,
+                              RISCV_INSN_FSGNJN_H, RISCV_INSN_FMIN_H,
+                              RISCV_INSN_FMAX_H},
     [RISCV_C_ZEXT_W] = {RISCV_INSN_C_ZEXT_W},
     [RISCV_SFENCE_INVAL_IR] = {RISCV_INSN_SFENCE_INVAL_IR},
     [RISCV_XPERM4] = {RISCV_INSN_XPERM4},
+    [RISCV_F_UN_TYPE_F_S] = {RISCV_INSN_FMV_W_X},
     [RISCV_C_AND] = {RISCV_INSN_C_AND},
     [RISCV_AES32DSI] = {RISCV_INSN_AES32DSI},
     [RISCV_RORI] = {RISCV_INSN_RORI},
     [RISCV_JALR] = {RISCV_INSN_JALR},
     [RISCV_VMSIF_M] = {RISCV_INSN_VMSIF_M},
+    [RISCV_CSRImm] = {RISCV_INSN_CSRRW, RISCV_INSN_CSRRS, RISCV_INSN_CSRRC},
     [RISCV_VLSSEGTYPE] = {RISCV_INSN_VLSSEGTYPE},
     [RISCV_SHA512SIG1H] = {RISCV_INSN_SHA512SIG1H},
     [RISCV_FLTQ_S] = {RISCV_INSN_FLTQ_S},
@@ -49,10 +54,14 @@ static const uint16_t to_insn[294][21] = {
                          RISCV_INSN_VXCMP_VMSLE, RISCV_INSN_VXCMP_VMSGTU,
                          RISCV_INSN_VXCMP_VMSGT, RISCV_INSN_VXCMP_VMSEQ},
     [RISCV_C_LHU] = {RISCV_INSN_C_LHU},
+    [RISCV_F_UN_RM_FX_TYPE_S] = {RISCV_INSN_FCVT_W_S, RISCV_INSN_FCVT_WU_S,
+                                 RISCV_INSN_FCVT_L_S, RISCV_INSN_FCVT_LU_S},
     [RISCV_JAL] = {RISCV_INSN_JAL},
     [RISCV_ECALL] = {RISCV_INSN_ECALL},
+    [RISCV_F_UN_X_TYPE_D] = {RISCV_INSN_FMV_X_D, RISCV_INSN_FCLASS_D},
     [RISCV_C_FSWSP] = {RISCV_INSN_C_FSWSP},
     [RISCV_VMVXS] = {RISCV_INSN_VMVXS},
+    [RISCV_ZVKSHA2TYPE] = {RISCV_INSN_ZVK_VSHA2CL, RISCV_INSN_ZVK_VSHA2CH},
     [RISCV_C_FLD] = {RISCV_INSN_C_FLD},
     [RISCV_SHIFTIWOP] = {RISCV_INSN_SRLIW, RISCV_INSN_SRAIW, RISCV_INSN_SLLIW},
     [RISCV_UNZIP] = {RISCV_INSN_UNZIP},
@@ -72,25 +81,16 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_VSETIVLI] = {RISCV_INSN_VSETIVLI},
     [RISCV_FMAXM_D] = {RISCV_INSN_FMAXM_D},
     [RISCV_C_SD] = {RISCV_INSN_C_SD},
-    [RISCV_F_BIN_TYPE_H] = {RISCV_INSN_FSGNJ_H, RISCV_INSN_FSGNJX_H,
-                            RISCV_INSN_FSGNJN_H, RISCV_INSN_FMIN_H,
-                            RISCV_INSN_FMAX_H, RISCV_INSN_FLT_H,
-                            RISCV_INSN_FLE_H, RISCV_INSN_FEQ_H},
     [RISCV_ZBKB_PACKW] = {RISCV_INSN_ZBKB_PACKW},
     [RISCV_FVVMTYPE] = {RISCV_INSN_FVVM_VMFNE, RISCV_INSN_FVVM_VMFLT,
                         RISCV_INSN_FVVM_VMFLE, RISCV_INSN_FVVM_VMFEQ},
     [RISCV_VMVSX] = {RISCV_INSN_VMVSX},
-    [RISCV_F_UN_RM_TYPE_D] = {RISCV_INSN_FSQRT_D, RISCV_INSN_FCVT_W_D,
-                              RISCV_INSN_FCVT_WU_D, RISCV_INSN_FCVT_S_D,
-                              RISCV_INSN_FCVT_L_D, RISCV_INSN_FCVT_LU_D,
-                              RISCV_INSN_FCVT_D_WU, RISCV_INSN_FCVT_D_W,
-                              RISCV_INSN_FCVT_D_S, RISCV_INSN_FCVT_D_LU,
-                              RISCV_INSN_FCVT_D_L},
     [RISCV_ORCB] = {RISCV_INSN_ORCB},
     [RISCV_C_MUL] = {RISCV_INSN_C_MUL},
     [RISCV_SM3P1] = {RISCV_INSN_SM3P1},
     [RISCV_CLMUL] = {RISCV_INSN_CLMUL},
     [RISCV_FLEQ_S] = {RISCV_INSN_FLEQ_S},
+    [RISCV_F_UN_RM_FF_TYPE_S] = {RISCV_INSN_FSQRT_S},
     [RISCV_WVXTYPE] = {RISCV_INSN_WVX_VWMULU, RISCV_INSN_WVX_VWMULSU,
                        RISCV_INSN_WVX_VWMUL, RISCV_INSN_WVX_VSUBU,
                        RISCV_INSN_WVX_VSUB, RISCV_INSN_WVX_VADDU,
@@ -105,10 +105,11 @@ static const uint16_t to_insn[294][21] = {
                       RISCV_INSN_MM_VMORN, RISCV_INSN_MM_VMOR,
                       RISCV_INSN_MM_VMNOR, RISCV_INSN_MM_VMNAND,
                       RISCV_INSN_MM_VMANDN, RISCV_INSN_MM_VMAND},
-    [RISCV_F_UN_TYPE_S] = {RISCV_INSN_FMV_X_W, RISCV_INSN_FMV_W_X,
-                           RISCV_INSN_FCLASS_S},
     [RISCV_NVTYPE] = {RISCV_INSN_NV_VNCLIPU, RISCV_INSN_NV_VNCLIP},
     [RISCV_AES64KS2] = {RISCV_INSN_AES64KS2},
+    [RISCV_F_BIN_F_TYPE_D] = {RISCV_INSN_FSGNJ_D, RISCV_INSN_FSGNJX_D,
+                              RISCV_INSN_FSGNJN_D, RISCV_INSN_FMIN_D,
+                              RISCV_INSN_FMAX_D},
     [RISCV_AES32ESMI] = {RISCV_INSN_AES32ESMI},
     [RISCV_F_MADD_TYPE_H] = {RISCV_INSN_FNMSUB_H, RISCV_INSN_FNMADD_H,
                              RISCV_INSN_FMSUB_H, RISCV_INSN_FMADD_H},
@@ -118,6 +119,7 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_C_LW] = {RISCV_INSN_C_LW},
     [RISCV_C_LWSP] = {RISCV_INSN_C_LWSP},
     [RISCV_C_ADDI16SP] = {RISCV_INSN_C_ADDI16SP},
+    [RISCV_CSRReg] = {RISCV_INSN_CSRRW, RISCV_INSN_CSRRS, RISCV_INSN_CSRRC},
     [RISCV_SHA512SIG0L] = {RISCV_INSN_SHA512SIG0L},
     [RISCV_SM3P0] = {RISCV_INSN_SM3P0},
     [RISCV_SM4ED] = {RISCV_INSN_SM4ED},
@@ -128,6 +130,7 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_CTZ] = {RISCV_INSN_CTZ},
     [RISCV_FMVH_X_D] = {RISCV_INSN_FMVH_X_D},
     [RISCV_SLLIUW] = {RISCV_INSN_SLLIUW},
+    [RISCV_ZCMOP] = {RISCV_INSN_ZCMOP},
     [RISCV_FMINM_S] = {RISCV_INSN_FMINM_S},
     [RISCV_ZBA_RTYPEUW] = {RISCV_INSN_SH3ADDUW, RISCV_INSN_SH2ADDUW,
                            RISCV_INSN_SH1ADDUW, RISCV_INSN_ADDUW},
@@ -138,14 +141,9 @@ static const uint16_t to_insn[294][21] = {
                              RISCV_INSN_FMSUB_S, RISCV_INSN_FMADD_S},
     [RISCV_ZIP] = {RISCV_INSN_ZIP},
     [RISCV_SHA512SUM1] = {RISCV_INSN_SHA512SUM1},
+    [RISCV_VROR_VI] = {RISCV_INSN_VROR_VI},
     [RISCV_C_LDSP] = {RISCV_INSN_C_LDSP},
-    [RISCV_F_UN_RM_TYPE_H] = {RISCV_INSN_FSQRT_H, RISCV_INSN_FCVT_W_H,
-                              RISCV_INSN_FCVT_WU_H, RISCV_INSN_FCVT_S_H,
-                              RISCV_INSN_FCVT_L_H, RISCV_INSN_FCVT_LU_H,
-                              RISCV_INSN_FCVT_H_WU, RISCV_INSN_FCVT_H_W,
-                              RISCV_INSN_FCVT_H_S,
-                              RISCV_INSN_FCVT_H_LU, RISCV_INSN_FCVT_H_L,
-                              RISCV_INSN_FCVT_H_D, RISCV_INSN_FCVT_D_H},
+    [RISCV_VBREV_V] = {RISCV_INSN_VBREV_V},
     [RISCV_CPOP] = {RISCV_INSN_CPOP},
     [RISCV_FWFTYPE] = {RISCV_INSN_FWF_VSUB, RISCV_INSN_FWF_VADD},
     [RISCV_FWVTYPE] = {RISCV_INSN_FWV_VSUB, RISCV_INSN_FWV_VADD},
@@ -154,6 +152,7 @@ static const uint16_t to_insn[294][21] = {
                          RISCV_INSN_MAXU, RISCV_INSN_MAX, RISCV_INSN_ANDN},
     [RISCV_SM4KS] = {RISCV_INSN_SM4KS},
     [RISCV_RORIW] = {RISCV_INSN_RORIW},
+    [RISCV_F_UN_TYPE_X_S] = {RISCV_INSN_FMV_X_W, RISCV_INSN_FCLASS_S},
     [RISCV_NXTYPE] = {RISCV_INSN_NX_VNCLIPU, RISCV_INSN_NX_VNCLIP},
     [RISCV_C_ADDIW] = {RISCV_INSN_C_ADDIW},
     [RISCV_C_LD] = {RISCV_INSN_C_LD},
@@ -161,20 +160,17 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_XPERM8] = {RISCV_INSN_XPERM8},
     [RISCV_ITYPE] = {RISCV_INSN_XORI, RISCV_INSN_SLTIU, RISCV_INSN_SLTI,
                      RISCV_INSN_ORI, RISCV_INSN_ANDI, RISCV_INSN_ADDI},
+    [RISCV_VCLMUL_VV] = {RISCV_INSN_VCLMUL_VV},
+    [RISCV_F_UN_F_TYPE_H] = {RISCV_INSN_FMV_H_X},
+    [RISCV_VCLZ_V] = {RISCV_INSN_VCLZ_V},
     [RISCV_VID_V] = {RISCV_INSN_VID_V},
     [RISCV_FENCE] = {RISCV_INSN_FENCE},
     [RISCV_C_FLWSP] = {RISCV_INSN_C_FLWSP},
     [RISCV_STORE] = {RISCV_INSN_STORE},
-    [RISCV_F_BIN_TYPE_S] = {RISCV_INSN_FSGNJ_S, RISCV_INSN_FSGNJX_S,
-                            RISCV_INSN_FSGNJN_S, RISCV_INSN_FMIN_S,
-                            RISCV_INSN_FMAX_S, RISCV_INSN_FLT_S,
-                            RISCV_INSN_FLE_S, RISCV_INSN_FEQ_S},
+    [RISCV_VBREV8_V] = {RISCV_INSN_VBREV8_V},
     [RISCV_VSSEGTYPE] = {RISCV_INSN_VSSEGTYPE},
-    [RISCV_F_BIN_TYPE_D] = {RISCV_INSN_FSGNJ_D, RISCV_INSN_FSGNJX_D,
-                            RISCV_INSN_FSGNJN_D, RISCV_INSN_FMIN_D,
-                            RISCV_INSN_FMAX_D, RISCV_INSN_FLT_D,
-                            RISCV_INSN_FLE_D, RISCV_INSN_FEQ_D},
     [RISCV_ZICOND_RTYPE] = {RISCV_INSN_CZERO_NEZ, RISCV_INSN_CZERO_EQZ},
+    [RISCV_VCLMULH_VX] = {RISCV_INSN_VCLMULH_VX},
     [RISCV_C_FSDSP] = {RISCV_INSN_C_FSDSP},
     [RISCV_SRET] = {RISCV_INSN_SRET},
     [RISCV_STORE_FP] = {RISCV_INSN_STORE_FP},
@@ -186,6 +182,7 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_ZBB_RTYPEW] = {RISCV_INSN_RORW, RISCV_INSN_ROLW},
     [RISCV_C_FLDSP] = {RISCV_INSN_C_FLDSP},
     [RISCV_C_MV_HINT] = {RISCV_INSN_C_MV_HINT},
+    [RISCV_VWSLL_VI] = {RISCV_INSN_VWSLL_VI},
     [RISCV_FCVTMOD_W_D] = {RISCV_INSN_FCVTMOD_W_D},
     [RISCV_RFVVTYPE] = {RISCV_INSN_FVV_VFWREDUSUM, RISCV_INSN_FVV_VFWREDOSUM,
                         RISCV_INSN_FVV_VFREDUSUM, RISCV_INSN_FVV_VFREDOSUM,
@@ -195,6 +192,7 @@ static const uint16_t to_insn[294][21] = {
                    RISCV_INSN_AMOMINU, RISCV_INSN_AMOMIN, RISCV_INSN_AMOMAXU,
                    RISCV_INSN_AMOMAX, RISCV_INSN_AMOAND, RISCV_INSN_AMOADD},
     [RISCV_LOAD_FP] = {RISCV_INSN_LOAD_FP},
+    [RISCV_VROL_VV] = {RISCV_INSN_VROL_VV},
     [RISCV_VVMSTYPE] = {RISCV_INSN_VVMS_VSBC, RISCV_INSN_VVMS_VADC},
     [RISCV_FVVMATYPE] = {RISCV_INSN_FVV_VNMSUB, RISCV_INSN_FVV_VNMSAC,
                          RISCV_INSN_FVV_VNMADD, RISCV_INSN_FVV_VNMACC,
@@ -209,8 +207,7 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_SHA512SIG1L] = {RISCV_INSN_SHA512SIG1L},
     [RISCV_VLSEGTYPE] = {RISCV_INSN_VLSEGTYPE},
     [RISCV_SHA256SIG0] = {RISCV_INSN_SHA256SIG0},
-    [RISCV_F_UN_TYPE_H] = {RISCV_INSN_FMV_X_H, RISCV_INSN_FMV_H_X,
-                           RISCV_INSN_FCLASS_H},
+    [RISCV_ZIMOP_MOP_RR] = {RISCV_INSN_ZIMOP_MOP_RR},
     [RISCV_C_ADDI4SPN] = {RISCV_INSN_C_ADDI4SPN},
     [RISCV_VVTYPE] = {RISCV_INSN_VV_VXOR,         RISCV_INSN_VV_VSUB,
                       RISCV_INSN_VV_VSSUBU,       RISCV_INSN_VV_VSSUB,
@@ -223,6 +220,7 @@ static const uint16_t to_insn[294][21] = {
                       RISCV_INSN_VV_VMIN,         RISCV_INSN_VV_VMAXU,
                       RISCV_INSN_VV_VMAX,         RISCV_INSN_VV_VAND,
                       RISCV_INSN_VV_VADD},
+    [RISCV_VSHA2MS_VV] = {RISCV_INSN_VSHA2MS_VV},
     [RISCV_FLEQ_H] = {RISCV_INSN_FLEQ_H},
     [RISCV_VICMPTYPE] = {RISCV_INSN_VICMP_VMSNE, RISCV_INSN_VICMP_VMSLEU,
                          RISCV_INSN_VICMP_VMSLE, RISCV_INSN_VICMP_VMSGTU,
@@ -233,8 +231,6 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_AES64ES] = {RISCV_INSN_AES64ES},
     [RISCV_C_SRAI_HINT] = {RISCV_INSN_C_SRAI_HINT},
     [RISCV_DIV] = {RISCV_INSN_DIV},
-    [RISCV_F_UN_TYPE_D] = {RISCV_INSN_FMV_X_D, RISCV_INSN_FMV_D_X,
-                           RISCV_INSN_FCLASS_D},
     [RISCV_C_LH] = {RISCV_INSN_C_LH},
     [RISCV_C_NOP_HINT] = {RISCV_INSN_C_NOP_HINT},
     [RISCV_VFIRST_M] = {RISCV_INSN_VFIRST_M},
@@ -259,14 +255,18 @@ static const uint16_t to_insn[294][21] = {
                       RISCV_INSN_VX_VAND,   RISCV_INSN_VX_VADD},
     [RISCV_BTYPE] = {RISCV_INSN_BNE, RISCV_INSN_BLTU, RISCV_INSN_BLT,
                      RISCV_INSN_BGEU, RISCV_INSN_BGE, RISCV_INSN_BEQ},
+    [RISCV_VROR_VX] = {RISCV_INSN_VROR_VX},
     [RISCV_LOAD] = {RISCV_INSN_LOAD},
     [RISCV_VIOTA_M] = {RISCV_INSN_VIOTA_M},
+    [RISCV_VROL_VX] = {RISCV_INSN_VROL_VX},
     [RISCV_CLMULR] = {RISCV_INSN_CLMULR},
+    [RISCV_VROR_VV] = {RISCV_INSN_VROR_VV},
     [RISCV_VXMSTYPE] = {RISCV_INSN_VXMS_VSBC, RISCV_INSN_VXMS_VADC},
     [RISCV_CLZ] = {RISCV_INSN_CLZ},
     [RISCV_UTYPE] = {RISCV_INSN_LUI, RISCV_INSN_AUIPC},
     [RISCV_CLMULH] = {RISCV_INSN_CLMULH},
     [RISCV_FLI_H] = {RISCV_INSN_FLI_H},
+    [RISCV_F_UN_X_TYPE_H] = {RISCV_INSN_FMV_X_H, RISCV_INSN_FCLASS_H},
     [RISCV_F_BIN_RM_TYPE_H] = {RISCV_INSN_FSUB_H, RISCV_INSN_FMUL_H,
                                RISCV_INSN_FDIV_H, RISCV_INSN_FADD_H},
     [RISCV_VSETVLI] = {RISCV_INSN_VSETVLI},
@@ -282,8 +282,12 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_STORECON] = {RISCV_INSN_STORECON},
     [RISCV_VMVRTYPE] = {RISCV_INSN_VMVRTYPE},
     [RISCV_ZBKB_RTYPE] = {RISCV_INSN_PACKH, RISCV_INSN_PACK},
+    [RISCV_VWSLL_VX] = {RISCV_INSN_VWSLL_VX},
+    [RISCV_F_UN_RM_FX_TYPE_H] = {RISCV_INSN_FCVT_W_H, RISCV_INSN_FCVT_WU_H,
+                                 RISCV_INSN_FCVT_L_H, RISCV_INSN_FCVT_LU_H},
     [RISCV_VISG] = {RISCV_INSN_VI_VSLIDEUP, RISCV_INSN_VI_VSLIDEDOWN,
                     RISCV_INSN_VI_VRGATHER},
+    [RISCV_VCLMUL_VX] = {RISCV_INSN_VCLMUL_VX},
     [RISCV_C_ADD] = {RISCV_INSN_C_ADD},
     [RISCV_FVFTYPE] = {RISCV_INSN_VF_VSUB, RISCV_INSN_VF_VSLIDE1UP,
                        RISCV_INSN_VF_VSLIDE1DOWN, RISCV_INSN_VF_VSGNJX,
@@ -292,6 +296,8 @@ static const uint16_t to_insn[294][21] = {
                        RISCV_INSN_VF_VMUL, RISCV_INSN_VF_VMIN,
                        RISCV_INSN_VF_VMAX, RISCV_INSN_VF_VDIV,
                        RISCV_INSN_VF_VADD},
+    [RISCV_F_UN_RM_FX_TYPE_D] = {RISCV_INSN_FCVT_W_D, RISCV_INSN_FCVT_WU_D,
+                                 RISCV_INSN_FCVT_L_D, RISCV_INSN_FCVT_LU_D},
     [RISCV_FENCE_RESERVED] = {RISCV_INSN_FENCE_RESERVED},
     [RISCV_MASKTYPEI] = {RISCV_INSN_MASKTYPEI},
     [RISCV_FVVTYPE] = {RISCV_INSN_FVV_VSUB, RISCV_INSN_FVV_VSGNJX,
@@ -303,9 +309,14 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_C_LI_HINT] = {RISCV_INSN_C_LI_HINT},
     [RISCV_SHA256SUM1] = {RISCV_INSN_SHA256SUM1},
     [RISCV_VSUXSEGTYPE] = {RISCV_INSN_VSUXSEGTYPE},
+    [RISCV_VANDN_VX] = {RISCV_INSN_VANDN_VX},
+    [RISCV_VCTZ_V] = {RISCV_INSN_VCTZ_V},
+    [RISCV_F_UN_RM_XF_TYPE_D] = {RISCV_INSN_FCVT_D_WU, RISCV_INSN_FCVT_D_W,
+                                 RISCV_INSN_FCVT_D_LU, RISCV_INSN_FCVT_D_L},
     [RISCV_VIMCTYPE] = {RISCV_INSN_VIMC_VMADC},
     [RISCV_VIMSTYPE] = {RISCV_INSN_VIMS_VADC},
     [RISCV_MASKTYPEV] = {RISCV_INSN_MASKTYPEV},
+    [RISCV_THREAD_START] = {RISCV_INSN_THREAD_START},
     [RISCV_FVFMTYPE] = {RISCV_INSN_VFM_VMFNE, RISCV_INSN_VFM_VMFLT,
                         RISCV_INSN_VFM_VMFLE, RISCV_INSN_VFM_VMFGT,
                         RISCV_INSN_VFM_VMFGE, RISCV_INSN_VFM_VMFEQ},
@@ -327,12 +338,14 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_FROUND_H] = {RISCV_INSN_FROUND_H},
     [RISCV_C_JAL] = {RISCV_INSN_C_JAL},
     [RISCV_SFENCE_VMA] = {RISCV_INSN_SFENCE_VMA},
+    [RISCV_STOP_FETCHING] = {RISCV_INSN_STOP_FETCHING},
     [RISCV_NVSTYPE] = {RISCV_INSN_NVS_VNSRL, RISCV_INSN_NVS_VNSRA},
     [RISCV_FROUND_S] = {RISCV_INSN_FROUND_S},
     [RISCV_NISTYPE] = {RISCV_INSN_NIS_VNSRL, RISCV_INSN_NIS_VNSRA},
     [RISCV_C_SLLI] = {RISCV_INSN_C_SLLI},
     [RISCV_VXMTYPE] = {RISCV_INSN_VXM_VMSBC, RISCV_INSN_VXM_VMADC},
     [RISCV_FENCEI] = {RISCV_INSN_FENCEI},
+    [RISCV_F_UN_F_TYPE_D] = {RISCV_INSN_FMV_D_X},
     [RISCV_VFMVSF] = {RISCV_INSN_VFMVSF},
     [RISCV_VEXT8TYPE] = {RISCV_INSN_VEXT8_ZVF8, RISCV_INSN_VEXT8_SVF8},
     [RISCV_C_OR] = {RISCV_INSN_C_OR},
@@ -343,6 +356,9 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_C_ZEXT_B] = {RISCV_INSN_C_ZEXT_B},
     [RISCV_C_MV] = {RISCV_INSN_C_MV},
     [RISCV_VIMTYPE] = {RISCV_INSN_VIM_VMADC},
+    [RISCV_F_UN_RM_FF_TYPE_H] = {RISCV_INSN_FSQRT_H, RISCV_INSN_FCVT_S_H,
+                                 RISCV_INSN_FCVT_H_S, RISCV_INSN_FCVT_H_D,
+                                 RISCV_INSN_FCVT_D_H},
     [RISCV_LOADRES] = {RISCV_INSN_LOADRES},
     [RISCV_C_J] = {RISCV_INSN_C_J},
     [RISCV_AES32ESI] = {RISCV_INSN_AES32ESI},
@@ -358,6 +374,8 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_C_SW] = {RISCV_INSN_C_SW},
     [RISCV_ZBS_RTYPE] = {RISCV_INSN_BSET, RISCV_INSN_BINV, RISCV_INSN_BEXT,
                          RISCV_INSN_BCLR},
+    [RISCV_F_BIN_TYPE_X_S] = {RISCV_INSN_FLT_S, RISCV_INSN_FLE_S,
+                              RISCV_INSN_FEQ_S},
     [RISCV_C_SUB] = {RISCV_INSN_C_SUB},
     [RISCV_VFUNARY0] = {RISCV_INSN_FV_CVT_X_F, RISCV_INSN_FV_CVT_XU_F,
                         RISCV_INSN_FV_CVT_RTZ_X_F, RISCV_INSN_FV_CVT_RTZ_XU_F,
@@ -383,21 +401,29 @@ static const uint16_t to_insn[294][21] = {
     [RISCV_ZBS_IOP] = {RISCV_INSN_BSETI, RISCV_INSN_BINVI, RISCV_INSN_BEXTI,
                        RISCV_INSN_BCLRI},
     [RISCV_C_XOR] = {RISCV_INSN_C_XOR},
+    [RISCV_ZIMOP_MOP_R] = {RISCV_INSN_ZIMOP_MOP_R},
     [RISCV_FMINM_H] = {RISCV_INSN_FMINM_H},
     [RISCV_C_LUI_HINT] = {RISCV_INSN_C_LUI_HINT},
     [RISCV_VVMCTYPE] = {RISCV_INSN_VVMC_VMSBC, RISCV_INSN_VVMC_VMADC},
+    [RISCV_F_UN_RM_XF_TYPE_H] = {RISCV_INSN_FCVT_H_WU, RISCV_INSN_FCVT_H_W,
+                                 RISCV_INSN_FCVT_H_LU, RISCV_INSN_FCVT_H_L},
     [RISCV_F_BIN_RM_TYPE_S] = {RISCV_INSN_FSUB_S, RISCV_INSN_FMUL_S,
                                RISCV_INSN_FDIV_S, RISCV_INSN_FADD_S},
     [RISCV_SINVAL_VMA] = {RISCV_INSN_SINVAL_VMA},
     [RISCV_MOVETYPEX] = {RISCV_INSN_MOVETYPEX},
+    [RISCV_VCPOP_V] = {RISCV_INSN_VCPOP_V},
     [RISCV_C_BNEZ] = {RISCV_INSN_C_BNEZ},
     [RISCV_FWVVMATYPE] = {RISCV_INSN_FWVV_VNMSAC, RISCV_INSN_FWVV_VNMACC,
                           RISCV_INSN_FWVV_VMSAC, RISCV_INSN_FWVV_VMACC},
     [RISCV_AES64KS1I] = {RISCV_INSN_AES64KS1I},
+    [RISCV_F_BIN_X_TYPE_D] = {RISCV_INSN_FLT_D, RISCV_INSN_FLE_D,
+                              RISCV_INSN_FEQ_D},
     [RISCV_RMVVTYPE] = {RISCV_INSN_MVV_VREDXOR, RISCV_INSN_MVV_VREDSUM,
                         RISCV_INSN_MVV_VREDOR, RISCV_INSN_MVV_VREDMINU,
                         RISCV_INSN_MVV_VREDMIN, RISCV_INSN_MVV_VREDMAXU,
                         RISCV_INSN_MVV_VREDMAX, RISCV_INSN_MVV_VREDAND},
+    [RISCV_F_UN_RM_XF_TYPE_S] = {RISCV_INSN_FCVT_S_WU, RISCV_INSN_FCVT_S_W,
+                                 RISCV_INSN_FCVT_S_LU, RISCV_INSN_FCVT_S_L},
     [RISCV_CLZW] = {RISCV_INSN_CLZW},
     [RISCV_REM] = {RISCV_INSN_REM},
     [RISCV_C_EBREAK] = {RISCV_INSN_C_EBREAK},
@@ -425,28 +451,33 @@ static const uint16_t to_insn[294][21] = {
                        RISCV_INSN_WVV_VWMUL, RISCV_INSN_WVV_VSUBU,
                        RISCV_INSN_WVV_VSUB, RISCV_INSN_WVV_VADDU,
                        RISCV_INSN_WVV_VADD},
+    [RISCV_F_BIN_TYPE_F_S] = {RISCV_INSN_FSGNJ_S, RISCV_INSN_FSGNJX_S,
+                              RISCV_INSN_FSGNJN_S, RISCV_INSN_FMIN_S,
+                              RISCV_INSN_FMAX_S},
     [RISCV_AES64DSM] = {RISCV_INSN_AES64DSM},
     [RISCV_C_LI] = {RISCV_INSN_C_LI},
-    [RISCV_CSR] = {RISCV_INSN_CSRRW, RISCV_INSN_CSRRS, RISCV_INSN_CSRRC},
+    [RISCV_F_BIN_X_TYPE_H] = {RISCV_INSN_FLT_H, RISCV_INSN_FLE_H,
+                              RISCV_INSN_FEQ_H},
     [RISCV_C_SRAI] = {RISCV_INSN_C_SRAI},
+    [RISCV_F_UN_RM_FF_TYPE_D] = {RISCV_INSN_FSQRT_D, RISCV_INSN_FCVT_S_D,
+                                 RISCV_INSN_FCVT_D_S},
     [RISCV_FMVP_D_X] = {RISCV_INSN_FMVP_D_X},
     [RISCV_C_LBU] = {RISCV_INSN_C_LBU},
-    [RISCV_F_UN_RM_TYPE_S] = {RISCV_INSN_FSQRT_S, RISCV_INSN_FCVT_W_S,
-                              RISCV_INSN_FCVT_WU_S, RISCV_INSN_FCVT_S_WU,
-                              RISCV_INSN_FCVT_S_W, RISCV_INSN_FCVT_S_LU,
-                              RISCV_INSN_FCVT_S_L, RISCV_INSN_FCVT_L_S,
-                              RISCV_INSN_FCVT_LU_S},
     [RISCV_RTYPEW] = {RISCV_INSN_SUBW, RISCV_INSN_SRLW, RISCV_INSN_SRAW,
                       RISCV_INSN_SLLW, RISCV_INSN_ADDW},
     [RISCV_WMVVTYPE] = {RISCV_INSN_WMVV_VWMACCU, RISCV_INSN_WMVV_VWMACCSU,
                         RISCV_INSN_WMVV_VWMACC},
     [RISCV_MULW] = {RISCV_INSN_MULW},
+    [RISCV_VWSLL_VV] = {RISCV_INSN_VWSLL_VV},
     [RISCV_VVCMPTYPE] = {RISCV_INSN_VVCMP_VMSNE, RISCV_INSN_VVCMP_VMSLTU,
                          RISCV_INSN_VVCMP_VMSLT, RISCV_INSN_VVCMP_VMSLEU,
                          RISCV_INSN_VVCMP_VMSLE, RISCV_INSN_VVCMP_VMSEQ},
     [RISCV_ILLEGAL] = {RISCV_INSN_ILLEGAL},
+    [RISCV_VREV8_V] = {RISCV_INSN_VREV8_V},
     [RISCV_BREV8] = {RISCV_INSN_BREV8},
+    [RISCV_VCLMULH_VV] = {RISCV_INSN_VCLMULH_VV},
     [RISCV_AES32DSMI] = {RISCV_INSN_AES32DSMI},
+    [RISCV_VANDN_VV] = {RISCV_INSN_VANDN_VV},
     [RISCV_C_FSD] = {RISCV_INSN_C_FSD},
     [RISCV_C_ADDW] = {RISCV_INSN_C_ADDW},
     [RISCV_VCPOP_M] = {RISCV_INSN_VCPOP_M},
@@ -467,27 +498,38 @@ uint16_t get_insn_type(struct ast *tree) {
     return to_insn[RISCV_RTYPE][tree->ast_node.rtype.op];
   case RISCV_RIVVTYPE:
     return to_insn[RISCV_RIVVTYPE][tree->ast_node.rivvtype.funct6];
+  case RISCV_F_BIN_F_TYPE_H:
+    return to_insn[RISCV_F_BIN_F_TYPE_H][tree->ast_node.f_bin_f_type_h.fmax_h];
+  case RISCV_F_UN_TYPE_F_S:
+    return to_insn[RISCV_F_UN_TYPE_F_S][tree->ast_node.f_un_type_f_s.fmv_w_x];
+  case RISCV_CSRImm:
+    return to_insn[RISCV_CSRImm][tree->ast_node.csrimm.op];
   case RISCV_VXSG:
     return to_insn[RISCV_VXSG][tree->ast_node.vxsg.funct6];
   case RISCV_VXCMPTYPE:
     return to_insn[RISCV_VXCMPTYPE][tree->ast_node.vxcmptype.funct6];
+  case RISCV_F_UN_RM_FX_TYPE_S:
+    return to_insn[RISCV_F_UN_RM_FX_TYPE_S]
+                  [tree->ast_node.f_un_rm_fx_type_s.fcvt_lu_s];
+  case RISCV_F_UN_X_TYPE_D:
+    return to_insn[RISCV_F_UN_X_TYPE_D][tree->ast_node.f_un_x_type_d.fmv_x_d];
+  case RISCV_ZVKSHA2TYPE:
+    return to_insn[RISCV_ZVKSHA2TYPE][tree->ast_node.zvksha2type.funct6];
   case RISCV_SHIFTIWOP:
     return to_insn[RISCV_SHIFTIWOP][tree->ast_node.shiftiwop.op];
   case RISCV_ZICBOM:
-    return to_insn[RISCV_ZICBOM][tree->ast_node.riscv_zicbom.cbop];
+    return to_insn[RISCV_ZICBOM][tree->ast_node.riscv_zicbom.cbo_inval];
   case RISCV_NITYPE:
     return to_insn[RISCV_NITYPE][tree->ast_node.nitype.funct6];
   case RISCV_VVMTYPE:
     return to_insn[RISCV_VVMTYPE][tree->ast_node.vvmtype.funct6];
   case RISCV_MVXMATYPE:
     return to_insn[RISCV_MVXMATYPE][tree->ast_node.mvxmatype.funct6];
-  case RISCV_F_BIN_TYPE_H:
-    return to_insn[RISCV_F_BIN_TYPE_H][tree->ast_node.f_bin_type_h.fle_h];
   case RISCV_FVVMTYPE:
     return to_insn[RISCV_FVVMTYPE][tree->ast_node.fvvmtype.funct6];
-  case RISCV_F_UN_RM_TYPE_D:
-    return to_insn[RISCV_F_UN_RM_TYPE_D]
-                  [tree->ast_node.f_un_rm_type_d.fcvt_d_lu];
+  case RISCV_F_UN_RM_FF_TYPE_S:
+    return to_insn[RISCV_F_UN_RM_FF_TYPE_S]
+                  [tree->ast_node.f_un_rm_ff_type_s.fsqrt_s];
   case RISCV_WVXTYPE:
     return to_insn[RISCV_WVXTYPE][tree->ast_node.wvxtype.funct6];
   case RISCV_NXSTYPE:
@@ -496,35 +538,34 @@ uint16_t get_insn_type(struct ast *tree) {
     return to_insn[RISCV_VXMCTYPE][tree->ast_node.vxmctype.funct6];
   case RISCV_MMTYPE:
     return to_insn[RISCV_MMTYPE][tree->ast_node.mmtype.funct6];
-  case RISCV_F_UN_TYPE_S:
-    return to_insn[RISCV_F_UN_TYPE_S][tree->ast_node.f_un_type_s.fmv_w_x];
   case RISCV_NVTYPE:
     return to_insn[RISCV_NVTYPE][tree->ast_node.nvtype.funct6];
+  case RISCV_F_BIN_F_TYPE_D:
+    return to_insn[RISCV_F_BIN_F_TYPE_D][tree->ast_node.f_bin_f_type_d.fmax_d];
   case RISCV_F_MADD_TYPE_H:
     return to_insn[RISCV_F_MADD_TYPE_H][tree->ast_node.f_madd_type_h.op];
+  case RISCV_CSRReg:
+    return to_insn[RISCV_CSRReg][tree->ast_node.csrreg.op];
   case RISCV_ZBA_RTYPEUW:
     return to_insn[RISCV_ZBA_RTYPEUW][tree->ast_node.zba_rtypeuw.op];
   case RISCV_F_BIN_RM_TYPE_D:
     return to_insn[RISCV_F_BIN_RM_TYPE_D][tree->ast_node.f_bin_rm_type_d.op];
   case RISCV_F_MADD_TYPE_S:
     return to_insn[RISCV_F_MADD_TYPE_S][tree->ast_node.f_madd_type_s.op];
-  case RISCV_F_UN_RM_TYPE_H:
-    return to_insn[RISCV_F_UN_RM_TYPE_H]
-                  [tree->ast_node.f_un_rm_type_h.fcvt_h_lu];
   case RISCV_FWFTYPE:
     return to_insn[RISCV_FWFTYPE][tree->ast_node.fwftype.funct6];
   case RISCV_FWVTYPE:
     return to_insn[RISCV_FWVTYPE][tree->ast_node.fwvtype.funct6];
   case RISCV_ZBB_RTYPE:
     return to_insn[RISCV_ZBB_RTYPE][tree->ast_node.zbb_rtype.op];
+  case RISCV_F_UN_TYPE_X_S:
+    return to_insn[RISCV_F_UN_TYPE_X_S][tree->ast_node.f_un_type_x_s.fmv_x_w];
   case RISCV_NXTYPE:
     return to_insn[RISCV_NXTYPE][tree->ast_node.nxtype.funct6];
   case RISCV_ITYPE:
     return to_insn[RISCV_ITYPE][tree->ast_node.itype.op];
-  case RISCV_F_BIN_TYPE_S:
-    return to_insn[RISCV_F_BIN_TYPE_S][tree->ast_node.f_bin_type_s.fle_s];
-  case RISCV_F_BIN_TYPE_D:
-    return to_insn[RISCV_F_BIN_TYPE_D][tree->ast_node.f_bin_type_d.fle_d];
+  case RISCV_F_UN_F_TYPE_H:
+    return to_insn[RISCV_F_UN_F_TYPE_H][tree->ast_node.f_un_f_type_h.fmv_h_x];
   case RISCV_ZICOND_RTYPE:
     return to_insn[RISCV_ZICOND_RTYPE]
                   [tree->ast_node.zicond_rtype.riscv_czero_nez];
@@ -542,14 +583,10 @@ uint16_t get_insn_type(struct ast *tree) {
     return to_insn[RISCV_VEXT2TYPE][tree->ast_node.vext2type.funct6];
   case RISCV_F_MADD_TYPE_D:
     return to_insn[RISCV_F_MADD_TYPE_D][tree->ast_node.f_madd_type_d.op];
-  case RISCV_F_UN_TYPE_H:
-    return to_insn[RISCV_F_UN_TYPE_H][tree->ast_node.f_un_type_h.fmv_h_x];
   case RISCV_VVTYPE:
     return to_insn[RISCV_VVTYPE][tree->ast_node.vvtype.funct6];
   case RISCV_VICMPTYPE:
     return to_insn[RISCV_VICMPTYPE][tree->ast_node.vicmptype.funct6];
-  case RISCV_F_UN_TYPE_D:
-    return to_insn[RISCV_F_UN_TYPE_D][tree->ast_node.f_un_type_d.fmv_d_x];
   case RISCV_MVVMATYPE:
     return to_insn[RISCV_MVVMATYPE][tree->ast_node.mvvmatype.funct6];
   case RISCV_VXTYPE:
@@ -560,18 +597,29 @@ uint16_t get_insn_type(struct ast *tree) {
     return to_insn[RISCV_VXMSTYPE][tree->ast_node.vxmstype.funct6];
   case RISCV_UTYPE:
     return to_insn[RISCV_UTYPE][tree->ast_node.utype.op];
+  case RISCV_F_UN_X_TYPE_H:
+    return to_insn[RISCV_F_UN_X_TYPE_H][tree->ast_node.f_un_x_type_h.fmv_x_h];
   case RISCV_F_BIN_RM_TYPE_H:
     return to_insn[RISCV_F_BIN_RM_TYPE_H][tree->ast_node.f_bin_rm_type_h.op];
   case RISCV_VITYPE:
     return to_insn[RISCV_VITYPE][tree->ast_node.vitype.funct6];
   case RISCV_ZBKB_RTYPE:
     return to_insn[RISCV_ZBKB_RTYPE][tree->ast_node.zbkb_rtype.op];
+  case RISCV_F_UN_RM_FX_TYPE_H:
+    return to_insn[RISCV_F_UN_RM_FX_TYPE_H]
+                  [tree->ast_node.f_un_rm_fx_type_h.fcvt_lu_h];
   case RISCV_VISG:
     return to_insn[RISCV_VISG][tree->ast_node.visg.funct6];
   case RISCV_FVFTYPE:
     return to_insn[RISCV_FVFTYPE][tree->ast_node.fvftype.funct6];
+  case RISCV_F_UN_RM_FX_TYPE_D:
+    return to_insn[RISCV_F_UN_RM_FX_TYPE_D]
+                  [tree->ast_node.f_un_rm_fx_type_d.fcvt_lu_d];
   case RISCV_FVVTYPE:
     return to_insn[RISCV_FVVTYPE][tree->ast_node.fvvtype.funct6];
+  case RISCV_F_UN_RM_XF_TYPE_D:
+    return to_insn[RISCV_F_UN_RM_XF_TYPE_D]
+                  [tree->ast_node.f_un_rm_xf_type_d.fcvt_d_lu];
   case RISCV_VIMCTYPE:
     return to_insn[RISCV_VIMCTYPE][tree->ast_node.vimctype.funct6];
   case RISCV_VIMSTYPE:
@@ -592,6 +640,8 @@ uint16_t get_insn_type(struct ast *tree) {
     return to_insn[RISCV_NISTYPE][tree->ast_node.nistype.funct6];
   case RISCV_VXMTYPE:
     return to_insn[RISCV_VXMTYPE][tree->ast_node.vxmtype.funct6];
+  case RISCV_F_UN_F_TYPE_D:
+    return to_insn[RISCV_F_UN_F_TYPE_D][tree->ast_node.f_un_f_type_d.fmv_d_x];
   case RISCV_VEXT8TYPE:
     return to_insn[RISCV_VEXT8TYPE][tree->ast_node.vext8type.funct6];
   case RISCV_FWVFMATYPE:
@@ -600,10 +650,15 @@ uint16_t get_insn_type(struct ast *tree) {
     return to_insn[RISCV_SHIFTIOP][tree->ast_node.shiftiop.op];
   case RISCV_VIMTYPE:
     return to_insn[RISCV_VIMTYPE][tree->ast_node.vimtype.funct6];
+  case RISCV_F_UN_RM_FF_TYPE_H:
+    return to_insn[RISCV_F_UN_RM_FF_TYPE_H]
+                  [tree->ast_node.f_un_rm_ff_type_h.fcvt_d_h];
   case RISCV_WMVXTYPE:
     return to_insn[RISCV_WMVXTYPE][tree->ast_node.wmvxtype.funct6];
   case RISCV_ZBS_RTYPE:
     return to_insn[RISCV_ZBS_RTYPE][tree->ast_node.zbs_rtype.op];
+  case RISCV_F_BIN_TYPE_X_S:
+    return to_insn[RISCV_F_BIN_TYPE_X_S][tree->ast_node.f_bin_type_x_s.fle_s];
   case RISCV_VFUNARY0:
     return to_insn[RISCV_VFUNARY0][tree->ast_node.vfunary0.vfunary0];
   case RISCV_ZBB_EXTOP:
@@ -616,12 +671,20 @@ uint16_t get_insn_type(struct ast *tree) {
     return to_insn[RISCV_ZBS_IOP][tree->ast_node.zbs_iop.op];
   case RISCV_VVMCTYPE:
     return to_insn[RISCV_VVMCTYPE][tree->ast_node.vvmctype.funct6];
+  case RISCV_F_UN_RM_XF_TYPE_H:
+    return to_insn[RISCV_F_UN_RM_XF_TYPE_H]
+                  [tree->ast_node.f_un_rm_xf_type_h.fcvt_h_lu];
   case RISCV_F_BIN_RM_TYPE_S:
     return to_insn[RISCV_F_BIN_RM_TYPE_S][tree->ast_node.f_bin_rm_type_s.op];
   case RISCV_FWVVMATYPE:
     return to_insn[RISCV_FWVVMATYPE][tree->ast_node.fwvvmatype.funct6];
+  case RISCV_F_BIN_X_TYPE_D:
+    return to_insn[RISCV_F_BIN_X_TYPE_D][tree->ast_node.f_bin_x_type_d.fle_d];
   case RISCV_RMVVTYPE:
     return to_insn[RISCV_RMVVTYPE][tree->ast_node.rmvvtype.funct6];
+  case RISCV_F_UN_RM_XF_TYPE_S:
+    return to_insn[RISCV_F_UN_RM_XF_TYPE_S]
+                  [tree->ast_node.f_un_rm_xf_type_s.fcvt_s_lu];
   case RISCV_VFNUNARY0:
     return to_insn[RISCV_VFNUNARY0][tree->ast_node.vfnunary0.vfnunary0];
   case RISCV_VFWUNARY0:
@@ -634,11 +697,13 @@ uint16_t get_insn_type(struct ast *tree) {
     return to_insn[RISCV_ZBA_RTYPE][tree->ast_node.zba_rtype.op];
   case RISCV_WVVTYPE:
     return to_insn[RISCV_WVVTYPE][tree->ast_node.wvvtype.funct6];
-  case RISCV_CSR:
-    return to_insn[RISCV_CSR][tree->ast_node.csr.op];
-  case RISCV_F_UN_RM_TYPE_S:
-    return to_insn[RISCV_F_UN_RM_TYPE_S]
-                  [tree->ast_node.f_un_rm_type_s.fcvt_s_lu];
+  case RISCV_F_BIN_TYPE_F_S:
+    return to_insn[RISCV_F_BIN_TYPE_F_S][tree->ast_node.f_bin_type_f_s.fmax_s];
+  case RISCV_F_BIN_X_TYPE_H:
+    return to_insn[RISCV_F_BIN_X_TYPE_H][tree->ast_node.f_bin_x_type_h.fle_h];
+  case RISCV_F_UN_RM_FF_TYPE_D:
+    return to_insn[RISCV_F_UN_RM_FF_TYPE_D]
+                  [tree->ast_node.f_un_rm_ff_type_d.fcvt_d_s];
   case RISCV_RTYPEW:
     return to_insn[RISCV_RTYPEW][tree->ast_node.rtypew.op];
   case RISCV_WMVVTYPE:

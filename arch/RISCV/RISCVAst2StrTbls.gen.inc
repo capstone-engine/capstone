@@ -3,7 +3,7 @@
 /* (see https://github.com/rizinorg/capstone-autosync-sail)*/
 /* from the sail model of RISC-V*/
 /* (see https://github.com/riscv/sail-riscv) @ version
- * 8a75b297b116a1ffd8c62e98a7f43e2d93761d15.*/
+ * dc1155266a1cb6ba2342162601739881b58a1c4e.*/
 /* DO NOT MODIFY THIS CODE MANUALLY. ANY MANUAL EDITS ARE OVERWRITTEN.*/
 /* ------------------------------------------------------------------- */
 /* Copyright © 2024-2025 moste00 <ubermenchun@gmail.com>*/
@@ -16,8 +16,8 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "RISCVAst.gen.inc"
 #include "../../SStream.h"
+#include "RISCVAst.gen.inc"
 
 void utype_mnemonic(uint64_t member, SStream *ss) {
   switch (member) {
@@ -27,138 +27,6 @@ void utype_mnemonic(uint64_t member, SStream *ss) {
   }
   case RISCV_AUIPC: {
     SStream_concat(ss, "auipc");
-    break;
-  }
-  }
-}
-void reg_name(uint64_t member, SStream *ss) {
-  switch (member) {
-  case 0x08: {
-    SStream_concat(ss, "fp");
-    break;
-  }
-  case 0x15: {
-    SStream_concat(ss, "s5");
-    break;
-  }
-  case 0x01: {
-    SStream_concat(ss, "ra");
-    break;
-  }
-  case 0x06: {
-    SStream_concat(ss, "t1");
-    break;
-  }
-  case 0x09: {
-    SStream_concat(ss, "s1");
-    break;
-  }
-  case 0x10: {
-    SStream_concat(ss, "a6");
-    break;
-  }
-  case 0x1B: {
-    SStream_concat(ss, "s11");
-    break;
-  }
-  case 0x1C: {
-    SStream_concat(ss, "t3");
-    break;
-  }
-  case 0x16: {
-    SStream_concat(ss, "s6");
-    break;
-  }
-  case 0x00: {
-    SStream_concat(ss, "zero");
-    break;
-  }
-  case 0x0A: {
-    SStream_concat(ss, "a0");
-    break;
-  }
-  case 0x1A: {
-    SStream_concat(ss, "s10");
-    break;
-  }
-  case 0x17: {
-    SStream_concat(ss, "s7");
-    break;
-  }
-  case 0x0C: {
-    SStream_concat(ss, "a2");
-    break;
-  }
-  case 0x18: {
-    SStream_concat(ss, "s8");
-    break;
-  }
-  case 0x02: {
-    SStream_concat(ss, "sp");
-    break;
-  }
-  case 0x1F: {
-    SStream_concat(ss, "t6");
-    break;
-  }
-  case 0x0B: {
-    SStream_concat(ss, "a1");
-    break;
-  }
-  case 0x07: {
-    SStream_concat(ss, "t2");
-    break;
-  }
-  case 0x13: {
-    SStream_concat(ss, "s3");
-    break;
-  }
-  case 0x04: {
-    SStream_concat(ss, "tp");
-    break;
-  }
-  case 0x19: {
-    SStream_concat(ss, "s9");
-    break;
-  }
-  case 0x12: {
-    SStream_concat(ss, "s2");
-    break;
-  }
-  case 0x14: {
-    SStream_concat(ss, "s4");
-    break;
-  }
-  case 0x0E: {
-    SStream_concat(ss, "a4");
-    break;
-  }
-  case 0x1E: {
-    SStream_concat(ss, "t5");
-    break;
-  }
-  case 0x11: {
-    SStream_concat(ss, "a7");
-    break;
-  }
-  case 0x03: {
-    SStream_concat(ss, "gp");
-    break;
-  }
-  case 0x05: {
-    SStream_concat(ss, "t0");
-    break;
-  }
-  case 0x1D: {
-    SStream_concat(ss, "t4");
-    break;
-  }
-  case 0x0D: {
-    SStream_concat(ss, "a3");
-    break;
-  }
-  case 0x0F: {
-    SStream_concat(ss, "a5");
     break;
   }
   }
@@ -379,42 +247,6 @@ void amo_mnemonic(uint64_t member, SStream *ss) {
   }
   }
 }
-void creg_name(uint64_t member, SStream *ss) {
-  switch (member) {
-  case 0x7: {
-    SStream_concat(ss, "a5");
-    break;
-  }
-  case 0x5: {
-    SStream_concat(ss, "a3");
-    break;
-  }
-  case 0x1: {
-    SStream_concat(ss, "s1");
-    break;
-  }
-  case 0x3: {
-    SStream_concat(ss, "a1");
-    break;
-  }
-  case 0x2: {
-    SStream_concat(ss, "a0");
-    break;
-  }
-  case 0x4: {
-    SStream_concat(ss, "a2");
-    break;
-  }
-  case 0x6: {
-    SStream_concat(ss, "a4");
-    break;
-  }
-  case 0x0: {
-    SStream_concat(ss, "s0");
-    break;
-  }
-  }
-}
 void csr_mnemonic(uint64_t member, SStream *ss) {
   switch (member) {
   case RISCV_CSRRS: {
@@ -427,138 +259,6 @@ void csr_mnemonic(uint64_t member, SStream *ss) {
   }
   case RISCV_CSRRC: {
     SStream_concat(ss, "csrrc");
-    break;
-  }
-  }
-}
-void freg_name(uint64_t member, SStream *ss) {
-  switch (member) {
-  case 0x08: {
-    SStream_concat(ss, "fs0");
-    break;
-  }
-  case 0x15: {
-    SStream_concat(ss, "fs5");
-    break;
-  }
-  case 0x01: {
-    SStream_concat(ss, "ft1");
-    break;
-  }
-  case 0x06: {
-    SStream_concat(ss, "ft6");
-    break;
-  }
-  case 0x09: {
-    SStream_concat(ss, "fs1");
-    break;
-  }
-  case 0x10: {
-    SStream_concat(ss, "fa6");
-    break;
-  }
-  case 0x1B: {
-    SStream_concat(ss, "fs11");
-    break;
-  }
-  case 0x1C: {
-    SStream_concat(ss, "ft8");
-    break;
-  }
-  case 0x16: {
-    SStream_concat(ss, "fs6");
-    break;
-  }
-  case 0x00: {
-    SStream_concat(ss, "ft0");
-    break;
-  }
-  case 0x0A: {
-    SStream_concat(ss, "fa0");
-    break;
-  }
-  case 0x1A: {
-    SStream_concat(ss, "fs10");
-    break;
-  }
-  case 0x17: {
-    SStream_concat(ss, "fs7");
-    break;
-  }
-  case 0x0C: {
-    SStream_concat(ss, "fa2");
-    break;
-  }
-  case 0x18: {
-    SStream_concat(ss, "fs8");
-    break;
-  }
-  case 0x02: {
-    SStream_concat(ss, "ft2");
-    break;
-  }
-  case 0x1F: {
-    SStream_concat(ss, "ft11");
-    break;
-  }
-  case 0x0B: {
-    SStream_concat(ss, "fa1");
-    break;
-  }
-  case 0x07: {
-    SStream_concat(ss, "ft7");
-    break;
-  }
-  case 0x13: {
-    SStream_concat(ss, "fs3");
-    break;
-  }
-  case 0x04: {
-    SStream_concat(ss, "ft4");
-    break;
-  }
-  case 0x19: {
-    SStream_concat(ss, "fs9");
-    break;
-  }
-  case 0x12: {
-    SStream_concat(ss, "fs2");
-    break;
-  }
-  case 0x14: {
-    SStream_concat(ss, "fs4");
-    break;
-  }
-  case 0x0E: {
-    SStream_concat(ss, "fa4");
-    break;
-  }
-  case 0x1E: {
-    SStream_concat(ss, "ft10");
-    break;
-  }
-  case 0x11: {
-    SStream_concat(ss, "fa7");
-    break;
-  }
-  case 0x03: {
-    SStream_concat(ss, "ft3");
-    break;
-  }
-  case 0x05: {
-    SStream_concat(ss, "ft5");
-    break;
-  }
-  case 0x1D: {
-    SStream_concat(ss, "ft9");
-    break;
-  }
-  case 0x0D: {
-    SStream_concat(ss, "fa3");
-    break;
-  }
-  case 0x0F: {
-    SStream_concat(ss, "fa5");
     break;
   }
   }
@@ -631,6 +331,106 @@ void f_bin_rm_type_mnemonic_S(uint64_t member, SStream *ss) {
   }
   }
 }
+void f_un_rm_fx_type_mnemonic_S(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FCVT_LU_S: {
+    SStream_concat(ss, "fcvt.lu.s");
+    break;
+  }
+  case RISCV_FCVT_WU_S: {
+    SStream_concat(ss, "fcvt.wu.s");
+    break;
+  }
+  case RISCV_FCVT_W_S: {
+    SStream_concat(ss, "fcvt.w.s");
+    break;
+  }
+  case RISCV_FCVT_L_S: {
+    SStream_concat(ss, "fcvt.l.s");
+    break;
+  }
+  }
+}
+void f_un_rm_xf_type_mnemonic_S(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FCVT_S_L: {
+    SStream_concat(ss, "fcvt.s.l");
+    break;
+  }
+  case RISCV_FCVT_S_WU: {
+    SStream_concat(ss, "fcvt.s.wu");
+    break;
+  }
+  case RISCV_FCVT_S_W: {
+    SStream_concat(ss, "fcvt.s.w");
+    break;
+  }
+  case RISCV_FCVT_S_LU: {
+    SStream_concat(ss, "fcvt.s.lu");
+    break;
+  }
+  }
+}
+void f_bin_type_mnemonic_f_S(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FSGNJ_S: {
+    SStream_concat(ss, "fsgnj.s");
+    break;
+  }
+  case RISCV_FSGNJN_S: {
+    SStream_concat(ss, "fsgnjn.s");
+    break;
+  }
+  case RISCV_FSGNJX_S: {
+    SStream_concat(ss, "fsgnjx.s");
+    break;
+  }
+  case RISCV_FMIN_S: {
+    SStream_concat(ss, "fmin.s");
+    break;
+  }
+  case RISCV_FMAX_S: {
+    SStream_concat(ss, "fmax.s");
+    break;
+  }
+  }
+}
+void f_bin_type_mnemonic_x_S(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FEQ_S: {
+    SStream_concat(ss, "feq.s");
+    break;
+  }
+  case RISCV_FLT_S: {
+    SStream_concat(ss, "flt.s");
+    break;
+  }
+  case RISCV_FLE_S: {
+    SStream_concat(ss, "fle.s");
+    break;
+  }
+  }
+}
+void f_un_type_mnemonic_x_S(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FMV_X_W: {
+    SStream_concat(ss, "fmv.x.w");
+    break;
+  }
+  case RISCV_FCLASS_S: {
+    SStream_concat(ss, "fclass.s");
+    break;
+  }
+  }
+}
+void f_un_type_mnemonic_f_S(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FMV_W_X: {
+    SStream_concat(ss, "fmv.w.x");
+    break;
+  }
+  }
+}
 void f_madd_type_mnemonic_D(uint64_t member, SStream *ss) {
   switch (member) {
   case RISCV_FMSUB_D: {
@@ -667,6 +467,122 @@ void f_bin_rm_type_mnemonic_D(uint64_t member, SStream *ss) {
   }
   case RISCV_FDIV_D: {
     SStream_concat(ss, "fdiv.d");
+    break;
+  }
+  }
+}
+void f_un_rm_ff_type_mnemonic_D(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FSQRT_D: {
+    SStream_concat(ss, "fsqrt.d");
+    break;
+  }
+  case RISCV_FCVT_S_D: {
+    SStream_concat(ss, "fcvt.s.d");
+    break;
+  }
+  case RISCV_FCVT_D_S: {
+    SStream_concat(ss, "fcvt.d.s");
+    break;
+  }
+  }
+}
+void f_un_rm_fx_type_mnemonic_D(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FCVT_L_D: {
+    SStream_concat(ss, "fcvt.l.d");
+    break;
+  }
+  case RISCV_FCVT_WU_D: {
+    SStream_concat(ss, "fcvt.wu.d");
+    break;
+  }
+  case RISCV_FCVT_W_D: {
+    SStream_concat(ss, "fcvt.w.d");
+    break;
+  }
+  case RISCV_FCVT_LU_D: {
+    SStream_concat(ss, "fcvt.lu.d");
+    break;
+  }
+  }
+}
+void f_un_rm_xf_type_mnemonic_D(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FCVT_D_LU: {
+    SStream_concat(ss, "fcvt.d.lu");
+    break;
+  }
+  case RISCV_FCVT_D_WU: {
+    SStream_concat(ss, "fcvt.d.wu");
+    break;
+  }
+  case RISCV_FCVT_D_W: {
+    SStream_concat(ss, "fcvt.d.w");
+    break;
+  }
+  case RISCV_FCVT_D_L: {
+    SStream_concat(ss, "fcvt.d.l");
+    break;
+  }
+  }
+}
+void f_bin_f_type_mnemonic_D(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FSGNJ_D: {
+    SStream_concat(ss, "fsgnj.d");
+    break;
+  }
+  case RISCV_FMAX_D: {
+    SStream_concat(ss, "fmax.d");
+    break;
+  }
+  case RISCV_FSGNJX_D: {
+    SStream_concat(ss, "fsgnjx.d");
+    break;
+  }
+  case RISCV_FSGNJN_D: {
+    SStream_concat(ss, "fsgnjn.d");
+    break;
+  }
+  case RISCV_FMIN_D: {
+    SStream_concat(ss, "fmin.d");
+    break;
+  }
+  }
+}
+void f_bin_x_type_mnemonic_D(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FLE_D: {
+    SStream_concat(ss, "fle.d");
+    break;
+  }
+  case RISCV_FEQ_D: {
+    SStream_concat(ss, "feq.d");
+    break;
+  }
+  case RISCV_FLT_D: {
+    SStream_concat(ss, "flt.d");
+    break;
+  }
+  }
+}
+void f_un_x_type_mnemonic_D(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FCLASS_D: {
+    SStream_concat(ss, "fclass.d");
+    break;
+  }
+  case RISCV_FMV_X_D: {
+    SStream_concat(ss, "fmv.x.d");
+    break;
+  }
+  }
+}
+void f_un_f_type_mnemonic_D(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FMV_D_X: {
+    SStream_concat(ss, "fmv.d.x");
     break;
   }
   }
@@ -855,6 +771,130 @@ void f_madd_type_mnemonic_H(uint64_t member, SStream *ss) {
   }
   }
 }
+void f_bin_f_type_mnemonic_H(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FSGNJ_H: {
+    SStream_concat(ss, "fsgnj.h");
+    break;
+  }
+  case RISCV_FMIN_H: {
+    SStream_concat(ss, "fmin.h");
+    break;
+  }
+  case RISCV_FSGNJX_H: {
+    SStream_concat(ss, "fsgnjx.h");
+    break;
+  }
+  case RISCV_FMAX_H: {
+    SStream_concat(ss, "fmax.h");
+    break;
+  }
+  case RISCV_FSGNJN_H: {
+    SStream_concat(ss, "fsgnjn.h");
+    break;
+  }
+  }
+}
+void f_bin_x_type_mnemonic_H(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FLE_H: {
+    SStream_concat(ss, "fle.h");
+    break;
+  }
+  case RISCV_FLT_H: {
+    SStream_concat(ss, "flt.h");
+    break;
+  }
+  case RISCV_FEQ_H: {
+    SStream_concat(ss, "feq.h");
+    break;
+  }
+  }
+}
+void f_un_rm_ff_type_mnemonic_H(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FSQRT_H: {
+    SStream_concat(ss, "fsqrt.h");
+    break;
+  }
+  case RISCV_FCVT_H_S: {
+    SStream_concat(ss, "fcvt.h.s");
+    break;
+  }
+  case RISCV_FCVT_S_H: {
+    SStream_concat(ss, "fcvt.s.h");
+    break;
+  }
+  case RISCV_FCVT_D_H: {
+    SStream_concat(ss, "fcvt.d.h");
+    break;
+  }
+  case RISCV_FCVT_H_D: {
+    SStream_concat(ss, "fcvt.h.d");
+    break;
+  }
+  }
+}
+void f_un_rm_fx_type_mnemonic_H(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FCVT_L_H: {
+    SStream_concat(ss, "fcvt.l.h");
+    break;
+  }
+  case RISCV_FCVT_LU_H: {
+    SStream_concat(ss, "fcvt.lu.h");
+    break;
+  }
+  case RISCV_FCVT_W_H: {
+    SStream_concat(ss, "fcvt.w.h");
+    break;
+  }
+  case RISCV_FCVT_WU_H: {
+    SStream_concat(ss, "fcvt.wu.h");
+    break;
+  }
+  }
+}
+void f_un_rm_xf_type_mnemonic_H(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FCVT_H_L: {
+    SStream_concat(ss, "fcvt.h.l");
+    break;
+  }
+  case RISCV_FCVT_H_W: {
+    SStream_concat(ss, "fcvt.h.w");
+    break;
+  }
+  case RISCV_FCVT_H_LU: {
+    SStream_concat(ss, "fcvt.h.lu");
+    break;
+  }
+  case RISCV_FCVT_H_WU: {
+    SStream_concat(ss, "fcvt.h.wu");
+    break;
+  }
+  }
+}
+void f_un_f_type_mnemonic_H(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FMV_H_X: {
+    SStream_concat(ss, "fmv.h.x");
+    break;
+  }
+  }
+}
+void f_un_x_type_mnemonic_H(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_FCLASS_H: {
+    SStream_concat(ss, "fclass.h");
+    break;
+  }
+  case RISCV_FMV_X_H: {
+    SStream_concat(ss, "fmv.x.h");
+    break;
+  }
+  }
+}
 void zbkb_rtype_mnemonic(uint64_t member, SStream *ss) {
   switch (member) {
   case RISCV_PACKH: {
@@ -983,138 +1023,6 @@ void vvtype_mnemonic(uint64_t member, SStream *ss) {
   }
   case RISCV_VV_VOR: {
     SStream_concat(ss, "vor.vv");
-    break;
-  }
-  }
-}
-void vreg_name(uint64_t member, SStream *ss) {
-  switch (member) {
-  case 0x08: {
-    SStream_concat(ss, "v8");
-    break;
-  }
-  case 0x15: {
-    SStream_concat(ss, "v21");
-    break;
-  }
-  case 0x01: {
-    SStream_concat(ss, "v1");
-    break;
-  }
-  case 0x06: {
-    SStream_concat(ss, "v6");
-    break;
-  }
-  case 0x09: {
-    SStream_concat(ss, "v9");
-    break;
-  }
-  case 0x10: {
-    SStream_concat(ss, "v16");
-    break;
-  }
-  case 0x1B: {
-    SStream_concat(ss, "v27");
-    break;
-  }
-  case 0x1C: {
-    SStream_concat(ss, "v28");
-    break;
-  }
-  case 0x16: {
-    SStream_concat(ss, "v22");
-    break;
-  }
-  case 0x00: {
-    SStream_concat(ss, "v0");
-    break;
-  }
-  case 0x0A: {
-    SStream_concat(ss, "v10");
-    break;
-  }
-  case 0x1A: {
-    SStream_concat(ss, "v26");
-    break;
-  }
-  case 0x17: {
-    SStream_concat(ss, "v23");
-    break;
-  }
-  case 0x0C: {
-    SStream_concat(ss, "v12");
-    break;
-  }
-  case 0x18: {
-    SStream_concat(ss, "v24");
-    break;
-  }
-  case 0x02: {
-    SStream_concat(ss, "v2");
-    break;
-  }
-  case 0x1F: {
-    SStream_concat(ss, "v31");
-    break;
-  }
-  case 0x0B: {
-    SStream_concat(ss, "v11");
-    break;
-  }
-  case 0x07: {
-    SStream_concat(ss, "v7");
-    break;
-  }
-  case 0x13: {
-    SStream_concat(ss, "v19");
-    break;
-  }
-  case 0x04: {
-    SStream_concat(ss, "v4");
-    break;
-  }
-  case 0x19: {
-    SStream_concat(ss, "v25");
-    break;
-  }
-  case 0x12: {
-    SStream_concat(ss, "v18");
-    break;
-  }
-  case 0x14: {
-    SStream_concat(ss, "v20");
-    break;
-  }
-  case 0x0E: {
-    SStream_concat(ss, "v14");
-    break;
-  }
-  case 0x1E: {
-    SStream_concat(ss, "v30");
-    break;
-  }
-  case 0x11: {
-    SStream_concat(ss, "v17");
-    break;
-  }
-  case 0x03: {
-    SStream_concat(ss, "v3");
-    break;
-  }
-  case 0x05: {
-    SStream_concat(ss, "v5");
-    break;
-  }
-  case 0x1D: {
-    SStream_concat(ss, "v29");
-    break;
-  }
-  case 0x0D: {
-    SStream_concat(ss, "v13");
-    break;
-  }
-  case 0x0F: {
-    SStream_concat(ss, "v15");
     break;
   }
   }
@@ -2515,6 +2423,18 @@ void cbop_mnemonic(uint64_t member, SStream *ss) {
   }
   case RISCV_CBO_FLUSH: {
     SStream_concat(ss, "cbo.flush");
+    break;
+  }
+  }
+}
+void vsha2c_mnemonic(uint64_t member, SStream *ss) {
+  switch (member) {
+  case RISCV_ZVK_VSHA2CH: {
+    SStream_concat(ss, "vsha2ch.vv");
+    break;
+  }
+  case RISCV_ZVK_VSHA2CL: {
+    SStream_concat(ss, "vsha2cl.vv");
     break;
   }
   }

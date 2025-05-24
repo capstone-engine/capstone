@@ -4,6 +4,7 @@
 #include "RISCVDecode.gen.inc"
 #include "RISCVDecodeCompressed.gen.inc"
 #include "RISCVInsnMappings.gen.inc"
+#include "RISCVOperands.gen.inc"
 #include "../../cs_priv.h"
 #include "../../utils.h"
 
@@ -29,9 +30,9 @@ bool riscv_get_instruction(csh handle,
 
     // VERY HACKY: use op_str as a temporary buffer to serialize the instruction struct
     // so that the printer callback can later de-serialize it in order to stringify it
-    // alternatives: dynamic memory, global/static variables, 
-    //               duplicating the decoding again in the printer
-    //               doing all the work including decoding in the printer (and not here)
+    // alternatives:
+    //             (1) duplicating the decoding again in the printer
+    //             (2) doing all the work including decoding in the printer (and not here)
     CS_ASSERT(sizeof(struct ast) < 160);
     memcpy(insn->op_str, &instruction, sizeof(struct ast));
 
@@ -39,5 +40,8 @@ bool riscv_get_instruction(csh handle,
     insn->address = address;
     
     *size = sz;
+
+    fill_operands(&instruction, insn->detail->riscv.operands, &(insn->detail->riscv.op_count));
+    patch_operands(&instruction, insn->detail->riscv.operands, &(insn->detail->riscv.op_count), &ctx);
     return true;
 }

@@ -1,7 +1,6 @@
 /* Capstone Disassembly Engine */
 /* RISC-V Backend By Rodrigo Cortes Porto <porto703@gmail.com> & 
    Shawn Chang <citypw@gmail.com>, HardenedLinux@2018 */
-
 #ifdef CAPSTONE_HAS_RISCV
 
 #include "RISCVModule.h"
@@ -14,6 +13,19 @@ void noop_getid(cs_struct *h, cs_insn *insn, unsigned int id) {
 
 }
 
+const char *riscv_get_regname(csh handle, unsigned int id) {
+	if (IS_GEN_PURPOSE_REG(id)) {
+		return reg_names[INDEX_FROM_GEN_PURPOSE_REG(id)];
+	} else if (IS_FLOAT_REG(id)) {
+		return freg_names[INDEX_FROM_FLOAT_REG(id)];
+	} else if (IS_DOUBLE_REG(id)) {
+		return freg_names[INDEX_FROM_DOUBLE_REG(id)];
+	} else if (IS_VECTOR_REG(id)) {
+		return vreg_names[INDEX_FROM_VECTOR_REG(id)];
+	}
+	return "<UNKNOWN>";
+}
+
 cs_err RISCV_global_init(cs_struct * ud)
 {
 	ud->printer = riscv_printer;
@@ -22,7 +34,7 @@ cs_err RISCV_global_init(cs_struct * ud)
 	ud->disasm = riscv_get_instruction;
 	ud->post_printer = NULL;
 
-	ud->reg_name = noop_getname;
+	ud->reg_name = riscv_get_regname;
 	ud->insn_id = noop_getid;
 	ud->insn_name = noop_getname;
 	ud->group_name = noop_getname;
