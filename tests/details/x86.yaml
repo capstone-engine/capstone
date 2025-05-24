@@ -1322,3 +1322,25 @@ test_cases:
                 access: CS_AC_READ
           regs_read: [ st(0) ]
           regs_write: [ fpsw ]
+  -
+    input:
+      bytes: [ 0xc3 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ret"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc3, 0x00, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+          regs_read: [ rsp ]
+          regs_write: [ rsp, rip ]
