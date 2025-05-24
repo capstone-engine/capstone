@@ -2825,3 +2825,38 @@ test_cases:
           writeback: -1
           regs_read: [ r3 ]
           regs_write: [ ]
+  -
+    input:
+      bytes: [ 0xf0, 0xbd ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_OPT_DETAIL, CS_MODE_THUMB ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pop  {r4, r5, r6, r7, pc}"
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r4
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r5
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r6
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r7
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r15
+                access: CS_AC_WRITE
+          regs_read: [ r13 ]
+          regs_write: [ r13, r4, r5, r6, r7, r15 ]
