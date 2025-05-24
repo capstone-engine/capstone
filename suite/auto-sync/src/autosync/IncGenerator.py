@@ -140,7 +140,8 @@ class IncGenerator:
         if not patch_dir.exists():
             return
 
-        for patch in patch_dir.iterdir():
+        # apply patches in alphabetical order
+        for patch in sorted(patch_dir.iterdir()):
             try:
                 subprocess.run(
                     ["git", "apply", "-v", "--recount", str(patch)],
