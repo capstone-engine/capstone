@@ -694,7 +694,7 @@ typedef struct cs_mips_op {
 
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-	uint8_t access;
+	cs_ac_type access;
 } cs_mips_op;
 
 #define NUM_MIPS_OPS 10

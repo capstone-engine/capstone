@@ -44,7 +44,7 @@ typedef struct cs_tricore_op {
 	};
 	/// This field is combined of cs_ac_type.
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-	uint8_t access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)
+	cs_ac_type access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)
 } cs_tricore_op;
 
 #define NUM_TRICORE_OPS 8

@@ -289,7 +289,7 @@ typedef struct cs_x86_op {
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// This field is combined of cs_ac_type.
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-	uint8_t access;
+	cs_ac_type access;
 
 	/// AVX broadcast type, or 0 if irrelevant
 	x86_avx_bcast avx_bcast;

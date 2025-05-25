@@ -2847,7 +2847,7 @@ typedef struct cs_aarch64_op {
   /// How is this operand accessed? (READ, WRITE or READ|WRITE)
   /// This field is combined of cs_ac_type.
   /// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-  uint8_t access;
+  cs_ac_type access;
   bool is_list_member; ///< True if this operand is part of a register or vector list.
 } cs_aarch64_op;
 

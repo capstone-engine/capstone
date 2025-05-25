@@ -889,7 +889,7 @@ typedef struct cs_arm_op {
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// This field is combined of cs_ac_type.
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-	uint8_t access;
+	cs_ac_type access;
 
 	/// Neon lane index for NEON instructions (or -1 if irrelevant)
 	int8_t neon_lane;

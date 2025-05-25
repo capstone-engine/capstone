@@ -43,7 +43,7 @@ typedef struct cs_loongarch_op {
 
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-	uint8_t access;
+	cs_ac_type access;
 } cs_loongarch_op;
 
 /// LoongArch instruction formats. To get details about them please
