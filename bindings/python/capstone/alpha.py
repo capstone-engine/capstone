@@ -20,7 +20,7 @@ class AlphaOp(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', AlphaOpValue),
-        ('access', ctypes.c_uint8)
+        ('access', ctypes.c_uint)
     )
 
     @property

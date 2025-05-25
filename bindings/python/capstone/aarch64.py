@@ -110,7 +110,7 @@ class AArch64Op(ctypes.Structure):
         ('is_vreg', ctypes.c_bool),
         ('value', AArch64OpValue),
         ('sysop', AArch64SysOp),
-        ('access', ctypes.c_uint8),
+        ('access', ctypes.c_uint),
         ('is_list_member', ctypes.c_bool),
     )
 

@@ -23,7 +23,7 @@ class TriCoreOp(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', TriCoreOpValue),
-        ('access', ctypes.c_uint8)
+        ('access', ctypes.c_uint)
     )
 
     @property

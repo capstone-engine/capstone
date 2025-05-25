@@ -44,7 +44,7 @@ class M680xOp(ctypes.Structure):
         ('type', ctypes.c_uint),
         ('value', M680xOpValue),
         ('size', ctypes.c_uint8),
-        ('access', ctypes.c_uint8),
+        ('access', ctypes.c_uint),
     )
 
     @property

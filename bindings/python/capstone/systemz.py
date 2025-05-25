@@ -25,7 +25,7 @@ class SystemZOp(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint),
         ('value', SystemZOpValue),
-        ('access', ctypes.c_int),
+        ('access', ctypes.c_uint),
         ('imm_width', ctypes.c_uint8),
     )
 

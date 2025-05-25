@@ -25,7 +25,7 @@ class MipsOp(ctypes.Structure):
         ('value', MipsOpValue),
         ('is_reglist', ctypes.c_bool),
         ('is_unsigned', ctypes.c_bool),
-        ('access', ctypes.c_uint8),
+        ('access', ctypes.c_uint),
     )
 
     @property

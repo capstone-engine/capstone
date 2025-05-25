@@ -26,7 +26,7 @@ class X86Op(ctypes.Structure):
         ('type', ctypes.c_uint),
         ('value', X86OpValue),
         ('size', ctypes.c_uint8),
-        ('access', ctypes.c_uint8),
+        ('access', ctypes.c_uint),
         ('avx_bcast', ctypes.c_uint),
         ('avx_zero_opmask', ctypes.c_bool),
     )

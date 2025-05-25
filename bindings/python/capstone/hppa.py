@@ -45,7 +45,7 @@ class HPPAOp(ctypes.Structure):
     _fields_ = (
         ('type', ctypes.c_uint8),
         ('value', HPPAOpValue),
-        ('access', ctypes.c_uint8)
+        ('access', ctypes.c_uint)
     )
 
     @property

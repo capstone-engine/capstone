@@ -28,7 +28,7 @@ class BPFOp(ctypes.Structure):
         ('value', BPFOpValue),
         ('is_signed', ctypes.c_bool),
         ('is_pkt', ctypes.c_bool),
-        ('access', ctypes.c_uint8),
+        ('access', ctypes.c_uint),
     )
 
     @property
