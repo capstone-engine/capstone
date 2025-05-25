@@ -1691,24 +1691,27 @@ typedef enum cs_xtensa_op_type {
 	XTENSA_OP_REG = CS_OP_REG,	   ///< = (Register operand).
 	XTENSA_OP_IMM = CS_OP_IMM,	   ///< = (Immediate operand).
 	XTENSA_OP_MEM = CS_OP_MEM,	   ///< = (Memory operand).
-	XTENSA_OP_MEM_REG = CS_OP_MEM_REG, ///< = (Memory Register operand).
-	XTENSA_OP_MEM_IMM = CS_OP_MEM_IMM, ///< = (Memory Immediate operand).
 	XTENSA_OP_L32R = CS_OP_SPECIAL + 0,			   ///< = (L32R Target)
 } cs_xtensa_op_type;
 
+/// Instruction's operand referring to memory
+/// This is associated with XTENSA_OP_MEM operand type above
 typedef struct cs_xtensa_op_mem {
-	uint8_t base;
-	int32_t disp;
+	uint8_t base;  ///< base register
+	int32_t disp;  ///< displacement/offset value
 } cs_xtensa_op_mem;
 
-typedef struct cs_xtensa_operand {
-	uint8_t type;
-	uint8_t access;
+/// Instruction operand
+typedef struct cs_xtensa_op {
+	cs_xtensa_op_type type;   //< operand type
+	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
+	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
+	cs_ac_type access;
 
 	union {
-		uint8_t reg;
-		int32_t imm;
-		cs_xtensa_op_mem mem;
+		uint8_t reg;          /// register value for REG operand
+		int32_t imm;          /// immediate value for IMM operand
+		cs_xtensa_op_mem mem; /// base/disp value for MEM operand
 	};
 } cs_xtensa_op;
 

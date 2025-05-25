@@ -42,13 +42,13 @@ void print_insn_detail_xtensa(csh handle, cs_insn *ins)
 
 	for (i = 0; i < detail->op_count; i++) {
 		cs_xtensa_op *op = &(detail->operands[i]);
-		if (op->type == CS_OP_REG)
+		if (op->type == XTENSA_OP_REG)
 			printf("\t\toperands[%u].type: REG = %s\n", i,
 			       cs_reg_name(handle, op->reg));
-		else if (op->type == CS_OP_IMM)
+		else if (op->type == XTENSA_OP_IMM)
 			printf("\t\toperands[%u].type: IMM = 0x%" PRIx32 "\n",
 			       i, op->imm);
-		else if (op->type == CS_OP_MEM)
+		else if (op->type == XTENSA_OP_MEM)
 			printf("\t\toperands[%u].type: MEM\n"
 			       "\t\t\t.mem.base: REG = %s\n"
 			       "\t\t\t.mem.disp: 0x%" PRIx32 "\n",
