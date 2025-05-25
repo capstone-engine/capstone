@@ -103,12 +103,11 @@ typedef enum e_access_mode {
 } e_access_mode;
 
 // Access type values are compatible with enum cs_ac_type:
-typedef enum e_access {
-	UNCHANGED = CS_AC_INVALID,
-	READ = CS_AC_READ,
-	WRITE = CS_AC_WRITE,
-	MODIFY = (CS_AC_READ | CS_AC_WRITE),
-} e_access;
+typedef cs_ac_type e_access;
+#define UNCHANGED CS_AC_INVALID
+#define READ CS_AC_READ
+#define WRITE CS_AC_WRITE
+#define MODIFY CS_AC_READ_WRITE
 
 /* Properties of one instruction in PAGE1 (without prefix) */
 typedef struct inst_page1 {
