@@ -19,6 +19,7 @@ void Sparc_init_cs_detail(MCInst *MI)
 	}
 	memset(get_detail(MI), 0, offsetof(cs_detail, sparc) + sizeof(cs_sparc));
 	Sparc_get_detail(MI)->cc = SPARC_CC_UNDEF;
+	Sparc_get_detail(MI)->cc_field = SPARC_CC_FIELD_NONE;
 }
 
 const insn_map sparc_insns[] = {
@@ -49,6 +50,29 @@ static void Sparc_add_bit_details(MCInst *MI, const uint8_t *Bytes,
 	uint32_t insn = readBytes32(MI, Bytes);
 
 	cs_sparc *detail = Sparc_get_detail(MI);
+	switch (detail->format) {
+	default:
+		break;
+	case SPARC_INSN_FORM_F2_2:
+		// V8 conditional branch instruction only has ICC.
+		detail->cc_field = SPARC_CC_FIELD_ICC;
+		break;
+	case SPARC_INSN_FORM_F2_3:
+		detail->cc_field = 0x4 | get_insn_field_r(insn, 20, 21);
+		break;
+	case SPARC_INSN_FORM_TRAPSP:
+		detail->cc_field = 0x4 | get_insn_field_r(insn, 25, 26);
+		break;
+	case SPARC_INSN_FORM_F4_1:
+	case SPARC_INSN_FORM_F4_2:
+		detail->cc_field = get_insn_field_r(insn, 11, 12);
+		detail->cc_field |= get_insn_field_r(insn, 18, 18) << 2;
+		break;
+	case SPARC_INSN_FORM_F4_3:
+		detail->cc_field = get_insn_field_r(insn, 11, 13);
+		break;
+	}
+
 	switch (detail->format) {
 	default:
 		break;
@@ -339,10 +363,32 @@ void Sparc_set_detail_op_reg(MCInst *MI, unsigned OpNum, sparc_reg Reg)
 		return;
 	CS_ASSERT_RET((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
 
-	Sparc_get_detail_op(MI, 0)->type = SPARC_OP_REG;
-	Sparc_get_detail_op(MI, 0)->reg = Reg;
-	Sparc_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
-	Sparc_inc_op_count(MI);
+	switch (Reg) {
+	default:
+		Sparc_get_detail_op(MI, 0)->type = SPARC_OP_REG;
+		Sparc_get_detail_op(MI, 0)->reg = Reg;
+		Sparc_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+		Sparc_inc_op_count(MI);
+		return;
+	// The LLVM definition is inconsistent with the cc fields.
+	// Sometimes they are encoded as register, sometimes not at all.
+	// For Capstone they are always saved in the cc_field field for now.
+	case SPARC_REG_ICC:
+		Sparc_get_detail(MI)->cc_field = SPARC_CC_FIELD_ICC;
+		break;
+	case SPARC_REG_FCC0:
+		Sparc_get_detail(MI)->cc_field = SPARC_CC_FIELD_FCC0;
+		break;
+	case SPARC_REG_FCC1:
+		Sparc_get_detail(MI)->cc_field = SPARC_CC_FIELD_FCC1;
+		break;
+	case SPARC_REG_FCC2:
+		Sparc_get_detail(MI)->cc_field = SPARC_CC_FIELD_FCC2;
+		break;
+	case SPARC_REG_FCC3:
+		Sparc_get_detail(MI)->cc_field = SPARC_CC_FIELD_FCC3;
+		break;
+	}
 }
 
 static inline bool is_single_reg_mem_case(MCInst *MI, unsigned OpNo)

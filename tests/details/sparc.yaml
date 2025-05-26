@@ -620,3 +620,132 @@ test_cases:
                   access: CS_AC_READ
               cc: SPARC_CC_ICC_A
             groups: [ jump ]
+  -
+    input:
+      bytes: [ 0x10, 0xbf, 0xff, 0xe0 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x0001bcf0
+    expected:
+      insns:
+        -
+          asm_text: "ba	0x1bc70"
+          is_alias: 1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  imm: 0x1bc70
+                  access: CS_AC_READ
+              cc: SPARC_CC_ICC_A
+            groups: [ jump ]
+            
+  -
+    input:
+      bytes: [ 0x20, 0x68, 0x04, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x0
+    expected:
+      insns:
+        -
+          asm_text: "bn,a	%xcc, 0x1000"
+          is_alias: -1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 0x1000
+              cc: SPARC_CC_ICC_N
+              cc_field: SPARC_CC_FIELD_XCC
+            groups: [ jump ]
+  -
+    input:
+      bytes: [ 0x0e, 0x80, 0x04, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x4
+    expected:
+      insns:
+        -
+          asm_text: "bvs	0x1004"
+          is_alias: 1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 0x1004
+              cc: SPARC_CC_ICC_VS
+              cc_field: SPARC_CC_FIELD_ICC
+            groups: [ jump ]
+  -
+    input:
+      bytes: [ 0x85, 0xa8, 0x0a, 0xe4 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x8
+    expected:
+      insns:
+        -
+          asm_text: "fcmpeq	%fcc2, %f0, %f4"
+          is_alias: -1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: f0
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: f4
+              cc_field: SPARC_CC_FIELD_FCC2
+  -
+    input:
+      bytes: [ 0x30, 0x68, 0x04, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0xc
+    expected:
+      insns:
+        -
+          asm_text: "ba,a	%xcc, 0x100c"
+          is_alias: -1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 0x100c
+              cc: SPARC_CC_ICC_A
+              cc_field: SPARC_CC_FIELD_XCC
+              hint: SPARC_HINT_A_PT
+            groups: [ jump ]
+  -
+    input:
+      bytes: [ 0x1e, 0x48, 0x04, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "bvc	%icc, 0x1010"
+          is_alias: -1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 0x1010
+              cc: SPARC_CC_ICC_VC
+              cc_field: SPARC_CC_FIELD_ICC
+            groups: [ jump, HasV9 ]

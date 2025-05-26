@@ -53,6 +53,7 @@ static const cyaml_schema_value_t test_detail_sparc_op_schema = {
 
 typedef struct {
 	char *cc;
+	char *cc_field;
 	char *hint;
 	TestDetailSparcOp **operands;
 	uint32_t operands_count;
@@ -61,6 +62,8 @@ typedef struct {
 static const cyaml_schema_field_t test_detail_sparc_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("cc", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparc, cc, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR("cc_field", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailSparc, cc_field, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("hint", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparc, hint, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_SEQUENCE(

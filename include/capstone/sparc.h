@@ -155,6 +155,20 @@ inline static const char *SPARCCondCodeToString(sparc_cc CC) {
   return "invalid";
 }
 
+/// The cc field values encoded in the cc0, cc1, cc2 bits or opf_cc.
+/// They are equivalent to ISA Sparc v9 - Table 41 - Chapter E.2 Tables - Page 281.
+typedef enum {
+	SPARC_CC_FIELD_FCC0 = 0,
+	SPARC_CC_FIELD_FCC1 = 1,
+	SPARC_CC_FIELD_FCC2 = 2,
+	SPARC_CC_FIELD_FCC3 = 3,
+	SPARC_CC_FIELD_ICC = 4,
+	SPARC_CC_FIELD_RESERVED_I = 5,
+	SPARC_CC_FIELD_XCC = 6,
+	SPARC_CC_FIELD_RESERVED_II = 7,
+	SPARC_CC_FIELD_NONE = 0xff,
+} sparc_cc_field;
+
 /// The instruction formats.
 /// They are only loosely equivalent to the one in the ISA.
 /// Because in LLVM they are not defined one to one.
@@ -535,6 +549,7 @@ typedef struct cs_sparc_op {
 /// Instruction structure
 typedef struct cs_sparc {
 	sparc_cc cc;	///< Condition code: only SPARC_CC_ICC_* are set here.
+	sparc_cc_field cc_field; ///< The CC field the instruction uses.
 	sparc_hint hint;	///< branch hint: encoding as bitwise OR of sparc_hint.
 	sparc_insn_form format; ///< The instruction format.
 	/// Number of operands of this instruction,

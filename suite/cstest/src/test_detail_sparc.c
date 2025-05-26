@@ -22,6 +22,7 @@ void test_detail_sparc_free(TestDetailSparc *detail)
 	}
 	cs_mem_free(detail->operands);
 	cs_mem_free(detail->cc);
+	cs_mem_free(detail->cc_field);
 	cs_mem_free(detail->hint);
 	cs_mem_free(detail);
 }
@@ -32,6 +33,7 @@ TestDetailSparc *test_detail_sparc_clone(const TestDetailSparc *detail)
 
 	clone->operands_count = detail->operands_count;
 	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
+	clone->cc_field = detail->cc_field ? strdup(detail->cc_field) : NULL;
 	clone->hint = detail->hint ? strdup(detail->hint) : NULL;
 	if (detail->operands_count > 0) {
 		clone->operands = cs_mem_calloc(sizeof(TestDetailSparcOp *),
@@ -89,6 +91,9 @@ bool test_expected_sparc(csh *handle, const cs_sparc *actual,
 
 	if (expected->cc) {
 		compare_enum_ret(actual->cc, expected->cc, false);
+	}
+	if (expected->cc_field) {
+		compare_enum_ret(actual->cc_field, expected->cc_field, false);
 	}
 	if (expected->hint) {
 		compare_enum_ret(actual->hint, expected->hint, false);

@@ -52,6 +52,7 @@ class SparcOp(ctypes.Structure):
 class CsSparc(ctypes.Structure):
     _fields_ = (
         ('cc', ctypes.c_uint),
+        ('cc_field', ctypes.c_uint),
         ('hint', ctypes.c_uint),
         ('format', ctypes.c_uint),
         ('op_count', ctypes.c_uint8),
@@ -59,5 +60,5 @@ class CsSparc(ctypes.Structure):
     )
 
 def get_arch_info(a):
-    return (a.cc, a.hint, a.format, copy_ctypes_list(a.operands[:a.op_count]))
+    return (a.cc, a.cc_field, a.hint, a.format, copy_ctypes_list(a.operands[:a.op_count]))
 
