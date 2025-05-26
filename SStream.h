@@ -22,6 +22,7 @@ typedef struct SStream {
 	bool is_closed;
 	bool markup_stream; ///< If true, markups to the stream are allowed.
 	bool prefixed_by_markup; ///< Set after the stream wrote a markup for an operand.
+	bool unsigned_num; ///< Print all numbers as unsigned. Set with CS_OPT_UNSIGNED.
 } SStream;
 
 #define SSTREAM_OVERFLOW_CHECK(OS, len) \
@@ -39,6 +40,7 @@ do { \
 } while(0)
 
 void SStream_Init(SStream *ss);
+void SStream_opt_unum(SStream *ss, bool print_unsigned_numbers);
 
 const char *SStream_replc(const SStream *ss, char elem, char repl);
 
@@ -81,6 +83,8 @@ void printInt32HexOffset(SStream *ss, int32_t val);
 
 void printUInt32Bang(SStream *O, uint32_t val);
 
+void printUInt8(SStream *ss, uint8_t val);
+void printUInt16(SStream *ss, uint16_t val);
 void printUInt32(SStream *O, uint32_t val);
 
 // print number in decimal mode

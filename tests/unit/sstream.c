@@ -276,6 +276,46 @@ bool test_printint64_bang()
 	return true;
 }
 
+bool test_printuint16()
+{
+	printf("Test test_printuint16\n");
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+	printUInt16(&OS, HEX_THRESHOLD + 1);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "0xa");
+	SStream_Flush(&OS, NULL);
+
+	printUInt16(&OS, HEX_THRESHOLD);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "9");
+	SStream_Flush(&OS, NULL);
+
+	printUInt16(&OS, UINT16_MAX);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "0xffff");
+	SStream_Flush(&OS, NULL);
+	return true;
+}
+
+bool test_printuint8()
+{
+	printf("Test test_printuint8\n");
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+	printUInt8(&OS, HEX_THRESHOLD + 1);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "0xa");
+	SStream_Flush(&OS, NULL);
+
+	printUInt8(&OS, HEX_THRESHOLD);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "9");
+	SStream_Flush(&OS, NULL);
+
+	printUInt8(&OS, UINT8_MAX);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "0xff");
+	SStream_Flush(&OS, NULL);
+	return true;
+}
+
 bool test_printuint32_bang()
 {
 	printf("Test test_printuint32Bang\n");
@@ -346,6 +386,46 @@ bool test_trimls() {
 	SStream_trimls(&OS);
 	CHECK_OS_EQUAL_RET_FALSE(OS, "");
 	CHECK_INT_EQUAL_RET_FALSE(OS.index, 0);
+	return true;
+}
+
+bool test_stream_unsigned_imm()
+{
+	printf("Test test_stream_unsigned_imm\n");
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+
+	OS.unsigned_num = true;
+	printInt8(&OS, -1);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "0xff");
+	SStream_Flush(&OS, NULL);
+
+	OS.unsigned_num = true;
+	printInt16(&OS, -1);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "0xffff");
+	SStream_Flush(&OS, NULL);
+
+	OS.unsigned_num = true;
+	printInt32(&OS, -1);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "0xffffffff");
+	SStream_Flush(&OS, NULL);
+
+	OS.unsigned_num = true;
+	printInt32Bang(&OS, -1);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "#0xffffffff");
+	SStream_Flush(&OS, NULL);
+
+
+	OS.unsigned_num = true;
+	printInt64(&OS, -1);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "0xffffffffffffffff");
+	SStream_Flush(&OS, NULL);
+
+	OS.unsigned_num = true;
+	printInt64Bang(&OS, -1);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "#0xffffffffffffffff");
+	SStream_Flush(&OS, NULL);
 	return true;
 }
 
@@ -519,8 +599,11 @@ int main()
 	result &= test_printint64();
 	result &= test_printint32_bang();
 	result &= test_printint64_bang();
+	result &= test_printuint8();
+	result &= test_printuint16();
 	result &= test_printuint32_bang();
 	result &= test_printuint64_bang();
+	result &= test_stream_unsigned_imm();
 	result &= test_replc();
 	result &= test_replc_str();
 	result &= test_copy_mnem_opstr();

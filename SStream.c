@@ -26,6 +26,13 @@ void SStream_Init(SStream *ss)
 	ss->is_closed = false;
 	ss->markup_stream = false;
 	ss->prefixed_by_markup = false;
+	ss->unsigned_num = false;
+}
+
+void SStream_opt_unum(SStream *ss, bool print_unsigned_numbers)
+{
+	assert(ss);
+	ss->unsigned_num = print_unsigned_numbers;
 }
 
 /// Returns the a pointer to the internal string buffer of the stream.
@@ -224,6 +231,10 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 void printInt64Bang(SStream *ss, int64_t val)
 {
 	assert(ss);
+	if (ss->unsigned_num) {
+		printUInt64Bang(ss, val);
+		return;
+	}
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	SStream_concat1(ss, '#');
 	printInt64(ss, val);
@@ -241,6 +252,10 @@ void printUInt64Bang(SStream *ss, uint64_t val)
 void printInt64(SStream *ss, int64_t val)
 {
 	assert(ss);
+	if (ss->unsigned_num) {
+		printUInt64(ss, val);
+		return;
+	}
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
@@ -286,14 +301,40 @@ void printInt32BangDec(SStream *ss, int32_t val)
 void printInt32Bang(SStream *ss, int32_t val)
 {
 	assert(ss);
+	if (ss->unsigned_num) {
+		printUInt32Bang(ss, val);
+		return;
+	}
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	SStream_concat1(ss, '#');
 	printInt32(ss, val);
 }
 
+void printUInt8(SStream *ss, uint8_t val)
+{
+	assert(ss);
+	if (val > HEX_THRESHOLD)
+		SStream_concat(ss, "0x%"PRIx8, val);
+	else
+		SStream_concat(ss, "%"PRIu8, val);
+}
+
+void printUInt16(SStream *ss, uint16_t val)
+{
+	assert(ss);
+	if (val > HEX_THRESHOLD)
+		SStream_concat(ss, "0x%"PRIx16, val);
+	else
+		SStream_concat(ss, "%"PRIu16, val);
+}
+
 void printInt8(SStream *ss, int8_t val)
 {
 	assert(ss);
+	if (ss->unsigned_num) {
+		printUInt8(ss, val);
+		return;
+	}
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
@@ -314,6 +355,10 @@ void printInt8(SStream *ss, int8_t val)
 void printInt16(SStream *ss, int16_t val)
 {
 	assert(ss);
+	if (ss->unsigned_num) {
+		printUInt16(ss, val);
+		return;
+	}
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
@@ -334,6 +379,10 @@ void printInt16(SStream *ss, int16_t val)
 void printInt16HexOffset(SStream *ss, int16_t val)
 {
 	assert(ss);
+	if (ss->unsigned_num) {
+		printUInt16(ss, val);
+		return;
+	}
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (val >= 0) {
 		SStream_concat(ss, "+0x%" PRIx16, val);
@@ -350,6 +399,10 @@ void printInt16HexOffset(SStream *ss, int16_t val)
 void printInt32(SStream *ss, int32_t val)
 {
 	assert(ss);
+	if (ss->unsigned_num) {
+		printUInt32(ss, val);
+		return;
+	}
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
@@ -371,6 +424,10 @@ void printInt32(SStream *ss, int32_t val)
 void printInt32HexOffset(SStream *ss, int32_t val)
 {
 	assert(ss);
+	if (ss->unsigned_num) {
+		printUInt32(ss, val);
+		return;
+	}
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (val >= 0) {
 		SStream_concat(ss, "+0x%" PRIx32, val);

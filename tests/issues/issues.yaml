@@ -6216,3 +6216,14 @@ test_cases:
       insns:
         - asm_text: "l32i.n a1, a3, 8"
           illegal: -1
+
+  -
+    input:
+      name: "#2722 - CS_OPT_UNSIGNED is ignored for most archs"
+      bytes: [ 0x20, 0xf0, 0x5f, 0xf8 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_UNSIGNED ]
+      address: 0x0
+    expected:
+      insns:
+      - asm_text: "ldur x0, [x1, #0xffffffffffffffff]"
