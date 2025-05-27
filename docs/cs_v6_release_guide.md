@@ -307,6 +307,7 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | Immediate | Immediate values (`arm_op.imm`) type changed to `int64_t` | Prevent loss of precision in some cases. | None. |
 | `mem.lshift` | The `mem.lshift` field was removed. It was not set properly before and just duplicates information in `shift` | Remove faulty and duplicate code. | None. |
 | Instr. alias | Capstone now clearly separates real instructions and their aliases. Previously many aliases were treated as real instructions. See above for details. | This became a simple necessity because CS operates with a copy of the LLVMs decoder without changes to the decoder logic. |
+| Operand access type | Previously, operand access type is stored in the `uint8_t access;` field within operand details. However its possible values are stored in `enum cs_ac_type`. Now, the field has `enum cs_ac_type` type instead. | The user can find the connection between the field and the enum directly. | None |
 
 **ARM**
 
