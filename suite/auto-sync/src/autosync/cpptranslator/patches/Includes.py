@@ -468,9 +468,7 @@ def get_sparc_includes(filename: str) -> bytes:
                 + b'#include "SparcRegisterInfo.h"\n\n'
             )
         case "SparcInstPrinter.h":
-            return (
-                b'#include "SparcMCTargetDesc.h"\n\n'
-            )
+            return b'#include "SparcMCTargetDesc.h"\n\n'
         case "SparcMCTargetDesc.h":
             return (
                 b'#include "../../LEB128.h"\n'
