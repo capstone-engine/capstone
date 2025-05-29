@@ -474,6 +474,8 @@ typedef enum sparc_reg {
 } sparc_reg;
 
 typedef enum sparc_asi {
+	SPARC_ASITAG_ASI_INVALID = 0x0,
+
 	// generated content <SparcGenCSSystemOperandsEnum.inc:GET_ENUM_VALUES_ASITag> begin
 	// clang-format off
 
