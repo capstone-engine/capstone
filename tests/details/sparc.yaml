@@ -749,3 +749,29 @@ test_cases:
               cc: SPARC_CC_ICC_VC
               cc_field: SPARC_CC_FIELD_ICC
             groups: [ jump, HasV9 ]
+  -
+    input:
+      bytes: [ 0xd4, 0xee, 0x00, 0x96 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "ldstuba [%i0+%l6] 4, %o2"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_MEM
+                  access: CS_AC_READ_WRITE
+                  mem_base: i0
+                  mem_index: l6
+                -
+                  type: SPARC_OP_ASI
+                  access: CS_AC_READ
+                  asi: SPARC_ASITAG_ASI_N
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_WRITE
+                  reg: o2

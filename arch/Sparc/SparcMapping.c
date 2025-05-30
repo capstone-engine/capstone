@@ -244,7 +244,7 @@ static void Sparc_insert_detail_op_reg_at(MCInst *MI, unsigned index, sparc_reg 
 	insert_op(MI, index, op);
 }
 
-static void Sparc_add_hardcoded_details(MCInst *MI)
+static void Sparc_correct_details(MCInst *MI)
 {
 	if (!detail_is_set(MI)) {
 		return;
@@ -252,6 +252,15 @@ static void Sparc_add_hardcoded_details(MCInst *MI)
 	switch (MCInst_getOpcode(MI)) {
 	default:
 		return;
+	case Sparc_LDSTUBri:
+	case Sparc_LDSTUBrr:
+	case Sparc_LDSTUBAri:
+	case Sparc_LDSTUBArr:
+		// The memory gets written back with ones
+		// but there is not write back memory operand defined
+		// (if even possible).
+		Sparc_get_detail(MI)->operands[0].access = CS_AC_READ_WRITE;
+		break;
 	case Sparc_RDPSR:
 		Sparc_insert_detail_op_reg_at(MI, 0, SPARC_REG_PSR, CS_AC_READ);
 		break;
@@ -288,7 +297,7 @@ void Sparc_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 #ifndef CAPSTONE_DIET
 	map_set_alias_id(MI, O, insn_alias_mnem_map,
 			 ARR_SIZE(insn_alias_mnem_map));
-	Sparc_add_hardcoded_details(MI);
+	Sparc_correct_details(MI);
 #endif
 }
 
@@ -398,7 +407,7 @@ static inline bool is_single_reg_mem_case(MCInst *MI, unsigned OpNo)
 	}
 	if (MI->size == 1) {
 		return true;
-	} else if (MI->size > OpNo + 1) {
+	} else if (MI->size > OpNo + 1 && Sparc_get_detail(MI)->operands[0].type != SPARC_OP_MEM) {
 		// Next operand is not a memory operand (disponent or index reg).
 		return !(map_get_op_type(MI, OpNo + 1) & SPARC_OP_MEM);
 	}
