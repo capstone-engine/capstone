@@ -1,0 +1,44 @@
+# CSdump - Capstone Disassembler Engine
+
+This directory contains csdump of Capstone Engine.
+
+Csdump is a command-line tool to disassemble binary files.
+For example, to decode a binary file for Intel 64bit, run:
+
+```bash
+$ csdump -a x86 -m 64 -i program.bin
+0x0:	48 89 e5     	mov	rbp, rsp
+0x3:	48 83 ec 10  	sub	rsp, 0x10
+0x7:	c7 45 fc 00 00 00 00	mov	dword ptr [rbp - 4], 0
+0xe:	8b 45 fc     	mov	eax, dword ptr [rbp - 4]
+```
+
+Csdump disassembles the input binary file and prints out the assembly instructions.
+On each line, the first column is the instruction address, the second
+column is opcodes, and the rest is the instruction itself.
+
+Csdump is flexible enough to handle various binary formats. The tool automatically
+detects ELF, PE/MZ, and raw binary formats.
+
+```bash
+$ csdump -a arm -m thumb -i firmware.bin
+$ csdump -a riscv -m 64 -i riscv_binary  
+$ csdump -a mips -m 32 -i mips_program
+```
+
+To print out instruction details, run Csdump with -d option, like below.
+
+```bash
+$ csdump -d -a x86 -m 32 -i sample.bin
+0x1000:	01 d8        	add	eax, ebx
+    Groups: 0 
+    Implicit registers read: 
+    Implicit registers written: 17 
+    
+0x1002:	89 ec        	mov	esp, ebp
+    Groups: 0 
+    Implicit registers read: 21 
+    Implicit registers written: 39 
+```
+
+To see all the supported options, run ./csdump
