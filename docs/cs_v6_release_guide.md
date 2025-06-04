@@ -308,7 +308,7 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | Instruction groups| Instruction groups, which actually were CPU features, were renamed to reflect that. | Names now match the ones in LLVM. Better for code generation. | Replace IDs with macros. |
 | CPU features | CPU features get checked more strictly (`MCLASS`, `V8` etc.) | With many new supported extensions, some instruction bytes decode to a different instruction, depending on the enabled features. Hence, it becomes necessary. | None. |
 | `writeback` | `writeback` member was moved to detail. | More architectures need a `writeback` flag. This is a simplification. | None. |
-| Register alias | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. | Mimic LLVM as close as possible. | Enable `CS_OPT_SYNTAX_CS_REG_ALIAS` option. |
+| Register alias | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. WARNING: This option uses a naive search and replace strategy to patch the register names in the asm text. And hence adds significant runtime at scale, if enabled. | Mimic LLVM as close as possible. | Enable `CS_OPT_SYNTAX_CS_REG_ALIAS` option. |
 | Immediate | Immediate values (`arm_op.imm`) type changed to `int64_t` | Prevent loss of precision in some cases. | None. |
 | `mem.lshift` | The `mem.lshift` field was removed. It was not set properly before and just duplicates information in `shift` | Remove faulty and duplicate code. | None. |
 | Instr. alias | Capstone now clearly separates real instructions and their aliases. Previously many aliases were treated as real instructions. See above for details. | This became a simple necessity because CS operates with a copy of the LLVMs decoder without changes to the decoder logic. |
@@ -327,7 +327,7 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | Instruction groups| Instruction groups, which actually were CPU features, were renamed to reflect that. | Names now match the ones in LLVM. Better for code generation. |
 | CPU features | CPU features get checked more strictly (`MCLASS`, `V8` etc.) | With many new supported extensions, some instruction bytes decode to a different instruction, depending on the enabled features. Hence, it becomes necessary. |
 | `writeback` | `writeback` member was moved to detail. | More architectures need a `writeback` flag. This is a simplification. |
-| Register alias | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. | Mimic LLVM as close as possible. |
+| Register alias | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. WARNING: This option uses a naive search and replace strategy to patch the register names in the asm text. And hence adds significant runtime at scale, if enabled. | Mimic LLVM as close as possible. |
 | Immediate | Immediate values (`arm_op.imm`) type changed to `int64_t` | Prevent loss of precision in some cases. |
 
 **AArch64 (formerly ARM64)**
@@ -340,7 +340,7 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | System operands | System Operands are separated into different types now. | System operands follow a special encoding. Some byte sequences match two different operands. Hence, a more detailed concept was necessary. |
 | `writeback` | `writeback` member was moved to detail. | See ARM explanation. |
 | `arm64_vas` | `arm64_vas` renamed to `AArch64Layout_VectorLayout` | LLVM compatibility. |
-| Register alias | Register alias (`x29 = fp` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. | Mimic LLVM as close as possible. |
+| Register alias | Register alias (`x29 = fp` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. WARNING: This option uses a naive search and replace strategy to patch the register names in the asm text. And hence adds significant runtime at scale, if enabled. | Mimic LLVM as close as possible. |
 | `AArch64CC_*` | `AArch64CC_EQ == 0` but `AArch64CC_INVALID != 0` | They match the LLVM enum. Better for LLVM compatibility and code generation. |
 
 **PPC**
