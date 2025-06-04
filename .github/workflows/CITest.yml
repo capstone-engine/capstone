@@ -141,7 +141,8 @@ jobs:
     - name: Valgrind cstest
       if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.enable-asan, 'OFF')
       run: |
-        sudo apt-get install valgrind
+        sudo apt-get -y update
+        sudo apt-get -y install valgrind
         valgrind cstest tests
 
     - name: Comaptibility header generation
