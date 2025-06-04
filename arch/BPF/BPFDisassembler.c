@@ -539,9 +539,7 @@ static bpf_insn op2insn_st(unsigned opcode, const uint32_t imm)
 		CASE(DW);
 	}
 
-	CS_ASSERT_RET_VAL(
-				false && "Malformed atomic BPF instruction",
-				BPF_INS_INVALID);
+	return BPF_INS_INVALID;
 }
 #undef CASE
 

@@ -90,6 +90,8 @@ For `v7` we can then focus on other big features, like [SAIL](https://github.com
 
 - `clang-tidy` is now run on all files changed by a PR.
 - ASAN: All tests are now run with the address sanitizer enabled. This includes checking for leaks.
+- Many more asserts were added. They are only enabled for debug builds (with a few exceptions).
+  Enabling the build option `CAPSTONE_ASSERTION_WARNINGS` will print warnings in release builds if an assert is hit.
 
 **Instruction formats for PPC, SystemZ, LoongArch**
 
