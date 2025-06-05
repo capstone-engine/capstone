@@ -57,7 +57,7 @@ typedef enum sparc_cc {
 	SPARC_CC_FCC_ULE = 14 + SPARC_CC_FCC_BEGIN, // Unordered or Less or Equal
 	SPARC_CC_FCC_O = 15 + SPARC_CC_FCC_BEGIN,   // Ordered
 
-	SPARC_CC_CPCC_BEGIN = 32,
+	SPARC_CC_CPCC_BEGIN = 32, ///< Co-processor conditional branches
 	SPARC_CC_CPCC_A = 8 + SPARC_CC_CPCC_BEGIN, // Always
 	SPARC_CC_CPCC_N = 0 + SPARC_CC_CPCC_BEGIN, // Never
 	SPARC_CC_CPCC_3 = 7 + SPARC_CC_CPCC_BEGIN,

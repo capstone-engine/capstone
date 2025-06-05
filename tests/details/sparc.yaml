@@ -775,3 +775,154 @@ test_cases:
                   type: SPARC_OP_REG
                   access: CS_AC_WRITE
                   reg: o2
+  -
+    input:
+      bytes: [ 0x83, 0x64, 0x80, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "movle	%icc, %g0, %g1"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: g0
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_WRITE
+                  reg: g1
+              cc: SPARC_CC_ICC_LE
+              cc_field: SPARC_CC_FIELD_ICC
+            groups: [ HasV9 ]
+  -
+    input:
+      bytes: [ 0x83, 0x65, 0xf0, 0x50 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "movvs %xcc, 0x50, %g1"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 0x50
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_WRITE
+                  reg: g1
+              cc: SPARC_CC_ICC_VS
+              cc_field: SPARC_CC_FIELD_XCC
+            # groups: [ HasV9 ] - Bug: llvm-project/#142388
+  -
+    input:
+      bytes: [ 0x83, 0x7c, 0x04, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "movrz %l0, %g5, %g1"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: l0
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: g5
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_WRITE
+                  reg: g1
+              cc: SPARC_CC_REG_Z
+            # groups: [ HasV9 ] - Bug: llvm-project/#142388
+  -
+    input:
+      bytes: [ 0x83, 0x7c, 0x3c, 0x10 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "movrgez	%l0, 16, %g1"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: l0
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 16
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_WRITE
+                  reg: g1
+              cc: SPARC_CC_REG_GEZ
+            # groups: [ HasV9 ] - Bug: llvm-project/#142388
+
+  -
+    input:
+      bytes: [ 0x83, 0xd4, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "te	%icc, %l0 + %g0"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: l0
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: g0
+              cc: SPARC_CC_ICC_E
+              cc_field: SPARC_CC_FIELD_ICC
+            # groups: [ HasV9 ] - Bug: llvm-project/#142388
+  -
+    input:
+      bytes: [ 0x8f, 0xd4, 0x10, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "tvs	%xcc, %l0 + %g0"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: l0
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: g0
+              cc: SPARC_CC_ICC_VS
+              cc_field: SPARC_CC_FIELD_XCC
+            # groups: [ HasV9 ] - Bug: llvm-project/#142388

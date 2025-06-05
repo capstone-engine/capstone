@@ -49,19 +49,27 @@ static void Sparc_add_bit_details(MCInst *MI, const uint8_t *Bytes,
 	}
 	uint32_t insn = readBytes32(MI, Bytes);
 
+	// CC field
 	cs_sparc *detail = Sparc_get_detail(MI);
 	switch (detail->format) {
 	default:
 		break;
-	case SPARC_INSN_FORM_F2_2:
-		// V8 conditional branch instruction only has ICC.
-		detail->cc_field = SPARC_CC_FIELD_ICC;
+	case SPARC_INSN_FORM_F2_2: {
+		// This format is used either by B or FB instructions.
+		// The op2 == 6 for the FB and 2 for B.
+		// This is the only indicator we have here to determine which CC field is used
+		// if we don't want big switch cases.
+		//
+		// See: Opcode Maps - Table 39 - Sparc V9 ISA
+		size_t op2 = get_insn_field_r(insn, 22, 24);
+		detail->cc_field = op2 == 6 ? SPARC_CC_FIELD_FCC0 : SPARC_CC_FIELD_ICC;
 		break;
+	}
 	case SPARC_INSN_FORM_F2_3:
 		detail->cc_field = 0x4 | get_insn_field_r(insn, 20, 21);
 		break;
 	case SPARC_INSN_FORM_TRAPSP:
-		detail->cc_field = 0x4 | get_insn_field_r(insn, 25, 26);
+		detail->cc_field = 0x4 | get_insn_field_r(insn, 11, 12);
 		break;
 	case SPARC_INSN_FORM_F4_1:
 	case SPARC_INSN_FORM_F4_2:
@@ -73,56 +81,30 @@ static void Sparc_add_bit_details(MCInst *MI, const uint8_t *Bytes,
 		break;
 	}
 
+	// Condition codes
 	switch (detail->format) {
 	default:
 		break;
+	case SPARC_INSN_FORM_F2_1:
 	case SPARC_INSN_FORM_F2_2:
-	case SPARC_INSN_FORM_F2_3: {
+	case SPARC_INSN_FORM_F2_3:
+	case SPARC_INSN_FORM_TRAPSP: {
 		// cond
 		// Alias instructions don't define the conditions as operands.
 		// We need to add them here to the details again.
 		sparc_cc cc = get_insn_field_r(insn, 25, 28);
-		switch (MCInst_getOpcode(MI)) {
-		case Sparc_CBCOND:
-		case Sparc_CBCONDA:
+		if (MCInst_getOpcode(MI) == Sparc_CBCOND ||
+		    MCInst_getOpcode(MI) == Sparc_CBCONDA) {
 			cc += SPARC_CC_CPCC_BEGIN;
-			break;
-		case Sparc_FBCOND:
-		case Sparc_FBCONDA:
-		case Sparc_FBCOND_V9:
-		case Sparc_FBCONDA_V9:
-		case Sparc_BPFCC:
-		case Sparc_BPFCCA:
-		case Sparc_BPFCCNT:
-		case Sparc_BPFCCANT:
-			cc += SPARC_CC_FCC_BEGIN;
-			break;
-		default:
-			break;
 		}
-		Sparc_get_detail(MI)->cc = cc;
+		detail->cc = cc;
 		break;
 	}
+	case SPARC_INSN_FORM_F4_1:
 	case SPARC_INSN_FORM_F4_2:
 	case SPARC_INSN_FORM_F4_3: {
 		sparc_cc cc = get_insn_field_r(insn, 14, 17);
-		switch (MCInst_getOpcode(MI)) {
-		case Sparc_MOVFCCrr:
-		case Sparc_V9MOVFCCrr:
-		case Sparc_MOVFCCri:
-		case Sparc_V9MOVFCCri:
-		case Sparc_FMOVS_FCC:
-		case Sparc_V9FMOVS_FCC:
-		case Sparc_FMOVD_FCC:
-		case Sparc_V9FMOVD_FCC:
-		case Sparc_FMOVQ_FCC:
-		case Sparc_V9FMOVQ_FCC:
-			cc += SPARC_CC_FCC_BEGIN;
-			break;
-		default:
-			break;
-		}
-		Sparc_get_detail(MI)->cc = cc;
+		detail->cc = cc;
 		break;
 	}
 	case SPARC_INSN_FORM_F2_4: {
@@ -130,27 +112,40 @@ static void Sparc_add_bit_details(MCInst *MI, const uint8_t *Bytes,
 		// Alias instructions don't define the conditions as operands.
 		// We need to add them here to the details again.
 		sparc_cc rcc = get_insn_field_r(insn, 25, 27);
-		Sparc_get_detail(MI)->cc = rcc + SPARC_CC_REG_BEGIN;
+		detail->cc = rcc + SPARC_CC_REG_BEGIN;
 		break;
 	}
 	case SPARC_INSN_FORM_F4_4R:
 	case SPARC_INSN_FORM_F4_4I: {
 		sparc_cc rcc = get_insn_field_r(insn, 10, 12);
-		Sparc_get_detail(MI)->cc = rcc + SPARC_CC_REG_BEGIN;
+		detail->cc = rcc + SPARC_CC_REG_BEGIN;
 		break;
 	}
 	}
+	switch (detail->cc_field) {
+	default:
+	case SPARC_CC_FIELD_ICC:
+	case SPARC_CC_FIELD_XCC:
+		break;
+	case SPARC_CC_FIELD_FCC0:
+	case SPARC_CC_FIELD_FCC1:
+	case SPARC_CC_FIELD_FCC2:
+	case SPARC_CC_FIELD_FCC3:
+		detail->cc += SPARC_CC_FCC_BEGIN;
+		break;
+	}
 
+	// Hints
 	switch (detail->format) {
 	default:
 		break;
 	case SPARC_INSN_FORM_F2_2:
-		Sparc_get_detail(MI)->hint = get_insn_field_r(insn, 29, 29);
+		detail->hint = get_insn_field_r(insn, 29, 29);
 		break;
 	case SPARC_INSN_FORM_F2_3:
 	case SPARC_INSN_FORM_F2_4:
-		Sparc_get_detail(MI)->hint = get_insn_field_r(insn, 29, 29);
-		Sparc_get_detail(MI)->hint |=
+		detail->hint = get_insn_field_r(insn, 29, 29);
+		detail->hint |=
 			get_insn_field_r(insn, 19, 19) == 0 ? SPARC_HINT_PN :
 							      SPARC_HINT_PT;
 		break;
