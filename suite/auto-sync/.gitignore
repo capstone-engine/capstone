@@ -9,5 +9,6 @@ src/autosync/Tests/MCUpdaterTests/Disassembler/ARCH/Output
 src/autosync/lit_config/test_dir_*
 src/autosync/lit_config/.lit_test_times.txt
 src/autosync/Tests/MCUpdaterTests/test_output
+src/autosync/Tests/MCUpdaterTests/test_output_fuzz
 src/autosync/Tests/MCUpdaterTests/**/Output
 src/autosync/cpptranslator/Tests/Differ/output/*.c

@@ -189,6 +189,8 @@ class ASUpdater:
             self.diff()
         if USteps.MC in self.steps:
             self.mc_updater.gen_all()
+            self.mc_updater.write_to_build_dir()
+            self.mc_updater.write_to_build_dir(fuzzer_tests=True)
         if not self.write:
             if self.inc_generator.has_inc_patches():
                 log.warning(
@@ -230,6 +232,10 @@ class ASUpdater:
         log.info(f"Copy MC test files to {mc_dir}")
         for file in get_path("{MCUPDATER_OUT_DIR}").iterdir():
             self.copy_files(file, mc_dir)
+            i += 1
+        legacy_mc_dir = get_path("{LEGACY_MC_DIR}").joinpath(self.arch_dir_name)
+        for file in get_path("{MCUPDATER_OUT_FUZZ_DIR}").iterdir():
+            self.copy_files(file, legacy_mc_dir)
             i += 1
         log.info(f"Copied {i} files")
 

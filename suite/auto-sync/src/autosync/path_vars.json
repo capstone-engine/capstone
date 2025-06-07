@@ -43,8 +43,11 @@
     "{MCUPDATER_TEST_DIR}": "{AUTO_SYNC_TEST_DIR}/MCUpdaterTests/",
     "{MCUPDATER_TEST_DIR_EXPECTED}": "{AUTO_SYNC_TEST_DIR}/MCUpdaterTests/expected",
     "{MCUPDATER_OUT_DIR}": "{BUILD_DIR}/mc_out/",
+    "{MCUPDATER_OUT_FUZZ_DIR}": "{BUILD_DIR}/mc_out_fuzz/",
     "{MCUPDATER_TEST_OUT_DIR}": "{MCUPDATER_TEST_DIR}/test_output/",
-    "{MC_DIR}": "{CS_ROOT}/tests/MC/"
+    "{MCUPDATER_TEST_OUT_FUZZ_DIR}": "{MCUPDATER_TEST_DIR}/test_output_fuzz/",
+    "{MC_DIR}": "{CS_ROOT}/tests/MC/",
+    "{LEGACY_MC_DIR}": "{CS_ROOT}/suite/MC/"
   },
   "create_during_runtime": [
     "{BUILD_DIR}",
@@ -55,7 +58,9 @@
     "{HEADER_GEN_TEST_ARM64_OUT_FILE}",
     "{HEADER_GEN_TEST_SYSZ_OUT_FILE}",
     "{MCUPDATER_OUT_DIR}",
-    "{MCUPDATER_TEST_OUT_DIR}"
+    "{MCUPDATER_TEST_OUT_DIR}",
+    "{MCUPDATER_OUT_FUZZ_DIR}",
+    "{MCUPDATER_TEST_OUT_FUZZ_DIR}"
   ],
   "ignore_missing": [
     "{DIFFER_TEST_PERSISTENCE_FILE}"

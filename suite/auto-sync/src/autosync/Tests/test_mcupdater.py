@@ -65,6 +65,7 @@ class TestHeaderPatcher(unittest.TestCase):
         )
         self.updater = MCUpdater("ARCH", get_path("{MCUPDATER_TEST_DIR}"), [], [], True)
         self.updater.gen_all()
+        self.updater.write_to_build_dir()
         return self.compare_files(out_dir, ["test_a.txt.yaml", "test_b.txt.yaml"])
 
     def separated_test_cases(self):
@@ -85,6 +86,7 @@ class TestHeaderPatcher(unittest.TestCase):
             "ARCH", get_path("{MCUPDATER_TEST_DIR}"), [], [], False
         )
         self.updater.gen_all()
+        self.updater.write_to_build_dir()
         return self.compare_files(out_dir, ["test_a.txt.yaml", "test_b.txt.yaml"])
 
     def multi_mode_unified_test_cases(self):
@@ -103,6 +105,7 @@ class TestHeaderPatcher(unittest.TestCase):
             "ARCH", get_path("{MCUPDATER_TEST_DIR}"), [], [], True, multi_mode=True
         )
         self.updater.gen_all()
+        self.updater.write_to_build_dir()
         return self.compare_files(
             out_dir,
             [
@@ -128,6 +131,7 @@ class TestHeaderPatcher(unittest.TestCase):
             "ARCH", get_path("{MCUPDATER_TEST_DIR}"), [], [], False, multi_mode=True
         )
         self.updater.gen_all()
+        self.updater.write_to_build_dir()
         return self.compare_files(
             out_dir,
             [
@@ -136,6 +140,21 @@ class TestHeaderPatcher(unittest.TestCase):
                 "test_b_arm64.txt.yaml",
             ],
         )
+
+    def test_fuzz_test_cases(self):
+        out_dir = Path(get_path("{MCUPDATER_TEST_OUT_FUZZ_DIR}").joinpath("fuzz"))
+        if not out_dir.exists():
+            out_dir.mkdir(parents=True)
+        for file in out_dir.iterdir():
+            self.del_path(file)
+        test_only_overwrite_path_var(
+            "{MCUPDATER_OUT_FUZZ_DIR}",
+            out_dir,
+        )
+        self.updater = MCUpdater("ARCH", get_path("{MCUPDATER_TEST_DIR}"), [], [], True)
+        self.updater.gen_all()
+        self.updater.write_to_build_dir(True)
+        self.assertTrue(self.compare_files(out_dir, ["test_a.txt.cs", "test_b.txt.cs"]))
 
     def test_no_symbol_tests(self):
         with self.mutex:
@@ -156,6 +175,7 @@ class TestHeaderPatcher(unittest.TestCase):
                 False,
             )
             self.updater.gen_all()
+            self.updater.write_to_build_dir()
             self.assertFalse(
                 out_dir.joinpath("test_no_symbol.s.txt.yaml").exists(),
                 "File should not exist",
@@ -182,6 +202,7 @@ class TestHeaderPatcher(unittest.TestCase):
                 False,
             )
             self.updater.gen_all()
+            self.updater.write_to_build_dir()
             self.assertTrue(
                 self.compare_files(
                     out_dir,
@@ -199,9 +220,9 @@ class TestHeaderPatcher(unittest.TestCase):
         expected_dir = (
             get_path("{MCUPDATER_TEST_DIR_EXPECTED}")
             # Dirty for now. Sorry.
-            .joinpath(parent_name if parent_name != "test_output" else "").joinpath(
-                out_dir.name
-            )
+            .joinpath(
+                parent_name if not parent_name.startswith("test_output") else ""
+            ).joinpath(out_dir.name)
         )
         if not expected_dir.exists() or not expected_dir.is_dir():
             logging.error(f"Expected: {expected_dir} is not a directory.")
