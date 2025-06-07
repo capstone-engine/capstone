@@ -2025,7 +2025,7 @@
   /* setx $val, $tmp, $rd */
   Sparc_SETX /* 287 */, SPARC_INS_SETX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { SPARC_FEATURE_HASV9, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_ASMPSEUDOINST }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, SPARC_FEATURE_HASV9, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_ASMPSEUDOINST }}
 
   #endif
 },
@@ -2319,7 +2319,7 @@
   /* br$rcond $rs1, $imm16 */
   Sparc_BPR /* 324 */, SPARC_INS_BR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_4 }}
+    { 0 }, { 0 }, { SPARC_GRP_JUMP, SPARC_FEATURE_IS64BIT, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_4 }}
 
   #endif
 },
@@ -2327,7 +2327,7 @@
   /* br$rcond,a $rs1, $imm16 */
   Sparc_BPRA /* 325 */, SPARC_INS_BR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_4 }}
+    { 0 }, { 0 }, { SPARC_GRP_JUMP, SPARC_FEATURE_IS64BIT, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_4 }}
 
   #endif
 },
@@ -2335,7 +2335,7 @@
   /* br$rcond,a,pn $rs1, $imm16 */
   Sparc_BPRANT /* 326 */, SPARC_INS_BR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_4 }}
+    { 0 }, { 0 }, { SPARC_GRP_JUMP, SPARC_FEATURE_IS64BIT, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_4 }}
 
   #endif
 },
@@ -2343,7 +2343,7 @@
   /* br$rcond,pn $rs1, $imm16 */
   Sparc_BPRNT /* 327 */, SPARC_INS_BR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_4 }}
+    { 0 }, { 0 }, { SPARC_GRP_JUMP, SPARC_FEATURE_IS64BIT, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_4 }}
 
   #endif
 },
@@ -2351,7 +2351,7 @@
   /* b$cond %xcc, $imm19 */
   Sparc_BPXCC /* 328 */, SPARC_INS_B,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_3 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, SPARC_FEATURE_IS64BIT, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_3 }}
 
   #endif
 },
@@ -2359,7 +2359,7 @@
   /* b$cond,a %xcc, $imm19 */
   Sparc_BPXCCA /* 329 */, SPARC_INS_B,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_3 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, SPARC_FEATURE_IS64BIT, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_3 }}
 
   #endif
 },
@@ -2367,7 +2367,7 @@
   /* b$cond,a,pn %xcc, $imm19 */
   Sparc_BPXCCANT /* 330 */, SPARC_INS_B,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_3 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, SPARC_FEATURE_IS64BIT, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_3 }}
 
   #endif
 },
@@ -2375,7 +2375,7 @@
   /* b$cond,pn %xcc, $imm19 */
   Sparc_BPXCCNT /* 331 */, SPARC_INS_B,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_3 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_GRP_JUMP, SPARC_FEATURE_IS64BIT, 0 }, 1, 0, { .sparc = { SPARC_INSN_FORM_F2_3 }}
 
   #endif
 },
@@ -2429,7 +2429,7 @@
   /* casxa [$rs1] %asi, $rs2, $rd */
   Sparc_CASXAri /* 338 */, SPARC_INS_CASXA,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ASR3, 0 }, { 0 }, { SPARC_FEATURE_HASV9, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { SPARC_REG_ASR3, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, SPARC_FEATURE_HASV9, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -2437,7 +2437,7 @@
   /* casxa [$rs1] $asi, $rs2, $rd */
   Sparc_CASXArr /* 339 */, SPARC_INS_CASXA,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { SPARC_FEATURE_HASV9, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, SPARC_FEATURE_HASV9, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -2895,7 +2895,7 @@
   /* fdtox $rs2, $rd */
   Sparc_FDTOX /* 397 */, SPARC_INS_FDTOX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
 
   #endif
 },
@@ -3047,7 +3047,7 @@
   /* fmovd$cond %xcc, $rs2, $rd */
   Sparc_FMOVD_XCC /* 416 */, SPARC_INS_FMOVD,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_3 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_3 }}
 
   #endif
 },
@@ -3079,7 +3079,7 @@
   /* fmovq$cond %xcc, $rs2, $rd */
   Sparc_FMOVQ_XCC /* 420 */, SPARC_INS_FMOVQ,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_3 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_3 }}
 
   #endif
 },
@@ -3087,7 +3087,7 @@
   /* fmovrd$rcond $rs1, $rs2, $rd */
   Sparc_FMOVRD /* 421 */, SPARC_INS_FMOVRD,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_4R }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_4R }}
 
   #endif
 },
@@ -3103,7 +3103,7 @@
   /* fmovrs$rcond $rs1, $rs2, $rd */
   Sparc_FMOVRS /* 423 */, SPARC_INS_FMOVRS,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_4R }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_4R }}
 
   #endif
 },
@@ -3135,7 +3135,7 @@
   /* fmovs$cond %xcc, $rs2, $rd */
   Sparc_FMOVS_XCC /* 427 */, SPARC_INS_FMOVS,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_3 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_3 }}
 
   #endif
 },
@@ -3559,7 +3559,7 @@
   /* fqtox $rs2, $rd */
   Sparc_FQTOX /* 480 */, SPARC_INS_FQTOX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
 
   #endif
 },
@@ -3719,7 +3719,7 @@
   /* fstox $rs2, $rd */
   Sparc_FSTOX /* 500 */, SPARC_INS_FSTOX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
 
   #endif
 },
@@ -3783,7 +3783,7 @@
   /* fxtod $rs2, $rd */
   Sparc_FXTOD /* 508 */, SPARC_INS_FXTOD,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
 
   #endif
 },
@@ -3791,7 +3791,7 @@
   /* fxtoq $rs2, $rd */
   Sparc_FXTOQ /* 509 */, SPARC_INS_FXTOQ,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
 
   #endif
 },
@@ -3799,7 +3799,7 @@
   /* fxtos $rs2, $rd */
   Sparc_FXTOS /* 510 */, SPARC_INS_FXTOS,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3U }}
 
   #endif
 },
@@ -3823,7 +3823,7 @@
   /* ldx [$addr], $rd, $sym */
   Sparc_GDOP_LDXrr /* 513 */, SPARC_INS_LDX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -4159,7 +4159,7 @@
   /* ldswa [$addr] %asi, $rd */
   Sparc_LDSWAri /* 555 */, SPARC_INS_LDSWA,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ASR3, 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
+    { SPARC_REG_ASR3, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
 
   #endif
 },
@@ -4167,7 +4167,7 @@
   /* ldswa [$addr] $asi, $rd */
   Sparc_LDSWArr /* 556 */, SPARC_INS_LDSWA,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -4175,7 +4175,7 @@
   /* ldsw [$addr], $rd */
   Sparc_LDSWri /* 557 */, SPARC_INS_LDSW,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
 
   #endif
 },
@@ -4183,7 +4183,7 @@
   /* ldsw [$addr], $rd */
   Sparc_LDSWrr /* 558 */, SPARC_INS_LDSW,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -4255,7 +4255,7 @@
   /* ldxa [$addr] %asi, $rd */
   Sparc_LDXAri /* 567 */, SPARC_INS_LDXA,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ASR3, 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
+    { SPARC_REG_ASR3, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
 
   #endif
 },
@@ -4263,7 +4263,7 @@
   /* ldxa [$addr] $asi, $rd */
   Sparc_LDXArr /* 568 */, SPARC_INS_LDXA,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -4287,7 +4287,7 @@
   /* ldx [$addr], $rd */
   Sparc_LDXri /* 571 */, SPARC_INS_LDX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
 
   #endif
 },
@@ -4295,7 +4295,7 @@
   /* ldx [$addr], $rd */
   Sparc_LDXrr /* 572 */, SPARC_INS_LDX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -4375,7 +4375,7 @@
   /* movr$rcond $rs1, $simm10, $rd */
   Sparc_MOVRri /* 582 */, SPARC_INS_MOVR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_4I }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_4I }}
 
   #endif
 },
@@ -4383,7 +4383,7 @@
   /* movr$rcond $rs1, $rs2, $rd */
   Sparc_MOVRrr /* 583 */, SPARC_INS_MOVR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_4R }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_4R }}
 
   #endif
 },
@@ -4415,7 +4415,7 @@
   /* mov$cond %xcc, $simm11, $rd */
   Sparc_MOVXCCri /* 587 */, SPARC_INS_MOV,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_2 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_2 }}
 
   #endif
 },
@@ -4423,7 +4423,7 @@
   /* mov$cond %xcc, $rs2, $rd */
   Sparc_MOVXCCrr /* 588 */, SPARC_INS_MOV,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_1 }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F4_1 }}
 
   #endif
 },
@@ -4455,7 +4455,7 @@
   /* mulx $rs1, $simm13, $rd */
   Sparc_MULXri /* 592 */, SPARC_INS_MULX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
 
   #endif
 },
@@ -4463,7 +4463,7 @@
   /* mulx $rs1, $rs2, $rd */
   Sparc_MULXrr /* 593 */, SPARC_INS_MULX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -4749,7 +4749,7 @@
   /* sdivx $rs1, $simm13, $rd */
   Sparc_SDIVXri /* 629 */, SPARC_INS_SDIVX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
 
   #endif
 },
@@ -4757,7 +4757,7 @@
   /* sdivx $rs1, $rs2, $rd */
   Sparc_SDIVXrr /* 630 */, SPARC_INS_SDIVX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -4813,7 +4813,7 @@
   /* sllx $rs1, $shcnt, $rd */
   Sparc_SLLXri /* 637 */, SPARC_INS_SLLX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SI }}
 
   #endif
 },
@@ -4821,7 +4821,7 @@
   /* sllx $rs1, $rs2, $rd */
   Sparc_SLLXrr /* 638 */, SPARC_INS_SLLX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SR }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SR }}
 
   #endif
 },
@@ -4893,7 +4893,7 @@
   /* srax $rs1, $shcnt, $rd */
   Sparc_SRAXri /* 647 */, SPARC_INS_SRAX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SI }}
 
   #endif
 },
@@ -4901,7 +4901,7 @@
   /* srax $rs1, $rs2, $rd */
   Sparc_SRAXrr /* 648 */, SPARC_INS_SRAX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SR }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SR }}
 
   #endif
 },
@@ -4925,7 +4925,7 @@
   /* srlx $rs1, $shcnt, $rd */
   Sparc_SRLXri /* 651 */, SPARC_INS_SRLX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SI }}
 
   #endif
 },
@@ -4933,7 +4933,7 @@
   /* srlx $rs1, $rs2, $rd */
   Sparc_SRLXrr /* 652 */, SPARC_INS_SRLX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SR }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_SR }}
 
   #endif
 },
@@ -5269,7 +5269,7 @@
   /* stxa $rd, [$addr] %asi */
   Sparc_STXAri /* 694 */, SPARC_INS_STXA,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ASR3, 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
+    { SPARC_REG_ASR3, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
 
   #endif
 },
@@ -5277,7 +5277,7 @@
   /* stxa $rd, [$addr] $asi */
   Sparc_STXArr /* 695 */, SPARC_INS_STXA,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -5301,7 +5301,7 @@
   /* stx $rd, [$addr] */
   Sparc_STXri /* 698 */, SPARC_INS_STX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
 
   #endif
 },
@@ -5309,7 +5309,7 @@
   /* stx $rd, [$addr] */
   Sparc_STXrr /* 699 */, SPARC_INS_STX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -5531,7 +5531,7 @@
   /* ldx [$addr], $rd, $sym */
   Sparc_TLS_LDXrr /* 727 */, SPARC_INS_LDX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },
@@ -5595,7 +5595,7 @@
   /* t$cond %xcc, $rs1 + $imm */
   Sparc_TXCCri /* 735 */, SPARC_INS_T,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_TRAPSP }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_TRAPSP }}
 
   #endif
 },
@@ -5603,7 +5603,7 @@
   /* t$cond %xcc, $rs1 + $rs2 */
   Sparc_TXCCrr /* 736 */, SPARC_INS_T,
   #ifndef CAPSTONE_DIET
-    { SPARC_REG_ICC, 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_TRAPSP }}
+    { SPARC_REG_ICC, 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_TRAPSP }}
 
   #endif
 },
@@ -5627,7 +5627,7 @@
   /* udivx $rs1, $simm13, $rd */
   Sparc_UDIVXri /* 739 */, SPARC_INS_UDIVX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_2 }}
 
   #endif
 },
@@ -5635,7 +5635,7 @@
   /* udivx $rs1, $rs2, $rd */
   Sparc_UDIVXrr /* 740 */, SPARC_INS_UDIVX,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
+    { 0 }, { 0 }, { SPARC_FEATURE_IS64BIT, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_1_ASI }}
 
   #endif
 },

@@ -11,6 +11,7 @@
 /* Capstone's LLVM TableGen Backends: */
 /* https://github.com/capstone-engine/llvm-capstone */
 
+{ SPARC_FEATURE_IS64BIT, "Is64Bit" },
 { SPARC_FEATURE_USESOFTMULDIV, "UseSoftMulDiv" },
 { SPARC_FEATURE_HASV9, "HasV9" },
 { SPARC_FEATURE_HASVIS, "HasVIS" },
