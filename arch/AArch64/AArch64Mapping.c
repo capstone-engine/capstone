@@ -1112,6 +1112,15 @@ void AArch64_reg_access(const cs_insn *insn, cs_regs regs_read,
 		}
 	}
 
+	switch (insn->alias_id) {
+	default:
+		break;
+	case AARCH64_INS_ALIAS_RET:
+		regs_read[read_count] = AARCH64_REG_X30;
+		read_count++;
+		break;
+	}
+
 	*regs_read_count = read_count;
 	*regs_write_count = write_count;
 }

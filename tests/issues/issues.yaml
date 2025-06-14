@@ -6227,3 +6227,19 @@ test_cases:
     expected:
       insns:
       - asm_text: "ldur x0, [x1, #0xffffffffffffffff]"
+  -
+    input:
+      name: "issue 2737 AArch64 RET misses implicit x32 read."
+      bytes: [ 0xc0, 0x03, 0x5f, 0xd6 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ret"
+        is_alias: 1
+        details:
+          aarch64:
+            operands: []
+          regs_read: [ x30 ]
