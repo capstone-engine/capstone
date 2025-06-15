@@ -50,7 +50,28 @@ jobs:
               arch: x64,
               build-system: 'cmake',
               diet-build: 'OFF',
-              enable-asan: 'OFF'
+              enable-asan: 'OFF',
+              build_type: 'Debug'
+            }
+          - {
+              name: 'ubuntu-22.04 x64 release - assert warn',
+              os: ubuntu-22.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              enable-asan: 'OFF',
+              build_type: 'Release',
+              build_options: '-DCAPSTONE_ASSERTION_WARNINGS=ON'
+            }
+          - {
+              name: 'ubuntu-22.04 x64 release - no asserts',
+              os: ubuntu-22.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              enable-asan: 'OFF',
+              build_type: 'Release',
+              build_options: '-DCAPSTONE_ASSERTION_WARNINGS=OFF'
             }
           - {
               name: 'ubuntu-24.04 x64 ASAN',
@@ -58,7 +79,8 @@ jobs:
               arch: x64,
               build-system: 'cmake',
               diet-build: 'OFF',
-              enable-asan: 'ON'
+              enable-asan: 'ON',
+              build_type: 'Debug'
             }
 
     steps:
@@ -85,14 +107,16 @@ jobs:
       if: startsWith(matrix.config.build-system, 'cmake')
       env:
         asan: ${{ matrix.config.enable-asan }}
+        build_option: ${{ matrix.config.build_option }}
+        build_type: ${{ matrix.config.build_type }}
       run: |
         mkdir build && cd build
         # build static library
-        cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} -DCAPSTONE_BUILD_DIET=${diet_build} ..
-        cmake --build . --config Debug
+        cmake -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} -DCAPSTONE_BUILD_DIET=${diet_build} ${build_option} ..
+        cmake --build . --config ${build_type}
         # build shared library
-        cmake -DCAPSTONE_INSTALL=1 -DCAPSTONE_BUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ..
-        sudo cmake --build . --config Debug --target install
+        cmake -DCAPSTONE_INSTALL=1 -DCAPSTONE_BUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ${build_option} ..
+        sudo cmake --build . --config ${build_type} --target install
 
     - name: Lower number of KASL randomized address bits
       run: |
