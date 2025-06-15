@@ -110,7 +110,7 @@ extern cs_vsnprintf_t cs_vsnprintf;
 #define CS_ASSERT(expr) \
 do { \
 	if (!(expr)) { \
-		fprintf(stderr, "Hit assert: \"" #expr "\": %s:%" PRIu32 "\n", __FILE__, __LINE__); \
+		fprintf(stderr, "Capstone hit the assert: \"" #expr "\": %s:%" PRIu32 "\n", __FILE__, __LINE__); \
 	} \
 } while(0)
 #else
@@ -125,7 +125,7 @@ do { \
 #define CS_ASSERT_RET_VAL(expr, val) \
 do { \
 	if (!(expr)) { \
-		fprintf(stderr, "Hit assert: \"" #expr "\": %s:%" PRIu32 "\n", __FILE__, __LINE__); \
+		fprintf(stderr, "Capstone hit the assert: \"" #expr "\": %s:%" PRIu32 "\n", __FILE__, __LINE__); \
 		return val; \
 	} \
 } while(0)
@@ -141,7 +141,7 @@ do { \
 #define CS_ASSERT_RET(expr) \
 do { \
 	if (!(expr)) { \
-		fprintf(stderr, "Hit assert: \"" #expr "\": %s:%" PRIu32 "\n", __FILE__, __LINE__); \
+		fprintf(stderr, "Capstone hit the assert: \"" #expr "\": %s:%" PRIu32 "\n", __FILE__, __LINE__); \
 		return; \
 	} \
 } while(0)
