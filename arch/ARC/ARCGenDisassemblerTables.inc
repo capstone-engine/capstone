@@ -1207,7 +1207,7 @@ static const uint8_t DecoderTable64[] = {
 };
 
 static bool checkDecoderPredicate(MCInst *Inst, unsigned Idx) {
-  CS_ASSERT_RET_VAL(0 && "Invalid index!", false);
+  return false;
 }
 
 #define DecodeToMCInst(fname, fieldname, InsnType) \
