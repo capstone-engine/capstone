@@ -7,8 +7,8 @@ from .sparc_const import *
 # define the API
 class SparcOpMem(ctypes.Structure):
     _fields_ = (
-        ('base', ctypes.c_uint8),
-        ('index', ctypes.c_uint8),
+        ('base', ctypes.c_uint),
+        ('index', ctypes.c_uint),
         ('disp', ctypes.c_int32),
     )
 
