@@ -1295,13 +1295,6 @@ def test_expected_hppa(actual: CsInsn, expected: dict) -> bool:
                 actual, aop.mem.space, eop.get("mem_space"), "mem_space"
             ):
                 return False
-            if not compare_reg(
-                actual,
-                aop.mem.base_access,
-                eop.get("mem_base_access"),
-                "mem_base_access",
-            ):
-                return False
         else:
             raise ValueError("Operand type not handled.")
     return True

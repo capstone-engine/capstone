@@ -306,7 +306,7 @@ static void set_op_mem(cs_hppa *hppa, uint32_t base, uint32_t space,
 	op->type = HPPA_OP_MEM;
 	op->mem.base = base;
 	op->mem.space = space;
-	op->mem.base_access = base_access;
+	op->access = base_access;
 }
 /* HPPA instruction formats (access)
    i - imm arguments

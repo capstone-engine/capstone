@@ -16,7 +16,6 @@ typedef struct {
 	int64_t imm;
 	char *mem_base;
 	char *mem_space;
-	char *mem_base_access;
 } TestDetailHPPAOp;
 
 static const cyaml_schema_field_t test_detail_hppa_op_mapping_schema[] = {
@@ -34,9 +33,6 @@ static const cyaml_schema_field_t test_detail_hppa_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("mem_space",
 			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailHPPAOp, mem_space, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR(
-		"mem_base_access", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-		TestDetailHPPAOp, mem_base_access, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_END
 };
 

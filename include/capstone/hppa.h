@@ -471,7 +471,6 @@ typedef enum hppa_insn {
 typedef struct hppa_mem {
 	hppa_reg base;
 	hppa_reg space;
-	cs_ac_type base_access;
 } hppa_mem;
 
 // Instruction operand

@@ -10,7 +10,6 @@ class HPPAOpMem(ctypes.Structure):
     _fields_ = (
         ('base', ctypes.c_uint),
         ('space', ctypes.c_uint),
-        ('base_access', ctypes.c_uint8),
     )
 
 class HPPAModifierValue(ctypes.Union):
