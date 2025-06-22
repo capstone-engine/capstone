@@ -115,7 +115,6 @@ class StreamOperations(Patch):
                 )) @decl
 """
             query = kwargs["ts_cpp_lang"].query(queue_str)
-            query.end_byte_for_pattern(last_op.start_byte)
             root_node = kwargs["tree"].root_node
             query_result = list(
                 filter(
