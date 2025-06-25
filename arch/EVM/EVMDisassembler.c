@@ -3,8 +3,7 @@
 /* By Andelf, 2025 */
 
 #include <string.h>
-#include <stddef.h> // offsetof macro
-                    // alternatively #include "../../utils.h" like everyone else
+#include <stddef.h>
 
 #include "EVMDisassembler.h"
 #include "EVMMapping.h"

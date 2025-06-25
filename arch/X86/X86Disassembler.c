@@ -79,8 +79,10 @@
 #ifdef CAPSTONE_HAS_X86
 
 #ifdef _MSC_VER
-#pragma warning(disable:4996)			// disable MSVC's warning on strncpy()
-#pragma warning(disable:28719)		// disable MSVC's warning on strncpy()
+// disable MSVC's warning on strncpy()
+#pragma warning(disable:4996)
+// disable MSVC's warning on strncpy()
+#pragma warning(disable:28719)
 #endif
 
 #include <capstone/platform.h>

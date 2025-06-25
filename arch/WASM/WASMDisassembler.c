@@ -2,8 +2,7 @@
 /* By Spike, xwings 2019 */
 
 #include <string.h>
-#include <stddef.h> // offsetof macro
-// alternatively #include "../../utils.h" like everyone else
+#include <stddef.h>
 
 #include "WASMDisassembler.h"
 #include "WASMMapping.h"

@@ -19,8 +19,10 @@
 #if defined(CAPSTONE_HAS_X86) && !defined(CAPSTONE_DIET) && !defined(CAPSTONE_X86_ATT_DISABLE)
 
 #ifdef _MSC_VER
-#pragma warning(disable:4996)			// disable MSVC's warning on strncpy()
-#pragma warning(disable:28719)		// disable MSVC's warning on strncpy()
+// disable MSVC's warning on strncpy()
+#pragma warning(disable:4996)
+// disable MSVC's warning on strncpy()
+#pragma warning(disable:28719)
 #endif
 
 #if !defined(CAPSTONE_HAS_OSXKERNEL)

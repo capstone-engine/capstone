@@ -6,6 +6,7 @@
 import argparse
 import logging as log
 import re
+import subprocess as sp
 
 from pathlib import Path
 
@@ -66,6 +67,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "-p", dest="patch", help="Patch inc file into header", action="store_true"
+    )
+    parser.add_argument(
+        "-C",
+        dest="clang_format",
+        help=".clang-format file to use for formatting",
+        type=Path,
     )
     arguments = parser.parse_args()
     return arguments
@@ -158,9 +165,10 @@ class HeaderPatcher:
 
 
 class CompatHeaderBuilder:
-    def __init__(self, v6: Path, v5: Path, arch: str):
+    def __init__(self, v6: Path, v5: Path, arch: str, clang_format: Path | None = None):
         self.v6 = v6
         self.v5 = v5
+        self.clang_format = clang_format
         match arch:
             case "aarch64":
                 self.v6_lower = "aarch64"
@@ -323,6 +331,16 @@ class CompatHeaderBuilder:
         with open(self.v5, "w+") as f:
             f.writelines(patched)
 
+        if self.clang_format:
+            sp.run(
+                [
+                    "clang-format-17",
+                    "-i",
+                    f"--style=file:{self.clang_format}",
+                    self.v5,
+                ]
+            )
+
 
 if __name__ == "__main__":
     args = parse_args()
@@ -348,5 +366,5 @@ if __name__ == "__main__":
     else:
         raise ValueError(f"Does not know the arch for header file: {args.v6.name}")
 
-    builder = CompatHeaderBuilder(args.v6, args.v5, arch)
+    builder = CompatHeaderBuilder(args.v6, args.v5, arch, args.clang_format)
     builder.generate_v5_compat_header()

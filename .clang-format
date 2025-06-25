@@ -15,9 +15,7 @@ AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
 AlignEscapedNewlines: DontAlign
 AlignOperands: true
-AlignTrailingComments:
-  Kind: Always
-  OverEmptyLines: 2
+AlignTrailingComments: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false

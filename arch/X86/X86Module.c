@@ -79,7 +79,7 @@ cs_err X86_option(cs_struct *handle, cs_opt_type type, size_t value)
 					// ATT syntax is unsupported
 					handle->errnum = CS_ERR_X86_ATT;
 					return CS_ERR_X86_ATT;
-#else	// CAPSTONE_DIET
+#else
 					// this is irrelevant in CAPSTONE_DIET mode
 					handle->errnum = CS_ERR_DIET;
 					return CS_ERR_DIET;
