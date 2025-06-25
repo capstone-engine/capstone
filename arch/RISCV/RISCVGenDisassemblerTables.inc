@@ -39,7 +39,7 @@ static InsnType fname(InsnType insn, unsigned startBit, unsigned numBits) \
 static const uint8_t DecoderTable16[] = {
 /* 0 */       MCD_OPC_ExtractField, 13, 3, // Inst{15-13} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 77, 0, 0, // Skip to: 85
-/* 8 */       MCD_OPC_ExtractField, 0, 2, // Inst{1-0} ...
+/* 8 */       MCD_OPC_ExtractField, 0, 2, //  Inst{1-0} ...
 /* 11 */      MCD_OPC_FilterValue, 0, 25, 0, 0, // Skip to: 41
 /* 16 */      MCD_OPC_CheckPredicate, 0, 11, 0, 0, // Skip to: 32
 /* 21 */      MCD_OPC_CheckField, 2, 11, 0, 4, 0, 0, // Skip to: 32
@@ -56,7 +56,7 @@ static const uint8_t DecoderTable16[] = {
 /* 76 */      MCD_OPC_CheckPredicate, 0, 80, 2, 0, // Skip to: 673
 /* 81 */      MCD_OPC_Decode, 175, 2, 3, // Opcode: C_SLLI
 /* 85 */      MCD_OPC_FilterValue, 1, 45, 0, 0, // Skip to: 135
-/* 90 */      MCD_OPC_ExtractField, 0, 2, // Inst{1-0} ...
+/* 90 */      MCD_OPC_ExtractField, 0, 2, //  Inst{1-0} ...
 /* 93 */      MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 107
 /* 98 */      MCD_OPC_CheckPredicate, 1, 58, 2, 0, // Skip to: 673
 /* 103 */     MCD_OPC_Decode, 152, 2, 4, // Opcode: C_FLD
@@ -67,7 +67,7 @@ static const uint8_t DecoderTable16[] = {
 /* 126 */     MCD_OPC_CheckPredicate, 1, 30, 2, 0, // Skip to: 673
 /* 131 */     MCD_OPC_Decode, 153, 2, 5, // Opcode: C_FLDSP
 /* 135 */     MCD_OPC_FilterValue, 2, 45, 0, 0, // Skip to: 185
-/* 140 */     MCD_OPC_ExtractField, 0, 2, // Inst{1-0} ...
+/* 140 */     MCD_OPC_ExtractField, 0, 2, //  Inst{1-0} ...
 /* 143 */     MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 157
 /* 148 */     MCD_OPC_CheckPredicate, 0, 8, 2, 0, // Skip to: 673
 /* 153 */     MCD_OPC_Decode, 168, 2, 6, // Opcode: C_LW
@@ -78,7 +78,7 @@ static const uint8_t DecoderTable16[] = {
 /* 176 */     MCD_OPC_CheckPredicate, 0, 236, 1, 0, // Skip to: 673
 /* 181 */     MCD_OPC_Decode, 169, 2, 8, // Opcode: C_LWSP
 /* 185 */     MCD_OPC_FilterValue, 3, 61, 0, 0, // Skip to: 251
-/* 190 */     MCD_OPC_ExtractField, 0, 2, // Inst{1-0} ...
+/* 190 */     MCD_OPC_ExtractField, 0, 2, //  Inst{1-0} ...
 /* 193 */     MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 207
 /* 198 */     MCD_OPC_CheckPredicate, 2, 214, 1, 0, // Skip to: 673
 /* 203 */     MCD_OPC_Decode, 164, 2, 9, // Opcode: C_LD
@@ -92,12 +92,12 @@ static const uint8_t DecoderTable16[] = {
 /* 242 */     MCD_OPC_CheckPredicate, 2, 170, 1, 0, // Skip to: 673
 /* 247 */     MCD_OPC_Decode, 165, 2, 12, // Opcode: C_LDSP
 /* 251 */     MCD_OPC_FilterValue, 4, 11, 1, 0, // Skip to: 523
-/* 256 */     MCD_OPC_ExtractField, 0, 2, // Inst{1-0} ...
+/* 256 */     MCD_OPC_ExtractField, 0, 2, //  Inst{1-0} ...
 /* 259 */     MCD_OPC_FilterValue, 1, 175, 0, 0, // Skip to: 439
-/* 264 */     MCD_OPC_ExtractField, 10, 2, // Inst{11-10} ...
+/* 264 */     MCD_OPC_ExtractField, 10, 2, //  Inst{11-10} ...
 /* 267 */     MCD_OPC_FilterValue, 0, 17, 0, 0, // Skip to: 289
 /* 272 */     MCD_OPC_CheckPredicate, 0, 140, 1, 0, // Skip to: 673
-/* 277 */     MCD_OPC_ExtractField, 12, 1,  // Inst{12} ...
+/* 277 */     MCD_OPC_ExtractField, 12, 1,  //  Inst{12} ...
 /* 280 */     MCD_OPC_FilterValue, 0, 148, 1, 0, // Skip to: 673
 /* 285 */     MCD_OPC_Decode, 177, 2, 13, // Opcode: C_SRLI
 /* 289 */     MCD_OPC_FilterValue, 1, 9, 0, 0, // Skip to: 303
@@ -107,9 +107,9 @@ static const uint8_t DecoderTable16[] = {
 /* 308 */     MCD_OPC_CheckPredicate, 0, 104, 1, 0, // Skip to: 673
 /* 313 */     MCD_OPC_Decode, 148, 2, 14, // Opcode: C_ANDI
 /* 317 */     MCD_OPC_FilterValue, 3, 95, 1, 0, // Skip to: 673
-/* 322 */     MCD_OPC_ExtractField, 5, 2, // Inst{6-5} ...
+/* 322 */     MCD_OPC_ExtractField, 5, 2, //  Inst{6-5} ...
 /* 325 */     MCD_OPC_FilterValue, 0, 31, 0, 0, // Skip to: 361
-/* 330 */     MCD_OPC_ExtractField, 12, 1, // Inst{12} ...
+/* 330 */     MCD_OPC_ExtractField, 12, 1, //  Inst{12} ...
 /* 333 */     MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 347
 /* 338 */     MCD_OPC_CheckPredicate, 0, 74, 1, 0, // Skip to: 673
 /* 343 */     MCD_OPC_Decode, 178, 2, 15, // Opcode: C_SUB
@@ -117,7 +117,7 @@ static const uint8_t DecoderTable16[] = {
 /* 352 */     MCD_OPC_CheckPredicate, 2, 60, 1, 0, // Skip to: 673
 /* 357 */     MCD_OPC_Decode, 179, 2, 15, // Opcode: C_SUBW
 /* 361 */     MCD_OPC_FilterValue, 1, 31, 0, 0, // Skip to: 397
-/* 366 */     MCD_OPC_ExtractField, 12, 1, // Inst{12} ...
+/* 366 */     MCD_OPC_ExtractField, 12, 1, //  Inst{12} ...
 /* 369 */     MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 383
 /* 374 */     MCD_OPC_CheckPredicate, 0, 38, 1, 0, // Skip to: 673
 /* 379 */     MCD_OPC_Decode, 183, 2, 15, // Opcode: C_XOR
@@ -133,7 +133,7 @@ static const uint8_t DecoderTable16[] = {
 /* 428 */     MCD_OPC_CheckField, 12, 1, 0, 238, 0, 0, // Skip to: 673
 /* 435 */     MCD_OPC_Decode, 147, 2, 15, // Opcode: C_AND
 /* 439 */     MCD_OPC_FilterValue, 2, 229, 0, 0, // Skip to: 673
-/* 444 */     MCD_OPC_ExtractField, 12, 1, // Inst{12} ...
+/* 444 */     MCD_OPC_ExtractField, 12, 1, //  Inst{12} ...
 /* 447 */     MCD_OPC_FilterValue, 0, 25, 0, 0, // Skip to: 477
 /* 452 */     MCD_OPC_CheckPredicate, 0, 11, 0, 0, // Skip to: 468
 /* 457 */     MCD_OPC_CheckField, 2, 5, 0, 4, 0, 0, // Skip to: 468
@@ -150,7 +150,7 @@ static const uint8_t DecoderTable16[] = {
 /* 514 */     MCD_OPC_CheckPredicate, 0, 154, 0, 0, // Skip to: 673
 /* 519 */     MCD_OPC_Decode, 141, 2, 18, // Opcode: C_ADD
 /* 523 */     MCD_OPC_FilterValue, 5, 45, 0, 0, // Skip to: 573
-/* 528 */     MCD_OPC_ExtractField, 0, 2, // Inst{1-0} ...
+/* 528 */     MCD_OPC_ExtractField, 0, 2, //  Inst{1-0} ...
 /* 531 */     MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 545
 /* 536 */     MCD_OPC_CheckPredicate, 1, 132, 0, 0, // Skip to: 673
 /* 541 */     MCD_OPC_Decode, 156, 2, 4, // Opcode: C_FSD
@@ -161,7 +161,7 @@ static const uint8_t DecoderTable16[] = {
 /* 564 */     MCD_OPC_CheckPredicate, 1, 104, 0, 0, // Skip to: 673
 /* 569 */     MCD_OPC_Decode, 157, 2, 20, // Opcode: C_FSDSP
 /* 573 */     MCD_OPC_FilterValue, 6, 45, 0, 0, // Skip to: 623
-/* 578 */     MCD_OPC_ExtractField, 0, 2, // Inst{1-0} ...
+/* 578 */     MCD_OPC_ExtractField, 0, 2, //  Inst{1-0} ...
 /* 581 */     MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 595
 /* 586 */     MCD_OPC_CheckPredicate, 0, 82, 0, 0, // Skip to: 673
 /* 591 */     MCD_OPC_Decode, 180, 2, 6, // Opcode: C_SW
@@ -172,7 +172,7 @@ static const uint8_t DecoderTable16[] = {
 /* 614 */     MCD_OPC_CheckPredicate, 0, 54, 0, 0, // Skip to: 673
 /* 619 */     MCD_OPC_Decode, 181, 2, 22, // Opcode: C_SWSP
 /* 623 */     MCD_OPC_FilterValue, 7, 45, 0, 0, // Skip to: 673
-/* 628 */     MCD_OPC_ExtractField, 0, 2, // Inst{1-0} ...
+/* 628 */     MCD_OPC_ExtractField, 0, 2, //  Inst{1-0} ...
 /* 631 */     MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 645
 /* 636 */     MCD_OPC_CheckPredicate, 2, 32, 0, 0, // Skip to: 673
 /* 641 */     MCD_OPC_Decode, 173, 2, 9, // Opcode: C_SD
