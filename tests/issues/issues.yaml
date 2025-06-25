@@ -6263,3 +6263,21 @@ test_cases:
       insns:
         -
           asm_text: "c.srli a4, 5"
+  -
+    input:
+      name: "issue 2741 - SystemZ addresses with 0 operand."
+      bytes: [ 0xc6,0x00,0x00,0x00,0x00,0x05 ]
+      arch: "CS_ARCH_SYSTEMZ"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "exrl	0, 0xa"
+        details:
+          systemz:
+            operands:
+              - type: SYSTEMZ_OP_IMM
+                imm: 0
+              - type: SYSTEMZ_OP_IMM
+                imm: 0xa

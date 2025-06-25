@@ -321,6 +321,21 @@ void SystemZ_set_detail_op_reg(MCInst *MI, unsigned op_num, systemz_reg Reg)
 	if (!detail_is_set(MI))
 		return;
 	CS_ASSERT((map_get_op_type(MI, op_num) & ~CS_OP_MEM) == CS_OP_REG);
+	if (Reg == SYSTEMZ_REG_INVALID) {
+		// This case is legal. The ISA says:
+		// "
+		// When the R1 field is not zero, bits 8-15 of the instruction designated
+		// by the second-operand address are ORed with bits 56-63 of
+		// general register R1. [...] When the R1 field is zero, no ORing takes place
+		// "
+		// This means we just save the neutral element for ORing, so 0.
+		SystemZ_get_detail_op(MI, 0)->type = SYSTEMZ_OP_IMM;
+		SystemZ_get_detail_op(MI, 0)->imm = 0;
+		SystemZ_get_detail_op(MI, 0)->access = map_get_op_access(MI, op_num);
+		SystemZ_get_detail_op(MI, 0)->imm_width = 0;
+		SystemZ_inc_op_count(MI);
+		return;
+	}
 
 	SystemZ_get_detail_op(MI, 0)->type = SYSTEMZ_OP_REG;
 	SystemZ_get_detail_op(MI, 0)->reg = Reg;
