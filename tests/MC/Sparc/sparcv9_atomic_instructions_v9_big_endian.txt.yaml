@@ -1,0 +1,60 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x81, 0x43, 0xe0, 0x0f ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "membar #LoadLoad | #StoreLoad | #LoadStore | #StoreStore"
+
+  -
+    input:
+      bytes: [ 0x81, 0x43, 0xe0, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "membar #LoadLoad"
+
+  -
+    input:
+      bytes: [ 0x81, 0x43, 0xe0, 0x09 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "membar #LoadLoad | #StoreStore"
+
+  -
+    input:
+      bytes: [ 0x81, 0x43, 0xe0, 0x7f ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "membar #LoadLoad | #StoreLoad | #LoadStore | #StoreStore | #Lookaside | #MemIssue | #Sync"
+
+  -
+    input:
+      bytes: [ 0xd4, 0xfe, 0x20, 0x06 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "swapa [%i0+6] %asi, %o2"
+
+  -
+    input:
+      bytes: [ 0xc2, 0xee, 0x20, 0x02 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldstuba [%i0+2] %asi, %g1"

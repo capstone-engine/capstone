@@ -3904,7 +3904,7 @@ test_cases:
       name: "issue 426"
       bytes: [ 0xbb,0x70,0x00,0x00 ]
       arch: "CS_ARCH_SPARC"
-      options: [ CS_MODE_BIG_ENDIAN ]
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
       address: 0x0
     expected:
       insns:

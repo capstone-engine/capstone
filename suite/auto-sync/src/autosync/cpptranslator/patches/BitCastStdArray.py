@@ -46,15 +46,15 @@ class BitCastStdArray(Patch):
         return "array_bit_cast"
 
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
-        arr_name: bytes = captures[1][0].text
+        c1 = captures[1][0]
+        c4 = captures[4][0]
+        arr_name: bytes = get_text(src, c1.start_byte, c1.end_byte)
         array_type: Node = captures[3][0]
-        cast_target: bytes = captures[4][0].text.strip(b"()")
-        array_templ_args: bytes = (
-            array_type.named_children[0]
-            .named_children[1]
-            .named_children[1]
-            .text.strip(b"<>")
-        )
+        cast_target: bytes = get_text(src, c4.start_byte, c4.end_byte).strip(b"()")
+        named_child = array_type.named_children[0].named_children[1].named_children[1]
+        array_templ_args: bytes = get_text(
+            src, named_child.start_byte, named_child.end_byte
+        ).strip(b"<>")
         arr_type = array_templ_args.split(b",")[0]
         arr_len = array_templ_args.split(b",")[1]
         return (

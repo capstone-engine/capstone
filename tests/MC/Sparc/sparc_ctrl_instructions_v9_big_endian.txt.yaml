@@ -1,0 +1,100 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x9f, 0xc0, 0x40, 0x1a ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "call %g1+%i2"
+
+  -
+    input:
+      bytes: [ 0x9f, 0xc2, 0x60, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "call %o1+8"
+
+  -
+    input:
+      bytes: [ 0x9f, 0xc0, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "call %g1"
+
+  -
+    input:
+      bytes: [ 0x81, 0xc0, 0x40, 0x1a ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jmp %g1+%i2"
+
+  -
+    input:
+      bytes: [ 0x81, 0xc2, 0x60, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jmp %o1+8"
+
+  -
+    input:
+      bytes: [ 0x81, 0xc0, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jmp %g1"
+
+  -
+    input:
+      bytes: [ 0x85, 0xc0, 0x40, 0x1a ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jmpl %g1+%i2, %g2"
+
+  -
+    input:
+      bytes: [ 0x85, 0xc2, 0x60, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jmpl %o1+8, %g2"
+
+  -
+    input:
+      bytes: [ 0x85, 0xc0, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jmpl %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x81, 0xcf, 0xe0, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_V9", "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rett %i7+8"

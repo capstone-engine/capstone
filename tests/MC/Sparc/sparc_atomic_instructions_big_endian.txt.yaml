@@ -1,0 +1,70 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x81, 0x43, 0xc0, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stbar"
+
+  -
+    input:
+      bytes: [ 0xd4, 0x7e, 0x00, 0x16 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap [%i0+%l6], %o2"
+
+  -
+    input:
+      bytes: [ 0xd4, 0x7e, 0x20, 0x20 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "swap [%i0+32], %o2"
+
+  -
+    input:
+      bytes: [ 0xd4, 0xfe, 0x10, 0x76 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "swapa [%i0+%l6] 131, %o2"
+
+  -
+    input:
+      bytes: [ 0xc2, 0x6e, 0x20, 0x28 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldstub [%i0+40], %g1"
+
+  -
+    input:
+      bytes: [ 0xc2, 0x6e, 0x00, 0x1a ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldstub [%i0+%i2], %g1"
+
+  -
+    input:
+      bytes: [ 0xc2, 0xee, 0x10, 0x7a ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldstuba [%i0+%i2] 131, %g1"

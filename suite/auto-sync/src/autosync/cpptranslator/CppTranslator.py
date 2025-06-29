@@ -91,6 +91,7 @@ from autosync.Helper import (
     run_clang_format,
 )
 from autosync.cpptranslator.patches.isUInt import IsUInt
+from autosync.cpptranslator.tree_sitter_compatibility import query_captures_22_3
 
 
 class Translator:
@@ -361,7 +362,7 @@ class Translator:
     def parse(self, src_path: Path) -> None:
         self.read_src_file(src_path)
         log.debug("Parse source code")
-        self.tree = self.parser.parse(self.src, keep_text=True)
+        self.tree = self.parser.parse(self.src)
 
     def patch_src(self, p_list: [(bytes, Node)]) -> None:
         if len(p_list) == 0:
@@ -391,7 +392,7 @@ class Translator:
                 old_end_point=old_end_point,
                 new_end_point=(old_end_point[0], old_end_point[1] + d),
             )
-        self.tree = self.parser.parse(new_src, self.tree, keep_text=True)
+        self.tree = self.parser.parse(new_src, self.tree)
 
     def apply_patch(self, patch: Patch) -> bool:
         """Tests if the given patch should be applied for the current architecture or file."""
@@ -435,7 +436,7 @@ class Translator:
                 # Here we bundle these captures together.
                 query: Query = self.ts_cpp_lang.query(pattern)
                 captures_bundle: [[(Node, str)]] = list()
-                for q in query.captures(self.tree.root_node):
+                for q in query_captures_22_3(query, self.tree.root_node):
                     if q[1] == patch.get_main_capture_name():
                         # The main capture the patch is looking for.
                         captures_bundle.append([q])
@@ -453,8 +454,6 @@ class Translator:
                 cb: [(Node, str)]
                 for cb in captures_bundle:
                     patch_kwargs = self.get_patch_kwargs(patch)
-                    patch_kwargs["tree"] = self.tree
-                    patch_kwargs["ts_cpp_lang"] = self.ts_cpp_lang
                     bytes_patch: bytes = patch.get_patch(cb, self.src, **patch_kwargs)
                     p_list.append((bytes_patch, cb[0][0]))
                 self.patch_src(p_list)
@@ -480,9 +479,12 @@ class Translator:
         self.template_collector.collect()
 
     def get_patch_kwargs(self, patch):
-        if isinstance(patch, Includes):
-            return {"filename": self.current_src_path_in.name}
-        return dict()
+        default_kwargs = dict()
+        default_kwargs["tree"] = self.tree
+        default_kwargs["ts_cpp_lang"] = self.ts_cpp_lang
+        if isinstance(patch, Includes) and self.current_src_path_in:
+            default_kwargs["filename"] = self.current_src_path_in.name
+        return default_kwargs
 
     def remark_manual_files(self) -> None:
         manual_edited = self.conf["manually_edited_files"]

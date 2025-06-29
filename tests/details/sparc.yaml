@@ -1,9 +1,9 @@
 test_cases:
   -
     input:
-      bytes: [ 0x80, 0xa0, 0x40, 0x02, 0x85, 0xc2, 0x60, 0x08, 0x85, 0xe8, 0x20, 0x01, 0x81, 0xe8, 0x00, 0x00, 0x90, 0x10, 0x20, 0x01, 0xd5, 0xf6, 0x10, 0x16, 0x21, 0x00, 0x00, 0x0a, 0x86, 0x00, 0x40, 0x02, 0x01, 0x00, 0x00, 0x00, 0x12, 0xbf, 0xff, 0xff, 0x10, 0xbf, 0xff, 0xff, 0xa0, 0x02, 0x00, 0x09, 0x0d, 0xbf, 0xff, 0xff, 0xd4, 0x20, 0x60, 0x00, 0xd4, 0x4e, 0x00, 0x16, 0x2a, 0xc2, 0x80, 0x03  ]
+      bytes: [ 0x80, 0xa0, 0x40, 0x02 ]
       arch: "sparc"
-      options: [ CS_OPT_DETAIL ]
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
       address: 0x1000
     expected:
       insns:
@@ -18,6 +18,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: g2
+  -
+    input:
+      bytes: [ 0x85, 0xc2, 0x60, 0x08 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "jmpl %o1+8, %g2"
         details:
@@ -30,6 +38,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: g2
+  -
+    input:
+      bytes: [ 0x85, 0xe8, 0x20, 0x01 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "restore %g0, 1, %g2"
         details:
@@ -44,8 +60,24 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: g2
+  -
+    input:
+      bytes: [ 0x81, 0xe8, 0x00, 0x00 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "restore"
+  -
+    input:
+      bytes: [ 0x90, 0x10, 0x20, 0x01 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "mov 1, %o0"
         details:
@@ -57,6 +89,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: o0
+  -
+    input:
+      bytes: [ 0xd5, 0xf6, 0x10, 0x16 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "casx [%i0], %l6, %o2"
         details:
@@ -71,6 +111,55 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: o2
+  -
+    input:
+      bytes: [ 0xd5, 0xe6, 0x10, 0x56 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "casa [%i0] #asi_pnf, %l6, %o2"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_MEM
+                mem_base: i0
+              -
+                type: SPARC_OP_ASI
+                asi: SPARC_ASITAG_ASI_PNF
+              -
+                type: SPARC_OP_REG
+                reg: l6
+              -
+                type: SPARC_OP_REG
+                reg: o2
+  -
+    input:
+      bytes: [ 0x81, 0x43, 0xe0, 0x01 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "membar #LoadLoad"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_MEMBAR_TAG
+                membar_tag: SPARC_MEMBAR_TAG_LOADLOAD
+  -
+    input:
+      bytes: [ 0x21, 0x00, 0x00, 0x0a ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "sethi 0xa, %l0"
         details:
@@ -82,6 +171,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: l0
+  -
+    input:
+      bytes: [ 0x86, 0x00, 0x40, 0x02 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "add %g1, %g2, %g3"
         details:
@@ -96,25 +193,57 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: g3
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x00, 0x00 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "nop"
+  -
+    input:
+      bytes: [ 0x12, 0xbf, 0xff, 0xff ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1020
+    expected:
+      insns:
       -
-        asm_text: "bne 0x1020"
+        asm_text: "bne 0x101c"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_IMM
+                imm: 0x101c
+            cc: SPARC_CC_ICC_NE
+  -
+    input:
+      bytes: [ 0x10, 0xbf, 0xff, 0xff ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1024
+    expected:
+      insns:
+      -
+        asm_text: "ba 0x1020"
         details:
           sparc:
             operands:
               -
                 type: SPARC_OP_IMM
                 imm: 0x1020
-            cc: SPARC_CC_ICC_NE
-      -
-        asm_text: "ba 0x1024"
-        details:
-          sparc:
-            operands:
-              -
-                type: SPARC_OP_IMM
-                imm: 0x1024
+  -
+    input:
+      bytes: [ 0xa0, 0x02, 0x00, 0x09 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "add %o0, %o1, %l0"
         details:
@@ -129,15 +258,31 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: l0
+  -
+    input:
+      bytes: [ 0x0d, 0xbf, 0xff, 0xff ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x102c
+    expected:
+      insns:
       -
-        asm_text: "fbg 0x102c"
+        asm_text: "fbg 0x1028"
         details:
           sparc:
             operands:
               -
                 type: SPARC_OP_IMM
-                imm: 0x102c
+                imm: 0x1028
             cc: SPARC_CC_FCC_G
+  -
+    input:
+      bytes: [ 0xd4, 0x20, 0x60, 0x00 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "st %o2, [%g1]"
         details:
@@ -149,6 +294,14 @@ test_cases:
               -
                 type: SPARC_OP_MEM
                 mem_base: g1
+  -
+    input:
+      bytes: [ 0xd4, 0x4e, 0x00, 0x16 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "ldsb [%i0+%l6], %o2"
         details:
@@ -161,8 +314,16 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: o2
+  -
+    input:
+      bytes: [ 0x2a, 0xc2, 0x80, 0x03 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1048
+    expected:
+      insns:
       -
-        asm_text: "brnz,a,pn %o2, 0x1048"
+        asm_text: "brnz,a,pn %o2, 0x1054"
         details:
           sparc:
             operands:
@@ -171,13 +332,37 @@ test_cases:
                 reg: o2
               -
                 type: SPARC_OP_IMM
-                imm: 0x1048
+                imm: 0x1054
             hint: SPARC_HINT_A_PN
+            cc: SPARC_CC_REG_NZ
+          groups: [ jump, SPARC_FEATURE_IS64BIT ]
   -
     input:
-      bytes: [ 0x81, 0xa8, 0x0a, 0x24, 0x89, 0xa0, 0x10, 0x20, 0x89, 0xa0, 0x1a, 0x60, 0x89, 0xa0, 0x00, 0xe0  ]
+      bytes: [ 0x22, 0xc8, 0x40, 0x00 ]
       arch: "sparc"
-      options: [ CS_OPT_DETAIL ]
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10000
+    expected:
+      insns:
+      -
+        asm_text: "brz,a	%g1, 0x10000"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_REG
+                reg: g1
+              -
+                type: SPARC_OP_IMM
+                imm: 0x10000
+            hint: SPARC_HINT_A_PT
+            cc: SPARC_CC_REG_Z
+          groups: [ jump, SPARC_FEATURE_IS64BIT ]
+  -
+    input:
+      bytes: [ 0x81, 0xa8, 0x0a, 0x24 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
       address: 0x1000
     expected:
       insns:
@@ -192,6 +377,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: f4
+  -
+    input:
+      bytes: [ 0x89, 0xa0, 0x10, 0x20 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "fstox %f0, %f4"
         details:
@@ -203,6 +396,15 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: f4
+          groups: [ SPARC_FEATURE_IS64BIT ]
+  -
+    input:
+      bytes: [ 0x89, 0xa0, 0x1a, 0x60 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "fqtoi %f0, %f4"
         details:
@@ -214,6 +416,14 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: f4
+  -
+    input:
+      bytes: [ 0x89, 0xa0, 0x00, 0xe0 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
       -
         asm_text: "fnegq %f0, %f4"
         details:
@@ -225,4 +435,495 @@ test_cases:
               -
                 type: SPARC_OP_REG
                 reg: f4
+  -
+    input:
+      bytes: [ 0x40, 0x00, 0xb3, 0x12 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x00012d44
+    expected:
+      insns:
+      -
+        asm_text: "call	0x3f98c"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_IMM
+                imm: 0x3f98c
+  -
+    input:
+      bytes: [ 0x83, 0x88, 0x00, 0x17 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "pwr %g0, %l7, %psr"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: g0
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: l7
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: psr
+                  access: CS_AC_WRITE
+            groups: [ HasPWRPSR ]
+  -
+    input:
+      bytes: [ 0xa3, 0x48, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %psr, %l1"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: psr
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: l1
+                  access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x81, 0x96, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %i0, 5, %wim"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: i0
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_IMM
+                  imm: 5
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: wim
+                  access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0xb1, 0x50, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %wim, %i0"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: wim
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: i0
+                  access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x81, 0x9e, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %i0, 5, %tbr"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: i0
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_IMM
+                  imm: 5
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: tbr
+                  access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0xb1, 0x58, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %tbr, %i0"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  reg: tbr
+                  access: CS_AC_READ
+                -
+                  type: SPARC_OP_REG
+                  reg: i0
+                  access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x9f, 0xc2, 0x60, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+    expected:
+      insns:
+        -
+          asm_text: "call %o1+8"
+          is_alias: 1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_MEM
+                  mem_base: o1
+                  mem_disp: 8
+  -
+    input:
+      bytes: [ 0x10, 0xbf, 0xff, 0xe0 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x0001bcf0
+    expected:
+      insns:
+        -
+          asm_text: "ba	0x1bc70"
+          is_alias: 1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  imm: 0x1bc70
+                  access: CS_AC_READ
+              cc: SPARC_CC_ICC_A
+            groups: [ jump ]
+  -
+    input:
+      bytes: [ 0x10, 0xbf, 0xff, 0xe0 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x0001bcf0
+    expected:
+      insns:
+        -
+          asm_text: "ba	0x1bc70"
+          is_alias: 1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  imm: 0x1bc70
+                  access: CS_AC_READ
+              cc: SPARC_CC_ICC_A
+            groups: [ jump ]
+            
+  -
+    input:
+      bytes: [ 0x20, 0x68, 0x04, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x0
+    expected:
+      insns:
+        -
+          asm_text: "bn,a	%xcc, 0x1000"
+          is_alias: -1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 0x1000
+              cc: SPARC_CC_ICC_N
+              cc_field: SPARC_CC_FIELD_XCC
+            groups: [ jump, SPARC_FEATURE_IS64BIT ]
+  -
+    input:
+      bytes: [ 0x0e, 0x80, 0x04, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x4
+    expected:
+      insns:
+        -
+          asm_text: "bvs	0x1004"
+          is_alias: 1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 0x1004
+              cc: SPARC_CC_ICC_VS
+              cc_field: SPARC_CC_FIELD_ICC
+            groups: [ jump ]
+  -
+    input:
+      bytes: [ 0x85, 0xa8, 0x0a, 0xe4 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x8
+    expected:
+      insns:
+        -
+          asm_text: "fcmpeq	%fcc2, %f0, %f4"
+          is_alias: -1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: f0
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: f4
+              cc_field: SPARC_CC_FIELD_FCC2
+  -
+    input:
+      bytes: [ 0x30, 0x68, 0x04, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0xc
+    expected:
+      insns:
+        -
+          asm_text: "ba,a	%xcc, 0x100c"
+          is_alias: -1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 0x100c
+              cc: SPARC_CC_ICC_A
+              cc_field: SPARC_CC_FIELD_XCC
+              hint: SPARC_HINT_A_PT
+            groups: [ jump, SPARC_FEATURE_IS64BIT ]
+  -
+    input:
+      bytes: [ 0x1e, 0x48, 0x04, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "bvc	%icc, 0x1010"
+          is_alias: -1
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 0x1010
+              cc: SPARC_CC_ICC_VC
+              cc_field: SPARC_CC_FIELD_ICC
+            groups: [ jump, HasV9 ]
+  -
+    input:
+      bytes: [ 0xd4, 0xee, 0x00, 0x96 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "ldstuba [%i0+%l6] 4, %o2"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_MEM
+                  access: CS_AC_READ_WRITE
+                  mem_base: i0
+                  mem_index: l6
+                -
+                  type: SPARC_OP_ASI
+                  access: CS_AC_READ
+                  asi: SPARC_ASITAG_ASI_N
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_WRITE
+                  reg: o2
+  -
+    input:
+      bytes: [ 0x83, 0x64, 0x80, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "movle	%icc, %g0, %g1"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: g0
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_WRITE
+                  reg: g1
+              cc: SPARC_CC_ICC_LE
+              cc_field: SPARC_CC_FIELD_ICC
+            groups: [ HasV9 ]
+  -
+    input:
+      bytes: [ 0x83, 0x65, 0xf0, 0x50 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "movvs %xcc, 0x50, %g1"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 0x50
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_WRITE
+                  reg: g1
+              cc: SPARC_CC_ICC_VS
+              cc_field: SPARC_CC_FIELD_XCC
+            # groups: [ HasV9 ] - Bug: llvm-project/#142388
+  -
+    input:
+      bytes: [ 0x83, 0x7c, 0x04, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "movrz %l0, %g5, %g1"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: l0
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: g5
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_WRITE
+                  reg: g1
+              cc: SPARC_CC_REG_Z
+            # groups: [ HasV9 ] - Bug: llvm-project/#142388
+  -
+    input:
+      bytes: [ 0x83, 0x7c, 0x3c, 0x10 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "movrgez	%l0, 16, %g1"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: l0
+                -
+                  type: SPARC_OP_IMM
+                  access: CS_AC_READ
+                  imm: 16
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_WRITE
+                  reg: g1
+              cc: SPARC_CC_REG_GEZ
+            # groups: [ HasV9 ] - Bug: llvm-project/#142388
 
+  -
+    input:
+      bytes: [ 0x83, 0xd4, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "te	%icc, %l0 + %g0"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: l0
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: g0
+              cc: SPARC_CC_ICC_E
+              cc_field: SPARC_CC_FIELD_ICC
+            # groups: [ HasV9 ] - Bug: llvm-project/#142388
+  -
+    input:
+      bytes: [ 0x8f, 0xd4, 0x10, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x10
+    expected:
+      insns:
+        -
+          asm_text: "tvs	%xcc, %l0 + %g0"
+          details:
+            sparc:
+              operands:
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: l0
+                -
+                  type: SPARC_OP_REG
+                  access: CS_AC_READ
+                  reg: g0
+              cc: SPARC_CC_ICC_VS
+              cc_field: SPARC_CC_FIELD_XCC
+            # groups: [ HasV9 ] - Bug: llvm-project/#142388

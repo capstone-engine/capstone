@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x83, 0x88, 0x20, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN", "gr740" ]
+    expected:
+      insns:
+        -
+          asm_text: "pwr %g0, 0, %psr"
+
+  -
+    input:
+      bytes: [ 0x83, 0x88, 0x00, 0x17 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN", "gr740" ]
+    expected:
+      insns:
+        -
+          asm_text: "pwr %g0, %l7, %psr"
+
+  -
+    input:
+      bytes: [ 0x83, 0x88, 0x20, 0x20 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN", "gr740" ]
+    expected:
+      insns:
+        -
+          asm_text: "pwr %g0, 32, %psr"

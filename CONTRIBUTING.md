@@ -109,6 +109,6 @@ Adding an Architecture
 
 If your architecture is supported in LLVM or one of its forks, you can use `Auto-Sync` to
 add the new module.
-Checkout [suite/auto-sync/README.md](suite/auto-sync/README.md).
+Checkout [suite/auto-sync/RefactorGuide.md](suite/auto-sync/RefactorGuide.md).
 
 Otherwise, you need to implement the disassembler on your own and make it work with the Capstone API.

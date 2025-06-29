@@ -110,7 +110,7 @@ class StreamOperations(Patch):
                 (declaration (
                     (primitive_type) @typ
                     (init_declarator 
-                        (identifier) @ident (#eq? @ident "{last_op_text.decode('utf8')}")
+                        (identifier) @ident (#eq? @ident "{last_op_text.decode("utf8")}")
                     )
                 )) @decl
 """
@@ -119,14 +119,13 @@ class StreamOperations(Patch):
             query_result = list(
                 filter(
                     lambda x: "typ" in x[1],
-                    query.matches(root_node, end_byte=last_op.start_byte),
+                    query.matches(root_node),
                 )
             )
             if len(query_result) == 0:
                 res += b"SStream_concat0(" + s_name + b", " + last_op_text + b");"
             else:
-                cap = query_result[-1]
-                typ = get_text_from_node(src, cap[1]["typ"])
+                typ = get_text_from_node(src, query_result[0][1]["typ"][-1])
                 match typ:
                     case b"int":
                         res += b"printInt32(" + s_name + b", " + last_op_text + b");"

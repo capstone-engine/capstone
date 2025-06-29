@@ -147,7 +147,7 @@ typedef struct cs_arch_config {
 	{ \
 		Sparc_global_init, \
 		Sparc_option, \
-		~(CS_MODE_BIG_ENDIAN | CS_MODE_V9), \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | CS_MODE_V9 | CS_MODE_64 | CS_MODE_32), \
 	}
 #define CS_ARCH_CONFIG_SYSTEMZ \
 	{ \

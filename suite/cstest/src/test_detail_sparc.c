@@ -22,6 +22,7 @@ void test_detail_sparc_free(TestDetailSparc *detail)
 	}
 	cs_mem_free(detail->operands);
 	cs_mem_free(detail->cc);
+	cs_mem_free(detail->cc_field);
 	cs_mem_free(detail->hint);
 	cs_mem_free(detail);
 }
@@ -32,6 +33,7 @@ TestDetailSparc *test_detail_sparc_clone(const TestDetailSparc *detail)
 
 	clone->operands_count = detail->operands_count;
 	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
+	clone->cc_field = detail->cc_field ? strdup(detail->cc_field) : NULL;
 	clone->hint = detail->hint ? strdup(detail->hint) : NULL;
 	if (detail->operands_count > 0) {
 		clone->operands = cs_mem_calloc(sizeof(TestDetailSparcOp *),
@@ -55,11 +57,14 @@ TestDetailSparcOp *test_detail_sparc_op_clone(const TestDetailSparcOp *op)
 	TestDetailSparcOp *clone = test_detail_sparc_op_new();
 
 	clone->type = op->type ? strdup(op->type) : NULL;
+	clone->access = op->access ? strdup(op->access) : NULL;
 	clone->reg = op->reg ? strdup(op->reg) : NULL;
 	clone->imm = op->imm;
 	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
 	clone->mem_index = op->mem_index ? strdup(op->mem_index) : NULL;
 	clone->mem_disp = op->mem_disp;
+	clone->asi = op->asi ? strdup(op->asi) : NULL;
+	clone->membar_tag = op->membar_tag ? strdup(op->membar_tag) : NULL;
 
 	return clone;
 }
@@ -70,9 +75,12 @@ void test_detail_sparc_op_free(TestDetailSparcOp *op)
 		return;
 	}
 	cs_mem_free(op->type);
+	cs_mem_free(op->access);
 	cs_mem_free(op->reg);
 	cs_mem_free(op->mem_base);
 	cs_mem_free(op->mem_index);
+	cs_mem_free(op->asi);
+	cs_mem_free(op->membar_tag);
 	cs_mem_free(op);
 }
 
@@ -83,6 +91,9 @@ bool test_expected_sparc(csh *handle, const cs_sparc *actual,
 
 	if (expected->cc) {
 		compare_enum_ret(actual->cc, expected->cc, false);
+	}
+	if (expected->cc_field) {
+		compare_enum_ret(actual->cc_field, expected->cc_field, false);
 	}
 	if (expected->hint) {
 		compare_enum_ret(actual->hint, expected->hint, false);
@@ -97,6 +108,7 @@ bool test_expected_sparc(csh *handle, const cs_sparc *actual,
 		const cs_sparc_op *op = &actual->operands[i];
 		TestDetailSparcOp *eop = expected->operands[i];
 		compare_enum_ret(op->type, eop->type, false);
+		compare_enum_ret(op->access, eop->access, false);
 		switch (op->type) {
 		default:
 			fprintf(stderr,
@@ -115,6 +127,12 @@ bool test_expected_sparc(csh *handle, const cs_sparc *actual,
 			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
 					false);
 			compare_int32_ret(op->mem.disp, eop->mem_disp, false);
+			break;
+		case SPARC_OP_ASI:
+			compare_enum_ret(op->asi, eop->asi, false);
+			break;
+		case SPARC_OP_MEMBAR_TAG:
+			compare_enum_ret(op->membar_tag, eop->membar_tag, false);
 			break;
 		}
 	}

@@ -412,21 +412,30 @@ if(CAPSTONE_SPARC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SPARC)
     set(SOURCES_SPARC
         arch/Sparc/SparcDisassembler.c
+        arch/Sparc/SparcDisassemblerExtension.c
         arch/Sparc/SparcInstPrinter.c
         arch/Sparc/SparcMapping.c
         arch/Sparc/SparcModule.c
     )
     set(HEADERS_SPARC
-        arch/Sparc/Sparc.h
-        arch/Sparc/SparcDisassembler.h
+        arch/Sparc/SparcDisassemblerExtension.h
+        arch/Sparc/SparcInstPrinter.h
+        arch/Sparc/SparcLinkage.h
+        arch/Sparc/SparcMCTargetDesc.h
+        arch/Sparc/SparcMapping.h
+        arch/Sparc/SparcModule.h
         arch/Sparc/SparcGenAsmWriter.inc
+        arch/Sparc/SparcGenCSAliasMnemMap.inc
+        arch/Sparc/SparcGenCSFeatureName.inc
+        arch/Sparc/SparcGenCSMappingInsn.inc
+        arch/Sparc/SparcGenCSMappingInsnName.inc
+        arch/Sparc/SparcGenCSMappingInsnOp.inc
+        arch/Sparc/SparcGenCSOpGroup.inc
         arch/Sparc/SparcGenDisassemblerTables.inc
         arch/Sparc/SparcGenInstrInfo.inc
         arch/Sparc/SparcGenRegisterInfo.inc
         arch/Sparc/SparcGenSubtargetInfo.inc
-        arch/Sparc/SparcInstPrinter.h
-        arch/Sparc/SparcMapping.h
-        arch/Sparc/SparcMappingInsn.inc
+        arch/Sparc/SparcGenSystemOperands.inc
     )
 endif()
 

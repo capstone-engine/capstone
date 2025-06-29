@@ -1,9 +1,22 @@
-//===-- SparcInstPrinter.cpp - Convert Sparc MCInst to assembly syntax --------===//
+/* Capstone Disassembly Engine, http://www.capstone-engine.org */
+/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
+/*    Rot127 <unisono@quyllur.org> 2022-2023 */
+/* Automatically translated source file from LLVM. */
+
+/* LLVM-commit: <commit> */
+/* LLVM-tag: <tag> */
+
+/* Only small edits allowed. */
+/* For multiple similar edits, please create a Patch for the translator. */
+
+/* Capstone's C++ file translator: */
+/* https://github.com/capstone-engine/capstone/tree/next/suite/auto-sync */
+
+//===-- SparcInstPrinter.cpp - Convert Sparc MCInst to assembly syntax -----==//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is distributed under the University of Illinois Open Source
-// License. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 //
@@ -11,438 +24,317 @@
 //
 //===----------------------------------------------------------------------===//
 
-/* Capstone Disassembly Engine */
-/* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2015 */
-
-#ifdef CAPSTONE_HAS_SPARC
-
-#ifdef _MSC_VER
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <limits.h>
+#include <stdlib.h>
+#include <capstone/platform.h>
 
+#include "../../MCInstPrinter.h"
+#include "../../Mapping.h"
 #include "SparcInstPrinter.h"
-#include "../../MCInst.h"
-#include "../../utils.h"
-#include "../../SStream.h"
-#include "../../MCRegisterInfo.h"
-#include "../../MathExtras.h"
+#include "SparcLinkage.h"
+#include "SparcMCTargetDesc.h"
 #include "SparcMapping.h"
+#include "SparcDisassemblerExtension.h"
 
-#include "Sparc.h"
+#define CONCAT(a, b) CONCAT_(a, b)
+#define CONCAT_(a, b) a##_##b
 
-static const char *getRegisterName(unsigned RegNo);
-static void printInstruction(MCInst *MI, SStream *O, const MCRegisterInfo *MRI);
-static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modifier);
+#define DEBUG_TYPE "asm-printer"
+
+static void printCustomAliasOperand(
+         MCInst *MI, uint64_t Address, unsigned OpIdx,
+         unsigned PrintMethodIdx,
+         SStream *OS);
 static void printOperand(MCInst *MI, int opNum, SStream *O);
 
-static void Sparc_add_hint(MCInst *MI, unsigned int hint)
+#define GET_INSTRUCTION_NAME
+#define PRINT_ALIAS_INSTR
+#include "SparcGenAsmWriter.inc"
+
+static void printRegName(SStream *OS, MCRegister Reg)
 {
-	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->sparc.hint = hint;
-	}
+	SStream_concat1(OS, '%');
+	SStream_concat0(OS, getRegisterName(Reg, Sparc_NoRegAltName));
 }
 
-static void Sparc_add_reg(MCInst *MI, unsigned int reg)
+static void printRegNameAlt(SStream *OS, MCRegister Reg, unsigned AltIdx)
 {
-	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
-		MI->flat_insn->detail->sparc.op_count++;
-	}
+	SStream_concat1(OS, '%');
+	SStream_concat0(OS, getRegisterName(Reg, AltIdx));
 }
 
-static void set_mem_access(MCInst *MI, bool status)
+static void printInst(MCInst *MI, uint64_t Address, SStream *O)
 {
-	if (MI->csh->detail_opt != CS_OPT_ON)
-		return;
+	bool isAlias = false;
+	bool useAliasDetails = map_use_alias_details(MI);
+	map_set_fill_detail_ops(MI, useAliasDetails);
 
-	MI->csh->doing_mem = status;
-
-	if (status) {
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_MEM;
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.base = SPARC_REG_INVALID;
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.disp = 0;
+	if (!printAliasInstr(MI, Address, O) &&
+		!printSparcAliasInstr(MI, O)) {
+		MCInst_setIsAlias(MI, false);
 	} else {
-		// done, create the next operand slot
-		MI->flat_insn->detail->sparc.op_count++;
+		isAlias = true;
+		MCInst_setIsAlias(MI, isAlias);
+		if (useAliasDetails) {
+			return;
+		}
+	}
+
+	if (!isAlias || !useAliasDetails) {
+		map_set_fill_detail_ops(MI, !(isAlias && useAliasDetails));
+		if (isAlias)
+			SStream_Close(O);
+		printInstruction(MI, Address, O);
+		if (isAlias)
+			SStream_Open(O);
 	}
 }
 
-void Sparc_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *mci)
-{
-	if (((cs_struct *)ud)->detail_opt != CS_OPT_ON)
-		return;
-
-	// fix up some instructions
-	if (insn->id == SPARC_INS_CASX) {
-		// first op is actually a memop, not regop
-		uint8_t base = (uint8_t)insn->detail->sparc.operands[0].reg;
-		memset(&insn->detail->sparc.operands[0], 0, sizeof(cs_sparc_op));
-		insn->detail->sparc.operands[0].type = SPARC_OP_MEM;
-		insn->detail->sparc.operands[0].mem.base = base;
-		insn->detail->sparc.operands[0].mem.disp = 0;
-	}
-}
-
-static void printRegName(SStream *OS, unsigned RegNo)
-{
-	SStream_concat0(OS, "%");
-	SStream_concat0(OS, getRegisterName(RegNo));
-}
-
-#define GET_INSTRINFO_ENUM
-#include "SparcGenInstrInfo.inc"
-
-#define GET_REGINFO_ENUM
-#include "SparcGenRegisterInfo.inc"
-
-static bool printSparcAliasInstr(MCInst *MI, SStream *O)
+bool printSparcAliasInstr(MCInst *MI, SStream *O)
 {
 	switch (MCInst_getOpcode(MI)) {
-		default: return false;
-		case SP_JMPLrr:
-		case SP_JMPLri:
-				 if (MCInst_getNumOperands(MI) != 3)
-					 return false;
-				 if (!MCOperand_isReg(MCInst_getOperand(MI, 0)))
-					 return false;
-
-				 switch (MCOperand_getReg(MCInst_getOperand(MI, 0))) {
-					 default: return false;
-					 case SP_G0: // jmp $addr | ret | retl
-							  if (MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
-									MCOperand_getImm(MCInst_getOperand(MI, 2)) == 8) {
-								  switch(MCOperand_getReg(MCInst_getOperand(MI, 1))) {
-									  default: break;
-									  case SP_I7: SStream_concat0(O, "ret"); MCInst_setOpcodePub(MI, SPARC_INS_RET); return true;
-									  case SP_O7: SStream_concat0(O, "retl"); MCInst_setOpcodePub(MI, SPARC_INS_RETL); return true;
-								  }
-							  }
-
-							  SStream_concat0(O, "jmp\t");
-							  MCInst_setOpcodePub(MI, SPARC_INS_JMP);
-							  printMemOperand(MI, 1, O, NULL);
-							  return true;
-					 case SP_O7: // call $addr
-							  SStream_concat0(O, "call ");
-							  MCInst_setOpcodePub(MI, SPARC_INS_CALL);
-							  printMemOperand(MI, 1, O, NULL);
-							  return true;
-				 }
-		case SP_V9FCMPS:
-		case SP_V9FCMPD:
-		case SP_V9FCMPQ:
-		case SP_V9FCMPES:
-		case SP_V9FCMPED:
-		case SP_V9FCMPEQ:
-				 if (MI->csh->mode & CS_MODE_V9 || (MCInst_getNumOperands(MI) != 3) ||
-						 (!MCOperand_isReg(MCInst_getOperand(MI, 0))) ||
-						 (MCOperand_getReg(MCInst_getOperand(MI, 0)) != SP_FCC0))
-						 return false;
-				 // if V8, skip printing %fcc0.
-				 switch(MCInst_getOpcode(MI)) {
-					 default:
-					 case SP_V9FCMPS:  SStream_concat0(O, "fcmps\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPS); break;
-					 case SP_V9FCMPD:  SStream_concat0(O, "fcmpd\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPD); break;
-					 case SP_V9FCMPQ:  SStream_concat0(O, "fcmpq\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPQ); break;
-					 case SP_V9FCMPES: SStream_concat0(O, "fcmpes\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPES); break;
-					 case SP_V9FCMPED: SStream_concat0(O, "fcmped\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPED); break;
-					 case SP_V9FCMPEQ: SStream_concat0(O, "fcmpeq\t"); MCInst_setOpcodePub(MI, SPARC_INS_FCMPEQ); break;
-				 }
-				 printOperand(MI, 1, O);
-				 SStream_concat0(O, ", ");
-				 printOperand(MI, 2, O);
-				 return true;
+	default:
+		return false;
+	case Sparc_JMPLrr:
+	case Sparc_JMPLri: {
+		if (MCInst_getNumOperands(MI) != 3)
+			return false;
+		if (!MCOperand_isReg(MCInst_getOperand(MI, (0))))
+			return false;
+		switch (MCOperand_getReg(MCInst_getOperand(MI, (0)))) {
+		default:
+			return false;
+		case Sparc_G0: // jmp $addr | ret | retl
+			if (MCOperand_isImm(MCInst_getOperand(MI, (2))) &&
+			    MCOperand_getImm(MCInst_getOperand(MI, (2))) == 8) {
+				switch (MCOperand_getReg(
+					MCInst_getOperand(MI, (1)))) {
+				default:
+					break;
+				case Sparc_I7:
+					SStream_concat0(O, "\tret");
+					return true;
+				case Sparc_O7:
+					SStream_concat0(O, "\tretl");
+					return true;
+				}
+			}
+			SStream_concat0(O, "\tjmp ");
+			printMemOperand(MI, 1, O);
+			return true;
+		case Sparc_O7: // call $addr
+			SStream_concat0(O, "\tcall ");
+			printMemOperand(MI, 1, O);
+			return true;
+		}
+	}
+	case Sparc_V9FCMPS:
+	case Sparc_V9FCMPD:
+	case Sparc_V9FCMPQ:
+	case Sparc_V9FCMPES:
+	case Sparc_V9FCMPED:
+	case Sparc_V9FCMPEQ: {
+		if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9) || (MCInst_getNumOperands(MI) != 3) ||
+		    (!MCOperand_isReg(MCInst_getOperand(MI, (0)))) ||
+		    (MCOperand_getReg(MCInst_getOperand(MI, (0))) != Sparc_FCC0))
+			return false;
+		// if V8, skip printing %fcc0.
+		switch (MCInst_getOpcode(MI)) {
+		default:
+		case Sparc_V9FCMPS:
+			SStream_concat0(O, "\tfcmps ");
+			break;
+		case Sparc_V9FCMPD:
+			SStream_concat0(O, "\tfcmpd ");
+			break;
+		case Sparc_V9FCMPQ:
+			SStream_concat0(O, "\tfcmpq ");
+			break;
+		case Sparc_V9FCMPES:
+			SStream_concat0(O, "\tfcmpes ");
+			break;
+		case Sparc_V9FCMPED:
+			SStream_concat0(O, "\tfcmped ");
+			break;
+		case Sparc_V9FCMPEQ:
+			SStream_concat0(O, "\tfcmpeq ");
+			break;
+		}
+		printOperand(MI, 1, O);
+		SStream_concat0(O, ", ");
+		printOperand(MI, 2, O);
+		return true;
+	}
 	}
 }
 
 static void printOperand(MCInst *MI, int opNum, SStream *O)
 {
-	int64_t Imm;
-	unsigned reg;
-	MCOperand *MO = MCInst_getOperand(MI, opNum);
+	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_Operand, opNum);
+	MCOperand *MO = MCInst_getOperand(MI, (opNum));
 
 	if (MCOperand_isReg(MO)) {
-		reg = MCOperand_getReg(MO);
-		printRegName(O, reg);
-		reg = Sparc_map_register(reg);
-
-		if (MI->csh->detail_opt) {
-			if (MI->csh->doing_mem) {
-				if (MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.base)
-					MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.index = (uint8_t)reg;
-				else
-					MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.base = (uint8_t)reg;
-			} else {
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
-				MI->flat_insn->detail->sparc.op_count++;
-			}
-		}
-
+		unsigned Reg = MCOperand_getReg(MO);
+		if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9))
+			printRegNameAlt(O, Reg, Sparc_RegNamesStateReg);
+		else
+			printRegName(O, Reg);
 		return;
 	}
 
 	if (MCOperand_isImm(MO)) {
-		Imm = (int)MCOperand_getImm(MO);
+		switch (MCInst_getOpcode(MI)) {
+		default:
+			printInt32(O, (int)MCOperand_getImm(MO));
+			return;
 
-		// Conditional branches displacements needs to be signextended to be
-		// able to jump backwards.
-		//
-		// Displacements are measured as the number of instructions forward or
-		// backward, so they need to be multiplied by 4
-		switch (MI->Opcode) {
-			case SP_CALL:
-				// Imm = SignExtend32(Imm, 30);
-				Imm += MI->address;
-				break;
-
-			// Branch on integer condition with prediction (BPcc)
-			// Branch on floating point condition with prediction (FBPfcc)
-			case SP_BPICC:
-			case SP_BPICCA:
-			case SP_BPICCANT:
-			case SP_BPICCNT:
-			case SP_BPXCC:
-			case SP_BPXCCA:
-			case SP_BPXCCANT:
-			case SP_BPXCCNT:
-			case SP_BPFCC:
-			case SP_BPFCCA:
-			case SP_BPFCCANT:
-			case SP_BPFCCNT:
-				Imm = SignExtend32(Imm, 19);
-				Imm = MI->address + Imm * 4;
-				break;
-
-			// Branch on integer condition (Bicc)
-			// Branch on floating point condition (FBfcc)
-			case SP_BA:
-			case SP_BCOND:
-			case SP_BCONDA:
-			case SP_FBCOND:
-			case SP_FBCONDA:
-				Imm = SignExtend32(Imm, 22);
-				Imm = MI->address + Imm * 4;
-				break;
-
-			// Branch on integer register with prediction (BPr)
-			case SP_BPGEZapn:
-			case SP_BPGEZapt:
-			case SP_BPGEZnapn:
-			case SP_BPGEZnapt:
-			case SP_BPGZapn:
-			case SP_BPGZapt:
-			case SP_BPGZnapn:
-			case SP_BPGZnapt:
-			case SP_BPLEZapn:
-			case SP_BPLEZapt:
-			case SP_BPLEZnapn:
-			case SP_BPLEZnapt:
-			case SP_BPLZapn:
-			case SP_BPLZapt:
-			case SP_BPLZnapn:
-			case SP_BPLZnapt:
-			case SP_BPNZapn:
-			case SP_BPNZapt:
-			case SP_BPNZnapn:
-			case SP_BPNZnapt:
-			case SP_BPZapn:
-			case SP_BPZapt:
-			case SP_BPZnapn:
-			case SP_BPZnapt:
-				Imm = SignExtend32(Imm, 16);
-				Imm = MI->address + Imm * 4;
-				break;
-		}
-		
-		printInt64(O, Imm);
-
-		if (MI->csh->detail_opt) {
-			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].mem.disp = Imm;
-			} else {
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_IMM;
-				MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].imm = Imm;
-				MI->flat_insn->detail->sparc.op_count++;
-			}
+		case Sparc_TICCri: // Fall through
+		case Sparc_TICCrr: // Fall through
+		case Sparc_TRAPri: // Fall through
+		case Sparc_TRAPrr: // Fall through
+		case Sparc_TXCCri: // Fall through
+		case Sparc_TXCCrr: // Fall through
+			// Only seven-bit values up to 127.
+			printInt8(O, ((int)MCOperand_getImm(MO) & 0x7f));
+			return;
 		}
 	}
 
-	return;
+	CS_ASSERT(MCOperand_isExpr(MO) &&
+		  "Unknown operand kind in printOperand");
 }
 
-static void printMemOperand(MCInst *MI, int opNum, SStream *O, const char *Modifier)
+void printMemOperand(MCInst *MI, int opNum, SStream *O)
 {
-	MCOperand *MO;
+	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_MemOperand, opNum);
+	MCOperand *Op1 = MCInst_getOperand(MI, (opNum));
+	MCOperand *Op2 = MCInst_getOperand(MI, (opNum + 1));
 
-	set_mem_access(MI, true);
-	printOperand(MI, opNum, O);
+	bool PrintedFirstOperand = false;
+	if (MCOperand_isReg(Op1) && MCOperand_getReg(Op1) != Sparc_G0) {
+		printOperand(MI, opNum, O);
+		PrintedFirstOperand = true;
+	}
 
-	// If this is an ADD operand, emit it like normal operands.
-	if (Modifier && !strcmp(Modifier, "arith")) {
-		SStream_concat0(O, ", ");
+	// Skip the second operand iff it adds nothing (literal 0 or %g0) and we've
+	// already printed the first one
+	const bool SkipSecondOperand =
+		PrintedFirstOperand &&
+		((MCOperand_isReg(Op2) && MCOperand_getReg(Op2) == Sparc_G0) ||
+		 (MCOperand_isImm(Op2) && MCOperand_getImm(Op2) == 0));
+
+	if (!SkipSecondOperand) {
+		if (PrintedFirstOperand)
+			SStream_concat0(O, "+");
+
 		printOperand(MI, opNum + 1, O);
-		set_mem_access(MI, false);
-		return;
 	}
-
-	MO = MCInst_getOperand(MI, opNum + 1);
-
-	if (MCOperand_isReg(MO) && (MCOperand_getReg(MO) == SP_G0)) {
-		set_mem_access(MI, false);
-		return;   // don't print "+%g0"
-	}
-
-	if (MCOperand_isImm(MO) && (MCOperand_getImm(MO) == 0)) {
-		set_mem_access(MI, false);
-		return;   // don't print "+0"
-	}
-
-	SStream_concat0(O, "+");	// qq
-
-	printOperand(MI, opNum + 1, O);
-	set_mem_access(MI, false);
 }
 
-static void printCCOperand(MCInst *MI, int opNum, SStream *O)
+void printCCOperand(MCInst *MI, int opNum, SStream *O)
 {
-	int CC = (int)MCOperand_getImm(MCInst_getOperand(MI, opNum)) + 256;
-
+	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_CCOperand, opNum);
+	int CC = (int)MCOperand_getImm(MCInst_getOperand(MI, (opNum)));
 	switch (MCInst_getOpcode(MI)) {
-		default: break;
-		case SP_FBCOND:
-		case SP_FBCONDA:
-		case SP_BPFCC:
-		case SP_BPFCCA:
-		case SP_BPFCCNT:
-		case SP_BPFCCANT:
-		case SP_MOVFCCrr:  case SP_V9MOVFCCrr:
-		case SP_MOVFCCri:  case SP_V9MOVFCCri:
-		case SP_FMOVS_FCC: case SP_V9FMOVS_FCC:
-		case SP_FMOVD_FCC: case SP_V9FMOVD_FCC:
-		case SP_FMOVQ_FCC: case SP_V9FMOVQ_FCC:
-				 // Make sure CC is a fp conditional flag.
-				 CC = (CC < 16+256) ? (CC + 16) : CC;
-				 break;
+	default:
+		break;
+	case Sparc_FBCOND:
+	case Sparc_FBCONDA:
+	case Sparc_FBCOND_V9:
+	case Sparc_FBCONDA_V9:
+	case Sparc_BPFCC:
+	case Sparc_BPFCCA:
+	case Sparc_BPFCCNT:
+	case Sparc_BPFCCANT:
+	case Sparc_MOVFCCrr:
+	case Sparc_V9MOVFCCrr:
+	case Sparc_MOVFCCri:
+	case Sparc_V9MOVFCCri:
+	case Sparc_FMOVS_FCC:
+	case Sparc_V9FMOVS_FCC:
+	case Sparc_FMOVD_FCC:
+	case Sparc_V9FMOVD_FCC:
+	case Sparc_FMOVQ_FCC:
+	case Sparc_V9FMOVQ_FCC:
+		// Make sure CC is a fp conditional flag.
+		CC = (CC < SPARC_CC_FCC_BEGIN) ? (CC + SPARC_CC_FCC_BEGIN) : CC;
+		break;
+	case Sparc_CBCOND:
+	case Sparc_CBCONDA:
+		// Make sure CC is a cp conditional flag.
+		CC = (CC < SPARC_CC_CPCC_BEGIN) ? (CC + SPARC_CC_CPCC_BEGIN) : CC;
+		break;
+	case Sparc_BPR:
+	case Sparc_BPRA:
+	case Sparc_BPRNT:
+	case Sparc_BPRANT:
+	case Sparc_MOVRri:
+	case Sparc_MOVRrr:
+	case Sparc_FMOVRS:
+	case Sparc_FMOVRD:
+	case Sparc_FMOVRQ:
+		// Make sure CC is a register conditional flag.
+		CC = (CC < SPARC_CC_REG_BEGIN) ? (CC + SPARC_CC_REG_BEGIN) : CC;
+		break;
 	}
-
 	SStream_concat0(O, SPARCCondCodeToString((sparc_cc)CC));
-
-	if (MI->csh->detail_opt)
-		MI->flat_insn->detail->sparc.cc = (sparc_cc)CC; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
 }
 
-
-static bool printGetPCX(MCInst *MI, unsigned opNum, SStream *O)
+bool printGetPCX(MCInst *MI, unsigned opNum, SStream *O)
 {
+	printf("FIXME: Implement SparcInstPrinter::printGetPCX.");
 	return true;
 }
 
-
-#define PRINT_ALIAS_INSTR
-#include "SparcGenAsmWriter.inc"
-
-void Sparc_printInst(MCInst *MI, SStream *O, void *Info)
+void printMembarTag(MCInst *MI, int opNum, SStream *O)
 {
-	char *mnem, *p;
-	char instr[64];	// Sparc has no instruction this long
+	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_MembarTag, opNum);
+	static const char *const TagNames[] = { "#LoadLoad",  "#StoreLoad",
+						"#LoadStore", "#StoreStore",
+						"#Lookaside", "#MemIssue",
+						"#Sync" };
 
-	mnem = printAliasInstr(MI, O, Info);
-	if (mnem) {
-		// fixup instruction id due to the change in alias instruction
-		unsigned cpy_len = sizeof(instr) - 1 < strlen(mnem) ? sizeof(instr) - 1 : strlen(mnem);
-		memcpy(instr, mnem, cpy_len);
-		instr[cpy_len] = '\0';
-		// does this contains hint with a coma?
-		p = strchr(instr, ',');
-		if (p)
-			*p = '\0';	// now instr only has instruction mnemonic
-		MCInst_setOpcodePub(MI, Sparc_map_insn(instr));
-		switch(MCInst_getOpcode(MI)) {
-			case SP_BCOND:
-			case SP_BCONDA:
-			case SP_BPICCANT:
-			case SP_BPICCNT:
-			case SP_BPXCCANT:
-			case SP_BPXCCNT:
-			case SP_TXCCri:
-			case SP_TXCCrr:
-				if (MI->csh->detail_opt) {
-					// skip 'b', 't'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 1);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
-				}
-				break;
-			case SP_BPFCCANT:
-			case SP_BPFCCNT:
-				if (MI->csh->detail_opt) {
-					// skip 'fb'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 2);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
-				}
-				break;
-			case SP_FMOVD_ICC:
-			case SP_FMOVD_XCC:
-			case SP_FMOVQ_ICC:
-			case SP_FMOVQ_XCC:
-			case SP_FMOVS_ICC:
-			case SP_FMOVS_XCC:
-				if (MI->csh->detail_opt) {
-					// skip 'fmovd', 'fmovq', 'fmovs'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 5);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
-				}
-				break;
-			case SP_MOVICCri:
-			case SP_MOVICCrr:
-			case SP_MOVXCCri:
-			case SP_MOVXCCrr:
-				if (MI->csh->detail_opt) {
-					// skip 'mov'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_ICC(instr + 3);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
-				}
-				break;
-			case SP_V9FMOVD_FCC:
-			case SP_V9FMOVQ_FCC:
-			case SP_V9FMOVS_FCC:
-				if (MI->csh->detail_opt) {
-					// skip 'fmovd', 'fmovq', 'fmovs'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 5);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
-				}
-				break;
-			case SP_V9MOVFCCri:
-			case SP_V9MOVFCCrr:
-				if (MI->csh->detail_opt) {
-					// skip 'mov'
-					MI->flat_insn->detail->sparc.cc = Sparc_map_FCC(instr + 3);
-					MI->flat_insn->detail->sparc.hint = Sparc_map_hint(mnem);
-				}
-				break;
-			default:
-				break;
+	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (opNum)));
+
+	if (Imm > 127) {
+		printUInt32(O, Imm);
+		return;
+	}
+
+	bool First = true;
+	for (unsigned i = 0; i < sizeof(TagNames); i++) {
+		if (Imm & (1ull << i)) {
+			SStream_concat(O, "%s", (First ? "" : " | "));
+			SStream_concat0(O, TagNames[i]);
+			First = false;
 		}
-		cs_mem_free(mnem);
-	} else {
-		if (!printSparcAliasInstr(MI, O))
-			printInstruction(MI, O, NULL);
 	}
 }
 
-void Sparc_addReg(MCInst *MI, int reg)
+#define GET_ASITAG_IMPL
+#include "SparcGenSystemOperands.inc"
+
+void printASITag(MCInst *MI, int opNum, SStream *O)
 {
-	if (MI->csh->detail_opt) {
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].type = SPARC_OP_REG;
-		MI->flat_insn->detail->sparc.operands[MI->flat_insn->detail->sparc.op_count].reg = reg;
-		MI->flat_insn->detail->sparc.op_count++;
-	}
+	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_ASITag, opNum);
+	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (opNum)));
+	const Sparc_ASITag_ASITag *ASITag = Sparc_ASITag_lookupASITagByEncoding(Imm);
+	if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9) && ASITag) {
+		SStream_concat1(O, '#');
+		SStream_concat0(O, ASITag->Name);
+	} else
+		printUInt32(O, Imm);
 }
 
-#endif
+
+void Sparc_LLVM_printInst(MCInst *MI, uint64_t Address, const char *Annot,
+			      SStream *O)
+{
+	printInst(MI, Address, O);
+}
+
+const char *Sparc_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx)
+{
+	return getRegisterName(RegNo, AltIdx);
+}

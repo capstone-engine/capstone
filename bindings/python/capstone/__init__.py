@@ -961,7 +961,7 @@ class CsInsn(object):
             (self.bc, self.update_cr0, self.format, self.operands) = \
                 ppc.get_arch_info(self._raw.detail.contents.arch.ppc)
         elif arch == CS_ARCH_SPARC:
-            (self.cc, self.hint, self.operands) = sparc.get_arch_info(self._raw.detail.contents.arch.sparc)
+            (self.cc, self.cc_field, self.hint, self.format, self.operands) = sparc.get_arch_info(self._raw.detail.contents.arch.sparc)
         elif arch == CS_ARCH_SYSTEMZ:
             (self.cc, self.format, self.operands) = systemz.get_arch_info(self._raw.detail.contents.arch.systemz)
         elif arch == CS_ARCH_XCORE:

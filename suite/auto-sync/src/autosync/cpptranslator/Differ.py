@@ -287,6 +287,11 @@ class Differ:
         diff_dir: Path = self.diff_out_dir
         to_copy = self.old_files if self.edit_old_file else self.translated_files
         for f in to_copy:
+            if not f.exists():
+                log.fatal(
+                    f"Old version of '{f}' doesn't exist. But the Differ needs an old file for each translated one."
+                )
+                exit(1)
             dest = diff_dir.joinpath(f.name)
             copyfile(f, dest)
             self.patched_file_paths[f.name] = dest
@@ -345,7 +350,7 @@ class Differ:
         with open(file) as f:
             content = bytes(f.read(), "utf8")
 
-        tree: Tree = self.parser.parse(content, keep_text=True)
+        tree: Tree = self.parser.parse(content)
 
         node_types_to_diff = [
             n["node_type"] for n in self.conf_general["nodes_to_diff"]

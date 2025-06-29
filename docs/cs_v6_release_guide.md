@@ -174,6 +174,24 @@ Nonetheless, we hope this additional information is useful to you.
 
 - **`CS_MODE_MIPS_PTR64` is now required to decode 64-bit pointers**, like jumps and calls (for example: `jal $t0`).
 
+**Sparc**
+
+- Updated to LLVM-18
+- V9 must be enabled explicitly now.
+- Added Little Endian support. Big endian mode must be enabled explicitly now.
+- Alias support added. It is possible to choose between real and alias details.
+- ASI operands are now distinct from immediates.
+- Memory barriers are now distinct from immediates.
+- Operands have now read/write access information.
+- The instruction format was added as detail.
+- Instruction groups and modes changed to LLVM defined ones. Most notably: `64bit -> HasV9`.
+- The condition codes are now separate between normal, fp, cp or register conditional flags.
+  The flags can be normalized by unsetting the `SPARC_CC_..._BEGIN` bits.
+- The CC fields and instruction uses is encoded now consistently in `cs_sparc::cc_field`.
+  This might lead to confusions for instructions which list the cc field explicitly in their
+  asm text. For example the instruction `fcmpeq	%fcc2, %f0, %f4` has 2 not 3 operands.
+  Operands are the two registers `f0` and `f4` and the `cc_field` is set to `SPARC_CC_FIELD_FCC0`.
+
 **RISCV**
 
 - Operands have now read/write access information

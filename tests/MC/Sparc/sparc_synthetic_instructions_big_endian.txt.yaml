@@ -1,0 +1,1040 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x80, 0xa0, 0x40, 0x02 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x80, 0xa0, 0x60, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp %g1, 5"
+
+  -
+    input:
+      bytes: [ 0x80, 0x90, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "tst %g1"
+
+  -
+    input:
+      bytes: [ 0x81, 0xc7, 0xe0, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ret"
+
+  -
+    input:
+      bytes: [ 0x81, 0xc3, 0xe0, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "retl"
+
+  -
+    input:
+      bytes: [ 0x81, 0xe8, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "restore"
+
+  -
+    input:
+      bytes: [ 0x81, 0xe0, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "save"
+
+  -
+    input:
+      bytes: [ 0x82, 0x10, 0x20, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov 1, %g1"
+
+  -
+    input:
+      bytes: [ 0x84, 0x38, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "xnor %g1, %g0, %g2"
+
+  -
+    input:
+      bytes: [ 0x82, 0x38, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "xnor %g1, %g0, %g1"
+
+  -
+    input:
+      bytes: [ 0x84, 0x20, 0x00, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub %g0, %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x82, 0x20, 0x00, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub %g0, %g1, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x00, 0x60, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "add %g1, 1, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x00, 0x60, 0x37 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "add %g1, 55, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x80, 0x60, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addcc %g1, 1, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x80, 0x60, 0x37 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addcc %g1, 55, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x20, 0x60, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub %g1, 1, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x20, 0x60, 0x37 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub %g1, 55, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0xa0, 0x60, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "subcc %g1, 1, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0xa0, 0x60, 0x37 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "subcc %g1, 55, %g1"
+
+  -
+    input:
+      bytes: [ 0x80, 0x88, 0x80, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "andcc %g2, %g1, %g0"
+
+  -
+    input:
+      bytes: [ 0x80, 0x88, 0xa0, 0x04 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "andcc %g2, 4, %g0"
+
+  -
+    input:
+      bytes: [ 0x84, 0x10, 0x80, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "or %g2, %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x84, 0x10, 0xa0, 0x04 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "or %g2, 4, %g2"
+
+  -
+    input:
+      bytes: [ 0x84, 0x28, 0x80, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "andn %g2, %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x84, 0x28, 0xa0, 0x04 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "andn %g2, 4, %g2"
+
+  -
+    input:
+      bytes: [ 0x84, 0x18, 0x80, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor %g2, %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x84, 0x18, 0xa0, 0x04 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor %g2, 4, %g2"
+
+  -
+    input:
+      bytes: [ 0x82, 0x10, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov %g0, %g1"
+
+  -
+    input:
+      bytes: [ 0xc0, 0x28, 0x40, 0x02 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stb %g0, [%g1+%g2]"
+
+  -
+    input:
+      bytes: [ 0xc0, 0x30, 0x40, 0x02 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sth %g0, [%g1+%g2]"
+
+  -
+    input:
+      bytes: [ 0xc0, 0x20, 0x40, 0x02 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "st %g0, [%g1+%g2]"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x40, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %y, %i0"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x40, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %asr1, %i0"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x48, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %psr, %i0"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x50, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %wim, %i0"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x58, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %tbr, %i0"
+
+  -
+    input:
+      bytes: [ 0x81, 0x80, 0x00, 0x18 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, %i0, %y"
+
+  -
+    input:
+      bytes: [ 0x81, 0x80, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, 5, %y"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x80, 0x00, 0x18 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, %i0, %asr15"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x80, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, 5, %asr15"
+
+  -
+    input:
+      bytes: [ 0x81, 0x88, 0x00, 0x18 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, %i0, %psr"
+
+  -
+    input:
+      bytes: [ 0x81, 0x88, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, 5, %psr"
+
+  -
+    input:
+      bytes: [ 0x81, 0x90, 0x00, 0x18 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, %i0, %wim"
+
+  -
+    input:
+      bytes: [ 0x81, 0x90, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, 5, %wim"
+
+  -
+    input:
+      bytes: [ 0x81, 0x98, 0x00, 0x18 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, %i0, %tbr"
+
+  -
+    input:
+      bytes: [ 0x81, 0x98, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, 5, %tbr"
+
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x3f, 0xff ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov -1, %o1"
+
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x3f, 0xfe ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov -2, %o1"
+
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x3f, 0xf0 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov -16, %o1"
+
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x3f, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov -256, %o1"
+
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x30, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov -4096, %o1"
+
+  -
+    input:
+      bytes: [ 0x80, 0xa0, 0x40, 0x02 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x80, 0xa0, 0x60, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cmp %g1, 5"
+
+  -
+    input:
+      bytes: [ 0x80, 0x90, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "tst %g1"
+
+  -
+    input:
+      bytes: [ 0x81, 0xc7, 0xe0, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ret"
+
+  -
+    input:
+      bytes: [ 0x81, 0xc3, 0xe0, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "retl"
+
+  -
+    input:
+      bytes: [ 0x81, 0xe8, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "restore"
+
+  -
+    input:
+      bytes: [ 0x81, 0xe0, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "save"
+
+  -
+    input:
+      bytes: [ 0x82, 0x10, 0x20, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov 1, %g1"
+
+  -
+    input:
+      bytes: [ 0x84, 0x38, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "xnor %g1, %g0, %g2"
+
+  -
+    input:
+      bytes: [ 0x82, 0x38, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "xnor %g1, %g0, %g1"
+
+  -
+    input:
+      bytes: [ 0x84, 0x20, 0x00, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub %g0, %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x82, 0x20, 0x00, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub %g0, %g1, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x00, 0x60, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "add %g1, 1, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x00, 0x60, 0x37 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "add %g1, 55, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x80, 0x60, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addcc %g1, 1, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x80, 0x60, 0x37 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "addcc %g1, 55, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x20, 0x60, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub %g1, 1, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0x20, 0x60, 0x37 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub %g1, 55, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0xa0, 0x60, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "subcc %g1, 1, %g1"
+
+  -
+    input:
+      bytes: [ 0x82, 0xa0, 0x60, 0x37 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "subcc %g1, 55, %g1"
+
+  -
+    input:
+      bytes: [ 0x80, 0x88, 0x80, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "andcc %g2, %g1, %g0"
+
+  -
+    input:
+      bytes: [ 0x80, 0x88, 0xa0, 0x04 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "andcc %g2, 4, %g0"
+
+  -
+    input:
+      bytes: [ 0x84, 0x10, 0x80, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "or %g2, %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x84, 0x10, 0xa0, 0x04 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "or %g2, 4, %g2"
+
+  -
+    input:
+      bytes: [ 0x84, 0x28, 0x80, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "andn %g2, %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x84, 0x28, 0xa0, 0x04 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "andn %g2, 4, %g2"
+
+  -
+    input:
+      bytes: [ 0x84, 0x18, 0x80, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor %g2, %g1, %g2"
+
+  -
+    input:
+      bytes: [ 0x84, 0x18, 0xa0, 0x04 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor %g2, 4, %g2"
+
+  -
+    input:
+      bytes: [ 0x82, 0x10, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov %g0, %g1"
+
+  -
+    input:
+      bytes: [ 0xc0, 0x28, 0x40, 0x02 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stb %g0, [%g1+%g2]"
+
+  -
+    input:
+      bytes: [ 0xc0, 0x30, 0x40, 0x02 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "sth %g0, [%g1+%g2]"
+
+  -
+    input:
+      bytes: [ 0xc0, 0x20, 0x40, 0x02 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "st %g0, [%g1+%g2]"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x40, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %y, %i0"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x40, 0x40, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %asr1, %i0"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x48, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %psr, %i0"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x50, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %wim, %i0"
+
+  -
+    input:
+      bytes: [ 0xb1, 0x58, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rd %tbr, %i0"
+
+  -
+    input:
+      bytes: [ 0x81, 0x80, 0x00, 0x18 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, %i0, %y"
+
+  -
+    input:
+      bytes: [ 0x81, 0x80, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, 5, %y"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x80, 0x00, 0x18 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, %i0, %asr15"
+
+  -
+    input:
+      bytes: [ 0x9f, 0x80, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, 5, %asr15"
+
+  -
+    input:
+      bytes: [ 0x81, 0x88, 0x00, 0x18 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, %i0, %psr"
+
+  -
+    input:
+      bytes: [ 0x81, 0x88, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, 5, %psr"
+
+  -
+    input:
+      bytes: [ 0x81, 0x90, 0x00, 0x18 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, %i0, %wim"
+
+  -
+    input:
+      bytes: [ 0x81, 0x90, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, 5, %wim"
+
+  -
+    input:
+      bytes: [ 0x81, 0x98, 0x00, 0x18 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, %i0, %tbr"
+
+  -
+    input:
+      bytes: [ 0x81, 0x98, 0x20, 0x05 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "wr %g0, 5, %tbr"
+
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x3f, 0xff ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov -1, %o1"
+
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x3f, 0xfe ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov -2, %o1"
+
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x3f, 0xf0 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov -16, %o1"
+
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x3f, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov -256, %o1"
+
+  -
+    input:
+      bytes: [ 0x92, 0x10, 0x30, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "mov -4096, %o1"

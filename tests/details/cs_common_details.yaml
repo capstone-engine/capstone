@@ -607,7 +607,7 @@ test_cases:
             groups: [ HasQPX ]
   -
     input:
-      bytes: [ 0x80, 0xa0, 0x40, 0x02, 0x85, 0xc2, 0x60, 0x08, 0x85, 0xe8, 0x20, 0x01, 0x81, 0xe8, 0x00, 0x00, 0x90, 0x10, 0x20, 0x01, 0xd5, 0xf6, 0x10, 0x16, 0x21, 0x00, 0x00, 0x0a, 0x86, 0x00, 0x40, 0x02, 0x01, 0x00, 0x00, 0x00, 0x12, 0xbf, 0xff, 0xff, 0x10, 0xbf, 0xff, 0xff, 0xa0, 0x02, 0x00, 0x09, 0x0d, 0xbf, 0xff, 0xff, 0xd4, 0x20, 0x60, 0x00, 0xd4, 0x4e, 0x00, 0x16, 0x2a, 0xc2, 0x80, 0x03  ]
+      bytes: [ 0x80, 0xa0, 0x40, 0x02 ]
       arch: "CS_ARCH_SPARC"
       options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
       address: 0x1000
@@ -619,79 +619,199 @@ test_cases:
           op_str: "%g1, %g2"
           details:
             regs_impl_write: [ icc ]
+  -
+    input:
+      bytes: [ 0x85, 0xc2, 0x60, 0x08 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "jmpl %o1+8, %g2"
           mnemonic: "jmpl"
           op_str: "%o1+8, %g2"
+  -
+    input:
+      bytes: [ 0x85, 0xe8, 0x20, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "restore %g0, 1, %g2"
           mnemonic: "restore"
           op_str: "%g0, 1, %g2"
+  -
+    input:
+      bytes: [ 0x81, 0xe8, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "restore"
           mnemonic: "restore"
+  -
+    input:
+      bytes: [ 0x90, 0x10, 0x20, 0x01 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "mov 1, %o0"
           mnemonic: "mov"
           op_str: "1, %o0"
+  -
+    input:
+      bytes: [ 0xd5, 0xf6, 0x10, 0x16 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_V9, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "casx [%i0], %l6, %o2"
           mnemonic: "casx"
           op_str: "[%i0], %l6, %o2"
           details:
-            groups: [ 64bit ]
+            groups: [ SPARC_FEATURE_IS64BIT, SPARC_FEATURE_HASV9 ]
+  -
+    input:
+      bytes: [ 0x21, 0x00, 0x00, 0x0a ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "sethi 0xa, %l0"
           mnemonic: "sethi"
           op_str: "0xa, %l0"
+  -
+    input:
+      bytes: [ 0x86, 0x00, 0x40, 0x02 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "add %g1, %g2, %g3"
           mnemonic: "add"
           op_str: "%g1, %g2, %g3"
+  -
+    input:
+      bytes: [ 0x01, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "nop"
           mnemonic: "nop"
+  -
+    input:
+      bytes: [ 0x12, 0xbf, 0xff, 0xff ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
-          asm_text: "bne 0x1020"
+          asm_text: "bne 0xffc"
           mnemonic: "bne"
-          op_str: "0x1020"
+          op_str: "0xffc"
           details:
             regs_impl_read: [ icc ]
             groups: [ jump ]
+  -
+    input:
+      bytes: [ 0x10, 0xbf, 0xff, 0xff ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
-          asm_text: "ba 0x1024"
+          asm_text: "ba 0xffc"
           mnemonic: "ba"
-          op_str: "0x1024"
+          op_str: "0xffc"
           details:
             groups: [ jump ]
+  -
+    input:
+      bytes: [ 0xa0, 0x02, 0x00, 0x09 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "add %o0, %o1, %l0"
           mnemonic: "add"
           op_str: "%o0, %o1, %l0"
+  -
+    input:
+      bytes: [ 0x0d, 0xbf, 0xff, 0xff ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
-          asm_text: "fbg 0x102c"
+          asm_text: "fbg 0xffc"
           mnemonic: "fbg"
-          op_str: "0x102c"
+          op_str: "0xffc"
           details:
             regs_impl_read: [ fcc0 ]
             groups: [ jump ]
+  -
+    input:
+      bytes: [ 0xd4, 0x20, 0x60, 0x00 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "st %o2, [%g1]"
           mnemonic: "st"
           op_str: "%o2, [%g1]"
+  -
+    input:
+      bytes: [ 0xd4, 0x4e, 0x00, 0x16 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "ldsb [%i0+%l6], %o2"
           mnemonic: "ldsb"
           op_str: "[%i0+%l6], %o2"
-        -
-          asm_text: "brnz,a,pn %o2, 0x1048"
-          mnemonic: "brnz,a,pn"
-          op_str: "%o2, 0x1048"
-          details:
-            groups: [ 64bit, jump ]
   -
     input:
-      bytes: [ 0x81, 0xa8, 0x0a, 0x24, 0x89, 0xa0, 0x10, 0x20, 0x89, 0xa0, 0x1a, 0x60, 0x89, 0xa0, 0x00, 0xe0  ]
+      bytes: [ 0x2a, 0xc2, 0x80, 0x03 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
+        -
+          asm_text: "brnz,a,pn %o2, 0x100c"
+          mnemonic: "brnz,a,pn"
+          op_str: "%o2, 0x100c"
+          details:
+            groups: [ jump, SPARC_FEATURE_IS64BIT ]
+  -
+    input:
+      bytes: [ 0x81, 0xa8, 0x0a, 0x24 ]
       arch: "CS_ARCH_SPARC"
       options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
       address: 0x1000
@@ -701,24 +821,48 @@ test_cases:
           asm_text: "fcmps %f0, %f4"
           mnemonic: "fcmps"
           op_str: "%f0, %f4"
+  -
+    input:
+      bytes: [ 0x89, 0xa0, 0x10, 0x20 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "fstox %f0, %f4"
           mnemonic: "fstox"
           op_str: "%f0, %f4"
           details:
-            groups: [ 64bit ]
+            groups: [ ]
+  -
+    input:
+      bytes: [ 0x89, 0xa0, 0x1a, 0x60 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "fqtoi %f0, %f4"
           mnemonic: "fqtoi"
           op_str: "%f0, %f4"
           details:
-            groups: [ hardquad ]
+            groups: [ ]
+  -
+    input:
+      bytes: [ 0x89, 0xa0, 0x00, 0xe0 ]
+      arch: "CS_ARCH_SPARC"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
         -
           asm_text: "fnegq %f0, %f4"
           mnemonic: "fnegq"
           op_str: "%f0, %f4"
           details:
-            groups: [ v9 ]
+            groups: [ HasV9 ]
   -
     input:
       bytes: [ 0xed, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x5a, 0x0f, 0x1f, 0xff, 0xc2, 0x09, 0x80, 0x00, 0x00, 0x00, 0x07, 0xf7, 0xeb, 0x2a, 0xff, 0xff, 0x7f, 0x57, 0xe3, 0x01, 0xff, 0xff, 0x7f, 0x57, 0xeb, 0x00, 0xf0, 0x00, 0x00, 0x24, 0xb2, 0x4f, 0x00, 0x78  ]

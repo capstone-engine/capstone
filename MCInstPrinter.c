@@ -10,6 +10,7 @@ extern bool PPC_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool Mips_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool AArch64_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature);
+extern bool Sparc_getFeatureBits(unsigned int mode, unsigned int feature);
 
 static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 {
@@ -37,6 +38,10 @@ static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 #ifdef CAPSTONE_HAS_TRICORE
 	case CS_ARCH_TRICORE:
 		return TriCore_getFeatureBits(MI->csh->mode, Value);
+#endif
+#ifdef CAPSTONE_HAS_SPARC
+	case CS_ARCH_SPARC:
+		return Sparc_getFeatureBits(MI->csh->mode, Value);
 #endif
 	}
 }

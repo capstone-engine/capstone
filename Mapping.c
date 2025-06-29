@@ -355,6 +355,7 @@ DEFINE_get_detail_op(systemz, SystemZ);
 DEFINE_get_detail_op(xtensa, Xtensa);
 DEFINE_get_detail_op(bpf, BPF);
 DEFINE_get_detail_op(arc, ARC);
+DEFINE_get_detail_op(sparc, Sparc);
 
 /// Returns true if for this architecture the
 /// alias operands should be filled.
@@ -391,6 +392,8 @@ static inline bool char_ends_mnem(const char c, cs_arch arch) {
 		return (!c || c == ' ' || c == '\t' || c == '.');
 	case CS_ARCH_PPC:
 		return (!c || c == ' ' || c == '\t');
+	case CS_ARCH_SPARC:
+		return (!c || c == ' ' || c == '\t' || c == ',');
   }
 }
 

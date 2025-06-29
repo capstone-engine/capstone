@@ -6,6 +6,7 @@
 
 import unittest
 
+from pathlib import Path
 from tree_sitter import Node, Query
 
 from autosync.cpptranslator import CppTranslator
@@ -81,6 +82,7 @@ from autosync.cpptranslator.TemplateCollector import TemplateCollector
 from autosync.cpptranslator.patches.BadConditionCode import BadConditionCode
 from autosync.Helper import get_path
 from autosync.cpptranslator.patches.isUInt import IsUInt
+from autosync.cpptranslator.tree_sitter_compatibility import query_captures_22_3
 
 
 class TestPatches(unittest.TestCase):
@@ -94,14 +96,18 @@ class TestPatches(unittest.TestCase):
             configurator.get_parser(), configurator.get_cpp_lang(), [], []
         )
 
-    def check_patching_result(self, patch, syntax, expected, filename=""):
+    def check_patching_result(
+        self, patch, syntax, expected, filename: Path = None, tree: dict = None
+    ):
+        kwargs = self.translator.get_patch_kwargs(patch)
         if filename:
-            kwargs = {"filename": filename}
-        else:
-            kwargs = self.translator.get_patch_kwargs(patch)
+            kwargs["filename"] = filename
+
         query: Query = self.ts_cpp_lang.query(patch.get_search_pattern())
+        tree = self.parser.parse(syntax)
+        kwargs["tree"] = tree
         captures_bundle: [[(Node, str)]] = list()
-        for q in query.captures(self.parser.parse(syntax, keep_text=True).root_node):
+        for q in query_captures_22_3(query, tree.root_node):
             if q[1] == patch.get_main_capture_name():
                 captures_bundle.append([q])
             else:
@@ -369,7 +375,7 @@ public:
             b"#include <stdlib.h>\n"
             b"#include <capstone/platform.h>\n\n"
             b"test_output",
-            "filename",
+            filename=Path("filename"),
         )
 
     def test_inlinetostaticinline(self):
@@ -542,11 +548,6 @@ public:
             b"ARCH_getFeatureBits(Inst->csh->mode, ARCH::FLAG)",
         )
 
-    def test_stifeaturebits(self):
-        patch = SubtargetInfoParam(0)
-        syntax = b"void function(MCSubtargetInfo &STI);"
-        self.check_patching_result(patch, syntax, b"()")
-
     def test_streamoperation(self):
         patch = StreamOperations(0)
         syntax = b"{ OS << 'a'; }"
@@ -567,6 +568,9 @@ public:
             b"SStream_concat1(OS, 'a');\n"
             b'SStream_concat0(OS, "cccc");',
         )
+
+        syntax = b"{ int y = 1; int x = 1; OS << x; }"
+        self.check_patching_result(patch, syntax, b"printInt32(OS, x);")
 
     def test_templatedeclaration(self):
         patch = TemplateDeclaration(0, self.template_collector)

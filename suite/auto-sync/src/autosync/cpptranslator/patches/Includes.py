@@ -72,6 +72,8 @@ class Includes(Patch):
                 return res + get_Xtensa_includes(filename) + get_general_macros()
             case "ARC":
                 return res + get_ARC_includes(filename) + get_general_macros()
+            case "Sparc":
+                return res + get_sparc_includes(filename) + get_general_macros()
             case "TEST_ARCH":
                 return res + b"test_output"
             case _:
@@ -442,6 +444,40 @@ def get_ARC_includes(filename: str) -> bytes:
         case "ARCInstPrinter.h":
             return b'#include "../../SStream.h"\n' + b'#include "../../MCInst.h"\n'
     log.fatal(f"No includes given for ARC source file: {filename}")
+    exit(1)
+
+
+def get_sparc_includes(filename: str) -> bytes:
+    match filename:
+        case "SparcDisassembler.cpp":
+            return (
+                b'#include "../../MCDisassembler.h"\n'
+                + b'#include "../../MCFixedLenDisassembler.h"\n'
+                + b'#include "SparcDisassemblerExtension.h"\n'
+                + b'#include "SparcLinkage.h"\n'
+                + b'#include "SparcMapping.h"\n'
+                + b'#include "SparcMCTargetDesc.h"\n'
+            )
+        case "SparcInstPrinter.cpp":
+            return (
+                b'#include "SparcInstrInfo.h"\n'
+                + b'#include "SparcInstPrinter.h"\n'
+                + b'#include "SparcLinkage.h"\n'
+                + b'#include "SparcMCTargetDesc.h"\n'
+                + b'#include "SparcMapping.h"\n'
+                + b'#include "SparcRegisterInfo.h"\n\n'
+            )
+        case "SparcInstPrinter.h":
+            return b'#include "SparcMCTargetDesc.h"\n\n'
+        case "SparcMCTargetDesc.h":
+            return (
+                b'#include "../../LEB128.h"\n'
+                + b'#include "../../MathExtras.h"\n'
+                + b'#include "../../MCInst.h"\n'
+                + b'#include "../../MCInstrDesc.h"\n'
+                + b'#include "../../MCRegisterInfo.h"\n'
+            )
+    log.fatal(f"No includes given for Sparc source file: {filename}")
     exit(1)
 
 

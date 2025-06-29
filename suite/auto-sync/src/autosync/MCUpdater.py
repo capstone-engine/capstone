@@ -183,7 +183,7 @@ class TestFile:
                 text_section += 1
                 continue
             match = re.search(
-                rf"^\s*{asm_pat}\s*(#|//|@)\s*encoding:\s*{enc_pat}", line
+                rf"^\s*{asm_pat}\s*(#|//|@|!|;)\s*encoding:\s*{enc_pat}", line
             )
             if not match:
                 continue
@@ -391,7 +391,7 @@ class MCUpdater:
             filename.parent.mkdir(parents=True, exist_ok=True)
             if self.multi_mode and filename.exists():
                 log.warning(
-                    f"The following file exists already: {filename}. This is might indicate a blind spot in testing."
+                    f"The following file exists already: {filename}. This indicates a blind spot in testing."
                 )
                 overwritten += 1
             elif not self.multi_mode and filename.exists():
@@ -422,8 +422,8 @@ class MCUpdater:
                 f"These files contain instructions of several different cpu features.\n"
                 f"You have to use multi-mode to write them into distinct files.\n"
                 f"The current setting will only keep the last one written.\n"
-                f"See also: https://github.com/capstone-engine/capstone/issues/1992"
-                "If you already used multi-mode, there possibly is a blind spot for testing."
+                f"See also: https://github.com/capstone-engine/capstone/issues/1992\n"
+                "If you already used multi-mode (default = yes), there might be a blind spot in testing."
             )
 
     def build_test_options(self, options):
@@ -551,14 +551,14 @@ class MCUpdater:
 
     def gen_all(self):
         log.info("Check prerequisites")
-        disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch_dir_name}")
-        test_paths = [disas_tests]
-        # Xtensa only defines assembly tests.
-        if self.arch == "Xtensa":
+        test_paths = list()
+        if self.arch in self.conf["use_assembly_tests"]:
+            log.info(f"Add assembly tests for {self.arch}")
             test_paths.append(self.mc_dir.joinpath(self.arch))
-        # TriCore defines nothing.
-        elif self.arch == "TriCore":
-            return
+        if self.arch not in self.conf["exclude_disassembly_tests"]:
+            log.info(f"Add disassembly tests for {self.arch}")
+            disas_tests = self.mc_dir.joinpath(f"Disassembler/{self.arch_dir_name}")
+            test_paths.append(disas_tests)
         self.check_prerequisites(test_paths)
         log.info("Generate MC regression tests")
         llvm_mc_cmds = self.run_llvm_lit(

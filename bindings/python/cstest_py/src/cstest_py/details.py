@@ -73,7 +73,7 @@ from capstone.mips_const import MIPS_OP_REG, MIPS_OP_IMM, MIPS_OP_MEM
 from capstone.mos65xx_const import MOS65XX_OP_REG, MOS65XX_OP_MEM, MOS65XX_OP_IMM
 from capstone.riscv_const import RISCV_OP_MEM, RISCV_OP_IMM, RISCV_OP_REG
 from capstone.sh_const import SH_OP_REG, SH_OP_MEM, SH_OP_IMM
-from capstone.sparc_const import SPARC_OP_REG, SPARC_OP_IMM, SPARC_OP_MEM
+from capstone.sparc_const import SPARC_OP_REG, SPARC_OP_IMM, SPARC_OP_MEM, SPARC_OP_ASI, SPARC_OP_MEMBAR_TAG
 from capstone.systemz_const import SYSTEMZ_OP_REG, SYSTEMZ_OP_IMM, SYSTEMZ_OP_MEM
 from capstone.tms320c64x_const import (
     TMS320C64X_OP_REG,
@@ -873,6 +873,8 @@ def test_expected_sparc(actual: CsInsn, expected: dict) -> bool:
     for aop, eop in zip(actual.operands, expected["operands"]):
         if not compare_enum(aop.type, eop.get("type"), "type"):
             return False
+        if not compare_enum(aop.access, eop.get("access"), "access"):
+            return False
 
         if aop.type == SPARC_OP_REG:
             if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
@@ -888,6 +890,12 @@ def test_expected_sparc(actual: CsInsn, expected: dict) -> bool:
             ):
                 return False
             if not compare_int32(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+        elif aop.type == SPARC_OP_ASI:
+            if not compare_enum(aop.asi, eop.get("asi"), "asi"):
+                return False
+        elif aop.type == SPARC_OP_MEMBAR_TAG:
+            if not compare_enum(aop.membar_tag, eop.get("membar_tag"), "membar_tag"):
                 return False
         else:
             raise ValueError("Operand type not handled.")

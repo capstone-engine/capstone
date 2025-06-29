@@ -205,6 +205,7 @@ setup(
         "capstone": ["lib/*", "include/capstone/*"],
     },
     has_ext_modules=lambda: True,  # It's not a Pure Python wheel
+    options={"bdist_wheel": {"py_limited_api": "cp38"}},  # to have ABI3 tagged wheel
     install_requires=[
         "importlib_resources;python_version<'3.9'",
     ],
