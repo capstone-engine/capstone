@@ -34,4 +34,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "spop3,2,3,n r1,rp"
+          asm_text: "spop3,2,3,n r1, rp"

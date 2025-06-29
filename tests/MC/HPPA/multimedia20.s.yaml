@@ -7,7 +7,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "hadd r1,rp,r3"
+          asm_text: "hadd r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x03, 0x43 ]
@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "hadd,ss r1,rp,r3"
+          asm_text: "hadd,ss r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x03, 0x03 ]
@@ -25,7 +25,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "hadd,us r1,rp,r3"
+          asm_text: "hadd,us r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x01, 0xc3 ]
@@ -34,7 +34,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "hsub r1,rp,r3"
+          asm_text: "hsub r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x01, 0x43 ]
@@ -43,7 +43,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "hsub,ss r1,rp,r3"
+          asm_text: "hsub,ss r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x01, 0x03 ]
@@ -52,7 +52,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "hsub,us r1,rp,r3"
+          asm_text: "hsub,us r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x02, 0xc3 ]
@@ -61,7 +61,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "havg r1,rp,r3"
+          asm_text: "havg r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x07, 0xc3 ]
@@ -70,7 +70,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "hshladd r1,3,rp,r3"
+          asm_text: "hshladd r1, 3, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x05, 0xc3 ]
@@ -79,7 +79,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "hshradd r1,3,rp,r3"
+          asm_text: "hshradd r1, 3, rp, r3"
   -
     input:
       bytes: [ 0xf8, 0x01, 0x88, 0xc2 ]
@@ -88,7 +88,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "hshl r1,3,rp"
+          asm_text: "hshl r1, 3, rp"
   -
     input:
       bytes: [ 0xf8, 0x20, 0xcc, 0xc2 ]
@@ -97,7 +97,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "hshr,s r1,3,rp"
+          asm_text: "hshr,s r1, 3, rp"
   -
     input:
       bytes: [ 0xf8, 0x21, 0x00, 0x02 ]
@@ -106,7 +106,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "permh,0000 r1,rp"
+          asm_text: "permh,0000 r1, rp"
   -
     input:
       bytes: [ 0xf8, 0x21, 0x06, 0xc2 ]
@@ -115,4 +115,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "permh,0123 r1,rp"
+          asm_text: "permh,0123 r1, rp"

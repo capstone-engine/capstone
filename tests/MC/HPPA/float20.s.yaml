@@ -7,7 +7,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldw 5(r1),fr20"
+          asm_text: "fldw 5(r1), fr20"
   -
     input:
       bytes: [ 0x24, 0x2a, 0x30, 0x34 ]
@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldw,mb 5(r1),fr20"
+          asm_text: "fldw,mb 5(r1), fr20"
   -
     input:
       bytes: [ 0x24, 0x2a, 0x10, 0x34 ]
@@ -25,7 +25,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldw,ma 5(r1),fr20"
+          asm_text: "fldw,ma 5(r1), fr20"
   -
     input:
       bytes: [ 0x24, 0x22, 0x00, 0x14 ]
@@ -34,7 +34,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldw rp(r1),fr20"
+          asm_text: "fldw rp(r1), fr20"
   -
     input:
       bytes: [ 0x24, 0x22, 0x20, 0x14 ]
@@ -43,7 +43,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldw,s rp(r1),fr20"
+          asm_text: "fldw,s rp(r1), fr20"
   -
     input:
       bytes: [ 0x24, 0x22, 0x20, 0x34 ]
@@ -52,7 +52,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldw,sm rp(r1),fr20"
+          asm_text: "fldw,sm rp(r1), fr20"
   -
     input:
       bytes: [ 0x24, 0x22, 0x00, 0x34 ]
@@ -61,7 +61,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldw,m rp(r1),fr20"
+          asm_text: "fldw,m rp(r1), fr20"
   -
     input:
       bytes: [ 0x2c, 0x2a, 0x10, 0x14 ]
@@ -70,7 +70,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldd 5(r1),fr20"
+          asm_text: "fldd 5(r1), fr20"
   -
     input:
       bytes: [ 0x2c, 0x2a, 0x30, 0x34 ]
@@ -79,7 +79,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldd,mb 5(r1),fr20"
+          asm_text: "fldd,mb 5(r1), fr20"
   -
     input:
       bytes: [ 0x2c, 0x2a, 0x10, 0x34 ]
@@ -88,7 +88,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldd,ma 5(r1),fr20"
+          asm_text: "fldd,ma 5(r1), fr20"
   -
     input:
       bytes: [ 0x2c, 0x22, 0x00, 0x14 ]
@@ -97,7 +97,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldd rp(r1),fr20"
+          asm_text: "fldd rp(r1), fr20"
   -
     input:
       bytes: [ 0x2c, 0x22, 0x20, 0x14 ]
@@ -106,7 +106,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldd,s rp(r1),fr20"
+          asm_text: "fldd,s rp(r1), fr20"
   -
     input:
       bytes: [ 0x2c, 0x22, 0x20, 0x34 ]
@@ -115,7 +115,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldd,sm rp(r1),fr20"
+          asm_text: "fldd,sm rp(r1), fr20"
   -
     input:
       bytes: [ 0x2c, 0x22, 0x00, 0x34 ]
@@ -124,7 +124,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fldd,m rp(r1),fr20"
+          asm_text: "fldd,m rp(r1), fr20"
   -
     input:
       bytes: [ 0x24, 0x5e, 0x12, 0x14 ]
@@ -133,7 +133,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstw fr20,0xf(rp)"
+          asm_text: "fstw fr20, 0xf(rp)"
   -
     input:
       bytes: [ 0x24, 0x5e, 0x32, 0x34 ]
@@ -142,7 +142,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstw,mb fr20,0xf(rp)"
+          asm_text: "fstw,mb fr20, 0xf(rp)"
   -
     input:
       bytes: [ 0x24, 0x5e, 0x12, 0x34 ]
@@ -151,7 +151,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstw,ma fr20,0xf(rp)"
+          asm_text: "fstw,ma fr20, 0xf(rp)"
   -
     input:
       bytes: [ 0x24, 0x41, 0x06, 0x14 ]
@@ -160,7 +160,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstw,bc fr20,r1(rp)"
+          asm_text: "fstw,bc fr20, r1(rp)"
   -
     input:
       bytes: [ 0x24, 0x41, 0x26, 0x14 ]
@@ -169,7 +169,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstw,s,bc fr20,r1(rp)"
+          asm_text: "fstw,s,bc fr20, r1(rp)"
   -
     input:
       bytes: [ 0x24, 0x41, 0x26, 0x34 ]
@@ -178,7 +178,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstw,sm,bc fr20,r1(rp)"
+          asm_text: "fstw,sm,bc fr20, r1(rp)"
   -
     input:
       bytes: [ 0x24, 0x41, 0x06, 0x34 ]
@@ -187,7 +187,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstw,m,bc fr20,r1(rp)"
+          asm_text: "fstw,m,bc fr20, r1(rp)"
   -
     input:
       bytes: [ 0x2c, 0x5e, 0x12, 0x14 ]
@@ -196,7 +196,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstd fr20,0xf(rp)"
+          asm_text: "fstd fr20, 0xf(rp)"
   -
     input:
       bytes: [ 0x2c, 0x5e, 0x32, 0x34 ]
@@ -205,7 +205,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstd,mb fr20,0xf(rp)"
+          asm_text: "fstd,mb fr20, 0xf(rp)"
   -
     input:
       bytes: [ 0x2c, 0x5e, 0x12, 0x34 ]
@@ -214,7 +214,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstd,ma fr20,0xf(rp)"
+          asm_text: "fstd,ma fr20, 0xf(rp)"
   -
     input:
       bytes: [ 0x2c, 0x41, 0x06, 0x14 ]
@@ -223,7 +223,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstd,bc fr20,r1(rp)"
+          asm_text: "fstd,bc fr20, r1(rp)"
   -
     input:
       bytes: [ 0x2c, 0x41, 0x26, 0x14 ]
@@ -232,7 +232,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstd,s,bc fr20,r1(rp)"
+          asm_text: "fstd,s,bc fr20, r1(rp)"
   -
     input:
       bytes: [ 0x2c, 0x41, 0x26, 0x34 ]
@@ -241,7 +241,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstd,sm,bc fr20,r1(rp)"
+          asm_text: "fstd,sm,bc fr20, r1(rp)"
   -
     input:
       bytes: [ 0x2c, 0x41, 0x06, 0x34 ]
@@ -250,7 +250,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fstd,m,bc fr20,r1(rp)"
+          asm_text: "fstd,m,bc fr20, r1(rp)"
   -
     input:
       bytes: [ 0x30, 0x00, 0x00, 0x00 ]
@@ -268,7 +268,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcpy,sgl fr20,fr21"
+          asm_text: "fcpy,sgl fr20, fr21"
   -
     input:
       bytes: [ 0x32, 0x80, 0x60, 0x15 ]
@@ -277,7 +277,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fabs,sgl fr20,fr21"
+          asm_text: "fabs,sgl fr20, fr21"
   -
     input:
       bytes: [ 0x32, 0x80, 0x80, 0x15 ]
@@ -286,7 +286,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fsqrt,sgl fr20,fr21"
+          asm_text: "fsqrt,sgl fr20, fr21"
   -
     input:
       bytes: [ 0x32, 0x80, 0xa0, 0x15 ]
@@ -295,7 +295,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "frnd,sgl fr20,fr21"
+          asm_text: "frnd,sgl fr20, fr21"
   -
     input:
       bytes: [ 0x32, 0x80, 0xc0, 0x15 ]
@@ -304,7 +304,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fneg,sgl fr20,fr21"
+          asm_text: "fneg,sgl fr20, fr21"
   -
     input:
       bytes: [ 0x32, 0x80, 0xe0, 0x15 ]
@@ -313,7 +313,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fnegabs,sgl fr20,fr21"
+          asm_text: "fnegabs,sgl fr20, fr21"
   -
     input:
       bytes: [ 0x32, 0x80, 0x22, 0x15 ]
@@ -322,7 +322,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnv,sgl,dbl fr20,fr21"
+          asm_text: "fcnv,sgl,dbl fr20, fr21"
   -
     input:
       bytes: [ 0x32, 0x80, 0xa2, 0x15 ]
@@ -331,7 +331,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnv,w,dbl fr20,fr21"
+          asm_text: "fcnv,w,dbl fr20, fr21"
   -
     input:
       bytes: [ 0x32, 0x95, 0x04, 0x04 ]
@@ -340,7 +340,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,= fr20,fr21"
+          asm_text: "fcmp,sgl,= fr20, fr21"
   -
     input:
       bytes: [ 0x32, 0x95, 0x44, 0x04 ]
@@ -349,7 +349,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,= fr20,fr21,1"
+          asm_text: "fcmp,sgl,= fr20, fr21, 1"
   -
     input:
       bytes: [ 0x30, 0x00, 0x64, 0x20 ]
@@ -430,7 +430,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fadd,sgl fr20,fr21,fr22"
+          asm_text: "fadd,sgl fr20, fr21, fr22"
   -
     input:
       bytes: [ 0x32, 0x95, 0x26, 0x16 ]
@@ -439,7 +439,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fsub,sgl fr20,fr21,fr22"
+          asm_text: "fsub,sgl fr20, fr21, fr22"
   -
     input:
       bytes: [ 0x32, 0x95, 0x46, 0x16 ]
@@ -448,7 +448,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fmpy,sgl fr20,fr21,fr22"
+          asm_text: "fmpy,sgl fr20, fr21, fr22"
   -
     input:
       bytes: [ 0x32, 0x95, 0x66, 0x16 ]
@@ -457,7 +457,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fdiv,sgl fr20,fr21,fr22"
+          asm_text: "fdiv,sgl fr20, fr21, fr22"
   -
     input:
       bytes: [ 0x3a, 0x95, 0x47, 0x16 ]
@@ -466,7 +466,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xmpyu fr20,fr21,fr22"
+          asm_text: "xmpyu fr20, fr21, fr22"
   -
     input:
       bytes: [ 0x18, 0x85, 0x41, 0xe6 ]
@@ -475,7 +475,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fmpyadd,sgl fr20L,fr21L,fr22L,fr23L,fr24L"
+          asm_text: "fmpyadd,sgl fr20L, fr21L, fr22L, fr23L, fr24L"
   -
     input:
       bytes: [ 0x98, 0x85, 0x41, 0xe6 ]
@@ -484,7 +484,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fmpysub,sgl fr20L,fr21L,fr22L,fr23L,fr24L"
+          asm_text: "fmpysub,sgl fr20L, fr21L, fr22L, fr23L, fr24L"
   -
     input:
       bytes: [ 0xba, 0x95, 0xa4, 0x17 ]
@@ -493,7 +493,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fmpyfadd,sgl fr20,fr21,fr22,fr23"
+          asm_text: "fmpyfadd,sgl fr20, fr21, fr22, fr23"
   -
     input:
       bytes: [ 0xba, 0x95, 0xa4, 0x37 ]
@@ -502,4 +502,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fmpynfadd,sgl fr20,fr21,fr22,fr23"
+          asm_text: "fmpynfadd,sgl fr20, fr21, fr22, fr23"

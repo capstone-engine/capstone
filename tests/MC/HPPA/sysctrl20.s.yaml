@@ -7,7 +7,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldsid (sr1,r1),rp"
+          asm_text: "ldsid (sr1,r1), rp"
   -
     input:
       bytes: [ 0x00, 0x01, 0x58, 0x20 ]
@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "mtsp r1,sr1"
+          asm_text: "mtsp r1, sr1"
   -
     input:
       bytes: [ 0x00, 0x00, 0x44, 0xa1 ]
@@ -25,7 +25,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "mfsp sr1,r1"
+          asm_text: "mfsp sr1, r1"
   -
     input:
       bytes: [ 0x00, 0x41, 0x18, 0x40 ]
@@ -34,7 +34,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "mtctl r1,cr2"
+          asm_text: "mtctl r1, cr2"
   -
     input:
       bytes: [ 0x00, 0x20, 0x08, 0xa2 ]
@@ -43,7 +43,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "mfctl cr1,rp"
+          asm_text: "mfctl cr1, rp"
   -
     input:
       bytes: [ 0x01, 0x60, 0x48, 0xa1 ]
@@ -52,7 +52,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "mfctl,w sar,r1"
+          asm_text: "mfctl,w sar, r1"
   -
     input:
       bytes: [ 0x01, 0x61, 0x18, 0xc0 ]
@@ -79,7 +79,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ssm 0xf,r1"
+          asm_text: "ssm 0xf, r1"
   -
     input:
       bytes: [ 0x00, 0x0f, 0x0e, 0x61 ]
@@ -88,7 +88,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "rsm 0xf,r1"
+          asm_text: "rsm 0xf, r1"
   -
     input:
       bytes: [ 0x00, 0x01, 0x18, 0x60 ]
@@ -124,7 +124,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "break 0x1f,0x1ffe"
+          asm_text: "break 0x1f, 0x1ffe"
   -
     input:
       bytes: [ 0x00, 0x00, 0x04, 0x00 ]
@@ -151,7 +151,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "probe,r (sr1,r1),rp,r3"
+          asm_text: "probe,r (sr1,r1), rp, r3"
   -
     input:
       bytes: [ 0x04, 0x22, 0x51, 0xc3 ]
@@ -160,7 +160,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "probe,w (sr1,r1),rp,r3"
+          asm_text: "probe,w (sr1,r1), rp, r3"
   -
     input:
       bytes: [ 0x04, 0x22, 0x51, 0x83 ]
@@ -169,7 +169,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "probe,r (sr1,r1),rp,r3"
+          asm_text: "probe,r (sr1,r1), rp, r3"
   -
     input:
       bytes: [ 0x04, 0x2f, 0x71, 0x83 ]
@@ -178,7 +178,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "probei,r (sr1,r1),0xf,r3"
+          asm_text: "probei,r (sr1,r1), 0xf, r3"
   -
     input:
       bytes: [ 0x04, 0x2f, 0x71, 0xc3 ]
@@ -187,7 +187,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "probei,w (sr1,r1),0xf,r3"
+          asm_text: "probei,w (sr1,r1), 0xf, r3"
   -
     input:
       bytes: [ 0x04, 0x2f, 0x71, 0x83 ]
@@ -196,7 +196,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "probei,r (sr1,r1),0xf,r3"
+          asm_text: "probei,r (sr1,r1), 0xf, r3"
   -
     input:
       bytes: [ 0x04, 0x41, 0x53, 0x43 ]
@@ -205,7 +205,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "lpa r1(sr1,rp),r3"
+          asm_text: "lpa r1(sr1,rp), r3"
   -
     input:
       bytes: [ 0x04, 0x41, 0x53, 0x63 ]
@@ -214,7 +214,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "lpa,m r1(sr1,rp),r3"
+          asm_text: "lpa,m r1(sr1,rp), r3"
   -
     input:
       bytes: [ 0x04, 0x41, 0x53, 0x03 ]
@@ -223,7 +223,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "lci r1(sr1,rp),r3"
+          asm_text: "lci r1(sr1,rp), r3"
   -
     input:
       bytes: [ 0x04, 0x41, 0x12, 0x00 ]
@@ -322,7 +322,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "idtlbt r1,rp"
+          asm_text: "idtlbt r1, rp"
   -
     input:
       bytes: [ 0x04, 0x41, 0x08, 0x00 ]
@@ -331,7 +331,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "iitlbt r1,rp"
+          asm_text: "iitlbt r1, rp"
   -
     input:
       bytes: [ 0x04, 0x41, 0x13, 0x80 ]

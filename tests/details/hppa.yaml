@@ -8,7 +8,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "ldsid (sr1,r1),rp"
+        asm_text: "ldsid (sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -20,7 +20,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "mtsp r1,sr1"
+        asm_text: "mtsp r1, sr1"
         details:
           hppa:
             operands:
@@ -31,7 +31,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: sr1
       -
-        asm_text: "mfsp sr1,r1"
+        asm_text: "mfsp sr1, r1"
         details:
           hppa:
             operands:
@@ -42,7 +42,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r1
       -
-        asm_text: "mtctl r1,cr2"
+        asm_text: "mtctl r1, cr2"
         details:
           hppa:
             operands:
@@ -53,7 +53,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: cr2
       -
-        asm_text: "mfctl cr1,rp"
+        asm_text: "mfctl cr1, rp"
         details:
           hppa:
             operands:
@@ -64,7 +64,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "mfctl,w sar,r1"
+        asm_text: "mfctl,w sar, r1"
         details:
           hppa:
             operands:
@@ -91,7 +91,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r1
       -
-        asm_text: "ssm 0xf,r1"
+        asm_text: "ssm 0xf, r1"
         details:
           hppa:
             operands:
@@ -102,7 +102,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r1
       -
-        asm_text: "rsm 0xf,r1"
+        asm_text: "rsm 0xf, r1"
         details:
           hppa:
             operands:
@@ -125,7 +125,7 @@ test_cases:
       -
         asm_text: "rfi,r"
       -
-        asm_text: "break 0x1f,0x1ffe"
+        asm_text: "break 0x1f, 0x1ffe"
         details:
           hppa:
             operands:
@@ -140,7 +140,7 @@ test_cases:
       -
         asm_text: "syncdma"
       -
-        asm_text: "probe,r (sr1,r1),rp,r3"
+        asm_text: "probe,r (sr1,r1), rp, r3"
         details:
           hppa:
             operands:
@@ -155,7 +155,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "probe,w (sr1,r1),rp,r3"
+        asm_text: "probe,w (sr1,r1), rp, r3"
         details:
           hppa:
             operands:
@@ -170,7 +170,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "probe,r (sr1,r1),rp,r3"
+        asm_text: "probe,r (sr1,r1), rp, r3"
         details:
           hppa:
             operands:
@@ -185,7 +185,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "probei,r (sr1,r1),0xf,r3"
+        asm_text: "probei,r (sr1,r1), 0xf, r3"
         details:
           hppa:
             operands:
@@ -200,7 +200,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "probei,w (sr1,r1),0xf,r3"
+        asm_text: "probei,w (sr1,r1), 0xf, r3"
         details:
           hppa:
             operands:
@@ -215,7 +215,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "probei,r (sr1,r1),0xf,r3"
+        asm_text: "probei,r (sr1,r1), 0xf, r3"
         details:
           hppa:
             operands:
@@ -230,7 +230,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "lpa r1(sr1,rp),r3"
+        asm_text: "lpa r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -245,7 +245,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "lpa,m r1(sr1,rp),r3"
+        asm_text: "lpa,m r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -260,7 +260,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "lci r1(sr1,rp),r3"
+        asm_text: "lci r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -395,7 +395,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "idtlbt r1,rp"
+        asm_text: "idtlbt r1, rp"
         details:
           hppa:
             operands:
@@ -406,7 +406,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "iitlbt r1,rp"
+        asm_text: "iitlbt r1, rp"
         details:
           hppa:
             operands:
@@ -553,7 +553,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "ldsid (sr1,r1),rp"
+        asm_text: "ldsid (sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -565,7 +565,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "mtsp r1,sr1"
+        asm_text: "mtsp r1, sr1"
         details:
           hppa:
             operands:
@@ -576,7 +576,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: sr1
       -
-        asm_text: "mfsp sr1,r1"
+        asm_text: "mfsp sr1, r1"
         details:
           hppa:
             operands:
@@ -587,7 +587,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r1
       -
-        asm_text: "mtctl r1,cr2"
+        asm_text: "mtctl r1, cr2"
         details:
           hppa:
             operands:
@@ -598,7 +598,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: cr2
       -
-        asm_text: "mfctl cr1,rp"
+        asm_text: "mfctl cr1, rp"
         details:
           hppa:
             operands:
@@ -609,7 +609,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "mfctl,w sar,r1"
+        asm_text: "mfctl,w sar, r1"
         details:
           hppa:
             operands:
@@ -636,7 +636,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r1
       -
-        asm_text: "ssm 0xf,r1"
+        asm_text: "ssm 0xf, r1"
         details:
           hppa:
             operands:
@@ -647,7 +647,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r1
       -
-        asm_text: "rsm 0xf,r1"
+        asm_text: "rsm 0xf, r1"
         details:
           hppa:
             operands:
@@ -670,7 +670,7 @@ test_cases:
       -
         asm_text: "rfi,r"
       -
-        asm_text: "break 0x1f,0x1ffe"
+        asm_text: "break 0x1f, 0x1ffe"
         details:
           hppa:
             operands:
@@ -685,7 +685,7 @@ test_cases:
       -
         asm_text: "syncdma"
       -
-        asm_text: "probe,r (sr1,r1),rp,r3"
+        asm_text: "probe,r (sr1,r1), rp, r3"
         details:
           hppa:
             operands:
@@ -700,7 +700,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "probe,w (sr1,r1),rp,r3"
+        asm_text: "probe,w (sr1,r1), rp, r3"
         details:
           hppa:
             operands:
@@ -715,7 +715,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "probe,r (sr1,r1),rp,r3"
+        asm_text: "probe,r (sr1,r1), rp, r3"
         details:
           hppa:
             operands:
@@ -730,7 +730,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "probei,r (sr1,r1),0xf,r3"
+        asm_text: "probei,r (sr1,r1), 0xf, r3"
         details:
           hppa:
             operands:
@@ -745,7 +745,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "probei,w (sr1,r1),0xf,r3"
+        asm_text: "probei,w (sr1,r1), 0xf, r3"
         details:
           hppa:
             operands:
@@ -760,7 +760,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "probei,r (sr1,r1),0xf,r3"
+        asm_text: "probei,r (sr1,r1), 0xf, r3"
         details:
           hppa:
             operands:
@@ -775,7 +775,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "lpa r1(sr1,rp),r3"
+        asm_text: "lpa r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -790,7 +790,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "lpa,m r1(sr1,rp),r3"
+        asm_text: "lpa,m r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -805,7 +805,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "lci r1(sr1,rp),r3"
+        asm_text: "lci r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -940,7 +940,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "idtlbt r1,rp"
+        asm_text: "idtlbt r1, rp"
         details:
           hppa:
             operands:
@@ -951,7 +951,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "iitlbt r1,rp"
+        asm_text: "iitlbt r1, rp"
         details:
           hppa:
             operands:
@@ -1098,7 +1098,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "cldwx,3 r1(sr1,rp),r3"
+        asm_text: "cldwx,3 r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1113,7 +1113,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "cldwx,3,s r1(sr1,rp),r3"
+        asm_text: "cldwx,3,s r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1128,7 +1128,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "cldwx,3,m r1(sr1,rp),r3"
+        asm_text: "cldwx,3,m r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1143,7 +1143,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "cldwx,3,sm r1(sr1,rp),r3"
+        asm_text: "cldwx,3,sm r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1158,7 +1158,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "cldwx,3,sm,sl r1(sr1,rp),r3"
+        asm_text: "cldwx,3,sm,sl r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1173,7 +1173,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "clddx,3 r1(sr1,rp),r3"
+        asm_text: "clddx,3 r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1188,7 +1188,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "clddx,3,s r1(sr1,rp),r3"
+        asm_text: "clddx,3,s r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1203,7 +1203,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "clddx,3,m r1(sr1,rp),r3"
+        asm_text: "clddx,3,m r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1218,7 +1218,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "clddx,3,sm r1(sr1,rp),r3"
+        asm_text: "clddx,3,sm r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1233,7 +1233,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "clddx,3,sm,sl r1(sr1,rp),r3"
+        asm_text: "clddx,3,sm,sl r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1248,7 +1248,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "cstwx,3 r1,rp(sr1,r3)"
+        asm_text: "cstwx,3 r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1263,7 +1263,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstwx,3,s r1,rp(sr1,r3)"
+        asm_text: "cstwx,3,s r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1278,7 +1278,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstwx,3,m r1,rp(sr1,r3)"
+        asm_text: "cstwx,3,m r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1293,7 +1293,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstwx,3,m,bc r1,rp(sr1,r3)"
+        asm_text: "cstwx,3,m,bc r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1308,7 +1308,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstwx,3,sm r1,rp(sr1,r3)"
+        asm_text: "cstwx,3,sm r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1323,7 +1323,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstwx,3,sm,sl r1,rp(sr1,r3)"
+        asm_text: "cstwx,3,sm,sl r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1338,7 +1338,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3 r1,rp(sr1,r3)"
+        asm_text: "cstdx,3 r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1353,7 +1353,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3,s r1,rp(sr1,r3)"
+        asm_text: "cstdx,3,s r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1368,7 +1368,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3,m r1,rp(sr1,r3)"
+        asm_text: "cstdx,3,m r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1383,7 +1383,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3,m,bc r1,rp(sr1,r3)"
+        asm_text: "cstdx,3,m,bc r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1398,7 +1398,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3,sm r1,rp(sr1,r3)"
+        asm_text: "cstdx,3,sm r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1413,7 +1413,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3,sm,sl r1,rp(sr1,r3)"
+        asm_text: "cstdx,3,sm,sl r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1428,7 +1428,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cldws,3 0xf(sr1,r1),rp"
+        asm_text: "cldws,3 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -1443,7 +1443,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldws,3,ma 0xf(sr1,r1),rp"
+        asm_text: "cldws,3,ma 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -1458,7 +1458,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldws,3,mb 0xf(sr1,r1),rp"
+        asm_text: "cldws,3,mb 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -1473,7 +1473,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldws,3,mb,sl 0xf(sr1,r1),rp"
+        asm_text: "cldws,3,mb,sl 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -1488,7 +1488,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldds,3 0xf(sr1,r1),rp"
+        asm_text: "cldds,3 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -1503,7 +1503,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldds,3,ma 0xf(sr1,r1),rp"
+        asm_text: "cldds,3,ma 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -1518,7 +1518,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldds,3,mb 0xf(sr1,r1),rp"
+        asm_text: "cldds,3,mb 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -1533,7 +1533,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldds,3,mb,sl 0xf(sr1,r1),rp"
+        asm_text: "cldds,3,mb,sl 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -1548,7 +1548,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cstws,3 r1,0xf(sr1,rp)"
+        asm_text: "cstws,3 r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -1563,7 +1563,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstws,3,ma r1,0xf(sr1,rp)"
+        asm_text: "cstws,3,ma r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -1578,7 +1578,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstws,3,ma,bc r1,0xf(sr1,rp)"
+        asm_text: "cstws,3,ma,bc r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -1593,7 +1593,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstws,3,mb r1,0xf(sr1,rp)"
+        asm_text: "cstws,3,mb r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -1608,7 +1608,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstws,3,mb,sl r1,0xf(sr1,rp)"
+        asm_text: "cstws,3,mb,sl r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -1623,7 +1623,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstds,3 r1,0xf(sr1,rp)"
+        asm_text: "cstds,3 r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -1638,7 +1638,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstds,3,ma r1,0xf(sr1,rp)"
+        asm_text: "cstds,3,ma r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -1653,7 +1653,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstds,3,ma,bc r1,0xf(sr1,rp)"
+        asm_text: "cstds,3,ma,bc r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -1668,7 +1668,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstds,3,mb r1,0xf(sr1,rp)"
+        asm_text: "cstds,3,mb r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -1683,7 +1683,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstds,3,mb,sl r1,0xf(sr1,rp)"
+        asm_text: "cstds,3,mb,sl r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -1706,7 +1706,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "cldwx,3 r1(sr1,rp),r3"
+        asm_text: "cldwx,3 r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1721,7 +1721,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "cldwx,3,s r1(sr1,rp),r3"
+        asm_text: "cldwx,3,s r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1736,7 +1736,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "cldwx,3,m r1(sr1,rp),r3"
+        asm_text: "cldwx,3,m r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1751,7 +1751,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "cldwx,3,sm r1(sr1,rp),r3"
+        asm_text: "cldwx,3,sm r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1766,7 +1766,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "cldwx,3,sm,sl r1(sr1,rp),r3"
+        asm_text: "cldwx,3,sm,sl r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1781,7 +1781,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "clddx,3 r1(sr1,rp),r3"
+        asm_text: "clddx,3 r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1796,7 +1796,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "clddx,3,s r1(sr1,rp),r3"
+        asm_text: "clddx,3,s r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1811,7 +1811,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "clddx,3,m r1(sr1,rp),r3"
+        asm_text: "clddx,3,m r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1826,7 +1826,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "clddx,3,sm r1(sr1,rp),r3"
+        asm_text: "clddx,3,sm r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1841,7 +1841,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "clddx,3,sm,sl r1(sr1,rp),r3"
+        asm_text: "clddx,3,sm,sl r1(sr1,rp), r3"
         details:
           hppa:
             operands:
@@ -1856,7 +1856,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: r3
       -
-        asm_text: "cstwx,3 r1,rp(sr1,r3)"
+        asm_text: "cstwx,3 r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1871,7 +1871,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstwx,3,s r1,rp(sr1,r3)"
+        asm_text: "cstwx,3,s r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1886,7 +1886,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstwx,3,m r1,rp(sr1,r3)"
+        asm_text: "cstwx,3,m r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1901,7 +1901,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstwx,3,m,bc r1,rp(sr1,r3)"
+        asm_text: "cstwx,3,m,bc r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1916,7 +1916,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstwx,3,sm r1,rp(sr1,r3)"
+        asm_text: "cstwx,3,sm r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1931,7 +1931,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstwx,3,sm,sl r1,rp(sr1,r3)"
+        asm_text: "cstwx,3,sm,sl r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1946,7 +1946,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3 r1,rp(sr1,r3)"
+        asm_text: "cstdx,3 r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1961,7 +1961,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3,s r1,rp(sr1,r3)"
+        asm_text: "cstdx,3,s r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1976,7 +1976,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3,m r1,rp(sr1,r3)"
+        asm_text: "cstdx,3,m r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -1991,7 +1991,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3,m,bc r1,rp(sr1,r3)"
+        asm_text: "cstdx,3,m,bc r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -2006,7 +2006,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3,sm r1,rp(sr1,r3)"
+        asm_text: "cstdx,3,sm r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -2021,7 +2021,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cstdx,3,sm,sl r1,rp(sr1,r3)"
+        asm_text: "cstdx,3,sm,sl r1, rp(sr1,r3)"
         details:
           hppa:
             operands:
@@ -2036,7 +2036,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: r3
       -
-        asm_text: "cldws,3 0xf(sr1,r1),rp"
+        asm_text: "cldws,3 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -2051,7 +2051,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldws,3,ma 0xf(sr1,r1),rp"
+        asm_text: "cldws,3,ma 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -2066,7 +2066,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldws,3,mb 0xf(sr1,r1),rp"
+        asm_text: "cldws,3,mb 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -2081,7 +2081,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldws,3,mb,sl 0xf(sr1,r1),rp"
+        asm_text: "cldws,3,mb,sl 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -2096,7 +2096,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldds,3 0xf(sr1,r1),rp"
+        asm_text: "cldds,3 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -2111,7 +2111,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldds,3,ma 0xf(sr1,r1),rp"
+        asm_text: "cldds,3,ma 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -2126,7 +2126,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldds,3,mb 0xf(sr1,r1),rp"
+        asm_text: "cldds,3,mb 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -2141,7 +2141,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cldds,3,mb,sl 0xf(sr1,r1),rp"
+        asm_text: "cldds,3,mb,sl 0xf(sr1,r1), rp"
         details:
           hppa:
             operands:
@@ -2156,7 +2156,7 @@ test_cases:
                 type: HPPA_OP_REG
                 reg: rp
       -
-        asm_text: "cstws,3 r1,0xf(sr1,rp)"
+        asm_text: "cstws,3 r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -2171,7 +2171,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstws,3,ma r1,0xf(sr1,rp)"
+        asm_text: "cstws,3,ma r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -2186,7 +2186,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstws,3,ma,bc r1,0xf(sr1,rp)"
+        asm_text: "cstws,3,ma,bc r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -2201,7 +2201,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstws,3,mb r1,0xf(sr1,rp)"
+        asm_text: "cstws,3,mb r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -2216,7 +2216,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstws,3,mb,sl r1,0xf(sr1,rp)"
+        asm_text: "cstws,3,mb,sl r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -2231,7 +2231,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstds,3 r1,0xf(sr1,rp)"
+        asm_text: "cstds,3 r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -2246,7 +2246,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstds,3,ma r1,0xf(sr1,rp)"
+        asm_text: "cstds,3,ma r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -2261,7 +2261,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstds,3,ma,bc r1,0xf(sr1,rp)"
+        asm_text: "cstds,3,ma,bc r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -2276,7 +2276,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstds,3,mb r1,0xf(sr1,rp)"
+        asm_text: "cstds,3,mb r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:
@@ -2291,7 +2291,7 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
       -
-        asm_text: "cstds,3,mb,sl r1,0xf(sr1,rp)"
+        asm_text: "cstds,3,mb,sl r1, 0xf(sr1,rp)"
         details:
           hppa:
             operands:

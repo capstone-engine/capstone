@@ -7,7 +7,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add r1,rp,r3"
+          asm_text: "add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x26, 0x03 ]
@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,= r1,rp,r3"
+          asm_text: "add,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x46, 0x03 ]
@@ -25,7 +25,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,< r1,rp,r3"
+          asm_text: "add,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x66, 0x03 ]
@@ -34,7 +34,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,<= r1,rp,r3"
+          asm_text: "add,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x86, 0x03 ]
@@ -43,7 +43,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,nuv r1,rp,r3"
+          asm_text: "add,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xa6, 0x03 ]
@@ -52,7 +52,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,znv r1,rp,r3"
+          asm_text: "add,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xc6, 0x03 ]
@@ -61,7 +61,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,sv r1,rp,r3"
+          asm_text: "add,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe6, 0x03 ]
@@ -70,7 +70,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,od r1,rp,r3"
+          asm_text: "add,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x16, 0x03 ]
@@ -79,7 +79,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,tr r1,rp,r3"
+          asm_text: "add,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x36, 0x03 ]
@@ -88,7 +88,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,<> r1,rp,r3"
+          asm_text: "add,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x56, 0x03 ]
@@ -97,7 +97,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,>= r1,rp,r3"
+          asm_text: "add,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x76, 0x03 ]
@@ -106,7 +106,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,> r1,rp,r3"
+          asm_text: "add,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x96, 0x03 ]
@@ -115,7 +115,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,uv r1,rp,r3"
+          asm_text: "add,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xb6, 0x03 ]
@@ -124,7 +124,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,vnz r1,rp,r3"
+          asm_text: "add,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xd6, 0x03 ]
@@ -133,7 +133,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,nsv r1,rp,r3"
+          asm_text: "add,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf6, 0x03 ]
@@ -142,7 +142,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "add,ev r1,rp,r3"
+          asm_text: "add,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0e, 0x03 ]
@@ -151,7 +151,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo r1,rp,r3"
+          asm_text: "addo r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2e, 0x03 ]
@@ -160,7 +160,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,= r1,rp,r3"
+          asm_text: "addo,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4e, 0x03 ]
@@ -169,7 +169,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,< r1,rp,r3"
+          asm_text: "addo,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6e, 0x03 ]
@@ -178,7 +178,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,<= r1,rp,r3"
+          asm_text: "addo,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8e, 0x03 ]
@@ -187,7 +187,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,nuv r1,rp,r3"
+          asm_text: "addo,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xae, 0x03 ]
@@ -196,7 +196,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,znv r1,rp,r3"
+          asm_text: "addo,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xce, 0x03 ]
@@ -205,7 +205,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,sv r1,rp,r3"
+          asm_text: "addo,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xee, 0x03 ]
@@ -214,7 +214,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,od r1,rp,r3"
+          asm_text: "addo,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1e, 0x03 ]
@@ -223,7 +223,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,tr r1,rp,r3"
+          asm_text: "addo,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3e, 0x03 ]
@@ -232,7 +232,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,<> r1,rp,r3"
+          asm_text: "addo,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5e, 0x03 ]
@@ -241,7 +241,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,>= r1,rp,r3"
+          asm_text: "addo,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7e, 0x03 ]
@@ -250,7 +250,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,> r1,rp,r3"
+          asm_text: "addo,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9e, 0x03 ]
@@ -259,7 +259,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,uv r1,rp,r3"
+          asm_text: "addo,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xbe, 0x03 ]
@@ -268,7 +268,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,vnz r1,rp,r3"
+          asm_text: "addo,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xde, 0x03 ]
@@ -277,7 +277,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,nsv r1,rp,r3"
+          asm_text: "addo,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfe, 0x03 ]
@@ -286,7 +286,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addo,ev r1,rp,r3"
+          asm_text: "addo,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x07, 0x03 ]
@@ -295,7 +295,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc r1,rp,r3"
+          asm_text: "addc r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x27, 0x03 ]
@@ -304,7 +304,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,= r1,rp,r3"
+          asm_text: "addc,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x47, 0x03 ]
@@ -313,7 +313,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,< r1,rp,r3"
+          asm_text: "addc,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x67, 0x03 ]
@@ -322,7 +322,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,<= r1,rp,r3"
+          asm_text: "addc,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x87, 0x03 ]
@@ -331,7 +331,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,nuv r1,rp,r3"
+          asm_text: "addc,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xa7, 0x03 ]
@@ -340,7 +340,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,znv r1,rp,r3"
+          asm_text: "addc,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xc7, 0x03 ]
@@ -349,7 +349,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,sv r1,rp,r3"
+          asm_text: "addc,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe7, 0x03 ]
@@ -358,7 +358,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,od r1,rp,r3"
+          asm_text: "addc,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x17, 0x03 ]
@@ -367,7 +367,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,tr r1,rp,r3"
+          asm_text: "addc,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x37, 0x03 ]
@@ -376,7 +376,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,<> r1,rp,r3"
+          asm_text: "addc,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x57, 0x03 ]
@@ -385,7 +385,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,>= r1,rp,r3"
+          asm_text: "addc,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x77, 0x03 ]
@@ -394,7 +394,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,> r1,rp,r3"
+          asm_text: "addc,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x97, 0x03 ]
@@ -403,7 +403,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,uv r1,rp,r3"
+          asm_text: "addc,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xb7, 0x03 ]
@@ -412,7 +412,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,vnz r1,rp,r3"
+          asm_text: "addc,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xd7, 0x03 ]
@@ -421,7 +421,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,nsv r1,rp,r3"
+          asm_text: "addc,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf7, 0x03 ]
@@ -430,7 +430,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addc,ev r1,rp,r3"
+          asm_text: "addc,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0f, 0x03 ]
@@ -439,7 +439,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco r1,rp,r3"
+          asm_text: "addco r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2f, 0x03 ]
@@ -448,7 +448,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,= r1,rp,r3"
+          asm_text: "addco,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4f, 0x03 ]
@@ -457,7 +457,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,< r1,rp,r3"
+          asm_text: "addco,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6f, 0x03 ]
@@ -466,7 +466,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,<= r1,rp,r3"
+          asm_text: "addco,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8f, 0x03 ]
@@ -475,7 +475,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,nuv r1,rp,r3"
+          asm_text: "addco,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xaf, 0x03 ]
@@ -484,7 +484,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,znv r1,rp,r3"
+          asm_text: "addco,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xcf, 0x03 ]
@@ -493,7 +493,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,sv r1,rp,r3"
+          asm_text: "addco,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xef, 0x03 ]
@@ -502,7 +502,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,od r1,rp,r3"
+          asm_text: "addco,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1f, 0x03 ]
@@ -511,7 +511,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,tr r1,rp,r3"
+          asm_text: "addco,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3f, 0x03 ]
@@ -520,7 +520,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,<> r1,rp,r3"
+          asm_text: "addco,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5f, 0x03 ]
@@ -529,7 +529,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,>= r1,rp,r3"
+          asm_text: "addco,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7f, 0x03 ]
@@ -538,7 +538,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,> r1,rp,r3"
+          asm_text: "addco,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9f, 0x03 ]
@@ -547,7 +547,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,uv r1,rp,r3"
+          asm_text: "addco,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xbf, 0x03 ]
@@ -556,7 +556,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,vnz r1,rp,r3"
+          asm_text: "addco,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xdf, 0x03 ]
@@ -565,7 +565,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,nsv r1,rp,r3"
+          asm_text: "addco,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xff, 0x03 ]
@@ -574,7 +574,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addco,ev r1,rp,r3"
+          asm_text: "addco,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x06, 0x43 ]
@@ -583,7 +583,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add r1,rp,r3"
+          asm_text: "sh1add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x26, 0x43 ]
@@ -592,7 +592,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,= r1,rp,r3"
+          asm_text: "sh1add,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x46, 0x43 ]
@@ -601,7 +601,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,< r1,rp,r3"
+          asm_text: "sh1add,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x66, 0x43 ]
@@ -610,7 +610,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,<= r1,rp,r3"
+          asm_text: "sh1add,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x86, 0x43 ]
@@ -619,7 +619,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,nuv r1,rp,r3"
+          asm_text: "sh1add,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xa6, 0x43 ]
@@ -628,7 +628,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,znv r1,rp,r3"
+          asm_text: "sh1add,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xc6, 0x43 ]
@@ -637,7 +637,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,sv r1,rp,r3"
+          asm_text: "sh1add,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe6, 0x43 ]
@@ -646,7 +646,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,od r1,rp,r3"
+          asm_text: "sh1add,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x16, 0x43 ]
@@ -655,7 +655,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,tr r1,rp,r3"
+          asm_text: "sh1add,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x36, 0x43 ]
@@ -664,7 +664,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,<> r1,rp,r3"
+          asm_text: "sh1add,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x56, 0x43 ]
@@ -673,7 +673,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,>= r1,rp,r3"
+          asm_text: "sh1add,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x76, 0x43 ]
@@ -682,7 +682,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,> r1,rp,r3"
+          asm_text: "sh1add,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x96, 0x43 ]
@@ -691,7 +691,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,uv r1,rp,r3"
+          asm_text: "sh1add,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xb6, 0x43 ]
@@ -700,7 +700,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,vnz r1,rp,r3"
+          asm_text: "sh1add,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xd6, 0x43 ]
@@ -709,7 +709,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,nsv r1,rp,r3"
+          asm_text: "sh1add,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf6, 0x43 ]
@@ -718,7 +718,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1add,ev r1,rp,r3"
+          asm_text: "sh1add,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0e, 0x43 ]
@@ -727,7 +727,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo r1,rp,r3"
+          asm_text: "sh1addo r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2e, 0x43 ]
@@ -736,7 +736,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,= r1,rp,r3"
+          asm_text: "sh1addo,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4e, 0x43 ]
@@ -745,7 +745,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,< r1,rp,r3"
+          asm_text: "sh1addo,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6e, 0x43 ]
@@ -754,7 +754,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,<= r1,rp,r3"
+          asm_text: "sh1addo,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8e, 0x43 ]
@@ -763,7 +763,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,nuv r1,rp,r3"
+          asm_text: "sh1addo,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xae, 0x43 ]
@@ -772,7 +772,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,znv r1,rp,r3"
+          asm_text: "sh1addo,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xce, 0x43 ]
@@ -781,7 +781,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,sv r1,rp,r3"
+          asm_text: "sh1addo,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xee, 0x43 ]
@@ -790,7 +790,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,od r1,rp,r3"
+          asm_text: "sh1addo,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1e, 0x43 ]
@@ -799,7 +799,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,tr r1,rp,r3"
+          asm_text: "sh1addo,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3e, 0x43 ]
@@ -808,7 +808,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,<> r1,rp,r3"
+          asm_text: "sh1addo,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5e, 0x43 ]
@@ -817,7 +817,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,>= r1,rp,r3"
+          asm_text: "sh1addo,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7e, 0x43 ]
@@ -826,7 +826,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,> r1,rp,r3"
+          asm_text: "sh1addo,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9e, 0x43 ]
@@ -835,7 +835,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,uv r1,rp,r3"
+          asm_text: "sh1addo,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xbe, 0x43 ]
@@ -844,7 +844,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,vnz r1,rp,r3"
+          asm_text: "sh1addo,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xde, 0x43 ]
@@ -853,7 +853,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,nsv r1,rp,r3"
+          asm_text: "sh1addo,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfe, 0x43 ]
@@ -862,7 +862,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addo,ev r1,rp,r3"
+          asm_text: "sh1addo,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x06, 0x83 ]
@@ -871,7 +871,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add r1,rp,r3"
+          asm_text: "sh2add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x26, 0x83 ]
@@ -880,7 +880,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,= r1,rp,r3"
+          asm_text: "sh2add,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x46, 0x83 ]
@@ -889,7 +889,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,< r1,rp,r3"
+          asm_text: "sh2add,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x66, 0x83 ]
@@ -898,7 +898,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,<= r1,rp,r3"
+          asm_text: "sh2add,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x86, 0x83 ]
@@ -907,7 +907,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,nuv r1,rp,r3"
+          asm_text: "sh2add,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xa6, 0x83 ]
@@ -916,7 +916,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,znv r1,rp,r3"
+          asm_text: "sh2add,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xc6, 0x83 ]
@@ -925,7 +925,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,sv r1,rp,r3"
+          asm_text: "sh2add,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe6, 0x83 ]
@@ -934,7 +934,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,od r1,rp,r3"
+          asm_text: "sh2add,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x16, 0x83 ]
@@ -943,7 +943,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,tr r1,rp,r3"
+          asm_text: "sh2add,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x36, 0x83 ]
@@ -952,7 +952,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,<> r1,rp,r3"
+          asm_text: "sh2add,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x56, 0x83 ]
@@ -961,7 +961,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,>= r1,rp,r3"
+          asm_text: "sh2add,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x76, 0x83 ]
@@ -970,7 +970,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,> r1,rp,r3"
+          asm_text: "sh2add,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x96, 0x83 ]
@@ -979,7 +979,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,uv r1,rp,r3"
+          asm_text: "sh2add,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xb6, 0x83 ]
@@ -988,7 +988,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,vnz r1,rp,r3"
+          asm_text: "sh2add,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xd6, 0x83 ]
@@ -997,7 +997,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,nsv r1,rp,r3"
+          asm_text: "sh2add,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf6, 0x83 ]
@@ -1006,7 +1006,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2add,ev r1,rp,r3"
+          asm_text: "sh2add,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0e, 0x83 ]
@@ -1015,7 +1015,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo r1,rp,r3"
+          asm_text: "sh2addo r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2e, 0x83 ]
@@ -1024,7 +1024,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,= r1,rp,r3"
+          asm_text: "sh2addo,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4e, 0x83 ]
@@ -1033,7 +1033,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,< r1,rp,r3"
+          asm_text: "sh2addo,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6e, 0x83 ]
@@ -1042,7 +1042,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,<= r1,rp,r3"
+          asm_text: "sh2addo,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8e, 0x83 ]
@@ -1051,7 +1051,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,nuv r1,rp,r3"
+          asm_text: "sh2addo,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xae, 0x83 ]
@@ -1060,7 +1060,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,znv r1,rp,r3"
+          asm_text: "sh2addo,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xce, 0x83 ]
@@ -1069,7 +1069,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,sv r1,rp,r3"
+          asm_text: "sh2addo,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xee, 0x83 ]
@@ -1078,7 +1078,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,od r1,rp,r3"
+          asm_text: "sh2addo,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1e, 0x83 ]
@@ -1087,7 +1087,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,tr r1,rp,r3"
+          asm_text: "sh2addo,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3e, 0x83 ]
@@ -1096,7 +1096,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,<> r1,rp,r3"
+          asm_text: "sh2addo,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5e, 0x83 ]
@@ -1105,7 +1105,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,>= r1,rp,r3"
+          asm_text: "sh2addo,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7e, 0x83 ]
@@ -1114,7 +1114,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,> r1,rp,r3"
+          asm_text: "sh2addo,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9e, 0x83 ]
@@ -1123,7 +1123,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,uv r1,rp,r3"
+          asm_text: "sh2addo,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xbe, 0x83 ]
@@ -1132,7 +1132,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,vnz r1,rp,r3"
+          asm_text: "sh2addo,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xde, 0x83 ]
@@ -1141,7 +1141,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,nsv r1,rp,r3"
+          asm_text: "sh2addo,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfe, 0x83 ]
@@ -1150,7 +1150,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addo,ev r1,rp,r3"
+          asm_text: "sh2addo,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x06, 0xc3 ]
@@ -1159,7 +1159,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x26, 0xc3 ]
@@ -1168,7 +1168,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x46, 0xc3 ]
@@ -1177,7 +1177,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x66, 0xc3 ]
@@ -1186,7 +1186,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x86, 0xc3 ]
@@ -1195,7 +1195,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xa6, 0xc3 ]
@@ -1204,7 +1204,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xc6, 0xc3 ]
@@ -1213,7 +1213,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe6, 0xc3 ]
@@ -1222,7 +1222,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x16, 0xc3 ]
@@ -1231,7 +1231,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x36, 0xc3 ]
@@ -1240,7 +1240,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x56, 0xc3 ]
@@ -1249,7 +1249,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x76, 0xc3 ]
@@ -1258,7 +1258,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x96, 0xc3 ]
@@ -1267,7 +1267,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xb6, 0xc3 ]
@@ -1276,7 +1276,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xd6, 0xc3 ]
@@ -1285,7 +1285,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf6, 0xc3 ]
@@ -1294,7 +1294,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3add r1,rp,r3"
+          asm_text: "sh3add r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0e, 0xc3 ]
@@ -1303,7 +1303,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo r1,rp,r3"
+          asm_text: "sh3addo r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2e, 0xc3 ]
@@ -1312,7 +1312,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,= r1,rp,r3"
+          asm_text: "sh3addo,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4e, 0xc3 ]
@@ -1321,7 +1321,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,< r1,rp,r3"
+          asm_text: "sh3addo,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6e, 0xc3 ]
@@ -1330,7 +1330,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,<= r1,rp,r3"
+          asm_text: "sh3addo,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8e, 0xc3 ]
@@ -1339,7 +1339,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,nuv r1,rp,r3"
+          asm_text: "sh3addo,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xae, 0xc3 ]
@@ -1348,7 +1348,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,znv r1,rp,r3"
+          asm_text: "sh3addo,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xce, 0xc3 ]
@@ -1357,7 +1357,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,sv r1,rp,r3"
+          asm_text: "sh3addo,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xee, 0xc3 ]
@@ -1366,7 +1366,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,od r1,rp,r3"
+          asm_text: "sh3addo,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1e, 0xc3 ]
@@ -1375,7 +1375,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,tr r1,rp,r3"
+          asm_text: "sh3addo,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3e, 0xc3 ]
@@ -1384,7 +1384,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,<> r1,rp,r3"
+          asm_text: "sh3addo,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5e, 0xc3 ]
@@ -1393,7 +1393,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,>= r1,rp,r3"
+          asm_text: "sh3addo,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7e, 0xc3 ]
@@ -1402,7 +1402,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,> r1,rp,r3"
+          asm_text: "sh3addo,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9e, 0xc3 ]
@@ -1411,7 +1411,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,uv r1,rp,r3"
+          asm_text: "sh3addo,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xbe, 0xc3 ]
@@ -1420,7 +1420,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,vnz r1,rp,r3"
+          asm_text: "sh3addo,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xde, 0xc3 ]
@@ -1429,7 +1429,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,nsv r1,rp,r3"
+          asm_text: "sh3addo,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfe, 0xc3 ]
@@ -1438,7 +1438,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addo,ev r1,rp,r3"
+          asm_text: "sh3addo,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x04, 0x03 ]
@@ -1447,7 +1447,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub r1,rp,r3"
+          asm_text: "sub r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x24, 0x03 ]
@@ -1456,7 +1456,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,= r1,rp,r3"
+          asm_text: "sub,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x44, 0x03 ]
@@ -1465,7 +1465,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,< r1,rp,r3"
+          asm_text: "sub,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x64, 0x03 ]
@@ -1474,7 +1474,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,<= r1,rp,r3"
+          asm_text: "sub,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x84, 0x03 ]
@@ -1483,7 +1483,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,<< r1,rp,r3"
+          asm_text: "sub,<< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xa4, 0x03 ]
@@ -1492,7 +1492,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,<<= r1,rp,r3"
+          asm_text: "sub,<<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xc4, 0x03 ]
@@ -1501,7 +1501,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,sv r1,rp,r3"
+          asm_text: "sub,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe4, 0x03 ]
@@ -1510,7 +1510,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,od r1,rp,r3"
+          asm_text: "sub,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x14, 0x03 ]
@@ -1519,7 +1519,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,tr r1,rp,r3"
+          asm_text: "sub,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x34, 0x03 ]
@@ -1528,7 +1528,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,<> r1,rp,r3"
+          asm_text: "sub,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x54, 0x03 ]
@@ -1537,7 +1537,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,>= r1,rp,r3"
+          asm_text: "sub,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x74, 0x03 ]
@@ -1546,7 +1546,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,> r1,rp,r3"
+          asm_text: "sub,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x94, 0x03 ]
@@ -1555,7 +1555,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,>>= r1,rp,r3"
+          asm_text: "sub,>>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xb4, 0x03 ]
@@ -1564,7 +1564,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,>> r1,rp,r3"
+          asm_text: "sub,>> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xd4, 0x03 ]
@@ -1573,7 +1573,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,nsv r1,rp,r3"
+          asm_text: "sub,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf4, 0x03 ]
@@ -1582,7 +1582,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sub,ev r1,rp,r3"
+          asm_text: "sub,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0c, 0x03 ]
@@ -1591,7 +1591,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo r1,rp,r3"
+          asm_text: "subo r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2c, 0x03 ]
@@ -1600,7 +1600,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,= r1,rp,r3"
+          asm_text: "subo,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4c, 0x03 ]
@@ -1609,7 +1609,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,< r1,rp,r3"
+          asm_text: "subo,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6c, 0x03 ]
@@ -1618,7 +1618,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,<= r1,rp,r3"
+          asm_text: "subo,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8c, 0x03 ]
@@ -1627,7 +1627,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,<< r1,rp,r3"
+          asm_text: "subo,<< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xac, 0x03 ]
@@ -1636,7 +1636,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,<<= r1,rp,r3"
+          asm_text: "subo,<<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xcc, 0x03 ]
@@ -1645,7 +1645,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,sv r1,rp,r3"
+          asm_text: "subo,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xec, 0x03 ]
@@ -1654,7 +1654,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,od r1,rp,r3"
+          asm_text: "subo,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1c, 0x03 ]
@@ -1663,7 +1663,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,tr r1,rp,r3"
+          asm_text: "subo,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3c, 0x03 ]
@@ -1672,7 +1672,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,<> r1,rp,r3"
+          asm_text: "subo,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5c, 0x03 ]
@@ -1681,7 +1681,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,>= r1,rp,r3"
+          asm_text: "subo,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7c, 0x03 ]
@@ -1690,7 +1690,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,> r1,rp,r3"
+          asm_text: "subo,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9c, 0x03 ]
@@ -1699,7 +1699,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,>>= r1,rp,r3"
+          asm_text: "subo,>>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xbc, 0x03 ]
@@ -1708,7 +1708,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,>> r1,rp,r3"
+          asm_text: "subo,>> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xdc, 0x03 ]
@@ -1717,7 +1717,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,nsv r1,rp,r3"
+          asm_text: "subo,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfc, 0x03 ]
@@ -1726,7 +1726,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subo,ev r1,rp,r3"
+          asm_text: "subo,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x04, 0xc3 ]
@@ -1735,7 +1735,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt r1,rp,r3"
+          asm_text: "subt r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x24, 0xc3 ]
@@ -1744,7 +1744,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,= r1,rp,r3"
+          asm_text: "subt,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x44, 0xc3 ]
@@ -1753,7 +1753,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,< r1,rp,r3"
+          asm_text: "subt,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x64, 0xc3 ]
@@ -1762,7 +1762,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,<= r1,rp,r3"
+          asm_text: "subt,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x84, 0xc3 ]
@@ -1771,7 +1771,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,<< r1,rp,r3"
+          asm_text: "subt,<< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xa4, 0xc3 ]
@@ -1780,7 +1780,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,<<= r1,rp,r3"
+          asm_text: "subt,<<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xc4, 0xc3 ]
@@ -1789,7 +1789,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,sv r1,rp,r3"
+          asm_text: "subt,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe4, 0xc3 ]
@@ -1798,7 +1798,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,od r1,rp,r3"
+          asm_text: "subt,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x14, 0xc3 ]
@@ -1807,7 +1807,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,tr r1,rp,r3"
+          asm_text: "subt,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x34, 0xc3 ]
@@ -1816,7 +1816,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,<> r1,rp,r3"
+          asm_text: "subt,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x54, 0xc3 ]
@@ -1825,7 +1825,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,>= r1,rp,r3"
+          asm_text: "subt,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x74, 0xc3 ]
@@ -1834,7 +1834,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,> r1,rp,r3"
+          asm_text: "subt,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x94, 0xc3 ]
@@ -1843,7 +1843,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,>>= r1,rp,r3"
+          asm_text: "subt,>>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xb4, 0xc3 ]
@@ -1852,7 +1852,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,>> r1,rp,r3"
+          asm_text: "subt,>> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xd4, 0xc3 ]
@@ -1861,7 +1861,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,nsv r1,rp,r3"
+          asm_text: "subt,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf4, 0xc3 ]
@@ -1870,7 +1870,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subt,ev r1,rp,r3"
+          asm_text: "subt,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0c, 0xc3 ]
@@ -1879,7 +1879,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto r1,rp,r3"
+          asm_text: "subto r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2c, 0xc3 ]
@@ -1888,7 +1888,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,= r1,rp,r3"
+          asm_text: "subto,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4c, 0xc3 ]
@@ -1897,7 +1897,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,< r1,rp,r3"
+          asm_text: "subto,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6c, 0xc3 ]
@@ -1906,7 +1906,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,<= r1,rp,r3"
+          asm_text: "subto,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8c, 0xc3 ]
@@ -1915,7 +1915,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,<< r1,rp,r3"
+          asm_text: "subto,<< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xac, 0xc3 ]
@@ -1924,7 +1924,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,<<= r1,rp,r3"
+          asm_text: "subto,<<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xcc, 0xc3 ]
@@ -1933,7 +1933,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,sv r1,rp,r3"
+          asm_text: "subto,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xec, 0xc3 ]
@@ -1942,7 +1942,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,od r1,rp,r3"
+          asm_text: "subto,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1c, 0xc3 ]
@@ -1951,7 +1951,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,tr r1,rp,r3"
+          asm_text: "subto,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3c, 0xc3 ]
@@ -1960,7 +1960,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,<> r1,rp,r3"
+          asm_text: "subto,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5c, 0xc3 ]
@@ -1969,7 +1969,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,>= r1,rp,r3"
+          asm_text: "subto,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7c, 0xc3 ]
@@ -1978,7 +1978,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,> r1,rp,r3"
+          asm_text: "subto,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9c, 0xc3 ]
@@ -1987,7 +1987,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,>>= r1,rp,r3"
+          asm_text: "subto,>>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xbc, 0xc3 ]
@@ -1996,7 +1996,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,>> r1,rp,r3"
+          asm_text: "subto,>> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xdc, 0xc3 ]
@@ -2005,7 +2005,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,nsv r1,rp,r3"
+          asm_text: "subto,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfc, 0xc3 ]
@@ -2014,7 +2014,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subto,ev r1,rp,r3"
+          asm_text: "subto,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x05, 0x03 ]
@@ -2023,7 +2023,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb r1,rp,r3"
+          asm_text: "subb r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x25, 0x03 ]
@@ -2032,7 +2032,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,= r1,rp,r3"
+          asm_text: "subb,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x45, 0x03 ]
@@ -2041,7 +2041,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,< r1,rp,r3"
+          asm_text: "subb,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x65, 0x03 ]
@@ -2050,7 +2050,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,<= r1,rp,r3"
+          asm_text: "subb,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x85, 0x03 ]
@@ -2059,7 +2059,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,<< r1,rp,r3"
+          asm_text: "subb,<< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xa5, 0x03 ]
@@ -2068,7 +2068,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,<<= r1,rp,r3"
+          asm_text: "subb,<<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xc5, 0x03 ]
@@ -2077,7 +2077,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,sv r1,rp,r3"
+          asm_text: "subb,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe5, 0x03 ]
@@ -2086,7 +2086,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,od r1,rp,r3"
+          asm_text: "subb,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x15, 0x03 ]
@@ -2095,7 +2095,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,tr r1,rp,r3"
+          asm_text: "subb,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x35, 0x03 ]
@@ -2104,7 +2104,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,<> r1,rp,r3"
+          asm_text: "subb,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x55, 0x03 ]
@@ -2113,7 +2113,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,>= r1,rp,r3"
+          asm_text: "subb,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x75, 0x03 ]
@@ -2122,7 +2122,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,> r1,rp,r3"
+          asm_text: "subb,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x95, 0x03 ]
@@ -2131,7 +2131,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,>>= r1,rp,r3"
+          asm_text: "subb,>>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xb5, 0x03 ]
@@ -2140,7 +2140,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,>> r1,rp,r3"
+          asm_text: "subb,>> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xd5, 0x03 ]
@@ -2149,7 +2149,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,nsv r1,rp,r3"
+          asm_text: "subb,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf5, 0x03 ]
@@ -2158,7 +2158,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subb,ev r1,rp,r3"
+          asm_text: "subb,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0d, 0x03 ]
@@ -2167,7 +2167,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo r1,rp,r3"
+          asm_text: "subbo r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2d, 0x03 ]
@@ -2176,7 +2176,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,= r1,rp,r3"
+          asm_text: "subbo,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4d, 0x03 ]
@@ -2185,7 +2185,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,< r1,rp,r3"
+          asm_text: "subbo,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6d, 0x03 ]
@@ -2194,7 +2194,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,<= r1,rp,r3"
+          asm_text: "subbo,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8d, 0x03 ]
@@ -2203,7 +2203,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,<< r1,rp,r3"
+          asm_text: "subbo,<< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xad, 0x03 ]
@@ -2212,7 +2212,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,<<= r1,rp,r3"
+          asm_text: "subbo,<<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xcd, 0x03 ]
@@ -2221,7 +2221,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,sv r1,rp,r3"
+          asm_text: "subbo,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xed, 0x03 ]
@@ -2230,7 +2230,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,od r1,rp,r3"
+          asm_text: "subbo,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1d, 0x03 ]
@@ -2239,7 +2239,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,tr r1,rp,r3"
+          asm_text: "subbo,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3d, 0x03 ]
@@ -2248,7 +2248,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,<> r1,rp,r3"
+          asm_text: "subbo,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5d, 0x03 ]
@@ -2257,7 +2257,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,>= r1,rp,r3"
+          asm_text: "subbo,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7d, 0x03 ]
@@ -2266,7 +2266,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,> r1,rp,r3"
+          asm_text: "subbo,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9d, 0x03 ]
@@ -2275,7 +2275,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,>>= r1,rp,r3"
+          asm_text: "subbo,>>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xbd, 0x03 ]
@@ -2284,7 +2284,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,>> r1,rp,r3"
+          asm_text: "subbo,>> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xdd, 0x03 ]
@@ -2293,7 +2293,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,nsv r1,rp,r3"
+          asm_text: "subbo,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfd, 0x03 ]
@@ -2302,7 +2302,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "subbo,ev r1,rp,r3"
+          asm_text: "subbo,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x04, 0x43 ]
@@ -2311,7 +2311,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds r1,rp,r3"
+          asm_text: "ds r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x24, 0x43 ]
@@ -2320,7 +2320,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,= r1,rp,r3"
+          asm_text: "ds,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x44, 0x43 ]
@@ -2329,7 +2329,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,< r1,rp,r3"
+          asm_text: "ds,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x64, 0x43 ]
@@ -2338,7 +2338,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,<= r1,rp,r3"
+          asm_text: "ds,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x84, 0x43 ]
@@ -2347,7 +2347,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,<< r1,rp,r3"
+          asm_text: "ds,<< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xa4, 0x43 ]
@@ -2356,7 +2356,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,<<= r1,rp,r3"
+          asm_text: "ds,<<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xc4, 0x43 ]
@@ -2365,7 +2365,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,sv r1,rp,r3"
+          asm_text: "ds,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe4, 0x43 ]
@@ -2374,7 +2374,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,od r1,rp,r3"
+          asm_text: "ds,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x14, 0x43 ]
@@ -2383,7 +2383,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,tr r1,rp,r3"
+          asm_text: "ds,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x34, 0x43 ]
@@ -2392,7 +2392,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,<> r1,rp,r3"
+          asm_text: "ds,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x54, 0x43 ]
@@ -2401,7 +2401,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,>= r1,rp,r3"
+          asm_text: "ds,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x74, 0x43 ]
@@ -2410,7 +2410,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,> r1,rp,r3"
+          asm_text: "ds,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x94, 0x43 ]
@@ -2419,7 +2419,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,>>= r1,rp,r3"
+          asm_text: "ds,>>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xb4, 0x43 ]
@@ -2428,7 +2428,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,>> r1,rp,r3"
+          asm_text: "ds,>> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xd4, 0x43 ]
@@ -2437,7 +2437,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,nsv r1,rp,r3"
+          asm_text: "ds,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf4, 0x43 ]
@@ -2446,7 +2446,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ds,ev r1,rp,r3"
+          asm_text: "ds,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x00, 0x03 ]
@@ -2455,7 +2455,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "andcm r1,rp,r3"
+          asm_text: "andcm r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x20, 0x03 ]
@@ -2464,7 +2464,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "andcm,= r1,rp,r3"
+          asm_text: "andcm,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x40, 0x03 ]
@@ -2473,7 +2473,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "andcm,< r1,rp,r3"
+          asm_text: "andcm,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x60, 0x03 ]
@@ -2482,7 +2482,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "andcm,<= r1,rp,r3"
+          asm_text: "andcm,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe0, 0x03 ]
@@ -2491,7 +2491,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "andcm,od r1,rp,r3"
+          asm_text: "andcm,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x10, 0x03 ]
@@ -2500,7 +2500,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "andcm,tr r1,rp,r3"
+          asm_text: "andcm,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x30, 0x03 ]
@@ -2509,7 +2509,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "andcm,<> r1,rp,r3"
+          asm_text: "andcm,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x50, 0x03 ]
@@ -2518,7 +2518,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "andcm,>= r1,rp,r3"
+          asm_text: "andcm,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x70, 0x03 ]
@@ -2527,7 +2527,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "andcm,> r1,rp,r3"
+          asm_text: "andcm,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf0, 0x03 ]
@@ -2536,7 +2536,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "andcm,ev r1,rp,r3"
+          asm_text: "andcm,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x02, 0x03 ]
@@ -2545,7 +2545,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "and r1,rp,r3"
+          asm_text: "and r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x22, 0x03 ]
@@ -2554,7 +2554,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "and,= r1,rp,r3"
+          asm_text: "and,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x42, 0x03 ]
@@ -2563,7 +2563,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "and,< r1,rp,r3"
+          asm_text: "and,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x62, 0x03 ]
@@ -2572,7 +2572,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "and,<= r1,rp,r3"
+          asm_text: "and,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe2, 0x03 ]
@@ -2581,7 +2581,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "and,od r1,rp,r3"
+          asm_text: "and,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x12, 0x03 ]
@@ -2590,7 +2590,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "and,tr r1,rp,r3"
+          asm_text: "and,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x32, 0x03 ]
@@ -2599,7 +2599,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "and,<> r1,rp,r3"
+          asm_text: "and,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x52, 0x03 ]
@@ -2608,7 +2608,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "and,>= r1,rp,r3"
+          asm_text: "and,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x72, 0x03 ]
@@ -2617,7 +2617,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "and,> r1,rp,r3"
+          asm_text: "and,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf2, 0x03 ]
@@ -2626,7 +2626,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "and,ev r1,rp,r3"
+          asm_text: "and,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x02, 0x43 ]
@@ -2635,7 +2635,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "or r1,rp,r3"
+          asm_text: "or r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x22, 0x43 ]
@@ -2644,7 +2644,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "or,= r1,rp,r3"
+          asm_text: "or,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x42, 0x43 ]
@@ -2653,7 +2653,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "or,< r1,rp,r3"
+          asm_text: "or,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x62, 0x43 ]
@@ -2662,7 +2662,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "or,<= r1,rp,r3"
+          asm_text: "or,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe2, 0x43 ]
@@ -2671,7 +2671,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "or,od r1,rp,r3"
+          asm_text: "or,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x12, 0x43 ]
@@ -2680,7 +2680,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "or,tr r1,rp,r3"
+          asm_text: "or,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x32, 0x43 ]
@@ -2689,7 +2689,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "or,<> r1,rp,r3"
+          asm_text: "or,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x52, 0x43 ]
@@ -2698,7 +2698,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "or,>= r1,rp,r3"
+          asm_text: "or,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x72, 0x43 ]
@@ -2707,7 +2707,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "or,> r1,rp,r3"
+          asm_text: "or,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf2, 0x43 ]
@@ -2716,7 +2716,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "or,ev r1,rp,r3"
+          asm_text: "or,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x02, 0x83 ]
@@ -2725,7 +2725,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xor r1,rp,r3"
+          asm_text: "xor r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x22, 0x83 ]
@@ -2734,7 +2734,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xor,= r1,rp,r3"
+          asm_text: "xor,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x42, 0x83 ]
@@ -2743,7 +2743,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xor,< r1,rp,r3"
+          asm_text: "xor,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x62, 0x83 ]
@@ -2752,7 +2752,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xor,<= r1,rp,r3"
+          asm_text: "xor,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe2, 0x83 ]
@@ -2761,7 +2761,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xor,od r1,rp,r3"
+          asm_text: "xor,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x12, 0x83 ]
@@ -2770,7 +2770,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xor,tr r1,rp,r3"
+          asm_text: "xor,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x32, 0x83 ]
@@ -2779,7 +2779,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xor,<> r1,rp,r3"
+          asm_text: "xor,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x52, 0x83 ]
@@ -2788,7 +2788,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xor,>= r1,rp,r3"
+          asm_text: "xor,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x72, 0x83 ]
@@ -2797,7 +2797,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xor,> r1,rp,r3"
+          asm_text: "xor,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf2, 0x83 ]
@@ -2806,7 +2806,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xor,ev r1,rp,r3"
+          asm_text: "xor,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x03, 0x83 ]
@@ -2815,7 +2815,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uxor r1,rp,r3"
+          asm_text: "uxor r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x23, 0x83 ]
@@ -2824,7 +2824,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uxor,swz r1,rp,r3"
+          asm_text: "uxor,swz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x43, 0x83 ]
@@ -2833,7 +2833,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uxor,sbz r1,rp,r3"
+          asm_text: "uxor,sbz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x63, 0x83 ]
@@ -2842,7 +2842,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uxor,shz r1,rp,r3"
+          asm_text: "uxor,shz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x13, 0x83 ]
@@ -2851,7 +2851,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uxor,tr r1,rp,r3"
+          asm_text: "uxor,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x33, 0x83 ]
@@ -2860,7 +2860,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uxor,nwz r1,rp,r3"
+          asm_text: "uxor,nwz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x53, 0x83 ]
@@ -2869,7 +2869,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uxor,nbz r1,rp,r3"
+          asm_text: "uxor,nbz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x73, 0x83 ]
@@ -2878,7 +2878,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uxor,nhz r1,rp,r3"
+          asm_text: "uxor,nhz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x08, 0x83 ]
@@ -2887,7 +2887,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr r1,rp,r3"
+          asm_text: "comclr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x28, 0x83 ]
@@ -2896,7 +2896,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,= r1,rp,r3"
+          asm_text: "comclr,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x48, 0x83 ]
@@ -2905,7 +2905,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,< r1,rp,r3"
+          asm_text: "comclr,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x68, 0x83 ]
@@ -2914,7 +2914,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,<= r1,rp,r3"
+          asm_text: "comclr,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x88, 0x83 ]
@@ -2923,7 +2923,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,<< r1,rp,r3"
+          asm_text: "comclr,<< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xa8, 0x83 ]
@@ -2932,7 +2932,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,<<= r1,rp,r3"
+          asm_text: "comclr,<<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xc8, 0x83 ]
@@ -2941,7 +2941,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,sv r1,rp,r3"
+          asm_text: "comclr,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xe8, 0x83 ]
@@ -2950,7 +2950,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,od r1,rp,r3"
+          asm_text: "comclr,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x18, 0x83 ]
@@ -2959,7 +2959,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,tr r1,rp,r3"
+          asm_text: "comclr,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x38, 0x83 ]
@@ -2968,7 +2968,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,<> r1,rp,r3"
+          asm_text: "comclr,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x58, 0x83 ]
@@ -2977,7 +2977,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,>= r1,rp,r3"
+          asm_text: "comclr,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x78, 0x83 ]
@@ -2986,7 +2986,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,> r1,rp,r3"
+          asm_text: "comclr,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x98, 0x83 ]
@@ -2995,7 +2995,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,>>= r1,rp,r3"
+          asm_text: "comclr,>>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xb8, 0x83 ]
@@ -3004,7 +3004,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,>> r1,rp,r3"
+          asm_text: "comclr,>> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xd8, 0x83 ]
@@ -3013,7 +3013,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,nsv r1,rp,r3"
+          asm_text: "comclr,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xf8, 0x83 ]
@@ -3022,7 +3022,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "comclr,ev r1,rp,r3"
+          asm_text: "comclr,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x09, 0x83 ]
@@ -3031,7 +3031,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcm r1,rp,r3"
+          asm_text: "uaddcm r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x29, 0x83 ]
@@ -3040,7 +3040,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcm,swz r1,rp,r3"
+          asm_text: "uaddcm,swz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x49, 0x83 ]
@@ -3049,7 +3049,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcm,sbz r1,rp,r3"
+          asm_text: "uaddcm,sbz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x69, 0x83 ]
@@ -3058,7 +3058,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcm,shz r1,rp,r3"
+          asm_text: "uaddcm,shz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x19, 0x83 ]
@@ -3067,7 +3067,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcm,tr r1,rp,r3"
+          asm_text: "uaddcm,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x39, 0x83 ]
@@ -3076,7 +3076,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcm,nwz r1,rp,r3"
+          asm_text: "uaddcm,nwz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x59, 0x83 ]
@@ -3085,7 +3085,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcm,nbz r1,rp,r3"
+          asm_text: "uaddcm,nbz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x79, 0x83 ]
@@ -3094,7 +3094,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcm,nhz r1,rp,r3"
+          asm_text: "uaddcm,nhz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x09, 0xc3 ]
@@ -3103,7 +3103,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcmt r1,rp,r3"
+          asm_text: "uaddcmt r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x29, 0xc3 ]
@@ -3112,7 +3112,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcmt,swz r1,rp,r3"
+          asm_text: "uaddcmt,swz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x49, 0xc3 ]
@@ -3121,7 +3121,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcmt,sbz r1,rp,r3"
+          asm_text: "uaddcmt,sbz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x69, 0xc3 ]
@@ -3130,7 +3130,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcmt,shz r1,rp,r3"
+          asm_text: "uaddcmt,shz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x19, 0xc3 ]
@@ -3139,7 +3139,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcmt,tr r1,rp,r3"
+          asm_text: "uaddcmt,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x39, 0xc3 ]
@@ -3148,7 +3148,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcmt,nwz r1,rp,r3"
+          asm_text: "uaddcmt,nwz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x59, 0xc3 ]
@@ -3157,7 +3157,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcmt,nbz r1,rp,r3"
+          asm_text: "uaddcmt,nbz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x79, 0xc3 ]
@@ -3166,7 +3166,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "uaddcmt,nhz r1,rp,r3"
+          asm_text: "uaddcmt,nhz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0a, 0x03 ]
@@ -3175,7 +3175,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl r1,rp,r3"
+          asm_text: "addl r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2a, 0x03 ]
@@ -3184,7 +3184,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,= r1,rp,r3"
+          asm_text: "addl,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4a, 0x03 ]
@@ -3193,7 +3193,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,< r1,rp,r3"
+          asm_text: "addl,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6a, 0x03 ]
@@ -3202,7 +3202,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,<= r1,rp,r3"
+          asm_text: "addl,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8a, 0x03 ]
@@ -3211,7 +3211,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,nuv r1,rp,r3"
+          asm_text: "addl,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xaa, 0x03 ]
@@ -3220,7 +3220,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,znv r1,rp,r3"
+          asm_text: "addl,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xca, 0x03 ]
@@ -3229,7 +3229,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,sv r1,rp,r3"
+          asm_text: "addl,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xea, 0x03 ]
@@ -3238,7 +3238,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,od r1,rp,r3"
+          asm_text: "addl,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1a, 0x03 ]
@@ -3247,7 +3247,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,tr r1,rp,r3"
+          asm_text: "addl,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3a, 0x03 ]
@@ -3256,7 +3256,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,<> r1,rp,r3"
+          asm_text: "addl,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5a, 0x03 ]
@@ -3265,7 +3265,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,>= r1,rp,r3"
+          asm_text: "addl,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7a, 0x03 ]
@@ -3274,7 +3274,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,> r1,rp,r3"
+          asm_text: "addl,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9a, 0x03 ]
@@ -3283,7 +3283,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,uv r1,rp,r3"
+          asm_text: "addl,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xba, 0x03 ]
@@ -3292,7 +3292,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,vnz r1,rp,r3"
+          asm_text: "addl,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xda, 0x03 ]
@@ -3301,7 +3301,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,nsv r1,rp,r3"
+          asm_text: "addl,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfa, 0x03 ]
@@ -3310,7 +3310,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addl,ev r1,rp,r3"
+          asm_text: "addl,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0a, 0x43 ]
@@ -3319,7 +3319,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl r1,rp,r3"
+          asm_text: "sh1addl r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2a, 0x43 ]
@@ -3328,7 +3328,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,= r1,rp,r3"
+          asm_text: "sh1addl,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4a, 0x43 ]
@@ -3337,7 +3337,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,< r1,rp,r3"
+          asm_text: "sh1addl,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6a, 0x43 ]
@@ -3346,7 +3346,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,<= r1,rp,r3"
+          asm_text: "sh1addl,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8a, 0x43 ]
@@ -3355,7 +3355,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,nuv r1,rp,r3"
+          asm_text: "sh1addl,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xaa, 0x43 ]
@@ -3364,7 +3364,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,znv r1,rp,r3"
+          asm_text: "sh1addl,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xca, 0x43 ]
@@ -3373,7 +3373,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,sv r1,rp,r3"
+          asm_text: "sh1addl,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xea, 0x43 ]
@@ -3382,7 +3382,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,od r1,rp,r3"
+          asm_text: "sh1addl,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1a, 0x43 ]
@@ -3391,7 +3391,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,tr r1,rp,r3"
+          asm_text: "sh1addl,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3a, 0x43 ]
@@ -3400,7 +3400,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,<> r1,rp,r3"
+          asm_text: "sh1addl,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5a, 0x43 ]
@@ -3409,7 +3409,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,>= r1,rp,r3"
+          asm_text: "sh1addl,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7a, 0x43 ]
@@ -3418,7 +3418,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,> r1,rp,r3"
+          asm_text: "sh1addl,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9a, 0x43 ]
@@ -3427,7 +3427,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,uv r1,rp,r3"
+          asm_text: "sh1addl,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xba, 0x43 ]
@@ -3436,7 +3436,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,vnz r1,rp,r3"
+          asm_text: "sh1addl,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xda, 0x43 ]
@@ -3445,7 +3445,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,nsv r1,rp,r3"
+          asm_text: "sh1addl,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfa, 0x43 ]
@@ -3454,7 +3454,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh1addl,ev r1,rp,r3"
+          asm_text: "sh1addl,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0a, 0x83 ]
@@ -3463,7 +3463,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl r1,rp,r3"
+          asm_text: "sh2addl r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2a, 0x83 ]
@@ -3472,7 +3472,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,= r1,rp,r3"
+          asm_text: "sh2addl,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4a, 0x83 ]
@@ -3481,7 +3481,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,< r1,rp,r3"
+          asm_text: "sh2addl,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6a, 0x83 ]
@@ -3490,7 +3490,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,<= r1,rp,r3"
+          asm_text: "sh2addl,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8a, 0x83 ]
@@ -3499,7 +3499,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,nuv r1,rp,r3"
+          asm_text: "sh2addl,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xaa, 0x83 ]
@@ -3508,7 +3508,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,znv r1,rp,r3"
+          asm_text: "sh2addl,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xca, 0x83 ]
@@ -3517,7 +3517,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,sv r1,rp,r3"
+          asm_text: "sh2addl,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xea, 0x83 ]
@@ -3526,7 +3526,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,od r1,rp,r3"
+          asm_text: "sh2addl,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1a, 0x83 ]
@@ -3535,7 +3535,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,tr r1,rp,r3"
+          asm_text: "sh2addl,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3a, 0x83 ]
@@ -3544,7 +3544,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,<> r1,rp,r3"
+          asm_text: "sh2addl,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5a, 0x83 ]
@@ -3553,7 +3553,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,>= r1,rp,r3"
+          asm_text: "sh2addl,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7a, 0x83 ]
@@ -3562,7 +3562,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,> r1,rp,r3"
+          asm_text: "sh2addl,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9a, 0x83 ]
@@ -3571,7 +3571,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,uv r1,rp,r3"
+          asm_text: "sh2addl,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xba, 0x83 ]
@@ -3580,7 +3580,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,vnz r1,rp,r3"
+          asm_text: "sh2addl,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xda, 0x83 ]
@@ -3589,7 +3589,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,nsv r1,rp,r3"
+          asm_text: "sh2addl,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfa, 0x83 ]
@@ -3598,7 +3598,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh2addl,ev r1,rp,r3"
+          asm_text: "sh2addl,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x0a, 0xc3 ]
@@ -3607,7 +3607,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl r1,rp,r3"
+          asm_text: "sh3addl r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x2a, 0xc3 ]
@@ -3616,7 +3616,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,= r1,rp,r3"
+          asm_text: "sh3addl,= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x4a, 0xc3 ]
@@ -3625,7 +3625,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,< r1,rp,r3"
+          asm_text: "sh3addl,< r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x6a, 0xc3 ]
@@ -3634,7 +3634,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,<= r1,rp,r3"
+          asm_text: "sh3addl,<= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x8a, 0xc3 ]
@@ -3643,7 +3643,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,nuv r1,rp,r3"
+          asm_text: "sh3addl,nuv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xaa, 0xc3 ]
@@ -3652,7 +3652,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,znv r1,rp,r3"
+          asm_text: "sh3addl,znv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xca, 0xc3 ]
@@ -3661,7 +3661,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,sv r1,rp,r3"
+          asm_text: "sh3addl,sv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xea, 0xc3 ]
@@ -3670,7 +3670,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,od r1,rp,r3"
+          asm_text: "sh3addl,od r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x1a, 0xc3 ]
@@ -3679,7 +3679,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,tr r1,rp,r3"
+          asm_text: "sh3addl,tr r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x3a, 0xc3 ]
@@ -3688,7 +3688,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,<> r1,rp,r3"
+          asm_text: "sh3addl,<> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x5a, 0xc3 ]
@@ -3697,7 +3697,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,>= r1,rp,r3"
+          asm_text: "sh3addl,>= r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x7a, 0xc3 ]
@@ -3706,7 +3706,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,> r1,rp,r3"
+          asm_text: "sh3addl,> r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0x9a, 0xc3 ]
@@ -3715,7 +3715,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,uv r1,rp,r3"
+          asm_text: "sh3addl,uv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xba, 0xc3 ]
@@ -3724,7 +3724,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,vnz r1,rp,r3"
+          asm_text: "sh3addl,vnz r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xda, 0xc3 ]
@@ -3733,7 +3733,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,nsv r1,rp,r3"
+          asm_text: "sh3addl,nsv r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x41, 0xfa, 0xc3 ]
@@ -3742,7 +3742,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sh3addl,ev r1,rp,r3"
+          asm_text: "sh3addl,ev r1, rp, r3"
   -
     input:
       bytes: [ 0x08, 0x20, 0x0b, 0x82 ]
@@ -3751,7 +3751,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "dcor r1,rp"
+          asm_text: "dcor r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x2b, 0x82 ]
@@ -3760,7 +3760,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "dcor,swz r1,rp"
+          asm_text: "dcor,swz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x4b, 0x82 ]
@@ -3769,7 +3769,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "dcor,sbz r1,rp"
+          asm_text: "dcor,sbz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x6b, 0x82 ]
@@ -3778,7 +3778,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "dcor,shz r1,rp"
+          asm_text: "dcor,shz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x1b, 0x82 ]
@@ -3787,7 +3787,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "dcor,tr r1,rp"
+          asm_text: "dcor,tr r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x3b, 0x82 ]
@@ -3796,7 +3796,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "dcor,nwz r1,rp"
+          asm_text: "dcor,nwz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x5b, 0x82 ]
@@ -3805,7 +3805,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "dcor,nbz r1,rp"
+          asm_text: "dcor,nbz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x7b, 0x82 ]
@@ -3814,7 +3814,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "dcor,nhz r1,rp"
+          asm_text: "dcor,nhz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x0b, 0xc2 ]
@@ -3823,7 +3823,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "idcor r1,rp"
+          asm_text: "idcor r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x2b, 0xc2 ]
@@ -3832,7 +3832,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "idcor,swz r1,rp"
+          asm_text: "idcor,swz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x4b, 0xc2 ]
@@ -3841,7 +3841,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "idcor,sbz r1,rp"
+          asm_text: "idcor,sbz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x6b, 0xc2 ]
@@ -3850,7 +3850,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "idcor,shz r1,rp"
+          asm_text: "idcor,shz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x1b, 0xc2 ]
@@ -3859,7 +3859,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "idcor,tr r1,rp"
+          asm_text: "idcor,tr r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x3b, 0xc2 ]
@@ -3868,7 +3868,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "idcor,nwz r1,rp"
+          asm_text: "idcor,nwz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x5b, 0xc2 ]
@@ -3877,7 +3877,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "idcor,nbz r1,rp"
+          asm_text: "idcor,nbz r1, rp"
   -
     input:
       bytes: [ 0x08, 0x20, 0x7b, 0xc2 ]
@@ -3886,4 +3886,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "idcor,nhz r1,rp"
+          asm_text: "idcor,nhz r1, rp"

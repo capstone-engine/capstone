@@ -7,7 +7,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldo -8(r1),rp"
+          asm_text: "ldo -8(r1), rp"
   -
     input:
       bytes: [ 0x23, 0x98, 0xc5, 0x4f ]
@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldil -0x55810000,ret0"
+          asm_text: "ldil -0x55810000, ret0"
   -
     input:
       bytes: [ 0x2b, 0x98, 0xc5, 0x4f ]
@@ -25,4 +25,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "addil -0x55810000,ret0"
+          asm_text: "addil -0x55810000, ret0"

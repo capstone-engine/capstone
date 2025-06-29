@@ -25,7 +25,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcpy,sgl fpe2,fpe4"
+          asm_text: "fcpy,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x48, 0x02 ]
@@ -34,7 +34,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcpy,dbl fpe2,fpe4"
+          asm_text: "fcpy,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x58, 0x02 ]
@@ -43,7 +43,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcpy,quad fpe2,fpe4"
+          asm_text: "fcpy,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x60, 0x02 ]
@@ -52,7 +52,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fabs,sgl fpe2,fpe4"
+          asm_text: "fabs,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x68, 0x02 ]
@@ -61,7 +61,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fabs,dbl fpe2,fpe4"
+          asm_text: "fabs,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x78, 0x02 ]
@@ -70,7 +70,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fabs,quad fpe2,fpe4"
+          asm_text: "fabs,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x80, 0x02 ]
@@ -79,7 +79,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fsqrt,sgl fpe2,fpe4"
+          asm_text: "fsqrt,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x88, 0x02 ]
@@ -88,7 +88,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fsqrt,dbl fpe2,fpe4"
+          asm_text: "fsqrt,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x98, 0x02 ]
@@ -97,7 +97,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fsqrt,quad fpe2,fpe4"
+          asm_text: "fsqrt,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0xa0, 0x02 ]
@@ -106,7 +106,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "frnd,sgl fpe2,fpe4"
+          asm_text: "frnd,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0xa8, 0x02 ]
@@ -115,7 +115,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "frnd,dbl fpe2,fpe4"
+          asm_text: "frnd,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0xb8, 0x02 ]
@@ -124,7 +124,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "frnd,quad fpe2,fpe4"
+          asm_text: "frnd,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x22, 0x02 ]
@@ -133,7 +133,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvff,sgl,dbl fpe2,fpe4"
+          asm_text: "fcnvff,sgl,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x62, 0x02 ]
@@ -142,7 +142,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvff,sgl,quad fpe2,fpe4"
+          asm_text: "fcnvff,sgl,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x0a, 0x02 ]
@@ -151,7 +151,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvff,dbl,sgl fpe2,fpe4"
+          asm_text: "fcnvff,dbl,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x6a, 0x02 ]
@@ -160,7 +160,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvff,dbl,quad fpe2,fpe4"
+          asm_text: "fcnvff,dbl,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x02, 0x02 ]
@@ -169,7 +169,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvff,sgl,sgl fpe2,fpe4"
+          asm_text: "fcnvff,sgl,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x2a, 0x02 ]
@@ -178,7 +178,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvff,dbl,dbl fpe2,fpe4"
+          asm_text: "fcnvff,dbl,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x7a, 0x02 ]
@@ -187,7 +187,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvff,quad,quad fpe2,fpe4"
+          asm_text: "fcnvff,quad,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0xa2, 0x02 ]
@@ -196,7 +196,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvxf,sgl,dbl fpe2,fpe4"
+          asm_text: "fcnvxf,sgl,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0xe2, 0x02 ]
@@ -205,7 +205,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvxf,sgl,quad fpe2,fpe4"
+          asm_text: "fcnvxf,sgl,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x8a, 0x02 ]
@@ -214,7 +214,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvxf,dbl,sgl fpe2,fpe4"
+          asm_text: "fcnvxf,dbl,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0xea, 0x02 ]
@@ -223,7 +223,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvxf,dbl,quad fpe2,fpe4"
+          asm_text: "fcnvxf,dbl,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0x82, 0x02 ]
@@ -232,7 +232,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvxf,sgl,sgl fpe2,fpe4"
+          asm_text: "fcnvxf,sgl,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0xaa, 0x02 ]
@@ -241,7 +241,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvxf,dbl,dbl fpe2,fpe4"
+          asm_text: "fcnvxf,dbl,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x20, 0xfa, 0x02 ]
@@ -250,7 +250,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvxf,quad,quad fpe2,fpe4"
+          asm_text: "fcnvxf,quad,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0x22, 0x02 ]
@@ -259,7 +259,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfx,sgl,dbl fpe2,fpe4"
+          asm_text: "fcnvfx,sgl,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0x62, 0x02 ]
@@ -268,7 +268,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfx,sgl,quad fpe2,fpe4"
+          asm_text: "fcnvfx,sgl,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0x0a, 0x02 ]
@@ -277,7 +277,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfx,dbl,sgl fpe2,fpe4"
+          asm_text: "fcnvfx,dbl,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0x6a, 0x02 ]
@@ -286,7 +286,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfx,dbl,quad fpe2,fpe4"
+          asm_text: "fcnvfx,dbl,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0x02, 0x02 ]
@@ -295,7 +295,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfx,sgl,sgl fpe2,fpe4"
+          asm_text: "fcnvfx,sgl,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0x2a, 0x02 ]
@@ -304,7 +304,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfx,dbl,dbl fpe2,fpe4"
+          asm_text: "fcnvfx,dbl,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0x7a, 0x02 ]
@@ -313,7 +313,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfx,quad,quad fpe2,fpe4"
+          asm_text: "fcnvfx,quad,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0xa2, 0x02 ]
@@ -322,7 +322,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfxt,sgl,dbl fpe2,fpe4"
+          asm_text: "fcnvfxt,sgl,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0xe2, 0x02 ]
@@ -331,7 +331,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfxt,sgl,quad fpe2,fpe4"
+          asm_text: "fcnvfxt,sgl,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0x8a, 0x02 ]
@@ -340,7 +340,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfxt,dbl,sgl fpe2,fpe4"
+          asm_text: "fcnvfxt,dbl,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0xea, 0x02 ]
@@ -349,7 +349,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfxt,dbl,quad fpe2,fpe4"
+          asm_text: "fcnvfxt,dbl,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0x82, 0x02 ]
@@ -358,7 +358,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfxt,sgl,sgl fpe2,fpe4"
+          asm_text: "fcnvfxt,sgl,sgl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0xaa, 0x02 ]
@@ -367,7 +367,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfxt,dbl,dbl fpe2,fpe4"
+          asm_text: "fcnvfxt,dbl,dbl fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x21, 0xfa, 0x02 ]
@@ -376,7 +376,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcnvfxt,quad,quad fpe2,fpe4"
+          asm_text: "fcnvfxt,quad,quad fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x00 ]
@@ -385,7 +385,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,false? fpe2,fpe4"
+          asm_text: "fcmp,sgl,false? fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x01 ]
@@ -394,7 +394,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,false fpe2,fpe4"
+          asm_text: "fcmp,sgl,false fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x02 ]
@@ -403,7 +403,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,? fpe2,fpe4"
+          asm_text: "fcmp,sgl,? fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x03 ]
@@ -412,7 +412,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!<=> fpe2,fpe4"
+          asm_text: "fcmp,sgl,!<=> fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x04 ]
@@ -421,7 +421,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,= fpe2,fpe4"
+          asm_text: "fcmp,sgl,= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x05 ]
@@ -430,7 +430,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,=t fpe2,fpe4"
+          asm_text: "fcmp,sgl,=t fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x06 ]
@@ -439,7 +439,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,?= fpe2,fpe4"
+          asm_text: "fcmp,sgl,?= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x07 ]
@@ -448,7 +448,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!<> fpe2,fpe4"
+          asm_text: "fcmp,sgl,!<> fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x08 ]
@@ -457,7 +457,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!?>= fpe2,fpe4"
+          asm_text: "fcmp,sgl,!?>= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x09 ]
@@ -466,7 +466,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,< fpe2,fpe4"
+          asm_text: "fcmp,sgl,< fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x0a ]
@@ -475,7 +475,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,?< fpe2,fpe4"
+          asm_text: "fcmp,sgl,?< fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x0b ]
@@ -484,7 +484,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!>= fpe2,fpe4"
+          asm_text: "fcmp,sgl,!>= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x0c ]
@@ -493,7 +493,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!?> fpe2,fpe4"
+          asm_text: "fcmp,sgl,!?> fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x0d ]
@@ -502,7 +502,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,<= fpe2,fpe4"
+          asm_text: "fcmp,sgl,<= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x0e ]
@@ -511,7 +511,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,?<= fpe2,fpe4"
+          asm_text: "fcmp,sgl,?<= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x0f ]
@@ -520,7 +520,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!> fpe2,fpe4"
+          asm_text: "fcmp,sgl,!> fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x10 ]
@@ -529,7 +529,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!?<= fpe2,fpe4"
+          asm_text: "fcmp,sgl,!?<= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x11 ]
@@ -538,7 +538,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,> fpe2,fpe4"
+          asm_text: "fcmp,sgl,> fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x12 ]
@@ -547,7 +547,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,?> fpe2,fpe4"
+          asm_text: "fcmp,sgl,?> fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x13 ]
@@ -556,7 +556,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!<= fpe2,fpe4"
+          asm_text: "fcmp,sgl,!<= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x14 ]
@@ -565,7 +565,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!?< fpe2,fpe4"
+          asm_text: "fcmp,sgl,!?< fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x15 ]
@@ -574,7 +574,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,>= fpe2,fpe4"
+          asm_text: "fcmp,sgl,>= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x16 ]
@@ -583,7 +583,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,?>= fpe2,fpe4"
+          asm_text: "fcmp,sgl,?>= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x17 ]
@@ -592,7 +592,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!< fpe2,fpe4"
+          asm_text: "fcmp,sgl,!< fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x18 ]
@@ -601,7 +601,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!?= fpe2,fpe4"
+          asm_text: "fcmp,sgl,!?= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x19 ]
@@ -610,7 +610,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,<> fpe2,fpe4"
+          asm_text: "fcmp,sgl,<> fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x1a ]
@@ -619,7 +619,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!= fpe2,fpe4"
+          asm_text: "fcmp,sgl,!= fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x1b ]
@@ -628,7 +628,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!=t fpe2,fpe4"
+          asm_text: "fcmp,sgl,!=t fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x1c ]
@@ -637,7 +637,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,!? fpe2,fpe4"
+          asm_text: "fcmp,sgl,!? fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x1d ]
@@ -646,7 +646,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,<=> fpe2,fpe4"
+          asm_text: "fcmp,sgl,<=> fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x1e ]
@@ -655,7 +655,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,true? fpe2,fpe4"
+          asm_text: "fcmp,sgl,true? fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x22, 0x04, 0x1f ]
@@ -664,7 +664,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fcmp,sgl,true fpe2,fpe4"
+          asm_text: "fcmp,sgl,true fpe2, fpe4"
   -
     input:
       bytes: [ 0x30, 0x00, 0x24, 0x20 ]
@@ -682,7 +682,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fadd,sgl fpe2,fpe4,fpe6"
+          asm_text: "fadd,sgl fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x0e, 0x03 ]
@@ -691,7 +691,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fadd,dbl fpe2,fpe4,fpe6"
+          asm_text: "fadd,dbl fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x1e, 0x03 ]
@@ -700,7 +700,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fadd,quad fpe2,fpe4,fpe6"
+          asm_text: "fadd,quad fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x26, 0x03 ]
@@ -709,7 +709,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fsub,sgl fpe2,fpe4,fpe6"
+          asm_text: "fsub,sgl fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x2e, 0x03 ]
@@ -718,7 +718,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fsub,dbl fpe2,fpe4,fpe6"
+          asm_text: "fsub,dbl fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x3e, 0x03 ]
@@ -727,7 +727,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fsub,quad fpe2,fpe4,fpe6"
+          asm_text: "fsub,quad fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x46, 0x03 ]
@@ -736,7 +736,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fmpy,sgl fpe2,fpe4,fpe6"
+          asm_text: "fmpy,sgl fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x4e, 0x03 ]
@@ -745,7 +745,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fmpy,dbl fpe2,fpe4,fpe6"
+          asm_text: "fmpy,dbl fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x5e, 0x03 ]
@@ -754,7 +754,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fmpy,quad fpe2,fpe4,fpe6"
+          asm_text: "fmpy,quad fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x66, 0x03 ]
@@ -763,7 +763,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fdiv,sgl fpe2,fpe4,fpe6"
+          asm_text: "fdiv,sgl fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x6e, 0x03 ]
@@ -772,7 +772,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fdiv,dbl fpe2,fpe4,fpe6"
+          asm_text: "fdiv,dbl fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x30, 0x22, 0x7e, 0x03 ]
@@ -781,7 +781,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fdiv,quad fpe2,fpe4,fpe6"
+          asm_text: "fdiv,quad fpe2, fpe4, fpe6"
   -
     input:
       bytes: [ 0x38, 0x22, 0x47, 0x03 ]
@@ -790,4 +790,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "xmpyu fpe2,fpe4,fpe6"
+          asm_text: "xmpyu fpe2, fpe4, fpe6"

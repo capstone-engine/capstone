@@ -7,7 +7,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "bl 0xffffffffffffffc0,r1"
+          asm_text: "bl 0xffffffffffffffc0, r1"
   -
     input:
       bytes: [ 0xe8, 0x3f, 0x1f, 0x6f ]
@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "bl,n 0xffffffffffffffbc,r1"
+          asm_text: "bl,n 0xffffffffffffffbc, r1"
   -
     input:
       bytes: [ 0xe8, 0x41, 0x40, 0x00 ]
@@ -25,7 +25,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "blr r1,rp"
+          asm_text: "blr r1, rp"
   -
     input:
       bytes: [ 0xe8, 0x41, 0x40, 0x02 ]
@@ -34,7 +34,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "blr,n r1,rp"
+          asm_text: "blr,n r1, rp"
   -
     input:
       bytes: [ 0xe8, 0x41, 0xc0, 0x00 ]
@@ -61,7 +61,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "gate 0xffffffffffffffa8,rp"
+          asm_text: "gate 0xffffffffffffffa8, rp"
   -
     input:
       bytes: [ 0xe8, 0x5f, 0x3f, 0x3f ]
@@ -70,4 +70,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "gate,n 0xffffffffffffffa4,rp"
+          asm_text: "gate,n 0xffffffffffffffa4, rp"

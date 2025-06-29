@@ -7,7 +7,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbx flags(sr1,r1),rp"
+          asm_text: "ldbx flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x60, 0x02 ]
@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbx,s flags(sr1,r1),rp"
+          asm_text: "ldbx,s flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x40, 0x22 ]
@@ -25,7 +25,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbx,m flags(sr1,r1),rp"
+          asm_text: "ldbx,m flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x60, 0x22 ]
@@ -34,7 +34,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbx,sm flags(sr1,r1),rp"
+          asm_text: "ldbx,sm flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x68, 0x02 ]
@@ -43,7 +43,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbx,s,sl flags(sr1,r1),rp"
+          asm_text: "ldbx,s,sl flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x48, 0x22 ]
@@ -52,7 +52,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbx,m,sl flags(sr1,r1),rp"
+          asm_text: "ldbx,m,sl flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x68, 0x22 ]
@@ -61,7 +61,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbx,sm,sl flags(sr1,r1),rp"
+          asm_text: "ldbx,sm,sl flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x40, 0x42 ]
@@ -70,7 +70,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhx flags(sr1,r1),rp"
+          asm_text: "ldhx flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x60, 0x42 ]
@@ -79,7 +79,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhx,s flags(sr1,r1),rp"
+          asm_text: "ldhx,s flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x40, 0x62 ]
@@ -88,7 +88,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhx,m flags(sr1,r1),rp"
+          asm_text: "ldhx,m flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x60, 0x62 ]
@@ -97,7 +97,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhx,sm flags(sr1,r1),rp"
+          asm_text: "ldhx,sm flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x68, 0x42 ]
@@ -106,7 +106,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhx,s,sl flags(sr1,r1),rp"
+          asm_text: "ldhx,s,sl flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x48, 0x62 ]
@@ -115,7 +115,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhx,m,sl flags(sr1,r1),rp"
+          asm_text: "ldhx,m,sl flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x68, 0x62 ]
@@ -124,7 +124,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhx,sm,sl flags(sr1,r1),rp"
+          asm_text: "ldhx,sm,sl flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x40, 0x82 ]
@@ -133,7 +133,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwx flags(sr1,r1),rp"
+          asm_text: "ldwx flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x60, 0x82 ]
@@ -142,7 +142,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwx,s flags(sr1,r1),rp"
+          asm_text: "ldwx,s flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x40, 0xa2 ]
@@ -151,7 +151,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwx,m flags(sr1,r1),rp"
+          asm_text: "ldwx,m flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x60, 0xa2 ]
@@ -160,7 +160,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwx,sm flags(sr1,r1),rp"
+          asm_text: "ldwx,sm flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x68, 0x82 ]
@@ -169,7 +169,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwx,s,sl flags(sr1,r1),rp"
+          asm_text: "ldwx,s,sl flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x48, 0xa2 ]
@@ -178,7 +178,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwx,m,sl flags(sr1,r1),rp"
+          asm_text: "ldwx,m,sl flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x68, 0xa2 ]
@@ -187,7 +187,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwx,sm,sl flags(sr1,r1),rp"
+          asm_text: "ldwx,sm,sl flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x01, 0x82 ]
@@ -196,7 +196,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwax flags(r1),rp"
+          asm_text: "ldwax flags(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x21, 0x82 ]
@@ -205,7 +205,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwax,s flags(r1),rp"
+          asm_text: "ldwax,s flags(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x01, 0xa2 ]
@@ -214,7 +214,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwax,m flags(r1),rp"
+          asm_text: "ldwax,m flags(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x21, 0xa2 ]
@@ -223,7 +223,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwax,sm flags(r1),rp"
+          asm_text: "ldwax,sm flags(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x29, 0x82 ]
@@ -232,7 +232,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwax,s,sl flags(r1),rp"
+          asm_text: "ldwax,s,sl flags(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x09, 0xa2 ]
@@ -241,7 +241,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwax,m,sl flags(r1),rp"
+          asm_text: "ldwax,m,sl flags(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x29, 0xa2 ]
@@ -250,7 +250,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwax,sm,sl flags(r1),rp"
+          asm_text: "ldwax,sm,sl flags(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x41, 0xc2 ]
@@ -259,7 +259,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcwx flags(sr1,r1),rp"
+          asm_text: "ldcwx flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x61, 0xc2 ]
@@ -268,7 +268,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcwx,s flags(sr1,r1),rp"
+          asm_text: "ldcwx,s flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x41, 0xe2 ]
@@ -277,7 +277,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcwx,m flags(sr1,r1),rp"
+          asm_text: "ldcwx,m flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x61, 0xe2 ]
@@ -286,7 +286,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcwx,sm flags(sr1,r1),rp"
+          asm_text: "ldcwx,sm flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x65, 0xc2 ]
@@ -295,7 +295,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcwx,s,co flags(sr1,r1),rp"
+          asm_text: "ldcwx,s,co flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x45, 0xe2 ]
@@ -304,7 +304,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcwx,m,co flags(sr1,r1),rp"
+          asm_text: "ldcwx,m,co flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x20, 0x65, 0xe2 ]
@@ -313,7 +313,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcwx,sm,co flags(sr1,r1),rp"
+          asm_text: "ldcwx,sm,co flags(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x50, 0x02 ]
@@ -322,7 +322,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbs 0xf(sr1,r1),rp"
+          asm_text: "ldbs 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x50, 0x22 ]
@@ -331,7 +331,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbs,ma 0xf(sr1,r1),rp"
+          asm_text: "ldbs,ma 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x70, 0x22 ]
@@ -340,7 +340,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbs,mb 0xf(sr1,r1),rp"
+          asm_text: "ldbs,mb 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x58, 0x22 ]
@@ -349,7 +349,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbs,ma,sl 0xf(sr1,r1),rp"
+          asm_text: "ldbs,ma,sl 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x78, 0x22 ]
@@ -358,7 +358,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldbs,mb,sl 0xf(sr1,r1),rp"
+          asm_text: "ldbs,mb,sl 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x50, 0x42 ]
@@ -367,7 +367,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhs 0xf(sr1,r1),rp"
+          asm_text: "ldhs 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x50, 0x62 ]
@@ -376,7 +376,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhs,ma 0xf(sr1,r1),rp"
+          asm_text: "ldhs,ma 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x70, 0x62 ]
@@ -385,7 +385,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhs,mb 0xf(sr1,r1),rp"
+          asm_text: "ldhs,mb 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x58, 0x62 ]
@@ -394,7 +394,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhs,ma,sl 0xf(sr1,r1),rp"
+          asm_text: "ldhs,ma,sl 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x78, 0x62 ]
@@ -403,7 +403,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldhs,mb,sl 0xf(sr1,r1),rp"
+          asm_text: "ldhs,mb,sl 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x50, 0x82 ]
@@ -412,7 +412,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldws 0xf(sr1,r1),rp"
+          asm_text: "ldws 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x50, 0xa2 ]
@@ -421,7 +421,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldws,ma 0xf(sr1,r1),rp"
+          asm_text: "ldws,ma 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x70, 0xa2 ]
@@ -430,7 +430,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldws,mb 0xf(sr1,r1),rp"
+          asm_text: "ldws,mb 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x58, 0xa2 ]
@@ -439,7 +439,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldws,ma,sl 0xf(sr1,r1),rp"
+          asm_text: "ldws,ma,sl 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x78, 0xa2 ]
@@ -448,7 +448,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldws,mb,sl 0xf(sr1,r1),rp"
+          asm_text: "ldws,mb,sl 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x11, 0x82 ]
@@ -457,7 +457,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwas 0xf(r1),rp"
+          asm_text: "ldwas 0xf(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x11, 0xa2 ]
@@ -466,7 +466,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwas,ma 0xf(r1),rp"
+          asm_text: "ldwas,ma 0xf(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x31, 0xa2 ]
@@ -475,7 +475,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwas,mb 0xf(r1),rp"
+          asm_text: "ldwas,mb 0xf(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x19, 0xa2 ]
@@ -484,7 +484,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwas,ma,sl 0xf(r1),rp"
+          asm_text: "ldwas,ma,sl 0xf(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x39, 0xa2 ]
@@ -493,7 +493,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldwas,mb,sl 0xf(r1),rp"
+          asm_text: "ldwas,mb,sl 0xf(r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x51, 0xc2 ]
@@ -502,7 +502,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcws 0xf(sr1,r1),rp"
+          asm_text: "ldcws 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x51, 0xe2 ]
@@ -511,7 +511,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcws,ma 0xf(sr1,r1),rp"
+          asm_text: "ldcws,ma 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x71, 0xe2 ]
@@ -520,7 +520,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcws,mb 0xf(sr1,r1),rp"
+          asm_text: "ldcws,mb 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x55, 0xe2 ]
@@ -529,7 +529,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcws,ma,co 0xf(sr1,r1),rp"
+          asm_text: "ldcws,ma,co 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x3e, 0x75, 0xe2 ]
@@ -538,7 +538,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldcws,mb,co 0xf(sr1,r1),rp"
+          asm_text: "ldcws,mb,co 0xf(sr1,r1), rp"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x52, 0x1e ]
@@ -547,7 +547,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbs r1,0xf(sr1,rp)"
+          asm_text: "stbs r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x52, 0x3e ]
@@ -556,7 +556,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbs,ma r1,0xf(sr1,rp)"
+          asm_text: "stbs,ma r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x72, 0x3e ]
@@ -565,7 +565,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbs,mb r1,0xf(sr1,rp)"
+          asm_text: "stbs,mb r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x56, 0x3e ]
@@ -574,7 +574,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbs,ma,bc r1,0xf(sr1,rp)"
+          asm_text: "stbs,ma,bc r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x7a, 0x3e ]
@@ -583,7 +583,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbs,mb,sl r1,0xf(sr1,rp)"
+          asm_text: "stbs,mb,sl r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x52, 0x5e ]
@@ -592,7 +592,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sths r1,0xf(sr1,rp)"
+          asm_text: "sths r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x52, 0x7e ]
@@ -601,7 +601,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sths,ma r1,0xf(sr1,rp)"
+          asm_text: "sths,ma r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x72, 0x7e ]
@@ -610,7 +610,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sths,mb r1,0xf(sr1,rp)"
+          asm_text: "sths,mb r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x56, 0x7e ]
@@ -619,7 +619,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sths,ma,bc r1,0xf(sr1,rp)"
+          asm_text: "sths,ma,bc r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x7a, 0x7e ]
@@ -628,7 +628,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "sths,mb,sl r1,0xf(sr1,rp)"
+          asm_text: "sths,mb,sl r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x52, 0x9e ]
@@ -637,7 +637,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stws r1,0xf(sr1,rp)"
+          asm_text: "stws r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x52, 0xbe ]
@@ -646,7 +646,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stws,ma r1,0xf(sr1,rp)"
+          asm_text: "stws,ma r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x72, 0xbe ]
@@ -655,7 +655,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stws,mb r1,0xf(sr1,rp)"
+          asm_text: "stws,mb r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x56, 0xbe ]
@@ -664,7 +664,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stws,ma,bc r1,0xf(sr1,rp)"
+          asm_text: "stws,ma,bc r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x7a, 0xbe ]
@@ -673,7 +673,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stws,mb,sl r1,0xf(sr1,rp)"
+          asm_text: "stws,mb,sl r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x53, 0x1e ]
@@ -682,7 +682,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbys r1,0xf(sr1,rp)"
+          asm_text: "stbys r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x53, 0x1e ]
@@ -691,7 +691,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbys r1,0xf(sr1,rp)"
+          asm_text: "stbys r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x73, 0x1e ]
@@ -700,7 +700,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbys,e r1,0xf(sr1,rp)"
+          asm_text: "stbys,e r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x53, 0x3e ]
@@ -709,7 +709,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbys,b,m r1,0xf(sr1,rp)"
+          asm_text: "stbys,b,m r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x73, 0x3e ]
@@ -718,7 +718,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbys,e,m r1,0xf(sr1,rp)"
+          asm_text: "stbys,e,m r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x57, 0x3e ]
@@ -727,7 +727,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbys,b,m,bc r1,0xf(sr1,rp)"
+          asm_text: "stbys,b,m,bc r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x7b, 0x3e ]
@@ -736,7 +736,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stbys,e,m,sl r1,0xf(sr1,rp)"
+          asm_text: "stbys,e,m,sl r1, 0xf(sr1,rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x13, 0x9e ]
@@ -745,7 +745,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stwas r1,0xf(rp)"
+          asm_text: "stwas r1, 0xf(rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x33, 0xbe ]
@@ -754,7 +754,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stwas,mb r1,0xf(rp)"
+          asm_text: "stwas,mb r1, 0xf(rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x13, 0xbe ]
@@ -763,7 +763,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stwas,ma r1,0xf(rp)"
+          asm_text: "stwas,ma r1, 0xf(rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x37, 0xbe ]
@@ -772,7 +772,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stwas,mb,bc r1,0xf(rp)"
+          asm_text: "stwas,mb,bc r1, 0xf(rp)"
   -
     input:
       bytes: [ 0x0c, 0x41, 0x1b, 0xbe ]
@@ -781,4 +781,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "stwas,ma,sl r1,0xf(rp)"
+          asm_text: "stwas,ma,sl r1, 0xf(rp)"
