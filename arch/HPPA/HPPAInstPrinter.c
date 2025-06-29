@@ -822,7 +822,7 @@ void HPPA_printInst(MCInst *MI, SStream *O, void *Info)
 		print_operand(MI, O, op);
 		if (op->type != HPPA_OP_IDX_REG && op->type != HPPA_OP_DISP &&
 		    i != hppa.op_count - 1) {
-			SStream_concat(O, ",");
+			SStream_concat(O, ", ");
 		}
 	}
 
