@@ -98,7 +98,7 @@ static const uint8_t DecoderTable16[] = {
 /* 267 */     MCD_OPC_FilterValue, 0, 17, 0, 0, // Skip to: 289
 /* 272 */     MCD_OPC_CheckPredicate, 0, 140, 1, 0, // Skip to: 673
 /* 277 */     MCD_OPC_ExtractField, 12, 1,   // Inst{12} ...
-/* 280 */     MCD_OPC_FilterValue, 0, 148, 1, 0, // Skip to: 673
+/* 280 */     MCD_OPC_FilterValue, 0, 132, 1, 0, // Skip to: 673
 /* 285 */     MCD_OPC_Decode, 177, 2, 13, // Opcode: C_SRLI
 /* 289 */     MCD_OPC_FilterValue, 1, 9, 0, 0, // Skip to: 303
 /* 294 */     MCD_OPC_CheckPredicate, 0, 118, 1, 0, // Skip to: 673
