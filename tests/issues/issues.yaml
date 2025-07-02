@@ -6243,3 +6243,23 @@ test_cases:
           aarch64:
             operands: []
           regs_read: [ x30 ]
+  -
+    input:
+      name: "issue #2731 - Should not disassemble"
+      bytes: [ 0x15, 0x93 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue #2731 - Should disassemble"
+      bytes: [ 0x15, 0x83 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+        -
+          asm_text: "c.srli a4, 5"
