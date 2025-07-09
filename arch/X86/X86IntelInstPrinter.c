@@ -237,7 +237,6 @@ static void printf64mem(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->x86opsize = 8;
 				break;
 			case X86_MOVPQI2QImr:
-			case X86_COMISDrm:
 				SStream_concat0(O, "xmmword ptr ");
 				MI->x86opsize = 16;
 				break;

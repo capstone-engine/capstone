@@ -1344,3 +1344,36 @@ test_cases:
             sib_scale: 0
           regs_read: [ rsp ]
           regs_write: [ rsp, rip ]
+  -
+    input:
+      bytes: [ 0x66, 0x45, 0x0f, 0x2f, 0x38 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "comisd	xmm15, qword ptr [r8]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x2f, 0x00, 0x00 ]
+            rex: 0x45
+            addr_size: 8
+            modrm: 0x38
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: xmm15
+                size: 16
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: r8
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ xmm15, r8 ]
+          regs_write: [ rflags ]

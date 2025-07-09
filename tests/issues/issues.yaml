@@ -1805,7 +1805,7 @@ test_cases:
         asm_text: "lock adc al, byte ptr [ebp + 8]"
   -
     input:
-      name: "issue 1456 xmmword"
+      name: "issue 1456/2748 xmmword"
       bytes: [ 0x66,0x0f,0x2f,0x00 ]
       arch: "CS_ARCH_X86"
       options: [ CS_MODE_32 ]
@@ -1813,7 +1813,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "comisd xmm0, xmmword ptr [eax]"
+        asm_text: "comisd xmm0, qword ptr [eax]"
   -
     input:
       name: "issue 1456 ARM printPKHASRShiftImm"
