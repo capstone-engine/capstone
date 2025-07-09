@@ -320,8 +320,8 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 |---------|--------|---------------|-----------------|
 | Post-index | Post-index memory access has the disponent now set in the `MEMORY` operand! No longer as separated `reg`/`imm` operand. | The CS memory operand had a field which was there for disponents. Not having it set, for post-index operands was inconsistent. | Edit `ARM_set_detail_op_mem()` and add an immediate operand instead of setting the disponent. |
 | Sign `mem.disp` | `mem.disp` is now always positive and the `subtracted` flag indicates if it should be subtracted. | It was inconsistent before. | Change behavior in `ARM_set_detail_op_mem()` |
-| `ARM_CC` | `ARM_CC` → `ARMCC` and value change | They match the same LLVM enum. Better for LLVM compatibility and code generation. | Change it manually. |
-| `ARMCC_*` | `ARMCC_EQ == 0` but `ARMCC_INVALID != 0` | They match the LLVM enum. Better for LLVM compatibility and code generation. | Change by hand. |
+| `ARM_CC` | `ARM_CC` → `ARMCC` and value change | They match the same LLVM enum. Better for LLVM compatibility and code generation. Hints towards change in values. | Compatibility macros are defined. |
+| `ARMCC_*` | `ARMCC_EQ == 0` but `ARMCC_INVALID != 0` | They match the LLVM and the ISA now. Better for LLVM compatibility and code generation. For details see [here](https://github.com/capstone-engine/capstone/issues/2751#issuecomment-3052435282). | None. |
 | System registers | System registers are no longer saved in `cs_arm->reg`, but are separated and have more detail. | System operands follow their own encoding logic. Hence, they should be separated in the details as well. | None |
 | System operands | System operands have now the encoding of LLVM (SYSm value mostly) | See note about system registers. | None |
 | Instruction enum | Multiple instructions which were only alias were removed from the instruction enum. | Alias are always disassembled as their real instructions and an additional field identifies which alias it is. | None |
@@ -338,8 +338,8 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 
 | Keyword | Change | Justification |
 |---------|--------|---------------|
-| `ARMCC_*` | `ARMCC_EQ == 0` but `ARMCC_INVALID != 0` | They match the LLVM enum. Better for LLVM compatibility and code generation. Check the compatibility option below. |
-| `ARM_CC` | `ARM_CC` → `ARMCC` and value change | They match the same LLVM enum. Better for LLVM compatibility and code generation. |
+| `ARMCC_*` | `ARMCC_EQ == 0` but `ARMCC_INVALID != 0` | They match the LLVM and the ISA now. Better for LLVM compatibility and code generation. For details see [here](https://github.com/capstone-engine/capstone/issues/2751#issuecomment-3052435282). |
+| `ARM_CC` | `ARM_CC` → `ARMCC` and value change | They match the same LLVM enum. Better for LLVM compatibility and code generation. Hints towards change in values. |
 | Post-index | Post-index memory access has the disponent now set in the `MEMORY` operand! No longer as separated `reg`/`imm` operand. | The CS memory operand had a field which was there for disponents. Not having it set, for post-index operands was inconsistent. |
 | Sign `mem.disp` | `mem.disp` is now always positive and the `subtracted` flag indicates if it should be subtracted. | It was inconsistent before. |
 | System registers | System registers are no longer saved in `cs_arm->reg`, but are separated and have more detail. | System operands follow their own encoding logic. Hence, they should be separated in the details as well. |
@@ -362,7 +362,7 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | `writeback` | `writeback` member was moved to detail. | See ARM explanation. |
 | `arm64_vas` | `arm64_vas` renamed to `AArch64Layout_VectorLayout` | LLVM compatibility. |
 | Register alias | Register alias (`x29 = fp` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. WARNING: This option uses a naive search and replace strategy to patch the register names in the asm text. And hence adds significant runtime at scale, if enabled. | Mimic LLVM as close as possible. |
-| `AArch64CC_*` | `AArch64CC_EQ == 0` but `AArch64CC_INVALID != 0` | They match the LLVM enum. Better for LLVM compatibility and code generation. |
+| `AArch64CC_*` | `AArch64CC_EQ == 0` but `AArch64CC_INVALID != 0` | They match the LLVM and the ISA now. Better for LLVM compatibility and code generation. For details see [here](https://github.com/capstone-engine/capstone/issues/2751#issuecomment-3052435282). |
 
 **PPC**
 
