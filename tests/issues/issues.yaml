@@ -6281,3 +6281,14 @@ test_cases:
                 imm: 0
               - type: SYSTEMZ_OP_IMM
                 imm: 0xa
+  -
+    input:
+      name: "issue 2491 - Missing repne for movsd"
+      bytes: [ 0xf2, 0xa5 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "repne movsd        dword ptr es:[edi], dword ptr [esi]"
