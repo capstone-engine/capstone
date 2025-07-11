@@ -33,7 +33,7 @@ Note:
 	- Clone and build `llvm-tblgen` (see docs)
   - Quickly check options of the updater `ASUpdater -h`
 	- Add Arch name in `Target.py`
-	- In [llvm-capstone](https://github.com/capstone-engine/llvm-capstone) handle arch in `PrinterCapstone.cpp::decoderEmitterEmitFieldFromInstruction()` (add decoder function)
+	- In [llvm-capstone](https://github.com/capstone-engine/llvm-capstone) handle arch in `PrinterCapstone.cpp::decoderEmitterEmitDecodeInstruction()` (add decoder function)
 	- Generate: `ASUpdater -s IncGen -a ARCH`
 		- Errors? Check if the error message tells you what to do. If no hint exists, ask us.
 	- Check if `inc` files in `build` look good.
