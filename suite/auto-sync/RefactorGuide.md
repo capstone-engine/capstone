@@ -34,6 +34,9 @@ Note:
   - Quickly check options of the updater `ASUpdater -h`
 	- Add Arch name in `Target.py`
 	- In [llvm-capstone](https://github.com/capstone-engine/llvm-capstone) handle arch in `PrinterCapstone.cpp::decoderEmitterEmitDecodeInstruction()` (add decoder function)
+	  [!NOTE] Architecture specific code generation.
+		There are several oddities of architectures which require slightly different generated code.
+		If you search through `PrinterCapstone.cpp` for architecture names like `AArch64`, `ARM`, or `Sparc` you can see how these are handled.
 	- Generate: `ASUpdater -s IncGen -a ARCH`
 		- Errors? Check if the error message tells you what to do. If no hint exists, ask us.
 	- Check if `inc` files in `build` look good.
