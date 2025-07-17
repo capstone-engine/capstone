@@ -927,3 +927,26 @@ test_cases:
               cc: SPARC_CC_ICC_VS
               cc_field: SPARC_CC_FIELD_XCC
             # groups: [ HasV9 ] - Bug: llvm-project/#142388
+  -
+    input:
+      bytes: [ 0xa5, 0x61, 0xc0, 0x11 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x0
+    expected:
+      insns:
+        -
+          asm_text: "movu	%fcc0, %l1, %l2"
+          details:
+            sparc:
+              operands:
+                  -
+                    type: SPARC_OP_REG
+                    access: CS_AC_READ
+                    reg: l1
+                  -
+                    type: SPARC_OP_REG
+                    access: CS_AC_WRITE
+                    reg: l2
+              cc_field: SPARC_CC_FIELD_FCC0
+              cc: SPARC_CC_FCC_U
