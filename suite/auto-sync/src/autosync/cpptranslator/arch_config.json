@@ -319,7 +319,7 @@
   "RISCV": {
     "files_to_translate": [
       {
-        "in": "{LLVM_ROOT}/lllvm/lib/Target/RISCV/Disassembler/RISCVDisassembler.cpp",
+        "in": "{LLVM_ROOT}/llvm/lib/Target/RISCV/Disassembler/RISCVDisassembler.cpp",
         "out": "RISCVDisassembler.c"
       },{
         "in": "{LLVM_ROOT}/llvm/lib/Target/RISCV/MCTargetDesc/RISCVInstPrinter.cpp",
@@ -330,7 +330,8 @@
       }
     ],
     "files_for_template_search": [
-      "{LLVM_ROOT}/llvm/lib/Target/RISCV/Disassembler/RISCVDisassembler.cpp"
+      "{LLVM_ROOT}/llvm/lib/Target/RISCV/Disassembler/RISCVDisassembler.cpp",
+      "{CPP_INC_OUT_DIR}/RISCVGenDisassemblerTables.inc"
     ],
     "templates_with_arg_deduction": [],
     "manually_edited_files": []
