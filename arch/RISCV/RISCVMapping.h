@@ -4,6 +4,10 @@
 
 #include "../../include/capstone/capstone.h"
 
+typedef enum {
+    #include "RISCVGenCSOpGroup.inc"
+} riscv_op_group;
+
 // given internal insn id, return public instruction info
 void RISCV_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 

@@ -40,18 +40,19 @@
 #define GET_SUBTARGETINFO_ENUM
 #include "RISCVGenSubtargetInfo.inc"
 
-#define GET_INSTRINFO_ENUM
-#include "RISCVGenInstrInfo.inc"
+#include "RISCVBaseInfo.h"
 
 #define GET_REGINFO_ENUM
 #include "RISCVGenRegisterInfo.inc"
+
+#define GET_INSTRINFO_ENUM
+#define GET_INSTRINFO_MC_DESC
+#include "RISCVGenInstrInfo.inc"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
 #define DEBUG_TYPE "riscv-disassembler"
-
-typedef MCDisassembler_DecodeStatus DecodeStatus;
 
 DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
 			    size_t BytesLen, uint64_t Address,
@@ -64,7 +65,7 @@ static DecodeStatus DecodeGPRRegisterClass(MCInst *Inst, uint32_t RegNo,
 					   uint64_t Address,
 					   const void *Decoder)
 {
-	bool IsRVE = Decoder->getSubtargetInfo().hasFeature(RISCV_FeatureRVE);
+	bool IsRVE = RISCV_getFeatureBits(Inst->csh->mode, RISCV_FeatureRVE);
 
 	if (RegNo >= 32 || (IsRVE && RegNo >= 16))
 		return MCDisassembler_Fail;
@@ -223,11 +224,9 @@ static DecodeStatus DecodeVRM2RegisterClass(MCInst *Inst, uint32_t RegNo,
 	if (RegNo >= 32 || RegNo % 2)
 		return MCDisassembler_Fail;
 
-	const RISCVDisassembler *Dis = (const RISCVDisassembler *)(Decoder);
-	const MCRegisterInfo *RI = MCOperand_getRegisterInfo(Dis->getContext());
-	MCRegister Reg = RI->getMatchingSuperReg(
+	MCRegister Reg = MCRegisterInfo_getMatchingSuperReg(Inst->MRI,
 		RISCV_V0 + RegNo, RISCV_sub_vrm1_0,
-		&RISCVMCRegisterClasses[RISCV_VRM2RegClassID]);
+		MCRegisterInfo_getRegClass(Inst->MRI, RISCV_VRM2RegClassID));
 
 	MCOperand_CreateReg0(Inst, (Reg));
 	return MCDisassembler_Success;
@@ -240,11 +239,9 @@ static DecodeStatus DecodeVRM4RegisterClass(MCInst *Inst, uint32_t RegNo,
 	if (RegNo >= 32 || RegNo % 4)
 		return MCDisassembler_Fail;
 
-	const RISCVDisassembler *Dis = (const RISCVDisassembler *)(Decoder);
-	const MCRegisterInfo *RI = MCOperand_getRegisterInfo(Dis->getContext());
-	MCRegister Reg = RI->getMatchingSuperReg(
+	MCRegister Reg = MCRegisterInfo_getMatchingSuperReg(Inst->MRI,
 		RISCV_V0 + RegNo, RISCV_sub_vrm1_0,
-		&RISCVMCRegisterClasses[RISCV_VRM4RegClassID]);
+		MCRegisterInfo_getRegClass(Inst->MRI, RISCV_VRM4RegClassID));
 
 	MCOperand_CreateReg0(Inst, (Reg));
 	return MCDisassembler_Success;
@@ -257,11 +254,9 @@ static DecodeStatus DecodeVRM8RegisterClass(MCInst *Inst, uint32_t RegNo,
 	if (RegNo >= 32 || RegNo % 8)
 		return MCDisassembler_Fail;
 
-	const RISCVDisassembler *Dis = (const RISCVDisassembler *)(Decoder);
-	const MCRegisterInfo *RI = MCOperand_getRegisterInfo(Dis->getContext());
-	MCRegister Reg = RI->getMatchingSuperReg(
+	MCRegister Reg = MCRegisterInfo_getMatchingSuperReg(Inst->MRI,
 		RISCV_V0 + RegNo, RISCV_sub_vrm1_0,
-		&RISCVMCRegisterClasses[RISCV_VRM8RegClassID]);
+		MCRegisterInfo_getRegClass(Inst->MRI, RISCV_VRM8RegClassID));
 
 	MCOperand_CreateReg0(Inst, (Reg));
 	return MCDisassembler_Success;
@@ -373,7 +368,7 @@ static DecodeStatus decodeFRMArg(MCInst *Inst, uint32_t Imm, int64_t Address,
 				 const void *Decoder)
 {
 	CS_ASSERT(isUIntN(3, Imm) && "Invalid immediate");
-	if (!llvm_RISCVFPRndMode::isValidRoundingMode(Imm))
+	if (!RISCVFPRndMode_isValidRoundingMode(Imm))
 		return MCDisassembler_Fail;
 
 	MCOperand_CreateImm0(Inst, (Imm));
@@ -547,11 +542,15 @@ static DecodeStatus decodeZcmpSpimm(MCInst *Inst, unsigned Imm,
 // isn't explicitly encoded in the instruction.
 void addSPOperands(MCInst *MI)
 {
-	const MCInstrDesc *MCID = MCII->get(MCInst_getOpcode(MI));
-	for (unsigned i = 0; i < MCInst_getNumOperands(MCID); i++)
-		if (MCID.operands()[i].RegClass == RISCV_SPRegClassID)
-			MI.insert(MI.begin() + i,
-				  MCOperand_createReg(RISCV_X2));
+	const MCInstrDesc *MCID = 
+		MCInstrDesc_get(MCInst_getOpcode(MI), RISCVDescs.Insts, ARR_SIZE(RISCVDescs.Insts));
+	MCOperand SPReg;
+	SPReg.MachineOperandType = kRegister;
+	SPReg.Kind = kRegister;
+	SPReg.RegVal = RISCV_X2;
+	for (unsigned i = 0; i < MCID->NumOperands; i++)
+		if (MCID->OpInfo[i].RegClass == RISCV_SPRegClassID)
+			MCInst_insert0(MI, i, &SPReg);
 }
 
 DecodeStatus getInstruction(MCInst *MI, uint64_t *Size, const uint8_t *Bytes,
@@ -566,10 +565,9 @@ DecodeStatus getInstruction(MCInst *MI, uint64_t *Size, const uint8_t *Bytes,
 						DESC, ADDITIONAL_OPERATION) \
 	do { \
 		if (FEATURE_CHECKS) { \
-			LLVM_DEBUG(dbgs() << "Trying " DESC ":\n"); \
-			Result = decodeInstruction(DECODER_TABLE, MI, Insn, \
-						   Address, this, STI); \
-			if (Result != MCDisassembler::Fail) { \
+			Result = decodeInstruction_4(DECODER_TABLE, MI, Insn, \
+						   Address, NULL); \
+			if (Result != MCDisassembler_Fail) { \
 				ADDITIONAL_OPERATION; \
 				return Result; \
 			} \
@@ -580,9 +578,9 @@ DecodeStatus getInstruction(MCInst *MI, uint64_t *Size, const uint8_t *Bytes,
 						DESC, addSPOperands(MI))
 #define TRY_TO_DECODE(FEATURE_CHECKS, DECODER_TABLE, DESC) \
 	TRY_TO_DECODE_WITH_ADDITIONAL_OPERATION(FEATURE_CHECKS, DECODER_TABLE, \
-						DESC, (void)nullptr)
+						DESC, (void)NULL)
 #define TRY_TO_DECODE_FEATURE(FEATURE, DECODER_TABLE, DESC) \
-	TRY_TO_DECODE(STI.hasFeature(FEATURE), DECODER_TABLE, DESC)
+	TRY_TO_DECODE(RISCV_getFeatureBits(MI->csh->mode, FEATURE), DECODER_TABLE, DESC)
 
 	// It's a 32 bit instruction if bit 0 and 1 are 1.
 	if ((Bytes[0] & 0x3) == 0x3) {
@@ -592,14 +590,14 @@ DecodeStatus getInstruction(MCInst *MI, uint64_t *Size, const uint8_t *Bytes,
 		}
 		*Size = 4;
 
-		Insn = support_endian::read32le(Bytes);
+		Insn = readBytes32(MI, Bytes);
 
-		TRY_TO_DECODE(STI.hasFeature(RISCV_FeatureStdExtZdinx) &&
-				      !STI.hasFeature(RISCV_Feature64Bit),
+		TRY_TO_DECODE(RISCV_getFeatureBits(MI->csh->mode, RISCV_FeatureStdExtZdinx) &&
+				      !RISCV_getFeatureBits(MI->csh->mode, RISCV_Feature64Bit),
 			      DecoderTableRV32Zdinx32,
 			      "RV32Zdinx table (Double in Integer and rv32)");
-		TRY_TO_DECODE(STI.hasFeature(RISCV_FeatureStdExtZacas) &&
-				      !STI.hasFeature(RISCV_Feature64Bit),
+		TRY_TO_DECODE(RISCV_getFeatureBits(MI->csh->mode, RISCV_FeatureStdExtZacas) &&
+				      !RISCV_getFeatureBits(MI->csh->mode, RISCV_Feature64Bit),
 			      DecoderTableRV32Zacas32,
 			      "RV32Zacas table (Compare-And-Swap and rv32)");
 		TRY_TO_DECODE_FEATURE(RISCV_FeatureStdExtZfinx,
@@ -693,8 +691,8 @@ DecodeStatus getInstruction(MCInst *MI, uint64_t *Size, const uint8_t *Bytes,
 	}
 	*Size = 2;
 
-	Insn = support_endian::read16le(Bytes);
-	TRY_TO_DECODE_AND_ADD_SP(!STI.hasFeature(RISCV_Feature64Bit),
+	Insn = readBytes16(MI, Bytes);
+	TRY_TO_DECODE_AND_ADD_SP(!RISCV_getFeatureBits(MI->csh->mode, RISCV_Feature64Bit),
 				 DecoderTableRISCV32Only_16,
 				 "RISCV32Only_16 table (16-bit Instruction)");
 	TRY_TO_DECODE_FEATURE(RISCV_FeatureStdExtZicfiss, DecoderTableZicfiss16,

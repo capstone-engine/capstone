@@ -52,21 +52,19 @@
 
 // Print architectural register names rather than the ABI names (such as x2
 // instead of sp).
-// TODO: Make RISCVInstPrinter::getRegisterName non-static so that this can a
+// TODO: Make RISCVInstPrinter_doGetRegisterName non-static so that this can a
 // member.
 static bool ArchRegNames;
 
 void printRegName(SStream *O, MCRegister Reg)
 {
-	SStream_concat0(markup(O, Markup_Register), getRegisterName(Reg));
+	SStream_concat0(markup_OS(O, Markup_Register), doGetRegisterName(Reg));
 }
 
-static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O,
-				const char *Modifier)
+static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_Operand, OpNo);
-	CS_ASSERT((Modifier == nullptr || Modifier[0] == 0) &&
-		  "No modifiers supported");
+
 	MCOperand *MO = MCInst_getOperand(MI, (OpNo));
 
 	if (MCOperand_isReg(MO)) {
@@ -75,7 +73,7 @@ static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O,
 	}
 
 	if (MCOperand_isImm(MO)) {
-		SStream_concat0(markup(O, Markup_Immediate),
+		SStream_concat0(markup_OS(O, Markup_Immediate),
 				formatImm(MCOperand_getImm(MO)));
 		return;
 	}
@@ -95,11 +93,11 @@ static inline void printBranchOperand(MCInst *MI, uint64_t Address,
 
 	if (PrintBranchImmAsAddress) {
 		uint64_t Target = Address + MCOperand_getImm(MO);
-		if (!STI.hasFeature(RISCV_Feature64Bit))
+		if (!RISCV_getFeatureBits(MI->csh->mode, RISCV_Feature64Bit))
 			Target &= 0xffffffff;
-		SStream_concat0(markup(O, Markup_Target), formatHex(Target));
+		SStream_concat0(markup_OS(O, Markup_Target), formatHex(Target));
 	} else {
-		SStream_concat0(markup(O, Markup_Target),
+		SStream_concat0(markup_OS(O, Markup_Target),
 				formatImm(MCOperand_getImm(MO)));
 	}
 }
@@ -110,9 +108,9 @@ static inline void printCSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	auto SysReg = RISCVSysReg_lookupSysRegByEncoding(Imm);
 	if (SysReg && SysReg->haveRequiredFeatures(STI.getFeatureBits()))
-		SStream_concat0(markup(O, Markup_Register), SysReg->Name);
+		SStream_concat0(markup_OS(O, Markup_Register), SysReg->Name);
 	else
-		SStream_concat0(markup(O, Markup_Register), formatImm(Imm));
+		SStream_concat0(markup_OS(O, Markup_Register), formatImm(Imm));
 }
 
 static inline void printFenceArg(MCInst *MI, unsigned OpNo, SStream *O)
@@ -144,7 +142,7 @@ static inline void printFRMArg(MCInst *MI, unsigned OpNo, SStream *O)
 	auto FRMArg = (RISCVFPRndMode_RoundingMode)(MCOperand_getImm(
 		MCInst_getOperand(MI, (OpNo))));
 	if (PrintAliases && !NoAliases &&
-	    FRMArg == RISCVFPRndMode_RoundingMode::DYN)
+	    FRMArg == RISCVFPRndMode_RoundingMode_DYN)
 		return;
 	SStream_concat(O, "%s", ", ");
 	SStream_concat0(O, RISCVFPRndMode_roundingModeToString(FRMArg));
@@ -158,7 +156,7 @@ static inline void printFRMArgLegacy(MCInst *MI, unsigned OpNo, SStream *O)
 	// Never print rounding mode if it's the default 'rne'. This ensures the
 	// output can still be parsed by older tools that erroneously failed to
 	// accept a rounding mode.
-	if (FRMArg == RISCVFPRndMode_RoundingMode::RNE)
+	if (FRMArg == RISCVFPRndMode_RoundingMode_RNE)
 		return;
 	SStream_concat(O, "%s", ", ");
 	SStream_concat0(O, RISCVFPRndMode_roundingModeToString(FRMArg));
@@ -169,11 +167,11 @@ static inline void printFPImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_FPImmOperand, OpNo);
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	if (Imm == 1) {
-		SStream_concat0(markup(O, Markup_Immediate), "min");
+		SStream_concat0(markup_OS(O, Markup_Immediate), "min");
 	} else if (Imm == 30) {
-		SStream_concat0(markup(O, Markup_Immediate), "inf");
+		SStream_concat0(markup_OS(O, Markup_Immediate), "inf");
 	} else if (Imm == 31) {
-		SStream_concat0(markup(O, Markup_Immediate), "nan");
+		SStream_concat0(markup_OS(O, Markup_Immediate), "nan");
 	} else {
 		float FPVal = RISCVLoadFPImm_getFPImm(Imm);
 		// If the value is an integer, print a .0 fraction. Otherwise, use %g to
@@ -181,10 +179,10 @@ static inline void printFPImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		// if it is shorter than printing as a decimal. The smallest value requires
 		// 12 digits of precision including the decimal.
 		if (FPVal == (int)(FPVal))
-			SStream_concat0(markup(O, Markup_Immediate),
+			SStream_concat0(markup_OS(O, Markup_Immediate),
 					format("%.1f", FPVal));
 		else
-			SStream_concat0(markup(O, Markup_Immediate),
+			SStream_concat0(markup_OS(O, Markup_Immediate),
 					format("%.12g", FPVal));
 	}
 }
@@ -207,7 +205,7 @@ static inline void printVTypeI(MCInst *MI, unsigned OpNo, SStream *O)
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	// Print the raw immediate for reserved values: vlmul[2:0]=4, vsew[2:0]=0b1xx,
 	// or non-zero in bits 8 and above.
-	if (RISCVVType_getVLMUL(Imm) == RISCVII_VLMUL::LMUL_RESERVED ||
+	if (RISCVVType_getVLMUL(Imm) == RISCVII_VLMUL_LMUL_RESERVED ||
 	    RISCVVType_getSEW(Imm) > 64 || (Imm >> 8) != 0) {
 		SStream_concat0(O, formatImm(Imm));
 		return;
@@ -222,71 +220,71 @@ static inline void printRlist(MCInst *MI, unsigned OpNo, SStream *O)
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	SStream_concat0(O, "{");
 	switch (Imm) {
-	case RISCVZC_RLISTENCODE::RA:
-		SStream_concat0(markup(O, Markup_Register),
+	case RISCVZC_RLISTENCODE_RA:
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x1" : "ra"));
 		break;
-	case RISCVZC_RLISTENCODE::RA_S0:
-		SStream_concat0(markup(O, Markup_Register),
+	case RISCVZC_RLISTENCODE_RA_S0:
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x1" : "ra"));
 		SStream_concat0(O, ", ");
-		SStream_concat0(markup(O, Markup_Register),
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x8" : "s0"));
 		break;
-	case RISCVZC_RLISTENCODE::RA_S0_S1:
-		SStream_concat0(markup(O, Markup_Register),
+	case RISCVZC_RLISTENCODE_RA_S0_S1:
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x1" : "ra"));
 		SStream_concat0(O, ", ");
-		SStream_concat0(markup(O, Markup_Register),
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x8" : "s0"));
 		SStream_concat0(O, "-");
 
-		SStream_concat0(markup(O, Markup_Register),
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x9" : "s1"));
 		break;
-	case RISCVZC_RLISTENCODE::RA_S0_S2:
-		SStream_concat0(markup(O, Markup_Register),
+	case RISCVZC_RLISTENCODE_RA_S0_S2:
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x1" : "ra"));
 		SStream_concat0(O, ", ");
-		SStream_concat0(markup(O, Markup_Register),
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x8" : "s0"));
 		SStream_concat0(O, "-");
 
-		SStream_concat0(markup(O, Markup_Register),
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x9" : "s2"));
 		if (ArchRegNames) {
 			SStream_concat0(O, ", ");
-			SStream_concat0(markup(O, Markup_Register), "x18");
+			SStream_concat0(markup_OS(O, Markup_Register), "x18");
 		}
 		break;
-	case RISCVZC_RLISTENCODE::RA_S0_S3:
-	case RISCVZC_RLISTENCODE::RA_S0_S4:
-	case RISCVZC_RLISTENCODE::RA_S0_S5:
-	case RISCVZC_RLISTENCODE::RA_S0_S6:
-	case RISCVZC_RLISTENCODE::RA_S0_S7:
-	case RISCVZC_RLISTENCODE::RA_S0_S8:
-	case RISCVZC_RLISTENCODE::RA_S0_S9:
-	case RISCVZC_RLISTENCODE::RA_S0_S11:
-		SStream_concat0(markup(O, Markup_Register),
+	case RISCVZC_RLISTENCODE_RA_S0_S3:
+	case RISCVZC_RLISTENCODE_RA_S0_S4:
+	case RISCVZC_RLISTENCODE_RA_S0_S5:
+	case RISCVZC_RLISTENCODE_RA_S0_S6:
+	case RISCVZC_RLISTENCODE_RA_S0_S7:
+	case RISCVZC_RLISTENCODE_RA_S0_S8:
+	case RISCVZC_RLISTENCODE_RA_S0_S9:
+	case RISCVZC_RLISTENCODE_RA_S0_S11:
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x1" : "ra"));
 		SStream_concat0(O, ", ");
-		SStream_concat0(markup(O, Markup_Register),
+		SStream_concat0(markup_OS(O, Markup_Register),
 				(ArchRegNames ? "x8" : "s0"));
 		SStream_concat0(O, "-");
 
 		if (ArchRegNames) {
-			SStream_concat0(markup(O, Markup_Register), "x9");
+			SStream_concat0(markup_OS(O, Markup_Register), "x9");
 			SStream_concat0(O, ", ");
-			SStream_concat0(markup(O, Markup_Register), "x18");
+			SStream_concat0(markup_OS(O, Markup_Register), "x18");
 			SStream_concat0(O, "-");
 		}
 		SStream_concat0(
-			markup(O, Markup_Register),
-			getRegisterName(
+			markup_OS(O, Markup_Register),
+			doGetRegisterName(
 				RISCV_X19 +
-				(Imm == RISCVZC_RLISTENCODE::RA_S0_S11 ?
+				(Imm == RISCVZC_RLISTENCODE_RA_S0_S11 ?
 					 8 :
-					 Imm - RISCVZC_RLISTENCODE::RA_S0_S3)));
+					 Imm - RISCVZC_RLISTENCODE_RA_S0_S3)));
 		break;
 	default:
 		CS_ASSERT(0 && "invalid register list");
@@ -318,8 +316,8 @@ static inline void printSpimm(MCInst *MI, unsigned OpNo, SStream *O)
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_Spimm, OpNo);
 	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	unsigned Opcode = MCInst_getOpcode(MI);
-	bool IsRV64 = STI.hasFeature(RISCV_Feature64Bit);
-	bool IsEABI = STI.hasFeature(RISCV_FeatureRVE);
+	bool IsRV64 = RISCV_getFeatureBits(MI->csh->mode, RISCV_Feature64Bit);
+	bool IsEABI = RISCV_getFeatureBits(MI->csh->mode, RISCV_FeatureRVE);
 	int64_t Spimm = 0;
 	auto RlistVal = MCOperand_getImm(MCInst_getOperand(MI, (0)));
 	CS_ASSERT(RlistVal != 16 && "Incorrect rlist.");
@@ -329,9 +327,7 @@ static inline void printSpimm(MCInst *MI, unsigned OpNo, SStream *O)
 	if (Opcode == RISCV_CM_PUSH)
 		Spimm = -Spimm;
 
-	// RAII guard for ANSI color escape sequences
-	WithMarkup ScopedMarkup = markup(O, Markup_Immediate);
-	RISCVZC_printSpimm(Spimm, O);
+	RISCVZC_printSpimm(Spimm, markup_OS(O, Markup_Immediate));
 }
 
 static inline void printVMaskReg(MCInst *MI, unsigned OpNo, SStream *O)
@@ -348,7 +344,7 @@ static inline void printVMaskReg(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat0(O, ".t");
 }
 
-const char *getRegisterName(MCRegister Reg)
+const char *doGetRegisterName(MCRegister Reg)
 {
 	return getRegisterName(Reg, ArchRegNames ? RISCV_NoRegAltName :
 						   RISCV_ABIRegAltName);

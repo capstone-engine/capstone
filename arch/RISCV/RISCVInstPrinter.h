@@ -34,12 +34,14 @@
 
 #include "../../MCInstPrinter.h"
 #include "../../cs_priv.h"
+#include "../../SStream.h"
+#include "RISCVBaseInfo.h"
+#include "RISCVMapping.h"
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
 void printRegName(SStream *O, MCRegister Reg);
-void printOperand(MCInst *MI, unsigned OpNo, SStream *O,
-		  const char *Modifier = nullptr);
+void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo,
 			SStream *O);
 void printCSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O);

@@ -493,13 +493,12 @@ def get_RISCV_includes(filename: str) -> bytes:
                 + b'#include "../../MCFixedLenDisassembler.h"\n'
                 + b'#include "../../cs_priv.h"\n'
                 + b'#include "../../utils.h"\n'
-                + b'#include "RISCVDisassemblerExtension.h"\n'
                 + b"#define GET_SUBTARGETINFO_ENUM\n"
                 + b'#include "RISCVGenSubtargetInfo.inc"\n\n'
                 + b"#define GET_INSTRINFO_ENUM\n"
                 + b'#include "RISCVGenInstrInfo.inc"\n\n'
                 + b"#define GET_REGINFO_ENUM\n"
-                + b'#include RISCVGenRegisterInfo.inc"\n\n'
+                + b'#include "RISCVGenRegisterInfo.inc"\n\n'
             )
         case "RISCVInstPrinter.cpp":
             return (
@@ -515,6 +514,14 @@ def get_RISCV_includes(filename: str) -> bytes:
         case "RISCVInstPrinter.h":
             return (
                 b'#include "../../MCInstPrinter.h"\n' + b'#include "../../cs_priv.h"\n'
+            )
+        case "RISCVBaseInfo.h":
+            return (
+                b'#include "../../utils.h"\n'
+                + b"#define GET_REGINFO_ENUM\n"
+                + b'#include "RISCVGenRegisterInfo.inc"\n\n'
+                + b"#define GET_INSTRINFO_ENUM\n"
+                + b'#include "RISCVGenInstrInfo.inc"\n\n'
             )
     log.fatal(f"No includes given for RISCV source file: {filename}")
     exit(1)
