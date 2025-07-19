@@ -7,14 +7,14 @@ let package = Package(
     name: "capstone",
     products: [
         .library(
-            name: "CCapstone",
-            targets: ["CCapstone"]
+            name: "Ccapstone",
+            targets: ["Ccapstone"]
         ),
     ],
     targets: [
         .target(
-            name: "CCapstone",
-            path: "bindings/swift/CCapstone",
+            name: "Ccapstone",
+            path: "bindings/swift/Ccapstone",
         ),
     ]
 )
