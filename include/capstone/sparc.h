@@ -545,7 +545,7 @@ typedef struct cs_sparc_op {
 	cs_ac_type access; ///< The way the operand is accessed.
 } cs_sparc_op;
 
-#define NUM_SPARC_OPS 4
+#define NUM_SPARC_OPS 6
 
 /// Instruction structure
 typedef struct cs_sparc {
