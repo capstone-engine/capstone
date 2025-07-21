@@ -1715,11 +1715,11 @@ typedef struct cs_xtensa_op {
 	};
 } cs_xtensa_op;
 
-#define MAX_XTENSA_OPS 8
+#define NUM_XTENSA_OPS 8
 
 typedef struct cs_xtensa {
 	uint8_t op_count;
-	cs_xtensa_op operands[MAX_XTENSA_OPS];
+	cs_xtensa_op operands[NUM_XTENSA_OPS];
 	xtensa_insn_form format;
 } cs_xtensa;
 

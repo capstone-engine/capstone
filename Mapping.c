@@ -331,31 +331,31 @@ const cs_ac_type mapping_get_op_access(MCInst *MI, unsigned OpNum,
 }
 
 /// Returns the operand at detail->arch.operands[op_count + offset]
-/// Or NULL if detail is not set.
-#define DEFINE_get_detail_op(arch, ARCH) \
+/// Or NULL if detail is not set or the offset would be out of bounds.
+#define DEFINE_get_detail_op(arch, ARCH, ARCH_UPPER) \
 	cs_##arch##_op *ARCH##_get_detail_op(MCInst *MI, int offset) \
 	{ \
 		if (!MI->flat_insn->detail) \
 			return NULL; \
 		int OpIdx = MI->flat_insn->detail->arch.op_count + offset; \
-		assert(OpIdx >= 0 && OpIdx < MAX_MC_OPS); \
+		if (OpIdx < 0 && OpIdx >= NUM_##ARCH_UPPER##_OPS) { return NULL; } \
 		return &MI->flat_insn->detail->arch.operands[OpIdx]; \
 	}
 
-DEFINE_get_detail_op(arm, ARM);
-DEFINE_get_detail_op(ppc, PPC);
-DEFINE_get_detail_op(tricore, TriCore);
-DEFINE_get_detail_op(aarch64, AArch64);
-DEFINE_get_detail_op(alpha, Alpha);
-DEFINE_get_detail_op(hppa, HPPA);
-DEFINE_get_detail_op(loongarch, LoongArch);
-DEFINE_get_detail_op(mips, Mips);
-DEFINE_get_detail_op(riscv, RISCV);
-DEFINE_get_detail_op(systemz, SystemZ);
-DEFINE_get_detail_op(xtensa, Xtensa);
-DEFINE_get_detail_op(bpf, BPF);
-DEFINE_get_detail_op(arc, ARC);
-DEFINE_get_detail_op(sparc, Sparc);
+DEFINE_get_detail_op(arm, ARM, ARM);
+DEFINE_get_detail_op(ppc, PPC, PPC);
+DEFINE_get_detail_op(tricore, TriCore, TRICORE);
+DEFINE_get_detail_op(aarch64, AArch64, AARCH64);
+DEFINE_get_detail_op(alpha, Alpha, ALPHA);
+DEFINE_get_detail_op(hppa, HPPA, HPPA);
+DEFINE_get_detail_op(loongarch, LoongArch, LOONGARCH);
+DEFINE_get_detail_op(mips, Mips, MIPS);
+DEFINE_get_detail_op(riscv, RISCV, RISCV);
+DEFINE_get_detail_op(systemz, SystemZ, SYSTEMZ);
+DEFINE_get_detail_op(xtensa, Xtensa, XTENSA);
+DEFINE_get_detail_op(bpf, BPF, BPF);
+DEFINE_get_detail_op(arc, ARC, ARC);
+DEFINE_get_detail_op(sparc, Sparc, SPARC);
 
 /// Returns true if for this architecture the
 /// alias operands should be filled.
