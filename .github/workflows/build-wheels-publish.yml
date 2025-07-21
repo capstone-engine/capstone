@@ -63,7 +63,7 @@ jobs:
           # windows - x86
           # - { os: windows-latest, arch: x86, cibw_build: 'cp*', cibw_skip: '*36* *37*' }
           # windows - arm64
-          - { os: windows-latest, arch: ARM64, cibw_build: 'cp*', cibw_skip: '*36* *37* *38*' }
+          - { os: windows-11-arm, arch: ARM64, cibw_build: 'cp*', cibw_skip: '*36* *37* *38* *39* *310*' }
 
     steps:
       - uses: actions/checkout@v4
@@ -114,9 +114,8 @@ jobs:
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_ENVIRONMENT: DEBUG=${{ env.CAPSTONE_DEBUG }}
           CIBW_ENVIRONMENT_PASS_LINUX: DEBUG
-          # https://cibuildwheel.pypa.io/en/stable/faq/#windows-arm64
           # https://github.com/pypa/cibuildwheel/pull/1169
-          CIBW_TEST_SKIP: "*-win_arm64 cp38-macosx_*:arm64"
+          CIBW_TEST_SKIP: "cp38-macosx_*:arm64"
           CIBW_TEST_COMMAND: >
             python -m pip install {package}/cstest_py &&
             python {project}/suite/run_tests.py
