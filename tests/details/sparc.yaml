@@ -950,3 +950,25 @@ test_cases:
                     reg: l2
               cc_field: SPARC_CC_FIELD_FCC0
               cc: SPARC_CC_FCC_U
+  -
+    input:
+      bytes: [ 0xd0, 0x3d, 0x40, 0x16 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x0
+    expected:
+      insns:
+        -
+          asm_text: "std	%o0, [%l5+%l6]"
+          details:
+            sparc:
+              operands:
+                  -
+                    type: SPARC_OP_REG
+                    access: CS_AC_READ
+                    reg: o0
+                  -
+                    type: SPARC_OP_MEM
+                    mem_base: l5
+                    mem_index: l6
+                    access: CS_AC_WRITE

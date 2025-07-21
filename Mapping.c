@@ -338,7 +338,7 @@ const cs_ac_type mapping_get_op_access(MCInst *MI, unsigned OpNum,
 		if (!MI->flat_insn->detail) \
 			return NULL; \
 		int OpIdx = MI->flat_insn->detail->arch.op_count + offset; \
-		if (OpIdx < 0 && OpIdx >= NUM_##ARCH_UPPER##_OPS) { return NULL; } \
+		if (OpIdx < 0 || OpIdx >= NUM_##ARCH_UPPER##_OPS) { return NULL; } \
 		return &MI->flat_insn->detail->arch.operands[OpIdx]; \
 	}
 
