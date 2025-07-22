@@ -11,6 +11,8 @@ void print_insn_detail_mips(csh handle, cs_insn *ins)
 {
 	int i;
 	cs_mips *mips;
+	cs_regs regs_read, regs_write;
+	uint8_t regs_read_count, regs_write_count;
 
 	// detail can be NULL on "data" instruction if SKIPDATA option is turned ON
 	if (ins->detail == NULL)
@@ -44,5 +46,39 @@ void print_insn_detail_mips(csh handle, cs_insn *ins)
 				break;
 		}
 
+		switch(op->access) {
+			default:
+				break;
+			case CS_AC_READ:
+				printf("\t\toperands[%u].access: READ\n", i);
+				break;
+			case CS_AC_WRITE:
+				printf("\t\toperands[%u].access: WRITE\n", i);
+				break;
+			case CS_AC_READ | CS_AC_WRITE:
+				printf("\t\toperands[%u].access: READ | WRITE\n", i);
+				break;
+		}
+	}
+
+	// Print out all registers accessed by this instruction (either implicit or explicit)
+	if (!cs_regs_access(handle, ins,
+						regs_read, &regs_read_count,
+						regs_write, &regs_write_count)) {
+		if (regs_read_count) {
+			printf("\tRegisters read:");
+			for(i = 0; i < regs_read_count; i++) {
+				printf(" %s", cs_reg_name(handle, regs_read[i]));
+			}
+			printf("\n");
+		}
+
+		if (regs_write_count) {
+			printf("\tRegisters modified:");
+			for(i = 0; i < regs_write_count; i++) {
+				printf(" %s", cs_reg_name(handle, regs_write[i]));
+			}
+			printf("\n");
+		}
 	}
 }
