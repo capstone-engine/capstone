@@ -26,6 +26,9 @@ cs_err ALPHA_global_init(cs_struct *ud)
 	ud->insn_id = Alpha_get_insn_id;
 	ud->insn_name = Alpha_insn_name;
 	ud->group_name = Alpha_group_name;
+#ifndef CAPSTONE_DIET
+	ud->reg_access = Alpha_reg_access;
+#endif
 
 	return CS_ERR_OK;
 }

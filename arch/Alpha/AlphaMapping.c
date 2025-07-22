@@ -182,4 +182,48 @@ bool Alpha_getInstruction(csh handle, const uint8_t *code,
 	return Result != MCDisassembler_Fail;
 }
 
+#ifndef CAPSTONE_DIET
+void Alpha_reg_access(const cs_insn *insn, cs_regs regs_read,
+			  uint8_t *regs_read_count, cs_regs regs_write,
+			  uint8_t *regs_write_count)
+{
+	uint8_t i;
+	uint8_t read_count, write_count;
+	cs_alpha *alpha = &(insn->detail->alpha);
+
+	read_count = insn->detail->regs_read_count;
+	write_count = insn->detail->regs_write_count;
+
+	// implicit registers
+	memcpy(regs_read, insn->detail->regs_read,
+	       read_count * sizeof(insn->detail->regs_read[0]));
+	memcpy(regs_write, insn->detail->regs_write,
+	       write_count * sizeof(insn->detail->regs_write[0]));
+
+	// explicit registers
+	for (i = 0; i < alpha->op_count; i++) {
+		cs_alpha_op *op = &(alpha->operands[i]);
+		switch ((int)op->type) {
+		case ALPHA_OP_REG:
+			if ((op->access & CS_AC_READ) &&
+			    !arr_exist(regs_read, read_count, op->reg)) {
+				regs_read[read_count] = (uint16_t)op->reg;
+				read_count++;
+			}
+			if ((op->access & CS_AC_WRITE) &&
+			    !arr_exist(regs_write, write_count, op->reg)) {
+				regs_write[write_count] = (uint16_t)op->reg;
+				write_count++;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	*regs_read_count = read_count;
+	*regs_write_count = write_count;
+}
+#endif
+
 #endif

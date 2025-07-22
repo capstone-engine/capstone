@@ -32,4 +32,8 @@ void Alpha_set_detail_op_imm(MCInst *MI, unsigned OpNum, alpha_op_type ImmType,
 							 int64_t Imm);
 void Alpha_set_detail_op_reg(MCInst *MI, unsigned OpNum, alpha_op_type Reg);
 
+void Alpha_reg_access(const cs_insn *insn, cs_regs regs_read,
+			uint8_t *regs_read_count, cs_regs regs_write,
+			uint8_t *regs_write_count);
+
 #endif
