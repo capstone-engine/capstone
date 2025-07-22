@@ -697,7 +697,7 @@ typedef struct cs_mips_op {
 	cs_ac_type access;
 } cs_mips_op;
 
-#define NUM_MIPS_OPS 10
+#define NUM_MIPS_OPS 16
 
 /// Instruction structure
 typedef struct cs_mips {

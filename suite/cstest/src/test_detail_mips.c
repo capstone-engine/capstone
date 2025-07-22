@@ -56,6 +56,7 @@ TestDetailMipsOp *test_detail_mips_op_clone(const TestDetailMipsOp *op)
 	clone->imm = op->imm;
 	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
 	clone->mem_disp = op->mem_disp;
+	clone->is_reglist = op->is_reglist;
 
 	return clone;
 }
@@ -90,6 +91,7 @@ bool test_expected_mips(csh *handle, const cs_mips *actual,
 			return false;
 		case MIPS_OP_REG:
 			compare_reg_ret(*handle, op->reg, eop->reg, false);
+			compare_tbool_ret(op->is_reglist, eop->is_reglist, false);
 			break;
 		case MIPS_OP_IMM:
 			compare_uint64_ret(op->imm, eop->imm, false);

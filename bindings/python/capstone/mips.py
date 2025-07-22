@@ -44,7 +44,7 @@ class MipsOp(ctypes.Structure):
 class CsMips(ctypes.Structure):
     _fields_ = (
         ('op_count', ctypes.c_uint8),
-        ('operands', MipsOp * 10),
+        ('operands', MipsOp * 16),
     )
 
 def get_arch_info(a):

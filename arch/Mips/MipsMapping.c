@@ -303,7 +303,7 @@ static void Mips_set_detail_op_reg(MCInst *MI, unsigned OpNum, mips_reg Reg,
 		return;
 	}
 
-	CS_ASSERT((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
+	CS_ASSERT(is_reglist || (map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_REG;
 	Mips_get_detail_op(MI, 0)->reg = Reg;
 	Mips_get_detail_op(MI, 0)->is_reglist = is_reglist;
@@ -319,8 +319,19 @@ static void Mips_set_detail_op_operand(MCInst *MI, unsigned OpNum)
 		Mips_set_detail_op_imm(MI, OpNum, value);
 	} else if (op_type == CS_OP_REG) {
 		Mips_set_detail_op_reg(MI, OpNum, value, false);
-	} else
-		printf("Operand type %d not handled!\n", op_type);
+	} else {
+		// Register list which ends with a memory operand
+		// Gives very large MCInst operand numbers but don't
+		// have the respective Capstone type in the mapping table.
+		if (MCOperand_isImm(MCInst_getOperand(MI, OpNum))) {
+			Mips_get_detail_op(MI, 0)->type = MIPS_OP_MEM;
+			Mips_get_detail_op(MI, 0)->mem.disp = value;
+		} else if (MCOperand_isReg(MCInst_getOperand(MI, OpNum))) {
+			Mips_get_detail_op(MI, 0)->mem.base = value;
+		} else {
+			printf("Operand type %d not handled!\n", op_type);
+		}
+	}
 }
 
 static void Mips_set_detail_op_jump(MCInst *MI, unsigned OpNum)

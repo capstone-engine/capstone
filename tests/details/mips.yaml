@@ -267,3 +267,60 @@ test_cases:
               -
                 type: MIPS_OP_REG
                 reg: f0
+  -
+    input:
+      bytes: [ 0x23, 0x20, 0x5c, 0x6d ]
+      arch: "CS_ARCH_MIPS"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_MICRO32R6 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lwm32	$s0, $s1, $s2, $s3, $s4, $s5, $s6, $s7, $fp, $ra, -0x393($zero)"
+        details:
+          mips:
+            operands:
+              -
+                type: MIPS_OP_REG
+                reg: s0
+                is_reglist: 1
+              -
+                type: MIPS_OP_REG
+                reg: s1
+                is_reglist: 1
+              -
+                type: MIPS_OP_REG
+                reg: s2
+                is_reglist: 1
+              -
+                type: MIPS_OP_REG
+                reg: s3
+                is_reglist: 1
+              -
+                type: MIPS_OP_REG
+                reg: s4
+                is_reglist: 1
+              -
+                type: MIPS_OP_REG
+                reg: s5
+                is_reglist: 1
+              -
+                type: MIPS_OP_REG
+                reg: s6
+                is_reglist: 1
+              -
+                type: MIPS_OP_REG
+                reg: s7
+                is_reglist: 1
+              -
+                type: MIPS_OP_REG
+                reg: fp
+                is_reglist: 1
+              -
+                type: MIPS_OP_REG
+                reg: ra
+                is_reglist: 1
+              -
+                type: MIPS_OP_MEM
+                mem_base: zero
+                mem_disp: -0x393

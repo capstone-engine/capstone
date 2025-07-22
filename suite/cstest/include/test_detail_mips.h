@@ -15,6 +15,7 @@ typedef struct {
 	uint64_t imm;
 	char *mem_base;
 	int64_t mem_disp;
+	tbool is_reglist;
 } TestDetailMipsOp;
 
 static const cyaml_schema_field_t test_detail_mips_op_mapping_schema[] = {
@@ -31,6 +32,8 @@ static const cyaml_schema_field_t test_detail_mips_op_mapping_schema[] = {
 			       TestDetailMipsOp, mem_base, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailMipsOp,
 			mem_disp),
+	CYAML_FIELD_INT("is_reglist", CYAML_FLAG_OPTIONAL, TestDetailMipsOp,
+			is_reglist),
 	CYAML_FIELD_END
 };
 
