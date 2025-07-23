@@ -21,6 +21,8 @@ test_cases:
               -
                 type: ALPHA_OP_REG
                 reg: $13
+          regs_read: [ $13 ]
+          regs_write: [ $28, $15 ]
       -
         asm_text: "lda $15,0x7a50($15)"
         details:
@@ -35,6 +37,8 @@ test_cases:
               -
                 type: ALPHA_OP_REG
                 reg: $15
+          regs_read: [ $15 ]
+          regs_write: [ $28, $15 ]
       -
         asm_text: "lda $30,0xffd0($30)"
         details:
@@ -49,6 +53,8 @@ test_cases:
               -
                 type: ALPHA_OP_REG
                 reg: $30
+          regs_read: [ $30 ]
+          regs_write: [ $28, $30 ]
       -
         asm_text: "stq $12,0($30)"
         details:
@@ -63,6 +69,8 @@ test_cases:
               -
                 type: ALPHA_OP_REG
                 reg: $30
+          regs_read: [ $12, $30 ]
+          regs_write: [ $28 ]
   -
     input:
       bytes: [ 0x27, 0xbb, 0x00, 0x02, 0x23, 0xbd, 0x7a, 0x50, 0x23, 0xde, 0xff, 0xd0, 0xb7, 0x5e, 0x00, 0x00  ]
@@ -85,6 +93,8 @@ test_cases:
               -
                 type: ALPHA_OP_REG
                 reg: $13
+          regs_read: [ $13 ]
+          regs_write: [ $28, $15 ]
       -
         asm_text: "lda $15,0x7a50($15)"
         details:
@@ -99,6 +109,8 @@ test_cases:
               -
                 type: ALPHA_OP_REG
                 reg: $15
+          regs_read: [ $15 ]
+          regs_write: [ $28, $15 ]
       -
         asm_text: "lda $30,0xffd0($30)"
         details:
@@ -113,6 +125,8 @@ test_cases:
               -
                 type: ALPHA_OP_REG
                 reg: $30
+          regs_read: [ $30 ]
+          regs_write: [ $28, $30 ]
       -
         asm_text: "stq $12,0($30)"
         details:
@@ -127,4 +141,6 @@ test_cases:
               -
                 type: ALPHA_OP_REG
                 reg: $30
+          regs_read: [ $12, $30 ]
+          regs_write: [ $28 ]
 
