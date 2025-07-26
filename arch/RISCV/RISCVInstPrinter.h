@@ -36,7 +36,8 @@
 #include "../../cs_priv.h"
 #include "../../SStream.h"
 #include "RISCVBaseInfo.h"
-#include "RISCVMapping.h"
+#include "RISCVDisassemblerExtension.h"
+
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
@@ -56,11 +57,14 @@ void printRlist(MCInst *MI, unsigned OpNo, SStream *O);
 void printSpimm(MCInst *MI, unsigned OpNo, SStream *O);
 void printRegReg(MCInst *MI, unsigned OpNo, SStream *O);
 
-void printInstruction(MCInst *MI, uint64_t Address, SStream *O);
-bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *O);
-void printCustomAliasOperand(MCInst *MI, uint64_t Address, unsigned OpIdx,
-			     unsigned PrintMethodIdx, SStream *O);
-;
-// namespace llvm
+static void printCustomAliasOperand(
+         MCInst *MI, uint64_t Address, unsigned OpIdx,
+         unsigned PrintMethodIdx,
+         SStream *OS);
+
+typedef enum {
+	#define GET_ENUM_VALUES_SysReg
+	#include "RISCVGenCSSystemOperandsEnum.inc"
+} SysRegValue;
 
 #endif

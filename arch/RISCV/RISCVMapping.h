@@ -3,6 +3,7 @@
 #define CS_RISCV_MAP_H
 
 #include "../../include/capstone/capstone.h"
+#include "../../cs_priv.h"
 
 typedef enum {
     #include "RISCVGenCSOpGroup.inc"
@@ -18,6 +19,8 @@ const char *RISCV_group_name(csh handle, unsigned int id);
 const char *RISCV_reg_name(csh handle, unsigned int reg);
 
 void RISCV_add_cs_detail(MCInst *MI, unsigned OpNum);
+
+void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum);
 
 // map instruction name to instruction ID
 riscv_reg RISCV_map_insn(const char *name);

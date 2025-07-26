@@ -129,6 +129,11 @@ void RISCV_add_cs_detail(MCInst *MI, unsigned OpNum)
 	}
 }
 
+void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
+{
+	// do nothing for now
+}
+
 // given internal insn id, return public instruction info
 void RISCV_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {

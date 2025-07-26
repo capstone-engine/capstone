@@ -145,6 +145,27 @@ inline static bool RISCVFPRndMode_isValidRoundingMode(unsigned Mode)
 	}
 }
 
+inline static const char*
+RISCVFPRndMode_roundingModeToString(unsigned RndMode)
+{
+	switch (RndMode) {
+	default:
+		CS_ASSERT(0 && "Unknown floating point rounding mode");
+	case RISCVFPRndMode_RNE:
+		return "rne";
+	case RISCVFPRndMode_RTZ:
+		return "rtz";
+	case RISCVFPRndMode_RDN:
+		return "rdn";
+	case RISCVFPRndMode_RUP:
+		return "rup";
+	case RISCVFPRndMode_RMM:
+		return "rmm";
+	case RISCVFPRndMode_DYN:
+		return "dyn";
+	}
+}
+
 typedef enum RLISTENCODE {
 	RISCVZC_RLISTENCODE_RA = 4,
 	RISCVZC_RLISTENCODE_RA_S0,
@@ -161,5 +182,109 @@ typedef enum RLISTENCODE {
 	RISCVZC_RLISTENCODE_RA_S0_S11,
 	RISCVZC__RLISTENCODE_INVALID_RLIST,
 } RISCVZC_RLISTENCODE;
+
+
+inline static unsigned RISCVZC_getStackAdjBase(unsigned RlistVal, bool IsRV64,
+					       bool IsEABI)
+{
+	CS_ASSERT(RlistVal != RLISTENCODE_INVALID_RLIST &&
+		  "{ra, s0-s10} is not supported, s11 must be included.");
+	if (IsEABI)
+		return 16;
+	if (!IsRV64) {
+		switch (RlistVal) {
+		case RISCVZC_RLISTENCODE_RA:
+		case RISCVZC_RLISTENCODE_RA_S0:
+		case RISCVZC_RLISTENCODE_RA_S0_S1:
+		case RISCVZC_RLISTENCODE_RA_S0_S2:
+			return 16;
+		case RISCVZC_RLISTENCODE_RA_S0_S3:
+		case RISCVZC_RLISTENCODE_RA_S0_S4:
+		case RISCVZC_RLISTENCODE_RA_S0_S5:
+		case RISCVZC_RLISTENCODE_RA_S0_S6:
+			return 32;
+		case RISCVZC_RLISTENCODE_RA_S0_S7:
+		case RISCVZC_RLISTENCODE_RA_S0_S8:
+		case RISCVZC_RLISTENCODE_RA_S0_S9:
+			return 48;
+		case RISCVZC_RLISTENCODE_RA_S0_S11:
+			return 64;
+		}
+	} else {
+		switch (RlistVal) {
+		case RISCVZC_RLISTENCODE_RA:
+		case RISCVZC_RLISTENCODE_RA_S0:
+			return 16;
+		case RISCVZC_RLISTENCODE_RA_S0_S1:
+		case RISCVZC_RLISTENCODE_RA_S0_S2:
+			return 32;
+		case RISCVZC_RLISTENCODE_RA_S0_S3:
+		case RISCVZC_RLISTENCODE_RA_S0_S4:
+			return 48;
+		case RISCVZC_RLISTENCODE_RA_S0_S5:
+		case RISCVZC_RLISTENCODE_RA_S0_S6:
+			return 64;
+		case RISCVZC_RLISTENCODE_RA_S0_S7:
+		case RISCVZC_RLISTENCODE_RA_S0_S8:
+			return 80;
+		case RISCVZC_RLISTENCODE_RA_S0_S9:
+			return 96;
+		case RISCVZC_RLISTENCODE_RA_S0_S11:
+			return 112;
+		}
+	}
+	CS_ASSERT(0 && "Unexpected RlistVal");
+	return 0; // unreachable
+}
+
+typedef enum VLMUL {
+	RISCVII_LMUL_1 = 0,
+	RISCVII_LMUL_2,
+	RISCVII_LMUL_4,
+	RISCVII_LMUL_8,
+	RISCVII_LMUL_RESERVED,
+	RISCVII_LMUL_F8,
+	RISCVII_LMUL_F4,
+	RISCVII_LMUL_F2
+} RISCVII_VLMUL;
+
+inline static RISCVII_VLMUL RISCVVType_getVLMUL(unsigned VType)
+{
+	unsigned VLMUL = VType & 0x7;
+	return (RISCVII_VLMUL)(VLMUL);
+}
+
+inline static unsigned RISCVVType_decodeVSEW(unsigned VSEW)
+{
+	CS_ASSERT(VSEW < 8 && "Unexpected VSEW value");
+	return 1 << (VSEW + 3);
+}
+
+inline static unsigned RISCVVType_getSEW(unsigned VType)
+{
+	unsigned VSEW = (VType >> 3) & 0x7;
+	return RISCVVType_decodeVSEW(VSEW);
+}
+
+typedef struct {
+	unsigned raw_val;
+} RegVal;
+
+typedef struct SysReg {
+	const char *Name;
+	RegVal val1;
+	const char *AltName;
+	RegVal val2;
+	const char *DeprecatedName;
+	unsigned Encoding;
+	unsigned DummyFeatureArray[1];
+	bool isRV32Only;
+} RISCV_SysReg;
+
+void printVType(unsigned VType, SStream *OS);
+
+float getFPImm(unsigned Imm);
+
+void RISCVZC_printSpimm(int64_t Spimm, SStream *OS);
 
 #endif

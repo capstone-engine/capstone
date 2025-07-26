@@ -331,6 +331,10 @@
       {
         "in": "{LLVM_ROOT}/llvm/lib/Target/RISCV/MCTargetDesc/RISCVBaseInfo.h",
         "out": "RISCVBaseInfo.h"
+      },
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/RISCV/MCTargetDesc/RISCVBaseInfo.cpp",
+        "out": "RISCVBaseInfo.c"
       }
     ],
     "files_for_template_search": [

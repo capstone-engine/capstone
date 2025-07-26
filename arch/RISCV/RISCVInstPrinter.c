@@ -41,6 +41,9 @@
 #define GET_REGINFO_ENUM
 #include "RISCVGenRegisterInfo.inc"
 
+#define GET_SysRegsList_IMPL
+#include "RISCVGenSystemOperands.inc"
+
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
@@ -56,12 +59,26 @@
 // member.
 static bool ArchRegNames;
 
+const char *doGetRegisterName(MCRegister Reg)
+{
+	return getRegisterName(Reg, ArchRegNames ? RISCV_NoRegAltName :
+						   RISCV_ABIRegAltName);
+}
+
 void printRegName(SStream *O, MCRegister Reg)
 {
 	SStream_concat0(markup_OS(O, Markup_Register), doGetRegisterName(Reg));
 }
 
-static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
+bool haveRequiredFeatures(const RISCV_SysReg *Reg, MCInst *MI) {
+		// Not in 32-bit mode.
+		if (Reg->isRV32Only && RISCV_getFeatureBits(MI->csh->mode, RISCV_Feature64Bit))
+			return false;
+		
+		return true;
+}
+
+ void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_Operand, OpNo);
 
@@ -73,17 +90,17 @@ static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	}
 
 	if (MCOperand_isImm(MO)) {
-		SStream_concat0(markup_OS(O, Markup_Immediate),
-				formatImm(MCOperand_getImm(MO)));
+		printInt64(markup_OS(O, Markup_Immediate),
+				MCOperand_getImm(MO));
 		return;
 	}
 
 	CS_ASSERT(MCOperand_isExpr(MO) &&
 		  "Unknown operand kind in printOperand");
-	MCOperand_getExpr(MO)->print(O, &MAI);
+	printExpr(O, MCOperand_getExpr(MO));
 }
 
-static inline void printBranchOperand(MCInst *MI, uint64_t Address,
+ void printBranchOperand(MCInst *MI, uint64_t Address,
 				      unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_BranchOperand, OpNo);
@@ -91,29 +108,29 @@ static inline void printBranchOperand(MCInst *MI, uint64_t Address,
 	if (!MCOperand_isImm(MO))
 		return printOperand(MI, OpNo, O);
 
-	if (PrintBranchImmAsAddress) {
+	if (MI->csh->PrintBranchImmAsAddress) {
 		uint64_t Target = Address + MCOperand_getImm(MO);
 		if (!RISCV_getFeatureBits(MI->csh->mode, RISCV_Feature64Bit))
 			Target &= 0xffffffff;
-		SStream_concat0(markup_OS(O, Markup_Target), formatHex(Target));
+		printUInt64(markup_OS(O, Markup_Target), Target);
 	} else {
-		SStream_concat0(markup_OS(O, Markup_Target),
-				formatImm(MCOperand_getImm(MO)));
+		printInt64(markup_OS(O, Markup_Target),
+				MCOperand_getImm(MO));
 	}
 }
 
-static inline void printCSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
+ void printCSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_CSRSystemRegister, OpNo);
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
-	auto SysReg = RISCVSysReg_lookupSysRegByEncoding(Imm);
-	if (SysReg && SysReg->haveRequiredFeatures(STI.getFeatureBits()))
+	const RISCV_SysReg *SysReg = RISCV_lookupSysRegByEncoding(Imm);
+	if (SysReg && haveRequiredFeatures(SysReg, MI))
 		SStream_concat0(markup_OS(O, Markup_Register), SysReg->Name);
 	else
-		SStream_concat0(markup_OS(O, Markup_Register), formatImm(Imm));
+		printUInt64(markup_OS(O, Markup_Register), Imm);
 }
 
-static inline void printFenceArg(MCInst *MI, unsigned OpNo, SStream *O)
+ void printFenceArg(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_FenceArg, OpNo);
 	unsigned FenceArg = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
@@ -136,33 +153,32 @@ static inline void printFenceArg(MCInst *MI, unsigned OpNo, SStream *O)
 		SStream_concat0(O, "0");
 }
 
-static inline void printFRMArg(MCInst *MI, unsigned OpNo, SStream *O)
+ void printFRMArg(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_FRMArg, OpNo);
-	auto FRMArg = (RISCVFPRndMode_RoundingMode)(MCOperand_getImm(
-		MCInst_getOperand(MI, (OpNo))));
-	if (PrintAliases && !NoAliases &&
-	    FRMArg == RISCVFPRndMode_RoundingMode_DYN)
+	unsigned FRMArg = MCOperand_getImm(
+		MCInst_getOperand(MI, (OpNo)));
+	if (FRMArg == RISCVFPRndMode_DYN)
 		return;
 	SStream_concat(O, "%s", ", ");
 	SStream_concat0(O, RISCVFPRndMode_roundingModeToString(FRMArg));
 }
 
-static inline void printFRMArgLegacy(MCInst *MI, unsigned OpNo, SStream *O)
+ void printFRMArgLegacy(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_FRMArgLegacy, OpNo);
-	auto FRMArg = (RISCVFPRndMode_RoundingMode)(MCOperand_getImm(
-		MCInst_getOperand(MI, (OpNo))));
+	unsigned FRMArg = MCOperand_getImm(
+		MCInst_getOperand(MI, (OpNo)));
 	// Never print rounding mode if it's the default 'rne'. This ensures the
 	// output can still be parsed by older tools that erroneously failed to
 	// accept a rounding mode.
-	if (FRMArg == RISCVFPRndMode_RoundingMode_RNE)
+	if (FRMArg == RISCVFPRndMode_RNE)
 		return;
 	SStream_concat(O, "%s", ", ");
 	SStream_concat0(O, RISCVFPRndMode_roundingModeToString(FRMArg));
 }
 
-static inline void printFPImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
+ void printFPImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_FPImmOperand, OpNo);
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
@@ -173,21 +189,19 @@ static inline void printFPImmOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	} else if (Imm == 31) {
 		SStream_concat0(markup_OS(O, Markup_Immediate), "nan");
 	} else {
-		float FPVal = RISCVLoadFPImm_getFPImm(Imm);
+		float FPVal = getFPImm(Imm);
 		// If the value is an integer, print a .0 fraction. Otherwise, use %g to
 		// which will not print trailing zeros and will use scientific notation
 		// if it is shorter than printing as a decimal. The smallest value requires
 		// 12 digits of precision including the decimal.
 		if (FPVal == (int)(FPVal))
-			SStream_concat0(markup_OS(O, Markup_Immediate),
-					format("%.1f", FPVal));
+			printFloat(markup_OS(O, Markup_Immediate), FPVal);
 		else
-			SStream_concat0(markup_OS(O, Markup_Immediate),
-					format("%.12g", FPVal));
+			printFloat(markup_OS(O, Markup_Immediate), FPVal);
 	}
 }
 
-static inline void printZeroOffsetMemOp(MCInst *MI, unsigned OpNo, SStream *O)
+ void printZeroOffsetMemOp(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_ZeroOffsetMemOp, OpNo);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNo));
@@ -199,22 +213,22 @@ static inline void printZeroOffsetMemOp(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat0(O, ")");
 }
 
-static inline void printVTypeI(MCInst *MI, unsigned OpNo, SStream *O)
+ void printVTypeI(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_VTypeI, OpNo);
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	// Print the raw immediate for reserved values: vlmul[2:0]=4, vsew[2:0]=0b1xx,
 	// or non-zero in bits 8 and above.
-	if (RISCVVType_getVLMUL(Imm) == RISCVII_VLMUL_LMUL_RESERVED ||
+	if (RISCVVType_getVLMUL(Imm) == RISCVII_LMUL_RESERVED ||
 	    RISCVVType_getSEW(Imm) > 64 || (Imm >> 8) != 0) {
-		SStream_concat0(O, formatImm(Imm));
+		printUInt64(O, Imm);
 		return;
 	}
 	// Print the text form.
-	RISCVVType_printVType(Imm, O);
+	printVType(Imm, O);
 }
 
-static inline void printRlist(MCInst *MI, unsigned OpNo, SStream *O)
+ void printRlist(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_Rlist, OpNo);
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
@@ -292,7 +306,7 @@ static inline void printRlist(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat0(O, "}");
 }
 
-static inline void printRegReg(MCInst *MI, unsigned OpNo, SStream *O)
+ void printRegReg(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_RegReg, OpNo);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNo));
@@ -311,7 +325,7 @@ static inline void printRegReg(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat0(O, ")");
 }
 
-static inline void printSpimm(MCInst *MI, unsigned OpNo, SStream *O)
+ void printSpimm(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_Spimm, OpNo);
 	int64_t Imm = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
@@ -319,9 +333,9 @@ static inline void printSpimm(MCInst *MI, unsigned OpNo, SStream *O)
 	bool IsRV64 = RISCV_getFeatureBits(MI->csh->mode, RISCV_Feature64Bit);
 	bool IsEABI = RISCV_getFeatureBits(MI->csh->mode, RISCV_FeatureRVE);
 	int64_t Spimm = 0;
-	auto RlistVal = MCOperand_getImm(MCInst_getOperand(MI, (0)));
+	int64_t RlistVal = MCOperand_getImm(MCInst_getOperand(MI, (0)));
 	CS_ASSERT(RlistVal != 16 && "Incorrect rlist.");
-	auto Base = RISCVZC_getStackAdjBase(RlistVal, IsRV64, IsEABI);
+	unsigned Base = RISCVZC_getStackAdjBase(RlistVal, IsRV64, IsEABI);
 	Spimm = Imm + Base;
 	CS_ASSERT((Spimm >= Base && Spimm <= Base + 48) && "Incorrect spimm");
 	if (Opcode == RISCV_CM_PUSH)
@@ -330,7 +344,7 @@ static inline void printSpimm(MCInst *MI, unsigned OpNo, SStream *O)
 	RISCVZC_printSpimm(Spimm, markup_OS(O, Markup_Immediate));
 }
 
-static inline void printVMaskReg(MCInst *MI, unsigned OpNo, SStream *O)
+ void printVMaskReg(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_VMaskReg, OpNo);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNo));
@@ -344,8 +358,4 @@ static inline void printVMaskReg(MCInst *MI, unsigned OpNo, SStream *O)
 	SStream_concat0(O, ".t");
 }
 
-const char *doGetRegisterName(MCRegister Reg)
-{
-	return getRegisterName(Reg, ArchRegNames ? RISCV_NoRegAltName :
-						   RISCV_ABIRegAltName);
-}
+
