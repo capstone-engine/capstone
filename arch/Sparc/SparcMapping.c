@@ -66,7 +66,12 @@ static void Sparc_add_bit_details(MCInst *MI, const uint8_t *Bytes,
 		break;
 	}
 	case SPARC_INSN_FORM_F2_3:
-		detail->cc_field = 0x4 | get_insn_field_r(insn, 20, 21);
+		detail->cc_field = get_insn_field_r(insn, 20, 21);
+		if (get_insn_field_r(insn, 22, 24) == 1) {
+			// BPcc and FBPcc encode their fields in two bits.
+			// BPcc needs the upper bit set to match our CC field enum.
+			detail->cc_field |= 0x4;
+		}
 		break;
 	case SPARC_INSN_FORM_TRAPSP:
 		detail->cc_field = 0x4 | get_insn_field_r(insn, 11, 12);
