@@ -1,0 +1,3 @@
+# CS_ARCH_RISCV, 0, None
+0x81,0x62 == c.sspopchk t0
+0x81,0x60 == c.sspush ra

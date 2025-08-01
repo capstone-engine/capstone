@@ -68,13 +68,13 @@ VLMULDecodeResult decodeVLMUL(RISCVII_VLMUL VLMUL)
 
 void printVType(unsigned VType, SStream *OS)
 {
-	unsigned Sew = getSEW(VType);
+	unsigned Sew = RISCVVType_getSEW(VType);
 	SStream_concat(OS, "%s", "e");
-	SStream_concat0(OS, Sew);
+	printUInt64(OS, Sew);
 
 	unsigned LMul;
 	bool Fractional;
-	VLMULDecodeResult result = decodeVLMUL(getVLMUL(VType));
+	VLMULDecodeResult result = decodeVLMUL(RISCVVType_getVLMUL(VType));
 	LMul = result.value;
 	Fractional = result.isFractional;
 
@@ -82,14 +82,14 @@ void printVType(unsigned VType, SStream *OS)
 		SStream_concat0(OS, ", mf");
 	else
 		SStream_concat0(OS, ", m");
-	SStream_concat0(OS, LMul);
+	printUInt64(OS, LMul);
 
-	if (isTailAgnostic(VType))
+	if (RISCVVType_isTailAgnostic(VType))
 		SStream_concat0(OS, ", ta");
 	else
 		SStream_concat0(OS, ", tu");
 
-	if (isMaskAgnostic(VType))
+	if (RISCVVType_isMaskAgnostic(VType))
 		SStream_concat0(OS, ", ma");
 	else
 		SStream_concat0(OS, ", mu");
@@ -130,12 +130,14 @@ float getFPImm(unsigned Imm)
 	uint32_t Mantissa = LoadFP32ImmArr[Imm - 2].second;
 
 	uint32_t I = Sign << 31 | Exp << 23 | Mantissa << 21;
-	return CONCAT(bit_cast, float)(I);
+	float result;
+  	memcpy(&result, &I, sizeof(float));
+  	return result;
 }
 
 void RISCVZC_printSpimm(int64_t Spimm, SStream *OS)
 {
-	SStream_concat0(OS, Spimm);
+	printUInt64(OS, Spimm);
 }
 
 // namespace llvm

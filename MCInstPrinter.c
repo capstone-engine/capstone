@@ -11,6 +11,7 @@ extern bool Mips_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool AArch64_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool TriCore_getFeatureBits(unsigned int mode, unsigned int feature);
 extern bool Sparc_getFeatureBits(unsigned int mode, unsigned int feature);
+extern bool RISCV_getFeatureBits(unsigned int mode, unsigned int feature);
 
 static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 {
@@ -43,7 +44,12 @@ static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 	case CS_ARCH_SPARC:
 		return Sparc_getFeatureBits(MI->csh->mode, Value);
 #endif
+#ifdef CAPSTONE_HAS_RISCV
+	case CS_ARCH_RISCV:
+		return RISCV_getFeatureBits(MI->csh->mode, Value);
+#endif
 	}
+
 }
 
 static bool matchAliasCondition(MCInst *MI, const MCRegisterInfo *MRI,

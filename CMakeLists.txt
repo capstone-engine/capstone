@@ -599,20 +599,32 @@ endif()
 if(CAPSTONE_RISCV_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_RISCV)
     set(SOURCES_RISCV
+        arch/RISCV/RISCVBaseInfo.c
         arch/RISCV/RISCVDisassembler.c
+        arch/RISCV/RISCVDisassemblerExtension.c
         arch/RISCV/RISCVInstPrinter.c
-        #arch/RISCV/RISCVMapping.c
-        #arch/RISCV/RISCVModule.c
+        arch/RISCV/RISCVMapping.c
+        arch/RISCV/RISCVModule.c
     )
     set(HEADERS_RISCV
+        arch/RISCV/RISCVBaseInfo.h
+        arch/RISCV/RISCVDisassemblerExtension.h
         arch/RISCV/RISCVInstPrinter.h
-        #arch/RISCV/RISCVMapping.h
-        #arch/RISCV/RISCVModule.h
+        arch/RISCV/RISCVMapping.h
+        arch/RISCV/RISCVModule.h
         arch/RISCV/RISCVGenAsmWriter.inc
+        arch/RISCV/RISCVGenCSAliasMnemMap.inc
+        arch/RISCV/RISCVGenCSFeatureName.inc
+        arch/RISCV/RISCVGenCSMappingInsn.inc
+        arch/RISCV/RISCVGenCSMappingInsnName.inc
+        arch/RISCV/RISCVGenCSMappingInsnOp.inc
+        arch/RISCV/RISCVGenCSOpGroup.inc
+        arch/RISCV/RISCVGenCSSystemOperandsEnum.inc
         arch/RISCV/RISCVGenDisassemblerTables.inc
         arch/RISCV/RISCVGenInstrInfo.inc
         arch/RISCV/RISCVGenRegisterInfo.inc
         arch/RISCV/RISCVGenSubtargetInfo.inc
+        arch/RISCV/RISCVGenSystemOperands.inc
         arch/RISCV/RISCVMappingInsn.inc
         arch/RISCV/RISCVMappingInsnOp.inc
     )

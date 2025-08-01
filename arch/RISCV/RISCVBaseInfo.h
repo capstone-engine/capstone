@@ -166,6 +166,17 @@ RISCVFPRndMode_roundingModeToString(unsigned RndMode)
 	}
 }
 
+inline static bool RISCVVType_isTailAgnostic(unsigned VType)
+{
+	return VType & 0x40;
+}
+
+inline static bool RISCVVType_isMaskAgnostic(unsigned VType)
+{
+	return VType & 0x80;
+}
+
+
 typedef enum RLISTENCODE {
 	RISCVZC_RLISTENCODE_RA = 4,
 	RISCVZC_RLISTENCODE_RA_S0,
@@ -180,14 +191,14 @@ typedef enum RLISTENCODE {
 	RISCVZC_RLISTENCODE_RA_S0_S9,
 	// note - to include s10, s11 must also be included
 	RISCVZC_RLISTENCODE_RA_S0_S11,
-	RISCVZC__RLISTENCODE_INVALID_RLIST,
+	RISCVZC_RLISTENCODE_INVALID_RLIST,
 } RISCVZC_RLISTENCODE;
 
 
 inline static unsigned RISCVZC_getStackAdjBase(unsigned RlistVal, bool IsRV64,
 					       bool IsEABI)
 {
-	CS_ASSERT(RlistVal != RLISTENCODE_INVALID_RLIST &&
+	CS_ASSERT(RlistVal != RISCVZC_RLISTENCODE_INVALID_RLIST &&
 		  "{ra, s0-s10} is not supported, s11 must be included.");
 	if (IsEABI)
 		return 16;

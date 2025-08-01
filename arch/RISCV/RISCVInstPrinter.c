@@ -49,6 +49,12 @@
 
 #define DEBUG_TYPE "asm-printer"
 
+static void printCustomAliasOperand(
+         MCInst *MI, uint64_t Address, unsigned OpIdx,
+         unsigned PrintMethodIdx,
+         SStream *OS);
+static inline void printRegName(SStream *O, MCRegister Reg);
+static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 // Include the auto-generated portion of the assembly writer.
 #define PRINT_ALIAS_INSTR
 #include "RISCVGenAsmWriter.inc"
@@ -65,7 +71,7 @@ const char *doGetRegisterName(MCRegister Reg)
 						   RISCV_ABIRegAltName);
 }
 
-void printRegName(SStream *O, MCRegister Reg)
+static inline void printRegName(SStream *O, MCRegister Reg)
 {
 	SStream_concat0(markup_OS(O, Markup_Register), doGetRegisterName(Reg));
 }
@@ -78,7 +84,7 @@ bool haveRequiredFeatures(const RISCV_SysReg *Reg, MCInst *MI) {
 		return true;
 }
 
- void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
+static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_Operand, OpNo);
 
@@ -195,9 +201,9 @@ bool haveRequiredFeatures(const RISCV_SysReg *Reg, MCInst *MI) {
 		// if it is shorter than printing as a decimal. The smallest value requires
 		// 12 digits of precision including the decimal.
 		if (FPVal == (int)(FPVal))
-			printFloat(markup_OS(O, Markup_Immediate), FPVal);
+			printfFloat(markup_OS(O, Markup_Immediate), "%.1f", FPVal);
 		else
-			printFloat(markup_OS(O, Markup_Immediate), FPVal);
+			printfFloat(markup_OS(O, Markup_Immediate), "%.12g", FPVal);
 	}
 }
 
@@ -358,4 +364,14 @@ bool haveRequiredFeatures(const RISCV_SysReg *Reg, MCInst *MI) {
 	SStream_concat0(O, ".t");
 }
 
+void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
+	MI->MRI = (MCRegisterInfo*) info;
+	if (printAliasInstr(MI, MI->address, O))
+		MI->isAliasInstr = true;
+	else 
+		printInstruction(MI, MI->address, O);
+}
 
+const char *RISCV_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx) {
+	return getRegisterName(RegNo, AltIdx);
+}

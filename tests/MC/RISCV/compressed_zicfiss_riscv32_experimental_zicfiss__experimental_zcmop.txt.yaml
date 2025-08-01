@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x81, 0x62 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "riscv32", "experimental-zicfiss", "+experimental-zcmop" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.sspopchk t0"
+
+  -
+    input:
+      bytes: [ 0x81, 0x60 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "riscv32", "experimental-zicfiss", "+experimental-zcmop" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.sspush ra"

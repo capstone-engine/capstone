@@ -6,10 +6,10 @@
 
 #include "../../utils.h"
 #include "../../MCRegisterInfo.h"
-#include "RISCVDisassembler.h"
 #include "RISCVInstPrinter.h"
 #include "RISCVMapping.h"
 #include "RISCVModule.h"
+#include "RISCVLinkage.h"
 
 cs_err RISCV_global_init(cs_struct *ud)
 {
@@ -17,10 +17,10 @@ cs_err RISCV_global_init(cs_struct *ud)
 	mri = cs_mem_malloc(sizeof(*mri));
 
 	RISCV_init(mri);
-	ud->printer = RISCV_printInst;
+	ud->printer = RISCV_LLVM_printInstruction;
 	ud->printer_info = mri;
 	ud->getinsn_info = mri;
-	ud->disasm = RISCV_getInstruction;
+	ud->disasm = RISCV_LLVM_getInstruction;
 	ud->post_printer = NULL;
 
 	ud->reg_name = RISCV_reg_name;

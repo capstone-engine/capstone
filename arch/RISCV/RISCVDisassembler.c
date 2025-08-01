@@ -54,7 +54,7 @@
 
 #define DEBUG_TYPE "riscv-disassembler"
 
-DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
+DecodeStatus RISCV_getInstruction(MCInst *Instr, uint16_t *Size, const uint8_t *Bytes,
 			    size_t BytesLen, uint64_t Address,
 			    SStream *CStream);
 void addSPOperands(MCInst *MI);
@@ -553,7 +553,7 @@ void addSPOperands(MCInst *MI)
 			MCInst_insert0(MI, i, &SPReg);
 }
 
-DecodeStatus getInstruction(MCInst *MI, uint64_t *Size, const uint8_t *Bytes,
+DecodeStatus RISCV_getInstruction(MCInst *MI, uint16_t *Size, const uint8_t *Bytes,
 			    size_t BytesLen, uint64_t Address, SStream *CS)
 {
 	// TODO: This will need modification when supporting instruction set
@@ -706,4 +706,12 @@ DecodeStatus getInstruction(MCInst *MI, uint64_t *Size, const uint8_t *Bytes,
 				 "RISCV_C table (16-bit Instruction)");
 
 	return MCDisassembler_Fail;
+}
+
+bool RISCV_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
+				     size_t ByteLen, MCInst *MI, uint16_t *Size,
+				     uint64_t Address, void *Info) {
+
+	MI->MRI = (MCRegisterInfo *) Info;
+	return RISCV_getInstruction(MI, Size, Bytes, ByteLen, Address, NULL) != MCDisassembler_Fail;
 }

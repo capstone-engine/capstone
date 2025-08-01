@@ -41,8 +41,6 @@
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
 
-void printRegName(SStream *O, MCRegister Reg);
-void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo,
 			SStream *O);
 void printCSRSystemRegister(MCInst *MI, unsigned OpNo, SStream *O);
@@ -56,11 +54,6 @@ void printVMaskReg(MCInst *MI, unsigned OpNo, SStream *O);
 void printRlist(MCInst *MI, unsigned OpNo, SStream *O);
 void printSpimm(MCInst *MI, unsigned OpNo, SStream *O);
 void printRegReg(MCInst *MI, unsigned OpNo, SStream *O);
-
-static void printCustomAliasOperand(
-         MCInst *MI, uint64_t Address, unsigned OpIdx,
-         unsigned PrintMethodIdx,
-         SStream *OS);
 
 typedef enum {
 	#define GET_ENUM_VALUES_SysReg

@@ -23,9 +23,11 @@ void RISCV_add_cs_detail(MCInst *MI, unsigned OpNum);
 void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum);
 
 // map instruction name to instruction ID
-riscv_reg RISCV_map_insn(const char *name);
+riscv_insn RISCV_map_insn(const char *name);
 
 // map internal raw register to 'public' register
 riscv_reg RISCV_map_register(unsigned int r);
+
+void RISCV_init(MCRegisterInfo *MRI);
 
 #endif

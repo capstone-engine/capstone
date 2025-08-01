@@ -1,7 +1,8 @@
 {
     "use_assembly_tests": [
         "Xtensa",
-        "Sparc"
+        "Sparc",
+        "RISCV"
     ],
     "exclude_disassembly_tests": [
         "Xtensa"
