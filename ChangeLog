@@ -1,6 +1,50 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-Alpha5: August 3rd, 2025
+
+## What's Changed
+* Apple AArch64 proprietary by @Rot127 in https://github.com/capstone-engine/capstone/pull/2692
+* Add jump group for generic jirl by @jiegec in https://github.com/capstone-engine/capstone/pull/2698
+* LoongArch: Compute absolute address for address operand by @jiegec in https://github.com/capstone-engine/capstone/pull/2699
+* Fix LoongArch ld/st instructions register info by @jiegec in https://github.com/capstone-engine/capstone/pull/2701
+* ARM: fix typo, cspr -> cpsr by @jiegec in https://github.com/capstone-engine/capstone/pull/2716
+* Fix arm pop reg access by @jiegec in https://github.com/capstone-engine/capstone/pull/2718
+* Fix missing sp register read in ret instruction by @jiegec in https://github.com/capstone-engine/capstone/pull/2719
+* Fix missing operand for smstart, due to space replaced by tab by @jiegec in https://github.com/capstone-engine/capstone/pull/2720
+* Add flag for the SoftFail case of the LLVM disassembler. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2707
+* Remove unused files. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2709
+* clang-format: change license to BSD-3-Clause by @tmfink in https://github.com/capstone-engine/capstone/pull/2724
+* Use cs_ac_type for operand access mode in all arches and use cs_xtensa_op_type for Xtensa operand type by @jiegec in https://github.com/capstone-engine/capstone/pull/2721
+* Make SStream respect the CS_OPT_UNSIGNED flag. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2723
+* Make assertion hit warnings optional in release builds. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2729
+* Update source list before installing valgrind. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2730
+* Add x30 implicit read to the RET alias. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2739
+* Print immediate only memory operands for AArch64. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2732
+* Add warning about naive search and replace to patch reg names. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2728
+* Enable to generate legacy MC tests for the fuzzer. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2733
+* Auto-Sync update Sparc LLVM-18 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2704
+* Python binding: Use ABI3 wheels by @Antelox in https://github.com/capstone-engine/capstone/pull/2742
+* Update Auto-Sync to Python 3.13 and tree-sitter-py 24.0 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2705
+* Fix for Risc-V C.SRLI decoding (issue #2731) by @h01G3r in https://github.com/capstone-engine/capstone/pull/2745
+* HPPA fix mem operands access and instruction printing by @R33v0LT in https://github.com/capstone-engine/capstone/pull/2746
+* Handle zero case of R1 operand field by @Rot127 in https://github.com/capstone-engine/capstone/pull/2743
+* Fix comisd memory operand size: xmmword -> qword by @jiegec in https://github.com/capstone-engine/capstone/pull/2750
+* Fix missing repne for movsd op by @jiegec in https://github.com/capstone-engine/capstone/pull/2752
+* Explain more details about CC change. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2753
+* Add a test for FCC conditions for none FPU instructions. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2758
+* Print register access type and registers accessed in cstool_mips.c by @jiegec in https://github.com/capstone-engine/capstone/pull/2762
+* Fix duplication of memory operand by @Rot127 in https://github.com/capstone-engine/capstone/pull/2761
+* Python binding: Windows ARM64 build by @Antelox in https://github.com/capstone-engine/capstone/pull/2760
+* Implement cs_regs_access for Alpha architecture by @jiegec in https://github.com/capstone-engine/capstone/pull/2763
+* Fix decoding of the FCC fields of FBPcc (format 2_3). by @Rot127 in https://github.com/capstone-engine/capstone/pull/2764
+
+## New Contributors
+* @h01G3r made their first contribution in https://github.com/capstone-engine/capstone/pull/2745
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/6.0.0-Alpha4...6.0.0-Alpha5
+
+-----------------------------
 Version 6.0.0-Alpha4: April 11th, 2025
 
 ## What's Changed
