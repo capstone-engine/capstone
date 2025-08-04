@@ -23,6 +23,7 @@ on:
       - "README.md"
       - "docs/**"
   pull_request:
+  release:
 
 # Automatically cancel any previous running workflow on new push
 concurrency:
@@ -155,7 +156,7 @@ jobs:
     permissions:
       id-token: write
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags')
+    if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release'
     steps:
       - uses: actions/download-artifact@v4
         with:
