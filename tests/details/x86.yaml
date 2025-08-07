@@ -1390,7 +1390,7 @@ test_cases:
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
-            opcode: [ 6658, 0x0, 0x00, 0x00 ]
+            opcode: [ 0x58, 0x00, 0x00, 0x00 ]
             rex: 0x0
             addr_size: 4
             modrm: 0x0
@@ -1403,8 +1403,8 @@ test_cases:
                 reg: ax
                 size: 2
                 access: CS_AC_WRITE
-          regs_read: [ esp ]
-          regs_write: [ esp, ax ]
+          regs_read: [ sp ]
+          regs_write: [ sp, ax ]
       -
         asm_text: "pop eax"
         details:
