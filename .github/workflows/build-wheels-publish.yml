@@ -24,6 +24,7 @@ on:
       - "docs/**"
   pull_request:
   release:
+    types: [published]
 
 # Automatically cancel any previous running workflow on new push
 concurrency:
