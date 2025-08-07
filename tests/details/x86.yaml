@@ -1409,8 +1409,8 @@ test_cases:
         asm_text: "pop eax"
         details:
           x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
-            opcode: [ 58, 0x0, 0x00, 0x00 ]
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x58, 0x0, 0x00, 0x00 ]
             rex: 0x0
             addr_size: 4
             modrm: 0x0
@@ -1429,8 +1429,8 @@ test_cases:
         asm_text: "pop ds"
         details:
           x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
-            opcode: [ 1f, 0x0, 0x00, 0x00 ]
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x1f, 0x0, 0x00, 0x00 ]
             rex: 0x0
             addr_size: 4
             modrm: 0x0
@@ -1449,8 +1449,8 @@ test_cases:
         asm_text: "pop es"
         details:
           x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
-            opcode: [ 07, 0x0, 0x00, 0x00 ]
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x07, 0x0, 0x00, 0x00 ]
             rex: 0x0
             addr_size: 4
             modrm: 0x0
@@ -1469,8 +1469,8 @@ test_cases:
         asm_text: "pop fs"
         details:
           x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
-            opcode: [ 0fa1, 0x0, 0x00, 0x00 ]
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xa1, 0x00, 0x00 ]
             rex: 0x0
             addr_size: 4
             modrm: 0x0
@@ -1489,8 +1489,8 @@ test_cases:
         asm_text: "pop gs"
         details:
           x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
-            opcode: [ 0fa9, 0x0, 0x00, 0x00 ]
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xa9, 0x00, 0x00 ]
             rex: 0x0
             addr_size: 4
             modrm: 0x0
@@ -1509,8 +1509,8 @@ test_cases:
         asm_text: "pop ss"
         details:
           x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
-            opcode: [ 17, 0x0, 0x00, 0x00 ]
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x17, 0x0, 0x00, 0x00 ]
             rex: 0x0
             addr_size: 4
             modrm: 0x0
@@ -1537,8 +1537,8 @@ test_cases:
         asm_text: "pop rax"
         details:
           x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
-            opcode: [ 58, 0x0, 0x00, 0x00 ]
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x58, 0x0, 0x00, 0x00 ]
             rex: 0x0
             addr_size: 8
             modrm: 0x0
@@ -1557,8 +1557,8 @@ test_cases:
         asm_text: "pop fs"
         details:
           x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
-            opcode: [ 0fa1, 0x0, 0x00, 0x00 ]
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xa1, 0x00, 0x00 ]
             rex: 0x0
             addr_size: 8
             modrm: 0x0
@@ -1577,8 +1577,8 @@ test_cases:
         asm_text: "pop gs"
         details:
           x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
-            opcode: [ 0fa9, 0x0, 0x00, 0x00 ]
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xa9, 0x00, 0x00 ]
             rex: 0x0
             addr_size: 8
             modrm: 0x0
