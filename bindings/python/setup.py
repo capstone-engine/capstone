@@ -6,6 +6,7 @@ import logging
 import os
 import shutil
 import sys
+import sysconfig
 from setuptools import setup
 from setuptools.command.build_py import build_py
 from setuptools.command.sdist import sdist
@@ -205,7 +206,9 @@ setup(
         "capstone": ["lib/*", "include/capstone/*"],
     },
     has_ext_modules=lambda: True,  # It's not a Pure Python wheel
-    options={"bdist_wheel": {"py_limited_api": "cp38"}},  # to have ABI3 tagged wheel
+    # to have ABI3 tagged wheel
+    # NOTE: Free-threaded CPython doesn't support limited API yet, remove when it will
+    options={"bdist_wheel": {"py_limited_api": False if sysconfig.get_config_var("Py_GIL_DISABLED") else "cp38"}},
     install_requires=[
         "importlib_resources;python_version<'3.9'",
     ],

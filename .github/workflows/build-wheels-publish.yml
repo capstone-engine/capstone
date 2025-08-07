@@ -43,27 +43,27 @@ jobs:
         include:
           # NOTE: Making this to parallelize and speed up workflow
           # i686 - manylinux
-          # - { os: ubuntu-latest, arch: i686, cibw_build: 'cp*-manylinux*', cibw_skip: '*36* *37*' }
+          # - { os: ubuntu-latest, arch: i686, cibw_build: 'cp*-manylinux*', cibw_skip: '' }
           # i686 - musllinux
-          # - { os: ubuntu-latest, arch: i686, cibw_build: 'cp*-musllinux*', cibw_skip: '*36* *37*' }
+          # - { os: ubuntu-latest, arch: i686, cibw_build: 'cp*-musllinux*', cibw_skip: '' }
           # x86_64 - manylinux
-          - { os: ubuntu-latest, arch: x86_64, cibw_build: 'cp*-manylinux*', cibw_skip: '*36* *37*' }
+          - { os: ubuntu-latest, arch: x86_64, cibw_build: 'cp*-manylinux*', cibw_skip: '' }
           # x86_64 - musllinux
-          - { os: ubuntu-latest, arch: x86_64, cibw_build: 'cp*-musllinux*', cibw_skip: '*36* *37*' }
+          - { os: ubuntu-latest, arch: x86_64, cibw_build: 'cp*-musllinux*', cibw_skip: '' }
           # aarch64 - manylinux
-          - { os: ubuntu-24.04-arm, arch: aarch64, cibw_build: 'cp*-manylinux*', cibw_skip: '*36* *37*' }
+          - { os: ubuntu-24.04-arm, arch: aarch64, cibw_build: 'cp*-manylinux*', cibw_skip: '' }
           # aarch64 - musllinux
-          - { os: ubuntu-24.04-arm, arch: aarch64, cibw_build: 'cp*-musllinux*', cibw_skip: '*36* *37*' }
+          - { os: ubuntu-24.04-arm, arch: aarch64, cibw_build: 'cp*-musllinux*', cibw_skip: '' }
           # macos - x86_64
-          - { os: macos-13, arch: x86_64, cibw_build: 'cp*', cibw_skip: '*36* *37*' }
+          - { os: macos-13, arch: x86_64, cibw_build: 'cp*', cibw_skip: '' }
           # macos - arm64
-          - { os: macos-latest, arch: arm64, cibw_build: 'cp*', cibw_skip: '*36* *37*' }
+          - { os: macos-latest, arch: arm64, cibw_build: 'cp*', cibw_skip: '' }
           # windows - amd64
-          - { os: windows-latest, arch: AMD64, cibw_build: 'cp*', cibw_skip: '*36* *37*' }
+          - { os: windows-latest, arch: AMD64, cibw_build: 'cp*', cibw_skip: '' }
           # windows - x86
-          # - { os: windows-latest, arch: x86, cibw_build: 'cp*', cibw_skip: '*36* *37*' }
+          # - { os: windows-latest, arch: x86, cibw_build: 'cp*', cibw_skip: '' }
           # windows - arm64
-          - { os: windows-11-arm, arch: ARM64, cibw_build: 'cp*', cibw_skip: '*36* *37* *38* *39* *310*' }
+          - { os: windows-11-arm, arch: ARM64, cibw_build: 'cp*', cibw_skip: '*38* *39* *310*' }
 
     steps:
       - uses: actions/checkout@v4
@@ -106,7 +106,7 @@ jobs:
         uses: docker/setup-qemu-action@v3
 
       - name: '🚧 cibuildwheel run'
-        uses: pypa/cibuildwheel@v3.0.1
+        uses: pypa/cibuildwheel@v3.1.3
         env:
           CIBW_BUILD_FRONTEND: build
           CIBW_BUILD: ${{ matrix.cibw_build }}
