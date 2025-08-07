@@ -1379,6 +1379,134 @@ test_cases:
           regs_write: [ rflags ]
   -
     input:
+      bytes: [0x58, 0x1f, 0x07, 0x0f, 0xa1, 0x0f, 0xa9, 0x17]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pop ax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x58, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ sp ]
+          regs_write: [ sp, ax ]
+      -
+        asm_text: "pop ds"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x1f, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ds
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ sp ]
+          regs_write: [ sp, ds ]
+      -
+        asm_text: "pop es"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x07, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: es
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ sp ]
+          regs_write: [ sp, es ]
+      -
+        asm_text: "pop fs"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xa1, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: fs
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ sp ]
+          regs_write: [ sp, fs ]
+      -
+        asm_text: "pop gs"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xa9, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: gs
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ sp ]
+          regs_write: [ sp, gs ]
+      -
+        asm_text: "pop ss"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x17, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 2
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ss
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ sp ]
+          regs_write: [ sp, ss ]
+  -
+    input:
       bytes: [0x66, 0x58, 0x58, 0x1f, 0x07, 0x0f, 0xa1, 0x0f, 0xa9, 0x17]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_32 ]
