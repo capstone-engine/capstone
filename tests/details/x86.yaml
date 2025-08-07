@@ -1377,3 +1377,219 @@ test_cases:
                 access: CS_AC_READ
           regs_read: [ xmm15, r8 ]
           regs_write: [ rflags ]
+  -
+    input:
+      bytes: [0x66, 0x58, 0x58, 0x1f, 0x07, 0x0f, 0xa1, 0x0f, 0xa9, 0x17]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pop ax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 6658, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ esp ]
+          regs_write: [ esp, ax ]
+      -
+        asm_text: "pop eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 58, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+          regs_read: [ esp ]
+          regs_write: [ esp, eax ]
+      -
+        asm_text: "pop ds"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 1f, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ds
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ esp ]
+          regs_write: [ esp, ds ]
+      -
+        asm_text: "pop es"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 07, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: es
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ esp ]
+          regs_write: [ esp, es ]
+      -
+        asm_text: "pop fs"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0fa1, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: fs
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ esp ]
+          regs_write: [ esp, fs ]
+      -
+        asm_text: "pop gs"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0fa9, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: gs
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ esp ]
+          regs_write: [ esp, gs ]
+      -
+        asm_text: "pop ss"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 17, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 4
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ss
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ esp ]
+          regs_write: [ esp, ss ]
+  -
+    input:
+      bytes: [0x58, 0x0f, 0xa1, 0x0f, 0xa9]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pop rax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 58, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: rax
+                size: 8
+                access: CS_AC_WRITE
+          regs_read: [ rsp ]
+          regs_write: [ rsp, rax ]
+      -
+        asm_text: "pop fs"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0fa1, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: fs
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ rsp ]
+          regs_write: [ rsp, fs ]
+      -
+        asm_text: "pop gs"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0fa9, 0x0, 0x00, 0x00 ]
+            rex: 0x0
+            addr_size: 8
+            modrm: 0x0
+            disp: 0x0
+            sib: 0x0
+            sib_scale: 0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: gs
+                size: 2
+                access: CS_AC_WRITE
+          regs_read: [ rsp ]
+          regs_write: [ rsp, gs ]
