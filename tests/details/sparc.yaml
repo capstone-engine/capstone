@@ -972,3 +972,28 @@ test_cases:
                     mem_base: l5
                     mem_index: l6
                     access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x89, 0xb0, 0x09, 0x82 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bshuffle %f0, %f2, %f4"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_REG
+                reg: f0
+                access: CS_AC_READ
+              -
+                type: SPARC_OP_REG
+                reg: f2
+                access: CS_AC_READ
+              -
+                type: SPARC_OP_REG
+                reg: f4
+                access: CS_AC_WRITE
