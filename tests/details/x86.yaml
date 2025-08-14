@@ -1722,3 +1722,641 @@ test_cases:
                 access: CS_AC_WRITE
           regs_read: [ rsp ]
           regs_write: [ rsp, gs ]
+  -
+    input:
+      bytes: [ 
+         0xe8, 0x31, 0x12,                     # call 0x1234
+         0x66, 0xe8, 0x2b, 0x12, 0x00, 0x00,   # call 0x1234 w/ size override
+         0xff, 0xd0,                           # call ax
+         0xff, 0x10,                           # call word ptr [bx + si]
+         0xff, 0x50, 0x12,                     # call word ptr [bx + si + 0x12]
+         0xff, 0x90, 0x34, 0x12,               # call word ptr [bx + si + 0x1234]
+         0x9a, 0x34, 0x12, 0x78, 0x56,         # lcall 0x5678, 0x1234
+         0xff, 0x18,                           # lcall [bx+si]
+         0xff, 0x58, 0x12,                     # lcall [bx+si + 0x12]
+         0xff, 0x98, 0x34, 0x12,               # lcall [bx+si + 0x1234]
+         0x65, 0x66, 0xff, 0x1e, 0x10, 0x00    # call ptr gs:[0x10]
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "call 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x1234
+                size: 2
+          regs_read: [ esp, eip ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x1234
+                size: 4
+          regs_read: [ esp, eip ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call ax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            modrm: 0xd0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ esp, eip, ax ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call word ptr [bx + si]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            modrm: 0x10
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: si
+                mem_disp: 0x0
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ esp, eip, bx, si ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call word ptr [bx + si + 0x12]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            modrm: 0x50
+            disp: 0x12
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: si
+                mem_disp: 0x12
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ esp, eip, bx, si ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call word ptr [bx + si + 0x1234]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            modrm: 0x90
+            disp: 0x1234
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: si
+                mem_disp: 0x1234
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ esp, eip, bx, si ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "lcall 0x5678, 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x9a, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x5678
+                size: 2
+              -
+                type: X86_OP_IMM
+                imm: 0x1234
+                size: 4
+          regs_read: [ esp, eip ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "lcall [bx + si]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            modrm: 0x18
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: si
+                mem_scale: 0x1
+                mem_disp: 0x0
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ esp, eip, bx, si ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "lcall [bx + si + 0x12]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            modrm: 0x58
+            disp: 0x12
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: si
+                mem_scale: 0x1
+                mem_disp: 0x12
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ esp, eip, bx, si ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "lcall [bx + si + 0x1234]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            modrm: 0x98
+            disp: 0x1234
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: si
+                mem_scale: 0x1
+                mem_disp: 0x1234
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ esp, eip, bx, si ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call ptr gs:[0x10]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_GS, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 2
+            modrm: 0x1e
+            disp: 0x10
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_segment: gs
+                mem_disp: 0x10
+                size: 2
+                access: CS_AC_READ
+          regs_read: [ esp, eip, gs ]
+          regs_write: [ esp, eip ]
+  -
+    input:
+      bytes: [
+         0xe8, 0x73, 0x56, 0x34, 0x12,             # call 0x12345678
+         0x66, 0xe8, 0x2b, 0x12,                   # call 0x1234 w/ size override
+         0xff, 0xd0,                               # call eax
+         0xff, 0x10,                               # call dword ptr [eax]
+         0xff, 0x50, 0x12,                         # call dword ptr [eax + 0x12]
+         0xff, 0x90, 0x78, 0x56, 0x34, 0x12,       # call dword ptr [eax + 0x12345678]
+         0x9a, 0x78, 0x56, 0x34, 0x12, 0xbc, 0x9a, # lcall 0x9abc, 0x12345678
+         0xff, 0x18,                               # call ptr [eax]
+         0xff, 0x58, 0x12,                         # call ptr [eax + 0x12]
+         0xff, 0x98, 0x78, 0x56, 0x34, 0x12,       # call ptr [eax + 0x12345678]
+         0x65, 0x66, 0xff, 0x1d, 0x10, 0x00, 0x00, 0x00, 0x00    # lcall gs:[0x10]
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "call 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+                size: 4
+          regs_read: [ esp, eip ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x1234
+                size: 2
+          regs_read: [ esp, eip ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            modrm: 0xd0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ esp, eip, eax ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call dword ptr [eax]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            modrm: 0x10
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ esp, eip, eax ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call dword ptr [eax + 0x12]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            modrm: 0x50
+            disp: 0x12
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                mem_disp: 0x12
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ esp, eip, eax ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call dword ptr [eax + 0x12345678]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            modrm: 0x90
+            disp: 0x12345678
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                mem_disp: 0x12345678
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ esp, eip, eax ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "lcall 0x9abc, 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x9a, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x9abc
+                size: 2
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+                size: 4
+          regs_read: [ esp, eip ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call ptr [eax]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            modrm: 0x18
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ esp, eip, eax ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call ptr [eax + 0x12]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            modrm: 0x58
+            disp: 0x12
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                mem_disp: 0x12
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ esp, eip, eax ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call ptr [eax + 0x12345678]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            modrm: 0x98
+            disp: 0x12345678
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                mem_disp: 0x12345678
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ esp, eip, eax ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "lcall gs:[0x10]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_GS, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            modrm: 0x1d
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_segment: gs
+                mem_disp: 0x10
+                size: 6
+                access: CS_AC_READ
+          regs_read: [ esp, eip, gs ]
+          regs_write: [ esp, eip ]
+  -
+    input:
+      bytes: [
+         0xe8, 0x73, 0x56, 0x34, 0x12,             # call 0x12345678
+         0x66, 0xe8, 0x6d, 0x56, 0x34, 0x12,       # call 0x1234 w/ size override
+         0xe8, 0xe7, 0xce, 0xad, 0xde,             # call 0xffffffffdeadcef7
+         0xff, 0xd0,                               # call rax
+         0xff, 0x10,                               # call qword ptr [rax]
+         0xff, 0x50, 0x12,                         # call qword ptr [rax + 0x12]
+         0xff, 0x90, 0x78, 0x56, 0x34, 0x12,       # call qword ptr [rax + 0x12345678]
+         0xff, 0x18,                               # call ptr [rax]
+         0xff, 0x58, 0x12,                         # call ptr [rax + 0x12]
+         0xff, 0x98, 0x78, 0x56, 0x34, 0x12,       # call ptr [rax + 0x12345678]
+         0x40, 0xff, 0x98, 0x78, 0x56, 0x34, 0xf2, # rex call ptr [rax - 0xdcba988]
+         0x65, 0x66, 0xff, 0x1d, 0x10, 0x00, 0x00, 0x00, 0x00    # lcall gs:[rip + 0x10]
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "call 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+                size: 8
+          regs_read: [ rsp, rip ]
+          regs_write: [ rsp, rip ]
+      -
+        asm_text: "call 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+                size: 4
+          regs_read: [ rsp, rip ]
+          regs_write: [ rsp, rip ]
+      -
+        asm_text: "call 0xffffffffdeadcef7"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe8, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: -0x21523109
+                size: 8
+          regs_read: [ rsp, rip ]
+          regs_write: [ rsp, rip ]
+      -
+        asm_text: "call rax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0xd0
+            operands:
+              -
+                type: X86_OP_REG
+                reg: rax
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ rsp, rip, rax ]
+          regs_write: [ rsp, rip ]
+      -
+        asm_text: "call qword ptr [rax]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0x10
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ rsp, rip, rax ]
+          regs_write: [ rsp, rip ]
+      -
+        asm_text: "call qword ptr [rax + 0x12]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0x50
+            disp: 0x12
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                mem_disp: 0x12
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ rsp, rip, rax ]
+          regs_write: [ rsp, rip ]
+      -
+        asm_text: "call qword ptr [rax + 0x12345678]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0x90
+            disp: 0x12345678
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                mem_disp: 0x12345678
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ rsp, rip, rax ]
+          regs_write: [ rsp, rip ]
+      -
+        asm_text: "call ptr [rax]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0x18
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ esp, eip, rax ]      # These should be rsp and rip (https://github.com/capstone-engine/capstone/issues/2691)
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call ptr [rax + 0x12]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0x58
+            disp: 0x12
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                mem_disp: 0x12
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ esp, eip, rax ]      # These should be rsp and rip (https://github.com/capstone-engine/capstone/issues/2691)
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call ptr [rax + 0x12345678]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0x98
+            disp: 0x12345678
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                mem_disp: 0x12345678
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ esp, eip, rax ]      # These should be rsp and rip (https://github.com/capstone-engine/capstone/issues/2691)
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "call ptr [rax - 0xdcba988]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            rex: 0x40
+            addr_size: 8
+            modrm: 0x98
+            disp: -0xdcba988
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                mem_disp: -0xdcba988
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ esp, eip, rax ]      # These should be rsp and rip (https://github.com/capstone-engine/capstone/issues/2691)
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "lcall gs:[rip + 0x10]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_GS, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0x1d
+            disp: 0x10
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_segment: gs
+                mem_disp: 0x10
+                size: 10
+                access: CS_AC_READ
+          regs_read: [ esp, eip, gs, rip]
+          regs_write: [ esp, eip ]
