@@ -63,6 +63,7 @@ typedef struct {
 	char *op_str;
 	int32_t is_alias; ///< 0 == not given, >0 == true, <0 == false
 	int32_t illegal; ///< 0 == not given, >0 == true, <0 == false
+	uint32_t size;
 	char *alias_id;
 	char *mnemonic;
 	TestDetail *details;
@@ -84,6 +85,8 @@ static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 			 is_alias),
 	CYAML_FIELD_INT("illegal", CYAML_FLAG_OPTIONAL, TestInsnData,
 			 illegal),
+	CYAML_FIELD_UINT("size", CYAML_FLAG_OPTIONAL, TestInsnData,
+			 size),
 	CYAML_FIELD_STRING_PTR("alias_id",
 			CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			TestInsnData, alias_id, 0, CYAML_UNLIMITED),

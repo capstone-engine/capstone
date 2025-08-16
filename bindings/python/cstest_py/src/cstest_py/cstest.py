@@ -22,6 +22,7 @@ from cstest_py.compare import (
     compare_str,
     compare_tbool,
     compare_enum,
+    compare_uint32,
 )
 from enum import Enum
 from pathlib import Path
@@ -254,6 +255,9 @@ class TestExpected:
                 return TestResult.FAILED
 
             if not compare_tbool(a_insn.illegal, e_insn.get("illegal"), "illegal"):
+                return TestResult.FAILED
+
+            if not compare_uint32(a_insn.size, e_insn.get("size"), "size"):
                 return TestResult.FAILED
 
             if not compare_enum(a_insn.alias_id, e_insn.get("alias_id"), "alias_id"):

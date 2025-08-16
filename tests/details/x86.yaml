@@ -9,6 +9,7 @@ test_cases:
       insns:
       -
         asm_text: "lea cx, [si + 0x32]"
+        size: 3
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
