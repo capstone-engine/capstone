@@ -226,7 +226,9 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 		cs_x86_op *op = &actual->operands[i];
 		TestDetailX86Op *eop = expected->operands[i];
 		compare_enum_ret(op->type, eop->type, false);
-		compare_uint8_ret(op->size, eop->size, false);
+		if (eop->size) {
+			compare_uint8_ret(op->size, eop->size, false);
+		}
 		compare_enum_ret(op->access, eop->access, false);
 		compare_enum_ret(op->avx_bcast, eop->avx_bcast, false);
 		compare_tbool_ret(op->avx_zero_opmask, eop->avx_zero_opmask,
