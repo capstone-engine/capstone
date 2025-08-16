@@ -61,8 +61,8 @@ typedef struct {
 	char *id;
 	char *asm_text;	  // mandatory
 	char *op_str;
-	int32_t is_alias; ///< 0 == not given, >0 == true, <0 == false
-	int32_t illegal; ///< 0 == not given, >0 == true, <0 == false
+	tbool is_alias;
+	tbool illegal;
 	uint32_t size;
 	char *alias_id;
 	char *mnemonic;
