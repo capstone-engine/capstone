@@ -2360,3 +2360,158 @@ test_cases:
                 access: CS_AC_READ
           regs_read: [ esp, eip, gs, rip]
           regs_write: [ esp, eip ]
+
+  -
+    input:
+      name: "Interrupt instructions, 16-bit decode mode"
+      bytes: [
+         0xcc,        # int3
+         0xcd, 0x80,  # int 0x80
+         0xce,        # into
+         0xf1         # int1
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "int3"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcc, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_RESET_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_RESET_RF ]
+          regs_read: [ flags, esp ]
+          regs_write: [ flags, eip, esp ]
+      -
+        asm_text: "int 0x80"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcd, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_RESET_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_RESET_RF ]
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x80
+                size: 1
+          regs_read: [ flags, esp ]
+          regs_write: [ flags, eip, esp ]
+      -
+        asm_text: "into"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xce, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_MODIFY_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_RESET_RF, X86_EFLAGS_TEST_OF ]
+          regs_read: [ flags, esp ]
+          regs_write: [ flags, eip, esp ]
+      -
+        asm_text: "int1"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xf1, 0x00, 0x00, 0x00 ]
+          regs_read: [ esp ]
+          regs_write: [ eip, esp ]
+
+  -
+    input:
+      name: "Interrupt instructions, 32-bit decode mode"
+      bytes: [
+         0xcc,        # int3
+         0xcd, 0x80,  # int 0x80
+         0xce,        # into
+         0xf1         # int1
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "int3"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcc, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_RESET_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_RESET_RF ]
+          regs_read: [ eflags, esp ]
+          regs_write: [ eflags, eip, esp ]
+      -
+        asm_text: "int 0x80"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcd, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_RESET_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_RESET_RF ]
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x80
+                size: 1
+          regs_read: [ eflags, esp ]
+          regs_write: [ eflags, eip, esp ]
+      -
+        asm_text: "into"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xce, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_MODIFY_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_RESET_RF, X86_EFLAGS_TEST_OF ]
+          regs_read: [ eflags, esp ]
+          regs_write: [ eflags, eip, esp ]
+      -
+        asm_text: "int1"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xf1, 0x00, 0x00, 0x00 ]
+          regs_read: [ esp ]
+          regs_write: [ eip, esp ]
+
+  -
+    input:
+      name: "Interrupt instructions, 64-bit decode mode"
+      bytes: [
+         0xcc,        # int3
+         0xcd, 0x80,  # int 0x80
+         0xf1         # int1
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "int3"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcc, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_RESET_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_RESET_RF ]
+          regs_read: [ rflags, esp ]
+          regs_write: [ rflags, eip, esp ]
+      -
+        asm_text: "int 0x80"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcd, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_RESET_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_RESET_RF ]
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x80
+                size: 1
+          regs_read: [ rflags, esp ]
+          regs_write: [ rflags, eip, esp ]
+      -
+        asm_text: "int1"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xf1, 0x00, 0x00, 0x00 ]
+          regs_read: [ esp ]
+          regs_write: [ eip, esp ]
