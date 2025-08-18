@@ -323,7 +323,7 @@ def compare_bit_flags(actual: int, expected: None | list[str], msg: str) -> bool
     for flag in expected:
         enum_val = cs_const_getattr(flag)
         if not actual & enum_val:
-            log.error(f"{msg}: In {actual:x} the flag {expected} isn't set.")
+            log.error(f"{msg}: In {actual:x} the flag {flag} isn't set.")
             return False
     return True
 
