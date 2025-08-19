@@ -650,25 +650,25 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 2896 */    MCD_OPC_Decode, 135, 3, 38, // Opcode: FDIVQ
 /* 2900 */    MCD_OPC_FilterValue, 81, 9, 0, 0, // Skip to: 2914
 /* 2905 */    MCD_OPC_CheckPredicate, 2, 43, 19, 0, // Skip to: 7817
-/* 2910 */    MCD_OPC_Decode, 183, 3, 37, // Opcode: FNADDS
+/* 2910 */    MCD_OPC_Decode, 183, 3, 36, // Opcode: FNADDS
 /* 2914 */    MCD_OPC_FilterValue, 82, 9, 0, 0, // Skip to: 2928
 /* 2919 */    MCD_OPC_CheckPredicate, 2, 29, 19, 0, // Skip to: 7817
 /* 2924 */    MCD_OPC_Decode, 182, 3, 37, // Opcode: FNADDD
 /* 2928 */    MCD_OPC_FilterValue, 89, 9, 0, 0, // Skip to: 2942
 /* 2933 */    MCD_OPC_CheckPredicate, 2, 15, 19, 0, // Skip to: 7817
-/* 2938 */    MCD_OPC_Decode, 192, 3, 37, // Opcode: FNMULS
+/* 2938 */    MCD_OPC_Decode, 192, 3, 36, // Opcode: FNMULS
 /* 2942 */    MCD_OPC_FilterValue, 90, 9, 0, 0, // Skip to: 2956
 /* 2947 */    MCD_OPC_CheckPredicate, 2, 1, 19, 0, // Skip to: 7817
 /* 2952 */    MCD_OPC_Decode, 191, 3, 37, // Opcode: FNMULD
 /* 2956 */    MCD_OPC_FilterValue, 97, 9, 0, 0, // Skip to: 2970
 /* 2961 */    MCD_OPC_CheckPredicate, 2, 243, 18, 0, // Skip to: 7817
-/* 2966 */    MCD_OPC_Decode, 144, 3, 37, // Opcode: FHADDS
+/* 2966 */    MCD_OPC_Decode, 144, 3, 36, // Opcode: FHADDS
 /* 2970 */    MCD_OPC_FilterValue, 98, 9, 0, 0, // Skip to: 2984
 /* 2975 */    MCD_OPC_CheckPredicate, 2, 229, 18, 0, // Skip to: 7817
 /* 2980 */    MCD_OPC_Decode, 143, 3, 37, // Opcode: FHADDD
 /* 2984 */    MCD_OPC_FilterValue, 101, 9, 0, 0, // Skip to: 2998
 /* 2989 */    MCD_OPC_CheckPredicate, 2, 215, 18, 0, // Skip to: 7817
-/* 2994 */    MCD_OPC_Decode, 146, 3, 37, // Opcode: FHSUBS
+/* 2994 */    MCD_OPC_Decode, 146, 3, 36, // Opcode: FHSUBS
 /* 2998 */    MCD_OPC_FilterValue, 102, 9, 0, 0, // Skip to: 3012
 /* 3003 */    MCD_OPC_CheckPredicate, 2, 201, 18, 0, // Skip to: 7817
 /* 3008 */    MCD_OPC_Decode, 145, 3, 37, // Opcode: FHSUBD
@@ -678,13 +678,13 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 3026 */    MCD_OPC_Decode, 137, 3, 40, // Opcode: FDMULQ
 /* 3030 */    MCD_OPC_FilterValue, 113, 9, 0, 0, // Skip to: 3044
 /* 3035 */    MCD_OPC_CheckPredicate, 2, 169, 18, 0, // Skip to: 7817
-/* 3040 */    MCD_OPC_Decode, 190, 3, 37, // Opcode: FNHADDS
+/* 3040 */    MCD_OPC_Decode, 190, 3, 36, // Opcode: FNHADDS
 /* 3044 */    MCD_OPC_FilterValue, 114, 9, 0, 0, // Skip to: 3058
 /* 3049 */    MCD_OPC_CheckPredicate, 2, 155, 18, 0, // Skip to: 7817
 /* 3054 */    MCD_OPC_Decode, 189, 3, 37, // Opcode: FNHADDD
 /* 3058 */    MCD_OPC_FilterValue, 121, 9, 0, 0, // Skip to: 3072
 /* 3063 */    MCD_OPC_CheckPredicate, 2, 141, 18, 0, // Skip to: 7817
-/* 3068 */    MCD_OPC_Decode, 199, 3, 37, // Opcode: FNSMULD
+/* 3068 */    MCD_OPC_Decode, 199, 3, 39, // Opcode: FNSMULD
 /* 3072 */    MCD_OPC_FilterValue, 129, 1, 16, 0, 0, // Skip to: 3094
 /* 3078 */    MCD_OPC_CheckPredicate, 0, 126, 18, 0, // Skip to: 7817
 /* 3083 */    MCD_OPC_CheckField, 14, 5, 0, 119, 18, 0, // Skip to: 7817
@@ -976,13 +976,13 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 4509 */    MCD_OPC_Decode, 234, 3, 37, // Opcode: FSRA32
 /* 4513 */    MCD_OPC_FilterValue, 49, 9, 0, 0, // Skip to: 4527
 /* 4518 */    MCD_OPC_CheckPredicate, 3, 222, 12, 0, // Skip to: 7817
-/* 4523 */    MCD_OPC_Decode, 174, 3, 37, // Opcode: FMUL8X16
+/* 4523 */    MCD_OPC_Decode, 174, 3, 62, // Opcode: FMUL8X16
 /* 4527 */    MCD_OPC_FilterValue, 51, 9, 0, 0, // Skip to: 4541
 /* 4532 */    MCD_OPC_CheckPredicate, 3, 208, 12, 0, // Skip to: 7817
-/* 4537 */    MCD_OPC_Decode, 176, 3, 37, // Opcode: FMUL8X16AU
+/* 4537 */    MCD_OPC_Decode, 176, 3, 39, // Opcode: FMUL8X16AU
 /* 4541 */    MCD_OPC_FilterValue, 53, 9, 0, 0, // Skip to: 4555
 /* 4546 */    MCD_OPC_CheckPredicate, 3, 194, 12, 0, // Skip to: 7817
-/* 4551 */    MCD_OPC_Decode, 175, 3, 37, // Opcode: FMUL8X16AL
+/* 4551 */    MCD_OPC_Decode, 175, 3, 39, // Opcode: FMUL8X16AL
 /* 4555 */    MCD_OPC_FilterValue, 54, 9, 0, 0, // Skip to: 4569
 /* 4560 */    MCD_OPC_CheckPredicate, 3, 180, 12, 0, // Skip to: 7817
 /* 4565 */    MCD_OPC_Decode, 172, 3, 37, // Opcode: FMUL8SUX16
@@ -991,10 +991,10 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 4579 */    MCD_OPC_Decode, 173, 3, 37, // Opcode: FMUL8ULX16
 /* 4583 */    MCD_OPC_FilterValue, 56, 9, 0, 0, // Skip to: 4597
 /* 4588 */    MCD_OPC_CheckPredicate, 3, 152, 12, 0, // Skip to: 7817
-/* 4593 */    MCD_OPC_Decode, 178, 3, 37, // Opcode: FMULD8SUX16
+/* 4593 */    MCD_OPC_Decode, 178, 3, 39, // Opcode: FMULD8SUX16
 /* 4597 */    MCD_OPC_FilterValue, 57, 9, 0, 0, // Skip to: 4611
 /* 4602 */    MCD_OPC_CheckPredicate, 3, 138, 12, 0, // Skip to: 7817
-/* 4607 */    MCD_OPC_Decode, 179, 3, 37, // Opcode: FMULD8ULX16
+/* 4607 */    MCD_OPC_Decode, 179, 3, 39, // Opcode: FMULD8ULX16
 /* 4611 */    MCD_OPC_FilterValue, 58, 9, 0, 0, // Skip to: 4625
 /* 4616 */    MCD_OPC_CheckPredicate, 3, 124, 12, 0, // Skip to: 7817
 /* 4621 */    MCD_OPC_Decode, 209, 3, 37, // Opcode: FPACK32
@@ -1005,13 +1005,13 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 4646 */    MCD_OPC_FilterValue, 61, 16, 0, 0, // Skip to: 4667
 /* 4651 */    MCD_OPC_CheckPredicate, 3, 89, 12, 0, // Skip to: 7817
 /* 4656 */    MCD_OPC_CheckField, 14, 5, 0, 82, 12, 0, // Skip to: 7817
-/* 4663 */    MCD_OPC_Decode, 210, 3, 34, // Opcode: FPACKFIX
+/* 4663 */    MCD_OPC_Decode, 210, 3, 43, // Opcode: FPACKFIX
 /* 4667 */    MCD_OPC_FilterValue, 62, 9, 0, 0, // Skip to: 4681
 /* 4672 */    MCD_OPC_CheckPredicate, 3, 68, 12, 0, // Skip to: 7817
 /* 4677 */    MCD_OPC_Decode, 219, 4, 37, // Opcode: PDIST
 /* 4681 */    MCD_OPC_FilterValue, 63, 9, 0, 0, // Skip to: 4695
 /* 4686 */    MCD_OPC_CheckPredicate, 2, 54, 12, 0, // Skip to: 7817
-/* 4691 */    MCD_OPC_Decode, 220, 4, 37, // Opcode: PDISTN
+/* 4691 */    MCD_OPC_Decode, 220, 4, 61, // Opcode: PDISTN
 /* 4695 */    MCD_OPC_FilterValue, 64, 9, 0, 0, // Skip to: 4709
 /* 4700 */    MCD_OPC_CheckPredicate, 2, 40, 12, 0, // Skip to: 7817
 /* 4705 */    MCD_OPC_Decode, 156, 3, 37, // Opcode: FMEAN16
@@ -1026,48 +1026,48 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 4747 */    MCD_OPC_Decode, 236, 2, 37, // Opcode: FALIGNADATA
 /* 4751 */    MCD_OPC_FilterValue, 75, 9, 0, 0, // Skip to: 4765
 /* 4756 */    MCD_OPC_CheckPredicate, 3, 240, 11, 0, // Skip to: 7817
-/* 4761 */    MCD_OPC_Decode, 216, 3, 37, // Opcode: FPMERGE
+/* 4761 */    MCD_OPC_Decode, 216, 3, 39, // Opcode: FPMERGE
 /* 4765 */    MCD_OPC_FilterValue, 76, 9, 0, 0, // Skip to: 4779
 /* 4770 */    MCD_OPC_CheckPredicate, 4, 226, 11, 0, // Skip to: 7817
 /* 4775 */    MCD_OPC_Decode, 204, 2, 37, // Opcode: BSHUFFLE
 /* 4779 */    MCD_OPC_FilterValue, 77, 16, 0, 0, // Skip to: 4800
 /* 4784 */    MCD_OPC_CheckPredicate, 3, 212, 11, 0, // Skip to: 7817
 /* 4789 */    MCD_OPC_CheckField, 14, 5, 0, 205, 11, 0, // Skip to: 7817
-/* 4796 */    MCD_OPC_Decode, 142, 3, 34, // Opcode: FEXPAND
+/* 4796 */    MCD_OPC_Decode, 142, 3, 41, // Opcode: FEXPAND
 /* 4800 */    MCD_OPC_FilterValue, 80, 9, 0, 0, // Skip to: 4814
 /* 4805 */    MCD_OPC_CheckPredicate, 3, 191, 11, 0, // Skip to: 7817
 /* 4810 */    MCD_OPC_Decode, 211, 3, 37, // Opcode: FPADD16
 /* 4814 */    MCD_OPC_FilterValue, 81, 9, 0, 0, // Skip to: 4828
 /* 4819 */    MCD_OPC_CheckPredicate, 3, 177, 11, 0, // Skip to: 7817
-/* 4824 */    MCD_OPC_Decode, 212, 3, 37, // Opcode: FPADD16S
+/* 4824 */    MCD_OPC_Decode, 212, 3, 36, // Opcode: FPADD16S
 /* 4828 */    MCD_OPC_FilterValue, 82, 9, 0, 0, // Skip to: 4842
 /* 4833 */    MCD_OPC_CheckPredicate, 3, 163, 11, 0, // Skip to: 7817
 /* 4838 */    MCD_OPC_Decode, 213, 3, 37, // Opcode: FPADD32
 /* 4842 */    MCD_OPC_FilterValue, 83, 9, 0, 0, // Skip to: 4856
 /* 4847 */    MCD_OPC_CheckPredicate, 3, 149, 11, 0, // Skip to: 7817
-/* 4852 */    MCD_OPC_Decode, 214, 3, 37, // Opcode: FPADD32S
+/* 4852 */    MCD_OPC_Decode, 214, 3, 36, // Opcode: FPADD32S
 /* 4856 */    MCD_OPC_FilterValue, 84, 9, 0, 0, // Skip to: 4870
 /* 4861 */    MCD_OPC_CheckPredicate, 3, 135, 11, 0, // Skip to: 7817
 /* 4866 */    MCD_OPC_Decode, 217, 3, 37, // Opcode: FPSUB16
 /* 4870 */    MCD_OPC_FilterValue, 85, 9, 0, 0, // Skip to: 4884
 /* 4875 */    MCD_OPC_CheckPredicate, 3, 121, 11, 0, // Skip to: 7817
-/* 4880 */    MCD_OPC_Decode, 218, 3, 37, // Opcode: FPSUB16S
+/* 4880 */    MCD_OPC_Decode, 218, 3, 36, // Opcode: FPSUB16S
 /* 4884 */    MCD_OPC_FilterValue, 86, 9, 0, 0, // Skip to: 4898
 /* 4889 */    MCD_OPC_CheckPredicate, 3, 107, 11, 0, // Skip to: 7817
 /* 4894 */    MCD_OPC_Decode, 219, 3, 37, // Opcode: FPSUB32
 /* 4898 */    MCD_OPC_FilterValue, 87, 9, 0, 0, // Skip to: 4912
 /* 4903 */    MCD_OPC_CheckPredicate, 3, 93, 11, 0, // Skip to: 7817
-/* 4908 */    MCD_OPC_Decode, 220, 3, 37, // Opcode: FPSUB32S
+/* 4908 */    MCD_OPC_Decode, 220, 3, 36, // Opcode: FPSUB32S
 /* 4912 */    MCD_OPC_FilterValue, 96, 23, 0, 0, // Skip to: 4940
 /* 4917 */    MCD_OPC_CheckPredicate, 3, 79, 11, 0, // Skip to: 7817
 /* 4922 */    MCD_OPC_CheckField, 14, 5, 0, 72, 11, 0, // Skip to: 7817
 /* 4929 */    MCD_OPC_CheckField, 0, 5, 0, 65, 11, 0, // Skip to: 7817
-/* 4936 */    MCD_OPC_Decode, 255, 3, 62, // Opcode: FZERO
+/* 4936 */    MCD_OPC_Decode, 255, 3, 63, // Opcode: FZERO
 /* 4940 */    MCD_OPC_FilterValue, 97, 23, 0, 0, // Skip to: 4968
 /* 4945 */    MCD_OPC_CheckPredicate, 3, 51, 11, 0, // Skip to: 7817
 /* 4950 */    MCD_OPC_CheckField, 14, 5, 0, 44, 11, 0, // Skip to: 7817
 /* 4957 */    MCD_OPC_CheckField, 0, 5, 0, 37, 11, 0, // Skip to: 7817
-/* 4964 */    MCD_OPC_Decode, 128, 4, 63, // Opcode: FZEROS
+/* 4964 */    MCD_OPC_Decode, 128, 4, 64, // Opcode: FZEROS
 /* 4968 */    MCD_OPC_FilterValue, 98, 9, 0, 0, // Skip to: 4982
 /* 4973 */    MCD_OPC_CheckPredicate, 3, 23, 11, 0, // Skip to: 7817
 /* 4978 */    MCD_OPC_Decode, 193, 3, 37, // Opcode: FNOR
@@ -1097,11 +1097,11 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 5094 */    MCD_OPC_FilterValue, 106, 16, 0, 0, // Skip to: 5115
 /* 5099 */    MCD_OPC_CheckPredicate, 3, 153, 10, 0, // Skip to: 7817
 /* 5104 */    MCD_OPC_CheckField, 0, 5, 0, 146, 10, 0, // Skip to: 7817
-/* 5111 */    MCD_OPC_Decode, 195, 3, 64, // Opcode: FNOT1
+/* 5111 */    MCD_OPC_Decode, 195, 3, 65, // Opcode: FNOT1
 /* 5115 */    MCD_OPC_FilterValue, 107, 16, 0, 0, // Skip to: 5136
 /* 5120 */    MCD_OPC_CheckPredicate, 3, 132, 10, 0, // Skip to: 7817
 /* 5125 */    MCD_OPC_CheckField, 0, 5, 0, 125, 10, 0, // Skip to: 7817
-/* 5132 */    MCD_OPC_Decode, 196, 3, 65, // Opcode: FNOT1S
+/* 5132 */    MCD_OPC_Decode, 196, 3, 66, // Opcode: FNOT1S
 /* 5136 */    MCD_OPC_FilterValue, 108, 9, 0, 0, // Skip to: 5150
 /* 5141 */    MCD_OPC_CheckPredicate, 3, 111, 10, 0, // Skip to: 7817
 /* 5146 */    MCD_OPC_Decode, 250, 3, 37, // Opcode: FXOR
@@ -1129,11 +1129,11 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 5248 */    MCD_OPC_FilterValue, 116, 16, 0, 0, // Skip to: 5269
 /* 5253 */    MCD_OPC_CheckPredicate, 3, 255, 9, 0, // Skip to: 7817
 /* 5258 */    MCD_OPC_CheckField, 0, 5, 0, 248, 9, 0, // Skip to: 7817
-/* 5265 */    MCD_OPC_Decode, 235, 3, 64, // Opcode: FSRC1
+/* 5265 */    MCD_OPC_Decode, 235, 3, 65, // Opcode: FSRC1
 /* 5269 */    MCD_OPC_FilterValue, 117, 16, 0, 0, // Skip to: 5290
 /* 5274 */    MCD_OPC_CheckPredicate, 3, 234, 9, 0, // Skip to: 7817
 /* 5279 */    MCD_OPC_CheckField, 0, 5, 0, 227, 9, 0, // Skip to: 7817
-/* 5286 */    MCD_OPC_Decode, 236, 3, 65, // Opcode: FSRC1S
+/* 5286 */    MCD_OPC_Decode, 236, 3, 66, // Opcode: FSRC1S
 /* 5290 */    MCD_OPC_FilterValue, 118, 9, 0, 0, // Skip to: 5304
 /* 5295 */    MCD_OPC_CheckPredicate, 3, 213, 9, 0, // Skip to: 7817
 /* 5300 */    MCD_OPC_Decode, 205, 3, 37, // Opcode: FORNOT2
@@ -1164,12 +1164,12 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 5421 */    MCD_OPC_CheckPredicate, 3, 87, 9, 0, // Skip to: 7817
 /* 5426 */    MCD_OPC_CheckField, 14, 5, 0, 80, 9, 0, // Skip to: 7817
 /* 5433 */    MCD_OPC_CheckField, 0, 5, 0, 73, 9, 0, // Skip to: 7817
-/* 5440 */    MCD_OPC_Decode, 200, 3, 62, // Opcode: FONE
+/* 5440 */    MCD_OPC_Decode, 200, 3, 63, // Opcode: FONE
 /* 5444 */    MCD_OPC_FilterValue, 127, 23, 0, 0, // Skip to: 5472
 /* 5449 */    MCD_OPC_CheckPredicate, 3, 59, 9, 0, // Skip to: 7817
 /* 5454 */    MCD_OPC_CheckField, 14, 5, 0, 52, 9, 0, // Skip to: 7817
 /* 5461 */    MCD_OPC_CheckField, 0, 5, 0, 45, 9, 0, // Skip to: 7817
-/* 5468 */    MCD_OPC_Decode, 201, 3, 63, // Opcode: FONES
+/* 5468 */    MCD_OPC_Decode, 201, 3, 64, // Opcode: FONES
 /* 5472 */    MCD_OPC_FilterValue, 128, 1, 30, 0, 0, // Skip to: 5508
 /* 5478 */    MCD_OPC_CheckPredicate, 3, 30, 9, 0, // Skip to: 7817
 /* 5483 */    MCD_OPC_CheckField, 25, 5, 0, 23, 9, 0, // Skip to: 7817
@@ -1185,32 +1185,32 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 5544 */    MCD_OPC_FilterValue, 144, 2, 16, 0, 0, // Skip to: 5566
 /* 5550 */    MCD_OPC_CheckPredicate, 2, 214, 8, 0, // Skip to: 7817
 /* 5555 */    MCD_OPC_CheckField, 14, 5, 0, 207, 8, 0, // Skip to: 7817
-/* 5562 */    MCD_OPC_Decode, 193, 4, 66, // Opcode: MOVDTOX
+/* 5562 */    MCD_OPC_Decode, 193, 4, 67, // Opcode: MOVDTOX
 /* 5566 */    MCD_OPC_FilterValue, 145, 2, 16, 0, 0, // Skip to: 5588
 /* 5572 */    MCD_OPC_CheckPredicate, 2, 192, 8, 0, // Skip to: 7817
 /* 5577 */    MCD_OPC_CheckField, 14, 5, 0, 185, 8, 0, // Skip to: 7817
-/* 5584 */    MCD_OPC_Decode, 201, 4, 66, // Opcode: MOVSTOUW
+/* 5584 */    MCD_OPC_Decode, 201, 4, 68, // Opcode: MOVSTOUW
 /* 5588 */    MCD_OPC_FilterValue, 147, 2, 16, 0, 0, // Skip to: 5610
 /* 5594 */    MCD_OPC_CheckPredicate, 2, 170, 8, 0, // Skip to: 7817
 /* 5599 */    MCD_OPC_CheckField, 14, 5, 0, 163, 8, 0, // Skip to: 7817
-/* 5606 */    MCD_OPC_Decode, 200, 4, 66, // Opcode: MOVSTOSW
+/* 5606 */    MCD_OPC_Decode, 200, 4, 68, // Opcode: MOVSTOSW
 /* 5610 */    MCD_OPC_FilterValue, 149, 2, 9, 0, 0, // Skip to: 5625
 /* 5616 */    MCD_OPC_CheckPredicate, 2, 148, 8, 0, // Skip to: 7817
 /* 5621 */    MCD_OPC_Decode, 132, 6, 10, // Opcode: XMULX
-/* 5625 */    MCD_OPC_FilterValue, 151, 2, 9, 0, 0, // Skip to: 5640
+/* 5625 */    MCD_OPC_FilterValue, 150, 2, 9, 0, 0, // Skip to: 5640
 /* 5631 */    MCD_OPC_CheckPredicate, 2, 133, 8, 0, // Skip to: 7817
 /* 5636 */    MCD_OPC_Decode, 133, 6, 10, // Opcode: XMULXHI
 /* 5640 */    MCD_OPC_FilterValue, 152, 2, 16, 0, 0, // Skip to: 5662
 /* 5646 */    MCD_OPC_CheckPredicate, 2, 118, 8, 0, // Skip to: 7817
 /* 5651 */    MCD_OPC_CheckField, 14, 5, 0, 111, 8, 0, // Skip to: 7817
-/* 5658 */    MCD_OPC_Decode, 205, 4, 67, // Opcode: MOVXTOD
+/* 5658 */    MCD_OPC_Decode, 205, 4, 69, // Opcode: MOVXTOD
 /* 5662 */    MCD_OPC_FilterValue, 153, 2, 16, 0, 0, // Skip to: 5684
 /* 5668 */    MCD_OPC_CheckPredicate, 2, 96, 8, 0, // Skip to: 7817
 /* 5673 */    MCD_OPC_CheckField, 14, 5, 0, 89, 8, 0, // Skip to: 7817
-/* 5680 */    MCD_OPC_Decode, 202, 4, 67, // Opcode: MOVWTOS
+/* 5680 */    MCD_OPC_Decode, 202, 4, 70, // Opcode: MOVWTOS
 /* 5684 */    MCD_OPC_FilterValue, 209, 2, 9, 0, 0, // Skip to: 5699
 /* 5690 */    MCD_OPC_CheckPredicate, 2, 74, 8, 0, // Skip to: 7817
-/* 5695 */    MCD_OPC_Decode, 151, 3, 57, // Opcode: FLCMPS
+/* 5695 */    MCD_OPC_Decode, 151, 3, 56, // Opcode: FLCMPS
 /* 5699 */    MCD_OPC_FilterValue, 210, 2, 64, 8, 0, // Skip to: 7817
 /* 5705 */    MCD_OPC_CheckPredicate, 2, 59, 8, 0, // Skip to: 7817
 /* 5710 */    MCD_OPC_Decode, 150, 3, 57, // Opcode: FLCMPD
@@ -1218,25 +1218,25 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 5719 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 5722 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 5738
 /* 5727 */    MCD_OPC_CheckField, 5, 8, 0, 35, 8, 0, // Skip to: 7817
-/* 5734 */    MCD_OPC_Decode, 132, 4, 68, // Opcode: JMPLrr
+/* 5734 */    MCD_OPC_Decode, 132, 4, 71, // Opcode: JMPLrr
 /* 5738 */    MCD_OPC_FilterValue, 1, 26, 8, 0, // Skip to: 7817
-/* 5743 */    MCD_OPC_Decode, 131, 4, 69, // Opcode: JMPLri
+/* 5743 */    MCD_OPC_Decode, 131, 4, 72, // Opcode: JMPLri
 /* 5747 */    MCD_OPC_FilterValue, 57, 42, 0, 0, // Skip to: 5794
 /* 5752 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 5755 */    MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 5778
 /* 5760 */    MCD_OPC_CheckField, 25, 5, 0, 2, 8, 0, // Skip to: 7817
 /* 5767 */    MCD_OPC_CheckField, 5, 8, 0, 251, 7, 0, // Skip to: 7817
-/* 5774 */    MCD_OPC_Decode, 239, 4, 70, // Opcode: RETTrr
+/* 5774 */    MCD_OPC_Decode, 239, 4, 73, // Opcode: RETTrr
 /* 5778 */    MCD_OPC_FilterValue, 1, 242, 7, 0, // Skip to: 7817
 /* 5783 */    MCD_OPC_CheckField, 25, 5, 0, 235, 7, 0, // Skip to: 7817
-/* 5790 */    MCD_OPC_Decode, 238, 4, 71, // Opcode: RETTri
+/* 5790 */    MCD_OPC_Decode, 238, 4, 74, // Opcode: RETTri
 /* 5794 */    MCD_OPC_FilterValue, 58, 129, 0, 0, // Skip to: 5928
 /* 5799 */    MCD_OPC_ExtractField, 8, 6,  // Inst{13-8} ...
 /* 5802 */    MCD_OPC_FilterValue, 16, 23, 0, 0, // Skip to: 5830
 /* 5807 */    MCD_OPC_CheckPredicate, 0, 213, 7, 0, // Skip to: 7817
 /* 5812 */    MCD_OPC_CheckField, 29, 1, 0, 206, 7, 0, // Skip to: 7817
 /* 5819 */    MCD_OPC_CheckField, 5, 3, 0, 199, 7, 0, // Skip to: 7817
-/* 5826 */    MCD_OPC_Decode, 224, 5, 72, // Opcode: TXCCrr
+/* 5826 */    MCD_OPC_Decode, 224, 5, 75, // Opcode: TXCCrr
 /* 5830 */    MCD_OPC_FilterValue, 32, 72, 0, 0, // Skip to: 5907
 /* 5835 */    MCD_OPC_ExtractField, 0, 8,  // Inst{7-0} ...
 /* 5838 */    MCD_OPC_FilterValue, 1, 18, 0, 0, // Skip to: 5861
@@ -1254,7 +1254,7 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 5907 */    MCD_OPC_FilterValue, 48, 113, 7, 0, // Skip to: 7817
 /* 5912 */    MCD_OPC_CheckPredicate, 0, 108, 7, 0, // Skip to: 7817
 /* 5917 */    MCD_OPC_CheckField, 29, 1, 0, 101, 7, 0, // Skip to: 7817
-/* 5924 */    MCD_OPC_Decode, 223, 5, 73, // Opcode: TXCCri
+/* 5924 */    MCD_OPC_Decode, 223, 5, 76, // Opcode: TXCCri
 /* 5928 */    MCD_OPC_FilterValue, 59, 62, 0, 0, // Skip to: 5995
 /* 5933 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 5936 */    MCD_OPC_FilterValue, 0, 38, 0, 0, // Skip to: 5979
@@ -1265,10 +1265,10 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 5957 */    MCD_OPC_CheckField, 14, 5, 0, 11, 0, 0, // Skip to: 5975
 /* 5964 */    MCD_OPC_CheckField, 0, 5, 0, 4, 0, 0, // Skip to: 5975
 /* 5971 */    MCD_OPC_Decode, 152, 3, 4, // Opcode: FLUSH
-/* 5975 */    MCD_OPC_Decode, 155, 3, 70, // Opcode: FLUSHrr
+/* 5975 */    MCD_OPC_Decode, 155, 3, 73, // Opcode: FLUSHrr
 /* 5979 */    MCD_OPC_FilterValue, 1, 41, 7, 0, // Skip to: 7817
 /* 5984 */    MCD_OPC_CheckField, 25, 5, 0, 34, 7, 0, // Skip to: 7817
-/* 5991 */    MCD_OPC_Decode, 154, 3, 71, // Opcode: FLUSHri
+/* 5991 */    MCD_OPC_Decode, 154, 3, 74, // Opcode: FLUSHri
 /* 5995 */    MCD_OPC_FilterValue, 60, 28, 0, 0, // Skip to: 6028
 /* 6000 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6003 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6019
@@ -1315,348 +1315,348 @@ static const uint8_t DecoderTableSparc32[] = {
 /* 6200 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6203 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6219
 /* 6208 */    MCD_OPC_CheckField, 5, 8, 0, 66, 6, 0, // Skip to: 7817
-/* 6215 */    MCD_OPC_Decode, 190, 4, 68, // Opcode: LDrr
+/* 6215 */    MCD_OPC_Decode, 190, 4, 71, // Opcode: LDrr
 /* 6219 */    MCD_OPC_FilterValue, 1, 57, 6, 0, // Skip to: 7817
-/* 6224 */    MCD_OPC_Decode, 189, 4, 69, // Opcode: LDri
+/* 6224 */    MCD_OPC_Decode, 189, 4, 72, // Opcode: LDri
 /* 6228 */    MCD_OPC_FilterValue, 1, 28, 0, 0, // Skip to: 6261
 /* 6233 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6236 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6252
 /* 6241 */    MCD_OPC_CheckField, 5, 8, 0, 33, 6, 0, // Skip to: 7817
-/* 6248 */    MCD_OPC_Decode, 178, 4, 68, // Opcode: LDUBrr
+/* 6248 */    MCD_OPC_Decode, 178, 4, 71, // Opcode: LDUBrr
 /* 6252 */    MCD_OPC_FilterValue, 1, 24, 6, 0, // Skip to: 7817
-/* 6257 */    MCD_OPC_Decode, 177, 4, 69, // Opcode: LDUBri
+/* 6257 */    MCD_OPC_Decode, 177, 4, 72, // Opcode: LDUBri
 /* 6261 */    MCD_OPC_FilterValue, 2, 28, 0, 0, // Skip to: 6294
 /* 6266 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6269 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6285
 /* 6274 */    MCD_OPC_CheckField, 5, 8, 0, 0, 6, 0, // Skip to: 7817
-/* 6281 */    MCD_OPC_Decode, 182, 4, 68, // Opcode: LDUHrr
+/* 6281 */    MCD_OPC_Decode, 182, 4, 71, // Opcode: LDUHrr
 /* 6285 */    MCD_OPC_FilterValue, 1, 247, 5, 0, // Skip to: 7817
-/* 6290 */    MCD_OPC_Decode, 181, 4, 69, // Opcode: LDUHri
+/* 6290 */    MCD_OPC_Decode, 181, 4, 72, // Opcode: LDUHri
 /* 6294 */    MCD_OPC_FilterValue, 3, 28, 0, 0, // Skip to: 6327
 /* 6299 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6302 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6318
 /* 6307 */    MCD_OPC_CheckField, 5, 8, 0, 223, 5, 0, // Skip to: 7817
-/* 6314 */    MCD_OPC_Decode, 148, 4, 74, // Opcode: LDDrr
+/* 6314 */    MCD_OPC_Decode, 148, 4, 77, // Opcode: LDDrr
 /* 6318 */    MCD_OPC_FilterValue, 1, 214, 5, 0, // Skip to: 7817
-/* 6323 */    MCD_OPC_Decode, 147, 4, 75, // Opcode: LDDri
+/* 6323 */    MCD_OPC_Decode, 147, 4, 78, // Opcode: LDDri
 /* 6327 */    MCD_OPC_FilterValue, 4, 28, 0, 0, // Skip to: 6360
 /* 6332 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6335 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6351
 /* 6340 */    MCD_OPC_CheckField, 5, 8, 0, 190, 5, 0, // Skip to: 7817
-/* 6347 */    MCD_OPC_Decode, 189, 5, 76, // Opcode: STrr
+/* 6347 */    MCD_OPC_Decode, 189, 5, 79, // Opcode: STrr
 /* 6351 */    MCD_OPC_FilterValue, 1, 181, 5, 0, // Skip to: 7817
-/* 6356 */    MCD_OPC_Decode, 188, 5, 77, // Opcode: STri
+/* 6356 */    MCD_OPC_Decode, 188, 5, 80, // Opcode: STri
 /* 6360 */    MCD_OPC_FilterValue, 5, 28, 0, 0, // Skip to: 6393
 /* 6365 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6368 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6384
 /* 6373 */    MCD_OPC_CheckField, 5, 8, 0, 157, 5, 0, // Skip to: 7817
-/* 6380 */    MCD_OPC_Decode, 149, 5, 76, // Opcode: STBrr
+/* 6380 */    MCD_OPC_Decode, 149, 5, 79, // Opcode: STBrr
 /* 6384 */    MCD_OPC_FilterValue, 1, 148, 5, 0, // Skip to: 7817
-/* 6389 */    MCD_OPC_Decode, 148, 5, 77, // Opcode: STBri
+/* 6389 */    MCD_OPC_Decode, 148, 5, 80, // Opcode: STBri
 /* 6393 */    MCD_OPC_FilterValue, 6, 28, 0, 0, // Skip to: 6426
 /* 6398 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6401 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6417
 /* 6406 */    MCD_OPC_CheckField, 5, 8, 0, 124, 5, 0, // Skip to: 7817
-/* 6413 */    MCD_OPC_Decode, 177, 5, 76, // Opcode: STHrr
+/* 6413 */    MCD_OPC_Decode, 177, 5, 79, // Opcode: STHrr
 /* 6417 */    MCD_OPC_FilterValue, 1, 115, 5, 0, // Skip to: 7817
-/* 6422 */    MCD_OPC_Decode, 176, 5, 77, // Opcode: STHri
+/* 6422 */    MCD_OPC_Decode, 176, 5, 80, // Opcode: STHri
 /* 6426 */    MCD_OPC_FilterValue, 7, 28, 0, 0, // Skip to: 6459
 /* 6431 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6434 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6450
 /* 6439 */    MCD_OPC_CheckField, 5, 8, 0, 91, 5, 0, // Skip to: 7817
-/* 6446 */    MCD_OPC_Decode, 167, 5, 78, // Opcode: STDrr
+/* 6446 */    MCD_OPC_Decode, 167, 5, 81, // Opcode: STDrr
 /* 6450 */    MCD_OPC_FilterValue, 1, 82, 5, 0, // Skip to: 7817
-/* 6455 */    MCD_OPC_Decode, 166, 5, 79, // Opcode: STDri
+/* 6455 */    MCD_OPC_Decode, 166, 5, 82, // Opcode: STDri
 /* 6459 */    MCD_OPC_FilterValue, 8, 38, 0, 0, // Skip to: 6502
 /* 6464 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6467 */    MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 6488
 /* 6472 */    MCD_OPC_CheckPredicate, 0, 60, 5, 0, // Skip to: 7817
 /* 6477 */    MCD_OPC_CheckField, 5, 8, 0, 53, 5, 0, // Skip to: 7817
-/* 6484 */    MCD_OPC_Decode, 174, 4, 80, // Opcode: LDSWrr
+/* 6484 */    MCD_OPC_Decode, 174, 4, 83, // Opcode: LDSWrr
 /* 6488 */    MCD_OPC_FilterValue, 1, 44, 5, 0, // Skip to: 7817
 /* 6493 */    MCD_OPC_CheckPredicate, 0, 39, 5, 0, // Skip to: 7817
-/* 6498 */    MCD_OPC_Decode, 173, 4, 81, // Opcode: LDSWri
+/* 6498 */    MCD_OPC_Decode, 173, 4, 84, // Opcode: LDSWri
 /* 6502 */    MCD_OPC_FilterValue, 9, 28, 0, 0, // Skip to: 6535
 /* 6507 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6510 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6526
 /* 6515 */    MCD_OPC_CheckField, 5, 8, 0, 15, 5, 0, // Skip to: 7817
-/* 6522 */    MCD_OPC_Decode, 162, 4, 68, // Opcode: LDSBrr
+/* 6522 */    MCD_OPC_Decode, 162, 4, 71, // Opcode: LDSBrr
 /* 6526 */    MCD_OPC_FilterValue, 1, 6, 5, 0, // Skip to: 7817
-/* 6531 */    MCD_OPC_Decode, 161, 4, 69, // Opcode: LDSBri
+/* 6531 */    MCD_OPC_Decode, 161, 4, 72, // Opcode: LDSBri
 /* 6535 */    MCD_OPC_FilterValue, 10, 28, 0, 0, // Skip to: 6568
 /* 6540 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6543 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6559
 /* 6548 */    MCD_OPC_CheckField, 5, 8, 0, 238, 4, 0, // Skip to: 7817
-/* 6555 */    MCD_OPC_Decode, 166, 4, 68, // Opcode: LDSHrr
+/* 6555 */    MCD_OPC_Decode, 166, 4, 71, // Opcode: LDSHrr
 /* 6559 */    MCD_OPC_FilterValue, 1, 229, 4, 0, // Skip to: 7817
-/* 6564 */    MCD_OPC_Decode, 165, 4, 69, // Opcode: LDSHri
+/* 6564 */    MCD_OPC_Decode, 165, 4, 72, // Opcode: LDSHri
 /* 6568 */    MCD_OPC_FilterValue, 11, 38, 0, 0, // Skip to: 6611
 /* 6573 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6576 */    MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 6597
 /* 6581 */    MCD_OPC_CheckPredicate, 0, 207, 4, 0, // Skip to: 7817
 /* 6586 */    MCD_OPC_CheckField, 5, 8, 0, 200, 4, 0, // Skip to: 7817
-/* 6593 */    MCD_OPC_Decode, 188, 4, 80, // Opcode: LDXrr
+/* 6593 */    MCD_OPC_Decode, 188, 4, 83, // Opcode: LDXrr
 /* 6597 */    MCD_OPC_FilterValue, 1, 191, 4, 0, // Skip to: 7817
 /* 6602 */    MCD_OPC_CheckPredicate, 0, 186, 4, 0, // Skip to: 7817
-/* 6607 */    MCD_OPC_Decode, 187, 4, 81, // Opcode: LDXri
+/* 6607 */    MCD_OPC_Decode, 187, 4, 84, // Opcode: LDXri
 /* 6611 */    MCD_OPC_FilterValue, 13, 28, 0, 0, // Skip to: 6644
 /* 6616 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6619 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6635
 /* 6624 */    MCD_OPC_CheckField, 5, 8, 0, 162, 4, 0, // Skip to: 7817
-/* 6631 */    MCD_OPC_Decode, 170, 4, 68, // Opcode: LDSTUBrr
+/* 6631 */    MCD_OPC_Decode, 170, 4, 71, // Opcode: LDSTUBrr
 /* 6635 */    MCD_OPC_FilterValue, 1, 153, 4, 0, // Skip to: 7817
-/* 6640 */    MCD_OPC_Decode, 169, 4, 69, // Opcode: LDSTUBri
+/* 6640 */    MCD_OPC_Decode, 169, 4, 72, // Opcode: LDSTUBri
 /* 6644 */    MCD_OPC_FilterValue, 14, 38, 0, 0, // Skip to: 6687
 /* 6649 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6652 */    MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 6673
 /* 6657 */    MCD_OPC_CheckPredicate, 0, 131, 4, 0, // Skip to: 7817
 /* 6662 */    MCD_OPC_CheckField, 5, 8, 0, 124, 4, 0, // Skip to: 7817
-/* 6669 */    MCD_OPC_Decode, 187, 5, 82, // Opcode: STXrr
+/* 6669 */    MCD_OPC_Decode, 187, 5, 85, // Opcode: STXrr
 /* 6673 */    MCD_OPC_FilterValue, 1, 115, 4, 0, // Skip to: 7817
 /* 6678 */    MCD_OPC_CheckPredicate, 0, 110, 4, 0, // Skip to: 7817
-/* 6683 */    MCD_OPC_Decode, 186, 5, 83, // Opcode: STXri
+/* 6683 */    MCD_OPC_Decode, 186, 5, 86, // Opcode: STXri
 /* 6687 */    MCD_OPC_FilterValue, 15, 28, 0, 0, // Skip to: 6720
 /* 6692 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6695 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 6711
 /* 6700 */    MCD_OPC_CheckField, 5, 8, 0, 86, 4, 0, // Skip to: 7817
-/* 6707 */    MCD_OPC_Decode, 201, 5, 84, // Opcode: SWAPrr
+/* 6707 */    MCD_OPC_Decode, 201, 5, 87, // Opcode: SWAPrr
 /* 6711 */    MCD_OPC_FilterValue, 1, 77, 4, 0, // Skip to: 7817
-/* 6716 */    MCD_OPC_Decode, 200, 5, 85, // Opcode: SWAPri
+/* 6716 */    MCD_OPC_Decode, 200, 5, 88, // Opcode: SWAPri
 /* 6720 */    MCD_OPC_FilterValue, 16, 26, 0, 0, // Skip to: 6751
 /* 6725 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6728 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 6737
-/* 6733 */    MCD_OPC_Decode, 134, 4, 86, // Opcode: LDArr
+/* 6733 */    MCD_OPC_Decode, 134, 4, 89, // Opcode: LDArr
 /* 6737 */    MCD_OPC_FilterValue, 1, 51, 4, 0, // Skip to: 7817
 /* 6742 */    MCD_OPC_CheckPredicate, 0, 46, 4, 0, // Skip to: 7817
-/* 6747 */    MCD_OPC_Decode, 133, 4, 69, // Opcode: LDAri
+/* 6747 */    MCD_OPC_Decode, 133, 4, 72, // Opcode: LDAri
 /* 6751 */    MCD_OPC_FilterValue, 17, 26, 0, 0, // Skip to: 6782
 /* 6756 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6759 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 6768
-/* 6764 */    MCD_OPC_Decode, 176, 4, 86, // Opcode: LDUBArr
+/* 6764 */    MCD_OPC_Decode, 176, 4, 89, // Opcode: LDUBArr
 /* 6768 */    MCD_OPC_FilterValue, 1, 20, 4, 0, // Skip to: 7817
 /* 6773 */    MCD_OPC_CheckPredicate, 0, 15, 4, 0, // Skip to: 7817
-/* 6778 */    MCD_OPC_Decode, 175, 4, 69, // Opcode: LDUBAri
+/* 6778 */    MCD_OPC_Decode, 175, 4, 72, // Opcode: LDUBAri
 /* 6782 */    MCD_OPC_FilterValue, 18, 26, 0, 0, // Skip to: 6813
 /* 6787 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6790 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 6799
-/* 6795 */    MCD_OPC_Decode, 180, 4, 86, // Opcode: LDUHArr
+/* 6795 */    MCD_OPC_Decode, 180, 4, 89, // Opcode: LDUHArr
 /* 6799 */    MCD_OPC_FilterValue, 1, 245, 3, 0, // Skip to: 7817
 /* 6804 */    MCD_OPC_CheckPredicate, 0, 240, 3, 0, // Skip to: 7817
-/* 6809 */    MCD_OPC_Decode, 179, 4, 69, // Opcode: LDUHAri
+/* 6809 */    MCD_OPC_Decode, 179, 4, 72, // Opcode: LDUHAri
 /* 6813 */    MCD_OPC_FilterValue, 19, 26, 0, 0, // Skip to: 6844
 /* 6818 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6821 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 6830
-/* 6826 */    MCD_OPC_Decode, 140, 4, 87, // Opcode: LDDArr
+/* 6826 */    MCD_OPC_Decode, 140, 4, 90, // Opcode: LDDArr
 /* 6830 */    MCD_OPC_FilterValue, 1, 214, 3, 0, // Skip to: 7817
 /* 6835 */    MCD_OPC_CheckPredicate, 0, 209, 3, 0, // Skip to: 7817
-/* 6840 */    MCD_OPC_Decode, 139, 4, 75, // Opcode: LDDAri
+/* 6840 */    MCD_OPC_Decode, 139, 4, 78, // Opcode: LDDAri
 /* 6844 */    MCD_OPC_FilterValue, 20, 26, 0, 0, // Skip to: 6875
 /* 6849 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6852 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 6861
-/* 6857 */    MCD_OPC_Decode, 144, 5, 88, // Opcode: STArr
+/* 6857 */    MCD_OPC_Decode, 144, 5, 91, // Opcode: STArr
 /* 6861 */    MCD_OPC_FilterValue, 1, 183, 3, 0, // Skip to: 7817
 /* 6866 */    MCD_OPC_CheckPredicate, 0, 178, 3, 0, // Skip to: 7817
-/* 6871 */    MCD_OPC_Decode, 143, 5, 77, // Opcode: STAri
+/* 6871 */    MCD_OPC_Decode, 143, 5, 80, // Opcode: STAri
 /* 6875 */    MCD_OPC_FilterValue, 21, 26, 0, 0, // Skip to: 6906
 /* 6880 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6883 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 6892
-/* 6888 */    MCD_OPC_Decode, 147, 5, 88, // Opcode: STBArr
+/* 6888 */    MCD_OPC_Decode, 147, 5, 91, // Opcode: STBArr
 /* 6892 */    MCD_OPC_FilterValue, 1, 152, 3, 0, // Skip to: 7817
 /* 6897 */    MCD_OPC_CheckPredicate, 0, 147, 3, 0, // Skip to: 7817
-/* 6902 */    MCD_OPC_Decode, 146, 5, 77, // Opcode: STBAri
+/* 6902 */    MCD_OPC_Decode, 146, 5, 80, // Opcode: STBAri
 /* 6906 */    MCD_OPC_FilterValue, 22, 26, 0, 0, // Skip to: 6937
 /* 6911 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6914 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 6923
-/* 6919 */    MCD_OPC_Decode, 175, 5, 88, // Opcode: STHArr
+/* 6919 */    MCD_OPC_Decode, 175, 5, 91, // Opcode: STHArr
 /* 6923 */    MCD_OPC_FilterValue, 1, 121, 3, 0, // Skip to: 7817
 /* 6928 */    MCD_OPC_CheckPredicate, 0, 116, 3, 0, // Skip to: 7817
-/* 6933 */    MCD_OPC_Decode, 174, 5, 77, // Opcode: STHAri
+/* 6933 */    MCD_OPC_Decode, 174, 5, 80, // Opcode: STHAri
 /* 6937 */    MCD_OPC_FilterValue, 23, 26, 0, 0, // Skip to: 6968
 /* 6942 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6945 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 6954
-/* 6950 */    MCD_OPC_Decode, 155, 5, 89, // Opcode: STDArr
+/* 6950 */    MCD_OPC_Decode, 155, 5, 92, // Opcode: STDArr
 /* 6954 */    MCD_OPC_FilterValue, 1, 90, 3, 0, // Skip to: 7817
 /* 6959 */    MCD_OPC_CheckPredicate, 0, 85, 3, 0, // Skip to: 7817
-/* 6964 */    MCD_OPC_Decode, 154, 5, 79, // Opcode: STDAri
+/* 6964 */    MCD_OPC_Decode, 154, 5, 82, // Opcode: STDAri
 /* 6968 */    MCD_OPC_FilterValue, 24, 31, 0, 0, // Skip to: 7004
 /* 6973 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 6976 */    MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 6990
 /* 6981 */    MCD_OPC_CheckPredicate, 0, 63, 3, 0, // Skip to: 7817
-/* 6986 */    MCD_OPC_Decode, 172, 4, 90, // Opcode: LDSWArr
+/* 6986 */    MCD_OPC_Decode, 172, 4, 93, // Opcode: LDSWArr
 /* 6990 */    MCD_OPC_FilterValue, 1, 54, 3, 0, // Skip to: 7817
 /* 6995 */    MCD_OPC_CheckPredicate, 0, 49, 3, 0, // Skip to: 7817
-/* 7000 */    MCD_OPC_Decode, 171, 4, 81, // Opcode: LDSWAri
+/* 7000 */    MCD_OPC_Decode, 171, 4, 84, // Opcode: LDSWAri
 /* 7004 */    MCD_OPC_FilterValue, 25, 26, 0, 0, // Skip to: 7035
 /* 7009 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7012 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 7021
-/* 7017 */    MCD_OPC_Decode, 160, 4, 86, // Opcode: LDSBArr
+/* 7017 */    MCD_OPC_Decode, 160, 4, 89, // Opcode: LDSBArr
 /* 7021 */    MCD_OPC_FilterValue, 1, 23, 3, 0, // Skip to: 7817
 /* 7026 */    MCD_OPC_CheckPredicate, 0, 18, 3, 0, // Skip to: 7817
-/* 7031 */    MCD_OPC_Decode, 159, 4, 69, // Opcode: LDSBAri
+/* 7031 */    MCD_OPC_Decode, 159, 4, 72, // Opcode: LDSBAri
 /* 7035 */    MCD_OPC_FilterValue, 26, 26, 0, 0, // Skip to: 7066
 /* 7040 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7043 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 7052
-/* 7048 */    MCD_OPC_Decode, 164, 4, 86, // Opcode: LDSHArr
+/* 7048 */    MCD_OPC_Decode, 164, 4, 89, // Opcode: LDSHArr
 /* 7052 */    MCD_OPC_FilterValue, 1, 248, 2, 0, // Skip to: 7817
 /* 7057 */    MCD_OPC_CheckPredicate, 0, 243, 2, 0, // Skip to: 7817
-/* 7062 */    MCD_OPC_Decode, 163, 4, 69, // Opcode: LDSHAri
+/* 7062 */    MCD_OPC_Decode, 163, 4, 72, // Opcode: LDSHAri
 /* 7066 */    MCD_OPC_FilterValue, 27, 31, 0, 0, // Skip to: 7102
 /* 7071 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7074 */    MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 7088
 /* 7079 */    MCD_OPC_CheckPredicate, 0, 221, 2, 0, // Skip to: 7817
-/* 7084 */    MCD_OPC_Decode, 184, 4, 90, // Opcode: LDXArr
+/* 7084 */    MCD_OPC_Decode, 184, 4, 93, // Opcode: LDXArr
 /* 7088 */    MCD_OPC_FilterValue, 1, 212, 2, 0, // Skip to: 7817
 /* 7093 */    MCD_OPC_CheckPredicate, 0, 207, 2, 0, // Skip to: 7817
-/* 7098 */    MCD_OPC_Decode, 183, 4, 81, // Opcode: LDXAri
+/* 7098 */    MCD_OPC_Decode, 183, 4, 84, // Opcode: LDXAri
 /* 7102 */    MCD_OPC_FilterValue, 29, 26, 0, 0, // Skip to: 7133
 /* 7107 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7110 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 7119
-/* 7115 */    MCD_OPC_Decode, 168, 4, 86, // Opcode: LDSTUBArr
+/* 7115 */    MCD_OPC_Decode, 168, 4, 89, // Opcode: LDSTUBArr
 /* 7119 */    MCD_OPC_FilterValue, 1, 181, 2, 0, // Skip to: 7817
 /* 7124 */    MCD_OPC_CheckPredicate, 0, 176, 2, 0, // Skip to: 7817
-/* 7129 */    MCD_OPC_Decode, 167, 4, 69, // Opcode: LDSTUBAri
+/* 7129 */    MCD_OPC_Decode, 167, 4, 72, // Opcode: LDSTUBAri
 /* 7133 */    MCD_OPC_FilterValue, 30, 31, 0, 0, // Skip to: 7169
 /* 7138 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7141 */    MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 7155
 /* 7146 */    MCD_OPC_CheckPredicate, 0, 154, 2, 0, // Skip to: 7817
-/* 7151 */    MCD_OPC_Decode, 183, 5, 91, // Opcode: STXArr
+/* 7151 */    MCD_OPC_Decode, 183, 5, 94, // Opcode: STXArr
 /* 7155 */    MCD_OPC_FilterValue, 1, 145, 2, 0, // Skip to: 7817
 /* 7160 */    MCD_OPC_CheckPredicate, 0, 140, 2, 0, // Skip to: 7817
-/* 7165 */    MCD_OPC_Decode, 182, 5, 83, // Opcode: STXAri
+/* 7165 */    MCD_OPC_Decode, 182, 5, 86, // Opcode: STXAri
 /* 7169 */    MCD_OPC_FilterValue, 31, 26, 0, 0, // Skip to: 7200
 /* 7174 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7177 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 7186
-/* 7182 */    MCD_OPC_Decode, 199, 5, 92, // Opcode: SWAPArr
+/* 7182 */    MCD_OPC_Decode, 199, 5, 95, // Opcode: SWAPArr
 /* 7186 */    MCD_OPC_FilterValue, 1, 114, 2, 0, // Skip to: 7817
 /* 7191 */    MCD_OPC_CheckPredicate, 0, 109, 2, 0, // Skip to: 7817
-/* 7196 */    MCD_OPC_Decode, 198, 5, 85, // Opcode: SWAPAri
+/* 7196 */    MCD_OPC_Decode, 198, 5, 88, // Opcode: SWAPAri
 /* 7200 */    MCD_OPC_FilterValue, 32, 28, 0, 0, // Skip to: 7233
 /* 7205 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7208 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 7224
 /* 7213 */    MCD_OPC_CheckField, 5, 8, 0, 85, 2, 0, // Skip to: 7817
-/* 7220 */    MCD_OPC_Decode, 154, 4, 93, // Opcode: LDFrr
+/* 7220 */    MCD_OPC_Decode, 154, 4, 96, // Opcode: LDFrr
 /* 7224 */    MCD_OPC_FilterValue, 1, 76, 2, 0, // Skip to: 7817
-/* 7229 */    MCD_OPC_Decode, 153, 4, 94, // Opcode: LDFri
+/* 7229 */    MCD_OPC_Decode, 153, 4, 97, // Opcode: LDFri
 /* 7233 */    MCD_OPC_FilterValue, 33, 79, 0, 0, // Skip to: 7317
 /* 7238 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7241 */    MCD_OPC_FilterValue, 0, 40, 0, 0, // Skip to: 7286
 /* 7246 */    MCD_OPC_ExtractField, 25, 5,  // Inst{29-25} ...
 /* 7249 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 7265
 /* 7254 */    MCD_OPC_CheckField, 5, 8, 0, 44, 2, 0, // Skip to: 7817
-/* 7261 */    MCD_OPC_Decode, 152, 4, 70, // Opcode: LDFSRrr
+/* 7261 */    MCD_OPC_Decode, 152, 4, 73, // Opcode: LDFSRrr
 /* 7265 */    MCD_OPC_FilterValue, 1, 35, 2, 0, // Skip to: 7817
 /* 7270 */    MCD_OPC_CheckPredicate, 0, 30, 2, 0, // Skip to: 7817
 /* 7275 */    MCD_OPC_CheckField, 5, 8, 0, 23, 2, 0, // Skip to: 7817
-/* 7282 */    MCD_OPC_Decode, 186, 4, 70, // Opcode: LDXFSRrr
+/* 7282 */    MCD_OPC_Decode, 186, 4, 73, // Opcode: LDXFSRrr
 /* 7286 */    MCD_OPC_FilterValue, 1, 14, 2, 0, // Skip to: 7817
 /* 7291 */    MCD_OPC_ExtractField, 25, 5,  // Inst{29-25} ...
 /* 7294 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 7303
-/* 7299 */    MCD_OPC_Decode, 151, 4, 71, // Opcode: LDFSRri
+/* 7299 */    MCD_OPC_Decode, 151, 4, 74, // Opcode: LDFSRri
 /* 7303 */    MCD_OPC_FilterValue, 1, 253, 1, 0, // Skip to: 7817
 /* 7308 */    MCD_OPC_CheckPredicate, 0, 248, 1, 0, // Skip to: 7817
-/* 7313 */    MCD_OPC_Decode, 185, 4, 71, // Opcode: LDXFSRri
+/* 7313 */    MCD_OPC_Decode, 185, 4, 74, // Opcode: LDXFSRri
 /* 7317 */    MCD_OPC_FilterValue, 35, 28, 0, 0, // Skip to: 7350
 /* 7322 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7325 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 7341
 /* 7330 */    MCD_OPC_CheckField, 5, 8, 0, 224, 1, 0, // Skip to: 7817
-/* 7337 */    MCD_OPC_Decode, 146, 4, 95, // Opcode: LDDFrr
+/* 7337 */    MCD_OPC_Decode, 146, 4, 98, // Opcode: LDDFrr
 /* 7341 */    MCD_OPC_FilterValue, 1, 215, 1, 0, // Skip to: 7817
-/* 7346 */    MCD_OPC_Decode, 145, 4, 96, // Opcode: LDDFri
+/* 7346 */    MCD_OPC_Decode, 145, 4, 99, // Opcode: LDDFri
 /* 7350 */    MCD_OPC_FilterValue, 36, 28, 0, 0, // Skip to: 7383
 /* 7355 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7358 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 7374
 /* 7363 */    MCD_OPC_CheckField, 5, 8, 0, 191, 1, 0, // Skip to: 7817
-/* 7370 */    MCD_OPC_Decode, 173, 5, 97, // Opcode: STFrr
+/* 7370 */    MCD_OPC_Decode, 173, 5, 100, // Opcode: STFrr
 /* 7374 */    MCD_OPC_FilterValue, 1, 182, 1, 0, // Skip to: 7817
-/* 7379 */    MCD_OPC_Decode, 172, 5, 98, // Opcode: STFri
+/* 7379 */    MCD_OPC_Decode, 172, 5, 101, // Opcode: STFri
 /* 7383 */    MCD_OPC_FilterValue, 37, 79, 0, 0, // Skip to: 7467
 /* 7388 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7391 */    MCD_OPC_FilterValue, 0, 40, 0, 0, // Skip to: 7436
 /* 7396 */    MCD_OPC_ExtractField, 25, 5,  // Inst{29-25} ...
 /* 7399 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 7415
 /* 7404 */    MCD_OPC_CheckField, 5, 8, 0, 150, 1, 0, // Skip to: 7817
-/* 7411 */    MCD_OPC_Decode, 171, 5, 70, // Opcode: STFSRrr
+/* 7411 */    MCD_OPC_Decode, 171, 5, 73, // Opcode: STFSRrr
 /* 7415 */    MCD_OPC_FilterValue, 1, 141, 1, 0, // Skip to: 7817
 /* 7420 */    MCD_OPC_CheckPredicate, 0, 136, 1, 0, // Skip to: 7817
 /* 7425 */    MCD_OPC_CheckField, 5, 8, 0, 129, 1, 0, // Skip to: 7817
-/* 7432 */    MCD_OPC_Decode, 185, 5, 70, // Opcode: STXFSRrr
+/* 7432 */    MCD_OPC_Decode, 185, 5, 73, // Opcode: STXFSRrr
 /* 7436 */    MCD_OPC_FilterValue, 1, 120, 1, 0, // Skip to: 7817
 /* 7441 */    MCD_OPC_ExtractField, 25, 5,  // Inst{29-25} ...
 /* 7444 */    MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 7453
-/* 7449 */    MCD_OPC_Decode, 170, 5, 71, // Opcode: STFSRri
+/* 7449 */    MCD_OPC_Decode, 170, 5, 74, // Opcode: STFSRri
 /* 7453 */    MCD_OPC_FilterValue, 1, 103, 1, 0, // Skip to: 7817
 /* 7458 */    MCD_OPC_CheckPredicate, 0, 98, 1, 0, // Skip to: 7817
-/* 7463 */    MCD_OPC_Decode, 184, 5, 71, // Opcode: STXFSRri
+/* 7463 */    MCD_OPC_Decode, 184, 5, 74, // Opcode: STXFSRri
 /* 7467 */    MCD_OPC_FilterValue, 38, 42, 0, 0, // Skip to: 7514
 /* 7472 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7475 */    MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 7498
 /* 7480 */    MCD_OPC_CheckField, 25, 5, 0, 74, 1, 0, // Skip to: 7817
 /* 7487 */    MCD_OPC_CheckField, 5, 8, 0, 67, 1, 0, // Skip to: 7817
-/* 7494 */    MCD_OPC_Decode, 163, 5, 70, // Opcode: STDFQrr
+/* 7494 */    MCD_OPC_Decode, 163, 5, 73, // Opcode: STDFQrr
 /* 7498 */    MCD_OPC_FilterValue, 1, 58, 1, 0, // Skip to: 7817
 /* 7503 */    MCD_OPC_CheckField, 25, 5, 0, 51, 1, 0, // Skip to: 7817
-/* 7510 */    MCD_OPC_Decode, 162, 5, 71, // Opcode: STDFQri
+/* 7510 */    MCD_OPC_Decode, 162, 5, 74, // Opcode: STDFQri
 /* 7514 */    MCD_OPC_FilterValue, 39, 28, 0, 0, // Skip to: 7547
 /* 7519 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7522 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 7538
 /* 7527 */    MCD_OPC_CheckField, 5, 8, 0, 27, 1, 0, // Skip to: 7817
-/* 7534 */    MCD_OPC_Decode, 165, 5, 99, // Opcode: STDFrr
+/* 7534 */    MCD_OPC_Decode, 165, 5, 102, // Opcode: STDFrr
 /* 7538 */    MCD_OPC_FilterValue, 1, 18, 1, 0, // Skip to: 7817
-/* 7543 */    MCD_OPC_Decode, 164, 5, 100, // Opcode: STDFri
+/* 7543 */    MCD_OPC_Decode, 164, 5, 103, // Opcode: STDFri
 /* 7547 */    MCD_OPC_FilterValue, 45, 38, 0, 0, // Skip to: 7590
 /* 7552 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7555 */    MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 7576
 /* 7560 */    MCD_OPC_CheckPredicate, 0, 252, 0, 0, // Skip to: 7817
 /* 7565 */    MCD_OPC_CheckField, 5, 8, 0, 245, 0, 0, // Skip to: 7817
-/* 7572 */    MCD_OPC_Decode, 223, 4, 101, // Opcode: PREFETCHr
+/* 7572 */    MCD_OPC_Decode, 223, 4, 104, // Opcode: PREFETCHr
 /* 7576 */    MCD_OPC_FilterValue, 1, 236, 0, 0, // Skip to: 7817
 /* 7581 */    MCD_OPC_CheckPredicate, 0, 231, 0, 0, // Skip to: 7817
-/* 7586 */    MCD_OPC_Decode, 222, 4, 102, // Opcode: PREFETCHi
+/* 7586 */    MCD_OPC_Decode, 222, 4, 105, // Opcode: PREFETCHi
 /* 7590 */    MCD_OPC_FilterValue, 49, 42, 0, 0, // Skip to: 7637
 /* 7595 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7598 */    MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 7621
 /* 7603 */    MCD_OPC_CheckField, 25, 5, 0, 207, 0, 0, // Skip to: 7817
 /* 7610 */    MCD_OPC_CheckField, 5, 8, 0, 200, 0, 0, // Skip to: 7817
-/* 7617 */    MCD_OPC_Decode, 136, 4, 70, // Opcode: LDCSRrr
+/* 7617 */    MCD_OPC_Decode, 136, 4, 73, // Opcode: LDCSRrr
 /* 7621 */    MCD_OPC_FilterValue, 1, 191, 0, 0, // Skip to: 7817
 /* 7626 */    MCD_OPC_CheckField, 25, 5, 0, 184, 0, 0, // Skip to: 7817
-/* 7633 */    MCD_OPC_Decode, 135, 4, 71, // Opcode: LDCSRri
+/* 7633 */    MCD_OPC_Decode, 135, 4, 74, // Opcode: LDCSRri
 /* 7637 */    MCD_OPC_FilterValue, 53, 42, 0, 0, // Skip to: 7684
 /* 7642 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7645 */    MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 7668
 /* 7650 */    MCD_OPC_CheckField, 25, 5, 0, 160, 0, 0, // Skip to: 7817
 /* 7657 */    MCD_OPC_CheckField, 5, 8, 0, 153, 0, 0, // Skip to: 7817
-/* 7664 */    MCD_OPC_Decode, 151, 5, 70, // Opcode: STCSRrr
+/* 7664 */    MCD_OPC_Decode, 151, 5, 73, // Opcode: STCSRrr
 /* 7668 */    MCD_OPC_FilterValue, 1, 144, 0, 0, // Skip to: 7817
 /* 7673 */    MCD_OPC_CheckField, 25, 5, 0, 137, 0, 0, // Skip to: 7817
-/* 7680 */    MCD_OPC_Decode, 150, 5, 71, // Opcode: STCSRri
+/* 7680 */    MCD_OPC_Decode, 150, 5, 74, // Opcode: STCSRri
 /* 7684 */    MCD_OPC_FilterValue, 54, 42, 0, 0, // Skip to: 7731
 /* 7689 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7692 */    MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 7715
 /* 7697 */    MCD_OPC_CheckField, 25, 5, 0, 113, 0, 0, // Skip to: 7817
 /* 7704 */    MCD_OPC_CheckField, 5, 8, 0, 106, 0, 0, // Skip to: 7817
-/* 7711 */    MCD_OPC_Decode, 157, 5, 70, // Opcode: STDCQrr
+/* 7711 */    MCD_OPC_Decode, 157, 5, 73, // Opcode: STDCQrr
 /* 7715 */    MCD_OPC_FilterValue, 1, 97, 0, 0, // Skip to: 7817
 /* 7720 */    MCD_OPC_CheckField, 25, 5, 0, 90, 0, 0, // Skip to: 7817
-/* 7727 */    MCD_OPC_Decode, 156, 5, 71, // Opcode: STDCQri
+/* 7727 */    MCD_OPC_Decode, 156, 5, 74, // Opcode: STDCQri
 /* 7731 */    MCD_OPC_FilterValue, 60, 38, 0, 0, // Skip to: 7774
 /* 7736 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7739 */    MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 7753
 /* 7744 */    MCD_OPC_CheckPredicate, 5, 68, 0, 0, // Skip to: 7817
-/* 7749 */    MCD_OPC_Decode, 209, 2, 103, // Opcode: CASArr
+/* 7749 */    MCD_OPC_Decode, 209, 2, 106, // Opcode: CASArr
 /* 7753 */    MCD_OPC_FilterValue, 1, 59, 0, 0, // Skip to: 7817
 /* 7758 */    MCD_OPC_CheckPredicate, 0, 54, 0, 0, // Skip to: 7817
 /* 7763 */    MCD_OPC_CheckField, 5, 8, 0, 47, 0, 0, // Skip to: 7817
-/* 7770 */    MCD_OPC_Decode, 208, 2, 104, // Opcode: CASAri
+/* 7770 */    MCD_OPC_Decode, 208, 2, 107, // Opcode: CASAri
 /* 7774 */    MCD_OPC_FilterValue, 62, 38, 0, 0, // Skip to: 7817
 /* 7779 */    MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 7782 */    MCD_OPC_FilterValue, 0, 9, 0, 0, // Skip to: 7796
 /* 7787 */    MCD_OPC_CheckPredicate, 6, 25, 0, 0, // Skip to: 7817
-/* 7792 */    MCD_OPC_Decode, 211, 2, 105, // Opcode: CASXArr
+/* 7792 */    MCD_OPC_Decode, 211, 2, 108, // Opcode: CASXArr
 /* 7796 */    MCD_OPC_FilterValue, 1, 16, 0, 0, // Skip to: 7817
 /* 7801 */    MCD_OPC_CheckPredicate, 6, 11, 0, 0, // Skip to: 7817
 /* 7806 */    MCD_OPC_CheckField, 5, 8, 0, 4, 0, 0, // Skip to: 7817
-/* 7813 */    MCD_OPC_Decode, 210, 2, 106, // Opcode: CASXAri
+/* 7813 */    MCD_OPC_Decode, 210, 2, 109, // Opcode: CASXAri
 /* 7817 */    MCD_OPC_Fail,
   0
 };
@@ -1668,46 +1668,46 @@ static const uint8_t DecoderTableSparcV832[] = {
 /* 11 */      MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 34
 /* 16 */      MCD_OPC_CheckField, 30, 2, 3, 215, 0, 0, // Skip to: 238
 /* 23 */      MCD_OPC_CheckField, 5, 8, 0, 208, 0, 0, // Skip to: 238
-/* 30 */      MCD_OPC_Decode, 138, 4, 107, // Opcode: LDCrr
+/* 30 */      MCD_OPC_Decode, 138, 4, 110, // Opcode: LDCrr
 /* 34 */      MCD_OPC_FilterValue, 1, 199, 0, 0, // Skip to: 238
 /* 39 */      MCD_OPC_CheckField, 30, 2, 3, 192, 0, 0, // Skip to: 238
-/* 46 */      MCD_OPC_Decode, 137, 4, 108, // Opcode: LDCri
+/* 46 */      MCD_OPC_Decode, 137, 4, 111, // Opcode: LDCri
 /* 50 */      MCD_OPC_FilterValue, 51, 42, 0, 0, // Skip to: 97
 /* 55 */      MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 58 */      MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 81
 /* 63 */      MCD_OPC_CheckField, 30, 2, 3, 168, 0, 0, // Skip to: 238
 /* 70 */      MCD_OPC_CheckField, 5, 8, 0, 161, 0, 0, // Skip to: 238
-/* 77 */      MCD_OPC_Decode, 142, 4, 109, // Opcode: LDDCrr
+/* 77 */      MCD_OPC_Decode, 142, 4, 112, // Opcode: LDDCrr
 /* 81 */      MCD_OPC_FilterValue, 1, 152, 0, 0, // Skip to: 238
 /* 86 */      MCD_OPC_CheckField, 30, 2, 3, 145, 0, 0, // Skip to: 238
-/* 93 */      MCD_OPC_Decode, 141, 4, 110, // Opcode: LDDCri
+/* 93 */      MCD_OPC_Decode, 141, 4, 113, // Opcode: LDDCri
 /* 97 */      MCD_OPC_FilterValue, 52, 42, 0, 0, // Skip to: 144
 /* 102 */     MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 105 */     MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 128
 /* 110 */     MCD_OPC_CheckField, 30, 2, 3, 121, 0, 0, // Skip to: 238
 /* 117 */     MCD_OPC_CheckField, 5, 8, 0, 114, 0, 0, // Skip to: 238
-/* 124 */     MCD_OPC_Decode, 153, 5, 111, // Opcode: STCrr
+/* 124 */     MCD_OPC_Decode, 153, 5, 114, // Opcode: STCrr
 /* 128 */     MCD_OPC_FilterValue, 1, 105, 0, 0, // Skip to: 238
 /* 133 */     MCD_OPC_CheckField, 30, 2, 3, 98, 0, 0, // Skip to: 238
-/* 140 */     MCD_OPC_Decode, 152, 5, 112, // Opcode: STCri
+/* 140 */     MCD_OPC_Decode, 152, 5, 115, // Opcode: STCri
 /* 144 */     MCD_OPC_FilterValue, 55, 42, 0, 0, // Skip to: 191
 /* 149 */     MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 152 */     MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 175
 /* 157 */     MCD_OPC_CheckField, 30, 2, 3, 74, 0, 0, // Skip to: 238
 /* 164 */     MCD_OPC_CheckField, 5, 8, 0, 67, 0, 0, // Skip to: 238
-/* 171 */     MCD_OPC_Decode, 159, 5, 113, // Opcode: STDCrr
+/* 171 */     MCD_OPC_Decode, 159, 5, 116, // Opcode: STDCrr
 /* 175 */     MCD_OPC_FilterValue, 1, 58, 0, 0, // Skip to: 238
 /* 180 */     MCD_OPC_CheckField, 30, 2, 3, 51, 0, 0, // Skip to: 238
-/* 187 */     MCD_OPC_Decode, 158, 5, 114, // Opcode: STDCri
+/* 187 */     MCD_OPC_Decode, 158, 5, 117, // Opcode: STDCri
 /* 191 */     MCD_OPC_FilterValue, 58, 42, 0, 0, // Skip to: 238
 /* 196 */     MCD_OPC_ExtractField, 8, 6,  // Inst{13-8} ...
 /* 199 */     MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 222
 /* 204 */     MCD_OPC_CheckField, 29, 3, 4, 27, 0, 0, // Skip to: 238
 /* 211 */     MCD_OPC_CheckField, 5, 3, 0, 20, 0, 0, // Skip to: 238
-/* 218 */     MCD_OPC_Decode, 218, 5, 72, // Opcode: TRAPrr
+/* 218 */     MCD_OPC_Decode, 218, 5, 75, // Opcode: TRAPrr
 /* 222 */     MCD_OPC_FilterValue, 32, 11, 0, 0, // Skip to: 238
 /* 227 */     MCD_OPC_CheckField, 29, 3, 4, 4, 0, 0, // Skip to: 238
-/* 234 */     MCD_OPC_Decode, 217, 5, 73, // Opcode: TRAPri
+/* 234 */     MCD_OPC_Decode, 217, 5, 76, // Opcode: TRAPri
 /* 238 */     MCD_OPC_Fail,
   0
 };
@@ -1720,93 +1720,93 @@ static const uint8_t DecoderTableSparcV932[] = {
 /* 16 */      MCD_OPC_CheckPredicate, 0, 197, 1, 0, // Skip to: 474
 /* 21 */      MCD_OPC_CheckField, 30, 2, 3, 190, 1, 0, // Skip to: 474
 /* 28 */      MCD_OPC_CheckField, 5, 8, 0, 183, 1, 0, // Skip to: 474
-/* 35 */      MCD_OPC_Decode, 158, 4, 115, // Opcode: LDQFrr
+/* 35 */      MCD_OPC_Decode, 158, 4, 118, // Opcode: LDQFrr
 /* 39 */      MCD_OPC_FilterValue, 1, 174, 1, 0, // Skip to: 474
 /* 44 */      MCD_OPC_CheckPredicate, 0, 169, 1, 0, // Skip to: 474
 /* 49 */      MCD_OPC_CheckField, 30, 2, 3, 162, 1, 0, // Skip to: 474
-/* 56 */      MCD_OPC_Decode, 157, 4, 116, // Opcode: LDQFri
+/* 56 */      MCD_OPC_Decode, 157, 4, 119, // Opcode: LDQFri
 /* 60 */      MCD_OPC_FilterValue, 38, 52, 0, 0, // Skip to: 117
 /* 65 */      MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 68 */      MCD_OPC_FilterValue, 0, 23, 0, 0, // Skip to: 96
 /* 73 */      MCD_OPC_CheckPredicate, 0, 140, 1, 0, // Skip to: 474
 /* 78 */      MCD_OPC_CheckField, 30, 2, 3, 133, 1, 0, // Skip to: 474
 /* 85 */      MCD_OPC_CheckField, 5, 8, 0, 126, 1, 0, // Skip to: 474
-/* 92 */      MCD_OPC_Decode, 181, 5, 117, // Opcode: STQFrr
+/* 92 */      MCD_OPC_Decode, 181, 5, 120, // Opcode: STQFrr
 /* 96 */      MCD_OPC_FilterValue, 1, 117, 1, 0, // Skip to: 474
 /* 101 */     MCD_OPC_CheckPredicate, 0, 112, 1, 0, // Skip to: 474
 /* 106 */     MCD_OPC_CheckField, 30, 2, 3, 105, 1, 0, // Skip to: 474
-/* 113 */     MCD_OPC_Decode, 180, 5, 118, // Opcode: STQFri
+/* 113 */     MCD_OPC_Decode, 180, 5, 121, // Opcode: STQFri
 /* 117 */     MCD_OPC_FilterValue, 48, 45, 0, 0, // Skip to: 167
 /* 122 */     MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 125 */     MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 146
 /* 130 */     MCD_OPC_CheckPredicate, 0, 83, 1, 0, // Skip to: 474
 /* 135 */     MCD_OPC_CheckField, 30, 2, 3, 76, 1, 0, // Skip to: 474
-/* 142 */     MCD_OPC_Decode, 150, 4, 119, // Opcode: LDFArr
+/* 142 */     MCD_OPC_Decode, 150, 4, 122, // Opcode: LDFArr
 /* 146 */     MCD_OPC_FilterValue, 1, 67, 1, 0, // Skip to: 474
 /* 151 */     MCD_OPC_CheckPredicate, 0, 62, 1, 0, // Skip to: 474
 /* 156 */     MCD_OPC_CheckField, 30, 2, 3, 55, 1, 0, // Skip to: 474
-/* 163 */     MCD_OPC_Decode, 149, 4, 94, // Opcode: LDFAri
+/* 163 */     MCD_OPC_Decode, 149, 4, 97, // Opcode: LDFAri
 /* 167 */     MCD_OPC_FilterValue, 50, 45, 0, 0, // Skip to: 217
 /* 172 */     MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 175 */     MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 196
 /* 180 */     MCD_OPC_CheckPredicate, 0, 33, 1, 0, // Skip to: 474
 /* 185 */     MCD_OPC_CheckField, 30, 2, 3, 26, 1, 0, // Skip to: 474
-/* 192 */     MCD_OPC_Decode, 156, 4, 120, // Opcode: LDQFArr
+/* 192 */     MCD_OPC_Decode, 156, 4, 123, // Opcode: LDQFArr
 /* 196 */     MCD_OPC_FilterValue, 1, 17, 1, 0, // Skip to: 474
 /* 201 */     MCD_OPC_CheckPredicate, 0, 12, 1, 0, // Skip to: 474
 /* 206 */     MCD_OPC_CheckField, 30, 2, 3, 5, 1, 0, // Skip to: 474
-/* 213 */     MCD_OPC_Decode, 155, 4, 116, // Opcode: LDQFAri
+/* 213 */     MCD_OPC_Decode, 155, 4, 119, // Opcode: LDQFAri
 /* 217 */     MCD_OPC_FilterValue, 51, 45, 0, 0, // Skip to: 267
 /* 222 */     MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 225 */     MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 246
 /* 230 */     MCD_OPC_CheckPredicate, 0, 239, 0, 0, // Skip to: 474
 /* 235 */     MCD_OPC_CheckField, 30, 2, 3, 232, 0, 0, // Skip to: 474
-/* 242 */     MCD_OPC_Decode, 144, 4, 121, // Opcode: LDDFArr
+/* 242 */     MCD_OPC_Decode, 144, 4, 124, // Opcode: LDDFArr
 /* 246 */     MCD_OPC_FilterValue, 1, 223, 0, 0, // Skip to: 474
 /* 251 */     MCD_OPC_CheckPredicate, 0, 218, 0, 0, // Skip to: 474
 /* 256 */     MCD_OPC_CheckField, 30, 2, 3, 211, 0, 0, // Skip to: 474
-/* 263 */     MCD_OPC_Decode, 143, 4, 96, // Opcode: LDDFAri
+/* 263 */     MCD_OPC_Decode, 143, 4, 99, // Opcode: LDDFAri
 /* 267 */     MCD_OPC_FilterValue, 52, 45, 0, 0, // Skip to: 317
 /* 272 */     MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 275 */     MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 296
 /* 280 */     MCD_OPC_CheckPredicate, 0, 189, 0, 0, // Skip to: 474
 /* 285 */     MCD_OPC_CheckField, 30, 2, 3, 182, 0, 0, // Skip to: 474
-/* 292 */     MCD_OPC_Decode, 169, 5, 122, // Opcode: STFArr
+/* 292 */     MCD_OPC_Decode, 169, 5, 125, // Opcode: STFArr
 /* 296 */     MCD_OPC_FilterValue, 1, 173, 0, 0, // Skip to: 474
 /* 301 */     MCD_OPC_CheckPredicate, 0, 168, 0, 0, // Skip to: 474
 /* 306 */     MCD_OPC_CheckField, 30, 2, 3, 161, 0, 0, // Skip to: 474
-/* 313 */     MCD_OPC_Decode, 168, 5, 98, // Opcode: STFAri
+/* 313 */     MCD_OPC_Decode, 168, 5, 101, // Opcode: STFAri
 /* 317 */     MCD_OPC_FilterValue, 54, 45, 0, 0, // Skip to: 367
 /* 322 */     MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 325 */     MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 346
 /* 330 */     MCD_OPC_CheckPredicate, 0, 139, 0, 0, // Skip to: 474
 /* 335 */     MCD_OPC_CheckField, 30, 2, 3, 132, 0, 0, // Skip to: 474
-/* 342 */     MCD_OPC_Decode, 179, 5, 123, // Opcode: STQFArr
+/* 342 */     MCD_OPC_Decode, 179, 5, 126, // Opcode: STQFArr
 /* 346 */     MCD_OPC_FilterValue, 1, 123, 0, 0, // Skip to: 474
 /* 351 */     MCD_OPC_CheckPredicate, 0, 118, 0, 0, // Skip to: 474
 /* 356 */     MCD_OPC_CheckField, 30, 2, 3, 111, 0, 0, // Skip to: 474
-/* 363 */     MCD_OPC_Decode, 178, 5, 118, // Opcode: STQFAri
+/* 363 */     MCD_OPC_Decode, 178, 5, 121, // Opcode: STQFAri
 /* 367 */     MCD_OPC_FilterValue, 55, 45, 0, 0, // Skip to: 417
 /* 372 */     MCD_OPC_ExtractField, 13, 1,  // Inst{13} ...
 /* 375 */     MCD_OPC_FilterValue, 0, 16, 0, 0, // Skip to: 396
 /* 380 */     MCD_OPC_CheckPredicate, 0, 89, 0, 0, // Skip to: 474
 /* 385 */     MCD_OPC_CheckField, 30, 2, 3, 82, 0, 0, // Skip to: 474
-/* 392 */     MCD_OPC_Decode, 161, 5, 124, // Opcode: STDFArr
+/* 392 */     MCD_OPC_Decode, 161, 5, 127, // Opcode: STDFArr
 /* 396 */     MCD_OPC_FilterValue, 1, 73, 0, 0, // Skip to: 474
 /* 401 */     MCD_OPC_CheckPredicate, 0, 68, 0, 0, // Skip to: 474
 /* 406 */     MCD_OPC_CheckField, 30, 2, 3, 61, 0, 0, // Skip to: 474
-/* 413 */     MCD_OPC_Decode, 160, 5, 100, // Opcode: STDFAri
+/* 413 */     MCD_OPC_Decode, 160, 5, 103, // Opcode: STDFAri
 /* 417 */     MCD_OPC_FilterValue, 58, 52, 0, 0, // Skip to: 474
 /* 422 */     MCD_OPC_ExtractField, 8, 6,  // Inst{13-8} ...
 /* 425 */     MCD_OPC_FilterValue, 0, 23, 0, 0, // Skip to: 453
 /* 430 */     MCD_OPC_CheckPredicate, 0, 39, 0, 0, // Skip to: 474
 /* 435 */     MCD_OPC_CheckField, 29, 3, 4, 32, 0, 0, // Skip to: 474
 /* 442 */     MCD_OPC_CheckField, 5, 3, 0, 25, 0, 0, // Skip to: 474
-/* 449 */     MCD_OPC_Decode, 212, 5, 72, // Opcode: TICCrr
+/* 449 */     MCD_OPC_Decode, 212, 5, 75, // Opcode: TICCrr
 /* 453 */     MCD_OPC_FilterValue, 32, 16, 0, 0, // Skip to: 474
 /* 458 */     MCD_OPC_CheckPredicate, 0, 11, 0, 0, // Skip to: 474
 /* 463 */     MCD_OPC_CheckField, 29, 3, 4, 4, 0, 0, // Skip to: 474
-/* 470 */     MCD_OPC_Decode, 211, 5, 73, // Opcode: TICCri
+/* 470 */     MCD_OPC_Decode, 211, 5, 76, // Opcode: TICCri
 /* 474 */     MCD_OPC_Fail,
   0
 };
@@ -2324,48 +2324,64 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
   case 62: \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 25, 5); \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 63: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 64: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 65: \
     tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 66: \
+    tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
-  case 66: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    return S; \
   case 67: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 68: \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 69: \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 70: \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 71: \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
-  case 69: \
+  case 72: \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
@@ -2373,19 +2389,19 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 13); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
-  case 70: \
+  case 73: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
-  case 71: \
+  case 74: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 13); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
-  case 72: \
+  case 75: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
@@ -2393,7 +2409,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 25, 4); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
-  case 73: \
+  case 76: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 8); \
@@ -2401,88 +2417,88 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 25, 4); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
-  case 74: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    return S; \
-  case 75: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 13); \
-    MCOperand_CreateImm0(MI, tmp); \
-    return S; \
-  case 76: \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    return S; \
   case 77: \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 13); \
-    MCOperand_CreateImm0(MI, tmp); \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 78: \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 13); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 79: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 80: \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 13); \
     MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
-  case 80: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+  case 81: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    return S; \
-  case 81: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 13); \
-    MCOperand_CreateImm0(MI, tmp); \
+    if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 82: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    return S; \
-  case 83: \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 13); \
     MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 83: \
+    tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 84: \
     tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 13); \
+    MCOperand_CreateImm0(MI, tmp); \
+    return S; \
+  case 85: \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 86: \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 13); \
+    MCOperand_CreateImm0(MI, tmp); \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 87: \
+    tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
@@ -2491,7 +2507,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
-  case 85: \
+  case 88: \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
@@ -2501,49 +2517,19 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
-  case 86: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 5, 8); \
-    MCOperand_CreateImm0(MI, tmp); \
-    return S; \
-  case 87: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 5, 8); \
-    MCOperand_CreateImm0(MI, tmp); \
-    return S; \
-  case 88: \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 5, 8); \
-    MCOperand_CreateImm0(MI, tmp); \
-    return S; \
   case 89: \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 90: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
@@ -2557,243 +2543,273 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 92: \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 5, 8); \
+    MCOperand_CreateImm0(MI, tmp); \
+    return S; \
+  case 93: \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
-  case 93: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+  case 94: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    return S; \
-  case 94: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 13); \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 95: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 5, 8); \
+    MCOperand_CreateImm0(MI, tmp); \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 96: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 13); \
-    MCOperand_CreateImm0(MI, tmp); \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 97: \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    return S; \
-  case 98: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 13); \
     MCOperand_CreateImm0(MI, tmp); \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
-  case 99: \
+  case 98: \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 99: \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 13); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 100: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 13); \
-    MCOperand_CreateImm0(MI, tmp); \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 101: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 25, 5); \
+    tmp = fieldname(insn, 0, 13); \
     MCOperand_CreateImm0(MI, tmp); \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 102: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 103: \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 13); \
     MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 25, 5); \
-    MCOperand_CreateImm0(MI, tmp); \
-    return S; \
-  case 103: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 5, 8); \
-    MCOperand_CreateImm0(MI, tmp); \
+    if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 104: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 105: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 13); \
+    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 106: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 5, 8); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 107: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeCoprocRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeIntRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 108: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeCoprocRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 13); \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 109: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeCoprocPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeI64RegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 110: \
     tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeCoprocPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, DecodeCoprocRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 13); \
-    MCOperand_CreateImm0(MI, tmp); \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 111: \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeCoprocRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    return S; \
-  case 112: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 13); \
     MCOperand_CreateImm0(MI, tmp); \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeCoprocRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
-  case 113: \
+  case 112: \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeCoprocPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 113: \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeCoprocPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 13); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   case 114: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeCoprocRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 115: \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 13); \
+    MCOperand_CreateImm0(MI, tmp); \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeCoprocRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 116: \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeCoprocPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 117: \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 13); \
     MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeCoprocPairRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
-  case 115: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeQFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    return S; \
-  case 116: \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeQFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 13); \
-    MCOperand_CreateImm0(MI, tmp); \
-    return S; \
-  case 117: \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 25, 5); \
-    if (!Check(&S, DecodeQFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    return S; \
   case 118: \
-    tmp = fieldname(insn, 14, 5); \
-    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
-    tmp = fieldname(insn, 0, 13); \
-    MCOperand_CreateImm0(MI, tmp); \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeQFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 119: \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeQFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 13); \
+    MCOperand_CreateImm0(MI, tmp); \
+    return S; \
+  case 120: \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeQFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 121: \
+    tmp = fieldname(insn, 14, 5); \
+    if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    tmp = fieldname(insn, 0, 13); \
+    MCOperand_CreateImm0(MI, tmp); \
+    tmp = fieldname(insn, 25, 5); \
+    if (!Check(&S, DecodeQFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    return S; \
+  case 122: \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
@@ -2803,7 +2819,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
-  case 120: \
+  case 123: \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeQFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
@@ -2813,7 +2829,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
-  case 121: \
+  case 124: \
     tmp = fieldname(insn, 25, 5); \
     if (!Check(&S, DecodeDFPRegsRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 14, 5); \
@@ -2823,7 +2839,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
-  case 122: \
+  case 125: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
@@ -2833,7 +2849,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
-  case 123: \
+  case 126: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \
@@ -2843,7 +2859,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 5, 8); \
     MCOperand_CreateImm0(MI, tmp); \
     return S; \
-  case 124: \
+  case 127: \
     tmp = fieldname(insn, 14, 5); \
     if (!Check(&S, DecodePointerLikeRegClass0(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 5); \

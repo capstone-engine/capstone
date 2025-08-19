@@ -122,12 +122,15 @@
   "fnegs", // SPARC_INS_FNEGS
   "fnhaddd", // SPARC_INS_FNHADDD
   "fnhadds", // SPARC_INS_FNHADDS
+  "fnmuld", // SPARC_INS_FNMULD
+  "fnmuls", // SPARC_INS_FNMULS
   "fnor", // SPARC_INS_FNOR
   "fnors", // SPARC_INS_FNORS
   "fnot1", // SPARC_INS_FNOT1
   "fnot1s", // SPARC_INS_FNOT1S
   "fnot2", // SPARC_INS_FNOT2
   "fnot2s", // SPARC_INS_FNOT2S
+  "fnsmuld", // SPARC_INS_FNSMULD
   "fone", // SPARC_INS_FONE
   "fones", // SPARC_INS_FONES
   "for", // SPARC_INS_FOR
@@ -146,9 +149,9 @@
   "fpadd64", // SPARC_INS_FPADD64
   "fpmerge", // SPARC_INS_FPMERGE
   "fpsub16", // SPARC_INS_FPSUB16
-  "fpsub16S", // SPARC_INS_FPSUB16S
+  "fpsub16s", // SPARC_INS_FPSUB16S
   "fpsub32", // SPARC_INS_FPSUB32
-  "fpsub32S", // SPARC_INS_FPSUB32S
+  "fpsub32s", // SPARC_INS_FPSUB32S
   "fqtod", // SPARC_INS_FQTOD
   "fqtoi", // SPARC_INS_FQTOI
   "fqtos", // SPARC_INS_FQTOS
@@ -213,6 +216,8 @@
   "movr", // SPARC_INS_MOVR
   "movstosw", // SPARC_INS_MOVSTOSW
   "movstouw", // SPARC_INS_MOVSTOUW
+  "movwtos", // SPARC_INS_MOVWTOS
+  "movxtod", // SPARC_INS_MOVXTOD
   "mulscc", // SPARC_INS_MULSCC
   "mulx", // SPARC_INS_MULX
   "nop", // SPARC_INS_NOP

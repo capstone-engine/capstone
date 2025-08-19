@@ -75,274 +75,279 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
   /* 504 */ "array8 \0"
   /* 512 */ "!ADJCALLSTACKDOWN \0"
   /* 531 */ "!ADJCALLSTACKUP \0"
-  /* 548 */ "fpsub32S \0"
-  /* 558 */ "fpsub16S \0"
-  /* 568 */ "stba \0"
-  /* 574 */ "stda \0"
-  /* 580 */ "stha \0"
-  /* 586 */ "stqa \0"
-  /* 592 */ "sra \0"
-  /* 597 */ "faligndata \0"
-  /* 609 */ "sta \0"
-  /* 614 */ "stxa \0"
-  /* 620 */ "stb \0"
-  /* 625 */ "sub \0"
-  /* 630 */ "smac \0"
-  /* 636 */ "umac \0"
-  /* 642 */ "tsubcc \0"
-  /* 650 */ "addxccc \0"
-  /* 659 */ "taddcc \0"
-  /* 667 */ "andcc \0"
-  /* 674 */ "smulcc \0"
-  /* 682 */ "umulcc \0"
-  /* 690 */ "andncc \0"
-  /* 698 */ "orncc \0"
-  /* 705 */ "xnorcc \0"
-  /* 713 */ "xorcc \0"
-  /* 720 */ "mulscc \0"
-  /* 728 */ "sdivcc \0"
-  /* 736 */ "udivcc \0"
-  /* 744 */ "subxcc \0"
-  /* 752 */ "addxcc \0"
-  /* 760 */ "popc \0"
-  /* 766 */ "addxc \0"
-  /* 773 */ "fsubd \0"
-  /* 780 */ "fhsubd \0"
-  /* 788 */ "add \0"
-  /* 793 */ "faddd \0"
-  /* 800 */ "fhaddd \0"
-  /* 808 */ "fnhaddd \0"
-  /* 817 */ "fnaddd \0"
-  /* 825 */ "fcmped \0"
-  /* 833 */ "fnegd \0"
-  /* 840 */ "fmuld \0"
-  /* 847 */ "fsmuld \0"
-  /* 855 */ "fand \0"
-  /* 861 */ "fnand \0"
-  /* 868 */ "fexpand \0"
-  /* 877 */ "fitod \0"
-  /* 884 */ "fqtod \0"
-  /* 891 */ "fstod \0"
-  /* 898 */ "fxtod \0"
-  /* 905 */ "fcmpd \0"
-  /* 912 */ "flcmpd \0"
-  /* 920 */ "rd \0"
-  /* 924 */ "fabsd \0"
-  /* 931 */ "fsqrtd \0"
-  /* 939 */ "std \0"
-  /* 944 */ "fdivd \0"
-  /* 951 */ "fmovd \0"
-  /* 958 */ "fpmerge \0"
-  /* 967 */ "bshuffle \0"
-  /* 977 */ "fone \0"
-  /* 983 */ "restore \0"
-  /* 992 */ "save \0"
-  /* 998 */ "flush \0"
-  /* 1005 */ "sth \0"
-  /* 1010 */ "sethi \0"
-  /* 1017 */ "umulxhi \0"
-  /* 1026 */ "xmulxhi \0"
-  /* 1035 */ "fdtoi \0"
-  /* 1042 */ "fqtoi \0"
-  /* 1049 */ "fstoi \0"
-  /* 1056 */ "bmask \0"
-  /* 1063 */ "edge32l \0"
-  /* 1072 */ "edge16l \0"
-  /* 1081 */ "edge8l \0"
-  /* 1089 */ "fmul8x16al \0"
-  /* 1101 */ "call \0"
-  /* 1107 */ "sll \0"
-  /* 1112 */ "jmpl \0"
-  /* 1118 */ "alignaddrl \0"
-  /* 1130 */ "srl \0"
-  /* 1135 */ "smul \0"
-  /* 1141 */ "umul \0"
-  /* 1147 */ "edge32n \0"
-  /* 1156 */ "edge16n \0"
-  /* 1165 */ "edge8n \0"
-  /* 1173 */ "andn \0"
-  /* 1179 */ "edge32ln \0"
-  /* 1189 */ "edge16ln \0"
-  /* 1199 */ "edge8ln \0"
-  /* 1208 */ "orn \0"
-  /* 1213 */ "pdistn \0"
-  /* 1221 */ "fzero \0"
-  /* 1228 */ "unimp \0"
-  /* 1235 */ "jmp \0"
-  /* 1240 */ "fsubq \0"
-  /* 1247 */ "faddq \0"
-  /* 1254 */ "fcmpeq \0"
-  /* 1262 */ "fnegq \0"
-  /* 1269 */ "fdmulq \0"
-  /* 1277 */ "fmulq \0"
-  /* 1284 */ "fdtoq \0"
-  /* 1291 */ "fitoq \0"
-  /* 1298 */ "fstoq \0"
-  /* 1305 */ "fxtoq \0"
-  /* 1312 */ "fcmpq \0"
-  /* 1319 */ "fabsq \0"
-  /* 1326 */ "fsqrtq \0"
-  /* 1334 */ "stq \0"
-  /* 1339 */ "fdivq \0"
-  /* 1346 */ "fmovq \0"
-  /* 1353 */ "membar \0"
-  /* 1361 */ "alignaddr \0"
-  /* 1372 */ "sir \0"
-  /* 1377 */ "for \0"
-  /* 1382 */ "fnor \0"
-  /* 1388 */ "fxnor \0"
-  /* 1395 */ "fxor \0"
-  /* 1401 */ "rdpr \0"
-  /* 1407 */ "wrpr \0"
-  /* 1413 */ "pwr \0"
-  /* 1418 */ "fsrc1s \0"
-  /* 1426 */ "fandnot1s \0"
-  /* 1437 */ "fnot1s \0"
-  /* 1445 */ "fornot1s \0"
-  /* 1455 */ "fpadd32s \0"
-  /* 1465 */ "fsrc2s \0"
-  /* 1473 */ "fandnot2s \0"
-  /* 1484 */ "fnot2s \0"
-  /* 1492 */ "fornot2s \0"
-  /* 1502 */ "fpadd16s \0"
-  /* 1512 */ "fsubs \0"
-  /* 1519 */ "fhsubs \0"
-  /* 1527 */ "fadds \0"
-  /* 1534 */ "fhadds \0"
-  /* 1542 */ "fnhadds \0"
-  /* 1551 */ "fnadds \0"
-  /* 1559 */ "fands \0"
-  /* 1566 */ "fnands \0"
-  /* 1574 */ "fones \0"
-  /* 1581 */ "fcmpes \0"
-  /* 1589 */ "fnegs \0"
-  /* 1596 */ "fmuls \0"
-  /* 1603 */ "fzeros \0"
-  /* 1611 */ "fdtos \0"
-  /* 1618 */ "fitos \0"
-  /* 1625 */ "fqtos \0"
-  /* 1632 */ "fxtos \0"
-  /* 1639 */ "fcmps \0"
-  /* 1646 */ "flcmps \0"
-  /* 1654 */ "fors \0"
-  /* 1660 */ "fnors \0"
-  /* 1667 */ "fxnors \0"
-  /* 1675 */ "fxors \0"
-  /* 1682 */ "fabss \0"
-  /* 1689 */ "fsqrts \0"
-  /* 1697 */ "fdivs \0"
-  /* 1704 */ "fmovs \0"
-  /* 1711 */ "set \0"
-  /* 1716 */ "lzcnt \0"
-  /* 1723 */ "pdist \0"
-  /* 1730 */ "rett \0"
-  /* 1736 */ "fmul8x16au \0"
-  /* 1748 */ "sdiv \0"
-  /* 1754 */ "udiv \0"
-  /* 1760 */ "tsubcctv \0"
-  /* 1770 */ "taddcctv \0"
-  /* 1780 */ "movstosw \0"
-  /* 1790 */ "movstouw \0"
-  /* 1800 */ "srax \0"
-  /* 1806 */ "subx \0"
-  /* 1812 */ "addx \0"
-  /* 1818 */ "fpackfix \0"
-  /* 1828 */ "sllx \0"
-  /* 1834 */ "srlx \0"
-  /* 1840 */ "xmulx \0"
-  /* 1847 */ "fdtox \0"
-  /* 1854 */ "movdtox \0"
-  /* 1863 */ "fqtox \0"
-  /* 1870 */ "fstox \0"
-  /* 1877 */ "setx \0"
-  /* 1883 */ "stx \0"
-  /* 1888 */ "sdivx \0"
-  /* 1895 */ "udivx \0"
-  /* 1902 */ "; SELECT_CC_DFP_FCC PSEUDO!\0"
-  /* 1930 */ "; SELECT_CC_QFP_FCC PSEUDO!\0"
-  /* 1958 */ "; SELECT_CC_FP_FCC PSEUDO!\0"
-  /* 1985 */ "; SELECT_CC_Int_FCC PSEUDO!\0"
-  /* 2013 */ "; SELECT_CC_DFP_ICC PSEUDO!\0"
-  /* 2041 */ "; SELECT_CC_QFP_ICC PSEUDO!\0"
-  /* 2069 */ "; SELECT_CC_FP_ICC PSEUDO!\0"
-  /* 2096 */ "; SELECT_CC_Int_ICC PSEUDO!\0"
-  /* 2124 */ "; SELECT_CC_DFP_XCC PSEUDO!\0"
-  /* 2152 */ "; SELECT_CC_QFP_XCC PSEUDO!\0"
-  /* 2180 */ "; SELECT_CC_FP_XCC PSEUDO!\0"
-  /* 2207 */ "; SELECT_CC_Int_XCC PSEUDO!\0"
-  /* 2235 */ "jmp %i7+\0"
-  /* 2244 */ "jmp %o7+\0"
-  /* 2253 */ "# XRay Function Patchable RET.\0"
-  /* 2284 */ "# XRay Typed Event Log.\0"
-  /* 2308 */ "# XRay Custom Event Log.\0"
-  /* 2333 */ "# XRay Function Enter.\0"
-  /* 2356 */ "# XRay Tail Call Exit.\0"
-  /* 2379 */ "# XRay Function Exit.\0"
-  /* 2401 */ "flush %g0\0"
-  /* 2411 */ "ta 1\0"
-  /* 2416 */ "ta 3\0"
-  /* 2421 */ "ta 5\0"
-  /* 2426 */ "LIFETIME_END\0"
-  /* 2439 */ "PSEUDO_PROBE\0"
-  /* 2452 */ "BUNDLE\0"
-  /* 2459 */ "DBG_VALUE\0"
-  /* 2469 */ "DBG_INSTR_REF\0"
-  /* 2483 */ "DBG_PHI\0"
-  /* 2491 */ "DBG_LABEL\0"
-  /* 2501 */ "LIFETIME_START\0"
-  /* 2516 */ "DBG_VALUE_LIST\0"
-  /* 2531 */ "std %cq, [\0"
-  /* 2542 */ "std %fq, [\0"
-  /* 2553 */ "st %csr, [\0"
-  /* 2564 */ "st %fsr, [\0"
-  /* 2575 */ "stx %fsr, [\0"
-  /* 2587 */ "ldsba [\0"
-  /* 2595 */ "lduba [\0"
-  /* 2603 */ "ldstuba [\0"
-  /* 2613 */ "ldda [\0"
-  /* 2620 */ "lda [\0"
-  /* 2626 */ "ldsha [\0"
-  /* 2634 */ "lduha [\0"
-  /* 2642 */ "swapa [\0"
-  /* 2650 */ "ldqa [\0"
-  /* 2657 */ "casa [\0"
-  /* 2664 */ "ldswa [\0"
-  /* 2672 */ "ldxa [\0"
-  /* 2679 */ "casxa [\0"
-  /* 2687 */ "ldsb [\0"
-  /* 2694 */ "ldub [\0"
-  /* 2701 */ "ldstub [\0"
-  /* 2710 */ "ldd [\0"
-  /* 2716 */ "ld [\0"
-  /* 2721 */ "prefetch [\0"
-  /* 2732 */ "ldsh [\0"
-  /* 2739 */ "lduh [\0"
-  /* 2746 */ "swap [\0"
-  /* 2753 */ "ldq [\0"
-  /* 2759 */ "ldsw [\0"
-  /* 2766 */ "ldx [\0"
-  /* 2772 */ "cb\0"
-  /* 2775 */ "fb\0"
-  /* 2778 */ "restored\0"
-  /* 2787 */ "saved\0"
-  /* 2793 */ "fmovrd\0"
-  /* 2800 */ "fmovd\0"
-  /* 2806 */ "done\0"
-  /* 2811 */ "# FEntry call\0"
-  /* 2825 */ "siam\0"
-  /* 2830 */ "shutdown\0"
-  /* 2839 */ "nop\0"
-  /* 2843 */ "fmovrq\0"
-  /* 2850 */ "fmovq\0"
-  /* 2856 */ "stbar\0"
-  /* 2862 */ "br\0"
-  /* 2865 */ "movr\0"
-  /* 2870 */ "fmovrs\0"
-  /* 2877 */ "fmovs\0"
-  /* 2883 */ "t\0"
-  /* 2885 */ "mov\0"
-  /* 2889 */ "flushw\0"
-  /* 2896 */ "retry\0"
+  /* 548 */ "stba \0"
+  /* 554 */ "stda \0"
+  /* 560 */ "stha \0"
+  /* 566 */ "stqa \0"
+  /* 572 */ "sra \0"
+  /* 577 */ "faligndata \0"
+  /* 589 */ "sta \0"
+  /* 594 */ "stxa \0"
+  /* 600 */ "stb \0"
+  /* 605 */ "sub \0"
+  /* 610 */ "smac \0"
+  /* 616 */ "umac \0"
+  /* 622 */ "tsubcc \0"
+  /* 630 */ "addxccc \0"
+  /* 639 */ "taddcc \0"
+  /* 647 */ "andcc \0"
+  /* 654 */ "smulcc \0"
+  /* 662 */ "umulcc \0"
+  /* 670 */ "andncc \0"
+  /* 678 */ "orncc \0"
+  /* 685 */ "xnorcc \0"
+  /* 693 */ "xorcc \0"
+  /* 700 */ "mulscc \0"
+  /* 708 */ "sdivcc \0"
+  /* 716 */ "udivcc \0"
+  /* 724 */ "subxcc \0"
+  /* 732 */ "addxcc \0"
+  /* 740 */ "popc \0"
+  /* 746 */ "addxc \0"
+  /* 753 */ "fsubd \0"
+  /* 760 */ "fhsubd \0"
+  /* 768 */ "add \0"
+  /* 773 */ "faddd \0"
+  /* 780 */ "fhaddd \0"
+  /* 788 */ "fnhaddd \0"
+  /* 797 */ "fnaddd \0"
+  /* 805 */ "fcmped \0"
+  /* 813 */ "fnegd \0"
+  /* 820 */ "fmuld \0"
+  /* 827 */ "fnmuld \0"
+  /* 835 */ "fsmuld \0"
+  /* 843 */ "fnsmuld \0"
+  /* 852 */ "fand \0"
+  /* 858 */ "fnand \0"
+  /* 865 */ "fexpand \0"
+  /* 874 */ "fitod \0"
+  /* 881 */ "fqtod \0"
+  /* 888 */ "fstod \0"
+  /* 895 */ "fxtod \0"
+  /* 902 */ "movxtod \0"
+  /* 911 */ "fcmpd \0"
+  /* 918 */ "flcmpd \0"
+  /* 926 */ "rd \0"
+  /* 930 */ "fabsd \0"
+  /* 937 */ "fsqrtd \0"
+  /* 945 */ "std \0"
+  /* 950 */ "fdivd \0"
+  /* 957 */ "fmovd \0"
+  /* 964 */ "fpmerge \0"
+  /* 973 */ "bshuffle \0"
+  /* 983 */ "fone \0"
+  /* 989 */ "restore \0"
+  /* 998 */ "save \0"
+  /* 1004 */ "flush \0"
+  /* 1011 */ "sth \0"
+  /* 1016 */ "sethi \0"
+  /* 1023 */ "umulxhi \0"
+  /* 1032 */ "xmulxhi \0"
+  /* 1041 */ "fdtoi \0"
+  /* 1048 */ "fqtoi \0"
+  /* 1055 */ "fstoi \0"
+  /* 1062 */ "bmask \0"
+  /* 1069 */ "edge32l \0"
+  /* 1078 */ "edge16l \0"
+  /* 1087 */ "edge8l \0"
+  /* 1095 */ "fmul8x16al \0"
+  /* 1107 */ "call \0"
+  /* 1113 */ "sll \0"
+  /* 1118 */ "jmpl \0"
+  /* 1124 */ "alignaddrl \0"
+  /* 1136 */ "srl \0"
+  /* 1141 */ "smul \0"
+  /* 1147 */ "umul \0"
+  /* 1153 */ "edge32n \0"
+  /* 1162 */ "edge16n \0"
+  /* 1171 */ "edge8n \0"
+  /* 1179 */ "andn \0"
+  /* 1185 */ "edge32ln \0"
+  /* 1195 */ "edge16ln \0"
+  /* 1205 */ "edge8ln \0"
+  /* 1214 */ "orn \0"
+  /* 1219 */ "pdistn \0"
+  /* 1227 */ "fzero \0"
+  /* 1234 */ "unimp \0"
+  /* 1241 */ "jmp \0"
+  /* 1246 */ "fsubq \0"
+  /* 1253 */ "faddq \0"
+  /* 1260 */ "fcmpeq \0"
+  /* 1268 */ "fnegq \0"
+  /* 1275 */ "fdmulq \0"
+  /* 1283 */ "fmulq \0"
+  /* 1290 */ "fdtoq \0"
+  /* 1297 */ "fitoq \0"
+  /* 1304 */ "fstoq \0"
+  /* 1311 */ "fxtoq \0"
+  /* 1318 */ "fcmpq \0"
+  /* 1325 */ "fabsq \0"
+  /* 1332 */ "fsqrtq \0"
+  /* 1340 */ "stq \0"
+  /* 1345 */ "fdivq \0"
+  /* 1352 */ "fmovq \0"
+  /* 1359 */ "membar \0"
+  /* 1367 */ "alignaddr \0"
+  /* 1378 */ "sir \0"
+  /* 1383 */ "for \0"
+  /* 1388 */ "fnor \0"
+  /* 1394 */ "fxnor \0"
+  /* 1401 */ "fxor \0"
+  /* 1407 */ "rdpr \0"
+  /* 1413 */ "wrpr \0"
+  /* 1419 */ "pwr \0"
+  /* 1424 */ "fsrc1s \0"
+  /* 1432 */ "fandnot1s \0"
+  /* 1443 */ "fnot1s \0"
+  /* 1451 */ "fornot1s \0"
+  /* 1461 */ "fpsub32s \0"
+  /* 1471 */ "fpadd32s \0"
+  /* 1481 */ "fsrc2s \0"
+  /* 1489 */ "fandnot2s \0"
+  /* 1500 */ "fnot2s \0"
+  /* 1508 */ "fornot2s \0"
+  /* 1518 */ "fpsub16s \0"
+  /* 1528 */ "fpadd16s \0"
+  /* 1538 */ "fsubs \0"
+  /* 1545 */ "fhsubs \0"
+  /* 1553 */ "fadds \0"
+  /* 1560 */ "fhadds \0"
+  /* 1568 */ "fnhadds \0"
+  /* 1577 */ "fnadds \0"
+  /* 1585 */ "fands \0"
+  /* 1592 */ "fnands \0"
+  /* 1600 */ "fones \0"
+  /* 1607 */ "fcmpes \0"
+  /* 1615 */ "fnegs \0"
+  /* 1622 */ "fmuls \0"
+  /* 1629 */ "fnmuls \0"
+  /* 1637 */ "fzeros \0"
+  /* 1645 */ "fdtos \0"
+  /* 1652 */ "fitos \0"
+  /* 1659 */ "fqtos \0"
+  /* 1666 */ "movwtos \0"
+  /* 1675 */ "fxtos \0"
+  /* 1682 */ "fcmps \0"
+  /* 1689 */ "flcmps \0"
+  /* 1697 */ "fors \0"
+  /* 1703 */ "fnors \0"
+  /* 1710 */ "fxnors \0"
+  /* 1718 */ "fxors \0"
+  /* 1725 */ "fabss \0"
+  /* 1732 */ "fsqrts \0"
+  /* 1740 */ "fdivs \0"
+  /* 1747 */ "fmovs \0"
+  /* 1754 */ "set \0"
+  /* 1759 */ "lzcnt \0"
+  /* 1766 */ "pdist \0"
+  /* 1773 */ "rett \0"
+  /* 1779 */ "fmul8x16au \0"
+  /* 1791 */ "sdiv \0"
+  /* 1797 */ "udiv \0"
+  /* 1803 */ "tsubcctv \0"
+  /* 1813 */ "taddcctv \0"
+  /* 1823 */ "movstosw \0"
+  /* 1833 */ "movstouw \0"
+  /* 1843 */ "srax \0"
+  /* 1849 */ "subx \0"
+  /* 1855 */ "addx \0"
+  /* 1861 */ "fpackfix \0"
+  /* 1871 */ "sllx \0"
+  /* 1877 */ "srlx \0"
+  /* 1883 */ "xmulx \0"
+  /* 1890 */ "fdtox \0"
+  /* 1897 */ "movdtox \0"
+  /* 1906 */ "fqtox \0"
+  /* 1913 */ "fstox \0"
+  /* 1920 */ "setx \0"
+  /* 1926 */ "stx \0"
+  /* 1931 */ "sdivx \0"
+  /* 1938 */ "udivx \0"
+  /* 1945 */ "; SELECT_CC_DFP_FCC PSEUDO!\0"
+  /* 1973 */ "; SELECT_CC_QFP_FCC PSEUDO!\0"
+  /* 2001 */ "; SELECT_CC_FP_FCC PSEUDO!\0"
+  /* 2028 */ "; SELECT_CC_Int_FCC PSEUDO!\0"
+  /* 2056 */ "; SELECT_CC_DFP_ICC PSEUDO!\0"
+  /* 2084 */ "; SELECT_CC_QFP_ICC PSEUDO!\0"
+  /* 2112 */ "; SELECT_CC_FP_ICC PSEUDO!\0"
+  /* 2139 */ "; SELECT_CC_Int_ICC PSEUDO!\0"
+  /* 2167 */ "; SELECT_CC_DFP_XCC PSEUDO!\0"
+  /* 2195 */ "; SELECT_CC_QFP_XCC PSEUDO!\0"
+  /* 2223 */ "; SELECT_CC_FP_XCC PSEUDO!\0"
+  /* 2250 */ "; SELECT_CC_Int_XCC PSEUDO!\0"
+  /* 2278 */ "jmp %i7+\0"
+  /* 2287 */ "jmp %o7+\0"
+  /* 2296 */ "# XRay Function Patchable RET.\0"
+  /* 2327 */ "# XRay Typed Event Log.\0"
+  /* 2351 */ "# XRay Custom Event Log.\0"
+  /* 2376 */ "# XRay Function Enter.\0"
+  /* 2399 */ "# XRay Tail Call Exit.\0"
+  /* 2422 */ "# XRay Function Exit.\0"
+  /* 2444 */ "flush %g0\0"
+  /* 2454 */ "ta 1\0"
+  /* 2459 */ "ta 3\0"
+  /* 2464 */ "ta 5\0"
+  /* 2469 */ "LIFETIME_END\0"
+  /* 2482 */ "PSEUDO_PROBE\0"
+  /* 2495 */ "BUNDLE\0"
+  /* 2502 */ "DBG_VALUE\0"
+  /* 2512 */ "DBG_INSTR_REF\0"
+  /* 2526 */ "DBG_PHI\0"
+  /* 2534 */ "DBG_LABEL\0"
+  /* 2544 */ "LIFETIME_START\0"
+  /* 2559 */ "DBG_VALUE_LIST\0"
+  /* 2574 */ "std %cq, [\0"
+  /* 2585 */ "std %fq, [\0"
+  /* 2596 */ "st %csr, [\0"
+  /* 2607 */ "st %fsr, [\0"
+  /* 2618 */ "stx %fsr, [\0"
+  /* 2630 */ "ldsba [\0"
+  /* 2638 */ "lduba [\0"
+  /* 2646 */ "ldstuba [\0"
+  /* 2656 */ "ldda [\0"
+  /* 2663 */ "lda [\0"
+  /* 2669 */ "ldsha [\0"
+  /* 2677 */ "lduha [\0"
+  /* 2685 */ "swapa [\0"
+  /* 2693 */ "ldqa [\0"
+  /* 2700 */ "casa [\0"
+  /* 2707 */ "ldswa [\0"
+  /* 2715 */ "ldxa [\0"
+  /* 2722 */ "casxa [\0"
+  /* 2730 */ "ldsb [\0"
+  /* 2737 */ "ldub [\0"
+  /* 2744 */ "ldstub [\0"
+  /* 2753 */ "ldd [\0"
+  /* 2759 */ "ld [\0"
+  /* 2764 */ "prefetch [\0"
+  /* 2775 */ "ldsh [\0"
+  /* 2782 */ "lduh [\0"
+  /* 2789 */ "swap [\0"
+  /* 2796 */ "ldq [\0"
+  /* 2802 */ "ldsw [\0"
+  /* 2809 */ "ldx [\0"
+  /* 2815 */ "cb\0"
+  /* 2818 */ "fb\0"
+  /* 2821 */ "restored\0"
+  /* 2830 */ "saved\0"
+  /* 2836 */ "fmovrd\0"
+  /* 2843 */ "fmovd\0"
+  /* 2849 */ "done\0"
+  /* 2854 */ "# FEntry call\0"
+  /* 2868 */ "siam\0"
+  /* 2873 */ "shutdown\0"
+  /* 2882 */ "nop\0"
+  /* 2886 */ "fmovrq\0"
+  /* 2893 */ "fmovq\0"
+  /* 2899 */ "stbar\0"
+  /* 2905 */ "br\0"
+  /* 2908 */ "movr\0"
+  /* 2913 */ "fmovrs\0"
+  /* 2920 */ "fmovs\0"
+  /* 2926 */ "t\0"
+  /* 2928 */ "mov\0"
+  /* 2932 */ "flushw\0"
+  /* 2939 */ "retry\0"
 };
 #endif // CAPSTONE_DIET
 
@@ -360,20 +365,20 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// IMPLICIT_DEF
     0U,	// SUBREG_TO_REG
     0U,	// COPY_TO_REGCLASS
-    2460U,	// DBG_VALUE
-    2517U,	// DBG_VALUE_LIST
-    2470U,	// DBG_INSTR_REF
-    2484U,	// DBG_PHI
-    2492U,	// DBG_LABEL
+    2503U,	// DBG_VALUE
+    2560U,	// DBG_VALUE_LIST
+    2513U,	// DBG_INSTR_REF
+    2527U,	// DBG_PHI
+    2535U,	// DBG_LABEL
     0U,	// REG_SEQUENCE
     0U,	// COPY
-    2453U,	// BUNDLE
-    2502U,	// LIFETIME_START
-    2427U,	// LIFETIME_END
-    2440U,	// PSEUDO_PROBE
+    2496U,	// BUNDLE
+    2545U,	// LIFETIME_START
+    2470U,	// LIFETIME_END
+    2483U,	// PSEUDO_PROBE
     0U,	// ARITH_FENCE
     0U,	// STACKMAP
-    2812U,	// FENTRY_CALL
+    2855U,	// FENTRY_CALL
     0U,	// PATCHPOINT
     0U,	// LOAD_STACK_GUARD
     0U,	// PREALLOCATED_SETUP
@@ -382,12 +387,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// LOCAL_ESCAPE
     0U,	// FAULTING_OP
     0U,	// PATCHABLE_OP
-    2334U,	// PATCHABLE_FUNCTION_ENTER
-    2254U,	// PATCHABLE_RET
-    2380U,	// PATCHABLE_FUNCTION_EXIT
-    2357U,	// PATCHABLE_TAIL_CALL
-    2309U,	// PATCHABLE_EVENT_CALL
-    2285U,	// PATCHABLE_TYPED_EVENT_CALL
+    2377U,	// PATCHABLE_FUNCTION_ENTER
+    2297U,	// PATCHABLE_RET
+    2423U,	// PATCHABLE_FUNCTION_EXIT
+    2400U,	// PATCHABLE_TAIL_CALL
+    2352U,	// PATCHABLE_EVENT_CALL
+    2328U,	// PATCHABLE_TYPED_EVENT_CALL
     0U,	// ICALL_BRANCH_FUNNEL
     0U,	// MEMBARRIER
     0U,	// JUMP_TABLE_DEBUG_INFO
@@ -621,109 +626,109 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     4609U,	// ADJCALLSTACKDOWN
     70164U,	// ADJCALLSTACKUP
     8206U,	// GETPCX
-    1903U,	// SELECT_CC_DFP_FCC
-    2014U,	// SELECT_CC_DFP_ICC
-    2125U,	// SELECT_CC_DFP_XCC
-    1959U,	// SELECT_CC_FP_FCC
-    2070U,	// SELECT_CC_FP_ICC
-    2181U,	// SELECT_CC_FP_XCC
-    1986U,	// SELECT_CC_Int_FCC
-    2097U,	// SELECT_CC_Int_ICC
-    2208U,	// SELECT_CC_Int_XCC
-    1931U,	// SELECT_CC_QFP_FCC
-    2042U,	// SELECT_CC_QFP_ICC
-    2153U,	// SELECT_CC_QFP_XCC
-    2111152U,	// SET
-    20985686U,	// SETX
-    20984469U,	// ADDCCri
-    20984469U,	// ADDCCrr
-    20985621U,	// ADDCri
-    20985621U,	// ADDCrr
-    20984561U,	// ADDEri
-    20984561U,	// ADDErr
-    20984575U,	// ADDXC
-    20984459U,	// ADDXCCC
-    20984597U,	// ADDri
-    20984597U,	// ADDrr
-    20985170U,	// ALIGNADDR
-    20984927U,	// ALIGNADDRL
-    20984476U,	// ANDCCri
-    20984476U,	// ANDCCrr
-    20984499U,	// ANDNCCri
-    20984499U,	// ANDNCCrr
-    20984982U,	// ANDNri
-    20984982U,	// ANDNrr
-    20984665U,	// ANDri
-    20984665U,	// ANDrr
+    1946U,	// SELECT_CC_DFP_FCC
+    2057U,	// SELECT_CC_DFP_ICC
+    2168U,	// SELECT_CC_DFP_XCC
+    2002U,	// SELECT_CC_FP_FCC
+    2113U,	// SELECT_CC_FP_ICC
+    2224U,	// SELECT_CC_FP_XCC
+    2029U,	// SELECT_CC_Int_FCC
+    2140U,	// SELECT_CC_Int_ICC
+    2251U,	// SELECT_CC_Int_XCC
+    1974U,	// SELECT_CC_QFP_FCC
+    2085U,	// SELECT_CC_QFP_ICC
+    2196U,	// SELECT_CC_QFP_XCC
+    2111195U,	// SET
+    20985729U,	// SETX
+    20984449U,	// ADDCCri
+    20984449U,	// ADDCCrr
+    20985664U,	// ADDCri
+    20985664U,	// ADDCrr
+    20984541U,	// ADDEri
+    20984541U,	// ADDErr
+    20984555U,	// ADDXC
+    20984439U,	// ADDXCCC
+    20984577U,	// ADDri
+    20984577U,	// ADDrr
+    20985176U,	// ALIGNADDR
+    20984933U,	// ALIGNADDRL
+    20984456U,	// ANDCCri
+    20984456U,	// ANDCCrr
+    20984479U,	// ANDNCCri
+    20984479U,	// ANDNCCrr
+    20984988U,	// ANDNri
+    20984988U,	// ANDNrr
+    20984662U,	// ANDri
+    20984662U,	// ANDrr
     20984289U,	// ARRAY16
     20984042U,	// ARRAY32
     20984313U,	// ARRAY8
-    2247382U,	// BCOND
-    2312918U,	// BCONDA
-    87252U,	// BINDri
-    87252U,	// BINDrr
-    20984865U,	// BMASK
-    21121752U,	// BPFCC
-    21187288U,	// BPFCCA
-    281304U,	// BPFCCANT
-    346840U,	// BPFCCNT
-    2509526U,	// BPICC
-    477910U,	// BPICCA
-    543446U,	// BPICCANT
-    608982U,	// BPICCNT
-    21121839U,	// BPR
-    21187375U,	// BPRA
-    281391U,	// BPRANT
-    346927U,	// BPRNT
-    2771670U,	// BPXCC
-    740054U,	// BPXCCA
-    805590U,	// BPXCCANT
-    871126U,	// BPXCCNT
-    20984776U,	// BSHUFFLE
-    70734U,	// CALL
-    87118U,	// CALLri
-    87118U,	// CALLrr
-    21903970U,	// CASAri
-    7289442U,	// CASArr
-    21903992U,	// CASXAri
-    7289464U,	// CASXArr
-    2247381U,	// CBCOND
-    2312917U,	// CBCONDA
+    2247425U,	// BCOND
+    2312961U,	// BCONDA
+    87258U,	// BINDri
+    87258U,	// BINDrr
+    20984871U,	// BMASK
+    21121795U,	// BPFCC
+    21187331U,	// BPFCCA
+    281347U,	// BPFCCANT
+    346883U,	// BPFCCNT
+    2509569U,	// BPICC
+    477953U,	// BPICCA
+    543489U,	// BPICCANT
+    609025U,	// BPICCNT
+    21121882U,	// BPR
+    21187418U,	// BPRA
+    281434U,	// BPRANT
+    346970U,	// BPRNT
+    2771713U,	// BPXCC
+    740097U,	// BPXCCA
+    805633U,	// BPXCCANT
+    871169U,	// BPXCCNT
+    20984782U,	// BSHUFFLE
+    70740U,	// CALL
+    87124U,	// CALLri
+    87124U,	// CALLrr
+    21904013U,	// CASAri
+    7289485U,	// CASArr
+    21904035U,	// CASXAri
+    7289507U,	// CASXArr
+    2247424U,	// CBCOND
+    2312960U,	// CBCONDA
     69980U,	// CMASK16
     69812U,	// CMASK32
     70129U,	// CMASK8
-    2807U,	// DONE
+    2850U,	// DONE
     20984119U,	// EDGE16
-    20984881U,	// EDGE16L
-    20984998U,	// EDGE16LN
-    20984965U,	// EDGE16N
+    20984887U,	// EDGE16L
+    20985004U,	// EDGE16LN
+    20984971U,	// EDGE16N
     20983951U,	// EDGE32
-    20984872U,	// EDGE32L
-    20984988U,	// EDGE32LN
-    20984956U,	// EDGE32N
+    20984878U,	// EDGE32L
+    20984994U,	// EDGE32LN
+    20984962U,	// EDGE32N
     20984298U,	// EDGE8
-    20984890U,	// EDGE8L
-    20985008U,	// EDGE8LN
-    20984974U,	// EDGE8N
-    2110365U,	// FABSD
-    2110760U,	// FABSQ
-    2111123U,	// FABSS
-    20984602U,	// FADDD
-    20985056U,	// FADDQ
-    20985336U,	// FADDS
-    20984406U,	// FALIGNADATA
-    20984664U,	// FAND
+    20984896U,	// EDGE8L
+    20985014U,	// EDGE8LN
+    20984980U,	// EDGE8N
+    2110371U,	// FABSD
+    2110766U,	// FABSQ
+    2111166U,	// FABSS
+    20984582U,	// FADDD
+    20985062U,	// FADDQ
+    20985362U,	// FADDS
+    20984386U,	// FALIGNADATA
+    20984661U,	// FAND
     20983899U,	// FANDNOT1
-    20985235U,	// FANDNOT1S
+    20985241U,	// FANDNOT1S
     20984058U,	// FANDNOT2
-    20985282U,	// FANDNOT2S
-    20985368U,	// FANDS
-    2247384U,	// FBCOND
-    2312920U,	// FBCONDA
-    1067736U,	// FBCONDA_V9
-    3230424U,	// FBCOND_V9
+    20985298U,	// FANDNOT2S
+    20985394U,	// FANDS
+    2247427U,	// FBCOND
+    2312963U,	// FBCONDA
+    1067779U,	// FBCONDA_V9
+    3230467U,	// FBCOND_V9
     20984181U,	// FCHKSM16
-    5002U,	// FCMPD
+    5008U,	// FCMPD
     4097U,	// FCMPD_V9
     20984200U,	// FCMPEQ16
     20984013U,	// FCMPEQ32
@@ -733,402 +738,402 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     20983959U,	// FCMPLE32
     20984137U,	// FCMPNE16
     20983969U,	// FCMPNE32
-    5409U,	// FCMPQ
+    5415U,	// FCMPQ
     4111U,	// FCMPQ_V9
-    5736U,	// FCMPS
+    5779U,	// FCMPS
     4125U,	// FCMPS_V9
-    20984753U,	// FDIVD
-    20985148U,	// FDIVQ
-    20985506U,	// FDIVS
-    20985078U,	// FDMULQ
-    2110476U,	// FDTOI
-    2110725U,	// FDTOQ
-    2111052U,	// FDTOS
-    2111288U,	// FDTOX
-    2110309U,	// FEXPAND
-    20984609U,	// FHADDD
-    20985343U,	// FHADDS
-    20984589U,	// FHSUBD
-    20985328U,	// FHSUBS
-    2110318U,	// FITOD
-    2110732U,	// FITOQ
-    2111059U,	// FITOS
-    150999953U,	// FLCMPD
-    151000687U,	// FLCMPS
-    2402U,	// FLUSH
-    2890U,	// FLUSHW
-    87015U,	// FLUSHri
-    87015U,	// FLUSHrr
+    20984759U,	// FDIVD
+    20985154U,	// FDIVQ
+    20985549U,	// FDIVS
+    20985084U,	// FDMULQ
+    2110482U,	// FDTOI
+    2110731U,	// FDTOQ
+    2111086U,	// FDTOS
+    2111331U,	// FDTOX
+    2110306U,	// FEXPAND
+    20984589U,	// FHADDD
+    20985369U,	// FHADDS
+    20984569U,	// FHSUBD
+    20985354U,	// FHSUBS
+    2110315U,	// FITOD
+    2110738U,	// FITOQ
+    2111093U,	// FITOS
+    150999959U,	// FLCMPD
+    151000730U,	// FLCMPS
+    2445U,	// FLUSH
+    2933U,	// FLUSHW
+    87021U,	// FLUSHri
+    87021U,	// FLUSHrr
     20984191U,	// FMEAN16
-    2110392U,	// FMOVD
-    17918705U,	// FMOVD_FCC
-    17197809U,	// FMOVD_ICC
-    17459953U,	// FMOVD_XCC
-    2110787U,	// FMOVQ
-    17918755U,	// FMOVQ_FCC
-    17197859U,	// FMOVQ_ICC
-    17460003U,	// FMOVQ_XCC
-    31466U,	// FMOVRD
-    31516U,	// FMOVRQ
-    31543U,	// FMOVRS
-    2111145U,	// FMOVS
-    17918782U,	// FMOVS_FCC
-    17197886U,	// FMOVS_ICC
-    17460030U,	// FMOVS_XCC
+    2110398U,	// FMOVD
+    17918748U,	// FMOVD_FCC
+    17197852U,	// FMOVD_ICC
+    17459996U,	// FMOVD_XCC
+    2110793U,	// FMOVQ
+    17918798U,	// FMOVQ_FCC
+    17197902U,	// FMOVQ_ICC
+    17460046U,	// FMOVQ_XCC
+    31509U,	// FMOVRD
+    31559U,	// FMOVRQ
+    31586U,	// FMOVRS
+    2111188U,	// FMOVS
+    17918825U,	// FMOVS_FCC
+    17197929U,	// FMOVS_ICC
+    17460073U,	// FMOVS_XCC
     20984277U,	// FMUL8SUX16
     20984252U,	// FMUL8ULX16
     20984229U,	// FMUL8X16
-    20984898U,	// FMUL8X16AL
-    20985545U,	// FMUL8X16AU
-    20984649U,	// FMULD
+    20984904U,	// FMUL8X16AL
+    20985588U,	// FMUL8X16AU
+    20984629U,	// FMULD
     20984264U,	// FMULD8SUX16
     20984239U,	// FMULD8ULX16
-    20985086U,	// FMULQ
-    20985405U,	// FMULS
-    20984626U,	// FNADDD
-    20985360U,	// FNADDS
-    20984670U,	// FNAND
-    20985375U,	// FNANDS
-    2110274U,	// FNEGD
-    2110703U,	// FNEGQ
-    2111030U,	// FNEGS
-    20984617U,	// FNHADDD
-    20985351U,	// FNHADDS
-    20984617U,	// FNMULD
-    20985351U,	// FNMULS
-    20985191U,	// FNOR
-    20985469U,	// FNORS
+    20985092U,	// FMULQ
+    20985431U,	// FMULS
+    20984606U,	// FNADDD
+    20985386U,	// FNADDS
+    20984667U,	// FNAND
+    20985401U,	// FNANDS
+    2110254U,	// FNEGD
+    2110709U,	// FNEGQ
+    2111056U,	// FNEGS
+    20984597U,	// FNHADDD
+    20985377U,	// FNHADDS
+    20984636U,	// FNMULD
+    20985438U,	// FNMULS
+    20985197U,	// FNOR
+    20985512U,	// FNORS
     2109541U,	// FNOT1
-    2110878U,	// FNOT1S
+    2110884U,	// FNOT1S
     2109700U,	// FNOT2
-    2110925U,	// FNOT2S
-    20985351U,	// FNSMULD
-    70610U,	// FONE
-    71207U,	// FONES
-    20985186U,	// FOR
+    2110941U,	// FNOT2S
+    20984652U,	// FNSMULD
+    70616U,	// FONE
+    71233U,	// FONES
+    20985192U,	// FOR
     20983916U,	// FORNOT1
-    20985254U,	// FORNOT1S
+    20985260U,	// FORNOT1S
     20984075U,	// FORNOT2
-    20985301U,	// FORNOT2S
-    20985463U,	// FORS
+    20985317U,	// FORNOT2S
+    20985506U,	// FORS
     2109779U,	// FPACK16
     20983979U,	// FPACK32
-    2111259U,	// FPACKFIX
+    2111302U,	// FPACKFIX
     20984110U,	// FPADD16
-    20985311U,	// FPADD16S
+    20985337U,	// FPADD16S
     20983942U,	// FPADD32
-    20985264U,	// FPADD32S
+    20985280U,	// FPADD32S
     20984084U,	// FPADD64
-    20984767U,	// FPMERGE
+    20984773U,	// FPMERGE
     20984101U,	// FPSUB16
-    20984367U,	// FPSUB16S
+    20985327U,	// FPSUB16S
     20983933U,	// FPSUB32
-    20984357U,	// FPSUB32S
-    2110325U,	// FQTOD
-    2110483U,	// FQTOI
-    2111066U,	// FQTOS
-    2111304U,	// FQTOX
+    20985270U,	// FPSUB32S
+    2110322U,	// FQTOD
+    2110489U,	// FQTOI
+    2111100U,	// FQTOS
+    2111347U,	// FQTOX
     20984210U,	// FSLAS16
     20984023U,	// FSLAS32
     20984165U,	// FSLL16
     20983997U,	// FSLL32
-    20984656U,	// FSMULD
-    2110372U,	// FSQRTD
-    2110767U,	// FSQRTQ
-    2111130U,	// FSQRTS
+    20984644U,	// FSMULD
+    2110378U,	// FSQRTD
+    2110773U,	// FSQRTQ
+    2111173U,	// FSQRTS
     20984093U,	// FSRA16
     20983925U,	// FSRA32
     2109524U,	// FSRC1
-    2110859U,	// FSRC1S
+    2110865U,	// FSRC1S
     2109683U,	// FSRC2
-    2110906U,	// FSRC2S
+    2110922U,	// FSRC2S
     20984173U,	// FSRL16
     20984005U,	// FSRL32
-    2110332U,	// FSTOD
-    2110490U,	// FSTOI
-    2110739U,	// FSTOQ
-    2111311U,	// FSTOX
-    20984582U,	// FSUBD
-    20985049U,	// FSUBQ
-    20985321U,	// FSUBS
-    20985197U,	// FXNOR
-    20985476U,	// FXNORS
-    20985204U,	// FXOR
-    20985484U,	// FXORS
-    2110339U,	// FXTOD
-    2110746U,	// FXTOQ
-    2111073U,	// FXTOS
-    70854U,	// FZERO
-    71236U,	// FZEROS
-    288525007U,	// GDOP_LDXrr
-    288524957U,	// GDOP_LDrr
-    2131033U,	// JMPLri
-    2131033U,	// JMPLrr
-    3050045U,	// LDAri
-    26184253U,	// LDArr
-    1268381U,	// LDCSRri
-    1268381U,	// LDCSRrr
-    3312285U,	// LDCri
-    3312285U,	// LDCrr
-    3050038U,	// LDDAri
-    26184246U,	// LDDArr
-    3312279U,	// LDDCri
-    3312279U,	// LDDCrr
-    3050038U,	// LDDFAri
-    26184246U,	// LDDFArr
-    3312279U,	// LDDFri
-    3312279U,	// LDDFrr
-    3312279U,	// LDDri
-    3312279U,	// LDDrr
-    3050045U,	// LDFAri
-    26184253U,	// LDFArr
-    1333917U,	// LDFSRri
-    1333917U,	// LDFSRrr
-    3312285U,	// LDFri
-    3312285U,	// LDFrr
-    3050075U,	// LDQFAri
-    26184283U,	// LDQFArr
-    3312322U,	// LDQFri
-    3312322U,	// LDQFrr
-    3050012U,	// LDSBAri
-    26184220U,	// LDSBArr
-    3312256U,	// LDSBri
-    3312256U,	// LDSBrr
-    3050051U,	// LDSHAri
-    26184259U,	// LDSHArr
-    3312301U,	// LDSHri
-    3312301U,	// LDSHrr
-    3050028U,	// LDSTUBAri
-    26184236U,	// LDSTUBArr
-    3312270U,	// LDSTUBri
-    3312270U,	// LDSTUBrr
-    3050089U,	// LDSWAri
-    26184297U,	// LDSWArr
-    3312328U,	// LDSWri
-    3312328U,	// LDSWrr
-    3050020U,	// LDUBAri
-    26184228U,	// LDUBArr
-    3312263U,	// LDUBri
-    3312263U,	// LDUBrr
-    3050059U,	// LDUHAri
-    26184267U,	// LDUHArr
-    3312308U,	// LDUHri
-    3312308U,	// LDUHrr
-    3050097U,	// LDXAri
-    26184305U,	// LDXArr
-    1333967U,	// LDXFSRri
-    1333967U,	// LDXFSRrr
-    3312335U,	// LDXri
-    3312335U,	// LDXrr
-    3312285U,	// LDri
-    3312285U,	// LDrr
-    2111157U,	// LZCNT
-    38218U,	// MEMBARi
-    2111295U,	// MOVDTOX
-    17918790U,	// MOVFCCri
-    17918790U,	// MOVFCCrr
-    17197894U,	// MOVICCri
-    17197894U,	// MOVICCrr
-    31538U,	// MOVRri
-    31538U,	// MOVRrr
-    2111221U,	// MOVSTOSW
-    2111231U,	// MOVSTOUW
-    2111295U,	// MOVWTOS
-    17460038U,	// MOVXCCri
-    17460038U,	// MOVXCCrr
-    2111295U,	// MOVXTOD
-    20984529U,	// MULSCCri
-    20984529U,	// MULSCCrr
-    20985650U,	// MULXri
-    20985650U,	// MULXrr
-    2840U,	// NOP
-    20984516U,	// ORCCri
-    20984516U,	// ORCCrr
-    20984507U,	// ORNCCri
-    20984507U,	// ORNCCrr
-    20985017U,	// ORNri
-    20985017U,	// ORNrr
-    20985187U,	// ORri
-    20985187U,	// ORrr
-    20985532U,	// PDIST
-    20985022U,	// PDISTN
-    2110201U,	// POPCrr
-    5397154U,	// PREFETCHi
-    5397154U,	// PREFETCHr
-    33559942U,	// PWRPSRri
-    33559942U,	// PWRPSRrr
-    2110361U,	// RDASR
+    2110329U,	// FSTOD
+    2110496U,	// FSTOI
+    2110745U,	// FSTOQ
+    2111354U,	// FSTOX
+    20984562U,	// FSUBD
+    20985055U,	// FSUBQ
+    20985347U,	// FSUBS
+    20985203U,	// FXNOR
+    20985519U,	// FXNORS
+    20985210U,	// FXOR
+    20985527U,	// FXORS
+    2110336U,	// FXTOD
+    2110752U,	// FXTOQ
+    2111116U,	// FXTOS
+    70860U,	// FZERO
+    71270U,	// FZEROS
+    288525050U,	// GDOP_LDXrr
+    288525000U,	// GDOP_LDrr
+    2131039U,	// JMPLri
+    2131039U,	// JMPLrr
+    3050088U,	// LDAri
+    26184296U,	// LDArr
+    1268424U,	// LDCSRri
+    1268424U,	// LDCSRrr
+    3312328U,	// LDCri
+    3312328U,	// LDCrr
+    3050081U,	// LDDAri
+    26184289U,	// LDDArr
+    3312322U,	// LDDCri
+    3312322U,	// LDDCrr
+    3050081U,	// LDDFAri
+    26184289U,	// LDDFArr
+    3312322U,	// LDDFri
+    3312322U,	// LDDFrr
+    3312322U,	// LDDri
+    3312322U,	// LDDrr
+    3050088U,	// LDFAri
+    26184296U,	// LDFArr
+    1333960U,	// LDFSRri
+    1333960U,	// LDFSRrr
+    3312328U,	// LDFri
+    3312328U,	// LDFrr
+    3050118U,	// LDQFAri
+    26184326U,	// LDQFArr
+    3312365U,	// LDQFri
+    3312365U,	// LDQFrr
+    3050055U,	// LDSBAri
+    26184263U,	// LDSBArr
+    3312299U,	// LDSBri
+    3312299U,	// LDSBrr
+    3050094U,	// LDSHAri
+    26184302U,	// LDSHArr
+    3312344U,	// LDSHri
+    3312344U,	// LDSHrr
+    3050071U,	// LDSTUBAri
+    26184279U,	// LDSTUBArr
+    3312313U,	// LDSTUBri
+    3312313U,	// LDSTUBrr
+    3050132U,	// LDSWAri
+    26184340U,	// LDSWArr
+    3312371U,	// LDSWri
+    3312371U,	// LDSWrr
+    3050063U,	// LDUBAri
+    26184271U,	// LDUBArr
+    3312306U,	// LDUBri
+    3312306U,	// LDUBrr
+    3050102U,	// LDUHAri
+    26184310U,	// LDUHArr
+    3312351U,	// LDUHri
+    3312351U,	// LDUHrr
+    3050140U,	// LDXAri
+    26184348U,	// LDXArr
+    1334010U,	// LDXFSRri
+    1334010U,	// LDXFSRrr
+    3312378U,	// LDXri
+    3312378U,	// LDXrr
+    3312328U,	// LDri
+    3312328U,	// LDrr
+    2111200U,	// LZCNT
+    38224U,	// MEMBARi
+    2111338U,	// MOVDTOX
+    17918833U,	// MOVFCCri
+    17918833U,	// MOVFCCrr
+    17197937U,	// MOVICCri
+    17197937U,	// MOVICCrr
+    31581U,	// MOVRri
+    31581U,	// MOVRrr
+    2111264U,	// MOVSTOSW
+    2111274U,	// MOVSTOUW
+    2111107U,	// MOVWTOS
+    17460081U,	// MOVXCCri
+    17460081U,	// MOVXCCrr
+    2110343U,	// MOVXTOD
+    20984509U,	// MULSCCri
+    20984509U,	// MULSCCrr
+    20985693U,	// MULXri
+    20985693U,	// MULXrr
+    2883U,	// NOP
+    20984496U,	// ORCCri
+    20984496U,	// ORCCrr
+    20984487U,	// ORNCCri
+    20984487U,	// ORNCCrr
+    20985023U,	// ORNri
+    20985023U,	// ORNrr
+    20985193U,	// ORri
+    20985193U,	// ORrr
+    20985575U,	// PDIST
+    20985028U,	// PDISTN
+    2110181U,	// POPCrr
+    5397197U,	// PREFETCHi
+    5397197U,	// PREFETCHr
+    33559948U,	// PWRPSRri
+    33559948U,	// PWRPSRrr
+    2110367U,	// RDASR
     69685U,	// RDFQ
-    2110842U,	// RDPR
+    2110848U,	// RDPR
     69706U,	// RDPSR
     69696U,	// RDTBR
     69675U,	// RDWIM
-    2779U,	// RESTORED
-    20984792U,	// RESTOREri
-    20984792U,	// RESTORErr
-    71868U,	// RET
-    71877U,	// RETL
-    2897U,	// RETRY
-    87747U,	// RETTri
-    87747U,	// RETTrr
-    2788U,	// SAVED
-    20984801U,	// SAVEri
-    20984801U,	// SAVErr
-    20984537U,	// SDIVCCri
-    20984537U,	// SDIVCCrr
-    20985697U,	// SDIVXri
-    20985697U,	// SDIVXrr
-    20985557U,	// SDIVri
-    20985557U,	// SDIVrr
-    2110451U,	// SETHIi
-    2831U,	// SHUTDOWN
-    2826U,	// SIAM
-    71005U,	// SIR
-    20985637U,	// SLLXri
-    20985637U,	// SLLXrr
-    20984916U,	// SLLri
-    20984916U,	// SLLrr
-    20984439U,	// SMACri
-    20984439U,	// SMACrr
-    20984483U,	// SMULCCri
-    20984483U,	// SMULCCrr
-    20984944U,	// SMULri
-    20984944U,	// SMULrr
-    20985609U,	// SRAXri
-    20985609U,	// SRAXrr
-    20984401U,	// SRAri
-    20984401U,	// SRArr
-    20985643U,	// SRLXri
-    20985643U,	// SRLXrr
-    20984939U,	// SRLri
-    20984939U,	// SRLrr
-    1417826U,	// STAri
-    9413218U,	// STArr
-    2857U,	// STBAR
-    1417785U,	// STBAri
-    9413177U,	// STBArr
-    1483373U,	// STBri
-    1483373U,	// STBrr
-    1464826U,	// STCSRri
-    1464826U,	// STCSRrr
-    1484479U,	// STCri
-    1484479U,	// STCrr
-    1417791U,	// STDAri
-    9413183U,	// STDArr
-    1464804U,	// STDCQri
-    1464804U,	// STDCQrr
-    1483692U,	// STDCri
-    1483692U,	// STDCrr
-    1417791U,	// STDFAri
-    9413183U,	// STDFArr
-    1464815U,	// STDFQri
-    1464815U,	// STDFQrr
-    1483692U,	// STDFri
-    1483692U,	// STDFrr
-    1483692U,	// STDri
-    1483692U,	// STDrr
-    1417826U,	// STFAri
-    9413218U,	// STFArr
-    1464837U,	// STFSRri
-    1464837U,	// STFSRrr
-    1484479U,	// STFri
-    1484479U,	// STFrr
-    1417797U,	// STHAri
-    9413189U,	// STHArr
-    1483758U,	// STHri
-    1483758U,	// STHrr
-    1417803U,	// STQFAri
-    9413195U,	// STQFArr
-    1484087U,	// STQFri
-    1484087U,	// STQFrr
-    1417831U,	// STXAri
-    9413223U,	// STXArr
-    1464848U,	// STXFSRri
-    1464848U,	// STXFSRrr
-    1484636U,	// STXri
-    1484636U,	// STXrr
-    1484479U,	// STri
-    1484479U,	// STrr
-    20984452U,	// SUBCCri
-    20984452U,	// SUBCCrr
-    20985615U,	// SUBCri
-    20985615U,	// SUBCrr
-    20984553U,	// SUBEri
-    20984553U,	// SUBErr
-    20984434U,	// SUBri
-    20984434U,	// SUBrr
-    3050067U,	// SWAPAri
-    26184275U,	// SWAPArr
-    3312315U,	// SWAPri
-    3312315U,	// SWAPrr
-    2412U,	// TA1
-    2417U,	// TA3
-    2422U,	// TA5
-    20985579U,	// TADDCCTVri
-    20985579U,	// TADDCCTVrr
-    20984468U,	// TADDCCri
-    20984468U,	// TADDCCrr
-    70734U,	// TAIL_CALL
-    87252U,	// TAIL_CALLri
-    52869956U,	// TICCri
-    52869956U,	// TICCrr
-    557855509U,	// TLS_ADDrr
-    5198U,	// TLS_CALL
-    288525007U,	// TLS_LDXrr
-    288524957U,	// TLS_LDrr
-    52607812U,	// TRAPri
-    52607812U,	// TRAPrr
-    20985569U,	// TSUBCCTVri
-    20985569U,	// TSUBCCTVrr
-    20984451U,	// TSUBCCri
-    20984451U,	// TSUBCCrr
-    53132100U,	// TXCCri
-    53132100U,	// TXCCrr
-    20984545U,	// UDIVCCri
-    20984545U,	// UDIVCCrr
-    20985704U,	// UDIVXri
-    20985704U,	// UDIVXrr
-    20985563U,	// UDIVri
-    20985563U,	// UDIVrr
-    20984445U,	// UMACri
-    20984445U,	// UMACrr
-    20984491U,	// UMULCCri
-    20984491U,	// UMULCCrr
-    20984826U,	// UMULXHI
-    20984950U,	// UMULri
-    20984950U,	// UMULrr
-    70861U,	// UNIMP
-    150999946U,	// V9FCMPD
-    150999866U,	// V9FCMPED
-    151000295U,	// V9FCMPEQ
-    151000622U,	// V9FCMPES
-    151000353U,	// V9FCMPQ
-    151000680U,	// V9FCMPS
-    31473U,	// V9FMOVD_FCC
-    31523U,	// V9FMOVQ_FCC
-    31550U,	// V9FMOVS_FCC
-    31558U,	// V9MOVFCCri
-    31558U,	// V9MOVFCCrr
-    20985223U,	// WRASRri
-    20985223U,	// WRASRrr
-    20985216U,	// WRPRri
-    20985216U,	// WRPRrr
-    33559943U,	// WRPSRri
-    33559943U,	// WRPSRrr
-    67114375U,	// WRTBRri
-    67114375U,	// WRTBRrr
-    83891591U,	// WRWIMri
-    83891591U,	// WRWIMrr
-    20985649U,	// XMULX
-    20984835U,	// XMULXHI
-    20984514U,	// XNORCCri
-    20984514U,	// XNORCCrr
-    20985198U,	// XNORri
-    20985198U,	// XNORrr
-    20984522U,	// XORCCri
-    20984522U,	// XORCCrr
-    20985205U,	// XORri
-    20985205U,	// XORrr
+    2822U,	// RESTORED
+    20984798U,	// RESTOREri
+    20984798U,	// RESTORErr
+    71911U,	// RET
+    71920U,	// RETL
+    2940U,	// RETRY
+    87790U,	// RETTri
+    87790U,	// RETTrr
+    2831U,	// SAVED
+    20984807U,	// SAVEri
+    20984807U,	// SAVErr
+    20984517U,	// SDIVCCri
+    20984517U,	// SDIVCCrr
+    20985740U,	// SDIVXri
+    20985740U,	// SDIVXrr
+    20985600U,	// SDIVri
+    20985600U,	// SDIVrr
+    2110457U,	// SETHIi
+    2874U,	// SHUTDOWN
+    2869U,	// SIAM
+    71011U,	// SIR
+    20985680U,	// SLLXri
+    20985680U,	// SLLXrr
+    20984922U,	// SLLri
+    20984922U,	// SLLrr
+    20984419U,	// SMACri
+    20984419U,	// SMACrr
+    20984463U,	// SMULCCri
+    20984463U,	// SMULCCrr
+    20984950U,	// SMULri
+    20984950U,	// SMULrr
+    20985652U,	// SRAXri
+    20985652U,	// SRAXrr
+    20984381U,	// SRAri
+    20984381U,	// SRArr
+    20985686U,	// SRLXri
+    20985686U,	// SRLXrr
+    20984945U,	// SRLri
+    20984945U,	// SRLrr
+    1417806U,	// STAri
+    9413198U,	// STArr
+    2900U,	// STBAR
+    1417765U,	// STBAri
+    9413157U,	// STBArr
+    1483353U,	// STBri
+    1483353U,	// STBrr
+    1464869U,	// STCSRri
+    1464869U,	// STCSRrr
+    1484522U,	// STCri
+    1484522U,	// STCrr
+    1417771U,	// STDAri
+    9413163U,	// STDArr
+    1464847U,	// STDCQri
+    1464847U,	// STDCQrr
+    1483698U,	// STDCri
+    1483698U,	// STDCrr
+    1417771U,	// STDFAri
+    9413163U,	// STDFArr
+    1464858U,	// STDFQri
+    1464858U,	// STDFQrr
+    1483698U,	// STDFri
+    1483698U,	// STDFrr
+    1483698U,	// STDri
+    1483698U,	// STDrr
+    1417806U,	// STFAri
+    9413198U,	// STFArr
+    1464880U,	// STFSRri
+    1464880U,	// STFSRrr
+    1484522U,	// STFri
+    1484522U,	// STFrr
+    1417777U,	// STHAri
+    9413169U,	// STHArr
+    1483764U,	// STHri
+    1483764U,	// STHrr
+    1417783U,	// STQFAri
+    9413175U,	// STQFArr
+    1484093U,	// STQFri
+    1484093U,	// STQFrr
+    1417811U,	// STXAri
+    9413203U,	// STXArr
+    1464891U,	// STXFSRri
+    1464891U,	// STXFSRrr
+    1484679U,	// STXri
+    1484679U,	// STXrr
+    1484522U,	// STri
+    1484522U,	// STrr
+    20984432U,	// SUBCCri
+    20984432U,	// SUBCCrr
+    20985658U,	// SUBCri
+    20985658U,	// SUBCrr
+    20984533U,	// SUBEri
+    20984533U,	// SUBErr
+    20984414U,	// SUBri
+    20984414U,	// SUBrr
+    3050110U,	// SWAPAri
+    26184318U,	// SWAPArr
+    3312358U,	// SWAPri
+    3312358U,	// SWAPrr
+    2455U,	// TA1
+    2460U,	// TA3
+    2465U,	// TA5
+    20985622U,	// TADDCCTVri
+    20985622U,	// TADDCCTVrr
+    20984448U,	// TADDCCri
+    20984448U,	// TADDCCrr
+    70740U,	// TAIL_CALL
+    87258U,	// TAIL_CALLri
+    52869999U,	// TICCri
+    52869999U,	// TICCrr
+    557855489U,	// TLS_ADDrr
+    5204U,	// TLS_CALL
+    288525050U,	// TLS_LDXrr
+    288525000U,	// TLS_LDrr
+    52607855U,	// TRAPri
+    52607855U,	// TRAPrr
+    20985612U,	// TSUBCCTVri
+    20985612U,	// TSUBCCTVrr
+    20984431U,	// TSUBCCri
+    20984431U,	// TSUBCCrr
+    53132143U,	// TXCCri
+    53132143U,	// TXCCrr
+    20984525U,	// UDIVCCri
+    20984525U,	// UDIVCCrr
+    20985747U,	// UDIVXri
+    20985747U,	// UDIVXrr
+    20985606U,	// UDIVri
+    20985606U,	// UDIVrr
+    20984425U,	// UMACri
+    20984425U,	// UMACrr
+    20984471U,	// UMULCCri
+    20984471U,	// UMULCCrr
+    20984832U,	// UMULXHI
+    20984956U,	// UMULri
+    20984956U,	// UMULrr
+    70867U,	// UNIMP
+    150999952U,	// V9FCMPD
+    150999846U,	// V9FCMPED
+    151000301U,	// V9FCMPEQ
+    151000648U,	// V9FCMPES
+    151000359U,	// V9FCMPQ
+    151000723U,	// V9FCMPS
+    31516U,	// V9FMOVD_FCC
+    31566U,	// V9FMOVQ_FCC
+    31593U,	// V9FMOVS_FCC
+    31601U,	// V9MOVFCCri
+    31601U,	// V9MOVFCCrr
+    20985229U,	// WRASRri
+    20985229U,	// WRASRrr
+    20985222U,	// WRPRri
+    20985222U,	// WRPRrr
+    33559949U,	// WRPSRri
+    33559949U,	// WRPSRrr
+    67114381U,	// WRTBRri
+    67114381U,	// WRTBRrr
+    83891597U,	// WRWIMri
+    83891597U,	// WRWIMrr
+    20985692U,	// XMULX
+    20984841U,	// XMULXHI
+    20984494U,	// XNORCCri
+    20984494U,	// XNORCCrr
+    20985204U,	// XNORri
+    20985204U,	// XNORrr
+    20984502U,	// XORCCri
+    20984502U,	// XORCCrr
+    20985211U,	// XORri
+    20985211U,	// XORrr
   };
 
   // Emit the opcode for the instruction.

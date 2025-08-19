@@ -997,3 +997,29 @@ test_cases:
                 type: SPARC_OP_REG
                 reg: f4
                 access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0xad, 0xb4, 0x22, 0xd1 ]
+      arch: "sparc"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_V9 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "xmulxhi	%l0, %l1, %l6"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_REG
+                reg: l0
+                access: CS_AC_READ
+              -
+                type: SPARC_OP_REG
+                reg: l1
+                access: CS_AC_READ
+              -
+                type: SPARC_OP_REG
+                reg: l6
+                access: CS_AC_WRITE
+          groups: [HasVIS3]

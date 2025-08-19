@@ -1588,7 +1588,7 @@
 { /* SPARC_FEXPAND (398) - SPARC_INS_FEXPAND - fexpand $rs2, $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FHADDD (399) - SPARC_INS_FHADDD - fhaddd $rs1, $rs2, $rd */
@@ -1600,9 +1600,9 @@
 }},
 { /* SPARC_FHADDS (400) - SPARC_INS_FHADDS - fhadds $rs1, $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FHSUBD (401) - SPARC_INS_FHSUBD - fhsubd $rs1, $rs2, $rd */
@@ -1614,9 +1614,9 @@
 }},
 { /* SPARC_FHSUBS (402) - SPARC_INS_FHSUBS - fhsubs $rs1, $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FITOD (403) - SPARC_INS_FITOD - fitod $rs2, $rd */
@@ -1647,8 +1647,8 @@
 { /* SPARC_FLCMPS (407) - SPARC_INS_FLCMPS - flcmps $rd, $rs1, $rs2 */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i1, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FLUSH (408) - SPARC_INS_FLUSH - flush %g0 */
@@ -1812,22 +1812,22 @@
 { /* SPARC_FMUL8X16 (430) - SPARC_INS_FMUL8X16 - fmul8x16 $rs1, $rs2, $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FMUL8X16AL (431) - SPARC_INS_FMUL8X16AL - fmul8x16al $rs1, $rs2, $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FMUL8X16AU (432) - SPARC_INS_FMUL8X16AU - fmul8x16au $rs1, $rs2, $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FMULD (433) - SPARC_INS_FMULD - fmuld $rs1, $rs2, $rd */
@@ -1840,15 +1840,15 @@
 { /* SPARC_FMULD8SUX16 (434) - SPARC_INS_FMULD8SUX16 - fmuld8sux16 $rs1, $rs2, $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FMULD8ULX16 (435) - SPARC_INS_FMULD8ULX16 - fmuld8ulx16 $rs1, $rs2, $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FMULQ (436) - SPARC_INS_FMULQ - fmulq $rs1, $rs2, $rd */
@@ -1874,9 +1874,9 @@
 }},
 { /* SPARC_FNADDS (439) - SPARC_INS_FNADDS - fnadds $rs1, $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FNAND (440) - SPARC_INS_FNAND - fnand $rs1, $rs2, $rd */
@@ -1920,23 +1920,23 @@
 }},
 { /* SPARC_FNHADDS (446) - SPARC_INS_FNHADDS - fnhadds $rs1, $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
-{ /* SPARC_FNMULD (447) - SPARC_INS_FNHADDD - fnhaddd $rs1, $rs2, $rd */
+{ /* SPARC_FNMULD (447) - SPARC_INS_FNMULD - fnmuld $rs1, $rs2, $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
-{ /* SPARC_FNMULS (448) - SPARC_INS_FNHADDS - fnhadds $rs1, $rs2, $rd */
+{ /* SPARC_FNMULS (448) - SPARC_INS_FNMULS - fnmuls $rs1, $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FNOR (449) - SPARC_INS_FNOR - fnor $rs1, $rs2, $rd */
@@ -1977,23 +1977,21 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
-{ /* SPARC_FNSMULD (455) - SPARC_INS_FNHADDS - fnhadds $rs1, $rs2, $rd */
+{ /* SPARC_FNSMULD (455) - SPARC_INS_FNSMULD - fnsmuld $rs1, $rs2, $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FONE (456) - SPARC_INS_FONE - fone $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* f */
   { 0 }
 }},
 { /* SPARC_FONES (457) - SPARC_INS_FONES - fones $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* f */
   { 0 }
 }},
 { /* SPARC_FOR (458) - SPARC_INS_FOR - for $rs1, $rs2, $rd */
@@ -2053,7 +2051,7 @@
 }},
 { /* SPARC_FPACKFIX (466) - SPARC_INS_FPACKFIX - fpackfix $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
@@ -2066,9 +2064,9 @@
 }},
 { /* SPARC_FPADD16S (468) - SPARC_INS_FPADD16S - fpadd16s $rs1, $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FPADD32 (469) - SPARC_INS_FPADD32 - fpadd32 $rs1, $rs2, $rd */
@@ -2080,9 +2078,9 @@
 }},
 { /* SPARC_FPADD32S (470) - SPARC_INS_FPADD32S - fpadd32s $rs1, $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FPADD64 (471) - SPARC_INS_FPADD64 - fpadd64 $rs1, $rs2, $rd */
@@ -2095,8 +2093,8 @@
 { /* SPARC_FPMERGE (472) - SPARC_INS_FPMERGE - fpmerge $rs1, $rs2, $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FPSUB16 (473) - SPARC_INS_FPSUB16 - fpsub16 $rs1, $rs2, $rd */
@@ -2106,11 +2104,11 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
-{ /* SPARC_FPSUB16S (474) - SPARC_INS_FPSUB16S - fpsub16S $rs1, $rs2, $rd */
+{ /* SPARC_FPSUB16S (474) - SPARC_INS_FPSUB16S - fpsub16s $rs1, $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FPSUB32 (475) - SPARC_INS_FPSUB32 - fpsub32 $rs1, $rs2, $rd */
@@ -2120,11 +2118,11 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
-{ /* SPARC_FPSUB32S (476) - SPARC_INS_FPSUB32S - fpsub32S $rs1, $rs2, $rd */
+{ /* SPARC_FPSUB32S (476) - SPARC_INS_FPSUB32S - fpsub32s $rs1, $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs1 */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_FQTOD (477) - SPARC_INS_FQTOD - fqtod $rs2, $rd */
@@ -2350,13 +2348,11 @@
 { /* SPARC_FZERO (511) - SPARC_INS_FZERO - fzero $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* f */
   { 0 }
 }},
 { /* SPARC_FZEROS (512) - SPARC_INS_FZEROS - fzeros $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* f */
   { 0 }
 }},
 { /* SPARC_GDOP_LDXrr (513) - SPARC_INS_LDX - ldx [$addr], $rd, $sym */
@@ -2870,20 +2866,20 @@
 }},
 { /* SPARC_MOVSTOSW (584) - SPARC_INS_MOVSTOSW - movstosw $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_MOVSTOUW (585) - SPARC_INS_MOVSTOUW - movstouw $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
-{ /* SPARC_MOVWTOS (586) - SPARC_INS_MOVDTOX - movdtox $rs2, $rd */
+{ /* SPARC_MOVWTOS (586) - SPARC_INS_MOVWTOS - movwtos $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* rs2 */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }
 }},
 { /* SPARC_MOVXCCri (587) - SPARC_INS_MOV - mov$cond %xcc, $simm11, $rd */
@@ -2902,7 +2898,7 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* cond */
   { 0 }
 }},
-{ /* SPARC_MOVXTOD (589) - SPARC_INS_MOVDTOX - movdtox $rs2, $rd */
+{ /* SPARC_MOVXTOD (589) - SPARC_INS_MOVXTOD - movxtod $rs2, $rd */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* rs2 */
@@ -3005,7 +3001,7 @@
 }},
 { /* SPARC_PDISTN (604) - SPARC_INS_PDISTN - pdistn $rs1, $rs2, $rd */
 {
-  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rd */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* rd */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs1 */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST } }, /* rs2 */
   { 0 }

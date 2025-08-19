@@ -3292,16 +3292,16 @@
   #endif
 },
 {
-  /* fnhaddd $rs1, $rs2, $rd */
-  Sparc_FNMULD /* 447 */, SPARC_INS_FNHADDD,
+  /* fnmuld $rs1, $rs2, $rd */
+  Sparc_FNMULD /* 447 */, SPARC_INS_FNMULD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { SPARC_FEATURE_HASVIS3, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3 }}
 
   #endif
 },
 {
-  /* fnhadds $rs1, $rs2, $rd */
-  Sparc_FNMULS /* 448 */, SPARC_INS_FNHADDS,
+  /* fnmuls $rs1, $rs2, $rd */
+  Sparc_FNMULS /* 448 */, SPARC_INS_FNMULS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { SPARC_FEATURE_HASVIS3, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3 }}
 
@@ -3356,8 +3356,8 @@
   #endif
 },
 {
-  /* fnhadds $rs1, $rs2, $rd */
-  Sparc_FNSMULD /* 455 */, SPARC_INS_FNHADDS,
+  /* fnsmuld $rs1, $rs2, $rd */
+  Sparc_FNSMULD /* 455 */, SPARC_INS_FNSMULD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { SPARC_FEATURE_HASVIS3, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3 }}
 
@@ -3508,7 +3508,7 @@
   #endif
 },
 {
-  /* fpsub16S $rs1, $rs2, $rd */
+  /* fpsub16s $rs1, $rs2, $rd */
   Sparc_FPSUB16S /* 474 */, SPARC_INS_FPSUB16S,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { SPARC_FEATURE_HASVIS, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3 }}
@@ -3524,7 +3524,7 @@
   #endif
 },
 {
-  /* fpsub32S $rs1, $rs2, $rd */
+  /* fpsub32s $rs1, $rs2, $rd */
   Sparc_FPSUB32S /* 476 */, SPARC_INS_FPSUB32S,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { SPARC_FEATURE_HASVIS, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3 }}
@@ -4404,8 +4404,8 @@
   #endif
 },
 {
-  /* movdtox $rs2, $rd */
-  Sparc_MOVWTOS /* 586 */, SPARC_INS_MOVDTOX,
+  /* movwtos $rs2, $rd */
+  Sparc_MOVWTOS /* 586 */, SPARC_INS_MOVWTOS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { SPARC_FEATURE_HASVIS3, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3 }}
 
@@ -4428,8 +4428,8 @@
   #endif
 },
 {
-  /* movdtox $rs2, $rd */
-  Sparc_MOVXTOD /* 589 */, SPARC_INS_MOVDTOX,
+  /* movxtod $rs2, $rd */
+  Sparc_MOVXTOD /* 589 */, SPARC_INS_MOVXTOD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { SPARC_FEATURE_HASVIS3, 0 }, 0, 0, { .sparc = { SPARC_INSN_FORM_F3_3 }}
 

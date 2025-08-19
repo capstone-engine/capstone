@@ -805,7 +805,7 @@
 #if defined(GET_INSTRINFO_MC_DESC) || defined(GET_INSTRINFO_CTOR_DTOR)
 typedef struct SparcInstrTable {
   MCInstrDesc Insts[782];
-  MCOperandInfo OperandInfo[532];
+  MCOperandInfo OperandInfo[537];
   MCPhysReg ImplicitOps[32];
 } SparcInstrTable;
 
@@ -828,25 +828,25 @@ static const SparcInstrTable SparcDescs = {
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #774 = XNORCCri
   { 3, &SparcDescs.OperandInfo[167] },  // Inst #773 = XMULXHI
   { 3, &SparcDescs.OperandInfo[167] },  // Inst #772 = XMULX
-  { 2, &SparcDescs.OperandInfo[367] },  // Inst #771 = WRWIMrr
+  { 2, &SparcDescs.OperandInfo[375] },  // Inst #771 = WRWIMrr
   { 2, &SparcDescs.OperandInfo[156] },  // Inst #770 = WRWIMri
-  { 2, &SparcDescs.OperandInfo[367] },  // Inst #769 = WRTBRrr
+  { 2, &SparcDescs.OperandInfo[375] },  // Inst #769 = WRTBRrr
   { 2, &SparcDescs.OperandInfo[156] },  // Inst #768 = WRTBRri
-  { 2, &SparcDescs.OperandInfo[367] },  // Inst #767 = WRPSRrr
+  { 2, &SparcDescs.OperandInfo[375] },  // Inst #767 = WRPSRrr
   { 2, &SparcDescs.OperandInfo[156] },  // Inst #766 = WRPSRri
-  { 3, &SparcDescs.OperandInfo[529] },  // Inst #765 = WRPRrr
-  { 3, &SparcDescs.OperandInfo[526] },  // Inst #764 = WRPRri
-  { 3, &SparcDescs.OperandInfo[523] },  // Inst #763 = WRASRrr
-  { 3, &SparcDescs.OperandInfo[520] },  // Inst #762 = WRASRri
-  { 5, &SparcDescs.OperandInfo[515] },  // Inst #761 = V9MOVFCCrr
-  { 5, &SparcDescs.OperandInfo[510] },  // Inst #760 = V9MOVFCCri
-  { 5, &SparcDescs.OperandInfo[505] },  // Inst #759 = V9FMOVS_FCC
-  { 5, &SparcDescs.OperandInfo[500] },  // Inst #758 = V9FMOVQ_FCC
-  { 5, &SparcDescs.OperandInfo[495] },  // Inst #757 = V9FMOVD_FCC
-  { 3, &SparcDescs.OperandInfo[492] },  // Inst #756 = V9FCMPS
-  { 3, &SparcDescs.OperandInfo[489] },  // Inst #755 = V9FCMPQ
-  { 3, &SparcDescs.OperandInfo[492] },  // Inst #754 = V9FCMPES
-  { 3, &SparcDescs.OperandInfo[489] },  // Inst #753 = V9FCMPEQ
+  { 3, &SparcDescs.OperandInfo[534] },  // Inst #765 = WRPRrr
+  { 3, &SparcDescs.OperandInfo[531] },  // Inst #764 = WRPRri
+  { 3, &SparcDescs.OperandInfo[528] },  // Inst #763 = WRASRrr
+  { 3, &SparcDescs.OperandInfo[525] },  // Inst #762 = WRASRri
+  { 5, &SparcDescs.OperandInfo[520] },  // Inst #761 = V9MOVFCCrr
+  { 5, &SparcDescs.OperandInfo[515] },  // Inst #760 = V9MOVFCCri
+  { 5, &SparcDescs.OperandInfo[510] },  // Inst #759 = V9FMOVS_FCC
+  { 5, &SparcDescs.OperandInfo[505] },  // Inst #758 = V9FMOVQ_FCC
+  { 5, &SparcDescs.OperandInfo[500] },  // Inst #757 = V9FMOVD_FCC
+  { 3, &SparcDescs.OperandInfo[233] },  // Inst #756 = V9FCMPS
+  { 3, &SparcDescs.OperandInfo[497] },  // Inst #755 = V9FCMPQ
+  { 3, &SparcDescs.OperandInfo[233] },  // Inst #754 = V9FCMPES
+  { 3, &SparcDescs.OperandInfo[497] },  // Inst #753 = V9FCMPEQ
   { 3, &SparcDescs.OperandInfo[230] },  // Inst #752 = V9FCMPED
   { 3, &SparcDescs.OperandInfo[230] },  // Inst #751 = V9FCMPD
   { 1, &SparcDescs.OperandInfo[1] },  // Inst #750 = UNIMP
@@ -855,28 +855,28 @@ static const SparcInstrTable SparcDescs = {
   { 3, &SparcDescs.OperandInfo[167] },  // Inst #747 = UMULXHI
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #746 = UMULCCrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #745 = UMULCCri
-  { 4, &SparcDescs.OperandInfo[393] },  // Inst #744 = UMACrr
-  { 4, &SparcDescs.OperandInfo[389] },  // Inst #743 = UMACri
+  { 4, &SparcDescs.OperandInfo[401] },  // Inst #744 = UMACrr
+  { 4, &SparcDescs.OperandInfo[397] },  // Inst #743 = UMACri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #742 = UDIVrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #741 = UDIVri
   { 3, &SparcDescs.OperandInfo[167] },  // Inst #740 = UDIVXrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #739 = UDIVXri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #738 = UDIVCCrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #737 = UDIVCCri
-  { 3, &SparcDescs.OperandInfo[386] },  // Inst #736 = TXCCrr
-  { 3, &SparcDescs.OperandInfo[482] },  // Inst #735 = TXCCri
+  { 3, &SparcDescs.OperandInfo[394] },  // Inst #736 = TXCCrr
+  { 3, &SparcDescs.OperandInfo[490] },  // Inst #735 = TXCCri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #734 = TSUBCCrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #733 = TSUBCCri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #732 = TSUBCCTVrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #731 = TSUBCCTVri
-  { 3, &SparcDescs.OperandInfo[386] },  // Inst #730 = TRAPrr
-  { 3, &SparcDescs.OperandInfo[482] },  // Inst #729 = TRAPri
-  { 4, &SparcDescs.OperandInfo[275] },  // Inst #728 = TLS_LDrr
-  { 4, &SparcDescs.OperandInfo[275] },  // Inst #727 = TLS_LDXrr
+  { 3, &SparcDescs.OperandInfo[394] },  // Inst #730 = TRAPrr
+  { 3, &SparcDescs.OperandInfo[490] },  // Inst #729 = TRAPri
+  { 4, &SparcDescs.OperandInfo[279] },  // Inst #728 = TLS_LDrr
+  { 4, &SparcDescs.OperandInfo[279] },  // Inst #727 = TLS_LDXrr
   { 2, &SparcDescs.OperandInfo[13] },  // Inst #726 = TLS_CALL
-  { 4, &SparcDescs.OperandInfo[485] },  // Inst #725 = TLS_ADDrr
-  { 3, &SparcDescs.OperandInfo[386] },  // Inst #724 = TICCrr
-  { 3, &SparcDescs.OperandInfo[482] },  // Inst #723 = TICCri
+  { 4, &SparcDescs.OperandInfo[493] },  // Inst #725 = TLS_ADDrr
+  { 3, &SparcDescs.OperandInfo[394] },  // Inst #724 = TICCrr
+  { 3, &SparcDescs.OperandInfo[490] },  // Inst #723 = TICCri
   { 2, &SparcDescs.OperandInfo[172] },  // Inst #722 = TAIL_CALLri
   { 1, &SparcDescs.OperandInfo[0] },  // Inst #721 = TAIL_CALL
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #720 = TADDCCrr
@@ -886,10 +886,10 @@ static const SparcInstrTable SparcDescs = {
   { 0, &SparcDescs.OperandInfo[1] },  // Inst #716 = TA5
   { 0, &SparcDescs.OperandInfo[1] },  // Inst #715 = TA3
   { 0, &SparcDescs.OperandInfo[1] },  // Inst #714 = TA1
-  { 4, &SparcDescs.OperandInfo[478] },  // Inst #713 = SWAPrr
-  { 4, &SparcDescs.OperandInfo[469] },  // Inst #712 = SWAPri
-  { 5, &SparcDescs.OperandInfo[473] },  // Inst #711 = SWAPArr
-  { 4, &SparcDescs.OperandInfo[469] },  // Inst #710 = SWAPAri
+  { 4, &SparcDescs.OperandInfo[486] },  // Inst #713 = SWAPrr
+  { 4, &SparcDescs.OperandInfo[477] },  // Inst #712 = SWAPri
+  { 5, &SparcDescs.OperandInfo[481] },  // Inst #711 = SWAPArr
+  { 4, &SparcDescs.OperandInfo[477] },  // Inst #710 = SWAPAri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #709 = SUBrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #708 = SUBri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #707 = SUBErr
@@ -898,71 +898,71 @@ static const SparcInstrTable SparcDescs = {
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #704 = SUBCri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #703 = SUBCCrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #702 = SUBCCri
-  { 3, &SparcDescs.OperandInfo[404] },  // Inst #701 = STrr
-  { 3, &SparcDescs.OperandInfo[397] },  // Inst #700 = STri
-  { 3, &SparcDescs.OperandInfo[466] },  // Inst #699 = STXrr
-  { 3, &SparcDescs.OperandInfo[459] },  // Inst #698 = STXri
+  { 3, &SparcDescs.OperandInfo[412] },  // Inst #701 = STrr
+  { 3, &SparcDescs.OperandInfo[405] },  // Inst #700 = STri
+  { 3, &SparcDescs.OperandInfo[474] },  // Inst #699 = STXrr
+  { 3, &SparcDescs.OperandInfo[467] },  // Inst #698 = STXri
   { 2, &SparcDescs.OperandInfo[174] },  // Inst #697 = STXFSRrr
   { 2, &SparcDescs.OperandInfo[172] },  // Inst #696 = STXFSRri
-  { 4, &SparcDescs.OperandInfo[462] },  // Inst #695 = STXArr
-  { 3, &SparcDescs.OperandInfo[459] },  // Inst #694 = STXAri
-  { 3, &SparcDescs.OperandInfo[456] },  // Inst #693 = STQFrr
-  { 3, &SparcDescs.OperandInfo[449] },  // Inst #692 = STQFri
-  { 4, &SparcDescs.OperandInfo[452] },  // Inst #691 = STQFArr
-  { 3, &SparcDescs.OperandInfo[449] },  // Inst #690 = STQFAri
-  { 3, &SparcDescs.OperandInfo[404] },  // Inst #689 = STHrr
-  { 3, &SparcDescs.OperandInfo[397] },  // Inst #688 = STHri
-  { 4, &SparcDescs.OperandInfo[400] },  // Inst #687 = STHArr
-  { 3, &SparcDescs.OperandInfo[397] },  // Inst #686 = STHAri
-  { 3, &SparcDescs.OperandInfo[446] },  // Inst #685 = STFrr
-  { 3, &SparcDescs.OperandInfo[439] },  // Inst #684 = STFri
+  { 4, &SparcDescs.OperandInfo[470] },  // Inst #695 = STXArr
+  { 3, &SparcDescs.OperandInfo[467] },  // Inst #694 = STXAri
+  { 3, &SparcDescs.OperandInfo[464] },  // Inst #693 = STQFrr
+  { 3, &SparcDescs.OperandInfo[457] },  // Inst #692 = STQFri
+  { 4, &SparcDescs.OperandInfo[460] },  // Inst #691 = STQFArr
+  { 3, &SparcDescs.OperandInfo[457] },  // Inst #690 = STQFAri
+  { 3, &SparcDescs.OperandInfo[412] },  // Inst #689 = STHrr
+  { 3, &SparcDescs.OperandInfo[405] },  // Inst #688 = STHri
+  { 4, &SparcDescs.OperandInfo[408] },  // Inst #687 = STHArr
+  { 3, &SparcDescs.OperandInfo[405] },  // Inst #686 = STHAri
+  { 3, &SparcDescs.OperandInfo[454] },  // Inst #685 = STFrr
+  { 3, &SparcDescs.OperandInfo[447] },  // Inst #684 = STFri
   { 2, &SparcDescs.OperandInfo[174] },  // Inst #683 = STFSRrr
   { 2, &SparcDescs.OperandInfo[172] },  // Inst #682 = STFSRri
-  { 4, &SparcDescs.OperandInfo[442] },  // Inst #681 = STFArr
-  { 3, &SparcDescs.OperandInfo[439] },  // Inst #680 = STFAri
-  { 3, &SparcDescs.OperandInfo[436] },  // Inst #679 = STDrr
-  { 3, &SparcDescs.OperandInfo[413] },  // Inst #678 = STDri
-  { 3, &SparcDescs.OperandInfo[433] },  // Inst #677 = STDFrr
-  { 3, &SparcDescs.OperandInfo[426] },  // Inst #676 = STDFri
+  { 4, &SparcDescs.OperandInfo[450] },  // Inst #681 = STFArr
+  { 3, &SparcDescs.OperandInfo[447] },  // Inst #680 = STFAri
+  { 3, &SparcDescs.OperandInfo[444] },  // Inst #679 = STDrr
+  { 3, &SparcDescs.OperandInfo[421] },  // Inst #678 = STDri
+  { 3, &SparcDescs.OperandInfo[441] },  // Inst #677 = STDFrr
+  { 3, &SparcDescs.OperandInfo[434] },  // Inst #676 = STDFri
   { 2, &SparcDescs.OperandInfo[174] },  // Inst #675 = STDFQrr
   { 2, &SparcDescs.OperandInfo[172] },  // Inst #674 = STDFQri
-  { 4, &SparcDescs.OperandInfo[429] },  // Inst #673 = STDFArr
-  { 3, &SparcDescs.OperandInfo[426] },  // Inst #672 = STDFAri
-  { 3, &SparcDescs.OperandInfo[423] },  // Inst #671 = STDCrr
-  { 3, &SparcDescs.OperandInfo[420] },  // Inst #670 = STDCri
+  { 4, &SparcDescs.OperandInfo[437] },  // Inst #673 = STDFArr
+  { 3, &SparcDescs.OperandInfo[434] },  // Inst #672 = STDFAri
+  { 3, &SparcDescs.OperandInfo[431] },  // Inst #671 = STDCrr
+  { 3, &SparcDescs.OperandInfo[428] },  // Inst #670 = STDCri
   { 2, &SparcDescs.OperandInfo[174] },  // Inst #669 = STDCQrr
   { 2, &SparcDescs.OperandInfo[172] },  // Inst #668 = STDCQri
-  { 4, &SparcDescs.OperandInfo[416] },  // Inst #667 = STDArr
-  { 3, &SparcDescs.OperandInfo[413] },  // Inst #666 = STDAri
-  { 3, &SparcDescs.OperandInfo[410] },  // Inst #665 = STCrr
-  { 3, &SparcDescs.OperandInfo[407] },  // Inst #664 = STCri
+  { 4, &SparcDescs.OperandInfo[424] },  // Inst #667 = STDArr
+  { 3, &SparcDescs.OperandInfo[421] },  // Inst #666 = STDAri
+  { 3, &SparcDescs.OperandInfo[418] },  // Inst #665 = STCrr
+  { 3, &SparcDescs.OperandInfo[415] },  // Inst #664 = STCri
   { 2, &SparcDescs.OperandInfo[174] },  // Inst #663 = STCSRrr
   { 2, &SparcDescs.OperandInfo[172] },  // Inst #662 = STCSRri
-  { 3, &SparcDescs.OperandInfo[404] },  // Inst #661 = STBrr
-  { 3, &SparcDescs.OperandInfo[397] },  // Inst #660 = STBri
-  { 4, &SparcDescs.OperandInfo[400] },  // Inst #659 = STBArr
-  { 3, &SparcDescs.OperandInfo[397] },  // Inst #658 = STBAri
+  { 3, &SparcDescs.OperandInfo[412] },  // Inst #661 = STBrr
+  { 3, &SparcDescs.OperandInfo[405] },  // Inst #660 = STBri
+  { 4, &SparcDescs.OperandInfo[408] },  // Inst #659 = STBArr
+  { 3, &SparcDescs.OperandInfo[405] },  // Inst #658 = STBAri
   { 0, &SparcDescs.OperandInfo[1] },  // Inst #657 = STBAR
-  { 4, &SparcDescs.OperandInfo[400] },  // Inst #656 = STArr
-  { 3, &SparcDescs.OperandInfo[397] },  // Inst #655 = STAri
+  { 4, &SparcDescs.OperandInfo[408] },  // Inst #656 = STArr
+  { 3, &SparcDescs.OperandInfo[405] },  // Inst #655 = STAri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #654 = SRLrr
-  { 3, &SparcDescs.OperandInfo[386] },  // Inst #653 = SRLri
-  { 3, &SparcDescs.OperandInfo[383] },  // Inst #652 = SRLXrr
-  { 3, &SparcDescs.OperandInfo[380] },  // Inst #651 = SRLXri
+  { 3, &SparcDescs.OperandInfo[394] },  // Inst #653 = SRLri
+  { 3, &SparcDescs.OperandInfo[391] },  // Inst #652 = SRLXrr
+  { 3, &SparcDescs.OperandInfo[388] },  // Inst #651 = SRLXri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #650 = SRArr
-  { 3, &SparcDescs.OperandInfo[386] },  // Inst #649 = SRAri
-  { 3, &SparcDescs.OperandInfo[383] },  // Inst #648 = SRAXrr
-  { 3, &SparcDescs.OperandInfo[380] },  // Inst #647 = SRAXri
+  { 3, &SparcDescs.OperandInfo[394] },  // Inst #649 = SRAri
+  { 3, &SparcDescs.OperandInfo[391] },  // Inst #648 = SRAXrr
+  { 3, &SparcDescs.OperandInfo[388] },  // Inst #647 = SRAXri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #646 = SMULrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #645 = SMULri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #644 = SMULCCrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #643 = SMULCCri
-  { 4, &SparcDescs.OperandInfo[393] },  // Inst #642 = SMACrr
-  { 4, &SparcDescs.OperandInfo[389] },  // Inst #641 = SMACri
+  { 4, &SparcDescs.OperandInfo[401] },  // Inst #642 = SMACrr
+  { 4, &SparcDescs.OperandInfo[397] },  // Inst #641 = SMACri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #640 = SLLrr
-  { 3, &SparcDescs.OperandInfo[386] },  // Inst #639 = SLLri
-  { 3, &SparcDescs.OperandInfo[383] },  // Inst #638 = SLLXrr
-  { 3, &SparcDescs.OperandInfo[380] },  // Inst #637 = SLLXri
+  { 3, &SparcDescs.OperandInfo[394] },  // Inst #639 = SLLri
+  { 3, &SparcDescs.OperandInfo[391] },  // Inst #638 = SLLXrr
+  { 3, &SparcDescs.OperandInfo[388] },  // Inst #637 = SLLXri
   { 1, &SparcDescs.OperandInfo[1] },  // Inst #636 = SIR
   { 0, &SparcDescs.OperandInfo[1] },  // Inst #635 = SIAM
   { 0, &SparcDescs.OperandInfo[1] },  // Inst #634 = SHUTDOWN
@@ -984,18 +984,18 @@ static const SparcInstrTable SparcDescs = {
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #618 = RESTORErr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #617 = RESTOREri
   { 0, &SparcDescs.OperandInfo[1] },  // Inst #616 = RESTORED
-  { 1, &SparcDescs.OperandInfo[377] },  // Inst #615 = RDWIM
-  { 1, &SparcDescs.OperandInfo[377] },  // Inst #614 = RDTBR
-  { 1, &SparcDescs.OperandInfo[377] },  // Inst #613 = RDPSR
-  { 2, &SparcDescs.OperandInfo[378] },  // Inst #612 = RDPR
-  { 1, &SparcDescs.OperandInfo[377] },  // Inst #611 = RDFQ
-  { 2, &SparcDescs.OperandInfo[375] },  // Inst #610 = RDASR
-  { 2, &SparcDescs.OperandInfo[367] },  // Inst #609 = PWRPSRrr
+  { 1, &SparcDescs.OperandInfo[385] },  // Inst #615 = RDWIM
+  { 1, &SparcDescs.OperandInfo[385] },  // Inst #614 = RDTBR
+  { 1, &SparcDescs.OperandInfo[385] },  // Inst #613 = RDPSR
+  { 2, &SparcDescs.OperandInfo[386] },  // Inst #612 = RDPR
+  { 1, &SparcDescs.OperandInfo[385] },  // Inst #611 = RDFQ
+  { 2, &SparcDescs.OperandInfo[383] },  // Inst #610 = RDASR
+  { 2, &SparcDescs.OperandInfo[375] },  // Inst #609 = PWRPSRrr
   { 2, &SparcDescs.OperandInfo[156] },  // Inst #608 = PWRPSRri
-  { 3, &SparcDescs.OperandInfo[372] },  // Inst #607 = PREFETCHr
-  { 3, &SparcDescs.OperandInfo[369] },  // Inst #606 = PREFETCHi
-  { 2, &SparcDescs.OperandInfo[367] },  // Inst #605 = POPCrr
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #604 = PDISTN
+  { 3, &SparcDescs.OperandInfo[380] },  // Inst #607 = PREFETCHr
+  { 3, &SparcDescs.OperandInfo[377] },  // Inst #606 = PREFETCHi
+  { 2, &SparcDescs.OperandInfo[375] },  // Inst #605 = POPCrr
+  { 3, &SparcDescs.OperandInfo[216] },  // Inst #604 = PDISTN
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #603 = PDIST
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #602 = ORrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #601 = ORri
@@ -1010,85 +1010,85 @@ static const SparcInstrTable SparcDescs = {
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #592 = MULXri
   { 3, &SparcDescs.OperandInfo[164] },  // Inst #591 = MULSCCrr
   { 3, &SparcDescs.OperandInfo[161] },  // Inst #590 = MULSCCri
-  { 2, &SparcDescs.OperandInfo[365] },  // Inst #589 = MOVXTOD
-  { 4, &SparcDescs.OperandInfo[351] },  // Inst #588 = MOVXCCrr
-  { 4, &SparcDescs.OperandInfo[347] },  // Inst #587 = MOVXCCri
-  { 2, &SparcDescs.OperandInfo[365] },  // Inst #586 = MOVWTOS
-  { 2, &SparcDescs.OperandInfo[345] },  // Inst #585 = MOVSTOUW
-  { 2, &SparcDescs.OperandInfo[345] },  // Inst #584 = MOVSTOSW
-  { 5, &SparcDescs.OperandInfo[360] },  // Inst #583 = MOVRrr
-  { 5, &SparcDescs.OperandInfo[355] },  // Inst #582 = MOVRri
-  { 4, &SparcDescs.OperandInfo[351] },  // Inst #581 = MOVICCrr
-  { 4, &SparcDescs.OperandInfo[347] },  // Inst #580 = MOVICCri
-  { 4, &SparcDescs.OperandInfo[351] },  // Inst #579 = MOVFCCrr
-  { 4, &SparcDescs.OperandInfo[347] },  // Inst #578 = MOVFCCri
-  { 2, &SparcDescs.OperandInfo[345] },  // Inst #577 = MOVDTOX
+  { 2, &SparcDescs.OperandInfo[373] },  // Inst #589 = MOVXTOD
+  { 4, &SparcDescs.OperandInfo[355] },  // Inst #588 = MOVXCCrr
+  { 4, &SparcDescs.OperandInfo[351] },  // Inst #587 = MOVXCCri
+  { 2, &SparcDescs.OperandInfo[371] },  // Inst #586 = MOVWTOS
+  { 2, &SparcDescs.OperandInfo[369] },  // Inst #585 = MOVSTOUW
+  { 2, &SparcDescs.OperandInfo[369] },  // Inst #584 = MOVSTOSW
+  { 5, &SparcDescs.OperandInfo[364] },  // Inst #583 = MOVRrr
+  { 5, &SparcDescs.OperandInfo[359] },  // Inst #582 = MOVRri
+  { 4, &SparcDescs.OperandInfo[355] },  // Inst #581 = MOVICCrr
+  { 4, &SparcDescs.OperandInfo[351] },  // Inst #580 = MOVICCri
+  { 4, &SparcDescs.OperandInfo[355] },  // Inst #579 = MOVFCCrr
+  { 4, &SparcDescs.OperandInfo[351] },  // Inst #578 = MOVFCCri
+  { 2, &SparcDescs.OperandInfo[349] },  // Inst #577 = MOVDTOX
   { 1, &SparcDescs.OperandInfo[0] },  // Inst #576 = MEMBARi
-  { 2, &SparcDescs.OperandInfo[343] },  // Inst #575 = LZCNT
-  { 3, &SparcDescs.OperandInfo[282] },  // Inst #574 = LDrr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #573 = LDri
-  { 3, &SparcDescs.OperandInfo[340] },  // Inst #572 = LDXrr
-  { 3, &SparcDescs.OperandInfo[337] },  // Inst #571 = LDXri
+  { 2, &SparcDescs.OperandInfo[347] },  // Inst #575 = LZCNT
+  { 3, &SparcDescs.OperandInfo[286] },  // Inst #574 = LDrr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #573 = LDri
+  { 3, &SparcDescs.OperandInfo[344] },  // Inst #572 = LDXrr
+  { 3, &SparcDescs.OperandInfo[341] },  // Inst #571 = LDXri
   { 2, &SparcDescs.OperandInfo[174] },  // Inst #570 = LDXFSRrr
   { 2, &SparcDescs.OperandInfo[172] },  // Inst #569 = LDXFSRri
-  { 4, &SparcDescs.OperandInfo[271] },  // Inst #568 = LDXArr
-  { 3, &SparcDescs.OperandInfo[337] },  // Inst #567 = LDXAri
-  { 3, &SparcDescs.OperandInfo[282] },  // Inst #566 = LDUHrr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #565 = LDUHri
-  { 4, &SparcDescs.OperandInfo[275] },  // Inst #564 = LDUHArr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #563 = LDUHAri
-  { 3, &SparcDescs.OperandInfo[282] },  // Inst #562 = LDUBrr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #561 = LDUBri
-  { 4, &SparcDescs.OperandInfo[275] },  // Inst #560 = LDUBArr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #559 = LDUBAri
-  { 3, &SparcDescs.OperandInfo[340] },  // Inst #558 = LDSWrr
-  { 3, &SparcDescs.OperandInfo[337] },  // Inst #557 = LDSWri
-  { 4, &SparcDescs.OperandInfo[271] },  // Inst #556 = LDSWArr
-  { 3, &SparcDescs.OperandInfo[337] },  // Inst #555 = LDSWAri
-  { 3, &SparcDescs.OperandInfo[282] },  // Inst #554 = LDSTUBrr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #553 = LDSTUBri
-  { 4, &SparcDescs.OperandInfo[275] },  // Inst #552 = LDSTUBArr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #551 = LDSTUBAri
-  { 3, &SparcDescs.OperandInfo[282] },  // Inst #550 = LDSHrr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #549 = LDSHri
-  { 4, &SparcDescs.OperandInfo[275] },  // Inst #548 = LDSHArr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #547 = LDSHAri
-  { 3, &SparcDescs.OperandInfo[282] },  // Inst #546 = LDSBrr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #545 = LDSBri
-  { 4, &SparcDescs.OperandInfo[275] },  // Inst #544 = LDSBArr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #543 = LDSBAri
-  { 3, &SparcDescs.OperandInfo[334] },  // Inst #542 = LDQFrr
-  { 3, &SparcDescs.OperandInfo[327] },  // Inst #541 = LDQFri
-  { 4, &SparcDescs.OperandInfo[330] },  // Inst #540 = LDQFArr
-  { 3, &SparcDescs.OperandInfo[327] },  // Inst #539 = LDQFAri
-  { 3, &SparcDescs.OperandInfo[324] },  // Inst #538 = LDFrr
-  { 3, &SparcDescs.OperandInfo[317] },  // Inst #537 = LDFri
+  { 4, &SparcDescs.OperandInfo[275] },  // Inst #568 = LDXArr
+  { 3, &SparcDescs.OperandInfo[341] },  // Inst #567 = LDXAri
+  { 3, &SparcDescs.OperandInfo[286] },  // Inst #566 = LDUHrr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #565 = LDUHri
+  { 4, &SparcDescs.OperandInfo[279] },  // Inst #564 = LDUHArr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #563 = LDUHAri
+  { 3, &SparcDescs.OperandInfo[286] },  // Inst #562 = LDUBrr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #561 = LDUBri
+  { 4, &SparcDescs.OperandInfo[279] },  // Inst #560 = LDUBArr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #559 = LDUBAri
+  { 3, &SparcDescs.OperandInfo[344] },  // Inst #558 = LDSWrr
+  { 3, &SparcDescs.OperandInfo[341] },  // Inst #557 = LDSWri
+  { 4, &SparcDescs.OperandInfo[275] },  // Inst #556 = LDSWArr
+  { 3, &SparcDescs.OperandInfo[341] },  // Inst #555 = LDSWAri
+  { 3, &SparcDescs.OperandInfo[286] },  // Inst #554 = LDSTUBrr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #553 = LDSTUBri
+  { 4, &SparcDescs.OperandInfo[279] },  // Inst #552 = LDSTUBArr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #551 = LDSTUBAri
+  { 3, &SparcDescs.OperandInfo[286] },  // Inst #550 = LDSHrr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #549 = LDSHri
+  { 4, &SparcDescs.OperandInfo[279] },  // Inst #548 = LDSHArr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #547 = LDSHAri
+  { 3, &SparcDescs.OperandInfo[286] },  // Inst #546 = LDSBrr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #545 = LDSBri
+  { 4, &SparcDescs.OperandInfo[279] },  // Inst #544 = LDSBArr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #543 = LDSBAri
+  { 3, &SparcDescs.OperandInfo[338] },  // Inst #542 = LDQFrr
+  { 3, &SparcDescs.OperandInfo[331] },  // Inst #541 = LDQFri
+  { 4, &SparcDescs.OperandInfo[334] },  // Inst #540 = LDQFArr
+  { 3, &SparcDescs.OperandInfo[331] },  // Inst #539 = LDQFAri
+  { 3, &SparcDescs.OperandInfo[328] },  // Inst #538 = LDFrr
+  { 3, &SparcDescs.OperandInfo[321] },  // Inst #537 = LDFri
   { 2, &SparcDescs.OperandInfo[174] },  // Inst #536 = LDFSRrr
   { 2, &SparcDescs.OperandInfo[172] },  // Inst #535 = LDFSRri
-  { 4, &SparcDescs.OperandInfo[320] },  // Inst #534 = LDFArr
-  { 3, &SparcDescs.OperandInfo[317] },  // Inst #533 = LDFAri
-  { 3, &SparcDescs.OperandInfo[314] },  // Inst #532 = LDDrr
-  { 3, &SparcDescs.OperandInfo[291] },  // Inst #531 = LDDri
-  { 3, &SparcDescs.OperandInfo[311] },  // Inst #530 = LDDFrr
-  { 3, &SparcDescs.OperandInfo[304] },  // Inst #529 = LDDFri
-  { 4, &SparcDescs.OperandInfo[307] },  // Inst #528 = LDDFArr
-  { 3, &SparcDescs.OperandInfo[304] },  // Inst #527 = LDDFAri
-  { 3, &SparcDescs.OperandInfo[301] },  // Inst #526 = LDDCrr
-  { 3, &SparcDescs.OperandInfo[298] },  // Inst #525 = LDDCri
-  { 4, &SparcDescs.OperandInfo[294] },  // Inst #524 = LDDArr
-  { 3, &SparcDescs.OperandInfo[291] },  // Inst #523 = LDDAri
-  { 3, &SparcDescs.OperandInfo[288] },  // Inst #522 = LDCrr
-  { 3, &SparcDescs.OperandInfo[285] },  // Inst #521 = LDCri
+  { 4, &SparcDescs.OperandInfo[324] },  // Inst #534 = LDFArr
+  { 3, &SparcDescs.OperandInfo[321] },  // Inst #533 = LDFAri
+  { 3, &SparcDescs.OperandInfo[318] },  // Inst #532 = LDDrr
+  { 3, &SparcDescs.OperandInfo[295] },  // Inst #531 = LDDri
+  { 3, &SparcDescs.OperandInfo[315] },  // Inst #530 = LDDFrr
+  { 3, &SparcDescs.OperandInfo[308] },  // Inst #529 = LDDFri
+  { 4, &SparcDescs.OperandInfo[311] },  // Inst #528 = LDDFArr
+  { 3, &SparcDescs.OperandInfo[308] },  // Inst #527 = LDDFAri
+  { 3, &SparcDescs.OperandInfo[305] },  // Inst #526 = LDDCrr
+  { 3, &SparcDescs.OperandInfo[302] },  // Inst #525 = LDDCri
+  { 4, &SparcDescs.OperandInfo[298] },  // Inst #524 = LDDArr
+  { 3, &SparcDescs.OperandInfo[295] },  // Inst #523 = LDDAri
+  { 3, &SparcDescs.OperandInfo[292] },  // Inst #522 = LDCrr
+  { 3, &SparcDescs.OperandInfo[289] },  // Inst #521 = LDCri
   { 2, &SparcDescs.OperandInfo[174] },  // Inst #520 = LDCSRrr
   { 2, &SparcDescs.OperandInfo[172] },  // Inst #519 = LDCSRri
-  { 4, &SparcDescs.OperandInfo[275] },  // Inst #518 = LDArr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #517 = LDAri
-  { 3, &SparcDescs.OperandInfo[282] },  // Inst #516 = JMPLrr
-  { 3, &SparcDescs.OperandInfo[279] },  // Inst #515 = JMPLri
-  { 4, &SparcDescs.OperandInfo[275] },  // Inst #514 = GDOP_LDrr
-  { 4, &SparcDescs.OperandInfo[271] },  // Inst #513 = GDOP_LDXrr
-  { 2, &SparcDescs.OperandInfo[262] },  // Inst #512 = FZEROS
-  { 2, &SparcDescs.OperandInfo[260] },  // Inst #511 = FZERO
+  { 4, &SparcDescs.OperandInfo[279] },  // Inst #518 = LDArr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #517 = LDAri
+  { 3, &SparcDescs.OperandInfo[286] },  // Inst #516 = JMPLrr
+  { 3, &SparcDescs.OperandInfo[283] },  // Inst #515 = JMPLri
+  { 4, &SparcDescs.OperandInfo[279] },  // Inst #514 = GDOP_LDrr
+  { 4, &SparcDescs.OperandInfo[275] },  // Inst #513 = GDOP_LDXrr
+  { 1, &SparcDescs.OperandInfo[270] },  // Inst #512 = FZEROS
+  { 1, &SparcDescs.OperandInfo[269] },  // Inst #511 = FZERO
   { 2, &SparcDescs.OperandInfo[222] },  // Inst #510 = FXTOS
   { 2, &SparcDescs.OperandInfo[224] },  // Inst #509 = FXTOQ
   { 2, &SparcDescs.OperandInfo[204] },  // Inst #508 = FXTOD
@@ -1114,26 +1114,26 @@ static const SparcInstrTable SparcDescs = {
   { 2, &SparcDescs.OperandInfo[208] },  // Inst #488 = FSQRTS
   { 2, &SparcDescs.OperandInfo[206] },  // Inst #487 = FSQRTQ
   { 2, &SparcDescs.OperandInfo[204] },  // Inst #486 = FSQRTD
-  { 3, &SparcDescs.OperandInfo[268] },  // Inst #485 = FSMULD
+  { 3, &SparcDescs.OperandInfo[266] },  // Inst #485 = FSMULD
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #484 = FSLL32
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #483 = FSLL16
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #482 = FSLAS32
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #481 = FSLAS16
-  { 2, &SparcDescs.OperandInfo[264] },  // Inst #480 = FQTOX
-  { 2, &SparcDescs.OperandInfo[266] },  // Inst #479 = FQTOS
-  { 2, &SparcDescs.OperandInfo[266] },  // Inst #478 = FQTOI
-  { 2, &SparcDescs.OperandInfo[264] },  // Inst #477 = FQTOD
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #476 = FPSUB32S
+  { 2, &SparcDescs.OperandInfo[271] },  // Inst #480 = FQTOX
+  { 2, &SparcDescs.OperandInfo[273] },  // Inst #479 = FQTOS
+  { 2, &SparcDescs.OperandInfo[273] },  // Inst #478 = FQTOI
+  { 2, &SparcDescs.OperandInfo[271] },  // Inst #477 = FQTOD
+  { 3, &SparcDescs.OperandInfo[213] },  // Inst #476 = FPSUB32S
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #475 = FPSUB32
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #474 = FPSUB16S
+  { 3, &SparcDescs.OperandInfo[213] },  // Inst #474 = FPSUB16S
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #473 = FPSUB16
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #472 = FPMERGE
+  { 3, &SparcDescs.OperandInfo[266] },  // Inst #472 = FPMERGE
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #471 = FPADD64
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #470 = FPADD32S
+  { 3, &SparcDescs.OperandInfo[213] },  // Inst #470 = FPADD32S
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #469 = FPADD32
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #468 = FPADD16S
+  { 3, &SparcDescs.OperandInfo[213] },  // Inst #468 = FPADD16S
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #467 = FPADD16
-  { 2, &SparcDescs.OperandInfo[204] },  // Inst #466 = FPACKFIX
+  { 2, &SparcDescs.OperandInfo[222] },  // Inst #466 = FPACKFIX
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #465 = FPACK32
   { 2, &SparcDescs.OperandInfo[204] },  // Inst #464 = FPACK16
   { 3, &SparcDescs.OperandInfo[213] },  // Inst #463 = FORS
@@ -1142,66 +1142,66 @@ static const SparcInstrTable SparcDescs = {
   { 3, &SparcDescs.OperandInfo[213] },  // Inst #460 = FORNOT1S
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #459 = FORNOT1
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #458 = FOR
-  { 2, &SparcDescs.OperandInfo[262] },  // Inst #457 = FONES
-  { 2, &SparcDescs.OperandInfo[260] },  // Inst #456 = FONE
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #455 = FNSMULD
+  { 1, &SparcDescs.OperandInfo[270] },  // Inst #457 = FONES
+  { 1, &SparcDescs.OperandInfo[269] },  // Inst #456 = FONE
+  { 3, &SparcDescs.OperandInfo[266] },  // Inst #455 = FNSMULD
   { 2, &SparcDescs.OperandInfo[208] },  // Inst #454 = FNOT2S
   { 2, &SparcDescs.OperandInfo[204] },  // Inst #453 = FNOT2
   { 2, &SparcDescs.OperandInfo[208] },  // Inst #452 = FNOT1S
   { 2, &SparcDescs.OperandInfo[204] },  // Inst #451 = FNOT1
   { 3, &SparcDescs.OperandInfo[213] },  // Inst #450 = FNORS
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #449 = FNOR
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #448 = FNMULS
+  { 3, &SparcDescs.OperandInfo[213] },  // Inst #448 = FNMULS
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #447 = FNMULD
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #446 = FNHADDS
+  { 3, &SparcDescs.OperandInfo[213] },  // Inst #446 = FNHADDS
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #445 = FNHADDD
   { 2, &SparcDescs.OperandInfo[208] },  // Inst #444 = FNEGS
   { 2, &SparcDescs.OperandInfo[206] },  // Inst #443 = FNEGQ
   { 2, &SparcDescs.OperandInfo[204] },  // Inst #442 = FNEGD
   { 3, &SparcDescs.OperandInfo[213] },  // Inst #441 = FNANDS
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #440 = FNAND
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #439 = FNADDS
+  { 3, &SparcDescs.OperandInfo[213] },  // Inst #439 = FNADDS
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #438 = FNADDD
   { 3, &SparcDescs.OperandInfo[213] },  // Inst #437 = FMULS
   { 3, &SparcDescs.OperandInfo[210] },  // Inst #436 = FMULQ
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #435 = FMULD8ULX16
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #434 = FMULD8SUX16
+  { 3, &SparcDescs.OperandInfo[266] },  // Inst #435 = FMULD8ULX16
+  { 3, &SparcDescs.OperandInfo[266] },  // Inst #434 = FMULD8SUX16
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #433 = FMULD
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #432 = FMUL8X16AU
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #431 = FMUL8X16AL
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #430 = FMUL8X16
+  { 3, &SparcDescs.OperandInfo[266] },  // Inst #432 = FMUL8X16AU
+  { 3, &SparcDescs.OperandInfo[266] },  // Inst #431 = FMUL8X16AL
+  { 3, &SparcDescs.OperandInfo[263] },  // Inst #430 = FMUL8X16
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #429 = FMUL8ULX16
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #428 = FMUL8SUX16
-  { 4, &SparcDescs.OperandInfo[256] },  // Inst #427 = FMOVS_XCC
-  { 4, &SparcDescs.OperandInfo[256] },  // Inst #426 = FMOVS_ICC
-  { 4, &SparcDescs.OperandInfo[256] },  // Inst #425 = FMOVS_FCC
+  { 4, &SparcDescs.OperandInfo[259] },  // Inst #427 = FMOVS_XCC
+  { 4, &SparcDescs.OperandInfo[259] },  // Inst #426 = FMOVS_ICC
+  { 4, &SparcDescs.OperandInfo[259] },  // Inst #425 = FMOVS_FCC
   { 2, &SparcDescs.OperandInfo[208] },  // Inst #424 = FMOVS
-  { 5, &SparcDescs.OperandInfo[251] },  // Inst #423 = FMOVRS
-  { 5, &SparcDescs.OperandInfo[246] },  // Inst #422 = FMOVRQ
-  { 5, &SparcDescs.OperandInfo[241] },  // Inst #421 = FMOVRD
-  { 4, &SparcDescs.OperandInfo[237] },  // Inst #420 = FMOVQ_XCC
-  { 4, &SparcDescs.OperandInfo[237] },  // Inst #419 = FMOVQ_ICC
-  { 4, &SparcDescs.OperandInfo[237] },  // Inst #418 = FMOVQ_FCC
+  { 5, &SparcDescs.OperandInfo[254] },  // Inst #423 = FMOVRS
+  { 5, &SparcDescs.OperandInfo[249] },  // Inst #422 = FMOVRQ
+  { 5, &SparcDescs.OperandInfo[244] },  // Inst #421 = FMOVRD
+  { 4, &SparcDescs.OperandInfo[240] },  // Inst #420 = FMOVQ_XCC
+  { 4, &SparcDescs.OperandInfo[240] },  // Inst #419 = FMOVQ_ICC
+  { 4, &SparcDescs.OperandInfo[240] },  // Inst #418 = FMOVQ_FCC
   { 2, &SparcDescs.OperandInfo[206] },  // Inst #417 = FMOVQ
-  { 4, &SparcDescs.OperandInfo[233] },  // Inst #416 = FMOVD_XCC
-  { 4, &SparcDescs.OperandInfo[233] },  // Inst #415 = FMOVD_ICC
-  { 4, &SparcDescs.OperandInfo[233] },  // Inst #414 = FMOVD_FCC
+  { 4, &SparcDescs.OperandInfo[236] },  // Inst #416 = FMOVD_XCC
+  { 4, &SparcDescs.OperandInfo[236] },  // Inst #415 = FMOVD_ICC
+  { 4, &SparcDescs.OperandInfo[236] },  // Inst #414 = FMOVD_FCC
   { 2, &SparcDescs.OperandInfo[204] },  // Inst #413 = FMOVD
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #412 = FMEAN16
   { 2, &SparcDescs.OperandInfo[174] },  // Inst #411 = FLUSHrr
   { 2, &SparcDescs.OperandInfo[172] },  // Inst #410 = FLUSHri
   { 0, &SparcDescs.OperandInfo[1] },  // Inst #409 = FLUSHW
   { 0, &SparcDescs.OperandInfo[1] },  // Inst #408 = FLUSH
-  { 3, &SparcDescs.OperandInfo[230] },  // Inst #407 = FLCMPS
+  { 3, &SparcDescs.OperandInfo[233] },  // Inst #407 = FLCMPS
   { 3, &SparcDescs.OperandInfo[230] },  // Inst #406 = FLCMPD
   { 2, &SparcDescs.OperandInfo[208] },  // Inst #405 = FITOS
   { 2, &SparcDescs.OperandInfo[228] },  // Inst #404 = FITOQ
   { 2, &SparcDescs.OperandInfo[226] },  // Inst #403 = FITOD
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #402 = FHSUBS
+  { 3, &SparcDescs.OperandInfo[213] },  // Inst #402 = FHSUBS
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #401 = FHSUBD
-  { 3, &SparcDescs.OperandInfo[182] },  // Inst #400 = FHADDS
+  { 3, &SparcDescs.OperandInfo[213] },  // Inst #400 = FHADDS
   { 3, &SparcDescs.OperandInfo[182] },  // Inst #399 = FHADDD
-  { 2, &SparcDescs.OperandInfo[204] },  // Inst #398 = FEXPAND
+  { 2, &SparcDescs.OperandInfo[226] },  // Inst #398 = FEXPAND
   { 2, &SparcDescs.OperandInfo[204] },  // Inst #397 = FDTOX
   { 2, &SparcDescs.OperandInfo[222] },  // Inst #396 = FDTOS
   { 2, &SparcDescs.OperandInfo[224] },  // Inst #395 = FDTOQ
@@ -1678,95 +1678,98 @@ static const SparcInstrTable SparcDescs = {
     /* 226 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
     /* 228 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
     /* 230 */ { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 233 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 237 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 241 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 246 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 251 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 256 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 260 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
-    /* 262 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
-    /* 264 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 266 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 268 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 271 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 275 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 279 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
-    /* 282 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
-    /* 285 */ { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
-    /* 288 */ { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
-    /* 291 */ { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
-    /* 294 */ { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 298 */ { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
-    /* 301 */ { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
-    /* 304 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
-    /* 307 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 311 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
-    /* 314 */ { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
-    /* 317 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
-    /* 320 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 324 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
-    /* 327 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
-    /* 330 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 334 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
-    /* 337 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
-    /* 340 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
-    /* 343 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 345 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 347 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 351 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 355 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 360 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 365 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 367 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 369 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 372 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 375 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 377 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 378 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_PRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 380 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 383 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 386 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 389 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 393 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 397 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 400 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 404 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 407 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 410 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 413 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 416 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 420 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 423 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 426 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 429 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 433 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 436 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 439 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 442 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 446 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 449 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 452 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 456 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 459 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 462 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 466 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 469 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
-    /* 473 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
-    /* 478 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
-    /* 482 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 485 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 489 */ { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 492 */ { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 495 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 500 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 505 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 510 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 515 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
-    /* 520 */ { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
-    /* 523 */ { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
-    /* 526 */ { SP_PRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
-    /* 529 */ { SP_PRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 233 */ { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 236 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 240 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 244 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 249 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 254 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 259 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 263 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 266 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 269 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 270 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 271 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 273 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 275 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 279 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 283 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
+    /* 286 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
+    /* 289 */ { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
+    /* 292 */ { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
+    /* 295 */ { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
+    /* 298 */ { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 302 */ { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
+    /* 305 */ { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
+    /* 308 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
+    /* 311 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 315 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
+    /* 318 */ { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
+    /* 321 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
+    /* 324 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 328 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
+    /* 331 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
+    /* 334 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 338 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
+    /* 341 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 },
+    /* 344 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 },
+    /* 347 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 349 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 351 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 355 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 359 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 364 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 369 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 371 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 373 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 375 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 377 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 380 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 383 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 385 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 386 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_PRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 388 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 391 */ { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 394 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 397 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 401 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 405 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 408 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 412 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 415 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 418 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_CoprocRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 421 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 424 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 428 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 431 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_CoprocPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 434 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 437 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 441 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 444 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_IntPairRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 447 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 450 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 454 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 457 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 460 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 464 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 467 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 470 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 474 */ { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_I64RegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 477 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_MEMORY, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
+    /* 481 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
+    /* 486 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { 0, 0|(1<<MCOI_LookupPtrRegClass), MCOI_OPERAND_MEMORY, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) },
+    /* 490 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 493 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 497 */ { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 500 */ { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_DFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 505 */ { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_QFPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 510 */ { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FPRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 515 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 520 */ { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_FCCRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, CONSTRAINT_MCOI_TIED_TO(0) }, { -1, 0, MCOI_OPERAND_UNKNOWN, 0 },
+    /* 525 */ { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
+    /* 528 */ { SP_ASRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
+    /* 531 */ { SP_PRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { -1, 0, MCOI_OPERAND_IMMEDIATE, 0 },
+    /* 534 */ { SP_PRRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 }, { SP_IntRegsRegClassID, 0, MCOI_OPERAND_REGISTER, 0 },
   }, {
     /* 0 */
     /* 0 */ Sparc_O6, Sparc_O6,
