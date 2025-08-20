@@ -1,0 +1,12 @@
+# Package version of Capstone for Makefile.
+# To be used to generate capstone.pc for pkg-config
+
+# version major & minor 
+PKG_MAJOR = @PROJECT_VERSION_MAJOR@
+PKG_MINOR = @PROJECT_VERSION_MINOR@
+
+# version bugfix level. Example: PKG_EXTRA = 1
+PKG_EXTRA = @PROJECT_VERSION_PATCH@
+
+# version tag. Examples: rc1, b2, post1 - or just comment out for no tag
+PKG_TAG = @PROJECT_VERSION_PRERELEASE@

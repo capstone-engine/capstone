@@ -25,16 +25,37 @@ if(NOT DEFINED PROJECT_VERSION OR PROJECT_VERSION STREQUAL "")
 endif()
 
 # Remove the 'v' prefix if it exists and extract the major, minor, and patch versions
-string(REGEX MATCH "^[vV]?([0-9]+\\.[0-9]+\\.[0-9]+)" _ ${PROJECT_VERSION})
-set(PROJECT_VERSION_BASE ${CMAKE_MATCH_1})
+# The pre-release part (if present) should be captured without the '-'
+string(REGEX MATCH "^[vV]?([0-9]+)\\.([0-9]+)\\.([0-9]+)(-([a-zA-Z0-9]+))?$" MATCH_RESULT "${PROJECT_VERSION}")
+if(NOT MATCH_RESULT)
+    message(FATAL_ERROR "Invalid PROJECT_VERSION format. Expected format: x.y.z or x.y.z-pre")
+endif()
 
-# Use PROJECT_VERSION directly for CPack
-set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(PROJECT_VERSION_MAJOR ${CMAKE_MATCH_1})
+set(PROJECT_VERSION_MINOR ${CMAKE_MATCH_2})
+set(PROJECT_VERSION_PATCH ${CMAKE_MATCH_3})
+set(PROJECT_VERSION_PRERELEASE ${CMAKE_MATCH_5})
+if(PROJECT_VERSION_PRERELEASE)
+    set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}-${PROJECT_VERSION_PRERELEASE}")
+else()
+    set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
+endif()
 
-# Set the project version without the pre-release identifier
-project(capstone VERSION ${PROJECT_VERSION_BASE})
-# Print the values of PROJECT_VERSION and PROJECT_VERSION_BASE
-message(STATUS "PROJECT_VERSION: ${CPACK_PACKAGE_VERSION} CAPSTONE_VERSION: ${PROJECT_VERSION_BASE}")
+project(capstone VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
+
+# Overwrite the version header file
+configure_file(
+  "${CMAKE_SOURCE_DIR}/version.h.in"
+  "${CMAKE_SOURCE_DIR}/include/capstone/version.h"
+  @ONLY
+)
+
+# Overwrite the pkgconfig.mk file
+# configure_file(
+#  "${CMAKE_SOURCE_DIR}/pkgconfig.mk.in"
+#  "${CMAKE_SOURCE_DIR}/pkgconfig.mk"
+#   @ONLY
+# )
 
 set(UNIX_COMPILER_OPTIONS -Werror -Wall -Warray-bounds -Wshift-negative-value -Wreturn-type -Wformat -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context -Wmisleading-indentation)
 
