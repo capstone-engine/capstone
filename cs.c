@@ -200,8 +200,10 @@ typedef struct cs_arch_config {
 	}
 #define CS_ARCH_CONFIG_RISCV \
 	{ \
-		RISCV_global_init, RISCV_option, \
-			~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC), \
+		RISCV_global_init, \
+		RISCV_option, \
+		~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC | CS_MODE_RISCVFD | CS_MODE_RISCVV | \
+		  CS_MODE_RISCVZFINX | CS_MODE_RISCVZCMP_ZCMT_ZCE), \
 	}
 #define CS_ARCH_CONFIG_SH \
 	{ \

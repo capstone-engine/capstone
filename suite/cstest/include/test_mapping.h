@@ -183,8 +183,19 @@ static const cs_enum_id_map test_mode_map[] = {
 	{ .str = "CS_MODE_XTENSA_ESP32", .val = CS_MODE_XTENSA_ESP32 },
 	{ .str = "CS_MODE_XTENSA_ESP32S2", .val = CS_MODE_XTENSA_ESP32S2 },
 	{ .str = "CS_MODE_XTENSA_ESP8266", .val = CS_MODE_XTENSA_ESP8266 },
+	{ .str = "c"      , .val = CS_MODE_RISCVC  },
+	{ .str = "d"      , .val = CS_MODE_RISCVFD },
+	{ .str = "f"      , .val = CS_MODE_RISCVFD },
 	{ .str = "riscv32", .val = CS_MODE_RISCV32 },
 	{ .str = "riscv64", .val = CS_MODE_RISCV64 },
+	{ .str = "v"      , .val = CS_MODE_RISCVV  },
+	{ .str = "zce"    , .val = CS_MODE_RISCVZCMP_ZCMT_ZCE},
+	{ .str = "zcmp"   , .val = CS_MODE_RISCVZCMP_ZCMT_ZCE},
+	{ .str = "zcmt"   , .val = CS_MODE_RISCVZCMP_ZCMT_ZCE},
+	{ .str = "zdinx"  , .val = CS_MODE_RISCVZFINX},
+	{ .str = "zfinx"  , .val = CS_MODE_RISCVZFINX},
+	{ .str = "zhinx"  , .val = CS_MODE_RISCVZFINX},
+	{ .str = "zhinxmin",.val = CS_MODE_RISCVZFINX}
 };
 
 static const TestOptionMapEntry test_option_map[] = {

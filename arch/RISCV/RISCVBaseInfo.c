@@ -137,7 +137,7 @@ float getFPImm(unsigned Imm)
 
 void RISCVZC_printSpimm(int64_t Spimm, SStream *OS)
 {
-	printUInt64(OS, Spimm);
+	printInt32(OS, Spimm);
 }
 
 // namespace llvm

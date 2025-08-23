@@ -204,11 +204,15 @@ typedef enum cs_mode {
 	CS_MODE_M680X_CPU12 = 1 << 9, ///< M680X Motorola/Freescale/NXP CPU12
 	///< used on M68HC12/HCS12
 	CS_MODE_M680X_HCS08 = 1 << 10, ///< M680X Freescale/NXP HCS08 mode
-	CS_MODE_BPF_CLASSIC = 0, ///< Classic BPF mode (default)
-	CS_MODE_BPF_EXTENDED = 1 << 0, ///< Extended BPF mode
-	CS_MODE_RISCV32 = 1 << 0, ///< RISCV RV32G
-	CS_MODE_RISCV64 = 1 << 1, ///< RISCV RV64G
-	CS_MODE_RISCVC = 1 << 2, ///< RISCV compressed instructure mode
+	CS_MODE_BPF_CLASSIC = 0,	///< Classic BPF mode (default)
+	CS_MODE_BPF_EXTENDED = 1 << 0,	///< Extended BPF mode
+	CS_MODE_RISCV32  = 1 << 0,        ///< RISCV RV32G
+	CS_MODE_RISCV64  = 1 << 1,        ///< RISCV RV64G
+	CS_MODE_RISCVC   = 1 << 2,        ///< RISCV compressed instructure mode
+	CS_MODE_RISCVFD  = 1 << 3,
+	CS_MODE_RISCVV   = 1 << 4,
+	CS_MODE_RISCVZFINX = 1 << 5,
+	CS_MODE_RISCVZCMP_ZCMT_ZCE = 1 << 6,
 	CS_MODE_MOS65XX_6502 = 1 << 1, ///< MOS65XXX MOS 6502
 	CS_MODE_MOS65XX_65C02 = 1 << 2, ///< MOS65XXX WDC 65c02
 	CS_MODE_MOS65XX_W65C02 = 1 << 3, ///< MOS65XXX WDC W65c02
