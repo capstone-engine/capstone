@@ -25,7 +25,7 @@ if(NOT DEFINED PROJECT_VERSION OR PROJECT_VERSION STREQUAL "")
 endif()
 
 # Remove the 'v' prefix if it exists and extract the major, minor, and patch versions
-string(REGEX MATCH "^[vV]?([0-9]+\\.[0-9]+\\.[0-9]+)" _ ${PROJECT_VERSION})
+string(REGEX MATCH "^[vV]?([0-9]+\\.[0-9]+\\.[0-9]+)" _ "${PROJECT_VERSION}")
 set(PROJECT_VERSION_BASE ${CMAKE_MATCH_1})
 
 # Use PROJECT_VERSION directly for CPack
