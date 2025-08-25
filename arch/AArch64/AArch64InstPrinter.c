@@ -464,7 +464,8 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 	    MCOperand_isExpr(MCInst_getOperand(MI, (1)))) {
 		printUInt64Bang(O, MCInst_getOpVal(MI, 1));
 		if (detail_is_set(MI) && useAliasDetails) {
-			AArch64_set_detail_op_imm(MI, 1, AARCH64_OP_IMM, MCInst_getOpVal(MI, 1));
+			AArch64_set_detail_op_imm(MI, 1, AARCH64_OP_IMM,
+						  MCInst_getOpVal(MI, 1));
 		}
 	}
 
@@ -472,7 +473,8 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 	    MCOperand_isExpr(MCInst_getOperand(MI, (2)))) {
 		printUInt64Bang(O, MCInst_getOpVal(MI, 2));
 		if (detail_is_set(MI) && useAliasDetails) {
-			AArch64_set_detail_op_imm(MI, 2, AARCH64_OP_IMM, MCInst_getOpVal(MI, 2));
+			AArch64_set_detail_op_imm(MI, 2, AARCH64_OP_IMM,
+						  MCInst_getOpVal(MI, 2));
 		}
 	}
 
@@ -640,10 +642,10 @@ bool printRangePrefetchAlias(MCInst *MI, SStream *O, const char *Annot)
 	if (RPRFM) {
 		SStream_concat0(O, RPRFM->Name);
 	} else {
-    printUInt32Bang(O, RPRFOp);
-    SStream_concat(O, ", ");
+		printUInt32Bang(O, RPRFOp);
+		SStream_concat(O, ", ");
 	}
-  SStream_concat0(O, getRegisterName(Rm, AArch64_NoRegAltName));
+	SStream_concat0(O, getRegisterName(Rm, AArch64_NoRegAltName));
 	SStream_concat0(O, ", [");
 	printOperand(MI, 1, O); // "Rn".
 	SStream_concat0(O, "]");
@@ -1058,7 +1060,8 @@ void printPostIncOperand(MCInst *MI, unsigned OpNo, unsigned Imm, SStream *O)
 		} else
 			printRegName(O, Reg);
 	} else
-		CS_ASSERT_RET(0 && "unknown operand kind in printPostIncOperand64");
+		CS_ASSERT_RET(0 &&
+			      "unknown operand kind in printPostIncOperand64");
 }
 
 void printVRegOperand(MCInst *MI, unsigned OpNo, SStream *O)
@@ -1105,7 +1108,8 @@ void printAddSubImm(MCInst *MI, unsigned OpNum, SStream *O)
 					SStream *O) \
 	{ \
 		AArch64_add_cs_detail_1( \
-			MI, CONCAT(AArch64_OP_GROUP_LogicalImm, T), OpNum, sizeof(T)); \
+			MI, CONCAT(AArch64_OP_GROUP_LogicalImm, T), OpNum, \
+			sizeof(T)); \
 		uint64_t Val = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		SStream_concat(O, "%s", markup("<imm:")); \
@@ -1236,7 +1240,7 @@ void printMemExtend(MCInst *MI, unsigned OpNum, SStream *O, char SrcRegKind,
 			SStream_concat1(O, '\0'); \
 		} else \
 			CS_ASSERT_RET((CHAR(Suffix) == '0') && \
-			       "Unsupported suffix size"); \
+				      "Unsupported suffix size"); \
 		bool DoShift = ExtWidth != 8; \
 		if (SignExtend || DoShift || CHAR(SrcRegKind) == 'w') { \
 			SStream_concat0(O, ", "); \
@@ -1286,8 +1290,9 @@ DEFINE_printRegWithShiftExtend(false, 128, x, 0);
 		unsigned Reg = \
 			MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
 		if (Reg < AArch64_PN0 || Reg > AArch64_PN15) \
-			CS_ASSERT_RET(0 && \
-			       "Unsupported predicate-as-counter register"); \
+			CS_ASSERT_RET( \
+				0 && \
+				"Unsupported predicate-as-counter register"); \
 		SStream_concat(O, "%s", "pn"); \
 		printUInt32(O, (Reg - AArch64_PN0)); \
 		switch (EltSize) { \
@@ -1768,7 +1773,7 @@ static unsigned getNextVectorRegister(unsigned Reg, unsigned Stride /* = 1 */)
 			       size), \
 			OpNum, size); \
 		CS_ASSERT_RET((size == 64 || size == 32) && \
-		       "Template parameter must be either 32 or 64"); \
+			      "Template parameter must be either 32 or 64"); \
 		unsigned Reg = \
 			MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
 \
@@ -1790,8 +1795,9 @@ DEFINE_printGPRSeqPairsClassOperand(64);
 	void CONCAT(printMatrixIndex, Scale)(MCInst * MI, unsigned OpNum, \
 					     SStream *O) \
 	{ \
-		AArch64_add_cs_detail_1(MI, CONCAT(AArch64_OP_GROUP_MatrixIndex, Scale), \
-			      OpNum, Scale); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_MatrixIndex, Scale), \
+			OpNum, Scale); \
 		printInt64(O, Scale *MCOperand_getImm( \
 				      MCInst_getOperand(MI, (OpNum)))); \
 	}
@@ -2085,18 +2091,19 @@ void printAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 	printUInt64Bang(O, MCOperand_getImm(Op));
 }
 
-void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O) {
+void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
+{
 	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_AdrAdrpLabel, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 
-  // If the label has already been resolved to an immediate offset (say, when
-  // we're running the disassembler), just print the immediate.
+	// If the label has already been resolved to an immediate offset (say, when
+	// we're running the disassembler), just print the immediate.
 	if (MCOperand_isImm(Op)) {
 		int64_t Offset = MCOperand_getImm(Op);
-    if (MCInst_getOpcode(MI) == AArch64_ADRP) {
-      Offset = Offset * 4096;
-      Address = Address & -4096;
-    }
+		if (MCInst_getOpcode(MI) == AArch64_ADRP) {
+			Offset = Offset * 4096;
+			Address = Address & -4096;
+		}
 		SStream_concat0(O, markup(">"));
 		if (MI->csh->PrintBranchImmAsAddress)
 			printUInt64(O, (Address + Offset));
@@ -2104,8 +2111,8 @@ void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 			printUInt64Bang(O, Offset);
 		}
 		SStream_concat0(O, markup(">"));
-    return;
-  }
+		return;
+	}
 
 	printUInt64Bang(O, MCOperand_getImm(Op));
 }
@@ -2115,7 +2122,8 @@ void printAdrAdrpLabel(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
 /// https://github.com/AsahiLinux/docs/blob/main/docs/hw/cpu/apple-instructions.md
 void printAppleSysBarrierOption(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_AppleSysBarrierOption, OpNo);
+	AArch64_add_cs_detail_0(MI, AArch64_OP_GROUP_AppleSysBarrierOption,
+				OpNo);
 	unsigned Val = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
 	switch (Val) {
 	default:
@@ -2428,7 +2436,8 @@ DEFINE_isSignedType(uint64_t);
 					SStream *O) \
 	{ \
 		AArch64_add_cs_detail_1( \
-			MI, CONCAT(AArch64_OP_GROUP_Imm8OptLsl, T), OpNum, sizeof(T)); \
+			MI, CONCAT(AArch64_OP_GROUP_Imm8OptLsl, T), OpNum, \
+			sizeof(T)); \
 		unsigned UnscaledVal = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum))); \
 		unsigned Shift = \

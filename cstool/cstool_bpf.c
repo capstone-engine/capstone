@@ -4,7 +4,7 @@
 #include <capstone/platform.h>
 #include "cstool.h"
 
-static const char * ext_name[] = {
+static const char *ext_name[] = {
 	[BPF_EXT_LEN] = "#len",
 };
 
@@ -43,8 +43,9 @@ void print_insn_detail_bpf(csh handle, cs_insn *ins)
 			printf("MEM\n");
 			if (op->mem.base != BPF_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-						i, cs_reg_name(handle, op->mem.base));
-			printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i, op->mem.disp);
+				       i, cs_reg_name(handle, op->mem.base));
+			printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i,
+			       op->mem.disp);
 			break;
 		case BPF_OP_MMEM:
 			printf("MMEM = M[0x%x]\n", op->mmem);
@@ -59,20 +60,21 @@ void print_insn_detail_bpf(csh handle, cs_insn *ins)
 	}
 
 	/* print all registers that are involved in this instruction */
-	if (!cs_regs_access(handle, ins,
-			regs_read, &regs_read_count,
-			regs_write, &regs_write_count)) {
+	if (!cs_regs_access(handle, ins, regs_read, &regs_read_count,
+			    regs_write, &regs_write_count)) {
 		if (regs_read_count) {
 			printf("\tRegisters read:");
-			for(i = 0; i < regs_read_count; i++)
-				printf(" %s", cs_reg_name(handle, regs_read[i]));
+			for (i = 0; i < regs_read_count; i++)
+				printf(" %s",
+				       cs_reg_name(handle, regs_read[i]));
 			printf("\n");
 		}
 
 		if (regs_write_count) {
 			printf("\tRegisters modified:");
-			for(i = 0; i < regs_write_count; i++)
-				printf(" %s", cs_reg_name(handle, regs_write[i]));
+			for (i = 0; i < regs_write_count; i++)
+				printf(" %s",
+				       cs_reg_name(handle, regs_write[i]));
 			printf("\n");
 		}
 	}

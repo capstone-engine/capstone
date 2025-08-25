@@ -8,12 +8,12 @@
 #define CS_MCASMINFO_H
 
 typedef enum {
-  SYSTEMZASMDIALECT_AD_ATT = 0,
-  SYSTEMZASMDIALECT_AD_HLASM = 1,
+	SYSTEMZASMDIALECT_AD_ATT = 0,
+	SYSTEMZASMDIALECT_AD_HLASM = 1,
 } MCAsmInfoAssemblerDialect;
 
 typedef struct {
-  MCAsmInfoAssemblerDialect assemblerDialect;
+	MCAsmInfoAssemblerDialect assemblerDialect;
 } MCAsmInfo;
 
 #endif // CS_MCASMINFO_H

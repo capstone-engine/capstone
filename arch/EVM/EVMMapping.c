@@ -39,7 +39,8 @@ void EVM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 #ifndef CAPSTONE_DIET
 	if (evm_insn_find(insns, ARR_SIZE(insns), id) > 0) {
 		if (h->detail_opt) {
-			memcpy(&insn->detail->evm, &insns[id], sizeof(insns[id]));
+			memcpy(&insn->detail->evm, &insns[id],
+			       sizeof(insns[id]));
 		}
 	}
 #endif
@@ -322,9 +323,9 @@ const char *EVM_insn_name(csh handle, unsigned int id)
 static const name_map group_name_maps[] = {
 	// generic groups
 	{ EVM_GRP_INVALID, NULL },
-	{ EVM_GRP_JUMP,	"jump" },
+	{ EVM_GRP_JUMP, "jump" },
 	// special groups
-	{ EVM_GRP_MATH,	"math" },
+	{ EVM_GRP_MATH, "math" },
 	{ EVM_GRP_STACK_WRITE, "stack_write" },
 	{ EVM_GRP_STACK_READ, "stack_read" },
 	{ EVM_GRP_MEM_WRITE, "mem_write" },

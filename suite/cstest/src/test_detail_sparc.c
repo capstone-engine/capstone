@@ -132,7 +132,8 @@ bool test_expected_sparc(csh *handle, const cs_sparc *actual,
 			compare_enum_ret(op->asi, eop->asi, false);
 			break;
 		case SPARC_OP_MEMBAR_TAG:
-			compare_enum_ret(op->membar_tag, eop->membar_tag, false);
+			compare_enum_ret(op->membar_tag, eop->membar_tag,
+					 false);
 			break;
 		}
 	}

@@ -14,9 +14,10 @@ const char *MOS65XX_insn_name(csh handle, unsigned int id);
 
 const char *MOS65XX_group_name(csh handle, unsigned int id);
 
-const char* MOS65XX_reg_name(csh handle, unsigned int reg);
+const char *MOS65XX_reg_name(csh handle, unsigned int reg);
 
 bool MOS65XX_getInstruction(csh ud, const uint8_t *code, size_t code_len,
-                            MCInst *MI, uint16_t *size, uint64_t address, void *inst_info);
+			    MCInst *MI, uint16_t *size, uint64_t address,
+			    void *inst_info);
 
 #endif //CAPSTONE_MOS65XXDISASSEMBLER_H

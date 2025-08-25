@@ -30,16 +30,15 @@
 /// corresponding high-order hex digit specifying the constraint value.
 /// This allows for a maximum of 3 constraints.
 typedef enum {
-	MCOI_TIED_TO = 0,    // Operand tied to another operand.
-	MCOI_EARLY_CLOBBER   // Operand is an early clobber register operand
+	MCOI_TIED_TO = 0, // Operand tied to another operand.
+	MCOI_EARLY_CLOBBER // Operand is an early clobber register operand
 } MCOI_OperandConstraint;
 
 // Define a macro to produce each constraint value.
 #define CONSTRAINT_MCOI_TIED_TO(op) \
-  ((1 << MCOI_TIED_TO) | ((op) << (4 + MCOI_TIED_TO * 4)))
+	((1 << MCOI_TIED_TO) | ((op) << (4 + MCOI_TIED_TO * 4)))
 
-#define CONSTRAINT_MCOI_EARLY_CLOBBER \
-  (1 << MCOI_EARLY_CLOBBER)
+#define CONSTRAINT_MCOI_EARLY_CLOBBER (1 << MCOI_EARLY_CLOBBER)
 
 /// OperandFlags - These are flags set on operands, but should be considered
 /// private, all access should go through the MCOperandInfo accessors.
@@ -74,7 +73,6 @@ enum MCOI_OperandType {
 	MCOI_OPERAND_FIRST_TARGET = 13,
 };
 
-
 /// MCOperandInfo - This holds information about one operand of a machine
 /// instruction, indicating the register class for register operands, etc.
 ///
@@ -96,7 +94,6 @@ typedef struct MCOperandInfo {
 	uint16_t Constraints;
 	/// Currently no other information.
 } MCOperandInfo;
-
 
 //===----------------------------------------------------------------------===//
 // Machine Instruction Flags and Description
@@ -150,8 +147,8 @@ enum {
 /// for each target instruction class, and the MachineInstr class points to
 /// this struct directly to describe itself.
 typedef struct MCInstrDesc {
-	unsigned char  NumOperands;   // Num of args (may be more if variable_ops)
-	const MCOperandInfo *OpInfo;   // 'NumOperands' entries about operands
+	unsigned char NumOperands; // Num of args (may be more if variable_ops)
+	const MCOperandInfo *OpInfo; // 'NumOperands' entries about operands
 } MCInstrDesc;
 
 bool MCOperandInfo_isPredicate(const MCOperandInfo *m);
@@ -163,9 +160,7 @@ bool MCOperandInfo_isTiedToOp(const MCOperandInfo *m);
 int MCOperandInfo_getOperandConstraint(const MCInstrDesc *OpInfo,
 				       unsigned OpNum,
 				       MCOI_OperandConstraint Constraint);
-const MCInstrDesc *MCInstrDesc_get(unsigned opcode,
-                                   const MCInstrDesc *table,
-                                   unsigned tbl_size);
-
+const MCInstrDesc *MCInstrDesc_get(unsigned opcode, const MCInstrDesc *table,
+				   unsigned tbl_size);
 
 #endif

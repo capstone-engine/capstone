@@ -22,7 +22,8 @@ static void printMemOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printMemOperand2(MCInst *MI, unsigned OpNo, SStream *O);
 static void printRegPair(MCInst *MI, unsigned OpNo, SStream *O);
 
-void TMS320C64x_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *mci)
+void TMS320C64x_post_printer(csh ud, cs_insn *insn, SStream *insn_asm,
+			     MCInst *mci)
 {
 	SStream ss;
 	const char *op_str_ptr, *p2;
@@ -35,22 +36,22 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *m
 		tms320c64x = &mci->flat_insn->detail->tms320c64x;
 
 		for (i = 0; i < insn->detail->groups_count; i++) {
-			switch(insn->detail->groups[i]) {
-				case TMS320C64X_GRP_FUNIT_D:
-					unit = TMS320C64X_FUNIT_D;
-					break;
-				case TMS320C64X_GRP_FUNIT_L:
-					unit = TMS320C64X_FUNIT_L;
-					break;
-				case TMS320C64X_GRP_FUNIT_M:
-					unit = TMS320C64X_FUNIT_M;
-					break;
-				case TMS320C64X_GRP_FUNIT_S:
-					unit = TMS320C64X_FUNIT_S;
-					break;
-				case TMS320C64X_GRP_FUNIT_NO:
-					unit = TMS320C64X_FUNIT_NO;
-					break;
+			switch (insn->detail->groups[i]) {
+			case TMS320C64X_GRP_FUNIT_D:
+				unit = TMS320C64X_FUNIT_D;
+				break;
+			case TMS320C64X_GRP_FUNIT_L:
+				unit = TMS320C64X_FUNIT_L;
+				break;
+			case TMS320C64X_GRP_FUNIT_M:
+				unit = TMS320C64X_FUNIT_M;
+				break;
+			case TMS320C64X_GRP_FUNIT_S:
+				unit = TMS320C64X_FUNIT_S;
+				break;
+			case TMS320C64X_GRP_FUNIT_NO:
+				unit = TMS320C64X_FUNIT_NO;
+				break;
 			}
 			if (unit != 0)
 				break;
@@ -59,15 +60,21 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *m
 
 		SStream_Init(&ss);
 		if (tms320c64x->condition.reg != TMS320C64X_REG_INVALID)
-			SStream_concat(&ss, "[%c%s]|", (tms320c64x->condition.zero == 1) ? '!' : '|', cs_reg_name(ud, tms320c64x->condition.reg));
+			SStream_concat(
+				&ss, "[%c%s]|",
+				(tms320c64x->condition.zero == 1) ? '!' : '|',
+				cs_reg_name(ud, tms320c64x->condition.reg));
 
 		// Sorry for all the fixes below. I don't have time to add more helper SStream functions.
 		// Before that they messed around with the private buffer of the stream.
 		// So it is better now. But still not efficient.
 		op_str_ptr = strchr(SStream_rbuf(insn_asm), '\t');
 
-		if ((op_str_ptr != NULL) && (((p2 = strchr(op_str_ptr, '[')) != NULL) || ((p2 = strchr(op_str_ptr, '(')) != NULL))) {
-			while ((p2 > op_str_ptr) && ((*p2 != 'a') && (*p2 != 'b')))
+		if ((op_str_ptr != NULL) &&
+		    (((p2 = strchr(op_str_ptr, '[')) != NULL) ||
+		     ((p2 = strchr(op_str_ptr, '(')) != NULL))) {
+			while ((p2 > op_str_ptr) &&
+			       ((*p2 != 'a') && (*p2 != 'b')))
 				p2--;
 			if (p2 == op_str_ptr) {
 				SStream_Flush(insn_asm, NULL);
@@ -83,19 +90,23 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *m
 		}
 		SStream mnem_post = { 0 };
 		SStream_Init(&mnem_post);
-		switch(tms320c64x->funit.unit) {
-			case TMS320C64X_FUNIT_D:
-				SStream_concat(&mnem_post, ".D%s%u", tmp, tms320c64x->funit.side);
-				break;
-			case TMS320C64X_FUNIT_L:
-				SStream_concat(&mnem_post, ".L%s%u", tmp, tms320c64x->funit.side);
-				break;
-			case TMS320C64X_FUNIT_M:
-				SStream_concat(&mnem_post, ".M%s%u", tmp, tms320c64x->funit.side);
-				break;
-			case TMS320C64X_FUNIT_S:
-				SStream_concat(&mnem_post, ".S%s%u", tmp, tms320c64x->funit.side);
-				break;
+		switch (tms320c64x->funit.unit) {
+		case TMS320C64X_FUNIT_D:
+			SStream_concat(&mnem_post, ".D%s%u", tmp,
+				       tms320c64x->funit.side);
+			break;
+		case TMS320C64X_FUNIT_L:
+			SStream_concat(&mnem_post, ".L%s%u", tmp,
+				       tms320c64x->funit.side);
+			break;
+		case TMS320C64X_FUNIT_M:
+			SStream_concat(&mnem_post, ".M%s%u", tmp,
+				       tms320c64x->funit.side);
+			break;
+		case TMS320C64X_FUNIT_S:
+			SStream_concat(&mnem_post, ".S%s%u", tmp,
+				       tms320c64x->funit.side);
+			break;
 		}
 		if (tms320c64x->funit.crosspath > 0)
 			SStream_concat0(&mnem_post, "X");
@@ -103,7 +114,8 @@ void TMS320C64x_post_printer(csh ud, cs_insn *insn, SStream *insn_asm, MCInst *m
 		if (op_str_ptr != NULL) {
 			// There is an op_str
 			SStream_concat1(&mnem_post, '\t');
-			SStream_replc_str(insn_asm, '\t', SStream_rbuf(&mnem_post));
+			SStream_replc_str(insn_asm, '\t',
+					  SStream_rbuf(&mnem_post));
 		}
 
 		if (tms320c64x->parallel != 0)
@@ -127,25 +139,32 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 	if (MCOperand_isReg(Op)) {
 		reg = MCOperand_getReg(Op);
-		if ((MCInst_getOpcode(MI) == TMS320C64x_MVC_s1_rr) && (OpNo == 1)) {
-			switch(reg) {
-				case TMS320C64X_REG_EFR:
-					SStream_concat0(O, "EFR");
-					break;
-				case TMS320C64X_REG_IFR:
-					SStream_concat0(O, "IFR");
-					break;
-				default:
-					SStream_concat0(O, getRegisterName(reg));
-					break;
+		if ((MCInst_getOpcode(MI) == TMS320C64x_MVC_s1_rr) &&
+		    (OpNo == 1)) {
+			switch (reg) {
+			case TMS320C64X_REG_EFR:
+				SStream_concat0(O, "EFR");
+				break;
+			case TMS320C64X_REG_IFR:
+				SStream_concat0(O, "IFR");
+				break;
+			default:
+				SStream_concat0(O, getRegisterName(reg));
+				break;
 			}
 		} else {
 			SStream_concat0(O, getRegisterName(reg));
 		}
 
 		if (MI->csh->detail_opt) {
-			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].type = TMS320C64X_OP_REG;
-			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].reg = reg;
+			MI->flat_insn->detail->tms320c64x
+				.operands[MI->flat_insn->detail->tms320c64x
+						  .op_count]
+				.type = TMS320C64X_OP_REG;
+			MI->flat_insn->detail->tms320c64x
+				.operands[MI->flat_insn->detail->tms320c64x
+						  .op_count]
+				.reg = reg;
 			MI->flat_insn->detail->tms320c64x.op_count++;
 		}
 	} else if (MCOperand_isImm(Op)) {
@@ -153,19 +172,25 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 		if (Imm >= 0) {
 			if (Imm > HEX_THRESHOLD)
-				SStream_concat(O, "0x%"PRIx64, Imm);
+				SStream_concat(O, "0x%" PRIx64, Imm);
 			else
-				SStream_concat(O, "%"PRIu64, Imm);
+				SStream_concat(O, "%" PRIu64, Imm);
 		} else {
 			if (Imm < -HEX_THRESHOLD)
-				SStream_concat(O, "-0x%"PRIx64, -Imm);
+				SStream_concat(O, "-0x%" PRIx64, -Imm);
 			else
-				SStream_concat(O, "-%"PRIu64, -Imm);
+				SStream_concat(O, "-%" PRIu64, -Imm);
 		}
 
 		if (MI->csh->detail_opt) {
-			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].type = TMS320C64X_OP_IMM;
-			MI->flat_insn->detail->tms320c64x.operands[MI->flat_insn->detail->tms320c64x.op_count].imm = Imm;
+			MI->flat_insn->detail->tms320c64x
+				.operands[MI->flat_insn->detail->tms320c64x
+						  .op_count]
+				.type = TMS320C64X_OP_IMM;
+			MI->flat_insn->detail->tms320c64x
+				.operands[MI->flat_insn->detail->tms320c64x
+						  .op_count]
+				.imm = Imm;
 			MI->flat_insn->detail->tms320c64x.op_count++;
 		}
 	}
@@ -193,114 +218,163 @@ static void printMemOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		nd = ')';
 	}
 
-	switch(mode) {
-		case 0:
-			SStream_concat(O, "*-%s%c%u%c", getRegisterName(base), st, offset, nd);
-			break;
-		case 1:
-			SStream_concat(O, "*+%s%c%u%c", getRegisterName(base), st, offset, nd);
-			break;
-		case 4:
-			SStream_concat(O, "*-%s%c%s%c", getRegisterName(base), st, getRegisterName(offset), nd);
-			break;
-		case 5:
-			SStream_concat(O, "*+%s%c%s%c", getRegisterName(base), st, getRegisterName(offset), nd);
-			break;
-		case 8:
-			SStream_concat(O, "*--%s%c%u%c", getRegisterName(base), st, offset, nd);
-			break;
-		case 9:
-			SStream_concat(O, "*++%s%c%u%c", getRegisterName(base), st, offset, nd);
-			break;
-		case 10:
-			SStream_concat(O, "*%s--%c%u%c", getRegisterName(base), st, offset, nd);
-			break;
-		case 11:
-			SStream_concat(O, "*%s++%c%u%c", getRegisterName(base), st, offset, nd);
-			break;
-		case 12:
-			SStream_concat(O, "*--%s%c%s%c", getRegisterName(base), st, getRegisterName(offset), nd);
-			break;
-		case 13:
-			SStream_concat(O, "*++%s%c%s%c", getRegisterName(base), st, getRegisterName(offset), nd);
-			break;
-		case 14:
-			SStream_concat(O, "*%s--%c%s%c", getRegisterName(base), st, getRegisterName(offset), nd);
-			break;
-		case 15:
-			SStream_concat(O, "*%s++%c%s%c", getRegisterName(base), st, getRegisterName(offset), nd);
-			break;
+	switch (mode) {
+	case 0:
+		SStream_concat(O, "*-%s%c%u%c", getRegisterName(base), st,
+			       offset, nd);
+		break;
+	case 1:
+		SStream_concat(O, "*+%s%c%u%c", getRegisterName(base), st,
+			       offset, nd);
+		break;
+	case 4:
+		SStream_concat(O, "*-%s%c%s%c", getRegisterName(base), st,
+			       getRegisterName(offset), nd);
+		break;
+	case 5:
+		SStream_concat(O, "*+%s%c%s%c", getRegisterName(base), st,
+			       getRegisterName(offset), nd);
+		break;
+	case 8:
+		SStream_concat(O, "*--%s%c%u%c", getRegisterName(base), st,
+			       offset, nd);
+		break;
+	case 9:
+		SStream_concat(O, "*++%s%c%u%c", getRegisterName(base), st,
+			       offset, nd);
+		break;
+	case 10:
+		SStream_concat(O, "*%s--%c%u%c", getRegisterName(base), st,
+			       offset, nd);
+		break;
+	case 11:
+		SStream_concat(O, "*%s++%c%u%c", getRegisterName(base), st,
+			       offset, nd);
+		break;
+	case 12:
+		SStream_concat(O, "*--%s%c%s%c", getRegisterName(base), st,
+			       getRegisterName(offset), nd);
+		break;
+	case 13:
+		SStream_concat(O, "*++%s%c%s%c", getRegisterName(base), st,
+			       getRegisterName(offset), nd);
+		break;
+	case 14:
+		SStream_concat(O, "*%s--%c%s%c", getRegisterName(base), st,
+			       getRegisterName(offset), nd);
+		break;
+	case 15:
+		SStream_concat(O, "*%s++%c%s%c", getRegisterName(base), st,
+			       getRegisterName(offset), nd);
+		break;
 	}
 
 	if (MI->csh->detail_opt) {
 		tms320c64x = &MI->flat_insn->detail->tms320c64x;
 
-		tms320c64x->operands[tms320c64x->op_count].type = TMS320C64X_OP_MEM;
+		tms320c64x->operands[tms320c64x->op_count].type =
+			TMS320C64X_OP_MEM;
 		tms320c64x->operands[tms320c64x->op_count].mem.base = base;
 		tms320c64x->operands[tms320c64x->op_count].mem.disp = offset;
 		tms320c64x->operands[tms320c64x->op_count].mem.unit = unit + 1;
 		tms320c64x->operands[tms320c64x->op_count].mem.scaled = scaled;
-		switch(mode) {
-			case 0:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_NO;
-				break;
-			case 1:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_NO;
-				break;
-			case 4:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_NO;
-				break;
-			case 5:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_NO;
-				break;
-			case 8:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_PRE;
-				break;
-			case 9:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_PRE;
-				break;
-			case 10:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_POST;
-				break;
-			case 11:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_POST;
-				break;
-			case 12:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_PRE;
-				break;
-			case 13:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_PRE;
-				break;
-			case 14:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_BW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_POST;
-				break;
-			case 15:
-				tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_REGISTER;
-				tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-				tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_POST;
-				break;
+		switch (mode) {
+		case 0:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_CONSTANT;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_BW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_NO;
+			break;
+		case 1:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_CONSTANT;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_FW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_NO;
+			break;
+		case 4:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_REGISTER;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_BW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_NO;
+			break;
+		case 5:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_REGISTER;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_FW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_NO;
+			break;
+		case 8:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_CONSTANT;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_BW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_PRE;
+			break;
+		case 9:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_CONSTANT;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_FW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_PRE;
+			break;
+		case 10:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_CONSTANT;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_BW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_POST;
+			break;
+		case 11:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_CONSTANT;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_FW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_POST;
+			break;
+		case 12:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_REGISTER;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_BW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_PRE;
+			break;
+		case 13:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_REGISTER;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_FW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_PRE;
+			break;
+		case 14:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_REGISTER;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_BW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_POST;
+			break;
+		case 15:
+			tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+				TMS320C64X_MEM_DISP_REGISTER;
+			tms320c64x->operands[tms320c64x->op_count]
+				.mem.direction = TMS320C64X_MEM_DIR_FW;
+			tms320c64x->operands[tms320c64x->op_count].mem.modify =
+				TMS320C64X_MEM_MOD_POST;
+			break;
 		}
 		tms320c64x->op_count++;
 	}
@@ -321,13 +395,17 @@ static void printMemOperand2(MCInst *MI, unsigned OpNo, SStream *O)
 	if (MI->csh->detail_opt) {
 		tms320c64x = &MI->flat_insn->detail->tms320c64x;
 
-		tms320c64x->operands[tms320c64x->op_count].type = TMS320C64X_OP_MEM;
+		tms320c64x->operands[tms320c64x->op_count].type =
+			TMS320C64X_OP_MEM;
 		tms320c64x->operands[tms320c64x->op_count].mem.base = basereg;
 		tms320c64x->operands[tms320c64x->op_count].mem.unit = 2;
 		tms320c64x->operands[tms320c64x->op_count].mem.disp = offset;
-		tms320c64x->operands[tms320c64x->op_count].mem.disptype = TMS320C64X_MEM_DISP_CONSTANT;
-		tms320c64x->operands[tms320c64x->op_count].mem.direction = TMS320C64X_MEM_DIR_FW;
-		tms320c64x->operands[tms320c64x->op_count].mem.modify = TMS320C64X_MEM_MOD_NO;
+		tms320c64x->operands[tms320c64x->op_count].mem.disptype =
+			TMS320C64X_MEM_DISP_CONSTANT;
+		tms320c64x->operands[tms320c64x->op_count].mem.direction =
+			TMS320C64X_MEM_DIR_FW;
+		tms320c64x->operands[tms320c64x->op_count].mem.modify =
+			TMS320C64X_MEM_MOD_NO;
 		tms320c64x->op_count++;
 	}
 }
@@ -338,12 +416,14 @@ static void printRegPair(MCInst *MI, unsigned OpNo, SStream *O)
 	unsigned reg = MCOperand_getReg(Op);
 	cs_tms320c64x *tms320c64x;
 
-	SStream_concat(O, "%s:%s", getRegisterName(reg + 1), getRegisterName(reg));
+	SStream_concat(O, "%s:%s", getRegisterName(reg + 1),
+		       getRegisterName(reg));
 
 	if (MI->csh->detail_opt) {
 		tms320c64x = &MI->flat_insn->detail->tms320c64x;
 
-		tms320c64x->operands[tms320c64x->op_count].type = TMS320C64X_OP_REGPAIR;
+		tms320c64x->operands[tms320c64x->op_count].type =
+			TMS320C64X_OP_REGPAIR;
 		tms320c64x->operands[tms320c64x->op_count].reg = reg;
 		tms320c64x->op_count++;
 	}
@@ -354,206 +434,199 @@ static bool printAliasInstruction(MCInst *MI, SStream *O, MCRegisterInfo *MRI)
 	unsigned opcode = MCInst_getOpcode(MI);
 	MCOperand *op;
 
-	switch(opcode) {
-		/* ADD.Dx -i, x, y -> SUB.Dx x, i, y */
-		case TMS320C64x_ADD_d2_rir:
-		/* ADD.L -i, x, y -> SUB.L x, i, y */
-		case TMS320C64x_ADD_l1_irr:
-		case TMS320C64x_ADD_l1_ipp:
-		/* ADD.S -i, x, y -> SUB.S x, i, y */
-		case TMS320C64x_ADD_s1_irr:
-			if ((MCInst_getNumOperands(MI) == 3) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
-				MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
-				(MCOperand_getImm(MCInst_getOperand(MI, 2)) < 0)) {
+	switch (opcode) {
+	/* ADD.Dx -i, x, y -> SUB.Dx x, i, y */
+	case TMS320C64x_ADD_d2_rir:
+	/* ADD.L -i, x, y -> SUB.L x, i, y */
+	case TMS320C64x_ADD_l1_irr:
+	case TMS320C64x_ADD_l1_ipp:
+	/* ADD.S -i, x, y -> SUB.S x, i, y */
+	case TMS320C64x_ADD_s1_irr:
+		if ((MCInst_getNumOperands(MI) == 3) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+		    MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+		    (MCOperand_getImm(MCInst_getOperand(MI, 2)) < 0)) {
+			MCInst_setOpcodePub(MI, TMS320C64X_INS_SUB);
+			op = MCInst_getOperand(MI, 2);
+			MCOperand_setImm(op, -MCOperand_getImm(op));
 
-				MCInst_setOpcodePub(MI, TMS320C64X_INS_SUB);
-				op = MCInst_getOperand(MI, 2);
-				MCOperand_setImm(op, -MCOperand_getImm(op));
+			SStream_concat0(O, "SUB\t");
+			printOperand(MI, 1, O);
+			SStream_concat0(O, ", ");
+			printOperand(MI, 2, O);
+			SStream_concat0(O, ", ");
+			printOperand(MI, 0, O);
 
-				SStream_concat0(O, "SUB\t");
-				printOperand(MI, 1, O);
-				SStream_concat0(O, ", ");
-				printOperand(MI, 2, O);
-				SStream_concat0(O, ", ");
-				printOperand(MI, 0, O);
-
-				return true;
-			}
-			break;
+			return true;
+		}
+		break;
 	}
-	switch(opcode) {
-		/* ADD.D 0, x, y -> MV.D x, y */
-		case TMS320C64x_ADD_d1_rir:
-		/* OR.D x, 0, y -> MV.D x, y */
-		case TMS320C64x_OR_d2_rir:
-		/* ADD.L 0, x, y -> MV.L x, y */
-		case TMS320C64x_ADD_l1_irr:
-		case TMS320C64x_ADD_l1_ipp:
-		/* OR.L 0, x, y -> MV.L x, y */
-		case TMS320C64x_OR_l1_irr:
-		/* ADD.S 0, x, y -> MV.S x, y */
-		case TMS320C64x_ADD_s1_irr:
-		/* OR.S 0, x, y -> MV.S x, y */
-		case TMS320C64x_OR_s1_irr:
-			if ((MCInst_getNumOperands(MI) == 3) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
-				MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
-				(MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0)) {
+	switch (opcode) {
+	/* ADD.D 0, x, y -> MV.D x, y */
+	case TMS320C64x_ADD_d1_rir:
+	/* OR.D x, 0, y -> MV.D x, y */
+	case TMS320C64x_OR_d2_rir:
+	/* ADD.L 0, x, y -> MV.L x, y */
+	case TMS320C64x_ADD_l1_irr:
+	case TMS320C64x_ADD_l1_ipp:
+	/* OR.L 0, x, y -> MV.L x, y */
+	case TMS320C64x_OR_l1_irr:
+	/* ADD.S 0, x, y -> MV.S x, y */
+	case TMS320C64x_ADD_s1_irr:
+	/* OR.S 0, x, y -> MV.S x, y */
+	case TMS320C64x_OR_s1_irr:
+		if ((MCInst_getNumOperands(MI) == 3) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+		    MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+		    (MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0)) {
+			MCInst_setOpcodePub(MI, TMS320C64X_INS_MV);
+			MI->size--;
 
-				MCInst_setOpcodePub(MI, TMS320C64X_INS_MV);
-				MI->size--;
+			SStream_concat0(O, "MV\t");
+			printOperand(MI, 1, O);
+			SStream_concat0(O, ", ");
+			printOperand(MI, 0, O);
 
-				SStream_concat0(O, "MV\t");
-				printOperand(MI, 1, O);
-				SStream_concat0(O, ", ");
-				printOperand(MI, 0, O);
-
-				return true;
-			}
-			break;
+			return true;
+		}
+		break;
 	}
-	switch(opcode) {
-		/* XOR.D -1, x, y -> NOT.D x, y */
-		case TMS320C64x_XOR_d2_rir:
-		/* XOR.L -1, x, y -> NOT.L x, y */
-		case TMS320C64x_XOR_l1_irr:
-		/* XOR.S -1, x, y -> NOT.S x, y */
-		case TMS320C64x_XOR_s1_irr:
-			if ((MCInst_getNumOperands(MI) == 3) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
-				MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
-				(MCOperand_getImm(MCInst_getOperand(MI, 2)) == -1)) {
+	switch (opcode) {
+	/* XOR.D -1, x, y -> NOT.D x, y */
+	case TMS320C64x_XOR_d2_rir:
+	/* XOR.L -1, x, y -> NOT.L x, y */
+	case TMS320C64x_XOR_l1_irr:
+	/* XOR.S -1, x, y -> NOT.S x, y */
+	case TMS320C64x_XOR_s1_irr:
+		if ((MCInst_getNumOperands(MI) == 3) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+		    MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+		    (MCOperand_getImm(MCInst_getOperand(MI, 2)) == -1)) {
+			MCInst_setOpcodePub(MI, TMS320C64X_INS_NOT);
+			MI->size--;
 
-				MCInst_setOpcodePub(MI, TMS320C64X_INS_NOT);
-				MI->size--;
+			SStream_concat0(O, "NOT\t");
+			printOperand(MI, 1, O);
+			SStream_concat0(O, ", ");
+			printOperand(MI, 0, O);
 
-				SStream_concat0(O, "NOT\t");
-				printOperand(MI, 1, O);
-				SStream_concat0(O, ", ");
-				printOperand(MI, 0, O);
-
-				return true;
-			}
-			break;
+			return true;
+		}
+		break;
 	}
-	switch(opcode) {
-		/* MVK.D 0, x -> ZERO.D x */
-		case TMS320C64x_MVK_d1_rr:
-		/* MVK.L 0, x -> ZERO.L x */
-		case TMS320C64x_MVK_l2_ir:
-			if ((MCInst_getNumOperands(MI) == 2) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
-				MCOperand_isImm(MCInst_getOperand(MI, 1)) &&
-				(MCOperand_getImm(MCInst_getOperand(MI, 1)) == 0)) {
+	switch (opcode) {
+	/* MVK.D 0, x -> ZERO.D x */
+	case TMS320C64x_MVK_d1_rr:
+	/* MVK.L 0, x -> ZERO.L x */
+	case TMS320C64x_MVK_l2_ir:
+		if ((MCInst_getNumOperands(MI) == 2) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
+		    MCOperand_isImm(MCInst_getOperand(MI, 1)) &&
+		    (MCOperand_getImm(MCInst_getOperand(MI, 1)) == 0)) {
+			MCInst_setOpcodePub(MI, TMS320C64X_INS_ZERO);
+			MI->size--;
 
-				MCInst_setOpcodePub(MI, TMS320C64X_INS_ZERO);
-				MI->size--;
+			SStream_concat0(O, "ZERO\t");
+			printOperand(MI, 0, O);
 
-				SStream_concat0(O, "ZERO\t");
-				printOperand(MI, 0, O);
-
-				return true;
-			}
-			break;
+			return true;
+		}
+		break;
 	}
-	switch(opcode) {
-		/* SUB.L x, x, y -> ZERO.L y */
-		case TMS320C64x_SUB_l1_rrp_x1:
-		/* SUB.S x, x, y -> ZERO.S y */
-		case TMS320C64x_SUB_s1_rrr:
-			if ((MCInst_getNumOperands(MI) == 3) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 2)) &&
-				(MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 2)))) {
+	switch (opcode) {
+	/* SUB.L x, x, y -> ZERO.L y */
+	case TMS320C64x_SUB_l1_rrp_x1:
+	/* SUB.S x, x, y -> ZERO.S y */
+	case TMS320C64x_SUB_s1_rrr:
+		if ((MCInst_getNumOperands(MI) == 3) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 2)) &&
+		    (MCOperand_getReg(MCInst_getOperand(MI, 1)) ==
+		     MCOperand_getReg(MCInst_getOperand(MI, 2)))) {
+			MCInst_setOpcodePub(MI, TMS320C64X_INS_ZERO);
+			MI->size -= 2;
 
-				MCInst_setOpcodePub(MI, TMS320C64X_INS_ZERO);
-				MI->size -= 2;
+			SStream_concat0(O, "ZERO\t");
+			printOperand(MI, 0, O);
 
-				SStream_concat0(O, "ZERO\t");
-				printOperand(MI, 0, O);
-
-				return true;
-			}
-			break;
+			return true;
+		}
+		break;
 	}
-	switch(opcode) {
-		/* SUB.L 0, x, y -> NEG.L x, y */
-		case TMS320C64x_SUB_l1_irr:
-		case TMS320C64x_SUB_l1_ipp:
-		/* SUB.S 0, x, y -> NEG.S x, y */
-		case TMS320C64x_SUB_s1_irr:
-			if ((MCInst_getNumOperands(MI) == 3) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
-				MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
-				(MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0)) {
+	switch (opcode) {
+	/* SUB.L 0, x, y -> NEG.L x, y */
+	case TMS320C64x_SUB_l1_irr:
+	case TMS320C64x_SUB_l1_ipp:
+	/* SUB.S 0, x, y -> NEG.S x, y */
+	case TMS320C64x_SUB_s1_irr:
+		if ((MCInst_getNumOperands(MI) == 3) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+		    MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+		    (MCOperand_getImm(MCInst_getOperand(MI, 2)) == 0)) {
+			MCInst_setOpcodePub(MI, TMS320C64X_INS_NEG);
+			MI->size--;
 
-				MCInst_setOpcodePub(MI, TMS320C64X_INS_NEG);
-				MI->size--;
+			SStream_concat0(O, "NEG\t");
+			printOperand(MI, 1, O);
+			SStream_concat0(O, ", ");
+			printOperand(MI, 0, O);
 
-				SStream_concat0(O, "NEG\t");
-				printOperand(MI, 1, O);
-				SStream_concat0(O, ", ");
-				printOperand(MI, 0, O);
-
-				return true;
-			}
-			break;
+			return true;
+		}
+		break;
 	}
-	switch(opcode) {
-		/* PACKLH2.L x, x, y -> SWAP2.L x, y */
-		case TMS320C64x_PACKLH2_l1_rrr_x2:
-		/* PACKLH2.S x, x, y -> SWAP2.S x, y */
-		case TMS320C64x_PACKLH2_s1_rrr:
-			if ((MCInst_getNumOperands(MI) == 3) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
-				MCOperand_isReg(MCInst_getOperand(MI, 2)) &&
-				(MCOperand_getReg(MCInst_getOperand(MI, 1)) == MCOperand_getReg(MCInst_getOperand(MI, 2)))) {
+	switch (opcode) {
+	/* PACKLH2.L x, x, y -> SWAP2.L x, y */
+	case TMS320C64x_PACKLH2_l1_rrr_x2:
+	/* PACKLH2.S x, x, y -> SWAP2.S x, y */
+	case TMS320C64x_PACKLH2_s1_rrr:
+		if ((MCInst_getNumOperands(MI) == 3) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 0)) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 1)) &&
+		    MCOperand_isReg(MCInst_getOperand(MI, 2)) &&
+		    (MCOperand_getReg(MCInst_getOperand(MI, 1)) ==
+		     MCOperand_getReg(MCInst_getOperand(MI, 2)))) {
+			MCInst_setOpcodePub(MI, TMS320C64X_INS_SWAP2);
+			MI->size--;
 
-				MCInst_setOpcodePub(MI, TMS320C64X_INS_SWAP2);
-				MI->size--;
+			SStream_concat0(O, "SWAP2\t");
+			printOperand(MI, 1, O);
+			SStream_concat0(O, ", ");
+			printOperand(MI, 0, O);
 
-				SStream_concat0(O, "SWAP2\t");
-				printOperand(MI, 1, O);
-				SStream_concat0(O, ", ");
-				printOperand(MI, 0, O);
-
-				return true;
-			}
-			break;
+			return true;
+		}
+		break;
 	}
-	switch(opcode) {
-		/* NOP 16 -> IDLE */
-		/* NOP 1 -> NOP */
-		case TMS320C64x_NOP_n:
-			if ((MCInst_getNumOperands(MI) == 1) &&
-				MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
-				(MCOperand_getReg(MCInst_getOperand(MI, 0)) == 16)) {
+	switch (opcode) {
+	/* NOP 16 -> IDLE */
+	/* NOP 1 -> NOP */
+	case TMS320C64x_NOP_n:
+		if ((MCInst_getNumOperands(MI) == 1) &&
+		    MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+		    (MCOperand_getReg(MCInst_getOperand(MI, 0)) == 16)) {
+			MCInst_setOpcodePub(MI, TMS320C64X_INS_IDLE);
+			MI->size--;
 
-				MCInst_setOpcodePub(MI, TMS320C64X_INS_IDLE);
-				MI->size--;
+			SStream_concat0(O, "IDLE");
 
-				SStream_concat0(O, "IDLE");
+			return true;
+		}
+		if ((MCInst_getNumOperands(MI) == 1) &&
+		    MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
+		    (MCOperand_getReg(MCInst_getOperand(MI, 0)) == 1)) {
+			MI->size--;
 
-				return true;
-			}
-			if ((MCInst_getNumOperands(MI) == 1) &&
-				MCOperand_isImm(MCInst_getOperand(MI, 0)) &&
-				(MCOperand_getReg(MCInst_getOperand(MI, 0)) == 1)) {
+			SStream_concat0(O, "NOP");
 
-				MI->size--;
-
-				SStream_concat0(O, "NOP");
-
-				return true;
-			}
-			break;
+			return true;
+		}
+		break;
 	}
 
 	return false;

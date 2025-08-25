@@ -338,7 +338,9 @@ const cs_ac_type mapping_get_op_access(MCInst *MI, unsigned OpNum,
 		if (!MI->flat_insn->detail) \
 			return NULL; \
 		int OpIdx = MI->flat_insn->detail->arch.op_count + offset; \
-		if (OpIdx < 0 || OpIdx >= NUM_##ARCH_UPPER##_OPS) { return NULL; } \
+		if (OpIdx < 0 || OpIdx >= NUM_##ARCH_UPPER##_OPS) { \
+			return NULL; \
+		} \
 		return &MI->flat_insn->detail->arch.operands[OpIdx]; \
 	}
 
@@ -361,14 +363,17 @@ DEFINE_get_detail_op(sparc, Sparc, SPARC);
 /// alias operands should be filled.
 /// TODO: Replace this with a proper option.
 /// 			So it can be toggled between disas() calls.
-bool map_use_alias_details(const MCInst *MI) {
+bool map_use_alias_details(const MCInst *MI)
+{
 	assert(MI);
-	return (MI->csh->detail_opt & CS_OPT_ON) && !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
+	return (MI->csh->detail_opt & CS_OPT_ON) &&
+	       !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
 }
 
 /// Sets the setDetailOps flag to @p Val.
 /// If detail == NULLit refuses to set the flag to true.
-void map_set_fill_detail_ops(MCInst *MI, bool Val) {
+void map_set_fill_detail_ops(MCInst *MI, bool Val)
+{
 	CS_ASSERT_RET(MI);
 	if (!detail_is_set(MI)) {
 		MI->fillDetailOps = false;
@@ -379,14 +384,16 @@ void map_set_fill_detail_ops(MCInst *MI, bool Val) {
 }
 
 /// Sets the instruction alias flags and the given alias id.
-void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias) {
+void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias)
+{
 	CS_ASSERT_RET(MI);
 	MI->isAliasInstr = Val;
 	MI->flat_insn->is_alias = Val;
 	MI->flat_insn->alias_id = Alias;
 }
 
-static inline bool char_ends_mnem(const char c, cs_arch arch) {
+static inline bool char_ends_mnem(const char c, cs_arch arch)
+{
 	switch (arch) {
 	default:
 		return (!c || c == ' ' || c == '\t' || c == '.');
@@ -394,13 +401,15 @@ static inline bool char_ends_mnem(const char c, cs_arch arch) {
 		return (!c || c == ' ' || c == '\t');
 	case CS_ARCH_SPARC:
 		return (!c || c == ' ' || c == '\t' || c == ',');
-  }
+	}
 }
 
 /// Sets an alternative id for some instruction.
 /// Or -1 if it fails.
 /// You must add (<ARCH>_INS_ALIAS_BEGIN + 1) to the id to get the real id.
-void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_id_map, int map_size) {
+void map_set_alias_id(MCInst *MI, const SStream *O,
+		      const name_map *alias_mnem_id_map, int map_size)
+{
 	if (!MCInst_isAlias(MI))
 		return;
 
@@ -421,7 +430,8 @@ void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_i
 		alias_mnem[j] = asm_str_buf[i];
 	}
 
-	MI->flat_insn->alias_id = name2id(alias_mnem_id_map, map_size, alias_mnem);
+	MI->flat_insn->alias_id =
+		name2id(alias_mnem_id_map, map_size, alias_mnem);
 }
 
 /// Does a binary search over the given map and searches for @id.
@@ -456,7 +466,8 @@ uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,
 		} else if (id[i] > map[m].str[j]) {
 			l = m + 1;
 		}
-		if ((m == 0 && id[i] < map[m].str[j]) || (l + r) / 2 >= map_len) {
+		if ((m == 0 && id[i] < map[m].str[j]) ||
+		    (l + r) / 2 >= map_len) {
 			// Break before we go out of bounds.
 			break;
 		}
@@ -464,4 +475,3 @@ uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,
 	*found = false;
 	return UINT64_MAX;
 }
-

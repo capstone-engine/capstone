@@ -23,4 +23,3 @@ xcore_reg XCore_map_register(unsigned int r);
 xcore_reg XCore_reg_id(char *name);
 
 #endif
-

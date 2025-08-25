@@ -21,9 +21,9 @@ typedef struct {
 static const cyaml_schema_field_t test_detail_mips_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("type", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailMipsOp, type, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR(
-		"access", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-		TestDetailMipsOp, access, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR("access",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailMipsOp, access, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailMipsOp, reg, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("imm", CYAML_FLAG_OPTIONAL, TestDetailMipsOp, imm),

@@ -24,7 +24,8 @@ typedef struct {
 static const cyaml_schema_field_t test_detail_sparc_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("type", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparcOp, type, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("access", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+	CYAML_FIELD_STRING_PTR("access",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparcOp, access, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparcOp, reg, 0, CYAML_UNLIMITED),
@@ -37,12 +38,11 @@ static const cyaml_schema_field_t test_detail_sparc_op_mapping_schema[] = {
 		TestDetailSparcOp, mem_index, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailSparcOp,
 			mem_disp),
-	CYAML_FIELD_STRING_PTR("asi",
-			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+	CYAML_FIELD_STRING_PTR("asi", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparcOp, asi, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("membar_tag",
-			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			       TestDetailSparcOp, membar_tag, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR(
+		"membar_tag", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetailSparcOp, membar_tag, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_END
 };
 
@@ -62,7 +62,8 @@ typedef struct {
 static const cyaml_schema_field_t test_detail_sparc_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("cc", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparc, cc, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("cc_field", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+	CYAML_FIELD_STRING_PTR("cc_field",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparc, cc_field, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("hint", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSparc, hint, 0, CYAML_UNLIMITED),

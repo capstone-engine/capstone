@@ -21,8 +21,7 @@ bool test_cs_enum_get_val()
 	}
 	// Get second value
 	val = enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map),
-					   "AAAAAAAAAAAAAAAAAAAAAAAAAB",
-					   &found);
+				  "AAAAAAAAAAAAAAAAAAAAAAAAAB", &found);
 	if (!found || val != 0xffffff) {
 		fprintf(stderr,
 			"enum_map_bin_search(cs_enum_map, ARR_SIZE(cs_enum_map), AAAAAAAAAAAAAAAAAAAAAAAAAB) failed is %d.\n",

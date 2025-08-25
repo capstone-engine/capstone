@@ -12,65 +12,262 @@ extern "C" {
 #include "cs_operand.h"
 
 /// Calculate relative address for X86-64, given cs_insn structure
-#define X86_REL_ADDR(insn) (((insn).detail->x86.operands[0].type == X86_OP_IMM) \
-	? (uint64_t)((insn).detail->x86.operands[0].imm) \
-	: (((insn).address + (insn).size) + (uint64_t)(insn).detail->x86.disp))
+#define X86_REL_ADDR(insn) \
+	(((insn).detail->x86.operands[0].type == X86_OP_IMM) ? \
+		 (uint64_t)((insn).detail->x86.operands[0].imm) : \
+		 (((insn).address + (insn).size) + \
+		  (uint64_t)(insn).detail->x86.disp))
 
 /// X86 registers
 typedef enum x86_reg {
 	X86_REG_INVALID = 0,
-	X86_REG_AH, X86_REG_AL, X86_REG_AX, X86_REG_BH, X86_REG_BL,
-	X86_REG_BP, X86_REG_BPL, X86_REG_BX, X86_REG_CH, X86_REG_CL,
-	X86_REG_CS, X86_REG_CX, X86_REG_DH, X86_REG_DI, X86_REG_DIL,
-	X86_REG_DL, X86_REG_DS, X86_REG_DX, X86_REG_EAX, X86_REG_EBP,
-	X86_REG_EBX, X86_REG_ECX, X86_REG_EDI, X86_REG_EDX, X86_REG_EFLAGS,
-	X86_REG_EIP, X86_REG_EIZ, X86_REG_ES, X86_REG_ESI, X86_REG_ESP,
-	X86_REG_FPSW, X86_REG_FS, X86_REG_GS, X86_REG_IP, X86_REG_RAX,
-	X86_REG_RBP, X86_REG_RBX, X86_REG_RCX, X86_REG_RDI, X86_REG_RDX,
-	X86_REG_RIP, X86_REG_RIZ, X86_REG_RSI, X86_REG_RSP, X86_REG_SI,
-	X86_REG_SIL, X86_REG_SP, X86_REG_SPL, X86_REG_SS, X86_REG_CR0,
-	X86_REG_CR1, X86_REG_CR2, X86_REG_CR3, X86_REG_CR4, X86_REG_CR5,
-	X86_REG_CR6, X86_REG_CR7, X86_REG_CR8, X86_REG_CR9, X86_REG_CR10,
-	X86_REG_CR11, X86_REG_CR12, X86_REG_CR13, X86_REG_CR14, X86_REG_CR15,
-	X86_REG_DR0, X86_REG_DR1, X86_REG_DR2, X86_REG_DR3, X86_REG_DR4,
-	X86_REG_DR5, X86_REG_DR6, X86_REG_DR7, X86_REG_DR8, X86_REG_DR9,
-	X86_REG_DR10, X86_REG_DR11, X86_REG_DR12, X86_REG_DR13, X86_REG_DR14,
-	X86_REG_DR15, X86_REG_FP0, X86_REG_FP1, X86_REG_FP2, X86_REG_FP3,
-	X86_REG_FP4, X86_REG_FP5, X86_REG_FP6, X86_REG_FP7,
-	X86_REG_K0, X86_REG_K1, X86_REG_K2, X86_REG_K3, X86_REG_K4,
-	X86_REG_K5, X86_REG_K6, X86_REG_K7, X86_REG_MM0, X86_REG_MM1,
-	X86_REG_MM2, X86_REG_MM3, X86_REG_MM4, X86_REG_MM5, X86_REG_MM6,
-	X86_REG_MM7, X86_REG_R8, X86_REG_R9, X86_REG_R10, X86_REG_R11,
-	X86_REG_R12, X86_REG_R13, X86_REG_R14, X86_REG_R15,
-	X86_REG_ST0, X86_REG_ST1, X86_REG_ST2, X86_REG_ST3,
-	X86_REG_ST4, X86_REG_ST5, X86_REG_ST6, X86_REG_ST7,
-	X86_REG_XMM0, X86_REG_XMM1, X86_REG_XMM2, X86_REG_XMM3, X86_REG_XMM4,
-	X86_REG_XMM5, X86_REG_XMM6, X86_REG_XMM7, X86_REG_XMM8, X86_REG_XMM9,
-	X86_REG_XMM10, X86_REG_XMM11, X86_REG_XMM12, X86_REG_XMM13, X86_REG_XMM14,
-	X86_REG_XMM15, X86_REG_XMM16, X86_REG_XMM17, X86_REG_XMM18, X86_REG_XMM19,
-	X86_REG_XMM20, X86_REG_XMM21, X86_REG_XMM22, X86_REG_XMM23, X86_REG_XMM24,
-	X86_REG_XMM25, X86_REG_XMM26, X86_REG_XMM27, X86_REG_XMM28, X86_REG_XMM29,
-	X86_REG_XMM30, X86_REG_XMM31, X86_REG_YMM0, X86_REG_YMM1, X86_REG_YMM2,
-	X86_REG_YMM3, X86_REG_YMM4, X86_REG_YMM5, X86_REG_YMM6, X86_REG_YMM7,
-	X86_REG_YMM8, X86_REG_YMM9, X86_REG_YMM10, X86_REG_YMM11, X86_REG_YMM12,
-	X86_REG_YMM13, X86_REG_YMM14, X86_REG_YMM15, X86_REG_YMM16, X86_REG_YMM17,
-	X86_REG_YMM18, X86_REG_YMM19, X86_REG_YMM20, X86_REG_YMM21, X86_REG_YMM22,
-	X86_REG_YMM23, X86_REG_YMM24, X86_REG_YMM25, X86_REG_YMM26, X86_REG_YMM27,
-	X86_REG_YMM28, X86_REG_YMM29, X86_REG_YMM30, X86_REG_YMM31, X86_REG_ZMM0,
-	X86_REG_ZMM1, X86_REG_ZMM2, X86_REG_ZMM3, X86_REG_ZMM4, X86_REG_ZMM5,
-	X86_REG_ZMM6, X86_REG_ZMM7, X86_REG_ZMM8, X86_REG_ZMM9, X86_REG_ZMM10,
-	X86_REG_ZMM11, X86_REG_ZMM12, X86_REG_ZMM13, X86_REG_ZMM14, X86_REG_ZMM15,
-	X86_REG_ZMM16, X86_REG_ZMM17, X86_REG_ZMM18, X86_REG_ZMM19, X86_REG_ZMM20,
-	X86_REG_ZMM21, X86_REG_ZMM22, X86_REG_ZMM23, X86_REG_ZMM24, X86_REG_ZMM25,
-	X86_REG_ZMM26, X86_REG_ZMM27, X86_REG_ZMM28, X86_REG_ZMM29, X86_REG_ZMM30,
-	X86_REG_ZMM31, X86_REG_R8B, X86_REG_R9B, X86_REG_R10B, X86_REG_R11B,
-	X86_REG_R12B, X86_REG_R13B, X86_REG_R14B, X86_REG_R15B, X86_REG_R8D,
-	X86_REG_R9D, X86_REG_R10D, X86_REG_R11D, X86_REG_R12D, X86_REG_R13D,
-	X86_REG_R14D, X86_REG_R15D, X86_REG_R8W, X86_REG_R9W, X86_REG_R10W,
-	X86_REG_R11W, X86_REG_R12W, X86_REG_R13W, X86_REG_R14W, X86_REG_R15W,
-	X86_REG_BND0, X86_REG_BND1, X86_REG_BND2, X86_REG_BND3,
+	X86_REG_AH,
+	X86_REG_AL,
+	X86_REG_AX,
+	X86_REG_BH,
+	X86_REG_BL,
+	X86_REG_BP,
+	X86_REG_BPL,
+	X86_REG_BX,
+	X86_REG_CH,
+	X86_REG_CL,
+	X86_REG_CS,
+	X86_REG_CX,
+	X86_REG_DH,
+	X86_REG_DI,
+	X86_REG_DIL,
+	X86_REG_DL,
+	X86_REG_DS,
+	X86_REG_DX,
+	X86_REG_EAX,
+	X86_REG_EBP,
+	X86_REG_EBX,
+	X86_REG_ECX,
+	X86_REG_EDI,
+	X86_REG_EDX,
+	X86_REG_EFLAGS,
+	X86_REG_EIP,
+	X86_REG_EIZ,
+	X86_REG_ES,
+	X86_REG_ESI,
+	X86_REG_ESP,
+	X86_REG_FPSW,
+	X86_REG_FS,
+	X86_REG_GS,
+	X86_REG_IP,
+	X86_REG_RAX,
+	X86_REG_RBP,
+	X86_REG_RBX,
+	X86_REG_RCX,
+	X86_REG_RDI,
+	X86_REG_RDX,
+	X86_REG_RIP,
+	X86_REG_RIZ,
+	X86_REG_RSI,
+	X86_REG_RSP,
+	X86_REG_SI,
+	X86_REG_SIL,
+	X86_REG_SP,
+	X86_REG_SPL,
+	X86_REG_SS,
+	X86_REG_CR0,
+	X86_REG_CR1,
+	X86_REG_CR2,
+	X86_REG_CR3,
+	X86_REG_CR4,
+	X86_REG_CR5,
+	X86_REG_CR6,
+	X86_REG_CR7,
+	X86_REG_CR8,
+	X86_REG_CR9,
+	X86_REG_CR10,
+	X86_REG_CR11,
+	X86_REG_CR12,
+	X86_REG_CR13,
+	X86_REG_CR14,
+	X86_REG_CR15,
+	X86_REG_DR0,
+	X86_REG_DR1,
+	X86_REG_DR2,
+	X86_REG_DR3,
+	X86_REG_DR4,
+	X86_REG_DR5,
+	X86_REG_DR6,
+	X86_REG_DR7,
+	X86_REG_DR8,
+	X86_REG_DR9,
+	X86_REG_DR10,
+	X86_REG_DR11,
+	X86_REG_DR12,
+	X86_REG_DR13,
+	X86_REG_DR14,
+	X86_REG_DR15,
+	X86_REG_FP0,
+	X86_REG_FP1,
+	X86_REG_FP2,
+	X86_REG_FP3,
+	X86_REG_FP4,
+	X86_REG_FP5,
+	X86_REG_FP6,
+	X86_REG_FP7,
+	X86_REG_K0,
+	X86_REG_K1,
+	X86_REG_K2,
+	X86_REG_K3,
+	X86_REG_K4,
+	X86_REG_K5,
+	X86_REG_K6,
+	X86_REG_K7,
+	X86_REG_MM0,
+	X86_REG_MM1,
+	X86_REG_MM2,
+	X86_REG_MM3,
+	X86_REG_MM4,
+	X86_REG_MM5,
+	X86_REG_MM6,
+	X86_REG_MM7,
+	X86_REG_R8,
+	X86_REG_R9,
+	X86_REG_R10,
+	X86_REG_R11,
+	X86_REG_R12,
+	X86_REG_R13,
+	X86_REG_R14,
+	X86_REG_R15,
+	X86_REG_ST0,
+	X86_REG_ST1,
+	X86_REG_ST2,
+	X86_REG_ST3,
+	X86_REG_ST4,
+	X86_REG_ST5,
+	X86_REG_ST6,
+	X86_REG_ST7,
+	X86_REG_XMM0,
+	X86_REG_XMM1,
+	X86_REG_XMM2,
+	X86_REG_XMM3,
+	X86_REG_XMM4,
+	X86_REG_XMM5,
+	X86_REG_XMM6,
+	X86_REG_XMM7,
+	X86_REG_XMM8,
+	X86_REG_XMM9,
+	X86_REG_XMM10,
+	X86_REG_XMM11,
+	X86_REG_XMM12,
+	X86_REG_XMM13,
+	X86_REG_XMM14,
+	X86_REG_XMM15,
+	X86_REG_XMM16,
+	X86_REG_XMM17,
+	X86_REG_XMM18,
+	X86_REG_XMM19,
+	X86_REG_XMM20,
+	X86_REG_XMM21,
+	X86_REG_XMM22,
+	X86_REG_XMM23,
+	X86_REG_XMM24,
+	X86_REG_XMM25,
+	X86_REG_XMM26,
+	X86_REG_XMM27,
+	X86_REG_XMM28,
+	X86_REG_XMM29,
+	X86_REG_XMM30,
+	X86_REG_XMM31,
+	X86_REG_YMM0,
+	X86_REG_YMM1,
+	X86_REG_YMM2,
+	X86_REG_YMM3,
+	X86_REG_YMM4,
+	X86_REG_YMM5,
+	X86_REG_YMM6,
+	X86_REG_YMM7,
+	X86_REG_YMM8,
+	X86_REG_YMM9,
+	X86_REG_YMM10,
+	X86_REG_YMM11,
+	X86_REG_YMM12,
+	X86_REG_YMM13,
+	X86_REG_YMM14,
+	X86_REG_YMM15,
+	X86_REG_YMM16,
+	X86_REG_YMM17,
+	X86_REG_YMM18,
+	X86_REG_YMM19,
+	X86_REG_YMM20,
+	X86_REG_YMM21,
+	X86_REG_YMM22,
+	X86_REG_YMM23,
+	X86_REG_YMM24,
+	X86_REG_YMM25,
+	X86_REG_YMM26,
+	X86_REG_YMM27,
+	X86_REG_YMM28,
+	X86_REG_YMM29,
+	X86_REG_YMM30,
+	X86_REG_YMM31,
+	X86_REG_ZMM0,
+	X86_REG_ZMM1,
+	X86_REG_ZMM2,
+	X86_REG_ZMM3,
+	X86_REG_ZMM4,
+	X86_REG_ZMM5,
+	X86_REG_ZMM6,
+	X86_REG_ZMM7,
+	X86_REG_ZMM8,
+	X86_REG_ZMM9,
+	X86_REG_ZMM10,
+	X86_REG_ZMM11,
+	X86_REG_ZMM12,
+	X86_REG_ZMM13,
+	X86_REG_ZMM14,
+	X86_REG_ZMM15,
+	X86_REG_ZMM16,
+	X86_REG_ZMM17,
+	X86_REG_ZMM18,
+	X86_REG_ZMM19,
+	X86_REG_ZMM20,
+	X86_REG_ZMM21,
+	X86_REG_ZMM22,
+	X86_REG_ZMM23,
+	X86_REG_ZMM24,
+	X86_REG_ZMM25,
+	X86_REG_ZMM26,
+	X86_REG_ZMM27,
+	X86_REG_ZMM28,
+	X86_REG_ZMM29,
+	X86_REG_ZMM30,
+	X86_REG_ZMM31,
+	X86_REG_R8B,
+	X86_REG_R9B,
+	X86_REG_R10B,
+	X86_REG_R11B,
+	X86_REG_R12B,
+	X86_REG_R13B,
+	X86_REG_R14B,
+	X86_REG_R15B,
+	X86_REG_R8D,
+	X86_REG_R9D,
+	X86_REG_R10D,
+	X86_REG_R11D,
+	X86_REG_R12D,
+	X86_REG_R13D,
+	X86_REG_R14D,
+	X86_REG_R15D,
+	X86_REG_R8W,
+	X86_REG_R9W,
+	X86_REG_R10W,
+	X86_REG_R11W,
+	X86_REG_R12W,
+	X86_REG_R13W,
+	X86_REG_R14W,
+	X86_REG_R15W,
+	X86_REG_BND0,
+	X86_REG_BND1,
+	X86_REG_BND2,
+	X86_REG_BND3,
 
-	X86_REG_ENDING		// <-- mark the end of the list of registers
+	X86_REG_ENDING // <-- mark the end of the list of registers
 } x86_reg;
 
 // Sub-flags of EFLAGS
@@ -155,7 +352,6 @@ typedef enum x86_reg {
 #define X86_FPU_FLAGS_TEST_C2 (1ULL << 18)
 #define X86_FPU_FLAGS_TEST_C3 (1ULL << 19)
 
-
 /// Operand type for instruction's operands
 typedef enum x86_op_type {
 	X86_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
@@ -166,7 +362,7 @@ typedef enum x86_op_type {
 
 /// XOP Code Condition type
 typedef enum x86_xop_cc {
-	X86_XOP_CC_INVALID = 0,	///< Uninitialized.
+	X86_XOP_CC_INVALID = 0, ///< Uninitialized.
 	X86_XOP_CC_LT,
 	X86_XOP_CC_LE,
 	X86_XOP_CC_GT,
@@ -179,16 +375,16 @@ typedef enum x86_xop_cc {
 
 /// AVX broadcast type
 typedef enum x86_avx_bcast {
-	X86_AVX_BCAST_INVALID = 0,	///< Uninitialized.
-	X86_AVX_BCAST_2,	///< AVX512 broadcast type {1to2}
-	X86_AVX_BCAST_4,	///< AVX512 broadcast type {1to4}
-	X86_AVX_BCAST_8,	///< AVX512 broadcast type {1to8}
-	X86_AVX_BCAST_16,	///< AVX512 broadcast type {1to16}
+	X86_AVX_BCAST_INVALID = 0, ///< Uninitialized.
+	X86_AVX_BCAST_2, ///< AVX512 broadcast type {1to2}
+	X86_AVX_BCAST_4, ///< AVX512 broadcast type {1to4}
+	X86_AVX_BCAST_8, ///< AVX512 broadcast type {1to8}
+	X86_AVX_BCAST_16, ///< AVX512 broadcast type {1to16}
 } x86_avx_bcast;
 
 /// SSE Code Condition type
 typedef enum x86_sse_cc {
-	X86_SSE_CC_INVALID = 0,	///< Uninitialized.
+	X86_SSE_CC_INVALID = 0, ///< Uninitialized.
 	X86_SSE_CC_EQ,
 	X86_SSE_CC_LT,
 	X86_SSE_CC_LE,
@@ -201,7 +397,7 @@ typedef enum x86_sse_cc {
 
 /// AVX Code Condition type
 typedef enum x86_avx_cc {
-	X86_AVX_CC_INVALID = 0,	///< Uninitialized.
+	X86_AVX_CC_INVALID = 0, ///< Uninitialized.
 	X86_AVX_CC_EQ,
 	X86_AVX_CC_LT,
 	X86_AVX_CC_LE,
@@ -238,49 +434,49 @@ typedef enum x86_avx_cc {
 
 /// AVX static rounding mode type
 typedef enum x86_avx_rm {
-	X86_AVX_RM_INVALID = 0,	///< Uninitialized.
-	X86_AVX_RM_RN,	///< Round to nearest
-	X86_AVX_RM_RD,	///< Round down
-	X86_AVX_RM_RU,	///< Round up
-	X86_AVX_RM_RZ,	///< Round toward zero
+	X86_AVX_RM_INVALID = 0, ///< Uninitialized.
+	X86_AVX_RM_RN, ///< Round to nearest
+	X86_AVX_RM_RD, ///< Round down
+	X86_AVX_RM_RU, ///< Round up
+	X86_AVX_RM_RZ, ///< Round toward zero
 } x86_avx_rm;
 
 /// Instruction prefixes - to be used in cs_x86.prefix[]
 typedef enum x86_prefix {
-	X86_PREFIX_0		=	0x0,
-	X86_PREFIX_LOCK		= 	0xf0,	///< lock (cs_x86.prefix[0]
-	X86_PREFIX_REP		= 	0xf3,	///< rep (cs_x86.prefix[0]
-	X86_PREFIX_REPE		= 	0xf3,	///< repe/repz (cs_x86.prefix[0]
-	X86_PREFIX_REPNE	= 	0xf2,	///< repne/repnz (cs_x86.prefix[0]
+	X86_PREFIX_0 = 0x0,
+	X86_PREFIX_LOCK = 0xf0, ///< lock (cs_x86.prefix[0]
+	X86_PREFIX_REP = 0xf3, ///< rep (cs_x86.prefix[0]
+	X86_PREFIX_REPE = 0xf3, ///< repe/repz (cs_x86.prefix[0]
+	X86_PREFIX_REPNE = 0xf2, ///< repne/repnz (cs_x86.prefix[0]
 
-	X86_PREFIX_CS		= 	0x2e,	///< segment override CS (cs_x86.prefix[1]
-	X86_PREFIX_SS		= 	0x36,	///< segment override SS (cs_x86.prefix[1]
-	X86_PREFIX_DS		= 	0x3e,	///< segment override DS (cs_x86.prefix[1]
-	X86_PREFIX_ES		= 	0x26,	///< segment override ES (cs_x86.prefix[1]
-	X86_PREFIX_FS		= 	0x64,	///< segment override FS (cs_x86.prefix[1]
-	X86_PREFIX_GS		= 	0x65,	///< segment override GS (cs_x86.prefix[1]
+	X86_PREFIX_CS = 0x2e, ///< segment override CS (cs_x86.prefix[1]
+	X86_PREFIX_SS = 0x36, ///< segment override SS (cs_x86.prefix[1]
+	X86_PREFIX_DS = 0x3e, ///< segment override DS (cs_x86.prefix[1]
+	X86_PREFIX_ES = 0x26, ///< segment override ES (cs_x86.prefix[1]
+	X86_PREFIX_FS = 0x64, ///< segment override FS (cs_x86.prefix[1]
+	X86_PREFIX_GS = 0x65, ///< segment override GS (cs_x86.prefix[1]
 
-	X86_PREFIX_OPSIZE	=	0x66,	///< operand-size override (cs_x86.prefix[2]
-	X86_PREFIX_ADDRSIZE	=	0x67,	///< address-size override (cs_x86.prefix[3]
+	X86_PREFIX_OPSIZE = 0x66, ///< operand-size override (cs_x86.prefix[2]
+	X86_PREFIX_ADDRSIZE = 0x67, ///< address-size override (cs_x86.prefix[3]
 } x86_prefix;
 
 /// Instruction's operand referring to memory
 /// This is associated with X86_OP_MEM operand type above
 typedef struct x86_op_mem {
 	x86_reg segment; ///< segment register (or X86_REG_INVALID if irrelevant)
-	x86_reg base;	///< base register (or X86_REG_INVALID if irrelevant)
-	x86_reg index;	///< index register (or X86_REG_INVALID if irrelevant)
-	int scale;	///< scale for index register
-	int64_t disp;	///< displacement value
+	x86_reg base; ///< base register (or X86_REG_INVALID if irrelevant)
+	x86_reg index; ///< index register (or X86_REG_INVALID if irrelevant)
+	int scale; ///< scale for index register
+	int64_t disp; ///< displacement value
 } x86_op_mem;
 
 /// Instruction operand
 typedef struct cs_x86_op {
-	x86_op_type type;	///< operand type
+	x86_op_type type; ///< operand type
 	union {
-		x86_reg reg;	  ///< register value for REG operand
-		int64_t imm;		///< immediate value for IMM operand
-		x86_op_mem mem;		///< base/index/scale/disp value for MEM operand
+		x86_reg reg; ///< register value for REG operand
+		int64_t imm; ///< immediate value for IMM operand
+		x86_op_mem mem; ///< base/index/scale/disp value for MEM operand
 	};
 
 	/// size of this operand (in bytes).
@@ -364,7 +560,6 @@ typedef struct cs_x86 {
 	/// AVX static rounding mode
 	x86_avx_rm avx_rm;
 
-	
 	union {
 		/// EFLAGS updated by this instruction.
 		/// This can be formed from OR combination of X86_EFLAGS_* symbols in x86.h
@@ -378,9 +573,9 @@ typedef struct cs_x86 {
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
 
-	cs_x86_op operands[8];	///< operands for this instruction.
+	cs_x86_op operands[8]; ///< operands for this instruction.
 
-	cs_x86_encoding encoding;  ///< encoding information
+	cs_x86_encoding encoding; ///< encoding information
 } cs_x86;
 
 /// X86 instructions
@@ -1915,27 +2110,27 @@ typedef enum x86_insn {
 } x86_insn;
 
 /// Group of X86 instructions
-typedef enum  x86_insn_group {
+typedef enum x86_insn_group {
 	X86_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
 	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	X86_GRP_JUMP,	///< = CS_GRP_JUMP
+	X86_GRP_JUMP, ///< = CS_GRP_JUMP
 	// all call instructions
-	X86_GRP_CALL,	///< = CS_GRP_CALL
+	X86_GRP_CALL, ///< = CS_GRP_CALL
 	// all return instructions
-	X86_GRP_RET,	///< = CS_GRP_RET
+	X86_GRP_RET, ///< = CS_GRP_RET
 	// all interrupt instructions (int+syscall)
-	X86_GRP_INT,	///< = CS_GRP_INT
+	X86_GRP_INT, ///< = CS_GRP_INT
 	// all interrupt return instructions
-	X86_GRP_IRET,	///< = CS_GRP_IRET
+	X86_GRP_IRET, ///< = CS_GRP_IRET
 	// all privileged instructions
-	X86_GRP_PRIVILEGE,	///< = CS_GRP_PRIVILEGE
+	X86_GRP_PRIVILEGE, ///< = CS_GRP_PRIVILEGE
 	// all relative branching instructions
 	X86_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 
 	// Architecture-specific groups
-	X86_GRP_VM = 128,	///< all virtualization instructions (VT-x + AMD-V)
+	X86_GRP_VM = 128, ///< all virtualization instructions (VT-x + AMD-V)
 	X86_GRP_3DNOW,
 	X86_GRP_AES,
 	X86_GRP_ADX,

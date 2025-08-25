@@ -60,9 +60,9 @@ void MCInst_insert0(MCInst *inst, int index, MCOperand *Op)
 	CS_ASSERT_RET(index < MAX_MC_OPS);
 	int i;
 
-	for(i = inst->size; i > index; i--)
+	for (i = inst->size; i > index; i--)
 		//memcpy(&(inst->Operands[i]), &(inst->Operands[i-1]), sizeof(MCOperand));
-		inst->Operands[i] = inst->Operands[i-1];
+		inst->Operands[i] = inst->Operands[i - 1];
 
 	inst->Operands[index] = *Op;
 	inst->size++;
@@ -239,20 +239,21 @@ bool MCInst_isPredicable(const MCInstrDesc *MIDesc)
 /// Checks if tied operands exist in the instruction and sets
 /// - The writeback flag in detail
 /// - Saves the indices of the tied destination operands.
-void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDescTable, unsigned tbl_size)
+void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDescTable,
+			    unsigned tbl_size)
 {
 	const MCInstrDesc *InstDesc = NULL;
 	const MCOperandInfo *OpInfo = NULL;
 	unsigned short NumOps = 0;
-	InstDesc = MCInstrDesc_get(MCInst_getOpcode(MI), InstDescTable, tbl_size);
+	InstDesc =
+		MCInstrDesc_get(MCInst_getOpcode(MI), InstDescTable, tbl_size);
 	OpInfo = InstDesc->OpInfo;
 	NumOps = InstDesc->NumOperands;
 
 	for (unsigned i = 0; i < NumOps; ++i) {
 		if (MCOperandInfo_isTiedToOp(&OpInfo[i])) {
 			int idx = MCOperandInfo_getOperandConstraint(
-				InstDesc, i,
-				MCOI_TIED_TO);
+				InstDesc, i, MCOI_TIED_TO);
 
 			if (idx == -1)
 				continue;
@@ -303,7 +304,8 @@ uint64_t MCInst_getOpVal(MCInst *MI, unsigned OpNum)
 	return MCOperand_getImm(op);
 }
 
-void MCInst_setIsAlias(MCInst *MI, bool Flag) {
+void MCInst_setIsAlias(MCInst *MI, bool Flag)
+{
 	assert(MI);
 	MI->isAliasInstr = Flag;
 	MI->flat_insn->is_alias = Flag;
@@ -313,11 +315,13 @@ void MCInst_setIsAlias(MCInst *MI, bool Flag) {
 /// the main MCInst. This is used if TryDecode was run on a temporary MCInst.
 /// @param MI The main MCInst
 /// @param TmpMI The temporary MCInst.
-void MCInst_updateWithTmpMI(MCInst *MI, MCInst *TmpMI) {
+void MCInst_updateWithTmpMI(MCInst *MI, MCInst *TmpMI)
+{
 	MI->size = TmpMI->size;
 	MI->Opcode = TmpMI->Opcode;
 	assert(MI->size < MAX_MC_OPS);
-	memcpy(MI->Operands, TmpMI->Operands, sizeof(MI->Operands[0]) * MI->size);
+	memcpy(MI->Operands, TmpMI->Operands,
+	       sizeof(MI->Operands[0]) * MI->size);
 }
 
 /// @brief Sets the softfail/illegal flag in the cs_insn.
@@ -325,7 +329,8 @@ void MCInst_updateWithTmpMI(MCInst *MI, MCInst *TmpMI) {
 /// due to not allowed operands or an illegal context.
 ///
 /// @param MI The MCInst holding the cs_insn currently decoded.
-void MCInst_setSoftFail(MCInst *MI) {
+void MCInst_setSoftFail(MCInst *MI)
+{
 	assert(MI && MI->flat_insn);
 	MI->flat_insn->illegal = true;
 }

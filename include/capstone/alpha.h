@@ -24,8 +24,8 @@ extern "C" {
 //> Operand type for instruction's operands
 typedef enum alpha_op_type {
 	ALPHA_OP_INVALID = CS_OP_INVALID, ///< CS_OP_INVALID (Uninitialized).
-	ALPHA_OP_REG = CS_OP_REG,	    ///< CS_OP_REG (Register operand).
-	ALPHA_OP_IMM = CS_OP_IMM,	    ///< CS_OP_IMM (Immediate operand).
+	ALPHA_OP_REG = CS_OP_REG, ///< CS_OP_REG (Register operand).
+	ALPHA_OP_IMM = CS_OP_IMM, ///< CS_OP_IMM (Immediate operand).
 } alpha_op_type;
 
 // Instruction operand
@@ -45,7 +45,6 @@ typedef struct cs_alpha {
 	uint8_t op_count;
 	cs_alpha_op operands[NUM_ALPHA_OPS]; // operands for this instruction.
 } cs_alpha;
-
 
 //> Alpha registers
 typedef enum alpha_reg {
@@ -282,7 +281,7 @@ typedef enum alpha_insn {
 
 	// clang-format on
 	// generated content <AlphaGenCSInsnEnum.inc:GET_INSTR_ENUM> end
-    ALPHA_INS_ENDING, // <-- mark the end of the list of instructions
+	ALPHA_INS_ENDING, // <-- mark the end of the list of instructions
 } alpha_insn;
 
 //> Group of Alpha instructions

@@ -162,7 +162,9 @@ inline static const char *ARM_TSB_TraceSyncBOptToString(unsigned val)
 {
 	switch (val) {
 	default:
-		CS_ASSERT_RET_VAL("Unknown trace synchronization barrier operation", NULL);
+		CS_ASSERT_RET_VAL(
+			"Unknown trace synchronization barrier operation",
+			NULL);
 	case ARM_TSB_CSYNC:
 		return "csync";
 	}
@@ -272,20 +274,20 @@ typedef enum AddrMode {
 	ARMII_AddrModeT1_1 = 7,
 	ARMII_AddrModeT1_2 = 8,
 	ARMII_AddrModeT1_4 = 9,
-	ARMII_AddrModeT1_s = 10,     // i8 * 4 for pc and sp relative data
+	ARMII_AddrModeT1_s = 10, // i8 * 4 for pc and sp relative data
 	ARMII_AddrModeT2_i12 = 11,
-	ARMII_AddrModeT2_i8 = 12,    // +/- i8
+	ARMII_AddrModeT2_i8 = 12, // +/- i8
 	ARMII_AddrModeT2_i8pos = 13, // + i8
 	ARMII_AddrModeT2_i8neg = 14, // - i8
 	ARMII_AddrModeT2_so = 15,
-	ARMII_AddrModeT2_pc = 16,    // +/- i12 for pc relative data
-	ARMII_AddrModeT2_i8s4 = 17,  // i8 * 4
+	ARMII_AddrModeT2_pc = 16, // +/- i12 for pc relative data
+	ARMII_AddrModeT2_i8s4 = 17, // i8 * 4
 	ARMII_AddrMode_i12 = 18,
-	ARMII_AddrMode5FP16 = 19,    // i8 * 2
+	ARMII_AddrMode5FP16 = 19, // i8 * 2
 	ARMII_AddrModeT2_ldrex = 20, // i8 * 4, with unscaled offset in MCInst
-	ARMII_AddrModeT2_i7s4 = 21,  // i7 * 4
-	ARMII_AddrModeT2_i7s2 = 22,  // i7 * 2
-	ARMII_AddrModeT2_i7 = 23,    // i7 * 1
+	ARMII_AddrModeT2_i7s4 = 21, // i7 * 4
+	ARMII_AddrModeT2_i7s2 = 22, // i7 * 2
+	ARMII_AddrModeT2_i7 = 23, // i7 * 1
 } ARMII_AddrMode;
 
 inline static const char *ARMII_AddrModeToString(ARMII_AddrMode addrmode)

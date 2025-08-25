@@ -688,8 +688,8 @@ static bpf_insn op2insn_jmp(unsigned opcode)
 
 #ifndef CAPSTONE_DIET
 
-static void update_regs_access(MCInst *MI, cs_detail *detail,
-			       bpf_insn insn_id, unsigned int opcode)
+static void update_regs_access(MCInst *MI, cs_detail *detail, bpf_insn insn_id,
+			       unsigned int opcode)
 {
 	if (insn_id == BPF_INS_INVALID)
 		return;

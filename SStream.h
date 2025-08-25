@@ -26,18 +26,18 @@ typedef struct SStream {
 } SStream;
 
 #define SSTREAM_OVERFLOW_CHECK(OS, len) \
-do { \
-	if (OS->index + len + 1 > SSTREAM_BUF_LEN) { \
-		fprintf(stderr, "Buffer overflow caught!\n"); \
-		return; \
-	} \
-} while(0)
+	do { \
+		if (OS->index + len + 1 > SSTREAM_BUF_LEN) { \
+			fprintf(stderr, "Buffer overflow caught!\n"); \
+			return; \
+		} \
+	} while (0)
 
 #define SSTREAM_RETURN_IF_CLOSED(OS) \
-do { \
-	if (OS->is_closed) \
-		return; \
-} while(0)
+	do { \
+		if (OS->is_closed) \
+			return; \
+	} while (0)
 
 void SStream_Init(SStream *ss);
 void SStream_opt_unum(SStream *ss, bool print_unsigned_numbers);
@@ -48,7 +48,9 @@ void SStream_replc_str(SStream *ss, char chr, const char *rstr);
 
 const char *SStream_rbuf(const SStream *ss);
 
-void SStream_extract_mnem_opstr(const SStream *ss, char *mnem_buf, size_t mnem_buf_size, char *op_str_buf, size_t op_str_buf_size);
+void SStream_extract_mnem_opstr(const SStream *ss, char *mnem_buf,
+				size_t mnem_buf_size, char *op_str_buf,
+				size_t op_str_buf_size);
 
 void SStream_trimls(SStream *ss);
 

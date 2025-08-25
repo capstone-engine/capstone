@@ -23,4 +23,3 @@ tms320c64x_reg TMS320C64x_map_register(unsigned int r);
 tms320c64x_reg TMS320C64x_reg_id(char *name);
 
 #endif
-

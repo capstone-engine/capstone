@@ -135,9 +135,9 @@ static inline unsigned ARM_AM_rotr32(unsigned Val, unsigned Amt)
 	if (Amt == 32) {
 		return Val;
 	}
-	return (Val >> Amt) |
-	       (Val << ((32 - Amt) &
-			31)); // NOLINT(clang-analyzer-core.BitwiseShift)
+	// NOLINTBEGIN(clang-analyzer-core.BitwiseShift)
+	return (Val >> Amt) | (Val << ((32 - Amt) & 31));
+	// NOLINTEND(clang-analyzer-core.BitwiseShift)
 }
 
 static inline unsigned ARM_AM_rotl32(unsigned Val, unsigned Amt)

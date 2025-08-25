@@ -13,7 +13,7 @@
 #include "../../MathExtras.h"
 #include "../../utils.h"
 
-#define CMPLT_HAS_MODIFY_BIT(CMPLT) (((CMPLT)&1) == 1)
+#define CMPLT_HAS_MODIFY_BIT(CMPLT) (((CMPLT) & 1) == 1)
 
 #define HPPA_EXT_REF(MI) (&MI->hppa_ext)
 
@@ -177,17 +177,18 @@ static int32_t extract_21(unsigned word)
 	val |= get_insn_field(word, 0, 4);
 	val <<= 2;
 	val |= get_insn_field(word, 7, 8);
-	return (uint32_t) SignExtend32(val, 21) << 11;
+	return (uint32_t)SignExtend32(val, 21) << 11;
 }
 
 /* Extract a 12 bit constant from branch instructions.  */
 
 static int32_t extract_12(unsigned word)
 {
-	return (uint32_t) SignExtend32(get_insn_field(word, 19, 28) |
-				    get_insn_field(word, 29, 29) << 10 |
-				    (word & 0x1) << 11,
-			    12)
+	return (uint32_t)SignExtend32(get_insn_field(word, 19, 28) |
+					      get_insn_field(word, 29, 29)
+						      << 10 |
+					      (word & 0x1) << 11,
+				      12)
 	       << 2;
 }
 
@@ -196,22 +197,24 @@ static int32_t extract_12(unsigned word)
 
 static int32_t extract_17(unsigned word)
 {
-	return (uint32_t) SignExtend32(get_insn_field(word, 19, 28) |
-				    get_insn_field(word, 29, 29) << 10 |
-				    get_insn_field(word, 11, 15) << 11 |
-				    (word & 0x1) << 16,
-			    17)
+	return (uint32_t)SignExtend32(
+		       get_insn_field(word, 19, 28) |
+			       get_insn_field(word, 29, 29) << 10 |
+			       get_insn_field(word, 11, 15) << 11 |
+			       (word & 0x1) << 16,
+		       17)
 	       << 2;
 }
 
 static int32_t extract_22(unsigned word)
 {
-	return (uint32_t) SignExtend32(get_insn_field(word, 19, 28) |
-				    get_insn_field(word, 29, 29) << 10 |
-				    get_insn_field(word, 11, 15) << 11 |
-				    get_insn_field(word, 6, 10) << 16 |
-				    (word & 0x1) << 21,
-			    22)
+	return (uint32_t)SignExtend32(
+		       get_insn_field(word, 19, 28) |
+			       get_insn_field(word, 29, 29) << 10 |
+			       get_insn_field(word, 11, 15) << 11 |
+			       get_insn_field(word, 6, 10) << 16 |
+			       (word & 0x1) << 21,
+		       22)
 	       << 2;
 }
 
@@ -2888,7 +2891,7 @@ static bool decode_copr(const cs_struct *ud, MCInst *MI, uint32_t insn)
 			default:
 				return false;
 			}
-		} else  {
+		} else {
 			subop = get_insn_field(insn, 16, 18);
 			switch (subop) {
 			case 0x00:

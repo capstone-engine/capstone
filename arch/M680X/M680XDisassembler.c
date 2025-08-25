@@ -26,8 +26,8 @@
 #define DECL_SPEC __cdecl
 #else
 #define DECL_SPEC
-#endif  // _MSC_VER
-#endif  // DECL_SPEC
+#endif // _MSC_VER
+#endif // DECL_SPEC
 
 /* ======================================================================== */
 /* ============================ GENERAL DEFINES =========================== */
@@ -111,15 +111,15 @@ typedef cs_ac_type e_access;
 
 /* Properties of one instruction in PAGE1 (without prefix) */
 typedef struct inst_page1 {
-	unsigned insn : 9;        // A value of type m680x_insn
+	unsigned insn : 9; // A value of type m680x_insn
 	unsigned handler_id1 : 6; // Type insn_hdlr_id, first instr. handler id
 	unsigned handler_id2 : 6; // Type insn_hdlr_id, second instr. handler id
 } inst_page1;
 
 /* Properties of one instruction in any other PAGE X */
 typedef struct inst_pageX {
-	unsigned opcode : 8;      // The opcode byte
-	unsigned insn : 9;        // A value of type m680x_insn
+	unsigned opcode : 8; // The opcode byte
+	unsigned insn : 9; // A value of type m680x_insn
 	unsigned handler_id1 : 6; // Type insn_hdlr_id, first instr. handler id
 	unsigned handler_id2 : 6; // Type insn_hdlr_id, second instr. handler id
 } inst_pageX;
@@ -127,8 +127,8 @@ typedef struct inst_pageX {
 typedef struct insn_props {
 	unsigned group : 4;
 	unsigned access_mode : 5; // A value of type e_access_mode
-	unsigned reg0 : 5;        // A value of type m680x_reg
-	unsigned reg1 : 5;        // A value of type m680x_reg
+	unsigned reg0 : 5; // A value of type m680x_reg
+	unsigned reg1 : 5; // A value of type m680x_reg
 	bool cc_modified : 1;
 	bool update_reg_access : 1;
 } insn_props;
@@ -154,7 +154,7 @@ typedef struct insn_props {
 static bool read_byte(const m680x_info *info, uint8_t *byte, uint16_t address)
 {
 	if (address < info->offset ||
-		(uint32_t)(address - info->offset) >= info->size)
+	    (uint32_t)(address - info->offset) >= info->size)
 		// out of code buffer range
 		return false;
 
@@ -164,14 +164,14 @@ static bool read_byte(const m680x_info *info, uint8_t *byte, uint16_t address)
 }
 
 static bool read_byte_sign_extended(const m680x_info *info, int16_t *word,
-	uint16_t address)
+				    uint16_t address)
 {
 	if (address < info->offset ||
-		(uint32_t)(address - info->offset) >= info->size)
+	    (uint32_t)(address - info->offset) >= info->size)
 		// out of code buffer range
 		return false;
 
-	*word = (int16_t) info->code[address - info->offset];
+	*word = (int16_t)info->code[address - info->offset];
 
 	if (*word & 0x80)
 		*word |= 0xFF00;
@@ -182,7 +182,7 @@ static bool read_byte_sign_extended(const m680x_info *info, int16_t *word,
 static bool read_word(const m680x_info *info, uint16_t *word, uint16_t address)
 {
 	if (address < info->offset ||
-		(uint32_t)(address + 1 - info->offset) >= info->size)
+	    (uint32_t)(address + 1 - info->offset) >= info->size)
 		// out of code buffer range
 		return false;
 
@@ -193,10 +193,10 @@ static bool read_word(const m680x_info *info, uint16_t *word, uint16_t address)
 }
 
 static bool read_sdword(const m680x_info *info, int32_t *sdword,
-	uint16_t address)
+			uint16_t address)
 {
 	if (address < info->offset ||
-		(uint32_t)(address + 3 - info->offset) >= info->size)
+	    (uint32_t)(address + 3 - info->offset) >= info->size)
 		// out of code buffer range
 		return false;
 
@@ -213,7 +213,7 @@ static bool read_sdword(const m680x_info *info, int32_t *sdword,
 // used which contains the opcode. Using a binary search for the right opcode
 // is much faster (= O(log n) ) in comparison to a linear search ( = O(n) ).
 static int binary_search(const inst_pageX *const inst_pageX_table,
-	size_t table_size, unsigned int opcode)
+			 size_t table_size, unsigned int opcode)
 {
 	// As part of the algorithm last may get negative.
 	// => signed integer has to be used.
@@ -224,18 +224,16 @@ static int binary_search(const inst_pageX *const inst_pageX_table,
 	while (first <= last) {
 		if (inst_pageX_table[middle].opcode < opcode) {
 			first = middle + 1;
-		}
-		else if (inst_pageX_table[middle].opcode == opcode) {
-			return middle;  /* item found */
-		}
-		else
+		} else if (inst_pageX_table[middle].opcode == opcode) {
+			return middle; /* item found */
+		} else
 			last = middle - 1;
 
 		middle = (first + last) / 2;
 	}
 
 	if (first > last)
-		return -1;  /* item not found */
+		return -1; /* item not found */
 
 	return -2;
 }
@@ -254,15 +252,16 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 
 	for (i = 0; i < ARR_SIZE(cpu->pageX_prefix); ++i) {
 		if (cpu->pageX_table_size[i] == 0 ||
-			(cpu->inst_pageX_table[i] == NULL))
+		    (cpu->inst_pageX_table[i] == NULL))
 			break;
 
 		if (cpu->pageX_prefix[i] == insn_prefix) {
 			index = binary_search(cpu->inst_pageX_table[i],
-					cpu->pageX_table_size[i], opcode);
-			insn->id = (index >= 0) ?
-				cpu->inst_pageX_table[i][index].insn :
-				M680X_INS_ILLGL;
+					      cpu->pageX_table_size[i], opcode);
+			insn->id =
+				(index >= 0) ?
+					cpu->inst_pageX_table[i][index].insn :
+					M680X_INS_ILLGL;
 			return;
 		}
 	}
@@ -278,12 +277,12 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 	// Check if opcode byte is present in an overlay table
 	for (i = 0; i < ARR_SIZE(cpu->overlay_table_size); ++i) {
 		if (cpu->overlay_table_size[i] == 0 ||
-			(cpu->inst_overlay_table[i] == NULL))
+		    (cpu->inst_overlay_table[i] == NULL))
 			break;
 
 		if ((index = binary_search(cpu->inst_overlay_table[i],
-						cpu->overlay_table_size[i],
-						opcode)) >= 0) {
+					   cpu->overlay_table_size[i],
+					   opcode)) >= 0) {
 			insn->id = cpu->inst_overlay_table[i][index].insn;
 			return;
 		}
@@ -292,8 +291,8 @@ void M680X_get_insn_id(cs_struct *handle, cs_insn *insn, unsigned int id)
 
 static void add_insn_group(cs_detail *detail, m680x_group_type group)
 {
-	if (detail != NULL &&
-		(group != M680X_GRP_INVALID) && (group != M680X_GRP_ENDING))
+	if (detail != NULL && (group != M680X_GRP_INVALID) &&
+	    (group != M680X_GRP_ENDING))
 		detail->groups[detail->groups_count++] = (uint8_t)group;
 }
 
@@ -318,24 +317,24 @@ static void add_reg_to_rw_list(MCInst *MI, m680x_reg reg, e_access access)
 
 	switch (access) {
 	case MODIFY:
-		if (!exists_reg_list(detail->regs_read,
-				detail->regs_read_count, reg))
+		if (!exists_reg_list(detail->regs_read, detail->regs_read_count,
+				     reg))
 			detail->regs_read[detail->regs_read_count++] =
 				(uint16_t)reg;
 
-	// intentionally fall through
+		// intentionally fall through
 
 	case WRITE:
 		if (!exists_reg_list(detail->regs_write,
-				detail->regs_write_count, reg))
+				     detail->regs_write_count, reg))
 			detail->regs_write[detail->regs_write_count++] =
 				(uint16_t)reg;
 
 		break;
 
 	case READ:
-		if (!exists_reg_list(detail->regs_read,
-				detail->regs_read_count, reg))
+		if (!exists_reg_list(detail->regs_read, detail->regs_read_count,
+				     reg))
 			detail->regs_read[detail->regs_read_count++] =
 				(uint16_t)reg;
 
@@ -348,7 +347,7 @@ static void add_reg_to_rw_list(MCInst *MI, m680x_reg reg, e_access access)
 }
 
 static void update_am_reg_list(MCInst *MI, m680x_info *info, cs_m680x_op *op,
-	e_access access)
+			       e_access access)
 {
 	if (MI->flat_insn->detail == NULL)
 		return;
@@ -362,9 +361,8 @@ static void update_am_reg_list(MCInst *MI, m680x_info *info, cs_m680x_op *op,
 		add_reg_to_rw_list(MI, op->idx.base_reg, READ);
 
 		if (op->idx.base_reg == M680X_REG_X &&
-			info->cpu->reg_byte_size[M680X_REG_H])
+		    info->cpu->reg_byte_size[M680X_REG_H])
 			add_reg_to_rw_list(MI, M680X_REG_H, READ);
-
 
 		if (op->idx.offset_reg != M680X_REG_INVALID)
 			add_reg_to_rw_list(MI, op->idx.offset_reg, READ);
@@ -373,7 +371,7 @@ static void update_am_reg_list(MCInst *MI, m680x_info *info, cs_m680x_op *op,
 			add_reg_to_rw_list(MI, op->idx.base_reg, WRITE);
 
 			if (op->idx.base_reg == M680X_REG_X &&
-				info->cpu->reg_byte_size[M680X_REG_H])
+			    info->cpu->reg_byte_size[M680X_REG_H])
 				add_reg_to_rw_list(MI, M680X_REG_H, WRITE);
 		}
 
@@ -386,20 +384,72 @@ static void update_am_reg_list(MCInst *MI, m680x_info *info, cs_m680x_op *op,
 
 static const e_access g_access_mode_to_access[4][15] = {
 	{
-		UNCHANGED, READ, WRITE, READ,  READ, READ,   WRITE, MODIFY,
-		MODIFY, MODIFY, MODIFY, MODIFY, WRITE, READ, MODIFY,
+		UNCHANGED,
+		READ,
+		WRITE,
+		READ,
+		READ,
+		READ,
+		WRITE,
+		MODIFY,
+		MODIFY,
+		MODIFY,
+		MODIFY,
+		MODIFY,
+		WRITE,
+		READ,
+		MODIFY,
 	},
 	{
-		UNCHANGED, READ, WRITE, WRITE, READ, MODIFY, READ,  READ,
-		WRITE, MODIFY, WRITE, MODIFY, MODIFY, READ, UNCHANGED,
+		UNCHANGED,
+		READ,
+		WRITE,
+		WRITE,
+		READ,
+		MODIFY,
+		READ,
+		READ,
+		WRITE,
+		MODIFY,
+		WRITE,
+		MODIFY,
+		MODIFY,
+		READ,
+		UNCHANGED,
 	},
 	{
-		UNCHANGED, READ, WRITE, WRITE, READ, MODIFY, READ,  READ,
-		WRITE, MODIFY, READ, READ, MODIFY, UNCHANGED, UNCHANGED,
+		UNCHANGED,
+		READ,
+		WRITE,
+		WRITE,
+		READ,
+		MODIFY,
+		READ,
+		READ,
+		WRITE,
+		MODIFY,
+		READ,
+		READ,
+		MODIFY,
+		UNCHANGED,
+		UNCHANGED,
 	},
 	{
-		UNCHANGED, READ, WRITE, WRITE, MODIFY, MODIFY, READ, READ,
-		WRITE, MODIFY, READ, READ, MODIFY, UNCHANGED, UNCHANGED,
+		UNCHANGED,
+		READ,
+		WRITE,
+		WRITE,
+		MODIFY,
+		MODIFY,
+		READ,
+		READ,
+		WRITE,
+		MODIFY,
+		READ,
+		READ,
+		MODIFY,
+		UNCHANGED,
+		UNCHANGED,
 	},
 };
 
@@ -411,7 +461,7 @@ static e_access get_access(int operator_index, e_access_mode access_mode)
 }
 
 static void build_regs_read_write_counts(MCInst *MI, m680x_info *info,
-	e_access_mode access_mode)
+					 e_access_mode access_mode)
 {
 	cs_m680x *m680x = &info->m680x;
 	int i;
@@ -420,21 +470,20 @@ static void build_regs_read_write_counts(MCInst *MI, m680x_info *info,
 		return;
 
 	for (i = 0; i < m680x->op_count; ++i) {
-
 		e_access access = get_access(i, access_mode);
 		update_am_reg_list(MI, info, &m680x->operands[i], access);
 	}
 }
 
 static void add_operators_access(MCInst *MI, m680x_info *info,
-	e_access_mode access_mode)
+				 e_access_mode access_mode)
 {
 	cs_m680x *m680x = &info->m680x;
 	int offset = 0;
 	int i;
 
 	if (MI->flat_insn->detail == NULL || (!m680x->op_count) ||
-		(access_mode == uuuu))
+	    (access_mode == uuuu))
 		return;
 
 	for (i = 0; i < m680x->op_count; ++i) {
@@ -464,28 +513,22 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 		{ M680X_INS_BSR, mmmm, { M680X_REG_S, EOL } },
 		{ M680X_INS_CALL, mmmm, { M680X_REG_S, EOL } },
 		{
-			M680X_INS_CWAI, mrrr, {
-				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
-				M680X_REG_Y, M680X_REG_X, M680X_REG_DP,
-				M680X_REG_D, M680X_REG_CC, EOL
-			},
+			M680X_INS_CWAI,
+			mrrr,
+			{ M680X_REG_S, M680X_REG_PC, M680X_REG_U, M680X_REG_Y,
+			  M680X_REG_X, M680X_REG_DP, M680X_REG_D, M680X_REG_CC,
+			  EOL },
 		},
 		{ M680X_INS_DAA, mrrr, { M680X_REG_A, EOL } },
-		{
-			M680X_INS_DIV, mmrr, {
-				M680X_REG_A, M680X_REG_H, M680X_REG_X, EOL
-			}
-		},
-		{
-			M680X_INS_EDIV, mmrr, {
-				M680X_REG_D, M680X_REG_Y, M680X_REG_X, EOL
-			}
-		},
-		{
-			M680X_INS_EDIVS, mmrr, {
-				M680X_REG_D, M680X_REG_Y, M680X_REG_X, EOL
-			}
-		},
+		{ M680X_INS_DIV,
+		  mmrr,
+		  { M680X_REG_A, M680X_REG_H, M680X_REG_X, EOL } },
+		{ M680X_INS_EDIV,
+		  mmrr,
+		  { M680X_REG_D, M680X_REG_Y, M680X_REG_X, EOL } },
+		{ M680X_INS_EDIVS,
+		  mmrr,
+		  { M680X_REG_D, M680X_REG_Y, M680X_REG_X, EOL } },
 		{ M680X_INS_EMACS, mrrr, { M680X_REG_X, M680X_REG_Y, EOL } },
 		{ M680X_INS_EMAXM, rrrr, { M680X_REG_D, EOL } },
 		{ M680X_INS_EMINM, rrrr, { M680X_REG_D, EOL } },
@@ -499,11 +542,9 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 		{ M680X_INS_LBSR, mmmm, { M680X_REG_S, EOL } },
 		{ M680X_INS_MAXM, rrrr, { M680X_REG_A, EOL } },
 		{ M680X_INS_MINM, rrrr, { M680X_REG_A, EOL } },
-		{
-			M680X_INS_MEM, mmrr, {
-				M680X_REG_X, M680X_REG_Y, M680X_REG_A, EOL
-			}
-		},
+		{ M680X_INS_MEM,
+		  mmrr,
+		  { M680X_REG_X, M680X_REG_Y, M680X_REG_A, EOL } },
 		{ M680X_INS_MUL, mmmm, { M680X_REG_A, M680X_REG_B, EOL } },
 		{ M680X_INS_MULD, mwrr, { M680X_REG_D, M680X_REG_W, EOL } },
 		{ M680X_INS_PSHA, rmmm, { M680X_REG_A, M680X_REG_S, EOL } },
@@ -520,72 +561,53 @@ static void set_changed_regs_read_write_counts(MCInst *MI, m680x_info *info)
 		{ M680X_INS_PULH, wmmm, { M680X_REG_H, M680X_REG_S, EOL } },
 		{ M680X_INS_PULX, wmmm, { M680X_REG_X, M680X_REG_S, EOL } },
 		{ M680X_INS_PULY, wmmm, { M680X_REG_Y, M680X_REG_S, EOL } },
-		{
-			M680X_INS_REV, mmrr, {
-				M680X_REG_A, M680X_REG_X, M680X_REG_Y, EOL
-			}
-		},
-		{
-			M680X_INS_REVW, mmmm, {
-				M680X_REG_A, M680X_REG_X, M680X_REG_Y, EOL
-			}
-		},
+		{ M680X_INS_REV,
+		  mmrr,
+		  { M680X_REG_A, M680X_REG_X, M680X_REG_Y, EOL } },
+		{ M680X_INS_REVW,
+		  mmmm,
+		  { M680X_REG_A, M680X_REG_X, M680X_REG_Y, EOL } },
 		{ M680X_INS_RTC, mwww, { M680X_REG_S, M680X_REG_PC, EOL } },
 		{
-			M680X_INS_RTI, mwww, {
-				M680X_REG_S, M680X_REG_CC, M680X_REG_B,
-				M680X_REG_A, M680X_REG_DP, M680X_REG_X,
-				M680X_REG_Y, M680X_REG_U, M680X_REG_PC,
-				EOL
-			},
+			M680X_INS_RTI,
+			mwww,
+			{ M680X_REG_S, M680X_REG_CC, M680X_REG_B, M680X_REG_A,
+			  M680X_REG_DP, M680X_REG_X, M680X_REG_Y, M680X_REG_U,
+			  M680X_REG_PC, EOL },
 		},
 		{ M680X_INS_RTS, mwww, { M680X_REG_S, M680X_REG_PC, EOL } },
 		{ M680X_INS_SEX, wrrr, { M680X_REG_A, M680X_REG_B, EOL } },
 		{ M680X_INS_SEXW, rwww, { M680X_REG_W, M680X_REG_D, EOL } },
+		{ M680X_INS_SWI,
+		  mmrr,
+		  { M680X_REG_S, M680X_REG_PC, M680X_REG_U, M680X_REG_Y,
+		    M680X_REG_X, M680X_REG_DP, M680X_REG_A, M680X_REG_B,
+		    M680X_REG_CC, EOL } },
 		{
-			M680X_INS_SWI, mmrr, {
-				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
-				M680X_REG_Y, M680X_REG_X, M680X_REG_DP,
-				M680X_REG_A, M680X_REG_B, M680X_REG_CC,
-				EOL
-			}
+			M680X_INS_SWI2,
+			mmrr,
+			{ M680X_REG_S, M680X_REG_PC, M680X_REG_U, M680X_REG_Y,
+			  M680X_REG_X, M680X_REG_DP, M680X_REG_A, M680X_REG_B,
+			  M680X_REG_CC, EOL },
 		},
 		{
-			M680X_INS_SWI2, mmrr, {
-				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
-				M680X_REG_Y, M680X_REG_X, M680X_REG_DP,
-				M680X_REG_A, M680X_REG_B, M680X_REG_CC,
-				EOL
-			},
-		},
-		{
-			M680X_INS_SWI3, mmrr, {
-				M680X_REG_S, M680X_REG_PC, M680X_REG_U,
-				M680X_REG_Y, M680X_REG_X, M680X_REG_DP,
-				M680X_REG_A, M680X_REG_B, M680X_REG_CC,
-				EOL
-			},
+			M680X_INS_SWI3,
+			mmrr,
+			{ M680X_REG_S, M680X_REG_PC, M680X_REG_U, M680X_REG_Y,
+			  M680X_REG_X, M680X_REG_DP, M680X_REG_A, M680X_REG_B,
+			  M680X_REG_CC, EOL },
 		},
 		{ M680X_INS_TBL, wrrr, { M680X_REG_A, M680X_REG_B, EOL } },
-		{
-			M680X_INS_WAI, mrrr, {
-				M680X_REG_S, M680X_REG_PC, M680X_REG_X,
-				M680X_REG_A, M680X_REG_B, M680X_REG_CC,
-				EOL
-			}
-		},
-		{
-			M680X_INS_WAV, rmmm, {
-				M680X_REG_A, M680X_REG_B, M680X_REG_X,
-				M680X_REG_Y, EOL
-			}
-		},
-		{
-			M680X_INS_WAVR, rmmm, {
-				M680X_REG_A, M680X_REG_B, M680X_REG_X,
-				M680X_REG_Y, EOL
-			}
-		},
+		{ M680X_INS_WAI,
+		  mrrr,
+		  { M680X_REG_S, M680X_REG_PC, M680X_REG_X, M680X_REG_A,
+		    M680X_REG_B, M680X_REG_CC, EOL } },
+		{ M680X_INS_WAV,
+		  rmmm,
+		  { M680X_REG_A, M680X_REG_B, M680X_REG_X, M680X_REG_Y, EOL } },
+		{ M680X_INS_WAVR,
+		  rmmm,
+		  { M680X_REG_A, M680X_REG_B, M680X_REG_X, M680X_REG_Y, EOL } },
 	};
 
 	int i, j;
@@ -670,9 +692,9 @@ static int get_indexed09_post_byte_size(const m680x_info *info,
 
 	case 0x9F: // [n]
 		if ((post_byte & 0x60) != 0 ||
-			!read_byte(info, &ir, address + 2))
+		    !read_byte(info, &ir, address + 2))
 			return -1;
-		return  3;
+		return 3;
 	}
 
 	// Any other indexed post byte is valid and
@@ -738,7 +760,7 @@ static bool is_tfr09_reg_valid(const m680x_info *info, uint8_t reg_nibble)
 
 // Check for CPU12 TFR/EXG instruction for valid register
 static bool is_exg_tfr12_post_byte_valid(const m680x_info *info,
-	uint8_t post_byte)
+					 uint8_t post_byte)
 {
 	return !(post_byte & 0x08);
 }
@@ -761,8 +783,8 @@ static int get_loop_post_byte_size(const m680x_info *info, uint16_t address)
 		return -1;
 
 	// According to documentation bit 3 is don't care and not checked here.
-	if ((post_byte >= 0xc0) ||
-		((post_byte & 0x07) == 2) || ((post_byte & 0x07) == 3))
+	if ((post_byte >= 0xc0) || ((post_byte & 0x07) == 2) ||
+	    ((post_byte & 0x07) == 3))
 		return -1;
 
 	if (!read_byte(info, &rr, address + 1))
@@ -794,7 +816,7 @@ static int get_bitmv_post_byte_size(const m680x_info *info, uint16_t address)
 }
 
 static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
-	insn_desc *insn_description)
+				    insn_desc *insn_description)
 {
 	int i;
 	bool retval = true;
@@ -806,7 +828,6 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		bool is_subset = false;
 
 		switch (insn_description->hid[i]) {
-
 		case imm32_hid:
 			if ((retval = read_byte(info, &ir, address + size + 3)))
 				size += 4;
@@ -855,11 +876,11 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		case idx12s_hid:
 			is_subset = true;
 
-		// intentionally fall through
+			// intentionally fall through
 
 		case idx12_hid:
-			sz = get_indexed12_post_byte_size(info,
-					address + size, is_subset);
+			sz = get_indexed12_post_byte_size(info, address + size,
+							  is_subset);
 			if (sz >= 0)
 				size += sz;
 			else
@@ -868,24 +889,24 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 
 		case exti12x_hid:
 		case imm16i12x_hid:
-			sz = get_indexed12_post_byte_size(info,
-					address + size, false);
+			sz = get_indexed12_post_byte_size(info, address + size,
+							  false);
 			if (sz >= 0) {
 				size += sz;
 				if ((retval = read_byte(info, &ir,
-						address + size + 1)))
+							address + size + 1)))
 					size += 2;
 			} else
 				retval = false;
 			break;
 
 		case imm8i12x_hid:
-			sz = get_indexed12_post_byte_size(info,
-					address + size, false);
+			sz = get_indexed12_post_byte_size(info, address + size,
+							  false);
 			if (sz >= 0) {
 				size += sz;
 				if ((retval = read_byte(info, &ir,
-						address + size)))
+							address + size)))
 					size++;
 			} else
 				retval = false;
@@ -894,16 +915,18 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		case tfm_hid:
 			if ((retval = read_byte(info, &ir, address + size))) {
 				size++;
-				retval = is_tfm_reg_valid(info, (ir >> 4) & 0x0F) &&
-					is_tfm_reg_valid(info, ir & 0x0F);
+				retval = is_tfm_reg_valid(info,
+							  (ir >> 4) & 0x0F) &&
+					 is_tfm_reg_valid(info, ir & 0x0F);
 			}
 			break;
 
 		case rr09_hid:
 			if ((retval = read_byte(info, &ir, address + size))) {
 				size++;
-				retval = is_tfr09_reg_valid(info, (ir >> 4) & 0x0F) &&
-					is_tfr09_reg_valid(info, ir & 0x0F);
+				retval = is_tfr09_reg_valid(info,
+							    (ir >> 4) & 0x0F) &&
+					 is_tfr09_reg_valid(info, ir & 0x0F);
 			}
 			break;
 
@@ -948,7 +971,7 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 // Check for a valid M680X instruction AND for enough bytes in the code buffer
 // Return an instruction description in insn_desc.
 static bool decode_insn(const m680x_info *info, uint16_t address,
-	insn_desc *insn_description)
+			insn_desc *insn_description)
 {
 	const inst_pageX *inst_table = NULL;
 	const cpu_tables *cpu = info->cpu;
@@ -967,7 +990,7 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 	// Check if a page prefix byte is present
 	for (i = 0; i < ARR_SIZE(cpu->pageX_table_size); ++i) {
 		if (cpu->pageX_table_size[i] == 0 ||
-			(cpu->inst_pageX_table[i] == NULL))
+		    (cpu->inst_pageX_table[i] == NULL))
 			break;
 
 		if ((cpu->pageX_prefix[i] == ir)) {
@@ -983,7 +1006,7 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 				(insn_description->opcode << 8) | ir;
 
 			if ((index = binary_search(inst_table, table_size,
-				ir)) < 0)
+						   ir)) < 0)
 				return false;
 
 			insn_description->hid[0] =
@@ -1008,14 +1031,14 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 		// Check if opcode byte is present in an overlay table
 		for (i = 0; i < ARR_SIZE(cpu->overlay_table_size); ++i) {
 			if (cpu->overlay_table_size[i] == 0 ||
-				(cpu->inst_overlay_table[i] == NULL))
+			    (cpu->inst_overlay_table[i] == NULL))
 				break;
 
 			inst_table = cpu->inst_overlay_table[i];
 			table_size = cpu->overlay_table_size[i];
 
 			if ((index = binary_search(inst_table, table_size,
-							ir)) >= 0) {
+						   ir)) >= 0) {
 				insn_description->hid[0] =
 					inst_table[index].handler_id1;
 				insn_description->hid[1] =
@@ -1029,8 +1052,8 @@ static bool decode_insn(const m680x_info *info, uint16_t address,
 	insn_description->insn_size = address - base_address;
 
 	return (insn_description->insn != M680X_INS_ILLGL) &&
-		(insn_description->insn != M680X_INS_INVLD) &&
-		is_sufficient_code_size(info, address, insn_description);
+	       (insn_description->insn != M680X_INS_INVLD) &&
+	       is_sufficient_code_size(info, address, insn_description);
 }
 
 static void illegal_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1061,23 +1084,23 @@ static void add_reg_operand(m680x_info *info, m680x_reg reg)
 }
 
 static void set_operand_size(m680x_info *info, cs_m680x_op *op,
-	uint8_t default_size)
+			     uint8_t default_size)
 {
 	cs_m680x *m680x = &info->m680x;
 
 	if (info->insn == M680X_INS_JMP || info->insn == M680X_INS_JSR)
 		op->size = 0;
 	else if (info->insn == M680X_INS_DIVD ||
-		((info->insn == M680X_INS_AIS || info->insn == M680X_INS_AIX) &&
-			op->type != M680X_OP_REGISTER))
+		 ((info->insn == M680X_INS_AIS ||
+		   info->insn == M680X_INS_AIX) &&
+		  op->type != M680X_OP_REGISTER))
 		op->size = 1;
-	else if (info->insn == M680X_INS_DIVQ ||
-		info->insn == M680X_INS_MOVW)
+	else if (info->insn == M680X_INS_DIVQ || info->insn == M680X_INS_MOVW)
 		op->size = 2;
 	else if (info->insn == M680X_INS_EMACS)
 		op->size = 4;
 	else if ((m680x->op_count > 0) &&
-		(m680x->operands[0].type == M680X_OP_REGISTER))
+		 (m680x->operands[0].type == M680X_OP_REGISTER))
 		op->size = m680x->operands[0].size;
 	else
 		op->size = default_size;
@@ -1116,9 +1139,8 @@ static void reg_bits_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		break;
 	}
 
-	if ((info->insn == M680X_INS_PULU ||
-			(info->insn == M680X_INS_PULS)) &&
-		((reg_bits & 0x80) != 0))
+	if ((info->insn == M680X_INS_PULU || (info->insn == M680X_INS_PULS)) &&
+	    ((reg_bits & 0x80) != 0))
 		// PULS xxx,PC or PULU xxx,PC which is like return from
 		// subroutine (RTS)
 		add_insn_group(MI->flat_insn->detail, M680X_GRP_RET);
@@ -1131,11 +1153,23 @@ static void reg_bits_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 static const m680x_reg g_tfr_exg_reg_ids[] = {
 	/* 16-bit registers */
-	M680X_REG_D, M680X_REG_X,  M680X_REG_Y,  M680X_REG_U,
-	M680X_REG_S, M680X_REG_PC, M680X_REG_W,  M680X_REG_V,
+	M680X_REG_D,
+	M680X_REG_X,
+	M680X_REG_Y,
+	M680X_REG_U,
+	M680X_REG_S,
+	M680X_REG_PC,
+	M680X_REG_W,
+	M680X_REG_V,
 	/* 8-bit registers */
-	M680X_REG_A, M680X_REG_B,  M680X_REG_CC, M680X_REG_DP,
-	M680X_REG_0, M680X_REG_0,  M680X_REG_E,  M680X_REG_F,
+	M680X_REG_A,
+	M680X_REG_B,
+	M680X_REG_CC,
+	M680X_REG_DP,
+	M680X_REG_0,
+	M680X_REG_0,
+	M680X_REG_E,
+	M680X_REG_F,
 };
 
 static void reg_reg09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1153,16 +1187,15 @@ static void reg_reg09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	}
 }
 
-
 static void reg_reg12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	static const m680x_reg g_tfr_exg12_reg0_ids[] = {
-		M680X_REG_A, M680X_REG_B,  M680X_REG_CC,  M680X_REG_TMP3,
-		M680X_REG_D, M680X_REG_X, M680X_REG_Y,  M680X_REG_S,
+		M680X_REG_A, M680X_REG_B, M680X_REG_CC, M680X_REG_TMP3,
+		M680X_REG_D, M680X_REG_X, M680X_REG_Y,	M680X_REG_S,
 	};
 	static const m680x_reg g_tfr_exg12_reg1_ids[] = {
-		M680X_REG_A, M680X_REG_B,  M680X_REG_CC,  M680X_REG_TMP2,
-		M680X_REG_D, M680X_REG_X, M680X_REG_Y,  M680X_REG_S,
+		M680X_REG_A, M680X_REG_B, M680X_REG_CC, M680X_REG_TMP2,
+		M680X_REG_D, M680X_REG_X, M680X_REG_Y,	M680X_REG_S,
 	};
 	uint8_t regs = 0;
 
@@ -1198,9 +1231,8 @@ static void relative8_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	add_rel_operand(info, offset, *address + offset);
 	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 
-	if ((info->insn != M680X_INS_BRA) &&
-		(info->insn != M680X_INS_BSR) &&
-		(info->insn != M680X_INS_BRN))
+	if ((info->insn != M680X_INS_BRA) && (info->insn != M680X_INS_BSR) &&
+	    (info->insn != M680X_INS_BRN))
 		add_reg_to_rw_list(MI, M680X_REG_CC, READ);
 }
 
@@ -1213,19 +1245,22 @@ static void relative16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	add_rel_operand(info, (int16_t)offset, *address + offset);
 	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 
-	if ((info->insn != M680X_INS_LBRA) &&
-		(info->insn != M680X_INS_LBSR) &&
-		(info->insn != M680X_INS_LBRN))
+	if ((info->insn != M680X_INS_LBRA) && (info->insn != M680X_INS_LBSR) &&
+	    (info->insn != M680X_INS_LBRN))
 		add_reg_to_rw_list(MI, M680X_REG_CC, READ);
 }
 
 static const m680x_reg g_rr5_to_reg_ids[] = {
-	M680X_REG_X, M680X_REG_Y, M680X_REG_U, M680X_REG_S,
+	M680X_REG_X,
+	M680X_REG_Y,
+	M680X_REG_U,
+	M680X_REG_S,
 };
 
 static void add_indexed_operand(m680x_info *info, m680x_reg base_reg,
-	bool post_inc_dec, uint8_t inc_dec, uint8_t offset_bits,
-	uint16_t offset, bool no_comma)
+				bool post_inc_dec, uint8_t inc_dec,
+				uint8_t offset_bits, uint16_t offset,
+				bool no_comma)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
@@ -1256,7 +1291,7 @@ static void indexedX_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_byte(info, &offset, (*address)++);
 
 	add_indexed_operand(info, M680X_REG_X, false, 0, M680X_OFFSET_BITS_8,
-		(uint16_t)offset, false);
+			    (uint16_t)offset, false);
 }
 
 static void indexedY_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1266,7 +1301,7 @@ static void indexedY_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_byte(info, &offset, (*address)++);
 
 	add_indexed_operand(info, M680X_REG_Y, false, 0, M680X_OFFSET_BITS_8,
-		(uint16_t)offset, false);
+			    (uint16_t)offset, false);
 }
 
 // M6809/M6309 indexed mode handler
@@ -1294,8 +1329,7 @@ static void indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 		op->idx.offset_addr = op->idx.offset + *address;
 		op->idx.offset_bits = M680X_OFFSET_BITS_5;
-	}
-	else {
+	} else {
 		if ((post_byte & 0x10) == 0x10)
 			op->idx.flags |= M680X_IDX_INDIRECT;
 
@@ -1387,24 +1421,24 @@ static void indexed09_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		}
 	}
 
-	if (((info->insn == M680X_INS_LEAU) ||
-			(info->insn == M680X_INS_LEAS) ||
-			(info->insn == M680X_INS_LEAX) ||
-			(info->insn == M680X_INS_LEAY)) &&
-		(m680x->operands[0].reg == M680X_REG_X ||
-			(m680x->operands[0].reg == M680X_REG_Y)))
+	if (((info->insn == M680X_INS_LEAU) || (info->insn == M680X_INS_LEAS) ||
+	     (info->insn == M680X_INS_LEAX) ||
+	     (info->insn == M680X_INS_LEAY)) &&
+	    (m680x->operands[0].reg == M680X_REG_X ||
+	     (m680x->operands[0].reg == M680X_REG_Y)))
 		// Only LEAX and LEAY modify CC register
 		add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 }
 
-
 static const m680x_reg g_idx12_to_reg_ids[4] = {
-	M680X_REG_X, M680X_REG_Y, M680X_REG_S, M680X_REG_PC,
+	M680X_REG_X,
+	M680X_REG_Y,
+	M680X_REG_S,
+	M680X_REG_PC,
 };
 
-static const m680x_reg g_or12_to_reg_ids[3] = {
-	M680X_REG_A, M680X_REG_B, M680X_REG_D
-};
+static const m680x_reg g_or12_to_reg_ids[3] = { M680X_REG_A, M680X_REG_B,
+						M680X_REG_D };
 
 // CPU12 indexed mode handler
 static void indexed12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1431,8 +1465,7 @@ static void indexed12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 		op->idx.offset_addr = op->idx.offset + *address;
 		op->idx.offset_bits = M680X_OFFSET_BITS_5;
-	}
-	else {
+	} else {
 		if ((post_byte & 0xe0) == 0xe0)
 			op->idx.base_reg =
 				g_idx12_to_reg_ids[(post_byte >> 3) & 0x03];
@@ -1495,7 +1528,6 @@ static void indexed12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 				op->idx.flags |= M680X_IDX_POST_INC_DEC;
 
 			break;
-
 		}
 	}
 }
@@ -1567,7 +1599,10 @@ static void immediate_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 static void bit_move_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	static const m680x_reg m680x_reg[] = {
-		M680X_REG_CC, M680X_REG_A, M680X_REG_B, M680X_REG_INVALID,
+		M680X_REG_CC,
+		M680X_REG_A,
+		M680X_REG_B,
+		M680X_REG_INVALID,
 	};
 
 	uint8_t post_byte = 0;
@@ -1597,10 +1632,16 @@ static void bit_move_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 static void tfm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	static const uint8_t inc_dec_r0[] = {
-		1, -1, 1, 0,
+		1,
+		-1,
+		1,
+		0,
 	};
 	static const uint8_t inc_dec_r1[] = {
-		1, -1, 0, 1,
+		1,
+		-1,
+		0,
+		1,
 	};
 	uint8_t regs = 0;
 	uint8_t index = (MI->Opcode & 0xff) - 0x38;
@@ -1608,9 +1649,9 @@ static void tfm_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_byte(info, &regs, *address);
 
 	add_indexed_operand(info, g_tfr_exg_reg_ids[regs >> 4], true,
-		inc_dec_r0[index], M680X_OFFSET_NONE, 0, true);
+			    inc_dec_r0[index], M680X_OFFSET_NONE, 0, true);
 	add_indexed_operand(info, g_tfr_exg_reg_ids[regs & 0x0f], true,
-		inc_dec_r1[index], M680X_OFFSET_NONE, 0, true);
+			    inc_dec_r1[index], M680X_OFFSET_NONE, 0, true);
 
 	add_reg_to_rw_list(MI, M680X_REG_W, READ | WRITE);
 }
@@ -1644,8 +1685,8 @@ static void opidx_dir_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 static void indexedX0_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	add_indexed_operand(info, M680X_REG_X, false, 0, M680X_OFFSET_NONE,
-		0, false);
+	add_indexed_operand(info, M680X_REG_X, false, 0, M680X_OFFSET_NONE, 0,
+			    false);
 }
 
 static void indexedX16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1655,7 +1696,7 @@ static void indexedX16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_word(info, &offset, *address);
 	*address += 2;
 	add_indexed_operand(info, M680X_REG_X, false, 0, M680X_OFFSET_BITS_16,
-		offset, false);
+			    offset, false);
 }
 
 static void imm_rel_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1671,7 +1712,7 @@ static void indexedS_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_byte(info, &offset, (*address)++);
 
 	add_indexed_operand(info, M680X_REG_S, false, 0, M680X_OFFSET_BITS_8,
-		(uint16_t)offset, false);
+			    (uint16_t)offset, false);
 }
 
 static void indexedS16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1682,13 +1723,13 @@ static void indexedS16_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	*address += 2;
 
 	add_indexed_operand(info, M680X_REG_S, false, 0, M680X_OFFSET_BITS_16,
-		offset, false);
+			    offset, false);
 }
 
 static void indexedX0p_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
-	add_indexed_operand(info, M680X_REG_X, true, 1, M680X_OFFSET_NONE,
-		0, true);
+	add_indexed_operand(info, M680X_REG_X, true, 1, M680X_OFFSET_NONE, 0,
+			    true);
 }
 
 static void indexedXp_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1698,7 +1739,7 @@ static void indexedXp_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	read_byte(info, &offset, (*address)++);
 
 	add_indexed_operand(info, M680X_REG_X, true, 1, M680X_OFFSET_BITS_8,
-		(uint16_t)offset, false);
+			    (uint16_t)offset, false);
 }
 
 static void imm_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
@@ -1715,8 +1756,7 @@ static void imm_idx12_x_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		read_word(info, &imm16, *address);
 		op->imm = (int16_t)imm16;
 		op->size = 2;
-	}
-	else {
+	} else {
 		uint8_t imm8 = 0;
 
 		read_byte(info, &imm8, *address);
@@ -1746,10 +1786,10 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	static const m680x_reg index_to_reg_id[] = {
 		M680X_REG_A, M680X_REG_B, M680X_REG_INVALID, M680X_REG_INVALID,
-		M680X_REG_D, M680X_REG_X, M680X_REG_Y, M680X_REG_S,
+		M680X_REG_D, M680X_REG_X, M680X_REG_Y,	     M680X_REG_S,
 	};
 	static const m680x_insn index_to_insn_id[] = {
-		M680X_INS_DBEQ, M680X_INS_DBNE, M680X_INS_TBEQ, M680X_INS_TBNE,
+		M680X_INS_DBEQ, M680X_INS_DBNE, M680X_INS_TBEQ,	 M680X_INS_TBNE,
 		M680X_INS_IBEQ, M680X_INS_IBNE, M680X_INS_ILLGL, M680X_INS_ILLGL
 	};
 	cs_m680x *m680x = &info->m680x;
@@ -1773,7 +1813,7 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 
 	op->type = M680X_OP_RELATIVE;
 
-	op->rel.offset = (post_byte & 0x10) ? (int16_t) (0xff00 | rel) : rel;
+	op->rel.offset = (post_byte & 0x10) ? (int16_t)(0xff00 | rel) : rel;
 
 	op->rel.address = *address + op->rel.offset;
 
@@ -1781,44 +1821,23 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 }
 
 static void (*const g_insn_handler[])(MCInst *, m680x_info *, uint16_t *) = {
-	illegal_hdlr,
-	relative8_hdlr,
-	relative16_hdlr,
+	illegal_hdlr,	  relative8_hdlr,   relative16_hdlr,
 	immediate_hdlr, // 8-bit
 	immediate_hdlr, // 16-bit
 	immediate_hdlr, // 32-bit
-	direct_hdlr,
-	extended_hdlr,
-	indexedX_hdlr,
-	indexedY_hdlr,
-	indexed09_hdlr,
-	inherent_hdlr,
-	reg_reg09_hdlr,
-	reg_bits_hdlr,
-	bit_move_hdlr,
-	tfm_hdlr,
-	opidx_hdlr,
-	opidx_dir_rel_hdlr,
-	indexedX0_hdlr,
-	indexedX16_hdlr,
-	imm_rel_hdlr,
-	indexedS_hdlr,
-	indexedS16_hdlr,
-	indexedXp_hdlr,
-	indexedX0p_hdlr,
-	indexed12_hdlr,
+	direct_hdlr,	  extended_hdlr,    indexedX_hdlr,   indexedY_hdlr,
+	indexed09_hdlr,	  inherent_hdlr,    reg_reg09_hdlr,  reg_bits_hdlr,
+	bit_move_hdlr,	  tfm_hdlr,	    opidx_hdlr,	     opidx_dir_rel_hdlr,
+	indexedX0_hdlr,	  indexedX16_hdlr,  imm_rel_hdlr,    indexedS_hdlr,
+	indexedS16_hdlr,  indexedXp_hdlr,   indexedX0p_hdlr, indexed12_hdlr,
 	indexed12_hdlr, // subset of indexed12
-	reg_reg12_hdlr,
-	loop_hdlr,
-	index_hdlr,
-	imm_idx12_x_hdlr,
-	imm_idx12_x_hdlr,
-	ext_idx12_x_hdlr,
+	reg_reg12_hdlr,	  loop_hdlr,	    index_hdlr,	     imm_idx12_x_hdlr,
+	imm_idx12_x_hdlr, ext_idx12_x_hdlr,
 }; /* handler function pointers */
 
 /* Disasemble one instruction at address and store in str_buff */
 static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
-	uint16_t address)
+				      uint16_t address)
 {
 	cs_m680x *m680x = &info->m680x;
 	cs_detail *detail = MI->flat_insn->detail;
@@ -1827,7 +1846,8 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 	e_access_mode access_mode;
 
 	if (detail != NULL) {
-		memset(detail, 0, offsetof(cs_detail, m680x)+sizeof(cs_m680x));
+		memset(detail, 0,
+		       offsetof(cs_detail, m680x) + sizeof(cs_m680x));
 	}
 
 	memset(&insn_description, 0, sizeof(insn_description));
@@ -1850,7 +1870,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 		if (reg != M680X_REG_INVALID) {
 			if (reg == M680X_REG_HX &&
-				(!info->cpu->reg_byte_size[reg]))
+			    (!info->cpu->reg_byte_size[reg]))
 				reg = M680X_REG_X;
 
 			add_reg_operand(info, reg);
@@ -1861,7 +1881,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 			if (reg != M680X_REG_INVALID) {
 				if (reg == M680X_REG_HX &&
-					(!info->cpu->reg_byte_size[reg]))
+				    (!info->cpu->reg_byte_size[reg]))
 					reg = M680X_REG_X;
 
 				add_reg_operand(info, reg);
@@ -1870,16 +1890,14 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 		}
 
 		// Call addressing mode specific instruction handler
-		(g_insn_handler[insn_description.hid[0]])(MI, info,
-			&address);
-		(g_insn_handler[insn_description.hid[1]])(MI, info,
-			&address);
+		(g_insn_handler[insn_description.hid[0]])(MI, info, &address);
+		(g_insn_handler[insn_description.hid[1]])(MI, info, &address);
 
 		add_insn_group(detail, g_insn_props[info->insn].group);
 
 		if (g_insn_props[info->insn].cc_modified &&
-			(info->cpu->insn_cc_not_modified[0] != info->insn) &&
-			(info->cpu->insn_cc_not_modified[1] != info->insn))
+		    (info->cpu->insn_cc_not_modified[0] != info->insn) &&
+		    (info->cpu->insn_cc_not_modified[1] != info->insn))
 			add_reg_to_rw_list(MI, M680X_REG_CC, MODIFY);
 
 		access_mode = g_insn_props[info->insn].access_mode;
@@ -1887,7 +1905,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 		// Fix for M6805 BSET/BCLR. It has a different operand order
 		// in comparison to the M6811
 		if ((info->cpu->insn_cc_not_modified[0] == info->insn) ||
-			(info->cpu->insn_cc_not_modified[1] == info->insn))
+		    (info->cpu->insn_cc_not_modified[1] == info->insn))
 			access_mode = rmmm;
 
 		build_regs_read_write_counts(MI, info, access_mode);
@@ -1899,8 +1917,7 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 		info->insn_size = (uint8_t)insn_description.insn_size;
 
 		return info->insn_size;
-	}
-	else
+	} else
 		MCInst_setOpcode(MI, insn_description.opcode);
 
 	// Illegal instruction
@@ -1960,178 +1977,130 @@ static const bool m6809_tfr_reg_valid[16] = {
 };
 
 static const cpu_tables g_cpu_tables[] = {
-	{
-		// M680X_CPU_TYPE_INVALID
-		NULL,
-		{ NULL, NULL },
-		{ 0, 0 },
-		{ 0x00, 0x00, 0x00 },
-		{ NULL, NULL, NULL },
-		{ 0, 0, 0 },
-		NULL,
-		NULL,
-		{ M680X_INS_INVLD, M680X_INS_INVLD }
-	},
-	{
-		// M680X_CPU_TYPE_6301
-		&g_m6800_inst_page1_table[0],
-		{ &g_m6801_inst_overlay_table[0], &g_hd6301_inst_overlay_table[0] },
-		{
-			ARR_SIZE(g_m6801_inst_overlay_table),
-			ARR_SIZE(g_hd6301_inst_overlay_table)
-		},
-		{ 0x00, 0x00, 0x00 },
-		{ NULL, NULL, NULL },
-		{ 0, 0, 0 },
-		&g_m6801_reg_byte_size[0],
-		NULL,
-		{ M680X_INS_INVLD, M680X_INS_INVLD }
-	},
-	{
-		// M680X_CPU_TYPE_6309
-		&g_m6809_inst_page1_table[0],
-		{ &g_hd6309_inst_overlay_table[0], NULL },
-		{ ARR_SIZE(g_hd6309_inst_overlay_table), 0 },
-		{ 0x10, 0x11, 0x00 },
-		{ &g_hd6309_inst_page2_table[0], &g_hd6309_inst_page3_table[0], NULL },
-		{
-			ARR_SIZE(g_hd6309_inst_page2_table),
-			ARR_SIZE(g_hd6309_inst_page3_table),
-			0
-		},
-		&g_hd6309_reg_byte_size[0],
-		NULL,
-		{ M680X_INS_INVLD, M680X_INS_INVLD }
-	},
-	{
-		// M680X_CPU_TYPE_6800
-		&g_m6800_inst_page1_table[0],
-		{ NULL, NULL },
-		{ 0, 0 },
-		{ 0x00, 0x00, 0x00 },
-		{ NULL, NULL, NULL },
-		{ 0, 0, 0 },
-		&g_m6800_reg_byte_size[0],
-		NULL,
-		{ M680X_INS_INVLD, M680X_INS_INVLD }
-	},
-	{
-		// M680X_CPU_TYPE_6801
-		&g_m6800_inst_page1_table[0],
-		{ &g_m6801_inst_overlay_table[0], NULL },
-		{ ARR_SIZE(g_m6801_inst_overlay_table), 0 },
-		{ 0x00, 0x00, 0x00 },
-		{ NULL, NULL, NULL },
-		{ 0, 0, 0 },
-		&g_m6801_reg_byte_size[0],
-		NULL,
-		{ M680X_INS_INVLD, M680X_INS_INVLD }
-	},
-	{
-		// M680X_CPU_TYPE_6805
-		&g_m6805_inst_page1_table[0],
-		{ NULL, NULL },
-		{ 0, 0 },
-		{ 0x00, 0x00, 0x00 },
-		{ NULL, NULL, NULL },
-		{ 0, 0, 0 },
-		&g_m6805_reg_byte_size[0],
-		NULL,
-		{ M680X_INS_BCLR, M680X_INS_BSET }
-	},
-	{
-		// M680X_CPU_TYPE_6808
-		&g_m6805_inst_page1_table[0],
-		{ &g_m6808_inst_overlay_table[0], NULL },
-		{ ARR_SIZE(g_m6808_inst_overlay_table), 0 },
-		{ 0x9E, 0x00, 0x00 },
-		{ &g_m6808_inst_page2_table[0], NULL, NULL },
-		{ ARR_SIZE(g_m6808_inst_page2_table), 0, 0 },
-		&g_m6808_reg_byte_size[0],
-		NULL,
-		{ M680X_INS_BCLR, M680X_INS_BSET }
-	},
-	{
-		// M680X_CPU_TYPE_6809
-		&g_m6809_inst_page1_table[0],
-		{ NULL, NULL },
-		{ 0, 0 },
-		{ 0x10, 0x11, 0x00 },
-		{
-			&g_m6809_inst_page2_table[0],
-			&g_m6809_inst_page3_table[0],
-			NULL
-		},
-		{
-			ARR_SIZE(g_m6809_inst_page2_table),
-			ARR_SIZE(g_m6809_inst_page3_table),
-			0
-		},
-		&g_m6809_reg_byte_size[0],
-		&m6809_tfr_reg_valid[0],
-		{ M680X_INS_INVLD, M680X_INS_INVLD }
-	},
-	{
-		// M680X_CPU_TYPE_6811
-		&g_m6800_inst_page1_table[0],
-		{
-			&g_m6801_inst_overlay_table[0],
-			&g_m6811_inst_overlay_table[0]
-		},
-		{
-			ARR_SIZE(g_m6801_inst_overlay_table),
-			ARR_SIZE(g_m6811_inst_overlay_table)
-		},
-		{ 0x18, 0x1A, 0xCD },
-		{
-			&g_m6811_inst_page2_table[0],
-			&g_m6811_inst_page3_table[0],
-			&g_m6811_inst_page4_table[0]
-		},
-		{
-			ARR_SIZE(g_m6811_inst_page2_table),
-			ARR_SIZE(g_m6811_inst_page3_table),
-			ARR_SIZE(g_m6811_inst_page4_table)
-		},
-		&g_m6811_reg_byte_size[0],
-		NULL,
-		{ M680X_INS_INVLD, M680X_INS_INVLD }
-	},
-	{
-		// M680X_CPU_TYPE_CPU12
-		&g_cpu12_inst_page1_table[0],
-		{ NULL, NULL },
-		{ 0, 0 },
-		{ 0x18, 0x00, 0x00 },
-		{ &g_cpu12_inst_page2_table[0], NULL, NULL },
-		{ ARR_SIZE(g_cpu12_inst_page2_table), 0, 0 },
-		&g_cpu12_reg_byte_size[0],
-		NULL,
-		{ M680X_INS_INVLD, M680X_INS_INVLD }
-	},
-	{
-		// M680X_CPU_TYPE_HCS08
-		&g_m6805_inst_page1_table[0],
-		{
-			&g_m6808_inst_overlay_table[0],
-			&g_hcs08_inst_overlay_table[0]
-		},
-		{
-			ARR_SIZE(g_m6808_inst_overlay_table),
-			ARR_SIZE(g_hcs08_inst_overlay_table)
-		},
-		{ 0x9E, 0x00, 0x00 },
-		{ &g_hcs08_inst_page2_table[0], NULL, NULL },
-		{ ARR_SIZE(g_hcs08_inst_page2_table), 0, 0 },
-		&g_m6808_reg_byte_size[0],
-		NULL,
-		{ M680X_INS_BCLR, M680X_INS_BSET }
-	},
+	{ // M680X_CPU_TYPE_INVALID
+	  NULL,
+	  { NULL, NULL },
+	  { 0, 0 },
+	  { 0x00, 0x00, 0x00 },
+	  { NULL, NULL, NULL },
+	  { 0, 0, 0 },
+	  NULL,
+	  NULL,
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
+	{ // M680X_CPU_TYPE_6301
+	  &g_m6800_inst_page1_table[0],
+	  { &g_m6801_inst_overlay_table[0], &g_hd6301_inst_overlay_table[0] },
+	  { ARR_SIZE(g_m6801_inst_overlay_table),
+	    ARR_SIZE(g_hd6301_inst_overlay_table) },
+	  { 0x00, 0x00, 0x00 },
+	  { NULL, NULL, NULL },
+	  { 0, 0, 0 },
+	  &g_m6801_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
+	{ // M680X_CPU_TYPE_6309
+	  &g_m6809_inst_page1_table[0],
+	  { &g_hd6309_inst_overlay_table[0], NULL },
+	  { ARR_SIZE(g_hd6309_inst_overlay_table), 0 },
+	  { 0x10, 0x11, 0x00 },
+	  { &g_hd6309_inst_page2_table[0], &g_hd6309_inst_page3_table[0],
+	    NULL },
+	  { ARR_SIZE(g_hd6309_inst_page2_table),
+	    ARR_SIZE(g_hd6309_inst_page3_table), 0 },
+	  &g_hd6309_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
+	{ // M680X_CPU_TYPE_6800
+	  &g_m6800_inst_page1_table[0],
+	  { NULL, NULL },
+	  { 0, 0 },
+	  { 0x00, 0x00, 0x00 },
+	  { NULL, NULL, NULL },
+	  { 0, 0, 0 },
+	  &g_m6800_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
+	{ // M680X_CPU_TYPE_6801
+	  &g_m6800_inst_page1_table[0],
+	  { &g_m6801_inst_overlay_table[0], NULL },
+	  { ARR_SIZE(g_m6801_inst_overlay_table), 0 },
+	  { 0x00, 0x00, 0x00 },
+	  { NULL, NULL, NULL },
+	  { 0, 0, 0 },
+	  &g_m6801_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
+	{ // M680X_CPU_TYPE_6805
+	  &g_m6805_inst_page1_table[0],
+	  { NULL, NULL },
+	  { 0, 0 },
+	  { 0x00, 0x00, 0x00 },
+	  { NULL, NULL, NULL },
+	  { 0, 0, 0 },
+	  &g_m6805_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_BCLR, M680X_INS_BSET } },
+	{ // M680X_CPU_TYPE_6808
+	  &g_m6805_inst_page1_table[0],
+	  { &g_m6808_inst_overlay_table[0], NULL },
+	  { ARR_SIZE(g_m6808_inst_overlay_table), 0 },
+	  { 0x9E, 0x00, 0x00 },
+	  { &g_m6808_inst_page2_table[0], NULL, NULL },
+	  { ARR_SIZE(g_m6808_inst_page2_table), 0, 0 },
+	  &g_m6808_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_BCLR, M680X_INS_BSET } },
+	{ // M680X_CPU_TYPE_6809
+	  &g_m6809_inst_page1_table[0],
+	  { NULL, NULL },
+	  { 0, 0 },
+	  { 0x10, 0x11, 0x00 },
+	  { &g_m6809_inst_page2_table[0], &g_m6809_inst_page3_table[0], NULL },
+	  { ARR_SIZE(g_m6809_inst_page2_table),
+	    ARR_SIZE(g_m6809_inst_page3_table), 0 },
+	  &g_m6809_reg_byte_size[0],
+	  &m6809_tfr_reg_valid[0],
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
+	{ // M680X_CPU_TYPE_6811
+	  &g_m6800_inst_page1_table[0],
+	  { &g_m6801_inst_overlay_table[0], &g_m6811_inst_overlay_table[0] },
+	  { ARR_SIZE(g_m6801_inst_overlay_table),
+	    ARR_SIZE(g_m6811_inst_overlay_table) },
+	  { 0x18, 0x1A, 0xCD },
+	  { &g_m6811_inst_page2_table[0], &g_m6811_inst_page3_table[0],
+	    &g_m6811_inst_page4_table[0] },
+	  { ARR_SIZE(g_m6811_inst_page2_table),
+	    ARR_SIZE(g_m6811_inst_page3_table),
+	    ARR_SIZE(g_m6811_inst_page4_table) },
+	  &g_m6811_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
+	{ // M680X_CPU_TYPE_CPU12
+	  &g_cpu12_inst_page1_table[0],
+	  { NULL, NULL },
+	  { 0, 0 },
+	  { 0x18, 0x00, 0x00 },
+	  { &g_cpu12_inst_page2_table[0], NULL, NULL },
+	  { ARR_SIZE(g_cpu12_inst_page2_table), 0, 0 },
+	  &g_cpu12_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
+	{ // M680X_CPU_TYPE_HCS08
+	  &g_m6805_inst_page1_table[0],
+	  { &g_m6808_inst_overlay_table[0], &g_hcs08_inst_overlay_table[0] },
+	  { ARR_SIZE(g_m6808_inst_overlay_table),
+	    ARR_SIZE(g_hcs08_inst_overlay_table) },
+	  { 0x9E, 0x00, 0x00 },
+	  { &g_hcs08_inst_page2_table[0], NULL, NULL },
+	  { ARR_SIZE(g_hcs08_inst_page2_table), 0, 0 },
+	  &g_m6808_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_BCLR, M680X_INS_BSET } },
 };
 
 static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
-	uint16_t address,
-	const uint8_t *code, uint16_t code_len)
+				  uint16_t address, const uint8_t *code,
+				  uint16_t code_len)
 {
 	if (cpu_type == M680X_CPU_TYPE_INVALID) {
 		return false;
@@ -2148,7 +2117,8 @@ static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
 }
 
 bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
-	MCInst *MI, uint16_t *size, uint64_t address, void *inst_info)
+			  MCInst *MI, uint16_t *size, uint64_t address,
+			  void *inst_info)
 {
 	unsigned int insn_size = 0;
 	e_cpu_type cpu_type = M680X_CPU_TYPE_INVALID; // No default CPU type
@@ -2188,8 +2158,8 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		cpu_type = M680X_CPU_TYPE_CPU12;
 
 	if (cpu_type != M680X_CPU_TYPE_INVALID &&
-		m680x_setup_internals(info, cpu_type, (uint16_t)address, code,
-			(uint16_t)code_len))
+	    m680x_setup_internals(info, cpu_type, (uint16_t)address, code,
+				  (uint16_t)code_len))
 		insn_size = m680x_disassemble(MI, info, (uint16_t)address);
 
 	if (insn_size == 0) {
@@ -2201,8 +2171,7 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	if (insn_size > code_len) {
 		*size = (uint16_t)code_len;
 		return false;
-	}
-	else
+	} else
 		*size = (uint16_t)insn_size;
 
 	return true;
@@ -2270,9 +2239,9 @@ cs_err M680X_disassembler_init(cs_struct *ud)
 		return CS_ERR_MODE;
 	}
 
-	if (ACCESS_MODE_ENDING !=  MATRIX_SIZE(g_access_mode_to_access)) {
+	if (ACCESS_MODE_ENDING != MATRIX_SIZE(g_access_mode_to_access)) {
 		CS_ASSERT(ACCESS_MODE_ENDING ==
-			MATRIX_SIZE(g_access_mode_to_access));
+			  MATRIX_SIZE(g_access_mode_to_access));
 
 		return CS_ERR_MODE;
 	}
@@ -2281,26 +2250,23 @@ cs_err M680X_disassembler_init(cs_struct *ud)
 }
 
 #ifndef CAPSTONE_DIET
-void M680X_reg_access(const cs_insn *insn,
-	cs_regs regs_read, uint8_t *regs_read_count,
-	cs_regs regs_write, uint8_t *regs_write_count)
+void M680X_reg_access(const cs_insn *insn, cs_regs regs_read,
+		      uint8_t *regs_read_count, cs_regs regs_write,
+		      uint8_t *regs_write_count)
 {
 	if (insn->detail == NULL) {
 		*regs_read_count = 0;
 		*regs_write_count = 0;
-	}
-	else {
+	} else {
 		*regs_read_count = insn->detail->regs_read_count;
 		*regs_write_count = insn->detail->regs_write_count;
 
 		memcpy(regs_read, insn->detail->regs_read,
-			*regs_read_count * sizeof(insn->detail->regs_read[0]));
+		       *regs_read_count * sizeof(insn->detail->regs_read[0]));
 		memcpy(regs_write, insn->detail->regs_write,
-			*regs_write_count *
-			sizeof(insn->detail->regs_write[0]));
+		       *regs_write_count * sizeof(insn->detail->regs_write[0]));
 	}
 }
 #endif
 
 #endif
-

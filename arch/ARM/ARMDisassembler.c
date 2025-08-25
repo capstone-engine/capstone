@@ -1105,7 +1105,7 @@ static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes,
 		uint32_t NEONDataInsn = Insn32;
 		NEONDataInsn &= 0xF0FFFFFF; // Clear bits 27-24
 		NEONDataInsn |= (NEONDataInsn & 0x10000000) >>
-				4;	    // Move bit 28 to bit 24
+				4; // Move bit 28 to bit 24
 		NEONDataInsn |= 0x12000000; // Set bits 28 and 25
 		Result = decodeInstruction_4(DecoderTableNEONData32, MI,
 					     NEONDataInsn, Address, NULL);
@@ -1118,7 +1118,7 @@ static DecodeStatus getThumbInstruction(csh ud, const uint8_t *Bytes,
 		uint32_t NEONCryptoInsn = Insn32;
 		NEONCryptoInsn &= 0xF0FFFFFF; // Clear bits 27-24
 		NEONCryptoInsn |= (NEONCryptoInsn & 0x10000000) >>
-				  4;	      // Move bit 28 to bit 24
+				  4; // Move bit 28 to bit 24
 		NEONCryptoInsn |= 0x12000000; // Set bits 28 and 25
 		Result = decodeInstruction_4(DecoderTablev8Crypto32, MI,
 					     NEONCryptoInsn, Address, NULL);
@@ -5063,15 +5063,15 @@ static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Val, uint64_t Address,
 
 		// Validate the SYSm value first.
 		switch (ValLow) {
-		case 0:	 // apsr
-		case 1:	 // iapsr
-		case 2:	 // eapsr
-		case 3:	 // xpsr
-		case 5:	 // ipsr
-		case 6:	 // epsr
-		case 7:	 // iepsr
-		case 8:	 // msp
-		case 9:	 // psp
+		case 0: // apsr
+		case 1: // iapsr
+		case 2: // eapsr
+		case 3: // xpsr
+		case 5: // ipsr
+		case 6: // epsr
+		case 7: // iepsr
+		case 8: // msp
+		case 9: // psp
 		case 16: // primask
 		case 20: // control
 			break;
@@ -5092,8 +5092,8 @@ static DecodeStatus DecodeMSRMask(MCInst *Inst, unsigned Val, uint64_t Address,
 						 ARM_HasV8MMainlineOps)))
 				return MCDisassembler_Fail;
 			// fall through
-		case 10:   // msplim
-		case 11:   // psplim
+		case 10: // msplim
+		case 11: // psplim
 		case 0x88: // msp_ns
 		case 0x89: // psp_ns
 		case 0x90: // primask_ns
@@ -7286,7 +7286,7 @@ static DecodeStatus DecodeT2AddSubSPImm(MCInst *Inst, unsigned Insn,
 		MCInst_setOpcode(Inst,
 				 (sign1 ? ARM_t2SUBspImm : ARM_t2ADDspImm));
 		if (!Check(&DS, DecodeT2SOImm(Inst, Imm12, Address,
-					      Decoder)))      // imm12
+					      Decoder))) // imm12
 			return MCDisassembler_Fail;
 		if (!Check(&DS, DecodeCCOutOperand(Inst, S, Address,
 						   Decoder))) // cc_out

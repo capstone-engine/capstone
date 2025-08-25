@@ -424,7 +424,7 @@ static inline bool AArch64_AM_isValidDecodeLogicalImmediate(uint64_t val,
 	if (regSize == 32 && N != 0) // undefined logical immediate encoding
 		return false;
 	int len = 31 - countLeadingZeros((N << 6) | (~imms & 0x3f));
-	if (len < 0)		     // undefined logical immediate encoding
+	if (len < 0) // undefined logical immediate encoding
 		return false;
 	unsigned size = (1 << len);
 	unsigned S = imms & (size - 1);

@@ -11,4 +11,3 @@ typedef enum DecodeStatus {
 } DecodeStatus;
 
 #endif
-

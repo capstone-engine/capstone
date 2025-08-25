@@ -25,7 +25,7 @@ cs_err SH_global_init(cs_struct *ud)
 	ud->group_name = SH_group_name;
 	ud->disasm = SH_getInstruction;
 #ifndef CAPSTONE_DIET
-        ud->reg_access = SH_reg_access;
+	ud->reg_access = SH_reg_access;
 #endif
 
 	return CS_ERR_OK;

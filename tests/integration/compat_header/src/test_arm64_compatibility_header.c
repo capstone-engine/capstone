@@ -58,9 +58,11 @@ int arm64(void)
 	}
 	arm64_cc test_cc64 = insn[0].detail->arm64.cc + ARM64_CC_GE;
 	arm_cc test_cc = insn[0].detail->arm.cc + ARM_CC_LE;
-	printf("test_cc64 = %" PRId32 " test_cc = %" PRId32 "\n", test_cc64, test_cc);
+	printf("test_cc64 = %" PRId32 " test_cc = %" PRId32 "\n", test_cc64,
+	       test_cc);
 
-	arm64_vas test_vas = insn[0].detail->arm64.operands[0].vas + ARM64_VAS_16B;
+	arm64_vas test_vas =
+		insn[0].detail->arm64.operands[0].vas + ARM64_VAS_16B;
 	printf("test_vas = %" PRId32 "\n", test_vas);
 
 	cs_free(insn, count);

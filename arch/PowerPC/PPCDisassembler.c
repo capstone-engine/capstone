@@ -105,7 +105,8 @@ static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, uint64_t RegNo,
 }
 
 static DecodeStatus DecodeFpRCRegisterClass(MCInst *Inst, uint64_t RegNo,
-					    uint64_t Address, const void *Decoder)
+					    uint64_t Address,
+					    const void *Decoder)
 {
 	if (RegNo > 30 || (RegNo & 1))
 		return MCDisassembler_Fail;
@@ -410,8 +411,8 @@ DecodeStatus getInstruction(csh ud, const uint8_t *Bytes, size_t BytesLen,
 		uint32_t Prefix = readBytes32(MI, Bytes);
 		uint32_t BaseInst = readBytes32(MI, Bytes + 4);
 		uint64_t Inst = BaseInst | (uint64_t)Prefix << 32;
-		DecodeStatus result =
-			decodeInstruction_4(DecoderTable64, MI, Inst, Address, NULL);
+		DecodeStatus result = decodeInstruction_4(DecoderTable64, MI,
+							  Inst, Address, NULL);
 		if (result != MCDisassembler_Fail) {
 			*Size = 8;
 			return result;

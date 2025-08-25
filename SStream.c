@@ -37,7 +37,8 @@ void SStream_opt_unum(SStream *ss, bool print_unsigned_numbers)
 
 /// Returns the a pointer to the internal string buffer of the stream.
 /// For reading only.
-const char *SStream_rbuf(const SStream *ss) {
+const char *SStream_rbuf(const SStream *ss)
+{
 	assert(ss);
 	return ss->buffer;
 }
@@ -47,7 +48,8 @@ const char *SStream_rbuf(const SStream *ss) {
 /// or NULL if no character was replaced.
 ///
 /// It will never replace the final \0 byte in the stream buffer.
-const char *SStream_replc(const SStream *ss, char elem, char repl) {
+const char *SStream_replc(const SStream *ss, char elem, char repl)
+{
 	assert(ss);
 	char *found = strchr(ss->buffer, elem);
 	if (!found || found == ss->buffer + (SSTREAM_BUF_LEN - 1)) {
@@ -60,7 +62,8 @@ const char *SStream_replc(const SStream *ss, char elem, char repl) {
 
 /// Searches in the stream for the first (from the left) occurrence of @chr and replaces
 /// it with @rstr.
-void SStream_replc_str(SStream *ss, char chr, const char *rstr) {
+void SStream_replc_str(SStream *ss, char chr, const char *rstr)
+{
 	assert(ss && rstr);
 	char *found = strchr(ss->buffer, chr);
 	if (!found || found == ss->buffer + (SSTREAM_BUF_LEN - 1)) {
@@ -78,7 +81,8 @@ void SStream_replc_str(SStream *ss, char chr, const char *rstr) {
 }
 
 /// Removes the space characters '\t' and ' ' from the beginning of the stream buffer.
-void SStream_trimls(SStream *ss) {
+void SStream_trimls(SStream *ss)
+{
 	assert(ss);
 	size_t buf_off = 0;
 	/// Remove leading spaces
@@ -86,7 +90,8 @@ void SStream_trimls(SStream *ss) {
 		buf_off++;
 	}
 	if (buf_off > 0) {
-		memmove(ss->buffer, ss->buffer + buf_off, SSTREAM_BUF_LEN - buf_off);
+		memmove(ss->buffer, ss->buffer + buf_off,
+			SSTREAM_BUF_LEN - buf_off);
 		ss->index -= buf_off;
 	}
 }
@@ -94,11 +99,16 @@ void SStream_trimls(SStream *ss) {
 /// Extract the mnemonic to @mnem_buf and the operand string into @op_str_buf from the stream buffer.
 /// The mnemonic is everything up until the first ' ' or '\t' character.
 /// The operand string is everything after the first ' ' or '\t' sequence.
-void SStream_extract_mnem_opstr(const SStream *ss, char *mnem_buf, size_t mnem_buf_size, char *op_str_buf, size_t op_str_buf_size) {
-	assert(ss && mnem_buf && mnem_buf_size > 0 && op_str_buf && op_str_buf_size > 0);
+void SStream_extract_mnem_opstr(const SStream *ss, char *mnem_buf,
+				size_t mnem_buf_size, char *op_str_buf,
+				size_t op_str_buf_size)
+{
+	assert(ss && mnem_buf && mnem_buf_size > 0 && op_str_buf &&
+	       op_str_buf_size > 0);
 	size_t off = 0;
 	// Copy all non space chars to as mnemonic.
-	while (ss->buffer[off] && ss->buffer[off] != ' ' && ss->buffer[off] != '\t') {
+	while (ss->buffer[off] && ss->buffer[off] != ' ' &&
+	       ss->buffer[off] != '\t') {
 		if (off < mnem_buf_size - 1) {
 			// Only copy if there is space left.
 			mnem_buf[off] = ss->buffer[off];
@@ -112,7 +122,8 @@ void SStream_extract_mnem_opstr(const SStream *ss, char *mnem_buf, size_t mnem_b
 	// Iterate until next non space char.
 	do {
 		off++;
-	} while (ss->buffer[off] && (ss->buffer[off] == ' ' || ss->buffer[off] == '\t'));
+	} while (ss->buffer[off] &&
+		 (ss->buffer[off] == ' ' || ss->buffer[off] == '\t'));
 
 	if (!ss->buffer[off]) {
 		return;
@@ -141,7 +152,8 @@ void SStream_Flush(SStream *ss, FILE *file)
 /**
  * Open the output stream. Every write attempt is accepted again.
  */
-void SStream_Open(SStream *ss) {
+void SStream_Open(SStream *ss)
+{
 	assert(ss);
 	ss->is_closed = false;
 }
@@ -149,7 +161,8 @@ void SStream_Open(SStream *ss) {
 /**
  * Closes the output stream. Every write attempt is ignored.
  */
-void SStream_Close(SStream *ss) {
+void SStream_Close(SStream *ss)
+{
 	assert(ss);
 	ss->is_closed = true;
 }
@@ -164,7 +177,7 @@ void SStream_concat0(SStream *ss, const char *s)
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (s[0] == '\0')
 		return;
-	unsigned int len = (unsigned int) strlen(s);
+	unsigned int len = (unsigned int)strlen(s);
 
 	SSTREAM_OVERFLOW_CHECK(ss, len);
 
@@ -216,7 +229,8 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 	int ret;
 
 	va_start(ap, fmt);
-	ret = cs_vsnprintf(ss->buffer + ss->index, sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
+	ret = cs_vsnprintf(ss->buffer + ss->index,
+			   sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
 	va_end(ap);
 	ss->index += ret;
 	if (ss->markup_stream && ss->prefixed_by_markup) {
@@ -259,17 +273,19 @@ void printInt64(SStream *ss, int64_t val)
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (val >= 0) {
 		if (val > HEX_THRESHOLD)
-			SStream_concat(ss, "0x%"PRIx64, val);
+			SStream_concat(ss, "0x%" PRIx64, val);
 		else
-			SStream_concat(ss, "%"PRIu64, val);
+			SStream_concat(ss, "%" PRIu64, val);
 	} else {
 		if (val < -HEX_THRESHOLD) {
 			if (val == INT64_MIN)
-				SStream_concat(ss, "-0x%"PRIx64, (uint64_t) INT64_MAX + 1);
+				SStream_concat(ss, "-0x%" PRIx64,
+					       (uint64_t)INT64_MAX + 1);
 			else
-				SStream_concat(ss, "-0x%"PRIx64, (uint64_t)-val);
+				SStream_concat(ss, "-0x%" PRIx64,
+					       (uint64_t)-val);
 		} else
-			SStream_concat(ss, "-%"PRIu64, -val);
+			SStream_concat(ss, "-%" PRIu64, -val);
 	}
 }
 
@@ -278,9 +294,9 @@ void printUInt64(SStream *ss, uint64_t val)
 	assert(ss);
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (val > HEX_THRESHOLD)
-		SStream_concat(ss, "0x%"PRIx64, val);
+		SStream_concat(ss, "0x%" PRIx64, val);
 	else
-		SStream_concat(ss, "%"PRIu64, val);
+		SStream_concat(ss, "%" PRIu64, val);
 }
 
 // print number in decimal mode
@@ -314,18 +330,18 @@ void printUInt8(SStream *ss, uint8_t val)
 {
 	assert(ss);
 	if (val > HEX_THRESHOLD)
-		SStream_concat(ss, "0x%"PRIx8, val);
+		SStream_concat(ss, "0x%" PRIx8, val);
 	else
-		SStream_concat(ss, "%"PRIu8, val);
+		SStream_concat(ss, "%" PRIu8, val);
 }
 
 void printUInt16(SStream *ss, uint16_t val)
 {
 	assert(ss);
 	if (val > HEX_THRESHOLD)
-		SStream_concat(ss, "0x%"PRIx16, val);
+		SStream_concat(ss, "0x%" PRIx16, val);
 	else
-		SStream_concat(ss, "%"PRIu16, val);
+		SStream_concat(ss, "%" PRIu16, val);
 }
 
 void printInt8(SStream *ss, int8_t val)
@@ -344,7 +360,8 @@ void printInt8(SStream *ss, int8_t val)
 	} else {
 		if (val < -HEX_THRESHOLD) {
 			if (val == INT8_MIN)
-				SStream_concat(ss, "-0x%" PRIx8, (uint8_t) INT8_MAX + 1);
+				SStream_concat(ss, "-0x%" PRIx8,
+					       (uint8_t)INT8_MAX + 1);
 			else
 				SStream_concat(ss, "-0x%" PRIx8, (int8_t)-val);
 		} else
@@ -368,9 +385,11 @@ void printInt16(SStream *ss, int16_t val)
 	} else {
 		if (val < -HEX_THRESHOLD) {
 			if (val == INT16_MIN)
-				SStream_concat(ss, "-0x%" PRIx16, (uint16_t) INT16_MAX + 1);
+				SStream_concat(ss, "-0x%" PRIx16,
+					       (uint16_t)INT16_MAX + 1);
 			else
-				SStream_concat(ss, "-0x%" PRIx16, (int16_t)-val);
+				SStream_concat(ss, "-0x%" PRIx16,
+					       (int16_t)-val);
 		} else
 			SStream_concat(ss, "-%" PRIu16, -val);
 	}
@@ -395,7 +414,6 @@ void printInt16HexOffset(SStream *ss, int16_t val)
 	}
 }
 
-
 void printInt32(SStream *ss, int32_t val)
 {
 	assert(ss);
@@ -412,9 +430,11 @@ void printInt32(SStream *ss, int32_t val)
 	} else {
 		if (val < -HEX_THRESHOLD) {
 			if (val == INT32_MIN)
-				SStream_concat(ss, "-0x%" PRIx32, (uint32_t) INT32_MAX + 1);
+				SStream_concat(ss, "-0x%" PRIx32,
+					       (uint32_t)INT32_MAX + 1);
 			else
-				SStream_concat(ss, "-0x%" PRIx32, (int32_t)-val);
+				SStream_concat(ss, "-0x%" PRIx32,
+					       (int32_t)-val);
 		} else {
 			SStream_concat(ss, "-%" PRIu32, (uint32_t)-val);
 		}
@@ -491,10 +511,11 @@ void printExpr(SStream *ss, uint64_t val)
 {
 	assert(ss);
 	SSTREAM_RETURN_IF_CLOSED(ss);
-	SStream_concat(ss, "%"PRIu64, val);
+	SStream_concat(ss, "%" PRIu64, val);
 }
 
-SStream *markup_OS(SStream *OS, SStreamMarkup style) {
+SStream *markup_OS(SStream *OS, SStreamMarkup style)
+{
 	assert(OS);
 
 	if (OS->is_closed || !OS->markup_stream) {

@@ -22,9 +22,9 @@ extern "C" {
 /// Operand type for instruction's operands
 typedef enum tricore_op_type {
 	TRICORE_OP_INVALID = CS_OP_INVALID, ///< CS_OP_INVALID (Uninitialized).
-	TRICORE_OP_REG = CS_OP_REG,	    ///< CS_OP_REG (Register operand).
-	TRICORE_OP_IMM = CS_OP_IMM,	    ///< CS_OP_IMM (Immediate operand).
-	TRICORE_OP_MEM = CS_OP_MEM,	    ///< CS_OP_MEM (Memory operand).
+	TRICORE_OP_REG = CS_OP_REG, ///< CS_OP_REG (Register operand).
+	TRICORE_OP_IMM = CS_OP_IMM, ///< CS_OP_IMM (Immediate operand).
+	TRICORE_OP_MEM = CS_OP_MEM, ///< CS_OP_MEM (Memory operand).
 } tricore_op_type;
 
 /// Instruction's operand referring to memory
@@ -36,15 +36,16 @@ typedef struct tricore_op_mem {
 
 /// Instruction operand
 typedef struct cs_tricore_op {
-	tricore_op_type type;	    ///< operand type
+	tricore_op_type type; ///< operand type
 	union {
-		unsigned int reg;   ///< register value for REG operand
-		int64_t imm;	    ///< immediate value for IMM operand
+		unsigned int reg; ///< register value for REG operand
+		int64_t imm; ///< immediate value for IMM operand
 		tricore_op_mem mem; ///< base/disp value for MEM operand
 	};
 	/// This field is combined of cs_ac_type.
 	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-	cs_ac_type access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)
+	cs_ac_type
+		access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)
 } cs_tricore_op;
 
 #define NUM_TRICORE_OPS 8
@@ -572,8 +573,8 @@ typedef enum tricore_insn {
 typedef enum tricore_insn_group {
 	TRICORE_GRP_INVALID, ///< = CS_GRP_INVALID
 	/// Generic groups
-	TRICORE_GRP_CALL,   ///< = CS_GRP_CALL
-	TRICORE_GRP_JUMP,   ///< = CS_GRP_JUMP
+	TRICORE_GRP_CALL, ///< = CS_GRP_CALL
+	TRICORE_GRP_JUMP, ///< = CS_GRP_JUMP
 	TRICORE_GRP_ENDING, ///< mark the end of the list of groups
 } tricore_insn_group;
 

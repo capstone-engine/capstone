@@ -19,25 +19,25 @@ extern "C" {
 /// Operand type for instruction's operands
 typedef enum loongarch_op_type {
 	LOONGARCH_OP_INVALID = CS_OP_INVALID, ///< Invalid
-	LOONGARCH_OP_REG = CS_OP_REG,	      ///< Register operand
-	LOONGARCH_OP_IMM = CS_OP_IMM,	      ///< Immediate operand
-	LOONGARCH_OP_MEM = CS_OP_MEM,	      ///< Memory operand
+	LOONGARCH_OP_REG = CS_OP_REG, ///< Register operand
+	LOONGARCH_OP_IMM = CS_OP_IMM, ///< Immediate operand
+	LOONGARCH_OP_MEM = CS_OP_MEM, ///< Memory operand
 } loongarch_op_type;
 
 /// Instruction's operand referring to memory
 /// This is associated with LOONGARCH_OP_MEM operand type above
 typedef struct loongarch_op_mem {
-	unsigned int base;  ///< base register
+	unsigned int base; ///< base register
 	unsigned int index; ///< index register
-	int64_t disp;	    ///< displacement/offset value
+	int64_t disp; ///< displacement/offset value
 } loongarch_op_mem;
 
 /// Instruction operand
 typedef struct cs_loongarch_op {
-	loongarch_op_type type;	      //< operand type
+	loongarch_op_type type; //< operand type
 	union {
-		unsigned int reg;     /// register value for REG operand
-		int64_t imm;	      /// immediate value for IMM operand
+		unsigned int reg; /// register value for REG operand
+		int64_t imm; /// immediate value for IMM operand
 		loongarch_op_mem mem; /// base/disp value for MEM operand
 	};
 
@@ -187,7 +187,8 @@ typedef struct cs_loongarch {
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_loongarch_op operands[NUM_LOONGARCH_OPS]; ///< operands for this instruction.
+	cs_loongarch_op
+		operands[NUM_LOONGARCH_OPS]; ///< operands for this instruction.
 } cs_loongarch;
 
 /// LoongArch registers

@@ -11,7 +11,7 @@
 #include "RISCVMapping.h"
 #include "RISCVModule.h"
 
-cs_err RISCV_global_init(cs_struct * ud)
+cs_err RISCV_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
@@ -31,7 +31,7 @@ cs_err RISCV_global_init(cs_struct * ud)
 	return CS_ERR_OK;
 }
 
-cs_err RISCV_option(cs_struct * handle, cs_opt_type type, size_t value)
+cs_err RISCV_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	if (type == CS_OPT_SYNTAX) {
 		handle->syntax = (int)value;

@@ -42,11 +42,11 @@ static const cyaml_schema_field_t test_detail_bpf_op_mapping_schema[] = {
 			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailBPFOp, mem_base, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_UINT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailBPFOp,
-			mem_disp),
+			 mem_disp),
 	CYAML_FIELD_TBOOL("is_pkt", CYAML_FLAG_OPTIONAL, TestDetailBPFOp,
-			 is_pkt),
+			  is_pkt),
 	CYAML_FIELD_TBOOL("is_signed", CYAML_FLAG_OPTIONAL, TestDetailBPFOp,
-			 is_signed),
+			  is_signed),
 	CYAML_FIELD_END
 };
 

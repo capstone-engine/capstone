@@ -17,8 +17,7 @@ void Mips_init_mri(MCRegisterInfo *MRI);
 // return name of register in friendly string
 const char *Mips_reg_name(csh handle, unsigned int reg);
 
-void Mips_printer(MCInst *MI, SStream *O,
-		       void * /* MCRegisterInfo* */ info);
+void Mips_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info);
 
 // given internal insn id, return public instruction ID
 void Mips_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
@@ -28,12 +27,12 @@ const char *Mips_insn_name(csh handle, unsigned int id);
 const char *Mips_group_name(csh handle, unsigned int id);
 
 bool Mips_getInstruction(csh handle, const uint8_t *code, size_t code_len,
-			      MCInst *instr, uint16_t *size, uint64_t address,
-			      void *info);
+			 MCInst *instr, uint16_t *size, uint64_t address,
+			 void *info);
 
 void Mips_reg_access(const cs_insn *insn, cs_regs regs_read,
-			uint8_t *regs_read_count, cs_regs regs_write,
-			uint8_t *regs_write_count);
+		     uint8_t *regs_read_count, cs_regs regs_write,
+		     uint8_t *regs_write_count);
 
 // cs_detail related functions
 void Mips_init_cs_detail(MCInst *MI);

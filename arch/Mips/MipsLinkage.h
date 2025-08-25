@@ -15,7 +15,7 @@
 const char *Mips_LLVM_getRegisterName(unsigned RegNo, bool noRegName);
 void Mips_LLVM_printInst(MCInst *MI, uint64_t Address, SStream *O);
 DecodeStatus Mips_LLVM_getInstruction(MCInst *Instr, uint64_t *Size,
-				const uint8_t *Bytes, size_t BytesLen,
-				uint64_t Address, SStream *CStream);
+				      const uint8_t *Bytes, size_t BytesLen,
+				      uint64_t Address, SStream *CStream);
 
 #endif // CS_MIPS_LINKAGE_H

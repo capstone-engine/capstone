@@ -68,7 +68,8 @@ char *test_input_stringify(const TestInput *test_input, const char *postfix)
 	char opt_seq[128] = { 0 };
 	str_append_no_realloc(opt_seq, sizeof(opt_seq), "[");
 	for (size_t i = 0; i < test_input->options_count; ++i) {
-		str_append_no_realloc(opt_seq, sizeof(opt_seq), test_input->options[i]);
+		str_append_no_realloc(opt_seq, sizeof(opt_seq),
+				      test_input->options[i]);
 		if (i < test_input->options_count - 1) {
 			str_append_no_realloc(opt_seq, sizeof(opt_seq), ", ");
 		}
@@ -111,9 +112,7 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 	tid->alias_id = test_insn_data->alias_id ?
 				cs_strdup(test_insn_data->alias_id) :
 				NULL;
-	tid->id = test_insn_data->id ?
-				cs_strdup(test_insn_data->id) :
-				NULL;
+	tid->id = test_insn_data->id ? cs_strdup(test_insn_data->id) : NULL;
 	tid->is_alias = test_insn_data->is_alias;
 	tid->illegal = test_insn_data->illegal;
 	tid->size = test_insn_data->size;
@@ -208,9 +207,10 @@ static bool compare_asm_text(const char *asm_text, const char *expected,
 	return false;
 }
 
-static bool ids_match(uint32_t actual, const char *expected) {
-       compare_enum_ret(actual, expected, false);
-       return true;
+static bool ids_match(uint32_t actual, const char *expected)
+{
+	compare_enum_ret(actual, expected, false);
+	return true;
 }
 
 /// Compares the decoded instructions @insns against the @expected values and returns the result.
@@ -226,12 +226,12 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 		char asm_text[256] = { 0 };
 		if (insns[i].mnemonic[0] != '\0') {
 			str_append_no_realloc(asm_text, sizeof(asm_text),
-				      insns[i].mnemonic);
+					      insns[i].mnemonic);
 			str_append_no_realloc(asm_text, sizeof(asm_text), " ");
 		}
 		if (insns[i].op_str[0] != '\0') {
 			str_append_no_realloc(asm_text, sizeof(asm_text),
-				      insns[i].op_str);
+					      insns[i].op_str);
 		}
 		if (!compare_asm_text(asm_text, expec_data->asm_text,
 				      arch_bits)) {
@@ -241,7 +241,7 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 		// Not mandatory fields. If not initialized they should still match.
 		if (expec_data->id) {
 			assert_true(ids_match((uint32_t)insns[i].id,
-								expec_data->id));
+					      expec_data->id));
 		}
 		if (expec_data->is_alias != 0) {
 			if (expec_data->is_alias > 0) {
@@ -262,7 +262,7 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 		}
 		if (expec_data->alias_id) {
 			assert_true(ids_match((uint32_t)insns[i].alias_id,
-								expec_data->alias_id));
+					      expec_data->alias_id));
 		}
 		if (expec_data->mnemonic) {
 			assert_string_equal(insns[i].mnemonic,

@@ -350,23 +350,28 @@ bool PPC_getFeatureBits(unsigned int mode, unsigned int feature)
 	} else if (feature == PPC_FeatureModernAIXAs) {
 		return (mode & CS_MODE_MODERN_AIX_AS) != 0;
 	} else if (feature == PPC_AIXOS) {
-		return (mode & CS_MODE_AIX_OS) != 0 || (mode & CS_MODE_MODERN_AIX_AS) != 0;
+		return (mode & CS_MODE_AIX_OS) != 0 ||
+		       (mode & CS_MODE_MODERN_AIX_AS) != 0;
 	} else if (feature == PPC_FeatureMSYNC) {
 		return (mode & CS_MODE_MSYNC) != 0;
 	}
-	if ((mode & (CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 | CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE)) == 0) {
+	if ((mode & (CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 |
+		     CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE)) == 0) {
 		// By default support everything
 		return true;
 	}
 
 	if (is_feature_of(feature, P7Features, ARR_SIZE(P7Features))) {
-		return (mode & (CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 | CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE));
+		return (mode & (CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 |
+				CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE));
 	}
 	if (is_feature_of(feature, P8Features, ARR_SIZE(P8Features))) {
-		return (mode & (CS_MODE_PWR8 | CS_MODE_PWR9 | CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE));
+		return (mode & (CS_MODE_PWR8 | CS_MODE_PWR9 | CS_MODE_PWR10 |
+				CS_MODE_PPC_ISA_FUTURE));
 	}
 	if (is_feature_of(feature, P9Features, ARR_SIZE(P9Features))) {
-		return (mode & (CS_MODE_PWR9 | CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE));
+		return (mode & (CS_MODE_PWR9 | CS_MODE_PWR10 |
+				CS_MODE_PPC_ISA_FUTURE));
 	}
 	if (is_feature_of(feature, P10Features, ARR_SIZE(P10Features))) {
 		return (mode & (CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE));

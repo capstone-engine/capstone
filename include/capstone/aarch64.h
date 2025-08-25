@@ -21,30 +21,30 @@ extern "C" {
 /// Those values do not correspond to the bit values encoded
 /// in the instruction.
 typedef enum aarch64_shifter {
-  AARCH64_SFT_INVALID = 0,
-  AARCH64_SFT_LSL = 1,
-  AARCH64_SFT_MSL = 2,
-  AARCH64_SFT_LSR = 3,
-  AARCH64_SFT_ASR = 4,
-  AARCH64_SFT_ROR = 5,
-  AARCH64_SFT_LSL_REG = 6,
-  AARCH64_SFT_MSL_REG = 7,
-  AARCH64_SFT_LSR_REG = 8,
-  AARCH64_SFT_ASR_REG = 9,
-  AARCH64_SFT_ROR_REG = 10,
+	AARCH64_SFT_INVALID = 0,
+	AARCH64_SFT_LSL = 1,
+	AARCH64_SFT_MSL = 2,
+	AARCH64_SFT_LSR = 3,
+	AARCH64_SFT_ASR = 4,
+	AARCH64_SFT_ROR = 5,
+	AARCH64_SFT_LSL_REG = 6,
+	AARCH64_SFT_MSL_REG = 7,
+	AARCH64_SFT_LSR_REG = 8,
+	AARCH64_SFT_ASR_REG = 9,
+	AARCH64_SFT_ROR_REG = 10,
 } aarch64_shifter;
 
 /// AArch64 extender type
 typedef enum aarch64_extender {
-  AARCH64_EXT_INVALID = 0,
-  AARCH64_EXT_UXTB = 1,
-  AARCH64_EXT_UXTH = 2,
-  AARCH64_EXT_UXTW = 3,
-  AARCH64_EXT_UXTX = 4,
-  AARCH64_EXT_SXTB = 5,
-  AARCH64_EXT_SXTH = 6,
-  AARCH64_EXT_SXTW = 7,
-  AARCH64_EXT_SXTX = 8,
+	AARCH64_EXT_INVALID = 0,
+	AARCH64_EXT_UXTB = 1,
+	AARCH64_EXT_UXTH = 2,
+	AARCH64_EXT_UXTW = 3,
+	AARCH64_EXT_UXTX = 4,
+	AARCH64_EXT_SXTB = 5,
+	AARCH64_EXT_SXTH = 6,
+	AARCH64_EXT_SXTW = 7,
+	AARCH64_EXT_SXTX = 8,
 } aarch64_extender;
 
 // Moved from AArch64BaseInfo.h and modified
@@ -89,17 +89,18 @@ typedef enum VectorLayout {
 // field for predicated instructions.
 typedef enum AArch64CondCode { // Meaning (integer) Meaning (floating-point)
 	AArch64CC_EQ = 0x0, // Equal                      Equal
-	AArch64CC_NE = 0x1, // Not equal                  Not equal, or unordered
+	AArch64CC_NE = 0x1, // Not equal, or unordered
 	AArch64CC_HS = 0x2, // Unsigned higher or same    >, ==, or unordered
 	AArch64CC_LO = 0x3, // Unsigned lower             Less than
 	AArch64CC_MI = 0x4, // Minus, negative            Less than
 	AArch64CC_PL = 0x5, // Plus, positive or zero     >, ==, or unordered
 	AArch64CC_VS = 0x6, // Overflow                   Unordered
 	AArch64CC_VC = 0x7, // No overflow                Not unordered
-	AArch64CC_HI = 0x8, // Unsigned higher            Greater than, or unordered
+	/// Unsigned higher Greater than, or unordered
+	AArch64CC_HI = 0x8,
 	AArch64CC_LS = 0x9, // Unsigned lower or same     Less than or equal
 	AArch64CC_GE = 0xa, // Greater than or equal      Greater than or equal
-	AArch64CC_LT = 0xb, // Less than                  Less than, or unordered
+	AArch64CC_LT = 0xb, // Less than, or unordered
 	AArch64CC_GT = 0xc, // Greater than               Greater than
 	AArch64CC_LE = 0xd, // Less than or equal         <, ==, or unordered
 	AArch64CC_AL = 0xe, // Always (unconditional)     Always (unconditional)
@@ -108,10 +109,10 @@ typedef enum AArch64CondCode { // Meaning (integer) Meaning (floating-point)
 	AArch64CC_Invalid,
 
 	// Common aliases used for SVE.
-	AArch64CC_ANY_ACTIVE = AArch64CC_NE,	 // (!Z)
+	AArch64CC_ANY_ACTIVE = AArch64CC_NE, // (!Z)
 	AArch64CC_FIRST_ACTIVE = AArch64CC_MI, // ( N)
-	AArch64CC_LAST_ACTIVE = AArch64CC_LO,	 // (!C)
-	AArch64CC_NONE_ACTIVE = AArch64CC_EQ,  // ( Z)
+	AArch64CC_LAST_ACTIVE = AArch64CC_LO, // (!C)
+	AArch64CC_NONE_ACTIVE = AArch64CC_EQ, // ( Z)
 } AArch64CC_CondCode;
 
 inline static const char *AArch64CC_getCondCodeName(AArch64CC_CondCode Code)
@@ -154,7 +155,8 @@ inline static const char *AArch64CC_getCondCodeName(AArch64CC_CondCode Code)
 	}
 }
 
-inline static AArch64CC_CondCode AArch64CC_getInvertedCondCode(AArch64CC_CondCode Code)
+inline static AArch64CC_CondCode
+AArch64CC_getInvertedCondCode(AArch64CC_CondCode Code)
 {
 	// To reverse a condition it's necessary to only invert the low bit:
 
@@ -165,7 +167,8 @@ inline static AArch64CC_CondCode AArch64CC_getInvertedCondCode(AArch64CC_CondCod
 /// The flag bits are in the format expected by the ccmp instructions.
 /// Note that many different flag settings can satisfy a given condition code,
 /// this function just returns one of them.
-inline static unsigned AArch64CC_getNZCVToSatisfyCondCode(AArch64CC_CondCode Code)
+inline static unsigned
+AArch64CC_getNZCVToSatisfyCondCode(AArch64CC_CondCode Code)
 {
 	// NZCV flags encoded as expected by ccmp instructions, ARMv8 ISA 5.5.7.
 	enum { N = 8, Z = 4, C = 2, V = 1 };
@@ -2009,17 +2012,21 @@ typedef union {
 
 /// Operand type for instruction's operands
 typedef enum aarch64_op_type {
-  AARCH64_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
-  AARCH64_OP_REG = CS_OP_REG,		///< = CS_OP_REG (Register operand).
-  AARCH64_OP_IMM = CS_OP_IMM,		///< = CS_OP_IMM (Immediate operand).
-  AARCH64_OP_MEM_REG = CS_OP_MEM_REG,		///< Register which references memory.
-  AARCH64_OP_MEM_IMM = CS_OP_MEM_IMM,		///< = Immediate value which references memory.
-  AARCH64_OP_MEM = CS_OP_MEM,		///< = CS_OP_MEM (Memory operand).
-  AARCH64_OP_FP = CS_OP_FP,		///< = CS_OP_FP (Floating-Point operand).
-  AARCH64_OP_CIMM = CS_OP_SPECIAL + 0,	///< C-Immediate
-  AARCH64_OP_REG_MRS = CS_OP_SPECIAL + 1,	///< MRS register operand.
-  AARCH64_OP_REG_MSR = CS_OP_SPECIAL + 2,	///< MSR register operand.
-  AARCH64_OP_IMPLICIT_IMM_0 = CS_OP_SPECIAL + 3, ///< Implicit immediate operand 0
+	/// CS_OP_INVALID (Uninitialized).
+	AARCH64_OP_INVALID = CS_OP_INVALID,
+	AARCH64_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
+	AARCH64_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	/// Register which references memory.
+	AARCH64_OP_MEM_REG = CS_OP_MEM_REG,
+	/// Immediate value which references memory.
+	AARCH64_OP_MEM_IMM = CS_OP_MEM_IMM,
+	AARCH64_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
+	AARCH64_OP_FP = CS_OP_FP, ///< = CS_OP_FP (Floating-Point operand).
+	AARCH64_OP_CIMM = CS_OP_SPECIAL + 0, ///< C-Immediate
+	AARCH64_OP_REG_MRS = CS_OP_SPECIAL + 1, ///< MRS register operand.
+	AARCH64_OP_REG_MSR = CS_OP_SPECIAL + 2, ///< MSR register operand.
+	/// Implicit immediate operand 0
+	AARCH64_OP_IMPLICIT_IMM_0 = CS_OP_SPECIAL + 3,
 	// Different system operands.
 	AARCH64_OP_SVCR = CS_OP_SPECIAL + 4,
 	AARCH64_OP_AT = CS_OP_SPECIAL + 5,
@@ -2768,18 +2775,18 @@ typedef enum aarch64_reg {
 	// clang-format on
 	// generated content <AArch64GenCSRegEnum.inc> end
 
-  // alias registers
-  AARCH64_REG_IP0 = AARCH64_REG_X16,
-  AARCH64_REG_IP1 = AARCH64_REG_X17,
-  AARCH64_REG_X29 = AARCH64_REG_FP,
-  AARCH64_REG_X30 = AARCH64_REG_LR,
+	// alias registers
+	AARCH64_REG_IP0 = AARCH64_REG_X16,
+	AARCH64_REG_IP1 = AARCH64_REG_X17,
+	AARCH64_REG_X29 = AARCH64_REG_FP,
+	AARCH64_REG_X30 = AARCH64_REG_LR,
 } aarch64_reg;
 
 /// Instruction's operand referring to memory
 typedef struct aarch64_op_mem {
-  aarch64_reg base;  ///< base register
-  aarch64_reg index; ///< index register
-  int32_t disp;	   ///< displacement/offset value
+	aarch64_reg base; ///< base register
+	aarch64_reg index; ///< index register
+	int32_t disp; ///< displacement/offset value
 } aarch64_op_mem;
 
 typedef enum {
@@ -2798,77 +2805,82 @@ typedef struct {
 
 /// SME Instruction's matrix operand
 typedef struct {
-  aarch64_sme_op_type type; ///< AArch64_SME_OP_TILE, AArch64_SME_OP_TILE_VEC
-  aarch64_reg tile; ///< Matrix tile register
-  aarch64_reg slice_reg; ///< slice index reg
+	aarch64_sme_op_type
+		type; ///< AArch64_SME_OP_TILE, AArch64_SME_OP_TILE_VEC
+	aarch64_reg tile; ///< Matrix tile register
+	aarch64_reg slice_reg; ///< slice index reg
 	union {
 		uint16_t imm; ///< Invalid if equal to AARCH64_SLICE_IMM_INVALID
-		aarch64_imm_range imm_range; ///< Members are set to AARCH64_SLICE_IMM_RANGE_INVALID if invalid.
+		aarch64_imm_range
+			imm_range; ///< Members are set to AARCH64_SLICE_IMM_RANGE_INVALID if invalid.
 	} slice_offset; ///< slice index offset.
 	bool has_range_offset; ///< If true, the offset is a range.
-  bool is_vertical;	///< Flag if slice is vertical or horizontal
+	bool is_vertical; ///< Flag if slice is vertical or horizontal
 } aarch64_op_sme;
 
 /// SME Instruction's operand has index
 typedef struct {
-  aarch64_reg reg; ///< Vector predicate register
-  aarch64_reg vec_select; ///< Vector select register.
-  int32_t imm_index; ///< Index in range 0 to one less of vector elements in a 128bit reg.
+	aarch64_reg reg; ///< Vector predicate register
+	aarch64_reg vec_select; ///< Vector select register.
+	int32_t imm_index; ///< Index in range 0 to one less of vector elements in a 128bit reg.
 } aarch64_op_pred;
 
 /// Instruction operand
 typedef struct cs_aarch64_op {
-  int vector_index; ///< Vector Index for some vector operands (or -1 if
-		    ///< irrelevant)
-  AArch64Layout_VectorLayout vas;    ///< Vector Arrangement Specifier
-  struct {
-    aarch64_shifter type; ///< shifter type of this operand
-    /// Shift value of this operand.
-    /// If the type indicates a shift with a register this value should be
-    /// interpreted as aarch64_reg.
-    unsigned int value;
-  } shift;
-  aarch64_extender ext; ///< extender type of this operand
-  aarch64_op_type type; ///< operand type
-	/// Q and V regs share the same identifiers (because they are the same registers).
-	/// If this flag is set, the register operand is interpreted as a V-register.
-  bool is_vreg;
-  union {
-    aarch64_reg reg;	 ///< register value for REG operand
-    int64_t imm;	 ///< immediate value, or index for C-IMM or IMM operand
+	int vector_index; ///< Vector Index for some vector operands (or -1 if
+		///< irrelevant)
+	AArch64Layout_VectorLayout vas; ///< Vector Arrangement Specifier
+	struct {
+		aarch64_shifter type; ///< shifter type of this operand
+		/// Shift value of this operand.
+		/// If the type indicates a shift with a register this value should be
+		/// interpreted as aarch64_reg.
+		unsigned int value;
+	} shift;
+	aarch64_extender ext; ///< extender type of this operand
+	aarch64_op_type type; ///< operand type
+		/// Q and V regs share the same identifiers (because they are the same registers).
+		/// If this flag is set, the register operand is interpreted as a V-register.
+	bool is_vreg;
+	union {
+		aarch64_reg reg; ///< register value for REG operand
+		int64_t imm; ///< immediate value, or index for C-IMM or IMM operand
 		aarch64_imm_range imm_range; ///< An immediate range
-    double fp;		 ///< floating point value for FP operand
-    aarch64_op_mem mem;	 ///< base/index/scale/disp value for MEM operand
-    aarch64_op_sme sme; ///< SME matrix operand
-    aarch64_op_pred pred; ///< Predicate register
-  };
-  aarch64_sysop sysop; ///< System operand
+		double fp; ///< floating point value for FP operand
+		aarch64_op_mem
+			mem; ///< base/index/scale/disp value for MEM operand
+		aarch64_op_sme sme; ///< SME matrix operand
+		aarch64_op_pred pred; ///< Predicate register
+	};
+	aarch64_sysop sysop; ///< System operand
 
-  /// How is this operand accessed? (READ, WRITE or READ|WRITE)
-  /// This field is combined of cs_ac_type.
-  /// NOTE: this field is irrelevant if engine is compiled in DIET mode.
-  cs_ac_type access;
-  bool is_list_member; ///< True if this operand is part of a register or vector list.
+	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
+	/// This field is combined of cs_ac_type.
+	/// NOTE: this field is irrelevant if engine is compiled in DIET mode.
+	cs_ac_type access;
+	bool is_list_member; ///< True if this operand is part of a register or vector list.
 } cs_aarch64_op;
 
 typedef struct {
-	cs_ac_type mem_acc; ///< CGI memory access according to mayLoad and mayStore
+	cs_ac_type
+		mem_acc; ///< CGI memory access according to mayLoad and mayStore
 } aarch64_suppl_info;
 
 #define NUM_AARCH64_OPS 16
 
 /// Instruction structure
 typedef struct cs_aarch64 {
-  AArch64CC_CondCode cc;	     ///< conditional code for this insn
-  bool update_flags; ///< does this insn update flags?
-  bool post_index;   ///< only set if writeback is 'True', if 'False' pre-index, otherwise post.
-  bool is_doing_sme; ///< True if a SME or SVE operand is currently edited.
+	AArch64CC_CondCode cc; ///< conditional code for this insn
+	bool update_flags; ///< does this insn update flags?
+	bool post_index; ///< only set if writeback is 'True', if 'False' pre-index, otherwise post.
+	bool is_doing_sme; ///< True if a SME or SVE operand is currently edited.
 
-  /// Number of operands of this instruction,
-  /// or 0 when instruction has no operand.
-  uint8_t op_count;
+	/// Number of operands of this instruction,
+	/// or 0 when instruction has no operand.
+	uint8_t op_count;
 
-  cs_aarch64_op operands[NUM_AARCH64_OPS]; ///< operands for this instruction.
+	cs_aarch64_op
+		operands[NUM_AARCH64_OPS]; ///< operands for this instruction.
 } cs_aarch64;
 
 /// AArch64 instruction
@@ -4302,7 +4314,7 @@ typedef enum aarch64_insn {
 	// clang-format on
 	// generated content <AArch64GenCSInsnEnum.inc> end
 
-  AARCH64_INS_ENDING, // <-- mark the end of the list of insn
+	AARCH64_INS_ENDING, // <-- mark the end of the list of insn
 
 	AARCH64_INS_ALIAS_BEGIN,
 	// generated content <AArch64GenCSAliasEnum.inc> begin
@@ -4699,16 +4711,16 @@ typedef enum aarch64_insn {
 
 /// Group of AArch64 instructions
 typedef enum aarch64_insn_group {
-  AARCH64_GRP_INVALID = 0, ///< = CS_GRP_INVALID
+	AARCH64_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-  // Generic groups
-  // all jump instructions (conditional+direct+indirect jumps)
-  AARCH64_GRP_JUMP, ///< = CS_GRP_JUMP
-  AARCH64_GRP_CALL,
-  AARCH64_GRP_RET,
-  AARCH64_GRP_INT,
-  AARCH64_GRP_PRIVILEGE = 6,   ///< = CS_GRP_PRIVILEGE
-  AARCH64_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
+	// Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	AARCH64_GRP_JUMP, ///< = CS_GRP_JUMP
+	AARCH64_GRP_CALL,
+	AARCH64_GRP_RET,
+	AARCH64_GRP_INT,
+	AARCH64_GRP_PRIVILEGE = 6, ///< = CS_GRP_PRIVILEGE
+	AARCH64_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 	// generated content <AArch64GenCSFeatureEnum.inc> begin
 	// clang-format off
 
@@ -4842,7 +4854,7 @@ typedef enum aarch64_insn_group {
 	// clang-format on
 	// generated content <AArch64GenCSFeatureEnum.inc> end
 
-  AARCH64_GRP_ENDING, // <-- mark the end of the list of groups
+	AARCH64_GRP_ENDING, // <-- mark the end of the list of groups
 } aarch64_insn_group;
 
 #ifdef __cplusplus

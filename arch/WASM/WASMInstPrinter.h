@@ -4,7 +4,6 @@
 #ifndef CS_WASMINSTPRINTER_H
 #define CS_WASMINSTPRINTER_H
 
-
 #include "capstone/capstone.h"
 #include "../../MCInst.h"
 #include "../../SStream.h"

@@ -22,7 +22,7 @@ typedef enum mos65xx_reg {
 	MOS65XX_REG_DP, ///< direct page register
 	MOS65XX_REG_B, ///< data bank register
 	MOS65XX_REG_K, ///< program bank register
-	MOS65XX_REG_ENDING,   // <-- mark the end of the list of registers
+	MOS65XX_REG_ENDING, // <-- mark the end of the list of registers
 } mos65xx_reg;
 
 /// MOS65XX Addressing Modes
@@ -34,7 +34,7 @@ typedef enum mos65xx_address_mode {
 	MOS65XX_AM_REL, ///< relative addressing used by branches
 	MOS65XX_AM_INT, ///< interrupt addressing
 	MOS65XX_AM_BLOCK, ///< memory block addressing
-	MOS65XX_AM_ZP,  ///< zeropage addressing
+	MOS65XX_AM_ZP, ///< zeropage addressing
 	MOS65XX_AM_ZP_X, ///< indexed zeropage addressing by the X index register
 	MOS65XX_AM_ZP_Y, ///< indexed zeropage addressing by the Y index register
 	MOS65XX_AM_ZP_REL, ///< zero page address, branch relative address
@@ -154,24 +154,25 @@ typedef enum mos65xx_insn {
 	MOS65XX_INS_WDM,
 	MOS65XX_INS_XBA,
 	MOS65XX_INS_XCE,
-	MOS65XX_INS_ENDING,   // <-- mark the end of the list of instructions
+	MOS65XX_INS_ENDING, // <-- mark the end of the list of instructions
 } mos65xx_insn;
 
 /// Group of MOS65XX instructions
 typedef enum mos65xx_group_type {
-	MOS65XX_GRP_INVALID = 0,  ///< CS_GRP_INVALID
-	MOS65XX_GRP_JUMP,		 ///< = CS_GRP_JUMP
-	MOS65XX_GRP_CALL,		 ///< = CS_GRP_RET
-	MOS65XX_GRP_RET,		  ///< = CS_GRP_RET
-	MOS65XX_GRP_INT,		  ///< = CS_GRP_INT
-	MOS65XX_GRP_IRET = 5,	 ///< = CS_GRP_IRET
+	MOS65XX_GRP_INVALID = 0, ///< CS_GRP_INVALID
+	MOS65XX_GRP_JUMP, ///< = CS_GRP_JUMP
+	MOS65XX_GRP_CALL, ///< = CS_GRP_RET
+	MOS65XX_GRP_RET, ///< = CS_GRP_RET
+	MOS65XX_GRP_INT, ///< = CS_GRP_INT
+	MOS65XX_GRP_IRET = 5, ///< = CS_GRP_IRET
 	MOS65XX_GRP_BRANCH_RELATIVE = 6, ///< = CS_GRP_BRANCH_RELATIVE
-	MOS65XX_GRP_ENDING,// <-- mark the end of the list of groups
+	MOS65XX_GRP_ENDING, // <-- mark the end of the list of groups
 } mos65xx_group_type;
 
 /// Operand type for instruction's operands
 typedef enum mos65xx_op_type {
-	MOS65XX_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
+	MOS65XX_OP_INVALID =
+		CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
 	MOS65XX_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
 	MOS65XX_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
 	MOS65XX_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
@@ -179,11 +180,11 @@ typedef enum mos65xx_op_type {
 
 /// Instruction operand
 typedef struct cs_mos65xx_op {
-	mos65xx_op_type type;	///< operand type
+	mos65xx_op_type type; ///< operand type
 	union {
-		mos65xx_reg reg;	///< register value for REG operand
-		uint16_t imm;		///< immediate value for IMM operand
-		uint32_t mem;		///< address for MEM operand
+		mos65xx_reg reg; ///< register value for REG operand
+		uint16_t imm; ///< immediate value for IMM operand
+		uint32_t mem; ///< address for MEM operand
 	};
 } cs_mos65xx_op;
 

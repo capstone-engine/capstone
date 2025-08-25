@@ -70,8 +70,8 @@ static const name_map insn_name_maps[256] = {
 	{ WASM_INS_I64_LOAD8_S, "i64.load8_s" },
 	{ WASM_INS_I64_LOAD8_U, "i64.load8_u" },
 	{ WASM_INS_I64_LOAD16_S, "i64.load16_s" },
-	{ WASM_INS_I64_LOAD16_U, "i64.load16_u"},
-	{ WASM_INS_I64_LOAD32_S, "i64.load32_s"},
+	{ WASM_INS_I64_LOAD16_U, "i64.load16_u" },
+	{ WASM_INS_I64_LOAD32_S, "i64.load32_s" },
 	{ WASM_INS_I64_LOAD32_U, "i64.load32_u" },
 	{ WASM_INS_I32_STORE, "i32.store" },
 	{ WASM_INS_I64_STORE, "i64.store" },
@@ -295,27 +295,25 @@ static const name_map group_name_maps[] = {
 	// generic groups
 	{ WASM_GRP_INVALID, NULL },
 	// special groups
-	{ WASM_GRP_NUMBERIC, "numberic"},
-	{ WASM_GRP_PARAMETRIC, "parametric"},
-	{ WASM_GRP_VARIABLE, "variable"},
-	{ WASM_GRP_MEMORY, "memory"},
-	{ WASM_GRP_CONTROL, "control"},
+	{ WASM_GRP_NUMBERIC, "numberic" },
+	{ WASM_GRP_PARAMETRIC, "parametric" },
+	{ WASM_GRP_VARIABLE, "variable" },
+	{ WASM_GRP_MEMORY, "memory" },
+	{ WASM_GRP_CONTROL, "control" },
 };
 #endif
 
 #ifndef CAPSTONE_DIET
 static const name_map kind_name_maps[] = {
-	{ WASM_OP_INVALID, "Invalid" },
-	{ WASM_OP_NONE, "None" },
-	{ WASM_OP_INT7, "uint7" },
-	{ WASM_OP_VARUINT32, "varuint32" },
-	{ WASM_OP_VARUINT64, "varuint64" },
-	{ WASM_OP_UINT32, "uint32" },
+	{ WASM_OP_INVALID, "Invalid" },	    { WASM_OP_NONE, "None" },
+	{ WASM_OP_INT7, "uint7" },	    { WASM_OP_VARUINT32, "varuint32" },
+	{ WASM_OP_VARUINT64, "varuint64" }, { WASM_OP_UINT32, "uint32" },
 	{ WASM_OP_UINT64, "uint64" },
 };
 #endif
 
-const char *WASM_kind_name(unsigned int id){
+const char *WASM_kind_name(unsigned int id)
+{
 #ifndef CAPSTONE_DIET
 	return id2name(kind_name_maps, ARR_SIZE(kind_name_maps), id);
 #else

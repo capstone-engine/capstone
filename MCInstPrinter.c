@@ -47,9 +47,9 @@ static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 }
 
 static bool matchAliasCondition(MCInst *MI, const MCRegisterInfo *MRI,
-								unsigned *OpIdx, const AliasMatchingData *M,
-								const AliasPatternCond *C,
-								bool *OrPredicateResult)
+				unsigned *OpIdx, const AliasMatchingData *M,
+				const AliasPatternCond *C,
+				bool *OrPredicateResult)
 {
 	// Feature tests are special, they don't consume operands.
 	if (C->Kind == AliasPatternCond_K_Feature)
@@ -84,25 +84,28 @@ static bool matchAliasCondition(MCInst *MI, const MCRegisterInfo *MRI,
 	case AliasPatternCond_K_Imm:
 		// Operand must be a specific immediate.
 		return MCOperand_isImm(Opnd) &&
-			   MCOperand_getImm(Opnd) == (int32_t)C->Value;
+		       MCOperand_getImm(Opnd) == (int32_t)C->Value;
 	case AliasPatternCond_K_Reg:
 		// Operand must be a specific register.
-		return MCOperand_isReg(Opnd) && MCOperand_getReg(Opnd) == C->Value;
+		return MCOperand_isReg(Opnd) &&
+		       MCOperand_getReg(Opnd) == C->Value;
 	case AliasPatternCond_K_TiedReg:
 		// Operand must match the register of another operand.
 		return MCOperand_isReg(Opnd) &&
-			   MCOperand_getReg(Opnd) ==
-				   MCOperand_getReg(MCInst_getOperand(MI, C->Value));
+		       MCOperand_getReg(Opnd) ==
+			       MCOperand_getReg(
+				       MCInst_getOperand(MI, C->Value));
 	case AliasPatternCond_K_RegClass:
 		// Operand must be a register in this class. Value is a register class
 		// id.
 		return MCOperand_isReg(Opnd) &&
-			   MCRegisterClass_contains(
-				   MCRegisterInfo_getRegClass(MRI, C->Value),
-				   MCOperand_getReg(Opnd));
+		       MCRegisterClass_contains(
+			       MCRegisterInfo_getRegClass(MRI, C->Value),
+			       MCOperand_getReg(Opnd));
 	case AliasPatternCond_K_Custom:
 		// Operand must match some custom criteria.
-		assert(M->ValidateMCOperand && "A custom validator should be set but isn't.");
+		assert(M->ValidateMCOperand &&
+		       "A custom validator should be set but isn't.");
 		return M->ValidateMCOperand(Opnd, C->Value);
 	case AliasPatternCond_K_Ignore:
 		// Operand can be anything.
@@ -141,25 +144,30 @@ const char *matchAliasPatterns(MCInst *MI, const AliasMatchingData *M)
 	uint32_t PatternOpcode = M->OpToPatterns[i].Opcode;
 	while (PatternOpcode < MIOpcode && validOpToPatter(&M->OpToPatterns[i]))
 		PatternOpcode = M->OpToPatterns[++i].Opcode;
-	if (PatternOpcode != MI->Opcode || !validOpToPatter(&M->OpToPatterns[i]))
+	if (PatternOpcode != MI->Opcode ||
+	    !validOpToPatter(&M->OpToPatterns[i]))
 		return NULL;
 
 	// // Try all patterns for this opcode.
 	uint32_t AsmStrOffset = ~0U;
-	const AliasPattern *Patterns = M->Patterns + M->OpToPatterns[i].PatternStart;
+	const AliasPattern *Patterns =
+		M->Patterns + M->OpToPatterns[i].PatternStart;
 	for (const AliasPattern *P = Patterns;
-		P != Patterns + M->OpToPatterns[i].NumPatterns; ++P) {
+	     P != Patterns + M->OpToPatterns[i].NumPatterns; ++P) {
 		// Check operand count first.
 		if (MCInst_getNumOperands(MI) != P->NumOperands)
 			return NULL;
 
 		// Test all conditions for this pattern.
-		const AliasPatternCond *Conds = M->PatternConds + P->AliasCondStart;
+		const AliasPatternCond *Conds =
+			M->PatternConds + P->AliasCondStart;
 		unsigned OpIdx = 0;
 		bool OrPredicateResult = false;
 		bool allMatch = true;
-		for (const AliasPatternCond *C = Conds; C != Conds + P->NumConds; ++C) {
-			if (!matchAliasCondition(MI, MI->MRI, &OpIdx, M, C, &OrPredicateResult)) {
+		for (const AliasPatternCond *C = Conds;
+		     C != Conds + P->NumConds; ++C) {
+			if (!matchAliasCondition(MI, MI->MRI, &OpIdx, M, C,
+						 &OrPredicateResult)) {
 				allMatch = false;
 				break;
 			}
@@ -180,7 +188,10 @@ const char *matchAliasPatterns(MCInst *MI, const AliasMatchingData *M)
 }
 
 // TODO Add functionality to toggle the flag.
-bool getUseMarkup(void) { return false; }
+bool getUseMarkup(void)
+{
+	return false;
+}
 
 /// Utility functions to make adding mark ups simpler.
 const char *markup(const char *s)
@@ -194,7 +205,8 @@ const char *markup(const char *s)
 
 // binary search for encoding in IndexType array
 // return -1 if not found, or index if found
-unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index, size_t size, uint16_t encoding)
+unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index,
+					 size_t size, uint16_t encoding)
 {
 	// binary searching since the index is sorted in encoding order
 	size_t left, right, m;
@@ -207,7 +219,7 @@ unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index, size_t s
 
 	left = 0;
 
-	while(left <= right) {
+	while (left <= right) {
 		m = (left + right) / 2;
 		if (encoding == index[m].encoding) {
 			// LLVM actually uses lower_bound for the index table search
@@ -230,7 +242,8 @@ unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index, size_t s
 
 // binary search for encoding in IndexTypeStr array
 // return -1 if not found, or index if found
-unsigned int binsearch_IndexTypeStrEncoding(const struct IndexTypeStr *index, size_t size, const char *name)
+unsigned int binsearch_IndexTypeStrEncoding(const struct IndexTypeStr *index,
+					    size_t size, const char *name)
 {
 	// binary searching since the index is sorted in encoding order
 	size_t left, right, m;
@@ -245,7 +258,7 @@ unsigned int binsearch_IndexTypeStrEncoding(const struct IndexTypeStr *index, si
 
 	left = 0;
 
-	while(left <= right) {
+	while (left <= right) {
 		m = (left + right) / 2;
 		if (strcmp(name, index[m].name) == 0) {
 			// LLVM actually uses lower_bound for the index table search

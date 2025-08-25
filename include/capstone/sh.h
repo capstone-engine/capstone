@@ -12,7 +12,7 @@ extern "C" {
 #include "cs_operand.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
+#pragma warning(disable : 4201)
 #endif
 
 /// SH registers and special registers
@@ -154,33 +154,33 @@ typedef enum {
 	SH_REG_DSP_RSVE,
 	SH_REG_DSP_RSVF,
 
-	SH_REG_ENDING,   // <-- mark the end of the list of registers
+	SH_REG_ENDING, // <-- mark the end of the list of registers
 } sh_reg;
 
 typedef enum {
-	SH_OP_INVALID = CS_OP_INVALID,  ///< = CS_OP_INVALID (Uninitialized).
+	SH_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
 	SH_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
 	SH_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
 	SH_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
-} sh_op_type;	
+} sh_op_type;
 
 typedef enum {
-	SH_OP_MEM_INVALID = 0,   /// <= Invalid
-	SH_OP_MEM_REG_IND,   /// <= Register indirect
-	SH_OP_MEM_REG_POST,  /// <= Register post increment
-	SH_OP_MEM_REG_PRE,   /// <= Register pre decrement
-	SH_OP_MEM_REG_DISP,  /// <= displacement
-	SH_OP_MEM_REG_R0,    /// <= R0 indexed
-	SH_OP_MEM_GBR_DISP,  /// <= GBR based displacement
-	SH_OP_MEM_GBR_R0,    /// <= GBR based R0 indexed
-	SH_OP_MEM_PCR,       /// <= PC relative
-	SH_OP_MEM_TBR_DISP,  /// <= TBR based displaysment
+	SH_OP_MEM_INVALID = 0, /// <= Invalid
+	SH_OP_MEM_REG_IND, /// <= Register indirect
+	SH_OP_MEM_REG_POST, /// <= Register post increment
+	SH_OP_MEM_REG_PRE, /// <= Register pre decrement
+	SH_OP_MEM_REG_DISP, /// <= displacement
+	SH_OP_MEM_REG_R0, /// <= R0 indexed
+	SH_OP_MEM_GBR_DISP, /// <= GBR based displacement
+	SH_OP_MEM_GBR_R0, /// <= GBR based R0 indexed
+	SH_OP_MEM_PCR, /// <= PC relative
+	SH_OP_MEM_TBR_DISP, /// <= TBR based displaysment
 } sh_op_mem_type;
 
 typedef struct sh_op_mem {
-	sh_op_mem_type address;  /// <= memory address
-	sh_reg reg;              /// <= base register
-	uint32_t disp;           /// <= displacement
+	sh_op_mem_type address; /// <= memory address
+	sh_reg reg; /// <= base register
+	uint32_t disp; /// <= displacement
 } sh_op_mem;
 
 typedef enum sh_dsp_insn {
@@ -208,7 +208,7 @@ typedef enum sh_dsp_insn {
 	SH_INS_DSP_PINC,
 	SH_INS_DSP_PCLR,
 	SH_INS_DSP_PDMSB,
-	SH_INS_DSP_PNEG, 
+	SH_INS_DSP_PNEG,
 	SH_INS_DSP_PCOPY,
 	SH_INS_DSP_PSTS,
 	SH_INS_DSP_PLDS,
@@ -225,7 +225,7 @@ typedef enum sh_dsp_operand {
 	SH_OP_DSP_REG_INDEX,
 	SH_OP_DSP_REG,
 	SH_OP_DSP_IMM,
-	
+
 } sh_dsp_operand;
 
 typedef enum sh_dsp_cc {
@@ -243,15 +243,15 @@ typedef struct sh_op_dsp {
 	uint8_t imm;
 	int size;
 } sh_op_dsp;
-	
+
 /// Instruction operand
 typedef struct cs_sh_op {
 	sh_op_type type;
 	union {
-		uint64_t imm;       ///< immediate value for IMM operand
-		sh_reg reg;	    ///< register value for REG operand
-		sh_op_mem mem; 	    ///< data when operand is targeting memory
-		sh_op_dsp dsp;	    ///< dsp instruction
+		uint64_t imm; ///< immediate value for IMM operand
+		sh_reg reg; ///< register value for REG operand
+		sh_op_mem mem; ///< data when operand is targeting memory
+		sh_op_dsp dsp; ///< dsp instruction
 	};
 } cs_sh_op;
 
@@ -416,7 +416,7 @@ typedef enum sh_insn {
 	SH_INS_XOR,
 	SH_INS_XTRCT,
 	SH_INS_DSP,
-	SH_INS_ENDING,   // <-- mark the end of the list of instructions
+	SH_INS_ENDING, // <-- mark the end of the list of instructions
 } sh_insn;
 
 /// Instruction structure
@@ -429,13 +429,13 @@ typedef struct cs_sh {
 
 /// Group of SH instructions
 typedef enum sh_insn_group {
-	SH_GRP_INVALID = 0,  ///< CS_GRUP_INVALID
-	SH_GRP_JUMP,  ///< = CS_GRP_JUMP
-	SH_GRP_CALL,  ///< = CS_GRP_CALL
-	SH_GRP_INT,  ///< = CS_GRP_INT
-	SH_GRP_RET,  ///< = CS_GRP_RET
+	SH_GRP_INVALID = 0, ///< CS_GRUP_INVALID
+	SH_GRP_JUMP, ///< = CS_GRP_JUMP
+	SH_GRP_CALL, ///< = CS_GRP_CALL
+	SH_GRP_INT, ///< = CS_GRP_INT
+	SH_GRP_RET, ///< = CS_GRP_RET
 	SH_GRP_IRET, ///< = CS_GRP_IRET
-        SH_GRP_PRIVILEGE,     ///< = CS_GRP_PRIVILEGE
+	SH_GRP_PRIVILEGE, ///< = CS_GRP_PRIVILEGE
 	SH_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 
 	SH_GRP_SH1,
@@ -448,8 +448,8 @@ typedef enum sh_insn_group {
 	SH_GRP_SH3DSP,
 	SH_GRP_SH4,
 	SH_GRP_SH4A,
-	
-	SH_GRP_ENDING,// <-- mark the end of the list of groups
+
+	SH_GRP_ENDING, // <-- mark the end of the list of groups
 } sh_insn_group;
 
 #ifdef __cplusplus

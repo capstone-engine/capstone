@@ -55,6 +55,6 @@ TestDetailARCOp *test_detail_arc_op_clone(const TestDetailARCOp *detail);
 void test_detail_arc_op_free(TestDetailARCOp *detail);
 
 bool test_expected_arc(csh *handle, const cs_arc *actual,
-			 const TestDetailARC *expected);
+		       const TestDetailARC *expected);
 
 #endif // TEST_DETAIL_ARC_H

@@ -152,15 +152,15 @@ static const cyaml_schema_field_t test_detail_mapping_schema[] = {
 	CYAML_FIELD_MAPPING_PTR(
 		"xtensa", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
 		xtensa, test_detail_xtensa_mapping_schema),
-	CYAML_FIELD_MAPPING_PTR(
-		"arc", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestDetail,
-		arc, test_detail_arc_mapping_schema),
-	CYAML_FIELD_SEQUENCE("regs_read",
-			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			     TestDetail, regs_read, &single_string_schema, 0, 255),
-	CYAML_FIELD_SEQUENCE("regs_write",
-			     CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			     TestDetail, regs_write, &single_string_schema, 0, 255),
+	CYAML_FIELD_MAPPING_PTR("arc", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+				TestDetail, arc,
+				test_detail_arc_mapping_schema),
+	CYAML_FIELD_SEQUENCE(
+		"regs_read", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetail, regs_read, &single_string_schema, 0, 255),
+	CYAML_FIELD_SEQUENCE(
+		"regs_write", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetail, regs_write, &single_string_schema, 0, 255),
 	CYAML_FIELD_SEQUENCE(
 		"regs_impl_read", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 		TestDetail, regs_impl_read, &single_string_schema, 0, 255),

@@ -119,7 +119,10 @@ static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned Reg = MCOperand_getReg(Op);
 		if (!MI->csh->ShowVSRNumsAsVR)
 			Reg = PPCInstrInfo_getRegNumForOperand(
-				MCInstrDesc_get(MCInst_getOpcode(MI), PPCDescs.Insts, ARR_SIZE(PPCDescs.Insts)), Reg, OpNo);
+				MCInstrDesc_get(MCInst_getOpcode(MI),
+						PPCDescs.Insts,
+						ARR_SIZE(PPCDescs.Insts)),
+				Reg, OpNo);
 
 		const char *RegName;
 		RegName = getVerboseConditionRegName(
@@ -445,7 +448,9 @@ static inline void printAbsBranchOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		return;
 	}
 
-	printUInt64(O, ((unsigned)MCOperand_getImm(MCInst_getOperand(MI, (OpNo))) << 2));
+	printUInt64(O,
+		    ((unsigned)MCOperand_getImm(MCInst_getOperand(MI, (OpNo)))
+		     << 2));
 }
 
 static inline void printcrbitm(MCInst *MI, unsigned OpNo, SStream *O)

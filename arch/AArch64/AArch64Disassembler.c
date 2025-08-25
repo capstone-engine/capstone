@@ -353,7 +353,8 @@ static DecodeStatus getInstruction(csh handle, const uint8_t *Bytes,
 
 		// Table is indexed backwards
 		const MCInstrDesc Desc =
-			AArch64Descs.Insts[ARR_SIZE(AArch64Descs.Insts) - 1 - MCInst_getOpcode(MI)];
+			AArch64Descs.Insts[ARR_SIZE(AArch64Descs.Insts) - 1 -
+					   MCInst_getOpcode(MI)];
 
 		// For Scalable Matrix Extension (SME) instructions that have an
 		// implicit operand for the accumulator (ZA) or implicit immediate zero
@@ -414,7 +415,8 @@ DecodeStatus AArch64_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
 	DecodeStatus Result = MCDisassembler_Fail;
 	Result =
 		getInstruction(handle, Bytes, ByteLen, MI, Size, Address, Info);
-	MCInst_handleWriteback(MI, AArch64Descs.Insts, ARR_SIZE(AArch64Descs.Insts));
+	MCInst_handleWriteback(MI, AArch64Descs.Insts,
+			       ARR_SIZE(AArch64Descs.Insts));
 	return Result;
 }
 
@@ -1922,8 +1924,8 @@ static DecodeStatus DecodeUnconditionalBranch(MCInst *Inst, uint32_t insn,
 static bool isInvalidPState(uint64_t Op1, uint64_t Op2)
 {
 	return Op1 == 0 && (Op2 == 0 || // CFINV
-							Op2 == 1 || // XAFlag
-							Op2 == 2);  // AXFlag
+			    Op2 == 1 || // XAFlag
+			    Op2 == 2); // AXFlag
 }
 
 static DecodeStatus DecodeSystemPStateImm0_15Instruction(MCInst *Inst,

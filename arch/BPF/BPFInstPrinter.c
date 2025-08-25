@@ -110,7 +110,8 @@ static void convert_operands(MCInst *MI, cs_bpf *bpf)
 		case BPF_MODE_ABS:
 			op = MCInst_getOperand(MI, 0);
 			push_op_mem(bpf, BPF_REG_INVALID,
-				    (uint32_t)MCOperand_getImm(op), EBPF_MODE(MI->csh->mode), true);
+				    (uint32_t)MCOperand_getImm(op),
+				    EBPF_MODE(MI->csh->mode), true);
 			break;
 		case BPF_MODE_IND:
 			op = MCInst_getOperand(MI, 0);

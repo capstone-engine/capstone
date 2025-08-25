@@ -76,9 +76,9 @@ void printPostIncOperand(MCInst *MI, unsigned OpNo, unsigned Imm, SStream *O);
 	static inline void CONCAT(printPostIncOperand, Amount)( \
 		MCInst * MI, unsigned OpNo, SStream *O) \
 	{ \
-		AArch64_add_cs_detail_1(MI, \
-			      CONCAT(AArch64_OP_GROUP_PostIncOperand, Amount), \
-			      OpNo, Amount); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_PostIncOperand, Amount), \
+			OpNo, Amount); \
 		printPostIncOperand(MI, OpNo, Amount, O); \
 	}
 DEFINE_printPostIncOperand(64);
@@ -182,9 +182,9 @@ void printAMIndexedWB(MCInst *MI, unsigned OpNum, unsigned Scale, SStream *O);
 	static inline void CONCAT(printUImm12Offset, Scale)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		AArch64_add_cs_detail_1(MI, \
-			      CONCAT(AArch64_OP_GROUP_UImm12Offset, Scale), \
-			      OpNum, Scale); \
+		AArch64_add_cs_detail_1( \
+			MI, CONCAT(AArch64_OP_GROUP_UImm12Offset, Scale), \
+			OpNum, Scale); \
 		printUImm12Offset(MI, OpNum, Scale, O); \
 	}
 DEFINE_printUImm12Offset(1);

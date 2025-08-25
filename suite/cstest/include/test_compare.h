@@ -165,7 +165,8 @@ typedef int32_t tbool;
 				#actual " != " #expected ": %" PRId32 \
 					" != %s%s\n", \
 				actual, expected, \
-				found ? "" : " <== id not found. Consider adding it in test_mapping.h::cs_enum_map."); \
+				found ? "" : \
+					" <== id not found. Consider adding it in test_mapping.h::cs_enum_map."); \
 			return ret_val; \
 		} \
 	}

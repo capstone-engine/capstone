@@ -21,26 +21,26 @@ cs_err M680X_global_init(cs_struct *ud)
 	if (errcode != CS_ERR_OK)
 		return errcode;
 
-	errcode =  M680X_instprinter_init(ud);
+	errcode = M680X_instprinter_init(ud);
 
 	if (errcode != CS_ERR_OK)
 		return errcode;
 
 	// verify if requested mode is valid
-	if (ud->mode & ~(CS_MODE_M680X_6800 | CS_MODE_M680X_6801 |
-			CS_MODE_M680X_6805 | CS_MODE_M680X_6808 |
-			CS_MODE_M680X_6809 | CS_MODE_M680X_6811 |
-			CS_MODE_M680X_6301 | CS_MODE_M680X_6309 |
-			CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08)) {
+	if (ud->mode &
+	    ~(CS_MODE_M680X_6800 | CS_MODE_M680X_6801 | CS_MODE_M680X_6805 |
+	      CS_MODE_M680X_6808 | CS_MODE_M680X_6809 | CS_MODE_M680X_6811 |
+	      CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | CS_MODE_M680X_CPU12 |
+	      CS_MODE_M680X_HCS08)) {
 		// At least one mode is not supported by M680X
 		return CS_ERR_MODE;
 	}
 
-	if (!(ud->mode & (CS_MODE_M680X_6800 | CS_MODE_M680X_6801 |
-				CS_MODE_M680X_6805 | CS_MODE_M680X_6808 |
-				CS_MODE_M680X_6809 | CS_MODE_M680X_6811 |
-				CS_MODE_M680X_6301 | CS_MODE_M680X_6309 |
-				CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08))) {
+	if (!(ud->mode &
+	      (CS_MODE_M680X_6800 | CS_MODE_M680X_6801 | CS_MODE_M680X_6805 |
+	       CS_MODE_M680X_6808 | CS_MODE_M680X_6809 | CS_MODE_M680X_6811 |
+	       CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | CS_MODE_M680X_CPU12 |
+	       CS_MODE_M680X_HCS08))) {
 		// At least the cpu type has to be selected. No default.
 		return CS_ERR_MODE;
 	}
@@ -74,4 +74,3 @@ cs_err M680X_option(cs_struct *handle, cs_opt_type type, size_t value)
 }
 
 #endif
-
