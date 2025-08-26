@@ -177,6 +177,8 @@ void SStream_concat0(SStream *ss, const char *s)
 		ss->index += 1;
 		ss->buffer[ss->index] = '\0';
 	}
+#else
+	ss->buffer[ss->index] = '\0';
 #endif
 }
 
@@ -201,6 +203,8 @@ void SStream_concat1(SStream *ss, const char c)
 		ss->buffer[ss->index] = '>';
 		ss->index++;
 	}
+#else
+	ss->buffer[ss->index] = '\0';
 #endif
 }
 
@@ -224,6 +228,8 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 		ss->buffer[ss->index] = '>';
 		ss->index += 1;
 	}
+#else
+	ss->buffer[ss->index] = '\0';
 #endif
 }
 
