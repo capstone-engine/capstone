@@ -23,20 +23,25 @@
 
 // Issue #681: Windows kernel does not support formatting float point
 #if defined(_KERNEL_MODE) && !defined(CAPSTONE_DIET)
-#if defined(CAPSTONE_HAS_ARM) || defined(CAPSTONE_HAS_AARCH64) || defined(CAPSTONE_HAS_M68K)
+#if defined(CAPSTONE_HAS_ARM) || defined(CAPSTONE_HAS_AARCH64) || \
+	defined(CAPSTONE_HAS_M68K)
 #define CAPSTONE_STR_INTERNAL(x) #x
 #define CAPSTONE_STR(x) CAPSTONE_STR_INTERNAL(x)
-#define CAPSTONE_MSVC_WRANING_PREFIX __FILE__ "("CAPSTONE_STR(__LINE__)") : warning message : "
+#define CAPSTONE_MSVC_WRANING_PREFIX \
+	__FILE__ "(" CAPSTONE_STR(__LINE__) ") : warning message : "
 
-#pragma message(CAPSTONE_MSVC_WRANING_PREFIX "Windows driver does not support full features for selected architecture(s). Define CAPSTONE_DIET to compile Capstone with only supported features. See issue #681 for details.")
+#pragma message( \
+	CAPSTONE_MSVC_WRANING_PREFIX \
+	"Windows driver does not support full features for selected architecture(s). Define CAPSTONE_DIET to compile Capstone with only supported features. See issue #681 for details.")
 
 #undef CAPSTONE_MSVC_WRANING_PREFIX
 #undef CAPSTONE_STR
 #undef CAPSTONE_STR_INTERNAL
 #endif
-#endif	// defined(_KERNEL_MODE) && !defined(CAPSTONE_DIET)
+#endif // defined(_KERNEL_MODE) && !defined(CAPSTONE_DIET)
 
-#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(CAPSTONE_DIET) && !defined(_KERNEL_MODE)
+#if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(CAPSTONE_DIET) && \
+	!defined(_KERNEL_MODE)
 #define INSN_CACHE_SIZE 32
 #else
 // reduce stack variable size for kernel/firmware
@@ -86,192 +91,155 @@ typedef struct cs_arch_config {
 
 #define CS_ARCH_CONFIG_ARM \
 	{ \
-		ARM_global_init, \
-		ARM_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 | CS_MODE_MCLASS | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN), \
+		ARM_global_init, ARM_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 | \
+			  CS_MODE_MCLASS | CS_MODE_THUMB | \
+			  CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_AARCH64 \
 	{ \
-		AArch64_global_init, \
-		AArch64_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_BIG_ENDIAN | CS_MODE_APPLE_PROPRIETARY), \
+		AArch64_global_init, AArch64_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | \
+			  CS_MODE_BIG_ENDIAN | CS_MODE_APPLE_PROPRIETARY), \
 	}
 #define CS_ARCH_CONFIG_MIPS \
 	{ \
-		Mips_global_init, \
-		Mips_option, \
-		~(CS_MODE_LITTLE_ENDIAN | \
-			CS_MODE_BIG_ENDIAN | \
-			CS_MODE_MIPS16 | \
-			CS_MODE_MIPS32 | \
-			CS_MODE_MIPS64 | \
-			CS_MODE_MICRO | \
-			CS_MODE_MIPS1 | \
-			CS_MODE_MIPS2 | \
-			CS_MODE_MIPS32R2 | \
-			CS_MODE_MIPS32R3 | \
-			CS_MODE_MIPS32R5 | \
-			CS_MODE_MIPS32R6 | \
-			CS_MODE_MIPS3 | \
-			CS_MODE_MIPS4 | \
-			CS_MODE_MIPS5 | \
-			CS_MODE_MIPS64R2 | \
-			CS_MODE_MIPS64R3 | \
-			CS_MODE_MIPS64R5 | \
-			CS_MODE_MIPS64R6 | \
-			CS_MODE_OCTEON | \
-			CS_MODE_OCTEONP | \
-			CS_MODE_NANOMIPS | \
-			CS_MODE_NMS1 | \
-			CS_MODE_I7200 | \
-			CS_MODE_MIPS_NOFLOAT | \
-			CS_MODE_MIPS_PTR64 \
-			), \
+		Mips_global_init, Mips_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | \
+			  CS_MODE_MIPS16 | CS_MODE_MIPS32 | CS_MODE_MIPS64 | \
+			  CS_MODE_MICRO | CS_MODE_MIPS1 | CS_MODE_MIPS2 | \
+			  CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | \
+			  CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | \
+			  CS_MODE_MIPS3 | CS_MODE_MIPS4 | CS_MODE_MIPS5 | \
+			  CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | \
+			  CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | \
+			  CS_MODE_OCTEON | CS_MODE_OCTEONP | \
+			  CS_MODE_NANOMIPS | CS_MODE_NMS1 | CS_MODE_I7200 | \
+			  CS_MODE_MIPS_NOFLOAT | CS_MODE_MIPS_PTR64), \
 	}
 #define CS_ARCH_CONFIG_X86 \
 	{ \
-		X86_global_init, \
-		X86_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_16), \
+		X86_global_init, X86_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
+			  CS_MODE_16), \
 	}
 #define CS_ARCH_CONFIG_PPC \
 	{ \
-		PPC_global_init, \
-		PPC_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | CS_MODE_BIG_ENDIAN \
-				| CS_MODE_QPX | CS_MODE_PS | CS_MODE_BOOKE | CS_MODE_SPE \
-				| CS_MODE_AIX_OS | CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 \
-				| CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE | CS_MODE_MSYNC | CS_MODE_MODERN_AIX_AS), \
+		PPC_global_init, PPC_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
+			  CS_MODE_BIG_ENDIAN | CS_MODE_QPX | CS_MODE_PS | \
+			  CS_MODE_BOOKE | CS_MODE_SPE | CS_MODE_AIX_OS | \
+			  CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 | \
+			  CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE | \
+			  CS_MODE_MSYNC | CS_MODE_MODERN_AIX_AS), \
 	}
 #define CS_ARCH_CONFIG_SPARC \
 	{ \
-		Sparc_global_init, \
-		Sparc_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | CS_MODE_V9 | CS_MODE_64 | CS_MODE_32), \
+		Sparc_global_init, Sparc_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | \
+			  CS_MODE_V9 | CS_MODE_64 | CS_MODE_32), \
 	}
 #define CS_ARCH_CONFIG_SYSTEMZ \
 	{ \
-		SystemZ_global_init, \
-		SystemZ_option, \
-		~(CS_MODE_BIG_ENDIAN | \
-			CS_MODE_SYSTEMZ_ARCH8 | \
-			CS_MODE_SYSTEMZ_ARCH9 | \
-			CS_MODE_SYSTEMZ_ARCH10 | \
-			CS_MODE_SYSTEMZ_ARCH11 | \
-			CS_MODE_SYSTEMZ_ARCH12 | \
-			CS_MODE_SYSTEMZ_ARCH13 | \
-			CS_MODE_SYSTEMZ_ARCH14 | \
-			CS_MODE_SYSTEMZ_Z10 | \
-			CS_MODE_SYSTEMZ_Z196 | \
-			CS_MODE_SYSTEMZ_ZEC12 | \
-			CS_MODE_SYSTEMZ_Z13 | \
-			CS_MODE_SYSTEMZ_Z14 | \
-			CS_MODE_SYSTEMZ_Z15 | \
-			CS_MODE_SYSTEMZ_Z16 | \
-			CS_MODE_SYSTEMZ_GENERIC \
-		), \
+		SystemZ_global_init, SystemZ_option, \
+			~(CS_MODE_BIG_ENDIAN | CS_MODE_SYSTEMZ_ARCH8 | \
+			  CS_MODE_SYSTEMZ_ARCH9 | CS_MODE_SYSTEMZ_ARCH10 | \
+			  CS_MODE_SYSTEMZ_ARCH11 | CS_MODE_SYSTEMZ_ARCH12 | \
+			  CS_MODE_SYSTEMZ_ARCH13 | CS_MODE_SYSTEMZ_ARCH14 | \
+			  CS_MODE_SYSTEMZ_Z10 | CS_MODE_SYSTEMZ_Z196 | \
+			  CS_MODE_SYSTEMZ_ZEC12 | CS_MODE_SYSTEMZ_Z13 | \
+			  CS_MODE_SYSTEMZ_Z14 | CS_MODE_SYSTEMZ_Z15 | \
+			  CS_MODE_SYSTEMZ_Z16 | CS_MODE_SYSTEMZ_GENERIC), \
 	}
 #define CS_ARCH_CONFIG_XCORE \
 	{ \
-		XCore_global_init, \
-		XCore_option, \
-		~(CS_MODE_BIG_ENDIAN), \
+		XCore_global_init, XCore_option, ~(CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_M68K \
 	{ \
-		M68K_global_init, \
-		M68K_option, \
-		~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_000 | CS_MODE_M68K_010 | CS_MODE_M68K_020 \
-				| CS_MODE_M68K_030 | CS_MODE_M68K_040 | CS_MODE_M68K_060), \
+		M68K_global_init, M68K_option, \
+			~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_000 | \
+			  CS_MODE_M68K_010 | CS_MODE_M68K_020 | \
+			  CS_MODE_M68K_030 | CS_MODE_M68K_040 | \
+			  CS_MODE_M68K_060), \
 	}
 #define CS_ARCH_CONFIG_TMS320C64X \
 	{ \
-		TMS320C64x_global_init, \
-		TMS320C64x_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
+		TMS320C64x_global_init, TMS320C64x_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_M680X \
 	{ \
-		M680X_global_init, \
-		M680X_option, \
-		~(CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | CS_MODE_M680X_6800 \
-				| CS_MODE_M680X_6801 | CS_MODE_M680X_6805 | CS_MODE_M680X_6808 \
-				| CS_MODE_M680X_6809 | CS_MODE_M680X_6811 | CS_MODE_M680X_CPU12 \
-				| CS_MODE_M680X_HCS08), \
+		M680X_global_init, M680X_option, \
+			~(CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | \
+			  CS_MODE_M680X_6800 | CS_MODE_M680X_6801 | \
+			  CS_MODE_M680X_6805 | CS_MODE_M680X_6808 | \
+			  CS_MODE_M680X_6809 | CS_MODE_M680X_6811 | \
+			  CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08), \
 	}
 #define CS_ARCH_CONFIG_EVM \
 	{ \
-		EVM_global_init, \
-		EVM_option, \
-		0, \
+		EVM_global_init, EVM_option, 0, \
 	}
 #define CS_ARCH_CONFIG_MOS65XX \
 	{ \
-		MOS65XX_global_init, \
-		MOS65XX_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_MOS65XX_6502 | CS_MODE_MOS65XX_65C02 \
-				| CS_MODE_MOS65XX_W65C02 | CS_MODE_MOS65XX_65816_LONG_MX), \
+		MOS65XX_global_init, MOS65XX_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_MOS65XX_6502 | \
+			  CS_MODE_MOS65XX_65C02 | CS_MODE_MOS65XX_W65C02 | \
+			  CS_MODE_MOS65XX_65816_LONG_MX), \
 	}
 #define CS_ARCH_CONFIG_WASM \
 	{ \
-		WASM_global_init, \
-		WASM_option, \
-		0, \
+		WASM_global_init, WASM_option, 0, \
 	}
 #define CS_ARCH_CONFIG_BPF \
 	{ \
-		BPF_global_init, \
-		BPF_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC | CS_MODE_BPF_EXTENDED \
-				| CS_MODE_BIG_ENDIAN), \
+		BPF_global_init, BPF_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC | \
+			  CS_MODE_BPF_EXTENDED | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_RISCV \
 	{ \
-		RISCV_global_init, \
-		RISCV_option, \
-		~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC), \
+		RISCV_global_init, RISCV_option, \
+			~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC), \
 	}
 #define CS_ARCH_CONFIG_SH \
 	{ \
-		SH_global_init, \
-		SH_option, \
-		~(CS_MODE_SH2 | CS_MODE_SH2A | CS_MODE_SH3 | \
-		  CS_MODE_SH4 | CS_MODE_SH4A | \
-		  CS_MODE_SHFPU | CS_MODE_SHDSP|CS_MODE_BIG_ENDIAN), \
+		SH_global_init, SH_option, \
+			~(CS_MODE_SH2 | CS_MODE_SH2A | CS_MODE_SH3 | \
+			  CS_MODE_SH4 | CS_MODE_SH4A | CS_MODE_SHFPU | \
+			  CS_MODE_SHDSP | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_TRICORE \
 	{ \
-		TRICORE_global_init, \
-		TRICORE_option, \
-		~(CS_MODE_TRICORE_110 | CS_MODE_TRICORE_120 | CS_MODE_TRICORE_130 \
-		| CS_MODE_TRICORE_131 | CS_MODE_TRICORE_160 | CS_MODE_TRICORE_161 \
-		| CS_MODE_TRICORE_162 | CS_MODE_TRICORE_180 | CS_MODE_LITTLE_ENDIAN), \
+		TRICORE_global_init, TRICORE_option, \
+			~(CS_MODE_TRICORE_110 | CS_MODE_TRICORE_120 | \
+			  CS_MODE_TRICORE_130 | CS_MODE_TRICORE_131 | \
+			  CS_MODE_TRICORE_160 | CS_MODE_TRICORE_161 | \
+			  CS_MODE_TRICORE_162 | CS_MODE_TRICORE_180 | \
+			  CS_MODE_LITTLE_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_ALPHA \
 	{ \
-		ALPHA_global_init, \
-		ALPHA_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
+		ALPHA_global_init, ALPHA_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_LOONGARCH \
 	{ \
-		LoongArch_global_init, \
-		LoongArch_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_LOONGARCH32 | CS_MODE_LOONGARCH64), \
+		LoongArch_global_init, LoongArch_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_LOONGARCH32 | \
+			  CS_MODE_LOONGARCH64), \
 	}
 #define CS_ARCH_CONFIG_XTENSA \
 	{ \
-		Xtensa_global_init, \
-		Xtensa_option, \
-		~(CS_MODE_XTENSA_ESP32 | CS_MODE_XTENSA_ESP32S2 | \
-		  CS_MODE_XTENSA_ESP8266), \
+		Xtensa_global_init, Xtensa_option, \
+			~(CS_MODE_XTENSA_ESP32 | CS_MODE_XTENSA_ESP32S2 | \
+			  CS_MODE_XTENSA_ESP8266), \
 	}
 
 #define CS_ARCH_CONFIG_ARC \
 	{ \
-		ARC_global_init, \
-		ARC_option, \
-		~(CS_MODE_LITTLE_ENDIAN), \
+		ARC_global_init, ARC_option, ~(CS_MODE_LITTLE_ENDIAN), \
 	}
 
 #ifdef CAPSTONE_USE_ARCH_REGISTRATION
@@ -472,9 +440,8 @@ static const uint32_t all_arch = 0
 #ifdef CAPSTONE_HAS_ARC
 				 | (1 << CS_ARCH_ARC)
 #endif
-;
+	;
 #endif
-
 
 #if defined(CAPSTONE_USE_SYS_DYN_MEM)
 #if !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
@@ -487,7 +454,7 @@ cs_free_t cs_mem_free = free;
 cs_vsnprintf_t cs_vsnprintf = _vsnprintf;
 #else
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
-#endif  // defined(_WIN32_WCE)
+#endif // defined(_WIN32_WCE)
 
 #elif defined(_KERNEL_MODE)
 // Windows driver
@@ -498,11 +465,11 @@ cs_free_t cs_mem_free = cs_winkernel_free;
 cs_vsnprintf_t cs_vsnprintf = cs_winkernel_vsnprintf;
 #else
 // OSX kernel
-extern void* kern_os_malloc(size_t size);
-extern void kern_os_free(void* addr);
-extern void* kern_os_realloc(void* addr, size_t nsize);
+extern void *kern_os_malloc(size_t size);
+extern void kern_os_free(void *addr);
+extern void *kern_os_realloc(void *addr, size_t nsize);
 
-static void* cs_kern_os_calloc(size_t num, size_t size)
+static void *cs_kern_os_calloc(size_t num, size_t size)
 {
 	return kern_os_malloc(num * size); // malloc bzeroes the buffer
 }
@@ -512,7 +479,7 @@ cs_calloc_t cs_mem_calloc = cs_kern_os_calloc;
 cs_realloc_t cs_mem_realloc = kern_os_realloc;
 cs_free_t cs_mem_free = kern_os_free;
 cs_vsnprintf_t cs_vsnprintf = vsnprintf;
-#endif  // !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
+#endif // !defined(CAPSTONE_HAS_OSXKERNEL) && !defined(_KERNEL_MODE)
 #else
 // User-defined
 cs_malloc_t cs_mem_malloc = NULL;
@@ -521,7 +488,7 @@ cs_realloc_t cs_mem_realloc = NULL;
 cs_free_t cs_mem_free = NULL;
 cs_vsnprintf_t cs_vsnprintf = NULL;
 
-#endif  // defined(CAPSTONE_USE_SYS_DYN_MEM)
+#endif // defined(CAPSTONE_USE_SYS_DYN_MEM)
 
 CAPSTONE_EXPORT
 unsigned int CAPSTONE_API cs_version(int *major, int *minor)
@@ -707,13 +674,12 @@ void CAPSTONE_API cs_arch_register_arc(void)
 #endif
 }
 
-
 CAPSTONE_EXPORT
 bool CAPSTONE_API cs_support(int query)
 {
 	if (query == CS_ARCH_ALL)
 		return all_arch ==
-		    ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_AARCH64) |
+		       ((1 << CS_ARCH_ARM) | (1 << CS_ARCH_AARCH64) |
 			(1 << CS_ARCH_MIPS) | (1 << CS_ARCH_X86) |
 			(1 << CS_ARCH_PPC) | (1 << CS_ARCH_SPARC) |
 			(1 << CS_ARCH_SYSTEMZ) | (1 << CS_ARCH_XCORE) |
@@ -723,7 +689,7 @@ bool CAPSTONE_API cs_support(int query)
 			(1 << CS_ARCH_WASM) | (1 << CS_ARCH_BPF) |
 			(1 << CS_ARCH_SH) | (1 << CS_ARCH_TRICORE) |
 			(1 << CS_ARCH_ALPHA) | (1 << CS_ARCH_HPPA) |
-			(1 << CS_ARCH_LOONGARCH) | (1 << CS_ARCH_XTENSA) | 
+			(1 << CS_ARCH_LOONGARCH) | (1 << CS_ARCH_XTENSA) |
 			(1 << CS_ARCH_ARC));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
@@ -762,41 +728,41 @@ cs_err CAPSTONE_API cs_errno(csh handle)
 }
 
 CAPSTONE_EXPORT
-const char * CAPSTONE_API cs_strerror(cs_err code)
+const char *CAPSTONE_API cs_strerror(cs_err code)
 {
-	switch(code) {
-		default:
-			return "Unknown error code";
-		case CS_ERR_OK:
-			return "OK (CS_ERR_OK)";
-		case CS_ERR_MEM:
-			return "Out of memory (CS_ERR_MEM)";
-		case CS_ERR_ARCH:
-			return "Invalid/unsupported architecture(CS_ERR_ARCH)";
-		case CS_ERR_HANDLE:
-			return "Invalid handle (CS_ERR_HANDLE)";
-		case CS_ERR_CSH:
-			return "Invalid csh (CS_ERR_CSH)";
-		case CS_ERR_MODE:
-			return "Invalid mode (CS_ERR_MODE)";
-		case CS_ERR_OPTION:
-			return "Invalid option (CS_ERR_OPTION)";
-		case CS_ERR_DETAIL:
-			return "Details are unavailable (CS_ERR_DETAIL)";
-		case CS_ERR_MEMSETUP:
-			return "Dynamic memory management uninitialized (CS_ERR_MEMSETUP)";
-		case CS_ERR_VERSION:
-			return "Different API version between core & binding (CS_ERR_VERSION)";
-		case CS_ERR_DIET:
-			return "Information irrelevant in diet engine (CS_ERR_DIET)";
-		case CS_ERR_SKIPDATA:
-			return "Information irrelevant for 'data' instruction in SKIPDATA mode (CS_ERR_SKIPDATA)";
-		case CS_ERR_X86_ATT:
-			return "AT&T syntax is unavailable (CS_ERR_X86_ATT)";
-		case CS_ERR_X86_INTEL:
-			return "INTEL syntax is unavailable (CS_ERR_X86_INTEL)";
-		case CS_ERR_X86_MASM:
-			return "MASM syntax is unavailable (CS_ERR_X86_MASM)";
+	switch (code) {
+	default:
+		return "Unknown error code";
+	case CS_ERR_OK:
+		return "OK (CS_ERR_OK)";
+	case CS_ERR_MEM:
+		return "Out of memory (CS_ERR_MEM)";
+	case CS_ERR_ARCH:
+		return "Invalid/unsupported architecture(CS_ERR_ARCH)";
+	case CS_ERR_HANDLE:
+		return "Invalid handle (CS_ERR_HANDLE)";
+	case CS_ERR_CSH:
+		return "Invalid csh (CS_ERR_CSH)";
+	case CS_ERR_MODE:
+		return "Invalid mode (CS_ERR_MODE)";
+	case CS_ERR_OPTION:
+		return "Invalid option (CS_ERR_OPTION)";
+	case CS_ERR_DETAIL:
+		return "Details are unavailable (CS_ERR_DETAIL)";
+	case CS_ERR_MEMSETUP:
+		return "Dynamic memory management uninitialized (CS_ERR_MEMSETUP)";
+	case CS_ERR_VERSION:
+		return "Different API version between core & binding (CS_ERR_VERSION)";
+	case CS_ERR_DIET:
+		return "Information irrelevant in diet engine (CS_ERR_DIET)";
+	case CS_ERR_SKIPDATA:
+		return "Information irrelevant for 'data' instruction in SKIPDATA mode (CS_ERR_SKIPDATA)";
+	case CS_ERR_X86_ATT:
+		return "AT&T syntax is unavailable (CS_ERR_X86_ATT)";
+	case CS_ERR_X86_INTEL:
+		return "INTEL syntax is unavailable (CS_ERR_X86_INTEL)";
+	case CS_ERR_X86_MASM:
+		return "MASM syntax is unavailable (CS_ERR_X86_MASM)";
 	}
 }
 
@@ -805,7 +771,8 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
 	cs_err err;
 	struct cs_struct *ud = NULL;
-	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc || !cs_mem_free || !cs_vsnprintf)
+	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc ||
+	    !cs_mem_free || !cs_vsnprintf)
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
 		return CS_ERR_MEMSETUP;
@@ -867,7 +834,7 @@ cs_err CAPSTONE_API cs_close(csh *handle)
 
 	// free the linked list of customized mnemonic
 	tmp = ud->mnem_list;
-	while(tmp) {
+	while (tmp) {
 		next = tmp->next;
 		cs_mem_free(tmp);
 		tmp = next;
@@ -898,10 +865,11 @@ static int str_replace(char *result, char *target, const char *str1, char *str2)
 	}
 
 	// only perform replacement if the output fits into result
-	if (target_len - str1_len + strlen(str2) <= CS_MNEMONIC_SIZE - 1)  {
+	if (target_len - str1_len + strlen(str2) <= CS_MNEMONIC_SIZE - 1) {
 		// copy str2 to beginning of result
 		// skip str1 - already replaced by str2
-		snprintf(result, CS_MNEMONIC_SIZE, "%s%s", str2, target + str1_len);
+		snprintf(result, CS_MNEMONIC_SIZE, "%s%s", str2,
+			 target + str1_len);
 
 		return 0;
 	} else
@@ -910,8 +878,9 @@ static int str_replace(char *result, char *target, const char *str1, char *str2)
 #endif
 
 // fill insn with mnemonic & operands info
-static void fill_insn(struct cs_struct *handle, cs_insn *insn, SStream *OS, MCInst *mci,
-		PostPrinter_t postprinter, const uint8_t *code)
+static void fill_insn(struct cs_struct *handle, cs_insn *insn, SStream *OS,
+		      MCInst *mci, PostPrinter_t postprinter,
+		      const uint8_t *code)
 {
 #ifndef CAPSTONE_DIET
 	char *sp;
@@ -936,24 +905,31 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, SStream *OS, MCIn
 #ifndef CAPSTONE_DIET
 	memset(insn->mnemonic, '\0', sizeof(insn->mnemonic));
 	memset(insn->op_str, '\0', sizeof(insn->op_str));
-	SStream_extract_mnem_opstr(OS, insn->mnemonic, sizeof(insn->mnemonic), insn->op_str, sizeof(insn->op_str));
+	SStream_extract_mnem_opstr(OS, insn->mnemonic, sizeof(insn->mnemonic),
+				   insn->op_str, sizeof(insn->op_str));
 	for (sp = insn->mnemonic; *sp; sp++) {
-		if (*sp == '|')	// lock|rep prefix for x86
+		if (*sp == '|') // lock|rep prefix for x86
 			*sp = ' ';
 	}
 
 	// we might have customized mnemonic
 	if (handle->mnem_list) {
 		struct insn_mnem *tmp = handle->mnem_list;
-		while(tmp) {
+		while (tmp) {
 			if (tmp->insn.id == insn->id) {
 				char str[CS_MNEMONIC_SIZE] = { 0 };
 
-				if (!str_replace(str, insn->mnemonic, cs_insn_name((csh)handle, insn->id), tmp->insn.mnemonic)) {
+				if (!str_replace(str, insn->mnemonic,
+						 cs_insn_name((csh)handle,
+							      insn->id),
+						 tmp->insn.mnemonic)) {
 					// copy result to mnemonic
-					CS_ASSERT_RET(sizeof(insn->mnemonic) == sizeof(str));
-					(void)memcpy(insn->mnemonic, str, sizeof(insn->mnemonic));
-					insn->mnemonic[sizeof(insn->mnemonic) - 1] = '\0';
+					CS_ASSERT_RET(sizeof(insn->mnemonic) ==
+						      sizeof(str));
+					(void)memcpy(insn->mnemonic, str,
+						     sizeof(insn->mnemonic));
+					insn->mnemonic[sizeof(insn->mnemonic) -
+						       1] = '\0';
 				}
 
 				break;
@@ -968,78 +944,78 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, SStream *OS, MCIn
 // this very much depends on instruction alignment requirement of each arch.
 static uint8_t skipdata_size(cs_struct *handle)
 {
-	switch(handle->arch) {
-		default:
-			// should never reach
-			return (uint8_t)-1;
-		case CS_ARCH_ARM:
-			// skip 2 bytes on Thumb mode.
-			if (handle->mode & CS_MODE_THUMB)
-				return 2;
-			// otherwise, skip 4 bytes
-			return 4;
-		case CS_ARCH_AARCH64:
-		case CS_ARCH_MIPS:
-		case CS_ARCH_PPC:
-		case CS_ARCH_SPARC:
-			// skip 4 bytes
-			return 4;
-		case CS_ARCH_SYSTEMZ:
-			// SystemZ instruction's length can be 2, 4 or 6 bytes,
-			// so we just skip 2 bytes
+	switch (handle->arch) {
+	default:
+		// should never reach
+		return (uint8_t)-1;
+	case CS_ARCH_ARM:
+		// skip 2 bytes on Thumb mode.
+		if (handle->mode & CS_MODE_THUMB)
 			return 2;
-		case CS_ARCH_X86:
-			// X86 has no restriction on instruction alignment
-			return 1;
-		case CS_ARCH_XCORE:
-			// XCore instruction's length can be 2 or 4 bytes,
-			// so we just skip 2 bytes
+		// otherwise, skip 4 bytes
+		return 4;
+	case CS_ARCH_AARCH64:
+	case CS_ARCH_MIPS:
+	case CS_ARCH_PPC:
+	case CS_ARCH_SPARC:
+		// skip 4 bytes
+		return 4;
+	case CS_ARCH_SYSTEMZ:
+		// SystemZ instruction's length can be 2, 4 or 6 bytes,
+		// so we just skip 2 bytes
+		return 2;
+	case CS_ARCH_X86:
+		// X86 has no restriction on instruction alignment
+		return 1;
+	case CS_ARCH_XCORE:
+		// XCore instruction's length can be 2 or 4 bytes,
+		// so we just skip 2 bytes
+		return 2;
+	case CS_ARCH_M68K:
+		// M68K has 2 bytes instruction alignment but contain multibyte instruction so we skip 2 bytes
+		return 2;
+	case CS_ARCH_TMS320C64X:
+		// TMS320C64x alignment is 4.
+		return 4;
+	case CS_ARCH_M680X:
+		// M680X alignment is 1.
+		return 1;
+	case CS_ARCH_EVM:
+		// EVM alignment is 1.
+		return 1;
+	case CS_ARCH_WASM:
+		//WASM alignment is 1
+		return 1;
+	case CS_ARCH_MOS65XX:
+		// MOS65XX alignment is 1.
+		return 1;
+	case CS_ARCH_BPF:
+		// both classic and extended BPF have alignment 8.
+		return 8;
+	case CS_ARCH_RISCV:
+		// special compress mode
+		if (handle->mode & CS_MODE_RISCVC)
 			return 2;
-		case CS_ARCH_M68K:
-			// M68K has 2 bytes instruction alignment but contain multibyte instruction so we skip 2 bytes
-			return 2;
-		case CS_ARCH_TMS320C64X:
-			// TMS320C64x alignment is 4.
-			return 4;
-		case CS_ARCH_M680X:
-			// M680X alignment is 1.
-			return 1;
-		case CS_ARCH_EVM:
-			// EVM alignment is 1.
-			return 1;
-		case CS_ARCH_WASM:
-			//WASM alignment is 1
-			return 1;
-		case CS_ARCH_MOS65XX:
-			// MOS65XX alignment is 1.
-			return 1;
-		case CS_ARCH_BPF:
-			// both classic and extended BPF have alignment 8.
-			return 8;
-		case CS_ARCH_RISCV:
-			// special compress mode
-			if (handle->mode & CS_MODE_RISCVC)
-				return 2;
-			return 4;
-		case CS_ARCH_SH:
-			return 2;
-		case CS_ARCH_TRICORE:
-			// TriCore instruction's length can be 2 or 4 bytes,
-			// so we just skip 2 bytes
-			return 2;
-		case CS_ARCH_ALPHA:
-			// Alpha alignment is 4.
-			return 4;
-		case CS_ARCH_HPPA:
-			// Hppa alignment is 4.
-			return 4;
-		case CS_ARCH_LOONGARCH:
-			// LoongArch alignment is 4.
-			return 4;
-		case CS_ARCH_ARC:
-			// ARC instruction's length can be 2, 4, 6 or 8 bytes,
-			// therefore, skip 2 bytes
-			return 2;
+		return 4;
+	case CS_ARCH_SH:
+		return 2;
+	case CS_ARCH_TRICORE:
+		// TriCore instruction's length can be 2 or 4 bytes,
+		// so we just skip 2 bytes
+		return 2;
+	case CS_ARCH_ALPHA:
+		// Alpha alignment is 4.
+		return 4;
+	case CS_ARCH_HPPA:
+		// Hppa alignment is 4.
+		return 4;
+	case CS_ARCH_LOONGARCH:
+		// LoongArch alignment is 4.
+		return 4;
+	case CS_ARCH_ARC:
+		// ARC instruction's length can be 2, 4, 6 or 8 bytes,
+		// therefore, skip 2 bytes
+		return 2;
 	}
 }
 
@@ -1067,102 +1043,117 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 	if (!handle)
 		return CS_ERR_CSH;
 
-	switch(type) {
-		default:
-			break;
+	switch (type) {
+	default:
+		break;
 
-		case CS_OPT_UNSIGNED:
-			handle->imm_unsigned = (cs_opt_value)value;
-			return CS_ERR_OK;
+	case CS_OPT_UNSIGNED:
+		handle->imm_unsigned = (cs_opt_value)value;
+		return CS_ERR_OK;
 
-		case CS_OPT_DETAIL:
-			handle->detail_opt |= (cs_opt_value)value;
-			return CS_ERR_OK;
+	case CS_OPT_DETAIL:
+		handle->detail_opt |= (cs_opt_value)value;
+		return CS_ERR_OK;
 
-		case CS_OPT_SKIPDATA:
-			handle->skipdata = (value == CS_OPT_ON);
-			if (handle->skipdata) {
-				if (handle->skipdata_size == 0) {
-					// set the default skipdata size
-					handle->skipdata_size = skipdata_size(handle);
-				}
+	case CS_OPT_SKIPDATA:
+		handle->skipdata = (value == CS_OPT_ON);
+		if (handle->skipdata) {
+			if (handle->skipdata_size == 0) {
+				// set the default skipdata size
+				handle->skipdata_size = skipdata_size(handle);
 			}
-			return CS_ERR_OK;
+		}
+		return CS_ERR_OK;
 
-		case CS_OPT_SKIPDATA_SETUP:
-			if (value) {
-				handle->skipdata_setup = *((cs_opt_skipdata *)value);
-				if (handle->skipdata_setup.mnemonic == NULL) {
-					handle->skipdata_setup.mnemonic = SKIPDATA_MNEM;
-				}
+	case CS_OPT_SKIPDATA_SETUP:
+		if (value) {
+			handle->skipdata_setup = *((cs_opt_skipdata *)value);
+			if (handle->skipdata_setup.mnemonic == NULL) {
+				handle->skipdata_setup.mnemonic = SKIPDATA_MNEM;
 			}
-			return CS_ERR_OK;
+		}
+		return CS_ERR_OK;
 
-		case CS_OPT_MNEMONIC:
-			opt = (cs_opt_mnem *)value;
-			if (opt->id) {
-				if (opt->mnemonic) {
-					struct insn_mnem *tmp;
+	case CS_OPT_MNEMONIC:
+		opt = (cs_opt_mnem *)value;
+		if (opt->id) {
+			if (opt->mnemonic) {
+				struct insn_mnem *tmp;
 
-					// add new instruction, or replace existing instruction
-					// 1. find if we already had this insn in the linked list
-					tmp = handle->mnem_list;
-					while(tmp) {
-						if (tmp->insn.id == opt->id) {
-							// found this instruction, so replace its mnemonic
-							(void)strncpy(tmp->insn.mnemonic, opt->mnemonic, sizeof(tmp->insn.mnemonic) - 1);
-							tmp->insn.mnemonic[sizeof(tmp->insn.mnemonic) - 1] = '\0';
-							break;
+				// add new instruction, or replace existing instruction
+				// 1. find if we already had this insn in the linked list
+				tmp = handle->mnem_list;
+				while (tmp) {
+					if (tmp->insn.id == opt->id) {
+						// found this instruction, so replace its mnemonic
+						(void)strncpy(
+							tmp->insn.mnemonic,
+							opt->mnemonic,
+							sizeof(tmp->insn
+								       .mnemonic) -
+								1);
+						tmp->insn.mnemonic
+							[sizeof(tmp->insn.mnemonic) -
+							 1] = '\0';
+						break;
+					}
+					tmp = tmp->next;
+				}
+
+				// 2. add this instruction if we have not had it yet
+				if (!tmp) {
+					tmp = cs_mem_malloc(sizeof(*tmp));
+					tmp->insn.id = opt->id;
+					(void)strncpy(
+						tmp->insn.mnemonic,
+						opt->mnemonic,
+						sizeof(tmp->insn.mnemonic) - 1);
+					tmp->insn.mnemonic
+						[sizeof(tmp->insn.mnemonic) - 1] =
+						'\0';
+					// this new instruction is heading the list
+					tmp->next = handle->mnem_list;
+					handle->mnem_list = tmp;
+				}
+				return CS_ERR_OK;
+			} else {
+				struct insn_mnem *prev, *tmp;
+
+				// we want to delete an existing instruction
+				// iterate the list to find the instruction to remove it
+				tmp = handle->mnem_list;
+				prev = tmp;
+				while (tmp) {
+					if (tmp->insn.id == opt->id) {
+						// delete this instruction
+						if (tmp == prev) {
+							// head of the list
+							handle->mnem_list =
+								tmp->next;
+						} else {
+							prev->next = tmp->next;
 						}
-						tmp = tmp->next;
+						cs_mem_free(tmp);
+						break;
 					}
-
-					// 2. add this instruction if we have not had it yet
-					if (!tmp) {
-						tmp = cs_mem_malloc(sizeof(*tmp));
-						tmp->insn.id = opt->id;
-						(void)strncpy(tmp->insn.mnemonic, opt->mnemonic, sizeof(tmp->insn.mnemonic) - 1);
-						tmp->insn.mnemonic[sizeof(tmp->insn.mnemonic) - 1] = '\0';
-						// this new instruction is heading the list
-						tmp->next = handle->mnem_list;
-						handle->mnem_list = tmp;
-					}
-					return CS_ERR_OK;
-				} else {
-					struct insn_mnem *prev, *tmp;
-
-					// we want to delete an existing instruction
-					// iterate the list to find the instruction to remove it
-					tmp = handle->mnem_list;
 					prev = tmp;
-					while(tmp) {
-						if (tmp->insn.id == opt->id) {
-							// delete this instruction
-							if (tmp == prev) {
-								// head of the list
-								handle->mnem_list = tmp->next;
-							} else {
-								prev->next = tmp->next;
-							}
-							cs_mem_free(tmp);
-							break;
-						}
-						prev = tmp;
-						tmp = tmp->next;
-					}
+					tmp = tmp->next;
 				}
 			}
-			return CS_ERR_OK;
+		}
+		return CS_ERR_OK;
 
-		case CS_OPT_MODE:
-			// verify if requested mode is valid
-			if (value & arch_configs[handle->arch].arch_disallowed_mode_mask) {
-				return CS_ERR_OPTION;
-			}
-			break;
-		case CS_OPT_ONLY_OFFSET_BRANCH:
-			handle->PrintBranchImmAsAddress = value == CS_OPT_ON ? false : true;
-			return CS_ERR_OK;
+	case CS_OPT_MODE:
+		// verify if requested mode is valid
+		if (value &
+		    arch_configs[handle->arch].arch_disallowed_mode_mask) {
+			return CS_ERR_OPTION;
+		}
+		break;
+	case CS_OPT_ONLY_OFFSET_BRANCH:
+		handle->PrintBranchImmAsAddress = value == CS_OPT_ON ? false :
+								       true;
+		return CS_ERR_OK;
 	}
 
 	if (!arch_configs[handle->arch].arch_option)
@@ -1178,7 +1169,7 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 	char *p = opstr;
 	int len;
 	size_t i;
-	size_t available = sizeof(((cs_insn*)NULL)->op_str);
+	size_t available = sizeof(((cs_insn *)NULL)->op_str);
 
 	if (!size) {
 		opstr[0] = '\0';
@@ -1186,10 +1177,10 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 	}
 
 	len = cs_snprintf(p, available, "0x%02x", buffer[0]);
-	p+= len;
+	p += len;
 	available -= len;
 
-	for(i = 1; i < size; i++) {
+	for (i = 1; i < size; i++) {
 		len = cs_snprintf(p, available, ", 0x%02x", buffer[i]);
 		if (len < 0) {
 			break;
@@ -1197,7 +1188,7 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 		if ((size_t)len > available - 1) {
 			break;
 		}
-		p+= len;
+		p += len;
 		available -= len;
 	}
 }
@@ -1206,16 +1197,18 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 // dynamically allocate memory to contain disasm insn
 // NOTE: caller must free() the allocated memory itself to avoid memory leaking
 CAPSTONE_EXPORT
-size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64_t offset, size_t count, cs_insn **insn)
+size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size,
+			      uint64_t offset, size_t count, cs_insn **insn)
 {
 	struct cs_struct *handle;
 	MCInst mci;
 	uint16_t insn_size;
 	size_t c = 0, i;
-	unsigned int f = 0;	// index of the next instruction in the cache
-	cs_insn *insn_cache;	// cache contains disassembled instructions
+	unsigned int f = 0; // index of the next instruction in the cache
+	cs_insn *insn_cache; // cache contains disassembled instructions
 	void *total = NULL;
-	size_t total_size = 0;	// total size of output buffer containing all insns
+	size_t total_size =
+		0; // total size of output buffer containing all insns
 	bool r;
 	void *tmp;
 	size_t skipdata_bytes;
@@ -1236,7 +1229,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 
 #ifdef CAPSTONE_USE_SYS_DYN_MEM
 	if (count > 0 && count <= INSN_CACHE_SIZE)
-		cache_size = (unsigned int) count;
+		cache_size = (unsigned int)count;
 #endif
 
 	// save the original offset for SKIPDATA
@@ -1278,7 +1271,8 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 		mci.flat_insn->op_str[0] = '\0';
 #endif
 
-		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset, handle->getinsn_info);
+		r = handle->disasm(ud, buffer, size, &mci, &insn_size, offset,
+				   handle->getinsn_info);
 		if (r) {
 			SStream ss;
 			SStream_Init(&ss);
@@ -1291,14 +1285,16 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 
 			SStream_opt_unum(&ss, handle->imm_unsigned);
 			handle->printer(&mci, &ss, handle->printer_info);
-			fill_insn(handle, insn_cache, &ss, &mci, handle->post_printer, buffer);
+			fill_insn(handle, insn_cache, &ss, &mci,
+				  handle->post_printer, buffer);
 
 			// adjust for pseudo opcode (X86)
-			if (handle->arch == CS_ARCH_X86 && insn_cache->id != X86_INS_VCMP)
+			if (handle->arch == CS_ARCH_X86 &&
+			    insn_cache->id != X86_INS_VCMP)
 				insn_cache->id += mci.popcode_adjust;
 
 			next_offset = insn_size;
-		} else	{
+		} else {
 			// encounter a broken instruction
 
 			// free memory of @detail pointer
@@ -1312,8 +1308,10 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 				break;
 
 			if (handle->skipdata_setup.callback) {
-				skipdata_bytes = handle->skipdata_setup.callback(buffer_org, size_org,
-						(size_t)(offset - offset_org), handle->skipdata_setup.user_data);
+				skipdata_bytes = handle->skipdata_setup.callback(
+					buffer_org, size_org,
+					(size_t)(offset - offset_org),
+					handle->skipdata_setup.user_data);
 				if (skipdata_bytes > size)
 					// remaining data is not enough
 					break;
@@ -1325,7 +1323,8 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 				skipdata_bytes = handle->skipdata_size;
 
 			// we have to skip some amount of data, depending on arch & mode
-			insn_cache->id = 0;	// invalid ID for this "data" instruction
+			insn_cache->id =
+				0; // invalid ID for this "data" instruction
 			insn_cache->address = offset;
 			insn_cache->size = (uint16_t)skipdata_bytes;
 			memcpy(insn_cache->bytes, buffer, skipdata_bytes);
@@ -1333,9 +1332,11 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			insn_cache->mnemonic[0] = '\0';
 			insn_cache->op_str[0] = '\0';
 #else
-			strncpy(insn_cache->mnemonic, handle->skipdata_setup.mnemonic,
-					sizeof(insn_cache->mnemonic) - 1);
-			skipdata_opstr(insn_cache->op_str, buffer, skipdata_bytes);
+			strncpy(insn_cache->mnemonic,
+				handle->skipdata_setup.mnemonic,
+				sizeof(insn_cache->mnemonic) - 1);
+			skipdata_opstr(insn_cache->op_str, buffer,
+				       skipdata_bytes);
 #endif
 			insn_cache->detail = NULL;
 
@@ -1356,7 +1357,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 			cache_size = cache_size * 8 / 5; // * 1.6 ~ golden ratio
 			total_size += (sizeof(cs_insn) * cache_size);
 			tmp = cs_mem_realloc(total, total_size);
-			if (tmp == NULL) {	// insufficient memory
+			if (tmp == NULL) { // insufficient memory
 				if (handle->detail_opt) {
 					insn_cache = (cs_insn *)total;
 					for (i = 0; i < c; i++, insn_cache++)
@@ -1371,7 +1372,8 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 
 			total = tmp;
 			// continue to fill in the cache after the last instruction
-			insn_cache = (cs_insn *)((char *)total + sizeof(cs_insn) * c);
+			insn_cache = (cs_insn *)((char *)total +
+						 sizeof(cs_insn) * c);
 
 			// reset f back to 0, so we fill in the cache from beginning
 			f = 0;
@@ -1389,8 +1391,10 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 		total = NULL;
 	} else if (f != cache_size) {
 		// total did not fully use the last cache, so downsize it
-		tmp = cs_mem_realloc(total, total_size - (cache_size - f) * sizeof(*insn_cache));
-		if (tmp == NULL) {	// insufficient memory
+		tmp = cs_mem_realloc(total,
+				     total_size - (cache_size - f) *
+							  sizeof(*insn_cache));
+		if (tmp == NULL) { // insufficient memory
 			// free all detail pointers
 			if (handle->detail_opt) {
 				insn_cache = (cs_insn *)total;
@@ -1427,7 +1431,7 @@ void CAPSTONE_API cs_free(cs_insn *insn, size_t count)
 }
 
 CAPSTONE_EXPORT
-cs_insn * CAPSTONE_API cs_malloc(csh ud)
+cs_insn *CAPSTONE_API cs_malloc(csh ud)
 {
 	cs_insn *insn;
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
@@ -1441,7 +1445,7 @@ cs_insn * CAPSTONE_API cs_malloc(csh ud)
 		if (handle->detail_opt) {
 			// allocate memory for @detail pointer
 			insn->detail = cs_mem_malloc(sizeof(cs_detail));
-			if (insn->detail == NULL) {	// insufficient memory
+			if (insn->detail == NULL) { // insufficient memory
 				cs_mem_free(insn);
 				handle->errnum = CS_ERR_MEM;
 				return NULL;
@@ -1456,7 +1460,7 @@ cs_insn * CAPSTONE_API cs_malloc(csh ud)
 // iterator for instruction "single-stepping"
 CAPSTONE_EXPORT
 bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
-		uint64_t *address, cs_insn *insn)
+				 uint64_t *address, cs_insn *insn)
 {
 	struct cs_struct *handle;
 	uint16_t insn_size;
@@ -1485,7 +1489,8 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 	mci.flat_insn->op_str[0] = '\0';
 #endif
 
-	r = handle->disasm(ud, *code, *size, &mci, &insn_size, *address, handle->getinsn_info);
+	r = handle->disasm(ud, *code, *size, &mci, &insn_size, *address,
+			   handle->getinsn_info);
 	if (r) {
 		SStream ss;
 		SStream_Init(&ss);
@@ -1507,7 +1512,7 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 		*code += insn_size;
 		*size -= insn_size;
 		*address += insn_size;
-	} else { 	// encounter a broken instruction
+	} else { // encounter a broken instruction
 		size_t skipdata_bytes;
 
 		// if there is no request to skip data, or remaining data is too small,
@@ -1516,8 +1521,9 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 			return false;
 
 		if (handle->skipdata_setup.callback) {
-			skipdata_bytes = handle->skipdata_setup.callback(*code, *size,
-					0, handle->skipdata_setup.user_data);
+			skipdata_bytes = handle->skipdata_setup.callback(
+				*code, *size, 0,
+				handle->skipdata_setup.user_data);
 			if (skipdata_bytes > *size)
 				// remaining data is not enough
 				return false;
@@ -1529,7 +1535,7 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 			skipdata_bytes = handle->skipdata_size;
 
 		// we have to skip some amount of data, depending on arch & mode
-		insn->id = 0;	// invalid ID for this "data" instruction
+		insn->id = 0; // invalid ID for this "data" instruction
 		insn->address = *address;
 		insn->size = (uint16_t)skipdata_bytes;
 #ifdef CAPSTONE_DIET
@@ -1538,7 +1544,7 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 #else
 		memcpy(insn->bytes, *code, skipdata_bytes);
 		strncpy(insn->mnemonic, handle->skipdata_setup.mnemonic,
-				sizeof(insn->mnemonic) - 1);
+			sizeof(insn->mnemonic) - 1);
 		skipdata_opstr(insn->op_str, *code, skipdata_bytes);
 #endif
 
@@ -1552,7 +1558,7 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 
 // return friendly name of register in a string
 CAPSTONE_EXPORT
-const char * CAPSTONE_API cs_reg_name(csh ud, unsigned int reg)
+const char *CAPSTONE_API cs_reg_name(csh ud, unsigned int reg)
 {
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
 
@@ -1564,7 +1570,7 @@ const char * CAPSTONE_API cs_reg_name(csh ud, unsigned int reg)
 }
 
 CAPSTONE_EXPORT
-const char * CAPSTONE_API cs_insn_name(csh ud, unsigned int insn)
+const char *CAPSTONE_API cs_insn_name(csh ud, unsigned int insn)
 {
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
 
@@ -1576,7 +1582,7 @@ const char * CAPSTONE_API cs_insn_name(csh ud, unsigned int insn)
 }
 
 CAPSTONE_EXPORT
-const char * CAPSTONE_API cs_group_name(csh ud, unsigned int group)
+const char *CAPSTONE_API cs_group_name(csh ud, unsigned int group)
 {
 	struct cs_struct *handle = (struct cs_struct *)(uintptr_t)ud;
 
@@ -1588,7 +1594,8 @@ const char * CAPSTONE_API cs_group_name(csh ud, unsigned int group)
 }
 
 CAPSTONE_EXPORT
-bool CAPSTONE_API cs_insn_group(csh ud, const cs_insn *insn, unsigned int group_id)
+bool CAPSTONE_API cs_insn_group(csh ud, const cs_insn *insn,
+				unsigned int group_id)
 {
 	struct cs_struct *handle;
 	if (!ud)
@@ -1611,7 +1618,8 @@ bool CAPSTONE_API cs_insn_group(csh ud, const cs_insn *insn, unsigned int group_
 		return false;
 	}
 
-	return arr_exist8(insn->detail->groups, insn->detail->groups_count, group_id);
+	return arr_exist8(insn->detail->groups, insn->detail->groups_count,
+			  group_id);
 }
 
 CAPSTONE_EXPORT
@@ -1638,7 +1646,8 @@ bool CAPSTONE_API cs_reg_read(csh ud, const cs_insn *insn, unsigned int reg_id)
 		return false;
 	}
 
-	return arr_exist(insn->detail->regs_read, insn->detail->regs_read_count, reg_id);
+	return arr_exist(insn->detail->regs_read, insn->detail->regs_read_count,
+			 reg_id);
 }
 
 CAPSTONE_EXPORT
@@ -1665,7 +1674,8 @@ bool CAPSTONE_API cs_reg_write(csh ud, const cs_insn *insn, unsigned int reg_id)
 		return false;
 	}
 
-	return arr_exist(insn->detail->regs_write, insn->detail->regs_write_count, reg_id);
+	return arr_exist(insn->detail->regs_write,
+			 insn->detail->regs_write_count, reg_id);
 }
 
 CAPSTONE_EXPORT
@@ -1696,111 +1706,131 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 	handle->errnum = CS_ERR_OK;
 
 	switch (handle->arch) {
-		default:
-			handle->errnum = CS_ERR_HANDLE;
-			return -1;
-		case CS_ARCH_ARM:
-			for (i = 0; i < insn->detail->arm.op_count; i++)
-				if (insn->detail->arm.operands[i].type == (arm_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_AARCH64:
-			for (i = 0; i < insn->detail->aarch64.op_count; i++)
-				if (insn->detail->aarch64.operands[i].type == (aarch64_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_X86:
-			for (i = 0; i < insn->detail->x86.op_count; i++)
-				if (insn->detail->x86.operands[i].type == (x86_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_MIPS:
-			for (i = 0; i < insn->detail->mips.op_count; i++)
-				if (insn->detail->mips.operands[i].type == (mips_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_PPC:
-			for (i = 0; i < insn->detail->ppc.op_count; i++)
-				if (insn->detail->ppc.operands[i].type == (ppc_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_SPARC:
-			for (i = 0; i < insn->detail->sparc.op_count; i++)
-				if (insn->detail->sparc.operands[i].type == (sparc_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_SYSTEMZ:
-			for (i = 0; i < insn->detail->systemz.op_count; i++)
-				if (insn->detail->systemz.operands[i].type == (systemz_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_XCORE:
-			for (i = 0; i < insn->detail->xcore.op_count; i++)
-				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_M68K:
-			for (i = 0; i < insn->detail->m68k.op_count; i++)
-				if (insn->detail->m68k.operands[i].type == (m68k_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_TMS320C64X:
-			for (i = 0; i < insn->detail->tms320c64x.op_count; i++)
-				if (insn->detail->tms320c64x.operands[i].type == (tms320c64x_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_M680X:
-			for (i = 0; i < insn->detail->m680x.op_count; i++)
-				if (insn->detail->m680x.operands[i].type == (m680x_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_EVM:
-			break;
-		case CS_ARCH_MOS65XX:
-			for (i = 0; i < insn->detail->mos65xx.op_count; i++)
-				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_WASM:
-			for (i = 0; i < insn->detail->wasm.op_count; i++)
-				if (insn->detail->wasm.operands[i].type == (wasm_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_BPF:
-			for (i = 0; i < insn->detail->bpf.op_count; i++)
-				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_RISCV:
-			for (i = 0; i < insn->detail->riscv.op_count; i++)
-				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_TRICORE:
-			for (i = 0; i < insn->detail->tricore.op_count; i++)
-				if (insn->detail->tricore.operands[i].type == (tricore_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_ALPHA:
-			for (i = 0; i < insn->detail->alpha.op_count; i++)
-				if (insn->detail->alpha.operands[i].type == (alpha_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_HPPA:
-			for (i = 0; i < insn->detail->hppa.op_count; i++)
-				if (insn->detail->hppa.operands[i].type == (hppa_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_LOONGARCH:
-			for (i = 0; i < insn->detail->loongarch.op_count; i++)
-				if (insn->detail->loongarch.operands[i].type == (loongarch_op_type)op_type)
-					count++;
-			break;
-		case CS_ARCH_ARC:
-			for (i = 0; i < insn->detail->arc.op_count; i++)
-				if (insn->detail->arc.operands[i].type == (arc_op_type)op_type)
-					count++;
-			break;
+	default:
+		handle->errnum = CS_ERR_HANDLE;
+		return -1;
+	case CS_ARCH_ARM:
+		for (i = 0; i < insn->detail->arm.op_count; i++)
+			if (insn->detail->arm.operands[i].type ==
+			    (arm_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_AARCH64:
+		for (i = 0; i < insn->detail->aarch64.op_count; i++)
+			if (insn->detail->aarch64.operands[i].type ==
+			    (aarch64_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_X86:
+		for (i = 0; i < insn->detail->x86.op_count; i++)
+			if (insn->detail->x86.operands[i].type ==
+			    (x86_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_MIPS:
+		for (i = 0; i < insn->detail->mips.op_count; i++)
+			if (insn->detail->mips.operands[i].type ==
+			    (mips_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_PPC:
+		for (i = 0; i < insn->detail->ppc.op_count; i++)
+			if (insn->detail->ppc.operands[i].type ==
+			    (ppc_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_SPARC:
+		for (i = 0; i < insn->detail->sparc.op_count; i++)
+			if (insn->detail->sparc.operands[i].type ==
+			    (sparc_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_SYSTEMZ:
+		for (i = 0; i < insn->detail->systemz.op_count; i++)
+			if (insn->detail->systemz.operands[i].type ==
+			    (systemz_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_XCORE:
+		for (i = 0; i < insn->detail->xcore.op_count; i++)
+			if (insn->detail->xcore.operands[i].type ==
+			    (xcore_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_M68K:
+		for (i = 0; i < insn->detail->m68k.op_count; i++)
+			if (insn->detail->m68k.operands[i].type ==
+			    (m68k_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_TMS320C64X:
+		for (i = 0; i < insn->detail->tms320c64x.op_count; i++)
+			if (insn->detail->tms320c64x.operands[i].type ==
+			    (tms320c64x_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_M680X:
+		for (i = 0; i < insn->detail->m680x.op_count; i++)
+			if (insn->detail->m680x.operands[i].type ==
+			    (m680x_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_EVM:
+		break;
+	case CS_ARCH_MOS65XX:
+		for (i = 0; i < insn->detail->mos65xx.op_count; i++)
+			if (insn->detail->mos65xx.operands[i].type ==
+			    (mos65xx_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_WASM:
+		for (i = 0; i < insn->detail->wasm.op_count; i++)
+			if (insn->detail->wasm.operands[i].type ==
+			    (wasm_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_BPF:
+		for (i = 0; i < insn->detail->bpf.op_count; i++)
+			if (insn->detail->bpf.operands[i].type ==
+			    (bpf_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_RISCV:
+		for (i = 0; i < insn->detail->riscv.op_count; i++)
+			if (insn->detail->riscv.operands[i].type ==
+			    (riscv_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_TRICORE:
+		for (i = 0; i < insn->detail->tricore.op_count; i++)
+			if (insn->detail->tricore.operands[i].type ==
+			    (tricore_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_ALPHA:
+		for (i = 0; i < insn->detail->alpha.op_count; i++)
+			if (insn->detail->alpha.operands[i].type ==
+			    (alpha_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_HPPA:
+		for (i = 0; i < insn->detail->hppa.op_count; i++)
+			if (insn->detail->hppa.operands[i].type ==
+			    (hppa_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_LOONGARCH:
+		for (i = 0; i < insn->detail->loongarch.op_count; i++)
+			if (insn->detail->loongarch.operands[i].type ==
+			    (loongarch_op_type)op_type)
+				count++;
+		break;
+	case CS_ARCH_ARC:
+		for (i = 0; i < insn->detail->arc.op_count; i++)
+			if (insn->detail->arc.operands[i].type ==
+			    (arc_op_type)op_type)
+				count++;
+		break;
 	}
 
 	return count;
@@ -1808,7 +1838,7 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 
 CAPSTONE_EXPORT
 int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
-		unsigned int post)
+			     unsigned int post)
 {
 	struct cs_struct *handle;
 	unsigned int count = 0, i;
@@ -1835,106 +1865,118 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 	handle->errnum = CS_ERR_OK;
 
 	switch (handle->arch) {
-		default:
-			handle->errnum = CS_ERR_HANDLE;
-			return -1;
-		case CS_ARCH_ARM:
-			for (i = 0; i < insn->detail->arm.op_count; i++) {
-				if (insn->detail->arm.operands[i].type == (arm_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_AARCH64:
-			for (i = 0; i < insn->detail->aarch64.op_count; i++) {
-				if (insn->detail->aarch64.operands[i].type == (aarch64_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_X86:
-			for (i = 0; i < insn->detail->x86.op_count; i++) {
-				if (insn->detail->x86.operands[i].type == (x86_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_MIPS:
-			for (i = 0; i < insn->detail->mips.op_count; i++) {
-				if (insn->detail->mips.operands[i].type == (mips_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_PPC:
-			for (i = 0; i < insn->detail->ppc.op_count; i++) {
-				if (insn->detail->ppc.operands[i].type == (ppc_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_SPARC:
-			for (i = 0; i < insn->detail->sparc.op_count; i++) {
-				if (insn->detail->sparc.operands[i].type == (sparc_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_SYSTEMZ:
-			for (i = 0; i < insn->detail->systemz.op_count; i++) {
-				if (insn->detail->systemz.operands[i].type == (systemz_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_XCORE:
-			for (i = 0; i < insn->detail->xcore.op_count; i++) {
-				if (insn->detail->xcore.operands[i].type == (xcore_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_TRICORE:
-			for (i = 0; i < insn->detail->tricore.op_count; i++) {
-				if (insn->detail->tricore.operands[i].type == (tricore_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_M68K:
-			for (i = 0; i < insn->detail->m68k.op_count; i++) {
-				if (insn->detail->m68k.operands[i].type == (m68k_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_TMS320C64X:
-			for (i = 0; i < insn->detail->tms320c64x.op_count; i++) {
-				if (insn->detail->tms320c64x.operands[i].type == (tms320c64x_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_M680X:
-			for (i = 0; i < insn->detail->m680x.op_count; i++) {
-				if (insn->detail->m680x.operands[i].type == (m680x_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_EVM:
+	default:
+		handle->errnum = CS_ERR_HANDLE;
+		return -1;
+	case CS_ARCH_ARM:
+		for (i = 0; i < insn->detail->arm.op_count; i++) {
+			if (insn->detail->arm.operands[i].type ==
+			    (arm_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_AARCH64:
+		for (i = 0; i < insn->detail->aarch64.op_count; i++) {
+			if (insn->detail->aarch64.operands[i].type ==
+			    (aarch64_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_X86:
+		for (i = 0; i < insn->detail->x86.op_count; i++) {
+			if (insn->detail->x86.operands[i].type ==
+			    (x86_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_MIPS:
+		for (i = 0; i < insn->detail->mips.op_count; i++) {
+			if (insn->detail->mips.operands[i].type ==
+			    (mips_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_PPC:
+		for (i = 0; i < insn->detail->ppc.op_count; i++) {
+			if (insn->detail->ppc.operands[i].type ==
+			    (ppc_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_SPARC:
+		for (i = 0; i < insn->detail->sparc.op_count; i++) {
+			if (insn->detail->sparc.operands[i].type ==
+			    (sparc_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_SYSTEMZ:
+		for (i = 0; i < insn->detail->systemz.op_count; i++) {
+			if (insn->detail->systemz.operands[i].type ==
+			    (systemz_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_XCORE:
+		for (i = 0; i < insn->detail->xcore.op_count; i++) {
+			if (insn->detail->xcore.operands[i].type ==
+			    (xcore_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_TRICORE:
+		for (i = 0; i < insn->detail->tricore.op_count; i++) {
+			if (insn->detail->tricore.operands[i].type ==
+			    (tricore_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_M68K:
+		for (i = 0; i < insn->detail->m68k.op_count; i++) {
+			if (insn->detail->m68k.operands[i].type ==
+			    (m68k_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_TMS320C64X:
+		for (i = 0; i < insn->detail->tms320c64x.op_count; i++) {
+			if (insn->detail->tms320c64x.operands[i].type ==
+			    (tms320c64x_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_M680X:
+		for (i = 0; i < insn->detail->m680x.op_count; i++) {
+			if (insn->detail->m680x.operands[i].type ==
+			    (m680x_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_EVM:
 #if 0
 			for (i = 0; i < insn->detail->evm.op_count; i++) {
 				if (insn->detail->evm.operands[i].type == (evm_op_type)op_type)
@@ -1943,79 +1985,88 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 					return i;
 			}
 #endif
-			break;
-		case CS_ARCH_MOS65XX:
-			for (i = 0; i < insn->detail->mos65xx.op_count; i++) {
-				if (insn->detail->mos65xx.operands[i].type == (mos65xx_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_WASM:
-			for (i = 0; i < insn->detail->wasm.op_count; i++) {
-				if (insn->detail->wasm.operands[i].type == (wasm_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_BPF:
-			for (i = 0; i < insn->detail->bpf.op_count; i++) {
-				if (insn->detail->bpf.operands[i].type == (bpf_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_RISCV:
-			for (i = 0; i < insn->detail->riscv.op_count; i++) {
-				if (insn->detail->riscv.operands[i].type == (riscv_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_SH:
-			for (i = 0; i < insn->detail->sh.op_count; i++) {
-				if (insn->detail->sh.operands[i].type == (sh_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_ALPHA:
-			for (i = 0; i < insn->detail->alpha.op_count; i++) {
-				if (insn->detail->alpha.operands[i].type == (alpha_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_HPPA:
-			for (i = 0; i < insn->detail->hppa.op_count; i++) {
-				if (insn->detail->hppa.operands[i].type == (hppa_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_LOONGARCH:
-			for (i = 0; i < insn->detail->loongarch.op_count; i++) {
-				if (insn->detail->loongarch.operands[i].type == (loongarch_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
-		case CS_ARCH_ARC:
-			for (i = 0; i < insn->detail->arc.op_count; i++) {
-				if (insn->detail->arc.operands[i].type == (arc_op_type)op_type)
-					count++;
-				if (count == post)
-					return i;
-			}
-			break;
+		break;
+	case CS_ARCH_MOS65XX:
+		for (i = 0; i < insn->detail->mos65xx.op_count; i++) {
+			if (insn->detail->mos65xx.operands[i].type ==
+			    (mos65xx_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_WASM:
+		for (i = 0; i < insn->detail->wasm.op_count; i++) {
+			if (insn->detail->wasm.operands[i].type ==
+			    (wasm_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_BPF:
+		for (i = 0; i < insn->detail->bpf.op_count; i++) {
+			if (insn->detail->bpf.operands[i].type ==
+			    (bpf_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_RISCV:
+		for (i = 0; i < insn->detail->riscv.op_count; i++) {
+			if (insn->detail->riscv.operands[i].type ==
+			    (riscv_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_SH:
+		for (i = 0; i < insn->detail->sh.op_count; i++) {
+			if (insn->detail->sh.operands[i].type ==
+			    (sh_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_ALPHA:
+		for (i = 0; i < insn->detail->alpha.op_count; i++) {
+			if (insn->detail->alpha.operands[i].type ==
+			    (alpha_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_HPPA:
+		for (i = 0; i < insn->detail->hppa.op_count; i++) {
+			if (insn->detail->hppa.operands[i].type ==
+			    (hppa_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_LOONGARCH:
+		for (i = 0; i < insn->detail->loongarch.op_count; i++) {
+			if (insn->detail->loongarch.operands[i].type ==
+			    (loongarch_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_ARC:
+		for (i = 0; i < insn->detail->arc.op_count; i++) {
+			if (insn->detail->arc.operands[i].type ==
+			    (arc_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
 	}
 
 	return -1;
@@ -2023,8 +2074,9 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 
 CAPSTONE_EXPORT
 cs_err CAPSTONE_API cs_regs_access(csh ud, const cs_insn *insn,
-		cs_regs regs_read, uint8_t *regs_read_count,
-		cs_regs regs_write, uint8_t *regs_write_count)
+				   cs_regs regs_read, uint8_t *regs_read_count,
+				   cs_regs regs_write,
+				   uint8_t *regs_write_count)
 {
 	struct cs_struct *handle;
 
@@ -2054,7 +2106,8 @@ cs_err CAPSTONE_API cs_regs_access(csh ud, const cs_insn *insn,
 	}
 
 	if (handle->reg_access) {
-		handle->reg_access(insn, regs_read, regs_read_count, regs_write, regs_write_count);
+		handle->reg_access(insn, regs_read, regs_read_count, regs_write,
+				   regs_write_count);
 	} else {
 		// this arch is unsupported yet
 		handle->errnum = CS_ERR_ARCH;

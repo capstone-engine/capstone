@@ -13,11 +13,11 @@
 /// Input data for a test case.
 typedef struct {
 	char *name;
-	uint8_t *bytes;		// mandatory
-	uint32_t bytes_count;	// Filled by cyaml
-	char *arch;		// mandatory
+	uint8_t *bytes; // mandatory
+	uint32_t bytes_count; // Filled by cyaml
+	char *arch; // mandatory
 	uint64_t address;
-	char **options;		// mandatory
+	char **options; // mandatory
 	uint32_t options_count; // Filled by cyaml
 } TestInput;
 
@@ -41,8 +41,8 @@ static const cyaml_schema_value_t option_schema = {
 };
 
 static const cyaml_schema_field_t test_input_mapping_schema[] = {
-	CYAML_FIELD_STRING_PTR("name", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL, TestInput, name,
-			     0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR("name", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestInput, name, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_SEQUENCE("bytes", CYAML_FLAG_POINTER, TestInput, bytes,
 			     &byte_schema, 0, CYAML_UNLIMITED), // 0-MAX bytes
 	CYAML_FIELD_STRING_PTR("arch", CYAML_FLAG_POINTER, TestInput, arch, 0,
@@ -59,7 +59,7 @@ static const cyaml_schema_field_t test_input_mapping_schema[] = {
 /// Data compared to the produced cs_insn.
 typedef struct {
 	char *id;
-	char *asm_text;	  // mandatory
+	char *asm_text; // mandatory
 	char *op_str;
 	tbool is_alias;
 	tbool illegal;
@@ -75,21 +75,19 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data);
 
 static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("id", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			 TestInsnData, id, 0, CYAML_UNLIMITED),
+			       TestInsnData, id, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("asm_text", CYAML_FLAG_POINTER, TestInsnData,
 			       asm_text, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR(
 		"op_str", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL,
 		TestInsnData, op_str, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("is_alias", CYAML_FLAG_OPTIONAL, TestInsnData,
-			 is_alias),
-	CYAML_FIELD_INT("illegal", CYAML_FLAG_OPTIONAL, TestInsnData,
-			 illegal),
-	CYAML_FIELD_UINT("size", CYAML_FLAG_OPTIONAL, TestInsnData,
-			 size),
+			is_alias),
+	CYAML_FIELD_INT("illegal", CYAML_FLAG_OPTIONAL, TestInsnData, illegal),
+	CYAML_FIELD_UINT("size", CYAML_FLAG_OPTIONAL, TestInsnData, size),
 	CYAML_FIELD_STRING_PTR("alias_id",
-			CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-			TestInsnData, alias_id, 0, CYAML_UNLIMITED),
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestInsnData, alias_id, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR(
 		"mnemonic", CYAML_FLAG_POINTER_NULL_STR | CYAML_FLAG_OPTIONAL,
 		TestInsnData, mnemonic, 0, CYAML_UNLIMITED),
@@ -125,10 +123,10 @@ static const cyaml_schema_field_t test_expected_mapping_schema[] = {
 
 /// A single test case.
 typedef struct {
-	TestInput *input;	///< Input data for a test case
+	TestInput *input; ///< Input data for a test case
 	TestExpected *expected; ///< Expected data of the test case.
-	bool skip;		///< If set, the test is skipped
-	char *skip_reason;	///< Reason this test is skipped.
+	bool skip; ///< If set, the test is skipped
+	char *skip_reason; ///< Reason this test is skipped.
 } TestCase;
 
 TestCase *test_case_new();

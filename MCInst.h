@@ -33,13 +33,13 @@ typedef void MCExpr;
 /// This is a simple discriminated union.
 struct MCOperand {
 	enum {
-		kInvalid = 0,  ///< Uninitialized.
-		kRegister,     ///< Register operand.
-		kImmediate,    ///< Immediate operand.
-		kFPImmediate,  ///< Floating-point immediate operand.
+		kInvalid = 0, ///< Uninitialized.
+		kRegister, ///< Register operand.
+		kImmediate, ///< Immediate operand.
+		kFPImmediate, ///< Floating-point immediate operand.
 		kDFPImmediate, ///< Double-Floating-point immediate operand.
-		kExpr,	       ///< Relocatable immediate operand.
-		kInst	       ///< Sub-instruction operand.
+		kExpr, ///< Relocatable immediate operand.
+		kInst ///< Sub-instruction operand.
 	} MachineOperandType;
 	unsigned char Kind;
 
@@ -101,16 +101,16 @@ MCOperand *MCOperand_CreateImm1(MCInst *inst, int64_t Val);
 /// MCInst - Instances of this class represent a single low-level machine
 /// instruction.
 struct MCInst {
-	unsigned OpcodePub;  // public opcode (<arch>_INS_yyy in header files <arch>.h)
-	uint8_t size;	// number of operands
-	bool has_imm;	// indicate this instruction has an X86_OP_IMM operand - used for ATT syntax
+	unsigned OpcodePub; // public opcode (<arch>_INS_yyy in header files <arch>.h)
+	uint8_t size; // number of operands
+	bool has_imm; // indicate this instruction has an X86_OP_IMM operand - used for ATT syntax
 	uint8_t op1_size; // size of 1st operand - for X86 Intel syntax
-	unsigned Opcode;  // private opcode
+	unsigned Opcode; // private opcode
 	MCOperand Operands[MAX_MC_OPS];
-	cs_insn *flat_insn;	// insn to be exposed to public
-	uint64_t address;	// address of this insn
-	cs_struct *csh;	// save the main csh
-	uint8_t x86opsize;	// opsize for [mem] operand
+	cs_insn *flat_insn; // insn to be exposed to public
+	uint64_t address; // address of this insn
+	cs_struct *csh; // save the main csh
+	uint8_t x86opsize; // opsize for [mem] operand
 
 	// These flags could be used to pass some info from one target subcomponent
 	// to another, for example, from disassembler to asm printer. The values of
@@ -121,21 +121,21 @@ struct MCInst {
 	// A prefix byte gets value 0 when irrelevant.
 	// This is copied from cs_x86 struct
 	uint8_t x86_prefix[4];
-	uint8_t imm_size;	// immediate size for X86_OP_IMM operand
-	bool writeback;		// writeback for ARM
+	uint8_t imm_size; // immediate size for X86_OP_IMM operand
+	bool writeback; // writeback for ARM
 	int8_t tied_op_idx
 		[MAX_MC_OPS]; ///< Tied operand indices. Index = Src op; Value: Dest op
 	// operand access index for list of registers sharing the same access right (for ARM)
 	uint8_t ac_idx;
-	uint8_t popcode_adjust;   // Pseudo X86 instruction adjust
-	char assembly[8];	// for special instruction, so that we don't need printer
-	unsigned char evm_data[32];	// for EVM PUSH operand
-	cs_wasm_op wasm_data;    // for WASM operand
+	uint8_t popcode_adjust; // Pseudo X86 instruction adjust
+	char assembly[8]; // for special instruction, so that we don't need printer
+	unsigned char evm_data[32]; // for EVM PUSH operand
+	cs_wasm_op wasm_data; // for WASM operand
 	MCRegisterInfo *MRI;
-	uint8_t xAcquireRelease;   // X86 xacquire/xrelease
+	uint8_t xAcquireRelease; // X86 xacquire/xrelease
 	bool isAliasInstr; // Flag if this MCInst is an alias.
 	bool fillDetailOps; // If set, detail->operands gets filled.
-	hppa_ext hppa_ext;	///< for HPPA operand. Contains info about modifiers and their effect on the instruction
+	hppa_ext hppa_ext; ///< for HPPA operand. Contains info about modifiers and their effect on the instruction
 	MCAsmInfo MAI; ///< The equivalent to MCAsmInfo in LLVM. It holds flags relevant for the asm style to print.
 };
 
@@ -148,11 +148,11 @@ void MCInst_insert0(MCInst *inst, int index, MCOperand *Op);
 
 void MCInst_setOpcode(MCInst *inst, unsigned Op);
 
-unsigned MCInst_getOpcode(const MCInst*);
+unsigned MCInst_getOpcode(const MCInst *);
 
 void MCInst_setOpcodePub(MCInst *inst, unsigned Op);
 
-unsigned MCInst_getOpcodePub(const MCInst*);
+unsigned MCInst_getOpcodePub(const MCInst *);
 
 MCOperand *MCInst_getOperand(MCInst *inst, unsigned i);
 
@@ -163,7 +163,8 @@ void MCInst_addOperand2(MCInst *inst, MCOperand *Op);
 
 bool MCInst_isPredicable(const MCInstrDesc *MIDesc);
 
-void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDescTable, unsigned tbl_size);
+void MCInst_handleWriteback(MCInst *MI, const MCInstrDesc *InstDescTable,
+			    unsigned tbl_size);
 
 bool MCInst_opIsTied(const MCInst *MI, unsigned OpNum);
 
@@ -173,7 +174,8 @@ uint64_t MCInst_getOpVal(MCInst *MI, unsigned OpNum);
 
 void MCInst_setIsAlias(MCInst *MI, bool Flag);
 
-static inline bool MCInst_isAlias(const MCInst *MI) {
+static inline bool MCInst_isAlias(const MCInst *MI)
+{
 	return MI->isAliasInstr;
 }
 

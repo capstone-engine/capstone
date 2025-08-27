@@ -17,17 +17,17 @@
 
 // map instruction to its characteristics
 typedef struct insn_map {
-	unsigned short id;		    // The LLVM instruction id
-	unsigned short mapid;		    // The Capstone instruction id
+	unsigned short id; // The LLVM instruction id
+	unsigned short mapid; // The Capstone instruction id
 #ifndef CAPSTONE_DIET
 	uint16_t regs_use[MAX_IMPL_R_REGS]; ///< list of implicit registers used by
-					    ///< this instruction
+		///< this instruction
 	uint16_t regs_mod[MAX_IMPL_W_REGS]; ///< list of implicit registers modified
-					    ///< by this instruction
+		///< by this instruction
 	unsigned char groups
 		[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
-	bool branch;		  // branch instruction?
-	bool indirect_branch;	  // indirect branch instruction?
+	bool branch; // branch instruction?
+	bool indirect_branch; // indirect branch instruction?
 	union {
 		ppc_suppl_info ppc;
 		loongarch_suppl_info loongarch;
@@ -52,11 +52,10 @@ unsigned int find_cs_id(unsigned MC_Opcode, const insn_map *imap,
 
 ///< A LLVM<->CS Mapping entry of an MCOperand.
 typedef struct {
-	uint8_t /* cs_op_type */ type;	 ///< Operand type (e.g.: reg, imm, mem)
+	uint8_t /* cs_op_type */ type; ///< Operand type (e.g.: reg, imm, mem)
 	uint8_t /* cs_ac_type */ access; ///< The access type (read, write)
-	uint8_t				 /* cs_data_type */
-		dtypes[MAX_NO_DATA_TYPES]; ///< List of op types. Terminated by
-					   ///< CS_DATA_TYPE_LAST
+	/// List of op types. Terminated by CS_DATA_TYPE_LAST
+	uint8_t /* cs_data_type */ dtypes[MAX_NO_DATA_TYPES];
 } mapping_op;
 
 #define MAX_NO_INSN_MAP_OPS 16
@@ -85,8 +84,7 @@ const cs_ac_type mapping_get_op_access(MCInst *MI, unsigned OpNum,
 	mapping_get_op_type(MI, OpNum, (const map_insn_ops *)insn_operands, \
 			    sizeof(insn_operands) / sizeof(insn_operands[0]))
 #else
-#define map_get_op_type(MI, OpNum) \
-	CS_OP_INVALID
+#define map_get_op_type(MI, OpNum) CS_OP_INVALID
 #endif
 
 /// Macro for easier access of operand access flags from the map.
@@ -98,8 +96,7 @@ const cs_ac_type mapping_get_op_access(MCInst *MI, unsigned OpNum,
 			      sizeof(insn_operands) / \
 				      sizeof(insn_operands[0]))
 #else
-#define map_get_op_access(MI, OpNum) \
-	CS_AC_INVALID
+#define map_get_op_access(MI, OpNum) CS_AC_INVALID
 #endif
 
 ///< Map for ids to their string
@@ -229,8 +226,10 @@ DEFINE_get_arch_detail(bpf, BPF);
 DEFINE_get_arch_detail(sparc, Sparc);
 
 #define DEFINE_check_safe_inc(Arch, ARCH) \
-	static inline void Arch##_check_safe_inc(const MCInst *MI) { \
-		assert(Arch##_get_detail(MI)->op_count + 1 < NUM_##ARCH##_OPS); \
+	static inline void Arch##_check_safe_inc(const MCInst *MI) \
+	{ \
+		assert(Arch##_get_detail(MI)->op_count + 1 < \
+		       NUM_##ARCH##_OPS); \
 	}
 
 DEFINE_check_safe_inc(ARM, ARM);
@@ -261,14 +260,15 @@ static inline cs_detail *get_detail(const MCInst *MI)
 
 /// Returns if the given instruction is an alias instruction.
 #define RETURN_IF_INSN_IS_ALIAS(MI) \
-do { \
-	if (MI->isAliasInstr) \
-		return; \
-} while(0)
+	do { \
+		if (MI->isAliasInstr) \
+			return; \
+	} while (0)
 
 void map_set_fill_detail_ops(MCInst *MI, bool Val);
 
-static inline bool map_fill_detail_ops(MCInst *MI) {
+static inline bool map_fill_detail_ops(MCInst *MI)
+{
 	assert(MI);
 	return MI->fillDetailOps;
 }
@@ -277,7 +277,8 @@ void map_set_is_alias_insn(MCInst *MI, bool Val, uint64_t Alias);
 
 bool map_use_alias_details(const MCInst *MI);
 
-void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_id_map, int map_size);
+void map_set_alias_id(MCInst *MI, const SStream *O,
+		      const name_map *alias_mnem_id_map, int map_size);
 
 /// Mapping from Capstone enumeration identifiers and their values.
 ///
@@ -296,7 +297,7 @@ void map_set_alias_id(MCInst *MI, const SStream *O, const name_map *alias_mnem_i
 /// ```
 typedef struct {
 	const char *str; ///< The name of the enumeration identifier
-	uint64_t val;	 ///< The value of the identifier
+	uint64_t val; ///< The value of the identifier
 } cs_enum_id_map;
 
 uint64_t enum_map_bin_search(const cs_enum_id_map *map, size_t map_len,

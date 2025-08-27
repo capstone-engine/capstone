@@ -16,68 +16,68 @@ extern "C" {
 #include "platform.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
+#pragma warning(disable : 4201)
 #endif
 
 // Enums corresponding to ARM condition codes
 // The CondCodes constants map directly to the 4-bit encoding of the
 // condition field for predicated instructions.
 typedef enum CondCodes {
-  // Meaning (integer)          Meaning (floating-point)
-  ARMCC_EQ, // Equal                      Equal
-  ARMCC_NE, // Not equal                  Not equal, or unordered
-  ARMCC_HS, // Carry set                  >, ==, or unordered
-  ARMCC_LO, // Carry clear                Less than
-  ARMCC_MI, // Minus, negative            Less than
-  ARMCC_PL, // Plus, positive or zero     >, ==, or unordered
-  ARMCC_VS, // Overflow                   Unordered
-  ARMCC_VC, // No overflow                Not unordered
-  ARMCC_HI, // Unsigned higher            Greater than, or unordered
-  ARMCC_LS, // Unsigned lower or same     Less than or equal
-  ARMCC_GE, // Greater than or equal      Greater than or equal
-  ARMCC_LT, // Less than                  Less than, or unordered
-  ARMCC_GT, // Greater than               Greater than
-  ARMCC_LE, // Less than or equal         <, ==, or unordered
-  ARMCC_AL, // Always (unconditional)     Always (unconditional)
-  ARMCC_UNDEF = 15, // Undefined
-  ARMCC_Invalid = 16, // Invalid
+	// Meaning (integer)          Meaning (floating-point)
+	ARMCC_EQ, // Equal                      Equal
+	ARMCC_NE, // Not equal                  Not equal, or unordered
+	ARMCC_HS, // Carry set                  >, ==, or unordered
+	ARMCC_LO, // Carry clear                Less than
+	ARMCC_MI, // Minus, negative            Less than
+	ARMCC_PL, // Plus, positive or zero     >, ==, or unordered
+	ARMCC_VS, // Overflow                   Unordered
+	ARMCC_VC, // No overflow                Not unordered
+	ARMCC_HI, // Unsigned higher            Greater than, or unordered
+	ARMCC_LS, // Unsigned lower or same     Less than or equal
+	ARMCC_GE, // Greater than or equal      Greater than or equal
+	ARMCC_LT, // Less than                  Less than, or unordered
+	ARMCC_GT, // Greater than               Greater than
+	ARMCC_LE, // Less than or equal         <, ==, or unordered
+	ARMCC_AL, // Always (unconditional)     Always (unconditional)
+	ARMCC_UNDEF = 15, // Undefined
+	ARMCC_Invalid = 16, // Invalid
 } ARMCC_CondCodes;
 
 inline static ARMCC_CondCodes ARMCC_getOppositeCondition(ARMCC_CondCodes CC)
 {
-  switch (CC) {
-  default:
-    // llvm_unreachable("Unknown condition code");
-    assert(0);
-  case ARMCC_EQ:
-    return ARMCC_NE;
-  case ARMCC_NE:
-    return ARMCC_EQ;
-  case ARMCC_HS:
-    return ARMCC_LO;
-  case ARMCC_LO:
-    return ARMCC_HS;
-  case ARMCC_MI:
-    return ARMCC_PL;
-  case ARMCC_PL:
-    return ARMCC_MI;
-  case ARMCC_VS:
-    return ARMCC_VC;
-  case ARMCC_VC:
-    return ARMCC_VS;
-  case ARMCC_HI:
-    return ARMCC_LS;
-  case ARMCC_LS:
-    return ARMCC_HI;
-  case ARMCC_GE:
-    return ARMCC_LT;
-  case ARMCC_LT:
-    return ARMCC_GE;
-  case ARMCC_GT:
-    return ARMCC_LE;
-  case ARMCC_LE:
-    return ARMCC_GT;
-  }
+	switch (CC) {
+	default:
+		// llvm_unreachable("Unknown condition code");
+		assert(0);
+	case ARMCC_EQ:
+		return ARMCC_NE;
+	case ARMCC_NE:
+		return ARMCC_EQ;
+	case ARMCC_HS:
+		return ARMCC_LO;
+	case ARMCC_LO:
+		return ARMCC_HS;
+	case ARMCC_MI:
+		return ARMCC_PL;
+	case ARMCC_PL:
+		return ARMCC_MI;
+	case ARMCC_VS:
+		return ARMCC_VC;
+	case ARMCC_VC:
+		return ARMCC_VS;
+	case ARMCC_HI:
+		return ARMCC_LS;
+	case ARMCC_LS:
+		return ARMCC_HI;
+	case ARMCC_GE:
+		return ARMCC_LT;
+	case ARMCC_LT:
+		return ARMCC_GE;
+	case ARMCC_GT:
+		return ARMCC_LE;
+	case ARMCC_LE:
+		return ARMCC_GT;
+	}
 }
 
 /// getSwappedCondition - assume the flags are set by MI(a,b), return
@@ -85,36 +85,36 @@ inline static ARMCC_CondCodes ARMCC_getOppositeCondition(ARMCC_CondCodes CC)
 /// set by MI(b,a).
 inline static ARMCC_CondCodes ARMCC_getSwappedCondition(ARMCC_CondCodes CC)
 {
-  switch (CC) {
-  default:
-    return ARMCC_AL;
-  case ARMCC_EQ:
-    return ARMCC_EQ;
-  case ARMCC_NE:
-    return ARMCC_NE;
-  case ARMCC_HS:
-    return ARMCC_LS;
-  case ARMCC_LO:
-    return ARMCC_HI;
-  case ARMCC_HI:
-    return ARMCC_LO;
-  case ARMCC_LS:
-    return ARMCC_HS;
-  case ARMCC_GE:
-    return ARMCC_LE;
-  case ARMCC_LT:
-    return ARMCC_GT;
-  case ARMCC_GT:
-    return ARMCC_LT;
-  case ARMCC_LE:
-    return ARMCC_GE;
-  }
+	switch (CC) {
+	default:
+		return ARMCC_AL;
+	case ARMCC_EQ:
+		return ARMCC_EQ;
+	case ARMCC_NE:
+		return ARMCC_NE;
+	case ARMCC_HS:
+		return ARMCC_LS;
+	case ARMCC_LO:
+		return ARMCC_HI;
+	case ARMCC_HI:
+		return ARMCC_LO;
+	case ARMCC_LS:
+		return ARMCC_HS;
+	case ARMCC_GE:
+		return ARMCC_LE;
+	case ARMCC_LT:
+		return ARMCC_GT;
+	case ARMCC_GT:
+		return ARMCC_LT;
+	case ARMCC_LE:
+		return ARMCC_GE;
+	}
 }
 
 typedef enum VPTCodes {
-  ARMVCC_None = 0,
-  ARMVCC_Then,
-  ARMVCC_Else
+	ARMVCC_None = 0,
+	ARMVCC_Then,
+	ARMVCC_Else
 } ARMVCC_VPTCodes;
 
 /// Mask values for IT and VPT Blocks, to be used by MCOperands.
@@ -126,22 +126,22 @@ typedef enum VPTCodes {
 ///   Txy = xy10
 ///   Txyz = xyz1
 typedef enum PredBlockMask {
-  ARM_PredBlockMaskInvalid = 0,
-  ARM_T = 0x8, // 0b1000
-  ARM_TT = 0x4, // 0b0100
-  ARM_TE = 0xc, // 0b1100
-  ARM_TTT = 0x2, // 0b0010
-  ARM_TTE = 0x6, // 0b0110
-  ARM_TEE = 0xe, // 0b1110
-  ARM_TET = 0xa, // 0b1010
-  ARM_TTTT = 0x1, // 0b0001
-  ARM_TTTE = 0x3, // 0b0011
-  ARM_TTEE = 0x7, // 0b0111
-  ARM_TTET = 0x5, // 0b0101
-  ARM_TEEE = 0xf, // 0b1111
-  ARM_TEET = 0xd, // 0b1101
-  ARM_TETT = 0x9, // 0b1001
-  ARM_TETE = 0xb, // 0b1011
+	ARM_PredBlockMaskInvalid = 0,
+	ARM_T = 0x8, // 0b1000
+	ARM_TT = 0x4, // 0b0100
+	ARM_TE = 0xc, // 0b1100
+	ARM_TTT = 0x2, // 0b0010
+	ARM_TTE = 0x6, // 0b0110
+	ARM_TEE = 0xe, // 0b1110
+	ARM_TET = 0xa, // 0b1010
+	ARM_TTTT = 0x1, // 0b0001
+	ARM_TTTE = 0x3, // 0b0011
+	ARM_TTEE = 0x7, // 0b0111
+	ARM_TTET = 0x5, // 0b0101
+	ARM_TEEE = 0xf, // 0b1111
+	ARM_TEET = 0xd, // 0b1101
+	ARM_TETT = 0x9, // 0b1001
+	ARM_TETE = 0xb, // 0b1011
 } ARM_PredBlockMask;
 
 // Expands a PredBlockMask by adding an E or a T at the end, depending on Kind.
@@ -149,105 +149,105 @@ typedef enum PredBlockMask {
 // and so on.
 inline static const char *ARMVPTPredToString(ARMVCC_VPTCodes CC)
 {
-  switch (CC) {
-  case ARMVCC_None:
-    return "none";
-  case ARMVCC_Then:
-    return "t";
-  case ARMVCC_Else:
-    return "e";
-  }
-  assert(0 && "Unknown VPT code");
-  return "";
+	switch (CC) {
+	case ARMVCC_None:
+		return "none";
+	case ARMVCC_Then:
+		return "t";
+	case ARMVCC_Else:
+		return "e";
+	}
+	assert(0 && "Unknown VPT code");
+	return "";
 }
 
 inline static unsigned ARMVectorCondCodeFromString(const char CC)
 {
-  switch (CC) {
-  default:
-    return ~0U;
-  case 't':
-    return ARMVCC_Then;
-  case 'e':
-    return ARMVCC_Else;
-  }
+	switch (CC) {
+	default:
+		return ~0U;
+	case 't':
+		return ARMVCC_Then;
+	case 'e':
+		return ARMVCC_Else;
+	}
 }
 
 inline static const char *ARMCondCodeToString(ARMCC_CondCodes CC)
 {
-  switch (CC) {
-  default:
-    assert(0 && "Unknown condition code");
-  case ARMCC_EQ:
-    return "eq";
-  case ARMCC_NE:
-    return "ne";
-  case ARMCC_HS:
-    return "hs";
-  case ARMCC_LO:
-    return "lo";
-  case ARMCC_MI:
-    return "mi";
-  case ARMCC_PL:
-    return "pl";
-  case ARMCC_VS:
-    return "vs";
-  case ARMCC_VC:
-    return "vc";
-  case ARMCC_HI:
-    return "hi";
-  case ARMCC_LS:
-    return "ls";
-  case ARMCC_GE:
-    return "ge";
-  case ARMCC_LT:
-    return "lt";
-  case ARMCC_GT:
-    return "gt";
-  case ARMCC_LE:
-    return "le";
-  case ARMCC_AL:
-    return "al";
-  }
+	switch (CC) {
+	default:
+		assert(0 && "Unknown condition code");
+	case ARMCC_EQ:
+		return "eq";
+	case ARMCC_NE:
+		return "ne";
+	case ARMCC_HS:
+		return "hs";
+	case ARMCC_LO:
+		return "lo";
+	case ARMCC_MI:
+		return "mi";
+	case ARMCC_PL:
+		return "pl";
+	case ARMCC_VS:
+		return "vs";
+	case ARMCC_VC:
+		return "vc";
+	case ARMCC_HI:
+		return "hi";
+	case ARMCC_LS:
+		return "ls";
+	case ARMCC_GE:
+		return "ge";
+	case ARMCC_LT:
+		return "lt";
+	case ARMCC_GT:
+		return "gt";
+	case ARMCC_LE:
+		return "le";
+	case ARMCC_AL:
+		return "al";
+	}
 }
 
 inline static unsigned ARMCondCodeFromString(const char *CC)
 {
-  if (strcmp("eq", CC) == 0)
-    return ARMCC_EQ;
-  else if (strcmp("ne", CC) == 0)
-    return ARMCC_NE;
-  else if (strcmp("hs", CC) == 0)
-    return ARMCC_HS;
-  else if (strcmp("cs", CC) == 0)
-    return ARMCC_HS;
-  else if (strcmp("lo", CC) == 0)
-    return ARMCC_LO;
-  else if (strcmp("cc", CC) == 0)
-    return ARMCC_LO;
-  else if (strcmp("mi", CC) == 0)
-    return ARMCC_MI;
-  else if (strcmp("pl", CC) == 0)
-    return ARMCC_PL;
-  else if (strcmp("vs", CC) == 0)
-    return ARMCC_VS;
-  else if (strcmp("vc", CC) == 0)
-    return ARMCC_VC;
-  else if (strcmp("hi", CC) == 0)
-    return ARMCC_HI;
-  else if (strcmp("ls", CC) == 0)
-    return ARMCC_LS;
-  else if (strcmp("ge", CC) == 0)
-    return ARMCC_GE;
-  else if (strcmp("lt", CC) == 0)
-    return ARMCC_LT;
-  else if (strcmp("gt", CC) == 0)
-    return ARMCC_GT;
-  else if (strcmp("le", CC) == 0)
-    return ARMCC_LE;
-  else if (strcmp("al", CC) == 0)
-    return ARMCC_AL;
-  return (~0U);
+	if (strcmp("eq", CC) == 0)
+		return ARMCC_EQ;
+	else if (strcmp("ne", CC) == 0)
+		return ARMCC_NE;
+	else if (strcmp("hs", CC) == 0)
+		return ARMCC_HS;
+	else if (strcmp("cs", CC) == 0)
+		return ARMCC_HS;
+	else if (strcmp("lo", CC) == 0)
+		return ARMCC_LO;
+	else if (strcmp("cc", CC) == 0)
+		return ARMCC_LO;
+	else if (strcmp("mi", CC) == 0)
+		return ARMCC_MI;
+	else if (strcmp("pl", CC) == 0)
+		return ARMCC_PL;
+	else if (strcmp("vs", CC) == 0)
+		return ARMCC_VS;
+	else if (strcmp("vc", CC) == 0)
+		return ARMCC_VC;
+	else if (strcmp("hi", CC) == 0)
+		return ARMCC_HI;
+	else if (strcmp("ls", CC) == 0)
+		return ARMCC_LS;
+	else if (strcmp("ge", CC) == 0)
+		return ARMCC_GE;
+	else if (strcmp("lt", CC) == 0)
+		return ARMCC_LT;
+	else if (strcmp("gt", CC) == 0)
+		return ARMCC_GT;
+	else if (strcmp("le", CC) == 0)
+		return ARMCC_LE;
+	else if (strcmp("al", CC) == 0)
+		return ARMCC_AL;
+	return (~0U);
 }
 
 /// ARM shift type
@@ -413,9 +413,9 @@ typedef enum {
 } arm_sysreg;
 
 typedef union {
-  arm_sysreg mclasssysreg;
-  arm_bankedreg bankedreg;
-  int raw_val; ///< Raw value for assignment in generated files.
+	arm_sysreg mclasssysreg;
+	arm_bankedreg bankedreg;
+	int raw_val; ///< Raw value for assignment in generated files.
 } arm_sysop_reg;
 
 /// Operand type for instruction's operands
@@ -423,25 +423,31 @@ typedef enum arm_op_type {
 	ARM_OP_INVALID = CS_OP_INVALID, ///< Invalid
 	ARM_OP_REG = CS_OP_REG, ///< Register operand
 	ARM_OP_IMM = CS_OP_IMM, ///< Immediate operand
-	ARM_OP_FP = CS_OP_FP,  ///< Floating-Point operand
+	ARM_OP_FP = CS_OP_FP, ///< Floating-Point operand
 	ARM_OP_PRED = CS_OP_PRED, ///< Predicate
-	ARM_OP_CIMM = CS_OP_SPECIAL + 0, ///< C-Immediate (coprocessor registers)
-	ARM_OP_PIMM = CS_OP_SPECIAL + 1, ///< P-Immediate (coprocessor registers)
-	ARM_OP_SETEND = CS_OP_SPECIAL + 2,	///< operand for SETEND instruction
-	ARM_OP_SYSREG = CS_OP_SPECIAL + 3,	///< MSR/MRS special register operand
-	ARM_OP_BANKEDREG = CS_OP_SPECIAL + 4,	///< Banked register operand
-	ARM_OP_SPSR = CS_OP_SPECIAL + 5,	///< Collection of SPSR bits
-	ARM_OP_CPSR = CS_OP_SPECIAL + 6,	///< Collection of CPSR bits
-	ARM_OP_SYSM = CS_OP_SPECIAL + 7,	///< Raw SYSm field
-	ARM_OP_VPRED_R = CS_OP_SPECIAL + 8, ///< Vector predicate. Leaves inactive lanes of output vector register unchanged.
-	ARM_OP_VPRED_N = CS_OP_SPECIAL + 9, ///< Vector predicate. Don't preserved inactive lanes of output register.
+	ARM_OP_CIMM =
+		CS_OP_SPECIAL + 0, ///< C-Immediate (coprocessor registers)
+	ARM_OP_PIMM =
+		CS_OP_SPECIAL + 1, ///< P-Immediate (coprocessor registers)
+	ARM_OP_SETEND = CS_OP_SPECIAL + 2, ///< operand for SETEND instruction
+	ARM_OP_SYSREG = CS_OP_SPECIAL + 3, ///< MSR/MRS special register operand
+	ARM_OP_BANKEDREG = CS_OP_SPECIAL + 4, ///< Banked register operand
+	ARM_OP_SPSR = CS_OP_SPECIAL + 5, ///< Collection of SPSR bits
+	ARM_OP_CPSR = CS_OP_SPECIAL + 6, ///< Collection of CPSR bits
+	ARM_OP_SYSM = CS_OP_SPECIAL + 7, ///< Raw SYSm field
+	ARM_OP_VPRED_R =
+		CS_OP_SPECIAL +
+		8, ///< Vector predicate. Leaves inactive lanes of output vector register unchanged.
+	ARM_OP_VPRED_N =
+		CS_OP_SPECIAL +
+		9, ///< Vector predicate. Don't preserved inactive lanes of output register.
 	ARM_OP_MEM = CS_OP_MEM, ///< Memory operand
 } arm_op_type;
 
 /// Operand type for SETEND instruction
 typedef enum arm_setend_type {
-	ARM_SETEND_INVALID = 0,	///< Uninitialized.
-	ARM_SETEND_BE,	///< BE operand.
+	ARM_SETEND_INVALID = 0, ///< Uninitialized.
+	ARM_SETEND_BE, ///< BE operand.
 	ARM_SETEND_LE, ///< LE operand
 } arm_setend_type;
 
@@ -457,7 +463,7 @@ typedef enum arm_cpsflag_type {
 	ARM_CPSFLAG_F = 1,
 	ARM_CPSFLAG_I = 2,
 	ARM_CPSFLAG_A = 4,
-	ARM_CPSFLAG_NONE = 16,	///< no flag
+	ARM_CPSFLAG_NONE = 16, ///< no flag
 } arm_cpsflag_type;
 
 /// Data type for elements of vector instructions.
@@ -846,38 +852,39 @@ typedef enum arm_reg {
 /// Instruction's operand referring to memory
 /// This is associated with ARM_OP_MEM operand type above
 typedef struct arm_op_mem {
-	arm_reg base;	///< base register
-	arm_reg index;	///< index register
-	int scale;	///< scale for index register. Can be 1 if index reg is added, -1 if it is subtracted or 0 if unset.
-	int disp;	///< displacement/offset value
-  unsigned align; ///< Alignment of base register. 0 If not set.
+	arm_reg base; ///< base register
+	arm_reg index; ///< index register
+	int scale; ///< scale for index register. Can be 1 if index reg is added, -1 if it is subtracted or 0 if unset.
+	int disp; ///< displacement/offset value
+	unsigned align; ///< Alignment of base register. 0 If not set.
 } arm_op_mem;
 
 typedef struct {
-  arm_sysop_reg reg; ///< The system or banked register.
-  arm_spsr_cpsr_bits psr_bits; ///< SPSR/CPSR bits.
-  uint16_t sysm; ///< Raw SYSm field. UINT16_MAX if unset.
-  uint8_t msr_mask; ///< Mask of MSR instructions. UINT8_MAX if invalid.
+	arm_sysop_reg reg; ///< The system or banked register.
+	arm_spsr_cpsr_bits psr_bits; ///< SPSR/CPSR bits.
+	uint16_t sysm; ///< Raw SYSm field. UINT16_MAX if unset.
+	uint8_t msr_mask; ///< Mask of MSR instructions. UINT8_MAX if invalid.
 } arm_sysop;
 
 /// Instruction operand
 typedef struct cs_arm_op {
-	int vector_index;	///< Vector Index for some vector operands (or -1 if irrelevant)
+	int vector_index; ///< Vector Index for some vector operands (or -1 if irrelevant)
 
 	struct {
 		arm_shifter type; ///< The shift type
-		unsigned int value; ///< The amount to shift. If shift.type > ARM_SFT_REG, the value must be interpreted as register id.
+		unsigned int
+			value; ///< The amount to shift. If shift.type > ARM_SFT_REG, the value must be interpreted as register id.
 	} shift;
 
-	arm_op_type type;	///< operand type
+	arm_op_type type; ///< operand type
 
 	union {
-		int reg;	///< register value for REG
-		arm_sysop sysop;  ///< System operand.
-		int64_t imm;			///< immediate value for C-IMM, P-IMM or IMM operand
-		int pred;			///< Predicate operand value.
-		double fp;			///< floating point value for FP operand
-		arm_op_mem mem;		///< base/index/scale/disp value for MEM operand
+		int reg; ///< register value for REG
+		arm_sysop sysop; ///< System operand.
+		int64_t imm; ///< immediate value for C-IMM, P-IMM or IMM operand
+		int pred; ///< Predicate operand value.
+		double fp; ///< floating point value for FP operand
+		arm_op_mem mem; ///< base/index/scale/disp value for MEM operand
 		arm_setend_type setend; ///< SETEND instruction's operand type
 	};
 
@@ -896,30 +903,34 @@ typedef struct cs_arm_op {
 } cs_arm_op;
 
 typedef struct {
-	cs_ac_type mem_acc; ///< CGI memory access according to mayLoad and mayStore
+	cs_ac_type
+		mem_acc; ///< CGI memory access according to mayLoad and mayStore
 } arm_suppl_info;
 
 #define NUM_ARM_OPS 36
 
 /// Instruction structure
 typedef struct cs_arm {
-	bool usermode;	///< User-mode registers to be loaded (for LDM/STM instructions)
-	int vector_size; 	///< Scalar size for vector instructions
-	arm_vectordata_type vector_data; ///< Data type for elements of vector instructions
-	arm_cpsmode_type cps_mode;	///< CPS mode for CPS instruction
-	arm_cpsflag_type cps_flag;	///< CPS mode for CPS instruction
-	ARMCC_CondCodes cc;		///< conditional code for this insn
-	ARMVCC_VPTCodes vcc;	///< Vector conditional code for this instruction.
-	bool update_flags;	///< does this insn update flags?
-	bool post_index;	///< only set if writeback is 'True', if 'False' pre-index, otherwise post.
-	arm_mem_bo_opt mem_barrier; ///< Option for some memory barrier instructions
+	bool usermode; ///< User-mode registers to be loaded (for LDM/STM instructions)
+	int vector_size; ///< Scalar size for vector instructions
+	arm_vectordata_type
+		vector_data; ///< Data type for elements of vector instructions
+	arm_cpsmode_type cps_mode; ///< CPS mode for CPS instruction
+	arm_cpsflag_type cps_flag; ///< CPS mode for CPS instruction
+	ARMCC_CondCodes cc; ///< conditional code for this insn
+	ARMVCC_VPTCodes vcc; ///< Vector conditional code for this instruction.
+	bool update_flags; ///< does this insn update flags?
+	bool post_index; ///< only set if writeback is 'True', if 'False' pre-index, otherwise post.
+	arm_mem_bo_opt
+		mem_barrier; ///< Option for some memory barrier instructions
 	// Check ARM_PredBlockMask for encoding details.
-	uint8_t /* ARM_PredBlockMask */ pred_mask;	///< Used by IT/VPT block instructions.
+	uint8_t /* ARM_PredBlockMask */
+		pred_mask; ///< Used by IT/VPT block instructions.
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
 
-	cs_arm_op operands[NUM_ARM_OPS];	///< operands for this instruction.
+	cs_arm_op operands[NUM_ARM_OPS]; ///< operands for this instruction.
 } cs_arm;
 
 /// ARM instruction
@@ -1568,7 +1579,7 @@ typedef enum arm_insn {
 	// clang-format on
 	// generated content <ARMGenCSInsnEnum.inc> end
 
-	ARM_INS_ENDING,	// <-- mark the end of the list of instructions
+	ARM_INS_ENDING, // <-- mark the end of the list of instructions
 
 	ARM_INS_ALIAS_BEGIN,
 	// generated content <ARMGenCSAliasEnum.inc> begin
@@ -1637,8 +1648,8 @@ typedef enum arm_insn_group {
 
 	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	ARM_GRP_JUMP,	///< = CS_GRP_JUMP
-	ARM_GRP_CALL,	///< = CS_GRP_CALL
+	ARM_GRP_JUMP, ///< = CS_GRP_JUMP
+	ARM_GRP_CALL, ///< = CS_GRP_CALL
 	ARM_GRP_RET, ///<  = CS_GRP_RET
 	ARM_GRP_INT = 4, ///< = CS_GRP_INT
 	ARM_GRP_PRIVILEGE = 6, ///< = CS_GRP_PRIVILEGE

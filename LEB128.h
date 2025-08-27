@@ -35,4 +35,4 @@ static inline uint64_t decodeULEB128(const uint8_t *p, unsigned *n)
 	return Value;
 }
 
-#endif  // LLVM_SYSTEM_LEB128_H
+#endif // LLVM_SYSTEM_LEB128_H

@@ -42,10 +42,9 @@
 
 #define DEBUG_TYPE "asm-printer"
 
-static void printCustomAliasOperand(
-         MCInst *MI, uint64_t Address, unsigned OpIdx,
-         unsigned PrintMethodIdx,
-         SStream *OS);
+static void printCustomAliasOperand(MCInst *MI, uint64_t Address,
+				    unsigned OpIdx, unsigned PrintMethodIdx,
+				    SStream *OS);
 static void printOperand(MCInst *MI, int opNum, SStream *O);
 
 #define GET_INSTRUCTION_NAME
@@ -70,8 +69,7 @@ static void printInst(MCInst *MI, uint64_t Address, SStream *O)
 	bool useAliasDetails = map_use_alias_details(MI);
 	map_set_fill_detail_ops(MI, useAliasDetails);
 
-	if (!printAliasInstr(MI, Address, O) &&
-		!printSparcAliasInstr(MI, O)) {
+	if (!printAliasInstr(MI, Address, O) && !printSparcAliasInstr(MI, O)) {
 		MCInst_setIsAlias(MI, false);
 	} else {
 		isAlias = true;
@@ -135,9 +133,11 @@ bool printSparcAliasInstr(MCInst *MI, SStream *O)
 	case Sparc_V9FCMPES:
 	case Sparc_V9FCMPED:
 	case Sparc_V9FCMPEQ: {
-		if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9) || (MCInst_getNumOperands(MI) != 3) ||
+		if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9) ||
+		    (MCInst_getNumOperands(MI) != 3) ||
 		    (!MCOperand_isReg(MCInst_getOperand(MI, (0)))) ||
-		    (MCOperand_getReg(MCInst_getOperand(MI, (0))) != Sparc_FCC0))
+		    (MCOperand_getReg(MCInst_getOperand(MI, (0))) !=
+		     Sparc_FCC0))
 			return false;
 		// if V8, skip printing %fcc0.
 		switch (MCInst_getOpcode(MI)) {
@@ -263,7 +263,8 @@ void printCCOperand(MCInst *MI, int opNum, SStream *O)
 	case Sparc_CBCOND:
 	case Sparc_CBCONDA:
 		// Make sure CC is a cp conditional flag.
-		CC = (CC < SPARC_CC_CPCC_BEGIN) ? (CC + SPARC_CC_CPCC_BEGIN) : CC;
+		CC = (CC < SPARC_CC_CPCC_BEGIN) ? (CC + SPARC_CC_CPCC_BEGIN) :
+						  CC;
 		break;
 	case Sparc_BPR:
 	case Sparc_BPRA:
@@ -319,7 +320,8 @@ void printASITag(MCInst *MI, int opNum, SStream *O)
 {
 	Sparc_add_cs_detail_0(MI, Sparc_OP_GROUP_ASITag, opNum);
 	unsigned Imm = MCOperand_getImm(MCInst_getOperand(MI, (opNum)));
-	const Sparc_ASITag_ASITag *ASITag = Sparc_ASITag_lookupASITagByEncoding(Imm);
+	const Sparc_ASITag_ASITag *ASITag =
+		Sparc_ASITag_lookupASITagByEncoding(Imm);
 	if (Sparc_getFeatureBits(MI->csh->mode, Sparc_FeatureV9) && ASITag) {
 		SStream_concat1(O, '#');
 		SStream_concat0(O, ASITag->Name);
@@ -327,9 +329,8 @@ void printASITag(MCInst *MI, int opNum, SStream *O)
 		printUInt32(O, Imm);
 }
 
-
 void Sparc_LLVM_printInst(MCInst *MI, uint64_t Address, const char *Annot,
-			      SStream *O)
+			  SStream *O)
 {
 	printInst(MI, Address, O);
 }

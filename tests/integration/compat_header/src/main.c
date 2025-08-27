@@ -4,13 +4,14 @@
 #include "compat.h"
 #include <stdio.h>
 
-int main() {
-  if (arm64() != 0) {
-    printf("Failed the arm64 compatibility header test.\n");
-    return -1;
-  }
-  if (sysz() != 0) {
-    printf("Failed the sysz compatibility header test.\n");
-    return -1;
-  }
+int main()
+{
+	if (arm64() != 0) {
+		printf("Failed the arm64 compatibility header test.\n");
+		return -1;
+	}
+	if (sysz() != 0) {
+		printf("Failed the sysz compatibility header test.\n");
+		return -1;
+	}
 }

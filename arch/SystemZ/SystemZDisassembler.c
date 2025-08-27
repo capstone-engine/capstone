@@ -41,9 +41,9 @@
 
 #define DEBUG_TYPE "systemz-disassembler"
 
-static DecodeStatus getInstruction(MCInst *Instr, uint16_t *Size, const uint8_t *Bytes,
-			    size_t BytesLen, uint64_t Address,
-			    SStream *CStream);
+static DecodeStatus getInstruction(MCInst *Instr, uint16_t *Size,
+				   const uint8_t *Bytes, size_t BytesLen,
+				   uint64_t Address, SStream *CStream);
 
 /// tryAddingSymbolicOperand - trys to add a symbolic operand in place of the
 /// immediate Value in the MCInst.
@@ -365,8 +365,9 @@ static DecodeStatus decodePC32DBLOperand(MCInst *Inst, uint64_t Imm,
 
 #include "SystemZGenDisassemblerTables.inc"
 
-static DecodeStatus getInstruction(MCInst *MI, uint16_t *Size, const uint8_t *Bytes,
-			    size_t BytesLen, uint64_t Address, SStream *CS)
+static DecodeStatus getInstruction(MCInst *MI, uint16_t *Size,
+				   const uint8_t *Bytes, size_t BytesLen,
+				   uint64_t Address, SStream *CS)
 {
 	// Get the first two bytes of the instruction.
 	*Size = 0;
@@ -406,9 +407,9 @@ static DecodeStatus getInstruction(MCInst *MI, uint16_t *Size, const uint8_t *By
 }
 
 DecodeStatus SystemZ_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
-				     size_t BytesLen, MCInst *MI,
-				     uint16_t *Size, uint64_t Address,
-				     void *Info)
+					 size_t BytesLen, MCInst *MI,
+					 uint16_t *Size, uint64_t Address,
+					 void *Info)
 {
 	return getInstruction(MI, Size, Bytes, BytesLen, MI->address, NULL);
 }

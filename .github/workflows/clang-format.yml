@@ -1,0 +1,33 @@
+name: Run clang-format-17
+on:
+  push:
+    paths:
+    - '**.c'
+    - '**.h'
+    # Ignore
+    - '!suite/auto-sync/**'
+  pull_request:
+
+# Stop previous runs on the same branch on new push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+
+    name: clang-format-17
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Install clang-format-17
+      run: |
+        sudo apt update -y
+        sudo apt install -y clang-format-17
+        clang-format-17 --version
+
+    - name: Check formatting
+      run: |
+        ./suite/run_clang_format.sh

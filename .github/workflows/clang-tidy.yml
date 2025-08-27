@@ -40,7 +40,7 @@ jobs:
         base_sha: ${{ github.event.pull_request.base.sha }}
         head_sha: ${{ github.event.pull_request.head.sha }}
       run: |
-        ./run-clang-tidy.sh build
+        ./suite/run_clang_tidy.sh build
 
     - uses: actions/upload-artifact@v4
       if: ${{ failure() }}

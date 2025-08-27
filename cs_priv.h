@@ -16,18 +16,22 @@ typedef void (*Printer_t)(MCInst *MI, SStream *OS, void *info);
 
 // function to be called after Printer_t
 // this is the best time to gather insn's characteristics
-typedef void (*PostPrinter_t)(csh handle, cs_insn *, SStream *mnem, MCInst *mci);
+typedef void (*PostPrinter_t)(csh handle, cs_insn *, SStream *mnem,
+			      MCInst *mci);
 
-typedef bool (*Disasm_t)(csh handle, const uint8_t *code, size_t code_len, MCInst *instr, uint16_t *size, uint64_t address, void *info);
+typedef bool (*Disasm_t)(csh handle, const uint8_t *code, size_t code_len,
+			 MCInst *instr, uint16_t *size, uint64_t address,
+			 void *info);
 
 typedef const char *(*GetName_t)(csh handle, unsigned int id);
 
 typedef void (*GetID_t)(cs_struct *h, cs_insn *insn, unsigned int id);
 
 // return registers accessed by instruction
-typedef void (*GetRegisterAccess_t)(const cs_insn *insn,
-		cs_regs regs_read, uint8_t *regs_read_count,
-		cs_regs regs_write, uint8_t *regs_write_count);
+typedef void (*GetRegisterAccess_t)(const cs_insn *insn, cs_regs regs_read,
+				    uint8_t *regs_read_count,
+				    cs_regs regs_write,
+				    uint8_t *regs_write_count);
 
 // for ARM only
 typedef struct ARM_ITBlock {
@@ -50,15 +54,15 @@ struct customized_mnem {
 
 struct insn_mnem {
 	struct customized_mnem insn;
-	struct insn_mnem *next;	// linked list of customized mnemonics
+	struct insn_mnem *next; // linked list of customized mnemonics
 };
 
 struct cs_struct {
 	cs_arch arch;
 	cs_mode mode;
-	Printer_t printer;	// asm printer
+	Printer_t printer; // asm printer
 	void *printer_info; // aux info for printer
-	Disasm_t disasm;	// disassembler
+	Disasm_t disasm; // disassembler
 	void *getinsn_info; // auxiliary info for printer
 	GetName_t reg_name;
 	GetName_t insn_name;
@@ -66,21 +70,22 @@ struct cs_struct {
 	GetID_t insn_id;
 	PostPrinter_t post_printer;
 	cs_err errnum;
-	ARM_ITBlock ITBlock;	// for Arm only
-	ARM_VPTBlock VPTBlock;  // for ARM only
+	ARM_ITBlock ITBlock; // for Arm only
+	ARM_VPTBlock VPTBlock; // for ARM only
 	bool PrintBranchImmAsAddress;
 	bool ShowVSRNumsAsVR;
 	cs_opt_value detail_opt, imm_unsigned;
-	int syntax;	// asm syntax for simple printer such as ARM, Mips & PPC
-	bool doing_mem;	// handling memory operand in InstPrinter code
+	int syntax; // asm syntax for simple printer such as ARM, Mips & PPC
+	bool doing_mem; // handling memory operand in InstPrinter code
 	bool doing_SME_Index; // handling a SME instruction that has index
-	unsigned short *insn_cache;	// index caching for mapping.c
-	bool skipdata;	// set this to True if we skip data when disassembling
-	uint8_t skipdata_size;	// how many bytes to skip
-	cs_opt_skipdata skipdata_setup;	// user-defined skipdata setup
-	const uint8_t *regsize_map;	// map to register size (x86-only for now)
+	unsigned short *insn_cache; // index caching for mapping.c
+	bool skipdata; // set this to True if we skip data when disassembling
+	uint8_t skipdata_size; // how many bytes to skip
+	cs_opt_skipdata skipdata_setup; // user-defined skipdata setup
+	const uint8_t *regsize_map; // map to register size (x86-only for now)
 	GetRegisterAccess_t reg_access;
-	struct insn_mnem *mnem_list;	// linked list of customized instruction mnemonic
+	struct insn_mnem
+		*mnem_list; // linked list of customized instruction mnemonic
 	uint32_t LITBASE; ///< The LITBASE register content. Bit 0 (LSB) indicatess if it is set. Bit[23:8] are the literal base address.
 };
 
@@ -108,11 +113,14 @@ extern cs_vsnprintf_t cs_vsnprintf;
 #define CS_ASSERT(expr) assert(expr)
 #elif CAPSTONE_ASSERTION_WARNINGS
 #define CS_ASSERT(expr) \
-do { \
-	if (!(expr)) { \
-		fprintf(stderr, "Capstone hit the assert: \"" #expr "\": %s:%" PRIu32 "\n", __FILE__, __LINE__); \
-	} \
-} while(0)
+	do { \
+		if (!(expr)) { \
+			fprintf(stderr, \
+				"Capstone hit the assert: \"" #expr \
+				"\": %s:%" PRIu32 "\n", \
+				__FILE__, __LINE__); \
+		} \
+	} while (0)
 #else
 #define CS_ASSERT(expr)
 #endif
@@ -123,12 +131,15 @@ do { \
 #define CS_ASSERT_RET_VAL(expr, val) assert(expr)
 #elif CAPSTONE_ASSERTION_WARNINGS
 #define CS_ASSERT_RET_VAL(expr, val) \
-do { \
-	if (!(expr)) { \
-		fprintf(stderr, "Capstone hit the assert: \"" #expr "\": %s:%" PRIu32 "\n", __FILE__, __LINE__); \
-		return val; \
-	} \
-} while(0)
+	do { \
+		if (!(expr)) { \
+			fprintf(stderr, \
+				"Capstone hit the assert: \"" #expr \
+				"\": %s:%" PRIu32 "\n", \
+				__FILE__, __LINE__); \
+			return val; \
+		} \
+	} while (0)
 #else
 #define CS_ASSERT_RET_VAL(expr, val)
 #endif
@@ -139,12 +150,15 @@ do { \
 #define CS_ASSERT_RET(expr) assert(expr)
 #elif CAPSTONE_ASSERTION_WARNINGS
 #define CS_ASSERT_RET(expr) \
-do { \
-	if (!(expr)) { \
-		fprintf(stderr, "Capstone hit the assert: \"" #expr "\": %s:%" PRIu32 "\n", __FILE__, __LINE__); \
-		return; \
-	} \
-} while(0)
+	do { \
+		if (!(expr)) { \
+			fprintf(stderr, \
+				"Capstone hit the assert: \"" #expr \
+				"\": %s:%" PRIu32 "\n", \
+				__FILE__, __LINE__); \
+			return; \
+		} \
+	} while (0)
 #else
 #define CS_ASSERT_RET(expr)
 #endif

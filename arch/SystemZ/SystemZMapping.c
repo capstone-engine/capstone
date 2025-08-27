@@ -3,7 +3,7 @@
 
 #ifdef CAPSTONE_HAS_SYSTEMZ
 
-#include <stdio.h>	// debug
+#include <stdio.h> // debug
 #include <string.h>
 
 #include "../../Mapping.h"
@@ -14,7 +14,6 @@
 #include "SystemZMCTargetDesc.h"
 #include "SystemZMapping.h"
 #include "SystemZLinkage.h"
-
 
 #ifndef CAPSTONE_DIET
 
@@ -40,7 +39,8 @@ const insn_map systemz_insns[] = {
 #include "SystemZGenCSMappingInsn.inc"
 };
 
-void SystemZ_set_instr_map_data(MCInst *MI, const uint8_t *Bytes, size_t BytesLen)
+void SystemZ_set_instr_map_data(MCInst *MI, const uint8_t *Bytes,
+				size_t BytesLen)
 {
 	map_cs_id(MI, systemz_insns, ARR_SIZE(systemz_insns));
 	map_implicit_reads(MI, systemz_insns);
@@ -78,7 +78,8 @@ void SystemZ_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 #endif
 }
 
-void SystemZ_init_cs_detail(MCInst *MI) {
+void SystemZ_init_cs_detail(MCInst *MI)
+{
 	if (!detail_is_set(MI)) {
 		return;
 	}
@@ -89,8 +90,8 @@ void SystemZ_init_cs_detail(MCInst *MI) {
 }
 
 bool SystemZ_getInstruction(csh handle, const uint8_t *bytes, size_t bytes_len,
-			MCInst *MI, uint16_t *size, uint64_t address,
-			void *info)
+			    MCInst *MI, uint16_t *size, uint64_t address,
+			    void *info)
 {
 	SystemZ_init_cs_detail(MI);
 	MI->MRI = (MCRegisterInfo *)info;
@@ -145,7 +146,7 @@ static const name_map group_name_maps[] = {
 	{ SYSTEMZ_GRP_PRIVILEGE, "privilege" },
 	{ SYSTEMZ_GRP_BRANCH_RELATIVE, "branch_relative" },
 
-	#include "SystemZGenCSFeatureName.inc"
+#include "SystemZGenCSFeatureName.inc"
 };
 #endif
 
@@ -173,13 +174,13 @@ void SystemZ_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 		break;
 	case SystemZ_OP_GROUP_Operand: {
 		cs_op_type secondary_op_type = map_get_op_type(MI, op_num) &
-							 ~(CS_OP_MEM | CS_OP_BOUND);
+					       ~(CS_OP_MEM | CS_OP_BOUND);
 		if (secondary_op_type == CS_OP_IMM) {
-			SystemZ_set_detail_op_imm(MI, op_num,
-								MCInst_getOpVal(MI, op_num), 0);
+			SystemZ_set_detail_op_imm(
+				MI, op_num, MCInst_getOpVal(MI, op_num), 0);
 		} else if (secondary_op_type == CS_OP_REG) {
 			SystemZ_set_detail_op_reg(MI, op_num,
-								MCInst_getOpVal(MI, op_num));
+						  MCInst_getOpVal(MI, op_num));
 		} else {
 			CS_ASSERT_RET(0 && "Op type not handled.");
 		}
@@ -194,15 +195,12 @@ void SystemZ_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 		CS_ASSERT_RET(map_get_op_type(MI, (op_num)) & CS_OP_MEM);
 		CS_ASSERT_RET(map_get_op_type(MI, (op_num + 1)) & CS_OP_MEM);
 		CS_ASSERT_RET(MCOperand_isReg(MCInst_getOperand(MI, (op_num))));
-		CS_ASSERT_RET(MCOperand_isImm(MCInst_getOperand(MI, (op_num + 1))));
-		SystemZ_set_detail_op_mem(MI,
-															op_num,
-															MCInst_getOpVal(MI, (op_num)),
-															MCInst_getOpVal(MI, (op_num + 1)),
-															0,
-															0,
-															SYSTEMZ_AM_BD
-														);
+		CS_ASSERT_RET(
+			MCOperand_isImm(MCInst_getOperand(MI, (op_num + 1))));
+		SystemZ_set_detail_op_mem(MI, op_num,
+					  MCInst_getOpVal(MI, (op_num)),
+					  MCInst_getOpVal(MI, (op_num + 1)), 0,
+					  0, SYSTEMZ_AM_BD);
 		break;
 	case SystemZ_OP_GROUP_BDVAddrOperand:
 	case SystemZ_OP_GROUP_BDXAddrOperand: {
@@ -212,14 +210,13 @@ void SystemZ_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 		CS_ASSERT(MCOperand_isReg(MCInst_getOperand(MI, (op_num))));
 		CS_ASSERT(MCOperand_isImm(MCInst_getOperand(MI, (op_num + 1))));
 		CS_ASSERT(MCOperand_isReg(MCInst_getOperand(MI, (op_num + 2))));
-		SystemZ_set_detail_op_mem(MI,
-															op_num,
-															MCInst_getOpVal(MI, (op_num)),
-															MCInst_getOpVal(MI, (op_num + 1)),
-															0,
-															MCInst_getOpVal(MI, (op_num + 2)),
-															(op_group == SystemZ_OP_GROUP_BDXAddrOperand ? SYSTEMZ_AM_BDX : SYSTEMZ_AM_BDV)
-														);
+		SystemZ_set_detail_op_mem(
+			MI, op_num, MCInst_getOpVal(MI, (op_num)),
+			MCInst_getOpVal(MI, (op_num + 1)), 0,
+			MCInst_getOpVal(MI, (op_num + 2)),
+			(op_group == SystemZ_OP_GROUP_BDXAddrOperand ?
+				 SYSTEMZ_AM_BDX :
+				 SYSTEMZ_AM_BDV));
 		break;
 	}
 	case SystemZ_OP_GROUP_BDLAddrOperand:
@@ -229,73 +226,67 @@ void SystemZ_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 		CS_ASSERT(MCOperand_isReg(MCInst_getOperand(MI, (op_num))));
 		CS_ASSERT(MCOperand_isImm(MCInst_getOperand(MI, (op_num + 1))));
 		CS_ASSERT(MCOperand_isImm(MCInst_getOperand(MI, (op_num + 2))));
-		SystemZ_set_detail_op_mem(MI,
-															op_num,
-															MCInst_getOpVal(MI, (op_num)),
-															MCInst_getOpVal(MI, (op_num + 1)),
-					                    MCInst_getOpVal(MI, (op_num + 2)),
-		                          0,
-		                          SYSTEMZ_AM_BDL
-		                        );
+		SystemZ_set_detail_op_mem(MI, op_num,
+					  MCInst_getOpVal(MI, (op_num)),
+					  MCInst_getOpVal(MI, (op_num + 1)),
+					  MCInst_getOpVal(MI, (op_num + 2)), 0,
+					  SYSTEMZ_AM_BDL);
 		break;
-  case SystemZ_OP_GROUP_BDRAddrOperand:
+	case SystemZ_OP_GROUP_BDRAddrOperand:
 		CS_ASSERT(map_get_op_type(MI, (op_num)) & CS_OP_MEM);
 		CS_ASSERT(map_get_op_type(MI, (op_num + 1)) & CS_OP_MEM);
 		CS_ASSERT(map_get_op_type(MI, (op_num + 2)) & CS_OP_MEM);
 		CS_ASSERT(MCOperand_isReg(MCInst_getOperand(MI, (op_num))));
 		CS_ASSERT(MCOperand_isImm(MCInst_getOperand(MI, (op_num + 1))));
 		CS_ASSERT(MCOperand_isReg(MCInst_getOperand(MI, (op_num + 2))));
-		SystemZ_set_detail_op_mem(MI,
-		                          op_num,
-		                          MCInst_getOpVal(MI, (op_num)),
-		                          MCInst_getOpVal(MI, (op_num + 1)),
-		                          MCInst_getOpVal(MI, (op_num + 2)),
-		                          0,
-		                          SYSTEMZ_AM_BDL
-		                        );
+		SystemZ_set_detail_op_mem(MI, op_num,
+					  MCInst_getOpVal(MI, (op_num)),
+					  MCInst_getOpVal(MI, (op_num + 1)),
+					  MCInst_getOpVal(MI, (op_num + 2)), 0,
+					  SYSTEMZ_AM_BDL);
 		break;
-  case SystemZ_OP_GROUP_PCRelOperand:
-			SystemZ_set_detail_op_imm(MI, op_num,
-						    MCInst_getOpVal(MI, op_num), 0);
+	case SystemZ_OP_GROUP_PCRelOperand:
+		SystemZ_set_detail_op_imm(MI, op_num,
+					  MCInst_getOpVal(MI, op_num), 0);
 		break;
-  case SystemZ_OP_GROUP_U1ImmOperand:
-			SystemZ_set_detail_op_imm(MI, op_num,
-						    MCInst_getOpVal(MI, op_num), 1);
+	case SystemZ_OP_GROUP_U1ImmOperand:
+		SystemZ_set_detail_op_imm(MI, op_num,
+					  MCInst_getOpVal(MI, op_num), 1);
 		break;
-  case SystemZ_OP_GROUP_U2ImmOperand:
-			SystemZ_set_detail_op_imm(MI, op_num,
-						    MCInst_getOpVal(MI, op_num), 2);
+	case SystemZ_OP_GROUP_U2ImmOperand:
+		SystemZ_set_detail_op_imm(MI, op_num,
+					  MCInst_getOpVal(MI, op_num), 2);
 		break;
-  case SystemZ_OP_GROUP_U3ImmOperand:
-			SystemZ_set_detail_op_imm(MI, op_num,
-						    MCInst_getOpVal(MI, op_num), 3);
+	case SystemZ_OP_GROUP_U3ImmOperand:
+		SystemZ_set_detail_op_imm(MI, op_num,
+					  MCInst_getOpVal(MI, op_num), 3);
 		break;
-  case SystemZ_OP_GROUP_U4ImmOperand:
-			SystemZ_set_detail_op_imm(MI, op_num,
-						    MCInst_getOpVal(MI, op_num), 4);
+	case SystemZ_OP_GROUP_U4ImmOperand:
+		SystemZ_set_detail_op_imm(MI, op_num,
+					  MCInst_getOpVal(MI, op_num), 4);
 		break;
-  case SystemZ_OP_GROUP_U8ImmOperand:
-  case SystemZ_OP_GROUP_S8ImmOperand:
-			SystemZ_set_detail_op_imm(MI, op_num,
-						    MCInst_getOpVal(MI, op_num), 8);
+	case SystemZ_OP_GROUP_U8ImmOperand:
+	case SystemZ_OP_GROUP_S8ImmOperand:
+		SystemZ_set_detail_op_imm(MI, op_num,
+					  MCInst_getOpVal(MI, op_num), 8);
 		break;
-  case SystemZ_OP_GROUP_U12ImmOperand:
-			SystemZ_set_detail_op_imm(MI, op_num,
-						    MCInst_getOpVal(MI, op_num), 12);
+	case SystemZ_OP_GROUP_U12ImmOperand:
+		SystemZ_set_detail_op_imm(MI, op_num,
+					  MCInst_getOpVal(MI, op_num), 12);
 		break;
-  case SystemZ_OP_GROUP_U16ImmOperand:
-  case SystemZ_OP_GROUP_S16ImmOperand:
-			SystemZ_set_detail_op_imm(MI, op_num,
-						    MCInst_getOpVal(MI, op_num), 16);
+	case SystemZ_OP_GROUP_U16ImmOperand:
+	case SystemZ_OP_GROUP_S16ImmOperand:
+		SystemZ_set_detail_op_imm(MI, op_num,
+					  MCInst_getOpVal(MI, op_num), 16);
 		break;
-  case SystemZ_OP_GROUP_U32ImmOperand:
-  case SystemZ_OP_GROUP_S32ImmOperand:
-			SystemZ_set_detail_op_imm(MI, op_num,
-						    MCInst_getOpVal(MI, op_num), 32);
+	case SystemZ_OP_GROUP_U32ImmOperand:
+	case SystemZ_OP_GROUP_S32ImmOperand:
+		SystemZ_set_detail_op_imm(MI, op_num,
+					  MCInst_getOpVal(MI, op_num), 32);
 		break;
-  case SystemZ_OP_GROUP_U48ImmOperand:
-			SystemZ_set_detail_op_imm(MI, op_num,
-						    MCInst_getOpVal(MI, op_num), 48);
+	case SystemZ_OP_GROUP_U48ImmOperand:
+		SystemZ_set_detail_op_imm(MI, op_num,
+					  MCInst_getOpVal(MI, op_num), 48);
 		break;
 	}
 #endif
@@ -303,7 +294,8 @@ void SystemZ_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
 
 #ifndef CAPSTONE_DIET
 
-void SystemZ_set_detail_op_imm(MCInst *MI, unsigned op_num, int64_t Imm, size_t width)
+void SystemZ_set_detail_op_imm(MCInst *MI, unsigned op_num, int64_t Imm,
+			       size_t width)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -331,7 +323,8 @@ void SystemZ_set_detail_op_reg(MCInst *MI, unsigned op_num, systemz_reg Reg)
 		// This means we just save the neutral element for ORing, so 0.
 		SystemZ_get_detail_op(MI, 0)->type = SYSTEMZ_OP_IMM;
 		SystemZ_get_detail_op(MI, 0)->imm = 0;
-		SystemZ_get_detail_op(MI, 0)->access = map_get_op_access(MI, op_num);
+		SystemZ_get_detail_op(MI, 0)->access =
+			map_get_op_access(MI, op_num);
 		SystemZ_get_detail_op(MI, 0)->imm_width = 0;
 		SystemZ_inc_op_count(MI);
 		return;
@@ -343,14 +336,16 @@ void SystemZ_set_detail_op_reg(MCInst *MI, unsigned op_num, systemz_reg Reg)
 	SystemZ_inc_op_count(MI);
 }
 
-void SystemZ_set_detail_op_mem(MCInst *MI, unsigned op_num, systemz_reg base, int64_t disp, uint64_t length, systemz_reg index, systemz_addr_mode am)
+void SystemZ_set_detail_op_mem(MCInst *MI, unsigned op_num, systemz_reg base,
+			       int64_t disp, uint64_t length, systemz_reg index,
+			       systemz_addr_mode am)
 {
 	if (!detail_is_set(MI))
 		return;
 	SystemZ_get_detail_op(MI, 0)->type = SYSTEMZ_OP_MEM;
 	SystemZ_get_detail_op(MI, 0)->access = map_get_op_access(MI, op_num);
 	SystemZ_get_detail_op(MI, 0)->mem.am = am;
-	switch(am) {
+	switch (am) {
 	default:
 		CS_ASSERT(0 && "Address mode not handled\n");
 		break;

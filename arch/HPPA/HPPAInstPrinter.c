@@ -702,7 +702,7 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 								       idx++);
 					}
 					CS_ASSERT_RET(space_reg_idx <
-					       ARR_SIZE(space_regs));
+						      ARR_SIZE(space_regs));
 					space_regs[space_reg_idx] =
 						MCOperand_getReg(op);
 					if (*fmt == 'R') {

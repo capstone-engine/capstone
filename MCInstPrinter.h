@@ -11,7 +11,7 @@
 /// Returned by getMnemonic() of the AsmPrinters.
 typedef struct {
 	const char *first; // Mnemonic
-	uint64_t second;   // Bits
+	uint64_t second; // Bits
 } MnemonicBitsInfo;
 
 /// Map from opcode to pattern list by binary search.
@@ -31,19 +31,19 @@ typedef struct {
 } AliasPattern;
 
 typedef enum {
-	AliasPatternCond_K_Feature,	   // Match only if a feature is enabled.
+	AliasPatternCond_K_Feature, // Match only if a feature is enabled.
 	AliasPatternCond_K_NegFeature, // Match only if a feature is disabled.
-	AliasPatternCond_K_OrFeature,  // Match only if one of a set of features is
-								   // enabled.
-	AliasPatternCond_K_OrNegFeature,  // Match only if one of a set of features
-									 // is disabled.
+	AliasPatternCond_K_OrFeature, // Match only if one of a set of features is
+	// enabled.
+	AliasPatternCond_K_OrNegFeature, // Match only if one of a set of features
+	// is disabled.
 	AliasPatternCond_K_EndOrFeatures, // Note end of list of K_Or(Neg)?Features.
-	AliasPatternCond_K_Ignore,		  // Match any operand.
-	AliasPatternCond_K_Reg,			  // Match a specific register.
-	AliasPatternCond_K_TiedReg,		  // Match another already matched register.
-	AliasPatternCond_K_Imm,			  // Match a specific immediate.
-	AliasPatternCond_K_RegClass,	  // Match registers in a class.
-	AliasPatternCond_K_Custom,		  // Call custom matcher by index.
+	AliasPatternCond_K_Ignore, // Match any operand.
+	AliasPatternCond_K_Reg, // Match a specific register.
+	AliasPatternCond_K_TiedReg, // Match another already matched register.
+	AliasPatternCond_K_Imm, // Match a specific immediate.
+	AliasPatternCond_K_RegClass, // Match registers in a class.
+	AliasPatternCond_K_Custom, // Call custom matcher by index.
 } AliasPatternCond_CondKind;
 
 typedef struct {
@@ -51,7 +51,8 @@ typedef struct {
 	uint32_t Value;
 } AliasPatternCond;
 
-typedef bool (*ValidateMCOperandFunc)(const MCOperand *MCOp, unsigned PredicateIndex);
+typedef bool (*ValidateMCOperandFunc)(const MCOperand *MCOp,
+				      unsigned PredicateIndex);
 
 /// Tablegenerated data structures needed to match alias patterns.
 typedef struct {
@@ -78,7 +79,9 @@ struct IndexTypeStr {
 
 // binary search for encoding in IndexType array
 // return -1 if not found, or index if found
-unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index, size_t size, uint16_t encoding);
-unsigned int binsearch_IndexTypeStrEncoding(const struct IndexTypeStr *index, size_t size, const char *name);
+unsigned int binsearch_IndexTypeEncoding(const struct IndexType *index,
+					 size_t size, uint16_t encoding);
+unsigned int binsearch_IndexTypeStrEncoding(const struct IndexTypeStr *index,
+					    size_t size, const char *name);
 
 #endif // CS_MCINSTPRINTER_H

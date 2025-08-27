@@ -110,7 +110,8 @@ TestDetailAArch64SME *test_detail_aarch64_op_sme_new()
 	return cs_mem_calloc(sizeof(TestDetailAArch64SME), 1);
 }
 
-TestDetailAArch64SME *test_detail_aarch64_op_sme_clone(TestDetailAArch64SME *sme)
+TestDetailAArch64SME *
+test_detail_aarch64_op_sme_clone(TestDetailAArch64SME *sme)
 {
 	TestDetailAArch64SME *clone = test_detail_aarch64_op_sme_new();
 
@@ -180,14 +181,14 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 		case AARCH64_OP_SYSREG:
 			compare_enum_ret(op->sysop.sub_type, eop->sub_type,
 					 false);
-			compare_int_ret(op->sysop.reg.raw_val,
-					   eop->sys_raw_val, false);
+			compare_int_ret(op->sysop.reg.raw_val, eop->sys_raw_val,
+					false);
 			break;
 		case AARCH64_OP_SYSIMM:
 			compare_enum_ret(op->sysop.sub_type, eop->sub_type,
 					 false);
-			compare_int_ret(op->sysop.imm.raw_val,
-					   eop->sys_raw_val, false);
+			compare_int_ret(op->sysop.imm.raw_val, eop->sys_raw_val,
+					false);
 			if (eop->fp_set) {
 				compare_fp_ret(op->fp, eop->fp, false);
 			}
@@ -196,7 +197,7 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 			compare_enum_ret(op->sysop.sub_type, eop->sub_type,
 					 false);
 			compare_int_ret(op->sysop.alias.raw_val,
-					   eop->sys_raw_val, false);
+					eop->sys_raw_val, false);
 			break;
 		case AARCH64_OP_MEM:
 			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
@@ -208,33 +209,41 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 		case AARCH64_OP_PRED:
 			compare_reg_ret(*handle, op->pred.reg, eop->pred_reg,
 					false);
-			compare_reg_ret(*handle, op->pred.vec_select, eop->pred_vec_select,
-					false);
+			compare_reg_ret(*handle, op->pred.vec_select,
+					eop->pred_vec_select, false);
 			if (eop->pred_imm_index_set) {
-				compare_int32_ret(op->pred.imm_index, eop->pred_imm_index, false);
+				compare_int32_ret(op->pred.imm_index,
+						  eop->pred_imm_index, false);
 			} else {
 				assert(eop->pred_imm_index == 0);
 			}
 			break;
 		case AARCH64_OP_SME:
-			compare_enum_ret(op->sme.type, eop->sme->type,
-					false);
+			compare_enum_ret(op->sme.type, eop->sme->type, false);
 			compare_reg_ret(*handle, op->sme.tile, eop->sme->tile,
 					false);
-			compare_reg_ret(*handle, op->sme.slice_reg, eop->sme->slice_reg,
-					false);
-			compare_tbool_ret(op->sme.has_range_offset, eop->sme->has_range_offset,
-					false);
-			compare_tbool_ret(op->sme.is_vertical, eop->sme->is_vertical,
-					false);
+			compare_reg_ret(*handle, op->sme.slice_reg,
+					eop->sme->slice_reg, false);
+			compare_tbool_ret(op->sme.has_range_offset,
+					  eop->sme->has_range_offset, false);
+			compare_tbool_ret(op->sme.is_vertical,
+					  eop->sme->is_vertical, false);
 			if (eop->sme->slice_offset_imm) {
-				compare_int32_ret(op->sme.slice_offset.imm, eop->sme->slice_offset_imm, false);
+				compare_int32_ret(op->sme.slice_offset.imm,
+						  eop->sme->slice_offset_imm,
+						  false);
 			}
 			if (eop->sme->slice_offset_ir_set) {
-				compare_int32_ret(op->sme.slice_offset.imm_range.first, eop->sme->slice_offset_ir_first, false);
-				compare_int32_ret(op->sme.slice_offset.imm_range.offset, eop->sme->slice_offset_ir_offset, false);
+				compare_int32_ret(
+					op->sme.slice_offset.imm_range.first,
+					eop->sme->slice_offset_ir_first, false);
+				compare_int32_ret(
+					op->sme.slice_offset.imm_range.offset,
+					eop->sme->slice_offset_ir_offset,
+					false);
 			} else {
-				assert(eop->sme->slice_offset_ir_first == 0 && eop->sme->slice_offset_ir_offset == 0);
+				assert(eop->sme->slice_offset_ir_first == 0 &&
+				       eop->sme->slice_offset_ir_offset == 0);
 			}
 			break;
 		}

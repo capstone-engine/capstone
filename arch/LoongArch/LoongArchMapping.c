@@ -258,26 +258,26 @@ void LoongArch_rewrite_memory_operand(MCInst *MI)
 	}
 
 	switch (suppl_info->form) {
-	case LOONGARCH_INSN_FORM_FMT2RI12:	 // ld, ldl, ldr, st, stl, str
-	case LOONGARCH_INSN_FORM_FMT2RI14:	 // ll, sc, ldptr, stptr
-	case LOONGARCH_INSN_FORM_FMT2RI9_VRI:	 // vldrepl.d
-	case LOONGARCH_INSN_FORM_FMT2RI10_VRI:	 // vldrepl.w
-	case LOONGARCH_INSN_FORM_FMT2RI11_VRI:	 // vldrepl.h
-	case LOONGARCH_INSN_FORM_FMT2RI12_VRI:	 // vld, vldrepl, vst
+	case LOONGARCH_INSN_FORM_FMT2RI12: // ld, ldl, ldr, st, stl, str
+	case LOONGARCH_INSN_FORM_FMT2RI14: // ll, sc, ldptr, stptr
+	case LOONGARCH_INSN_FORM_FMT2RI9_VRI: // vldrepl.d
+	case LOONGARCH_INSN_FORM_FMT2RI10_VRI: // vldrepl.w
+	case LOONGARCH_INSN_FORM_FMT2RI11_VRI: // vldrepl.h
+	case LOONGARCH_INSN_FORM_FMT2RI12_VRI: // vld, vldrepl, vst
 	case LOONGARCH_INSN_FORM_FMT2RI8I1_VRII: // vstelm.d
 	case LOONGARCH_INSN_FORM_FMT2RI8I2_VRII: // vstelm.w
 	case LOONGARCH_INSN_FORM_FMT2RI8I3_VRII: // vstelm.h
 	case LOONGARCH_INSN_FORM_FMT2RI8I4_VRII: // vstelm.b
-	case LOONGARCH_INSN_FORM_FMT2RI9_XRI:	 // xvldrepl.d
-	case LOONGARCH_INSN_FORM_FMT2RI10_XRI:	 // xvldrepl.w
-	case LOONGARCH_INSN_FORM_FMT2RI11_XRI:	 // xvldrepl.h
-	case LOONGARCH_INSN_FORM_FMT2RI12_XRI:	 // xvld, xvldrepl, xvst
+	case LOONGARCH_INSN_FORM_FMT2RI9_XRI: // xvldrepl.d
+	case LOONGARCH_INSN_FORM_FMT2RI10_XRI: // xvldrepl.w
+	case LOONGARCH_INSN_FORM_FMT2RI11_XRI: // xvldrepl.h
+	case LOONGARCH_INSN_FORM_FMT2RI12_XRI: // xvld, xvldrepl, xvst
 	case LOONGARCH_INSN_FORM_FMT2RI8I2_XRII: // xvstelm.d
 	case LOONGARCH_INSN_FORM_FMT2RI8I3_XRII: // xvstelm.w
 	case LOONGARCH_INSN_FORM_FMT2RI8I4_XRII: // xvstelm.h
 	case LOONGARCH_INSN_FORM_FMT2RI8I5_XRII: // xvstelm.b
-	case LOONGARCH_INSN_FORM_FMTPRELD:	 // preld
-	case LOONGARCH_INSN_FORM_FPFMT2RI12:	 // fld, fst
+	case LOONGARCH_INSN_FORM_FMTPRELD: // preld
+	case LOONGARCH_INSN_FORM_FPFMT2RI12: // fld, fst
 		// immediate offset
 		LoongArch_get_detail_op(MI, -2)->type = LOONGARCH_OP_MEM;
 		base = LoongArch_get_detail_op(MI, -2)->reg;
@@ -303,7 +303,7 @@ void LoongArch_rewrite_memory_operand(MCInst *MI)
 		}
 		// fallthrough
 
-	case LOONGARCH_INSN_FORM_FPFMTMEM:  // fldx, fstx
+	case LOONGARCH_INSN_FORM_FPFMTMEM: // fldx, fstx
 	case LOONGARCH_INSN_FORM_FMT3R_VRR: // vldx, vstx
 	case LOONGARCH_INSN_FORM_FMT3R_XRR: // xvldx, xvstx
 	case LOONGARCH_INSN_FORM_FMTPRELDX: // preldx
@@ -386,8 +386,8 @@ bool LoongArch_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 {
 	uint64_t temp_size;
 	LoongArch_init_cs_detail(instr);
-	DecodeStatus Result = LoongArch_LLVM_getInstruction(instr, &temp_size, code,
-						    code_len, address, info);
+	DecodeStatus Result = LoongArch_LLVM_getInstruction(
+		instr, &temp_size, code, code_len, address, info);
 	LoongArch_set_instr_map_data(instr);
 	*size = temp_size;
 	if (Result == MCDisassembler_SoftFail) {

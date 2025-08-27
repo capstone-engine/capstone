@@ -10,18 +10,17 @@
 
 int main(int argc, char **argv)
 {
-    unsigned char data;
+	unsigned char data;
 
-    if (argc != 2) {
-        printf("Decoding OSS fuzz platform\n");
-        printf("Syntax: %s <hex-byte>\n", argv[0]);
-        return -1;
-    }
+	if (argc != 2) {
+		printf("Decoding OSS fuzz platform\n");
+		printf("Syntax: %s <hex-byte>\n", argv[0]);
+		return -1;
+	}
 
-    data = (unsigned int)strtol(argv[1], NULL, 16);
+	data = (unsigned int)strtol(argv[1], NULL, 16);
 
-    printf("cstool arch+mode = %s\n", get_platform_cstoolname(data));
+	printf("cstool arch+mode = %s\n", get_platform_cstoolname(data));
 
-    return 0;
+	return 0;
 }
-

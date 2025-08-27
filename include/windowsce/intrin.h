@@ -1,5 +1,6 @@
 
-#if defined(_MSC_VER) && defined(_WIN32_WCE) && (_WIN32_WCE < 0x800) && !defined(__INTRIN_H_) && !defined(_INTRIN)
+#if defined(_MSC_VER) && defined(_WIN32_WCE) && (_WIN32_WCE < 0x800) && \
+	!defined(__INTRIN_H_) && !defined(_INTRIN)
 #define _STDINT
 
 #ifdef _M_ARM

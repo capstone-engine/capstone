@@ -26,12 +26,10 @@
 
 void ARC_init_mri(MCRegisterInfo *MRI)
 {
-	MCRegisterInfo_InitMCRegisterInfo(MRI, ARCRegDesc,
-					  sizeof(ARCRegDesc), 0, 0,
-					  ARCMCRegisterClasses,
-					  ARR_SIZE(ARCMCRegisterClasses),
-					  0, 0, ARCRegDiffLists, 0,
-					  ARCSubRegIdxLists,
+	MCRegisterInfo_InitMCRegisterInfo(MRI, ARCRegDesc, sizeof(ARCRegDesc),
+					  0, 0, ARCMCRegisterClasses,
+					  ARR_SIZE(ARCMCRegisterClasses), 0, 0,
+					  ARCRegDiffLists, 0, ARCSubRegIdxLists,
 					  ARR_SIZE(ARCSubRegIdxLists), 0);
 }
 
@@ -83,8 +81,8 @@ const char *ARC_group_name(csh handle, unsigned int id)
 }
 
 void ARC_reg_access(const cs_insn *insn, cs_regs regs_read,
-			  uint8_t *regs_read_count, cs_regs regs_write,
-			  uint8_t *regs_write_count)
+		    uint8_t *regs_read_count, cs_regs regs_write,
+		    uint8_t *regs_write_count)
 {
 	uint8_t i;
 	uint8_t read_count, write_count;
@@ -137,13 +135,13 @@ void ARC_set_instr_map_data(MCInst *MI)
 }
 
 bool ARC_getInstruction(csh handle, const uint8_t *code, size_t code_len,
-			      MCInst *instr, uint16_t *size, uint64_t address,
-			      void *info)
+			MCInst *instr, uint16_t *size, uint64_t address,
+			void *info)
 {
 	uint64_t temp_size;
 	ARC_init_cs_detail(instr);
 	DecodeStatus Result = ARC_LLVM_getInstruction(instr, &temp_size, code,
-						    code_len, address, info);
+						      code_len, address, info);
 	ARC_set_instr_map_data(instr);
 	*size = temp_size;
 	if (Result == MCDisassembler_SoftFail) {
@@ -152,8 +150,7 @@ bool ARC_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 	return Result != MCDisassembler_Fail;
 }
 
-void ARC_printer(MCInst *MI, SStream *O,
-		       void * /* MCRegisterInfo* */ info)
+void ARC_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 {
 	MCRegisterInfo *MRI = (MCRegisterInfo *)info;
 	MI->MRI = MRI;
@@ -174,21 +171,18 @@ void ARC_init_cs_detail(MCInst *MI)
 	}
 	unsigned int i;
 
-	memset(get_detail(MI), 0,
-			offsetof(cs_detail, arc) + sizeof(cs_arc));
+	memset(get_detail(MI), 0, offsetof(cs_detail, arc) + sizeof(cs_arc));
 
-	for (i = 0; i < ARR_SIZE(ARC_get_detail(MI)->operands);
-			i++)
-		ARC_setup_op(
-			&ARC_get_detail(MI)->operands[i]);
+	for (i = 0; i < ARR_SIZE(ARC_get_detail(MI)->operands); i++)
+		ARC_setup_op(&ARC_get_detail(MI)->operands[i]);
 }
 
 static const map_insn_ops insn_operands[] = {
 #include "ARCGenCSMappingInsnOp.inc"
 };
 
-void ARC_set_detail_op_imm(MCInst *MI, unsigned OpNum,
-				 arc_op_type ImmType, int64_t Imm)
+void ARC_set_detail_op_imm(MCInst *MI, unsigned OpNum, arc_op_type ImmType,
+			   int64_t Imm)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -215,8 +209,7 @@ void ARC_set_detail_op_reg(MCInst *MI, unsigned OpNum, arc_reg Reg)
 	ARC_inc_op_count(MI);
 }
 
-void ARC_add_cs_detail(MCInst *MI, int op_group,
-			     va_list args)
+void ARC_add_cs_detail(MCInst *MI, int op_group, va_list args)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -233,57 +226,58 @@ void ARC_add_cs_detail(MCInst *MI, int op_group,
 	case ARC_OP_GROUP_Operand:
 		if (op_type == CS_OP_IMM) {
 			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
-						    MCInst_getOpVal(MI, OpNum));
+					      MCInst_getOpVal(MI, OpNum));
 		} else if (op_type == CS_OP_REG) {
 			ARC_set_detail_op_reg(MI, OpNum,
-						    MCInst_getOpVal(MI, OpNum));
+					      MCInst_getOpVal(MI, OpNum));
 		} else {
 			// Expression
-			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
-						    MCOperand_getImm(MCInst_getOperand(MI, OpNum)));
+			ARC_set_detail_op_imm(
+				MI, OpNum, ARC_OP_IMM,
+				MCOperand_getImm(MCInst_getOperand(MI, OpNum)));
 		}
 		break;
 	case ARC_OP_GROUP_PredicateOperand:
 		if (op_type == CS_OP_IMM) {
 			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
-						    MCInst_getOpVal(MI, OpNum));
+					      MCInst_getOpVal(MI, OpNum));
 		} else
 			CS_ASSERT(0 && "Op type not handled.");
 		break;
 	case ARC_OP_GROUP_MemOperandRI:
 		if (base_op_type == CS_OP_REG) {
 			ARC_set_detail_op_reg(MI, OpNum,
-						    MCInst_getOpVal(MI, OpNum));
+					      MCInst_getOpVal(MI, OpNum));
 		} else
 			CS_ASSERT(0 && "Op type not handled.");
-		offset_op_type = map_get_op_type(MI, OpNum+1);
+		offset_op_type = map_get_op_type(MI, OpNum + 1);
 		if (offset_op_type == CS_OP_IMM) {
-			ARC_set_detail_op_imm(MI, OpNum+1, ARC_OP_IMM,
-						    MCInst_getOpVal(MI, OpNum+1));
+			ARC_set_detail_op_imm(MI, OpNum + 1, ARC_OP_IMM,
+					      MCInst_getOpVal(MI, OpNum + 1));
 		} else
 			CS_ASSERT(0 && "Op type not handled.");
 		break;
 	case ARC_OP_GROUP_BRCCPredicateOperand:
 		if (op_type == CS_OP_IMM) {
 			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
-						    MCInst_getOpVal(MI, OpNum));
+					      MCInst_getOpVal(MI, OpNum));
 		} else
 			CS_ASSERT(0 && "Op type not handled.");
 		break;
 	case ARC_OP_GROUP_CCOperand:
 		if (op_type == CS_OP_IMM) {
 			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
-						    MCInst_getOpVal(MI, OpNum));
+					      MCInst_getOpVal(MI, OpNum));
 		} else
 			CS_ASSERT(0 && "Op type not handled.");
 		break;
 	case ARC_OP_GROUP_U6:
 		if (op_type == CS_OP_IMM) {
 			ARC_set_detail_op_imm(MI, OpNum, ARC_OP_IMM,
-						    MCInst_getOpVal(MI, OpNum));
+					      MCInst_getOpVal(MI, OpNum));
 		} else
 			CS_ASSERT(0 && "Op type not handled.");
-		break;		
+		break;
 	}
 }
 

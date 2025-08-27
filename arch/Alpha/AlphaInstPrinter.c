@@ -19,7 +19,8 @@ static const char *getRegisterName(unsigned RegNo);
 
 static void printInstruction(MCInst *, uint64_t, SStream *);
 static void printOperand(MCInst *MI, int OpNum, SStream *O);
-static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O);
+static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum,
+			     SStream *O);
 
 #define GET_INSTRINFO_ENUM
 
@@ -35,7 +36,7 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 		return;
 
 	Alpha_add_cs_detail(MI, OpNum);
-	
+
 	MCOperand *Op;
 	Op = MCInst_getOperand(MI, OpNum);
 	if (MCOperand_isReg(Op)) {
@@ -57,12 +58,13 @@ static void printOperand(MCInst *MI, int OpNum, SStream *O)
 	}
 }
 
-static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O) 
+static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum,
+			     SStream *O)
 {
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 
 	uint64_t Imm = MCOperand_getImm(Op);
-	uint64_t Target = Address + 4 + (int16_t) (Imm << 2);
+	uint64_t Target = Address + 4 + (int16_t)(Imm << 2);
 
 	Alpha_set_detail_op_imm(MI, OpNum, ALPHA_OP_IMM, Target);
 	printUInt64(O, Target);

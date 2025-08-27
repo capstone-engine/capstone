@@ -26,14 +26,13 @@ typedef struct DiffListIterator {
 } DiffListIterator;
 
 void MCRegisterInfo_InitMCRegisterInfo(MCRegisterInfo *RI,
-		const MCRegisterDesc *D, unsigned NR,
-		unsigned RA, unsigned PC,
-		const MCRegisterClass *C, unsigned NC,
-		uint16_t (*RURoots)[2], unsigned NRU,
-		const MCPhysReg *DL,
-		const char *Strings,
-		const uint16_t *SubIndices, unsigned NumIndices,
-		const uint16_t *RET)
+				       const MCRegisterDesc *D, unsigned NR,
+				       unsigned RA, unsigned PC,
+				       const MCRegisterClass *C, unsigned NC,
+				       uint16_t (*RURoots)[2], unsigned NRU,
+				       const MCPhysReg *DL, const char *Strings,
+				       const uint16_t *SubIndices,
+				       unsigned NumIndices, const uint16_t *RET)
 {
 	RI->Desc = D;
 	RI->NumRegs = NR;
@@ -50,7 +49,8 @@ void MCRegisterInfo_InitMCRegisterInfo(MCRegisterInfo *RI,
 	RI->RegEncodingTable = RET;
 }
 
-static void DiffListIterator_init(DiffListIterator *d, MCPhysReg InitVal, const MCPhysReg *DiffList)
+static void DiffListIterator_init(DiffListIterator *d, MCPhysReg InitVal,
+				  const MCPhysReg *DiffList)
 {
 	d->Val = InitVal;
 	d->List = DiffList;
@@ -83,7 +83,9 @@ static bool DiffListIterator_isValid(DiffListIterator *d)
 	return (d->List != 0);
 }
 
-unsigned MCRegisterInfo_getMatchingSuperReg(const MCRegisterInfo *RI, unsigned Reg, unsigned SubIdx, const MCRegisterClass *RC)
+unsigned MCRegisterInfo_getMatchingSuperReg(const MCRegisterInfo *RI,
+					    unsigned Reg, unsigned SubIdx,
+					    const MCRegisterClass *RC)
 {
 	DiffListIterator iter;
 
@@ -91,12 +93,14 @@ unsigned MCRegisterInfo_getMatchingSuperReg(const MCRegisterInfo *RI, unsigned R
 		return 0;
 	}
 
-	DiffListIterator_init(&iter, (MCPhysReg)Reg, RI->DiffLists + RI->Desc[Reg].SuperRegs);
+	DiffListIterator_init(&iter, (MCPhysReg)Reg,
+			      RI->DiffLists + RI->Desc[Reg].SuperRegs);
 	DiffListIterator_next(&iter);
 
-	while(DiffListIterator_isValid(&iter)) {
+	while (DiffListIterator_isValid(&iter)) {
 		uint16_t val = DiffListIterator_getVal(&iter);
-		if (MCRegisterClass_contains(RC, val) && Reg ==  MCRegisterInfo_getSubReg(RI, val, SubIdx))
+		if (MCRegisterClass_contains(RC, val) &&
+		    Reg == MCRegisterInfo_getSubReg(RI, val, SubIdx))
 			return val;
 
 		DiffListIterator_next(&iter);
@@ -105,15 +109,17 @@ unsigned MCRegisterInfo_getMatchingSuperReg(const MCRegisterInfo *RI, unsigned R
 	return 0;
 }
 
-unsigned MCRegisterInfo_getSubReg(const MCRegisterInfo *RI, unsigned Reg, unsigned Idx)
+unsigned MCRegisterInfo_getSubReg(const MCRegisterInfo *RI, unsigned Reg,
+				  unsigned Idx)
 {
 	DiffListIterator iter;
 	const uint16_t *SRI = RI->SubRegIndices + RI->Desc[Reg].SubRegIndices;
 
-	DiffListIterator_init(&iter, (MCPhysReg)Reg, RI->DiffLists + RI->Desc[Reg].SubRegs);
+	DiffListIterator_init(&iter, (MCPhysReg)Reg,
+			      RI->DiffLists + RI->Desc[Reg].SubRegs);
 	DiffListIterator_next(&iter);
 
-	while(DiffListIterator_isValid(&iter)) {
+	while (DiffListIterator_isValid(&iter)) {
 		if (*SRI == Idx)
 			return DiffListIterator_getVal(&iter);
 		DiffListIterator_next(&iter);
@@ -123,7 +129,8 @@ unsigned MCRegisterInfo_getSubReg(const MCRegisterInfo *RI, unsigned Reg, unsign
 	return 0;
 }
 
-const MCRegisterClass* MCRegisterInfo_getRegClass(const MCRegisterInfo *RI, unsigned i)
+const MCRegisterClass *MCRegisterInfo_getRegClass(const MCRegisterInfo *RI,
+						  unsigned i)
 {
 	//assert(i < getNumRegClasses() && "Register Class ID out of range");
 	if (i >= RI->NumClasses)
@@ -138,7 +145,7 @@ bool MCRegisterClass_contains(const MCRegisterClass *c, unsigned Reg)
 
 	// Make sure that MCRegisterInfo_getRegClass didn't return 0
 	// (for calls to GETREGCLASS_CONTAIN0)
-	if(!c)
+	if (!c)
 		return false;
 
 	InByte = Reg % 8;
@@ -150,6 +157,7 @@ bool MCRegisterClass_contains(const MCRegisterClass *c, unsigned Reg)
 	return (c->RegSet[Byte] & (1 << InByte)) != 0;
 }
 
-unsigned MCRegisterClass_getRegister(const MCRegisterClass *c, unsigned RegNo) {
-    return c->RegsBegin[RegNo];
+unsigned MCRegisterClass_getRegister(const MCRegisterClass *c, unsigned RegNo)
+{
+	return c->RegsBegin[RegNo];
 }

@@ -12,7 +12,7 @@ extern "C" {
 #include "cs_operand.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
+#pragma warning(disable : 4201)
 #endif
 
 #define M680X_OPERAND_COUNT 9
@@ -49,123 +49,127 @@ typedef enum m680x_reg {
 	M680X_REG_TMP2, ///< CPU12
 	M680X_REG_TMP3, ///< CPU12
 
-	M680X_REG_ENDING,   ///< <-- mark the end of the list of registers
+	M680X_REG_ENDING, ///< <-- mark the end of the list of registers
 } m680x_reg;
 
 /// Operand type for instruction's operands
 typedef enum m680x_op_type {
 	M680X_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
-	M680X_OP_REGISTER = CS_OP_REG,    ///< = Register operand.
-	M680X_OP_IMMEDIATE = CS_OP_IMM,   ///< = Immediate operand.
-	M680X_OP_INDEXED = CS_OP_SPECIAL + 0,     ///< = Indexed addressing operand.
-	M680X_OP_EXTENDED = CS_OP_SPECIAL + 1,    ///< = Extended addressing operand.
-	M680X_OP_DIRECT = CS_OP_SPECIAL + 2,      ///< = Direct addressing operand.
-	M680X_OP_RELATIVE = CS_OP_SPECIAL + 3,    ///< = Relative addressing operand.
-	M680X_OP_CONSTANT = CS_OP_SPECIAL + 4,    ///< = constant operand (Displayed as number only).
-				///< Used e.g. for a bit index or page number.
+	M680X_OP_REGISTER = CS_OP_REG, ///< = Register operand.
+	M680X_OP_IMMEDIATE = CS_OP_IMM, ///< = Immediate operand.
+	M680X_OP_INDEXED = CS_OP_SPECIAL + 0, ///< = Indexed addressing operand.
+	M680X_OP_EXTENDED =
+		CS_OP_SPECIAL + 1, ///< = Extended addressing operand.
+	M680X_OP_DIRECT = CS_OP_SPECIAL + 2, ///< = Direct addressing operand.
+	M680X_OP_RELATIVE =
+		CS_OP_SPECIAL + 3, ///< = Relative addressing operand.
+	M680X_OP_CONSTANT =
+		CS_OP_SPECIAL +
+		4, ///< = constant operand (Displayed as number only).
+	///< Used e.g. for a bit index or page number.
 } m680x_op_type;
 
 // Supported bit values for mem.idx.offset_bits
-#define M680X_OFFSET_NONE      0
-#define M680X_OFFSET_BITS_5    5
-#define M680X_OFFSET_BITS_8    8
-#define M680X_OFFSET_BITS_9    9
-#define M680X_OFFSET_BITS_16  16
+#define M680X_OFFSET_NONE 0
+#define M680X_OFFSET_BITS_5 5
+#define M680X_OFFSET_BITS_8 8
+#define M680X_OFFSET_BITS_9 9
+#define M680X_OFFSET_BITS_16 16
 
 // Supported bit flags for mem.idx.flags
 // These flags can be combined
-#define M680X_IDX_INDIRECT     1
-#define M680X_IDX_NO_COMMA     2
+#define M680X_IDX_INDIRECT 1
+#define M680X_IDX_NO_COMMA 2
 #define M680X_IDX_POST_INC_DEC 4
 
 /// Instruction's operand referring to indexed addressing
 typedef struct m680x_op_idx {
-	m680x_reg base_reg;	///< base register (or M680X_REG_INVALID if
-				///< irrelevant)
-	m680x_reg offset_reg;	///< offset register (or M680X_REG_INVALID if
-				///< irrelevant)
-	int16_t offset;		///< 5-,8- or 16-bit offset. See also offset_bits.
-	uint16_t offset_addr;	///< = offset addr. if base_reg == M680X_REG_PC.
-				///< calculated as offset + PC
-	uint8_t offset_bits;	///< offset width in bits for indexed addressing
-	int8_t inc_dec;		///< inc. or dec. value:
-				///<    0: no inc-/decrement
-				///<    1 .. 8: increment by 1 .. 8
-				///<    -1 .. -8: decrement by 1 .. 8
-				///< if flag M680X_IDX_POST_INC_DEC set it is post
-				///< inc-/decrement otherwise pre inc-/decrement
-	uint8_t flags;		///< 8-bit flags (see above)
+	m680x_reg base_reg; ///< base register (or M680X_REG_INVALID if
+		///< irrelevant)
+	m680x_reg offset_reg; ///< offset register (or M680X_REG_INVALID if
+		///< irrelevant)
+	int16_t offset; ///< 5-,8- or 16-bit offset. See also offset_bits.
+	uint16_t offset_addr; ///< = offset addr. if base_reg == M680X_REG_PC.
+		///< calculated as offset + PC
+	uint8_t offset_bits; ///< offset width in bits for indexed addressing
+	int8_t inc_dec; ///< inc. or dec. value:
+		///<    0: no inc-/decrement
+		///<    1 .. 8: increment by 1 .. 8
+		///<    -1 .. -8: decrement by 1 .. 8
+		///< if flag M680X_IDX_POST_INC_DEC set it is post
+		///< inc-/decrement otherwise pre inc-/decrement
+	uint8_t flags; ///< 8-bit flags (see above)
 } m680x_op_idx;
 
 /// Instruction's memory operand referring to relative addressing (Bcc/LBcc)
 typedef struct m680x_op_rel {
-	uint16_t address;	///< The absolute address.
-				///< calculated as PC + offset. PC is the first
-				///< address after the instruction.
-	int16_t offset;		///< the offset/displacement value
+	uint16_t address; ///< The absolute address.
+		///< calculated as PC + offset. PC is the first
+		///< address after the instruction.
+	int16_t offset; ///< the offset/displacement value
 } m680x_op_rel;
 
 /// Instruction's operand referring to extended addressing
 typedef struct m680x_op_ext {
-	uint16_t address;      ///< The absolute address
-	bool indirect;         ///< true if extended indirect addressing
+	uint16_t address; ///< The absolute address
+	bool indirect; ///< true if extended indirect addressing
 } m680x_op_ext;
 
 /// Instruction operand
 typedef struct cs_m680x_op {
 	m680x_op_type type;
 	union {
-		int32_t imm;		///< immediate value for IMM operand
-		m680x_reg reg;		///< register value for REG operand
-		m680x_op_idx idx;	///< Indexed addressing operand
-		m680x_op_rel rel;	///< Relative address. operand (Bcc/LBcc)
-		m680x_op_ext ext;	///< Extended address
-		uint8_t direct_addr;	///<</ Direct address (lower 8-bit)
-		uint8_t const_val;	///< constant value (bit index, page nr.)
+		int32_t imm; ///< immediate value for IMM operand
+		m680x_reg reg; ///< register value for REG operand
+		m680x_op_idx idx; ///< Indexed addressing operand
+		m680x_op_rel rel; ///< Relative address. operand (Bcc/LBcc)
+		m680x_op_ext ext; ///< Extended address
+		uint8_t direct_addr; ///<</ Direct address (lower 8-bit)
+		uint8_t const_val; ///< constant value (bit index, page nr.)
 	};
-	uint8_t size;			///< size of this operand (in bytes)
+	uint8_t size; ///< size of this operand (in bytes)
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)
 	/// This field is combined of cs_ac_type.
-	/// NOTE: this field is irrelevant if engine is compiled in DIET 
+	/// NOTE: this field is irrelevant if engine is compiled in DIET
 	cs_ac_type access;
 } cs_m680x_op;
 
 /// Group of M680X instructions
 typedef enum m680x_group_type {
-	M680X_GRP_INVALID = 0,	/// = CS_GRP_INVALID
+	M680X_GRP_INVALID = 0, /// = CS_GRP_INVALID
 	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	M680X_GRP_JUMP,		///< = CS_GRP_JUMP
+	M680X_GRP_JUMP, ///< = CS_GRP_JUMP
 	// all call instructions
-	M680X_GRP_CALL,		///< = CS_GRP_CALL
+	M680X_GRP_CALL, ///< = CS_GRP_CALL
 	// all return instructions
-	M680X_GRP_RET,		///< = CS_GRP_RET
+	M680X_GRP_RET, ///< = CS_GRP_RET
 	// all interrupt instructions (int+syscall)
-	M680X_GRP_INT,		///< = CS_GRP_INT
+	M680X_GRP_INT, ///< = CS_GRP_INT
 	// all interrupt return instructions
-	M680X_GRP_IRET,		///< = CS_GRP_IRET
+	M680X_GRP_IRET, ///< = CS_GRP_IRET
 	// all privileged instructions
-	M680X_GRP_PRIV,		///< = CS_GRP_PRIVILEDGE; not used
+	M680X_GRP_PRIV, ///< = CS_GRP_PRIVILEDGE; not used
 	// all relative branching instructions
-	M680X_GRP_BRAREL,	///< = CS_GRP_BRANCH_RELATIVE
+	M680X_GRP_BRAREL, ///< = CS_GRP_BRANCH_RELATIVE
 
 	// Architecture-specific groups
-	M680X_GRP_ENDING,	// <-- mark the end of the list of groups
+	M680X_GRP_ENDING, // <-- mark the end of the list of groups
 } m680x_group_type;
 
 // M680X instruction flags:
 
 /// The first (register) operand is part of the
 /// instruction mnemonic
-#define M680X_FIRST_OP_IN_MNEM    1
+#define M680X_FIRST_OP_IN_MNEM 1
 /// The second (register) operand is part of the
 /// instruction mnemonic
-#define M680X_SECOND_OP_IN_MNEM   2
+#define M680X_SECOND_OP_IN_MNEM 2
 
 /// The M680X instruction and its operands
 typedef struct cs_m680x {
-	uint8_t flags;		///< See: M680X instruction flags
-	uint8_t op_count;	///< number of operands for the instruction or 0
+	uint8_t flags; ///< See: M680X instruction flags
+	uint8_t op_count; ///< number of operands for the instruction or 0
 	cs_m680x_op operands[M680X_OPERAND_COUNT]; ///< operands for this insn.
 } cs_m680x;
 
@@ -528,7 +532,7 @@ typedef enum m680x_insn {
 	M680X_INS_WAVR,
 	M680X_INS_XGDX, ///< HD6301
 	M680X_INS_XGDY,
-	M680X_INS_ENDING,   // <-- mark the end of the list of instructions
+	M680X_INS_ENDING, // <-- mark the end of the list of instructions
 } m680x_insn;
 
 #ifdef __cplusplus

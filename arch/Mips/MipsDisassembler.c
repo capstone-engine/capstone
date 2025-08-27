@@ -53,135 +53,123 @@
 
 bool Mips_getFeatureBits(unsigned int mode, unsigned int feature)
 {
-	switch(feature) {
+	switch (feature) {
 	case Mips_FeatureGP64Bit:
-		return mode & (CS_MODE_MIPS3 | CS_MODE_MIPS4 | 
-						CS_MODE_MIPS5 | CS_MODE_MIPS64 | 
-						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | 
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS3 | CS_MODE_MIPS4 | CS_MODE_MIPS5 |
+			CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 |
+			CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | CS_MODE_OCTEON |
+			CS_MODE_OCTEONP);
 	case Mips_FeatureFP64Bit:
-		return mode & (CS_MODE_MIPS32R6 | CS_MODE_MIPS3 | 
-						CS_MODE_MIPS4 | CS_MODE_MIPS5 | 
-						CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 |
-						CS_MODE_MIPS32R5 | CS_MODE_MIPS64 |
-						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 |
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 |
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS32R6 | CS_MODE_MIPS3 | CS_MODE_MIPS4 |
+			CS_MODE_MIPS5 | CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 |
+			CS_MODE_MIPS32R5 | CS_MODE_MIPS64 | CS_MODE_MIPS64R2 |
+			CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 |
+			CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureNaN2008:
 		return mode & (CS_MODE_MIPS32R6 | CS_MODE_MIPS64R6);
 	case Mips_FeatureAbs2008:
 		return mode & (CS_MODE_MIPS32R6 | CS_MODE_MIPS64R6);
 	case Mips_FeatureMips1:
-		return mode & (CS_MODE_MIPS1 | CS_MODE_MIPS2 | 
-						CS_MODE_MIPS32 | CS_MODE_MIPS32R2 | 
-						CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 | 
-						CS_MODE_MIPS32R6 | CS_MODE_MIPS3 | 
-						CS_MODE_MIPS4 | CS_MODE_MIPS5 | 
-						CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | 
-						CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | 
-						CS_MODE_MIPS64R6 | CS_MODE_OCTEON | 
-						CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS1 | CS_MODE_MIPS2 | CS_MODE_MIPS32 |
+			CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 |
+			CS_MODE_MIPS32R6 | CS_MODE_MIPS3 | CS_MODE_MIPS4 |
+			CS_MODE_MIPS5 | CS_MODE_MIPS64 | CS_MODE_MIPS64R2 |
+			CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 |
+			CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureMips2:
-		return mode & (CS_MODE_MIPS2 | CS_MODE_MIPS32 | 
-						CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | 
-						CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | 
-						CS_MODE_MIPS3 | CS_MODE_MIPS4 | 
-						CS_MODE_MIPS5 | CS_MODE_MIPS64 | 
-						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | 
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS2 | CS_MODE_MIPS32 | CS_MODE_MIPS32R2 |
+			CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 |
+			CS_MODE_MIPS3 | CS_MODE_MIPS4 | CS_MODE_MIPS5 |
+			CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 |
+			CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | CS_MODE_OCTEON |
+			CS_MODE_OCTEONP);
 	case Mips_FeatureMips3_32:
-		return mode & (CS_MODE_MIPS32 | CS_MODE_MIPS32R2 | 
-						CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 | 
-						CS_MODE_MIPS32R6 | CS_MODE_MIPS3 | 
-						CS_MODE_MIPS4 | CS_MODE_MIPS5 | 
-						CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | 
-						CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | 
-						CS_MODE_MIPS64R6 | CS_MODE_OCTEON | 
-						CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS32 | CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 |
+			CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | CS_MODE_MIPS3 |
+			CS_MODE_MIPS4 | CS_MODE_MIPS5 | CS_MODE_MIPS64 |
+			CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 |
+			CS_MODE_MIPS64R6 | CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureMips3_32r2:
-		return mode & (CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | 
-						CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | 
-						CS_MODE_MIPS3 | CS_MODE_MIPS4 | 
-						CS_MODE_MIPS5 | CS_MODE_MIPS64 | 
-						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | 
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 |
+			CS_MODE_MIPS32R6 | CS_MODE_MIPS3 | CS_MODE_MIPS4 |
+			CS_MODE_MIPS5 | CS_MODE_MIPS64 | CS_MODE_MIPS64R2 |
+			CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 |
+			CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureMips3:
-		return mode & (CS_MODE_MIPS3 | CS_MODE_MIPS4 | 
-						CS_MODE_MIPS5 | CS_MODE_MIPS64 | 
-						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | 
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS3 | CS_MODE_MIPS4 | CS_MODE_MIPS5 |
+			CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 |
+			CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | CS_MODE_OCTEON |
+			CS_MODE_OCTEONP);
 	case Mips_FeatureMips4_32:
-		return mode & (CS_MODE_MIPS32 | CS_MODE_MIPS32R2 | 
-						CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 | 
-						CS_MODE_MIPS32R6 | CS_MODE_MIPS4 | 
-						CS_MODE_MIPS5 | CS_MODE_MIPS64 | 
-						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | 
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS32 | CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 |
+			CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | CS_MODE_MIPS4 |
+			CS_MODE_MIPS5 | CS_MODE_MIPS64 | CS_MODE_MIPS64R2 |
+			CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 |
+			CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureMips4_32r2:
-		return mode & (CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | 
-						CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | 
-						CS_MODE_MIPS4 | CS_MODE_MIPS5 | 
-						CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | 
-						CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | 
-						CS_MODE_MIPS64R6 | CS_MODE_OCTEON | 
-						CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 |
+			CS_MODE_MIPS32R6 | CS_MODE_MIPS4 | CS_MODE_MIPS5 |
+			CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 |
+			CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | CS_MODE_OCTEON |
+			CS_MODE_OCTEONP);
 	case Mips_FeatureMips4:
-		return mode & (CS_MODE_MIPS4 | CS_MODE_MIPS5 | 
-						CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | 
-						CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | 
-						CS_MODE_MIPS64R6 | CS_MODE_OCTEON | 
-						CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS4 | CS_MODE_MIPS5 | CS_MODE_MIPS64 |
+			CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 |
+			CS_MODE_MIPS64R6 | CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureMips5_32r2:
-		return mode & (CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | 
-						CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | 
-						CS_MODE_MIPS5 | CS_MODE_MIPS64 | 
-						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | 
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 |
+			CS_MODE_MIPS32R6 | CS_MODE_MIPS5 | CS_MODE_MIPS64 |
+			CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 |
+			CS_MODE_MIPS64R6 | CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureMips5:
-		return mode & (CS_MODE_MIPS5 | CS_MODE_MIPS64 | 
-						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | 
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS5 | CS_MODE_MIPS64 | CS_MODE_MIPS64R2 |
+			CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 |
+			CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureMips32:
-		return mode & (CS_MODE_MIPS32 | CS_MODE_MIPS32R2 | 
-						CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 | 
-						CS_MODE_MIPS32R6 | CS_MODE_MIPS64 | 
-						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | 
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS32 | CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 |
+			CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | CS_MODE_MIPS64 |
+			CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 |
+			CS_MODE_MIPS64R6 | CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureMips32r2:
-		return mode & (CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | 
-						CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | 
-						CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | 
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 |
+			CS_MODE_MIPS32R6 | CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 |
+			CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | CS_MODE_OCTEON |
+			CS_MODE_OCTEONP);
 	case Mips_FeatureMips32r3:
-		return mode & (CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 | 
-						CS_MODE_MIPS32R6 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6);
+		return mode &
+		       (CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 |
+			CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6);
 	case Mips_FeatureMips32r5:
-		return mode & (CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6);
+		return mode & (CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 |
+			       CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6);
 	case Mips_FeatureMips32r6:
 		return mode & (CS_MODE_MIPS32R6 | CS_MODE_MIPS64R6);
 	case Mips_FeatureMips64:
-		return mode & (CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | 
-						CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | 
-						CS_MODE_MIPS64R6 | CS_MODE_OCTEON | 
-						CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS64 | CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 |
+			CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | CS_MODE_OCTEON |
+			CS_MODE_OCTEONP);
 	case Mips_FeatureMips64r2:
-		return mode & (CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | 
-						CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | 
-						CS_MODE_OCTEON | CS_MODE_OCTEONP);
+		return mode &
+		       (CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 |
+			CS_MODE_MIPS64R6 | CS_MODE_OCTEON | CS_MODE_OCTEONP);
 	case Mips_FeatureMips64r3:
-		return mode & (CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | 
-						CS_MODE_MIPS64R6);
+		return mode &
+		       (CS_MODE_MIPS64R3 | CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6);
 	case Mips_FeatureMips64r5:
 		return mode & (CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6);
 	case Mips_FeatureMips64r6:
@@ -191,8 +179,7 @@ bool Mips_getFeatureBits(unsigned int mode, unsigned int feature)
 	case Mips_FeatureMicroMips:
 		return mode & CS_MODE_MICRO;
 	case Mips_FeatureNanoMips:
-		return mode & (CS_MODE_NANOMIPS | CS_MODE_NMS1 | 
-						CS_MODE_I7200);
+		return mode & (CS_MODE_NANOMIPS | CS_MODE_NMS1 | CS_MODE_I7200);
 	case Mips_FeatureNMS1:
 		return mode & CS_MODE_NMS1;
 	case Mips_FeatureTLB:
@@ -241,8 +228,9 @@ bool Mips_getFeatureBits(unsigned int mode, unsigned int feature)
 	}
 }
 
-static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
-			    size_t BytesLen, uint64_t Address, SStream *CStream);
+static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size,
+				   const uint8_t *Bytes, size_t BytesLen,
+				   uint64_t Address, SStream *CStream);
 
 // end anonymous namespace
 
@@ -601,14 +589,15 @@ DEFINE_DecodeUImmWithOffset(5, 1);
 DEFINE_DecodeUImmWithOffset(2, 1);
 
 #define DECLARE_DecodeSImmWithOffsetAndScale(Bits, Offset, ScaleBy) \
-	static DecodeStatus CONCAT( \
-		DecodeSImmWithOffsetAndScale, \
-		CONCAT(Bits, CONCAT(Offset, ScaleBy)))( \
+	static DecodeStatus CONCAT(DecodeSImmWithOffsetAndScale, \
+				   CONCAT(Bits, CONCAT(Offset, ScaleBy)))( \
 		MCInst * Inst, unsigned Value, uint64_t Address, \
 		const void *Decoder);
 
-#define DECLARE_DecodeSImmWithOffsetAndScale_2(Bits, Offset) DECLARE_DecodeSImmWithOffsetAndScale(Bits, Offset, 1)
-#define DECLARE_DecodeSImmWithOffsetAndScale_3(Bits) DECLARE_DecodeSImmWithOffsetAndScale(Bits, 0, 1)
+#define DECLARE_DecodeSImmWithOffsetAndScale_2(Bits, Offset) \
+	DECLARE_DecodeSImmWithOffsetAndScale(Bits, Offset, 1)
+#define DECLARE_DecodeSImmWithOffsetAndScale_3(Bits) \
+	DECLARE_DecodeSImmWithOffsetAndScale(Bits, 0, 1)
 
 DECLARE_DecodeSImmWithOffsetAndScale_3(16);
 DECLARE_DecodeSImmWithOffsetAndScale_3(10);
@@ -697,7 +686,7 @@ static DecodeStatus DecodeDAHIDATIMMR6(MCInst *MI, uint32_t insn,
 */
 
 static DecodeStatus DecodeDAHIDATI(MCInst *MI, uint32_t insn, uint64_t Address,
-                                  const void *Decoder);
+				   const void *Decoder);
 
 static DecodeStatus DecodeAddiGroupBranch(MCInst *MI, uint32_t insn,
 					  uint64_t Address,
@@ -777,13 +766,12 @@ static DecodeStatus DecodeFIXMEInstruction(MCInst *Inst, uint32_t Insn,
 
 static unsigned getReg(const MCInst *Inst, unsigned RC, unsigned RegNo)
 {
-	const MCRegisterClass* c = MCRegisterInfo_getRegClass(Inst->MRI, RC);
+	const MCRegisterClass *c = MCRegisterInfo_getRegClass(Inst->MRI, RC);
 	return MCRegisterClass_getRegister(c, RegNo);
 }
 
-typedef DecodeStatus (*DecodeFN)(MCInst *Inst, uint32_t Insn,
-					   uint64_t Address,
-					   const void *Decoder);
+typedef DecodeStatus (*DecodeFN)(MCInst *Inst, uint32_t Insn, uint64_t Address,
+				 const void *Decoder);
 
 static DecodeStatus DecodeINSVE_DF(MCInst *MI, uint32_t insn, uint64_t Address,
 				   const void *Decoder)
@@ -793,7 +781,7 @@ static DecodeStatus DecodeINSVE_DF(MCInst *MI, uint32_t insn, uint64_t Address,
 	uint32_t tmp = fieldFromInstruction_4(insn, 17, 5);
 	unsigned NSize = 0;
 	DecodeFN RegDecoder = NULL;
-	if ((tmp & 0x18) == 0x00) {	   // INSVE_B
+	if ((tmp & 0x18) == 0x00) { // INSVE_B
 		NSize = 4;
 		RegDecoder = DecodeMSA128BRegisterClass;
 	} else if ((tmp & 0x1c) == 0x10) { // INSVE_H
@@ -805,8 +793,10 @@ static DecodeStatus DecodeINSVE_DF(MCInst *MI, uint32_t insn, uint64_t Address,
 	} else if ((tmp & 0x1f) == 0x1c) { // INSVE_D
 		NSize = 1;
 		RegDecoder = DecodeMSA128DRegisterClass;
-	} else
+	} else {
 		CS_ASSERT_RET_VAL(0 && "Invalid encoding", MCDisassembler_Fail);
+		return MCDisassembler_Fail;
+	}
 
 	// $wd
 	tmp = fieldFromInstruction_4(insn, 6, 5);
@@ -843,16 +833,16 @@ static DecodeStatus DecodeDAHIDATIMMR6(MCInst *MI, uint32_t insn,
 */
 
 static DecodeStatus DecodeDAHIDATI(MCInst *MI, uint32_t insn, uint64_t Address,
-                                   const void *Decoder)
- {
-       uint32_t Rs = fieldFromInstruction_4(insn, 21, 5);
-       uint32_t Imm = fieldFromInstruction_4(insn, 0, 16);
-       MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR64RegClassID, Rs)));
-       MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR64RegClassID, Rs)));
-        MCOperand_CreateImm0(MI, (Imm));
- 
-        return MCDisassembler_Success;
- }
+				   const void *Decoder)
+{
+	uint32_t Rs = fieldFromInstruction_4(insn, 21, 5);
+	uint32_t Imm = fieldFromInstruction_4(insn, 0, 16);
+	MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR64RegClassID, Rs)));
+	MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR64RegClassID, Rs)));
+	MCOperand_CreateImm0(MI, (Imm));
+
+	return MCDisassembler_Success;
+}
 
 static DecodeStatus DecodeAddiGroupBranch(MCInst *MI, uint32_t insn,
 					  uint64_t Address, const void *Decoder)
@@ -883,8 +873,8 @@ static DecodeStatus DecodeAddiGroupBranch(MCInst *MI, uint32_t insn,
 		MCInst_setOpcode(MI, (Mips_BEQZALC));
 
 	if (HasRs)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 
 	MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
 	MCOperand_CreateImm0(MI, (Imm));
@@ -902,26 +892,26 @@ static DecodeStatus DecodePOP35GroupBranchMMR6(MCInst *MI, uint32_t insn,
 
 	if (Rs >= Rt) {
 		MCInst_setOpcode(MI, (Mips_BOVC_MMR6));
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rt)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 		Imm = SignExtend64(fieldFromInstruction_4(insn, 0, 16), 16) *
 			      2 +
 		      4;
 	} else if (Rs != 0 && Rs < Rt) {
 		MCInst_setOpcode(MI, (Mips_BEQC_MMR6));
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rt)));
 		Imm = SignExtend64(fieldFromInstruction_4(insn, 0, 16), 16) *
 			      4 +
 		      4;
 	} else {
 		MCInst_setOpcode(MI, (Mips_BEQZALC_MMR6));
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rt)));
 		Imm = SignExtend64(fieldFromInstruction_4(insn, 0, 16), 16) *
 			      2 +
 		      4;
@@ -962,8 +952,8 @@ static DecodeStatus DecodeDaddiGroupBranch(MCInst *MI, uint32_t insn,
 		MCInst_setOpcode(MI, (Mips_BNEZALC));
 
 	if (HasRs)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 
 	MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
 	MCOperand_CreateImm0(MI, (Imm));
@@ -981,26 +971,26 @@ static DecodeStatus DecodePOP37GroupBranchMMR6(MCInst *MI, uint32_t insn,
 
 	if (Rs >= Rt) {
 		MCInst_setOpcode(MI, (Mips_BNVC_MMR6));
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rt)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 		Imm = SignExtend64(fieldFromInstruction_4(insn, 0, 16), 16) *
 			      2 +
 		      4;
 	} else if (Rs != 0 && Rs < Rt) {
 		MCInst_setOpcode(MI, (Mips_BNEC_MMR6));
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rt)));
 		Imm = SignExtend64(fieldFromInstruction_4(insn, 0, 16), 16) *
 			      4 +
 		      4;
 	} else {
 		MCInst_setOpcode(MI, (Mips_BNEZALC_MMR6));
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rt)));
 		Imm = SignExtend64(fieldFromInstruction_4(insn, 0, 16), 16) *
 			      2 +
 		      4;
@@ -1040,8 +1030,8 @@ static DecodeStatus DecodePOP65GroupBranchMMR6(MCInst *MI, uint32_t insn,
 	}
 
 	if (HasRs)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 
 	MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
 
@@ -1079,8 +1069,8 @@ static DecodeStatus DecodePOP75GroupBranchMMR6(MCInst *MI, uint32_t insn,
 	}
 
 	if (HasRs)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 
 	MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
 
@@ -1122,8 +1112,8 @@ static DecodeStatus DecodeBlezlGroupBranch(MCInst *MI, uint32_t insn,
 	}
 
 	if (HasRs)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 
 	MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
 
@@ -1166,8 +1156,8 @@ static DecodeStatus DecodeBgtzlGroupBranch(MCInst *MI, uint32_t insn,
 	}
 
 	if (HasRs)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 
 	MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
 
@@ -1213,12 +1203,12 @@ static DecodeStatus DecodeBgtzGroupBranch(MCInst *MI, uint32_t insn,
 	}
 
 	if (HasRs)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 
 	if (HasRt)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rt)));
 
 	MCOperand_CreateImm0(MI, (Imm));
 
@@ -1257,8 +1247,8 @@ static DecodeStatus DecodeBlezGroupBranch(MCInst *MI, uint32_t insn,
 	}
 
 	if (HasRs)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 	MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
 
 	MCOperand_CreateImm0(MI, (Imm));
@@ -1290,7 +1280,9 @@ static DecodeStatus DecodeDEXT(MCInst *MI, uint32_t Insn, uint64_t Address,
 		Size = Msbd + 1;
 		break;
 	default:
-		CS_ASSERT_RET_VAL(0 && "Unknown DEXT instruction!", MCDisassembler_Fail);
+		CS_ASSERT_RET_VAL(0 && "Unknown DEXT instruction!",
+				  MCDisassembler_Fail);
+		return MCDisassembler_Fail;
 	}
 
 	MCInst_setOpcode(MI, (Mips_DEXT));
@@ -1332,7 +1324,9 @@ static DecodeStatus DecodeDINS(MCInst *MI, uint32_t Insn, uint64_t Address,
 		Size = Msbd + 33 - Pos;
 		break;
 	default:
-		CS_ASSERT_RET_VAL(0 && "Unknown DINS instruction!", MCDisassembler_Fail);
+		CS_ASSERT_RET_VAL(0 && "Unknown DINS instruction!",
+				  MCDisassembler_Fail);
+		return MCDisassembler_Fail;
 	}
 
 	uint32_t Rs = fieldFromInstruction_4(Insn, 21, 5);
@@ -1404,14 +1398,14 @@ static DecodeStatus readInstruction32(const uint8_t *Bytes, size_t BytesLen,
 	if (IsBigEndian) {
 		// Encoded as a big-endian 32-bit word in the stream.
 		*Insn = (Bytes[3] << 0) | (Bytes[2] << 8) | (Bytes[1] << 16) |
-		       ((unsigned)Bytes[0] << 24);
+			((unsigned)Bytes[0] << 24);
 	} else {
 		if (IsMicroMips) {
 			*Insn = (Bytes[2] << 0) | (Bytes[3] << 8) |
-			       (Bytes[0] << 16) | ((unsigned)Bytes[1] << 24);
+				(Bytes[0] << 16) | ((unsigned)Bytes[1] << 24);
 		} else {
 			*Insn = (Bytes[0] << 0) | (Bytes[1] << 8) |
-			       (Bytes[2] << 16) | ((unsigned)Bytes[3] << 24);
+				(Bytes[2] << 16) | ((unsigned)Bytes[3] << 24);
 		}
 	}
 
@@ -1440,12 +1434,13 @@ static DecodeStatus readInstruction48(const uint8_t *Bytes, size_t BytesLen,
 
 	*Insn = (Bytes[0] << 0) | (Bytes[1] << 8);
 	*Insn = ((*Insn << 32) | (Bytes[4] << 0) | (Bytes[5] << 8) |
-		(Bytes[2] << 16) | ((unsigned)Bytes[3] << 24));
+		 (Bytes[2] << 16) | ((unsigned)Bytes[3] << 24));
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
-			    size_t BytesLen, uint64_t Address, SStream *CStream)
+static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size,
+				   const uint8_t *Bytes, size_t BytesLen,
+				   uint64_t Address, SStream *CStream)
 {
 	uint64_t Insn;
 	DecodeStatus Result;
@@ -1466,16 +1461,17 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 	bool IsPTR64 = Mips_getFeatureBits(mode, Mips_FeaturePTR64Bit);
 	// Only present in MIPS-I and MIPS-II
 	bool HasCOP3 = !Mips_getFeatureBits(mode, Mips_FeatureMips32) &&
-					 !Mips_getFeatureBits(mode, Mips_FeatureMips3);
+		       !Mips_getFeatureBits(mode, Mips_FeatureMips3);
 
 	if (IsNanoMips) {
 		uint64_t Insn2;
 		Result = readInstruction48(Bytes, BytesLen, Address, Size,
-						&Insn2, IsBigEndian, IsNanoMips);
+					   &Insn2, IsBigEndian, IsNanoMips);
 		if (Result != MCDisassembler_Fail) {
 			// Calling the auto-generated decoder function.
 			Result = decodeInstruction_8(DecoderTableNanoMips48,
-						   Instr, Insn2, Address, NULL);
+						     Instr, Insn2, Address,
+						     NULL);
 			if (Result != MCDisassembler_Fail) {
 				*Size = 6;
 				return Result;
@@ -1483,7 +1479,7 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 		}
 
 		Result = readInstruction32(Bytes, BytesLen, Address, Size,
-						&Insn, IsBigEndian, IsNanoMips);
+					   &Insn, IsBigEndian, IsNanoMips);
 		if (Result != MCDisassembler_Fail) {
 			// Calling the auto-generated decoder function.
 			Result = decodeInstruction_4(DecoderTableNanoMips32,
@@ -1496,7 +1492,7 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 		}
 
 		Result = readInstruction16(Bytes, BytesLen, Address, Size,
-						&Insn, IsBigEndian);
+					   &Insn, IsBigEndian);
 		if (Result != MCDisassembler_Fail) {
 			// Calling the auto-generated decoder function for NanoMips
 			// 16-bit instructions.
@@ -1508,9 +1504,9 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 				return Result;
 			}
 
-			Result = decodeInstruction_2(DecoderTableNanoMips_Conflict_Space16,
-						     Instr, Insn, Address,
-						     NULL);
+			Result = decodeInstruction_2(
+				DecoderTableNanoMips_Conflict_Space16, Instr,
+				Insn, Address, NULL);
 			if (Result != MCDisassembler_Fail) {
 				*Size = 2;
 				return Result;
@@ -1558,9 +1554,9 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 
 		if (IsMips32r6) {
 			// Calling the auto-generated decoder function.
-			Result = decodeInstruction_4(DecoderTableMicroMipsR6_Ambiguous32,
-						     Instr, Insn, Address,
-						     NULL);
+			Result = decodeInstruction_4(
+				DecoderTableMicroMipsR6_Ambiguous32, Instr,
+				Insn, Address, NULL);
 			if (Result != MCDisassembler_Fail) {
 				*Size = 4;
 				return Result;
@@ -1613,8 +1609,8 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 		Result = readInstruction32(Bytes, BytesLen, Address, Size,
 					   &Insn, IsBigEndian, IsMicroMips);
 		if (Result != MCDisassembler_Fail) {
-			Result = decodeInstruction_4(DecoderTable32, Instr, Insn, Address,
-						     NULL);
+			Result = decodeInstruction_4(DecoderTable32, Instr,
+						     Insn, Address, NULL);
 			if (Result != MCDisassembler_Fail) {
 				*Size = 4;
 				return Result;
@@ -1628,14 +1624,15 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 		}
 
 		*Size = 2;
-		return decodeInstruction_2(DecoderTable16, Instr, Insn, Address, NULL);
+		return decodeInstruction_2(DecoderTable16, Instr, Insn, Address,
+					   NULL);
 	}
 
 	// Attempt to read the instruction so that we can attempt to decode it. If
 	// the buffer is not 4 bytes long, let the higher level logic figure out
 	// what to do with a size of zero and MCDisassembler::Fail.
-	Result = readInstruction32(Bytes, BytesLen, Address, Size, &Insn, IsBigEndian,
-				   IsMicroMips);
+	Result = readInstruction32(Bytes, BytesLen, Address, Size, &Insn,
+				   IsBigEndian, IsMicroMips);
 	if (Result == MCDisassembler_Fail)
 		return MCDisassembler_Fail;
 
@@ -1664,8 +1661,9 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 	}
 
 	if (IsMips32r6 || IsMips64r6) {
-		Result = decodeInstruction_4(DecoderTableMips32r6_64r6_BranchZero32, Instr,
-					     Insn, Address, NULL);
+		Result = decodeInstruction_4(
+			DecoderTableMips32r6_64r6_BranchZero32, Instr, Insn,
+			Address, NULL);
 		if (Result != MCDisassembler_Fail)
 			return Result;
 
@@ -1674,8 +1672,9 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 		if (Result != MCDisassembler_Fail)
 			return Result;
 
-		Result = decodeInstruction_4(DecoderTableMips32r6_64r6_Ambiguous32, Instr,
-					     Insn, Address, NULL);
+		Result = decodeInstruction_4(
+			DecoderTableMips32r6_64r6_Ambiguous32, Instr, Insn,
+			Address, NULL);
 		if (Result != MCDisassembler_Fail)
 			return Result;
 	}
@@ -2008,7 +2007,7 @@ static DecodeStatus DecodeMem(MCInst *Inst, uint32_t Insn, uint64_t Address,
 
 #define DEFINE_DecodeMemNM(Offbits, isSigned, rt) \
 	static DecodeStatus CONCAT(DecodeMemNM, \
-		CONCAT(Offbits, CONCAT(isSigned, rt)))( \
+				   CONCAT(Offbits, CONCAT(isSigned, rt)))( \
 		MCInst * Inst, uint32_t Insn, uint64_t Address, \
 		const void *Decoder) \
 	{ \
@@ -2142,7 +2141,9 @@ static DecodeStatus DecodeCOP0SelRegisterClass(MCInst *Inst, unsigned RegNo,
 			MCInst_setOpcode(Inst, (Mips_MTHC0_NM));
 			break;
 		default:
-			CS_ASSERT_RET_VAL(0 && "Unknown instruction!", MCDisassembler_Fail);
+			CS_ASSERT_RET_VAL(0 && "Unknown instruction!",
+					  MCDisassembler_Fail);
+			return MCDisassembler_Fail;
 		}
 		Reg = getReg(Inst, Mips_COP0RegClassID, RegNo >> 5);
 		MCOperand_CreateReg0(Inst, (Reg));
@@ -2959,8 +2960,10 @@ DEFINE_DecodeUImmWithOffsetAndScale(21, 0, 1);
 		return MCDisassembler_Success; \
 	}
 
-#define DEFINE_DecodeSImmWithOffsetAndScale_2(Bits, Offset) DEFINE_DecodeSImmWithOffsetAndScale(Bits, Offset, 1)
-#define DEFINE_DecodeSImmWithOffsetAndScale_3(Bits) DEFINE_DecodeSImmWithOffsetAndScale(Bits, 0, 1)
+#define DEFINE_DecodeSImmWithOffsetAndScale_2(Bits, Offset) \
+	DEFINE_DecodeSImmWithOffsetAndScale(Bits, Offset, 1)
+#define DEFINE_DecodeSImmWithOffsetAndScale_3(Bits) \
+	DEFINE_DecodeSImmWithOffsetAndScale(Bits, 0, 1)
 
 DEFINE_DecodeSImmWithOffsetAndScale_3(16);
 DEFINE_DecodeSImmWithOffsetAndScale_3(10);
@@ -3200,12 +3203,12 @@ static DecodeStatus DecodeBgtzGroupBranchMMR6(MCInst *MI, uint32_t insn,
 	}
 
 	if (HasRs)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 
 	if (HasRt)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rt)));
 
 	MCOperand_CreateImm0(MI, (Imm));
 
@@ -3249,8 +3252,8 @@ static DecodeStatus DecodeBlezGroupBranchMMR6(MCInst *MI, uint32_t insn,
 	}
 
 	if (HasRs)
-		MCOperand_CreateReg0(
-			MI, (getReg(MI, Mips_GPR32RegClassID, Rs)));
+		MCOperand_CreateReg0(MI,
+				     (getReg(MI, Mips_GPR32RegClassID, Rs)));
 	MCOperand_CreateReg0(MI, (getReg(MI, Mips_GPR32RegClassID, Rt)));
 
 	MCOperand_CreateImm0(MI, (Imm));
@@ -3310,8 +3313,8 @@ static DecodeStatus DecodeNMRegListOperand(MCInst *Inst, uint32_t Insn,
 	unsigned i;
 	unsigned RegNo;
 
-	MCOperand_CreateReg0(
-		Inst, (getReg(Inst, Mips_GPRNM32RegClassID, RegStart)));
+	MCOperand_CreateReg0(Inst,
+			     (getReg(Inst, Mips_GPRNM32RegClassID, RegStart)));
 	for (i = RegStart + 1; i < RegStart + RegCount; i++) {
 		if (i == RegStart + RegCount - 1 && GP_bit)
 			RegNo = 28;
@@ -3420,8 +3423,9 @@ static DecodeStatus DecodeBranchConflictNM(MCInst *Inst, uint32_t Insn,
 		return MCDisassembler_Fail;
 }
 
-DecodeStatus Mips_LLVM_getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
-			    size_t BytesLen, uint64_t Address, SStream *CStream)
+DecodeStatus Mips_LLVM_getInstruction(MCInst *Instr, uint64_t *Size,
+				      const uint8_t *Bytes, size_t BytesLen,
+				      uint64_t Address, SStream *CStream)
 {
 	return getInstruction(Instr, Size, Bytes, BytesLen, Address, CStream);
 }

@@ -42,4 +42,3 @@ cs_err M68K_option(cs_struct *handle, cs_opt_type type, size_t value)
 }
 
 #endif
-

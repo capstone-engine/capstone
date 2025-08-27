@@ -107,37 +107,40 @@ bool test_expected_systemz(csh *handle, const cs_systemz *actual,
 			break;
 		case SYSTEMZ_OP_MEM:
 			compare_enum_ret(op->mem.am, eop->mem_am, false);
-			switch(op->mem.am) {
+			switch (op->mem.am) {
 			default:
 				assert(0 && "Address mode not handled\n");
 				break;
 			case SYSTEMZ_AM_BD:
-				compare_reg_ret(*handle, op->mem.base, eop->mem_base,
-					false);
-				compare_reg_ret(*handle, op->mem.index, eop->mem_index,
-					false);
+				compare_reg_ret(*handle, op->mem.base,
+						eop->mem_base, false);
+				compare_reg_ret(*handle, op->mem.index,
+						eop->mem_index, false);
 				break;
 			case SYSTEMZ_AM_BDX:
 			case SYSTEMZ_AM_BDV:
-				compare_reg_ret(*handle, op->mem.base, eop->mem_base,
-					false);
-				compare_int64_ret(op->mem.disp, eop->mem_disp, false);
-				compare_reg_ret(*handle, op->mem.index, eop->mem_index,
-					false);
+				compare_reg_ret(*handle, op->mem.base,
+						eop->mem_base, false);
+				compare_int64_ret(op->mem.disp, eop->mem_disp,
+						  false);
+				compare_reg_ret(*handle, op->mem.index,
+						eop->mem_index, false);
 				break;
 			case SYSTEMZ_AM_BDL:
-				compare_reg_ret(*handle, op->mem.base, eop->mem_base,
-					false);
-				compare_int64_ret(op->mem.disp, eop->mem_disp, false);
-				compare_uint64_ret(op->mem.length, eop->mem_length,
-					   false);
+				compare_reg_ret(*handle, op->mem.base,
+						eop->mem_base, false);
+				compare_int64_ret(op->mem.disp, eop->mem_disp,
+						  false);
+				compare_uint64_ret(op->mem.length,
+						   eop->mem_length, false);
 				break;
 			case SYSTEMZ_AM_BDR:
-				compare_reg_ret(*handle, op->mem.base, eop->mem_base,
-					false);
-				compare_int64_ret(op->mem.disp, eop->mem_disp, false);
-				compare_uint64_ret(op->mem.length, eop->mem_length,
-					   false);
+				compare_reg_ret(*handle, op->mem.base,
+						eop->mem_base, false);
+				compare_int64_ret(op->mem.disp, eop->mem_disp,
+						  false);
+				compare_uint64_ret(op->mem.length,
+						   eop->mem_length, false);
 				break;
 			}
 			break;

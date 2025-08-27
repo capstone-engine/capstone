@@ -63,9 +63,9 @@ typedef enum ppc_pred {
 	PPC_PRED_GT = (1 << 5) | 12,
 	PPC_PRED_NE = (2 << 5) | 4,
 	PPC_PRED_UN = (3 << 5) | 12, ///< Unordered (after fp comparison)
-	PPC_PRED_NU = (3 << 5) | 4,  ///< Not Unordered (after fp comparison)
+	PPC_PRED_NU = (3 << 5) | 4, ///< Not Unordered (after fp comparison)
 	PPC_PRED_SO = (3 << 5) | 12, ///< summary overflow
-	PPC_PRED_NS = (3 << 5) | 4,  ///< not summary overflow
+	PPC_PRED_NS = (3 << 5) | 4, ///< not summary overflow
 
 	/// CTR predicates
 	PPC_PRED_NZ = (0 << 5) | 16,
@@ -115,20 +115,20 @@ typedef enum ppc_pred {
 
 /// CR field indices and their meaning.
 typedef enum {
-	PPC_BI_LT = 0,	       ///< CR bit Less Than
-	PPC_BI_GT = 1,	       ///< CR bit Greater Than
-	PPC_BI_Z = 2,	       ///< CR bit Zero
-	PPC_BI_SO = 3,	       ///< CR bit Summary Overflow
+	PPC_BI_LT = 0, ///< CR bit Less Than
+	PPC_BI_GT = 1, ///< CR bit Greater Than
+	PPC_BI_Z = 2, ///< CR bit Zero
+	PPC_BI_SO = 3, ///< CR bit Summary Overflow
 	PPC_BI_INVALID = 0xff, ///< CR bit was not set/invalid
 } ppc_cr_bit;
 
 /// Masks of flags in the BO field.
 typedef enum {
-	PPC_BO_TEST_CR = (1 << 4),  ///< Flag mask: Test CR bit.
-	PPC_BO_CR_CMP = (1 << 3),   ///< Flag mask: Compare CR bit to 0 or 1.
+	PPC_BO_TEST_CR = (1 << 4), ///< Flag mask: Test CR bit.
+	PPC_BO_CR_CMP = (1 << 3), ///< Flag mask: Compare CR bit to 0 or 1.
 	PPC_BO_DECR_CTR = (1 << 2), ///< Flag mask: Decrement counter.
-	PPC_BO_CTR_CMP = (1 << 1),  ///< Flag mask: Compare CTR to 0 or 1.
-	PPC_BO_T = 1,               ///< Either ignored (z) or hint bit t
+	PPC_BO_CTR_CMP = (1 << 1), ///< Flag mask: Compare CTR to 0 or 1.
+	PPC_BO_T = 1, ///< Either ignored (z) or hint bit t
 } ppc_bo_mask;
 
 /// Bit for branch taken (plus) or not-taken (minus) hint
@@ -139,7 +139,7 @@ typedef enum {
 	PPC_BR_NOT_GIVEN = 0x0,
 	PPC_BR_RESERVED = 0x1,
 	PPC_BR_NOT_TAKEN = 0x2, ///< Minus
-	PPC_BR_TAKEN = 0x3,     ///< Plus
+	PPC_BR_TAKEN = 0x3, ///< Plus
 	PPC_BR_HINT_MASK = 0x3,
 } ppc_br_hint;
 
@@ -152,7 +152,6 @@ typedef enum {
 	PPC_BH_NOT_PREDICTABLE,
 	PPC_BH_RESERVED,
 } ppc_bh;
-
 
 /// Returns the predicate without branch hint information.
 inline static ppc_pred PPC_get_no_hint_pred(ppc_pred Code)
@@ -226,7 +225,8 @@ static inline ppc_br_hint PPC_get_hint(uint8_t bo)
 	if (!DecrCTR && !TestCR)
 		return PPC_BR_NOT_GIVEN;
 	else if (DecrCTR && !TestCR)
-		return (ppc_br_hint)(((bo & PPC_BO_CR_CMP) >> 2) | (bo & PPC_BO_T));
+		return (ppc_br_hint)(((bo & PPC_BO_CR_CMP) >> 2) |
+				     (bo & PPC_BO_T));
 	else if (!DecrCTR && TestCR)
 		return (ppc_br_hint)((bo & PPC_BO_CTR_CMP) | (bo & PPC_BO_T));
 	return PPC_BR_NOT_GIVEN;
@@ -254,8 +254,10 @@ static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo,
 		// The CTR condition without the CR-bit condition.
 		unsigned ctr_bo_cond = (bo | PPC_BO_TEST_CR) & ~PPC_BO_CR_CMP;
 		if (get_cr_pred)
-			return PPC_get_no_hint_pred((ppc_pred)(((bi % 4) << 5) | cr_bo_cond));
-		return PPC_get_no_hint_pred((ppc_pred)ctr_bo_cond); // BI is ignored
+			return PPC_get_no_hint_pred(
+				(ppc_pred)(((bi % 4) << 5) | cr_bo_cond));
+		return PPC_get_no_hint_pred(
+			(ppc_pred)ctr_bo_cond); // BI is ignored
 	}
 	// BO doesn't need any separation
 	return PPC_get_no_hint_pred((ppc_pred)(((bi % 4) << 5) | bo));
@@ -264,9 +266,9 @@ static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo,
 /// Operand type for instruction's operands
 typedef enum ppc_op_type {
 	PPC_OP_INVALID = CS_OP_INVALID, ///< Uninitialized.
-	PPC_OP_REG = CS_OP_REG,		///< Register operand.
-	PPC_OP_IMM = CS_OP_IMM,		///< Immediate operand.
-	PPC_OP_MEM = CS_OP_MEM,		///< Memory operand.
+	PPC_OP_REG = CS_OP_REG, ///< Register operand.
+	PPC_OP_IMM = CS_OP_IMM, ///< Immediate operand.
+	PPC_OP_MEM = CS_OP_MEM, ///< Memory operand.
 } ppc_op_type;
 
 /// PPC registers
@@ -863,17 +865,17 @@ typedef enum ppc_reg {
 /// Instruction's operand referring to memory
 /// This is associated with PPC_OP_MEM operand type above
 typedef struct ppc_op_mem {
-	ppc_reg base;	///< base register
-	int32_t disp;	///< displacement/offset value
+	ppc_reg base; ///< base register
+	int32_t disp; ///< displacement/offset value
 	ppc_reg offset; ///< Offset register
 } ppc_op_mem;
 
 /// Instruction operand
 typedef struct cs_ppc_op {
-	ppc_op_type type;	///< operand type
+	ppc_op_type type; ///< operand type
 	union {
-		ppc_reg reg;	///< register value for REG operand
-		int64_t imm;	///< immediate value for IMM operand
+		ppc_reg reg; ///< register value for REG operand
+		int64_t imm; ///< immediate value for IMM operand
 		ppc_op_mem mem; ///< base/disp value for MEM operand
 	};
 	cs_ac_type access;
@@ -883,14 +885,14 @@ typedef struct {
 	uint8_t bo; ///< BO field of branch condition. UINT8_MAX if invalid.
 	uint8_t bi; ///< BI field of branch condition. UINT8_MAX if invalid.
 	ppc_cr_bit crX_bit; ///< CR field bit to test.
-	ppc_reg crX;	    ///< The CR field accessed.
-	ppc_br_hint hint;   /** This is the hint encoded into the 'at' bits
+	ppc_reg crX; ///< The CR field accessed.
+	ppc_br_hint hint; /** This is the hint encoded into the 'at' bits
                            of the BO field. Not to be confused with
                            the BH field.
                       */
-	ppc_pred pred_cr;   ///< CR-bit branch predicate
-	ppc_pred pred_ctr;  ///< CTR branch predicate
-	ppc_bh bh;	    ///< The BH field hint if any is present.
+	ppc_pred pred_cr; ///< CR-bit branch predicate
+	ppc_pred pred_ctr; ///< CTR branch predicate
+	ppc_bh bh; ///< The BH field hint if any is present.
 } ppc_bc;
 
 /// Returns true if the CTR is decremented.

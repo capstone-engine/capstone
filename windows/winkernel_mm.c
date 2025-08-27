@@ -8,42 +8,44 @@
 // A pool tag for memory allocation
 static const ULONG CS_WINKERNEL_POOL_TAG = 'kwsC';
 
-
 // A structure to implement realloc()
 typedef struct _CS_WINKERNEL_MEMBLOCK {
-	size_t size;   // A number of bytes allocated
-	__declspec(align(MEMORY_ALLOCATION_ALIGNMENT))
-	char data[ANYSIZE_ARRAY];  // An address returned to a caller
+	size_t size; // A number of bytes allocated
+	__declspec(align(MEMORY_ALLOCATION_ALIGNMENT)) char data
+		[ANYSIZE_ARRAY]; // An address returned to a caller
 } CS_WINKERNEL_MEMBLOCK;
-
 
 // free()
 void CAPSTONE_API cs_winkernel_free(void *ptr)
 {
 	if (ptr) {
-		ExFreePoolWithTag(CONTAINING_RECORD(ptr, CS_WINKERNEL_MEMBLOCK, data), CS_WINKERNEL_POOL_TAG);
+		ExFreePoolWithTag(CONTAINING_RECORD(ptr, CS_WINKERNEL_MEMBLOCK,
+						    data),
+				  CS_WINKERNEL_POOL_TAG);
 	}
 }
 
 // malloc()
-void * CAPSTONE_API cs_winkernel_malloc(size_t size)
+void *CAPSTONE_API cs_winkernel_malloc(size_t size)
 {
 	// Disallow zero length allocation because they waste pool header space and,
 	// in many cases, indicate a potential validation issue in the calling code.
 	NT_ASSERT(size);
 
 	// FP; a use of NonPagedPool is required for Windows 7 support
-#pragma prefast(suppress : 30030)		// Allocating executable POOL_TYPE memory
+#pragma prefast(suppress : 30030) // Allocating executable POOL_TYPE memory
 	size_t number_of_bytes = 0;
 	CS_WINKERNEL_MEMBLOCK *block = NULL;
 	// A specially crafted size value can trigger the overflow.
 	// If the sum in a value that overflows or underflows the capacity of the type,
 	// the function returns NULL.
-	if (!NT_SUCCESS(RtlSizeTAdd(size, FIELD_OFFSET(CS_WINKERNEL_MEMBLOCK, data), &number_of_bytes))) {
+	if (!NT_SUCCESS(RtlSizeTAdd(size,
+				    FIELD_OFFSET(CS_WINKERNEL_MEMBLOCK, data),
+				    &number_of_bytes))) {
 		return NULL;
 	}
 	block = (CS_WINKERNEL_MEMBLOCK *)ExAllocatePoolWithTag(
-			NonPagedPool, number_of_bytes, CS_WINKERNEL_POOL_TAG);
+		NonPagedPool, number_of_bytes, CS_WINKERNEL_POOL_TAG);
 	if (!block) {
 		return NULL;
 	}
@@ -53,7 +55,7 @@ void * CAPSTONE_API cs_winkernel_malloc(size_t size)
 }
 
 // calloc()
-void * CAPSTONE_API cs_winkernel_calloc(size_t n, size_t size)
+void *CAPSTONE_API cs_winkernel_calloc(size_t n, size_t size)
 {
 	size_t total = n * size;
 
@@ -66,7 +68,7 @@ void * CAPSTONE_API cs_winkernel_calloc(size_t n, size_t size)
 }
 
 // realloc()
-void * CAPSTONE_API cs_winkernel_realloc(void *ptr, size_t size)
+void *CAPSTONE_API cs_winkernel_realloc(void *ptr, size_t size)
 {
 	void *new_ptr = NULL;
 	size_t current_size = 0;
@@ -81,7 +83,8 @@ void * CAPSTONE_API cs_winkernel_realloc(void *ptr, size_t size)
 		return NULL;
 	}
 
-	current_size = CONTAINING_RECORD(ptr, CS_WINKERNEL_MEMBLOCK, data)->size;
+	current_size =
+		CONTAINING_RECORD(ptr, CS_WINKERNEL_MEMBLOCK, data)->size;
 	smaller_size = (current_size < size) ? current_size : size;
 	RtlCopyMemory(new_ptr, ptr, smaller_size);
 	cs_winkernel_free(ptr);
@@ -96,7 +99,8 @@ void * CAPSTONE_API cs_winkernel_realloc(void *ptr, size_t size)
 // Banned API Usage : _vsnprintf is a Banned API as listed in dontuse.h for
 // security purposes.
 #pragma warning(disable : 28719)
-int CAPSTONE_API cs_winkernel_vsnprintf(char *buffer, size_t count, const char *format, va_list argptr)
+int CAPSTONE_API cs_winkernel_vsnprintf(char *buffer, size_t count,
+					const char *format, va_list argptr)
 {
 	int result = _vsnprintf(buffer, count, format, argptr);
 
@@ -113,7 +117,7 @@ int CAPSTONE_API cs_winkernel_vsnprintf(char *buffer, size_t count, const char *
 		// the same conversion with temp buffer that is most likely big enough to
 		// complete formatting and get a number of characters that would have been
 		// written.
-		char* tmp = cs_winkernel_malloc(0x1000);
+		char *tmp = cs_winkernel_malloc(0x1000);
 		if (!tmp) {
 			return result;
 		}

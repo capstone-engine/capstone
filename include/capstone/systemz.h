@@ -33,7 +33,8 @@ typedef enum systemz_cc {
 
 /// Operand type for instruction's operands
 typedef enum systemz_op_type {
-	SYSTEMZ_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
+	/// CS_OP_INVALID (Uninitialized).
+	SYSTEMZ_OP_INVALID = CS_OP_INVALID,
 	SYSTEMZ_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
 	SYSTEMZ_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
 	SYSTEMZ_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
@@ -353,22 +354,25 @@ typedef struct {
 /// Instruction's operand referring to memory
 /// This is associated with SYSTEMZ_OP_MEM operand type above
 typedef struct systemz_op_mem {
-	systemz_addr_mode am; ///< Address mode. Indicates which field below are set.
-	uint8_t /* systemz_reg */ base;		///< base register, can be safely interpreted as
-				///< a value of type `systemz_reg`, but it is only
-				///< one byte wide
-	uint8_t /* systemz_reg */ index;	///< Index register, same conditions apply here
-	uint64_t length;	///< Length component. Can be a register or immediate.
-	int64_t disp;	///< displacement/offset value
+	/// Address mode. Indicates which field below are set.
+	systemz_addr_mode am;
+	/// base register, can be safely interpreted as
+	/// a value of type `systemz_reg`, but it is only
+	/// one byte wide
+	uint8_t /* systemz_reg */ base;
+	uint8_t /* systemz_reg */
+		index; ///< Index register, same conditions apply here
+	uint64_t length; ///< Length component. Can be a register or immediate.
+	int64_t disp; ///< displacement/offset value
 } systemz_op_mem;
 
 /// Instruction operand
 typedef struct cs_systemz_op {
-	systemz_op_type type;	///< operand type
+	systemz_op_type type; ///< operand type
 	union {
-		systemz_reg reg;		///< register value for REG operand
-		int64_t imm;		///< immediate value for IMM operand
-		systemz_op_mem mem;	///< base/disp value for MEM operand
+		systemz_reg reg; ///< register value for REG operand
+		int64_t imm; ///< immediate value for IMM operand
+		systemz_op_mem mem; ///< base/disp value for MEM operand
 	};
 	cs_ac_type access; ///< R/W access of the operand.
 	uint8_t imm_width; ///< Bit width of the immediate. 0 if not specified.
@@ -378,12 +382,13 @@ typedef struct cs_systemz_op {
 
 // Instruction structure
 typedef struct cs_systemz {
-	systemz_cc cc;		///< Code condition
+	systemz_cc cc; ///< Code condition
 	systemz_insn_form format; ///< The instruction format.
 	/// Number of operands of this instruction,
 	/// or 0 when instruction has no operand.
 	uint8_t op_count;
-	cs_systemz_op operands[NUM_SYSTEMZ_OPS]; ///< operands for this instruction.
+	cs_systemz_op
+		operands[NUM_SYSTEMZ_OPS]; ///< operands for this instruction.
 } cs_systemz;
 
 /// SystemZ instruction
@@ -2958,7 +2963,7 @@ typedef enum systemz_insn_group {
 
 	// Generic groups
 	// all jump instructions (conditional+direct+indirect jumps)
-	SYSTEMZ_GRP_JUMP,	///< = CS_GRP_JUMP
+	SYSTEMZ_GRP_JUMP, ///< = CS_GRP_JUMP
 	SYSTEMZ_GRP_CALL, ///< CS_GRP_CALL
 	SYSTEMZ_GRP_RET, ///< CS_GRP_RET
 	SYSTEMZ_GRP_INT, ///< CS_GRP_INT
@@ -3014,7 +3019,7 @@ typedef enum systemz_insn_group {
 	// clang-format on
 	// generated content <SystemZGenCSFeatureEnum.inc> end
 
-	SYSTEMZ_GRP_ENDING,   // <-- mark the end of the list of groups
+	SYSTEMZ_GRP_ENDING, // <-- mark the end of the list of groups
 } systemz_insn_group;
 
 #ifdef CAPSTONE_SYSTEMZ_COMPAT_HEADER

@@ -23,21 +23,14 @@
 #include "ARMMapping.h"
 
 static const name_map insn_alias_mnem_map[] = {
-	#include "ARMGenCSAliasMnemMap.inc"
-	{ ARM_INS_ALIAS_ASR, "asr" },
-	{ ARM_INS_ALIAS_LSL, "lsl" },
-	{ ARM_INS_ALIAS_LSR, "lsr" },
-	{ ARM_INS_ALIAS_ROR, "ror" },
-	{ ARM_INS_ALIAS_RRX, "rrx" },
-	{ ARM_INS_ALIAS_UXTW, "uxtw" },
-	{ ARM_INS_ALIAS_LDM, "ldm" },
-	{ ARM_INS_ALIAS_POP, "pop" },
-	{ ARM_INS_ALIAS_PUSH, "push" },
-	{ ARM_INS_ALIAS_POPW, "pop.w" },
-	{ ARM_INS_ALIAS_PUSHW, "push.w" },
-	{ ARM_INS_ALIAS_VPOP, "vpop" },
-	{ ARM_INS_ALIAS_VPUSH, "vpush" },
-	{ ARM_INS_ALIAS_END, NULL }
+#include "ARMGenCSAliasMnemMap.inc"
+	{ ARM_INS_ALIAS_ASR, "asr" },	   { ARM_INS_ALIAS_LSL, "lsl" },
+	{ ARM_INS_ALIAS_LSR, "lsr" },	   { ARM_INS_ALIAS_ROR, "ror" },
+	{ ARM_INS_ALIAS_RRX, "rrx" },	   { ARM_INS_ALIAS_UXTW, "uxtw" },
+	{ ARM_INS_ALIAS_LDM, "ldm" },	   { ARM_INS_ALIAS_POP, "pop" },
+	{ ARM_INS_ALIAS_PUSH, "push" },	   { ARM_INS_ALIAS_POPW, "pop.w" },
+	{ ARM_INS_ALIAS_PUSHW, "push.w" }, { ARM_INS_ALIAS_VPOP, "vpop" },
+	{ ARM_INS_ALIAS_VPUSH, "vpush" },  { ARM_INS_ALIAS_END, NULL }
 };
 
 static const char *get_custom_reg_alias(unsigned reg)
@@ -161,10 +154,12 @@ static void patch_cs_reg_alias(char *asm_str)
 
 /// Check if PC is updated from stack. Those POP instructions
 /// are considered of group RETURN.
-static void check_pop_return(MCInst *MI) {
+static void check_pop_return(MCInst *MI)
+{
 	if (!MI->flat_insn->detail)
 		return;
-	if (MI->flat_insn->id != ARM_INS_POP && MI->flat_insn->alias_id != ARM_INS_ALIAS_POP) {
+	if (MI->flat_insn->id != ARM_INS_POP &&
+	    MI->flat_insn->alias_id != ARM_INS_ALIAS_POP) {
 		return;
 	}
 	for (size_t i = 0; i < ARM_get_detail(MI)->op_count; ++i) {
@@ -178,12 +173,14 @@ static void check_pop_return(MCInst *MI) {
 
 /// Check if PC is directly written.Those instructions
 /// are considered of group BRANCH.
-static void check_writes_to_pc(MCInst *MI) {
+static void check_writes_to_pc(MCInst *MI)
+{
 	if (!MI->flat_insn->detail)
 		return;
 	for (size_t i = 0; i < ARM_get_detail(MI)->op_count; ++i) {
 		cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
-		if (op->type == ARM_OP_REG && op->reg == ARM_REG_PC && (op->access & CS_AC_WRITE)) {
+		if (op->type == ARM_OP_REG && op->reg == ARM_REG_PC &&
+		    (op->access & CS_AC_WRITE)) {
 			add_group(MI, ARM_GRP_JUMP);
 			return;
 		}
@@ -218,7 +215,8 @@ static void ARM_add_cs_groups(MCInst *MI)
 	}
 }
 
-static void add_alias_details(MCInst *MI) {
+static void add_alias_details(MCInst *MI)
+{
 	if (!detail_is_set(MI))
 		return;
 	switch (MI->flat_insn->alias_id) {
@@ -227,7 +225,9 @@ static void add_alias_details(MCInst *MI) {
 	case ARM_INS_ALIAS_POP:
 		// Doesn't get set because memop is not printed.
 		if (ARM_get_detail(MI)->op_count == 1) {
-			CS_ASSERT_RET(MI->flat_insn->usesAliasDetails && "Not valid assumption for non alias details.");
+			CS_ASSERT_RET(
+				MI->flat_insn->usesAliasDetails &&
+				"Not valid assumption for non alias details.");
 			// Only single register pop is post-indexed
 			// Assumes only alias details are passed here.
 			ARM_get_detail(MI)->post_index = true;
@@ -260,23 +260,29 @@ static void add_alias_details(MCInst *MI) {
 		arm_shifter shift_type = ARM_SFT_INVALID;
 		switch (MCInst_getOpcode(MI)) {
 		default:
-			CS_ASSERT_RET(0 && "ASR, LSL, LSR, ROR alias not handled");
+			CS_ASSERT_RET(0 &&
+				      "ASR, LSL, LSR, ROR alias not handled");
 			return;
 		case ARM_MOVsi: {
 			MCOperand *MO2 = MCInst_getOperand(MI, 2);
-			shift_type = (arm_shifter) ARM_AM_getSORegShOp(MCOperand_getImm(MO2));
+			shift_type = (arm_shifter)ARM_AM_getSORegShOp(
+				MCOperand_getImm(MO2));
 
-			if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
+			if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) ==
+			    ARM_AM_rrx) {
 				break;
 			}
-			shift_value = translateShiftImm(ARM_AM_getSORegOffset(
-							       MCOperand_getImm(MO2)));
-			ARM_insert_detail_op_imm_at(MI, -1, shift_value, CS_AC_READ);
+			shift_value = translateShiftImm(
+				ARM_AM_getSORegOffset(MCOperand_getImm(MO2)));
+			ARM_insert_detail_op_imm_at(MI, -1, shift_value,
+						    CS_AC_READ);
 			break;
 		}
 		case ARM_MOVsr: {
 			MCOperand *MO3 = MCInst_getOperand(MI, (3));
-			shift_type = ARM_AM_getSORegShOp(MCOperand_getImm(MO3)) + ARM_SFT_REG;
+			shift_type =
+				ARM_AM_getSORegShOp(MCOperand_getImm(MO3)) +
+				ARM_SFT_REG;
 			shift_value = MCInst_getOpVal(MI, 2);
 			break;
 		}
@@ -533,7 +539,8 @@ static void ARM_add_not_defined_ops(MCInst *MI)
 		// Add shift information
 		ARM_get_detail(MI)->operands[1].shift.type =
 			(arm_shifter)ARM_AM_getSORegShOp(
-				MCInst_getOpVal(MI, 3)) + ARM_SFT_REG;
+				MCInst_getOpVal(MI, 3)) +
+			ARM_SFT_REG;
 		ARM_get_detail(MI)->operands[1].shift.value =
 			MCInst_getOpVal(MI, 2);
 		break;
@@ -627,7 +634,8 @@ static void ARM_post_index_detection(MCInst *MI)
 
 	cs_arm_op *op = &ARM_get_detail(MI)->operands[i];
 	cs_arm_op op_next = ARM_get_detail(MI)->operands[i + 1];
-	if (op_next.type == ARM_OP_INVALID || op->mem.disp != 0 || op->mem.index != ARM_REG_INVALID)
+	if (op_next.type == ARM_OP_INVALID || op->mem.disp != 0 ||
+	    op->mem.index != ARM_REG_INVALID)
 		return;
 
 	if (op_next.type & CS_OP_IMM)
@@ -653,7 +661,8 @@ void ARM_check_mem_access_validity(MCInst *MI)
 	}
 	cs_detail *detail = get_detail(MI);
 	for (int i = 0; i < detail->arm.op_count; ++i) {
-		if (detail->arm.operands[i].type == ARM_OP_MEM && detail->arm.operands[i].access != suppl->mem_acc) {
+		if (detail->arm.operands[i].type == ARM_OP_MEM &&
+		    detail->arm.operands[i].access != suppl->mem_acc) {
 			detail->arm.operands[i].access = suppl->mem_acc;
 			return;
 		}
@@ -670,7 +679,8 @@ void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 	MI->fillDetailOps = detail_is_set(MI);
 	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
 	ARM_LLVM_printInstruction(MI, O, info);
-	map_set_alias_id(MI, O, insn_alias_mnem_map, ARR_SIZE(insn_alias_mnem_map) - 1);
+	map_set_alias_id(MI, O, insn_alias_mnem_map,
+			 ARR_SIZE(insn_alias_mnem_map) - 1);
 	ARM_add_not_defined_ops(MI);
 	ARM_post_index_detection(MI);
 	ARM_check_mem_access_validity(MI);
@@ -816,9 +826,8 @@ bool ARM_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 			void *info)
 {
 	ARM_init_cs_detail(instr);
-	DecodeStatus Result = ARM_LLVM_getInstruction(handle, code, code_len, instr,
-					      size, address,
-					      info);
+	DecodeStatus Result = ARM_LLVM_getInstruction(
+		handle, code, code_len, instr, size, address, info);
 	ARM_set_instr_map_data(instr);
 	if (Result == MCDisassembler_SoftFail) {
 		MCInst_setSoftFail(instr);
@@ -1102,9 +1111,10 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			if (doing_mem(MI)) {
 				bool is_index_reg = map_get_op_type(MI, OpNum) &
 						    CS_OP_MEM;
-				ARM_set_detail_op_mem(
-					MI, OpNum, is_index_reg, is_index_reg ? 1 : 0,
-					MCInst_getOpVal(MI, OpNum));
+				ARM_set_detail_op_mem(MI, OpNum, is_index_reg,
+						      is_index_reg ? 1 : 0,
+						      MCInst_getOpVal(MI,
+								      OpNum));
 			} else {
 				ARM_set_detail_op_reg(
 					MI, OpNum, MCInst_getOpVal(MI, OpNum));
@@ -1477,7 +1487,8 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_PostIdxImm8s4Operand: {
 		unsigned Imm8s = MCInst_getOpVal(MI, OpNum);
 		bool sub = !(Imm8s & 256);
-		ARM_set_detail_op_mem_offset(MI, OpNum, (Imm8s & 0xff) << 2, sub);
+		ARM_set_detail_op_mem_offset(MI, OpNum, (Imm8s & 0xff) << 2,
+					     sub);
 		ARM_get_detail(MI)->post_index = true;
 		break;
 	}
@@ -1514,7 +1525,8 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			ARM_set_mem_access(MI, false);
 			break;
 		}
-		ARM_set_detail_op_mem(MI, OpNum + 1, true, subtracted == ARM_AM_sub ? -1 : 1,
+		ARM_set_detail_op_mem(MI, OpNum + 1, true,
+				      subtracted == ARM_AM_sub ? -1 : 1,
 				      MCInst_getOpVal(MI, OpNum + 1));
 		add_cs_detail_RegImmShift(MI, ARM_AM_getAM2ShiftOpc(imm3),
 					  ARM_AM_getAM2Offset(imm3));
@@ -1575,8 +1587,9 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 			unsigned Scale = 0;
 			switch (op_group) {
 			default:
-				CS_ASSERT_RET(0 &&
-				       "Cannot determine scale. Operand group not handled.");
+				CS_ASSERT_RET(
+					0 &&
+					"Cannot determine scale. Operand group not handled.");
 			case ARM_OP_GROUP_ThumbAddrModeImm5S1Operand:
 				Scale = 1;
 				break;
@@ -1605,8 +1618,7 @@ static void add_cs_detail_general(MCInst *MI, arm_op_group op_group,
 				      MCInst_getOpVal(MI, OpNum));
 		arm_reg RegNum = MCInst_getOpVal(MI, OpNum + 1);
 		if (RegNum)
-			ARM_set_detail_op_mem(MI, OpNum + 1, true, 1,
-					      RegNum);
+			ARM_set_detail_op_mem(MI, OpNum + 1, true, 1, RegNum);
 		ARM_set_mem_access(MI, false);
 		break;
 	}
@@ -1842,7 +1854,8 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 			ARM_AM_getAM3Op(MCInst_getOpVal(MI, OpNum + 2));
 
 		if (MCOperand_getReg(MO2)) {
-			ARM_set_detail_op_mem(MI, OpNum + 1, true, Sign == ARM_AM_sub ? -1 : 1,
+			ARM_set_detail_op_mem(MI, OpNum + 1, true,
+					      Sign == ARM_AM_sub ? -1 : 1,
 					      MCInst_getOpVal(MI, OpNum + 1));
 			ARM_get_detail_op(MI, 0)->subtracted = Sign ==
 							       ARM_AM_sub;
@@ -1853,8 +1866,7 @@ static void add_cs_detail_template_1(MCInst *MI, arm_op_group op_group,
 			ARM_AM_getAM3Offset(MCInst_getOpVal(MI, OpNum + 2));
 
 		if (AlwaysPrintImm0 || ImmOffs || Sign == ARM_AM_sub) {
-			ARM_set_detail_op_mem(MI, OpNum + 2, false, 0,
-					      ImmOffs);
+			ARM_set_detail_op_mem(MI, OpNum + 2, false, 0, ImmOffs);
 			ARM_get_detail_op(MI, 0)->subtracted = Sign ==
 							       ARM_AM_sub;
 		}
@@ -1943,7 +1955,8 @@ static void add_cs_detail_template_2(MCInst *MI, arm_op_group op_group,
 	case ARM_OP_GROUP_ComplexRotationOp_180_90: {
 		unsigned Angle = temp_arg_0;
 		unsigned Remainder = temp_arg_1;
-		unsigned Rotation = (MCInst_getOpVal(MI, OpNum) * Angle) + Remainder;
+		unsigned Rotation =
+			(MCInst_getOpVal(MI, OpNum) * Angle) + Remainder;
 		ARM_set_detail_op_imm(MI, OpNum, ARM_OP_IMM, Rotation);
 		break;
 	}
@@ -2087,7 +2100,7 @@ void ARM_set_detail_op_imm(MCInst *MI, unsigned OpNum, arm_op_type ImmType,
 	CS_ASSERT_RET(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
 	CS_ASSERT_RET(map_get_op_type(MI, OpNum) == CS_OP_IMM);
 	CS_ASSERT_RET(ImmType == ARM_OP_IMM || ImmType == ARM_OP_PIMM ||
-	       ImmType == ARM_OP_CIMM);
+		      ImmType == ARM_OP_CIMM);
 
 	ARM_get_detail_op(MI, 0)->type = ImmType;
 	ARM_get_detail_op(MI, 0)->imm = Imm;
@@ -2103,14 +2116,15 @@ void ARM_set_detail_op_mem_offset(MCInst *MI, unsigned OpNum, uint64_t Val,
 
 	if (!doing_mem(MI)) {
 		CS_ASSERT_RET((ARM_get_detail_op(MI, -1) != NULL) &&
-		       (ARM_get_detail_op(MI, -1)->type == ARM_OP_MEM));
+			      (ARM_get_detail_op(MI, -1)->type == ARM_OP_MEM));
 		ARM_dec_op_count(MI);
 	}
 
 	if ((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_IMM)
 		ARM_set_detail_op_mem(MI, OpNum, false, 0, Val);
 	else if ((map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG)
-		ARM_set_detail_op_mem(MI, OpNum, true, subtracted ? -1 : 1, Val);
+		ARM_set_detail_op_mem(MI, OpNum, true, subtracted ? -1 : 1,
+				      Val);
 	else
 		CS_ASSERT_RET(0 && "Memory type incorrect.");
 	ARM_get_detail_op(MI, 0)->subtracted = subtracted;
@@ -2135,7 +2149,8 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 		CS_ASSERT_RET(secondary_type == CS_OP_REG);
 		if (!is_index_reg) {
 			ARM_get_detail_op(MI, 0)->mem.base = Val;
-			if (MCInst_opIsTying(MI, OpNum) || MCInst_opIsTied(MI, OpNum)) {
+			if (MCInst_opIsTying(MI, OpNum) ||
+			    MCInst_opIsTied(MI, OpNum)) {
 				// Base registers can be writeback registers.
 				// For this they tie an MC operand which has write
 				// access. But this one is never processed in the printer
@@ -2143,7 +2158,8 @@ void ARM_set_detail_op_mem(MCInst *MI, unsigned OpNum, bool is_index_reg,
 				// added to the modified list.
 				// Here we check for this case and add the memory register
 				// to the modified list.
-				map_add_implicit_write(MI, MCInst_getOpVal(MI, OpNum));
+				map_add_implicit_write(
+					MI, MCInst_getOpVal(MI, OpNum));
 				MI->flat_insn->detail->writeback = true;
 			} else {
 				// If the base register is not tied, set the writebak flag to false.
@@ -2199,7 +2215,9 @@ void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
 	default:
 		CS_ASSERT_RET(0 && "Unknown system operand type.");
 	case ARM_OP_SYSREG:
-		ARM_get_detail_op(MI, 0)->sysop.reg.mclasssysreg = Val; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
+		// NOLINTBEGIN(clang-analyzer-optin.core.EnumCastOutOfRange)
+		ARM_get_detail_op(MI, 0)->sysop.reg.mclasssysreg = Val;
+		// NOLINTEND(clang-analyzer-optin.core.EnumCastOutOfRange)
 		break;
 	case ARM_OP_BANKEDREG:
 		ARM_get_detail_op(MI, 0)->sysop.reg.bankedreg = Val;
@@ -2208,7 +2226,9 @@ void ARM_set_detail_op_sysop(MCInst *MI, int Val, arm_op_type type,
 	case ARM_OP_CPSR:
 		ARM_get_detail_op(MI, 0)->reg =
 			type == ARM_OP_SPSR ? ARM_REG_SPSR : ARM_REG_CPSR;
-		ARM_get_detail_op(MI, 0)->sysop.psr_bits = Val; // NOLINT(clang-analyzer-optin.core.EnumCastOutOfRange)
+		// NOLINTBEGIN(clang-analyzer-optin.core.EnumCastOutOfRange)
+		ARM_get_detail_op(MI, 0)->sysop.psr_bits = Val;
+		// NOLINTEND(clang-analyzer-optin.core.EnumCastOutOfRange)
 		break;
 	}
 	ARM_get_detail_op(MI, 0)->sysop.sysm = Sysm;

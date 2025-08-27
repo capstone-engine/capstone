@@ -170,12 +170,17 @@ jobs:
         valgrind cstest tests
 
     - name: Comaptibility header generation
-      if: startsWith(matrix.config.build-system, 'cmake')
+      # clang-format-17 is only available in Ubuntu 24.04
+      # Hence the check only happens for it.
+      if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.os, 'ubuntu-24.04')
       run: |
+        sudo apt-get -y update
+        sudo apt-get -y install clang-format-17
+        clang-format-17 --version
         cp ./include/capstone/arm64.h arm64_compat_current.h
         cp ./include/capstone/systemz_compatibility.h systemz_compat_current.h
-        ./suite/auto-sync/src/autosync/HeaderPatcher.py -c --v6 ./include/capstone/aarch64.h --v5 ./include/capstone/arm64.h
-        ./suite/auto-sync/src/autosync/HeaderPatcher.py -c --v6 ./include/capstone/systemz.h --v5 ./include/capstone/systemz_compatibility.h
+        ./suite/auto-sync/src/autosync/HeaderPatcher.py -C ./.clang-format -c --v6 ./include/capstone/aarch64.h --v5 ./include/capstone/arm64.h
+        ./suite/auto-sync/src/autosync/HeaderPatcher.py -C ./.clang-format -c --v6 ./include/capstone/systemz.h --v5 ./include/capstone/systemz_compatibility.h
         diff ./include/capstone/arm64.h arm64_compat_current.h &&
         diff ./include/capstone/systemz_compatibility.h systemz_compat_current.h
 

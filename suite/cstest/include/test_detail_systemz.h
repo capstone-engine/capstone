@@ -25,16 +25,17 @@ typedef struct {
 static const cyaml_schema_field_t test_detail_systemz_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("type", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSystemZOp, type, 0, CYAML_UNLIMITED),
-	CYAML_FIELD_STRING_PTR("access", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+	CYAML_FIELD_STRING_PTR("access",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSystemZOp, access, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR("reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailSystemZOp, reg, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("imm", CYAML_FLAG_OPTIONAL, TestDetailSystemZOp, imm),
 	CYAML_FIELD_UINT("imm_width", CYAML_FLAG_OPTIONAL, TestDetailSystemZOp,
-			imm_width),
-	CYAML_FIELD_STRING_PTR(
-		"mem_am", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-		TestDetailSystemZOp, mem_am, 0, CYAML_UNLIMITED),
+			 imm_width),
+	CYAML_FIELD_STRING_PTR("mem_am",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailSystemZOp, mem_am, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_STRING_PTR(
 		"mem_base", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 		TestDetailSystemZOp, mem_base, 0, CYAML_UNLIMITED),
@@ -60,9 +61,9 @@ typedef struct {
 } TestDetailSystemZ;
 
 static const cyaml_schema_field_t test_detail_systemz_mapping_schema[] = {
-	CYAML_FIELD_STRING_PTR(
-		"format", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
-		TestDetailSystemZ, format, 0, CYAML_UNLIMITED),
+	CYAML_FIELD_STRING_PTR("format",
+			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailSystemZ, format, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_SEQUENCE(
 		"operands", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 		TestDetailSystemZ, operands, &test_detail_systemz_op_schema, 0,

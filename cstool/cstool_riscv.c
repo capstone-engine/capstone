@@ -20,38 +20,41 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 
 	for (i = 0; i < riscv->op_count; i++) {
 		cs_riscv_op *op = &(riscv->operands[i]);
-		switch((int)op->type) {
-			default:
-				break;
-			case RISCV_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
-				break;
-			case RISCV_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%lx\n", i, (long)op->imm);
-				break;
-			case RISCV_OP_MEM:
-				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != RISCV_REG_INVALID)
-					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-							i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%lx\n", i, (long)op->mem.disp);
+		switch ((int)op->type) {
+		default:
+			break;
+		case RISCV_OP_REG:
+			printf("\t\toperands[%u].type: REG = %s\n", i,
+			       cs_reg_name(handle, op->reg));
+			break;
+		case RISCV_OP_IMM:
+			printf("\t\toperands[%u].type: IMM = 0x%lx\n", i,
+			       (long)op->imm);
+			break;
+		case RISCV_OP_MEM:
+			printf("\t\toperands[%u].type: MEM\n", i);
+			if (op->mem.base != RISCV_REG_INVALID)
+				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
+				       i, cs_reg_name(handle, op->mem.base));
+			if (op->mem.disp != 0)
+				printf("\t\t\toperands[%u].mem.disp: 0x%lx\n",
+				       i, (long)op->mem.disp);
 
-				break;
+			break;
 		}
 
-		switch(op->access) {
-			default:
-				break;
-			case CS_AC_READ:
-				printf("\t\toperands[%u].access: READ\n", i);
-				break;
-			case CS_AC_WRITE:
-				printf("\t\toperands[%u].access: WRITE\n", i);
-				break;
-			case CS_AC_READ | CS_AC_WRITE:
-				printf("\t\toperands[%u].access: READ | WRITE\n", i);
-				break;
+		switch (op->access) {
+		default:
+			break;
+		case CS_AC_READ:
+			printf("\t\toperands[%u].access: READ\n", i);
+			break;
+		case CS_AC_WRITE:
+			printf("\t\toperands[%u].access: WRITE\n", i);
+			break;
+		case CS_AC_READ | CS_AC_WRITE:
+			printf("\t\toperands[%u].access: READ | WRITE\n", i);
+			break;
 		}
 	}
 

@@ -7,18 +7,17 @@
 #define CAPSTONE_SYSTEMZ_COMPAT_HEADER
 #include <capstone/capstone.h>
 
- // 0  5a 0f 1f ff        a	%r0, 0xfff(%r15,%r1)
-	// ID: 1 (a)
-	// op_count: 2
-	// 	operands[0].type: REG = r0
-	// 	operands[0].access: WRITE
-	// 	operands[1].type: MEM
-	// 		operands[1].mem.base: REG = r1
-	// 		operands[1].mem.index: REG = r15
-	// 		operands[1].mem.disp: 0xfff
-	// 		operands[1].mem.am: SYSTEMZ_AM_BDX
-	// 	operands[1].access: READ
-
+// 0  5a 0f 1f ff        a	%r0, 0xfff(%r15,%r1)
+// ID: 1 (a)
+// op_count: 2
+// 	operands[0].type: REG = r0
+// 	operands[0].access: WRITE
+// 	operands[1].type: MEM
+// 		operands[1].mem.base: REG = r1
+// 		operands[1].mem.index: REG = r15
+// 		operands[1].mem.disp: 0xfff
+// 		operands[1].mem.am: SYSTEMZ_AM_BDX
+// 	operands[1].access: READ
 
 int sysz(void)
 {
@@ -70,7 +69,8 @@ int sysz(void)
 		fprintf(stderr, "register wrong.\n");
 		goto err;
 	}
-	if (((sysz_addr_mode) insn[0].detail->sysz.operands[1].mem.am) != SYSZ_AM_BDX) {
+	if (((sysz_addr_mode)insn[0].detail->sysz.operands[1].mem.am) !=
+	    SYSZ_AM_BDX) {
 		fprintf(stderr, "mem.am wrong\n");
 		goto err;
 	}
@@ -78,11 +78,15 @@ int sysz(void)
 		fprintf(stderr, "mem.disp wrong\n");
 		goto err;
 	}
-	if (strcmp(cs_reg_name(handle, insn[0].detail->sysz.operands[1].mem.base), "r1") != 0) {
+	if (strcmp(cs_reg_name(handle,
+			       insn[0].detail->sysz.operands[1].mem.base),
+		   "r1") != 0) {
 		fprintf(stderr, "mem.base wrong\n");
 		goto err;
 	}
-	if (strcmp(cs_reg_name(handle, insn[0].detail->sysz.operands[1].mem.index), "r15") != 0) {
+	if (strcmp(cs_reg_name(handle,
+			       insn[0].detail->sysz.operands[1].mem.index),
+		   "r15") != 0) {
 		fprintf(stderr, "mem.index wrong\n");
 		goto err;
 	}

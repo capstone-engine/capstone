@@ -12,7 +12,7 @@ extern "C" {
 #include "cs_operand.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
+#pragma warning(disable : 4201)
 #endif
 
 #define M68K_OPERAND_COUNT 4
@@ -73,82 +73,86 @@ typedef enum m68k_reg {
 	M68K_REG_FPSR,
 	M68K_REG_FPIAR,
 
-	M68K_REG_ENDING,   // <-- mark the end of the list of registers
+	M68K_REG_ENDING, // <-- mark the end of the list of registers
 } m68k_reg;
 
 /// M68K Addressing Modes
 typedef enum m68k_address_mode {
-	M68K_AM_NONE = 0,			///< No address mode.
+	M68K_AM_NONE = 0, ///< No address mode.
 
-	M68K_AM_REG_DIRECT_DATA,		///< Register Direct - Data
-	M68K_AM_REG_DIRECT_ADDR,		///< Register Direct - Address
+	M68K_AM_REG_DIRECT_DATA, ///< Register Direct - Data
+	M68K_AM_REG_DIRECT_ADDR, ///< Register Direct - Address
 
-	M68K_AM_REGI_ADDR,				///< Register Indirect - Address
-	M68K_AM_REGI_ADDR_POST_INC,		///< Register Indirect - Address with Postincrement
-	M68K_AM_REGI_ADDR_PRE_DEC,		///< Register Indirect - Address with Predecrement
-	M68K_AM_REGI_ADDR_DISP,			///< Register Indirect - Address with Displacement
+	M68K_AM_REGI_ADDR, ///< Register Indirect - Address
+	M68K_AM_REGI_ADDR_POST_INC, ///< Register Indirect - Address with Postincrement
+	M68K_AM_REGI_ADDR_PRE_DEC, ///< Register Indirect - Address with Predecrement
+	M68K_AM_REGI_ADDR_DISP, ///< Register Indirect - Address with Displacement
 
-	M68K_AM_AREGI_INDEX_8_BIT_DISP,	///< Address Register Indirect With Index- 8-bit displacement
-	M68K_AM_AREGI_INDEX_BASE_DISP,	///< Address Register Indirect With Index- Base displacement
+	M68K_AM_AREGI_INDEX_8_BIT_DISP, ///< Address Register Indirect With Index- 8-bit displacement
+	M68K_AM_AREGI_INDEX_BASE_DISP, ///< Address Register Indirect With Index- Base displacement
 
-	M68K_AM_MEMI_POST_INDEX,		///< Memory indirect - Postindex
-	M68K_AM_MEMI_PRE_INDEX,			///< Memory indirect - Preindex
+	M68K_AM_MEMI_POST_INDEX, ///< Memory indirect - Postindex
+	M68K_AM_MEMI_PRE_INDEX, ///< Memory indirect - Preindex
 
-	M68K_AM_PCI_DISP,				///< Program Counter Indirect - with Displacement
+	M68K_AM_PCI_DISP, ///< Program Counter Indirect - with Displacement
 
-	M68K_AM_PCI_INDEX_8_BIT_DISP,	///< Program Counter Indirect with Index - with 8-Bit Displacement
-	M68K_AM_PCI_INDEX_BASE_DISP,	///< Program Counter Indirect with Index - with Base Displacement
+	M68K_AM_PCI_INDEX_8_BIT_DISP, ///< Program Counter Indirect with Index - with 8-Bit Displacement
+	M68K_AM_PCI_INDEX_BASE_DISP, ///< Program Counter Indirect with Index - with Base Displacement
 
-	M68K_AM_PC_MEMI_POST_INDEX,		///< Program Counter Memory Indirect - Postindexed
-	M68K_AM_PC_MEMI_PRE_INDEX,		///< Program Counter Memory Indirect - Preindexed
+	M68K_AM_PC_MEMI_POST_INDEX, ///< Program Counter Memory Indirect - Postindexed
+	M68K_AM_PC_MEMI_PRE_INDEX, ///< Program Counter Memory Indirect - Preindexed
 
-	M68K_AM_ABSOLUTE_DATA_SHORT,	///< Absolute Data Addressing  - Short
-	M68K_AM_ABSOLUTE_DATA_LONG,		///< Absolute Data Addressing  - Long
-	M68K_AM_IMMEDIATE,              ///< Immediate value
+	M68K_AM_ABSOLUTE_DATA_SHORT, ///< Absolute Data Addressing  - Short
+	M68K_AM_ABSOLUTE_DATA_LONG, ///< Absolute Data Addressing  - Long
+	M68K_AM_IMMEDIATE, ///< Immediate value
 
-	M68K_AM_BRANCH_DISPLACEMENT,    ///< Address as displacement from (PC+2) used by branches
+	M68K_AM_BRANCH_DISPLACEMENT, ///< Address as displacement from (PC+2) used by branches
 } m68k_address_mode;
 
 /// Operand type for instruction's operands
 typedef enum m68k_op_type {
 	M68K_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
-	M68K_OP_REG = CS_OP_REG,         ///< = CS_OP_REG (Register operand).
-	M68K_OP_IMM = CS_OP_IMM,         ///< = CS_OP_IMM (Immediate operand).
-	M68K_OP_FP_SINGLE = CS_OP_SPECIAL + 0,   ///< single precision Floating-Point operand
-	M68K_OP_FP_DOUBLE = CS_OP_SPECIAL + 1,   ///< double precision Floating-Point operand
-	M68K_OP_REG_BITS = CS_OP_SPECIAL + 2,    ///< Register bits move
-	M68K_OP_REG_PAIR = CS_OP_SPECIAL + 3,    ///< Register pair in the same op (upper 4 bits for first reg, lower for second)
-	M68K_OP_BR_DISP = CS_OP_SPECIAL + 4,     ///< Branch displacement
-	M68K_OP_MEM = CS_OP_MEM,         ///< = CS_OP_MEM (Memory operand).
+	M68K_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
+	M68K_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	M68K_OP_FP_SINGLE =
+		CS_OP_SPECIAL + 0, ///< single precision Floating-Point operand
+	M68K_OP_FP_DOUBLE =
+		CS_OP_SPECIAL + 1, ///< double precision Floating-Point operand
+	M68K_OP_REG_BITS = CS_OP_SPECIAL + 2, ///< Register bits move
+	M68K_OP_REG_PAIR =
+		CS_OP_SPECIAL +
+		3, ///< Register pair in the same op (upper 4 bits for first reg, lower for second)
+	M68K_OP_BR_DISP = CS_OP_SPECIAL + 4, ///< Branch displacement
+	M68K_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } m68k_op_type;
 
 /// Instruction's operand referring to memory
 /// This is associated with M68K_OP_MEM operand type above
 typedef struct m68k_op_mem {
-	m68k_reg base_reg;      ///< base register (or M68K_REG_INVALID if irrelevant)
-	m68k_reg index_reg;     ///< index register (or M68K_REG_INVALID if irrelevant)
-	m68k_reg in_base_reg;   ///< indirect base register (or M68K_REG_INVALID if irrelevant)
-	uint32_t in_disp; 	    ///< indirect displacement
-	uint32_t out_disp;      ///< other displacement
-	int16_t disp;	        ///< displacement value
-	uint8_t scale;	        ///< scale for index register
-	uint8_t bitfield;       ///< set to true if the two values below should be used
-	uint8_t width;	        ///< used for bf* instructions
-	uint8_t offset;	        ///< used for bf* instructions
-	uint8_t index_size;     ///< 0 = w, 1 = l
+	m68k_reg base_reg; ///< base register (or M68K_REG_INVALID if irrelevant)
+	m68k_reg index_reg; ///< index register (or M68K_REG_INVALID if irrelevant)
+	m68k_reg in_base_reg; ///< indirect base register (or M68K_REG_INVALID if irrelevant)
+	uint32_t in_disp; ///< indirect displacement
+	uint32_t out_disp; ///< other displacement
+	int16_t disp; ///< displacement value
+	uint8_t scale; ///< scale for index register
+	uint8_t bitfield; ///< set to true if the two values below should be used
+	uint8_t width; ///< used for bf* instructions
+	uint8_t offset; ///< used for bf* instructions
+	uint8_t index_size; ///< 0 = w, 1 = l
 } m68k_op_mem;
 
 /// Operand type for instruction's operands
 typedef enum m68k_op_br_disp_size {
 	M68K_OP_BR_DISP_SIZE_INVALID = 0, ///< = CS_OP_INVALID (Uninitialized).
-	M68K_OP_BR_DISP_SIZE_BYTE = 1,    ///< signed 8-bit displacement
-	M68K_OP_BR_DISP_SIZE_WORD = 2,    ///< signed 16-bit displacement
-	M68K_OP_BR_DISP_SIZE_LONG = 4,    ///< signed 32-bit displacement
+	M68K_OP_BR_DISP_SIZE_BYTE = 1, ///< signed 8-bit displacement
+	M68K_OP_BR_DISP_SIZE_WORD = 2, ///< signed 16-bit displacement
+	M68K_OP_BR_DISP_SIZE_LONG = 4, ///< signed 32-bit displacement
 } m68k_op_br_disp_size;
 
 typedef struct m68k_op_br_disp {
-	int32_t disp;	        ///< displacement value
-	uint8_t disp_size;		///< Size from m68k_op_br_disp_size type above
+	int32_t disp; ///< displacement value
+	uint8_t disp_size; ///< Size from m68k_op_br_disp_size type above
 } m68k_op_br_disp;
 
 /// Register pair in one operand.
@@ -160,34 +164,34 @@ typedef struct cs_m68k_op_reg_pair {
 /// Instruction operand
 typedef struct cs_m68k_op {
 	union {
-		uint64_t imm;               ///< immediate value for IMM operand
-		double dimm; 		    ///< double imm
-		float simm; 		    ///< float imm
-		m68k_reg reg;		    ///< register value for REG operand
+		uint64_t imm; ///< immediate value for IMM operand
+		double dimm; ///< double imm
+		float simm; ///< float imm
+		m68k_reg reg; ///< register value for REG operand
 		cs_m68k_op_reg_pair reg_pair; ///< register pair in one operand
 	};
 
-	m68k_op_mem mem; 	    ///< data when operand is targeting memory
+	m68k_op_mem mem; ///< data when operand is targeting memory
 	m68k_op_br_disp br_disp; ///< data when operand is a branch displacement
 	uint32_t register_bits; ///< register bits for movem etc. (always in d0-d7, a0-a7, fp0 - fp7 order)
 	m68k_op_type type;
-	m68k_address_mode address_mode;	///< M68K addressing mode for this op
+	m68k_address_mode address_mode; ///< M68K addressing mode for this op
 } cs_m68k_op;
 
 /// Operation size of the CPU instructions
 typedef enum m68k_cpu_size {
-	M68K_CPU_SIZE_NONE = 0,		///< unsized or unspecified
-	M68K_CPU_SIZE_BYTE = 1,		///< 1 byte in size
-	M68K_CPU_SIZE_WORD = 2,		///< 2 bytes in size
-	M68K_CPU_SIZE_LONG = 4,		///< 4 bytes in size
+	M68K_CPU_SIZE_NONE = 0, ///< unsized or unspecified
+	M68K_CPU_SIZE_BYTE = 1, ///< 1 byte in size
+	M68K_CPU_SIZE_WORD = 2, ///< 2 bytes in size
+	M68K_CPU_SIZE_LONG = 4, ///< 4 bytes in size
 } m68k_cpu_size;
 
 /// Operation size of the FPU instructions (Notice that FPU instruction can also use CPU sizes if needed)
 typedef enum m68k_fpu_size {
-	M68K_FPU_SIZE_NONE = 0,		///< unsized like fsave/frestore
-	M68K_FPU_SIZE_SINGLE = 4,		///< 4 byte in size (single float)
-	M68K_FPU_SIZE_DOUBLE = 8,		///< 8 byte in size (double)
-	M68K_FPU_SIZE_EXTENDED = 12,	///< 12 byte in size (extended real format)
+	M68K_FPU_SIZE_NONE = 0, ///< unsized like fsave/frestore
+	M68K_FPU_SIZE_SINGLE = 4, ///< 4 byte in size (single float)
+	M68K_FPU_SIZE_DOUBLE = 8, ///< 8 byte in size (double)
+	M68K_FPU_SIZE_EXTENDED = 12, ///< 12 byte in size (extended real format)
 } m68k_fpu_size;
 
 /// Type of size that is being used for the current instruction
@@ -210,8 +214,10 @@ typedef struct m68k_op_size {
 /// The M68K instruction and its operands
 typedef struct cs_m68k {
 	// Number of operands of this instruction or 0 when instruction has no operand.
-	cs_m68k_op operands[M68K_OPERAND_COUNT]; ///< operands for this instruction.
-	m68k_op_size op_size;	///< size of data operand works on in bytes (.b, .w, .l, etc)
+	cs_m68k_op
+		operands[M68K_OPERAND_COUNT]; ///< operands for this instruction.
+	m68k_op_size
+		op_size; ///< size of data operand works on in bytes (.b, .w, .l, etc)
 	uint8_t op_count; ///< number of operands for the instruction
 } cs_m68k;
 
@@ -593,18 +599,18 @@ typedef enum m68k_insn {
 	M68K_INS_TST,
 	M68K_INS_UNLK,
 	M68K_INS_UNPK,
-	M68K_INS_ENDING,   // <-- mark the end of the list of instructions
+	M68K_INS_ENDING, // <-- mark the end of the list of instructions
 } m68k_insn;
 
 /// Group of M68K instructions
 typedef enum m68k_group_type {
-	M68K_GRP_INVALID = 0,  ///< CS_GRUP_INVALID
-	M68K_GRP_JUMP,  ///< = CS_GRP_JUMP
-	M68K_GRP_RET = 3,  ///< = CS_GRP_RET
+	M68K_GRP_INVALID = 0, ///< CS_GRUP_INVALID
+	M68K_GRP_JUMP, ///< = CS_GRP_JUMP
+	M68K_GRP_RET = 3, ///< = CS_GRP_RET
 	M68K_GRP_IRET = 5, ///< = CS_GRP_IRET
 	M68K_GRP_BRANCH_RELATIVE = 7, ///< = CS_GRP_BRANCH_RELATIVE
 
-	M68K_GRP_ENDING,// <-- mark the end of the list of groups
+	M68K_GRP_ENDING, // <-- mark the end of the list of groups
 } m68k_group_type;
 
 #ifdef __cplusplus

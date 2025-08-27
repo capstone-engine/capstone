@@ -47,7 +47,8 @@ ppc_reg PPC_map_register(unsigned int r);
 bool PPC_getFeatureBits(unsigned int mode, unsigned int feature);
 
 void PPC_add_cs_detail_0(MCInst *MI, ppc_op_group op_group, unsigned OpNo);
-void PPC_add_cs_detail_1(MCInst *MI, ppc_op_group op_group, unsigned OpNo, const char *Modifier);
+void PPC_add_cs_detail_1(MCInst *MI, ppc_op_group op_group, unsigned OpNo,
+			 const char *Modifier);
 
 void PPC_set_detail_op_reg(MCInst *MI, unsigned OpNum, ppc_reg Reg);
 void PPC_set_detail_op_imm(MCInst *MI, unsigned OpNum, int64_t Imm);

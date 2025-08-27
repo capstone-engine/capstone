@@ -28,11 +28,13 @@ static void print_insn(csh handle)
 {
 	cs_insn *insn;
 	size_t count;
-	
-	count = cs_disasm(handle, (const uint8_t *)X86_CODE32, sizeof(X86_CODE32) - 1, 0x1000, 1, &insn);
+
+	count = cs_disasm(handle, (const uint8_t *)X86_CODE32,
+			  sizeof(X86_CODE32) - 1, 0x1000, 1, &insn);
 	if (count) {
-		print_string_hex((unsigned char *)X86_CODE32, sizeof(X86_CODE32) - 1);
-		printf("\t%s\t%s\n", insn[0].mnemonic, insn[0].op_str); 
+		print_string_hex((unsigned char *)X86_CODE32,
+				 sizeof(X86_CODE32) - 1);
+		printf("\t%s\t%s\n", insn[0].mnemonic, insn[0].op_str);
 		// Free memory allocated by cs_disasm()
 		cs_free(insn, count);
 	} else {
@@ -53,7 +55,8 @@ static void test()
 	err = cs_open(CS_ARCH_X86, CS_MODE_32, &handle);
 	if (err) {
 		if (cs_support(CS_ARCH_X86)) {
-			printf("Failed on cs_open() with error returned: %u\n", err);
+			printf("Failed on cs_open() with error returned: %u\n",
+			       err);
 			abort();
 		} else
 			return;

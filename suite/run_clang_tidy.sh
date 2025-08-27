@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -ex
+
 if [ $# -ne 1 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   echo "$0 <build-path>"
   echo "Set env var 'base_sha'  to upstream/next hash and 'head_sha' and your current HEAD hash."

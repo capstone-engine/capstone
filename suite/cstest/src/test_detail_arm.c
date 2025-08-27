@@ -35,12 +35,14 @@ TestDetailARM *test_detail_arm_clone(TestDetailARM *detail)
 	TestDetailARM *clone = test_detail_arm_new();
 	clone->update_flags = detail->update_flags;
 	clone->post_indexed = detail->post_indexed;
-	clone->vector_data = detail->vector_data ? strdup(detail->vector_data) : NULL;
+	clone->vector_data = detail->vector_data ? strdup(detail->vector_data) :
+						   NULL;
 	clone->cps_mode = detail->cps_mode ? strdup(detail->cps_mode) : NULL;
 	clone->cps_flag = detail->cps_flag ? strdup(detail->cps_flag) : NULL;
 	clone->cc = detail->cc ? strdup(detail->cc) : NULL;
 	clone->vcc = detail->vcc ? strdup(detail->vcc) : NULL;
-	clone->mem_barrier = detail->mem_barrier ? strdup(detail->mem_barrier) : NULL;
+	clone->mem_barrier = detail->mem_barrier ? strdup(detail->mem_barrier) :
+						   NULL;
 
 	clone->operands_count = detail->operands_count;
 	if (detail->operands_count > 0) {
@@ -229,7 +231,8 @@ bool test_expected_arm(csh *handle, cs_arm *actual, TestDetailARM *expected)
 			compare_int_ret(op->mem.disp, eop->mem_disp, false);
 			compare_uint_ret(op->mem.align, eop->mem_align, false);
 			if (eop->mem_scale) {
-				compare_int_ret(op->mem.scale, eop->mem_scale, false);
+				compare_int_ret(op->mem.scale, eop->mem_scale,
+						false);
 			}
 			break;
 		}

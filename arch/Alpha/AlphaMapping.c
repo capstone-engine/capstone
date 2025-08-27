@@ -31,7 +31,7 @@ void Alpha_init_cs_detail(MCInst *MI)
 {
 	if (detail_is_set(MI)) {
 		memset(get_detail(MI), 0,
-			   offsetof(cs_detail, alpha) + sizeof(cs_alpha));
+		       offsetof(cs_detail, alpha) + sizeof(cs_alpha));
 	}
 }
 
@@ -43,7 +43,7 @@ void Alpha_add_cs_detail(MCInst *MI, unsigned OpNum)
 	cs_op_type op_type = map_get_op_type(MI, OpNum);
 	if (op_type == CS_OP_IMM)
 		Alpha_set_detail_op_imm(MI, OpNum, ALPHA_OP_IMM,
-								MCInst_getOpVal(MI, OpNum));
+					MCInst_getOpVal(MI, OpNum));
 	else if (op_type == CS_OP_REG)
 		Alpha_set_detail_op_reg(MI, OpNum, MCInst_getOpVal(MI, OpNum));
 	else
@@ -51,7 +51,7 @@ void Alpha_add_cs_detail(MCInst *MI, unsigned OpNum)
 }
 
 void Alpha_set_detail_op_imm(MCInst *MI, unsigned OpNum, alpha_op_type ImmType,
-							 int64_t Imm)
+			     int64_t Imm)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -84,23 +84,25 @@ void Alpha_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	unsigned short i;
 
 	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
-	if (i == 0) { return; }
+	if (i == 0) {
+		return;
+	}
 	insn->id = insns[i].mapid;
 
 	if (insn->detail) {
 #ifndef CAPSTONE_DIET
 		memcpy(insn->detail->regs_read, insns[i].regs_use,
-				sizeof(insns[i].regs_use));
+		       sizeof(insns[i].regs_use));
 		insn->detail->regs_read_count =
 			(uint8_t)count_positive(insns[i].regs_use);
 
 		memcpy(insn->detail->regs_write, insns[i].regs_mod,
-				sizeof(insns[i].regs_mod));
+		       sizeof(insns[i].regs_mod));
 		insn->detail->regs_write_count =
 			(uint8_t)count_positive(insns[i].regs_mod);
 
 		memcpy(insn->detail->groups, insns[i].groups,
-				sizeof(insns[i].groups));
+		       sizeof(insns[i].groups));
 		insn->detail->groups_count =
 			(uint8_t)count_positive8(insns[i].groups);
 #endif
@@ -109,7 +111,7 @@ void Alpha_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 
-static const char * const insn_names[] = {
+static const char *const insn_names[] = {
 #include "AlphaGenCSMappingInsnName.inc"
 };
 
@@ -134,10 +136,10 @@ const char *Alpha_insn_name(csh handle, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 static const name_map group_name_maps[] = {
-	{Alpha_GRP_INVALID, NULL},
-	{Alpha_GRP_CALL, "call"},
-	{Alpha_GRP_JUMP, "jump"},
-	{Alpha_GRP_BRANCH_RELATIVE, "branch_relative"},
+	{ Alpha_GRP_INVALID, NULL },
+	{ Alpha_GRP_CALL, "call" },
+	{ Alpha_GRP_JUMP, "jump" },
+	{ Alpha_GRP_BRANCH_RELATIVE, "branch_relative" },
 };
 #endif
 
@@ -160,7 +162,7 @@ void Alpha_printInst(MCInst *MI, SStream *O, void *Info)
 	Alpha_LLVM_printInstruction(MI, O, Info);
 }
 
-void Alpha_set_instr_map_data(MCInst *MI) 
+void Alpha_set_instr_map_data(MCInst *MI)
 {
 	map_cs_id(MI, insns, ARR_SIZE(insns));
 	map_implicit_reads(MI, insns);
@@ -168,13 +170,13 @@ void Alpha_set_instr_map_data(MCInst *MI)
 	map_groups(MI, insns);
 }
 
-bool Alpha_getInstruction(csh handle, const uint8_t *code,
-								  size_t code_len, MCInst *instr,
-								  uint16_t *size, uint64_t address, void *info)
+bool Alpha_getInstruction(csh handle, const uint8_t *code, size_t code_len,
+			  MCInst *instr, uint16_t *size, uint64_t address,
+			  void *info)
 {
 	Alpha_init_cs_detail(instr);
-	DecodeStatus Result = Alpha_LLVM_getInstruction(handle, code, code_len, instr, size,
-									 address, info);
+	DecodeStatus Result = Alpha_LLVM_getInstruction(
+		handle, code, code_len, instr, size, address, info);
 	Alpha_set_instr_map_data(instr);
 	if (Result == MCDisassembler_SoftFail) {
 		MCInst_setSoftFail(instr);
@@ -184,8 +186,8 @@ bool Alpha_getInstruction(csh handle, const uint8_t *code,
 
 #ifndef CAPSTONE_DIET
 void Alpha_reg_access(const cs_insn *insn, cs_regs regs_read,
-			  uint8_t *regs_read_count, cs_regs regs_write,
-			  uint8_t *regs_write_count)
+		      uint8_t *regs_read_count, cs_regs regs_write,
+		      uint8_t *regs_write_count)
 {
 	uint8_t i;
 	uint8_t read_count, write_count;

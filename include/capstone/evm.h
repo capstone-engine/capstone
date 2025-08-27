@@ -12,14 +12,14 @@ extern "C" {
 #include "platform.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
+#pragma warning(disable : 4201)
 #endif
 
 /// Instruction structure
 typedef struct cs_evm {
-    unsigned char pop;    ///< number of items popped from the stack
-    unsigned char push;   ///< number of items pushed into the stack
-    unsigned int  fee;    ///< gas fee for the instruction
+	unsigned char pop; ///< number of items popped from the stack
+	unsigned char push; ///< number of items pushed into the stack
+	unsigned int fee; ///< gas fee for the instruction
 } cs_evm;
 
 /// EVM instruction
@@ -173,25 +173,25 @@ typedef enum evm_insn {
 	EVM_INS_INVALID = 254,
 	EVM_INS_SELFDESTRUCT = 255, // originally called SUICIDE
 
-	EVM_INS_ENDING,   // <-- mark the end of the list of instructions
+	EVM_INS_ENDING, // <-- mark the end of the list of instructions
 } evm_insn;
 
 /// Group of EVM instructions
 typedef enum evm_insn_group {
 	EVM_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-	EVM_GRP_JUMP,          ///< all jump instructions
+	EVM_GRP_JUMP, ///< all jump instructions
 
-	EVM_GRP_MATH = 8,      ///< math instructions
-	EVM_GRP_STACK_WRITE,   ///< instructions write to stack
-	EVM_GRP_STACK_READ,    ///< instructions read from stack
-	EVM_GRP_MEM_WRITE,     ///< instructions write to memory
-	EVM_GRP_MEM_READ,      ///< instructions read from memory
-	EVM_GRP_STORE_WRITE,   ///< instructions write to storage
-	EVM_GRP_STORE_READ,    ///< instructions read from storage
-	EVM_GRP_HALT,    ///< instructions halt execution
+	EVM_GRP_MATH = 8, ///< math instructions
+	EVM_GRP_STACK_WRITE, ///< instructions write to stack
+	EVM_GRP_STACK_READ, ///< instructions read from stack
+	EVM_GRP_MEM_WRITE, ///< instructions write to memory
+	EVM_GRP_MEM_READ, ///< instructions read from memory
+	EVM_GRP_STORE_WRITE, ///< instructions write to storage
+	EVM_GRP_STORE_READ, ///< instructions read from storage
+	EVM_GRP_HALT, ///< instructions halt execution
 
-	EVM_GRP_ENDING,   ///< <-- mark the end of the list of groups
+	EVM_GRP_ENDING, ///< <-- mark the end of the list of groups
 } evm_insn_group;
 
 #ifdef __cplusplus

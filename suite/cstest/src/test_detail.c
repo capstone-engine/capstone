@@ -233,7 +233,7 @@ void test_detail_free(TestDetail *detail)
 	}
 	if (detail->xtensa) {
 		test_detail_xtensa_free(detail->xtensa);
-	}	
+	}
 	if (detail->arc) {
 		test_detail_arc_free(detail->arc);
 	}
@@ -421,8 +421,7 @@ bool test_expected_detail(csh *handle, const cs_insn *insn,
 					    expected->xtensa);
 	}
 	if (expected->arc) {
-		return test_expected_arc(handle, &actual->arc,
-					  expected->arc);
+		return test_expected_arc(handle, &actual->arc, expected->arc);
 	}
 	return true;
 }

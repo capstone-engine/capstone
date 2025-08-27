@@ -18,7 +18,8 @@ unsigned int count_positive(const uint16_t *list)
 {
 	unsigned int c;
 
-	for (c = 0; list[c] > 0; c++);
+	for (c = 0; list[c] > 0; c++)
+		;
 
 	return c;
 }
@@ -29,7 +30,8 @@ unsigned int count_positive8(const unsigned char *list)
 {
 	unsigned int c;
 
-	for (c = 0; list[c] > 0; c++);
+	for (c = 0; list[c] > 0; c++)
+		;
 
 	return c;
 }
@@ -106,13 +108,13 @@ uint64_t readBytes64(MCInst *MI, const uint8_t *Bytes)
 	if (MODE_IS_BIG_ENDIAN(MI->csh->mode))
 		Insn = ((uint64_t)Bytes[7] << 0) | ((uint64_t)Bytes[6] << 8) |
 		       ((uint64_t)Bytes[5] << 16) | ((uint64_t)Bytes[4] << 24) |
-					 ((uint64_t)Bytes[3] << 32) | ((uint64_t)Bytes[2] << 40) |
-					 ((uint64_t)Bytes[1] << 48) | ((uint64_t)Bytes[0] << 56);
+		       ((uint64_t)Bytes[3] << 32) | ((uint64_t)Bytes[2] << 40) |
+		       ((uint64_t)Bytes[1] << 48) | ((uint64_t)Bytes[0] << 56);
 	else
 		Insn = ((uint64_t)Bytes[7] << 56) | ((uint64_t)Bytes[6] << 48) |
 		       ((uint64_t)Bytes[5] << 40) | ((uint64_t)Bytes[4] << 32) |
-					 ((uint64_t)Bytes[3] << 24) | ((uint64_t)Bytes[2] << 16) |
-					 ((uint64_t)Bytes[1] << 8) | ((uint64_t)Bytes[0] << 0);
+		       ((uint64_t)Bytes[3] << 24) | ((uint64_t)Bytes[2] << 16) |
+		       ((uint64_t)Bytes[1] << 8) | ((uint64_t)Bytes[0] << 0);
 	return Insn;
 }
 
@@ -124,11 +126,11 @@ uint64_t readBytes48(MCInst *MI, const uint8_t *Bytes)
 	if (MODE_IS_BIG_ENDIAN(MI->csh->mode))
 		Insn = ((uint64_t)Bytes[5] << 0) | ((uint64_t)Bytes[4] << 8) |
 		       ((uint64_t)Bytes[3] << 16) | ((uint64_t)Bytes[2] << 24) |
-					 ((uint64_t)Bytes[1] << 32) | ((uint64_t)Bytes[0] << 40);
+		       ((uint64_t)Bytes[1] << 32) | ((uint64_t)Bytes[0] << 40);
 	else
 		Insn = ((uint64_t)Bytes[5] << 40) | ((uint64_t)Bytes[4] << 32) |
-					 ((uint64_t)Bytes[3] << 24) | ((uint64_t)Bytes[2] << 16) |
-					 ((uint64_t)Bytes[1] << 8) | ((uint64_t)Bytes[0] << 0);
+		       ((uint64_t)Bytes[3] << 24) | ((uint64_t)Bytes[2] << 16) |
+		       ((uint64_t)Bytes[1] << 8) | ((uint64_t)Bytes[0] << 0);
 	return Insn;
 }
 
@@ -178,7 +180,8 @@ uint16_t readBytes16(MCInst *MI, const uint8_t *Bytes)
 /// @param str_size The length of @p str
 /// @param src The string to append.
 /// Does nothing if any of the given strings is NULL.
-void append_to_str_lower(char *str, size_t str_size, const char *src) {
+void append_to_str_lower(char *str, size_t str_size, const char *src)
+{
 	if (!str || !src) {
 		return;
 	}
@@ -202,7 +205,8 @@ void append_to_str_lower(char *str, size_t str_size, const char *src) {
 /// @param dest_buf_size Size of buffer @p str.
 /// @param src The string to append.
 /// Does nothing if any of the given strings is NULL.
-void str_append_no_realloc(char *dest, size_t dest_buf_size, const char *src) {
+void str_append_no_realloc(char *dest, size_t dest_buf_size, const char *src)
+{
 	if (!dest || !src) {
 		return;
 	}
@@ -213,13 +217,13 @@ void str_append_no_realloc(char *dest, size_t dest_buf_size, const char *src) {
 	strncat(dest, src, dest_buf_size - strlen(dest));
 }
 
-
 /// Allocates memory of strlen(str_a) + strlen(str_b) + 1 chars
 /// and copies all strings into it as str_a + str_b
 /// str_a is passed to realloc and should not be used afterwards.
 /// Returns the concatenated string.
 /// Returns NULL in case of failure.
-char *str_append(char *str_a, const char *str_b) {
+char *str_append(char *str_a, const char *str_b)
+{
 	if (!str_a || !str_b) {
 		return NULL;
 	}
@@ -243,8 +247,9 @@ char *byte_seq_to_str(uint8_t *bytes, size_t len)
 	char single_byte[8] = { 0 };
 	char *s = calloc(sizeof(char), 32);
 	for (size_t i = 0; i < len; ++i) {
-		cs_snprintf(single_byte, sizeof(single_byte), "0x%02" PRIx8 "%s",
-			    bytes[i], i == len - 1 ? "" : ", ");
+		cs_snprintf(single_byte, sizeof(single_byte),
+			    "0x%02" PRIx8 "%s", bytes[i],
+			    i == len - 1 ? "" : ", ");
 		s = str_append(s, single_byte);
 		if (!s) {
 			return NULL;

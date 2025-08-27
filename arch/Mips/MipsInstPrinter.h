@@ -103,19 +103,20 @@ static const char *MipsFCCToString(Mips_CondCode CC);
 static const char *getRegisterName(unsigned RegNo);
 static void printInstruction(MCInst *MI, uint64_t Address, SStream *O);
 static bool printAliasInstr(MCInst *MI, uint64_t Address, SStream *OS);
-static void printCustomAliasOperand(MCInst *MI, uint64_t Address, unsigned OpIdx,
-			     unsigned PrintMethodIdx, SStream *O);
+static void printCustomAliasOperand(MCInst *MI, uint64_t Address,
+				    unsigned OpIdx, unsigned PrintMethodIdx,
+				    SStream *O);
 static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printJumpOperand(MCInst *MI, unsigned OpNo, SStream *O);
 static void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo,
-			SStream *O);
+			       SStream *O);
 
 #define DECLARE_printUImm_2(Bits, Offset) \
 	static void CONCAT(printUImm, CONCAT(Bits, Offset))( \
-		MCInst *MI, int opNum, SStream *O)
+		MCInst * MI, int opNum, SStream *O)
 #define DECLARE_printUImm(Bits) \
-	static void CONCAT(printUImm, CONCAT(Bits, 0))( \
-		MCInst *MI, int opNum, SStream *O)
+	static void CONCAT(printUImm, CONCAT(Bits, 0))(MCInst * MI, int opNum, \
+						       SStream *O)
 DECLARE_printUImm(0);
 DECLARE_printUImm(1);
 DECLARE_printUImm(10);
@@ -142,12 +143,13 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O);
 static void printMemOperandEA(MCInst *MI, int opNum, SStream *O);
 static void printFCCOperand(MCInst *MI, int opNum, SStream *O);
 static bool printAlias(const char *Str, const MCInst *MI, uint64_t Address,
-		unsigned OpNo, SStream *OS, bool IsBranch);
+		       unsigned OpNo, SStream *OS, bool IsBranch);
 static bool printAlias2(const char *Str, const MCInst *MI, uint64_t Address,
-		unsigned OpNo0, unsigned OpNo1, SStream *OS,
-		bool IsBranch);
+			unsigned OpNo0, unsigned OpNo1, SStream *OS,
+			bool IsBranch);
 static bool printAlias3(const char *Str, const MCInst *MI, uint64_t Address,
-		unsigned OpNo0, unsigned OpNo1, unsigned OpNo2, SStream *OS);
+			unsigned OpNo0, unsigned OpNo1, unsigned OpNo2,
+			SStream *OS);
 static bool printAlias4(const MCInst *MI, uint64_t Address, SStream *OS);
 static void printRegisterList(MCInst *MI, int opNum, SStream *O);
 static void printNanoMipsRegisterList(MCInst *MI, int opNum, SStream *O);

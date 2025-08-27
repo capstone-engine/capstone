@@ -17,7 +17,8 @@ void Sparc_init_cs_detail(MCInst *MI)
 	if (!detail_is_set(MI)) {
 		return;
 	}
-	memset(get_detail(MI), 0, offsetof(cs_detail, sparc) + sizeof(cs_sparc));
+	memset(get_detail(MI), 0,
+	       offsetof(cs_detail, sparc) + sizeof(cs_sparc));
 	Sparc_get_detail(MI)->cc = SPARC_CC_UNDEF;
 	Sparc_get_detail(MI)->cc_field = SPARC_CC_FIELD_NONE;
 }
@@ -62,7 +63,8 @@ static void Sparc_add_bit_details(MCInst *MI, const uint8_t *Bytes,
 		//
 		// See: Opcode Maps - Table 39 - Sparc V9 ISA
 		size_t op2 = get_insn_field_r(insn, 22, 24);
-		detail->cc_field = op2 == 6 ? SPARC_CC_FIELD_FCC0 : SPARC_CC_FIELD_ICC;
+		detail->cc_field = op2 == 6 ? SPARC_CC_FIELD_FCC0 :
+					      SPARC_CC_FIELD_ICC;
 		break;
 	}
 	case SPARC_INSN_FORM_F2_3:
@@ -150,9 +152,9 @@ static void Sparc_add_bit_details(MCInst *MI, const uint8_t *Bytes,
 	case SPARC_INSN_FORM_F2_3:
 	case SPARC_INSN_FORM_F2_4:
 		detail->hint = get_insn_field_r(insn, 29, 29);
-		detail->hint |=
-			get_insn_field_r(insn, 19, 19) == 0 ? SPARC_HINT_PN :
-							      SPARC_HINT_PT;
+		detail->hint |= get_insn_field_r(insn, 19, 19) == 0 ?
+					SPARC_HINT_PN :
+					SPARC_HINT_PT;
 		break;
 	}
 }
@@ -231,8 +233,8 @@ static void insert_op(MCInst *MI, unsigned index, cs_sparc_op op)
 /// Inserts a register to the detail operands at @index.
 /// Already present operands are moved.
 /// If @index is -1 the operand is appended.
-static void Sparc_insert_detail_op_reg_at(MCInst *MI, unsigned index, sparc_reg Reg,
-				 cs_ac_type access)
+static void Sparc_insert_detail_op_reg_at(MCInst *MI, unsigned index,
+					  sparc_reg Reg, cs_ac_type access)
 {
 	if (!detail_is_set(MI))
 		return;
@@ -268,21 +270,24 @@ static void Sparc_correct_details(MCInst *MI)
 	case Sparc_PWRPSRrr:
 	case Sparc_WRPSRri:
 	case Sparc_WRPSRrr:
-		Sparc_insert_detail_op_reg_at(MI, -1, SPARC_REG_PSR, CS_AC_WRITE);
+		Sparc_insert_detail_op_reg_at(MI, -1, SPARC_REG_PSR,
+					      CS_AC_WRITE);
 		break;
 	case Sparc_RDWIM:
 		Sparc_insert_detail_op_reg_at(MI, 0, SPARC_REG_WIM, CS_AC_READ);
 		break;
 	case Sparc_WRWIMri:
 	case Sparc_WRWIMrr:
-		Sparc_insert_detail_op_reg_at(MI, -1, SPARC_REG_WIM, CS_AC_WRITE);
+		Sparc_insert_detail_op_reg_at(MI, -1, SPARC_REG_WIM,
+					      CS_AC_WRITE);
 		break;
 	case Sparc_RDTBR:
 		Sparc_insert_detail_op_reg_at(MI, 0, SPARC_REG_TBR, CS_AC_READ);
 		break;
 	case Sparc_WRTBRri:
 	case Sparc_WRTBRrr:
-		Sparc_insert_detail_op_reg_at(MI, -1, SPARC_REG_TBR, CS_AC_WRITE);
+		Sparc_insert_detail_op_reg_at(MI, -1, SPARC_REG_TBR,
+					      CS_AC_WRITE);
 		break;
 	}
 }
@@ -376,7 +381,8 @@ void Sparc_set_detail_op_reg(MCInst *MI, unsigned OpNum, sparc_reg Reg)
 	default:
 		Sparc_get_detail_op(MI, 0)->type = SPARC_OP_REG;
 		Sparc_get_detail_op(MI, 0)->reg = Reg;
-		Sparc_get_detail_op(MI, 0)->access = map_get_op_access(MI, OpNum);
+		Sparc_get_detail_op(MI, 0)->access =
+			map_get_op_access(MI, OpNum);
 		Sparc_inc_op_count(MI);
 		return;
 	// The LLVM definition is inconsistent with the cc fields.
@@ -411,7 +417,8 @@ static inline bool is_single_reg_mem_case(MCInst *MI, unsigned OpNo)
 	}
 	if (MI->size == 1) {
 		return true;
-	} else if (MI->size > OpNo + 1 && Sparc_get_detail(MI)->operands[0].type != SPARC_OP_MEM) {
+	} else if (MI->size > OpNo + 1 &&
+		   Sparc_get_detail(MI)->operands[0].type != SPARC_OP_MEM) {
 		// Next operand is not a memory operand (disponent or index reg).
 		return !(map_get_op_type(MI, OpNo + 1) & SPARC_OP_MEM);
 	}

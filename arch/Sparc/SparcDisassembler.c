@@ -41,72 +41,83 @@
 #define DEBUG_TYPE "sparc-disassembler"
 
 static const unsigned IntRegDecoderTable[] = {
-	Sparc_G0, Sparc_G1, Sparc_G2, Sparc_G3, Sparc_G4, Sparc_G5, Sparc_G6, Sparc_G7,
-	Sparc_O0, Sparc_O1, Sparc_O2, Sparc_O3, Sparc_O4, Sparc_O5, Sparc_O6, Sparc_O7,
-	Sparc_L0, Sparc_L1, Sparc_L2, Sparc_L3, Sparc_L4, Sparc_L5, Sparc_L6, Sparc_L7,
-	Sparc_I0, Sparc_I1, Sparc_I2, Sparc_I3, Sparc_I4, Sparc_I5, Sparc_I6, Sparc_I7
+	Sparc_G0, Sparc_G1, Sparc_G2, Sparc_G3, Sparc_G4, Sparc_G5, Sparc_G6,
+	Sparc_G7, Sparc_O0, Sparc_O1, Sparc_O2, Sparc_O3, Sparc_O4, Sparc_O5,
+	Sparc_O6, Sparc_O7, Sparc_L0, Sparc_L1, Sparc_L2, Sparc_L3, Sparc_L4,
+	Sparc_L5, Sparc_L6, Sparc_L7, Sparc_I0, Sparc_I1, Sparc_I2, Sparc_I3,
+	Sparc_I4, Sparc_I5, Sparc_I6, Sparc_I7
 };
 
 static const unsigned FPRegDecoderTable[] = {
-	Sparc_F0,	Sparc_F1,	Sparc_F2,	Sparc_F3,	Sparc_F4,	Sparc_F5,	Sparc_F6,	Sparc_F7,
-	Sparc_F8,	Sparc_F9,	Sparc_F10, Sparc_F11, Sparc_F12, Sparc_F13, Sparc_F14, Sparc_F15,
-	Sparc_F16, Sparc_F17, Sparc_F18, Sparc_F19, Sparc_F20, Sparc_F21, Sparc_F22, Sparc_F23,
-	Sparc_F24, Sparc_F25, Sparc_F26, Sparc_F27, Sparc_F28, Sparc_F29, Sparc_F30, Sparc_F31
+	Sparc_F0,  Sparc_F1,  Sparc_F2,	 Sparc_F3,  Sparc_F4,  Sparc_F5,
+	Sparc_F6,  Sparc_F7,  Sparc_F8,	 Sparc_F9,  Sparc_F10, Sparc_F11,
+	Sparc_F12, Sparc_F13, Sparc_F14, Sparc_F15, Sparc_F16, Sparc_F17,
+	Sparc_F18, Sparc_F19, Sparc_F20, Sparc_F21, Sparc_F22, Sparc_F23,
+	Sparc_F24, Sparc_F25, Sparc_F26, Sparc_F27, Sparc_F28, Sparc_F29,
+	Sparc_F30, Sparc_F31
 };
 
 static const unsigned DFPRegDecoderTable[] = {
-	Sparc_D0,	Sparc_D16, Sparc_D1,	Sparc_D17, Sparc_D2,	Sparc_D18, Sparc_D3,	Sparc_D19,
-	Sparc_D4,	Sparc_D20, Sparc_D5,	Sparc_D21, Sparc_D6,	Sparc_D22, Sparc_D7,	Sparc_D23,
-	Sparc_D8,	Sparc_D24, Sparc_D9,	Sparc_D25, Sparc_D10, Sparc_D26, Sparc_D11, Sparc_D27,
-	Sparc_D12, Sparc_D28, Sparc_D13, Sparc_D29, Sparc_D14, Sparc_D30, Sparc_D15, Sparc_D31
+	Sparc_D0,  Sparc_D16, Sparc_D1,	 Sparc_D17, Sparc_D2,  Sparc_D18,
+	Sparc_D3,  Sparc_D19, Sparc_D4,	 Sparc_D20, Sparc_D5,  Sparc_D21,
+	Sparc_D6,  Sparc_D22, Sparc_D7,	 Sparc_D23, Sparc_D8,  Sparc_D24,
+	Sparc_D9,  Sparc_D25, Sparc_D10, Sparc_D26, Sparc_D11, Sparc_D27,
+	Sparc_D12, Sparc_D28, Sparc_D13, Sparc_D29, Sparc_D14, Sparc_D30,
+	Sparc_D15, Sparc_D31
 };
 
 static const unsigned QFPRegDecoderTable[] = {
-	Sparc_Q0, Sparc_Q8,  ~0U, ~0U, Sparc_Q1, Sparc_Q9,	~0U, ~0U,
+	Sparc_Q0, Sparc_Q8,  ~0U, ~0U, Sparc_Q1, Sparc_Q9,  ~0U, ~0U,
 	Sparc_Q2, Sparc_Q10, ~0U, ~0U, Sparc_Q3, Sparc_Q11, ~0U, ~0U,
 	Sparc_Q4, Sparc_Q12, ~0U, ~0U, Sparc_Q5, Sparc_Q13, ~0U, ~0U,
 	Sparc_Q6, Sparc_Q14, ~0U, ~0U, Sparc_Q7, Sparc_Q15, ~0U, ~0U
 };
 
-static const unsigned FCCRegDecoderTable[] = { Sparc_FCC0, Sparc_FCC1, Sparc_FCC2,
-					       Sparc_FCC3 };
+static const unsigned FCCRegDecoderTable[] = { Sparc_FCC0, Sparc_FCC1,
+					       Sparc_FCC2, Sparc_FCC3 };
 
 static const unsigned ASRRegDecoderTable[] = {
-	Sparc_Y,	  Sparc_ASR1,  Sparc_ASR2,  Sparc_ASR3,	Sparc_ASR4,  Sparc_ASR5,  Sparc_ASR6,
-	Sparc_ASR7,  Sparc_ASR8,  Sparc_ASR9,  Sparc_ASR10, Sparc_ASR11, Sparc_ASR12, Sparc_ASR13,
-	Sparc_ASR14, Sparc_ASR15, Sparc_ASR16, Sparc_ASR17, Sparc_ASR18, Sparc_ASR19, Sparc_ASR20,
-	Sparc_ASR21, Sparc_ASR22, Sparc_ASR23, Sparc_ASR24, Sparc_ASR25, Sparc_ASR26, Sparc_ASR27,
-	Sparc_ASR28, Sparc_ASR29, Sparc_ASR30, Sparc_ASR31
+	Sparc_Y,     Sparc_ASR1,  Sparc_ASR2,  Sparc_ASR3,  Sparc_ASR4,
+	Sparc_ASR5,  Sparc_ASR6,  Sparc_ASR7,  Sparc_ASR8,  Sparc_ASR9,
+	Sparc_ASR10, Sparc_ASR11, Sparc_ASR12, Sparc_ASR13, Sparc_ASR14,
+	Sparc_ASR15, Sparc_ASR16, Sparc_ASR17, Sparc_ASR18, Sparc_ASR19,
+	Sparc_ASR20, Sparc_ASR21, Sparc_ASR22, Sparc_ASR23, Sparc_ASR24,
+	Sparc_ASR25, Sparc_ASR26, Sparc_ASR27, Sparc_ASR28, Sparc_ASR29,
+	Sparc_ASR30, Sparc_ASR31
 };
 
 static const unsigned PRRegDecoderTable[] = {
-	Sparc_TPC,	    Sparc_TNPC,	   Sparc_TSTATE,	Sparc_TT,	     Sparc_TICK,
-	Sparc_TBA,	    Sparc_PSTATE,	   Sparc_TL,	Sparc_PIL,	     Sparc_CWP,
-	Sparc_CANSAVE, Sparc_CANRESTORE, Sparc_CLEANWIN, Sparc_OTHERWIN, Sparc_WSTATE
+	Sparc_TPC,	Sparc_TNPC,	Sparc_TSTATE,  Sparc_TT,
+	Sparc_TICK,	Sparc_TBA,	Sparc_PSTATE,  Sparc_TL,
+	Sparc_PIL,	Sparc_CWP,	Sparc_CANSAVE, Sparc_CANRESTORE,
+	Sparc_CLEANWIN, Sparc_OTHERWIN, Sparc_WSTATE
 };
 
 static const uint16_t IntPairDecoderTable[] = {
-	Sparc_G0_G1, Sparc_G2_G3, Sparc_G4_G5, Sparc_G6_G7, Sparc_O0_O1, Sparc_O2_O3,
-	Sparc_O4_O5, Sparc_O6_O7, Sparc_L0_L1, Sparc_L2_L3, Sparc_L4_L5, Sparc_L6_L7,
+	Sparc_G0_G1, Sparc_G2_G3, Sparc_G4_G5, Sparc_G6_G7,
+	Sparc_O0_O1, Sparc_O2_O3, Sparc_O4_O5, Sparc_O6_O7,
+	Sparc_L0_L1, Sparc_L2_L3, Sparc_L4_L5, Sparc_L6_L7,
 	Sparc_I0_I1, Sparc_I2_I3, Sparc_I4_I5, Sparc_I6_I7,
 };
 
 static const unsigned CPRegDecoderTable[] = {
-	Sparc_C0,	Sparc_C1,	Sparc_C2,	Sparc_C3,	Sparc_C4,	Sparc_C5,	Sparc_C6,	Sparc_C7,
-	Sparc_C8,	Sparc_C9,	Sparc_C10, Sparc_C11, Sparc_C12, Sparc_C13, Sparc_C14, Sparc_C15,
-	Sparc_C16, Sparc_C17, Sparc_C18, Sparc_C19, Sparc_C20, Sparc_C21, Sparc_C22, Sparc_C23,
-	Sparc_C24, Sparc_C25, Sparc_C26, Sparc_C27, Sparc_C28, Sparc_C29, Sparc_C30, Sparc_C31
+	Sparc_C0,  Sparc_C1,  Sparc_C2,	 Sparc_C3,  Sparc_C4,  Sparc_C5,
+	Sparc_C6,  Sparc_C7,  Sparc_C8,	 Sparc_C9,  Sparc_C10, Sparc_C11,
+	Sparc_C12, Sparc_C13, Sparc_C14, Sparc_C15, Sparc_C16, Sparc_C17,
+	Sparc_C18, Sparc_C19, Sparc_C20, Sparc_C21, Sparc_C22, Sparc_C23,
+	Sparc_C24, Sparc_C25, Sparc_C26, Sparc_C27, Sparc_C28, Sparc_C29,
+	Sparc_C30, Sparc_C31
 };
 
 static const uint16_t CPPairDecoderTable[] = {
-	Sparc_C0_C1,   Sparc_C2_C3,	Sparc_C4_C5,   Sparc_C6_C7,	Sparc_C8_C9,   Sparc_C10_C11,
-	Sparc_C12_C13, Sparc_C14_C15, Sparc_C16_C17, Sparc_C18_C19, Sparc_C20_C21, Sparc_C22_C23,
+	Sparc_C0_C1,   Sparc_C2_C3,   Sparc_C4_C5,   Sparc_C6_C7,
+	Sparc_C8_C9,   Sparc_C10_C11, Sparc_C12_C13, Sparc_C14_C15,
+	Sparc_C16_C17, Sparc_C18_C19, Sparc_C20_C21, Sparc_C22_C23,
 	Sparc_C24_C25, Sparc_C26_C27, Sparc_C28_C29, Sparc_C30_C31
 };
 
 static DecodeStatus DecodeDisp19(MCInst *Inst, uint32_t ImmVal,
-					       uint64_t Address,
-					       const void *Decoder)
+				 uint64_t Address, const void *Decoder)
 {
 	int64_t BranchTarget = Address + (SignExtend64(ImmVal, 19) * 4);
 	MCOperand_CreateImm0(Inst, BranchTarget);
@@ -114,8 +125,7 @@ static DecodeStatus DecodeDisp19(MCInst *Inst, uint32_t ImmVal,
 }
 
 static DecodeStatus DecodeDisp16(MCInst *Inst, uint32_t ImmVal,
-					       uint64_t Address,
-					       const void *Decoder)
+				 uint64_t Address, const void *Decoder)
 {
 	int64_t BranchTarget = Address + (SignExtend64(ImmVal, 16) * 4);
 	MCOperand_CreateImm0(Inst, BranchTarget);
@@ -123,8 +133,7 @@ static DecodeStatus DecodeDisp16(MCInst *Inst, uint32_t ImmVal,
 }
 
 static DecodeStatus DecodeDisp22(MCInst *Inst, uint32_t ImmVal,
-					       uint64_t Address,
-					       const void *Decoder)
+				 uint64_t Address, const void *Decoder)
 {
 	int64_t BranchTarget = Address + (SignExtend64(ImmVal, 22) * 4);
 	MCOperand_CreateImm0(Inst, BranchTarget);
@@ -271,8 +280,9 @@ static DecodeStatus DecodeSIMM13(MCInst *Inst, unsigned insn, uint64_t Address,
 
 #include "SparcGenDisassemblerTables.inc"
 
-static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
-			    size_t BytesLen, uint64_t Address, SStream *CStream)
+static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size,
+				   const uint8_t *Bytes, size_t BytesLen,
+				   uint64_t Address, SStream *CStream)
 {
 	if (BytesLen < 4) {
 		return MCDisassembler_Fail;
@@ -333,10 +343,13 @@ static DecodeStatus DecodeSIMM13(MCInst *MI, unsigned insn, uint64_t Address,
 }
 
 DecodeStatus Sparc_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
-				     size_t ByteLen, MCInst *MI, uint16_t *Size,
-				     uint64_t Address, void *Info) {
+				       size_t ByteLen, MCInst *MI,
+				       uint16_t *Size, uint64_t Address,
+				       void *Info)
+{
 	uint64_t s = 0;
-	DecodeStatus status = getInstruction(MI, &s, Bytes, ByteLen, Address, NULL);
-	*Size = (uint16_t) s;
+	DecodeStatus status =
+		getInstruction(MI, &s, Bytes, ByteLen, Address, NULL);
+	*Size = (uint16_t)s;
 	return status;
 }

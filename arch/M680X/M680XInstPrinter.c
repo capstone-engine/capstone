@@ -20,84 +20,67 @@
 
 #ifndef CAPSTONE_DIET
 static const char s_reg_names[][10] = {
-	"<invalid>", "a", "b", "e", "f", "0", "d", "w", "cc", "dp", "md",
-	"hx", "h", "x", "y", "s", "u", "v", "q", "pc", "tmp2", "tmp3",
+	"<invalid>", "a", "b", "e", "f", "0", "d", "w", "cc", "dp",   "md",
+	"hx",	     "h", "x", "y", "s", "u", "v", "q", "pc", "tmp2", "tmp3",
 };
 
 static const char s_instruction_names[][6] = {
-	"invld", "aba", "abx", "aby", "adc", "adca", "adcb", "adcd", "adcr",
-	"add", "adda", "addb", "addd", "adde", "addf", "addr", "addw",
-	"aim", "ais", "aix", "and", "anda", "andb", "andcc", "andd", "andr",
-	"asl", "asla", "aslb", "asld",
-	"asr", "asra", "asrb", "asrd", "asrx",
-	"band",
-	"bcc", "bclr", "bcs", "beor", "beq", "bge", "bgnd", "bgt", "bhcc",
-	"bhcs", "bhi",
-	"biand", "bieor", "bih", "bil",
-	"bior", "bit", "bita", "bitb", "bitd", "bitmd", "ble", "bls", "blt",
-	"bmc",
-	"bmi", "bms",
-	"bne", "bor", "bpl", "brclr", "brset", "bra", "brn", "bset", "bsr",
-	"bvc", "bvs",
-	"call", "cba", "cbeq", "cbeqa", "cbeqx", "clc", "cli",
-	"clr", "clra", "clrb", "clrd", "clre", "clrf", "clrh", "clrw", "clrx",
-	"clv", "cmp",
-	"cmpa", "cmpb", "cmpd", "cmpe", "cmpf", "cmpr", "cmps", "cmpu", "cmpw",
-	"cmpx", "cmpy",
-	"com", "coma", "comb", "comd", "come", "comf", "comw", "comx", "cpd",
-	"cphx", "cps", "cpx", "cpy",
-	"cwai", "daa", "dbeq", "dbne", "dbnz", "dbnza", "dbnzx",
-	"dec", "deca", "decb", "decd", "dece", "decf", "decw",
-	"decx", "des", "dex", "dey",
-	"div", "divd", "divq", "ediv", "edivs", "eim", "emacs", "emaxd",
-	"emaxm", "emind", "eminm", "emul", "emuls",
-	"eor", "eora", "eorb", "eord", "eorr", "etbl",
-	"exg", "fdiv", "ibeq", "ibne", "idiv", "idivs", "illgl",
-	"inc", "inca", "incb", "incd", "ince", "incf", "incw", "incx",
-	"ins", "inx", "iny",
-	"jmp", "jsr",
-	"lbcc", "lbcs", "lbeq", "lbge", "lbgt", "lbhi", "lble", "lbls", "lblt",
-	"lbmi", "lbne", "lbpl", "lbra", "lbrn", "lbsr", "lbvc", "lbvs",
-	"lda", "ldaa", "ldab", "ldb", "ldbt", "ldd", "lde", "ldf", "ldhx",
-	"ldmd",
-	"ldq", "lds", "ldu", "ldw", "ldx", "ldy",
-	"leas", "leau", "leax", "leay",
-	"lsl", "lsla", "lslb", "lsld", "lslx",
-	"lsr", "lsra", "lsrb", "lsrd", "lsrw", "lsrx",
-	"maxa", "maxm", "mem", "mina", "minm", "mov", "movb", "movw", "mul",
-	"muld",
-	"neg", "nega", "negb", "negd", "negx",
-	"nop", "nsa", "oim", "ora", "oraa", "orab", "orb", "orcc", "ord", "orr",
-	"psha", "pshb", "pshc", "pshd", "pshh", "pshs", "pshsw", "pshu",
-	"pshuw", "pshx", "pshy",
-	"pula", "pulb", "pulc", "puld", "pulh", "puls", "pulsw", "pulu",
-	"puluw", "pulx", "puly", "rev", "revw",
-	"rol", "rola", "rolb", "rold", "rolw", "rolx",
-	"ror", "rora", "rorb", "rord", "rorw", "rorx",
-	"rsp", "rtc", "rti", "rts", "sba", "sbc", "sbca", "sbcb", "sbcd",
-	"sbcr",
-	"sec", "sei", "sev", "sex", "sexw", "slp", "sta", "staa", "stab", "stb",
-	"stbt", "std", "ste", "stf", "stop", "sthx",
-	"stq", "sts", "stu", "stw", "stx", "sty",
-	"sub", "suba", "subb", "subd", "sube", "subf", "subr", "subw",
-	"swi", "swi2", "swi3",
-	"sync", "tab", "tap", "tax", "tba", "tbeq", "tbl", "tbne", "test",
-	"tfm", "tfr",
-	"tim", "tpa",
-	"tst", "tsta", "tstb", "tstd", "tste", "tstf", "tstw", "tstx",
-	"tsx", "tsy", "txa", "txs", "tys", "wai", "wait", "wav", "wavr",
-	"xgdx", "xgdy",
+	"invld", "aba",	  "abx",   "aby",   "adc",   "adca",  "adcb",  "adcd",
+	"adcr",	 "add",	  "adda",  "addb",  "addd",  "adde",  "addf",  "addr",
+	"addw",	 "aim",	  "ais",   "aix",   "and",   "anda",  "andb",  "andcc",
+	"andd",	 "andr",  "asl",   "asla",  "aslb",  "asld",  "asr",   "asra",
+	"asrb",	 "asrd",  "asrx",  "band",  "bcc",   "bclr",  "bcs",   "beor",
+	"beq",	 "bge",	  "bgnd",  "bgt",   "bhcc",  "bhcs",  "bhi",   "biand",
+	"bieor", "bih",	  "bil",   "bior",  "bit",   "bita",  "bitb",  "bitd",
+	"bitmd", "ble",	  "bls",   "blt",   "bmc",   "bmi",   "bms",   "bne",
+	"bor",	 "bpl",	  "brclr", "brset", "bra",   "brn",   "bset",  "bsr",
+	"bvc",	 "bvs",	  "call",  "cba",   "cbeq",  "cbeqa", "cbeqx", "clc",
+	"cli",	 "clr",	  "clra",  "clrb",  "clrd",  "clre",  "clrf",  "clrh",
+	"clrw",	 "clrx",  "clv",   "cmp",   "cmpa",  "cmpb",  "cmpd",  "cmpe",
+	"cmpf",	 "cmpr",  "cmps",  "cmpu",  "cmpw",  "cmpx",  "cmpy",  "com",
+	"coma",	 "comb",  "comd",  "come",  "comf",  "comw",  "comx",  "cpd",
+	"cphx",	 "cps",	  "cpx",   "cpy",   "cwai",  "daa",   "dbeq",  "dbne",
+	"dbnz",	 "dbnza", "dbnzx", "dec",   "deca",  "decb",  "decd",  "dece",
+	"decf",	 "decw",  "decx",  "des",   "dex",   "dey",   "div",   "divd",
+	"divq",	 "ediv",  "edivs", "eim",   "emacs", "emaxd", "emaxm", "emind",
+	"eminm", "emul",  "emuls", "eor",   "eora",  "eorb",  "eord",  "eorr",
+	"etbl",	 "exg",	  "fdiv",  "ibeq",  "ibne",  "idiv",  "idivs", "illgl",
+	"inc",	 "inca",  "incb",  "incd",  "ince",  "incf",  "incw",  "incx",
+	"ins",	 "inx",	  "iny",   "jmp",   "jsr",   "lbcc",  "lbcs",  "lbeq",
+	"lbge",	 "lbgt",  "lbhi",  "lble",  "lbls",  "lblt",  "lbmi",  "lbne",
+	"lbpl",	 "lbra",  "lbrn",  "lbsr",  "lbvc",  "lbvs",  "lda",   "ldaa",
+	"ldab",	 "ldb",	  "ldbt",  "ldd",   "lde",   "ldf",   "ldhx",  "ldmd",
+	"ldq",	 "lds",	  "ldu",   "ldw",   "ldx",   "ldy",   "leas",  "leau",
+	"leax",	 "leay",  "lsl",   "lsla",  "lslb",  "lsld",  "lslx",  "lsr",
+	"lsra",	 "lsrb",  "lsrd",  "lsrw",  "lsrx",  "maxa",  "maxm",  "mem",
+	"mina",	 "minm",  "mov",   "movb",  "movw",  "mul",   "muld",  "neg",
+	"nega",	 "negb",  "negd",  "negx",  "nop",   "nsa",   "oim",   "ora",
+	"oraa",	 "orab",  "orb",   "orcc",  "ord",   "orr",   "psha",  "pshb",
+	"pshc",	 "pshd",  "pshh",  "pshs",  "pshsw", "pshu",  "pshuw", "pshx",
+	"pshy",	 "pula",  "pulb",  "pulc",  "puld",  "pulh",  "puls",  "pulsw",
+	"pulu",	 "puluw", "pulx",  "puly",  "rev",   "revw",  "rol",   "rola",
+	"rolb",	 "rold",  "rolw",  "rolx",  "ror",   "rora",  "rorb",  "rord",
+	"rorw",	 "rorx",  "rsp",   "rtc",   "rti",   "rts",   "sba",   "sbc",
+	"sbca",	 "sbcb",  "sbcd",  "sbcr",  "sec",   "sei",   "sev",   "sex",
+	"sexw",	 "slp",	  "sta",   "staa",  "stab",  "stb",   "stbt",  "std",
+	"ste",	 "stf",	  "stop",  "sthx",  "stq",   "sts",   "stu",   "stw",
+	"stx",	 "sty",	  "sub",   "suba",  "subb",  "subd",  "sube",  "subf",
+	"subr",	 "subw",  "swi",   "swi2",  "swi3",  "sync",  "tab",   "tap",
+	"tax",	 "tba",	  "tbeq",  "tbl",   "tbne",  "test",  "tfm",   "tfr",
+	"tim",	 "tpa",	  "tst",   "tsta",  "tstb",  "tstd",  "tste",  "tstf",
+	"tstw",	 "tstx",  "tsx",   "tsy",   "txa",   "txs",   "tys",   "wai",
+	"wait",	 "wav",	  "wavr",  "xgdx",  "xgdy",
 };
 
 static const name_map s_group_names[] = {
 	{ M680X_GRP_INVALID, "<invalid>" },
-	{ M680X_GRP_JUMP,  "jump" },
-	{ M680X_GRP_CALL,  "call" },
+	{ M680X_GRP_JUMP, "jump" },
+	{ M680X_GRP_CALL, "call" },
 	{ M680X_GRP_RET, "return" },
 	{ M680X_GRP_INT, "interrupt" },
-	{ M680X_GRP_IRET,  "interrupt_return" },
-	{ M680X_GRP_PRIV,  "privileged" },
-	{ M680X_GRP_BRAREL,  "branch_relative" },
+	{ M680X_GRP_IRET, "interrupt_return" },
+	{ M680X_GRP_PRIV, "privileged" },
+	{ M680X_GRP_BRAREL, "branch_relative" },
 };
 #endif
 
@@ -109,7 +92,7 @@ static void printRegName(cs_struct *handle, SStream *OS, unsigned int reg)
 }
 
 static void printInstructionName(cs_struct *handle, SStream *OS,
-	unsigned int insn)
+				 unsigned int insn)
 {
 #ifndef CAPSTONE_DIET
 	SStream_concat0(OS, handle->insn_name((csh)handle, insn));
@@ -132,7 +115,7 @@ static uint32_t get_unsigned(int32_t value, int byte_size)
 }
 
 static void printIncDec(bool isPost, SStream *O, m680x_info *info,
-	cs_m680x_op *op)
+			cs_m680x_op *op)
 {
 	static const char s_inc_dec[][3] = { "--", "-", "", "+", "++" };
 
@@ -140,7 +123,7 @@ static void printIncDec(bool isPost, SStream *O, m680x_info *info,
 		return;
 
 	if ((!isPost && !(op->idx.flags & M680X_IDX_POST_INC_DEC)) ||
-		(isPost && (op->idx.flags & M680X_IDX_POST_INC_DEC))) {
+	    (isPost && (op->idx.flags & M680X_IDX_POST_INC_DEC))) {
 		const char *prePostfix = "";
 
 		if (info->cpu_type == M680X_CPU_TYPE_CPU12)
@@ -154,7 +137,7 @@ static void printIncDec(bool isPost, SStream *O, m680x_info *info,
 }
 
 static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
-	cs_m680x_op *op)
+			 cs_m680x_op *op)
 {
 	switch (op->type) {
 	case M680X_OP_REGISTER:
@@ -168,7 +151,7 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 	case M680X_OP_IMMEDIATE:
 		if (MI->csh->imm_unsigned)
 			SStream_concat(O, "#%u",
-				get_unsigned(op->imm, op->size));
+				       get_unsigned(op->imm, op->size));
 		else
 			SStream_concat(O, "#%d", op->imm);
 
@@ -185,9 +168,8 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 				SStream_concat(O, "$%04x", op->idx.offset_addr);
 			else
 				SStream_concat(O, "%d", op->idx.offset);
-		}
-		else if (op->idx.inc_dec != 0 &&
-			info->cpu_type == M680X_CPU_TYPE_CPU12)
+		} else if (op->idx.inc_dec != 0 &&
+			   info->cpu_type == M680X_CPU_TYPE_CPU12)
 			SStream_concat(O, "%d", abs(op->idx.inc_dec));
 
 		if (!(op->idx.flags & M680X_IDX_NO_COMMA))
@@ -198,7 +180,7 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 		printRegName(MI->csh, O, op->idx.base_reg);
 
 		if (op->idx.base_reg == M680X_REG_PC &&
-			(op->idx.offset_bits > 0))
+		    (op->idx.offset_bits > 0))
 			SStream_concat(O, "r");
 
 		printIncDec(true, O, info, op);
@@ -222,8 +204,7 @@ static void printOperand(MCInst *MI, SStream *O, m680x_info *info,
 		else {
 			if (op->ext.address < 256) {
 				SStream_concat(O, ">$%04x", op->ext.address);
-			}
-			else {
+			} else {
 				SStream_concat(O, "$%04x", op->ext.address);
 			}
 		}
@@ -246,7 +227,7 @@ static const char *getDelimiter(m680x_info *info, cs_m680x *m680x)
 		return ", ";
 
 	if (m680x->op_count > 1) {
-		for (i  = 0; i < m680x->op_count; ++i) {
+		for (i = 0; i < m680x->op_count; ++i) {
 			if (m680x->operands[i].type == M680X_OP_INDEXED)
 				indexed = true;
 
@@ -288,7 +269,7 @@ void M680X_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	if ((m680x->flags & M680X_SECOND_OP_IN_MNEM) != 0)
 		suppress_operands++;
 
-	for (i  = 0; i < m680x->op_count; ++i) {
+	for (i = 0; i < m680x->op_count; ++i) {
 		if (i >= suppress_operands) {
 			printOperand(MI, O, info, &m680x->operands[i]);
 
@@ -359,4 +340,3 @@ cs_err M680X_instprinter_init(cs_struct *ud)
 }
 
 #endif
-

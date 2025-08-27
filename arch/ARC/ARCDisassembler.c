@@ -44,9 +44,9 @@
 #define DEBUG_TYPE "arc-disassembler"
 
 /// A disassembler class for ARC.
-static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
-			    size_t BytesLen, uint64_t Address,
-			    SStream *CStream);
+static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size,
+				   const uint8_t *Bytes, size_t BytesLen,
+				   uint64_t Address, SStream *CStream);
 
 // end anonymous namespace
 
@@ -56,7 +56,7 @@ static bool readInstruction32(const uint8_t *Bytes, size_t BytesLen,
 	*Size = 4;
 	// Read 2 16-bit values, but swap hi/lo parts.
 	*Insn = (Bytes[0] << 16) | (Bytes[1] << 24) | (Bytes[2] << 0) |
-	       (Bytes[3] << 8);
+		(Bytes[3] << 8);
 	return true;
 }
 
@@ -65,9 +65,9 @@ static bool readInstruction64(const uint8_t *Bytes, size_t BytesLen,
 {
 	*Size = 8;
 	*Insn = ((uint64_t)Bytes[0] << 16) | ((uint64_t)Bytes[1] << 24) |
-	       ((uint64_t)Bytes[2] << 0) | ((uint64_t)Bytes[3] << 8) |
-	       ((uint64_t)Bytes[4] << 48) | ((uint64_t)Bytes[5] << 56) |
-	       ((uint64_t)Bytes[6] << 32) | ((uint64_t)Bytes[7] << 40);
+		((uint64_t)Bytes[2] << 0) | ((uint64_t)Bytes[3] << 8) |
+		((uint64_t)Bytes[4] << 48) | ((uint64_t)Bytes[5] << 56) |
+		((uint64_t)Bytes[6] << 32) | ((uint64_t)Bytes[7] << 40);
 	return true;
 }
 
@@ -76,8 +76,8 @@ static bool readInstruction48(const uint8_t *Bytes, size_t BytesLen,
 {
 	*Size = 6;
 	*Insn = ((uint64_t)Bytes[0] << 0) | ((uint64_t)Bytes[1] << 8) |
-	       ((uint64_t)Bytes[2] << 32) | ((uint64_t)Bytes[3] << 40) |
-	       ((uint64_t)Bytes[4] << 16) | ((uint64_t)Bytes[5] << 24);
+		((uint64_t)Bytes[2] << 32) | ((uint64_t)Bytes[3] << 40) |
+		((uint64_t)Bytes[4] << 16) | ((uint64_t)Bytes[5] << 24);
 	return true;
 }
 
@@ -90,18 +90,18 @@ static bool readInstruction16(const uint8_t *Bytes, size_t BytesLen,
 }
 
 #define DECLARE_DecodeSignedOperand(B) \
-	static DecodeStatus CONCAT(DecodeSignedOperand, B)( \
-		MCInst * Inst, unsigned InsnS, uint64_t Address, \
-		const void *Decoder);
+	static DecodeStatus CONCAT(DecodeSignedOperand, \
+				   B)(MCInst * Inst, unsigned InsnS, \
+				      uint64_t Address, const void *Decoder);
 DECLARE_DecodeSignedOperand(11);
 DECLARE_DecodeSignedOperand(9);
 DECLARE_DecodeSignedOperand(10);
 DECLARE_DecodeSignedOperand(12);
 
 #define DECLARE_DecodeFromCyclicRange(B) \
-	static DecodeStatus CONCAT(DecodeFromCyclicRange, B)( \
-		MCInst * Inst, unsigned InsnS, uint64_t Address, \
-		const void *Decoder);
+	static DecodeStatus CONCAT(DecodeFromCyclicRange, \
+				   B)(MCInst * Inst, unsigned InsnS, \
+				      uint64_t Address, const void *Decoder);
 DECLARE_DecodeFromCyclicRange(3);
 
 #define DECLARE_DecodeBranchTargetS(B) \
@@ -116,8 +116,7 @@ DECLARE_DecodeBranchTargetS(21);
 DECLARE_DecodeBranchTargetS(25);
 DECLARE_DecodeBranchTargetS(9);
 
-static DecodeStatus DecodeMEMrs9(MCInst *, unsigned, uint64_t,
-				 const void *);
+static DecodeStatus DecodeMEMrs9(MCInst *, unsigned, uint64_t, const void *);
 
 static DecodeStatus DecodeLdLImmInstruction(MCInst *, uint64_t, uint64_t,
 					    const void *);
@@ -200,7 +199,8 @@ static DecodeStatus DecodeMEMrs9(MCInst *Inst, unsigned Insn, uint64_t Address,
 	// We have the 9-bit immediate in the low bits, 6-bit register in high bits.
 	unsigned S9 = Insn & 0x1ff;
 	unsigned R = (Insn & (0x7fff & ~0x1ff)) >> 9;
-	if (DecodeGPR32RegisterClass(Inst, R, Address, Decoder) == MCDisassembler_Fail) {
+	if (DecodeGPR32RegisterClass(Inst, R, Address, Decoder) ==
+	    MCDisassembler_Fail) {
 		return MCDisassembler_Fail;
 	}
 	MCOperand_CreateImm0(Inst, (SignExtend32((S9), 9)));
@@ -234,15 +234,13 @@ DEFINE_DecodeBranchTargetS(25);
 DEFINE_DecodeBranchTargetS(9);
 
 #define DEFINE_DecodeSignedOperand(B) \
-	static DecodeStatus CONCAT(DecodeSignedOperand, B)( \
-		MCInst * Inst, unsigned InsnS, uint64_t Address, \
-		const void * Decoder) \
+	static DecodeStatus CONCAT(DecodeSignedOperand, \
+				   B)(MCInst * Inst, unsigned InsnS, \
+				      uint64_t Address, const void *Decoder) \
 	{ \
 		CS_ASSERT(B > 0 && "field is empty"); \
 		MCOperand_CreateImm0( \
-			Inst, SignExtend32(maskTrailingOnes32(B) & \
-						    InsnS, B) \
-					    ); \
+			Inst, SignExtend32(maskTrailingOnes32(B) & InsnS, B)); \
 		return MCDisassembler_Success; \
 	}
 DEFINE_DecodeSignedOperand(11);
@@ -251,9 +249,9 @@ DEFINE_DecodeSignedOperand(10);
 DEFINE_DecodeSignedOperand(12);
 
 #define DEFINE_DecodeFromCyclicRange(B) \
-	static DecodeStatus CONCAT(DecodeFromCyclicRange, B)( \
-		MCInst * Inst, unsigned InsnS, uint64_t Address, \
-		const void * Decoder) \
+	static DecodeStatus CONCAT(DecodeFromCyclicRange, \
+				   B)(MCInst * Inst, unsigned InsnS, \
+				      uint64_t Address, const void *Decoder) \
 	{ \
 		CS_ASSERT(B > 0 && "field is empty"); \
 		const unsigned max = (1u << B) - 1; \
@@ -272,7 +270,8 @@ static DecodeStatus DecodeStLImmInstruction(MCInst *Inst, uint64_t Insn,
 		return MCDisassembler_Fail;
 	}
 	SrcC = decodeCField(Insn);
-	if (DecodeGPR32RegisterClass(Inst, SrcC, Address, Decoder) == MCDisassembler_Fail) {
+	if (DecodeGPR32RegisterClass(Inst, SrcC, Address, Decoder) ==
+	    MCDisassembler_Fail) {
 		return MCDisassembler_Fail;
 	}
 	LImm = (Insn >> 32);
@@ -293,7 +292,8 @@ static DecodeStatus DecodeLdLImmInstruction(MCInst *Inst, uint64_t Insn,
 		return MCDisassembler_Fail;
 	}
 	DstA = decodeAField(Insn);
-	if (DecodeGPR32RegisterClass(Inst, DstA, Address, Decoder) == MCDisassembler_Fail) {
+	if (DecodeGPR32RegisterClass(Inst, DstA, Address, Decoder) ==
+	    MCDisassembler_Fail) {
 		return MCDisassembler_Fail;
 	}
 	LImm = (Insn >> 32);
@@ -309,11 +309,13 @@ static DecodeStatus DecodeLdRLImmInstruction(MCInst *Inst, uint64_t Insn,
 	unsigned DstA, SrcB;
 	;
 	DstA = decodeAField(Insn);
-	if (DecodeGPR32RegisterClass(Inst, DstA, Address, Decoder) == MCDisassembler_Fail) {
+	if (DecodeGPR32RegisterClass(Inst, DstA, Address, Decoder) ==
+	    MCDisassembler_Fail) {
 		return MCDisassembler_Fail;
 	}
 	SrcB = decodeBField(Insn);
-	if (DecodeGPR32RegisterClass(Inst, SrcB, Address, Decoder) == MCDisassembler_Fail) {
+	if (DecodeGPR32RegisterClass(Inst, SrcB, Address, Decoder) ==
+	    MCDisassembler_Fail) {
 		return MCDisassembler_Fail;
 	}
 	if (decodeCField(Insn) != 62) {
@@ -324,9 +326,9 @@ static DecodeStatus DecodeLdRLImmInstruction(MCInst *Inst, uint64_t Insn,
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus DecodeRegisterOrImm(MCInst *Inst, uint64_t Address, 
-						const void *Decoder, uint64_t RegNum, 
-						uint64_t Value) 
+static DecodeStatus DecodeRegisterOrImm(MCInst *Inst, uint64_t Address,
+					const void *Decoder, uint64_t RegNum,
+					uint64_t Value)
 {
 	if (30 == RegNum) {
 		MCOperand_CreateImm0(Inst, (Value));
@@ -335,7 +337,6 @@ static DecodeStatus DecodeRegisterOrImm(MCInst *Inst, uint64_t Address,
 	return DecodeGPR32RegisterClass(Inst, RegNum, Address, Decoder);
 }
 
-
 static DecodeStatus DecodeMoveHRegInstruction(MCInst *Inst, uint64_t Insn,
 					      uint64_t Address,
 					      const void *Decoder)
@@ -343,12 +344,12 @@ static DecodeStatus DecodeMoveHRegInstruction(MCInst *Inst, uint64_t Insn,
 	;
 
 	uint64_t H = fieldFromInstruction_8(Insn, 5, 3) |
-		  (fieldFromInstruction_8(Insn, 0, 2) << 3);
+		     (fieldFromInstruction_8(Insn, 0, 2) << 3);
 	uint64_t G = fieldFromInstruction_8(Insn, 8, 3) |
-		  (fieldFromInstruction_8(Insn, 3, 2) << 3);
+		     (fieldFromInstruction_8(Insn, 3, 2) << 3);
 
-	if (MCDisassembler_Success != DecodeRegisterOrImm(Inst, Address, 
-									Decoder, G, 0))
+	if (MCDisassembler_Success !=
+	    DecodeRegisterOrImm(Inst, Address, Decoder, G, 0))
 		return MCDisassembler_Fail;
 
 	return DecodeRegisterOrImm(Inst, Address, Decoder, H, Insn >> 16u);
@@ -361,7 +362,8 @@ static DecodeStatus DecodeCCRU6Instruction(MCInst *Inst, uint64_t Insn,
 	unsigned DstB;
 	;
 	DstB = decodeBField(Insn);
-	if (DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder) == MCDisassembler_Fail) {
+	if (DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder) ==
+	    MCDisassembler_Fail) {
 		return MCDisassembler_Fail;
 	}
 
@@ -376,7 +378,8 @@ static DecodeStatus DecodeSOPwithRU6(MCInst *Inst, uint64_t Insn,
 				     uint64_t Address, const void *Decoder)
 {
 	unsigned DstB = decodeBField(Insn);
-	if (DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder) == MCDisassembler_Fail) {
+	if (DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder) ==
+	    MCDisassembler_Fail) {
 		return MCDisassembler_Fail;
 	}
 
@@ -389,7 +392,8 @@ static DecodeStatus DecodeSOPwithRS12(MCInst *Inst, uint64_t Insn,
 				      uint64_t Address, const void *Decoder)
 {
 	unsigned DstB = decodeBField(Insn);
-	if (DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder) == MCDisassembler_Fail) {
+	if (DecodeGPR32RegisterClass(Inst, DstB, Address, Decoder) ==
+	    MCDisassembler_Fail) {
 		return MCDisassembler_Fail;
 	}
 
@@ -401,8 +405,9 @@ static DecodeStatus DecodeSOPwithRS12(MCInst *Inst, uint64_t Insn,
 	return MCDisassembler_Success;
 }
 
-static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t *Bytes,
-			    size_t BytesLen, uint64_t Address, SStream *cStream)
+static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size,
+				   const uint8_t *Bytes, size_t BytesLen,
+				   uint64_t Address, SStream *cStream)
 {
 	DecodeStatus Result;
 	if (BytesLen < 2) {
@@ -422,17 +427,19 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 		if (BytesLen >= 8) {
 			// Attempt to decode 64-bit instruction.
 			uint64_t Insn64;
-			if (!readInstruction64(Bytes, BytesLen, Address, Size, &Insn64))
+			if (!readInstruction64(Bytes, BytesLen, Address, Size,
+					       &Insn64))
 				return MCDisassembler_Fail;
 			Result = decodeInstruction_8(DecoderTable64, Instr,
-						   Insn64, Address, NULL);
+						     Insn64, Address, NULL);
 			if (MCDisassembler_Success == Result) {
 				;
 				return Result;
 			};
 		}
 		uint32_t Insn32;
-		if (!readInstruction32(Bytes, BytesLen, Address, Size, &Insn32)) {
+		if (!readInstruction32(Bytes, BytesLen, Address, Size,
+				       &Insn32)) {
 			return MCDisassembler_Fail;
 		}
 		// Calling the auto-generated decoder function.
@@ -442,10 +449,11 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 		if (BytesLen >= 6) {
 			// Attempt to treat as instr. with limm data.
 			uint64_t Insn48;
-			if (!readInstruction48(Bytes, BytesLen, Address, Size, &Insn48))
+			if (!readInstruction48(Bytes, BytesLen, Address, Size,
+					       &Insn48))
 				return MCDisassembler_Fail;
 			Result = decodeInstruction_8(DecoderTable48, Instr,
-						   Insn48, Address, NULL);
+						     Insn48, Address, NULL);
 			if (MCDisassembler_Success == Result) {
 				;
 				return Result;
@@ -463,9 +471,8 @@ static DecodeStatus getInstruction(MCInst *Instr, uint64_t *Size, const uint8_t 
 }
 
 DecodeStatus ARC_LLVM_getInstruction(MCInst *MI, uint64_t *Size,
-					   const uint8_t *Bytes,
-					   size_t BytesLen, uint64_t Address,
-					   SStream *CS)
+				     const uint8_t *Bytes, size_t BytesLen,
+				     uint64_t Address, SStream *CS)
 {
 	return getInstruction(MI, Size, Bytes, BytesLen, Address, CS);
 }

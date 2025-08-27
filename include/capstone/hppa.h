@@ -475,10 +475,10 @@ typedef struct hppa_mem {
 
 // Instruction operand
 typedef struct cs_hppa_op {
-	hppa_op_type type;    ///< operand type
+	hppa_op_type type; ///< operand type
 	union {
 		hppa_reg reg; ///< register value for REG operand
-		int64_t imm;  ///< immediate value for IMM operand
+		int64_t imm; ///< immediate value for IMM operand
 		hppa_mem mem;
 	};
 	cs_ac_type access;
@@ -510,7 +510,8 @@ typedef struct hppa_modifier {
 
 // Additional instruction info
 typedef struct hppa_ext {
-	hppa_modifier modifiers[HPPA_MAX_MODIFIERS_LEN]; ///< instruction modifiers array
+	hppa_modifier
+		modifiers[HPPA_MAX_MODIFIERS_LEN]; ///< instruction modifiers array
 	uint8_t mod_num; ///< number of modifiers of current instruction
 	bool b_writeble; ///< true if some load/store modifier has modify base register bit
 	bool is_alternative; ///< true if some modifier affects instruction format

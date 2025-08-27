@@ -12,7 +12,7 @@ extern "C" {
 #include "cs_operand.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
+#pragma warning(disable : 4201)
 #endif
 
 typedef enum wasm_op_type {
@@ -241,7 +241,7 @@ typedef enum wasm_insn_group {
 	WASM_GRP_MEMORY,
 	WASM_GRP_CONTROL,
 
-	WASM_GRP_ENDING,   ///< <-- mark the end of the list of groups
+	WASM_GRP_ENDING, ///< <-- mark the end of the list of groups
 } wasm_insn_group;
 
 #ifdef __cplusplus

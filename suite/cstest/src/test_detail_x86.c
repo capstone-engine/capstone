@@ -89,7 +89,8 @@ TestDetailX86 *test_detail_x86_clone(TestDetailX86 *detail)
 		detail->fpu_flags ?
 			cs_mem_calloc(sizeof(char *), detail->fpu_flags_count) :
 			NULL;
-	for (size_t i = 0; clone->fpu_flags && i < detail->fpu_flags_count; ++i) {
+	for (size_t i = 0; clone->fpu_flags && i < detail->fpu_flags_count;
+	     ++i) {
 		clone->fpu_flags[i] = detail->fpu_flags[i] ?
 					      strdup(detail->fpu_flags[i]) :
 					      NULL;
@@ -164,7 +165,8 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 		compare_uint8_ret(actual->rex, expected->rex, false);
 	}
 	if (expected->addr_size) {
-		compare_uint8_ret(actual->addr_size, expected->addr_size, false);
+		compare_uint8_ret(actual->addr_size, expected->addr_size,
+				  false);
 	}
 	if (expected->modrm) {
 		compare_uint8_ret(actual->modrm, expected->modrm, false);
@@ -181,13 +183,12 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 	compare_tbool_ret(actual->avx_sae, expected->avx_sae, false);
 
 	for (size_t i = 0; i < ARR_SIZE(actual->prefix); ++i) {
-		compare_enum_ret(actual->prefix[i], expected->prefix[i],
-				  false);
+		compare_enum_ret(actual->prefix[i], expected->prefix[i], false);
 	}
 	for (size_t i = 0; i < ARR_SIZE(actual->opcode); ++i) {
 		if (expected->opcode[i] != 0) {
-			compare_uint8_ret(actual->opcode[i], expected->opcode[i],
-					  false);
+			compare_uint8_ret(actual->opcode[i],
+					  expected->opcode[i], false);
 		}
 	}
 
@@ -253,7 +254,8 @@ bool test_expected_x86(csh *handle, cs_x86 *actual, TestDetailX86 *expected)
 			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
 					false);
 			if (eop->mem_disp) {
-				compare_int64_ret(op->mem.disp, eop->mem_disp, false);
+				compare_int64_ret(op->mem.disp, eop->mem_disp,
+						  false);
 			}
 			if (eop->mem_scale) {
 				compare_int_ret(op->mem.scale, eop->mem_scale,

@@ -14,10 +14,9 @@
 
 const char *ARC_LLVM_getRegisterName(unsigned RegNo);
 void ARC_LLVM_printInst(MCInst *MI, uint64_t Address, const char *Annot,
-			      SStream *O);
+			SStream *O);
 DecodeStatus ARC_LLVM_getInstruction(MCInst *MI, uint64_t *Size,
-					   const uint8_t *Bytes,
-					   size_t BytesLen, uint64_t Address,
-					   SStream *CS);
+				     const uint8_t *Bytes, size_t BytesLen,
+				     uint64_t Address, SStream *CS);
 
 #endif // CS_ARC_LINKAGE_H

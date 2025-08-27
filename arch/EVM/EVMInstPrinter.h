@@ -4,7 +4,6 @@
 #ifndef CS_EVMINSTPRINTER_H
 #define CS_EVMINSTPRINTER_H
 
-
 #include "capstone/capstone.h"
 #include "../../MCInst.h"
 #include "../../SStream.h"

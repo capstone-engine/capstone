@@ -70,7 +70,8 @@ static const cs_enum_id_map test_mode_map[] = {
 	{ .str = "CS_MODE_32", .val = CS_MODE_32 },
 	{ .str = "CS_MODE_64", .val = CS_MODE_64 },
 	{ .str = "CS_MODE_AIX_OS", .val = CS_MODE_AIX_OS },
-	{ .str = "CS_MODE_APPLE_PROPRIETARY", .val = CS_MODE_APPLE_PROPRIETARY },
+	{ .str = "CS_MODE_APPLE_PROPRIETARY",
+	  .val = CS_MODE_APPLE_PROPRIETARY },
 	{ .str = "CS_MODE_ARM", .val = CS_MODE_ARM },
 	{ .str = "CS_MODE_BIG_ENDIAN", .val = CS_MODE_BIG_ENDIAN },
 	{ .str = "CS_MODE_BOOKE", .val = CS_MODE_BOOKE },
@@ -1296,8 +1297,10 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "SPARC_CC_FIELD_FCC3", .val = SPARC_CC_FIELD_FCC3 },
 	{ .str = "SPARC_CC_FIELD_ICC", .val = SPARC_CC_FIELD_ICC },
 	{ .str = "SPARC_CC_FIELD_NONE", .val = SPARC_CC_FIELD_NONE },
-	{ .str = "SPARC_CC_FIELD_RESERVED_I", .val = SPARC_CC_FIELD_RESERVED_I },
-	{ .str = "SPARC_CC_FIELD_RESERVED_II", .val = SPARC_CC_FIELD_RESERVED_II },
+	{ .str = "SPARC_CC_FIELD_RESERVED_I",
+	  .val = SPARC_CC_FIELD_RESERVED_I },
+	{ .str = "SPARC_CC_FIELD_RESERVED_II",
+	  .val = SPARC_CC_FIELD_RESERVED_II },
 	{ .str = "SPARC_CC_FIELD_XCC", .val = SPARC_CC_FIELD_XCC },
 	{ .str = "SPARC_CC_ICC_A", .val = SPARC_CC_ICC_A },
 	{ .str = "SPARC_CC_ICC_CC", .val = SPARC_CC_ICC_CC },
@@ -1329,7 +1332,8 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "SPARC_FEATURE_HASVIS2", .val = SPARC_FEATURE_HASVIS2 },
 	{ .str = "SPARC_FEATURE_HASVIS3", .val = SPARC_FEATURE_HASVIS3 },
 	{ .str = "SPARC_FEATURE_IS64BIT", .val = SPARC_FEATURE_IS64BIT },
-	{ .str = "SPARC_FEATURE_USESOFTMULDIV", .val = SPARC_FEATURE_USESOFTMULDIV },
+	{ .str = "SPARC_FEATURE_USESOFTMULDIV",
+	  .val = SPARC_FEATURE_USESOFTMULDIV },
 	{ .str = "SPARC_HINT_A", .val = SPARC_HINT_A },
 	{ .str = "SPARC_HINT_A_PN", .val = SPARC_HINT_A_PN },
 	{ .str = "SPARC_HINT_A_PT", .val = SPARC_HINT_A_PT },
@@ -1749,4 +1753,4 @@ static const cs_enum_id_map cs_enum_map[] = {
 	  .val = 0xffffff }, // For testing
 };
 
-#endif			     // TEST_MAPPING_H
+#endif // TEST_MAPPING_H

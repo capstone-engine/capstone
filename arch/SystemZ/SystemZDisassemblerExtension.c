@@ -20,22 +20,18 @@ static int systemz_arch9_features[] = {
 	SystemZ_FeatureResetReferenceBitsMultiple
 };
 
-static int systemz_arch10_features[] = {
-	SystemZ_FeatureExecutionHint,
-	SystemZ_FeatureLoadAndTrap,
-	SystemZ_FeatureMiscellaneousExtensions,
-	SystemZ_FeatureProcessorAssist,
-	SystemZ_FeatureTransactionalExecution,
-	SystemZ_FeatureDFPZonedConversion,
-	SystemZ_FeatureEnhancedDAT2
-};
+static int systemz_arch10_features[] = { SystemZ_FeatureExecutionHint,
+					 SystemZ_FeatureLoadAndTrap,
+					 SystemZ_FeatureMiscellaneousExtensions,
+					 SystemZ_FeatureProcessorAssist,
+					 SystemZ_FeatureTransactionalExecution,
+					 SystemZ_FeatureDFPZonedConversion,
+					 SystemZ_FeatureEnhancedDAT2 };
 
 static int systemz_arch11_features[] = {
 	SystemZ_FeatureLoadAndZeroRightmostByte,
-	SystemZ_FeatureLoadStoreOnCond2,
-	SystemZ_FeatureMessageSecurityAssist5,
-	SystemZ_FeatureDFPPackedConversion,
-	SystemZ_FeatureVector
+	SystemZ_FeatureLoadStoreOnCond2, SystemZ_FeatureMessageSecurityAssist5,
+	SystemZ_FeatureDFPPackedConversion, SystemZ_FeatureVector
 };
 
 static int systemz_arch12_features[] = {
@@ -59,47 +55,53 @@ static int systemz_arch13_features[] = {
 
 static int systemz_arch14_features[] = {
 	SystemZ_FeatureVectorPackedDecimalEnhancement2,
-	SystemZ_FeatureNNPAssist,
-	SystemZ_FeatureBEAREnhancement,
+	SystemZ_FeatureNNPAssist, SystemZ_FeatureBEAREnhancement,
 	SystemZ_FeatureResetDATProtection,
 	SystemZ_FeatureProcessorActivityInstrumentation
 };
 
-bool SystemZ_getFeatureBits(unsigned int mode, unsigned int feature) {
+bool SystemZ_getFeatureBits(unsigned int mode, unsigned int feature)
+{
 	switch (mode & ~CS_MODE_BIG_ENDIAN) {
 	case CS_MODE_SYSTEMZ_ARCH14:
 	case CS_MODE_SYSTEMZ_Z16:
-		if (arr_exist_int(systemz_arch14_features, ARR_SIZE(systemz_arch14_features), feature)) {
+		if (arr_exist_int(systemz_arch14_features,
+				  ARR_SIZE(systemz_arch14_features), feature)) {
 			return true;
 		}
 		// fallthrough
 	case CS_MODE_SYSTEMZ_ARCH13:
 	case CS_MODE_SYSTEMZ_Z15:
-		if (arr_exist_int(systemz_arch13_features, ARR_SIZE(systemz_arch13_features), feature)) {
+		if (arr_exist_int(systemz_arch13_features,
+				  ARR_SIZE(systemz_arch13_features), feature)) {
 			return true;
 		}
 		// fallthrough
 	case CS_MODE_SYSTEMZ_ARCH12:
 	case CS_MODE_SYSTEMZ_Z14:
-		if (arr_exist_int(systemz_arch12_features, ARR_SIZE(systemz_arch12_features), feature)) {
+		if (arr_exist_int(systemz_arch12_features,
+				  ARR_SIZE(systemz_arch12_features), feature)) {
 			return true;
 		}
 		// fallthrough
 	case CS_MODE_SYSTEMZ_ARCH11:
 	case CS_MODE_SYSTEMZ_Z13:
-		if (arr_exist_int(systemz_arch11_features, ARR_SIZE(systemz_arch11_features), feature)) {
+		if (arr_exist_int(systemz_arch11_features,
+				  ARR_SIZE(systemz_arch11_features), feature)) {
 			return true;
 		}
 		// fallthrough
 	case CS_MODE_SYSTEMZ_ARCH10:
 	case CS_MODE_SYSTEMZ_ZEC12:
-		if (arr_exist_int(systemz_arch10_features, ARR_SIZE(systemz_arch10_features), feature)) {
+		if (arr_exist_int(systemz_arch10_features,
+				  ARR_SIZE(systemz_arch10_features), feature)) {
 			return true;
 		}
 		// fallthrough
 	case CS_MODE_SYSTEMZ_ARCH9:
 	case CS_MODE_SYSTEMZ_Z196:
-		if (arr_exist_int(systemz_arch9_features, ARR_SIZE(systemz_arch9_features), feature)) {
+		if (arr_exist_int(systemz_arch9_features,
+				  ARR_SIZE(systemz_arch9_features), feature)) {
 			return true;
 		}
 		// fallthrough

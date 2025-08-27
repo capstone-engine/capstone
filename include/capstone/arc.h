@@ -15,16 +15,16 @@ extern "C" {
 /// Operand type for instruction's operands
 typedef enum arc_op_type {
 	ARC_OP_INVALID = CS_OP_INVALID, ///< Invalid
-	ARC_OP_REG = CS_OP_REG,	      ///< Register operand
-	ARC_OP_IMM = CS_OP_IMM,	      ///< Immediate operand
+	ARC_OP_REG = CS_OP_REG, ///< Register operand
+	ARC_OP_IMM = CS_OP_IMM, ///< Immediate operand
 } arc_op_type;
 
 /// Instruction operand
 typedef struct cs_arc_op {
-	arc_op_type type;	      //< operand type
+	arc_op_type type; //< operand type
 	union {
-		unsigned int reg;     /// register value for REG operand
-		int64_t imm;	      /// immediate value for IMM operand
+		unsigned int reg; /// register value for REG operand
+		int64_t imm; /// immediate value for IMM operand
 	};
 
 	/// How is this operand accessed? (READ, WRITE or READ|WRITE)

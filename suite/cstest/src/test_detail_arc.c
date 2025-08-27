@@ -70,7 +70,7 @@ void test_detail_arc_op_free(TestDetailARCOp *op)
 }
 
 bool test_expected_arc(csh *handle, const cs_arc *actual,
-			 const TestDetailARC *expected)
+		       const TestDetailARC *expected)
 {
 	assert(handle && actual && expected);
 

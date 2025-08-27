@@ -197,9 +197,8 @@ bool Mips_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 	instr->MRI = (MCRegisterInfo *)info;
 	map_set_fill_detail_ops(instr, true);
 
-	DecodeStatus Result = Mips_LLVM_getInstruction(instr, &size64, code, code_len,
-					       address,
-					       info);
+	DecodeStatus Result = Mips_LLVM_getInstruction(instr, &size64, code,
+						       code_len, address, info);
 	*size = size64;
 	if (Result != MCDisassembler_Fail) {
 		Mips_set_instr_map_data(instr);
@@ -303,7 +302,8 @@ static void Mips_set_detail_op_reg(MCInst *MI, unsigned OpNum, mips_reg Reg,
 		return;
 	}
 
-	CS_ASSERT(is_reglist || (map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
+	CS_ASSERT(is_reglist ||
+		  (map_get_op_type(MI, OpNum) & ~CS_OP_MEM) == CS_OP_REG);
 	Mips_get_detail_op(MI, 0)->type = MIPS_OP_REG;
 	Mips_get_detail_op(MI, 0)->reg = Reg;
 	Mips_get_detail_op(MI, 0)->is_reglist = is_reglist;

@@ -108,8 +108,8 @@ static bool parse_input_options(const TestInput *input, cs_arch *arch,
 		bool opt_found = false;
 		opt_str = options[i];
 		val = enum_map_bin_search(test_mode_map,
-						   ARR_SIZE(test_mode_map),
-						   opt_str, &opt_found);
+					  ARR_SIZE(test_mode_map), opt_str,
+					  &opt_found);
 
 		if (opt_found) {
 			*mode |= val;

@@ -4,10 +4,10 @@
 #include <capstone/capstone.h>
 
 struct platform {
-    cs_arch arch;
-    cs_mode mode;
-    const char *comment;
-    const char *cstoolname;
+	cs_arch arch;
+	cs_mode mode;
+	const char *comment;
+	const char *cstoolname;
 };
 
 extern struct platform platforms[];

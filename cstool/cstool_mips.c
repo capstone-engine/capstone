@@ -24,59 +24,66 @@ void print_insn_detail_mips(csh handle, cs_insn *ins)
 
 	for (i = 0; i < mips->op_count; i++) {
 		cs_mips_op *op = &(mips->operands[i]);
-		switch((int)op->type) {
-			default:
-				break;
-			case MIPS_OP_REG:
-				printf("\t\toperands[%u].type: REG = %s\n", i, cs_reg_name(handle, op->reg));
-				printf("\t\toperands[%u].is_reglist: %s\n", i, op->is_reglist ? "true" : "false");
-				break;
-			case MIPS_OP_IMM:
-				printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n", i, op->imm);
-				printf("\t\toperands[%u].is_unsigned: %s\n", i, op->is_unsigned ? "true" : "false");
-				break;
-			case MIPS_OP_MEM:
-				printf("\t\toperands[%u].type: MEM\n", i);
-				if (op->mem.base != MIPS_REG_INVALID)
-					printf("\t\t\toperands[%u].mem.base: REG = %s\n",
-						   i, cs_reg_name(handle, op->mem.base));
-				if (op->mem.disp != 0)
-					printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64 "\n", i, op->mem.disp);
+		switch ((int)op->type) {
+		default:
+			break;
+		case MIPS_OP_REG:
+			printf("\t\toperands[%u].type: REG = %s\n", i,
+			       cs_reg_name(handle, op->reg));
+			printf("\t\toperands[%u].is_reglist: %s\n", i,
+			       op->is_reglist ? "true" : "false");
+			break;
+		case MIPS_OP_IMM:
+			printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n",
+			       i, op->imm);
+			printf("\t\toperands[%u].is_unsigned: %s\n", i,
+			       op->is_unsigned ? "true" : "false");
+			break;
+		case MIPS_OP_MEM:
+			printf("\t\toperands[%u].type: MEM\n", i);
+			if (op->mem.base != MIPS_REG_INVALID)
+				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
+				       i, cs_reg_name(handle, op->mem.base));
+			if (op->mem.disp != 0)
+				printf("\t\t\toperands[%u].mem.disp: 0x%" PRIx64
+				       "\n",
+				       i, op->mem.disp);
 
-				break;
+			break;
 		}
 
-		switch(op->access) {
-			default:
-				break;
-			case CS_AC_READ:
-				printf("\t\toperands[%u].access: READ\n", i);
-				break;
-			case CS_AC_WRITE:
-				printf("\t\toperands[%u].access: WRITE\n", i);
-				break;
-			case CS_AC_READ | CS_AC_WRITE:
-				printf("\t\toperands[%u].access: READ | WRITE\n", i);
-				break;
+		switch (op->access) {
+		default:
+			break;
+		case CS_AC_READ:
+			printf("\t\toperands[%u].access: READ\n", i);
+			break;
+		case CS_AC_WRITE:
+			printf("\t\toperands[%u].access: WRITE\n", i);
+			break;
+		case CS_AC_READ | CS_AC_WRITE:
+			printf("\t\toperands[%u].access: READ | WRITE\n", i);
+			break;
 		}
 	}
 
 	// Print out all registers accessed by this instruction (either implicit or explicit)
-	if (!cs_regs_access(handle, ins,
-						regs_read, &regs_read_count,
-						regs_write, &regs_write_count)) {
+	if (!cs_regs_access(handle, ins, regs_read, &regs_read_count,
+			    regs_write, &regs_write_count)) {
 		if (regs_read_count) {
 			printf("\tRegisters read:");
-			for(i = 0; i < regs_read_count; i++) {
-				printf(" %s", cs_reg_name(handle, regs_read[i]));
+			for (i = 0; i < regs_read_count; i++) {
+				printf(" %s",
+				       cs_reg_name(handle, regs_read[i]));
 			}
 			printf("\n");
 		}
 
 		if (regs_write_count) {
 			printf("\tRegisters modified:");
-			for(i = 0; i < regs_write_count; i++) {
-				printf(" %s", cs_reg_name(handle, regs_write[i]));
+			for (i = 0; i < regs_write_count; i++) {
+				printf(" %s",
+				       cs_reg_name(handle, regs_write[i]));
 			}
 			printf("\n");
 		}

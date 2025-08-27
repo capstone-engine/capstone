@@ -37,11 +37,12 @@
 #define CONCAT_(a, b) a##_##b
 
 static void printAddress(const MCAsmInfo *MAI, MCRegister Base,
-		  const MCOperand *DispMO, MCRegister Index, SStream *O);
+			 const MCOperand *DispMO, MCRegister Index, SStream *O);
 static void printMCOperandMAI(const MCOperand *MO, const MCAsmInfo *MAI,
-                                      SStream *O);
+			      SStream *O);
 static void printRegName(const MCInst *MI, SStream *O, MCRegister Reg);
-static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O);
+static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
+		      SStream *O);
 static void printOperand(MCInst *MI, int OpNum, SStream *O);
 static void printU1ImmOperand(MCInst *MI, int OpNum, SStream *O);
 static void printU2ImmOperand(MCInst *MI, int OpNum, SStream *O);
@@ -60,8 +61,10 @@ static void printBDXAddrOperand(MCInst *MI, int OpNum, SStream *O);
 static void printBDLAddrOperand(MCInst *MI, int OpNum, SStream *O);
 static void printBDRAddrOperand(MCInst *MI, int OpNum, SStream *O);
 static void printBDVAddrOperand(MCInst *MI, int OpNum, SStream *O);
-static void printPCRelOperand(MCInst *MI, uint64_t Address, int OpNum, SStream *O);
-static void printPCRelTLSOperand(MCInst *MI, uint64_t Address, int OpNum, SStream *O);
+static void printPCRelOperand(MCInst *MI, uint64_t Address, int OpNum,
+			      SStream *O);
+static void printPCRelTLSOperand(MCInst *MI, uint64_t Address, int OpNum,
+				 SStream *O);
 // This forms part of the instruction name rather than the operand list.
 // Print the mnemonic for a condition-code mask ("ne", "lh", etc.)
 static void printCond4Operand(MCInst *MI, int OpNum, SStream *O);
@@ -69,7 +72,8 @@ static void printCond4Operand(MCInst *MI, int OpNum, SStream *O);
 #include "SystemZGenAsmWriter.inc"
 
 #define DECLARE_printUImmOperand(N) \
-	static void CONCAT(printUImmOperand, N)(MCInst * MI, int OpNum, SStream *O);
+	static void CONCAT(printUImmOperand, N)(MCInst * MI, int OpNum, \
+						SStream *O);
 DECLARE_printUImmOperand(1);
 DECLARE_printUImmOperand(2);
 DECLARE_printUImmOperand(3);
@@ -81,13 +85,14 @@ DECLARE_printUImmOperand(32);
 DECLARE_printUImmOperand(48);
 
 #define DECLARE_printSImmOperand(N) \
-	static void CONCAT(printSImmOperand, N)(MCInst * MI, int OpNum, SStream *O);
+	static void CONCAT(printSImmOperand, N)(MCInst * MI, int OpNum, \
+						SStream *O);
 DECLARE_printSImmOperand(8);
 DECLARE_printSImmOperand(16);
 DECLARE_printSImmOperand(32);
 
 static void printAddress(const MCAsmInfo *MAI, MCRegister Base,
-		  const MCOperand *DispMO, MCRegister Index, SStream *O)
+			 const MCOperand *DispMO, MCRegister Index, SStream *O)
 {
 	printMCOperandMAI(DispMO, MAI, O);
 	if (Base || Index) {
@@ -107,19 +112,20 @@ static void printAddress(const MCAsmInfo *MAI, MCRegister Base,
 }
 
 static void printMCOperandMAI(const MCOperand *MO, const MCAsmInfo *MAI,
-                                      SStream *O) {
-  if (MCOperand_isReg(MO)) {
-    if (!MCOperand_getReg(MO))
-      SStream_concat1(O, '0');
-    else
-      printFormattedRegName(MAI, MCOperand_getReg(MO), O);
-  }
-  else if (MCOperand_isImm(MO))
-    printInt64(markup_OS(O, Markup_Immediate), MCOperand_getImm(MO));
-  else if (MCOperand_isExpr(MO))
-    printExpr(O, MCOperand_getExpr(MO));
-  else
-    CS_ASSERT(0 && "Invalid operand");
+			      SStream *O)
+{
+	if (MCOperand_isReg(MO)) {
+		if (!MCOperand_getReg(MO))
+			SStream_concat1(O, '0');
+		else
+			printFormattedRegName(MAI, MCOperand_getReg(MO), O);
+	} else if (MCOperand_isImm(MO))
+		printInt64(markup_OS(O, Markup_Immediate),
+			   MCOperand_getImm(MO));
+	else if (MCOperand_isExpr(MO))
+		printExpr(O, MCOperand_getExpr(MO));
+	else
+		CS_ASSERT(0 && "Invalid operand");
 }
 
 static void printMCOperand(const MCInst *MI, const MCOperand *MO, SStream *O)
@@ -129,12 +135,13 @@ static void printMCOperand(const MCInst *MI, const MCOperand *MO, SStream *O)
 			SStream_concat0(O, "0");
 
 		else
-			printFormattedRegName(&MI->MAI, MCOperand_getReg(MO), O);
+			printFormattedRegName(&MI->MAI, MCOperand_getReg(MO),
+					      O);
 	} else if (MCOperand_isImm(MO))
 		printInt64(markup_OS(O, Markup_Immediate),
-				MCOperand_getImm(MO));
+			   MCOperand_getImm(MO));
 	else if (MCOperand_isExpr(MO))
-		printExpr(O, MCOperand_getExpr(MO)); \
+		printExpr(O, MCOperand_getExpr(MO));
 	else
 		CS_ASSERT_RET(0 && "Invalid operand");
 }
@@ -156,7 +163,8 @@ static void printRegName(const MCInst *MI, SStream *O, MCRegister Reg)
 	printFormattedRegName(&MI->MAI, Reg, O);
 }
 
-static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
+static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
+		      SStream *O)
 {
 	printInstruction(MI, Address, O);
 }
@@ -278,17 +286,19 @@ static void printU48ImmOperand(MCInst *MI, int OpNum, SStream *O)
 	CONCAT(printUImmOperand, 48)(MI, OpNum, O);
 }
 
-static void printPCRelOperand(MCInst *MI, uint64_t Address, int OpNum, SStream *O)
+static void printPCRelOperand(MCInst *MI, uint64_t Address, int OpNum,
+			      SStream *O)
 {
 	add_cs_detail(MI, SystemZ_OP_GROUP_PCRelOperand, OpNum);
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
 		printInt64(O, MCOperand_getImm(MO));
 	} else
-    printExpr(O, MCOperand_getExpr(MO));
+		printExpr(O, MCOperand_getExpr(MO));
 }
 
-static void printPCRelTLSOperand(MCInst *MI, uint64_t Address, int OpNum, SStream *O)
+static void printPCRelTLSOperand(MCInst *MI, uint64_t Address, int OpNum,
+				 SStream *O)
 {
 	// Output the PC-relative operand.
 	printPCRelOperand(MI, MI->address, OpNum, O);
@@ -377,7 +387,8 @@ const char *SystemZ_LLVM_getRegisterName(unsigned RegNo)
 	return getRegisterName(RegNo);
 }
 
-void SystemZ_LLVM_printInstruction(MCInst *MI, const char *Annotation, SStream *O)
+void SystemZ_LLVM_printInstruction(MCInst *MI, const char *Annotation,
+				   SStream *O)
 {
 	printInst(MI, MI->address, Annotation, O);
-}	
+}

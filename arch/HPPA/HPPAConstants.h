@@ -7,7 +7,7 @@
 #define CS_HPPA_CONSTANTS_H
 
 #define HPPA_OP_TYPE(byte) (byte) >> 2
-#define MODE_IS_HPPA_20(mode) (((mode)&CS_MODE_HPPA_20) != 0)
+#define MODE_IS_HPPA_20(mode) (((mode) & CS_MODE_HPPA_20) != 0)
 #define MODE_IS_HPPA_20W(mode) (((mode) & (1 << 3)) != 0)
 
 ///> HPPA opcode types

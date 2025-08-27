@@ -46,7 +46,9 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 	char *p, *p2;
 	char tmp[128];
 
-	strncpy(tmp, code, sizeof(tmp) - 1); // safe because code is way shorter than 128 bytes
+	strncpy(tmp, code,
+		sizeof(tmp) -
+			1); // safe because code is way shorter than 128 bytes
 
 	// find the first space
 	p = strchr(tmp, ' ');
@@ -60,20 +62,28 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 			if (id) {
 				// register
 				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_REG;
-					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg = id;
+					MI->flat_insn->detail->xcore
+						.operands[MI->flat_insn->detail
+								  ->xcore
+								  .op_count]
+						.type = XCORE_OP_REG;
+					MI->flat_insn->detail->xcore
+						.operands[MI->flat_insn->detail
+								  ->xcore
+								  .op_count]
+						.reg = id;
 					MI->flat_insn->detail->xcore.op_count++;
 				}
 			}
 			// next should be register, or memory?
 			// skip space
 			p2++;
-			while(*p2 && *p2 == ' ')
+			while (*p2 && *p2 == ' ')
 				p2++;
 			if (*p2) {
 				// find '['
 				p = p2;
-				while(*p && *p != '[')
+				while (*p && *p != '[')
 					p++;
 				if (*p) {
 					// this is '['
@@ -82,17 +92,55 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 					if (id) {
 						// base register
 						if (MI->csh->detail_opt) {
-							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_MEM;
-							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = (uint8_t)id;
-							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.index = XCORE_REG_INVALID;
-							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.disp = 0;
-							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.direct = 1;
+							MI->flat_insn->detail
+								->xcore
+								.operands
+									[MI->flat_insn
+										 ->detail
+										 ->xcore
+										 .op_count]
+								.type =
+								XCORE_OP_MEM;
+							MI->flat_insn->detail
+								->xcore
+								.operands
+									[MI->flat_insn
+										 ->detail
+										 ->xcore
+										 .op_count]
+								.mem.base =
+								(uint8_t)id;
+							MI->flat_insn->detail
+								->xcore
+								.operands
+									[MI->flat_insn
+										 ->detail
+										 ->xcore
+										 .op_count]
+								.mem.index =
+								XCORE_REG_INVALID;
+							MI->flat_insn->detail
+								->xcore
+								.operands
+									[MI->flat_insn
+										 ->detail
+										 ->xcore
+										 .op_count]
+								.mem.disp = 0;
+							MI->flat_insn->detail
+								->xcore
+								.operands
+									[MI->flat_insn
+										 ->detail
+										 ->xcore
+										 .op_count]
+								.mem.direct = 1;
 						}
 
 						p++;
 						p2 = p;
 						// until ']'
-						while(*p && *p != ']')
+						while (*p && *p != ']')
 							p++;
 						if (*p) {
 							*p = '\0';
@@ -101,18 +149,41 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 							if (id) {
 								// index register
 								if (MI->csh->detail_opt) {
-									MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.index = (uint8_t)id;
+									MI->flat_insn
+										->detail
+										->xcore
+										.operands
+											[MI->flat_insn
+												 ->detail
+												 ->xcore
+												 .op_count]
+										.mem
+										.index =
+										(uint8_t)
+											id;
 								}
 							} else {
 								// a number means disp
 								if (MI->csh->detail_opt) {
-									MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.disp = atoi(p2);
+									MI->flat_insn
+										->detail
+										->xcore
+										.operands
+											[MI->flat_insn
+												 ->detail
+												 ->xcore
+												 .op_count]
+										.mem
+										.disp =
+										atoi(p2);
 								}
 							}
 						}
 
 						if (MI->csh->detail_opt) {
-							MI->flat_insn->detail->xcore.op_count++;
+							MI->flat_insn->detail
+								->xcore
+								.op_count++;
 						}
 					}
 				} else {
@@ -121,9 +192,26 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 					if (id) {
 						// register
 						if (MI->csh->detail_opt) {
-							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_REG;
-							MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg = id;
-							MI->flat_insn->detail->xcore.op_count++;
+							MI->flat_insn->detail
+								->xcore
+								.operands
+									[MI->flat_insn
+										 ->detail
+										 ->xcore
+										 .op_count]
+								.type =
+								XCORE_OP_REG;
+							MI->flat_insn->detail
+								->xcore
+								.operands
+									[MI->flat_insn
+										 ->detail
+										 ->xcore
+										 .op_count]
+								.reg = id;
+							MI->flat_insn->detail
+								->xcore
+								.op_count++;
 						}
 					}
 				}
@@ -133,8 +221,16 @@ void XCore_insn_extract(MCInst *MI, const char *code)
 			if (id) {
 				// register
 				if (MI->csh->detail_opt) {
-					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_REG;
-					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg = id;
+					MI->flat_insn->detail->xcore
+						.operands[MI->flat_insn->detail
+								  ->xcore
+								  .op_count]
+						.type = XCORE_OP_REG;
+					MI->flat_insn->detail->xcore
+						.operands[MI->flat_insn->detail
+								  ->xcore
+								  .op_count]
+						.reg = id;
 					MI->flat_insn->detail->xcore.op_count++;
 				}
 			}
@@ -150,32 +246,68 @@ static void set_mem_access(MCInst *MI, bool status, int reg)
 	MI->csh->doing_mem = status;
 	if (status) {
 		if (reg != 0xffff && reg != -0xffff) {
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_MEM;
+			MI->flat_insn->detail->xcore
+				.operands[MI->flat_insn->detail->xcore.op_count]
+				.type = XCORE_OP_MEM;
 			if (reg) {
-				MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = (uint8_t)reg;
+				MI->flat_insn->detail->xcore
+					.operands[MI->flat_insn->detail->xcore
+							  .op_count]
+					.mem.base = (uint8_t)reg;
 			} else {
-				MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = XCORE_REG_INVALID;
+				MI->flat_insn->detail->xcore
+					.operands[MI->flat_insn->detail->xcore
+							  .op_count]
+					.mem.base = XCORE_REG_INVALID;
 			}
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.index = XCORE_REG_INVALID;
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.disp = 0;
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.direct = 1;
+			MI->flat_insn->detail->xcore
+				.operands[MI->flat_insn->detail->xcore.op_count]
+				.mem.index = XCORE_REG_INVALID;
+			MI->flat_insn->detail->xcore
+				.operands[MI->flat_insn->detail->xcore.op_count]
+				.mem.disp = 0;
+			MI->flat_insn->detail->xcore
+				.operands[MI->flat_insn->detail->xcore.op_count]
+				.mem.direct = 1;
 		} else {
 			// the last op should be the memory base
 			MI->flat_insn->detail->xcore.op_count--;
-			uint8_t base = MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg;
-			memset(&MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count], 0, sizeof(cs_xcore_op));
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_MEM;
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = base;
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.index = XCORE_REG_INVALID;
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.disp = 0;
+			uint8_t base =
+				MI->flat_insn->detail->xcore
+					.operands[MI->flat_insn->detail->xcore
+							  .op_count]
+					.reg;
+			memset(&MI->flat_insn->detail->xcore.operands
+					[MI->flat_insn->detail->xcore.op_count],
+			       0, sizeof(cs_xcore_op));
+			MI->flat_insn->detail->xcore
+				.operands[MI->flat_insn->detail->xcore.op_count]
+				.type = XCORE_OP_MEM;
+			MI->flat_insn->detail->xcore
+				.operands[MI->flat_insn->detail->xcore.op_count]
+				.mem.base = base;
+			MI->flat_insn->detail->xcore
+				.operands[MI->flat_insn->detail->xcore.op_count]
+				.mem.index = XCORE_REG_INVALID;
+			MI->flat_insn->detail->xcore
+				.operands[MI->flat_insn->detail->xcore.op_count]
+				.mem.disp = 0;
 			if (reg > 0)
-				MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.direct = 1;
+				MI->flat_insn->detail->xcore
+					.operands[MI->flat_insn->detail->xcore
+							  .op_count]
+					.mem.direct = 1;
 			else
-				MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.direct = -1;
+				MI->flat_insn->detail->xcore
+					.operands[MI->flat_insn->detail->xcore
+							  .op_count]
+					.mem.direct = -1;
 		}
 	} else {
 		if (reg) {
-			MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.index = (uint8_t)reg;
+			MI->flat_insn->detail->xcore
+				.operands[MI->flat_insn->detail->xcore.op_count]
+				.mem.index = (uint8_t)reg;
 			// done, create the next operand slot
 			MI->flat_insn->detail->xcore.op_count++;
 		}
@@ -192,13 +324,30 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 
 		if (MI->csh->detail_opt) {
 			if (MI->csh->doing_mem) {
-				if (MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base == ARM_REG_INVALID)
-					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.base = (uint8_t)reg;
+				if (MI->flat_insn->detail->xcore
+					    .operands[MI->flat_insn->detail
+							      ->xcore.op_count]
+					    .mem.base == ARM_REG_INVALID)
+					MI->flat_insn->detail->xcore
+						.operands[MI->flat_insn->detail
+								  ->xcore
+								  .op_count]
+						.mem.base = (uint8_t)reg;
 				else
-					MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.index = (uint8_t)reg;
+					MI->flat_insn->detail->xcore
+						.operands[MI->flat_insn->detail
+								  ->xcore
+								  .op_count]
+						.mem.index = (uint8_t)reg;
 			} else {
-				MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_REG;
-				MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].reg = reg;
+				MI->flat_insn->detail->xcore
+					.operands[MI->flat_insn->detail->xcore
+							  .op_count]
+					.type = XCORE_OP_REG;
+				MI->flat_insn->detail->xcore
+					.operands[MI->flat_insn->detail->xcore
+							  .op_count]
+					.reg = reg;
 				MI->flat_insn->detail->xcore.op_count++;
 			}
 		}
@@ -209,10 +358,19 @@ static void _printOperand(MCInst *MI, MCOperand *MO, SStream *O)
 
 		if (MI->csh->detail_opt) {
 			if (MI->csh->doing_mem) {
-				MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].mem.disp = Imm;
+				MI->flat_insn->detail->xcore
+					.operands[MI->flat_insn->detail->xcore
+							  .op_count]
+					.mem.disp = Imm;
 			} else {
-				MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].type = XCORE_OP_IMM;
-				MI->flat_insn->detail->xcore.operands[MI->flat_insn->detail->xcore.op_count].imm = Imm;
+				MI->flat_insn->detail->xcore
+					.operands[MI->flat_insn->detail->xcore
+							  .op_count]
+					.type = XCORE_OP_IMM;
+				MI->flat_insn->detail->xcore
+					.operands[MI->flat_insn->detail->xcore
+							  .op_count]
+					.imm = Imm;
 				MI->flat_insn->detail->xcore.op_count++;
 			}
 		}

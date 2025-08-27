@@ -16,16 +16,16 @@
 #include "AlphaLinkage.h"
 
 static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, unsigned RegNo,
-											uint64_t Address,
-											const void *Decoder);
+					    uint64_t Address,
+					    const void *Decoder);
 
 static DecodeStatus DecodeF4RCRegisterClass(MCInst *Inst, unsigned RegNo,
-											uint64_t Address,
-											const void *Decoder);
+					    uint64_t Address,
+					    const void *Decoder);
 
 static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, unsigned RegNo,
-											uint64_t Address,
-											const void *Decoder);
+					    uint64_t Address,
+					    const void *Decoder);
 
 #include "AlphaGenDisassemblerTables.inc"
 
@@ -35,8 +35,8 @@ static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, unsigned RegNo,
 #include "AlphaGenRegisterInfo.inc"
 
 static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, unsigned RegNo,
-											uint64_t Address,
-											const void *Decoder)
+					    uint64_t Address,
+					    const void *Decoder)
 {
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
@@ -47,8 +47,8 @@ static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static DecodeStatus DecodeF4RCRegisterClass(MCInst *Inst, unsigned RegNo,
-											uint64_t Address,
-											const void *Decoder)
+					    uint64_t Address,
+					    const void *Decoder)
 {
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
@@ -59,8 +59,8 @@ static DecodeStatus DecodeF4RCRegisterClass(MCInst *Inst, unsigned RegNo,
 }
 
 static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, unsigned RegNo,
-											uint64_t Address,
-											const void *Decoder)
+					    uint64_t Address,
+					    const void *Decoder)
 {
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
@@ -75,9 +75,9 @@ static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, unsigned RegNo,
 #include "AlphaGenInstrInfo.inc"
 
 DecodeStatus Alpha_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
-									   size_t ByteLen, MCInst *MI,
-									   uint16_t *Size, uint64_t Address,
-									   void *Info)
+				       size_t ByteLen, MCInst *MI,
+				       uint16_t *Size, uint64_t Address,
+				       void *Info)
 {
 	if (!handle) {
 		return MCDisassembler_Fail;
@@ -105,9 +105,9 @@ DecodeStatus Alpha_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
 void Alpha_init(MCRegisterInfo *MRI)
 {
 	MCRegisterInfo_InitMCRegisterInfo(
-		MRI, AlphaRegDesc, ARR_SIZE(AlphaRegDesc), 0, 0, AlphaMCRegisterClasses,
-		ARR_SIZE(AlphaMCRegisterClasses), 0, 0, AlphaRegDiffLists, 0,
-		AlphaSubRegIdxLists, 1, 0);
+		MRI, AlphaRegDesc, ARR_SIZE(AlphaRegDesc), 0, 0,
+		AlphaMCRegisterClasses, ARR_SIZE(AlphaMCRegisterClasses), 0, 0,
+		AlphaRegDiffLists, 0, AlphaSubRegIdxLists, 1, 0);
 }
 
 #endif

@@ -21,8 +21,8 @@
 unsigned int count_positive(const uint16_t *list);
 unsigned int count_positive8(const unsigned char *list);
 
-#define ARR_SIZE(a) (sizeof(a)/sizeof(a[0]))
-#define MATRIX_SIZE(a) (sizeof(a[0])/sizeof(a[0][0]))
+#define ARR_SIZE(a) (sizeof(a) / sizeof(a[0]))
+#define MATRIX_SIZE(a) (sizeof(a[0]) / sizeof(a[0][0]))
 
 char *cs_strdup(const char *str);
 
@@ -47,9 +47,13 @@ uint64_t readBytes64(MCInst *MI, const uint8_t *Bytes);
 void append_to_str_lower(char *str, size_t str_size, const char *src);
 void str_append_no_realloc(char *str, size_t str_buf_size, const char *src);
 char *str_append(char *str_a, const char *str_b);
-static inline bool strings_match(const char *str0, const char *str1) { return strcmp(str0, str1) == 0; }
+static inline bool strings_match(const char *str0, const char *str1)
+{
+	return strcmp(str0, str1) == 0;
+}
 
-static inline bool is_blank_char(const char c) {
+static inline bool is_blank_char(const char c)
+{
 	return c == ' ' || c == '\t';
 }
 

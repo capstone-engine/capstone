@@ -116,7 +116,8 @@ static void printRegName(SStream *OS, MCRegister Reg)
 	SStream_concat0(OS, getRegisterName(Reg));
 }
 
-static void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
+static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
+		      SStream *O)
 {
 	printInstruction(MI, Address, O);
 }
@@ -134,7 +135,8 @@ static void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	}
 }
 
-static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum, SStream *O)
+static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum,
+			     SStream *O)
 {
 	printOperand(MI, OpNum, O);
 }
@@ -177,7 +179,8 @@ static void printCCOperand(MCInst *MI, int OpNum, SStream *O)
 				   MCInst_getOperand(MI, (OpNum)))));
 }
 
-static void printU6ShiftedBy(unsigned ShiftBy, MCInst *MI, int OpNum, SStream *O)
+static void printU6ShiftedBy(unsigned ShiftBy, MCInst *MI, int OpNum,
+			     SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
@@ -197,7 +200,7 @@ static void printU6(MCInst *MI, int OpNum, SStream *O)
 }
 
 void ARC_LLVM_printInst(MCInst *MI, uint64_t Address, const char *Annot,
-			      SStream *O)
+			SStream *O)
 {
 	printInst(MI, Address, Annot, O);
 }
