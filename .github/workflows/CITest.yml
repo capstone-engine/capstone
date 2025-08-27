@@ -192,6 +192,14 @@ jobs:
             platform: windows
             python-arch: x64
             python-version: '3.9'
+            diet_build: false
+          - name: 'windows x64 MSVC 64bit DIET'
+            os: windows-latest
+            arch: x64
+            platform: windows
+            python-arch: x64
+            python-version: '3.9'
+            diet_build: true
 
     steps:
     - uses: actions/checkout@v4
@@ -210,6 +218,6 @@ jobs:
       shell: bash
       run: |
         cmake --version
-        cmake --preset=${{ matrix.config.platform }}-x64
+        cmake --preset=${{ matrix.config.platform }}-x64 -DCAPSTONE_BUILD_DIET=${diet_build}
         cmake --build --preset build-${{ matrix.config.platform }}-release
         cmake --build --preset install-${{ matrix.config.platform }}-release
