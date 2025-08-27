@@ -220,5 +220,5 @@ jobs:
       run: |
         cmake --version
         cmake --preset=${{ matrix.config.platform }}-x64${{ matrix.config.diet_build == true && '-diet' || '' }}
-        cmake --build --preset build-${{ matrix.config.platform }}-release
-        cmake --build --preset install-${{ matrix.config.platform }}-release
+        cmake --build --preset build-${{ matrix.config.platform }}${{ matrix.config.diet_build == true && '-diet' || '' }}-release
+        cmake --build --preset install-${{ matrix.config.platform }}${{ matrix.config.diet_build == true && '-diet' || '' }}-release

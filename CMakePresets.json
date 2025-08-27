@@ -90,6 +90,12 @@
       "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
     },
     {
+      "name": "build-windows-diet",
+      "configurePreset": "windows-x64-diet",
+      "nativeToolOptions": [ "-v" ],
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
+    },
+    {
       "name": "build-linux-release",
       "inherits": "build-linux",
       "configuration": "Release",
@@ -104,6 +110,12 @@
     {
       "name": "build-windows-release",
       "inherits": "build-windows",
+      "configuration": "Release",
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
+    },
+    {
+      "name": "build-windows-diet-release",
+      "inherits": "build-windows-diet",
       "configuration": "Release",
       "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
     },
@@ -129,6 +141,13 @@
       "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
     },
     {
+      "name": "install-windows-diet",
+      "configurePreset": "windows-x64-diet",
+      "inherits": "build-windows-diet",
+      "targets": [ "install" ],
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
+    },
+    {
       "name": "install-linux-release",
       "inherits": "install-linux",
       "configuration": "Release",
@@ -143,6 +162,12 @@
     {
       "name": "install-windows-release",
       "inherits": "install-windows",
+      "configuration": "Release",
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
+    },
+    {
+      "name": "install-windows-diet-release",
+      "inherits": "install-windows-diet",
       "configuration": "Release",
       "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
     }
