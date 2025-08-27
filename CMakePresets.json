@@ -38,6 +38,18 @@
       }
     },
     {
+      "name": "diet",
+      "hidden": true,
+      "displayName": "DIET",
+      "generator": "DIET build",
+      "cacheVariables": {
+        "CAPSTONE_BUILD_DIET": {
+          "type": "BOOL", 
+          "value": "ON"
+        }
+      }
+    },
+    {
       "name": "linux-x64",
       "inherits": [ "ninja", "x64", "locations-base", "warnings-base" ],
       "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux"}
@@ -50,6 +62,11 @@
     {
       "name": "windows-x64",
       "inherits": [ "ninja", "x64", "locations-base", "warnings-base" ],
+      "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
+    },
+    {
+      "name": "windows-x64-diet",
+      "inherits": [ "ninja", "x64", "locations-base", "warnings-base", "diet" ],
       "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"}
     }
   ],

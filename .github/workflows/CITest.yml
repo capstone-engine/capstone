@@ -219,6 +219,6 @@ jobs:
       shell: bash
       run: |
         cmake --version
-        cmake --preset=${{ matrix.config.platform }}-x64 -DCAPSTONE_BUILD_DIET=${diet_build}
+        cmake --preset=${{ matrix.config.platform }}-x64${{ matrix.config.diet == true && '-diet' || '' }}
         cmake --build --preset build-${{ matrix.config.platform }}-release
         cmake --build --preset install-${{ matrix.config.platform }}-release
