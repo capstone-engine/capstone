@@ -16,6 +16,7 @@ on:
       - "SPONSORS.TXT"
       - "TODO"
   pull_request:
+  workflow_dispatch:
 
 # Stop previous runs on the same branch on new push
 concurrency:
