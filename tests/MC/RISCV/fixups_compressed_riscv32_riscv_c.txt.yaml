@@ -1,26 +1,6 @@
 test_cases:
   -
     input:
-      bytes: [ 0x81 ]
-      arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
-    expected:
-      insns:
-        -
-          asm_text: "beqz a3, .LBB0_2"
-
-  -
-    input:
-      bytes: [ 0x81 ]
-      arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
-    expected:
-      insns:
-        -
-          asm_text: "bnez a5, .LBB0_2"
-
-  -
-    input:
       bytes: [ 0x01, 0x00 ]
       arch: "CS_ARCH_RISCV"
       options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
