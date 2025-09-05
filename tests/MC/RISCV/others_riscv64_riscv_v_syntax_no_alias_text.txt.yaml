@@ -1,0 +1,240 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x5c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmerge.vvm v8, v4, v20, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x5c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmerge.vxm v8, v4, a0, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x47, 0x5c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmerge.vim v8, v4, 15, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x38 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslideup.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x3a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslideup.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x4f, 0x38 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslideup.vi v8, v4, 31, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x4f, 0x3a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslideup.vi v8, v4, 31"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x3c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslidedown.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x3e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslidedown.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x4f, 0x3c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslidedown.vi v8, v4, 31, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x4f, 0x3e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslidedown.vi v8, v4, 31"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0x38 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslide1up.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0x3a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslide1up.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0x3c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslide1down.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0x3e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vslide1down.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x30 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrgather.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x32 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrgather.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x30 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrgather.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x32 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrgather.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x4f, 0x30 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrgather.vi v8, v4, 31, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x4f, 0x32 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrgather.vi v8, v4, 31"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x38 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrgatherei16.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x3a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrgatherei16.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0x5e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vcompress.vm v8, v4, v20"

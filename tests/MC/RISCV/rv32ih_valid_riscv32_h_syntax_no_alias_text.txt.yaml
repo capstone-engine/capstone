@@ -1,0 +1,140 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x00, 0x22 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hfence.vvma zero, zero"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0xb5, 0x22 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hfence.vvma a0, a1"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x00, 0x62 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hfence.gvma zero, zero"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0xb5, 0x62 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hfence.gvma a0, a1"
+
+  -
+    input:
+      bytes: [ 0x73, 0xc5, 0x05, 0x60 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hlv.b a0, (a1)"
+
+  -
+    input:
+      bytes: [ 0x73, 0xc5, 0x15, 0x60 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hlv.bu a0, (a1)"
+
+  -
+    input:
+      bytes: [ 0xf3, 0x45, 0x06, 0x64 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hlv.h a1, (a2)"
+
+  -
+    input:
+      bytes: [ 0xf3, 0xc5, 0x15, 0x64 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hlv.hu a1, (a1)"
+
+  -
+    input:
+      bytes: [ 0xf3, 0x45, 0x36, 0x64 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hlvx.hu a1, (a2)"
+
+  -
+    input:
+      bytes: [ 0x73, 0x46, 0x06, 0x68 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hlv.w a2, (a2)"
+
+  -
+    input:
+      bytes: [ 0x73, 0xc6, 0x36, 0x68 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hlvx.wu a2, (a3)"
+
+  -
+    input:
+      bytes: [ 0x73, 0xc0, 0xa5, 0x62 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hsv.b a0, (a1)"
+
+  -
+    input:
+      bytes: [ 0x73, 0xc0, 0xa5, 0x66 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hsv.h a0, (a1)"
+
+  -
+    input:
+      bytes: [ 0x73, 0xc0, 0xa5, 0x6a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hsv.w a0, (a1)"

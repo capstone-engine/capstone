@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0x57, 0x25, 0x94, 0x32 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "riscv32", "zve64x", "zvbc" ]
+      options: [ "CS_MODE_RISCV32", "zve64x", "zvbc" ]
     expected:
       insns:
         -
@@ -13,7 +13,7 @@ test_cases:
     input:
       bytes: [ 0x57, 0x65, 0x95, 0x32 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "riscv32", "zve64x", "zvbc" ]
+      options: [ "CS_MODE_RISCV32", "zve64x", "zvbc" ]
     expected:
       insns:
         -
@@ -23,7 +23,7 @@ test_cases:
     input:
       bytes: [ 0x57, 0x25, 0x94, 0x36 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "riscv32", "zve64x", "zvbc" ]
+      options: [ "CS_MODE_RISCV32", "zve64x", "zvbc" ]
     expected:
       insns:
         -
@@ -33,7 +33,7 @@ test_cases:
     input:
       bytes: [ 0x57, 0x65, 0x95, 0x36 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "riscv32", "zve64x", "zvbc" ]
+      options: [ "CS_MODE_RISCV32", "zve64x", "zvbc" ]
     expected:
       insns:
         -

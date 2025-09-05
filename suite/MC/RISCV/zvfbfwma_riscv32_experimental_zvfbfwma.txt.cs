@@ -1,4 +1,4 @@
-# CS_ARCH_RISCV, 0, None
+# CS_ARCH_RISCV, "CS_MODE_RISCV32", None
 0x57,0x14,0x4a,0xec == vfwmaccbf16.vv v8, v20, v4, v0.t
 0x57,0x14,0x4a,0xee == vfwmaccbf16.vv v8, v20, v4
 0x57,0x54,0x45,0xec == vfwmaccbf16.vf v8, fa0, v4, v0.t

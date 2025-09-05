@@ -1,0 +1,370 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0xb5, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsm.v v24, (a0)"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0x05, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vse8.v v24, (a0), v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0x05, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vse8.v v24, (a0)"
+
+  -
+    input:
+      bytes: [ 0x27, 0x5c, 0x05, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vse16.v v24, (a0), v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x5c, 0x05, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vse16.v v24, (a0)"
+
+  -
+    input:
+      bytes: [ 0x27, 0x6c, 0x05, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vse32.v v24, (a0), v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x6c, 0x05, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vse32.v v24, (a0)"
+
+  -
+    input:
+      bytes: [ 0x27, 0x7c, 0x05, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vse64.v v24, (a0), v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x7c, 0x05, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vse64.v v24, (a0)"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0xb5, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsse8.v v24, (a0), a1, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0xb5, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsse8.v v24, (a0), a1"
+
+  -
+    input:
+      bytes: [ 0x27, 0x5c, 0xb5, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsse16.v v24, (a0), a1, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x5c, 0xb5, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsse16.v v24, (a0), a1"
+
+  -
+    input:
+      bytes: [ 0x27, 0x6c, 0xb5, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsse32.v v24, (a0), a1, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x6c, 0xb5, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsse32.v v24, (a0), a1"
+
+  -
+    input:
+      bytes: [ 0x27, 0x7c, 0xb5, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsse64.v v24, (a0), a1, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x7c, 0xb5, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsse64.v v24, (a0), a1"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0x45, 0x04 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsuxei8.v v24, (a0), v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0x45, 0x06 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsuxei8.v v24, (a0), v4"
+
+  -
+    input:
+      bytes: [ 0x27, 0x5c, 0x45, 0x04 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsuxei16.v v24, (a0), v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x5c, 0x45, 0x06 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsuxei16.v v24, (a0), v4"
+
+  -
+    input:
+      bytes: [ 0x27, 0x6c, 0x45, 0x04 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsuxei32.v v24, (a0), v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x6c, 0x45, 0x06 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsuxei32.v v24, (a0), v4"
+
+  -
+    input:
+      bytes: [ 0x27, 0x7c, 0x45, 0x04 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsuxei64.v v24, (a0), v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x7c, 0x45, 0x06 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsuxei64.v v24, (a0), v4"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0x45, 0x0c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsoxei8.v v24, (a0), v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0x45, 0x0e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsoxei8.v v24, (a0), v4"
+
+  -
+    input:
+      bytes: [ 0x27, 0x5c, 0x45, 0x0c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsoxei16.v v24, (a0), v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x5c, 0x45, 0x0e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsoxei16.v v24, (a0), v4"
+
+  -
+    input:
+      bytes: [ 0x27, 0x6c, 0x45, 0x0c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsoxei32.v v24, (a0), v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x6c, 0x45, 0x0e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsoxei32.v v24, (a0), v4"
+
+  -
+    input:
+      bytes: [ 0x27, 0x7c, 0x45, 0x0c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsoxei64.v v24, (a0), v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x27, 0x7c, 0x45, 0x0e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsoxei64.v v24, (a0), v4"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0x85, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vs1r.v v24, (a0)"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0x85, 0x22 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vs2r.v v24, (a0)"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0x85, 0x62 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vs4r.v v24, (a0)"
+
+  -
+    input:
+      bytes: [ 0x27, 0x0c, 0x85, 0xe2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vs8r.v v24, (a0)"

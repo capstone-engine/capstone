@@ -28,6 +28,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <capstone/platform.h>
+#include "../../MathExtras.h"
 
 #include "RISCVMapping.h"
 #include "RISCVInstPrinter.h"
@@ -43,6 +44,9 @@
 
 #define GET_SysRegsList_IMPL
 #include "RISCVGenSystemOperands.inc"
+
+#define GEN_UNCOMPRESS_INSTR
+#include "RISCVGenCompressedInstructionsInfo.inc"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
@@ -164,7 +168,7 @@ static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_FRMArg, OpNo);
 	unsigned FRMArg = MCOperand_getImm(
 		MCInst_getOperand(MI, (OpNo)));
-	if (FRMArg == RISCVFPRndMode_DYN)
+	if (!(MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT) && FRMArg == RISCVFPRndMode_DYN)
 		return;
 	SStream_concat(O, "%s", ", ");
 	SStream_concat0(O, RISCVFPRndMode_roundingModeToString(FRMArg));
@@ -366,10 +370,25 @@ static inline void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info) {
 	MI->MRI = (MCRegisterInfo*) info;
-	if (printAliasInstr(MI, MI->address, O))
-		MI->isAliasInstr = true;
-	else 
+
+	if (MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT) {
 		printInstruction(MI, MI->address, O);
+	} else {
+		MCInst Uncompressed;
+		MCInst_Init(&Uncompressed, MI->csh->arch);
+
+		MCInst *McInstr = MI;
+		if (uncompressInst(&Uncompressed, MI)) {
+			McInstr = &Uncompressed;
+			Uncompressed.MRI = MI->MRI;
+			Uncompressed.csh = MI->csh;
+		}
+		
+		if (printAliasInstr(McInstr, MI->address, O))
+			MI->isAliasInstr = true;
+		else
+			printInstruction(McInstr, MI->address, O);
+	}
 }
 
 const char *RISCV_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx) {

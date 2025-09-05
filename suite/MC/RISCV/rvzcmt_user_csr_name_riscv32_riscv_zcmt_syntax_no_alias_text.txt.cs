@@ -1,0 +1,3 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32"|"CS_MODE_RISCV_ZCMT", None
+0x73,0x23,0x70,0x01 == csrrs t1, jvt, zero
+0xf3,0x23,0x70,0x01 == csrrs t2, jvt, zero

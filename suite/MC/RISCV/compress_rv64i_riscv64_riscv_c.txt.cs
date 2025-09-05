@@ -1,0 +1,8 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV64"|"CS_MODE_RISCV_C", None
+0xe0,0x7f == ld s0, 248(a5)
+0xa0,0xe3 == sd s0, 64(a5)
+0x7d,0x22 == addiw tp, tp, 31
+0x1d,0x9c == subw s0, s0, a5
+0x3d,0x9c == addw s0, s0, a5
+0xee,0x70 == ld ra, 248(sp)
+0xa2,0xe0 == sd s0, 64(sp)

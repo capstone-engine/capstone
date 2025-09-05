@@ -202,8 +202,11 @@ typedef struct cs_arch_config {
 	{ \
 		RISCV_global_init, \
 		RISCV_option, \
-		~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC | CS_MODE_RISCVFD | CS_MODE_RISCVV | \
-		  CS_MODE_RISCVZFINX | CS_MODE_RISCVZCMP_ZCMT_ZCE), \
+		~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCV_C | CS_MODE_RISCV_FD | CS_MODE_RISCV_V | \
+		  CS_MODE_RISCV_ZFINX | CS_MODE_RISCV_ZCMP_ZCMT_ZCE | CS_MODE_RISCV_ZICFISS | CS_MODE_RISCV_E | \
+		  CS_MODE_RISCV_A | CS_MODE_RISCV_COREV | CS_MODE_RISCV_SIFIVE | CS_MODE_RISCV_THEAD | \
+	 	  CS_MODE_RISCV_ZBA | CS_MODE_RISCV_ZBB | CS_MODE_RISCV_ZBC | CS_MODE_RISCV_ZBKB | \
+		  CS_MODE_RISCV_ZBKC | CS_MODE_RISCV_ZBKX | CS_MODE_RISCV_ZBS), \
 	}
 #define CS_ARCH_CONFIG_SH \
 	{ \
@@ -996,7 +999,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 		return 8;
 	case CS_ARCH_RISCV:
 		// special compress mode
-		if (handle->mode & CS_MODE_RISCVC)
+		if (handle->mode & CS_MODE_RISCV_C)
 			return 2;
 		return 4;
 	case CS_ARCH_SH:

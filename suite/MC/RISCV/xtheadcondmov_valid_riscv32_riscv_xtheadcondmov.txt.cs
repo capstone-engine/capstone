@@ -1,0 +1,3 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32"|"CS_MODE_RISCV_XTHEADCONDMOV", None
+0x0b,0x95,0xc5,0x40 == th.mveqz a0, a1, a2
+0x0b,0x95,0xc5,0x42 == th.mvnez a0, a1, a2

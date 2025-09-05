@@ -1,0 +1,90 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: ".insn r 51, 0, 0, a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x13, 0x85, 0xd5, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: ".insn i 19, 0, a0, a1, 13"
+
+  -
+    input:
+      bytes: [ 0x67, 0x85, 0xa5, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: ".insn i 103, 0, a0, 10(a1)"
+
+  -
+    input:
+      bytes: [ 0x03, 0x85, 0x45, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: ".insn i 3, 0, a0, 4(a1)"
+
+  -
+    input:
+      bytes: [ 0x63 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: ".insn b 99, 0, a0, a1, target"
+
+  -
+    input:
+      bytes: [ 0x23, 0x82, 0xa5, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: ".insn s 35, 0, a0, 4(a1)"
+
+  -
+    input:
+      bytes: [ 0x37, 0xf5, 0xff, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: ".insn u 55, a0, 4095"
+
+  -
+    input:
+      bytes: [ 0x43, 0x85, 0xc5, 0x68 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: ".insn r4 67, 0, 0, fa0, fa1, fa2, fa3"
+
+  -
+    input:
+      bytes: [ 0x03, 0xd3, 0x03, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: ".insn i 3, 5, t1, -2048(t2)"

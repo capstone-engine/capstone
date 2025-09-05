@@ -1,0 +1,90 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x20, 0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "svinval", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sret"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x20, 0x30 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "svinval", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "mret"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x50, 0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "svinval", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "wfi"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x00, 0x12 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "svinval", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sfence.vma zero, zero"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0xb5, 0x12 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "svinval", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sfence.vma a0, a1"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x00, 0x16 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "svinval", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sinval.vma zero, zero"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0xb5, 0x16 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "svinval", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sinval.vma a0, a1"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x00, 0x18 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "svinval", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sfence.w.inval"
+
+  -
+    input:
+      bytes: [ 0x73, 0x00, 0x10, 0x18 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "svinval", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sfence.inval.ir"

@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x7e, 0x74 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.flwsp fs0, 252(sp)"
+
+  -
+    input:
+      bytes: [ 0xc6, 0xff ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.fswsp fa7, 252(sp)"
+
+  -
+    input:
+      bytes: [ 0xf4, 0x7f ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.flw fa3, 124(a5)"
+
+  -
+    input:
+      bytes: [ 0xf0, 0xfd ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.fsw fa2, 124(a1)"

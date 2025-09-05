@@ -4,46 +4,99 @@
 #include "RISCVGenSubtargetInfo.inc"
 
 bool RISCV_getFeatureBits(unsigned int mode, unsigned int feature) {
-    printf("\n____________________ CHECKING FEATURE %d", feature);
-    // the embedded ABI makes it an error for the instruction to
-    // use a register after than the 16th register, makes decoding fails
-    if (feature == RISCV_FeatureRVE
-     || feature == RISCV_FeatureNoRVCHints 
-     || feature == RISCV_FeatureStdExtZicfiss /* feature == RISCV_FEATURE_HASSTDEXTZDINX*/) {
-        printf("\nReturning False ----");
+    printf("\n checking feature %u\n", feature);
+    if (feature == RISCV_FeatureNoRVCHints) {
         return false;
      }
 
     switch (feature) {
     case RISCV_Feature32Bit:
-        printf("\nReturning %s -----", (mode & CS_MODE_RISCV32)?"true":"false");
+        printf("\n _________________ RETURNING %s _________________\n", (mode & CS_MODE_RISCV32)? "true":"FALSE");
         return mode & CS_MODE_RISCV32;
     case RISCV_Feature64Bit:
-        printf("\nReturning %s -----", (mode & CS_MODE_RISCV64)?"true":"false");
+        printf("\n _________________ RETURNING %s _________________\n", (mode & CS_MODE_RISCV64)? "true":"FALSE");
         return mode & CS_MODE_RISCV64;
     case RISCV_FEATURE_HASSTDEXTF:
     case RISCV_FEATURE_HASSTDEXTD:
-        printf("\nReturning %s -----", (mode & CS_MODE_RISCVFD)?"true":"false");
-        return mode & CS_MODE_RISCVFD;
+        printf("\n _________________ RETURNING %s _________________\n", ( mode & CS_MODE_RISCV_FD)? "true":"FALSE");
+
+        return mode & CS_MODE_RISCV_FD;
     case RISCV_FeatureStdExtV:
-        printf("\nReturning %s -----", (mode & CS_MODE_RISCVV)?"true":"false");
-        return mode & CS_MODE_RISCVV;
+        printf("\n _________________ RETURNING %s _________________\n", (mode & CS_MODE_RISCV_V)? "true":"FALSE");
+
+        return mode & CS_MODE_RISCV_V;
     case RISCV_FeatureStdExtZfinx:
     case RISCV_FeatureStdExtZdinx:
     case RISCV_FeatureStdExtZhinx:
     case RISCV_FeatureStdExtZhinxmin:
-        printf("\nReturning %s -----", (mode & CS_MODE_RISCVZFINX)?"true":"false");
-        return mode & CS_MODE_RISCVZFINX;
+        printf("\n _________________ RETURNING %s _________________\n", (mode & CS_MODE_RISCV_ZFINX)? "true":"FALSE");
+
+        return mode & CS_MODE_RISCV_ZFINX;
     case RISCV_FeatureStdExtC:
-        printf("\nReturning %s -----", (mode & CS_MODE_RISCVC)?"true":"false");
-        return mode & CS_MODE_RISCVC;
+        printf("\n _________________ RETURNING %s _________________\n", (mode & CS_MODE_RISCV_C)? "true":"FALSE");
+
+        return mode & CS_MODE_RISCV_C;
+
     case RISCV_FeatureStdExtZcmp:
     case RISCV_FeatureStdExtZcmt:
     case RISCV_FeatureStdExtZce:
-        printf("\nReturning %s -----", (mode & CS_MODE_RISCVZCMP_ZCMT_ZCE)?"true":"false");
-        return mode & CS_MODE_RISCVZCMP_ZCMT_ZCE;
+        printf("\n _________________ RETURNING %s _________________\n", (mode & CS_MODE_RISCV_ZCMP_ZCMT_ZCE)? "true":"FALSE");
+
+        return mode & CS_MODE_RISCV_ZCMP_ZCMT_ZCE;
+    case RISCV_FeatureStdExtZicfiss:
+        printf("\n _________________ RETURNING %s _________________\n", ( mode & CS_MODE_RISCV_ZICFISS)? "true":"FALSE");
+
+        return mode & CS_MODE_RISCV_ZICFISS;
+    case RISCV_FeatureRVE:
+        printf("\n _________________ RETURNING %s _________________\n", (mode & CS_MODE_RISCV_E)? "true":"FALSE");
+
+        return mode & CS_MODE_RISCV_E;
+    case RISCV_FeatureStdExtA:
+        printf("\n _________________ RETURNING %s _________________\n", (true)? "true":"FALSE");
+
+        return true;
+        return mode & CS_MODE_RISCV_A;
+    case RISCV_FeatureVendorXCVelw:
+        printf("\n _________________ RETURNING %s _________________\n",  (mode & CS_MODE_RISCV_COREV)? "true":"FALSE");
+
+        return mode & CS_MODE_RISCV_COREV;
+    
+    case  RISCV_FeatureVendorXSfvcp:
+    case RISCV_FeatureVendorXSfvfnrclipxfqf:
+    case RISCV_FeatureVendorXSfvfwmaccqqq:
+    case RISCV_FeatureVendorXSfvqmaccdod:
+    case RISCV_FeatureVendorXSfvqmaccqoq:
+        return mode & CS_MODE_RISCV_SIFIVE;
+
+    case  RISCV_FeatureVendorXTHeadBa:
+    case RISCV_FeatureVendorXTHeadBb:
+    case RISCV_FeatureVendorXTHeadBs:
+    case RISCV_FeatureVendorXTHeadCmo:
+    case RISCV_FeatureVendorXTHeadCondMov:
+    case RISCV_FeatureVendorXTHeadFMemIdx:
+    case RISCV_FeatureVendorXTHeadMac:
+    case RISCV_FeatureVendorXTHeadMemIdx:
+    case RISCV_FeatureVendorXTHeadMemPair:
+    case RISCV_FeatureVendorXTHeadSync:
+    case RISCV_FeatureVendorXTHeadVdot:
+        return mode & CS_MODE_RISCV_THEAD;
+
+    case RISCV_FeatureStdExtZba:
+        return mode & CS_MODE_RISCV_ZBA;
+    case RISCV_FeatureStdExtZbb:
+        return mode & CS_MODE_RISCV_ZBB;
+    case RISCV_FeatureStdExtZbc:
+        return mode & CS_MODE_RISCV_ZBC;
+    case RISCV_FeatureStdExtZbkb:
+        return mode & CS_MODE_RISCV_ZBKB;
+    case RISCV_FeatureStdExtZbkc:
+        return mode & CS_MODE_RISCV_ZBKC;
+    case RISCV_FeatureStdExtZbkx:
+        return mode & CS_MODE_RISCV_ZBKX;
+    case RISCV_FeatureStdExtZbs: 
+        return mode & CS_MODE_RISCV_ZBS;
     default:
-        printf("\nReturning true -----");
+        printf("\n ______________________________ RETURNING TRUE ___________________________________ \n");
         // support everything by default
         return true;
     }

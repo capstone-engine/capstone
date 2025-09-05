@@ -1,0 +1,2 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32", None
+0x73,0x00,0x20,0x7b == dret

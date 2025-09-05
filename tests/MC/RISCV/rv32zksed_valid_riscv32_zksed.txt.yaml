@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0x33, 0x85, 0xc5, 0xf0 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "riscv32", "zksed" ]
+      options: [ "CS_MODE_RISCV32", "zksed" ]
     expected:
       insns:
         -
@@ -13,7 +13,7 @@ test_cases:
     input:
       bytes: [ 0x33, 0x85, 0xc5, 0xf4 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "riscv32", "zksed" ]
+      options: [ "CS_MODE_RISCV32", "zksed" ]
     expected:
       insns:
         -

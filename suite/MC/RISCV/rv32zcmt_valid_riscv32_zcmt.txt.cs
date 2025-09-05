@@ -1,3 +1,0 @@
-# CS_ARCH_RISCV, 0, None
-0x06,0xa0 == cm.jt 1
-0x82,0xa0 == cm.jalt 32

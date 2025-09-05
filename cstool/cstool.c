@@ -64,6 +64,9 @@ static struct {
 	  { CS_ARCH_LOONGARCH, CS_ARCH_MIPS, CS_ARCH_MAX },
 	  CS_OPT_SYNTAX_NO_DOLLAR,
 	  0 },
+	{ "+noalias", "Does not print the text alias of an alias instruction", {
+		CS_ARCH_RISCV, CS_ARCH_MAX
+	}, CS_OPT_SYNTAX_NO_ALIAS_TEXT, 0},
 	// cs_mode only
 	{ "+nofloat",
 	  "Disables floating point support",
@@ -351,9 +354,9 @@ static struct {
 	  CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED },
 
 	{ "riscv32", "Risc-V 32-bit, little endian", CS_ARCH_RISCV,
-	  CS_MODE_RISCV32 | CS_MODE_RISCVC },
+	  CS_MODE_RISCV32 | CS_MODE_RISCV_C },
 	{ "riscv64", "Risc-V 64-bit, little endian", CS_ARCH_RISCV,
-	  CS_MODE_RISCV64 | CS_MODE_RISCVC },
+	  CS_MODE_RISCV64 | CS_MODE_RISCV_C },
 
 	{ "6502", "MOS 6502", CS_ARCH_MOS65XX, CS_MODE_MOS65XX_6502 },
 	{ "65c02", "WDC 65c02", CS_ARCH_MOS65XX, CS_MODE_MOS65XX_65C02 },

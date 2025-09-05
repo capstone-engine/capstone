@@ -1,4 +1,4 @@
-# CS_ARCH_RISCV, 0, None
+# CS_ARCH_RISCV, "CS_MODE_RISCV32", None
 0x81,0x60 == cmop.1
 0x81,0x61 == cmop.3
 0x81,0x62 == cmop.5

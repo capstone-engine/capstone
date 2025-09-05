@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xb3, 0x12, 0x73, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZBC" ]
+    expected:
+      insns:
+        -
+          asm_text: "clmul t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0xb3, 0x22, 0x73, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZBC" ]
+    expected:
+      insns:
+        -
+          asm_text: "clmulr t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0xb3, 0x32, 0x73, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZBC" ]
+    expected:
+      insns:
+        -
+          asm_text: "clmulh t0, t1, t2"

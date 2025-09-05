@@ -1,0 +1,360 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x2f, 0x37, 0x14, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoswap.d a4, ra, (s0)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb5, 0xc6, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoadd.d a1, a2, (a3)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x36, 0xd7, 0x20 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoxor.d a2, a3, (a4)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb6, 0xe7, 0x60 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoand.d a3, a4, (a5)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x37, 0xf8, 0x40 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoor.d a4, a5, (a6)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb7, 0x08, 0x81 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomin.d a5, a6, (a7)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xbb, 0x6a, 0xa1 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomax.d s7, s6, (s5)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x3b, 0x5a, 0xc1 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amominu.d s6, s5, (s4)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xba, 0x49, 0xe1 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomaxu.d s5, s4, (s3)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x37, 0x14, 0x0c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoswap.d.aq a4, ra, (s0)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb5, 0xc6, 0x04 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoadd.d.aq a1, a2, (a3)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x36, 0xd7, 0x24 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoxor.d.aq a2, a3, (a4)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb6, 0xe7, 0x64 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoand.d.aq a3, a4, (a5)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x37, 0xf8, 0x44 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoor.d.aq a4, a5, (a6)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb7, 0x08, 0x85 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomin.d.aq a5, a6, (a7)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xbb, 0x6a, 0xa5 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomax.d.aq s7, s6, (s5)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x3b, 0x5a, 0xc5 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amominu.d.aq s6, s5, (s4)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xba, 0x49, 0xe5 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomaxu.d.aq s5, s4, (s3)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x37, 0x14, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoswap.d.rl a4, ra, (s0)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb5, 0xc6, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoadd.d.rl a1, a2, (a3)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x36, 0xd7, 0x22 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoxor.d.rl a2, a3, (a4)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb6, 0xe7, 0x62 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoand.d.rl a3, a4, (a5)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x37, 0xf8, 0x42 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoor.d.rl a4, a5, (a6)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb7, 0x08, 0x83 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomin.d.rl a5, a6, (a7)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xbb, 0x6a, 0xa3 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomax.d.rl s7, s6, (s5)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x3b, 0x5a, 0xc3 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amominu.d.rl s6, s5, (s4)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xba, 0x49, 0xe3 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomaxu.d.rl s5, s4, (s3)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x37, 0x14, 0x0e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoswap.d.aqrl a4, ra, (s0)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb5, 0xc6, 0x06 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoadd.d.aqrl a1, a2, (a3)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x36, 0xd7, 0x26 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoxor.d.aqrl a2, a3, (a4)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb6, 0xe7, 0x66 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoand.d.aqrl a3, a4, (a5)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x37, 0xf8, 0x46 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amoor.d.aqrl a4, a5, (a6)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb7, 0x08, 0x87 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomin.d.aqrl a5, a6, (a7)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xbb, 0x6a, 0xa7 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomax.d.aqrl s7, s6, (s5)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x3b, 0x5a, 0xc7 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amominu.d.aqrl s6, s5, (s4)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xba, 0x49, 0xe7 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amomaxu.d.aqrl s5, s4, (s3)"

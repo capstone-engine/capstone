@@ -1,0 +1,130 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x40, 0x4c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsqrt.v v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x40, 0x4e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsqrt.v v8, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x42, 0x4c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfrsqrt7.v v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x42, 0x4e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfrsqrt7.v v8, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x94, 0x42, 0x4c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfrec7.v v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x94, 0x42, 0x4e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfrec7.v v8, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x48, 0x4c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfclass.v v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x48, 0x4e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfclass.v v8, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x5c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmerge.vfm v8, v4, fa0, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x38 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfslide1up.vf v8, v4, fa0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x3a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfslide1up.vf v8, v4, fa0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x3c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfslide1down.vf v8, v4, fa0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x3e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfslide1down.vf v8, v4, fa0"

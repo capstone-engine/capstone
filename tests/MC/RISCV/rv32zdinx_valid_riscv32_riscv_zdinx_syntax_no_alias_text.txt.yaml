@@ -1,0 +1,370 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x43, 0x75, 0xe6, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmadd.d a0, a2, a4, a6, dyn"
+
+  -
+    input:
+      bytes: [ 0x47, 0x75, 0xe6, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmsub.d a0, a2, a4, a6, dyn"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x75, 0xe6, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fnmsub.d a0, a2, a4, a6, dyn"
+
+  -
+    input:
+      bytes: [ 0x4f, 0x75, 0xe6, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fnmadd.d a0, a2, a4, a6, dyn"
+
+  -
+    input:
+      bytes: [ 0x53, 0x7d, 0xee, 0x03 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd.d s10, t3, t5, dyn"
+
+  -
+    input:
+      bytes: [ 0x53, 0x7d, 0xee, 0x0b ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsub.d s10, t3, t5, dyn"
+
+  -
+    input:
+      bytes: [ 0x53, 0x7d, 0xee, 0x13 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul.d s10, t3, t5, dyn"
+
+  -
+    input:
+      bytes: [ 0x53, 0x7d, 0xee, 0x1b ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdiv.d s10, t3, t5, dyn"
+
+  -
+    input:
+      bytes: [ 0x53, 0x7a, 0x0b, 0x5a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsqrt.d s4, s6, dyn"
+
+  -
+    input:
+      bytes: [ 0x53, 0x0d, 0xee, 0x23 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsgnj.d s10, t3, t5"
+
+  -
+    input:
+      bytes: [ 0x53, 0x1d, 0xee, 0x23 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsgnjn.d s10, t3, t5"
+
+  -
+    input:
+      bytes: [ 0x53, 0x2d, 0xee, 0x23 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsgnjx.d s10, t3, t5"
+
+  -
+    input:
+      bytes: [ 0x53, 0x0d, 0xee, 0x2b ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmin.d s10, t3, t5"
+
+  -
+    input:
+      bytes: [ 0x53, 0x1d, 0xee, 0x2b ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmax.d s10, t3, t5"
+
+  -
+    input:
+      bytes: [ 0x53, 0x7d, 0x1e, 0x40 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.s.d s10, t3, dyn"
+
+  -
+    input:
+      bytes: [ 0x53, 0x0d, 0x0e, 0x42 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.d.s s10, t3"
+
+  -
+    input:
+      bytes: [ 0x53, 0x3d, 0x0e, 0x42 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.d.s s10, t3, rup"
+
+  -
+    input:
+      bytes: [ 0x53, 0x2d, 0xee, 0xa3 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "feq.d s10, t3, t5"
+
+  -
+    input:
+      bytes: [ 0x53, 0x1d, 0xee, 0xa3 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "flt.d s10, t3, t5"
+
+  -
+    input:
+      bytes: [ 0x53, 0x0d, 0xee, 0xa3 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fle.d s10, t3, t5"
+
+  -
+    input:
+      bytes: [ 0x53, 0x1d, 0x0e, 0xe2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fclass.d s10, t3"
+
+  -
+    input:
+      bytes: [ 0x53, 0x7a, 0x0b, 0xc2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.w.d s4, s6, dyn"
+
+  -
+    input:
+      bytes: [ 0x53, 0x0d, 0x0e, 0xd2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.d.w s10, t3"
+
+  -
+    input:
+      bytes: [ 0x53, 0x3d, 0x0e, 0xd2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.d.w s10, t3, rup"
+
+  -
+    input:
+      bytes: [ 0x53, 0x0d, 0x1e, 0xd2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.d.wu s10, t3"
+
+  -
+    input:
+      bytes: [ 0x53, 0x3d, 0x1e, 0xd2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.d.wu s10, t3, rup"
+
+  -
+    input:
+      bytes: [ 0x43, 0x05, 0xe6, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmadd.d a0, a2, a4, a6, rne"
+
+  -
+    input:
+      bytes: [ 0x47, 0x15, 0xe6, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmsub.d a0, a2, a4, a6, rtz"
+
+  -
+    input:
+      bytes: [ 0x4b, 0x25, 0xe6, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fnmsub.d a0, a2, a4, a6, rdn"
+
+  -
+    input:
+      bytes: [ 0x4f, 0x35, 0xe6, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fnmadd.d a0, a2, a4, a6, rup"
+
+  -
+    input:
+      bytes: [ 0x53, 0x4d, 0xee, 0x03 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fadd.d s10, t3, t5, rmm"
+
+  -
+    input:
+      bytes: [ 0x53, 0x0d, 0xee, 0x13 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fmul.d s10, t3, t5, rne"
+
+  -
+    input:
+      bytes: [ 0x53, 0x1d, 0xee, 0x1b ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fdiv.d s10, t3, t5, rtz"
+
+  -
+    input:
+      bytes: [ 0x53, 0x2a, 0x0b, 0x5a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsqrt.d s4, s6, rdn"
+
+  -
+    input:
+      bytes: [ 0x53, 0x3a, 0x1b, 0x40 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.s.d s4, s6, rup"
+
+  -
+    input:
+      bytes: [ 0x53, 0x4a, 0x0b, 0xc2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.w.d s4, s6, rmm"
+
+  -
+    input:
+      bytes: [ 0x53, 0x7a, 0x1b, 0xc2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZDINX", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fcvt.wu.d s4, s6, dyn"

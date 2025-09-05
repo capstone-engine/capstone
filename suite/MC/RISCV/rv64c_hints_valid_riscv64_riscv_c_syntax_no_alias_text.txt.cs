@@ -1,0 +1,2 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV64"|"CS_MODE_RISCV_C", None
+0x7e,0x10 == c.slli zero, 63

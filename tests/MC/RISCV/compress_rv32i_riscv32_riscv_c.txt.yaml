@@ -1,0 +1,290 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x2e, 0x85 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "mv a0, a1"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x1f ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi s0, sp, 1020"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x5f ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "lw s0, 124(a5)"
+
+  -
+    input:
+      bytes: [ 0xe0, 0xdf ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "sw s0, 124(a5)"
+
+  -
+    input:
+      bytes: [ 0x01, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "nop"
+
+  -
+    input:
+      bytes: [ 0x81, 0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi ra, ra, -32"
+
+  -
+    input:
+      bytes: [ 0x85, 0x50 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "li ra, -31"
+
+  -
+    input:
+      bytes: [ 0x39, 0x71 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi sp, sp, -64"
+
+  -
+    input:
+      bytes: [ 0xfd, 0x61 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "lui gp, 31"
+
+  -
+    input:
+      bytes: [ 0x7d, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "srli s0, s0, 31"
+
+  -
+    input:
+      bytes: [ 0x7d, 0x84 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "srai s0, s0, 31"
+
+  -
+    input:
+      bytes: [ 0x7d, 0x88 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "andi s0, s0, 31"
+
+  -
+    input:
+      bytes: [ 0x1d, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "sub s0, s0, a5"
+
+  -
+    input:
+      bytes: [ 0x3d, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "xor s0, s0, a5"
+
+  -
+    input:
+      bytes: [ 0x5d, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "or s0, s0, a5"
+
+  -
+    input:
+      bytes: [ 0x45, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "or s0, s0, s1"
+
+  -
+    input:
+      bytes: [ 0x7d, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "and s0, s0, a5"
+
+  -
+    input:
+      bytes: [ 0x01, 0xb0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "j -2048"
+
+  -
+    input:
+      bytes: [ 0x01, 0xd0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "beqz s0, -256"
+
+  -
+    input:
+      bytes: [ 0x7d, 0xec ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "bnez s0, 254"
+
+  -
+    input:
+      bytes: [ 0x7e, 0x04 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "slli s0, s0, 31"
+
+  -
+    input:
+      bytes: [ 0xfe, 0x50 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "lw ra, 252(sp)"
+
+  -
+    input:
+      bytes: [ 0x82, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "ret"
+
+  -
+    input:
+      bytes: [ 0x92, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "mv ra, tp"
+
+  -
+    input:
+      bytes: [ 0x02, 0x90 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "ebreak"
+
+  -
+    input:
+      bytes: [ 0x02, 0x94 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "jalr s0"
+
+  -
+    input:
+      bytes: [ 0x3e, 0x94 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "add s0, s0, a5"
+
+  -
+    input:
+      bytes: [ 0x82, 0xdf ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "sw zero, 252(sp)"
+
+  -
+    input:
+      bytes: [ 0x00, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C" ]
+    expected:
+      insns:
+        -
+          asm_text: "unimp"

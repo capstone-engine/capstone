@@ -1,2 +1,0 @@
-# CS_ARCH_RISCV, 0, None
-0x5b,0x14,0x42,0xf3 == sf.vfwmacc.4x4x4 v8, v4, v20

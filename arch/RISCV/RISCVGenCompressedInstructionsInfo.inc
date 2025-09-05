@@ -15,7 +15,8 @@ static bool RISCVValidateMCOperandForCompress(MCInst *MI,MCOperand *MCOp,
                   unsigned PredicateIndex) {
   switch (PredicateIndex) {
   default:
-    llvm_unreachable("Unknown MCOperandPredicate kind");
+    CS_ASSERT_RET_VAL(0,false); 
+	 return false;
     break;
   case 1: {
   // uimm10_lsb00nonzero
@@ -143,11 +144,12 @@ static bool RISCVValidateMCOperandForCompress(MCInst *MI,MCOperand *MCOp,
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     if (RISCV_getFeatureBits(MI->csh->mode,RISCV_Feature64Bit))
-      return  isUInt<6>(Imm) && (Imm != 0);
-    return isUInt<5>(Imm) && (Imm != 0);
+      return  isUIntN(6, Imm) && (Imm != 0);
+    return isUIntN(5, Imm) && (Imm != 0);
   
   }
   }
+	return false;
 }
 
 static bool compressInst(MCInst *OutInst,
@@ -165,9 +167,9 @@ static bool compressInst(MCInst *OutInst,
       // c.mv	$rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_MV);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -181,9 +183,9 @@ static bool compressInst(MCInst *OutInst,
       // c.mv	$rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_MV);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -197,11 +199,11 @@ static bool compressInst(MCInst *OutInst,
       // c.add	$rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_ADD);
       // Operand: rs1_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -215,11 +217,11 @@ static bool compressInst(MCInst *OutInst,
       // c.add	$rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_ADD);
       // Operand: rs1_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -235,11 +237,11 @@ static bool compressInst(MCInst *OutInst,
       // c.addi4spn	$rd, $rs1, $imm
       MCInst_setOpcode(OutInst, RISCV_C_ADDI4SPN);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -264,11 +266,11 @@ static bool compressInst(MCInst *OutInst,
       // c.addi	$rd, $imm
       MCInst_setOpcode(OutInst, RISCV_C_ADDI);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -281,9 +283,9 @@ static bool compressInst(MCInst *OutInst,
       // c.li	$rd, $imm
       MCInst_setOpcode(OutInst, RISCV_C_LI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -296,11 +298,11 @@ static bool compressInst(MCInst *OutInst,
       // c.addi16sp	$rd, $imm
       MCInst_setOpcode(OutInst, RISCV_C_ADDI16SP);
       // Operand: rd_wb
-      MCInst_CreateReg0(OutInst, RISCV_X2);
+      MCOperand_CreateReg0(OutInst, RISCV_X2);
       // Operand: rd
-      MCInst_CreateReg0(OutInst, RISCV_X2);
+      MCOperand_CreateReg0(OutInst, RISCV_X2);
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -314,9 +316,9 @@ static bool compressInst(MCInst *OutInst,
       // c.mv	$rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_MV);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -333,11 +335,11 @@ static bool compressInst(MCInst *OutInst,
       // c.addiw	$rd, $imm
       MCInst_setOpcode(OutInst, RISCV_C_ADDIW);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -351,9 +353,9 @@ static bool compressInst(MCInst *OutInst,
       // c.li	$rd, $imm
       MCInst_setOpcode(OutInst, RISCV_C_LI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -371,11 +373,11 @@ static bool compressInst(MCInst *OutInst,
       // c.addw	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_ADDW);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -390,11 +392,11 @@ static bool compressInst(MCInst *OutInst,
       // c.addw	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_ADDW);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -413,9 +415,9 @@ static bool compressInst(MCInst *OutInst,
       // c.zext.w	$rd
       MCInst_setOpcode(OutInst, RISCV_C_ZEXT_W);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -432,11 +434,11 @@ static bool compressInst(MCInst *OutInst,
       // c.and	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_AND);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -450,11 +452,11 @@ static bool compressInst(MCInst *OutInst,
       // c.and	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_AND);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -470,11 +472,11 @@ static bool compressInst(MCInst *OutInst,
       // c.andi	$rs1, $imm
       MCInst_setOpcode(OutInst, RISCV_C_ANDI);
       // Operand: rs1_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -488,9 +490,9 @@ static bool compressInst(MCInst *OutInst,
       // c.zext.b	$rd
       MCInst_setOpcode(OutInst, RISCV_C_ZEXT_B);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -506,9 +508,9 @@ static bool compressInst(MCInst *OutInst,
       // c.beqz	$rs1, $imm
       MCInst_setOpcode(OutInst, RISCV_C_BEQZ);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -521,9 +523,9 @@ static bool compressInst(MCInst *OutInst,
       // c.beqz	$rs1, $imm
       MCInst_setOpcode(OutInst, RISCV_C_BEQZ);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -539,9 +541,9 @@ static bool compressInst(MCInst *OutInst,
       // c.bnez	$rs1, $imm
       MCInst_setOpcode(OutInst, RISCV_C_BNEZ);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -554,9 +556,9 @@ static bool compressInst(MCInst *OutInst,
       // c.bnez	$rs1, $imm
       MCInst_setOpcode(OutInst, RISCV_C_BNEZ);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -582,11 +584,11 @@ static bool compressInst(MCInst *OutInst,
       // c.fld	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_FLD);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -600,11 +602,11 @@ static bool compressInst(MCInst *OutInst,
       // c.fldsp	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_FLDSP);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -622,11 +624,11 @@ static bool compressInst(MCInst *OutInst,
       // c.flw	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_FLW);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -641,11 +643,11 @@ static bool compressInst(MCInst *OutInst,
       // c.flwsp	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_FLWSP);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -662,11 +664,11 @@ static bool compressInst(MCInst *OutInst,
       // c.fsd	$rs2, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_FSD);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -680,11 +682,11 @@ static bool compressInst(MCInst *OutInst,
       // c.fsdsp	$rs2, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_FSDSP);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -702,11 +704,11 @@ static bool compressInst(MCInst *OutInst,
       // c.fsw	$rs2, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_FSW);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -721,11 +723,11 @@ static bool compressInst(MCInst *OutInst,
       // c.fswsp	$rs2, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_FSWSP);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -740,7 +742,7 @@ static bool compressInst(MCInst *OutInst,
       // c.jal	$offset
       MCInst_setOpcode(OutInst, RISCV_C_JAL);
       // Operand: offset
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -751,7 +753,7 @@ static bool compressInst(MCInst *OutInst,
       // c.j	$offset
       MCInst_setOpcode(OutInst, RISCV_C_J);
       // Operand: offset
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -768,7 +770,7 @@ static bool compressInst(MCInst *OutInst,
       // c.jr	$rs1
       MCInst_setOpcode(OutInst, RISCV_C_JR);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -782,7 +784,7 @@ static bool compressInst(MCInst *OutInst,
       // c.jalr	$rs1
       MCInst_setOpcode(OutInst, RISCV_C_JALR);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -798,11 +800,11 @@ static bool compressInst(MCInst *OutInst,
       // c.lbu	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_LBU);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -819,11 +821,11 @@ static bool compressInst(MCInst *OutInst,
       // c.ld	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_LD);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -837,11 +839,11 @@ static bool compressInst(MCInst *OutInst,
       // c.ldsp	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_LDSP);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -857,11 +859,11 @@ static bool compressInst(MCInst *OutInst,
       // c.lh	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_LH);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -877,11 +879,11 @@ static bool compressInst(MCInst *OutInst,
       // c.lhu	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_LHU);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -895,9 +897,9 @@ static bool compressInst(MCInst *OutInst,
       // c.lui	$rd, $imm
       MCInst_setOpcode(OutInst, RISCV_C_LUI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -913,11 +915,11 @@ static bool compressInst(MCInst *OutInst,
       // c.lw	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_LW);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -930,11 +932,11 @@ static bool compressInst(MCInst *OutInst,
       // c.lwsp	$rd, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_LWSP);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -952,11 +954,11 @@ static bool compressInst(MCInst *OutInst,
       // c.mul	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_MUL);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -971,11 +973,11 @@ static bool compressInst(MCInst *OutInst,
       // c.mul	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_MUL);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -992,11 +994,11 @@ static bool compressInst(MCInst *OutInst,
       // c.or	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_OR);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1010,11 +1012,11 @@ static bool compressInst(MCInst *OutInst,
       // c.or	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_OR);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -1030,11 +1032,11 @@ static bool compressInst(MCInst *OutInst,
       // c.sb	$rs2, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_SB);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1051,11 +1053,11 @@ static bool compressInst(MCInst *OutInst,
       // c.sd	$rs2, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_SD);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1069,11 +1071,11 @@ static bool compressInst(MCInst *OutInst,
       // c.sdsp	$rs2, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_SDSP);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1089,9 +1091,9 @@ static bool compressInst(MCInst *OutInst,
       // c.sext.b	$rd
       MCInst_setOpcode(OutInst, RISCV_C_SEXT_B);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -1107,9 +1109,9 @@ static bool compressInst(MCInst *OutInst,
       // c.sext.h	$rd
       MCInst_setOpcode(OutInst, RISCV_C_SEXT_H);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -1125,11 +1127,11 @@ static bool compressInst(MCInst *OutInst,
       // c.sh	$rs2, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_SH);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1145,11 +1147,11 @@ static bool compressInst(MCInst *OutInst,
       // c.slli	$rd, $imm
       MCInst_setOpcode(OutInst, RISCV_C_SLLI);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1165,11 +1167,11 @@ static bool compressInst(MCInst *OutInst,
       // c.srai	$rs1, $imm
       MCInst_setOpcode(OutInst, RISCV_C_SRAI);
       // Operand: rs1_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1185,11 +1187,11 @@ static bool compressInst(MCInst *OutInst,
       // c.srli	$rs1, $imm
       MCInst_setOpcode(OutInst, RISCV_C_SRLI);
       // Operand: rs1_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1203,7 +1205,7 @@ static bool compressInst(MCInst *OutInst,
       // c.sspopchk	$rs1
       MCInst_setOpcode(OutInst, RISCV_C_SSPOPCHK);
       // Operand: rs1
-      MCInst_CreateReg0(OutInst, RISCV_X5);
+      MCOperand_CreateReg0(OutInst, RISCV_X5);
 
       return true;
     } // if
@@ -1217,7 +1219,7 @@ static bool compressInst(MCInst *OutInst,
       // c.sspush	$rs1
       MCInst_setOpcode(OutInst, RISCV_C_SSPUSH);
       // Operand: rs1
-      MCInst_CreateReg0(OutInst, RISCV_X1);
+      MCOperand_CreateReg0(OutInst, RISCV_X1);
 
       return true;
     } // if
@@ -1234,11 +1236,11 @@ static bool compressInst(MCInst *OutInst,
       // c.sub	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_SUB);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1256,11 +1258,11 @@ static bool compressInst(MCInst *OutInst,
       // c.subw	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_SUBW);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1276,11 +1278,11 @@ static bool compressInst(MCInst *OutInst,
       // c.sw	$rs2, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_SW);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1293,11 +1295,11 @@ static bool compressInst(MCInst *OutInst,
       // c.swsp	$rs2, ${imm}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_C_SWSP);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1323,11 +1325,11 @@ static bool compressInst(MCInst *OutInst,
       // c.xor	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_XOR);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1341,11 +1343,11 @@ static bool compressInst(MCInst *OutInst,
       // c.xor	$rd, $rs2
       MCInst_setOpcode(OutInst, RISCV_C_XOR);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -1362,9 +1364,9 @@ static bool compressInst(MCInst *OutInst,
       // c.not	$rd
       MCInst_setOpcode(OutInst, RISCV_C_NOT);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -1380,9 +1382,9 @@ static bool compressInst(MCInst *OutInst,
       // c.zext.h	$rd
       MCInst_setOpcode(OutInst, RISCV_C_ZEXT_H);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -1398,9 +1400,9 @@ static bool compressInst(MCInst *OutInst,
       // c.zext.h	$rd
       MCInst_setOpcode(OutInst, RISCV_C_ZEXT_H);
       // Operand: rd_wb
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -1419,7 +1421,8 @@ static bool RISCVValidateMCOperandForUncompress(MCInst *MI,MCOperand *MCOp,
                   unsigned PredicateIndex) {
   switch (PredicateIndex) {
   default:
-    llvm_unreachable("Unknown MCOperandPredicate kind");
+    CS_ASSERT_RET_VAL(0,false); 
+	 return false;
     break;
   case 1: {
   // simm12
@@ -1469,6 +1472,7 @@ static bool RISCVValidateMCOperandForUncompress(MCInst *MI,MCOperand *MCOp,
   
   }
   }
+	return false;
 }
 
 static bool uncompressInst(MCInst *OutInst,
@@ -1486,11 +1490,11 @@ static bool uncompressInst(MCInst *OutInst,
       // add	$rd, $rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_ADD);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1506,11 +1510,11 @@ static bool uncompressInst(MCInst *OutInst,
       // addi	$rd, $rs1, $imm12
       MCInst_setOpcode(OutInst, RISCV_ADDI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1526,11 +1530,11 @@ static bool uncompressInst(MCInst *OutInst,
       // addi	$rd, $rs1, $imm12
       MCInst_setOpcode(OutInst, RISCV_ADDI);
       // Operand: rd
-      MCInst_CreateReg0(OutInst, RISCV_X2);
+      MCOperand_CreateReg0(OutInst, RISCV_X2);
       // Operand: rs1
-      MCInst_CreateReg0(OutInst, RISCV_X2);
+      MCOperand_CreateReg0(OutInst, RISCV_X2);
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1546,11 +1550,11 @@ static bool uncompressInst(MCInst *OutInst,
       // addi	$rd, $rs1, $imm12
       MCInst_setOpcode(OutInst, RISCV_ADDI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1567,11 +1571,11 @@ static bool uncompressInst(MCInst *OutInst,
       // addiw	$rd, $rs1, $imm12
       MCInst_setOpcode(OutInst, RISCV_ADDIW);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1589,11 +1593,11 @@ static bool uncompressInst(MCInst *OutInst,
       // addw	$rd, $rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_ADDW);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1610,11 +1614,11 @@ static bool uncompressInst(MCInst *OutInst,
       // and	$rd, $rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_AND);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1630,11 +1634,11 @@ static bool uncompressInst(MCInst *OutInst,
       // andi	$rd, $rs1, $imm12
       MCInst_setOpcode(OutInst, RISCV_ANDI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1648,11 +1652,11 @@ static bool uncompressInst(MCInst *OutInst,
       // beq	$rs1, $rs2, $imm12
       MCInst_setOpcode(OutInst, RISCV_BEQ);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      MCInst_CreateReg0(OutInst, RISCV_X0);
+      MCOperand_CreateReg0(OutInst, RISCV_X0);
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -1666,11 +1670,11 @@ static bool uncompressInst(MCInst *OutInst,
       // bne	$rs1, $rs2, $imm12
       MCInst_setOpcode(OutInst, RISCV_BNE);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      MCInst_CreateReg0(OutInst, RISCV_X0);
+      MCOperand_CreateReg0(OutInst, RISCV_X0);
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -1696,11 +1700,11 @@ static bool uncompressInst(MCInst *OutInst,
       // fld	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_FLD);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1717,11 +1721,11 @@ static bool uncompressInst(MCInst *OutInst,
       // fld	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_FLD);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1739,11 +1743,11 @@ static bool uncompressInst(MCInst *OutInst,
       // flw	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_FLW);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1761,11 +1765,11 @@ static bool uncompressInst(MCInst *OutInst,
       // flw	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_FLW);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1782,11 +1786,11 @@ static bool uncompressInst(MCInst *OutInst,
       // fsd	$rs2, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_FSD);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1803,11 +1807,11 @@ static bool uncompressInst(MCInst *OutInst,
       // fsd	$rs2, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_FSD);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1825,11 +1829,11 @@ static bool uncompressInst(MCInst *OutInst,
       // fsw	$rs2, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_FSW);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1847,11 +1851,11 @@ static bool uncompressInst(MCInst *OutInst,
       // fsw	$rs2, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_FSW);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1863,9 +1867,9 @@ static bool uncompressInst(MCInst *OutInst,
       // jal	$rd, $imm20
       MCInst_setOpcode(OutInst, RISCV_JAL);
       // Operand: rd
-      MCInst_CreateReg0(OutInst, RISCV_X0);
+      MCOperand_CreateReg0(OutInst, RISCV_X0);
       // Operand: imm20
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
 
       return true;
     } // if
@@ -1878,9 +1882,9 @@ static bool uncompressInst(MCInst *OutInst,
       // jal	$rd, $imm20
       MCInst_setOpcode(OutInst, RISCV_JAL);
       // Operand: rd
-      MCInst_CreateReg0(OutInst, RISCV_X1);
+      MCOperand_CreateReg0(OutInst, RISCV_X1);
       // Operand: imm20
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
 
       return true;
     } // if
@@ -1890,15 +1894,15 @@ static bool uncompressInst(MCInst *OutInst,
     if ((RISCV_getFeatureBits(MI->csh->mode, RISCV_FeatureStdExtC) || RISCV_getFeatureBits(MI->csh->mode, RISCV_FeatureStdExtZca)) &&
       (MCOperand_isReg(MCInst_getOperand(MI, 0))) &&
       (MCRegisterClass_contains(MCRegisterInfo_getRegClass(MI->MRI, RISCV_GPRRegClassID),MCOperand_getReg(MCInst_getOperand(MI, 0)))) &&
-      RISCVValidateMCOperandForUncompress(MI,MCOperand_createImm(0), 1)) {
+      RISCVValidateMCOperandForUncompress(MI,MCOperand_CreateImm1(MI, 0), 1)) {
       // jalr	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_JALR);
       // Operand: rd
-      MCInst_CreateReg0(OutInst, RISCV_X1);
+      MCOperand_CreateReg0(OutInst, RISCV_X1);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm12
-      MCInst_CreateImm0(OutInst, 0);
+      MCOperand_CreateImm0(OutInst, 0);
 
       return true;
     } // if
@@ -1908,15 +1912,15 @@ static bool uncompressInst(MCInst *OutInst,
     if ((RISCV_getFeatureBits(MI->csh->mode, RISCV_FeatureStdExtC) || RISCV_getFeatureBits(MI->csh->mode, RISCV_FeatureStdExtZca)) &&
       (MCOperand_isReg(MCInst_getOperand(MI, 0))) &&
       (MCRegisterClass_contains(MCRegisterInfo_getRegClass(MI->MRI, RISCV_GPRRegClassID),MCOperand_getReg(MCInst_getOperand(MI, 0)))) &&
-      RISCVValidateMCOperandForUncompress(MI,MCOperand_createImm(0), 1)) {
+      RISCVValidateMCOperandForUncompress(MI,MCOperand_CreateImm1(MI, 0), 1)) {
       // jalr	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_JALR);
       // Operand: rd
-      MCInst_CreateReg0(OutInst, RISCV_X0);
+      MCOperand_CreateReg0(OutInst, RISCV_X0);
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm12
-      MCInst_CreateImm0(OutInst, 0);
+      MCOperand_CreateImm0(OutInst, 0);
 
       return true;
     } // if
@@ -1932,11 +1936,11 @@ static bool uncompressInst(MCInst *OutInst,
       // lbu	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_LBU);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1953,11 +1957,11 @@ static bool uncompressInst(MCInst *OutInst,
       // ld	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_LD);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1974,11 +1978,11 @@ static bool uncompressInst(MCInst *OutInst,
       // ld	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_LD);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -1994,11 +1998,11 @@ static bool uncompressInst(MCInst *OutInst,
       // lh	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_LH);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2014,11 +2018,11 @@ static bool uncompressInst(MCInst *OutInst,
       // lhu	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_LHU);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2032,11 +2036,11 @@ static bool uncompressInst(MCInst *OutInst,
       // addi	$rd, $rs1, $imm12
       MCInst_setOpcode(OutInst, RISCV_ADDI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      MCInst_CreateReg0(OutInst, RISCV_X0);
+      MCOperand_CreateReg0(OutInst, RISCV_X0);
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -2050,9 +2054,9 @@ static bool uncompressInst(MCInst *OutInst,
       // lui	$rd, $imm20
       MCInst_setOpcode(OutInst, RISCV_LUI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm20
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
 
       return true;
     } // if
@@ -2068,11 +2072,11 @@ static bool uncompressInst(MCInst *OutInst,
       // lw	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_LW);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2088,11 +2092,11 @@ static bool uncompressInst(MCInst *OutInst,
       // lw	$rd, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_LW);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2110,11 +2114,11 @@ static bool uncompressInst(MCInst *OutInst,
       // mul	$rd, $rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_MUL);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2126,15 +2130,15 @@ static bool uncompressInst(MCInst *OutInst,
       (MCRegisterClass_contains(MCRegisterInfo_getRegClass(MI->MRI, RISCV_GPRRegClassID),MCOperand_getReg(MCInst_getOperand(MI, 0)))) &&
       (MCOperand_isReg(MCInst_getOperand(MI, 1))) &&
       (MCRegisterClass_contains(MCRegisterInfo_getRegClass(MI->MRI, RISCV_GPRRegClassID),MCOperand_getReg(MCInst_getOperand(MI, 1)))) &&
-      RISCVValidateMCOperandForUncompress(MI,MCOperand_createImm(0), 1)) {
+      RISCVValidateMCOperandForUncompress(MI,MCOperand_CreateImm1(MI, 0), 1)) {
       // addi	$rd, $rs1, $imm12
       MCInst_setOpcode(OutInst, RISCV_ADDI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      MCInst_CreateImm0(OutInst, 0);
+      MCOperand_CreateImm0(OutInst, 0);
 
       return true;
     } // if
@@ -2142,15 +2146,15 @@ static bool uncompressInst(MCInst *OutInst,
     } // case C_MV
     case RISCV_C_NOP: {
     if ((RISCV_getFeatureBits(MI->csh->mode, RISCV_FeatureStdExtC) || RISCV_getFeatureBits(MI->csh->mode, RISCV_FeatureStdExtZca)) &&
-      RISCVValidateMCOperandForUncompress(MI,MCOperand_createImm(0), 1)) {
+      RISCVValidateMCOperandForUncompress(MI,MCOperand_CreateImm1(MI, 0), 1)) {
       // addi	$rd, $rs1, $imm12
       MCInst_setOpcode(OutInst, RISCV_ADDI);
       // Operand: rd
-      MCInst_CreateReg0(OutInst, RISCV_X0);
+      MCOperand_CreateReg0(OutInst, RISCV_X0);
       // Operand: rs1
-      MCInst_CreateReg0(OutInst, RISCV_X0);
+      MCOperand_CreateReg0(OutInst, RISCV_X0);
       // Operand: imm12
-      MCInst_CreateImm0(OutInst, 0);
+      MCOperand_CreateImm0(OutInst, 0);
 
       return true;
     } // if
@@ -2162,15 +2166,15 @@ static bool uncompressInst(MCInst *OutInst,
       (MCRegisterClass_contains(MCRegisterInfo_getRegClass(MI->MRI, RISCV_GPRRegClassID),MCOperand_getReg(MCInst_getOperand(MI, 0)))) &&
       (MCOperand_isReg(MCInst_getOperand(MI, 0))) &&
       (MCRegisterClass_contains(MCRegisterInfo_getRegClass(MI->MRI, RISCV_GPRRegClassID),MCOperand_getReg(MCInst_getOperand(MI, 0)))) &&
-      RISCVValidateMCOperandForUncompress(MI,MCOperand_createImm(-1), 1)) {
+      RISCVValidateMCOperandForUncompress(MI,MCOperand_CreateImm1(MI, -1), 1)) {
       // xori	$rd, $rs1, $imm12
       MCInst_setOpcode(OutInst, RISCV_XORI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm12
-      OutInst.addOperand(MCOperand_createImm(-1));
+      MCOperand_CreateImm0(OutInst, -1);
 
       return true;
     } // if
@@ -2187,11 +2191,11 @@ static bool uncompressInst(MCInst *OutInst,
       // or	$rd, $rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_OR);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2207,11 +2211,11 @@ static bool uncompressInst(MCInst *OutInst,
       // sb	$rs2, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_SB);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2228,11 +2232,11 @@ static bool uncompressInst(MCInst *OutInst,
       // sd	$rs2, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_SD);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2249,11 +2253,11 @@ static bool uncompressInst(MCInst *OutInst,
       // sd	$rs2, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_SD);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2269,9 +2273,9 @@ static bool uncompressInst(MCInst *OutInst,
       // sext.b	$rd, $rs1
       MCInst_setOpcode(OutInst, RISCV_SEXT_B);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
 
       return true;
     } // if
@@ -2287,9 +2291,9 @@ static bool uncompressInst(MCInst *OutInst,
       // sext.h	$rd, $rs1
       MCInst_setOpcode(OutInst, RISCV_SEXT_H);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
 
       return true;
     } // if
@@ -2305,11 +2309,11 @@ static bool uncompressInst(MCInst *OutInst,
       // sh	$rs2, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_SH);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2325,11 +2329,11 @@ static bool uncompressInst(MCInst *OutInst,
       // slli	$rd, $rs1, $shamt
       MCInst_setOpcode(OutInst, RISCV_SLLI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: shamt
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2345,11 +2349,11 @@ static bool uncompressInst(MCInst *OutInst,
       // srai	$rd, $rs1, $shamt
       MCInst_setOpcode(OutInst, RISCV_SRAI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: shamt
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2365,11 +2369,11 @@ static bool uncompressInst(MCInst *OutInst,
       // srli	$rd, $rs1, $shamt
       MCInst_setOpcode(OutInst, RISCV_SRLI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: shamt
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2383,7 +2387,7 @@ static bool uncompressInst(MCInst *OutInst,
       // sspopchk	$rs1
       MCInst_setOpcode(OutInst, RISCV_SSPOPCHK);
       // Operand: rs1
-      MCInst_CreateReg0(OutInst, RISCV_X5);
+      MCOperand_CreateReg0(OutInst, RISCV_X5);
 
       return true;
     } // if
@@ -2397,7 +2401,7 @@ static bool uncompressInst(MCInst *OutInst,
       // sspush	$rs2
       MCInst_setOpcode(OutInst, RISCV_SSPUSH);
       // Operand: rs2
-      MCInst_CreateReg0(OutInst, RISCV_X1);
+      MCOperand_CreateReg0(OutInst, RISCV_X1);
 
       return true;
     } // if
@@ -2414,11 +2418,11 @@ static bool uncompressInst(MCInst *OutInst,
       // sub	$rd, $rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_SUB);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2436,11 +2440,11 @@ static bool uncompressInst(MCInst *OutInst,
       // subw	$rd, $rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_SUBW);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2456,11 +2460,11 @@ static bool uncompressInst(MCInst *OutInst,
       // sw	$rs2, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_SW);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2476,11 +2480,11 @@ static bool uncompressInst(MCInst *OutInst,
       // sw	$rs2, ${imm12}(${rs1})
       MCInst_setOpcode(OutInst, RISCV_SW);
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 1));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 1));
       // Operand: imm12
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2506,11 +2510,11 @@ static bool uncompressInst(MCInst *OutInst,
       // xor	$rd, $rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_XOR);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 2));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 2));
 
       return true;
     } // if
@@ -2522,15 +2526,15 @@ static bool uncompressInst(MCInst *OutInst,
       (MCRegisterClass_contains(MCRegisterInfo_getRegClass(MI->MRI, RISCV_GPRRegClassID),MCOperand_getReg(MCInst_getOperand(MI, 0)))) &&
       (MCOperand_isReg(MCInst_getOperand(MI, 0))) &&
       (MCRegisterClass_contains(MCRegisterInfo_getRegClass(MI->MRI, RISCV_GPRRegClassID),MCOperand_getReg(MCInst_getOperand(MI, 0)))) &&
-      RISCVValidateMCOperandForUncompress(MI,MCOperand_createImm(255), 1)) {
+      RISCVValidateMCOperandForUncompress(MI,MCOperand_CreateImm1(MI, 255), 1)) {
       // andi	$rd, $rs1, $imm12
       MCInst_setOpcode(OutInst, RISCV_ANDI);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: imm12
-      MCInst_CreateImm0(OutInst, 255);
+      MCOperand_CreateImm0(OutInst, 255);
 
       return true;
     } // if
@@ -2547,9 +2551,9 @@ static bool uncompressInst(MCInst *OutInst,
       // zext.h	$rd, $rs1
       MCInst_setOpcode(OutInst, RISCV_ZEXT_H_RV32);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
 
       return true;
     } // if
@@ -2563,9 +2567,9 @@ static bool uncompressInst(MCInst *OutInst,
       // zext.h	$rd, $rs1
       MCInst_setOpcode(OutInst, RISCV_ZEXT_H_RV64);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
 
       return true;
     } // if
@@ -2582,11 +2586,11 @@ static bool uncompressInst(MCInst *OutInst,
       // add.uw	$rd, $rs1, $rs2
       MCInst_setOpcode(OutInst, RISCV_ADD_UW);
       // Operand: rd
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs1
-      McInst_addOperand2(OutInst, McInst_getOperand(MI, 0));
+      MCInst_addOperand2(OutInst, MCInst_getOperand(MI, 0));
       // Operand: rs2
-      MCInst_CreateReg0(OutInst, RISCV_X0);
+      MCOperand_CreateReg0(OutInst, RISCV_X0);
 
       return true;
     } // if
@@ -2602,12 +2606,13 @@ static bool uncompressInst(MCInst *OutInst,
 #ifdef GEN_CHECK_COMPRESS_INSTR
 #undef GEN_CHECK_COMPRESS_INSTR
 
-static bool RISCVValidateMachineOperand(MCInst *MI,MachineOperand *MO,
+static bool RISCVValidateMachineOperand(MCInst *MI,MCOperand *MO,
                   unsigned PredicateIndex) {
   int64_t Imm = MCOperand_getImm(MO);
   switch (PredicateIndex) {
   default:
-    llvm_unreachable("Unknown ImmLeaf Predicate kind");
+    CS_ASSERT_RET_VAL(0,false); 
+	 return false;
     break;
   case 1: {
   // simm6nonzero
@@ -2667,14 +2672,15 @@ static bool RISCVValidateMachineOperand(MCInst *MI,MachineOperand *MO,
   // uimmlog2xlennonzero
   
   if (RISCV_getFeatureBits(MI->csh->mode,RISCV_Feature64Bit))
-    return isUInt<6>(Imm) && (Imm != 0);
-  return isUInt<5>(Imm) && (Imm != 0);
+    return isUIntN(6, Imm) && (Imm != 0);
+  return isUIntN(5, Imm) && (Imm != 0);
 
   }
   }
+	return false;
 }
 
-static bool isCompressibleInst(MachineInstr *MI) {
+static bool isCompressibleInst(MCInst *MI) {
   switch (MCInst_getOpcode(MI)) {
     default: return false;
     case RISCV_ADD: {

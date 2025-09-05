@@ -1,0 +1,300 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xb4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmacc.vv v8, v20, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xb6 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmacc.vv v8, v20, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xb4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmacc.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xb6 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmacc.vx v8, a0, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xbc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnmsac.vv v8, v20, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xbe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnmsac.vv v8, v20, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xbc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnmsac.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xbe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnmsac.vx v8, a0, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xa4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmadd.vv v8, v20, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xa6 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmadd.vv v8, v20, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xa4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmadd.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xa6 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmadd.vx v8, a0, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xac ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnmsub.vv v8, v20, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xae ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnmsub.vv v8, v20, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xac ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnmsub.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xae ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnmsub.vx v8, a0, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xf0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmaccu.vv v8, v20, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xf2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmaccu.vv v8, v20, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xf0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmaccu.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xf2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmaccu.vx v8, a0, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xf4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmacc.vv v8, v20, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xf6 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmacc.vv v8, v20, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xf4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmacc.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xf6 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmacc.vx v8, a0, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xfc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmaccsu.vv v8, v20, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xfe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmaccsu.vv v8, v20, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xfc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmaccsu.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xfe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmaccsu.vx v8, a0, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xf8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmaccus.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xfa ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwmaccus.vx v8, a0, v4"

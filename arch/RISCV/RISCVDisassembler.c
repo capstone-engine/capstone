@@ -49,11 +49,6 @@
 #define GET_INSTRINFO_MC_DESC
 #include "RISCVGenInstrInfo.inc"
 
-// will fail compilation if those were uncommented, compressed info inc is not valid C yet
-//#define GEN_COMPRESS_INSTR
-//#define GEN_CHECK_COMPRESS_INSTR
-//#define GEN_UNCOMPRESS_INSTR
-#include "RISCVGenCompressedInstructionsInfo.inc"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
