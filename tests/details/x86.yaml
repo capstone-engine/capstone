@@ -2438,22 +2438,24 @@ test_cases:
     input:
       name: "x87 comparison instructions, 32-bit decode mode"
       bytes: [
+        0xd8, 0x13,                               # fcom dword ptr [ebx]
+        0xdc, 0x13,                               # fcom qword ptr [ebx]
         0xd8, 0xd1,                               # fcom st(1)
-        0xdc, 0x55, 0x00,                         # fcom qword ptr [ebp]
-        0xd8, 0xd9,                               # fcomp st(1)
         0xd8, 0x5d, 0x00,                         # fcomp dword ptr [ebp]
+        0xdc, 0x5d, 0x00,                         # fcomp qword ptr [ebp]
+        0xd8, 0xd9,                               # fcomp st(1)
         0xde, 0xd9,                               # fcompp
         0xdb, 0xf0,                               # fcomi st(0)
         0xdf, 0xf1,                               # fcompi st(1)
+        0xdb, 0xe9,                               # fucomi st(1)
+        0xdf, 0xe9,                               # fucompi st(1)
         0xdd, 0xe1,                               # fucom st(1)
         0xdd, 0xe9,                               # fucomp st(1)
         0xda, 0xe9,                               # fucompp
-        0xdb, 0xe9,                               # fucomi st(1)
-        0xdf, 0xe9,                               # fucompi st(1)
         0xde, 0x14, 0x25, 0x34, 0x12, 0x00, 0x00, # ficom word ptr [0x1234]
-        0xda, 0x14, 0x25, 0x34, 0x12, 0x00, 0x00, # ficom dword ptr [0x1234]
+        0xda, 0x13,                               # ficom dword ptr [ebx]
         0xde, 0x1c, 0x25, 0x34, 0x12, 0x00, 0x00, # ficomp word ptr [0x1234]
-        0xda, 0x1c, 0x25, 0x34, 0x12, 0x00, 0x00, # ficomp dword ptr [0x1234]
+        0xda, 0x1b,                               # ficomp dword ptr [ebx]
         0xd9, 0xe4                                # ftest
       ]
       arch: "x86"
@@ -2461,39 +2463,41 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "fcom st(1)"
+        asm_text: "fcom dword ptr [ebx]"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xd8, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            modrm: 0x13
             operands:
               -
-                type: X86_OP_REG
-                reg: st(1)
-                size: 10
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
                 access: CS_AC_READ
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
-          regs_read: [ st(0), st(1) ]
+          regs_read: [ st(0), ss, ebx ]
           regs_write: [ fpsw ]
       -
-        asm_text: "fcom qword ptr [ebp]"
+        asm_text: "fcom qword ptr [ebx]"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xdc, 0x00, 0x00, 0x00 ]
             addr_size: 4
-            modrm: 0x55
+            modrm: 0x13
             operands:
               -
                 type: X86_OP_MEM
-                mem_base: ebp
+                mem_base: ebx
                 size: 8
                 access: CS_AC_READ
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
-          regs_read: [ st(0), ss, ebp ]
-          regs_write: [ fpsw ]
+          regs_read: [ st(0), ss, ebx ]
+          regs_write: [ fpsw ]          
       -
-        asm_text: "fcomp st(1)"
+        asm_text: "fcom st(1)"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
@@ -2525,6 +2529,38 @@ test_cases:
           regs_read: [ st(0), ss, ebp ]
           regs_write: [ fpsw ]
       -
+        asm_text: "fcomp qword ptr [ebp]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xdc, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            modrm: 0x5d
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebp
+                size: 8
+                access: CS_AC_READ
+            fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
+          regs_read: [ st(0), ss, ebp ]
+          regs_write: [ fpsw ]
+      -
+        asm_text: "fcomp st(1)"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xd8, 0x00, 0x00, 0x00 ]
+            operands:
+              -
+                type: X86_OP_REG
+                reg: st(1)
+                size: 10
+                access: CS_AC_READ
+            fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw ]
+      -
         asm_text: "fcompp"
         details:
           x86:
@@ -2534,7 +2570,6 @@ test_cases:
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
           regs_read: [ st(0), st(1) ]
           regs_write: [ fpsw ]
-          
       -
         asm_text: "fcomi st(0)"
         details:
@@ -2556,6 +2591,28 @@ test_cases:
             fpu_flags: [X86_FPU_FLAGS_RESET_C1 ]
 #             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
           regs_read: [ st(0), st(1)]
+          regs_write: [ fpsw, eflags ]
+      -
+        asm_text: "fucomi st(1)"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xdb, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
+#             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, eflags]
+      -
+        asm_text: "fucompi st(1)"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xdf, 0x00, 0x00, 0x00 ]
+            addr_size: 4
+            fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
+#             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
+          regs_read: [ st(0), st(1) ]
           regs_write: [ fpsw, eflags ]
       -
         asm_text: "fucom st(1)"
@@ -2597,28 +2654,6 @@ test_cases:
           regs_read: [ st(0), st(1) ]
           regs_write: [ fpsw ]
       -
-        asm_text: "fucomi st(1)"
-        details:
-          x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
-            opcode: [ 0xdb, 0x00, 0x00, 0x00 ]
-            addr_size: 4
-            fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
-#             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
-          regs_read: [ st(0), st(1) ]
-          regs_write: [ fpsw, eflags]
-      -
-        asm_text: "fucompi st(1)"
-        details:
-          x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
-            opcode: [ 0xdf, 0x00, 0x00, 0x00 ]
-            addr_size: 4
-            fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
-#             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
-          regs_read: [ st(0), st(1) ]
-          regs_write: [ fpsw, eflags ]
-      -
         asm_text: "ficom word ptr [0x1234]"
         details:
           x86:
@@ -2639,24 +2674,21 @@ test_cases:
           regs_read: [ st(0), ds ]
           regs_write: [ fpsw ]
       -
-        asm_text: "ficom dword ptr [0x1234]"
+        asm_text: "ficom dword ptr [ebx]"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xda, 0x00, 0x00, 0x00 ]
             addr_size: 4
-            modrm: 0x14
-            disp: 0x1234
-            sib: 0x25
-            sib_scale: 1
+            modrm: 0x13
             operands:
               -
                 type: X86_OP_MEM
-                mem_disp: 0x1234
+                mem_base: ebx
                 size: 4
                 access: CS_AC_READ
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
-          regs_read: [ st(0), ds ]
+          regs_read: [ st(0), ds, ebx ]
           regs_write: [ fpsw ]
       -
         asm_text: "ficomp word ptr [0x1234]"
@@ -2679,24 +2711,21 @@ test_cases:
           regs_read: [ st(0), ds ]
           regs_write: [ fpsw ]
       -
-        asm_text: "ficomp dword ptr [0x1234]"
+        asm_text: "ficomp dword ptr [ebx]"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xda, 0x00, 0x00, 0x00 ]
             addr_size: 4
-            modrm: 0x1c
-            disp: 0x1234
-            sib: 0x25
-            sib_scale: 1
+            modrm: 0x1b
             operands:
               -
                 type: X86_OP_MEM
-                mem_disp: 0x1234
+                mem_base: ebx
                 size: 4
                 access: CS_AC_READ
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
-          regs_read: [ st(0), ds ]
+          regs_read: [ st(0), ds, ebx ]
           regs_write: [ fpsw ]
       -
         asm_text: "ftst"
@@ -2712,22 +2741,24 @@ test_cases:
     input:
       name: "x87 comparison instructions, 64-bit decode mode"
       bytes: [
+        0xd8, 0x13,                               # fcom dword ptr [rbx]
+        0xdc, 0x13,                               # fcom qword ptr [rbx]
         0xd8, 0xd1,                               # fcom st(1)
-        0xdc, 0x55, 0x00,                         # fcom qword ptr [rbp]
+        0xd8, 0x5d, 0x00,                         # fcomp dword ptr [ebp]
+        0xdc, 0x5d, 0x00,                         # fcomp qword ptr [ebp]
         0xd8, 0xd9,                               # fcomp st(1)
-        0xd8, 0x5d, 0x00,                         # fcomp dword ptr [rbp]
         0xde, 0xd9,                               # fcompp
         0xdb, 0xf0,                               # fcomi st(0)
         0xdf, 0xf1,                               # fcompi st(1)
-        0xdd, 0xe1,                               # fucom st(1)
-        0xdd, 0xe9,                               # fucomp st(1)
-        0xda, 0xe9,                               # fucompp
         0xdb, 0xe9,                               # fucomi st(1)
         0xdf, 0xe9,                               # fucompi st(1)
+        0xdd, 0xe1,                               # fucom st(1)
+        0xdd, 0xe9,                               # fucomp st(1)
+        0xda, 0xe9,                               # fucom
         0xde, 0x14, 0x25, 0x34, 0x12, 0x00, 0x00, # ficom word ptr [0x1234]
-        0xda, 0x14, 0x25, 0x34, 0x12, 0x00, 0x00, # ficom dword ptr [0x1234]
+        0xda, 0x13,                               # ficom dword ptr [rbx]
         0xde, 0x1c, 0x25, 0x34, 0x12, 0x00, 0x00, # ficomp word ptr [0x1234]
-        0xda, 0x1c, 0x25, 0x34, 0x12, 0x00, 0x00, # ficomp dword ptr [0x1234]
+        0xda, 0x1b,                               # ficomp dword ptr [rbx]
         0xd9, 0xe4                                # ftest
       ]
       arch: "x86"
@@ -2735,39 +2766,41 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "fcom st(1)"
+        asm_text: "fcom dword ptr [rbx]"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xd8, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0x13
             operands:
               -
-                type: X86_OP_REG
-                reg: st(1)
-                size: 10
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
                 access: CS_AC_READ
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
-          regs_read: [ st(0), st(1) ]
+          regs_read: [ st(0), ss, rbx ]
           regs_write: [ fpsw ]
       -
-        asm_text: "fcom qword ptr [rbp]"
+        asm_text: "fcom qword ptr [rbx]"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xdc, 0x00, 0x00, 0x00 ]
             addr_size: 8
-            modrm: 0x55
+            modrm: 0x13
             operands:
               -
                 type: X86_OP_MEM
-                mem_base: rbp
+                mem_base: rbx
                 size: 8
                 access: CS_AC_READ
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
-          regs_read: [ st(0), ss, rbp ]
-          regs_write: [ fpsw ]
+          regs_read: [ st(0), ss, rbx ]
+          regs_write: [ fpsw ]          
       -
-        asm_text: "fcomp st(1)"
+        asm_text: "fcom st(1)"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
@@ -2799,6 +2832,38 @@ test_cases:
           regs_read: [ st(0), ss, rbp ]
           regs_write: [ fpsw ]
       -
+        asm_text: "fcomp qword ptr [rbp]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xdc, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0x5d
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbp
+                size: 8
+                access: CS_AC_READ
+            fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
+          regs_read: [ st(0), ss, rbp ]
+          regs_write: [ fpsw ]
+      -
+        asm_text: "fcomp st(1)"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xd8, 0x00, 0x00, 0x00 ]
+            operands:
+              -
+                type: X86_OP_REG
+                reg: st(1)
+                size: 10
+                access: CS_AC_READ
+            fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw ]
+      -
         asm_text: "fcompp"
         details:
           x86:
@@ -2808,7 +2873,6 @@ test_cases:
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
           regs_read: [ st(0), st(1) ]
           regs_write: [ fpsw ]
-          
       -
         asm_text: "fcomi st(0)"
         details:
@@ -2830,6 +2894,28 @@ test_cases:
             fpu_flags: [X86_FPU_FLAGS_RESET_C1 ]
 #             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
           regs_read: [ st(0), st(1)]
+          regs_write: [ fpsw, rflags ]
+      -
+        asm_text: "fucomi st(1)"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xdb, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
+#             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, rflags]
+      -
+        asm_text: "fucompi st(1)"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xdf, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
+#             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
+          regs_read: [ st(0), st(1) ]
           regs_write: [ fpsw, rflags ]
       -
         asm_text: "fucom st(1)"
@@ -2871,28 +2957,6 @@ test_cases:
           regs_read: [ st(0), st(1) ]
           regs_write: [ fpsw ]
       -
-        asm_text: "fucomi st(1)"
-        details:
-          x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
-            opcode: [ 0xdb, 0x00, 0x00, 0x00 ]
-            addr_size: 8
-            fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
-#             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
-          regs_read: [ st(0), st(1) ]
-          regs_write: [ fpsw, rflags]
-      -
-        asm_text: "fucompi st(1)"
-        details:
-          x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
-            opcode: [ 0xdf, 0x00, 0x00, 0x00 ]
-            addr_size: 8
-            fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
-#             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
-          regs_read: [ st(0), st(1) ]
-          regs_write: [ fpsw, rflags ]
-      -
         asm_text: "ficom word ptr [0x1234]"
         details:
           x86:
@@ -2913,24 +2977,21 @@ test_cases:
           regs_read: [ st(0), ds ]
           regs_write: [ fpsw ]
       -
-        asm_text: "ficom dword ptr [0x1234]"
+        asm_text: "ficom dword ptr [rbx]"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xda, 0x00, 0x00, 0x00 ]
             addr_size: 8
-            modrm: 0x14
-            disp: 0x1234
-            sib: 0x25
-            sib_scale: 1
+            modrm: 0x13
             operands:
               -
                 type: X86_OP_MEM
-                mem_disp: 0x1234
+                mem_base: rbx
                 size: 4
                 access: CS_AC_READ
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
-          regs_read: [ st(0), ds ]
+          regs_read: [ st(0), ds, rbx ]
           regs_write: [ fpsw ]
       -
         asm_text: "ficomp word ptr [0x1234]"
@@ -2953,24 +3014,21 @@ test_cases:
           regs_read: [ st(0), ds ]
           regs_write: [ fpsw ]
       -
-        asm_text: "ficomp dword ptr [0x1234]"
+        asm_text: "ficomp dword ptr [rbx]"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xda, 0x00, 0x00, 0x00 ]
             addr_size: 8
-            modrm: 0x1c
-            disp: 0x1234
-            sib: 0x25
-            sib_scale: 1
+            modrm: 0x1b
             operands:
               -
                 type: X86_OP_MEM
-                mem_disp: 0x1234
+                mem_base: rbx
                 size: 4
                 access: CS_AC_READ
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
-          regs_read: [ st(0), ds ]
+          regs_read: [ st(0), ds, rbx ]
           regs_write: [ fpsw ]
       -
         asm_text: "ftst"
