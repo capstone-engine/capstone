@@ -10,7 +10,7 @@ struct SwiftIntegrationTests {
     private static let x86Code: [UInt8] = [0x8D, 0x4C, 0x32, 0x08, 0x01, 0xD8, 0x81, 0xC6, 0x34, 0x12, 0x00, 0x00]
 
     @Test("Swift optionals and error handling")
-    func testSwiftOptionals() async throws {
+    func swiftOptionals() async throws {
         var handle: csh = 0
         let openResult = cs_open(CS_ARCH_X86, CS_MODE_32, &handle)
 
@@ -44,7 +44,7 @@ struct SwiftIntegrationTests {
     }
 
     @Test("Swift memory management patterns")
-    func testSwiftMemoryManagement() async throws {
+    func swiftMemoryManagement() async throws {
         var handle: csh = 0
         let openResult = cs_open(CS_ARCH_X86, CS_MODE_32, &handle)
 
@@ -100,7 +100,7 @@ struct SwiftIntegrationTests {
         #expect(deferCount == bufferCount, "Both patterns should yield same results")
 
         // Test iterator pattern with automatic cleanup
-        func testIteratorPattern() -> Int {
+        func iteratorPattern() -> Int {
             guard let insn = cs_malloc(handle) else {
                 return 0
             }
@@ -128,12 +128,12 @@ struct SwiftIntegrationTests {
             return instructionCount
         }
 
-        let iteratorCount = testIteratorPattern()
+        let iteratorCount = iteratorPattern()
         print("  Iterator pattern with automatic cleanup: \(iteratorCount) instructions")
     }
 
     @Test("Swift string handling and C interop")
-    func testSwiftStringHandling() async throws {
+    func swiftStringHandling() async throws {
         print("✓ Swift string handling and C interop:")
 
         // Test converting C strings to Swift strings
@@ -171,7 +171,7 @@ struct SwiftIntegrationTests {
     }
 
     @Test("Swift array and collection integration")
-    func testSwiftCollectionIntegration() async throws {
+    func swiftCollectionIntegration() async throws {
         var handle: csh = 0
         let openResult = cs_open(CS_ARCH_X86, CS_MODE_32, &handle)
 
@@ -243,7 +243,7 @@ struct SwiftIntegrationTests {
     }
 
     @Test("Swift error handling patterns")
-    func testSwiftErrorHandling() async throws {
+    func swiftErrorHandling() async throws {
         print("✓ Swift error handling patterns:")
 
         // Define a Swift wrapper that throws
@@ -330,7 +330,7 @@ struct SwiftIntegrationTests {
     }
 
     @Test("Swift value types and reference types")
-    func testSwiftValueAndReferenceTypes() async throws {
+    func swiftValueAndReferenceTypes() async throws {
         var handle: csh = 0
         let openResult = cs_open(CS_ARCH_X86, CS_MODE_32, &handle)
 
@@ -416,7 +416,7 @@ struct SwiftIntegrationTests {
     }
 
     @Test("Swift async/await compatibility")
-    func testAsyncAwaitCompatibility() async throws {
+    func asyncAwaitCompatibility() async throws {
         print("✓ Swift async/await compatibility:")
 
         // Test that Capstone operations can be used in async contexts
@@ -466,7 +466,7 @@ struct SwiftIntegrationTests {
     }
 
     @Test("Swift generic and protocol integration")
-    func testGenericAndProtocolIntegration() async throws {
+    func genericAndProtocolIntegration() async throws {
         print("✓ Swift generic and protocol integration:")
 
         // Define protocols for Capstone operations
@@ -530,11 +530,11 @@ struct SwiftIntegrationTests {
         print("  Set-derived array disassembly: \(setResult) instructions")
 
         // Test generic function
-        func testGenericDisassembly<T: Collection>(_ provider: DisassemblyProvider, code: T) -> Int where T.Element == UInt8 {
+        func genericDisassembly<T: Collection>(_ provider: DisassemblyProvider, code: T) -> Int where T.Element == UInt8 {
             return provider.disassemble(code)
         }
 
-        let genericResult = testGenericDisassembly(disassembler, code: Self.x86Code)
+        let genericResult = genericDisassembly(disassembler, code: Self.x86Code)
         print("  Generic function result: \(genericResult) instructions")
 
         #expect(arrayResult == genericResult, "Generic and direct calls should yield same results")
