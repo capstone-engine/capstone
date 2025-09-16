@@ -11,18 +11,23 @@ bool RISCV_getFeatureBits(unsigned int mode, unsigned int feature) {
     switch (feature) {
     case RISCV_Feature32Bit:
         return mode & CS_MODE_RISCV32;
+
     case RISCV_Feature64Bit:
         return mode & CS_MODE_RISCV64;
+
     case RISCV_FEATURE_HASSTDEXTF:
     case RISCV_FEATURE_HASSTDEXTD:
         return mode & CS_MODE_RISCV_FD;
+
     case RISCV_FeatureStdExtV:
         return mode & CS_MODE_RISCV_V;
+
     case RISCV_FeatureStdExtZfinx:
     case RISCV_FeatureStdExtZdinx:
     case RISCV_FeatureStdExtZhinx:
     case RISCV_FeatureStdExtZhinxmin:
         return mode & CS_MODE_RISCV_ZFINX;
+    
     case RISCV_FeatureStdExtC:
         return mode & CS_MODE_RISCV_C;
 
@@ -30,16 +35,20 @@ bool RISCV_getFeatureBits(unsigned int mode, unsigned int feature) {
     case RISCV_FeatureStdExtZcmt:
     case RISCV_FeatureStdExtZce:
         return mode & CS_MODE_RISCV_ZCMP_ZCMT_ZCE;
+
     case RISCV_FeatureStdExtZicfiss:
         return mode & CS_MODE_RISCV_ZICFISS;
+
     case RISCV_FeatureRVE:
         return mode & CS_MODE_RISCV_E;
+
     case RISCV_FeatureStdExtA:
         return mode & CS_MODE_RISCV_A;
+        
     case RISCV_FeatureVendorXCVelw:
         return mode & CS_MODE_RISCV_COREV;
     
-    case  RISCV_FeatureVendorXSfvcp:
+    case RISCV_FeatureVendorXSfvcp:
     case RISCV_FeatureVendorXSfvfnrclipxfqf:
     case RISCV_FeatureVendorXSfvfwmaccqqq:
     case RISCV_FeatureVendorXSfvqmaccdod:

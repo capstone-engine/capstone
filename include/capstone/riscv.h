@@ -45,6 +45,7 @@ typedef struct cs_riscv_op {
 	union {
 		unsigned int reg;	// register value for REG operand
 		int64_t imm;		// immediate value for IMM operand
+		double dimm;		// immeidate double value for FP operands
 		riscv_op_mem mem;	// base/disp value for MEM operand
 	};
 	cs_ac_type access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)

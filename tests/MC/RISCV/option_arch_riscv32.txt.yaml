@@ -60,6 +60,12 @@ test_cases:
           asm_text: "mul a4, ra, s0"
 
   -
+    skip: true
+    skip_reason: >
+      Bad test generated due to the ASUpdater not understanding the 
+      inline architecture options syntax in LLVM tests, this test 
+      should have been generated with an "a" flag because this
+      instruction belongs to the atomic extension
     input:
       bytes: [ 0xaf, 0x22, 0x03, 0x10 ]
       arch: "CS_ARCH_RISCV"
@@ -70,6 +76,8 @@ test_cases:
           asm_text: "lr.w t0, (t1)"
 
   -
+    skip: true
+    skip_reason: "Same as above, should have been generated with a 'zba' extension"
     input:
       bytes: [ 0xb3, 0x22, 0x73, 0x20 ]
       arch: "CS_ARCH_RISCV"

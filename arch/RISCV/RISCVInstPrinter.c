@@ -382,6 +382,7 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O, void * /* MCRegisterInf
 			McInstr = &Uncompressed;
 			Uncompressed.MRI = MI->MRI;
 			Uncompressed.csh = MI->csh;
+			Uncompressed.flat_insn = MI->flat_insn;
 		}
 		
 		if (printAliasInstr(McInstr, MI->address, O))

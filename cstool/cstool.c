@@ -138,6 +138,32 @@ static struct {
 	  { CS_ARCH_SPARC, CS_ARCH_MAX },
 	  0,
 	  CS_MODE_V9 },
+	{ "+c",
+	  "Enables RISCV C extension.",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_C },
+	{ "+fd",
+	  "Enables RISCV F and D extensions.",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_FD },
+	{ "+v",
+	  "Enables RISCV V extension.",
+          { CS_ARCH_RISCV, CS_ARCH_MAX },
+          0,
+          CS_MODE_RISCV_V },
+	{ "+inx",
+	  "Enables RISCV Zfinx, Zdinx, and Zhinx extensions,"
+	  	" zhinxmin is also enabled as it's subset of zhinx ",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_ZFINX },
+	{ "+zcmp-t-e",
+	  "Enables the following RISCV code size reduction extensions: zcmp, zcmt and zce",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_ZCMP_ZCMT_ZCE },
 	{ NULL }
 };
 
@@ -958,6 +984,8 @@ int main(int argc, char **argv)
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
+	printf("\nINSN TEXT: %s, %s", insn->mnemonic, insn->op_str);
+	printf("\n ------------------------------ COUNT OF CS INSN OPS : %d \n", insn->detail->riscv.op_count);
 	if (count > 0) {
 		for (i = 0; i < count; i++) {
 			int j;

@@ -106,7 +106,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0xa
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+          groups: [ RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
       -
         asm_text: "bne gp, t1, -6"
         details:
@@ -124,7 +124,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: -6
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+          groups: [ RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
       -
         asm_text: "blt t2, s1, 0x14"
         details:
@@ -142,7 +142,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x14
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+          groups: [ RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
       -
         asm_text: "bge a0, a1, 6"
         details:
@@ -160,7 +160,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x6
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+          groups: [ RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
       -
         asm_text: "bltu a2, a3, 0xa"
         details:
@@ -178,7 +178,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0xa
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+          groups: [ RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
       -
         asm_text: "bgeu a4, a5, 0xc"
         details:
@@ -196,7 +196,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0xc
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+          groups: [ RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
       -
         asm_text: "lb a6, 1(a7)"
         details:
@@ -710,7 +710,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s9
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTM ]
+          groups: [ RISCV_FEATURE_HasStdExtM ]
       -
         asm_text: "rem a2, s10, s11"
         details:
@@ -728,7 +728,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s11
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTM ]
+          groups: [ RISCV_FEATURE_HasStdExtM ]
       -
         asm_text: "lr.w s0, (t0)"
         details:
@@ -800,7 +800,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft3
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "fadd.s ft5, ft6, ft7"
         details:
@@ -818,7 +818,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft7
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "fsqrt.s fs0, fs1"
         details:
@@ -832,7 +832,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fs1
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "fmin.s fa0, fa1, fa2"
         details:
@@ -850,7 +850,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fa2
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "feq.s t3, ft8, ft9"
         details:
@@ -868,7 +868,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft9
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "fmv.w.x fs1, a1"
         details:
@@ -882,7 +882,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: a1
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "fmv.x.w a2, fa0"
         details:
@@ -896,7 +896,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fa0
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "fcvt.w.s a0, ft0"
         details:
@@ -910,7 +910,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft0
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "fcvt.s.w ft1, a1"
         details:
@@ -924,7 +924,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: a1
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "fclass.s a1, fa6"
         details:
@@ -938,7 +938,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fa6
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "flw fs5, 7(a1)"
         details:
@@ -953,7 +953,7 @@ test_cases:
                 mem_base: a1
                 mem_disp: 0x7
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "fsw fs6, 0xe(a2)"
         details:
@@ -968,7 +968,7 @@ test_cases:
                 mem_base: a2
                 mem_disp: 0xe
                 access: CS_AC_WRITE
-          groups: [ RISCV_GRP_HASSTDEXTF ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF ]
       -
         asm_text: "fmadd.d ft0, ft1, ft2, ft3"
         details:
@@ -1101,7 +1101,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s1
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTM, RISCV_GRP_ISRV64 ]
+          groups: [ RISCV_GRP_HASSTDEXTM, RISCV_FEATURE_ISRV64 ]
       -
         asm_text: "divw ra, s10, t0"
         details:
@@ -1119,7 +1119,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: t0
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTM, RISCV_GRP_ISRV64 ]
+          groups: [ RISCV_FEATURE_HasStdExtM, RISCV_FEATURE_ISRV64 ]
       -
         asm_text: "remw t1, a4, s11"
         details:
@@ -1137,7 +1137,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s11
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTM, RISCV_GRP_ISRV64 ]
+          groups: [ RISCV_FEATURE_HasStdExtM, RISCV_FEATURE_ISRV64 ]
       -
         asm_text: "lr.d s0, (t0)"
         details:
@@ -1151,7 +1151,7 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: t0
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTA, RISCV_GRP_ISRV64 ]
+          groups: [ RISCV_GRP_HASSTDEXTA, RISCV_FEATURE_ISRV64 ]
       -
         asm_text: "sc.d t2, t1, (a0)"
         details:
@@ -1169,7 +1169,7 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: a0
                 access: CS_AC_WRITE
-          groups: [ RISCV_GRP_HASSTDEXTA, RISCV_GRP_ISRV64 ]
+          groups: [ RISCV_GRP_HASSTDEXTA, RISCV_FEATURE_ISRV64 ]
       -
         asm_text: "amoadd.d a4, s2, (t5)"
         details:
@@ -1187,7 +1187,7 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: t5
                 access: CS_AC_READ_WRITE
-          groups: [ RISCV_GRP_HASSTDEXTA, RISCV_GRP_ISRV64 ]
+          groups: [ RISCV_GRP_HASSTDEXTA, RISCV_FEATURE_ISRV64 ]
       -
         asm_text: "fcvt.l.s a0, ft0"
         details:
@@ -1201,7 +1201,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft0
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF, RISCV_GRP_ISRV64 ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF, RISCV_FEATURE_ISRV64 ]
       -
         asm_text: "fcvt.s.l ft1, a1"
         details:
@@ -1215,7 +1215,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: a1
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTF, RISCV_GRP_ISRV64 ]
+          groups: [ RISCV_FEATURE_HASSTDEXTF, RISCV_FEATURE_ISRV64 ]
       -
         asm_text: "fmv.d.x fs1, a1"
         details:
@@ -1229,7 +1229,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: a1
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTD, RISCV_GRP_ISRV64 ]
+          groups: [ RISCV_GRP_HASSTDEXTD, RISCV_FEATURE_ISRV64 ]
       -
         asm_text: "fmv.x.d a2, fa0"
         details:
@@ -1243,7 +1243,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fa0
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTD, RISCV_GRP_ISRV64 ]
+          groups: [ RISCV_GRP_HASSTDEXTD, RISCV_FEATURE_ISRV64 ]
       -
         asm_text: "fcvt.w.d a0, ft0"
         details:
@@ -1320,7 +1320,7 @@ test_cases:
     input:
       bytes: [ 0xe8, 0x1f, 0x7d, 0x61, 0x80, 0x25, 0x00, 0x46, 0x88, 0xa2, 0x04, 0xcb, 0x55, 0x13, 0xf2, 0x93, 0x5d, 0x45, 0x19, 0x80, 0x15, 0x68, 0x2a, 0xa4, 0x62, 0x24, 0xa6, 0xff, 0x2a, 0x65, 0x76, 0x86, 0x65, 0xdd, 0x01, 0x00, 0xfd, 0xaf, 0x82, 0x82, 0x11, 0x20, 0x82, 0x94  ]
       arch: "riscv"
-      options: [ CS_OPT_DETAIL, CS_MODE_RISCVC ]
+      options: [ CS_OPT_DETAIL, CS_MODE_RISCVC, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x1000
     expected:
       insns:
@@ -1341,7 +1341,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x3fc
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.addi16sp sp, 0x1f0"
         details:
@@ -1355,7 +1355,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x1f0
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.fld fs0, 8(a1)"
         details:
@@ -1370,7 +1370,7 @@ test_cases:
                 mem_base: a1
                 mem_disp: 0x8
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTD ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_HASSTDEXTD ]
       -
         asm_text: "c.lw s0, 8(a2)"
         details:
@@ -1385,7 +1385,7 @@ test_cases:
                 mem_base: a2
                 mem_disp: 0x8
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.fsd fa0, 0(a3)"
         details:
@@ -1399,7 +1399,7 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: a3
                 access: CS_AC_WRITE
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTD ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_HASSTDEXTD ]
       -
         asm_text: "c.sw s1, 0x10(a4)"
         details:
@@ -1414,7 +1414,7 @@ test_cases:
                 mem_base: a4
                 mem_disp: 0x10
                 access: CS_AC_WRITE
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.addi t1, -0xb"
         details:
@@ -1428,7 +1428,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: -0xb
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.add t2, t3"
         details:
@@ -1442,7 +1442,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: t3
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.li a0, 0x17"
         details:
@@ -1456,7 +1456,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x17
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.srli s0, 6"
         details:
@@ -1470,7 +1470,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x6
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.lui a6, 5"
         details:
@@ -1484,7 +1484,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x5
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.fsdsp fa0, 8(sp)"
         details:
@@ -1499,7 +1499,7 @@ test_cases:
                 mem_base: sp
                 mem_disp: 0x8
                 access: CS_AC_WRITE
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTD ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_HASSTDEXTD ]
       -
         asm_text: "c.fldsp fs0, 0x18(sp)"
         details:
@@ -1514,7 +1514,7 @@ test_cases:
                 mem_base: sp
                 mem_disp: 0x18
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTD ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_HASSTDEXTD ]
       -
         asm_text: "c.fswsp fs1, 0xfc(sp)"
         details:
@@ -1532,7 +1532,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: sp
                 access: CS_AC_WRITE
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTF, RISCV_GRP_ISRV32 ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_FEATURE_HASSTDEXTF, RISCV_FEATURE_ISRV32 ]
       -
         asm_text: "c.flwsp fa0, 0x88(sp)"
         details:
@@ -1550,7 +1550,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: sp
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_HASSTDEXTF, RISCV_GRP_ISRV32 ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZcfOrZce, RISCV_FEATURE_HASSTDEXTF, RISCV_FEATURE_ISRV32 ]
       -
         asm_text: "c.mv a2, t4"
         details:
@@ -1564,7 +1564,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: t4
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.beqz a0, -8"
         details:
@@ -1578,11 +1578,11 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: -8
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_BRANCH_RELATIVE, RISCV_GRP_JUMP ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
       -
         asm_text: "c.nop"
         details:
-          groups: [ RISCV_GRP_HASSTDEXTC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
       -
         asm_text: "c.j 0x7fe"
         details:
@@ -1592,7 +1592,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x7fe
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_JUMP ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_JUMP ]
       -
         asm_text: "c.jr t0"
         details:
@@ -1602,7 +1602,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: t0
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_JUMP ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_JUMP ]
       -
         asm_text: "c.jal 4"
         details:
@@ -1612,7 +1612,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x4
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_ISRV32, RISCV_GRP_CALL ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_FEATURE_ISRV32, RISCV_GRP_CALL ]
       -
         asm_text: "c.jalr s1"
         details:
@@ -1622,7 +1622,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s1
                 access: CS_AC_READ
-          groups: [ RISCV_GRP_HASSTDEXTC, RISCV_GRP_CALL ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_CALL ]
   -
     input:
       bytes: [ 0x37,0x34,0x00,0x00 ]
@@ -1682,7 +1682,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x8
                 access: CS_AC_READ
-          groups: [ call ]
+          groups: [RISCV_GRP_CALL ]
   -
     input:
       bytes: [ 0xef,0xf0,0x1f,0xff ]
@@ -1700,7 +1700,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: -0x10
                 access: CS_AC_READ
-          groups: [ call ]
+          groups: [RISCV_GRP_CALL ]
   -
     input:
       bytes: [ 0xe7,0x00,0x45,0x00 ]
@@ -1726,7 +1726,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x4
                 access: CS_AC_READ
-          groups: [ call ]
+          groups: [RISCV_GRP_CALL ]
   -
     input:
       bytes: [ 0xe7,0x00,0xc0,0xff ]
@@ -1752,7 +1752,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: -4
                 access: CS_AC_READ
-          groups: [ call ]
+          groups: [RISCV_GRP_CALL ]
   -
     input:
       bytes: [ 0x63,0x05,0x41,0x00 ]
@@ -1778,7 +1778,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0xa
                 access: CS_AC_READ
-          groups: [ branch_relative, jump ]
+          groups: [ RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
   -
     input:
       bytes: [ 0xe3,0x9d,0x61,0xfe ]
@@ -1804,7 +1804,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: -6
                 access: CS_AC_READ
-          groups: [ branch_relative, jump ]
+          groups: [ RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
   -
     input:
       bytes: [ 0x63,0xca,0x93,0x00 ]
@@ -1830,7 +1830,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x14
                 access: CS_AC_READ
-          groups: [ branch_relative, jump ]
+          groups: [ RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
   -
     input:
       bytes: [ 0x63,0x53,0xb5,0x00 ]
@@ -1856,7 +1856,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x6
                 access: CS_AC_READ
-          groups: [ branch_relative, jump ]
+          groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
   -
     input:
       bytes: [ 0x63,0x65,0xd6,0x00 ]
@@ -1882,7 +1882,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0xa
                 access: CS_AC_READ
-          groups: [ branch_relative, jump ]
+          groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
   -
     input:
       bytes: [ 0x63,0x76,0xf7,0x00 ]
@@ -1908,7 +1908,7 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0xc
                 access: CS_AC_READ
-          groups: [ branch_relative, jump ]
+          groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE ]
   -
     input:
       bytes: [ 0x03,0x88,0x18,0x00 ]
@@ -2652,7 +2652,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s7
                 access: CS_AC_READ
-          groups: [ hasStdExtM ]
+          groups: [ RISCV_FEATURE_HasStdExtMOrZmmul ]
   -
     input:
       bytes: [ 0xb3,0x45,0x9c,0x03 ]
@@ -2678,7 +2678,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s9
                 access: CS_AC_READ
-          groups: [ hasStdExtM ]
+          groups: [ RISCV_FEATURE_HasStdExtM ]
   -
     input:
       bytes: [ 0x33,0x66,0xbd,0x03 ]
@@ -2704,7 +2704,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s11
                 access: CS_AC_READ
-          groups: [ hasStdExtM ]
+          groups: [ RISCV_FEATURE_HasStdExtM ]
   -
     input:
       bytes: [ 0x2f,0xa4,0x02,0x10 ]
@@ -2726,7 +2726,7 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: t0
                 access: CS_AC_READ
-          groups: [ hasStdExtA ]
+          groups: [ RISCV_FEATURE_HasStdExtA ]
   -
     input:
       bytes: [ 0xaf,0x23,0x65,0x18 ]
@@ -2752,7 +2752,7 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: a0
                 access: CS_AC_WRITE
-          groups: [ hasStdExtA ]
+          groups: [ RISCV_FEATURE_HasStdExtA ]
   -
     input:
       bytes: [ 0x2f,0x27,0x2f,0x01 ]
@@ -2778,7 +2778,7 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: t5
                 access: CS_AC_READ_WRITE
-          groups: [ hasStdExtA ]
+          groups: [ RISCV_FEATURE_HasStdExtA ]
   -
     input:
       bytes: [ 0x43,0xf0,0x20,0x18 ]
@@ -2808,7 +2808,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft3
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0xd3,0x72,0x73,0x00 ]
@@ -2834,7 +2834,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft7
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0x53,0xf4,0x04,0x58 ]
@@ -2856,7 +2856,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fs1
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0x53,0x85,0xc5,0x28 ]
@@ -2882,7 +2882,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fa2
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0x53,0x2e,0xde,0xa1 ]
@@ -2908,7 +2908,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft9
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0xd3,0x84,0x05,0xf0 ]
@@ -2930,7 +2930,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: a1
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0x53,0x06,0x05,0xe0 ]
@@ -2952,7 +2952,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fa0
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0x53,0x75,0x00,0xc0 ]
@@ -2974,7 +2974,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft0
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0xd3,0xf0,0x05,0xd0 ]
@@ -2996,7 +2996,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: a1
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0xd3,0x15,0x08,0xe0 ]
@@ -3018,7 +3018,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fa6
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0x87,0xaa,0x75,0x00 ]
@@ -3041,7 +3041,7 @@ test_cases:
                 mem_base: a1
                 mem_disp: 0x7
                 access: CS_AC_READ
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0x27,0x27,0x66,0x01 ]
@@ -3064,7 +3064,7 @@ test_cases:
                 mem_base: a2
                 mem_disp: 0xe
                 access: CS_AC_WRITE
-          groups: [ hasStdExtF ]
+          groups: [ RISCV_FEATURE_HasStdExtF ]
   -
     input:
       bytes: [ 0x43,0xf0,0x20,0x1a ]
@@ -3094,7 +3094,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft3
                 access: CS_AC_READ
-          groups: [ hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0xd3,0x72,0x73,0x02 ]
@@ -3120,7 +3120,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft7
                 access: CS_AC_READ
-          groups: [ hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0x53,0xf4,0x04,0x5a ]
@@ -3142,7 +3142,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fs1
                 access: CS_AC_READ
-          groups: [ hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0x53,0x85,0xc5,0x2a ]
@@ -3168,7 +3168,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fa2
                 access: CS_AC_READ
-          groups: [ hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0x53,0x2e,0xde,0xa3 ]
@@ -3194,7 +3194,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft9
                 access: CS_AC_READ
-          groups: [ hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0x13,0x04,0xa8,0x7a ]
@@ -3245,7 +3245,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s1
                 access: CS_AC_READ
-          groups: [ hasStdExtM, isrv64 ]
+          groups: [ RISCV_FEATURE_HasStdExtMOrZmmul, isrv64 ]
   -
     input:
       bytes: [ 0xbb,0x40,0x5d,0x02 ]
@@ -3271,7 +3271,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: t0
                 access: CS_AC_READ
-          groups: [ hasStdExtM, isrv64 ]
+          groups: [ RISCV_FEATURE_HasStdExtM, isrv64 ]
   -
     input:
       bytes: [ 0x3b,0x63,0xb7,0x03 ]
@@ -3297,7 +3297,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s11
                 access: CS_AC_READ
-          groups: [ hasStdExtM, isrv64 ]
+          groups: [ RISCV_FEATURE_HasStdExtM, isrv64 ]
   -
     input:
       bytes: [ 0x2f,0xb4,0x02,0x10 ]
@@ -3319,7 +3319,7 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: t0
                 access: CS_AC_READ
-          groups: [ hasStdExtA, isrv64 ]
+          groups: [ RISCV_FEATURE_HasStdExtA, isrv64 ]
   -
     input:
       bytes: [ 0xaf,0x33,0x65,0x18 ]
@@ -3345,7 +3345,7 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: a0
                 access: CS_AC_WRITE
-          groups: [ hasStdExtA, isrv64 ]
+          groups: [ RISCV_FEATURE_HasStdExtA, isrv64 ]
   -
     input:
       bytes: [ 0x2f,0x37,0x2f,0x01 ]
@@ -3371,7 +3371,7 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: t5
                 access: CS_AC_READ_WRITE
-          groups: [ hasStdExtA, isrv64 ]
+          groups: [ RISCV_FEATURE_HasStdExtA, isrv64 ]
   -
     input:
       bytes: [ 0x53,0x75,0x20,0xc0 ]
@@ -3393,7 +3393,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft0
                 access: CS_AC_READ
-          groups: [ hasStdExtF, isrv64 ]
+          groups: [ RISCV_FEATURE_HasStdExtF, isrv64 ]
   -
     input:
       bytes: [ 0xd3,0xf0,0x25,0xd0 ]
@@ -3415,7 +3415,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: a1
                 access: CS_AC_READ
-          groups: [ hasStdExtF, isrv64 ]
+          groups: [ RISCV_FEATURE_HasStdExtF, isrv64 ]
   -
     input:
       bytes: [ 0xd3,0x84,0x05,0xf2 ]
@@ -3437,7 +3437,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: a1
                 access: CS_AC_READ
-          groups: [ hasStdExtD, isrv64 ]
+          groups: [ RISCV_FEATURE_HasStdExtD, isrv64 ]
   -
     input:
       bytes: [ 0x53,0x06,0x05,0xe2 ]
@@ -3459,7 +3459,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fa0
                 access: CS_AC_READ
-          groups: [ hasStdExtD, isrv64 ]
+          groups: [ RISCV_FEATURE_HasStdExtD, isrv64 ]
   -
     input:
       bytes: [ 0x53,0x75,0x00,0xc2 ]
@@ -3481,7 +3481,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: ft0
                 access: CS_AC_READ
-          groups: [ hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0xd3,0x80,0x05,0xd2 ]
@@ -3503,7 +3503,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: a1
                 access: CS_AC_READ
-          groups: [ hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0xd3,0x15,0x08,0xe2 ]
@@ -3525,7 +3525,7 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: fa6
                 access: CS_AC_READ
-          groups: [ hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0x87,0xba,0x75,0x00 ]
@@ -3548,7 +3548,7 @@ test_cases:
                 mem_base: a1
                 mem_disp: 0x7
                 access: CS_AC_READ
-          groups: [ hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0x27,0x37,0x66,0x01 ]
@@ -3571,12 +3571,12 @@ test_cases:
                 mem_base: a2
                 mem_disp: 0xe
                 access: CS_AC_WRITE
-          groups: [ hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0xe8,0x1f ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3597,12 +3597,12 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x3fc
                 access: CS_AC_READ
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
   -
     input:
       bytes: [ 0x7d,0x61 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3619,12 +3619,12 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x1f0
                 access: CS_AC_READ
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
   -
     input:
       bytes: [ 0x80,0x25 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3642,12 +3642,12 @@ test_cases:
                 mem_base: a1
                 mem_disp: 0x8
                 access: CS_AC_READ
-          groups: [ hasStdExtC, hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZcd, RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0x00,0x46 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
       address: 0x0
     expected:
       insns:
@@ -3665,12 +3665,12 @@ test_cases:
                 mem_base: a2
                 mem_disp: 0x8
                 access: CS_AC_READ
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
   -
     input:
       bytes: [ 0x88,0xa2 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3687,12 +3687,12 @@ test_cases:
                 type: RISCV_OP_MEM
                 mem_base: a3
                 access: CS_AC_WRITE
-          groups: [ hasStdExtC, hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZcd, RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0x04,0xcb ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3710,12 +3710,12 @@ test_cases:
                 mem_base: a4
                 mem_disp: 0x10
                 access: CS_AC_WRITE
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtC ]
   -
     input:
       bytes: [ 0x55,0x13 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
       address: 0x0
     expected:
       insns:
@@ -3732,12 +3732,12 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: -0xb
                 access: CS_AC_READ
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
   -
     input:
       bytes: [ 0xf2,0x93 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3754,12 +3754,12 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: t3
                 access: CS_AC_READ
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca ]
   -
     input:
       bytes: [ 0x5d,0x45 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3776,12 +3776,12 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x17
                 access: CS_AC_READ
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtC ]
   -
     input:
       bytes: [ 0x19,0x80 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3798,12 +3798,12 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x6
                 access: CS_AC_READ
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtC ]
   -
     input:
       bytes: [ 0x15,0x68 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3820,12 +3820,12 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x5
                 access: CS_AC_READ
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, HasRVCHints ]
   -
     input:
       bytes: [ 0x2a,0xa4 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3843,12 +3843,12 @@ test_cases:
                 mem_base: sp
                 mem_disp: 0x8
                 access: CS_AC_WRITE
-          groups: [ hasStdExtC, hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZcd, RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0x62,0x24 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3866,12 +3866,12 @@ test_cases:
                 mem_base: sp
                 mem_disp: 0x18
                 access: CS_AC_READ
-          groups: [ hasStdExtC, hasStdExtD ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZcd, RISCV_FEATURE_HasStdExtD ]
   -
     input:
       bytes: [ 0xa6,0xff ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3892,12 +3892,12 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: sp
                 access: CS_AC_WRITE
-          groups: [ hasStdExtC, hasStdExtF, isrv32 ]
+          groups: [ RISCV_FEATURE_HasStdExtC, RISCV_FEATURE_HasStdExtF, isrv32 ]
   -
     input:
       bytes: [ 0x2a,0x65 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3918,12 +3918,12 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: sp
                 access: CS_AC_READ
-          groups: [ hasStdExtC, hasStdExtF, isrv32 ]
+          groups: [ RISCV_FEATURE_HasStdExtCOrZca, RISCV_FEATURE_HasStdExtF, isrv32 ]
   -
     input:
       bytes: [ 0x76,0x86 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3940,12 +3940,12 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: t4
                 access: CS_AC_READ
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtC ]
   -
     input:
       bytes: [ 0x65,0xdd ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3962,24 +3962,24 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: -0x8
                 access: CS_AC_READ
-          groups: [ hasStdExtC, branch_relative, jump ]
+          groups: [ RISCV_FEATURE_HasStdExtC, RISCV_GRP_BRANCH_RELATIVE,RISCV_GRP_JUMP ]
   -
     input:
       bytes: [ 0x01,0x00 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
       -
         asm_text: "c.nop"
         details:
-          groups: [ hasStdExtC ]
+          groups: [ RISCV_FEATURE_HasStdExtC ]
   -
     input:
       bytes: [ 0xfd,0xaf ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -3992,12 +3992,12 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x7fe
                 access: CS_AC_READ
-          groups: [ hasStdExtC, jump ]
+          groups: [ RISCV_FEATURE_HasStdExtC,RISCV_GRP_JUMP ]
   -
     input:
       bytes: [ 0x82,0x82 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -4010,12 +4010,12 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: t0
                 access: CS_AC_READ
-          groups: [ hasStdExtC, jump ]
+          groups: [ RISCV_FEATURE_HasStdExtC,RISCV_GRP_JUMP ]
   -
     input:
       bytes: [ 0x11,0x20 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -4028,12 +4028,12 @@ test_cases:
                 type: RISCV_OP_IMM
                 imm: 0x4
                 access: CS_AC_READ
-          groups: [ hasStdExtC, isrv32, call ]
+          groups: [ RISCV_FEATURE_HasStdExtC, isrv32,RISCV_GRP_CALL ]
   -
     input:
       bytes: [ 0x82,0x94 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCVC, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -4046,4 +4046,4 @@ test_cases:
                 type: RISCV_OP_REG
                 reg: s1
                 access: CS_AC_READ
-          groups: [ hasStdExtC, call ]
+          groups: [ RISCV_FEATURE_HasStdExtC,RISCV_GRP_CALL ]
