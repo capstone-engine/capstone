@@ -3048,3 +3048,87 @@ test_cases:
             fpu_flags: [X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C1, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
           regs_read: [ st(0) ]
           regs_write: [ st(0), fpsw ]
+
+  -
+    input:
+      name: "Enter/leave instructions, 16-bit decode mode"
+      bytes: [
+         0xc8, 0x34, 0x12, 0x05,      # enter 0x1234, 0x5 (Create a stack frame of size 0x1234 with a nesting level of 0x5)
+         0xc9                         # leave
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "enter 0x1234, 0x5"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc8, 0x00, 0x00, 0x00 ]
+          regs_read: [ bp, sp ]
+          regs_write: [ bp, sp ]
+      -
+        asm_text: "leave"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc9, 0x00, 0x00, 0x00 ]
+          regs_read: [ bp, sp ]
+          regs_write: [ bp, sp ]
+
+  -
+    input:
+      name: "Enter/leave instructions, 32-bit decode mode"
+      bytes: [
+         0xc8, 0x34, 0x12, 0x05,      # enter 0x1234, 0x5 (Create a stack frame of size 0x1234 with a nesting level of 0x5)
+         0xc9                         # leave
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "enter 0x1234, 0x5"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc8, 0x00, 0x00, 0x00 ]
+          regs_read: [ ebp, esp ]
+          regs_write: [ ebp, esp ]
+      -
+        asm_text: "leave"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc9, 0x00, 0x00, 0x00 ]
+          regs_read: [ ebp, esp ]
+          regs_write: [ ebp, esp ]
+
+  -
+    input:
+      name: "Enter/leave instructions, 64-bit decode mode"
+      bytes: [
+         0xc8, 0x34, 0x12, 0x05,      # enter 0x1234, 0x5 (Create a stack frame of size 0x1234 with a nesting level of 0x5)
+         0xc9                         # leave
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "enter 0x1234, 0x5"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc8, 0x00, 0x00, 0x00 ]
+          regs_read: [ rbp, rsp ]
+          regs_write: [ rbp, rsp ]
+      -
+        asm_text: "leave"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc9, 0x00, 0x00, 0x00 ]
+          regs_read: [ rbp, rsp ]
+          regs_write: [ rbp, rsp ]
