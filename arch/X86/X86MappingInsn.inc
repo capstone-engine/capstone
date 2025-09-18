@@ -5613,7 +5613,7 @@
 {
 	X86_FXAM, X86_INS_FXAM, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_FPU, 0 }, 0, 0
+	{ X86_REG_ST0, 0 }, { X86_REG_ST0, X86_REG_FPSW, 0 }, { X86_GRP_FPU, 0 }, 0, 0
 #endif
 },
 
