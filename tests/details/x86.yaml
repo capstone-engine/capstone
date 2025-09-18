@@ -2567,7 +2567,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xde, 0x00, 0x00, 0x00 ]
-            addr_size: 4
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
           regs_read: [ st(0), st(1) ]
           regs_write: [ fpsw ]
@@ -2577,7 +2576,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xdb, 0x00, 0x00, 0x00 ]
-            addr_size: 4
             fpu_flags: [X86_FPU_FLAGS_MODIFY_C1 ]
 #             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
           regs_read: [ st(0) ]
@@ -2588,7 +2586,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xdf, 0x00, 0x00, 0x00 ]
-            addr_size: 4
             fpu_flags: [X86_FPU_FLAGS_RESET_C1 ]
 #             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
           regs_read: [ st(0), st(1)]
@@ -2599,7 +2596,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xdb, 0x00, 0x00, 0x00 ]
-            addr_size: 4
             fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
 #             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
           regs_read: [ st(0), st(1) ]
@@ -2610,7 +2606,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xdf, 0x00, 0x00, 0x00 ]
-            addr_size: 4
             fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
 #             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
           regs_read: [ st(0), st(1) ]
@@ -2734,7 +2729,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xd9, 0x00, 0x00, 0x00 ]
-            addr_size: 4
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
           regs_read: [ st(0) ]
           regs_write: [ fpsw ]
@@ -2744,7 +2738,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xd9, 0x00, 0x00, 0x00 ]
-            addr_size: 4
             fpu_flags: [X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C1, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
           regs_read: [ st(0) ]
           regs_write: [ st(0), fpsw ]
@@ -2881,7 +2874,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xde, 0x00, 0x00, 0x00 ]
-            addr_size: 8
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
           regs_read: [ st(0), st(1) ]
           regs_write: [ fpsw ]
@@ -2891,7 +2883,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xdb, 0x00, 0x00, 0x00 ]
-            addr_size: 8
             fpu_flags: [X86_FPU_FLAGS_MODIFY_C1 ]
 #             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
           regs_read: [ st(0) ]
@@ -2902,7 +2893,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xdf, 0x00, 0x00, 0x00 ]
-            addr_size: 8
             fpu_flags: [X86_FPU_FLAGS_RESET_C1 ]
 #             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
           regs_read: [ st(0), st(1)]
@@ -2913,7 +2903,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xdb, 0x00, 0x00, 0x00 ]
-            addr_size: 8
             fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
 #             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
           regs_read: [ st(0), st(1) ]
@@ -2924,7 +2913,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xdf, 0x00, 0x00, 0x00 ]
-            addr_size: 8
             fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1 ]
 #             eflags: [ X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]  see https://github.com/capstone-engine/capstone/pull/2680
           regs_read: [ st(0), st(1) ]
@@ -3048,7 +3036,6 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xd9, 0x00, 0x00, 0x00 ]
-            addr_size: 8
             fpu_flags: [X86_FPU_FLAGS_RESET_C1, X86_FPU_FLAGS_MODIFY_C0, X86_FPU_FLAGS_MODIFY_C2, X86_FPU_FLAGS_MODIFY_C3 ]
           regs_read: [ st(0) ]
           regs_write: [ fpsw ]
