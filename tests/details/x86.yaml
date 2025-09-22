@@ -3302,6 +3302,12 @@ test_cases:
         0xf3,0xac,   # rep lodsb al, byte ptr ds:[si]
         0xad,        # lodsw ax, word ptr ds:[si]
         0xf3,0xad,   # rep lodsw ax, word ptr ds:[si]
+        0xae,        # scasb al, byte ptr es:[di]
+        0xf3, 0xae,  # repe scasb al, byte ptr es:[di]
+        0xf2, 0xae,  # repne scasb al, byte ptr es:[di]
+        0xaf,        # scasd ax, word ptr es:[edi]
+        0xf3, 0xaf,  # repe scasd ax, word ptr es:[edi]
+        0xf2, 0xaf,  # repne scasd ax, word ptr es:[edi]
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_16 ]
@@ -3380,6 +3386,60 @@ test_cases:
             eflags: [ X86_EFLAGS_TEST_DF ]
           regs_read: [ si, flags, ds, cx ]
           regs_write: [ ax, si, cx ]
+      -
+        asm_text: "scasb al, byte ptr es:[di]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xae, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ al, di, flags, es ]
+          regs_write: [ di, flags ]
+      -
+        asm_text: "repe scasb al, byte ptr es:[di]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xae, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ al, di, flags, cx, es ]
+          regs_write: [ di, flags, cx ]
+      -
+        asm_text: "repne scasb al, byte ptr es:[di]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPNE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xae, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ al, di, flags, cx, es ]
+          regs_write: [ di, flags, cx ]
+      -
+        asm_text: "scasw ax, word ptr es:[di]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ ax, di, flags, es ]
+          regs_write: [ di, flags ]
+      -
+        asm_text: "repe scasw ax, word ptr es:[di]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ ax, di, flags, cx, es ]
+          regs_write: [ di, flags, cx ]
+      -
+        asm_text: "repne scasw ax, word ptr es:[di]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPNE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ ax, di, flags, cx, es ]
+          regs_write: [ di, flags, cx ]
 
   -
     input:
@@ -3393,6 +3453,12 @@ test_cases:
         0xf3, 0xac,  # rep lodsb al, byte ptr ds:[esi]
         0xad,        # lodsb eax, dword ptr ds:[esi]
         0xf3, 0xad,  # rep lodsb eax, dword ptr ds:[esi]
+        0xae,        # scasb al, word ptr es:[edi]
+        0xf3, 0xae,  # repe scasb al, word ptr es:[edi]
+        0xf2, 0xae,  # repne scasb al, word ptr es:[edi]
+        0xaf,        # scasd eax, dword ptr es:[edi]
+        0xf3, 0xaf,  # repe scasd eax, dword ptr es:[edi]
+        0xf2, 0xaf,  # repne scasd eax, dword ptr es:[edi]
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_32 ]
@@ -3471,6 +3537,60 @@ test_cases:
             eflags: [ X86_EFLAGS_TEST_DF ]
           regs_read: [ esi, eflags, ds, ecx ]
           regs_write: [ eax, esi, ecx ]
+      -
+        asm_text: "scasb al, byte ptr es:[edi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xae, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ al, edi, eflags, es ]
+          regs_write: [ edi, eflags ]
+      -
+        asm_text: "repe scasb al, byte ptr es:[edi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xae, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ al, edi, eflags, ecx, es ]
+          regs_write: [ edi, eflags, ecx ]
+      -
+        asm_text: "repne scasb al, byte ptr es:[edi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPNE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xae, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ al, edi, eflags, ecx, es ]
+          regs_write: [ edi, eflags, ecx ]
+      -
+        asm_text: "scasd eax, dword ptr es:[edi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ eax, edi, eflags, es ]
+          regs_write: [ edi, eflags ]
+      -
+        asm_text: "repe scasd eax, dword ptr es:[edi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ eax, edi, eflags, ecx, es ]
+          regs_write: [ edi, eflags, ecx ]
+      -
+        asm_text: "repne scasd eax, dword ptr es:[edi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPNE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ eax, edi, eflags, ecx, es ]
+          regs_write: [ edi, eflags, ecx ]
 
   -
     input:
@@ -3488,6 +3608,15 @@ test_cases:
         0xf3, 0xad,          # rep lodsd eax, dword ptr [rsi]
         0x48, 0xad,          # REX.W lodsq rax, qword ptr [rsi]
         0xf3, 0x48, 0xad,    # rep REX.W lodsq rax, qword ptr [rsi]
+        0xae,                # scasb al, word ptr es:[rdi]
+        0xf3, 0xae,          # repe scasb al, word ptr es:[rdi]
+        0xf2, 0xae,          # repne scasb al, word ptr es:[rdi]
+        0xaf,                # scasd eax, dword ptr [rdi]
+        0xf3, 0xaf,          # repe scasd eax, dword ptr [rdi]
+        0xf2, 0xaf,          # repne scasd eax, dword ptr [rdi]
+        0x48, 0xaf,          # REX.W scasq rax, qword ptr [rdi]
+        0xf3, 0x48, 0xaf,    # repe REX.W scasq rax, qword ptr [rdi]
+        0xf2, 0x48, 0xaf,    # repne REX.W scasq rax, qword ptr [rdi]
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_64 ]
@@ -3606,3 +3735,87 @@ test_cases:
             eflags: [ X86_EFLAGS_TEST_DF ]
           regs_read: [ rsi, rflags, rcx ]
           regs_write: [ rax, rsi, rcx ]
+      -
+        asm_text: "scasb al, byte ptr [rdi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xae, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ al, rdi, rflags ]
+          regs_write: [ rdi, rflags ]
+      -
+        asm_text: "repe scasb al, byte ptr [rdi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xae, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ al, rdi, rflags, rcx ]
+          regs_write: [ rdi, rflags, rcx ]
+      -
+        asm_text: "repne scasb al, byte ptr [rdi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPNE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xae, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ al, rdi, rflags, rcx ]
+          regs_write: [ rdi, rflags, rcx ]
+      -
+        asm_text: "scasd eax, dword ptr [rdi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ eax, rdi, rflags ]
+          regs_write: [ rdi, rflags ]
+      -
+        asm_text: "repe scasd eax, dword ptr [rdi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ eax, rdi, rflags, rcx ]
+          regs_write: [ rdi, rflags, rcx ]
+      -
+        asm_text: "repne scasd eax, dword ptr [rdi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REPNE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ eax, rdi, rflags, rcx ]
+          regs_write: [ rdi, rflags, rcx ]
+      -
+        asm_text: "scasq rax, qword ptr [rdi]"
+        details:
+          x86:
+            rex: 0x48
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ rax, rdi, rflags ]
+          regs_write: [ rdi, rflags ]
+      -
+        asm_text: "repe scasq rax, qword ptr [rdi]"
+        details:
+          x86:
+            rex: 0x48
+            prefix: [ X86_PREFIX_REPE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ rax, rdi, rflags, rcx ]
+          regs_write: [ rdi, rflags, rcx ]
+      -
+        asm_text: "repne scasq rax, qword ptr [rdi]"
+        details:
+          x86:
+            rex: 0x48
+            prefix: [ X86_PREFIX_REPNE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+          regs_read: [ rax, rdi, rflags, rcx ]
+          regs_write: [ rdi, rflags, rcx ]

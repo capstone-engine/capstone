@@ -1018,6 +1018,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				break;
 
 			case X86_INS_SCASB:
+			case X86_INS_SCASD:
 			case X86_INS_SCASW:
 			case X86_INS_SCASQ:
 			case X86_INS_STOSB:
