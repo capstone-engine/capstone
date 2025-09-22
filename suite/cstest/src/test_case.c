@@ -55,7 +55,7 @@ TestInput *test_input_clone(TestInput *test_input)
 	return ti;
 }
 
-char *test_input_stringify(const TestInput *test_input, const char *postfix)
+char *test_input_stringify(const TestInput *test_input, const char *prefix)
 {
 	size_t msg_len = 2048;
 	char *msg = cs_mem_calloc(sizeof(char), msg_len);
@@ -79,7 +79,7 @@ char *test_input_stringify(const TestInput *test_input, const char *postfix)
 		msg, msg_len,
 		"%sTestInput { name: %s, arch: %s, options: %s, addr: 0x%" PRIx64
 		", bytes: %s }",
-		postfix, test_input->name, test_input->arch, opt_seq,
+		prefix, test_input->name, test_input->arch, opt_seq,
 		test_input->address, byte_seq);
 	cs_mem_free(byte_seq);
 	return msg;
