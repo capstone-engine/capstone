@@ -237,7 +237,8 @@ class TestExpected:
         for a_insn, e_insn in zip(actual_insns, self.insns):
             def _check(res: bool):
                 if not res:
-                    raise Exception(f"Failed instruction: {a_insn}")
+                    log.error(f"Failed instruction: {a_insn}")
+                    return TestResult.FAILED
 
             _check(compare_asm_text(a_insn, e_insn.get("asm_text"), bits))
 
@@ -293,9 +294,10 @@ class TestCase:
         try:
             self.input.setup()
             insns = self.input.decode()
-            return self.expected.compare(insns, self.input.arch_bits)
         except Exception as e:
             return _log_err("Setup", e)
+        
+        return self.expected.compare(insns, self.input.arch_bits)
 
 
 class TestFile:
