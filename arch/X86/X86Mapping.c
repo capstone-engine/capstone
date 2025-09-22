@@ -1156,6 +1156,9 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_CMPSB:
 			case X86_INS_CMPSD:
 			case X86_INS_CMPSW:
+			case X86_INS_MOVSB:
+			case X86_INS_MOVSW:
+			case X86_INS_MOVSD:
 				switch (h->mode) {
 				default:
 					break;
