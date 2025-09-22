@@ -229,10 +229,11 @@ class TestExpected:
 
     def compare(self, actual_insns: list[CsInsn], bits: int) -> TestResult:
         if len(actual_insns) != len(self.insns):
-            raise Exception(
+            log.error(
                 "Number of decoded instructions don't match (actual != expected): "
                 f"{len(actual_insns)} != {len(self.insns):#x}"
             )
+            return TestResult.FAILED
 
         for a_insn, e_insn in zip(actual_insns, self.insns):
             def _check(res: bool):
