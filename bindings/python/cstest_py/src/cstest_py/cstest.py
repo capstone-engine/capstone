@@ -286,18 +286,27 @@ class TestCase:
         if self.skip:
             log.info(f"Skip {self}\nReason: {self.skip_reason}")
             return TestResult.SKIPPED
-        
-        def _log_err(step: str, e: Exception):
-            log.error(e)
-            return TestResult.ERROR
 
         try:
             self.input.setup()
+        except Exception as e:
+            log.error(f"Setup failed at with: {e}")
+            traceback.print_exc()
+            return TestResult.ERROR
+
+        try:
             insns = self.input.decode()
         except Exception as e:
-            return _log_err("Setup", e)
-        
-        return self.expected.compare(insns, self.input.arch_bits)
+            log.error(f"Decode failed with: {e}")
+            traceback.print_exc()
+            return TestResult.ERROR
+
+        try:
+            return self.expected.compare(insns, self.input.arch_bits)
+        except Exception as e:
+            log.error(f"Compare expected failed with: {e}")
+            traceback.print_exc()
+            return TestResult.ERROR
 
 
 class TestFile:
