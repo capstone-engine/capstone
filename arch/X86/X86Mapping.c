@@ -1115,7 +1115,6 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insn->detail->regs_read,
 						insn->detail->regs_read_count,
 						X86_REG_ESP, X86_REG_SP);
-
 					arr_replace(
 						insn->detail->regs_write,
 						insn->detail->regs_write_count,
@@ -1142,6 +1141,34 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insn->detail->regs_write,
 						insn->detail->regs_write_count,
 						X86_REG_ESP, X86_REG_RSP);
+				}
+				break;
+
+			case X86_INS_INSB:
+			case X86_INS_INSW:
+			case X86_INS_INSD:
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EDI, X86_REG_DI);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EDI, X86_REG_DI);
+					break;
+				case CS_MODE_64:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EDI, X86_REG_RDI);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EDI, X86_REG_RDI);
 					break;
 				}
 				break;

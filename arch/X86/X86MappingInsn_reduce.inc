@@ -3590,7 +3590,7 @@
 {
 	X86_INSB, X86_INS_INSB, 0,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_DX, X86_REG_EDI, X86_REG_EFLAGS, 0 }, { X86_REG_EDI, 0 }, { 0 }, 0, 0
+	{ X86_REG_DX, X86_REG_EFLAGS, 0 }, { X86_REG_EDI, 0 }, { 0 }, 0, 0
 #endif
 },
 
@@ -3604,7 +3604,7 @@
 {
 	X86_INSW, X86_INS_INSW, 0,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_DX, X86_REG_EDI, X86_REG_EFLAGS, 0 }, { X86_REG_EDI, 0 }, { 0 }, 0, 0
+	{ X86_REG_DX, X86_REG_EFLAGS, 0 }, { X86_REG_EDI, 0 }, { 0 }, 0, 0
 #endif
 },
 

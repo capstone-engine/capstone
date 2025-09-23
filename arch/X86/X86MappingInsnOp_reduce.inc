@@ -2564,17 +2564,17 @@
 },
 
 {	/* X86_INSB, X86_INS_INSB: insb */
-	0,
+	X86_EFLAGS_TEST_DF,
 	{ CS_AC_IGNORE, CS_AC_READ, 0 }
 },
 
 {	/* X86_INSL, X86_INS_INSD: insd */
-	0,
+	X86_EFLAGS_TEST_DF,
 	{ CS_AC_IGNORE, 0 }
 },
 
 {	/* X86_INSW, X86_INS_INSW: insw */
-	0,
+	X86_EFLAGS_TEST_DF,
 	{ CS_AC_IGNORE, CS_AC_READ, 0 }
 },
 
