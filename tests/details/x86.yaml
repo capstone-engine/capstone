@@ -3322,6 +3322,10 @@ test_cases:
         0xf3, 0x6c,  # rep insb byte ptr es:[di], dx
         0x6d,        # insw word ptr es:[di], dx
         0xf3, 0x6d,  # rep insw word ptr es:[di], dx
+        0x6e,        # outsb dx, byte ptr [si]
+        0xf3, 0x6e,  # rep outsb dx, byte ptr [si]
+        0x6f,        # outsw dx, word ptr [si]
+        0xf3, 0x6f,  # rep outsb dx, word ptr [si]
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_16 ]
@@ -3578,8 +3582,44 @@ test_cases:
             prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0x6d, 0x00, 0x00, 0x00 ]
             eflags: [ X86_EFLAGS_TEST_DF ]
-          regs_read: [ dx, flags, cx, es, di ]
+          regs_read: [ dx, flags, cx, es, di]
           regs_write: [ di, cx ]
+      -
+        asm_text: "outsb dx, byte ptr [si]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6e, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, si, flags, ds ]
+          regs_write: [ si ]
+      -
+        asm_text: "rep outsb dx, byte ptr [si]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6e, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, si, flags, ds, cx]
+          regs_write: [ si, cx ]
+      -
+        asm_text: "outsw dx, word ptr [si]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6f, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, si, flags, ds ]
+          regs_write: [ si ]
+      -
+        asm_text: "rep outsw dx, word ptr [si]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6f, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, si, flags, ds, cx]
+          regs_write: [ si, cx ]
 
   -
     input:
@@ -3613,6 +3653,10 @@ test_cases:
         0xf3, 0x6c,  # rep insb byte ptr es:[edi], dx
         0x6d,        # insd dword ptr es:[edi], dx
         0xf3, 0x6d,  # rep insd dword ptr es:[edi], dx
+        0x6e,        # outsb dx, byte ptr [esi]
+        0xf3, 0x6e,  # rep outsb dx, byte ptr [esi]
+        0x6f,        # outsd dx, dword ptr [esi]
+        0xf3, 0x6f,  # rep outsd dx, dword ptr [esi]
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_32 ]
@@ -3871,6 +3915,42 @@ test_cases:
             eflags: [ X86_EFLAGS_TEST_DF ]
           regs_read: [ dx, edi, eflags, ecx, es ]
           regs_write: [ edi, ecx ]
+      -
+        asm_text: "outsb dx, byte ptr [esi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6e, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, esi, eflags, ds ]
+          regs_write: [ esi ]
+      -
+        asm_text: "rep outsb dx, byte ptr [esi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6e, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, esi, eflags, ds, ecx ]
+          regs_write: [ esi, ecx ]
+      -
+        asm_text: "outsd dx, dword ptr [esi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6f, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, esi, eflags, ds ]
+          regs_write: [ esi ]
+      -
+        asm_text: "rep outsd dx, dword ptr [esi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6f, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, esi, eflags, ds, ecx ]
+          regs_write: [ esi, ecx ]
 
   -
     input:
@@ -3916,6 +3996,10 @@ test_cases:
         0xf3, 0x6c,          # rep insb byte ptr [rdi], dx
         0x6d,                # insd dword ptr [rdi], dx
         0xf3, 0x6d,          # rep insd dword ptr [rdi], dx
+        0x6e,                # outsb dx, byte ptr [rsi]
+        0xf3, 0x6e,          # rep outsb dx, byte ptr [rsi]
+        0x6f,                # outsd dx, dword ptr [rsi]
+        0xf3, 0x6f,          # rep outsd dx, dword ptr [rsi]
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_64 ]
@@ -4294,3 +4378,39 @@ test_cases:
             eflags: [ X86_EFLAGS_TEST_DF ]
           regs_read: [ dx, rdi, rflags, rcx ]
           regs_write: [ rdi, rcx ]
+      -
+        asm_text: "outsb dx, byte ptr [rsi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6e, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, rsi, rflags ]
+          regs_write: [ rsi ]
+      -
+        asm_text: "rep outsb dx, byte ptr [rsi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6e, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, rsi, rflags, rcx ]
+          regs_write: [ rsi, rcx ]
+      -
+        asm_text: "outsd dx, dword ptr [rsi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6f, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, rsi, rflags ]
+          regs_write: [ rsi ]
+      -
+        asm_text: "rep outsd dx, dword ptr [rsi]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x6f, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ dx, rsi, rflags, rcx ]
+          regs_write: [ rsi, rcx ]
