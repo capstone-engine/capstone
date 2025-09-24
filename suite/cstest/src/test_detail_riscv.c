@@ -1,11 +1,14 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
+#include "capstone/riscv.h"
 #include "test_compare.h"
 #include "test_detail_riscv.h"
 #include <capstone/capstone.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "../arch/RISCV/RISCVInstPrinter.h"
 
 TestDetailRISCV *test_detail_riscv_new()
 {
@@ -98,6 +101,9 @@ bool test_expected_riscv(csh *handle, const cs_riscv *actual,
 			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
 					false);
 			compare_int64_ret(op->mem.disp, eop->mem_disp, false);
+			break;
+		case RISCV_OP_CSR:
+			compare_string_from_int_ret(op->csr, eop->csr, getSysRegName, false);
 			break;
 		}
 	}

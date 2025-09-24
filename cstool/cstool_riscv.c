@@ -1,9 +1,12 @@
 /* Capstone Disassembler Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2014 */
 
+#include "capstone/riscv.h"
 #include <stdio.h>
 #include <capstone/capstone.h>
 #include "cstool.h"
+
+#include "../arch/RISCV/RISCVInstPrinter.h"
 
 void print_insn_detail_riscv(csh handle, cs_insn *ins)
 {
@@ -40,7 +43,13 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 				printf("\t\t\toperands[%u].mem.disp: 0x%lx\n",
 				       i, (long)op->mem.disp);
 
-			break;
+				break;
+			case RISCV_OP_FP:
+				printf("\t\toperands[%u].type: FP_IMM\n", i);
+				break;
+			case RISCV_OP_CSR:
+				printf("\t\toperands[%u].type: CSR = %s\n", i, getSysRegName(op->csr));
+				break;	
 		}
 
 		switch (op->access) {

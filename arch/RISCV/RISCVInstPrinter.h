@@ -55,6 +55,10 @@ void printRlist(MCInst *MI, unsigned OpNo, SStream *O);
 void printSpimm(MCInst *MI, unsigned OpNo, SStream *O);
 void printRegReg(MCInst *MI, unsigned OpNo, SStream *O);
 
+const char *RISCV_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx);
+
+const char *getSysRegName(unsigned reg);
+
 typedef enum {
 	#define GET_ENUM_VALUES_SysReg
 	#include "RISCVGenCSSystemOperandsEnum.inc"

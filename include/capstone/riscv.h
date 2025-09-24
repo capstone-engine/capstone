@@ -30,6 +30,8 @@ typedef enum riscv_op_type {
 	RISCV_OP_REG = CS_OP_REG, // = CS_OP_REG (Register operand).
 	RISCV_OP_IMM = CS_OP_IMM, // = CS_OP_IMM (Immediate operand).
 	RISCV_OP_MEM = CS_OP_MEM, // = CS_OP_MEM (Memory operand).
+	RISCV_OP_FP  = CS_OP_FP,  // = CS_OP_FP (FP immediate operand).
+	RISCV_OP_CSR = CS_OP_SPECIAL // =  Control and Status Register.
 } riscv_op_type;
 
 // Instruction's operand referring to memory
@@ -47,6 +49,7 @@ typedef struct cs_riscv_op {
 		int64_t imm;		// immediate value for IMM operand
 		double dimm;		// immeidate double value for FP operands
 		riscv_op_mem mem;	// base/disp value for MEM operand
+		uint16_t csr;		// CSR system register (12-bit max in RISCV)
 	};
 	cs_ac_type access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)
 } cs_riscv_op;

@@ -5,6 +5,7 @@
 #define TEST_MAPPING_H
 
 #include "../../../Mapping.h"
+#include "capstone/riscv.h"
 #include <capstone/capstone.h>
 
 /// Maps a string to an option
@@ -1352,6 +1353,7 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "RISCV_GRP_JUMP", .val = RISCV_GRP_JUMP },
 	{ .str = "RISCV_GRP_PRIVILEGE", .val = RISCV_GRP_PRIVILEGE },
 	{ .str = "RISCV_GRP_RET", .val = RISCV_GRP_RET },
+	{ .str = "RISCV_OP_CSR", .val = RISCV_OP_CSR },
 	{ .str = "RISCV_OP_IMM", .val = RISCV_OP_IMM },
 	{ .str = "RISCV_OP_MEM", .val = RISCV_OP_MEM },
 	{ .str = "RISCV_OP_REG", .val = RISCV_OP_REG },

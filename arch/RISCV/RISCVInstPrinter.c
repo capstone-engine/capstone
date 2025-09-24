@@ -24,9 +24,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <capstone/platform.h>
 #include "../../MathExtras.h"
 
@@ -47,6 +44,8 @@
 
 #define GEN_UNCOMPRESS_INSTR
 #include "RISCVGenCompressedInstructionsInfo.inc"
+
+#include "RISCVMapping.h"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
@@ -390,6 +389,12 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O, void * /* MCRegisterInf
 		else
 			printInstruction(McInstr, MI->address, O);
 	}
+	RISCV_add_groups(MI);
+}
+
+const char *getSysRegName(unsigned reg) {
+	const RISCV_SysReg *SysReg = RISCV_lookupSysRegByEncoding(reg);
+	return SysReg->Name;
 }
 
 const char *RISCV_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx) {

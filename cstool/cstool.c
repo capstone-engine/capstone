@@ -164,6 +164,11 @@ static struct {
 	  { CS_ARCH_RISCV, CS_ARCH_MAX },
 	  0,
 	  CS_MODE_RISCV_ZCMP_ZCMT_ZCE },
+	{ "a",
+	  "Enables the RISCV A extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX},
+	  0,
+	  CS_MODE_RISCV_A },
 	{ NULL }
 };
 
