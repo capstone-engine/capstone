@@ -34,9 +34,13 @@ add_test(NAME integration_compat_headers
 )
 
 set(INTEGRATION_TEST_SRC test_litbase.c)
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+  set(INTEGRATION_TEST_SRC ${INTEGRATION_TEST_SRC} test_assert_macros.c)
+endif()
+
 foreach(TSRC ${INTEGRATION_TEST_SRC})
-      string(REGEX REPLACE ".c$" "" TBIN ${TSRC})
-      add_executable(${TBIN} "${TESTS_INTEGRATION_DIR}/${TSRC}")
-      target_link_libraries(${TBIN} PRIVATE capstone)
-      add_test(NAME "integration_${TBIN}" COMMAND ${TBIN})
-  endforeach()
+  string(REGEX REPLACE ".c$" "" TBIN ${TSRC})
+  add_executable(${TBIN} "${TESTS_INTEGRATION_DIR}/${TSRC}")
+  target_link_libraries(${TBIN} PRIVATE capstone)
+  add_test(NAME "integration_${TBIN}" COMMAND ${TBIN})
+endforeach()
