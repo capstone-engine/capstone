@@ -1243,28 +1243,6 @@ test_cases:
           regs_read: [ rflags ]
   -
     input:
-      bytes: [ 0xc3 ]
-      arch: "x86"
-      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
-      address: 0x0
-    expected:
-      insns:
-      -
-        asm_text: "ret"
-        details:
-          x86:
-            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
-            opcode: [ 0xc3, 0x00, 0x00, 0x00 ]
-            rex: 0x0
-            addr_size: 8
-            modrm: 0x0
-            disp: 0x0
-            sib: 0x0
-            sib_scale: 0
-          regs_read: [ rsp ]
-          regs_write: [ rsp, rip ]
-  -
-    input:
       bytes: [ 0x66, 0x45, 0x0f, 0x2f, 0x38 ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_64 ]
@@ -3132,3 +3110,142 @@ test_cases:
             opcode: [ 0xc9, 0x00, 0x00, 0x00 ]
           regs_read: [ rbp, rsp ]
           regs_write: [ rbp, rsp ]
+
+  -
+    input:
+      name: "Return from procedure, 16-bit decode mode"
+      bytes: [
+       0xc3,               # ret (near)
+       0xcb,               # retf (far)
+       0xc2, 0x34, 0x12,   # ret 0x1234 (near)
+       0xca, 0x34, 0x12,   # retf 0x1234 (far)
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ret"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc3, 0x00, 0x00, 0x00 ]
+          regs_read: [ sp, ss ]
+          regs_write: [ sp, ip ]
+      -
+        asm_text: "retf"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcb, 0x00, 0x00, 0x00 ]
+          regs_read: [ sp, ss ]
+          regs_write: [ sp, ip, cs ]
+      -
+        asm_text: "ret 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc2, 0x00, 0x00, 0x00 ]
+          regs_read: [ sp, ss ]
+          regs_write: [ sp, ip ]
+      -
+        asm_text: "retf 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xca, 0x00, 0x00, 0x00 ]
+          regs_read: [ sp, ss ]
+          regs_write: [ sp, ip, cs ]
+  -
+    input:
+      name: "Return from procedure, 32-bit decode mode"
+      bytes: [
+       0xc3,               # ret (near)
+       0xcb,               # retf (far)
+       0xc2, 0x34, 0x12,   # ret 0x1234 (near)
+       0xca, 0x34, 0x12,   # retf 0x1234 (far)
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ret"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc3, 0x00, 0x00, 0x00 ]
+          regs_read: [ esp, ss ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "retf"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcb, 0x00, 0x00, 0x00 ]
+          regs_read: [ esp, ss ]
+          regs_write: [ esp, eip, cs ]
+      -
+        asm_text: "ret 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc2, 0x00, 0x00, 0x00 ]
+          regs_read: [ esp, ss ]
+          regs_write: [ esp, eip ]
+      -
+        asm_text: "retf 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xca, 0x00, 0x00, 0x00 ]
+          regs_read: [ esp, ss ]
+          regs_write: [ esp, eip, cs ]
+  -
+    input:
+      name: "Return from procedure, 64-bit decode mode"
+      bytes: [
+       0xc3,               # ret (near)
+       0xcb,               # retf (far)
+       0xc2, 0x34, 0x12,   # ret 0x1234 (near)
+       0xca, 0x34, 0x12,   # retf 0x1234 (far)
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ret"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc3, 0x00, 0x00, 0x00 ]
+          regs_read: [ rsp, ss ]
+          regs_write: [ rsp, rip ]
+      -
+        asm_text: "retf"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcb, 0x00, 0x00, 0x00 ]
+          regs_read: [ esp, ss ]
+          regs_write: [ esp, eip, cs ]      # BUG: decoded as X86_LRETL instead of X86_LRETQ
+      -
+        asm_text: "ret 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xc2, 0x00, 0x00, 0x00 ]
+          regs_read: [ rsp, ss ]
+          regs_write: [ rsp, rip ]
+      -
+        asm_text: "retf 0x1234"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xca, 0x00, 0x00, 0x00 ]
+          regs_read: [ esp, ss ]
+          regs_write: [ esp, eip, cs ]      # BUG: decoded as X86_LRETIL instead of X86_LRETIQ
