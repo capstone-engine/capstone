@@ -2264,7 +2264,8 @@ test_cases:
          0xcc,        # int3
          0xcd, 0x80,  # int 0x80
          0xce,        # into
-         0xf1         # int1
+         0xf1,        # int1
+         0xcf         # iret
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_16 ]
@@ -2311,6 +2312,15 @@ test_cases:
             opcode: [ 0xf1, 0x00, 0x00, 0x00 ]
           regs_read: [ esp ]
           regs_write: [ eip, esp ]
+      -
+        asm_text: "iret"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_DF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_RF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_TF, X86_EFLAGS_MODIFY_ZF ]
+          regs_read: [ sp, ss, flags ]
+          regs_write: [ ip, sp, flags ]
 
   -
     input:
@@ -2319,7 +2329,8 @@ test_cases:
          0xcc,        # int3
          0xcd, 0x80,  # int 0x80
          0xce,        # into
-         0xf1         # int1
+         0xf1,        # int1
+         0xcf         # iret
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_32 ]
@@ -2366,6 +2377,15 @@ test_cases:
             opcode: [ 0xf1, 0x00, 0x00, 0x00 ]
           regs_read: [ esp ]
           regs_write: [ eip, esp ]
+      -
+        asm_text: "iretd"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_DF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_RF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_TF, X86_EFLAGS_MODIFY_ZF ]
+          regs_read: [ esp, ss, eflags ]
+          regs_write: [ eip, esp, eflags ]
 
   -
     input:
@@ -2373,7 +2393,9 @@ test_cases:
       bytes: [
          0xcc,        # int3
          0xcd, 0x80,  # int 0x80
-         0xf1         # int1
+         0xf1,        # int1
+         0xcf,        # iret
+         0x48, 0xcf,  # REX.W iretq
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_64 ]
@@ -2411,6 +2433,24 @@ test_cases:
             opcode: [ 0xf1, 0x00, 0x00, 0x00 ]
           regs_read: [ esp ]
           regs_write: [ eip, esp ]
+      -
+        asm_text: "iretd"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_DF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_RF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_TF, X86_EFLAGS_MODIFY_ZF ]
+          regs_read: [ esp, ss, rflags ]
+          regs_write: [ eip, esp, rflags ]
+      -
+        asm_text: "iretq"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xcf, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_DF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_RF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_TF, X86_EFLAGS_MODIFY_ZF ]
+          regs_read: [ rsp, ss, rflags ]
+          regs_write: [ rip, rsp, rflags ]
 
   -
     input:
