@@ -1250,7 +1250,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "comisd	xmm15, qword ptr [r8]"
+        asm_text: "comisd   xmm15, qword ptr [r8]"
         details:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
@@ -3289,3 +3289,178 @@ test_cases:
             opcode: [ 0xca, 0x00, 0x00, 0x00 ]
           regs_read: [ esp, ss ]
           regs_write: [ esp, eip, cs ]      # BUG: decoded as X86_LRETIL instead of X86_LRETIQ
+
+  -
+    input:
+      name: "String instructions, 16-bit decode mode"
+      bytes: [
+        0xaa,        # stosb byte ptr es:[di], al
+        0xf3,0xaa,   # rep stosb byte ptr es:[di], al
+        0xab,        # stosw word ptr es:[di], ax
+        0xf3,0xab,   # rep stosw word ptr es:[di], ax
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stosb byte ptr es:[di], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaa, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ al, di, flags, es ]
+          regs_write: [ di ]
+      -
+        asm_text: "rep stosb byte ptr es:[di], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaa, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ al, di, flags, cx, es ]
+          regs_write: [ di, cx ]
+      -
+        asm_text: "stosw word ptr es:[di], ax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xab, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ ax, di, flags, es ]
+          regs_write: [ di ]
+      -
+        asm_text: "rep stosw word ptr es:[di], ax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xab, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ ax, di, flags, cx, es ]
+          regs_write: [ di, cx ]
+
+  -
+    input:
+      name: "String instructions, 32-bit decode mode"
+      bytes: [
+        0xaa,        # stosb byte ptr es:[edi], al
+        0xf3, 0xaa,  # rep stosb byte ptr es:[edi], al
+        0xab,        # stosd dword ptr es:[edi], eax
+        0xf3, 0xab,  # rep stosd dword ptr es:[edi], eax
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stosb byte ptr es:[edi], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaa, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ al, edi, eflags, es ]
+          regs_write: [ edi ]
+      -
+        asm_text: "rep stosb byte ptr es:[edi], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaa, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ al, edi, eflags, ecx, es ]
+          regs_write: [ edi, ecx ]
+      -
+        asm_text: "stosd dword ptr es:[edi], eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xab, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ eax, edi, eflags, es ]
+          regs_write: [ edi ]
+      -
+        asm_text: "rep stosd dword ptr es:[edi], eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xab, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ eax, edi, eflags, ecx, es ]
+          regs_write: [ edi, ecx ]
+
+  -
+    input:
+      name: "String instructions, 64-bit decode mode"
+      bytes: [
+        0xaa,                # stosb byte ptr [rdi], al
+        0xf3, 0xaa,          # rep stosb byte ptr [rdi], al
+        0xab,                # stosd dword ptr [rdi], eax
+        0xf3, 0xab,          # rep stosd dword ptr [rdi], eax
+        0x48, 0xab,          # REX.W stosq qword ptr [rdi], rax
+        0xf3, 0x48, 0xab,    # rep REX.W stosq qword ptr [rdi], rax
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stosb byte ptr [rdi], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaa, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ al, rdi, rflags ]
+          regs_write: [ rdi ]
+      -
+        asm_text: "rep stosb byte ptr [rdi], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xaa, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ al, rdi, rflags, rcx ]
+          regs_write: [ rdi, rcx ]
+      -
+        asm_text: "stosd dword ptr [rdi], eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xab, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ eax, rdi, rflags ]
+          regs_write: [ rdi ]
+      -
+        asm_text: "rep stosd dword ptr [rdi], eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xab, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ eax, rdi, rflags, rcx ]
+          regs_write: [ rdi, rcx ]
+      -
+        asm_text: "stosq qword ptr [rdi], rax"
+        details:
+          x86:
+            rex: 0x48
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xab, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ rax, rdi, rflags, ]
+          regs_write: [ rdi ]
+      -
+        asm_text: "rep stosq qword ptr [rdi], rax"
+        details:
+          x86:
+            rex: 0x48
+            prefix: [ X86_PREFIX_REP, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xab, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_DF ]
+          regs_read: [ rax, rdi, rflags, rcx ]
+          regs_write: [ rdi, rcx ]
