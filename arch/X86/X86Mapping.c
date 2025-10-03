@@ -1146,6 +1146,26 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				break;
 			}
 
+			switch (insn->id) {
+			default:
+				break;
+			case X86_INS_LODSB:
+			case X86_INS_LODSD:
+			case X86_INS_LODSW:
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+				case CS_MODE_32: {
+					int pos = insn->detail->regs_read_count;
+					insn->detail->regs_read[pos] =
+						X86_REG_DS;
+					insn->detail->regs_read_count += 1;
+				} break;
+				}
+				break;
+			}
+
 			memcpy(insn->detail->groups, insns[i].groups,
 			       sizeof(insns[i].groups));
 			insn->detail->groups_count =
