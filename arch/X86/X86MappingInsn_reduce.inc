@@ -4472,21 +4472,21 @@
 {
 	X86_LOOP, X86_INS_LOOP, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_ECX, 0 }, { X86_REG_ECX, 0 }, { X86_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_LOOPE, X86_INS_LOOPE, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_ECX, 0 }, { X86_REG_ECX, 0 }, { X86_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_LOOPNE, X86_INS_LOOPNE, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_ECX, 0 }, { X86_REG_ECX, 0 }, { X86_GRP_BRANCH_RELATIVE, 0 }, 0, 0
 #endif
 },
 

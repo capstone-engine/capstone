@@ -5933,3 +5933,79 @@ test_cases:
             eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF, X86_EFLAGS_TEST_ZF ]
           regs_read: [ rflags, rip ]
           regs_write: [ rip ]
+
+  -
+    input:
+      name: "Loop according to ECX count, 16-bit decode mode"
+      bytes: [
+       0xe2, 0x32,   # loop 0x34
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "loop 0x34"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe2, 0x00, 0x00, 0x00 ]
+          regs_read: [ ip, cx ]
+          regs_write: [ ip, cx ]
+
+  -
+    input:
+      name: "Loop according to ECX count, 32-bit decode mode"
+      bytes: [
+       0xe2, 0x32,   # loop 0x34
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "loop 0x34"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe2, 0x00, 0x00, 0x00 ]
+          regs_read: [ eip, ecx ]
+          regs_write: [ eip, ecx ]
+
+  -
+    input:
+      name: "Loop according to ECX count, 64-bit decode mode"
+      bytes: [
+       0xe2, 0x32,         # loop 0x34
+       0x48, 0xe2, 0x2f,   # REX.W loop 0x34 (should ignore REX)
+       0x67, 0xe2, 0x2c,   # loop 0x34 (with size override)
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "loop 0x34"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe2, 0x00, 0x00, 0x00 ]
+          regs_read: [ rip, rcx ]
+          regs_write: [ rip, rcx ]
+      -
+        asm_text: "loop 0x34"
+        details:
+          x86:
+            rex: 0x48
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe2, 0x00, 0x00, 0x00 ]
+          regs_read: [ rip, rcx ]
+          regs_write: [ rip, rcx ]
+      -
+        asm_text: "loop 0x34"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_ADDRSIZE ]
+            opcode: [ 0xe2, 0x00, 0x00, 0x00 ]
+          regs_read: [ rip, rcx ]
+          regs_write: [ rip, rcx ]      # BUG: should be ecx
