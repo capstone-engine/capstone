@@ -947,6 +947,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				break;
 
 			case X86_INS_LOOP:
+			case X86_INS_LOOPE:
 				switch (h->mode) {
 				default:
 					break;
@@ -993,7 +994,6 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			default:
 				break;
 
-			case X86_INS_LOOPE:
 			case X86_INS_LOOPNE:
 				switch (h->mode) {
 				default:
