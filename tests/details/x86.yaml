@@ -5940,6 +5940,7 @@ test_cases:
       bytes: [
        0xe2, 0x32,   # loop 0x34
        0xe1, 0x30,   # loope 0x34
+       0xe0, 0x2e,   # loopne 0x34
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_16 ]
@@ -5962,6 +5963,15 @@ test_cases:
             eflags: [ X86_EFLAGS_TEST_ZF ]
           regs_read: [ ip, cx, flags ]
           regs_write: [ ip, cx ]
+      -
+        asm_text: "loopne 0x34"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe0, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ ip, cx, flags ]
+          regs_write: [ ip, cx ]
 
   -
     input:
@@ -5969,6 +5979,7 @@ test_cases:
       bytes: [
        0xe2, 0x32,   # loop 0x34
        0xe1, 0x30,   # loope 0x34
+       0xe0, 0x2e,   # loopne 0x34
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_32 ]
@@ -5991,6 +6002,15 @@ test_cases:
             eflags: [ X86_EFLAGS_TEST_ZF ]
           regs_read: [ eip, ecx, eflags ]
           regs_write: [ eip, ecx ]
+      -
+        asm_text: "loopne 0x34"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe0, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eip, ecx, eflags ]
+          regs_write: [ eip, ecx ]
 
   -
     input:
@@ -6002,6 +6022,9 @@ test_cases:
        0xe1, 0x2a,         # loope 0x34
        0x48, 0xe1, 0x27,   # REX.W loop 0x34 (should ignore REX)
        0x67, 0xe1, 0x24,   # loop 0x34 (with size override)
+       0xe0, 0x22,         # loope 0x34
+       0x48, 0xe0, 0x1f,   # REX.W loop 0x34 (should ignore REX)
+       0x67, 0xe0, 0x1c,   # loop 0x34 (with size override)
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_64 ]
@@ -6057,6 +6080,34 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_ADDRSIZE ]
             opcode: [ 0xe1, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rip, rcx, rflags ]
+          regs_write: [ rip, rcx ]      # BUG: should be ecx
+      -
+        asm_text: "loopne 0x34"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe0, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rip, rcx, rflags ]
+          regs_write: [ rip, rcx ]
+      -
+        asm_text: "loopne 0x34"
+        details:
+          x86:
+            rex: 0x48
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe0, 0x00, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rip, rcx, rflags ]
+          regs_write: [ rip, rcx ]
+      -
+        asm_text: "loopne 0x34"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_ADDRSIZE ]
+            opcode: [ 0xe0, 0x00, 0x00, 0x00 ]
             eflags: [ X86_EFLAGS_TEST_ZF ]
           regs_read: [ rip, rcx, rflags ]
           regs_write: [ rip, rcx ]      # BUG: should be ecx
