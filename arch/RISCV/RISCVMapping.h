@@ -22,6 +22,8 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum);
 
 void RISCV_add_groups(MCInst *MI);
 
+void RISCV_compact_operands(MCInst *MI);
+
 // map instruction name to instruction ID
 riscv_insn RISCV_map_insn(const char *name);
 

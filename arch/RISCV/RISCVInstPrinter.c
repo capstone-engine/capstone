@@ -390,6 +390,7 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O, void * /* MCRegisterInf
 			printInstruction(McInstr, MI->address, O);
 	}
 	RISCV_add_groups(MI);
+	RISCV_compact_operands(MI);
 }
 
 const char *getSysRegName(unsigned reg) {

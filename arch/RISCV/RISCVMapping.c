@@ -46,36 +46,36 @@ static const map_insn_ops insn_operands[] = {
 
 void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 {
-	printf("========== OP: %d, (CODE: %d)", OpNum, MI->Opcode);
-	switch (opgroup) {
+	// printf("========== OP: %d, (CODE: %d)", OpNum, MI->Opcode);
+	// switch (opgroup) {
 
-		case RISCV_OP_GROUP_Operand: printf("\n RISCV_OP_GROUP_Operand"); break;
-		case RISCV_OP_GROUP_BranchOperand:printf("\n RISCV_OP_GROUP_BranchOperand"); break;
-		case RISCV_OP_GROUP_VMaskReg:printf("\n RISCV_OP_GROUP_VMaskReg"); break;
-		case RISCV_OP_GROUP_VTypeI:printf("\n RISCV_OP_GROUP_VTypeI "); break;
-		case RISCV_OP_GROUP_ZeroOffsetMemOp:printf("\nRISCV_OP_GROUP_ZeroOffsetMemOp"); break;
-		case RISCV_OP_GROUP_Rlist:printf("\nRISCV_OP_GROUP_Rlist"); break;
-		case RISCV_OP_GROUP_Spimm:printf("\nRISCV_OP_GROUP_Spimm"); break;
-		case RISCV_OP_GROUP_CSRSystemRegister:printf("\n RISCV_OP_GROUP_CSRSystemRegister (%lu)", MCInst_getOperand(MI, OpNum)->ImmVal); break;
-		case RISCV_OP_GROUP_RegReg:printf("\nRISCV_OP_GROUP_RegReg"); break;
-		case RISCV_OP_GROUP_FRMArg:printf("\nRISCV_OP_GROUP_FRMArg"); break;
-		case RISCV_OP_GROUP_FRMArgLegacy:printf("\nRISCV_OP_GROUP_FRMArgLegacy"); break;
-		case RISCV_OP_GROUP_FenceArg:printf("\nRISCV_OP_GROUP_FenceArg"); break;
-		case RISCV_OP_GROUP_FPImmOperand:printf("\nRISCV_OP_GROUP_FPImmOperand"); break;
-	}
-	printf("\n================================================================== %d\n", insn_operands[0].ops[0].type);
+	// 	case RISCV_OP_GROUP_Operand: printf("\n RISCV_OP_GROUP_Operand"); break;
+	// 	case RISCV_OP_GROUP_BranchOperand:printf("\n RISCV_OP_GROUP_BranchOperand"); break;
+	// 	case RISCV_OP_GROUP_VMaskReg:printf("\n RISCV_OP_GROUP_VMaskReg"); break;
+	// 	case RISCV_OP_GROUP_VTypeI:printf("\n RISCV_OP_GROUP_VTypeI "); break;
+	// 	case RISCV_OP_GROUP_ZeroOffsetMemOp:printf("\nRISCV_OP_GROUP_ZeroOffsetMemOp"); break;
+	// 	case RISCV_OP_GROUP_Rlist:printf("\nRISCV_OP_GROUP_Rlist"); break;
+	// 	case RISCV_OP_GROUP_Spimm:printf("\nRISCV_OP_GROUP_Spimm"); break;
+	// 	case RISCV_OP_GROUP_CSRSystemRegister:printf("\n RISCV_OP_GROUP_CSRSystemRegister (%lu)", MCInst_getOperand(MI, OpNum)->ImmVal); break;
+	// 	case RISCV_OP_GROUP_RegReg:printf("\nRISCV_OP_GROUP_RegReg"); break;
+	// 	case RISCV_OP_GROUP_FRMArg:printf("\nRISCV_OP_GROUP_FRMArg"); break;
+	// 	case RISCV_OP_GROUP_FRMArgLegacy:printf("\nRISCV_OP_GROUP_FRMArgLegacy"); break;
+	// 	case RISCV_OP_GROUP_FenceArg:printf("\nRISCV_OP_GROUP_FenceArg"); break;
+	// 	case RISCV_OP_GROUP_FPImmOperand:printf("\nRISCV_OP_GROUP_FPImmOperand"); break;
+	// }
+	// printf("\n================================================================== %d\n", insn_operands[0].ops[0].type);
 	if (!detail_is_set(MI))
 		return;
 	// are not "true" arguments and has no Capstone equivalent
 	if (opgroup == RISCV_OP_GROUP_FRMArg || opgroup == RISCV_OP_GROUP_FRMArgLegacy)
 		return;
-	
+
 	cs_detail *details = MI->flat_insn->detail;
 	cs_riscv *riscv_details = &(details->riscv);
 	cs_riscv_op *op = &(riscv_details->operands[OpNum]);
 	op->type = (riscv_op_type) map_get_op_type(MI, OpNum);
 	op->access = (cs_ac_type) map_get_op_access(MI, OpNum);
-	printf("\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& OPINDEX: %d, OP: %d", OpNum, op->type);
+	//printf("\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& OPINDEX: %d, OP: %d", OpNum, op->type);
 	switch (map_get_op_type(MI, OpNum)) {
 		case CS_OP_REG:
 			op->reg = MCInst_getOperand(MI, OpNum)->RegVal;
@@ -112,81 +112,54 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 			riscv_details->op_count--; // don't increase the count, cancel the coming increment
 			printf("\n *******************  MEM %d: %lu\n", OpNum, op->mem.disp);
 			break;
-		case CS_OP_INVALID: 
+		case CS_OP_INVALID:
 			break;
 		default: {
-			CS_ASSERT(0 && "unhandled operand type");	
-		}		
+			CS_ASSERT(0 && "unhandled operand type");
+		}
 	}
 	riscv_details->op_count++;
-
-	// add Capstone-specific non-extension groups, LLVM code can't because LLVM doesn't know about them
-	// if (array_contains(return_instructions, MI)) {
-
-	// }
-
-	// ===================================================================================
-	// switch (opgroup) {
-	// 	case RISCV_OP_GROUP_Operand: 
-	// 		break;
-	// 	case RISCV_OP_GROUP_BranchOperand:
-	// 		break;
-	// 	case RISCV_OP_GROUP_VMaskReg:
-	// 		printf("\n RISCV_OP_GROUP_VMaskReg"); break;
-	// 	case RISCV_OP_GROUP_VTypeI:
-	// 		printf("\n RISCV_OP_GROUP_VTypeI "); 
-	// 		break;
-			
-	// 	case RISCV_OP_GROUP_ZeroOffsetMemOp:
-	// 		op->type = RISCV_OP_MEM;
-	// 		printf("\nRISCV_OP_GROUP_ZeroOffsetMemOp"); 
-	// 		break;
-	// 	case RISCV_OP_GROUP_Rlist:
-	// 		printf("\nRISCV_OP_GROUP_Rlist"); 
-	// 		break;
-	// 	case RISCV_OP_GROUP_Spimm:
-	// 		printf("\nRISCV_OP_GROUP_Spimm"); break;
-	// 	case RISCV_OP_GROUP_CSRSystemRegister:
-	// 		printf("\n RISCV_OP_GROUP_CSRSystemRegister"); 
-	// 		break;
-	// 	case RISCV_OP_GROUP_RegReg:
-	// 		printf("\nRISCV_OP_GROUP_RegReg"); 
-	// 		break;
-	// 	case RISCV_OP_GROUP_FRMArg:
-	// 		printf("\nRISCV_OP_GROUP_FRMArg"); 
-	// 		break;
-	// 	case RISCV_OP_GROUP_FRMArgLegacy:
-	// 		printf("\nRISCV_OP_GROUP_FRMArgLegacy"); 
-	// 		break;
-	// 	case RISCV_OP_GROUP_FenceArg:
-	// 		printf("\nRISCV_OP_GROUP_FenceArg"); 
-	// 		break;
-	// 	case RISCV_OP_GROUP_FPImmOperand:
-	// 		printf("\nRISCV_OP_GROUP_FPImmOperand"); 
-	// 		break;
-	// 	default:
-	// 		CS_ASSERT(0 && "Unhandled operand type in RISCV_add_cs_detail_0");
-	// }
 }
 
 void RISCV_add_groups(MCInst *MI) {
 	if (!detail_is_set(MI))
 		return;
-	
+
 	MI->flat_insn->detail->groups_count = 0;
 	int i = 0;
 	while (insns[MI->Opcode].groups[i] != 0) {
-		printf("\n ADDING GROUP %d, FOUND OPCODE %d (i.e. %d) \n", 
-			insns[MI->Opcode].groups[i],
-			insns[MI->Opcode].id,
-			insns[MI->Opcode].mapid);
+
 		add_group(MI, insns[MI->Opcode].groups[i]);
 		i++;
 	}
 }
 
+// for weird reasons some instructions end up with valid operands that are
+// interspersed with invalid operands, i.e. the operands array is an "island"
+// of valid operands with invalid gaps between them, this function will compactify
+// all the valid operands and pad the rest of the array to invalid
+void RISCV_compact_operands(MCInst *MI) {
+    if (!detail_is_set(MI))
+	return;
+    cs_riscv_op* ops = MI->flat_insn->detail->riscv.operands;
+    unsigned int write_pos = 0;
+
+    // Move valid elements to front
+    for (unsigned int read_pos = 0; read_pos < NUM_RISCV_OPS; read_pos++) {
+        if (ops[read_pos].type != (riscv_op_type)CS_OP_INVALID) {
+            if (write_pos != read_pos) {
+            	ops[write_pos] = ops[read_pos];
+            }
+            write_pos++;
+        }
+    }
+    // fill the rest, if any, with invalid
+    for (unsigned int i = write_pos; i < NUM_RISCV_OPS; i++) {
+    	memset((void *)(&ops[i]), CS_OP_INVALID, sizeof(cs_riscv_op));
+    }
+}
 // given internal insn id, return public instruction info
-void RISCV_get_insn_id(cs_struct * h, cs_insn * insn, unsigned int id) 
+void RISCV_get_insn_id(cs_struct * h, cs_insn * insn, unsigned int id)
 {
   	unsigned int i;
 
@@ -222,7 +195,7 @@ static const char *const insn_name_maps[] = {
 #include "RISCVGenCSMappingInsnName.inc"
 };
 
-const char *RISCV_insn_name(csh handle, unsigned int id) 
+const char *RISCV_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
   	if (id >= RISCV_INS_ENDING)
@@ -245,10 +218,10 @@ static const name_map group_name_maps[] = {
   	{ RISCV_GRP_IRET,       "iret" },
   	{ RISCV_GRP_PRIVILEGE,  "privileged" },
   	{ RISCV_GRP_BRANCH_RELATIVE, "branch_relative" },
-  
+
   	// architecture specific
   	#include "RISCVGenCSFeatureName.inc"
-  
+
   	{ RISCV_GRP_ENDING,     NULL }
 };
 #endif
@@ -260,7 +233,7 @@ const char *RISCV_group_name(csh handle, unsigned int id)
 	printf("GROUP ID: %d\n", id);
 	// if past the end
 	if (id >= RISCV_GRP_ENDING ||
-			// or in the encoding gap between generic groups and arch-specific groups 
+			// or in the encoding gap between generic groups and arch-specific groups
             (id > RISCV_GRP_BRANCH_RELATIVE && id < RISCV_FEATURE_HASSTDEXTI))
 		return NULL;
 	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
