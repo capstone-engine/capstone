@@ -1243,6 +1243,21 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 					->groups[insn->detail->groups_count] =
 					X86_GRP_JUMP;
 				insn->detail->groups_count++;
+
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EIP, X86_REG_IP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_IP);
+					break;
+				}
 			}
 
 			switch (insns[i].id) {
