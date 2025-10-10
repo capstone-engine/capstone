@@ -4923,3 +4923,508 @@ test_cases:
             eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF, X86_EFLAGS_TEST_ZF ]
           regs_read: [ flags, ip ]
           regs_write: [ ip ]
+
+  -
+    input:
+      name: "Conditional jump, 32-bit decode mode"
+      bytes: [
+         0x70, 0x7d,                          # jo    0x7f
+         0x71, 0x7b,                          # jno   0x7f
+         0x72, 0x79,                          # jb    0x7f       (aka jc/jnae)
+         0x73, 0x77,                          # jae   0x7f       (aka jnb/jnc)
+         0x74, 0x75,                          # je    0x7f       (aka jz)
+         0x75, 0x73,                          # jne   0x7f       (aka jnz)
+         0x76, 0x71,                          # jbe   0x7f       (aka jna)
+         0x77, 0x6f,                          # ja    0x7f       (aka jnbe)
+         0x78, 0x6d,                          # js    0x7f
+         0x79, 0x6b,                          # jns   0x7f
+         0x7a, 0x69,                          # jp    0x7f       (aka jpe)
+         0x7b, 0x67,                          # jnp   0x7f       (aka jpo)
+         0x7c, 0x65,                          # jl    0x7f       (aka jnge)
+         0x7d, 0x63,                          # jge   0x7f       (aka jnl)
+         0x7e, 0x61,                          # jle   0x7f       (aka jng)
+         0x7f, 0x5f,                          # jg    0x7f       (aka jnle)
+         0xe3, 0x5d,                          # jecxz 0x7f       (aka jcxz/jrcxz)
+         0x0f, 0x80, 0x50, 0x56, 0x34, 0x12,  # jo    0x12345678
+         0x0f, 0x81, 0x4a, 0x56, 0x34, 0x12,  # jno   0x12345678
+         0x0f, 0x82, 0x44, 0x56, 0x34, 0x12,  # jb    0x12345678 (aka jc/jnae)
+         0x0f, 0x83, 0x3e, 0x56, 0x34, 0x12,  # jae   0x12345678 (aka jnb/jnc)
+         0x0f, 0x84, 0x38, 0x56, 0x34, 0x12,  # je    0x12345678 (aka jz)
+         0x0f, 0x85, 0x32, 0x56, 0x34, 0x12,  # jne   0x12345678 (aka jnz)
+         0x0f, 0x86, 0x2c, 0x56, 0x34, 0x12,  # jbe   0x12345678 (aka jna)
+         0x0f, 0x87, 0x26, 0x56, 0x34, 0x12,  # ja    0x12345678 (aka jnbe)
+         0x0f, 0x88, 0x20, 0x56, 0x34, 0x12,  # js    0x12345678
+         0x0f, 0x89, 0x1a, 0x56, 0x34, 0x12,  # jns   0x12345678
+         0x0f, 0x8A, 0x14, 0x56, 0x34, 0x12,  # jp    0x12345678 (aka jpe)
+         0x0f, 0x8B, 0x0e, 0x56, 0x34, 0x12,  # jnp   0x12345678 (aka jpo)
+         0x0f, 0x8C, 0x08, 0x56, 0x34, 0x12,  # jl    0x12345678 (aka jnge)
+         0x0f, 0x8D, 0x02, 0x56, 0x34, 0x12,  # jge   0x12345678 (aka jnl)
+         0x0f, 0x8E, 0xfc, 0x55, 0x34, 0x12,  # jle   0x12345678 (aka jng)
+         0x0f, 0x8F, 0xf6, 0x55, 0x34, 0x12,  # jg    0x12345678 (aka jnle)
+
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "jo 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x70, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_OF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jno 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x71, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_OF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jb 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x72, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_CF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jae 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x73, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_CF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "je 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x74, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jne 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x75, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jbe 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x76, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_CF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "ja 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x77, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_CF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "js 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x78, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_SF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jns 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x79, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_SF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jp 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x7a, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_PF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jnp 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x7b, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_PF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jl 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x7c, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jge 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x7d, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jle 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x7e, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jg 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x7f, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jecxz 0x7f"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe3, 0x0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x7f
+          regs_read: [ eip, ecx ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jo 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x80, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_OF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jno 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x81, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_OF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jb 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x82, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_CF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jae 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x83, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_CF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "je 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x84, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jne 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x85, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jbe 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x86, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_CF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "ja 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x87, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_CF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "js 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x88, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_SF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jns 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x89, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_SF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jp 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x8A, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_PF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jnp 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x8B, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_PF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jl 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x8C, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jge 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x8D, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jle 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x8E, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jg 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x8F, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x12345678
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ eflags, eip ]
+          regs_write: [ eip ]
