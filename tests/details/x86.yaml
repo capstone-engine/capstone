@@ -6239,3 +6239,67 @@ test_cases:
             opcode: [ 0xff, 0x00, 0x00, 0x00 ]
           regs_read: [ eax ]
           regs_write: [ eip ]
+
+  -
+    input:
+      name: "Unconditional jump, 64-bit decode mode"
+      bytes: [
+         0xeb, 0x10,                                 # jmp 0x12
+         0xe9, 0x71, 0x56, 0x34, 0x12,               # jmp 0x12345678
+         0xff, 0xa0, 0x78, 0x56, 0x34, 0x12,         # jmp qword ptr [rax+0x12345678]
+         0xff, 0xe0,                                 # jmp rax
+         0xff, 0xa8, 0x78, 0x56, 0x34, 0x12,         # jmp ptr far [rax + 0x12345678]
+         0x48, 0xff, 0xa8, 0x78, 0x56, 0x34, 0x12,   # REX.W jmp ptr far [rax + 0x12345678]
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x12"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xeb, 0x00, 0x00, 0x00 ]
+          regs_read: [ rip ]
+          regs_write: [ rip ]
+      -
+        asm_text: "jmp 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe9, 0x00, 0x00, 0x00 ]
+          regs_read: [ rip ]
+          regs_write: [ rip ]
+      -
+        asm_text: "jmp qword ptr [rax + 0x12345678]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+          regs_read: [ rax ]
+          regs_write: [ rip ]
+      -
+        asm_text: "jmp rax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+          regs_read: [ rax ]
+          regs_write: [ rip ]
+      -
+        asm_text: "jmp ptr [rax + 0x12345678]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+          regs_read: [ rax ]
+          regs_write: [ rip ]
+      -
+        asm_text: "ljmp [rax + 0x12345678]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+          regs_read: [ rax ]
+          regs_write: [ rip ]
