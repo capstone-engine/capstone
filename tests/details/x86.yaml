@@ -6175,3 +6175,67 @@ test_cases:
             opcode: [ 0xff, 0x00, 0x00, 0x00 ]
           regs_read: [ ]
           regs_write: [ ip ]
+
+  -
+    input:
+      name: "Unconditional jump, 32-bit decode mode"
+      bytes: [
+         0xeb, 0x10,                                 # jmp 0x12
+         0xe9, 0x71, 0x56, 0x34, 0x12,               # jmp 0x1234
+         0xff, 0xa0, 0x78, 0x56, 0x34, 0x12,         # jmp dword ptr [eax+0x12345678]
+         0xff, 0xe0,                                 # jmp eax
+         0xea, 0x78, 0x56, 0x34, 0x12, 0x78, 0x56,   # ljmp 0x5678:0x12345678
+         0xff, 0xa8, 0x78, 0x56, 0x34, 0x12,         # jmp far [eax + 0x1234]
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "jmp 0x12"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xeb, 0x00, 0x00, 0x00 ]
+          regs_read: [ eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jmp 0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xe9, 0x00, 0x00, 0x00 ]
+          regs_read: [ eip ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jmp dword ptr [eax + 0x12345678]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+          regs_read: [ eax ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jmp eax"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+          regs_read: [ eax ]
+          regs_write: [ eip ]
+      -
+        asm_text: "ljmp 0x5678:0x12345678"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xea, 0x00, 0x00, 0x00 ]
+          regs_read: [ ]
+          regs_write: [ eip ]
+      -
+        asm_text: "jmp ptr [eax + 0x12345678]"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0xff, 0x00, 0x00, 0x00 ]
+          regs_read: [ eax ]
+          regs_write: [ eip ]
