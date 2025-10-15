@@ -142,7 +142,8 @@ void RISCV_compact_operands(MCInst *MI) {
 // and therefore the read-write operand is wrongly classified as only-read
 // this logic tries to correct that
 void RISCV_add_missing_write_access(MCInst* MI) {
-printf("REACHABLE %d\n\n", !isCompressed(MI));
+    if (!detail_is_set(MI))
+    	return;
     if (!isCompressed(MI))
     	return;
 
@@ -150,11 +151,9 @@ printf("REACHABLE %d\n\n", !isCompressed(MI));
     cs_riscv_op* ops = riscv_details->operands;
     // make the detection condition as specific as possible
     // so it doesn't accidentally trigger for other cases
-    printf("\n---------------- %d @ %d @ %d @ %d", riscv_details->op_count, ops[0].type,ops[1].type,ops[1].access);
     if (riscv_details->op_count == 2
     &&  ops[0].type == RISCV_OP_INVALID && ops[1].type == RISCV_OP_REG
     &&  ops[1].access == CS_AC_READ) {
-    	printf("\n\n&&&&&&&&&&&&& MISSING WRITE ACCESS DETECTED FOR OPCODE %d !!!!!!!!!!!!!!!!!!!!!!! \n\n", MI->Opcode);
     	ops[1].access |= CS_AC_WRITE;
     }
 }

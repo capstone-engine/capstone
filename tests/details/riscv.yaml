@@ -315,7 +315,7 @@ test_cases:
                   reg: ra
                   access: CS_AC_WRITE
                 - type: RISCV_OP_IMM
-                  imm: 0xffc
+                  imm: -0x10
                   access: CS_AC_READ
             groups: [RISCV_GRP_CALL, RISCV_GRP_BRANCH_RELATIVE]
         - asm_text: "jalr ra, 4(a0)"
@@ -346,7 +346,7 @@ test_cases:
                   imm: -4
                   access: CS_AC_READ
             groups: [RISCV_GRP_CALL]
-        - asm_text: "beq sp, tp, 0xa"
+        - asm_text: "beq sp, tp, 4130"
           details:
             riscv:
               operands:
@@ -360,7 +360,7 @@ test_cases:
                   imm: 0xa
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
-        - asm_text: "bne gp, t1, -6"
+        - asm_text: "bne gp, t1, 4118"
           details:
             riscv:
               operands:
@@ -374,7 +374,7 @@ test_cases:
                   imm: -6
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
-        - asm_text: "blt t2, s1, 0x14"
+        - asm_text: "blt t2, s1, 4148"
           details:
             riscv:
               operands:
@@ -388,7 +388,7 @@ test_cases:
                   imm: 0x14
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
-        - asm_text: "bge a0, a1, 6"
+        - asm_text: "bge a0, a1, 4138"
           details:
             riscv:
               operands:
@@ -402,7 +402,7 @@ test_cases:
                   imm: 0x6
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
-        - asm_text: "bltu a2, a3, 0xa"
+        - asm_text: "bltu a2, a3, 4146"
           details:
             riscv:
               operands:
@@ -416,7 +416,7 @@ test_cases:
                   imm: 0xa
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
-        - asm_text: "bgeu a4, a5, 0xc"
+        - asm_text: "bgeu a4, a5, 4152"
           details:
             riscv:
               operands:
@@ -887,7 +887,7 @@ test_cases:
                   access: CS_AC_READ
 
             groups: [RISCV_FEATURE_HasStdExtA]
-        - asm_text: "fmadd.s ft0, ft1, ft2, ft3"
+        - asm_text: "fmadd.s ft0, ft1, ft2, ft3, dyn"
           details:
             riscv:
               operands:
@@ -904,7 +904,7 @@ test_cases:
                   reg: ft3
                   access: CS_AC_READ
             groups: [RISCV_FEATURE_HasStdExtF]
-        - asm_text: "fadd.s ft5, ft6, ft7"
+        - asm_text: "fadd.s ft5, ft6, ft7, dyn"
           details:
             riscv:
               operands:
@@ -918,7 +918,7 @@ test_cases:
                   reg: ft7
                   access: CS_AC_READ
             groups: [RISCV_FEATURE_HasStdExtF]
-        - asm_text: "fsqrt.s fs0, fs1"
+        - asm_text: "fsqrt.s fs0, fs1, dyn"
           details:
             riscv:
               operands:
@@ -979,7 +979,7 @@ test_cases:
                   reg: fa0
                   access: CS_AC_READ
             groups: [RISCV_FEATURE_HasStdExtF]
-        - asm_text: "fcvt.w.s a0, ft0"
+        - asm_text: "fcvt.w.s a0, ft0, dyn"
           details:
             riscv:
               operands:
@@ -990,7 +990,7 @@ test_cases:
                   reg: ft0
                   access: CS_AC_READ
             groups: [RISCV_FEATURE_HasStdExtF]
-        - asm_text: "fcvt.s.w ft1, a1"
+        - asm_text: "fcvt.s.w ft1, a1, dyn"
           details:
             riscv:
               operands:
@@ -1036,7 +1036,7 @@ test_cases:
                   mem_disp: 0xe
                   access: CS_AC_WRITE
             groups: [RISCV_FEATURE_HasStdExtF]
-        - asm_text: "fmadd.d ft0, ft1, ft2, ft3"
+        - asm_text: "fmadd.d ft0, ft1, ft2, ft3, dyn"
           details:
             riscv:
               operands:
@@ -1053,7 +1053,7 @@ test_cases:
                   reg: ft3
                   access: CS_AC_READ
             groups: [RISCV_FEATURE_HasStdExtD]
-        - asm_text: "fadd.d ft5, ft6, ft7"
+        - asm_text: "fadd.d ft5, ft6, ft7, dyn"
           details:
             riscv:
               operands:
@@ -1067,7 +1067,7 @@ test_cases:
                   reg: ft7
                   access: CS_AC_READ
             groups: [RISCV_FEATURE_HasStdExtD]
-        - asm_text: "fsqrt.d fs0, fs1"
+        - asm_text: "fsqrt.d fs0, fs1, dyn"
           details:
             riscv:
               operands:
@@ -1626,7 +1626,7 @@ test_cases:
                   reg: t4
                   access: CS_AC_READ
             groups: [RISCV_FEATURE_HasStdExtCOrZca]
-        - asm_text: "c.beqz a0, -8"
+        - asm_text: "c.beqz a0, 4120"
           details:
             riscv:
               operands:
@@ -1645,7 +1645,7 @@ test_cases:
         - asm_text: "c.nop"
           details:
             groups: [RISCV_FEATURE_HasStdExtCOrZca]
-        - asm_text: "c.j 0x7fe"
+        - asm_text: "c.j 6178"
           details:
             riscv:
               operands:
@@ -1665,8 +1665,8 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: t0
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_JUMP]
-        - asm_text: "c.jal 4"
+            groups: [RISCV_GRP_JUMP, RISCV_FEATURE_HasStdExtCOrZca]
+        - asm_text: "c.jal 4140"
           details:
             riscv:
               operands:

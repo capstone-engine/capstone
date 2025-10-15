@@ -625,8 +625,6 @@ if(CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVGenRegisterInfo.inc
         arch/RISCV/RISCVGenSubtargetInfo.inc
         arch/RISCV/RISCVGenSystemOperands.inc
-        arch/RISCV/RISCVMappingInsn.inc
-        arch/RISCV/RISCVMappingInsnOp.inc
     )
 endif()
 
