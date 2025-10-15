@@ -83,7 +83,7 @@ bool haveRequiredFeatures(const RISCV_SysReg *Reg, MCInst *MI) {
 		// Not in 32-bit mode.
 		if (Reg->isRV32Only && RISCV_getFeatureBits(MI->csh->mode, RISCV_Feature64Bit))
 			return false;
-		
+
 		return true;
 }
 
@@ -383,13 +383,15 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O, void * /* MCRegisterInf
 			Uncompressed.csh = MI->csh;
 			Uncompressed.flat_insn = MI->flat_insn;
 		}
-		
+
 		if (printAliasInstr(McInstr, MI->address, O))
 			MI->isAliasInstr = true;
 		else
 			printInstruction(McInstr, MI->address, O);
 	}
+	printf("\n\n ADDING MISSING ACCESS \n\n");
 	RISCV_add_groups(MI);
+	RISCV_add_missing_write_access(MI);
 	RISCV_compact_operands(MI);
 }
 
@@ -400,4 +402,10 @@ const char *getSysRegName(unsigned reg) {
 
 const char *RISCV_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx) {
 	return getRegisterName(RegNo, AltIdx);
+}
+
+bool isCompressed(MCInst *MI) {
+    MCInst unused;
+    MCInst_Init(&unused, MI->csh->arch);
+    return uncompressInst(&unused, MI);
 }

@@ -295,20 +295,27 @@ test_cases:
                 - type: RISCV_OP_IMM
                   imm: 0x8
                   access: CS_AC_READ
-        - asm_text: "jal 8"
+        - asm_text: "jal ra, 4112"
           details:
             riscv:
               operands:
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_WRITE
+
                 - type: RISCV_OP_IMM
                   imm: 0x8
                   access: CS_AC_READ
             groups: [RISCV_GRP_CALL, RISCV_GRP_BRANCH_RELATIVE]
-        - asm_text: "jal -0x10"
+        - asm_text: "jal ra, 4092"
           details:
             riscv:
               operands:
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_WRITE
                 - type: RISCV_OP_IMM
-                  imm: -0x10
+                  imm: 0xffc
                   access: CS_AC_READ
             groups: [RISCV_GRP_CALL, RISCV_GRP_BRANCH_RELATIVE]
         - asm_text: "jalr ra, 4(a0)"
@@ -810,7 +817,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: s7
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTM]
+            groups: [HasStdExtMOrZmmul]
         - asm_text: "div a1, s8, s9"
           details:
             riscv:
@@ -849,7 +856,7 @@ test_cases:
                 - type: RISCV_OP_MEM
                   mem_base: t0
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTA]
+            groups: [RISCV_FEATURE_HasStdExtA]
         - asm_text: "sc.w t2, t1, (a0)"
           details:
             riscv:
@@ -864,7 +871,7 @@ test_cases:
                   reg: t1
                   access: CS_AC_READ
 
-            groups: [RISCV_GRP_HASSTDEXTA]
+            groups: [RISCV_FEATURE_HasStdExtA]
         - asm_text: "amoadd.w a4, s2, (t5)"
           details:
             riscv:
@@ -879,7 +886,7 @@ test_cases:
                   reg: s2
                   access: CS_AC_READ
 
-            groups: [RISCV_GRP_HASSTDEXTA]
+            groups: [RISCV_FEATURE_HasStdExtA]
         - asm_text: "fmadd.s ft0, ft1, ft2, ft3"
           details:
             riscv:
@@ -896,7 +903,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: ft3
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "fadd.s ft5, ft6, ft7"
           details:
             riscv:
@@ -910,7 +917,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: ft7
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "fsqrt.s fs0, fs1"
           details:
             riscv:
@@ -921,7 +928,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: fs1
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "fmin.s fa0, fa1, fa2"
           details:
             riscv:
@@ -935,7 +942,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: fa2
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "feq.s t3, ft8, ft9"
           details:
             riscv:
@@ -949,7 +956,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: ft9
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "fmv.w.x fs1, a1"
           details:
             riscv:
@@ -960,7 +967,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: a1
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "fmv.x.w a2, fa0"
           details:
             riscv:
@@ -971,7 +978,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: fa0
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "fcvt.w.s a0, ft0"
           details:
             riscv:
@@ -982,7 +989,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: ft0
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "fcvt.s.w ft1, a1"
           details:
             riscv:
@@ -993,7 +1000,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: a1
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "fclass.s a1, fa6"
           details:
             riscv:
@@ -1004,7 +1011,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: fa6
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "flw fs5, 7(a1)"
           details:
             riscv:
@@ -1016,7 +1023,7 @@ test_cases:
                   mem_base: a1
                   mem_disp: 0x7
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "fsw fs6, 0xe(a2)"
           details:
             riscv:
@@ -1028,7 +1035,7 @@ test_cases:
                   mem_base: a2
                   mem_disp: 0xe
                   access: CS_AC_WRITE
-            groups: [RISCV_FEATURE_HASSTDEXTF]
+            groups: [RISCV_FEATURE_HasStdExtF]
         - asm_text: "fmadd.d ft0, ft1, ft2, ft3"
           details:
             riscv:
@@ -1045,7 +1052,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: ft3
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtD]
         - asm_text: "fadd.d ft5, ft6, ft7"
           details:
             riscv:
@@ -1059,7 +1066,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: ft7
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtD]
         - asm_text: "fsqrt.d fs0, fs1"
           details:
             riscv:
@@ -1070,7 +1077,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: fs1
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtD]
         - asm_text: "fmin.d fa0, fa1, fa2"
           details:
             riscv:
@@ -1084,7 +1091,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: fa2
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtD]
         - asm_text: "feq.d t3, ft8, ft9"
           details:
             riscv:
@@ -1098,7 +1105,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: ft9
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtD]
   - input:
       bytes:
         [
@@ -1199,7 +1206,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: s1
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTM, RISCV_FEATURE_IsRV64]
+            groups: [HasStdExtMOrZmmul, RISCV_FEATURE_IsRV64]
         - asm_text: "divw ra, s10, t0"
           details:
             riscv:
@@ -1238,7 +1245,7 @@ test_cases:
                 - type: RISCV_OP_MEM
                   mem_base: t0
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTA, RISCV_FEATURE_IsRV64]
+            groups: [RISCV_FEATURE_HasStdExtA, RISCV_FEATURE_IsRV64]
         - asm_text: "sc.d t2, t1, (a0)"
           details:
             riscv:
@@ -1253,7 +1260,7 @@ test_cases:
                   reg: t1
                   access: CS_AC_READ
 
-            groups: [RISCV_GRP_HASSTDEXTA, RISCV_FEATURE_IsRV64]
+            groups: [RISCV_FEATURE_HasStdExtA, RISCV_FEATURE_IsRV64]
         - asm_text: "amoadd.d a4, s2, (t5)"
           details:
             riscv:
@@ -1268,7 +1275,7 @@ test_cases:
                   reg: s2
                   access: CS_AC_READ
 
-            groups: [RISCV_GRP_HASSTDEXTA, RISCV_FEATURE_IsRV64]
+            groups: [RISCV_FEATURE_HasStdExtA, RISCV_FEATURE_IsRV64]
         - asm_text: "fcvt.l.s a0, ft0"
           details:
             riscv:
@@ -1279,7 +1286,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: ft0
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF, RISCV_FEATURE_IsRV64]
+            groups: [RISCV_FEATURE_HasStdExtF, RISCV_FEATURE_IsRV64]
         - asm_text: "fcvt.s.l ft1, a1"
           details:
             riscv:
@@ -1290,7 +1297,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: a1
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HASSTDEXTF, RISCV_FEATURE_IsRV64]
+            groups: [RISCV_FEATURE_HasStdExtF, RISCV_FEATURE_IsRV64]
         - asm_text: "fmv.d.x fs1, a1"
           details:
             riscv:
@@ -1301,7 +1308,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: a1
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD, RISCV_FEATURE_IsRV64]
+            groups: [RISCV_FEATURE_HasStdExtD, RISCV_FEATURE_IsRV64]
         - asm_text: "fmv.x.d a2, fa0"
           details:
             riscv:
@@ -1312,7 +1319,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: fa0
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD, RISCV_FEATURE_IsRV64]
+            groups: [RISCV_FEATURE_HasStdExtD, RISCV_FEATURE_IsRV64]
         - asm_text: "fcvt.w.d a0, ft0"
           details:
             riscv:
@@ -1323,7 +1330,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: ft0
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtD]
         - asm_text: "fcvt.d.w ft1, a1"
           details:
             riscv:
@@ -1334,7 +1341,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: a1
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtD]
         - asm_text: "fclass.d a1, fa6"
           details:
             riscv:
@@ -1345,7 +1352,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: fa6
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtD]
         - asm_text: "fld fs5, 7(a1)"
           details:
             riscv:
@@ -1357,7 +1364,7 @@ test_cases:
                   mem_base: a1
                   mem_disp: 0x7
                   access: CS_AC_READ
-            groups: [RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtD]
         - asm_text: "fsd fs6, 0xe(a2)"
           details:
             riscv:
@@ -1369,7 +1376,7 @@ test_cases:
                   mem_base: a2
                   mem_disp: 0xe
                   access: CS_AC_WRITE
-            groups: [RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtD]
   - input:
       bytes:
         [
@@ -1459,7 +1466,7 @@ test_cases:
                   mem_base: a1
                   mem_disp: 0x8
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtCOrZcd, RISCV_FEATURE_HasStdExtD]
         - asm_text: "c.lw s0, 8(a2)"
           details:
             riscv:
@@ -1482,7 +1489,7 @@ test_cases:
                 - type: RISCV_OP_MEM
                   mem_base: a3
                   access: CS_AC_WRITE
-            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtCOrZcd, RISCV_FEATURE_HasStdExtD]
         - asm_text: "c.sw s1, 0x10(a4)"
           details:
             riscv:
@@ -1561,7 +1568,7 @@ test_cases:
                   mem_base: sp
                   mem_disp: 0x8
                   access: CS_AC_WRITE
-            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtCOrZcd, RISCV_FEATURE_HasStdExtD]
         - asm_text: "c.fldsp fs0, 0x18(sp)"
           details:
             riscv:
@@ -1573,7 +1580,7 @@ test_cases:
                   mem_base: sp
                   mem_disp: 0x18
                   access: CS_AC_READ
-            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_HASSTDEXTD]
+            groups: [RISCV_FEATURE_HasStdExtCOrZcd, RISCV_FEATURE_HasStdExtD]
         - asm_text: "c.fswsp fs1, 0xfc(sp)"
           details:
             riscv:
@@ -1587,8 +1594,8 @@ test_cases:
                   access: CS_AC_WRITE
             groups:
               [
-                RISCV_FEATURE_HasStdExtCOrZca,
-                RISCV_FEATURE_HASSTDEXTF,
+                RISCV_FEATURE_HasStdExtCOrZcfOrZce,
+                RISCV_FEATURE_HasStdExtF,
                 RISCV_FEATURE_IsRV32,
               ]
         - asm_text: "c.flwsp fa0, 0x88(sp)"
@@ -1598,16 +1605,14 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: fa0
                   access: CS_AC_WRITE
-                - type: RISCV_OP_IMM
-                  imm: 0x88
-                  access: CS_AC_READ
-                - type: RISCV_OP_REG
-                  reg: sp
+                - type: RISCV_OP_MEM
+                  mem_base: sp
+                  mem_disp: 0x88
                   access: CS_AC_READ
             groups:
               [
                 RISCV_FEATURE_HasStdExtCOrZcfOrZce,
-                RISCV_FEATURE_HASSTDEXTF,
+                RISCV_FEATURE_HasStdExtF,
                 RISCV_FEATURE_IsRV32,
               ]
         - asm_text: "c.mv a2, t4"

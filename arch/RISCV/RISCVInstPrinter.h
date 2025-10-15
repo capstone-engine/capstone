@@ -59,6 +59,8 @@ const char *RISCV_LLVM_getRegisterName(unsigned RegNo, unsigned AltIdx);
 
 const char *getSysRegName(unsigned reg);
 
+bool isCompressed(MCInst *MI);
+
 typedef enum {
 	#define GET_ENUM_VALUES_SysReg
 	#include "RISCVGenCSSystemOperandsEnum.inc"

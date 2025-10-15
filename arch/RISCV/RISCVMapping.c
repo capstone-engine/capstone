@@ -46,24 +46,6 @@ static const map_insn_ops insn_operands[] = {
 
 void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 {
-	// printf("========== OP: %d, (CODE: %d)", OpNum, MI->Opcode);
-	// switch (opgroup) {
-
-	// 	case RISCV_OP_GROUP_Operand: printf("\n RISCV_OP_GROUP_Operand"); break;
-	// 	case RISCV_OP_GROUP_BranchOperand:printf("\n RISCV_OP_GROUP_BranchOperand"); break;
-	// 	case RISCV_OP_GROUP_VMaskReg:printf("\n RISCV_OP_GROUP_VMaskReg"); break;
-	// 	case RISCV_OP_GROUP_VTypeI:printf("\n RISCV_OP_GROUP_VTypeI "); break;
-	// 	case RISCV_OP_GROUP_ZeroOffsetMemOp:printf("\nRISCV_OP_GROUP_ZeroOffsetMemOp"); break;
-	// 	case RISCV_OP_GROUP_Rlist:printf("\nRISCV_OP_GROUP_Rlist"); break;
-	// 	case RISCV_OP_GROUP_Spimm:printf("\nRISCV_OP_GROUP_Spimm"); break;
-	// 	case RISCV_OP_GROUP_CSRSystemRegister:printf("\n RISCV_OP_GROUP_CSRSystemRegister (%lu)", MCInst_getOperand(MI, OpNum)->ImmVal); break;
-	// 	case RISCV_OP_GROUP_RegReg:printf("\nRISCV_OP_GROUP_RegReg"); break;
-	// 	case RISCV_OP_GROUP_FRMArg:printf("\nRISCV_OP_GROUP_FRMArg"); break;
-	// 	case RISCV_OP_GROUP_FRMArgLegacy:printf("\nRISCV_OP_GROUP_FRMArgLegacy"); break;
-	// 	case RISCV_OP_GROUP_FenceArg:printf("\nRISCV_OP_GROUP_FenceArg"); break;
-	// 	case RISCV_OP_GROUP_FPImmOperand:printf("\nRISCV_OP_GROUP_FPImmOperand"); break;
-	// }
-	// printf("\n================================================================== %d\n", insn_operands[0].ops[0].type);
 	if (!detail_is_set(MI))
 		return;
 	// are not "true" arguments and has no Capstone equivalent
@@ -75,16 +57,13 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 	cs_riscv_op *op = &(riscv_details->operands[OpNum]);
 	op->type = (riscv_op_type) map_get_op_type(MI, OpNum);
 	op->access = (cs_ac_type) map_get_op_access(MI, OpNum);
-	//printf("\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& OPINDEX: %d, OP: %d", OpNum, op->type);
 	switch (map_get_op_type(MI, OpNum)) {
 		case CS_OP_REG:
 			op->reg = MCInst_getOperand(MI, OpNum)->RegVal;
-			printf("\n *******************  REG %d: %d\n", OpNum, op->reg);
 			break;
 		case CS_OP_MEM:
 			op->mem.base = 0;
 			op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
-			printf("\n *******************  MEM %d: %d\n", OpNum, op->reg);
 			break;
 		case CS_OP_IMM: {
 			uint64_t val = MCInst_getOperand(MI, OpNum)->ImmVal;
@@ -96,13 +75,11 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 				// CSR instruction always read-writes the system operand
 				op->access = CS_AC_READ_WRITE;
 			}
-			printf("\n *******************  IMM %d: %lu\n", OpNum, op->imm);
 			break;
 		}
 		case CS_OP_MEM_REG:
 			op->type = (riscv_op_type) CS_OP_MEM;
 			op->mem.base = MCInst_getOperand(MI, OpNum)->RegVal;
-			printf("\n *******************  REG MEM %d: %d\n", OpNum, op->mem.base);
 			break;
 		case CS_OP_MEM_IMM:
 			// fill in the disp in the last operand
@@ -110,7 +87,6 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 			op->type = (riscv_op_type) CS_OP_MEM;
 			op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
 			riscv_details->op_count--; // don't increase the count, cancel the coming increment
-			printf("\n *******************  MEM %d: %lu\n", OpNum, op->mem.disp);
 			break;
 		case CS_OP_INVALID:
 			break;
@@ -158,6 +134,31 @@ void RISCV_compact_operands(MCInst *MI) {
     	memset((void *)(&ops[i]), CS_OP_INVALID, sizeof(cs_riscv_op));
     }
 }
+
+// some C instructions have only 2 apparent operands, one of them is read-write
+// the operand information for those instruction has 3 operands, the first and second are the same,
+// but once with read and once write access
+// when those instructions are disassembled only the operand entry with the read access is used,
+// and therefore the read-write operand is wrongly classified as only-read
+// this logic tries to correct that
+void RISCV_add_missing_write_access(MCInst* MI) {
+printf("REACHABLE %d\n\n", !isCompressed(MI));
+    if (!isCompressed(MI))
+    	return;
+
+    cs_riscv *riscv_details = &(MI->flat_insn->detail->riscv);
+    cs_riscv_op* ops = riscv_details->operands;
+    // make the detection condition as specific as possible
+    // so it doesn't accidentally trigger for other cases
+    printf("\n---------------- %d @ %d @ %d @ %d", riscv_details->op_count, ops[0].type,ops[1].type,ops[1].access);
+    if (riscv_details->op_count == 2
+    &&  ops[0].type == RISCV_OP_INVALID && ops[1].type == RISCV_OP_REG
+    &&  ops[1].access == CS_AC_READ) {
+    	printf("\n\n&&&&&&&&&&&&& MISSING WRITE ACCESS DETECTED FOR OPCODE %d !!!!!!!!!!!!!!!!!!!!!!! \n\n", MI->Opcode);
+    	ops[1].access |= CS_AC_WRITE;
+    }
+}
+
 // given internal insn id, return public instruction info
 void RISCV_get_insn_id(cs_struct * h, cs_insn * insn, unsigned int id)
 {
@@ -230,7 +231,6 @@ const char *RISCV_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
 	// verify group id
-	printf("GROUP ID: %d\n", id);
 	// if past the end
 	if (id >= RISCV_GRP_ENDING ||
 			// or in the encoding gap between generic groups and arch-specific groups
