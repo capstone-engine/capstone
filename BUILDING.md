@@ -30,6 +30,20 @@ cmake.exe --build build --config Release # For debug build change "Release" to "
 cmake.exe --install build
 ```
 
+**Cross-compiling for Android**
+```bash
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=$NDK_PATH/build/cmake/android.toolchain.cmake -DANDROID_NDK=$NDK_PATH -DANDROID_ABI=arm64-v8a
+cmake --build build
+```
+
+**Cross-compiling static library for arm64**
+
+```bash
+# apt-get install gcc-aarch64-linux-gnu
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_EXE_LINKER_FLAGS=-static
+cmake --build build
+```
+
 ## Tailor Capstone to your needs.
 
 Enable and disable options in the "configure" step (first `cmake` command from above).
