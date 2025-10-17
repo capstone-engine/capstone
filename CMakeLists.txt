@@ -612,6 +612,7 @@ if(CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVInstPrinter.h
         arch/RISCV/RISCVMapping.h
         arch/RISCV/RISCVModule.h
+        arch/RISCV/RISCVLinkage.h
         arch/RISCV/RISCVGenAsmWriter.inc
         arch/RISCV/RISCVGenCSAliasMnemMap.inc
         arch/RISCV/RISCVGenCSFeatureName.inc
@@ -625,6 +626,11 @@ if(CAPSTONE_RISCV_SUPPORT)
         arch/RISCV/RISCVGenRegisterInfo.inc
         arch/RISCV/RISCVGenSubtargetInfo.inc
         arch/RISCV/RISCVGenSystemOperands.inc
+        arch/RISCV/RISCVGenCompressedInstructionsInfo.inc
+        arch/RISCV/RISCVGenCSAliasEnum.inc
+        arch/RISCV/RISCVGenCSFeatureEnum.inc
+        arch/RISCV/RISCVGenCSInsnEnum.inc
+        arch/RISCV/RISCVGenCSRegEnum.inc
     )
 endif()
 
