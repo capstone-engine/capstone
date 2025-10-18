@@ -6433,3 +6433,322 @@ test_cases:
             eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_DF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_MODIFY_RF ]
           regs_read: [ rcx, r11 ]
           regs_write: [ rip, rflags ]
+
+  -
+    input:
+      name: "Compare and exchange, 16-bit decode mode"
+      bytes: [
+         0x0f, 0xb0, 0xfe,                  # cmpxchg dh, bh
+         0x0f, 0xb0, 0xb6, 0x34, 0x12,      # cmpxchg byte ptr [bp + 0x1234], dh
+         0x0f, 0xb1, 0xfe,                  # cmpxchg si, di
+         0x0f, 0xb1, 0xb6, 0x34, 0x12,      # cmpxchg byte ptr [bp + 0x1234], si
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpxchg dh, bh"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb0, 0x0, 0x0 ]
+            addr_size: 2
+            operands:
+              -
+                type: X86_OP_REG
+                reg: dh
+                access: CS_AC_WRITE      # BUG: dh is also read
+              -
+                type: X86_OP_REG
+                reg: bh
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF  ]
+          regs_read: [ al, bh ]      # BUG: dh is also read
+          regs_write: [ al, flags, dh ]
+      -
+        asm_text: "cmpxchg byte ptr [bp + 0x1234], dh"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb0, 0x0, 0x0 ]
+            addr_size: 2
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bp
+                mem_disp: 0x1234
+                size: 1
+                access: CS_AC_READ  # BUG: memory operand is also written
+              -
+                type: X86_OP_REG
+                reg: dh
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF  ]
+          regs_read: [ al, bp, dh ]
+          regs_write: [ al, flags ]
+      -
+        asm_text: "cmpxchg si, di"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb1, 0x0, 0x0 ]
+            addr_size: 2
+            operands:
+              -
+                type: X86_OP_REG
+                reg: si
+                access: CS_AC_WRITE      # BUG: si is also read
+              -
+                type: X86_OP_REG
+                reg: di
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF  ]
+          regs_read: [ ax, di ]
+          regs_write: [ ax, flags, si ]
+      -
+        asm_text: "cmpxchg word ptr [bp + 0x1234], si"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb1, 0x0, 0x0 ]
+            addr_size: 2
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: bp
+                mem_disp: 0x1234
+                size: 2
+                access: CS_AC_READ  # BUG: memory operand is also written
+              -
+                type: X86_OP_REG
+                reg: si
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF,  ]
+          regs_read: [ ax, bp, si ]
+          regs_write: [ ax, flags ]
+
+  -
+    input:
+      name: "Compare and exchange, 32-bit decode mode"
+      bytes: [
+         0x0f, 0xb0, 0xfe,                          # cmpxchg dh, bh
+         0x0f, 0xb0, 0xb6, 0x34, 0x12, 0x0, 0x0,    # cmpxchg byte ptr [esi + 0x1234], dh
+         0x0f, 0xb1, 0xfe,                          # cmpxchg esi, edi
+         0x0f, 0xb1, 0xb6, 0x34, 0x12, 0x0, 0x0     # cmpxchg byte ptr [esi + 0x1234], esi
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpxchg dh, bh"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb0, 0x0, 0x0 ]
+            operands:
+              -
+                type: X86_OP_REG
+                reg: dh
+                access: CS_AC_WRITE      # BUG: dh is also read
+              -
+                type: X86_OP_REG
+                reg: bh
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF  ]
+          regs_read: [ al, bh ]      # BUG: dh is also read
+          regs_write: [ al, eflags, dh ]
+      -
+        asm_text: "cmpxchg byte ptr [esi + 0x1234], dh"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb0, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: esi
+                mem_disp: 0x1234
+                size: 1
+                access: CS_AC_READ  # BUG: memory operand is also written
+              -
+                type: X86_OP_REG
+                reg: dh
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF  ]
+          regs_read: [ al, esi, dh ]
+          regs_write: [ al, eflags ]
+      -
+        asm_text: "cmpxchg esi, edi"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb1, 0x0, 0x0 ]
+            operands:
+              -
+                type: X86_OP_REG
+                reg: esi
+                access: CS_AC_WRITE      # BUG: esi is also read
+              -
+                type: X86_OP_REG
+                reg: edi
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF  ]
+          regs_read: [ eax, edi ]
+          regs_write: [ eax, eflags, esi ]
+      -
+        asm_text: "cmpxchg dword ptr [esi + 0x1234], esi"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb1, 0x0, 0x0 ]
+            addr_size: 4
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: esi
+                mem_disp: 0x1234
+                size: 4
+                access: CS_AC_READ  # BUG: memory operand is also written
+              -
+                type: X86_OP_REG
+                reg: esi
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF,  ]
+          regs_read: [ eax, esi ]
+          regs_write: [ eax, eflags ]
+
+  -
+    input:
+      name: "Compare and exchange, 64-bit decode mode"
+      bytes: [
+         0x0f, 0xb0, 0xfe,                                # cmpxchg dh, bh
+         0x0f, 0xb0, 0xb6, 0x34, 0x12, 0x0, 0x0,          # cmpxchg byte ptr [rsi + 0x1234], dh
+         0x0f, 0xb1, 0xfe,                                # cmpxchg esi, edi
+         0x0f, 0xb1, 0xb6, 0x34, 0x12, 0x0, 0x0,          # cmpxchg byte ptr [rsi + 0x1234], esi
+         0x40, 0x0f, 0xb1, 0xfe,                          # REX.W cmpxchg rsi, rdi
+         0x40, 0x0f, 0xb1, 0xb6, 0x34, 0x12, 0x0, 0x0     # REX.W cmpxchg qword ptr [rsi + 0x1234], rsi
+      ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpxchg dh, bh"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb0, 0x0, 0x0 ]
+            operands:
+              -
+                type: X86_OP_REG
+                reg: dh
+                access: CS_AC_WRITE      # BUG: dh is also read
+              -
+                type: X86_OP_REG
+                reg: bh
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF  ]
+          regs_read: [ al, bh ]      # BUG: dh is also read
+          regs_write: [ al, rflags, dh ]
+      -
+        asm_text: "cmpxchg byte ptr [rsi + 0x1234], dh"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb0, 0x0, 0x0 ]
+            addr_size: 8
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rsi
+                mem_disp: 0x1234
+                size: 1
+                access: CS_AC_READ  # BUG: memory operand is also written
+              -
+                type: X86_OP_REG
+                reg: dh
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF  ]
+          regs_read: [ al, rsi, dh ]
+          regs_write: [ al, rflags ]
+      -
+        asm_text: "cmpxchg esi, edi"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb1, 0x0, 0x0 ]
+            operands:
+              -
+                type: X86_OP_REG
+                reg: esi
+                access: CS_AC_WRITE      # BUG: esi is also read
+              -
+                type: X86_OP_REG
+                reg: edi
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF  ]
+          regs_read: [ eax, edi ]
+          regs_write: [ eax, rflags, esi ]
+      -
+        asm_text: "cmpxchg dword ptr [rsi + 0x1234], esi"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb1, 0x0, 0x0 ]
+            addr_size: 8
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rsi
+                mem_disp: 0x1234
+                size: 4
+                access: CS_AC_READ  # BUG: memory operand is also written
+              -
+                type: X86_OP_REG
+                reg: esi
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF,  ]
+          regs_read: [ eax, rsi, esi ]
+          regs_write: [ eax, rflags ]
+      -
+        asm_text: "cmpxchg esi, edi"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb1, 0x0, 0x0 ]
+            operands:
+              -
+                type: X86_OP_REG
+                reg: esi
+                access: CS_AC_WRITE      # BUG: esi is also read
+              -
+                type: X86_OP_REG
+                reg: edi
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF  ]
+          regs_read: [ eax, edi ]
+          regs_write: [ eax, rflags, esi ]
+      -
+        asm_text: "cmpxchg dword ptr [rsi + 0x1234], esi"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0xb1, 0x0, 0x0 ]
+            addr_size: 8
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rsi
+                mem_disp: 0x1234
+                size: 4
+                access: CS_AC_READ  # BUG: memory operand is also written
+              -
+                type: X86_OP_REG
+                reg: esi
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF,  ]
+          regs_read: [ eax, rsi, esi ]
+          regs_write: [ eax, rflags ]

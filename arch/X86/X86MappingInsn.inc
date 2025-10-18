@@ -3905,70 +3905,70 @@
 {
 	X86_CMPXCHG16B, X86_INS_CMPXCHG16B, 0,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_RAX, X86_REG_RBX, X86_REG_RCX, X86_REG_RDX, 0 }, { X86_REG_RAX, X86_REG_RDX, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+	{ X86_REG_AL, 0 }, { X86_REG_AL, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG16rm, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_AX, 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AX, 0 }, { X86_REG_AX, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG16rr, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_AX, 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AX, 0 }, { X86_REG_AX, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG32rm, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_EAX, 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_EAX, 0 }, { X86_REG_EAX, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG32rr, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_EAX, 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_EAX, 0 }, { X86_REG_EAX, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG64rm, X86_INS_CMPXCHG, 1,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_RAX, 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_RAX, 0 }, { X86_REG_RAX, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG64rr, X86_INS_CMPXCHG, 1,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_RAX, 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_RAX, 0 }, { X86_REG_RAX, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG8B, X86_INS_CMPXCHG8B, 0,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_EAX, X86_REG_EBX, X86_REG_ECX, X86_REG_EDX, 0 }, { X86_REG_EAX, X86_REG_EDX, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
+	{ X86_REG_AL, 0 }, { X86_REG_AL, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG8rm, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_AL, 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AL, 0 }, { X86_REG_AL, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
 {
 	X86_CMPXCHG8rr, X86_INS_CMPXCHG, 0,
 #ifndef CAPSTONE_DIET
-	{ X86_REG_AL, 0 }, { 0 }, { 0 }, 0, 0
+	{ X86_REG_AL, 0 }, { X86_REG_AL, X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
