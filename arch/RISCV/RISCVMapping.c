@@ -97,6 +97,8 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 	riscv_details->op_count++;
 }
 
+static inline void RISCV_add_adhoc_groups(MCInst *MI);
+
 void RISCV_add_groups(MCInst *MI) {
 	if (!detail_is_set(MI))
 		return;
@@ -108,6 +110,54 @@ void RISCV_add_groups(MCInst *MI) {
 		add_group(MI, insns[MI->Opcode].groups[i]);
 		i++;
 	}
+	RISCV_add_adhoc_groups(MI);
+}
+
+enum {
+	#define GET_ENUM_VALUES_RISCVOpcode
+	#include "RISCVGenCSSystemOperandsEnum.inc"
+};
+
+static inline void RISCV_add_privileged_group(MCInst *MI) {
+    uint8_t opcode = MI->flat_insn->bytes[0] & 0x80;
+    // no privileged instruction has a major opcode other than SYSTEM
+    if (opcode != RISCV_RISCVOPCODE_SYSTEM) {
+    	return;
+    }
+    uint8_t func3 = (MI->flat_insn->bytes[1] >> 4) & 0x7;
+    // no privileged instruction has a minor opcode other than PRIV or PRIVM
+    if (func3 != 0 && func3 != 0x4) {
+    	return;
+    }
+    uint16_t func12 = readBytes16(MI, &(MI->flat_insn->bytes[2])) >> 4;
+    // ecall and ebreak has SYSTEM and PRIV but aren't privileged
+    if (func12 == 0 || func12 == 1) {
+    	return;
+    }
+    uint8_t func6 = func12 >> 6;
+    // a subspace under extension-defined custom SYSTEM instructions that is not privileged
+    if (func6 == 0x23 || func6 == 0x33) {
+    	return;
+    }
+    add_group(MI, RISCV_GRP_PRIVILEGE);
+}
+
+static inline void RISCV_add_interrupt_group(MCInst *MI) {
+    if (MI->Opcode == RISCV_ECALL || MI->Opcode == RISCV_EBREAK) {
+    	add_group(MI, RISCV_GRP_INT);
+    }
+}
+
+static inline void RISCV_add_interrupt_ret_group(MCInst *MI) {
+    if (MI->Opcode == RISCV_MRET || MI->Opcode == RISCV_SRET) {
+    	add_group(MI, RISCV_GRP_IRET);
+    }
+}
+
+static inline void RISCV_add_adhoc_groups(MCInst *MI) {
+    RISCV_add_privileged_group(MI);
+    RISCV_add_interrupt_group(MI);
+    RISCV_add_interrupt_ret_group(MI);
 }
 
 // for weird reasons some instructions end up with valid operands that are
