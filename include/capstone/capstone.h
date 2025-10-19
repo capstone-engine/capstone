@@ -765,7 +765,7 @@ const char *CAPSTONE_API cs_strerror(cs_err code);
  which complicates things. This is especially troublesome for the case @count=0,
  when cs_disasm() runs uncontrollably (until either end of input buffer, or
  when it encounters an invalid instruction).
- 
+
  @handle: handle returned by cs_open()
  @code: buffer containing raw binary code to be disassembled.
  @code_size: size of the above code buffer.
@@ -828,7 +828,7 @@ cs_insn *CAPSTONE_API cs_malloc(csh handle);
  which complicates things. This is especially troublesome for the case
  @count=0, when cs_disasm() runs uncontrollably (until either end of input
  buffer, or when it encounters an invalid instruction).
- 
+
  @handle: handle returned by cs_open()
  @code: buffer containing raw binary code to be disassembled
  @size: size of above code
