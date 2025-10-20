@@ -18,8 +18,22 @@ tests = [
     f"cstest_py {root_dir}/tests/features/",
 ]
 
+expected_to_fail = [
+    f"cstest_py {root_dir}/tests/negative/",
+]
+
 for test in tests:
     logger.info(f'Running {test}')
     logger.info("#######################")
     subprocess.run(test.split(" "), check=True)
     logger.info("-----------------------")
+
+for test in expected_to_fail:
+    logger.info(f'Running {test}')
+    logger.info("#######################")
+    try:
+        subprocess.run(test.split(" "), check=True)
+        logger.error("Test was expected to fail.")
+        exit(-1)
+    except Exception as e:
+        logger.info("-----------------------")
