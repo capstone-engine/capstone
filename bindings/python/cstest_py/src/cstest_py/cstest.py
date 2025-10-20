@@ -137,6 +137,7 @@ class TestStats:
             log.error(
                 "Inconsistent statistics: total != successful + failed + skipped\n"
             )
+            exit(-1)
 
         if self.errors != 0:
             log.error("Failed with errors\n")
@@ -236,28 +237,41 @@ class TestExpected:
             return TestResult.FAILED
 
         for a_insn, e_insn in zip(actual_insns, self.insns):
-            def _check(res: bool):
-                if not res:
-                    log.error(f"Failed instruction: {a_insn}")
-                    return TestResult.FAILED
+            if not compare_asm_text(a_insn, e_insn.get("asm_text"), bits):
+                log.error(f"Failed instruction: {a_insn}")
+                return TestResult.FAILED
 
-            _check(compare_asm_text(a_insn, e_insn.get("asm_text"), bits))
+            if not compare_str(a_insn.mnemonic, e_insn.get("mnemonic"), "mnemonic"):
+                log.error(f"Failed instruction: {a_insn}")
+                return TestResult.FAILED
 
-            _check(compare_str(a_insn.mnemonic, e_insn.get("mnemonic"), "mnemonic"))
+            if not compare_str(a_insn.op_str, e_insn.get("op_str"), "op_str"):
+                log.error(f"Failed instruction: {a_insn}")
+                return TestResult.FAILED
 
-            _check(compare_str(a_insn.op_str, e_insn.get("op_str"), "op_str"))
+            if not compare_enum(a_insn.id, e_insn.get("id"), "id"):
+                log.error(f"Failed instruction: {a_insn}")
+                return TestResult.FAILED
 
-            _check(compare_enum(a_insn.id, e_insn.get("id"), "id"))
+            if not compare_tbool(a_insn.is_alias, e_insn.get("is_alias"), "is_alias"):
+                log.error(f"Failed instruction: {a_insn}")
+                return TestResult.FAILED
 
-            _check(compare_tbool(a_insn.is_alias, e_insn.get("is_alias"), "is_alias"))
+            if not compare_tbool(a_insn.illegal, e_insn.get("illegal"), "illegal"):
+                log.error(f"Failed instruction: {a_insn}")
+                return TestResult.FAILED
 
-            _check(compare_tbool(a_insn.illegal, e_insn.get("illegal"), "illegal"))
+            if not compare_uint32(a_insn.size, e_insn.get("size"), "size"):
+                log.error(f"Failed instruction: {a_insn}")
+                return TestResult.FAILED
 
-            _check(compare_uint32(a_insn.size, e_insn.get("size"), "size"))
+            if not compare_enum(a_insn.alias_id, e_insn.get("alias_id"), "alias_id"):
+                log.error(f"Failed instruction: {a_insn}")
+                return TestResult.FAILED
 
-            _check(compare_enum(a_insn.alias_id, e_insn.get("alias_id"), "alias_id"))
-
-            _check(compare_details(a_insn, e_insn.get("details")))
+            if not compare_details(a_insn, e_insn.get("details")):
+                log.error(f"Failed instruction: {a_insn}")
+                return TestResult.FAILED
 
         return TestResult.SUCCESS
 
@@ -401,7 +415,6 @@ class CSTest:
                     self.stats.add_failing_file(tf.path)
                 self.stats.add_test_case_data_point(result)
                 log.info(result)
-                print()
         self.stats.print_evaluate()
 
 
