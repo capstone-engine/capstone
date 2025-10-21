@@ -88,6 +88,40 @@ add_test(FeaturesTests
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
 
+# These tests must be run independently. Otherwise we won't detect when one succeeds.
+# Because cstest will always return not 0 from the first failing test onwards.
+# But we need to ensure all of them fail always.
+add_test(NegativeTests1
+    cstest ${PROJECT_SOURCE_DIR}/tests/negative/should_fail_I.yaml
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+set_property(TEST NegativeTests1 PROPERTY WILL_FAIL TRUE)
+add_test(NegativeTests2
+    cstest ${PROJECT_SOURCE_DIR}/tests/negative/should_fail_II.yaml
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+set_property(TEST NegativeTests2 PROPERTY WILL_FAIL TRUE)
+add_test(NegativeTests3
+    cstest ${PROJECT_SOURCE_DIR}/tests/negative/should_fail_III.yaml
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+set_property(TEST NegativeTests3 PROPERTY WILL_FAIL TRUE)
+add_test(NegativeTests4
+    cstest ${PROJECT_SOURCE_DIR}/tests/negative/should_fail_IV.yaml
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+set_property(TEST NegativeTests4 PROPERTY WILL_FAIL TRUE)
+add_test(NegativeTests5
+    cstest ${PROJECT_SOURCE_DIR}/tests/negative/should_fail_V.yaml
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+set_property(TEST NegativeTests5 PROPERTY WILL_FAIL TRUE)
+add_test(NegativeTests6
+    cstest ${PROJECT_SOURCE_DIR}/tests/negative/should_fail_VI.yaml
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+set_property(TEST NegativeTests6 PROPERTY WILL_FAIL TRUE)
+
 
 if(CAPSTONE_INSTALL)
     install(TARGETS cstest EXPORT capstone-targets DESTINATION ${CMAKE_INSTALL_BINDIR})
