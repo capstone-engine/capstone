@@ -177,7 +177,7 @@ jobs:
       run: |
         sudo apt-get -y update
         sudo apt-get -y install valgrind
-        valgrind cstest tests
+        valgrind --leak-check=full cstest tests
 
     - name: Comaptibility header generation
       # clang-format-17 is only available in Ubuntu 24.04

@@ -248,6 +248,7 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 
 #define CS_TEST_FAIL(msg) \
 	_print_insn(handle, &insns[i]); \
+	cs_free(insns, insns_count); \
 	fail_msg(msg);
 
 		if (!compare_asm_text(asm_text, expec_data->asm_text,
