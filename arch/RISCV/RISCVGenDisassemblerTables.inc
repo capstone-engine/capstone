@@ -7558,7 +7558,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0x0; \
     tmp |= fieldname(insn, 2, 5) << 0; \
     tmp |= fieldname(insn, 12, 1) << 5; \
-    if (!Check(&S, decodeUImmNonZeroOperand_6(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, decodeUImmLog2XLenNonZeroOperand(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 8: \
     tmp = fieldname(insn, 2, 3); \
@@ -7688,7 +7688,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = 0x0; \
     tmp |= fieldname(insn, 2, 5) << 0; \
     tmp |= fieldname(insn, 12, 1) << 5; \
-    if (!Check(&S, decodeUImmNonZeroOperand_6(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, decodeUImmLog2XLenNonZeroOperand(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 23: \
     tmp = fieldname(insn, 7, 3); \
@@ -7879,7 +7879,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 15, 5); \
     if (!Check(&S, DecodeGPRRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 20, 6); \
-    if (!Check(&S, decodeUImmOperand_6(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, decodeUImmLog2XLenOperand(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 49: \
     tmp = fieldname(insn, 7, 5); \
@@ -9159,9 +9159,9 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 15, 5); \
     if (!Check(&S, DecodeGPRRegisterClass(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 26, 6); \
-    if (!Check(&S, decodeUImmOperand_6(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, decodeUImmLog2XLenOperand(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 20, 6); \
-    if (!Check(&S, decodeUImmOperand_6(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
+    if (!Check(&S, decodeUImmLog2XLenOperand(MI, tmp, Address, Decoder))) { return MCDisassembler_Fail; } \
     return S; \
   case 196: \
     tmp = fieldname(insn, 7, 5); \

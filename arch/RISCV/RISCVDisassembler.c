@@ -309,7 +309,6 @@ DEFINE_decodeUImmOperand(1);
 						    Decoder); \
 	}
 DEFINE_decodeUImmNonZeroOperand(10);
-DEFINE_decodeUImmNonZeroOperand(6);
 
 #define DEFINE_decodeSImmOperand(N) \
 	static DecodeStatus CONCAT(decodeSImmOperand, \
@@ -408,6 +407,29 @@ static DecodeStatus decodeZcmpSpimm(MCInst *Inst, unsigned Imm,
 
 static DecodeStatus decodeCSSPushPopchk(MCInst *Inst, uint32_t Insn,
 					uint64_t Address, const void *Decoder);
+
+static DecodeStatus decodeUImmLog2XLenOperand(MCInst *Inst, uint32_t Imm,
+ 					      int64_t Address,
+ 					      const void *Decoder)
+ {
+ 	CS_ASSERT(isUIntN(6, Imm) && "Invalid immediate");
+
+ 	if (!RISCV_getFeatureBits(Inst->csh->mode, RISCV_Feature64Bit) &&
+ 	    !isUIntN(5, Imm))
+ 		return MCDisassembler_Fail;
+
+ 	MCOperand_CreateImm0(Inst, (Imm));
+ 	return MCDisassembler_Success;
+ }
+
+static DecodeStatus decodeUImmLog2XLenNonZeroOperand(MCInst *Inst, uint32_t Imm,
+  						     int64_t Address,
+  						     const void *Decoder)
+  {
+  	if (Imm == 0)
+  		return MCDisassembler_Fail;
+  	return decodeUImmLog2XLenOperand(Inst, Imm, Address, Decoder);
+ }
 
 #include "RISCVGenDisassemblerTables.inc"
 
@@ -543,7 +565,7 @@ static DecodeStatus decodeZcmpSpimm(MCInst *Inst, unsigned Imm,
 // isn't explicitly encoded in the instruction.
 void addSPOperands(MCInst *MI)
 {
-	const MCInstrDesc *MCID = 
+	const MCInstrDesc *MCID =
 		MCInstrDesc_get(MCInst_getOpcode(MI), RISCVDescs.Insts, ARR_SIZE(RISCVDescs.Insts));
 	MCOperand SPReg;
 	SPReg.MachineOperandType = kRegister;
@@ -675,10 +697,10 @@ DecodeStatus RISCV_getInstruction(MCInst *MI, uint16_t *Size, const uint8_t *Byt
 		TRY_TO_DECODE_FEATURE(4, RISCV_FeatureVendorXCValu,
 				      DecoderTableXCValu32,
 				      "CORE-V ALU custom opcode table");
-		TRY_TO_DECODE_FEATURE(4, 
+		TRY_TO_DECODE_FEATURE(4,
 			RISCV_FeatureVendorXCVsimd, DecoderTableXCVsimd32,
 			"CORE-V SIMD extensions custom opcode table");
-		TRY_TO_DECODE_FEATURE(4, 
+		TRY_TO_DECODE_FEATURE(4,
 			RISCV_FeatureVendorXCVbi, DecoderTableXCVbi32,
 			"CORE-V Immediate Branching custom opcode table");
 		TRY_TO_DECODE(4, true, DecoderTable32, "RISCV32 table");
