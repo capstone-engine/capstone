@@ -192,7 +192,7 @@ jobs:
         valgrind --leak-check=full cstest tests/issues
         valgrind --leak-check=full cstest tests/MC
 
-    - name: Comaptibility header generation
+    - name: Compatibility header generation
       # clang-format-17 is only available in Ubuntu 24.04
       # Hence the check only happens for it.
       if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.os, 'ubuntu-24.04')

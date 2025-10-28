@@ -1,7 +1,7 @@
 test_cases:
   -
     input
-      name: "Failes due to malformatted file"
+      name: "Fails due to malformatted file"
       bytes: [ 0x00 ]
       arch: "sparc"
       options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN ]
