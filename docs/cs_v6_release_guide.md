@@ -219,12 +219,14 @@ Nonetheless, we hope this additional information is useful to you.
 - Testing was re-written from scratch. Now allowing fine-grained testing of all details and is more convenient to use by contributors.
 - Architecture modules from a static library, can be initialized on demand to decrease footprint (see: `cmake` option `CAPSTONE_USE_ARCH_REGISTRATION`).
 - New `cmake` option to choose between fat and thin binary for Apple.
+- Cross compilation support improved.
 
 **Code quality**
 
 - ASAN: All tests are now run with the address sanitizer enabled. This includes checking for leaks.
 - Coverity code scanning workflow added and all reported bugs fixed.
 - `clang-tidy` workflow added. All reported defects were fixed.
+- CI runs tests for s390x, Mips, PPC, and Android targets.
 
 ### Instruction Alias
 
