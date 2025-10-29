@@ -28,7 +28,7 @@ add_executable(compat_header_build_test ${COMPAT_C_SRC})
 add_dependencies(compat_header_build_test capstone)
 target_link_libraries(compat_header_build_test PUBLIC capstone)
 
-add_test(NAME integration_compat_headers
+add_test(NAME integration_c_compat_headers
   COMMAND compat_header_build_test
   WORKING_DIRECTORY ${COMPAT_C_TEST_DIR}
 )
