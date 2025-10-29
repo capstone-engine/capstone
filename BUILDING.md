@@ -92,6 +92,40 @@ By default, Capstone use system dynamic memory management, and both DIET and X86
 modes are disabled. To use your own memory allocations, turn ON both DIET &
 X86_REDUCE, run "cmake" with: `-DCAPSTONE_USE_SYS_DYN_MEM=0`, `-DCAPSTONE_BUILD_DIET=1`, `-DCAPSTONE_X86_REDUCE=1`
 
+### Cross compilation
+
+We have some example configurations for cross builds in [cross_configs](cross_configs/).
+Build them with the following command (static build is of course optional):
+
+```bash
+cmake -DCMAKE_TOOLCHAIN_FILE=cross_configs/<cross_build_config>.cmake -DCAPSTONE_BUILD_STATIC_LIBS=ON -S . -B build
+cmake --build build
+```
+
+See the cmake cross compilation [documentation](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Cross%20Compiling%20With%20CMake.html)
+for more details.
+
+**Android**
+
+The [Android SDK provides](https://developer.android.com/ndk/guides/cmake) a toolchain file for CMake.
+It is the most reliable way to build Capstone for Android.
+
+_Example:_
+
+```bash
+cmake -B build -DCMAKE_TOOLCHAIN_FILE=$NDK_PATH/build/cmake/android.toolchain.cmake -DANDROID_NDK=$NDK_PATH -DANDROID_ABI=arm64-v8a
+cmake --build build
+```
+
+#### Test cross build with QEMU
+
+Running the binaries with QEMU (here an example for s390x on Fedora 40)
+is usually done with a command like this:
+
+```bash
+QEMU_LD_PREFIX=/usr/s390x-redhat-linux/sys-root/fc40/usr/ qemu-s390x-static ./build/cstool -d aarch64 01421bd501423bd5
+```
+
 ### Developer specific options
 
 - `CAPSTONE_DEBUG`: Change this to ON to enable extra debug assertions. Automatically enabled with `Debug` build.
@@ -106,8 +140,9 @@ X86_REDUCE, run "cmake" with: `-DCAPSTONE_USE_SYS_DYN_MEM=0`, `-DCAPSTONE_BUILD_
 `cstest` is build together with Capstone by adding the flag `-DCAPSTONE_BUILD_CSTEST`.
 
 The build requires `libyaml`. It is a fairly common package and should be provided by your package manager.
+If not present it will attempt to build it from source.
 
-_Note:_ Currently `cstest` us only supported on Linux.
+_Note:_ Currently `cstest` is only tested on Linux.
 
 If you run another operation system, please install `cstest_py`.
 See `bindings/python/BUILDING.md` for instructions.
