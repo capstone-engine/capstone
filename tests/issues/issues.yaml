@@ -6292,3 +6292,14 @@ test_cases:
       insns:
       -
         asm_text: "repne movsd        dword ptr es:[edi], dword ptr [esi]"
+  -
+    input:
+      name: "issue 2339"
+      bytes: [ 0x8b, 0x34, 0x82 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov	esi, dword ptr [rdx + rax*4]"
