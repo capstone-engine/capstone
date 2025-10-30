@@ -1367,8 +1367,8 @@ static inline void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
 	add_cs_detail(MI, ARM_OP_GROUP_FBits16, OpNum);
 	SStream_concat(O, "%s%s", markup("<imm:"), "#");
 	SStream_concat(
-		O, "%" PRId32,
-		(int32_t)16 - MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
+		O, "%" PRIu32,
+		(uint32_t)(16 - MCOperand_getImm(MCInst_getOperand(MI, (OpNum)))));
 	SStream_concat0(O, markup(">"));
 }
 
@@ -1627,7 +1627,7 @@ DEFINE_printMVEVectorList(2) DEFINE_printMVEVectorList(4)
 			OpNo, Angle, Remainder); \
 		unsigned Val = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNo))); \
-		SStream_concat(O, "#%d", (Val * Angle) + Remainder); \
+		SStream_concat(O, "#%u", (uint32_t)((Val * Angle) + Remainder)); \
 	}
 	DEFINE_printComplexRotationOp(90, 0) DEFINE_printComplexRotationOp(180,
 									   90)
