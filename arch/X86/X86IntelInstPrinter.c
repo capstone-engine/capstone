@@ -1181,7 +1181,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			SStream_concat0(O, " + ");
 		_printOperand(MI, Op + X86_AddrIndexReg, O);
 		if (ScaleVal != 1)
-			SStream_concat(O, "*%u", ScaleVal);
+			SStream_concat(O, "*%" PRIu64, ScaleVal);
 		NeedPlus = true;
 	}
 

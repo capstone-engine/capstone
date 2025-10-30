@@ -886,15 +886,17 @@ static inline void printNoHashImmediate(MCInst *MI, unsigned OpNum, SStream *O)
 static inline void printPImmediate(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARM_OP_GROUP_PImmediate, OpNum);
-	SStream_concat(O, "%s%d", "p",
-		       MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
+	SStream_concat(
+		O, "%s%" PRIu32, "p",
+		(uint32_t)MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
 }
 
 static inline void printCImmediate(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARM_OP_GROUP_CImmediate, OpNum);
-	SStream_concat(O, "%s%d", "c",
-		       MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
+	SStream_concat(
+		O, "%s%" PRIu32, "c",
+		(uint32_t)MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
 }
 
 static inline void printCoprocOptionImm(MCInst *MI, unsigned OpNum, SStream *O)
@@ -1364,8 +1366,9 @@ static inline void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	add_cs_detail(MI, ARM_OP_GROUP_FBits16, OpNum);
 	SStream_concat(O, "%s%s", markup("<imm:"), "#");
-	SStream_concat(O, "%d",
-		       16 - MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
+	SStream_concat(
+		O, "%" PRId32,
+		(int32_t)16 - MCOperand_getImm(MCInst_getOperand(MI, (OpNum))));
 	SStream_concat0(O, markup(">"));
 }
 
