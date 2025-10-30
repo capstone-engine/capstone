@@ -81,6 +81,17 @@ jobs:
               cross_file: 'cross_configs/linux_ppc64_ubuntu24.cmake',
             }
           - {
+              name: 'QEMU Linux ARM',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              build_type: 'Debug',
+              diet_build: false,
+              packages: 'gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross qemu-user-static',
+              cross_file: 'cross_configs/linux_arm_ubuntu24.cmake',
+            }
+          - {
               name: '[BUILD ONLY] Windows i686 mingw',
               os: ubuntu-24.04,
               arch: x64,
