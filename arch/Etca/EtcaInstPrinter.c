@@ -78,9 +78,9 @@ const char *Etca_insn_name(csh handle, unsigned int id)
 		return "nop";
 
 	case ETCA_INS_REL_JMP:
-		return "rel_jmp";
+		return "jmp";
 	case ETCA_INS_ABS_JMP:
-		return "abs_jmp";
+		return "jmp";
 	case ETCA_INS_REL_CALL:
 		return "call";
 	case ETCA_INS_ABS_CALL:
