@@ -273,6 +273,16 @@ ifneq (,$(findstring evm,$(CAPSTONE_ARCHS)))
 	LIBOBJ_EVM += $(LIBSRC_EVM:%.c=$(OBJDIR)/%.o)
 endif
 
+DEP_ETCA =
+DEP_ETCA += $(wildcard arch/Etca/Etca*.inc)
+
+LIBOBJ_ETCA =
+ifneq (,$(findstring etca,$(CAPSTONE_ARCHS)))
+	CFLAGS += -DCAPSTONE_HAS_ETCA
+	LIBSRC_ETCA += $(wildcard arch/Etca/Etca*.c)
+	LIBOBJ_ETCA += $(LIBSRC_ETCA:%.c=$(OBJDIR)/%.o)
+endif
+
 DEP_RISCV =
 DEP_RISCV += $(wildcard arch/RISCV/RISCV*.inc)
 

@@ -339,6 +339,8 @@ static struct {
 
 	{ "evm", "ethereum virtual machine", CS_ARCH_EVM, 0 },
 
+	{ "etca", "ETC.a", CS_ARCH_ETCA, 0 },
+
 	{ "wasm", "web assembly", CS_ARCH_WASM, 0 },
 
 	{ "bpf", "Classic BPF, little endian", CS_ARCH_BPF,
@@ -504,6 +506,8 @@ static const char *get_arch_name(cs_arch arch)
 		return "M680X";
 	case CS_ARCH_EVM:
 		return "Evm";
+	case CS_ARCH_ETCA:
+		return "Etca";
 	case CS_ARCH_MOS65XX:
 		return "MOS65XX";
 	case CS_ARCH_WASM:
@@ -619,6 +623,9 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		break;
 	case CS_ARCH_EVM:
 		print_insn_detail_evm(handle, ins);
+		break;
+	case CS_ARCH_ETCA:
+		print_insn_detail_etca(handle, ins);
 		break;
 	case CS_ARCH_WASM:
 		print_insn_detail_wasm(handle, ins);
@@ -801,6 +808,10 @@ int main(int argc, char **argv)
 
 			if (cs_support(CS_ARCH_EVM)) {
 				printf("evm=1 ");
+			}
+
+			if (cs_support(CS_ARCH_ETCA)) {
+				printf("etca=1 ");
 			}
 
 			if (cs_support(CS_ARCH_WASM)) {

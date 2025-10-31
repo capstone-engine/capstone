@@ -24,5 +24,6 @@ void print_insn_detail_hppa(csh handle, cs_insn *ins);
 void print_insn_detail_loongarch(csh handle, cs_insn *ins);
 void print_insn_detail_xtensa(csh handle, cs_insn *ins);
 void print_insn_detail_arc(csh handle, cs_insn *ins);
+void print_insn_detail_etca(csh handle, cs_insn *ins);
 
 #endif //CAPSTONE_CSTOOL_CSTOOL_H_
