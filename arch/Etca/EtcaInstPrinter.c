@@ -82,9 +82,9 @@ const char *Etca_insn_name(csh handle, unsigned int id)
 	case ETCA_INS_ABS_JMP:
 		return "abs_jmp";
 	case ETCA_INS_REL_CALL:
-		return "rel_call";
+		return "call";
 	case ETCA_INS_ABS_CALL:
-		return "abs_call";
+		return "call";
 
 	case ETCA_INS_ADD:
 		return "add";
@@ -444,12 +444,26 @@ void Etca_printInst(MCInst *MI, SStream *O, void *infoIn)
 #ifndef CAPSTONE_DIET
 	etca_info *info = (etca_info *)infoIn;
 
-	// first word in buffer has to be mnemonic because of SStream_extract_mnem_opstr
-	SStream_concat0(O, Etca_insn_name(0, info->op.insn));
+	// first word in buffer has to be mnemonic because of SStream_extract_mnem_opstr!!
 
-	if (info->op.cond != ETCA_COND_ALWAYS) {
-		SStream_concat(O, " when %s, ",
-			       cs_etca_cond_name(info->op.cond));
+	if ((info->op.insn == ETCA_INS_ABS_JMP ||
+	     info->op.insn == ETCA_INS_REL_JMP) &&
+	    info->op.cond != ETCA_COND_ALWAYS) {
+		SStream_concat1(O, 'j');
+		SStream_concat0(O, cs_etca_cond_name(info->op.cond));
+	} else {
+		SStream_concat0(O, Etca_insn_name(0, info->op.insn));
+		if (info->op.cond != ETCA_COND_ALWAYS) {
+			if (info->op.insn == ETCA_INS_ABS_CALL ||
+			    info->op.insn == ETCA_INS_REL_CALL) {
+				SStream_concat0(
+					O, cs_etca_cond_name(info->op.cond));
+			} else {
+				SStream_concat(
+					O, " when %s, ",
+					cs_etca_cond_name(info->op.cond));
+			}
+		}
 	}
 
 	if (isSizedInsn(info->op.insn)) {

@@ -47,6 +47,11 @@ typedef struct {
 	struct {
 		bool present;
 		uint8_t a : 3;
+	} single_reg;
+
+	struct {
+		bool present;
+		uint8_t a : 3;
 		uint8_t b : 3;
 		uint8_t m : 3;
 	} abm;
@@ -289,8 +294,8 @@ static bool parseCoreOp(DecodeIsntCtx *ctx, const uint8_t **code_p,
 	} else if (code_len >= 2 && code[0] >> 6 == 0 &&
 		   (code[0] & 0xF) == 0xF && (code[1] << 3) >> 3 == 0) {
 		ctx->insn = ETCA_INS_ALLOC_ZERO;
-		ctx->abm.present = true;
-		ctx->abm.a = code[1] >> 5;
+		ctx->single_reg.present = true;
+		ctx->single_reg.a = code[1] >> 5;
 
 		code += 2;
 		code_len -= 2;
@@ -298,8 +303,8 @@ static bool parseCoreOp(DecodeIsntCtx *ctx, const uint8_t **code_p,
 	} else if (code_len >= 2 && code[0] >> 6 == 0 &&
 		   (code[0] & 0xF) == 0xF && (code[1] << 3) >> 3 == 4) {
 		ctx->insn = ETCA_INS_DCACHE_INVALIDATE;
-		ctx->abm.present = true;
-		ctx->abm.a = code[1] >> 5;
+		ctx->single_reg.present = true;
+		ctx->single_reg.a = code[1] >> 5;
 
 		code += 2;
 		code_len -= 2;
@@ -355,8 +360,8 @@ static bool parseCoreOp(DecodeIsntCtx *ctx, const uint8_t **code_p,
 		}
 		// clang-format on
 
-		ctx->abm.present = true;
-		ctx->abm.a = code[1] >> 5;
+		ctx->single_reg.present = true;
+		ctx->single_reg.a = code[1] >> 5;
 
 		code += 2;
 		code_len -= 2;
@@ -372,8 +377,8 @@ static bool parseCoreOp(DecodeIsntCtx *ctx, const uint8_t **code_p,
 
 		ctx->cond = code[1] & 0xF;
 
-		ctx->abm.present = true;
-		ctx->abm.a = code[1] >> 5;
+		ctx->single_reg.present = true;
+		ctx->single_reg.a = code[1] >> 5;
 
 		code += 2;
 		code_len -= 2;
@@ -588,6 +593,15 @@ bool Etca_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		// TODO: mo1 & mo2
 		if (ctx.abm.m != 0)
 			return false;
+	} else if (ctx.single_reg.present) {
+		info->op.op_count = 1;
+
+		info->op.operands[0].type = ETCA_OP_REG;
+		info->op.operands[0].reg =
+			((ctx.pfx_rex.present && ctx.pfx_rex.a) ?
+				 ETCA_REG_FIRST_REX :
+				 ETCA_REG_FIRST_BASE) +
+			ctx.single_reg.a;
 	}
 
 	// TODO: add_group
