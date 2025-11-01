@@ -9,24 +9,8 @@
 #include <stdarg.h>
 #include "../../cs_priv.h"
 #include "../../MCInst.h"
-#include "../../MCDisassembler.h"
-#include "../../utils.h"
+#include "../../MathExtras.h"
 #include "EtcaDisassembler.h"
-#include "capstone/sh.h"
-
-/*
-static void add_group(cs_detail *detail, cs_etca_insn_group group)
-{
-	if (detail != NULL && group > ETCA_GRP_INVALID &&
-	    group < ETCA_GRP_ENDING)
-		detail->groups[detail->groups_count++] = group;
-}
-*/
-
-#define sign_extend(var, type, width) \
-	if ((var) & (1 << ((width) - 1))) { \
-		var = (((type) - 1) << (width)) | var; \
-	}
 
 typedef struct {
 	struct {
@@ -174,7 +158,7 @@ static void parseRI(DecodeIsntCtx *ctx, uint8_t byte, etca_insn insn)
 	ctx->ri.r = byte >> 5;
 	ctx->ri.imm = byte & 31 /* 0b11111 */;
 	if (doesSignExtend(insn))
-		sign_extend(ctx->ri.imm, uint64_t, 5);
+		ctx->ri.imm = SignExtend64(ctx->ri.imm, 5);
 }
 
 static etca_insn parseExopOpcode(uint16_t opc)
@@ -386,7 +370,7 @@ static bool parseCoreOp(DecodeIsntCtx *ctx, const uint8_t **code_p,
 		ctx->insn = ETCA_INS_REL_CALL;
 
 		uint64_t d = (code[0] & 0xF) << 8 | code[1];
-		sign_extend(d, uint64_t, 12);
+		d = SignExtend64(d, 12);
 		ctx->rel.present = true;
 		ctx->rel.extended = d;
 
@@ -402,7 +386,7 @@ static bool parseCoreOp(DecodeIsntCtx *ctx, const uint8_t **code_p,
 		ctx->cond = code[0] & 0xF;
 
 		uint64_t d = ((code[0] >> 4) & 1) << 8 | code[1];
-		sign_extend(d, uint64_t, 9);
+		d = SignExtend64(d, 9);
 		ctx->rel.present = true;
 		ctx->rel.extended = d;
 
@@ -433,7 +417,7 @@ static bool parseCoreOp(DecodeIsntCtx *ctx, const uint8_t **code_p,
 
 		if (ctx->insn == ETCA_INS_REL_JMP ||
 		    ctx->insn == ETCA_INS_REL_CALL)
-			sign_extend(d, uint64_t, sz * 8);
+			d = SignExtend64(d, sz * 8);
 
 		code += sz + 1;
 		code_len -= sz + 1;

@@ -12,7 +12,7 @@ cs_err Etca_global_init(cs_struct *ud)
 {
 	etca_info *info;
 
-	info = cs_mem_malloc(sizeof(etca_info));
+	info = cs_mem_calloc(1, sizeof(etca_info));
 	if (!info) {
 		return CS_ERR_MEM;
 	}
