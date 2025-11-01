@@ -13,7 +13,6 @@
 #include "../../utils.h"
 #include "EtcaDisassembler.h"
 #include "capstone/sh.h"
-#include <sys/types.h>
 
 /*
 static void add_group(cs_detail *detail, cs_etca_insn_group group)
@@ -474,6 +473,214 @@ static bool parseCoreOp(DecodeIsntCtx *ctx, const uint8_t **code_p,
 	return true;
 }
 
+typedef struct {
+	uint8_t scale : 2;
+	uint8_t index : 3;
+	uint8_t base : 3;
+} sib_byte;
+
+static sib_byte parseSib(uint8_t b)
+{
+	return (sib_byte){ b >> 6, (b >> 3) & 3, b & 3 };
+}
+
+static uint64_t parseMultiByteUInt(uint8_t const *code, size_t nb)
+{
+	uint64_t imm = 0;
+	for (size_t i = 0; i < nb; i++) {
+		imm <<= 8;
+		imm |= code[i];
+	}
+	return imm;
+}
+
+static bool parseM(etca_info *info, size_t ptrWidthB, DecodeIsntCtx *ctx,
+		   const uint8_t **code_p, size_t *code_len_p, uint16_t *size)
+{
+	const uint8_t *code = *code_p;
+	size_t code_len = *code_len_p;
+
+	if (ctx->abm.m == 0) {
+		/* base */
+	} else if (ctx->abm.m == 1 && ctx->abm.b == 0 && ctx->abm.a != 0 &&
+		   ctx->abm.a != 4) {
+		/* from mo2 */
+
+		if (!code_len)
+			return false;
+		sib_byte sib = parseSib(code[0]);
+
+		if (ctx->abm.a == 1) {
+			/* sib, dP, i8 || [dP], i8 */
+
+			size_t dPWidth = ptrWidthB;
+			if (dPWidth == 8 &&
+			    !(ctx->pfx_rex.present && ctx->pfx_rex.q))
+				dPWidth = 4;
+
+			if (!(code_len >= dPWidth + 2))
+				return false;
+
+			uint64_t dP = parseMultiByteUInt(&code[1], dPWidth);
+			uint8_t i8 = code[1 + dPWidth];
+
+			cs_etca_op_mem memop = { 0 };
+			memop.displacement = dP;
+
+			info->op.operands[0].type = ETCA_OP_MEM;
+			info->op.operands[0].mem = memop;
+
+			info->op.operands[1].type = ETCA_OP_IMM;
+			info->op.operands[1].imm = i8;
+
+			code += 2 + ptrWidthB;
+			code_len -= 2 + ptrWidthB;
+			(*size) += 2 + ptrWidthB;
+		} else if (ctx->abm.a == 2) {
+			/* sib, i8 || [sib.b], i8 */
+
+			if (!(code_len >= 2))
+				return false;
+
+			uint8_t i8 = code[1];
+
+			cs_etca_op_mem memop = { 0 };
+			memop.base.enabled = true;
+			memop.base.base = sib.base;
+
+			info->op.operands[0].type = ETCA_OP_MEM;
+			info->op.operands[0].mem = memop;
+
+			info->op.operands[1].type = ETCA_OP_IMM;
+			info->op.operands[1].imm = i8;
+
+			code += 2;
+			code_len -= 2;
+			(*size) += 2;
+		} else if (ctx->abm.a == 3) {
+			/* sib, dP, i8 || [sib.b + dP], i8 */
+
+			size_t dPWidth = ptrWidthB;
+			if (dPWidth == 8 &&
+			    !(ctx->pfx_rex.present && ctx->pfx_rex.q))
+				dPWidth = 4;
+
+			if (!(code_len >= dPWidth + 2))
+				return false;
+
+			uint64_t dP = parseMultiByteUInt(&code[1], dPWidth);
+			uint8_t i8 = code[1 + dPWidth];
+
+			cs_etca_op_mem memop = { 0 };
+			memop.base.enabled = true;
+			memop.base.base = sib.base;
+			memop.displacement = dP;
+
+			info->op.operands[0].type = ETCA_OP_MEM;
+			info->op.operands[0].mem = memop;
+
+			info->op.operands[1].type = ETCA_OP_IMM;
+			info->op.operands[1].imm = i8;
+
+			code += 2 + ptrWidthB;
+			code_len -= 2 + ptrWidthB;
+			(*size) += 2 + ptrWidthB;
+		} else if (ctx->abm.a == 5) {
+			/* sib, dP, i8 || [2^sib.s*sib.x + dP], i8 */
+
+			size_t dPWidth = ptrWidthB;
+			if (dPWidth == 8 &&
+			    !(ctx->pfx_rex.present && ctx->pfx_rex.q))
+				dPWidth = 4;
+
+			if (!(code_len >= dPWidth + 2))
+				return false;
+
+			uint64_t dP = parseMultiByteUInt(&code[1], dPWidth);
+			uint8_t i8 = code[1 + dPWidth];
+
+			cs_etca_op_mem memop = { 0 };
+			memop.index.enabled = true;
+			memop.index.index = sib.index;
+			memop.index.index_multiplier_log2 = sib.scale;
+			memop.displacement = dP;
+
+			info->op.operands[0].type = ETCA_OP_MEM;
+			info->op.operands[0].mem = memop;
+
+			info->op.operands[1].type = ETCA_OP_IMM;
+			info->op.operands[1].imm = i8;
+
+			code += 2 + ptrWidthB;
+			code_len -= 2 + ptrWidthB;
+			(*size) += 2 + ptrWidthB;
+		} else if (ctx->abm.a == 6) {
+			/* sib, i8 || [2^sib.s*sib.x + sib.b], i8 */
+
+			if (!(code_len >= 2))
+				return false;
+
+			uint8_t i8 = code[1];
+
+			cs_etca_op_mem memop = { 0 };
+			memop.index.enabled = true;
+			memop.index.index = sib.index;
+			memop.index.index_multiplier_log2 = sib.scale;
+			memop.base.enabled = true;
+			memop.base.base = sib.base;
+
+			info->op.operands[0].type = ETCA_OP_MEM;
+			info->op.operands[0].mem = memop;
+
+			info->op.operands[1].type = ETCA_OP_IMM;
+			info->op.operands[1].imm = i8;
+
+			code += 2 + ptrWidthB;
+			code_len -= 2 + ptrWidthB;
+			(*size) += 2 + ptrWidthB;
+		} else if (ctx->abm.a == 7) {
+			/* sib, dP, i8 || [2^sib.s*sib.x + sib.b + dP], i8 */
+
+			size_t dPWidth = ptrWidthB;
+			if (dPWidth == 8 &&
+			    !(ctx->pfx_rex.present && ctx->pfx_rex.q))
+				dPWidth = 4;
+
+			if (!(code_len >= dPWidth + 2))
+				return false;
+
+			uint64_t dP = parseMultiByteUInt(&code[1], dPWidth);
+			uint8_t i8 = code[1 + dPWidth];
+
+			cs_etca_op_mem memop = { 0 };
+			memop.index.enabled = true;
+			memop.index.index = sib.index;
+			memop.index.index_multiplier_log2 = sib.scale;
+			memop.base.enabled = true;
+			memop.base.base = sib.base;
+			memop.displacement = dP;
+
+			info->op.operands[0].type = ETCA_OP_MEM;
+			info->op.operands[0].mem = memop;
+
+			info->op.operands[1].type = ETCA_OP_IMM;
+			info->op.operands[1].imm = i8;
+
+			code += 2 + ptrWidthB;
+			code_len -= 2 + ptrWidthB;
+			(*size) += 2 + ptrWidthB;
+		}
+	}
+	// TODO: finish mo2; mo1
+	else
+		return false;
+
+	*code_len_p = code_len;
+	*code_p = code;
+
+	return true;
+}
+
 // returns true if valid
 bool Etca_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			 MCInst *mcInstr, uint16_t * /* out */ size,
@@ -481,6 +688,17 @@ bool Etca_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 {
 	etca_info *info = infoIn;
 	// cs_detail *detail = mcInstr->flat_insn->detail;
+
+	size_t ptrWidthLog2;
+	// clang-format off
+	switch (mcInstr->csh->mode) {
+	case CS_MODE_ETCA16: ptrWidthLog2 = 1; break;
+	case CS_MODE_ETCA32: ptrWidthLog2 = 2; break;
+	case CS_MODE_ETCA64: ptrWidthLog2 = 3; break;
+	default: ptrWidthLog2 = 1; break;
+	}
+	// clang-format on
+	size_t ptrWidthB = 1 << ptrWidthLog2;
 
 	DecodeIsntCtx ctx = { 0 };
 	ctx.insn = ETCA_INS_INVALID;
@@ -539,11 +757,7 @@ bool Etca_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		ctx.abm.present = false;
 		ctx.ri.present = true;
 		ctx.ri.r = ctx.abm.a;
-		ctx.ri.imm = 0;
-		for (size_t i = 0; i < sz; i++) {
-			ctx.ri.imm <<= 8;
-			ctx.ri.imm |= code[i];
-		}
+		ctx.ri.imm = parseMultiByteUInt(code, sz);
 
 		code += sz;
 		code_len -= sz;
@@ -590,8 +804,7 @@ bool Etca_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 				 ETCA_REG_FIRST_BASE) +
 			ctx.abm.b;
 
-		// TODO: mo1 & mo2
-		if (ctx.abm.m != 0)
+		if (!parseM(info, ptrWidthB, &ctx, &code, &code_len, size))
 			return false;
 	} else if (ctx.single_reg.present) {
 		info->op.op_count = 1;

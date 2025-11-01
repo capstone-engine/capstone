@@ -327,7 +327,7 @@ static void printMemOp(SStream *O, cs_etca_op_mem *op)
 		}
 		first = false;
 
-		printInt32(O, op->displacement);
+		printInt64(O, op->displacement);
 	}
 
 	SStream_concat1(O, ']');

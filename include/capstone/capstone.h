@@ -227,7 +227,9 @@ typedef enum cs_mode {
 	CS_MODE_SH4A = 1 << 5, ///< SH4A
 	CS_MODE_SHFPU = 1 << 6, ///< w/ FPU
 	CS_MODE_SHDSP = 1 << 7, ///< w/ DSP
-	CS_MODE_ETCA = 1 << 1,
+	CS_MODE_ETCA16 = CS_MODE_16,
+	CS_MODE_ETCA32 = CS_MODE_32,
+	CS_MODE_ETCA64 = CS_MODE_64,
 	CS_MODE_TRICORE_110 = 1 << 1, ///< Tricore 1.1
 	CS_MODE_TRICORE_120 = 1 << 2, ///< Tricore 1.2
 	CS_MODE_TRICORE_130 = 1 << 3, ///< Tricore 1.3

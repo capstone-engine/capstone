@@ -339,7 +339,9 @@ static struct {
 
 	{ "evm", "ethereum virtual machine", CS_ARCH_EVM, 0 },
 
-	{ "etca", "ETC.a", CS_ARCH_ETCA, 0 },
+	{ "etca16", "ETC.a, 16 bit pointers", CS_ARCH_ETCA, CS_MODE_16 },
+	{ "etca32", "ETC.a, 32 bit pointers", CS_ARCH_ETCA, CS_MODE_32 },
+	{ "etca64", "ETC.a, 64 bit pointers", CS_ARCH_ETCA, CS_MODE_64 },
 
 	{ "wasm", "web assembly", CS_ARCH_WASM, 0 },
 

@@ -67,7 +67,7 @@ typedef struct {
 		cs_etca_reg base;
 	} base;
 
-	int32_t displacement;
+	int64_t displacement;
 } cs_etca_op_mem;
 
 // Instruction operand
