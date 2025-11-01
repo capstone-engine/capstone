@@ -301,7 +301,7 @@ static void printReg(SStream *O, cs_etca_reg reg)
 #endif
 
 #ifndef CAPSTONE_DIET
-static void printMemOp(SStream *O, cs_etca_op_mem *op)
+static void printMemOp(SStream *O, const cs_etca_op_mem *op)
 {
 	bool first = true;
 	SStream_concat1(O, '[');
@@ -335,7 +335,7 @@ static void printMemOp(SStream *O, cs_etca_op_mem *op)
 #endif
 
 #ifndef CAPSTONE_DIET
-static void printOp(SStream *O, cs_etca_op *op, etca_insn insn)
+static void printOp(SStream *O, const cs_etca_op *op, etca_insn insn)
 {
 	switch (op->type) {
 	case ETCA_OP_INVALID:
@@ -439,6 +439,11 @@ static bool isSizedInsn(etca_insn insn)
 }
 #endif
 
+static inline bool op_is_reg(const cs_etca_op *op, cs_etca_reg reg)
+{
+	return op->type == ETCA_OP_REG && op->reg == reg;
+}
+
 void Etca_printInst(MCInst *MI, SStream *O, void *infoIn)
 {
 #ifndef CAPSTONE_DIET
@@ -473,22 +478,20 @@ void Etca_printInst(MCInst *MI, SStream *O, void *infoIn)
 
 	int numPrinted = 0;
 	for (int i = 0; i < info->op.op_count; i++) {
+		const cs_etca_op *op = &info->op.operands[i];
+
 		/* don't print sp reg if it's the default */
 		if (i == 1 && info->op.insn == ETCA_INS_POP &&
-		    info->op.operands[1].type == ETCA_OP_REG &&
-		    info->op.operands[1].reg == ETCA_REG_R6)
+		    op_is_reg(op, ETCA_REG_R6))
 			continue;
 		if (i == 0 && info->op.insn == ETCA_INS_PUSH &&
-		    info->op.operands[0].type == ETCA_OP_REG &&
-		    info->op.operands[0].reg == ETCA_REG_R6)
+		    op_is_reg(op, ETCA_REG_R6))
 			continue;
 
 		if (numPrinted != 0) {
 			SStream_concat0(O, ",");
 		}
 		SStream_concat0(O, " ");
-
-		cs_etca_op *op = &info->op.operands[i];
 
 		char const *crname;
 		if (i == 1 &&

@@ -11,6 +11,11 @@ extern "C" {
 #include "platform.h"
 #include "cs_operand.h"
 
+#ifdef _MSC_VER
+// "anonymous unions are a non-standard extension"
+#pragma warning(disable : 4201)
+#endif
+
 /// ETCA registers and special registers
 typedef enum {
 	ETCA_REG_INVALID = 0,
