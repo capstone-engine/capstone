@@ -207,7 +207,7 @@ const char *Etca_insn_name(csh handle, unsigned int id)
 #endif
 }
 
-char const *cs_etca_cond_name(uint8_t cond)
+const char *cs_etca_cond_name(uint8_t cond)
 {
 	switch (cond) {
 	case ETCA_COND_Z:
@@ -249,7 +249,7 @@ char const *cs_etca_cond_name(uint8_t cond)
 	}
 }
 
-char const *cs_etca_cr_name(cs_etca_cr cr)
+const char *cs_etca_cr_name(cs_etca_cr cr)
 {
 	switch (cr) {
 	case ETCA_CR_CPUID1:
@@ -493,7 +493,7 @@ void Etca_printInst(MCInst *MI, SStream *O, void *infoIn)
 		}
 		SStream_concat0(O, " ");
 
-		char const *crname;
+		const char *crname;
 		if (i == 1 &&
 		    (info->op.insn == ETCA_INS_READCR ||
 		     info->op.insn == ETCA_INS_WRITECR) &&

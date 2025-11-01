@@ -92,183 +92,159 @@ typedef struct cs_arch_config {
 
 #define CS_ARCH_CONFIG_ARM \
 	{ \
-		ARM_global_init, \
-		ARM_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 | \
-		  CS_MODE_MCLASS | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN), \
+		ARM_global_init, ARM_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 | \
+			  CS_MODE_MCLASS | CS_MODE_THUMB | \
+			  CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_AARCH64 \
 	{ \
-		AArch64_global_init, \
-		AArch64_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_BIG_ENDIAN | \
-		  CS_MODE_APPLE_PROPRIETARY), \
+		AArch64_global_init, AArch64_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | \
+			  CS_MODE_BIG_ENDIAN | CS_MODE_APPLE_PROPRIETARY), \
 	}
 #define CS_ARCH_CONFIG_MIPS \
 	{ \
-		Mips_global_init, \
-		Mips_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | \
-		  CS_MODE_MIPS16 | CS_MODE_MIPS32 | CS_MODE_MIPS64 | \
-		  CS_MODE_MICRO | CS_MODE_MIPS1 | CS_MODE_MIPS2 | \
-		  CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 | \
-		  CS_MODE_MIPS32R6 | CS_MODE_MIPS3 | CS_MODE_MIPS4 | \
-		  CS_MODE_MIPS5 | CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | \
-		  CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | CS_MODE_OCTEON | \
-		  CS_MODE_OCTEONP | CS_MODE_NANOMIPS | CS_MODE_NMS1 | \
-		  CS_MODE_I7200 | CS_MODE_MIPS_NOFLOAT | CS_MODE_MIPS_PTR64), \
+		Mips_global_init, Mips_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | \
+			  CS_MODE_MIPS16 | CS_MODE_MIPS32 | CS_MODE_MIPS64 | \
+			  CS_MODE_MICRO | CS_MODE_MIPS1 | CS_MODE_MIPS2 | \
+			  CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | \
+			  CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | \
+			  CS_MODE_MIPS3 | CS_MODE_MIPS4 | CS_MODE_MIPS5 | \
+			  CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | \
+			  CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | \
+			  CS_MODE_OCTEON | CS_MODE_OCTEONP | \
+			  CS_MODE_NANOMIPS | CS_MODE_NMS1 | CS_MODE_I7200 | \
+			  CS_MODE_MIPS_NOFLOAT | CS_MODE_MIPS_PTR64), \
 	}
 #define CS_ARCH_CONFIG_X86 \
 	{ \
-		X86_global_init, \
-		X86_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
-		  CS_MODE_16), \
+		X86_global_init, X86_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
+			  CS_MODE_16), \
 	}
 #define CS_ARCH_CONFIG_PPC \
 	{ \
-		PPC_global_init, \
-		PPC_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
-		  CS_MODE_BIG_ENDIAN | CS_MODE_QPX | CS_MODE_PS | \
-		  CS_MODE_BOOKE | CS_MODE_SPE | CS_MODE_AIX_OS | \
-		  CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 | CS_MODE_PWR10 | \
-		  CS_MODE_PPC_ISA_FUTURE | CS_MODE_MSYNC | \
-		  CS_MODE_MODERN_AIX_AS), \
+		PPC_global_init, PPC_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
+			  CS_MODE_BIG_ENDIAN | CS_MODE_QPX | CS_MODE_PS | \
+			  CS_MODE_BOOKE | CS_MODE_SPE | CS_MODE_AIX_OS | \
+			  CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 | \
+			  CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE | \
+			  CS_MODE_MSYNC | CS_MODE_MODERN_AIX_AS), \
 	}
 #define CS_ARCH_CONFIG_SPARC \
 	{ \
-		Sparc_global_init, \
-		Sparc_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | CS_MODE_V9 | \
-		  CS_MODE_64 | CS_MODE_32), \
+		Sparc_global_init, Sparc_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | \
+			  CS_MODE_V9 | CS_MODE_64 | CS_MODE_32), \
 	}
 #define CS_ARCH_CONFIG_SYSTEMZ \
 	{ \
-		SystemZ_global_init, \
-		SystemZ_option, \
-		~(CS_MODE_BIG_ENDIAN | CS_MODE_SYSTEMZ_ARCH8 | \
-		  CS_MODE_SYSTEMZ_ARCH9 | CS_MODE_SYSTEMZ_ARCH10 | \
-		  CS_MODE_SYSTEMZ_ARCH11 | CS_MODE_SYSTEMZ_ARCH12 | \
-		  CS_MODE_SYSTEMZ_ARCH13 | CS_MODE_SYSTEMZ_ARCH14 | \
-		  CS_MODE_SYSTEMZ_Z10 | CS_MODE_SYSTEMZ_Z196 | \
-		  CS_MODE_SYSTEMZ_ZEC12 | CS_MODE_SYSTEMZ_Z13 | \
-		  CS_MODE_SYSTEMZ_Z14 | CS_MODE_SYSTEMZ_Z15 | \
-		  CS_MODE_SYSTEMZ_Z16 | CS_MODE_SYSTEMZ_GENERIC), \
+		SystemZ_global_init, SystemZ_option, \
+			~(CS_MODE_BIG_ENDIAN | CS_MODE_SYSTEMZ_ARCH8 | \
+			  CS_MODE_SYSTEMZ_ARCH9 | CS_MODE_SYSTEMZ_ARCH10 | \
+			  CS_MODE_SYSTEMZ_ARCH11 | CS_MODE_SYSTEMZ_ARCH12 | \
+			  CS_MODE_SYSTEMZ_ARCH13 | CS_MODE_SYSTEMZ_ARCH14 | \
+			  CS_MODE_SYSTEMZ_Z10 | CS_MODE_SYSTEMZ_Z196 | \
+			  CS_MODE_SYSTEMZ_ZEC12 | CS_MODE_SYSTEMZ_Z13 | \
+			  CS_MODE_SYSTEMZ_Z14 | CS_MODE_SYSTEMZ_Z15 | \
+			  CS_MODE_SYSTEMZ_Z16 | CS_MODE_SYSTEMZ_GENERIC), \
 	}
 #define CS_ARCH_CONFIG_XCORE \
 	{ \
-		XCore_global_init, \
-		XCore_option, \
-		~(CS_MODE_BIG_ENDIAN), \
+		XCore_global_init, XCore_option, ~(CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_M68K \
 	{ \
-		M68K_global_init, \
-		M68K_option, \
-		~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_000 | CS_MODE_M68K_010 | \
-		  CS_MODE_M68K_020 | CS_MODE_M68K_030 | CS_MODE_M68K_040 | \
-		  CS_MODE_M68K_060), \
+		M68K_global_init, M68K_option, \
+			~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_000 | \
+			  CS_MODE_M68K_010 | CS_MODE_M68K_020 | \
+			  CS_MODE_M68K_030 | CS_MODE_M68K_040 | \
+			  CS_MODE_M68K_060), \
 	}
 #define CS_ARCH_CONFIG_TMS320C64X \
 	{ \
-		TMS320C64x_global_init, \
-		TMS320C64x_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
+		TMS320C64x_global_init, TMS320C64x_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_M680X \
 	{ \
-		M680X_global_init, \
-		M680X_option, \
-		~(CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | \
-		  CS_MODE_M680X_6800 | CS_MODE_M680X_6801 | \
-		  CS_MODE_M680X_6805 | CS_MODE_M680X_6808 | \
-		  CS_MODE_M680X_6809 | CS_MODE_M680X_6811 | \
-		  CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08), \
+		M680X_global_init, M680X_option, \
+			~(CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | \
+			  CS_MODE_M680X_6800 | CS_MODE_M680X_6801 | \
+			  CS_MODE_M680X_6805 | CS_MODE_M680X_6808 | \
+			  CS_MODE_M680X_6809 | CS_MODE_M680X_6811 | \
+			  CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08), \
 	}
 #define CS_ARCH_CONFIG_EVM \
 	{ \
-		EVM_global_init, \
-		EVM_option, \
-		0, \
+		EVM_global_init, EVM_option, 0, \
 	}
 #define CS_ARCH_CONFIG_MOS65XX \
 	{ \
-		MOS65XX_global_init, \
-		MOS65XX_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_MOS65XX_6502 | \
-		  CS_MODE_MOS65XX_65C02 | CS_MODE_MOS65XX_W65C02 | \
-		  CS_MODE_MOS65XX_65816_LONG_MX), \
+		MOS65XX_global_init, MOS65XX_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_MOS65XX_6502 | \
+			  CS_MODE_MOS65XX_65C02 | CS_MODE_MOS65XX_W65C02 | \
+			  CS_MODE_MOS65XX_65816_LONG_MX), \
 	}
 #define CS_ARCH_CONFIG_WASM \
 	{ \
-		WASM_global_init, \
-		WASM_option, \
-		0, \
+		WASM_global_init, WASM_option, 0, \
 	}
 #define CS_ARCH_CONFIG_BPF \
 	{ \
-		BPF_global_init, \
-		BPF_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC | \
-		  CS_MODE_BPF_EXTENDED | CS_MODE_BIG_ENDIAN), \
+		BPF_global_init, BPF_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC | \
+			  CS_MODE_BPF_EXTENDED | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_RISCV \
 	{ \
-		RISCV_global_init, \
-		RISCV_option, \
-		~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC), \
+		RISCV_global_init, RISCV_option, \
+			~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC), \
 	}
 #define CS_ARCH_CONFIG_SH \
 	{ \
-		SH_global_init, \
-		SH_option, \
-		~(CS_MODE_SH2 | CS_MODE_SH2A | CS_MODE_SH3 | CS_MODE_SH4 | \
-		  CS_MODE_SH4A | CS_MODE_SHFPU | CS_MODE_SHDSP | \
-		  CS_MODE_BIG_ENDIAN), \
+		SH_global_init, SH_option, \
+			~(CS_MODE_SH2 | CS_MODE_SH2A | CS_MODE_SH3 | \
+			  CS_MODE_SH4 | CS_MODE_SH4A | CS_MODE_SHFPU | \
+			  CS_MODE_SHDSP | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_TRICORE \
 	{ \
-		TRICORE_global_init, \
-		TRICORE_option, \
-		~(CS_MODE_TRICORE_110 | CS_MODE_TRICORE_120 | \
-		  CS_MODE_TRICORE_130 | CS_MODE_TRICORE_131 | \
-		  CS_MODE_TRICORE_160 | CS_MODE_TRICORE_161 | \
-		  CS_MODE_TRICORE_162 | CS_MODE_TRICORE_180 | \
-		  CS_MODE_LITTLE_ENDIAN), \
+		TRICORE_global_init, TRICORE_option, \
+			~(CS_MODE_TRICORE_110 | CS_MODE_TRICORE_120 | \
+			  CS_MODE_TRICORE_130 | CS_MODE_TRICORE_131 | \
+			  CS_MODE_TRICORE_160 | CS_MODE_TRICORE_161 | \
+			  CS_MODE_TRICORE_162 | CS_MODE_TRICORE_180 | \
+			  CS_MODE_LITTLE_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_ETCA \
 	{ \
-		Etca_global_init, \
-		Etca_option, \
-		~(0), \
+		Etca_global_init, Etca_option, ~(0), \
 	}
 #define CS_ARCH_CONFIG_ALPHA \
 	{ \
-		ALPHA_global_init, \
-		ALPHA_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
+		ALPHA_global_init, ALPHA_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_LOONGARCH \
 	{ \
-		LoongArch_global_init, \
-		LoongArch_option, \
-		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_LOONGARCH32 | \
-		  CS_MODE_LOONGARCH64), \
+		LoongArch_global_init, LoongArch_option, \
+			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_LOONGARCH32 | \
+			  CS_MODE_LOONGARCH64), \
 	}
 #define CS_ARCH_CONFIG_XTENSA \
 	{ \
-		Xtensa_global_init, \
-		Xtensa_option, \
-		~(CS_MODE_XTENSA_ESP32 | CS_MODE_XTENSA_ESP32S2 | \
-		  CS_MODE_XTENSA_ESP8266), \
+		Xtensa_global_init, Xtensa_option, \
+			~(CS_MODE_XTENSA_ESP32 | CS_MODE_XTENSA_ESP32S2 | \
+			  CS_MODE_XTENSA_ESP8266), \
 	}
 
 #define CS_ARCH_CONFIG_ARC \
 	{ \
-		ARC_global_init, \
-		ARC_option, \
-		~(CS_MODE_LITTLE_ENDIAN), \
+		ARC_global_init, ARC_option, ~(CS_MODE_LITTLE_ENDIAN), \
 	}
 
 #ifdef CAPSTONE_USE_ARCH_REGISTRATION

@@ -468,7 +468,7 @@ static sib_byte parseSib(uint8_t b)
 	return (sib_byte){ b >> 6, (b >> 3) & 3, b & 3 };
 }
 
-static uint64_t parseMultiByteUInt(uint8_t const *code, size_t nb)
+static uint64_t parseMultiByteUInt(const uint8_t *code, size_t nb)
 {
 	uint64_t imm = 0;
 	for (size_t i = 0; i < nb; i++) {
