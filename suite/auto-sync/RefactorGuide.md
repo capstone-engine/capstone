@@ -73,11 +73,19 @@ Note:
 		- If in doubt, check the original C++ file in the LLVM repo.
 - ### Make it build
 	- Add `ARCHLinkage.h` and the functions in the `InstPrinter.c`, `ArchDisassembler.c`.
+		- Explanation: The idea behind `ARCHLinkage.h` is to separate the Capstone and LLVM code, at least loosely, into compile units.
+			So the LLVM and Capstone code can at some point live in their own object files. This is not yet implemented, but
+			we try to keep them from becoming too entangled.
 	- Add essential code in `ARCHMapping.c`. Esential is everything **not** releated to details.
 	- If unsure how to do Capstone <-> LLVM code things, always check LoongArch. If LoongArch doesn't handle this case, check Mips, SystemZ
 - ### Run tests & Fixing bugs
 	- Update regression MC tests: Map LLVM `mattr` and `mcpu` names to the CS identifiers if necessary. -> Edit the `mcupdater.json` config file.
   - Update tests: `ASUpdater -s MCUpdate -a Arch -w`
+		- It can happen that `MCUpdate` doesn't generate any tests. This means LLVM has no disassembly tests for this architecture.
+			You can add your arch to `use_assembly_tests` in `mcupdater.json` to do so.
+			Keep in mind that some tests can later fail even though they are correct.
+			The compiler can assemble an instruction to a semantically equivalent, but syntactically different one.
+			This syntactic mismatch can later make those tests fail in Capstone.
 	- Run MC tests: `cstest tests/MC/Arch`
 - ### Add details
 	- Effectively copy behavior from `LoongArchMapping.c` or `SystemZMapping.c` but change values.
