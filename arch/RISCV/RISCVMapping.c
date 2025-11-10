@@ -107,12 +107,16 @@ void RISCV_add_groups(MCInst *MI) {
 		return;
 
 	MI->flat_insn->detail->groups_count = 0;
+
+#ifndef CAPSTONE_DIET
 	int i = 0;
 	while (insns[MI->Opcode].groups[i] != 0) {
 
 		add_group(MI, insns[MI->Opcode].groups[i]);
 		i++;
 	}
+#endif
+
 	RISCV_add_adhoc_groups(MI);
 }
 
