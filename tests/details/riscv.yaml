@@ -304,7 +304,7 @@ test_cases:
                   access: CS_AC_WRITE
 
                 - type: RISCV_OP_IMM
-                  imm: 0x8
+                  imm: 4112
                   access: CS_AC_READ
             groups: [RISCV_GRP_CALL, RISCV_GRP_BRANCH_RELATIVE]
         - asm_text: "jal ra, 4092"
@@ -315,7 +315,7 @@ test_cases:
                   reg: ra
                   access: CS_AC_WRITE
                 - type: RISCV_OP_IMM
-                  imm: -0x10
+                  imm: 4092
                   access: CS_AC_READ
             groups: [RISCV_GRP_CALL, RISCV_GRP_BRANCH_RELATIVE]
         - asm_text: "jalr ra, 4(a0)"
@@ -357,7 +357,7 @@ test_cases:
                   reg: tp
                   access: CS_AC_READ
                 - type: RISCV_OP_IMM
-                  imm: 0xa
+                  imm: 4130
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
         - asm_text: "bne gp, t1, 4118"
@@ -371,7 +371,7 @@ test_cases:
                   reg: t1
                   access: CS_AC_READ
                 - type: RISCV_OP_IMM
-                  imm: -6
+                  imm: 4118
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
         - asm_text: "blt t2, s1, 4148"
@@ -385,7 +385,7 @@ test_cases:
                   reg: s1
                   access: CS_AC_READ
                 - type: RISCV_OP_IMM
-                  imm: 0x14
+                  imm: 4148
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
         - asm_text: "bge a0, a1, 4138"
@@ -399,7 +399,7 @@ test_cases:
                   reg: a1
                   access: CS_AC_READ
                 - type: RISCV_OP_IMM
-                  imm: 0x6
+                  imm: 4138
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
         - asm_text: "bltu a2, a3, 4146"
@@ -413,7 +413,7 @@ test_cases:
                   reg: a3
                   access: CS_AC_READ
                 - type: RISCV_OP_IMM
-                  imm: 0xa
+                  imm: 4146
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
         - asm_text: "bgeu a4, a5, 4152"
@@ -427,7 +427,7 @@ test_cases:
                   reg: a5
                   access: CS_AC_READ
                 - type: RISCV_OP_IMM
-                  imm: 0xc
+                  imm: 4152
                   access: CS_AC_READ
             groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
         - asm_text: "lb a6, 1(a7)"
@@ -1634,7 +1634,7 @@ test_cases:
                   reg: a0
                   access: CS_AC_READ
                 - type: RISCV_OP_IMM
-                  imm: -8
+                  imm: 4120
                   access: CS_AC_READ
             groups:
               [
@@ -1650,7 +1650,7 @@ test_cases:
             riscv:
               operands:
                 - type: RISCV_OP_IMM
-                  imm: 0x7fe
+                  imm: 6178
                   access: CS_AC_READ
             groups:
               [
@@ -1671,7 +1671,7 @@ test_cases:
             riscv:
               operands:
                 - type: RISCV_OP_IMM
-                  imm: 0x4
+                  imm: 4140
                   access: CS_AC_READ
             groups:
               [

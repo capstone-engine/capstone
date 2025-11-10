@@ -69,6 +69,9 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 			uint64_t val = MCInst_getOperand(MI, OpNum)->ImmVal;
 			if (opgroup != RISCV_OP_GROUP_CSRSystemRegister) {
 				op->imm = val;
+				if (opgroup == RISCV_OP_GROUP_BranchOperand) {
+					op->imm += MI->address;
+				}
 			} else /* system register read-write */ {
 				op->type = RISCV_OP_CSR;
 				op->csr = val;

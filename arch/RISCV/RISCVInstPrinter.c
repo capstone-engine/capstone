@@ -379,6 +379,7 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O, void * /* MCRegisterInf
 		MCInst *McInstr = MI;
 		if (uncompressInst(&Uncompressed, MI)) {
 			McInstr = &Uncompressed;
+			Uncompressed.address = MI->address;
 			Uncompressed.MRI = MI->MRI;
 			Uncompressed.csh = MI->csh;
 			Uncompressed.flat_insn = MI->flat_insn;
@@ -389,7 +390,6 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O, void * /* MCRegisterInf
 		else
 			printInstruction(McInstr, MI->address, O);
 	}
-	printf("\n\n ADDING MISSING ACCESS \n\n");
 	RISCV_add_groups(MI);
 	RISCV_add_missing_write_access(MI);
 	RISCV_compact_operands(MI);
