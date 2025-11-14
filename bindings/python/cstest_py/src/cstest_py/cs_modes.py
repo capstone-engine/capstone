@@ -42,4 +42,8 @@ configs = {
         "type": cs.CS_OPT_SYNTAX,
         "val": cs.CS_OPT_SYNTAX_NO_DOLLAR,
     },
+    "CS_OPT_SYNTAX_NO_ALIAS_TEXT": {
+        "type": cs.CS_OPT_SYNTAX,
+        "val": cs.CS_OPT_SYNTAX_NO_ALIAS_TEXT
+    }
 }
