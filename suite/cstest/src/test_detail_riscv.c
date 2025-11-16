@@ -103,7 +103,8 @@ bool test_expected_riscv(csh *handle, const cs_riscv *actual,
 			compare_int64_ret(op->mem.disp, eop->mem_disp, false);
 			break;
 		case RISCV_OP_CSR:
-			compare_string_from_int_ret(op->csr, eop->csr, getSysRegName, false);
+			compare_string_from_int_ret(op->csr, eop->csr,
+						    getSysRegName, false);
 			break;
 		}
 	}

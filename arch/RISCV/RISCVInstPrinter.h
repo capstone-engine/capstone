@@ -62,8 +62,8 @@ const char *getSysRegName(unsigned reg);
 bool isCompressed(MCInst *MI);
 
 typedef enum {
-	#define GET_ENUM_VALUES_SysReg
-	#include "RISCVGenCSSystemOperandsEnum.inc"
+#define GET_ENUM_VALUES_SysReg
+#include "RISCVGenCSSystemOperandsEnum.inc"
 } SysRegValue;
 
 #endif

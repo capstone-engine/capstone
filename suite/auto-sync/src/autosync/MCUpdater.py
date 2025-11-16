@@ -49,10 +49,14 @@ class LLVM_MC_Command:
                 attribute = m.group(2).strip("+")
                 processed_attr.append(attribute)
             opts += ",".join(processed_attr)
-        
+
         if "-riscv-no-aliases" in cmd:
             opts += " riscv-no-aliases"
-        print("\n ----------------------------------------------- CMD became " + cmd + " ------------------------------------ \n")
+        print(
+            "\n ----------------------------------------------- CMD became "
+            + cmd
+            + " ------------------------------------ \n"
+        )
         return cmd, opts, Path(test_file)
 
     def exec(self) -> sp.CompletedProcess:
@@ -203,7 +207,7 @@ class TestFile:
             asm_text = asm_text.strip()
             if not self.valid_byte_seq(enc_bytes):
                 log.warning(
-                   f"ignoring invalid byte stream {self.mc_cmd.file} for arch {self.arch}"
+                    f"ignoring invalid byte stream {self.mc_cmd.file} for arch {self.arch}"
                 )
                 continue
 
@@ -211,7 +215,9 @@ class TestFile:
                 continue
 
             if self.arch == "RISCV" and ".insn" in asm_text:
-                log.warning(f"ignoring .insn directive {asm_text}, unsupported for arch {self.arch}")
+                log.warning(
+                    f"ignoring .insn directive {asm_text}, unsupported for arch {self.arch}"
+                )
                 continue
 
             dups.append(enc_bytes + asm_text)
@@ -258,7 +264,7 @@ class TestFile:
             case "RISCV":
                 # RISCV can allow arbitrary lengths up to 192-bit and beyond
                 # but the vast majority is 16 and 32 bit, we also allow 48 and 64 for good measure
-                return enc_bytes.count("0x") in {2,4,6,8}
+                return enc_bytes.count("0x") in {2, 4, 6, 8}
             case _:
                 return True
 

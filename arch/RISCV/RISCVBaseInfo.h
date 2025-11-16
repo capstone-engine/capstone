@@ -145,8 +145,7 @@ inline static bool RISCVFPRndMode_isValidRoundingMode(unsigned Mode)
 	}
 }
 
-inline static const char*
-RISCVFPRndMode_roundingModeToString(unsigned RndMode)
+inline static const char *RISCVFPRndMode_roundingModeToString(unsigned RndMode)
 {
 	switch (RndMode) {
 	default:
@@ -176,7 +175,6 @@ inline static bool RISCVVType_isMaskAgnostic(unsigned VType)
 	return VType & 0x80;
 }
 
-
 typedef enum RLISTENCODE {
 	RISCVZC_RLISTENCODE_RA = 4,
 	RISCVZC_RLISTENCODE_RA_S0,
@@ -193,7 +191,6 @@ typedef enum RLISTENCODE {
 	RISCVZC_RLISTENCODE_RA_S0_S11,
 	RISCVZC_RLISTENCODE_INVALID_RLIST,
 } RISCVZC_RLISTENCODE;
-
 
 inline static unsigned RISCVZC_getStackAdjBase(unsigned RlistVal, bool IsRV64,
 					       bool IsEABI)

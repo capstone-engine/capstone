@@ -48,19 +48,16 @@ VLMULDecodeResult decodeVLMUL(RISCVII_VLMUL VLMUL)
 	case RISCVII_LMUL_2:
 	case RISCVII_LMUL_4:
 	case RISCVII_LMUL_8: {
-		VLMULDecodeResult result = {
-			.value = 1 << (unsigned)(VLMUL), 
-			.isFractional = false
-		};
+		VLMULDecodeResult result = { .value = 1 << (unsigned)(VLMUL),
+					     .isFractional = false };
 		return result;
 	}
 	case RISCVII_LMUL_F2:
 	case RISCVII_LMUL_F4:
 	case RISCVII_LMUL_F8: {
-	VLMULDecodeResult result = {
-			.value = 1 << (8 - (unsigned)(VLMUL)), 
-			.isFractional = true
-		};
+		VLMULDecodeResult result = { .value = 1 << (8 -
+							    (unsigned)(VLMUL)),
+					     .isFractional = true };
 		return result;
 	}
 	}
@@ -131,8 +128,8 @@ float getFPImm(unsigned Imm)
 
 	uint32_t I = Sign << 31 | Exp << 23 | Mantissa << 21;
 	float result;
-  	memcpy(&result, &I, sizeof(float));
-  	return result;
+	memcpy(&result, &I, sizeof(float));
+	return result;
 }
 
 void RISCVZC_printSpimm(int64_t Spimm, SStream *OS)

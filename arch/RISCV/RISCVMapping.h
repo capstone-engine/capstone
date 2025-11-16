@@ -6,7 +6,7 @@
 #include "../../cs_priv.h"
 
 typedef enum {
-    #include "RISCVGenCSOpGroup.inc"
+#include "RISCVGenCSOpGroup.inc"
 } riscv_op_group;
 
 // given internal insn id, return public instruction info
@@ -24,8 +24,7 @@ void RISCV_add_groups(MCInst *MI);
 
 void RISCV_compact_operands(MCInst *MI);
 
-void RISCV_add_missing_write_access(MCInst* MI);
-
+void RISCV_add_missing_write_access(MCInst *MI);
 
 // map instruction name to instruction ID
 riscv_insn RISCV_map_insn(const char *name);

@@ -482,6 +482,7 @@ def get_sparc_includes(filename: str) -> bytes:
     log.fatal(f"No includes given for Sparc source file: {filename}")
     exit(1)
 
+
 def get_RISCV_includes(filename: str) -> bytes:
     match filename:
         case "RISCVDisassembler.cpp":
@@ -516,22 +517,17 @@ def get_RISCV_includes(filename: str) -> bytes:
             )
         case "RISCVInstPrinter.h":
             return (
-                b'#include "../../MCInstPrinter.h"\n' 
+                b'#include "../../MCInstPrinter.h"\n'
                 + b'#include "../../cs_priv.h"\n'
                 + b'#include "../../SStream.h"\n'
                 + b'#include "RISCVBaseInfo.h"\n'
             )
         case "RISCVBaseInfo.h":
-            return (
-                b'#include "../../utils.h"\n'
-            )
+            return b'#include "../../utils.h"\n'
         case "RISCVBaseInfo.cpp":
-            return (
-                b'#include "RISCVBaseInfo.h"\n\n'
-            )
+            return b'#include "RISCVBaseInfo.h"\n\n'
     log.fatal(f"No includes given for RISCV source file: {filename}")
     exit(1)
-
 
 
 def get_general_macros():

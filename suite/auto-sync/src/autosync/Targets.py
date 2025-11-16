@@ -14,7 +14,7 @@ TARGETS_LLVM_NAMING = [
     "TriCore",
     "ARC",
     "Sparc",
-    "RISCV"
+    "RISCV",
 ]
 
 # Names of the target architecture as they are used in code and pretty much everywhere else.
@@ -30,7 +30,7 @@ ARCH_LLVM_NAMING = [
     "TriCore",
     "ARC",
     "Sparc",
-    "RISCV"
+    "RISCV",
 ]
 
 # Maps the target full name to the name used in code (and pretty much everywhere else).
@@ -47,7 +47,7 @@ TARGET_TO_IN_CODE_NAME = {
     "ARC": "ARC",
     "Sparc": "Sparc",
     "ARCH": "ARCH",  # For testing
-    "RISCV":"RISCV"
+    "RISCV": "RISCV",
 }
 
 # Maps the name from ARCH_LLVM_NAMING to the directory name in LLVM
@@ -64,5 +64,5 @@ TARGET_TO_DIR_NAME = {
     "ARC": "ARC",
     "Sparc": "Sparc",
     "ARCH": "ARCH",  # For testing
-    "RISCV":"RISCV"
+    "RISCV": "RISCV",
 }

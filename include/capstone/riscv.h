@@ -21,7 +21,7 @@ extern "C" {
 //#undef riscv
 
 #ifdef _MSC_VER
-#pragma warning(disable:4201)
+#pragma warning(disable : 4201)
 #endif
 
 //> Operand type for instruction's operands
@@ -30,28 +30,29 @@ typedef enum riscv_op_type {
 	RISCV_OP_REG = CS_OP_REG, // = CS_OP_REG (Register operand).
 	RISCV_OP_IMM = CS_OP_IMM, // = CS_OP_IMM (Immediate operand).
 	RISCV_OP_MEM = CS_OP_MEM, // = CS_OP_MEM (Memory operand).
-	RISCV_OP_FP  = CS_OP_FP,  // = CS_OP_FP (FP immediate operand).
+	RISCV_OP_FP = CS_OP_FP, // = CS_OP_FP (FP immediate operand).
 	RISCV_OP_CSR = CS_OP_SPECIAL // =  Control and Status Register.
 } riscv_op_type;
 
 // Instruction's operand referring to memory
 // This is associated with RISCV_OP_MEM operand type above
 typedef struct riscv_op_mem {
-	unsigned int base;	// base register
-	int64_t disp;	// displacement/offset value
+	unsigned int base; // base register
+	int64_t disp; // displacement/offset value
 } riscv_op_mem;
 
 // Instruction operand
 typedef struct cs_riscv_op {
-	riscv_op_type type;	// operand type
+	riscv_op_type type; // operand type
 	union {
-		unsigned int reg;	// register value for REG operand
-		int64_t imm;		// immediate value for IMM operand
-		double dimm;		// immeidate double value for FP operands
-		riscv_op_mem mem;	// base/disp value for MEM operand
-		uint16_t csr;		// CSR system register (12-bit max in RISCV)
+		unsigned int reg; // register value for REG operand
+		int64_t imm; // immediate value for IMM operand
+		double dimm; // immeidate double value for FP operands
+		riscv_op_mem mem; // base/disp value for MEM operand
+		uint16_t csr; // CSR system register (12-bit max in RISCV)
 	};
-	cs_ac_type access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)
+	cs_ac_type
+		access; ///< How is this operand accessed? (READ, WRITE or READ|WRITE)
 } cs_riscv_op;
 
 #define NUM_RISCV_OPS 8
@@ -2219,7 +2220,7 @@ typedef enum riscv_insn {
 
 	// clang-format on
 	// generated content <RISCVGenCSInsnEnum.inc> end
-  	RISCV_INS_ENDING,
+	RISCV_INS_ENDING,
 
 	RISCV_INS_ALIAS_BEGIN,
 	// generated content <RISCVGenCSAliasEnum.inc> begin
@@ -2319,25 +2320,25 @@ typedef enum riscv_insn {
 
 //> Group of RISCV instructions
 typedef enum riscv_insn_group {
-  	RISCV_GRP_INVALID = 0, ///< = CS_GRP_INVALID
+	RISCV_GRP_INVALID = 0, ///< = CS_GRP_INVALID
 
-  	// Generic groups
-  	// all jump instructions (conditional+direct+indirect jumps)
-  	RISCV_GRP_JUMP,	///< = CS_GRP_JUMP
-  	// all call instructions
-  	RISCV_GRP_CALL,	///< = CS_GRP_CALL
-  	// all return instructions
-  	RISCV_GRP_RET,	///< = CS_GRP_RET
-  	// all interrupt instructions (int+syscall)
-  	RISCV_GRP_INT,	///< = CS_GRP_INT
-  	// all interrupt return instructions
-  	RISCV_GRP_IRET,	///< = CS_GRP_IRET
-  	// all privileged instructions
-  	RISCV_GRP_PRIVILEGE,	///< = CS_GRP_PRIVILEGE
-  	// all relative branching instructions
-  	RISCV_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
+	// Generic groups
+	// all jump instructions (conditional+direct+indirect jumps)
+	RISCV_GRP_JUMP, ///< = CS_GRP_JUMP
+	// all call instructions
+	RISCV_GRP_CALL, ///< = CS_GRP_CALL
+	// all return instructions
+	RISCV_GRP_RET, ///< = CS_GRP_RET
+	// all interrupt instructions (int+syscall)
+	RISCV_GRP_INT, ///< = CS_GRP_INT
+	// all interrupt return instructions
+	RISCV_GRP_IRET, ///< = CS_GRP_IRET
+	// all privileged instructions
+	RISCV_GRP_PRIVILEGE, ///< = CS_GRP_PRIVILEGE
+	// all relative branching instructions
+	RISCV_GRP_BRANCH_RELATIVE, ///< = CS_GRP_BRANCH_RELATIVE
 
-  	// Architecture-specific groups
+	// Architecture-specific groups
 	// generated content <RISCVGenCSFeatureEnum.inc> begin
 	// clang-format off
 
@@ -2445,7 +2446,7 @@ typedef enum riscv_insn_group {
 	// clang-format on
 	// generated content <RISCVGenCSFeatureEnum.inc> end
 
-  	RISCV_GRP_ENDING,
+	RISCV_GRP_ENDING,
 } riscv_insn_group;
 
 #ifdef __cplusplus
@@ -2453,4 +2454,3 @@ typedef enum riscv_insn_group {
 #endif
 
 #endif
-

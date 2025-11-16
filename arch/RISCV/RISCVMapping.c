@@ -3,7 +3,7 @@
 #include <stdint.h>
 #ifdef CAPSTONE_HAS_RISCV
 
-#include <stdio.h>		// debug
+#include <stdio.h> // debug
 #include <string.h>
 
 #include "../../Mapping.h"
@@ -49,60 +49,63 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 	if (!detail_is_set(MI))
 		return;
 	// are not "true" arguments and has no Capstone equivalent
-	if (opgroup == RISCV_OP_GROUP_FRMArg || opgroup == RISCV_OP_GROUP_FRMArgLegacy)
+	if (opgroup == RISCV_OP_GROUP_FRMArg ||
+	    opgroup == RISCV_OP_GROUP_FRMArgLegacy)
 		return;
 
 	cs_detail *details = MI->flat_insn->detail;
 	cs_riscv *riscv_details = &(details->riscv);
 	cs_riscv_op *op = &(riscv_details->operands[OpNum]);
-	op->type = (riscv_op_type) map_get_op_type(MI, OpNum);
-	op->access = (cs_ac_type) map_get_op_access(MI, OpNum);
+	op->type = (riscv_op_type)map_get_op_type(MI, OpNum);
+	op->access = (cs_ac_type)map_get_op_access(MI, OpNum);
 	switch (map_get_op_type(MI, OpNum)) {
-		case CS_OP_REG:
-			op->reg = MCInst_getOperand(MI, OpNum)->RegVal;
-			break;
-		case CS_OP_MEM:
-			op->mem.base = 0;
-			op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
-			break;
-		case CS_OP_IMM: {
-			uint64_t val = MCInst_getOperand(MI, OpNum)->ImmVal;
-			if (opgroup != RISCV_OP_GROUP_CSRSystemRegister) {
-				op->imm = val;
-				if (opgroup == RISCV_OP_GROUP_BranchOperand) {
-					op->imm += MI->address;
-				}
-			} else /* system register read-write */ {
-				op->type = RISCV_OP_CSR;
-				op->csr = val;
-				// CSR instruction always read-writes the system operand
-				op->access = CS_AC_READ_WRITE;
+	case CS_OP_REG:
+		op->reg = MCInst_getOperand(MI, OpNum)->RegVal;
+		break;
+	case CS_OP_MEM:
+		op->mem.base = 0;
+		op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
+		break;
+	case CS_OP_IMM: {
+		uint64_t val = MCInst_getOperand(MI, OpNum)->ImmVal;
+		if (opgroup != RISCV_OP_GROUP_CSRSystemRegister) {
+			op->imm = val;
+			if (opgroup == RISCV_OP_GROUP_BranchOperand) {
+				op->imm += MI->address;
 			}
-			break;
+		} else /* system register read-write */ {
+			op->type = RISCV_OP_CSR;
+			op->csr = val;
+			// CSR instruction always read-writes the system operand
+			op->access = CS_AC_READ_WRITE;
 		}
-		case CS_OP_MEM_REG:
-			op->type = (riscv_op_type) CS_OP_MEM;
-			op->mem.base = MCInst_getOperand(MI, OpNum)->RegVal;
-			break;
-		case CS_OP_MEM_IMM:
-			// fill in the disp in the last operand
-			op = &(riscv_details->operands[OpNum - 1]);
-			op->type = (riscv_op_type) CS_OP_MEM;
-			op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
-			riscv_details->op_count--; // don't increase the count, cancel the coming increment
-			break;
-		case CS_OP_INVALID:
-			break;
-		default: {
-			CS_ASSERT(0 && "unhandled operand type");
-		}
+		break;
+	}
+	case CS_OP_MEM_REG:
+		op->type = (riscv_op_type)CS_OP_MEM;
+		op->mem.base = MCInst_getOperand(MI, OpNum)->RegVal;
+		break;
+	case CS_OP_MEM_IMM:
+		// fill in the disp in the last operand
+		op = &(riscv_details->operands[OpNum - 1]);
+		op->type = (riscv_op_type)CS_OP_MEM;
+		op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
+		riscv_details
+			->op_count--; // don't increase the count, cancel the coming increment
+		break;
+	case CS_OP_INVALID:
+		break;
+	default: {
+		CS_ASSERT(0 && "unhandled operand type");
+	}
 	}
 	riscv_details->op_count++;
 }
 
 static inline void RISCV_add_adhoc_groups(MCInst *MI);
 
-void RISCV_add_groups(MCInst *MI) {
+void RISCV_add_groups(MCInst *MI)
+{
 	if (!detail_is_set(MI))
 		return;
 
@@ -111,7 +114,6 @@ void RISCV_add_groups(MCInst *MI) {
 #ifndef CAPSTONE_DIET
 	int i = 0;
 	while (insns[MI->Opcode].groups[i] != 0) {
-
 		add_group(MI, insns[MI->Opcode].groups[i]);
 		i++;
 	}
@@ -121,75 +123,80 @@ void RISCV_add_groups(MCInst *MI) {
 }
 
 enum {
-	#define GET_ENUM_VALUES_RISCVOpcode
-	#include "RISCVGenCSSystemOperandsEnum.inc"
+#define GET_ENUM_VALUES_RISCVOpcode
+#include "RISCVGenCSSystemOperandsEnum.inc"
 };
 
-static inline void RISCV_add_privileged_group(MCInst *MI) {
-    uint8_t opcode = MI->flat_insn->bytes[0] & 0x80;
-    // no privileged instruction has a major opcode other than SYSTEM
-    if (opcode != RISCV_RISCVOPCODE_SYSTEM) {
-    	return;
-    }
-    uint8_t func3 = (MI->flat_insn->bytes[1] >> 4) & 0x7;
-    // no privileged instruction has a minor opcode other than PRIV or PRIVM
-    if (func3 != 0 && func3 != 0x4) {
-    	return;
-    }
-    uint16_t func12 = readBytes16(MI, &(MI->flat_insn->bytes[2])) >> 4;
-    // ecall and ebreak has SYSTEM and PRIV but aren't privileged
-    if (func12 == 0 || func12 == 1) {
-    	return;
-    }
-    uint8_t func6 = func12 >> 6;
-    // a subspace under extension-defined custom SYSTEM instructions that is not privileged
-    if (func6 == 0x23 || func6 == 0x33) {
-    	return;
-    }
-    add_group(MI, RISCV_GRP_PRIVILEGE);
+static inline void RISCV_add_privileged_group(MCInst *MI)
+{
+	uint8_t opcode = MI->flat_insn->bytes[0] & 0x80;
+	// no privileged instruction has a major opcode other than SYSTEM
+	if (opcode != RISCV_RISCVOPCODE_SYSTEM) {
+		return;
+	}
+	uint8_t func3 = (MI->flat_insn->bytes[1] >> 4) & 0x7;
+	// no privileged instruction has a minor opcode other than PRIV or PRIVM
+	if (func3 != 0 && func3 != 0x4) {
+		return;
+	}
+	uint16_t func12 = readBytes16(MI, &(MI->flat_insn->bytes[2])) >> 4;
+	// ecall and ebreak has SYSTEM and PRIV but aren't privileged
+	if (func12 == 0 || func12 == 1) {
+		return;
+	}
+	uint8_t func6 = func12 >> 6;
+	// a subspace under extension-defined custom SYSTEM instructions that is not privileged
+	if (func6 == 0x23 || func6 == 0x33) {
+		return;
+	}
+	add_group(MI, RISCV_GRP_PRIVILEGE);
 }
 
-static inline void RISCV_add_interrupt_group(MCInst *MI) {
-    if (MI->Opcode == RISCV_ECALL || MI->Opcode == RISCV_EBREAK) {
-    	add_group(MI, RISCV_GRP_INT);
-    }
+static inline void RISCV_add_interrupt_group(MCInst *MI)
+{
+	if (MI->Opcode == RISCV_ECALL || MI->Opcode == RISCV_EBREAK) {
+		add_group(MI, RISCV_GRP_INT);
+	}
 }
 
-static inline void RISCV_add_interrupt_ret_group(MCInst *MI) {
-    if (MI->Opcode == RISCV_MRET || MI->Opcode == RISCV_SRET) {
-    	add_group(MI, RISCV_GRP_IRET);
-    }
+static inline void RISCV_add_interrupt_ret_group(MCInst *MI)
+{
+	if (MI->Opcode == RISCV_MRET || MI->Opcode == RISCV_SRET) {
+		add_group(MI, RISCV_GRP_IRET);
+	}
 }
 
-static inline void RISCV_add_adhoc_groups(MCInst *MI) {
-    RISCV_add_privileged_group(MI);
-    RISCV_add_interrupt_group(MI);
-    RISCV_add_interrupt_ret_group(MI);
+static inline void RISCV_add_adhoc_groups(MCInst *MI)
+{
+	RISCV_add_privileged_group(MI);
+	RISCV_add_interrupt_group(MI);
+	RISCV_add_interrupt_ret_group(MI);
 }
 
 // for weird reasons some instructions end up with valid operands that are
 // interspersed with invalid operands, i.e. the operands array is an "island"
 // of valid operands with invalid gaps between them, this function will compactify
 // all the valid operands and pad the rest of the array to invalid
-void RISCV_compact_operands(MCInst *MI) {
-    if (!detail_is_set(MI))
-	return;
-    cs_riscv_op* ops = MI->flat_insn->detail->riscv.operands;
-    unsigned int write_pos = 0;
+void RISCV_compact_operands(MCInst *MI)
+{
+	if (!detail_is_set(MI))
+		return;
+	cs_riscv_op *ops = MI->flat_insn->detail->riscv.operands;
+	unsigned int write_pos = 0;
 
-    // Move valid elements to front
-    for (unsigned int read_pos = 0; read_pos < NUM_RISCV_OPS; read_pos++) {
-        if (ops[read_pos].type != (riscv_op_type)CS_OP_INVALID) {
-            if (write_pos != read_pos) {
-            	ops[write_pos] = ops[read_pos];
-            }
-            write_pos++;
-        }
-    }
-    // fill the rest, if any, with invalid
-    for (unsigned int i = write_pos; i < NUM_RISCV_OPS; i++) {
-    	memset((void *)(&ops[i]), CS_OP_INVALID, sizeof(cs_riscv_op));
-    }
+	// Move valid elements to front
+	for (unsigned int read_pos = 0; read_pos < NUM_RISCV_OPS; read_pos++) {
+		if (ops[read_pos].type != (riscv_op_type)CS_OP_INVALID) {
+			if (write_pos != read_pos) {
+				ops[write_pos] = ops[read_pos];
+			}
+			write_pos++;
+		}
+	}
+	// fill the rest, if any, with invalid
+	for (unsigned int i = write_pos; i < NUM_RISCV_OPS; i++) {
+		memset((void *)(&ops[i]), CS_OP_INVALID, sizeof(cs_riscv_op));
+	}
 }
 
 // some C instructions have only 2 apparent operands, one of them is read-write
@@ -198,56 +205,63 @@ void RISCV_compact_operands(MCInst *MI) {
 // when those instructions are disassembled only the operand entry with the read access is used,
 // and therefore the read-write operand is wrongly classified as only-read
 // this logic tries to correct that
-void RISCV_add_missing_write_access(MCInst* MI) {
-    if (!detail_is_set(MI))
-    	return;
-    if (!isCompressed(MI))
-    	return;
+void RISCV_add_missing_write_access(MCInst *MI)
+{
+	if (!detail_is_set(MI))
+		return;
+	if (!isCompressed(MI))
+		return;
 
-    cs_riscv *riscv_details = &(MI->flat_insn->detail->riscv);
-    cs_riscv_op* ops = riscv_details->operands;
-    // make the detection condition as specific as possible
-    // so it doesn't accidentally trigger for other cases
-    if (riscv_details->op_count == 2
-    &&  ops[0].type == RISCV_OP_INVALID && ops[1].type == RISCV_OP_REG
-    &&  ops[1].access == CS_AC_READ) {
-    	ops[1].access |= CS_AC_WRITE;
-    }
+	cs_riscv *riscv_details = &(MI->flat_insn->detail->riscv);
+	cs_riscv_op *ops = riscv_details->operands;
+	// make the detection condition as specific as possible
+	// so it doesn't accidentally trigger for other cases
+	if (riscv_details->op_count == 2 && ops[0].type == RISCV_OP_INVALID &&
+	    ops[1].type == RISCV_OP_REG && ops[1].access == CS_AC_READ) {
+		ops[1].access |= CS_AC_WRITE;
+	}
 }
 
 // given internal insn id, return public instruction info
-void RISCV_get_insn_id(cs_struct * h, cs_insn * insn, unsigned int id)
+void RISCV_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-  	unsigned int i;
+	unsigned int i;
 
-  	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
-  	if (i != 0) {
-    		insn->id = insns[i].mapid;
+	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
+	if (i != 0) {
+		insn->id = insns[i].mapid;
 
-    		if (h->detail_opt) {
+		if (h->detail_opt) {
 #ifndef CAPSTONE_DIET
-      			memcpy(insn->detail->regs_read,
-      			insns[i].regs_use, sizeof(insns[i].regs_use));
-      			insn->detail->regs_read_count = (uint8_t)count_positive(insns[i].regs_use);
+			memcpy(insn->detail->regs_read, insns[i].regs_use,
+			       sizeof(insns[i].regs_use));
+			insn->detail->regs_read_count =
+				(uint8_t)count_positive(insns[i].regs_use);
 
-      			memcpy(insn->detail->regs_write, insns[i].regs_mod, sizeof(insns[i].regs_mod));
-      			insn->detail->regs_write_count = (uint8_t)count_positive(insns[i].regs_mod);
+			memcpy(insn->detail->regs_write, insns[i].regs_mod,
+			       sizeof(insns[i].regs_mod));
+			insn->detail->regs_write_count =
+				(uint8_t)count_positive(insns[i].regs_mod);
 
-     			memcpy(insn->detail->groups, insns[i].groups, sizeof(insns[i].groups));
-      			insn->detail->groups_count = (uint8_t)count_positive8(insns[i].groups);
+			memcpy(insn->detail->groups, insns[i].groups,
+			       sizeof(insns[i].groups));
+			insn->detail->groups_count =
+				(uint8_t)count_positive8(insns[i].groups);
 
-      			if (insns[i].branch || insns[i].indirect_branch) {
-        			// this insn also belongs to JUMP group. add JUMP group
-        			insn->detail->groups[insn->detail->groups_count] = RISCV_GRP_JUMP;
-        			insn->detail->groups_count++;
-      			}
+			if (insns[i].branch || insns[i].indirect_branch) {
+				// this insn also belongs to JUMP group. add JUMP group
+				insn->detail
+					->groups[insn->detail->groups_count] =
+					RISCV_GRP_JUMP;
+				insn->detail->groups_count++;
+			}
 #endif
-    		}
-  	}
+		}
+	}
 }
 
 static const char *const insn_name_maps[] = {
-  	/*RISCV_INS_INVALID:*/ NULL,
+	/*RISCV_INS_INVALID:*/ NULL,
 
 #include "RISCVGenCSMappingInsnName.inc"
 };
@@ -255,31 +269,31 @@ static const char *const insn_name_maps[] = {
 const char *RISCV_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-  	if (id >= RISCV_INS_ENDING)
-    		return NULL;
+	if (id >= RISCV_INS_ENDING)
+		return NULL;
 
-  	return insn_name_maps[id];
+	return insn_name_maps[id];
 #else
-  	return NULL;
+	return NULL;
 #endif
 }
 
 #ifndef CAPSTONE_DIET
 static const name_map group_name_maps[] = {
-  	// generic groups
-  	{ RISCV_GRP_INVALID,    NULL },
-  	{ RISCV_GRP_JUMP,       "jump" },
-  	{ RISCV_GRP_CALL,       "call" },
-  	{ RISCV_GRP_RET,        "ret" },
-  	{ RISCV_GRP_INT,        "int" },
-  	{ RISCV_GRP_IRET,       "iret" },
-  	{ RISCV_GRP_PRIVILEGE,  "privileged" },
-  	{ RISCV_GRP_BRANCH_RELATIVE, "branch_relative" },
+	// generic groups
+	{ RISCV_GRP_INVALID, NULL },
+	{ RISCV_GRP_JUMP, "jump" },
+	{ RISCV_GRP_CALL, "call" },
+	{ RISCV_GRP_RET, "ret" },
+	{ RISCV_GRP_INT, "int" },
+	{ RISCV_GRP_IRET, "iret" },
+	{ RISCV_GRP_PRIVILEGE, "privileged" },
+	{ RISCV_GRP_BRANCH_RELATIVE, "branch_relative" },
 
-  	// architecture specific
-  	#include "RISCVGenCSFeatureName.inc"
+// architecture specific
+#include "RISCVGenCSFeatureName.inc"
 
-  	{ RISCV_GRP_ENDING,     NULL }
+	{ RISCV_GRP_ENDING, NULL }
 };
 #endif
 
@@ -289,8 +303,8 @@ const char *RISCV_group_name(csh handle, unsigned int id)
 	// verify group id
 	// if past the end
 	if (id >= RISCV_GRP_ENDING ||
-			// or in the encoding gap between generic groups and arch-specific groups
-            (id > RISCV_GRP_BRANCH_RELATIVE && id < RISCV_FEATURE_HASSTDEXTI))
+	    // or in the encoding gap between generic groups and arch-specific groups
+	    (id > RISCV_GRP_BRANCH_RELATIVE && id < RISCV_FEATURE_HASSTDEXTI))
 		return NULL;
 	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 #else
@@ -312,11 +326,12 @@ riscv_insn RISCV_map_insn(const char *name)
 
 void RISCV_init(MCRegisterInfo *MRI)
 {
-	MCRegisterInfo_InitMCRegisterInfo(
-		MRI, RISCVRegDesc, RISCV_REG_ENDING, 0, 0,
-		RISCVMCRegisterClasses, ARR_SIZE(RISCVMCRegisterClasses), 0,
-		0, RISCVRegDiffLists, 0, RISCVSubRegIdxLists,
-		ARR_SIZE(RISCVSubRegIdxLists), 0);
+	MCRegisterInfo_InitMCRegisterInfo(MRI, RISCVRegDesc, RISCV_REG_ENDING,
+					  0, 0, RISCVMCRegisterClasses,
+					  ARR_SIZE(RISCVMCRegisterClasses), 0,
+					  0, RISCVRegDiffLists, 0,
+					  RISCVSubRegIdxLists,
+					  ARR_SIZE(RISCVSubRegIdxLists), 0);
 }
 
 #endif
