@@ -510,7 +510,7 @@ void printFloat(SStream *ss, float val)
 	SStream_concat(ss, "%e", val);
 }
 
-void printfFloat(SStream *ss, const char* fmt, float val) 
+void printfFloat(SStream *ss, const char *fmt, float val)
 {
 	assert(ss);
 	SSTREAM_RETURN_IF_CLOSED(ss);
