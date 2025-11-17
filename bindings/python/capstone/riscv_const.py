@@ -1,6 +1,16 @@
 from . import (CS_OP_FP, CS_OP_IMM, CS_OP_INVALID, CS_OP_MEM, CS_OP_MEM_IMM, CS_OP_MEM_REG, CS_OP_PRED, CS_OP_REG, CS_OP_SPECIAL, UINT8_MAX, UINT16_MAX,)
 
 # For Capstone Engine. AUTO-GENERATED FILE DO NOT EDIT [riscv_const.py]
+#
+# ####################################################### ###########################################################
+# ####################################################### ###########################################################
+# ##################################################### TODO ########################################################
+# ########################### This file is supposed to be generated automatically by the bindings generator
+# ########################### But the generator is currently broken, so for now all new constants are manually added
+# ########################### Fix and ensure all the constants are still correctly added when the generator is fixed
+# # ####################################################### ###########################################################
+# ####################################################### ###########################################################
+# ####################################################### ###########################################################
 
 # Operand type for instruction's operands
 RISCV_OP_INVALID = CS_OP_INVALID
@@ -2938,6 +2948,10 @@ RISCV_SYSREG_MHARTID = 0xf14
 RISCV_SYSREG_MCONFIGPTR = 0xf15
 RISCV_SYSREG_MTOPI = 0xfb0
 
+# ####################################################### ###########################################################
+# ####################################################### ###########################################################
+# ####################################################### ###########################################################
+# Add functionality to the generator script to generate this from the SYSREG array
 SYSREG_NAME_TO_VAL = {
     "fflags": RISCV_SYSREG_FFLAGS, "frm": RISCV_SYSREG_FRM, "fcsr": RISCV_SYSREG_FCSR,
     "vstart": RISCV_SYSREG_VSTART, "vxsat": RISCV_SYSREG_VXSAT, "vxrm": RISCV_SYSREG_VXRM,

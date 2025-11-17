@@ -1,4 +1,5 @@
 
+#include "capstone/cs_operand.h"
 #include "capstone/riscv.h"
 #include <stdint.h>
 #ifdef CAPSTONE_HAS_RISCV
@@ -166,11 +167,43 @@ static inline void RISCV_add_interrupt_ret_group(MCInst *MI)
 	}
 }
 
+// calls are implemented in RISCV as plain jumps that happen to set a link register containing the return address
+// but this link register could be given as the null register x0, discarding the return address and making them jumps
+static inline void RISCV_add_call_group(MCInst *MI)
+{
+	if (MI->Opcode == RISCV_JAL || MI->Opcode == RISCV_JALR) {
+		cs_riscv_op op = MI->flat_insn->detail->riscv.operands[0];
+		if ((op.type == (riscv_op_type)CS_OP_REG) &&
+		    op.reg != RISCV_REG_X0 && (op.access & CS_AC_WRITE)) {
+			add_group(MI, RISCV_GRP_CALL);
+		}
+		if (MI->Opcode == RISCV_JAL) {
+			add_group(MI, RISCV_GRP_BRANCH_RELATIVE);
+		}
+	}
+}
+
+// returns are implemented in RISCV as a plain indirect jump that happen to reference the return address register ra == x1
+static inline void RISCV_add_ret_group(MCInst *MI)
+{
+	if (MI->Opcode == RISCV_C_JR) {
+		cs_riscv_op op = MI->flat_insn->detail->riscv.operands[0];
+		if ((op.type == (riscv_op_type)CS_OP_REG) &&
+		    op.reg == RISCV_REG_X1) {
+			add_group(MI, RISCV_GRP_RET);
+		} else {
+			add_group(MI, RISCV_GRP_JUMP);
+		}
+	}
+}
+
 static inline void RISCV_add_adhoc_groups(MCInst *MI)
 {
 	RISCV_add_privileged_group(MI);
 	RISCV_add_interrupt_group(MI);
 	RISCV_add_interrupt_ret_group(MI);
+	RISCV_add_call_group(MI);
+	RISCV_add_ret_group(MI);
 }
 
 // for weird reasons some instructions end up with valid operands that are

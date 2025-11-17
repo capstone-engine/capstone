@@ -82962,7 +82962,7 @@
   /* c.jr	$rs1 */
   RISCV_C_JR /* 11772 */, RISCV_INS_C_JR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { RISCV_GRP_JUMP, RISCV_FEATURE_HASSTDEXTCORZCA, 0 }, 1, 0, {{ 0 }}
+    { 0 }, { 0 }, { RISCV_FEATURE_HASSTDEXTCORZCA, 0 }, 0, 0, {{ 0 }}
 
   #endif
 },
@@ -85504,7 +85504,7 @@
   /* jal	$rd, $imm20 */
   RISCV_JAL /* 12092 */, RISCV_INS_JAL,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { RISCV_GRP_CALL, RISCV_GRP_BRANCH_RELATIVE, 0 }, 0, 0, {{ 0 }}
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
   #endif
 },
@@ -85512,7 +85512,7 @@
   /* jalr	$rd, ${imm12}(${rs1}) */
   RISCV_JALR /* 12093 */, RISCV_INS_JALR,
   #ifndef CAPSTONE_DIET
-    { 0 }, { 0 }, { RISCV_GRP_CALL, 0 }, 0, 0, {{ 0 }}
+    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
   #endif
 },

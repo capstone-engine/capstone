@@ -64,9 +64,11 @@ static struct {
 	  { CS_ARCH_LOONGARCH, CS_ARCH_MIPS, CS_ARCH_MAX },
 	  CS_OPT_SYNTAX_NO_DOLLAR,
 	  0 },
-	{ "+noalias", "Does not print the text alias of an alias instruction", {
-		CS_ARCH_RISCV, CS_ARCH_MAX
-	}, CS_OPT_SYNTAX_NO_ALIAS_TEXT, 0},
+	{ "+noalias",
+	  "Does not print the text alias of an alias instruction",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_SYNTAX_NO_ALIAS_TEXT,
+	  0 },
 	// cs_mode only
 	{ "+nofloat",
 	  "Disables floating point support",
@@ -150,12 +152,12 @@ static struct {
 	  CS_MODE_RISCV_FD },
 	{ "+v",
 	  "Enables RISCV V extension.",
-          { CS_ARCH_RISCV, CS_ARCH_MAX },
-          0,
-          CS_MODE_RISCV_V },
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_V },
 	{ "+inx",
 	  "Enables RISCV Zfinx, Zdinx, and Zhinx extensions,"
-	  	" zhinxmin is also enabled as it's subset of zhinx ",
+	  " zhinxmin is also enabled as it's subset of zhinx ",
 	  { CS_ARCH_RISCV, CS_ARCH_MAX },
 	  0,
 	  CS_MODE_RISCV_ZFINX },
@@ -166,7 +168,7 @@ static struct {
 	  CS_MODE_RISCV_ZCMP_ZCMT_ZCE },
 	{ "a",
 	  "Enables the RISCV A extension",
-	  { CS_ARCH_RISCV, CS_ARCH_MAX},
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
 	  0,
 	  CS_MODE_RISCV_A },
 	{ NULL }
@@ -990,7 +992,8 @@ int main(int argc, char **argv)
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
 	printf("\nINSN TEXT: %s, %s", insn->mnemonic, insn->op_str);
-	printf("\n ------------------------------ COUNT OF CS INSN OPS : %d \n", insn->detail->riscv.op_count);
+	printf("\n ------------------------------ COUNT OF CS INSN OPS : %d \n",
+	       insn->detail->riscv.op_count);
 	if (count > 0) {
 		for (i = 0; i < count; i++) {
 			int j;

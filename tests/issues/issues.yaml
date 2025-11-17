@@ -120,7 +120,7 @@ test_cases:
               -
                 type: RISCV_OP_IMM
                 imm: 0x4
-          groups: [ call, branch_relative ]
+          groups: [ branch_relative ]
   -
     input:
       name: "issue 2007 RISCV32 instruction groups"
@@ -172,7 +172,7 @@ test_cases:
               -
                 type: RISCV_OP_IMM
                 imm: 0x4
-          groups: [ call, branch_relative ]
+          groups: [ branch_relative ]
   -
     input:
       name: "issue 2007 RISCV32 instruction groups"

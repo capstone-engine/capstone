@@ -1665,7 +1665,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: t0
                   access: CS_AC_READ
-            groups: [RISCV_GRP_JUMP, RISCV_FEATURE_HasStdExtCOrZca]
+            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_JUMP]
         - asm_text: "c.jal 4140"
           details:
             riscv:
@@ -1736,7 +1736,7 @@ test_cases:
                 - type: RISCV_OP_IMM
                   imm: 0x8
                   access: CS_AC_READ
-            groups: [RISCV_GRP_CALL, RISCV_GRP_BRANCH_RELATIVE]
+            groups: [RISCV_GRP_BRANCH_RELATIVE]
   - input:
       bytes: [0xef, 0xf0, 0x1f, 0xff]
       arch: "CS_ARCH_RISCV"
@@ -1751,7 +1751,7 @@ test_cases:
                 - type: RISCV_OP_IMM
                   imm: -0x10
                   access: CS_AC_READ
-            groups: [RISCV_GRP_CALL, RISCV_GRP_BRANCH_RELATIVE]
+            groups: [RISCV_GRP_BRANCH_RELATIVE]
   - input:
       bytes: [0xe7, 0x00, 0x45, 0x00]
       arch: "CS_ARCH_RISCV"
@@ -3653,7 +3653,7 @@ test_cases:
                 - type: RISCV_OP_REG
                   reg: t0
                   access: CS_AC_READ
-            groups: [RISCV_GRP_JUMP, RISCV_FEATURE_HasStdExtCOrZca]
+            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_JUMP]
   - input:
       bytes: [0x11, 0x20]
       arch: "CS_ARCH_RISCV"
