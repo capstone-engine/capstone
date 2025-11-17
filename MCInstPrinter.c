@@ -49,7 +49,6 @@ static bool testFeatureBits(const MCInst *MI, uint32_t Value)
 		return RISCV_getFeatureBits(MI->csh->mode, Value);
 #endif
 	}
-
 }
 
 static bool matchAliasCondition(MCInst *MI, const MCRegisterInfo *MRI,
