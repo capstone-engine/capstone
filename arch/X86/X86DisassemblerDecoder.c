@@ -523,19 +523,27 @@ static int readPrefixes(struct InternalInstruction *insn)
 		case 0x65: /* GS segment override */
 			switch (byte) {
 			case 0x2e:
-				insn->segmentOverride = SEG_OVERRIDE_CS;
+				if (insn->mode != MODE_64BIT) {
+					insn->segmentOverride = SEG_OVERRIDE_CS;
+				}
 				insn->prefix1 = byte;
 				break;
 			case 0x36:
-				insn->segmentOverride = SEG_OVERRIDE_SS;
+				if (insn->mode != MODE_64BIT) {
+					insn->segmentOverride = SEG_OVERRIDE_SS;
+				}
 				insn->prefix1 = byte;
 				break;
 			case 0x3e:
-				insn->segmentOverride = SEG_OVERRIDE_DS;
+				if (insn->mode != MODE_64BIT) {
+					insn->segmentOverride = SEG_OVERRIDE_DS;
+				}
 				insn->prefix1 = byte;
 				break;
 			case 0x26:
-				insn->segmentOverride = SEG_OVERRIDE_ES;
+				if (insn->mode != MODE_64BIT) {
+					insn->segmentOverride = SEG_OVERRIDE_ES;
+				}
 				insn->prefix1 = byte;
 				break;
 			case 0x64:
