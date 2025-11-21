@@ -1113,6 +1113,10 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, uintptr_t value)
 				// 2. add this instruction if we have not had it yet
 				if (!tmp) {
 					tmp = cs_mem_malloc(sizeof(*tmp));
+					if (!tmp) {
+						return CS_ERR_MEM;
+					}
+
 					tmp->insn.id = opt->id;
 					(void)strncpy(
 						tmp->insn.mnemonic,
@@ -1268,6 +1272,17 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size,
 			// allocate memory for @detail pointer
 			insn_cache->detail =
 				cs_mem_calloc(1, sizeof(cs_detail));
+			if (!insn_cache->detail) {
+				insn_cache = (cs_insn *)total;
+				for (i = 0; i < c; i++, insn_cache++)
+					cs_mem_free(insn_cache->detail);
+
+				cs_mem_free(total);
+				*insn = NULL;
+
+				handle->errnum = CS_ERR_MEM;
+				return 0;
+			}
 		} else {
 			insn_cache->detail = NULL;
 		}

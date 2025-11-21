@@ -12,6 +12,8 @@ cs_err PPC_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = (MCRegisterInfo *)cs_mem_malloc(sizeof(*mri));
+	if (!mri)
+		return CS_ERR_MEM;
 
 	PPC_init_mri(mri);
 	ud->printer = PPC_printer;

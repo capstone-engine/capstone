@@ -14,6 +14,8 @@ cs_err ALPHA_global_init(cs_struct *ud)
 	MCRegisterInfo *mri;
 
 	mri = cs_mem_malloc(sizeof(*mri));
+	if (!mri)
+		return CS_ERR_MEM;
 
 	Alpha_init(mri);
 	ud->printer = Alpha_printInst;

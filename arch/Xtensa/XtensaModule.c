@@ -11,6 +11,8 @@ cs_err Xtensa_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_calloc(1, sizeof(*mri));
+	if (!mri)
+		return CS_ERR_MEM;
 
 	Xtensa_init_mri(mri);
 	ud->printer = Xtensa_printer;
