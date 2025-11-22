@@ -9610,7 +9610,7 @@
 {
 	X86_SYSENTER, X86_INS_SYSENTER, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { X86_GRP_INT, 0 }, 0, 0
+	{ 0 }, { X86_REG_EIP, X86_REG_ESP, X86_REG_EFLAGS, 0 }, { X86_GRP_INT, 0 }, 0, 0
 #endif
 },
 

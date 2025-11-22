@@ -1265,6 +1265,34 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 					break;
 				}
 				break;
+
+			case X86_INS_SYSENTER: {
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_IP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ESP, X86_REG_SP);
+					break;
+				case CS_MODE_64:
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_RIP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ESP, X86_REG_RSP);
+					break;
+				}
+				break;
+			} break;
 			}
 
 			memcpy(insn->detail->groups, insns[i].groups,
