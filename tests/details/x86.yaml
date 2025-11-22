@@ -6372,6 +6372,8 @@ test_cases:
          0x0f, 0x34,            # sysenter
          0x0f, 0x35,            # sysexit
          0x40, 0x0f, 0x35,      # REX.W sysexit
+         0x0f, 0x07,            # sysret
+         0x40, 0x0f, 0x07,      # REX.W sysret
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_64 ]
@@ -6413,3 +6415,21 @@ test_cases:
             eflags: [ ]
           regs_read: [ rcx, rdx ]
           regs_write: [ rip, rsp ]
+      -
+        asm_text: "sysret"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x07, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_DF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_MODIFY_RF ]
+          regs_read: [ rcx, r11 ]
+          regs_write: [ rip, rflags ]
+      -
+        asm_text: "sysret"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
+            opcode: [ 0x0f, 0x07, 0x00, 0x00 ]
+            eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_TF, X86_EFLAGS_MODIFY_IF, X86_EFLAGS_MODIFY_DF, X86_EFLAGS_MODIFY_NT, X86_EFLAGS_MODIFY_RF ]
+          regs_read: [ rcx, r11 ]
+          regs_write: [ rip, rflags ]
