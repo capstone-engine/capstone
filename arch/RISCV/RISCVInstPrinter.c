@@ -46,6 +46,7 @@
 #include "RISCVGenCompressedInstructionsInfo.inc"
 
 #include "RISCVMapping.h"
+#include "../../Mapping.h"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
@@ -372,9 +373,12 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 {
 	MI->MRI = (MCRegisterInfo *)info;
 
+	MCInst_setIsAlias(MI, false);
+	// print the exact instruction text and done
 	if (MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT) {
 		printInstruction(MI, MI->address, O);
 	} else {
+		/* the instruction might be an alias, including in the case of a compressed instruction */
 		MCInst Uncompressed;
 		MCInst_Init(&Uncompressed, MI->csh->arch);
 
@@ -387,9 +391,22 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 			Uncompressed.flat_insn = MI->flat_insn;
 		}
 
-		if (printAliasInstr(McInstr, MI->address, O))
-			MI->isAliasInstr = true;
-		else
+		if (printAliasInstr(McInstr, MI->address, O)) {
+			MCInst_setIsAlias(MI, true);
+			if (!map_use_alias_details(MI) && detail_is_set(MI)) {
+				// disable actual printing
+				SStream_Close(O);
+				memset(MI->flat_insn->detail->riscv.operands, 0,
+				       sizeof(MI->flat_insn->detail->riscv
+						      .operands));
+				MI->flat_insn->detail->riscv.op_count = 0;
+				// re-disassemble again in order to obtain the full details
+				// including the whole operands array
+				printInstruction(MI, MI->address, O);
+				// re-open the stream to restore the usual state
+				SStream_Open(O);
+			}
+		} else
 			printInstruction(McInstr, MI->address, O);
 	}
 	RISCV_add_groups(MI);
