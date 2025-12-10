@@ -62,7 +62,7 @@ static void printOp(MCInst *MI, MCOperand *MC, SStream *O)
 	else if (MCOperand_isExpr(MC))
 		printExpr(MCOperand_getExpr(MC), O);
 	else
-		CS_ASSERT("Invalid operand");
+		CS_ASSERT(0 && "Invalid operand");
 }
 
 static void printOperand(MCInst *MI, const int op_num, SStream *O)
@@ -168,7 +168,7 @@ static inline void printImm8_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			isIntN(8, Value) &&
 			"Invalid argument, value must be in ranges [-128,127]");
 		printInt64(O, Value);
@@ -183,7 +183,7 @@ static inline void printImm8_sh8_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(isIntN(16, Value) && ((Value & 0xFF) == 0)) &&
 			"Invalid argument, value must be multiples of 256 in range "
 			"[-32768,32512]");
@@ -198,7 +198,7 @@ static inline void printImm12_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= -2048 && Value <= 2047) &&
 			"Invalid argument, value must be in ranges [-2048,2047]");
 		printInt64(O, Value);
@@ -212,7 +212,7 @@ static inline void printImm12m_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= -2048 && Value <= 2047) &&
 			"Invalid argument, value must be in ranges [-2048,2047]");
 		printInt64(O, Value);
@@ -226,7 +226,8 @@ static inline void printUimm4_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 0 && Value <= 15) && "Invalid argument");
+		CS_ASSERT_RET((Value >= 0 && Value <= 15) &&
+			      "Invalid argument");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -238,7 +239,8 @@ static inline void printUimm5_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 0 && Value <= 31) && "Invalid argument");
+		CS_ASSERT_RET((Value >= 0 && Value <= 31) &&
+			      "Invalid argument");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -250,8 +252,9 @@ static inline void printShimm1_31_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 1 && Value <= 31) &&
-			  "Invalid argument, value must be in range [1,31]");
+		CS_ASSERT_RET(
+			(Value >= 1 && Value <= 31) &&
+			"Invalid argument, value must be in range [1,31]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -263,8 +266,9 @@ static inline void printShimm0_31_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 0 && Value <= 31) &&
-			  "Invalid argument, value must be in range [0,31]");
+		CS_ASSERT_RET(
+			(Value >= 0 && Value <= 31) &&
+			"Invalid argument, value must be in range [0,31]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -276,8 +280,9 @@ static inline void printImm1_16_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 1 && Value <= 16) &&
-			  "Invalid argument, value must be in range [1,16]");
+		CS_ASSERT_RET(
+			(Value >= 1 && Value <= 16) &&
+			"Invalid argument, value must be in range [1,16]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -289,7 +294,7 @@ static inline void printImm1n_15_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= -1 && (Value != 0) && Value <= 15) &&
 			"Invalid argument, value must be in ranges <-1,-1> or <1,15>");
 		printInt64(O, Value);
@@ -303,8 +308,9 @@ static inline void printImm32n_95_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= -32 && Value <= 95) &&
-			  "Invalid argument, value must be in ranges <-32,95>");
+		CS_ASSERT_RET(
+			(Value >= -32 && Value <= 95) &&
+			"Invalid argument, value must be in ranges <-32,95>");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -316,8 +322,9 @@ static inline void printImm8n_7_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= -8 && Value <= 7) &&
-			  "Invalid argument, value must be in ranges <-8,7>");
+		CS_ASSERT_RET(
+			(Value >= -8 && Value <= 7) &&
+			"Invalid argument, value must be in ranges <-8,7>");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -329,9 +336,9 @@ static inline void printImm64n_4n_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= -64 && Value <= -4) &
-				  ((Value & 0x3) == 0) &&
-			  "Invalid argument, value must be in ranges <-64,-4>");
+		CS_ASSERT_RET(
+			(Value >= -64 && Value <= -4) & ((Value & 0x3) == 0) &&
+			"Invalid argument, value must be in ranges <-64,-4>");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -344,7 +351,7 @@ static inline void printOffset8m32_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= 0 && Value <= 1020 && ((Value & 0x3) == 0)) &&
 			"Invalid argument, value must be multiples of four in range [0,1020]");
 		printInt64(O, Value);
@@ -360,7 +367,7 @@ static inline void printEntry_Imm12_AsmOperand(MCInst *MI, int OpNum,
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= 0 && Value <= 32760) &&
 			"Invalid argument, value must be multiples of eight in range "
 			"<0,32760>");
@@ -395,7 +402,7 @@ static inline void printB4const_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 		case 256:
 			break;
 		default:
-			CS_ASSERT((0) && "Invalid B4const argument");
+			CS_ASSERT_RET((0) && "Invalid B4const argument");
 		}
 		printInt64(O, Value);
 	} else
@@ -428,7 +435,7 @@ static inline void printB4constu_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 		case 256:
 			break;
 		default:
-			CS_ASSERT((0) && "Invalid B4constu argument");
+			CS_ASSERT_RET((0) && "Invalid B4constu argument");
 		}
 		printInt64(O, Value);
 	} else
@@ -441,8 +448,9 @@ static inline void printImm7_22_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 7 && Value <= 22) &&
-			  "Invalid argument, value must be in range <7,22>");
+		CS_ASSERT_RET(
+			(Value >= 7 && Value <= 22) &&
+			"Invalid argument, value must be in range <7,22>");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -454,8 +462,8 @@ static inline void printSelect_2_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 0 && Value <= 1) &&
-			  "Invalid argument, value must be in range [0,1]");
+		CS_ASSERT_RET((Value >= 0 && Value <= 1) &&
+			      "Invalid argument, value must be in range [0,1]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -467,8 +475,8 @@ static inline void printSelect_4_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 0 && Value <= 3) &&
-			  "Invalid argument, value must be in range [0,3]");
+		CS_ASSERT_RET((Value >= 0 && Value <= 3) &&
+			      "Invalid argument, value must be in range [0,3]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -480,8 +488,8 @@ static inline void printSelect_8_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 0 && Value <= 7) &&
-			  "Invalid argument, value must be in range [0,7]");
+		CS_ASSERT_RET((Value >= 0 && Value <= 7) &&
+			      "Invalid argument, value must be in range [0,7]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -493,8 +501,9 @@ static inline void printSelect_16_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 0 && Value <= 15) &&
-			  "Invalid argument, value must be in range [0,15]");
+		CS_ASSERT_RET(
+			(Value >= 0 && Value <= 15) &&
+			"Invalid argument, value must be in range [0,15]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -507,8 +516,9 @@ static inline void printSelect_256_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 0 && Value <= 255) &&
-			  "Invalid argument, value must be in range [0,255]");
+		CS_ASSERT_RET(
+			(Value >= 0 && Value <= 255) &&
+			"Invalid argument, value must be in range [0,255]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -522,7 +532,7 @@ static inline void printOffset_16_16_AsmOperand(MCInst *MI, int OpNum,
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= -128 && Value <= 112 && (Value & 0xf) == 0) &&
 			"Invalid argument, value must be in range [-128,112], first 4 bits "
 			"should be zero");
@@ -540,7 +550,7 @@ static inline void printOffset_256_8_AsmOperand(MCInst *MI, int OpNum,
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= -1024 && Value <= 1016 &&
 			 (Value & 0x7) == 0) &&
 			"Invalid argument, value must be in range [-1024,1016], first 3 "
@@ -558,7 +568,7 @@ static inline void printOffset_256_16_AsmOperand(MCInst *MI, int OpNum,
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= -2048 && Value <= 2032 &&
 			 (Value & 0xf) == 0) &&
 			"Invalid argument, value must be in range [-2048,2032], first 4 "
@@ -577,7 +587,7 @@ static inline void printOffset_256_4_AsmOperand(MCInst *MI, int OpNum,
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= -512 && Value <= 508 && (Value & 0x3) == 0) &&
 			"Invalid argument, value must be in range [-512,508], first 2 bits "
 			"should be zero");
@@ -594,7 +604,7 @@ static inline void printOffset_128_2_AsmOperand(MCInst *MI, int OpNum,
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= 0 && Value <= 254 && (Value & 0x1) == 0) &&
 			"Invalid argument, value must be in range [0,254], first bit should "
 			"be zero");
@@ -611,8 +621,9 @@ static inline void printOffset_128_1_AsmOperand(MCInst *MI, int OpNum,
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT((Value >= 0 && Value <= 127) &&
-			  "Invalid argument, value must be in range [0,127]");
+		CS_ASSERT_RET(
+			(Value >= 0 && Value <= 127) &&
+			"Invalid argument, value must be in range [0,127]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
@@ -626,7 +637,7 @@ static inline void printOffset_64_16_AsmOperand(MCInst *MI, int OpNum,
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
-		CS_ASSERT(
+		CS_ASSERT_RET(
 			(Value >= -512 && Value <= 496 && (Value & 0xf) == 0) &&
 			"Invalid argument, value must be in range [-512,496], first 4 bits "
 			"should be zero");
@@ -643,9 +654,9 @@ static inline void printOffset_64_16_AsmOperand(MCInst *MI, int OpNum,
 		MCOperand *MC = MCInst_getOperand(MI, (OpNum)); \
 		if (MCOperand_isImm(MC)) { \
 			int64_t Value = MCOperand_getImm(MC); \
-			CS_ASSERT((Value >= L && Value <= H && \
-				   ((Value % S) == 0)) && \
-				  "Invalid argument"); \
+			CS_ASSERT_RET((Value >= L && Value <= H && \
+				       ((Value % S) == 0)) && \
+				      "Invalid argument"); \
 			printInt64(O, Value); \
 		} else { \
 			printOperand(MI, OpNum, O); \
