@@ -508,6 +508,35 @@ bool test_replc_str()
 	return true;
 }
 
+static int evil_vsnprintf(char *str, size_t size, const char *fmt, va_list ap)
+{
+	(void)str;
+	(void)size;
+	(void)fmt;
+	(void)ap;
+	return -1; // forces index underflow
+}
+
+/// Possible underflow of SStream.index and subsequent OOB reads/writes.
+/// Reported by Finder16.
+bool test_underflow_in_sstream(void)
+{
+	cs_opt_mem mem = { .malloc = malloc,
+			   .calloc = calloc,
+			   .realloc = realloc,
+			   .free = free,
+			   .vsnprintf = evil_vsnprintf };
+	cs_option(0, CS_OPT_MEM, (size_t)&mem);
+
+	SStream OS;
+	SStream_Init(&OS);
+	SStream_concat(&OS, "%s", "AAAA"); // index += -1
+	SStream_concat1(&OS, 'B'); // writes before buffer => crash/ASan hit
+	CHECK_OS_EQUAL_RET_FALSE(OS, "B");
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, 1);
+	return true;
+}
+
 int main()
 {
 	bool result = true;
@@ -525,6 +554,7 @@ int main()
 	result &= test_replc_str();
 	result &= test_copy_mnem_opstr();
 	result &= test_trimls();
+	result &= test_underflow_in_sstream();
 	if (result) {
 		printf("All tests passed.\n");
 	} else {

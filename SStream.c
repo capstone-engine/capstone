@@ -211,6 +211,10 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 	va_start(ap, fmt);
 	ret = cs_vsnprintf(ss->buffer + ss->index, sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
 	va_end(ap);
+	if (ret < 0) {
+		return;
+	}
+	SSTREAM_OVERFLOW_CHECK(ss, ret);
 	ss->index += ret;
 	if (ss->markup_stream && ss->prefixed_by_markup) {
 		SSTREAM_OVERFLOW_CHECK(ss, 1);
