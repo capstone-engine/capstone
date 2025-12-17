@@ -111,6 +111,7 @@ jobs:
       env:
         packages: ${{ matrix.config.packages }}
       run: |
+        sudo apt-get update
         sudo apt-get install -y ${packages}
 
     - name: Setup Android NDK
