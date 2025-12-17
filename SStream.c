@@ -33,6 +33,7 @@ void SStream_concat0(SStream *ss, const char *s)
 #ifndef CAPSTONE_DIET
 	unsigned int len = (unsigned int) strlen(s);
 
+	SSTREAM_OVERFLOW_CHECK(ss, len);
 	memcpy(ss->buffer + ss->index, s, len);
 	ss->index += len;
 	ss->buffer[ss->index] = '\0';
@@ -42,6 +43,7 @@ void SStream_concat0(SStream *ss, const char *s)
 void SStream_concat1(SStream *ss, const char c)
 {
 #ifndef CAPSTONE_DIET
+	SSTREAM_OVERFLOW_CHECK(ss, 1);
 	ss->buffer[ss->index] = c;
 	ss->index++;
 	ss->buffer[ss->index] = '\0';
@@ -57,6 +59,10 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 	va_start(ap, fmt);
 	ret = cs_vsnprintf(ss->buffer + ss->index, sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
 	va_end(ap);
+	if (ret < 0) {
+		return;
+	}
+	SSTREAM_OVERFLOW_CHECK(ss, ret);
 	ss->index += ret;
 #endif
 }
