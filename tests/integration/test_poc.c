@@ -65,7 +65,7 @@ static void test_overflow_cs_insn_bytes_iter()
 	size_t size = sizeof(buf);
 	buf[0] = 0x06; // invalid WASM opcode to force skipdata path
 	cs_insn *insn = cs_malloc(handle);
-;
+
 	// Overflowed cs_insn->bytes before the fix.
 	while (cs_disasm_iter(handle, &b, &size, &address, insn)) {
 		continue;
