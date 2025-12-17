@@ -33,7 +33,7 @@ add_test(NAME integration_c_compat_headers
   WORKING_DIRECTORY ${COMPAT_C_TEST_DIR}
 )
 
-set(INTEGRATION_TEST_SRC test_litbase.c)
+set(INTEGRATION_TEST_SRC test_litbase.c test_poc.c)
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   set(INTEGRATION_TEST_SRC ${INTEGRATION_TEST_SRC} test_assert_macros.c)
 endif()
