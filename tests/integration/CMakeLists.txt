@@ -33,7 +33,8 @@ add_test(NAME integration_compat_headers
   WORKING_DIRECTORY ${COMPAT_C_TEST_DIR}
 )
 
-set(INTEGRATION_TEST_SRC test_litbase.c)
+set(INTEGRATION_TEST_SRC test_litbase.c test_poc.c)
+
 foreach(TSRC ${INTEGRATION_TEST_SRC})
       string(REGEX REPLACE ".c$" "" TBIN ${TSRC})
       add_executable(${TBIN} "${TESTS_INTEGRATION_DIR}/${TSRC}")
