@@ -1,6 +1,65 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-Alpha6: January 13th, 2026
+
+## What's Changed
+* Update register semantics for x86 pop instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2770
+* Python binding: Support 3.14 free-threaded CPython build by @Antelox in https://github.com/capstone-engine/capstone/pull/2769
+* Only publish if tag is present and workflow is triggered by release. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2766
+* Add Python prominently to the workflow name to prevent confusion. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2774
+* Fix incorrectly defined BSHUFFLE opcode. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2772
+* Fix cstest missing size checks by @Rot127 in https://github.com/capstone-engine/capstone/pull/2775
+* Update read/written registers for x86 call instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2773
+* Apply other VIS instruction fixes from llvm/#130967 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2777
+* Fix regex match syntax for project version by @Zangetsu38 in https://github.com/capstone-engine/capstone/pull/2779
+* Add workflow to check for C code formatting and format all code with clang-format-17 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2744
+* Fix log message in cstest_py/compare.compare_bit_flags by @hainest in https://github.com/capstone-engine/capstone/pull/2783
+* DIET MSVC C1001 Fix by @LADIlib in https://github.com/capstone-engine/capstone/pull/2782
+* Update read/written registers for x86 interrupt instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2781
+* Update read/written registers for x87 comparison instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2784
+* Update read/written registers for x86 enter/leave instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2788
+* Update read/written registers for x86 procedure return instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2789
+* Add instruction details to cstest logging by @hainest in https://github.com/capstone-engine/capstone/pull/2787
+* Update read/written registers for x86 interrupt return instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2793
+* Remove unused fuzzit.sh script and key. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2797
+* Fix assertions if CAPSTONE_ASSERTION_WARNINGS=1. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2792
+* Update read/written registers for x86 string instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2790
+* Update read/written registers for x86 conditional jump instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2798
+* Minor formatting changes by @moste00 in https://github.com/capstone-engine/capstone/pull/2804
+* Fix cstest_py and add negative tests. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2807
+* Add null check for Xtensa operation detail in Xtensa_add_cs_detail_0 by @b1llow in https://github.com/capstone-engine/capstone/pull/2809
+* Update read/written registers for x86 loop instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2799
+* Update read/written registers for x86 unconditional jump instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2800
+* Bump to latest MacOS runner. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2812
+* Fix SH `decode` table being exported globally by @stuxnot in https://github.com/capstone-engine/capstone/pull/2814
+* Doc fixups by @Rot127 in https://github.com/capstone-engine/capstone/pull/2754
+* Add better support for cross builds. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2803
+* Update read/written registers for x86 system call instructions by @hainest in https://github.com/capstone-engine/capstone/pull/2820
+* Fix possible OOB read by @Rot127 in https://github.com/capstone-engine/capstone/pull/2825
+* Update read/written registers for x86 cmpxchg instruction by @hainest in https://github.com/capstone-engine/capstone/pull/2821
+* Apply clang-format-17 to `test_poc.c` by @Rot127 in https://github.com/capstone-engine/capstone/pull/2833
+* Add missing apt-get update before installing dependencies. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2832
+* Return for failing range asserts to enforce the assumptions. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2829
+* [alpha] Fix immediate to be 64bit wide by @wargio in https://github.com/capstone-engine/capstone/pull/2840
+* Build static libs with PIC by @hainest in https://github.com/capstone-engine/capstone/pull/2836
+* M68K: fix displacement, register naming and suppressed registers by @csoren in https://github.com/capstone-engine/capstone/pull/2839
+* X86: Fix movabsq immediates >= 2^63 printed as decimal in ATT syntax by @0verflowme in https://github.com/capstone-engine/capstone/pull/2843
+* M68K: add displacement size fields to disassembler by @csoren in https://github.com/capstone-engine/capstone/pull/2842
+* fix: use uintptr_t to maintain pointer provenance by @kingiler in https://github.com/capstone-engine/capstone/pull/2845
+
+## New Contributors
+* @Zangetsu38 made their first contribution in https://github.com/capstone-engine/capstone/pull/2779
+* @LADIlib made their first contribution in https://github.com/capstone-engine/capstone/pull/2782
+* @moste00 made their first contribution in https://github.com/capstone-engine/capstone/pull/2804
+* @stuxnot made their first contribution in https://github.com/capstone-engine/capstone/pull/2814
+* @csoren made their first contribution in https://github.com/capstone-engine/capstone/pull/2839
+* @0verflowme made their first contribution in https://github.com/capstone-engine/capstone/pull/2843
+* @kingiler made their first contribution in https://github.com/capstone-engine/capstone/pull/2845
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/6.0.0-Alpha5...6.0.0-Alpha6
+
+-----------------------------
 Version 6.0.0-Alpha5: August 3rd, 2025
 
 ## What's Changed
