@@ -528,7 +528,8 @@ static bool tryAddingSymbolicOperand(int64_t Value, bool isBranch,
 static DecodeStatus decodeCallOperand(MCInst *Inst, uint64_t Imm,
 				      int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(18, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(18, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (SignExtend64((Imm << 2), 20)));
 	return MCDisassembler_Success;
 }
@@ -536,7 +537,8 @@ static DecodeStatus decodeCallOperand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeJumpOperand(MCInst *Inst, uint64_t Imm,
 				      int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(18, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(18, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (SignExtend64((Imm), 18)));
 	return MCDisassembler_Success;
 }
@@ -549,14 +551,16 @@ static DecodeStatus decodeBranchOperand(MCInst *Inst, uint64_t Imm,
 	case Xtensa_BGEZ:
 	case Xtensa_BLTZ:
 	case Xtensa_BNEZ:
-		CS_ASSERT(isUIntN(12, Imm) && "Invalid immediate");
+		CS_ASSERT_RET_VAL(isUIntN(12, Imm) && "Invalid immediate",
+				  MCDisassembler_Fail);
 		if (!tryAddingSymbolicOperand(
 			    SignExtend64((Imm), 12) + 4 + Address, true,
 			    Address, 0, 3, Inst, Decoder))
 			MCOperand_CreateImm0(Inst, (SignExtend64((Imm), 12)));
 		break;
 	default:
-		CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+		CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+				  MCDisassembler_Fail);
 		if (!tryAddingSymbolicOperand(
 			    SignExtend64((Imm), 8) + 4 + Address, true, Address,
 			    0, 3, Inst, Decoder))
@@ -568,7 +572,8 @@ static DecodeStatus decodeBranchOperand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeLoopOperand(MCInst *Inst, uint64_t Imm,
 				      int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	if (!tryAddingSymbolicOperand(Imm + 4 + Address, true, Address, 0, 3,
 				      Inst, Decoder))
 		MCOperand_CreateImm0(Inst, (Imm));
@@ -578,7 +583,8 @@ static DecodeStatus decodeLoopOperand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeL32ROperand(MCInst *Inst, uint64_t Imm,
 				      int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(16, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(16, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, OneExtend64(Imm << 2, 18));
 	return MCDisassembler_Success;
 }
@@ -586,7 +592,8 @@ static DecodeStatus decodeL32ROperand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeImm8Operand(MCInst *Inst, uint64_t Imm,
 				      int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (SignExtend64((Imm), 8)));
 	return MCDisassembler_Success;
 }
@@ -594,8 +601,9 @@ static DecodeStatus decodeImm8Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeImm8_sh8Operand(MCInst *Inst, uint64_t Imm,
 					  int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(16, Imm) && ((Imm & 0xff) == 0) &&
-		  "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(16, Imm) && ((Imm & 0xff) == 0) &&
+				  "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (SignExtend64((Imm), 16)));
 	return MCDisassembler_Success;
 }
@@ -603,7 +611,8 @@ static DecodeStatus decodeImm8_sh8Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeImm12Operand(MCInst *Inst, uint64_t Imm,
 				       int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(12, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(12, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (SignExtend64((Imm), 12)));
 	return MCDisassembler_Success;
 }
@@ -611,7 +620,8 @@ static DecodeStatus decodeImm12Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeUimm4Operand(MCInst *Inst, uint64_t Imm,
 				       int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(4, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(4, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
@@ -619,7 +629,8 @@ static DecodeStatus decodeUimm4Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeUimm5Operand(MCInst *Inst, uint64_t Imm,
 				       int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(5, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(5, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
@@ -627,7 +638,8 @@ static DecodeStatus decodeUimm5Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeImm1_16Operand(MCInst *Inst, uint64_t Imm,
 					 int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(4, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(4, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm + 1));
 	return MCDisassembler_Success;
 }
@@ -635,7 +647,8 @@ static DecodeStatus decodeImm1_16Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeImm1n_15Operand(MCInst *Inst, uint64_t Imm,
 					  int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(4, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(4, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	if (!Imm)
 		MCOperand_CreateImm0(Inst, (-1));
 	else
@@ -646,7 +659,8 @@ static DecodeStatus decodeImm1n_15Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeImm32n_95Operand(MCInst *Inst, uint64_t Imm,
 					   int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(7, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(7, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	if ((Imm & 0x60) == 0x60)
 		MCOperand_CreateImm0(Inst, ((~0x1f) | Imm));
 	else
@@ -657,7 +671,8 @@ static DecodeStatus decodeImm32n_95Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeImm8n_7Operand(MCInst *Inst, uint64_t Imm,
 					 int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(4, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(4, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	if (Imm > 7)
 		MCOperand_CreateImm0(Inst, (Imm - 16));
 	else
@@ -668,7 +683,9 @@ static DecodeStatus decodeImm8n_7Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeImm64n_4nOperand(MCInst *Inst, uint64_t Imm,
 					   int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(6, Imm) && ((Imm & 0x3) == 0) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(6, Imm) && ((Imm & 0x3) == 0) &&
+				  "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, ((~0x3f) | (Imm)));
 	return MCDisassembler_Success;
 }
@@ -677,8 +694,9 @@ static DecodeStatus decodeOffset8m32Operand(MCInst *Inst, uint64_t Imm,
 					    int64_t Address,
 					    const void *Decoder)
 {
-	CS_ASSERT(isUIntN(10, Imm) && ((Imm & 0x3) == 0) &&
-		  "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(10, Imm) && ((Imm & 0x3) == 0) &&
+				  "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
@@ -687,8 +705,9 @@ static DecodeStatus decodeEntry_Imm12OpValue(MCInst *Inst, uint64_t Imm,
 					     int64_t Address,
 					     const void *Decoder)
 {
-	CS_ASSERT(isUIntN(15, Imm) && ((Imm & 0x7) == 0) &&
-		  "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(15, Imm) && ((Imm & 0x7) == 0) &&
+				  "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
@@ -696,7 +715,8 @@ static DecodeStatus decodeEntry_Imm12OpValue(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeShimm1_31Operand(MCInst *Inst, uint64_t Imm,
 					   int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(5, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(5, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (32 - Imm));
 	return MCDisassembler_Success;
 }
@@ -704,7 +724,7 @@ static DecodeStatus decodeShimm1_31Operand(MCInst *Inst, uint64_t Imm,
 //static DecodeStatus decodeShimm0_31Operand(MCInst *Inst, uint64_t Imm,
 //					   int64_t Address, const void *Decoder)
 //{
-//	CS_ASSERT(isUIntN(5, Imm) && "Invalid immediate");
+//	CS_ASSERT_RET_VAL(isUIntN(5, Imm) && "Invalid immediate", MCDisassembler_Fail);
 //	MCOperand_CreateImm0(Inst, (32 - Imm));
 //	return MCDisassembler_Success;
 //}
@@ -712,7 +732,8 @@ static DecodeStatus decodeShimm1_31Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeImm7_22Operand(MCInst *Inst, uint64_t Imm,
 					 int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(4, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(4, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm + 7));
 	return MCDisassembler_Success;
 }
@@ -720,7 +741,8 @@ static DecodeStatus decodeImm7_22Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeSelect_2Operand(MCInst *Inst, uint64_t Imm,
 					  int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
@@ -728,7 +750,8 @@ static DecodeStatus decodeSelect_2Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeSelect_4Operand(MCInst *Inst, uint64_t Imm,
 					  int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
@@ -736,7 +759,8 @@ static DecodeStatus decodeSelect_4Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeSelect_8Operand(MCInst *Inst, uint64_t Imm,
 					  int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
@@ -744,7 +768,8 @@ static DecodeStatus decodeSelect_8Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeSelect_16Operand(MCInst *Inst, uint64_t Imm,
 					   int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
@@ -753,7 +778,8 @@ static DecodeStatus decodeSelect_256Operand(MCInst *Inst, uint64_t Imm,
 					    int64_t Address,
 					    const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
@@ -762,7 +788,8 @@ static DecodeStatus decodeOffset_16_16Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT(isIntN(Imm, 8) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isIntN(Imm, 8) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	if ((Imm & 0xf) != 0)
 		MCOperand_CreateImm0(Inst, (Imm << 4));
 	else
@@ -774,7 +801,8 @@ static DecodeStatus decodeOffset_256_8Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT(isIntN(16, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isIntN(16, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	if ((Imm & 0x7) != 0)
 		MCOperand_CreateImm0(Inst, (Imm << 3));
 	else
@@ -786,7 +814,8 @@ static DecodeStatus decodeOffset_256_16Operand(MCInst *Inst, uint64_t Imm,
 					       int64_t Address,
 					       const void *Decoder)
 {
-	CS_ASSERT(isIntN(16, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isIntN(16, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	if ((Imm & 0xf) != 0)
 		MCOperand_CreateImm0(Inst, (Imm << 4));
 	else
@@ -798,7 +827,8 @@ static DecodeStatus decodeOffset_256_4Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT(isIntN(16, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isIntN(16, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	if ((Imm & 0x2) != 0)
 		MCOperand_CreateImm0(Inst, (Imm << 2));
 	else
@@ -810,7 +840,8 @@ static DecodeStatus decodeOffset_128_2Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	if ((Imm & 0x1) != 0)
 		MCOperand_CreateImm0(Inst, (Imm << 1));
 	else
@@ -822,7 +853,8 @@ static DecodeStatus decodeOffset_128_1Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
 }
@@ -831,7 +863,8 @@ static DecodeStatus decodeOffset_64_16Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT(isIntN(16, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isIntN(16, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	if ((Imm & 0xf) != 0)
 		MCOperand_CreateImm0(Inst, (Imm << 4));
 	else
@@ -844,7 +877,8 @@ static int64_t TableB4const[16] = { -1, 1,  2,	3,  4,	5,  6,	 7,
 static DecodeStatus decodeB4constOperand(MCInst *Inst, uint64_t Imm,
 					 int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(4, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(4, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 
 	MCOperand_CreateImm0(Inst, (TableB4const[Imm]));
 	return MCDisassembler_Success;
@@ -855,7 +889,8 @@ static int64_t TableB4constu[16] = { 32768, 65536, 2,  3,  4,  5,  6,	7,
 static DecodeStatus decodeB4constuOperand(MCInst *Inst, uint64_t Imm,
 					  int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(4, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(4, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 
 	MCOperand_CreateImm0(Inst, (TableB4constu[Imm]));
 	return MCDisassembler_Success;
@@ -864,7 +899,8 @@ static DecodeStatus decodeB4constuOperand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeMem8Operand(MCInst *Inst, uint64_t Imm,
 				      int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(12, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(12, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	DecodeARRegisterClass(Inst, Imm & 0xf, Address, Decoder);
 	MCOperand_CreateImm0(Inst, ((Imm >> 4) & 0xff));
 	return MCDisassembler_Success;
@@ -873,7 +909,8 @@ static DecodeStatus decodeMem8Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeMem16Operand(MCInst *Inst, uint64_t Imm,
 				       int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(12, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(12, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	DecodeARRegisterClass(Inst, Imm & 0xf, Address, Decoder);
 	MCOperand_CreateImm0(Inst, ((Imm >> 3) & 0x1fe));
 	return MCDisassembler_Success;
@@ -882,7 +919,8 @@ static DecodeStatus decodeMem16Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeMem32Operand(MCInst *Inst, uint64_t Imm,
 				       int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(12, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(12, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	DecodeARRegisterClass(Inst, Imm & 0xf, Address, Decoder);
 	MCOperand_CreateImm0(Inst, ((Imm >> 2) & 0x3fc));
 	return MCDisassembler_Success;
@@ -891,7 +929,8 @@ static DecodeStatus decodeMem32Operand(MCInst *Inst, uint64_t Imm,
 static DecodeStatus decodeMem32nOperand(MCInst *Inst, uint64_t Imm,
 					int64_t Address, const void *Decoder)
 {
-	CS_ASSERT(isUIntN(8, Imm) && "Invalid immediate");
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+			  MCDisassembler_Fail);
 	DecodeARRegisterClass(Inst, Imm & 0xf, Address, Decoder);
 	MCOperand_CreateImm0(Inst, ((Imm >> 2) & 0x3c));
 	return MCDisassembler_Success;
