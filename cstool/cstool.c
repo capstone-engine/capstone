@@ -991,9 +991,7 @@ int main(int argc, char **argv)
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
-	printf("\nINSN TEXT: %s, %s", insn->mnemonic, insn->op_str);
-	printf("\n ------------------------------ COUNT OF CS INSN OPS : %d \n",
-	       insn->detail->riscv.op_count);
+
 	if (count > 0) {
 		for (i = 0; i < count; i++) {
 			int j;

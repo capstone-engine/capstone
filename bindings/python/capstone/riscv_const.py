@@ -2,15 +2,17 @@ from . import (CS_OP_FP, CS_OP_IMM, CS_OP_INVALID, CS_OP_MEM, CS_OP_MEM_IMM, CS_
 
 # For Capstone Engine. AUTO-GENERATED FILE DO NOT EDIT [riscv_const.py]
 #
-# ####################################################### ###########################################################
-# ####################################################### ###########################################################
-# ##################################################### TODO ########################################################
-# ########################### This file is supposed to be generated automatically by the bindings generator
-# ########################### But the generator is currently broken, so for now all new constants are manually added
-# ########################### Fix and ensure all the constants are still correctly added when the generator is fixed
-# # ####################################################### ###########################################################
-# ####################################################### ###########################################################
-# ####################################################### ###########################################################
+# ###################### TODO ##########################
+#  This file is supposed to be generated automatically 
+#  by the bindings generator
+#  But the generator is currently broken, so for now, 
+#  all new constants are manually added
+#  To Fix: 
+#   - fix the bindings generator
+#   - remove the manually defined constants
+#   - ensure all the constants are still correctly added
+#   - remove this comment
+# ######################################################
 
 # Operand type for instruction's operands
 RISCV_OP_INVALID = CS_OP_INVALID

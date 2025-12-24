@@ -52,11 +52,7 @@ class LLVM_MC_Command:
 
         if "-riscv-no-aliases" in cmd:
             opts += " riscv-no-aliases"
-        print(
-            "\n ----------------------------------------------- CMD became "
-            + cmd
-            + " ------------------------------------ \n"
-        )
+
         return cmd, opts, Path(test_file)
 
     def exec(self) -> sp.CompletedProcess:

@@ -1,18 +1,17 @@
-
 #include "capstone/cs_operand.h"
 #include "capstone/riscv.h"
 #include <stdint.h>
+#include <float.h>
+#include <math.h>
 #ifdef CAPSTONE_HAS_RISCV
 
-#include <stdio.h> // debug
 #include <string.h>
 
 #include "../../Mapping.h"
+#include "../../cs_simple_types.h"
 #include "../../utils.h"
 
 #include "RISCVMapping.h"
-
-#include "../../cs_simple_types.h"
 
 #define GET_INSTRINFO_ENUM
 #include "RISCVGenInstrInfo.inc"
@@ -53,9 +52,44 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 	if (opgroup == RISCV_OP_GROUP_FRMArg ||
 	    opgroup == RISCV_OP_GROUP_FRMArgLegacy)
 		return;
-
-	cs_detail *details = MI->flat_insn->detail;
-	cs_riscv *riscv_details = &(details->riscv);
+		
+	if (opgroup == RISCV_OP_GROUP_FPImmOperand) {
+		unsigned Imm = (unsigned)MCInst_getOperand(MI, OpNum)->ImmVal;
+		cs_riscv *riscv_details = RISCV_get_detail(MI);
+		cs_riscv_op *op = &(riscv_details->operands[OpNum]);
+		op->type = RISCV_OP_FP;
+		op->access = (cs_ac_type)map_get_op_access(MI, OpNum);
+		switch (Imm) {
+		case 1: // min
+			switch (MI->Opcode) {
+			case RISCV_FLI_S:
+				op->dimm = (double)FLT_MIN;
+				break;
+			case RISCV_FLI_D:
+				op->dimm = (double)DBL_MIN;
+				break;
+			case RISCV_FLI_H:
+				op->dimm = 6.103515625e-05;
+				break;
+			default:
+				op->dimm = 0.0;
+				break;
+			}
+			break;
+		case 30: // inf
+			op->dimm = INFINITY;
+			break;
+		case 31: // nan
+			op->dimm = NAN;
+			break;
+		default:
+			op->dimm = (double)getFPImm(Imm);
+			break;
+		}
+		RISCV_inc_op_count(MI);
+		return;
+	}
+	cs_riscv *riscv_details = RISCV_get_detail(MI);
 	cs_riscv_op *op = &(riscv_details->operands[OpNum]);
 	op->type = (riscv_op_type)map_get_op_type(MI, OpNum);
 	op->access = (cs_ac_type)map_get_op_access(MI, OpNum);
@@ -91,8 +125,7 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 		op = &(riscv_details->operands[OpNum - 1]);
 		op->type = (riscv_op_type)CS_OP_MEM;
 		op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
-		riscv_details
-			->op_count--; // don't increase the count, cancel the coming increment
+		RISCV_dec_op_count(MI); // don't increase the count, cancel the coming increment
 		break;
 	case CS_OP_INVALID:
 		break;
@@ -100,7 +133,7 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 		CS_ASSERT(0 && "unhandled operand type");
 	}
 	}
-	riscv_details->op_count++;
+	RISCV_inc_op_count(MI);
 }
 
 static inline void RISCV_add_adhoc_groups(MCInst *MI);
@@ -110,7 +143,7 @@ void RISCV_add_groups(MCInst *MI)
 	if (!detail_is_set(MI))
 		return;
 
-	MI->flat_insn->detail->groups_count = 0;
+	get_detail(MI)->groups_count = 0;
 
 #ifndef CAPSTONE_DIET
 	int i = 0;
@@ -130,17 +163,18 @@ enum {
 
 static inline void RISCV_add_privileged_group(MCInst *MI)
 {
-	uint8_t opcode = MI->flat_insn->bytes[0] & 0x80;
+	const uint8_t *bytes = MI->flat_insn->bytes;
+	uint8_t opcode = bytes[0] & 0x80;
 	// no privileged instruction has a major opcode other than SYSTEM
 	if (opcode != RISCV_RISCVOPCODE_SYSTEM) {
 		return;
 	}
-	uint8_t func3 = (MI->flat_insn->bytes[1] >> 4) & 0x7;
+	uint8_t func3 = (bytes[1] >> 4) & 0x7;
 	// no privileged instruction has a minor opcode other than PRIV or PRIVM
 	if (func3 != 0 && func3 != 0x4) {
 		return;
 	}
-	uint16_t func12 = readBytes16(MI, &(MI->flat_insn->bytes[2])) >> 4;
+	uint16_t func12 = readBytes16(MI, &(bytes[2])) >> 4;
 	// ecall and ebreak has SYSTEM and PRIV but aren't privileged
 	if (func12 == 0 || func12 == 1) {
 		return;
@@ -172,7 +206,7 @@ static inline void RISCV_add_interrupt_ret_group(MCInst *MI)
 static inline void RISCV_add_call_group(MCInst *MI)
 {
 	if (MI->Opcode == RISCV_JAL || MI->Opcode == RISCV_JALR) {
-		cs_riscv_op op = MI->flat_insn->detail->riscv.operands[0];
+		cs_riscv_op op = RISCV_get_detail(MI)->operands[0];
 		if ((op.type == (riscv_op_type)CS_OP_REG) &&
 		    op.reg != RISCV_REG_X0 && (op.access & CS_AC_WRITE)) {
 			add_group(MI, RISCV_GRP_CALL);
@@ -187,7 +221,7 @@ static inline void RISCV_add_call_group(MCInst *MI)
 static inline void RISCV_add_ret_group(MCInst *MI)
 {
 	if (MI->Opcode == RISCV_C_JR) {
-		cs_riscv_op op = MI->flat_insn->detail->riscv.operands[0];
+		cs_riscv_op op = RISCV_get_detail(MI)->operands[0];
 		if ((op.type == (riscv_op_type)CS_OP_REG) &&
 		    op.reg == RISCV_REG_X1) {
 			add_group(MI, RISCV_GRP_RET);
@@ -214,7 +248,7 @@ void RISCV_compact_operands(MCInst *MI)
 {
 	if (!detail_is_set(MI))
 		return;
-	cs_riscv_op *ops = MI->flat_insn->detail->riscv.operands;
+	cs_riscv_op *ops = RISCV_get_detail(MI)->operands;
 	unsigned int write_pos = 0;
 
 	// Move valid elements to front
@@ -227,9 +261,8 @@ void RISCV_compact_operands(MCInst *MI)
 		}
 	}
 	// fill the rest, if any, with invalid
-	for (unsigned int i = write_pos; i < NUM_RISCV_OPS; i++) {
-		memset((void *)(&ops[i]), CS_OP_INVALID, sizeof(cs_riscv_op));
-	}
+	memset((void *)(&ops[write_pos]), CS_OP_INVALID,
+	       (NUM_RISCV_OPS - write_pos) * sizeof(cs_riscv_op));
 }
 
 // some C instructions have only 2 apparent operands, one of them is read-write
@@ -245,7 +278,7 @@ void RISCV_add_missing_write_access(MCInst *MI)
 	if (!isCompressed(MI))
 		return;
 
-	cs_riscv *riscv_details = &(MI->flat_insn->detail->riscv);
+	cs_riscv *riscv_details = RISCV_get_detail(MI);
 	cs_riscv_op *ops = riscv_details->operands;
 	// make the detection condition as specific as possible
 	// so it doesn't accidentally trigger for other cases
@@ -348,7 +381,6 @@ const char *RISCV_group_name(csh handle, unsigned int id)
 // map instruction name to public instruction ID
 riscv_insn RISCV_map_insn(const char *name)
 {
-	// handle special alias first
 	unsigned int i;
 	for (i = 1; i < ARR_SIZE(insn_name_maps); i++) {
 		if (!strcmp(name, insn_name_maps[i]))

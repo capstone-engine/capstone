@@ -57,8 +57,10 @@ TestDetailRISCVOp *test_detail_riscv_op_clone(const TestDetailRISCVOp *op)
 	clone->access = op->access ? strdup(op->access) : NULL;
 	clone->reg = op->reg ? strdup(op->reg) : NULL;
 	clone->imm = op->imm;
+	clone->dimm = op->dimm;
 	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
 	clone->mem_disp = op->mem_disp;
+	clone->csr = op->csr ? strdup(op->csr) : NULL;
 
 	return clone;
 }
@@ -72,6 +74,7 @@ void test_detail_riscv_op_free(TestDetailRISCVOp *op)
 	cs_mem_free(op->access);
 	cs_mem_free(op->reg);
 	cs_mem_free(op->mem_base);
+	cs_mem_free(op->csr);
 	cs_mem_free(op);
 }
 
@@ -96,6 +99,9 @@ bool test_expected_riscv(csh *handle, const cs_riscv *actual,
 			break;
 		case RISCV_OP_IMM:
 			compare_uint64_ret(op->imm, eop->imm, false);
+			break;
+		case RISCV_OP_FP:
+			compare_fp_ret(op->dimm, eop->dimm, false);
 			break;
 		case RISCV_OP_MEM:
 			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
