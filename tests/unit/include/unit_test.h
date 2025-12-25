@@ -48,7 +48,8 @@
 		const char *const candidates__[] = { __VA_ARGS__ }; \
 		bool matched__ = false; \
 		for (size_t i__ = 0; \
-		     i__ < (sizeof(candidates__) / sizeof(candidates__[0])); i__++) { \
+		     i__ < (sizeof(candidates__) / sizeof(candidates__[0])); \
+		     i__++) { \
 			if (strcmp((OS).buffer, candidates__[i__]) == 0) { \
 				matched__ = true; \
 				break; \
