@@ -279,6 +279,7 @@ def compare_fp(actual: float, expected: None | float | str, msg: str) -> bool:
     if expected is None:
         return True
     from cstest_py.cstest import log
+    from math import isnan
 
     if isinstance(expected, str):
         try:
@@ -289,6 +290,10 @@ def compare_fp(actual: float, expected: None | float | str, msg: str) -> bool:
 
     def floatToBits(f):
         return struct.unpack("=L", struct.pack("=f", f))[0]
+
+    # NAN's bit representation is non-canonical
+    if isnan(actual) and isnan(expected):
+        return True
 
     if floatToBits(actual) != floatToBits(expected):
         log.error(f"{msg}: {actual} != {expected}")
