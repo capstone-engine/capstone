@@ -52,7 +52,7 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 	if (opgroup == RISCV_OP_GROUP_FRMArg ||
 	    opgroup == RISCV_OP_GROUP_FRMArgLegacy)
 		return;
-		
+
 	if (opgroup == RISCV_OP_GROUP_FPImmOperand) {
 		unsigned Imm = (unsigned)MCInst_getOperand(MI, OpNum)->ImmVal;
 		cs_riscv *riscv_details = RISCV_get_detail(MI);
@@ -125,7 +125,8 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 		op = &(riscv_details->operands[OpNum - 1]);
 		op->type = (riscv_op_type)CS_OP_MEM;
 		op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
-		RISCV_dec_op_count(MI); // don't increase the count, cancel the coming increment
+		RISCV_dec_op_count(
+			MI); // don't increase the count, cancel the coming increment
 		break;
 	case CS_OP_INVALID:
 		break;

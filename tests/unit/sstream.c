@@ -620,17 +620,17 @@ bool test_printfFloat()
 
 	printfFloat(&OS, "%f", NAN);
 	CHECK_OS_EQUALS_ANY_RET_FALSE(OS, "nan", "NaN", "NAN", "nan(ind)",
-				"NaN(ind)", "NAN(ind)");
+				      "NaN(ind)", "NAN(ind)");
 	SStream_Flush(&OS, NULL);
 
 	printfFloat(&OS, "%f", INFINITY);
 	CHECK_OS_EQUALS_ANY_RET_FALSE(OS, "inf", "Inf", "INF", "infinity",
-				"Infinity", "INFINITY");
+				      "Infinity", "INFINITY");
 	SStream_Flush(&OS, NULL);
 
 	printfFloat(&OS, "%f", -INFINITY);
 	CHECK_OS_EQUALS_ANY_RET_FALSE(OS, "-inf", "-Inf", "-INF", "-infinity",
-				"-Infinity", "-INFINITY");
+				      "-Infinity", "-INFINITY");
 	SStream_Flush(&OS, NULL);
 
 	return true;

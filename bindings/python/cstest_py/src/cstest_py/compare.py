@@ -275,10 +275,17 @@ def compare_int64(actual: int, expected: None | int, msg: str) -> bool:
     return True
 
 
-def compare_fp(actual: float, expected: None | float, msg: str) -> bool:
+def compare_fp(actual: float, expected: None | float | str, msg: str) -> bool:
     if expected is None:
         return True
     from cstest_py.cstest import log
+
+    if isinstance(expected, str):
+        try:
+            expected = float(expected)
+        except ValueError:
+            log.error(f"{msg}: Expected value '{expected}' is not a valid float.")
+            return False
 
     def floatToBits(f):
         return struct.unpack("=L", struct.pack("=f", f))[0]

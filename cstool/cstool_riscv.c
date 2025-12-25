@@ -44,7 +44,8 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 
 			break;
 		case RISCV_OP_FP:
-			printf("\t\toperands[%u].type: FP_IMM %f \n", i, op->dimm);
+			printf("\t\toperands[%u].type: FP_IMM %f \n", i,
+			       op->dimm);
 			break;
 		case RISCV_OP_CSR:
 			printf("\t\toperands[%u].type: CSR = %s\n", i,
