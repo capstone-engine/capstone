@@ -368,13 +368,13 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 			EXT_BASE_DISPLACEMENT_PRESENT(extension) ?
 				(EXT_BASE_DISPLACEMENT_LONG(extension) ?
 					 read_imm_32(info) :
-					 read_imm_16(info)) :
+					 (int16_t)read_imm_16(info)) :
 				0;
 		op->mem.out_disp =
 			EXT_OUTER_DISPLACEMENT_PRESENT(extension) ?
 				(EXT_OUTER_DISPLACEMENT_LONG(extension) ?
 					 read_imm_32(info) :
-					 read_imm_16(info)) :
+					 (int16_t)read_imm_16(info)) :
 				0;
 
 		if (EXT_BASE_REGISTER_PRESENT(extension)) {
@@ -413,6 +413,10 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 		} else if (postindex) {
 			op->address_mode = is_pc ? M68K_AM_PC_MEMI_POST_INDEX :
 						   M68K_AM_MEMI_POST_INDEX;
+		} else {
+			op->address_mode =
+				is_pc ? M68K_AM_PCI_INDEX_BASE_DISP :
+					M68K_AM_AREGI_INDEX_BASE_DISP;
 		}
 
 		return;

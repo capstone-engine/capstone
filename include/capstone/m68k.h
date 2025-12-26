@@ -132,8 +132,8 @@ typedef struct m68k_op_mem {
 	m68k_reg base_reg; ///< base register (or M68K_REG_INVALID if irrelevant)
 	m68k_reg index_reg; ///< index register (or M68K_REG_INVALID if irrelevant)
 	m68k_reg in_base_reg; ///< indirect base register (or M68K_REG_INVALID if irrelevant)
-	uint32_t in_disp; ///< indirect displacement
-	uint32_t out_disp; ///< other displacement
+	int32_t in_disp; ///< indirect displacement
+	int32_t out_disp; ///< outer displacement
 	int16_t disp; ///< displacement value
 	uint8_t scale; ///< scale for index register
 	uint8_t bitfield; ///< set to true if the two values below should be used

@@ -1171,11 +1171,11 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
                 return False
             if not compare_int16(aop.mem.disp, eop["mem"].get("disp"), "disp"):
                 return False
-            if not compare_uint32(
+            if not compare_int32(
                 aop.mem.in_disp, eop["mem"].get("in_disp"), "in_disp"
             ):
                 return False
-            if not compare_uint32(
+            if not compare_int32(
                 aop.mem.out_disp, eop["mem"].get("out_disp"), "out_disp"
             ):
                 return False
