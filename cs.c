@@ -976,10 +976,13 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 				skipdata_bytes = handle->skipdata_size;
 
 			// we have to skip some amount of data, depending on arch & mode
-			insn_cache->id = 0;	// invalid ID for this "data" instruction
+			// invalid ID for this "data" instruction
+			insn_cache->id = 0;
 			insn_cache->address = offset;
-			insn_cache->size = (uint16_t)skipdata_bytes;
-			memcpy(insn_cache->bytes, buffer, skipdata_bytes);
+			insn_cache->size = (uint16_t)MIN(
+				skipdata_bytes, sizeof(insn_cache->bytes));
+			memcpy(insn_cache->bytes, buffer,
+			       MIN(skipdata_bytes, sizeof(insn_cache->bytes)));
 #ifdef CAPSTONE_DIET
 			insn_cache->mnemonic[0] = '\0';
 			insn_cache->op_str[0] = '\0';
@@ -1181,12 +1184,13 @@ bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 		// we have to skip some amount of data, depending on arch & mode
 		insn->id = 0;	// invalid ID for this "data" instruction
 		insn->address = *address;
-		insn->size = (uint16_t)skipdata_bytes;
+		insn->size = (uint16_t)MIN(skipdata_bytes, sizeof(insn->bytes));
+		memcpy(insn->bytes, *code,
+		       MIN(skipdata_bytes, sizeof(insn->bytes)));
 #ifdef CAPSTONE_DIET
 		insn->mnemonic[0] = '\0';
 		insn->op_str[0] = '\0';
 #else
-		memcpy(insn->bytes, *code, skipdata_bytes);
 		strncpy(insn->mnemonic, handle->skipdata_setup.mnemonic,
 				sizeof(insn->mnemonic) - 1);
 		skipdata_opstr(insn->op_str, *code, skipdata_bytes);

@@ -6,8 +6,18 @@
 
 #include "include/capstone/platform.h"
 
+#define SSTREAM_BUF_LEN 512
+
+#define SSTREAM_OVERFLOW_CHECK(OS, len) \
+	do { \
+		if (OS->index + len + 1 > SSTREAM_BUF_LEN) { \
+			fprintf(stderr, "Buffer overflow caught!\n"); \
+			return; \
+		} \
+	} while (0)
+
 typedef struct SStream {
-	char buffer[512];
+	char buffer[SSTREAM_BUF_LEN];
 	int index;
 } SStream;
 
