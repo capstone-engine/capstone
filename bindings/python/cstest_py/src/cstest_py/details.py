@@ -965,7 +965,7 @@ def test_expected_alpha(actual: CsInsn, expected: dict) -> bool:
             if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
                 return False
         elif aop.type == ALPHA_OP_IMM:
-            if not compare_int32(aop.imm, eop.get("imm"), "imm"):
+            if not compare_int64(aop.imm, eop.get("imm"), "imm"):
                 return False
         else:
             raise ValueError("Operand type not handled.")

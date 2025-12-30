@@ -12,7 +12,7 @@ class AlphaOpMem(ctypes.Structure):
 class AlphaOpValue(ctypes.Union):
     _fields_ = (
         ('reg', ctypes.c_uint),
-        ('imm', ctypes.c_int32),
+        ('imm', ctypes.c_int64),
     )
 
 

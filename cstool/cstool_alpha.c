@@ -30,8 +30,8 @@ void print_insn_detail_alpha(csh handle, cs_insn *ins)
 			       cs_reg_name(handle, op->reg));
 			break;
 		case ALPHA_OP_IMM:
-			printf("\t\toperands[%u].type: IMM = 0x%x\n", i,
-			       op->imm);
+			printf("\t\toperands[%u].type: IMM = 0x%" PRIx64 "\n",
+			       i, op->imm);
 			break;
 		}
 

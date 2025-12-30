@@ -6302,4 +6302,22 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "mov	esi, dword ptr [rdx + rax*4]"
+        asm_text: "mov  esi, dword ptr [rdx + rax*4]"
+  -
+    input:
+      name: "alpha 64bit addresses"
+      bytes: [ 0x04, 0x00, 0x40, 0xf4 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ CS_OPT_DETAIL, CS_MODE_LITTLE_ENDIAN ]
+      address: 0x12001b33c
+    expected:
+      insns:
+      -
+        asm_text: "bne $2,0x12001b350"
+        details:
+          alpha:
+            operands:
+              - type: ALPHA_OP_REG
+                reg: $2
+              - type: ALPHA_OP_IMM
+                imm: 0x12001b350
