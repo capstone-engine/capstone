@@ -13,7 +13,7 @@ typedef struct {
 	char *access;
 
 	char *reg;
-	int32_t imm;
+	int64_t imm;
 } TestDetailAlphaOp;
 
 static const cyaml_schema_field_t test_detail_alpha_op_mapping_schema[] = {
