@@ -43,7 +43,7 @@ test_cases:
     input:
       bytes: [ 0x07, 0x20, 0xc5, 0x00 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV32" ]
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F" ]
     expected:
       insns:
         -
@@ -62,8 +62,8 @@ test_cases:
   -
     skip: true
     skip_reason: >
-      Bad test generated due to the ASUpdater not understanding the 
-      inline architecture options syntax in LLVM tests, this test 
+      Bad test generated due to the ASUpdater not understanding the
+      inline architecture options syntax in LLVM tests, this test
       should have been generated with an "a" flag because this
       instruction belongs to the atomic extension
     input:
@@ -91,7 +91,7 @@ test_cases:
     input:
       bytes: [ 0x08, 0x61 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV32" ]
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F" ]
     expected:
       insns:
         -

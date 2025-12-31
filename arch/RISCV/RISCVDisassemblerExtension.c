@@ -16,8 +16,8 @@ bool RISCV_getFeatureBits(unsigned int mode, unsigned int feature)
 	case RISCV_Feature64Bit:
 		return mode & CS_MODE_RISCV64;
 
-	case RISCV_FEATURE_HASSTDEXTF:
-	case RISCV_FEATURE_HASSTDEXTD:
+	case RISCV_FeatureStdExtF:
+	case RISCV_FeatureStdExtD:
 		return mode & CS_MODE_RISCV_FD;
 
 	case RISCV_FeatureStdExtV:
