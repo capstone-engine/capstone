@@ -814,6 +814,7 @@ set_property(TARGET capstone PROPERTY C_STANDARD 99)
 target_include_directories(capstone PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
+set_property(TARGET capstone PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 if(CAPSTONE_BUILD_STATIC_LIBS)
     add_library(capstone_static STATIC $<TARGET_OBJECTS:capstone>)
@@ -825,7 +826,6 @@ if(CAPSTONE_BUILD_STATIC_LIBS)
 endif()
 
 if(CAPSTONE_BUILD_SHARED_LIBS)
-    set_property(TARGET capstone PROPERTY POSITION_INDEPENDENT_CODE 1)
     add_library(capstone_shared SHARED $<TARGET_OBJECTS:capstone>)
     # Use normal capstone name. Otherwise we get libcapstone_shared.so
     set_target_properties(capstone_shared PROPERTIES OUTPUT_NAME "capstone")

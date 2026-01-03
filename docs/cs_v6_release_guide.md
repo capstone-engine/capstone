@@ -220,6 +220,7 @@ Nonetheless, we hope this additional information is useful to you.
 - Architecture modules from a static library, can be initialized on demand to decrease footprint (see: `cmake` option `CAPSTONE_USE_ARCH_REGISTRATION`).
 - New `cmake` option to choose between fat and thin binary for Apple.
 - Cross compilation support improved.
+- The static library (e.g., libcapstone.a) is now built with PIC to allow linking into shared libraries or PIE binaries.
 
 **Code quality**
 
