@@ -139,7 +139,10 @@ typedef struct m68k_op_mem {
 	uint8_t bitfield; ///< set to true if the two values below should be used
 	uint8_t width; ///< used for bf* instructions
 	uint8_t offset; ///< used for bf* instructions
-	uint8_t index_size; ///< 0 = w, 1 = l
+	uint8_t index_size; ///< 0 = word, 1 = long
+	uint8_t in_disp_size; ///< 0 = word, 1 = long
+	uint8_t out_disp_size; ///< 0 = word, 1 = long
+	uint8_t disp_size; ///< 0 = byte, 1 = word
 } m68k_op_mem;
 
 /// Operand type for instruction's operands

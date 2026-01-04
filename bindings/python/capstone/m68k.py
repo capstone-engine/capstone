@@ -18,6 +18,9 @@ class M68KOpMem(ctypes.Structure):
         ('width', ctypes.c_ubyte),
         ('offset', ctypes.c_ubyte),
         ('index_size', ctypes.c_ubyte),
+        ('in_disp_size', ctypes.c_ubyte),
+        ('out_disp_size', ctypes.c_ubyte),
+        ('disp_size', ctypes.c_ubyte),
     )
 
 class M68KOpRegPair(ctypes.Structure):
