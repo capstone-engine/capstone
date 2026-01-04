@@ -191,12 +191,12 @@ bool test_expected_m68k(csh *handle, cs_m68k *actual, TestDetailM68K *expected)
 			compare_tbool_ret(op->mem.index_size,
 					  eop->mem->index_size, false);
 			if (eop->mem->in_disp) {
-				compare_uint32_ret(op->mem.in_disp,
-						   eop->mem->in_disp, false);
+				compare_int32_ret(op->mem.in_disp,
+						  eop->mem->in_disp, false);
 			}
 			if (eop->mem->out_disp) {
-				compare_uint32_ret(op->mem.out_disp,
-						   eop->mem->out_disp, false);
+				compare_int32_ret(op->mem.out_disp,
+						  eop->mem->out_disp, false);
 			}
 			if (eop->mem->disp) {
 				compare_int16_ret(op->mem.disp, eop->mem->disp,

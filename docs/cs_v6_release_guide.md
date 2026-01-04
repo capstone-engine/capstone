@@ -396,6 +396,12 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | SYSZ -> SystemZ | `SYSZ` was everywhere renamed to `SystemZ` to match the LLVM naming. | See below |
 | `SYSTEMZ_CC_*` | `SYSTEMZ_CC_O = 0` and `SYSTEMZ_CC_INVALID != 0` | They match the same LLVM values. Better for LLVM compatibility and code generation. |
 
+**M68K**
+
+| Keyword | Change | Justification |
+|---------|--------|---------------|
+| m68k_op_mem.in_disp, m68k_op_mem.out_disp | These fields are now signed instead of unsigned. | The M68K architecture uses sign extended displacements for effective address calculation. |
+
 ### Notes about AArch64, SystemZ and ARM renaming
 
 `ARM64` was everywhere renamed to `AArch64`. And `SYSZ` to `SYSTEMZ`. This is a necessity to ensure that the update scripts stay reasonably simple.
