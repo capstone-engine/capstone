@@ -523,38 +523,50 @@ static int readPrefixes(struct InternalInstruction *insn)
 		case 0x65: /* GS segment override */
 			switch (byte) {
 			case 0x2e:
-				if (insn->mode != MODE_64BIT || (insn->prefix1 != 0x64 && insn->prefix1 != 0x65)) {
+				if (insn->mode != MODE_64BIT ||
+				    (insn->prefix1 != 0x64 &&
+				     insn->prefix1 != 0x65)) {
 					if (insn->mode != MODE_64BIT) {
-						insn->segmentOverride = SEG_OVERRIDE_CS;
+						insn->segmentOverride =
+							SEG_OVERRIDE_CS;
 					}
 
 					insn->prefix1 = byte;
 				}
 				break;
 			case 0x36:
-				if (insn->mode != MODE_64BIT || (insn->prefix1 != 0x64 && insn->prefix1 != 0x65)) {
+				if (insn->mode != MODE_64BIT ||
+				    (insn->prefix1 != 0x64 &&
+				     insn->prefix1 != 0x65)) {
 					if (insn->mode != MODE_64BIT) {
-						insn->segmentOverride = SEG_OVERRIDE_SS;
+						insn->segmentOverride =
+							SEG_OVERRIDE_SS;
 					}
 
 					insn->prefix1 = byte;
 				}
 				break;
 			case 0x3e:
-				if (insn->mode != MODE_64BIT || (insn->prefix1 != 0x64 && insn->prefix1 != 0x65)) {
+				if (insn->mode != MODE_64BIT ||
+				    (insn->prefix1 != 0x64 &&
+				     insn->prefix1 != 0x65)) {
 					if (insn->mode != MODE_64BIT) {
-						insn->segmentOverride = SEG_OVERRIDE_DS;
+						insn->segmentOverride =
+							SEG_OVERRIDE_DS;
 					}
 
 					insn->prefix1 = byte;
 				}
 				break;
 			case 0x26:
-				if (insn->mode != MODE_64BIT || (insn->prefix1 != 0x64 && insn->prefix1 != 0x65)) {
+				if (insn->mode != MODE_64BIT ||
+				    (insn->prefix1 != 0x64 &&
+				     insn->prefix1 != 0x65)) {
 					if (insn->mode != MODE_64BIT) {
-						insn->segmentOverride = SEG_OVERRIDE_ES;
+						insn->segmentOverride =
+							SEG_OVERRIDE_ES;
 					}
-					
+
 					insn->prefix1 = byte;
 				}
 				break;
