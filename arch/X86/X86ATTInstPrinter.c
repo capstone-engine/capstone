@@ -732,7 +732,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		case X86_INS_MOVABS:
 		case X86_INS_MOV:
 			// do not print number in negative form
-			if (imm > HEX_THRESHOLD)
+			// Use unsigned comparison to handle values >= 2^63 correctly
+			if ((uint64_t)imm > HEX_THRESHOLD)
 				SStream_concat(O, "$0x%" PRIx64, imm);
 			else
 				SStream_concat(O, "$%" PRIu64, imm);
