@@ -15,141 +15,139 @@ static bool RISCVValidateMCOperandForCompress(MCInst *MI,MCOperand *MCOp,
                   unsigned PredicateIndex) {
   switch (PredicateIndex) {
   default:
-    CS_ASSERT_RET_VAL(0,false); 
+    CS_ASSERT_RET_VAL(0,false);
 	 return false;
     break;
   case 1: {
   // uimm10_lsb00nonzero
-  
+
     int64_t Imm;
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     return isShiftedUIntN(8, 2, Imm) && (Imm != 0);
-  
+
   }
   case 2: {
   // simm6nonzero
-  
+
     int64_t Imm;
     if ((Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return (Imm != 0) && isIntN(6, Imm);
     return MCOperand_isExpr(MCOp);
-  
+
   }
   case 3: {
   // simm6
-  
+
     int64_t Imm;
     if ((Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return isIntN(6, Imm);
     return MCOperand_isExpr(MCOp);
-  
+
   }
   case 4: {
   // simm10_lsb0000nonzero
-  
+
     int64_t Imm;
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     return isShiftedIntN(6, 4, Imm) && (Imm != 0);
-  
+
   }
   case 5: {
   // simm9_lsb0
-  
+
     int64_t Imm;
     if ((Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return isShiftedIntN(8, 1, Imm);
     return MCOperand_isExpr(MCOp);
 
-  
+
   }
   case 6: {
   // uimm8_lsb000
-  
+
     int64_t Imm;
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     return isShiftedUIntN(5, 3, Imm);
-  
+
   }
   case 7: {
   // uimm9_lsb000
-  
+
     int64_t Imm;
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     return isShiftedUIntN(6, 3, Imm);
-  
+
   }
   case 8: {
   // uimm7_lsb00
-  
+
     int64_t Imm;
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     return isShiftedUIntN(5, 2, Imm);
-  
+
   }
   case 9: {
   // uimm8_lsb00
-  
+
     int64_t Imm;
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     return isShiftedUIntN(6, 2, Imm);
-  
+
   }
   case 10: {
   // simm12_lsb0
-  
+
     int64_t Imm;
     if ((Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return isShiftedIntN(11, 1, Imm);
     return MCOperand_isExpr(MCOp);
-  
+
   }
   case 11: {
   // uimm2
-  
+
     int64_t Imm;
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     return isUIntN(2, Imm);
-  
+
   }
   case 12: {
   // uimm2_lsb0
-  
+
     int64_t Imm;
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     return isShiftedUIntN(1, 1, Imm);
-  
+
   }
   case 13: {
   // c_lui_imm
-  
+
     int64_t Imm;
     if ((Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return (Imm != 0) && (isUIntN(5, Imm) ||
              (Imm >= 0xfffe0 && Imm <= 0xfffff));
     return MCOperand_isExpr(MCOp);
-  
+
   }
   case 14: {
   // uimmlog2xlennonzero
-  
+
     int64_t Imm;
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     if (RISCV_getFeatureBits(MI->csh->mode,RISCV_Feature64Bit))
       return  isUIntN(6, Imm) && (Imm != 0);
     return isUIntN(5, Imm) && (Imm != 0);
-  
   }
   }
-	return false;
 }
 
 static bool compressInst(MCInst *OutInst,
@@ -1421,58 +1419,57 @@ static bool RISCVValidateMCOperandForUncompress(MCInst *MI,MCOperand *MCOp,
                   unsigned PredicateIndex) {
   switch (PredicateIndex) {
   default:
-    CS_ASSERT_RET_VAL(0,false); 
+    CS_ASSERT_RET_VAL(0,false);
 	 return false;
     break;
   case 1: {
   // simm12
-  
+
     int64_t Imm;
     if ((Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return isIntN(12, Imm);
     return MCOperand_isExpr(MCOp);
-  
+
   }
   case 2: {
   // simm13_lsb0
-  
+
     int64_t Imm;
     if ((Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return isShiftedIntN(12, 1, Imm);
     return MCOperand_isExpr(MCOp);
-  
+
   }
   case 3: {
   // simm21_lsb0_jal
-  
+
     int64_t Imm;
     if ((Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return isShiftedIntN(20, 1, Imm);
     return MCOperand_isExpr(MCOp);
-  
+
   }
   case 4: {
   // uimm20_lui
-  
+
     int64_t Imm;
     if ((Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return isUIntN(20, Imm);
     return MCOperand_isExpr(MCOp);
-  
+
   }
   case 5: {
   // uimmlog2xlen
-  
+
     int64_t Imm;
     if (!(Imm = MCOperand_getImm(MCOp), MCOperand_isImm(MCOp)))
       return false;
     if (RISCV_getFeatureBits(MI->csh->mode,RISCV_Feature64Bit))
       return isUIntN(6, Imm);
     return isUIntN(5, Imm);
-  
+
   }
   }
-	return false;
 }
 
 static bool uncompressInst(MCInst *OutInst,
@@ -2611,7 +2608,7 @@ static bool RISCVValidateMachineOperand(MCInst *MI,MCOperand *MO,
   int64_t Imm = MCOperand_getImm(MO);
   switch (PredicateIndex) {
   default:
-    CS_ASSERT_RET_VAL(0,false); 
+    CS_ASSERT_RET_VAL(0,false);
 	 return false;
     break;
   case 1: {
@@ -2670,14 +2667,13 @@ static bool RISCVValidateMachineOperand(MCInst *MI,MCOperand *MO,
   }
   case 14: {
   // uimmlog2xlennonzero
-  
+
   if (RISCV_getFeatureBits(MI->csh->mode,RISCV_Feature64Bit))
     return isUIntN(6, Imm) && (Imm != 0);
   return isUIntN(5, Imm) && (Imm != 0);
 
   }
   }
-	return false;
 }
 
 static bool isCompressibleInst(MCInst *MI) {
@@ -3671,4 +3667,3 @@ static bool isCompressibleInst(MCInst *MI) {
 }
 
 #endif //GEN_CHECK_COMPRESS_INSTR
-

@@ -359,6 +359,34 @@ DEFINE_get_detail_op(bpf, BPF, BPF);
 DEFINE_get_detail_op(arc, ARC, ARC);
 DEFINE_get_detail_op(sparc, Sparc, SPARC);
 
+/// Returns the operand at detail->arch.operands[index]
+/// Or NULL if detail is not set or the index would be out of bounds.
+#define DEFINE_get_detail_op_at(arch, ARCH, ARCH_UPPER) \
+	cs_##arch##_op *ARCH##_get_detail_op_at(MCInst *MI, int index) \
+	{ \
+		if (!MI->flat_insn->detail) \
+			return NULL; \
+		if (index < 0 || index >= NUM_##ARCH_UPPER##_OPS) { \
+			return NULL; \
+		} \
+		return &MI->flat_insn->detail->arch.operands[index]; \
+	}
+
+DEFINE_get_detail_op_at(arm, ARM, ARM);
+DEFINE_get_detail_op_at(ppc, PPC, PPC);
+DEFINE_get_detail_op_at(tricore, TriCore, TRICORE);
+DEFINE_get_detail_op_at(aarch64, AArch64, AARCH64);
+DEFINE_get_detail_op_at(alpha, Alpha, ALPHA);
+DEFINE_get_detail_op_at(hppa, HPPA, HPPA);
+DEFINE_get_detail_op_at(loongarch, LoongArch, LOONGARCH);
+DEFINE_get_detail_op_at(mips, Mips, MIPS);
+DEFINE_get_detail_op_at(riscv, RISCV, RISCV);
+DEFINE_get_detail_op_at(systemz, SystemZ, SYSTEMZ);
+DEFINE_get_detail_op_at(xtensa, Xtensa, XTENSA);
+DEFINE_get_detail_op_at(bpf, BPF, BPF);
+DEFINE_get_detail_op_at(arc, ARC, ARC);
+DEFINE_get_detail_op_at(sparc, Sparc, SPARC);
+
 /// Returns true if for this architecture the
 /// alias operands should be filled.
 /// TODO: Replace this with a proper option.

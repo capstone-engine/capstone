@@ -115,7 +115,8 @@ float getFPImm(unsigned Imm)
 {
 	CS_ASSERT(Imm != 1 && Imm != 30 && Imm != 31 &&
 		  "Unsupported immediate");
-
+	CS_ASSERT((Imm == 0 || (Imm >= 2 && Imm < 30)) &&
+		  "Unsupported immediate");
 	// Entry 0 is -1.0, the only negative value. Entry 16 is 1.0.
 	uint32_t Sign = 0;
 	if (Imm == 0) {

@@ -55,8 +55,7 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 
 	if (opgroup == RISCV_OP_GROUP_FPImmOperand) {
 		unsigned Imm = (unsigned)MCInst_getOperand(MI, OpNum)->ImmVal;
-		cs_riscv *riscv_details = RISCV_get_detail(MI);
-		cs_riscv_op *op = &(riscv_details->operands[OpNum]);
+		cs_riscv_op *op = RISCV_get_detail_op_at(MI, OpNum);
 		op->type = RISCV_OP_FP;
 		op->access = (cs_ac_type)map_get_op_access(MI, OpNum);
 		switch (Imm) {
@@ -122,7 +121,7 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 		break;
 	case CS_OP_MEM_IMM:
 		// fill in the disp in the last operand
-		op = &(riscv_details->operands[OpNum - 1]);
+		op = RISCV_get_detail_op_at(MI, OpNum - 1);
 		op->type = (riscv_op_type)CS_OP_MEM;
 		op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
 		RISCV_dec_op_count(
@@ -207,9 +206,9 @@ static inline void RISCV_add_interrupt_ret_group(MCInst *MI)
 static inline void RISCV_add_call_group(MCInst *MI)
 {
 	if (MI->Opcode == RISCV_JAL || MI->Opcode == RISCV_JALR) {
-		cs_riscv_op op = RISCV_get_detail(MI)->operands[0];
-		if ((op.type == (riscv_op_type)CS_OP_REG) &&
-		    op.reg != RISCV_REG_X0 && (op.access & CS_AC_WRITE)) {
+		cs_riscv_op *op = RISCV_get_detail_op_at(MI, 0);
+		if ((op->type == (riscv_op_type)CS_OP_REG) &&
+		    op->reg != RISCV_REG_X0 && (op->access & CS_AC_WRITE)) {
 			add_group(MI, RISCV_GRP_CALL);
 		}
 		if (MI->Opcode == RISCV_JAL) {
@@ -222,9 +221,9 @@ static inline void RISCV_add_call_group(MCInst *MI)
 static inline void RISCV_add_ret_group(MCInst *MI)
 {
 	if (MI->Opcode == RISCV_C_JR) {
-		cs_riscv_op op = RISCV_get_detail(MI)->operands[0];
-		if ((op.type == (riscv_op_type)CS_OP_REG) &&
-		    op.reg == RISCV_REG_X1) {
+		cs_riscv_op *op = RISCV_get_detail_op_at(MI, 0);
+		if ((op->type == (riscv_op_type)CS_OP_REG) &&
+		    op->reg == RISCV_REG_X1) {
 			add_group(MI, RISCV_GRP_RET);
 		} else {
 			add_group(MI, RISCV_GRP_JUMP);

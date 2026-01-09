@@ -21,9 +21,9 @@ typedef struct insn_map {
 	unsigned short mapid; // The Capstone instruction id
 #ifndef CAPSTONE_DIET
 	uint16_t regs_use[MAX_IMPL_R_REGS]; ///< list of implicit registers used by
-		///< this instruction
+	///< this instruction
 	uint16_t regs_mod[MAX_IMPL_W_REGS]; ///< list of implicit registers modified
-		///< by this instruction
+	///< by this instruction
 	unsigned char groups
 		[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
 	bool branch; // branch instruction?
@@ -146,6 +146,24 @@ DECL_get_detail_op(xtensa, Xtensa);
 DECL_get_detail_op(bpf, BPF);
 DECL_get_detail_op(arc, ARC);
 DECL_get_detail_op(sparc, Sparc);
+
+#define DECL_get_detail_op_at(arch, ARCH) \
+	cs_##arch##_op *ARCH##_get_detail_op_at(MCInst *MI, int offset);
+
+DECL_get_detail_op_at(arm, ARM);
+DECL_get_detail_op_at(ppc, PPC);
+DECL_get_detail_op_at(tricore, TriCore);
+DECL_get_detail_op_at(aarch64, AArch64);
+DECL_get_detail_op_at(alpha, Alpha);
+DECL_get_detail_op_at(hppa, HPPA);
+DECL_get_detail_op_at(loongarch, LoongArch);
+DECL_get_detail_op_at(mips, Mips);
+DECL_get_detail_op_at(riscv, RISCV);
+DECL_get_detail_op_at(systemz, SystemZ);
+DECL_get_detail_op_at(xtensa, Xtensa);
+DECL_get_detail_op_at(bpf, BPF);
+DECL_get_detail_op_at(arc, ARC);
+DECL_get_detail_op_at(sparc, Sparc);
 
 /// Increments the detail->arch.op_count by one.
 #define DEFINE_inc_detail_op_count(arch, ARCH) \
