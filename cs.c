@@ -1020,7 +1020,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 }
 
 CAPSTONE_EXPORT
-cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
+cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, uintptr_t value)
 {
 	struct cs_struct *handle;
 	cs_opt_mnem *opt;

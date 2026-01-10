@@ -4,6 +4,7 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2016 */
 
+#include <stdint.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -70,7 +71,7 @@ extern "C" {
 #define CS_MNEMONIC_SIZE 32
 
 // Handle using with all API
-typedef size_t csh;
+typedef uintptr_t csh;
 
 /// Architecture type
 typedef enum cs_arch {
@@ -723,7 +724,7 @@ cs_err CAPSTONE_API cs_close(csh *handle);
  even before cs_open()
 */
 CAPSTONE_EXPORT
-cs_err CAPSTONE_API cs_option(csh handle, cs_opt_type type, size_t value);
+cs_err CAPSTONE_API cs_option(csh handle, cs_opt_type type, uintptr_t value);
 
 /**
  Report the last error number when some API function fail.
