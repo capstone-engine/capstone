@@ -401,6 +401,9 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | Keyword | Change | Justification |
 |---------|--------|---------------|
 | m68k_op_mem.in_disp, m68k_op_mem.out_disp | These fields are now signed instead of unsigned. | The M68K architecture uses sign extended displacements for effective address calculation. |
+| m68k_op_mem.disp_size | Defines if the .disp field was encoded as a byte (false) or word (true) | Necessary for accurate printing. |
+| m68k_op_mem.in_disp_size, m68k_op_mem.out_disp_size | Defines if the .in_disp and .out_disp fields respectively were encoded as words (false) or longs (true) | Necessary for accurate printing. |
+
 
 ### Notes about AArch64, SystemZ and ARM renaming
 

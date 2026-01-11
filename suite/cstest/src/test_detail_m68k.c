@@ -29,6 +29,9 @@ TestDetailM68KOpMem *test_detail_m68k_op_mem_clone(TestDetailM68KOpMem *mem)
 	clone->bitfield = mem->bitfield;
 	clone->width = mem->width;
 	clone->offset = mem->offset;
+	clone->in_disp_size = mem->in_disp_size;
+	clone->out_disp_size = mem->out_disp_size;
+	clone->disp_size = mem->disp_size;
 
 	return clone;
 }
@@ -218,6 +221,12 @@ bool test_expected_m68k(csh *handle, cs_m68k *actual, TestDetailM68K *expected)
 				compare_uint8_ret(op->mem.offset,
 						  eop->mem->offset, false);
 			}
+			compare_tbool_ret(op->mem.in_disp_size,
+					  eop->mem->in_disp_size, false);
+			compare_tbool_ret(op->mem.out_disp_size,
+					  eop->mem->out_disp_size, false);
+			compare_tbool_ret(op->mem.disp_size,
+					  eop->mem->disp_size, false);
 			break;
 		}
 	}

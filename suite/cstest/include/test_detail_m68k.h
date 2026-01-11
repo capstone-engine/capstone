@@ -13,6 +13,9 @@ typedef struct {
 	char *index_reg;
 	char *in_base_reg;
 	tbool index_size; // -1 == word, 1 == long
+	tbool disp_size; // -1 == byte, 1 == word
+	tbool in_disp_size; // -1 == word, 1 == long
+	tbool out_disp_size; // -1 == word, 1 == long
 	int16_t disp;
 	int32_t in_disp;
 	int32_t out_disp;
@@ -48,6 +51,14 @@ static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
 			 width),
 	CYAML_FIELD_UINT("offset", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
 			 offset),
+	CYAML_FIELD_INT("in_disp_size",
+			CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			TestDetailM68KOpMem, in_disp_size),
+	CYAML_FIELD_INT("out_disp_size",
+			CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			TestDetailM68KOpMem, out_disp_size),
+	CYAML_FIELD_INT("disp_size", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			TestDetailM68KOpMem, disp_size),
 	CYAML_FIELD_END
 };
 

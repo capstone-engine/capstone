@@ -1169,6 +1169,18 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
                 aop.mem.index_size, eop["mem"].get("index_size"), "index_size"
             ):
                 return False
+            if not compare_tbool(
+                aop.mem.in_disp_size, eop["mem"].get("in_disp_size"), "in_disp_size"
+            ):
+                return False
+            if not compare_tbool(
+                aop.mem.out_disp_size, eop["mem"].get("out_disp_size"), "out_disp_size"
+            ):
+                return False
+            if not compare_tbool(
+                aop.mem.disp_size, eop["mem"].get("disp_size"), "disp_size"
+            ):
+                return False
             if not compare_int16(aop.mem.disp, eop["mem"].get("disp"), "disp"):
                 return False
             if not compare_int32(

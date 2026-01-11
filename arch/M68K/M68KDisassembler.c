@@ -370,11 +370,24 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 					 read_imm_32(info) :
 					 (int16_t)read_imm_16(info)) :
 				0;
+
+		op->mem.in_disp_size =
+			EXT_BASE_DISPLACEMENT_PRESENT(extension) &&
+					EXT_BASE_DISPLACEMENT_LONG(extension) ?
+				1 :
+				0;
+
 		op->mem.out_disp =
 			EXT_OUTER_DISPLACEMENT_PRESENT(extension) ?
 				(EXT_OUTER_DISPLACEMENT_LONG(extension) ?
 					 read_imm_32(info) :
 					 (int16_t)read_imm_16(info)) :
+				0;
+
+		op->mem.out_disp_size =
+			EXT_OUTER_DISPLACEMENT_PRESENT(extension) &&
+					EXT_OUTER_DISPLACEMENT_LONG(extension) ?
+				1 :
 				0;
 
 		if (EXT_BASE_REGISTER_PRESENT(extension)) {
@@ -444,6 +457,7 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 		}
 
 		op->mem.disp = (int8_t)(extension & 0xff);
+		op->mem.disp_size = 0;
 	}
 
 	if (EXT_INDEX_SCALE(extension)) {
@@ -539,6 +553,7 @@ static void get_ea_mode_op(m68k_info *info, cs_m68k_op *op,
 		op->address_mode = M68K_AM_REGI_ADDR_DISP;
 		op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
 		op->mem.disp = (int16_t)read_imm_16(info);
+		op->mem.disp_size = 1;
 		break;
 
 	case 0x30:
@@ -569,6 +584,7 @@ static void get_ea_mode_op(m68k_info *info, cs_m68k_op *op,
 		/* program counter with displacement */
 		op->address_mode = M68K_AM_PCI_DISP;
 		op->mem.disp = (int16_t)read_imm_16(info);
+		op->mem.disp_size = 1;
 		break;
 
 	case 0x3b:
