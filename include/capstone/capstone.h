@@ -4,7 +4,6 @@
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2016 */
 
-#include <stdint.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -15,6 +14,7 @@ extern "C" {
 #include <libkern/libkern.h>
 #else
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdio.h>
 #endif
 
