@@ -228,6 +228,8 @@ Nonetheless, we hope this additional information is useful to you.
 - Coverity code scanning workflow added and all reported bugs fixed.
 - `clang-tidy` workflow added. All reported defects were fixed.
 - CI runs tests for s390x, Mips, PPC, and Android targets.
+- `csh` and `cs_option`'s argument `value` are now of type `uintptr_t` to ensure they can be cast between integer and pointer without issues.
+  This makes Capstone build on systems which strictly distinguish integers and pointers.
 
 ### Instruction Alias
 
