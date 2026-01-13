@@ -88,8 +88,14 @@ jobs:
         cmake --build build --config Release
         cmake --install build --config Release
 
+    # Install NSIS according to https://github.com/NSIS-Dev/ci-examples/blob/main/.github/workflows/windows-latest.yml
     - name: Package NSIS installer
       run: |
+        iwr -useb get.scoop.sh -outfile 'install.ps1'
+        .\install.ps1 -RunAsAdmin
+        scoop update
+        scoop bucket add extras
+        scoop install nsis --global
         cd build
         cpack -G NSIS
 
