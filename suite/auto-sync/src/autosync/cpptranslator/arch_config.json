@@ -314,5 +314,24 @@
     ],
     "templates_with_arg_deduction": [],
     "manually_edited_files": []
+  },
+  "WebAssembly": {
+    "files_to_translate": [
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/WebAssembly/Disassembler/WebAssemblyDisassembler.cpp",
+        "out": "WebAssemblyDisassembler.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/WebAssembly/MCTargetDesc/WebAssemblyInstPrinter.cpp",
+        "out": "WebAssemblyInstPrinter.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/WebAssembly/MCTargetDesc/WebAssemblyInstPrinter.h",
+        "out": "WebAssemblyInstPrinter.h"
+      }
+    ],
+    "files_for_template_search": [
+    ],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": [
+    ]
   }
 }
