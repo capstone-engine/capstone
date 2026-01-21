@@ -233,9 +233,11 @@ Nonetheless, we hope this additional information is useful to you.
 	* `CS_MODE_RISCV_ZBKC = 1 << 18`
 	* `CS_MODE_RISCV_ZBKX = 1 << 19`
 	* `CS_MODE_RISCV_ZBS = 1 << 20`
-  * NOTE1: All extensions above are disabled by default unless enabled by their option name or the corresponding command line flag in cstool. Any other extension is always enabled and can't be disabled.
-
-  * NOTE2: RISC-V has a massive, sprawling list of extensions, but Capstone's internal implementaton choice of using a 32-bit mode field is not enough to cover all of them. For now, those extension flags above were added because their encoding space is conflicting with either each other or other extensions. More flags can be added later if bug reports come in requesting finer-grained extension control. However, the current implementation using bitfields imposes a strict upper limit and would likely be refactored for a more expansive mechanism in the future. See [this issue](https://github.com/capstone-engine/capstone/issues/2848) for more details.
+  > [!NOTE] 
+  > All extensions above are disabled by default unless enabled by their option name or the corresponding command line flag in cstool. Any other extension is always enabled and can't be disabled.
+ 
+  > [!NOTE] 
+  > RISC-V has a massive, sprawling list of extensions, but Capstone's internal implementaton choice of using a 32-bit mode field is not enough to cover all of them. For now, those extension flags above were added because their encoding space is conflicting with either each other or other extensions. More flags can be added later if bug reports come in requesting finer-grained extension control. However, the current implementation using bitfields imposes a strict upper limit and would likely be refactored for a more expansive mechanism in the future. See [this issue](https://github.com/capstone-engine/capstone/issues/2848) for more details.
 
 **Xtensa**
 
