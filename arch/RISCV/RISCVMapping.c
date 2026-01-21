@@ -88,8 +88,7 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 		RISCV_inc_op_count(MI);
 		return;
 	}
-	cs_riscv *riscv_details = RISCV_get_detail(MI);
-	cs_riscv_op *op = &(riscv_details->operands[OpNum]);
+	cs_riscv_op *op = RISCV_get_detail_op_at(MI, OpNum);
 	op->type = (riscv_op_type)map_get_op_type(MI, OpNum);
 	op->access = (cs_ac_type)map_get_op_access(MI, OpNum);
 	switch (map_get_op_type(MI, OpNum)) {
@@ -265,8 +264,8 @@ void RISCV_compact_operands(MCInst *MI)
 	       (NUM_RISCV_OPS - write_pos) * sizeof(cs_riscv_op));
 }
 
-// some C instructions have only 2 apparent operands, one of them is read-write
-// the operand information for those instruction has 3 operands, the first and second are the same,
+// some RISC-V instructions have only 2 apparent operands, one of them is read-write
+// the actual operand information for those instruction should have 3 operands, the first and second are the same operand,
 // but once with read and once write access
 // when those instructions are disassembled only the operand entry with the read access is used,
 // and therefore the read-write operand is wrongly classified as only-read
