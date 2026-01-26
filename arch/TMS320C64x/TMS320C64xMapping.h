@@ -6,6 +6,9 @@
 
 #include "capstone/capstone.h"
 
+extern const insn_map *TMS320C64x_insns;
+extern const unsigned int TMS320C64x_insn_count;
+
 // return name of register in friendly string
 const char *TMS320C64x_reg_name(csh handle, unsigned int reg);
 

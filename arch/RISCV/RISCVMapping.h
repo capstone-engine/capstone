@@ -9,6 +9,9 @@ typedef enum {
 #include "RISCVGenCSOpGroup.inc"
 } riscv_op_group;
 
+extern const insn_map *RISCV_insns;
+extern const unsigned int RISCV_insn_count;
+
 // given internal insn id, return public instruction info
 void RISCV_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 

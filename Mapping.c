@@ -7,34 +7,52 @@
 #include "cs_priv.h"
 #include "utils.h"
 
-// create a cache for fast id lookup
-static unsigned short *make_id2insn(const insn_map *insns, unsigned int size)
+// Create a cache to map LLVM instruction IDs to capstone instruction IDs, if
+// the architecture needs this.
+cs_err populate_insn_map_cache(cs_struct *handle)
 {
-	// NOTE: assume that the max id is always put at the end of insns array
-	unsigned short max_id = insns[size - 1].id;
 	unsigned int i;
 
-	unsigned short *cache =
-		(unsigned short *)cs_mem_calloc(max_id + 1, sizeof(*cache));
+	// If this architecture doesn't use instruction mapping, do nothing
+	if (!handle->insn_map || handle->insn_map_size <= 0)
+		return CS_ERR_OK;
 
-	for (i = 1; i < size; i++)
-		cache[insns[i].id] = i;
+	// Since the instruction map is assumed to be stored in ascending
+	// order, we can get the maximum LLVM instruction id just by looking at
+	// the last element.
+	unsigned int cache_elements =
+		handle->insn_map[handle->insn_map_size - 1].id + 1;
 
-	return cache;
+	// This should not be initialized yet.
+	CS_ASSERT(!handle->insn_cache);
+
+	unsigned short *cache = cs_mem_calloc(cache_elements, sizeof(*cache));
+	if (!cache) {
+		handle->errnum = CS_ERR_MEM;
+		return CS_ERR_MEM;
+	}
+	handle->insn_cache = cache;
+
+	for (i = 1; i < handle->insn_map_size; ++i)
+		handle->insn_cache[handle->insn_map[i].id] = i;
+
+	return CS_ERR_OK;
 }
 
-// look for @id in @insns, given its size in @max. first time call will update
-// @cache. return 0 if not found
-unsigned short insn_find(const insn_map *insns, unsigned int max,
-			 unsigned int id, unsigned short **cache)
+insn_map const *lookup_insn_map(cs_struct *handle, unsigned short id)
 {
-	if (id > insns[max - 1].id)
-		return 0;
+	// If this is getting called, we need the cache to already be populated
+	// (this should be done when populate_insn_map_cache() gets called).
+	CS_ASSERT(handle->insn_cache);
 
-	if (*cache == NULL)
-		*cache = make_id2insn(insns, max);
+	unsigned short highest_id =
+		handle->insn_map[handle->insn_map_size - 1].id;
+	if (id > highest_id)
+		return NULL;
 
-	return (*cache)[id];
+	unsigned short i = handle->insn_cache[id];
+
+	return &handle->insn_map[i];
 }
 
 // Gives the id for the given @name if it is saved in @map.

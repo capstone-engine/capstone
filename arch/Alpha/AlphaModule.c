@@ -31,6 +31,8 @@ cs_err ALPHA_global_init(cs_struct *ud)
 #ifndef CAPSTONE_DIET
 	ud->reg_access = Alpha_reg_access;
 #endif
+	ud->insn_map = Alpha_insns;
+	ud->insn_map_size = Alpha_insn_count;
 
 	return CS_ERR_OK;
 }
