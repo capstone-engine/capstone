@@ -965,7 +965,7 @@ def test_expected_alpha(actual: CsInsn, expected: dict) -> bool:
             if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
                 return False
         elif aop.type == ALPHA_OP_IMM:
-            if not compare_int32(aop.imm, eop.get("imm"), "imm"):
+            if not compare_int64(aop.imm, eop.get("imm"), "imm"):
                 return False
         else:
             raise ValueError("Operand type not handled.")
@@ -1169,13 +1169,25 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
                 aop.mem.index_size, eop["mem"].get("index_size"), "index_size"
             ):
                 return False
+            if not compare_tbool(
+                aop.mem.in_disp_size, eop["mem"].get("in_disp_size"), "in_disp_size"
+            ):
+                return False
+            if not compare_tbool(
+                aop.mem.out_disp_size, eop["mem"].get("out_disp_size"), "out_disp_size"
+            ):
+                return False
+            if not compare_tbool(
+                aop.mem.disp_size, eop["mem"].get("disp_size"), "disp_size"
+            ):
+                return False
             if not compare_int16(aop.mem.disp, eop["mem"].get("disp"), "disp"):
                 return False
-            if not compare_uint32(
+            if not compare_int32(
                 aop.mem.in_disp, eop["mem"].get("in_disp"), "in_disp"
             ):
                 return False
-            if not compare_uint32(
+            if not compare_int32(
                 aop.mem.out_disp, eop["mem"].get("out_disp"), "out_disp"
             ):
                 return False

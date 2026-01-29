@@ -107,11 +107,28 @@ extern cs_realloc_t cs_mem_realloc;
 extern cs_free_t cs_mem_free;
 extern cs_vsnprintf_t cs_vsnprintf;
 
-/// By defining CAPSTONE_DEBUG assertions can be used.
-/// For the release build the @expr is not included.
-#ifdef CAPSTONE_DEBUG
+/// Capstone assert macros. They can be configured to print warnings
+/// when the `expr` is false.
+/// This can be enabled by defining CAPSTONE_ASSERTION_WARNINGS.
+/// Debug builds will always include an `assert(expr)` and hard fail
+/// if `!expr`.
+/// Release builds will not have `assert(expr)` code.
+
+/// An simple assert.
+#if defined(CAPSTONE_DEBUG) && !defined(CAPSTONE_ASSERTION_WARNINGS)
 #define CS_ASSERT(expr) assert(expr)
-#elif CAPSTONE_ASSERTION_WARNINGS
+#elif defined(CAPSTONE_DEBUG) && defined(CAPSTONE_ASSERTION_WARNINGS)
+#define CS_ASSERT(expr) \
+	do { \
+		if (!(expr)) { \
+			fprintf(stderr, \
+				"Capstone hit the assert: \"" #expr \
+				"\": %s:%" PRIu32 "\n", \
+				__FILE__, __LINE__); \
+			assert(expr) \
+		} \
+	} while (0)
+#elif defined(CAPSTONE_ASSERTION_WARNINGS)
 #define CS_ASSERT(expr) \
 	do { \
 		if (!(expr)) { \
@@ -125,42 +142,44 @@ extern cs_vsnprintf_t cs_vsnprintf;
 #define CS_ASSERT(expr)
 #endif
 
-/// If compiled in debug mode it will assert(@expr).
-/// In the release build it will check the @expr and return @val if false.
-#ifdef CAPSTONE_DEBUG
+/// An assert which returns the value in release builds if `!expr`.
+#if defined(CAPSTONE_DEBUG) && !defined(CAPSTONE_ASSERTION_WARNINGS)
 #define CS_ASSERT_RET_VAL(expr, val) assert(expr)
-#elif CAPSTONE_ASSERTION_WARNINGS
+#elif defined(CAPSTONE_ASSERTION_WARNINGS)
 #define CS_ASSERT_RET_VAL(expr, val) \
 	do { \
 		if (!(expr)) { \
-			fprintf(stderr, \
-				"Capstone hit the assert: \"" #expr \
-				"\": %s:%" PRIu32 "\n", \
-				__FILE__, __LINE__); \
+			CS_ASSERT(expr); \
 			return val; \
 		} \
 	} while (0)
 #else
-#define CS_ASSERT_RET_VAL(expr, val)
+#define CS_ASSERT_RET_VAL(expr, val) \
+	do { \
+		if (!(expr)) { \
+			return val; \
+		} \
+	} while (0)
 #endif
 
-/// If compiled in debug mode it will assert(@expr).
-/// In the release build it will check the @expr and return if false.
-#ifdef CAPSTONE_DEBUG
+/// An assert which returns in release builds if `!expr`.
+#if defined(CAPSTONE_DEBUG) && !defined(CAPSTONE_ASSERTION_WARNINGS)
 #define CS_ASSERT_RET(expr) assert(expr)
-#elif CAPSTONE_ASSERTION_WARNINGS
+#elif defined(CAPSTONE_ASSERTION_WARNINGS)
 #define CS_ASSERT_RET(expr) \
 	do { \
 		if (!(expr)) { \
-			fprintf(stderr, \
-				"Capstone hit the assert: \"" #expr \
-				"\": %s:%" PRIu32 "\n", \
-				__FILE__, __LINE__); \
+			CS_ASSERT(expr); \
 			return; \
 		} \
 	} while (0)
 #else
-#define CS_ASSERT_RET(expr)
+#define CS_ASSERT_RET(expr) \
+	do { \
+		if (!(expr)) { \
+			return; \
+		} \
+	} while (0)
 #endif
 
 #endif

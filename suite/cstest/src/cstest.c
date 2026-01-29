@@ -74,6 +74,20 @@ void print_test_run_stats(const TestRunStats *stats)
 	printf("\n");
 }
 
+void cleanup_test_files()
+{
+	if (!test_files) {
+		return;
+	}
+	for (size_t k = 0; k < file_count; ++k) {
+		cs_mem_free(test_files[0][k]);
+	}
+	if (test_files[0]) {
+		cs_mem_free(test_files[0]);
+	}
+	cs_mem_free(test_files);
+}
+
 int main(int argc, const char **argv)
 {
 	if (argc < 2 || strcmp(argv[1], "-h") == 0 ||
@@ -87,6 +101,7 @@ int main(int argc, const char **argv)
 	get_tfiles(argc, argv);
 	if (!*test_files || file_count == 0) {
 		fprintf(stderr, "Arguments are invalid. No files found.\n");
+		cleanup_test_files();
 		exit(EXIT_FAILURE);
 	}
 
@@ -95,6 +110,7 @@ int main(int argc, const char **argv)
 	TestRunResult res = cstest_run_tests(*test_files, file_count, &stats);
 
 	print_test_run_stats(&stats);
+	cleanup_test_files();
 	if (res == TEST_RUN_ERROR) {
 		fprintf(stderr, "[!] An error occured.\n");
 		exit(EXIT_FAILURE);

@@ -28,15 +28,19 @@ add_executable(compat_header_build_test ${COMPAT_C_SRC})
 add_dependencies(compat_header_build_test capstone)
 target_link_libraries(compat_header_build_test PUBLIC capstone)
 
-add_test(NAME integration_compat_headers
+add_test(NAME integration_c_compat_headers
   COMMAND compat_header_build_test
   WORKING_DIRECTORY ${COMPAT_C_TEST_DIR}
 )
 
-set(INTEGRATION_TEST_SRC test_litbase.c)
+set(INTEGRATION_TEST_SRC test_litbase.c test_poc.c)
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+  set(INTEGRATION_TEST_SRC ${INTEGRATION_TEST_SRC} test_assert_macros.c)
+endif()
+
 foreach(TSRC ${INTEGRATION_TEST_SRC})
-      string(REGEX REPLACE ".c$" "" TBIN ${TSRC})
-      add_executable(${TBIN} "${TESTS_INTEGRATION_DIR}/${TSRC}")
-      target_link_libraries(${TBIN} PRIVATE capstone)
-      add_test(NAME "integration_${TBIN}" COMMAND ${TBIN})
-  endforeach()
+  string(REGEX REPLACE ".c$" "" TBIN ${TSRC})
+  add_executable(${TBIN} "${TESTS_INTEGRATION_DIR}/${TSRC}")
+  target_link_libraries(${TBIN} PRIVATE capstone)
+  add_test(NAME "integration_${TBIN}" COMMAND ${TBIN})
+endforeach()

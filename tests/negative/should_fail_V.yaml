@@ -1,0 +1,21 @@
+test_cases:
+  -
+    input:
+      name: "Fails due to not decoded details."
+      bytes: [ 0x80, 0xa0, 0x40, 0x02 ]
+      arch: "sparc"
+      options: [ CS_MODE_BIG_ENDIAN ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "cmp %g1, %g2"
+        details:
+          sparc:
+            operands:
+              -
+                type: SPARC_OP_REG
+                reg: g1
+              -
+                type: SPARC_OP_REG
+                reg: g2

@@ -13,9 +13,12 @@ typedef struct {
 	char *index_reg;
 	char *in_base_reg;
 	tbool index_size; // -1 == word, 1 == long
+	tbool disp_size; // -1 == byte, 1 == word
+	tbool in_disp_size; // -1 == word, 1 == long
+	tbool out_disp_size; // -1 == word, 1 == long
 	int16_t disp;
-	uint32_t in_disp;
-	uint32_t out_disp;
+	int32_t in_disp;
+	int32_t out_disp;
 	uint8_t scale;
 	uint8_t bitfield;
 	uint8_t width;
@@ -36,10 +39,10 @@ static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
 	CYAML_FIELD_INT("index_size", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			TestDetailM68KOpMem, index_size),
 	CYAML_FIELD_INT("disp", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem, disp),
-	CYAML_FIELD_UINT("in_disp", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
-			 in_disp),
-	CYAML_FIELD_UINT("out_disp", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
-			 out_disp),
+	CYAML_FIELD_INT("in_disp", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
+			in_disp),
+	CYAML_FIELD_INT("out_disp", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
+			out_disp),
 	CYAML_FIELD_UINT("scale", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
 			 scale),
 	CYAML_FIELD_UINT("bitfield", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
@@ -48,6 +51,14 @@ static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
 			 width),
 	CYAML_FIELD_UINT("offset", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
 			 offset),
+	CYAML_FIELD_INT("in_disp_size",
+			CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			TestDetailM68KOpMem, in_disp_size),
+	CYAML_FIELD_INT("out_disp_size",
+			CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			TestDetailM68KOpMem, out_disp_size),
+	CYAML_FIELD_INT("disp_size", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			TestDetailM68KOpMem, disp_size),
 	CYAML_FIELD_END
 };
 

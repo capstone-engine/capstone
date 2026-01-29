@@ -1,4 +1,4 @@
-bool (*decode[])(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode, sh_info *info, cs_detail *detail) = {
+static bool (*decode[])(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode, sh_info *info, cs_detail *detail) = {
 	/// 00000000
 	NULL, NULL, opSTC, op0xx3, opMOV_B, opMOV_W, opMOV_L, opMUL_L, 
 	/// 00001000

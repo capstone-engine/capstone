@@ -33,7 +33,7 @@ typedef struct cs_alpha_op {
 	alpha_op_type type; // operand type
 	union {
 		unsigned int reg; // register value for REG operand
-		int32_t imm; // immediate value for IMM operand
+		int64_t imm; // immediate value for IMM operand
 	};
 	enum cs_ac_type access;
 } cs_alpha_op;

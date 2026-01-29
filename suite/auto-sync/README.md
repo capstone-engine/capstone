@@ -36,8 +36,8 @@ pip install -e .
 #### Clone Capstones LLVM fork and build `llvm-tblgen`
 
 ```bash
-git clone https://github.com/capstone-engine/llvm-capstone vendor/llvm_root/
-cd vendor/llvm_root/llvm-capstone
+git clone https://github.com/capstone-engine/llvm-capstone <capstone-root>/suite/auto-sync/vendor/llvm_root/
+cd <capstone-root>/suite/auto-sync/vendor/llvm_root/llvm-capstone
 git checkout auto-sync
 mkdir build
 cd build

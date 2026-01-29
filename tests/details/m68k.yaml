@@ -1,7 +1,7 @@
 test_cases:
   -
     input:
-      bytes: [ 0xf0, 0x10, 0xf0, 0x00, 0x48, 0xaf, 0xff, 0xff, 0x7f, 0xff, 0x11, 0xb0, 0x01, 0x37, 0x7f, 0xff, 0xff, 0xff, 0x12, 0x34, 0x56, 0x78, 0x01, 0x33, 0x10, 0x10, 0x10, 0x10, 0x32, 0x32, 0x32, 0x32, 0x4c, 0x00, 0x54, 0x04, 0x48, 0xe7, 0xe0, 0x30, 0x4c, 0xdf, 0x0c, 0x07, 0xd4, 0x40, 0x87, 0x5a, 0x4e, 0x71, 0x02, 0xb4, 0xc0, 0xde, 0xc0, 0xde, 0x5c, 0x00, 0x1d, 0x80, 0x71, 0x12, 0x01, 0x23, 0xf2, 0x3c, 0x44, 0x22, 0x40, 0x49, 0x0e, 0x56, 0x54, 0xc5, 0xf2, 0x3c, 0x44, 0x00, 0x44, 0x7a, 0x00, 0x00, 0xf2, 0x00, 0x0a, 0x28, 0x4e, 0xb9, 0x00, 0x00, 0x00, 0x12, 0x4e, 0x75  ]
+      bytes: [ 0xf0, 0x10, 0xf0, 0x00, 0x48, 0xaf, 0xff, 0xff, 0x7f, 0xff, 0x11, 0xb0, 0x01, 0x37, 0x7f, 0xff, 0xff, 0xff, 0x12, 0x34, 0x56, 0x78, 0x01, 0x33, 0x10, 0x10, 0x10, 0x10, 0x32, 0x32, 0x32, 0x32, 0x4c, 0x00, 0x54, 0x04, 0x48, 0xe7, 0xe0, 0x30, 0x4c, 0xdf, 0x0c, 0x07, 0xd4, 0x40, 0x87, 0x5a, 0x4e, 0x71, 0x02, 0xb4, 0xc0, 0xde, 0xc0, 0xde, 0x5c, 0x00, 0x1d, 0x80, 0x71, 0x12, 0x01, 0x23, 0xf2, 0x3c, 0x44, 0x22, 0x40, 0x49, 0x0e, 0x56, 0x54, 0xc5, 0xf2, 0x3c, 0x44, 0x00, 0x44, 0x7a, 0x00, 0x00, 0xf2, 0x00, 0x0a, 0x28, 0x4e, 0xb9, 0x00, 0x00, 0x00, 0x12, 0x4e, 0x75, 0x47, 0xf1, 0x21, 0x22, 0xff, 0xd6, 0xff, 0xa9, 0x47, 0xf1, 0x21, 0x12, 0xff, 0xa9, 0x47, 0xf1, 0x21, 0x21, 0xff, 0xd6, 0x47, 0xf1, 0x21, 0x26, 0xff, 0xd6, 0xff, 0xa9, 0x47, 0xf1, 0x21, 0x20, 0xff, 0xd6, 0x47, 0xfb, 0x21, 0x20, 0xf9, 0xce, 0x47, 0xfb, 0x21, 0x30, 0xff, 0xff, 0xf9, 0xc8, 0x47, 0xfb, 0x01, 0x70, 0xff, 0xff, 0xf9, 0xc0, 0x47, 0xf0, 0x29, 0xa0, 0xff, 0xd6 ]
       arch: "m68k"
       options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
       address: 0x1000
@@ -33,6 +33,7 @@ test_cases:
                 mem:
                   base_reg: a7
                   disp: 0x7fff
+                  disp_size: 1
                 address_mode: M68K_AM_REGI_ADDR_DISP
       -
         asm_text: "move.b ([$7fffffff, a0], d0.w, $12345678), ([$10101010, a0, d0.w], $32323232)"
@@ -46,6 +47,10 @@ test_cases:
                   base_reg: a0
                   index_reg: d0
                   index_size: -1
+                  in_disp: 0x7fffffff
+                  out_disp: 0x12345678
+                  in_disp_size: 1
+                  out_disp_size: 1
                 address_mode: M68K_AM_MEMI_POST_INDEX
               -
                 type: M68K_OP_MEM
@@ -53,6 +58,10 @@ test_cases:
                   base_reg: a0
                   index_reg: d0
                   index_size: -1
+                  in_disp: 0x10101010
+                  out_disp: 0x32323232
+                  in_disp_size: 1
+                  out_disp_size: 1
                 address_mode: M68K_AM_MEMI_PRE_INDEX
       -
         asm_text: "mulu.l d0, d4:d5"
@@ -137,6 +146,8 @@ test_cases:
                   index_reg: d5
                   index_size: 1
                   scale: 4
+                  disp: 0
+                  disp_size: -1
                 address_mode: M68K_AM_AREGI_INDEX_BASE_DISP
       -
         asm_text: "move.b d0, ([a6, d7.w], $123)"
@@ -153,6 +164,9 @@ test_cases:
                   base_reg: a6
                   index_reg: d7
                   index_size: -1
+                  out_disp: 0x123
+                  out_disp_size: -1
+                  in_disp: 0
                 address_mode: M68K_AM_MEMI_PRE_INDEX
       -
         asm_text: "fadd.s #3.141500, fp0"
@@ -210,3 +224,183 @@ test_cases:
                 address_mode: M68K_AM_ABSOLUTE_DATA_LONG
       -
         asm_text: "rts"
+      -
+        asm_text: "lea.l ([-$2a, a1, d2.w], -$57), a3"
+        details:
+          regs_read: [ d2, a1 ]
+          regs_write: [ a3 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: a1
+                  index_reg: d2
+                  index_size: -1
+                  in_disp: -0x2a
+                  in_disp_size: -1
+                  out_disp: -0x57
+                  out_disp_size: -1
+                address_mode: M68K_AM_MEMI_PRE_INDEX
+              -
+                type: M68K_OP_REG
+                reg: a3
+      -
+        asm_text: "lea.l ([a1, d2.w], -$57), a3"
+        details:
+          regs_read: [ d2, a1 ]
+          regs_write: [ a3 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: a1
+                  index_reg: d2
+                  index_size: -1
+                  in_disp: 0
+                  out_disp: -0x57
+                  out_disp_size: -1
+                address_mode: M68K_AM_MEMI_PRE_INDEX
+              -
+                type: M68K_OP_REG
+                reg: a3
+      -
+        asm_text: "lea.l ([-$2a, a1, d2.w]), a3"
+        details:
+          regs_read: [ d2, a1 ]
+          regs_write: [ a3 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: a1
+                  index_reg: d2
+                  index_size: -1
+                  in_disp: -0x2a
+                  in_disp_size: -1
+                  out_disp: 0
+                  out_disp_size: -1
+                address_mode: M68K_AM_MEMI_PRE_INDEX
+              -
+                type: M68K_OP_REG
+                reg: a3
+      -
+        asm_text: "lea.l ([-$2a, a1], d2.w, -$57), a3"
+        details:
+          regs_read: [ d2, a1 ]
+          regs_write: [ a3 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: a1
+                  index_reg: d2
+                  index_size: -1
+                  in_disp: -0x2a
+                  in_disp_size: -1
+                  out_disp: -0x57
+                  out_disp_size: -1
+                address_mode: M68K_AM_MEMI_POST_INDEX
+              -
+                type: M68K_OP_REG
+                reg: a3
+      -
+        asm_text: "lea.l -$2a(a1, d2.w), a3"
+        details:
+          regs_read: [ d2, a1 ]
+          regs_write: [ a3 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: a1
+                  index_reg: d2
+                  index_size: -1
+                  in_disp: -0x2a
+                  out_disp: 0
+                  in_disp_size: -1
+                  out_disp_size: -1
+                address_mode: M68K_AM_AREGI_INDEX_BASE_DISP
+              -
+                type: M68K_OP_REG
+                reg: a3
+      -
+        asm_text: "lea.l $a50(pc, d2.w), a3"
+        details:
+          regs_read: [ d2, pc ]
+          regs_write: [ a3 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: pc
+                  index_reg: d2
+                  index_size: -1
+                  in_disp: -0x632
+                  out_disp: 0
+                  in_disp_size: -1
+                address_mode: M68K_AM_PCI_INDEX_BASE_DISP
+              -
+                type: M68K_OP_REG
+                reg: a3
+      -
+        asm_text: "lea.l $a50(pc, d2.w), a3"
+        details:
+          regs_read: [ d2, pc ]
+          regs_write: [ a3 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: pc
+                  index_reg: d2
+                  index_size: -1
+                  in_disp: -0x638
+                  out_disp: 0
+                  in_disp_size: 1
+                address_mode: M68K_AM_PCI_INDEX_BASE_DISP
+              -
+                type: M68K_OP_REG
+                reg: a3
+      -
+        asm_text: "lea.l $a50(pc), a3"
+        details:
+          regs_read: [ pc ]
+          regs_write: [ a3 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: pc
+                  index_size: -1
+                  in_disp: -0x640
+                  in_disp_size: 1
+                address_mode: M68K_AM_PCI_INDEX_BASE_DISP
+              -
+                type: M68K_OP_REG
+                reg: a3
+      -
+        asm_text: "lea.l -$2a(d2.l), a3"
+        details:
+          regs_read: [ d2 ]
+          regs_write: [ a3 ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                mem:
+                  index_reg: d2
+                  index_size: 1
+                  disp: 0
+                  disp_size: -1
+                address_mode: M68K_AM_AREGI_INDEX_BASE_DISP
+              -
+                type: M68K_OP_REG
+                reg: a3

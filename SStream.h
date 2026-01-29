@@ -18,7 +18,7 @@ typedef enum {
 
 typedef struct SStream {
 	char buffer[SSTREAM_BUF_LEN];
-	int index;
+	size_t index;
 	bool is_closed;
 	bool markup_stream; ///< If true, markups to the stream are allowed.
 	bool prefixed_by_markup; ///< Set after the stream wrote a markup for an operand.

@@ -304,7 +304,7 @@ void printMembarTag(MCInst *MI, int opNum, SStream *O)
 	}
 
 	bool First = true;
-	for (unsigned i = 0; i < sizeof(TagNames); i++) {
+	for (unsigned i = 0; i < ARR_SIZE(TagNames); i++) {
 		if (Imm & (1ull << i)) {
 			SStream_concat(O, "%s", (First ? "" : " | "));
 			SStream_concat0(O, TagNames[i]);

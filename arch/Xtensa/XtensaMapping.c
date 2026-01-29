@@ -192,6 +192,10 @@ void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 	}
 
 	cs_xtensa_op *xop = Xtensa_get_detail_op(MI, 0);
+	if (!xop) {
+		return;
+	}
+
 	switch (op_group) {
 	case Xtensa_OP_GROUP_Operand: {
 		const MCOperand *MC = MCInst_getOperand(MI, op_num);

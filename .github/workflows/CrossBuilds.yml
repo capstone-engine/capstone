@@ -1,0 +1,179 @@
+name: Cross Build Tests
+on:
+  push:
+    paths-ignore:
+      - ".gitignore"
+      - "docs/**"
+      - "ChangeLog"
+      - "CREDITS.TXT"
+      - "COMPILE_MAKE.TXT"
+      - "BUILDING.md"
+      - "CONTRIBUTING.md"
+      - "LICENSE.TXT"
+      - "LICENSE_LLVM.TXT"
+      - "README.md"
+      - "RELEASE_NOTES"
+      - "SPONSORS.TXT"
+      - "TODO"
+  pull_request:
+
+# Stop previous runs on the same branch on new push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: true
+  UBSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+  ASAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+  LSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+
+jobs:
+  Linux:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {
+              name: 'QEMU Linux s390x',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              build_type: 'Debug',
+              diet_build: false,
+              packages: 'gcc-s390x-linux-gnu g++-s390x-linux-gnu binutils-s390x-linux-gnu libc6-dev-s390x-cross qemu-user-static',
+              cross_file: 'cross_configs/linux_s390x_ubuntu24.cmake',
+            }
+          # - {
+          #     name: 'QEMU Linux Mips 32',
+          #     os: ubuntu-24.04,
+          #     arch: x64,
+          #     build-system: 'cmake',
+          #     diet-build: 'OFF',
+          #     build_type: 'Debug',
+          #     diet_build: false,
+          #     packages: 'gcc-mips-linux-gnu g++-mips-linux-gnu binutils-mips-linux-gnu libc6-dev-mips-cross qemu-user-static',
+          #     cross_file: 'cross_configs/linux_mips_ubuntu24.cmake',
+          #   }
+          - {
+              name: 'QEMU Linux Mips64el',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              build_type: 'Debug',
+              diet_build: false,
+              packages: 'gcc-mips64el-linux-gnuabi64 g++-mips64el-linux-gnuabi64 binutils-mips64el-linux-gnuabi64 libc6-dev-mips64el-cross qemu-user-static',
+              cross_file: 'cross_configs/linux_mips64_ubuntu24.cmake',
+            }
+          - {
+              name: 'QEMU Linux PPC64',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              build_type: 'Debug',
+              diet_build: false,
+              packages: 'gcc-powerpc64-linux-gnu g++-powerpc64-linux-gnu binutils-powerpc64-linux-gnu libc6-dev-ppc64-cross qemu-user-static',
+              cross_file: 'cross_configs/linux_ppc64_ubuntu24.cmake',
+            }
+          - {
+              name: '[BUILD ONLY] Android 35 (arm64_v8a) NDK 29',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              build_option: '-DANDROID_NDK=ndk/ -DANDROID_PLATFORM=android-35 -DANDROID_ABI=arm64-v8a',
+              diet-build: 'OFF',
+              build_type: 'Debug',
+              diet_build: false,
+              # QEMU alone can't emulate the binaries, because the NDK doesn't
+              # provide dynamic linker.
+              skip_tests: true,
+              packages: 'qemu-user-static',
+              ndk_version: 'r29',
+              cross_file: 'ndk/build/cmake/android.toolchain.cmake',
+              qemu: 'qemu-aarch64-static'
+            }
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.config.python-version }}
+
+    - name: Install cross build dependencies
+      if: ${{ matrix.config.packages != '' }}
+      env:
+        packages: ${{ matrix.config.packages }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ${packages}
+
+    - name: Setup Android NDK
+      if: contains(matrix.config.name, 'Android')
+      env:
+        ndk_version: ${{ matrix.config.ndk_version }}
+        qemu: ${{ matrix.config.qemu }}
+        cross_file: ${{ matrix.config.cross_file }}
+      run: |
+        wget -q https://dl.google.com/android/repository/android-ndk-${ndk_version}-linux.zip
+        mkdir ndk
+        unzip -q -d ndk android-ndk-${ndk_version}-linux.zip
+        mv ndk/*/* ndk/
+        cat ndk/source.properties
+
+    - name: cmake (cross build)
+      env:
+        build_option: ${{ matrix.config.build_option }}
+        build_type: ${{ matrix.config.build_type }}
+        cross_file: ${{ matrix.config.cross_file }}
+      run: |
+        cmake -DCMAKE_BUILD_TYPE=${build_type} \
+          -DCAPSTONE_BUILD_STATIC_LIBS=ON \
+          -S . \
+          -DCAPSTONE_BUILD_CSTEST=ON \
+          -DCAPSTONE_BUILD_DIET=${diet_build} \
+          -DCMAKE_TOOLCHAIN_FILE=${cross_file} \
+          ${build_option} \
+          -B build .
+        cmake --build build --config ${build_type}
+
+    - name: unit tests
+      if: ${{ matrix.config.skip_tests != true }}
+      run: |
+        ctest --test-dir build --output-on-failure -R unit_*
+
+    - name: "Integration tests"
+      if: ${{ matrix.config.skip_tests != true }}
+      run: |
+        ctest --test-dir build --output-on-failure -R integration_c_*
+
+    - name: cstest MC
+      if: ${{ matrix.config.skip_tests != true }}
+      run: |
+        ctest --test-dir build --output-on-failure -R MCTests
+
+    - name: cstest details
+      if: ${{ matrix.config.skip_tests != true }}
+      run: |
+        ctest --test-dir build --output-on-failure -R DetailTests
+
+    - name: cstest issues
+      if: ${{ matrix.config.skip_tests != true }}
+      run: |
+        ctest --test-dir build --output-on-failure -R IssueTests
+
+    - name: cstest features
+      if: ${{ matrix.config.skip_tests != true }}
+      run: |
+        ctest --test-dir build --output-on-failure -R FeaturesTests
+
+    - name: Legacy integration tests
+      if: ${{ matrix.config.skip_tests != true }}
+      run: |
+        ctest --test-dir build --output-on-failure -R legacy*

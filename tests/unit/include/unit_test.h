@@ -38,7 +38,7 @@
 #define CHECK_INT_EQUAL_RET_FALSE(a, b) \
 	do { \
 		if (a != b) { \
-			printf("%" PRId32 " != %" PRId32 "\n", a, b); \
+			printf("%zu != %" PRId32 "\n", a, b); \
 			return false; \
 		} \
 	} while (0);

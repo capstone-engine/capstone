@@ -57,7 +57,7 @@ jobs:
           # aarch64 - musllinux
           - { os: ubuntu-24.04-arm, arch: aarch64, cibw_build: 'cp*-musllinux*', cibw_skip: '' }
           # macos - x86_64
-          - { os: macos-13, arch: x86_64, cibw_build: 'cp*', cibw_skip: '' }
+          - { os: macos-15-intel, arch: x86_64, cibw_build: 'cp*', cibw_skip: '' }
           # macos - arm64
           - { os: macos-latest, arch: arm64, cibw_build: 'cp*', cibw_skip: '' }
           # windows - amd64

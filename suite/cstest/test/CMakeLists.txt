@@ -17,7 +17,7 @@ add_test(NAME unit_cstest
   COMMAND unit_test
   WORKING_DIRECTORY ${CSTEST_TEST_DIR}
 )
-add_test(NAME integration_cstest
+add_test(NAME integration_py_cstest
   COMMAND python3 ${CSTEST_TEST_DIR}/integration_tests.py cstest
   WORKING_DIRECTORY ${CSTEST_TEST_DIR}
 )

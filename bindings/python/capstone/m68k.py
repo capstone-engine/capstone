@@ -10,14 +10,17 @@ class M68KOpMem(ctypes.Structure):
         ('base_reg', ctypes.c_uint),
         ('index_reg', ctypes.c_uint),
         ('in_base_reg', ctypes.c_uint),
-        ('in_disp', ctypes.c_uint),
-        ('out_disp', ctypes.c_uint),
+        ('in_disp', ctypes.c_int),
+        ('out_disp', ctypes.c_int),
         ('disp', ctypes.c_short),
         ('scale', ctypes.c_ubyte),
         ('bitfield', ctypes.c_ubyte),
         ('width', ctypes.c_ubyte),
         ('offset', ctypes.c_ubyte),
         ('index_size', ctypes.c_ubyte),
+        ('in_disp_size', ctypes.c_ubyte),
+        ('out_disp_size', ctypes.c_ubyte),
+        ('disp_size', ctypes.c_ubyte),
     )
 
 class M68KOpRegPair(ctypes.Structure):

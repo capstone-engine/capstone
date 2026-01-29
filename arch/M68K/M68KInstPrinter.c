@@ -242,32 +242,36 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 
 		if (op->address_mode == M68K_AM_PCI_INDEX_BASE_DISP) {
 			SStream_concat(O, "$%x", pc + 2 + op->mem.in_disp);
-		} else {
-			if (op->mem.in_disp > 0)
-				SStream_concat(O, "$%x", op->mem.in_disp);
+		} else if (op->mem.in_disp != 0) {
+			SStream_concat(O, "%s$%x",
+				       op->mem.in_disp >= 0 ? "" : "-",
+				       abs(op->mem.in_disp));
 		}
 
 		SStream_concat0(O, "(");
 
 		if (op->address_mode == M68K_AM_PCI_INDEX_BASE_DISP) {
-			SStream_concat(O, "pc,%s.%c",
-				       getRegName(op->mem.index_reg),
-				       op->mem.index_size ? 'l' : 'w');
-		} else {
-			if (op->mem.base_reg != M68K_REG_INVALID)
-				SStream_concat(O, "a%d,%s",
-					       op->mem.base_reg - M68K_REG_A0,
-					       s_spacing);
+			SStream_concat0(O, "pc");
+		} else if (op->mem.base_reg != M68K_REG_INVALID) {
+			SStream_concat(O, "a%d",
+				       op->mem.base_reg - M68K_REG_A0);
+		}
+
+		if ((op->address_mode == M68K_AM_PCI_INDEX_BASE_DISP ||
+		     op->mem.base_reg != M68K_REG_INVALID) &&
+		    op->mem.index_reg != M68K_REG_INVALID)
+			SStream_concat(O, ",%s", s_spacing);
+
+		if (op->mem.index_reg != M68K_REG_INVALID) {
 			SStream_concat(O, "%s.%c",
 				       getRegName(op->mem.index_reg),
 				       op->mem.index_size ? 'l' : 'w');
+			if (op->mem.scale > 0)
+				SStream_concat(O, "%s*%s%d", s_spacing,
+					       s_spacing, op->mem.scale);
 		}
 
-		if (op->mem.scale > 0)
-			SStream_concat(O, "%s*%s%d)", s_spacing, s_spacing,
-				       op->mem.scale);
-		else
-			SStream_concat0(O, ")");
+		SStream_concat0(O, ")");
 		break;
 		// It's ok to just use PCMI here as is as we set base_reg to PC in the disassembler. While this is not strictly correct it makes the code
 		// easier and that is what actually happens when the code is executed anyway.
@@ -281,13 +285,14 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 		if (op->address_mode == M68K_AM_PC_MEMI_POST_INDEX ||
 		    op->address_mode == M68K_AM_PC_MEMI_PRE_INDEX) {
 			SStream_concat(O, "$%x", pc + 2 + op->mem.in_disp);
-		} else {
-			if (op->mem.in_disp > 0)
-				SStream_concat(O, "$%x", op->mem.in_disp);
+		} else if (op->mem.in_disp != 0) {
+			SStream_concat(O, "%s$%x",
+				       op->mem.in_disp >= 0 ? "" : "-",
+				       abs(op->mem.in_disp));
 		}
 
 		if (op->mem.base_reg != M68K_REG_INVALID) {
-			if (op->mem.in_disp > 0)
+			if (op->mem.in_disp != 0)
 				SStream_concat(O, ",%s%s", s_spacing,
 					       getRegName(op->mem.base_reg));
 			else
@@ -312,9 +317,11 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 		    op->address_mode == M68K_AM_PC_MEMI_PRE_INDEX)
 			SStream_concat0(O, "]");
 
-		if (op->mem.out_disp > 0)
-			SStream_concat(O, ",%s$%x", s_spacing,
-				       op->mem.out_disp);
+		if (op->mem.out_disp != 0) {
+			SStream_concat(O, ",%s%s$%x", s_spacing,
+				       op->mem.out_disp >= 0 ? "" : "-",
+				       abs(op->mem.out_disp));
+		}
 
 		SStream_concat0(O, ")");
 		break;

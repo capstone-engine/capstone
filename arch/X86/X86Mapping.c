@@ -942,7 +942,6 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				}
 				break;
 			}
-
 			switch (insn->id) {
 			default:
 				break;
@@ -954,39 +953,47 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				default:
 					break;
 				case CS_MODE_16:
-					insn->detail->regs_read[0] = X86_REG_CX;
-					insn->detail->regs_read_count = 1;
-					insn->detail->regs_write[0] =
-						X86_REG_CX;
-					insn->detail->regs_write_count = 1;
-					break;
-				case CS_MODE_32:
-					insn->detail->regs_read[0] =
-						X86_REG_ECX;
-					insn->detail->regs_read_count = 1;
-					insn->detail->regs_write[0] =
-						X86_REG_ECX;
-					insn->detail->regs_write_count = 1;
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EIP, X86_REG_IP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_IP);
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_ECX, X86_REG_CX);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ECX, X86_REG_CX);
 					break;
 				case CS_MODE_64:
-					insn->detail->regs_read[0] =
-						X86_REG_RCX;
-					insn->detail->regs_read_count = 1;
-					insn->detail->regs_write[0] =
-						X86_REG_RCX;
-					insn->detail->regs_write_count = 1;
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EIP, X86_REG_RIP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_RIP);
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_ECX, X86_REG_RCX);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ECX, X86_REG_RCX);
 					break;
 				}
+			}
 
-				// LOOPE & LOOPNE also read EFLAGS
-				if (insn->id != X86_INS_LOOP) {
-					insn->detail->regs_read[1] =
-						X86_REG_EFLAGS;
-					insn->detail->regs_read_count = 2;
-				}
-
+			switch (insn->id) {
+			default:
 				break;
-
 			case X86_INS_LODSB:
 			case X86_INS_LODSD:
 			case X86_INS_LODSQ:
@@ -1018,6 +1025,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				break;
 
 			case X86_INS_SCASB:
+			case X86_INS_SCASD:
 			case X86_INS_SCASW:
 			case X86_INS_SCASQ:
 			case X86_INS_STOSB:
@@ -1099,6 +1107,235 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 					break;
 				}
 				break;
+
+			case X86_INS_ENTER:
+			case X86_INS_LEAVE:
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EBP, X86_REG_BP);
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_ESP, X86_REG_SP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EBP, X86_REG_BP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ESP, X86_REG_SP);
+					break;
+				case CS_MODE_64:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EBP, X86_REG_RBP);
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_ESP, X86_REG_RSP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EBP, X86_REG_RBP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ESP, X86_REG_RSP);
+				}
+				break;
+
+			case X86_INS_INSB:
+			case X86_INS_INSW:
+			case X86_INS_INSD:
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EDI, X86_REG_DI);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EDI, X86_REG_DI);
+					break;
+				case CS_MODE_64:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EDI, X86_REG_RDI);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EDI, X86_REG_RDI);
+					break;
+				}
+				break;
+
+			case X86_INS_OUTSB:
+			case X86_INS_OUTSW:
+			case X86_INS_OUTSD:
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_64:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_ESI, X86_REG_RSI);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ESI, X86_REG_RSI);
+					break;
+				case CS_MODE_16:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_ESI, X86_REG_SI);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ESI, X86_REG_SI);
+					break;
+				}
+				break;
+			}
+
+			switch (insn->id) {
+			default:
+				break;
+			case X86_INS_LODSB:
+			case X86_INS_LODSD:
+			case X86_INS_LODSW:
+			case X86_INS_CMPSB:
+			case X86_INS_CMPSD:
+			case X86_INS_CMPSW:
+			case X86_INS_MOVSB:
+			case X86_INS_MOVSW:
+			case X86_INS_MOVSD:
+			case X86_INS_OUTSB:
+			case X86_INS_OUTSW:
+			case X86_INS_OUTSD:
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+				case CS_MODE_32: {
+					int pos = insn->detail->regs_read_count;
+					insn->detail->regs_read[pos] =
+						X86_REG_DS;
+					insn->detail->regs_read_count += 1;
+				} break;
+				}
+				break;
+
+			case X86_INS_JMP:
+			case X86_INS_LJMP:
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EIP, X86_REG_IP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_IP);
+					break;
+				case CS_MODE_64:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EIP, X86_REG_RIP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_RIP);
+					break;
+				}
+				break;
+
+			case X86_INS_SYSENTER: {
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_IP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ESP, X86_REG_SP);
+					break;
+				case CS_MODE_64:
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_RIP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ESP, X86_REG_RSP);
+					break;
+				}
+				break;
+			} break;
+			case X86_INS_SYSEXIT: {
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_ECX, X86_REG_CX);
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EDX, X86_REG_DX);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_IP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ESP, X86_REG_SP);
+					break;
+				case CS_MODE_64:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_ECX, X86_REG_RCX);
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EDX, X86_REG_RDX);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_RIP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ESP, X86_REG_RSP);
+					break;
+				}
+				break;
+			} break;
 			}
 
 			memcpy(insn->detail->groups, insns[i].groups,
@@ -1112,6 +1349,31 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 					->groups[insn->detail->groups_count] =
 					X86_GRP_JUMP;
 				insn->detail->groups_count++;
+
+				switch (h->mode) {
+				default:
+					break;
+				case CS_MODE_16:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EIP, X86_REG_IP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_IP);
+					break;
+				case CS_MODE_64:
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_EIP, X86_REG_RIP);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_EIP, X86_REG_RIP);
+					break;
+				}
 			}
 
 			switch (insns[i].id) {

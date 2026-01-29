@@ -71,10 +71,3 @@ There are custom drivers :
 - onefile.c : simple one file driver
 
 For libfuzzer, the preferred main function is now to use linker option `-fsanitize=fuzzer`
-
-Fuzzit integration
-------
-
-Travis will build the fuzz target with the different sanitizers.
-Then, Travis will launch sanity fuzzit jobs as part of continuous integration (for each of the sanitizers)
-The fuzzit target ids are stored in a configuration file fuzzitid.txt and used by fuzzit.sh

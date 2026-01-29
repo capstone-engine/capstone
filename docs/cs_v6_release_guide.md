@@ -219,12 +219,17 @@ Nonetheless, we hope this additional information is useful to you.
 - Testing was re-written from scratch. Now allowing fine-grained testing of all details and is more convenient to use by contributors.
 - Architecture modules from a static library, can be initialized on demand to decrease footprint (see: `cmake` option `CAPSTONE_USE_ARCH_REGISTRATION`).
 - New `cmake` option to choose between fat and thin binary for Apple.
+- Cross compilation support improved.
+- The static library (e.g., libcapstone.a) is now built with PIC to allow linking into shared libraries or PIE binaries.
 
 **Code quality**
 
 - ASAN: All tests are now run with the address sanitizer enabled. This includes checking for leaks.
 - Coverity code scanning workflow added and all reported bugs fixed.
 - `clang-tidy` workflow added. All reported defects were fixed.
+- CI runs tests for s390x, Mips, PPC, and Android targets.
+- `csh` and `cs_option`'s argument `value` are now of type `uintptr_t` to ensure they can be cast between integer and pointer without issues.
+  This makes Capstone build on systems which strictly distinguish integers and pointers.
 
 ### Instruction Alias
 
@@ -392,6 +397,15 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 |---------|--------|---------------|
 | SYSZ -> SystemZ | `SYSZ` was everywhere renamed to `SystemZ` to match the LLVM naming. | See below |
 | `SYSTEMZ_CC_*` | `SYSTEMZ_CC_O = 0` and `SYSTEMZ_CC_INVALID != 0` | They match the same LLVM values. Better for LLVM compatibility and code generation. |
+
+**M68K**
+
+| Keyword | Change | Justification |
+|---------|--------|---------------|
+| m68k_op_mem.in_disp, m68k_op_mem.out_disp | These fields are now signed instead of unsigned. | The M68K architecture uses sign extended displacements for effective address calculation. |
+| m68k_op_mem.disp_size | Defines if the .disp field was encoded as a byte (false) or word (true) | Necessary for accurate printing. |
+| m68k_op_mem.in_disp_size, m68k_op_mem.out_disp_size | Defines if the .in_disp and .out_disp fields respectively were encoded as words (false) or longs (true) | Necessary for accurate printing. |
+
 
 ### Notes about AArch64, SystemZ and ARM renaming
 

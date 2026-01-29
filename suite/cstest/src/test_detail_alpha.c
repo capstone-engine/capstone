@@ -90,7 +90,7 @@ bool test_expected_alpha(csh *handle, const cs_alpha *actual,
 			compare_reg_ret(*handle, op->reg, eop->reg, false);
 			break;
 		case ALPHA_OP_IMM:
-			compare_int32_ret(op->imm, eop->imm, false);
+			compare_int64_ret(op->imm, eop->imm, false);
 			break;
 		}
 	}
