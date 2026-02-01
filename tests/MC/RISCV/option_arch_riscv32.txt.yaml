@@ -1,0 +1,98 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x13, 0x85, 0x05, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32" ]
+    expected:
+      insns:
+        -
+          asm_text: "mv a0, a1"
+
+  -
+    input:
+      bytes: [ 0x13, 0x04, 0xc1, 0x3f ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi s0, sp, 1020"
+
+  -
+    input:
+      bytes: [ 0x2e, 0x85 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32" ]
+    expected:
+      insns:
+        -
+          asm_text: "mv a0, a1"
+
+  -
+    input:
+      bytes: [ 0xe0, 0x1f ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32" ]
+    expected:
+      insns:
+        -
+          asm_text: "addi s0, sp, 1020"
+
+  -
+    input:
+      bytes: [ 0x07, 0x20, 0xc5, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "flw ft0, 12(a0)"
+
+  -
+    input:
+      bytes: [ 0x33, 0x87, 0x80, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32" ]
+    expected:
+      insns:
+        -
+          asm_text: "mul a4, ra, s0"
+
+  -
+    skip: true
+    skip_reason: >
+      Bad test generated due to the ASUpdater not understanding the
+      inline architecture options syntax in LLVM tests, this test
+      should have been generated with an "a" flag because this
+      instruction belongs to the atomic extension
+    input:
+      bytes: [ 0xaf, 0x22, 0x03, 0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32" ]
+    expected:
+      insns:
+        -
+          asm_text: "lr.w t0, (t1)"
+
+  -
+    skip: true
+    skip_reason: "Same as above, should have been generated with a 'zba' extension"
+    input:
+      bytes: [ 0xb3, 0x22, 0x73, 0x20 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32" ]
+    expected:
+      insns:
+        -
+          asm_text: "sh1add t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x08, 0x61 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "flw fa0, 0(a0)"

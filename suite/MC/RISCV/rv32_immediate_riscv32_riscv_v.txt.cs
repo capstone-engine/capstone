@@ -1,0 +1,3 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32"|"CS_MODE_RISCV_V", None
+0x57,0x34,0x48,0x02 == vadd.vi v8, v4, -16
+0x57,0x34,0x48,0x72 == vmsleu.vi v8, v4, -16

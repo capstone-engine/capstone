@@ -1,0 +1,130 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x0c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfredosum.vs v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x0e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfredosum.vs v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x04 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfredusum.vs v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x06 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfredusum.vs v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x1c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfredmax.vs v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x1e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfredmax.vs v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x14 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfredmin.vs v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x16 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfredmin.vs v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0xcc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfwredosum.vs v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0xce ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfwredosum.vs v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0xc4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfwredusum.vs v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0xc6 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfwredusum.vs v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x10, 0x4a, 0x0c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfredosum.vs v0, v4, v20, v0.t"

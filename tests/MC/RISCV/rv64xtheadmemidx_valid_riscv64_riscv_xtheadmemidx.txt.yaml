@@ -1,0 +1,440 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0x05, 0x78 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.ldia a0, (a1), 0, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xf5, 0x6a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.ldib a0, (a1), 15, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0x05, 0x5c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lwia a0, (a1), 0, 2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0x05, 0x4f ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lwib a0, (a1), -16, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0x05, 0xd8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lwuia a0, (a1), 0, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xf5, 0xca ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lwuib a0, (a1), 15, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0x05, 0x3c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lhia a0, (a1), 0, 2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0x05, 0x2f ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lhib a0, (a1), -16, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0x05, 0xb8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lhuia a0, (a1), 0, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xf5, 0xaa ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lhuib a0, (a1), 15, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0x05, 0x1c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lbia a0, (a1), 0, 2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0x05, 0x0f ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lbib a0, (a1), -16, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0x05, 0x98 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lbuia a0, (a1), 0, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xf5, 0x8a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lbuib a0, (a1), 15, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0x05, 0x79 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.sdia a0, (a1), -16, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xf5, 0x6b ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.sdib a0, (a1), -1, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0x05, 0x5c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.swia a0, (a1), 0, 2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0x15, 0x4e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.swib a0, (a1), 1, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0x45, 0x38 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.shia a0, (a1), 4, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xd5, 0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.shib a0, (a1), 13, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xe5, 0x1c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.sbia a0, (a1), 14, 2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xf5, 0x0e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.sbib a0, (a1), 15, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0x60 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lrd a0, a1, a2, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0x42 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lrw a0, a1, a2, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0xc4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lrwu a0, a1, a2, 2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0x26 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lrh a0, a1, a2, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0xa0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lrhu a0, a1, a2, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lrb a0, a1, a2, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0x84 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lrbu a0, a1, a2, 2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xc5, 0x66 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.srd a0, a1, a2, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xc5, 0x40 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.srw a0, a1, a2, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xc5, 0x22 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.srh a0, a1, a2, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xc5, 0x04 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.srb a0, a1, a2, 2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0x70 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lurd a0, a1, a2, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0x52 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lurw a0, a1, a2, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0xd4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lurwu a0, a1, a2, 2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0x36 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lurh a0, a1, a2, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0xb0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lurhu a0, a1, a2, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0x12 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lurb a0, a1, a2, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xc5, 0xc5, 0x94 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lurbu a0, a1, a2, 2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xc5, 0x76 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.surd a0, a1, a2, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xc5, 0x50 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.surw a0, a1, a2, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xc5, 0x32 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.surh a0, a1, a2, 1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xd5, 0xc5, 0x14 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMIDX" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.surb a0, a1, a2, 2"

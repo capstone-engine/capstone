@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x73, 0xc5, 0x15, 0x68 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hlv.wu a0, (a1)"
+
+  -
+    input:
+      bytes: [ 0x73, 0xc5, 0x05, 0x6c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hlv.d a0, (a1)"
+
+  -
+    input:
+      bytes: [ 0x73, 0xc0, 0xa5, 0x6e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "h", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "hsv.d a0, (a1)"

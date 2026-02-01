@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0b, 0xe0, 0x02, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVBI" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.beqimm t0, 0, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x65, 0x55, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVBI" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.beqimm a0, 5, 42"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xf0, 0x02, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVBI" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.bneimm t0, 0, 0"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x75, 0x55, 0x02 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVBI" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.bneimm a0, 5, 42"

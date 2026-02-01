@@ -46,7 +46,14 @@
       "name": "SystemOperand",
       "tblgen_arg": "--gen-searchable-tables",
       "inc_name": "",
-      "only_arch": ["AArch64", "ARM", "Sparc"],
+      "only_arch": ["AArch64", "ARM", "Sparc", "RISCV"],
+      "lang": ["CCS"]
+    },
+    {
+      "name": "InstCompressorUncompressor",
+      "tblgen_arg": "--gen-compress-inst-emitter",
+      "inc_name": "CompressedInstructionsInfo",
+      "only_arch": ["RISCV"],
       "lang": ["CCS"]
     }
   ]

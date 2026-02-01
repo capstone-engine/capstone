@@ -1,0 +1,160 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x45, 0x22 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, 548"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x05, 0x0d ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, e32, m1, ta, ma"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x15, 0x0d ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, e32, m2, ta, ma"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x05, 0x05 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, e32, m1, ta, mu"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x05, 0x09 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, e32, m1, tu, ma"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x25, 0x0d ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, e32, m4, ta, ma"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x35, 0x0d ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, e32, m8, ta, ma"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x75, 0x0d ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, e32, mf2, ta, ma"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x65, 0x0d ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, e32, mf4, ta, ma"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x55, 0x0d ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, e32, mf8, ta, ma"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x05, 0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvli a2, a0, e32, m1, tu, mu"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0xb5, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetvl a2, a0, a1"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x40, 0xe2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetivli a2, 0, 548"
+
+  -
+    input:
+      bytes: [ 0x57, 0x76, 0x00, 0xcd ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetivli a2, 0, e32, m1, ta, ma"
+
+  -
+    input:
+      bytes: [ 0x57, 0xf6, 0x07, 0xcd ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetivli a2, 15, e32, m1, ta, ma"
+
+  -
+    input:
+      bytes: [ 0x57, 0xf6, 0x0f, 0xcd ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsetivli a2, 31, e32, m1, ta, ma"

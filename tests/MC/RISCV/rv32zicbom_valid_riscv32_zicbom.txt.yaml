@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0f, 0xa0, 0x12, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zicbom" ]
+    expected:
+      insns:
+        -
+          asm_text: "cbo.clean (t0)"
+
+  -
+    input:
+      bytes: [ 0x0f, 0x20, 0x23, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zicbom" ]
+    expected:
+      insns:
+        -
+          asm_text: "cbo.flush (t1)"
+
+  -
+    input:
+      bytes: [ 0x0f, 0xa0, 0x03, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zicbom" ]
+    expected:
+      insns:
+        -
+          asm_text: "cbo.inval (t2)"

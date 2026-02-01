@@ -62,6 +62,17 @@ static inline bool isIntN(unsigned N, int64_t x)
 	       (-(INT64_C(1) << (N - 1)) <= x && x < (INT64_C(1) << (N - 1)));
 }
 
+/// isShiftedIntN - Checks if a signed integer is an N bit number shifted left by S.
+static inline bool isShiftedIntN(unsigned N, unsigned S, int64_t x)
+{
+	return isIntN(N + S, x) && (x % (UINT64_C(1) << S) == 0);
+}
+
+static inline bool isShiftedUIntN(unsigned N, unsigned S, uint64_t x)
+{
+	return isUIntN(N + S, x) && (x % (UINT64_C(1) << S) == 0);
+}
+
 /// isMask_32 - This function returns true if the argument is a sequence of ones
 /// starting at the least significant bit with the remainder zero (32 bit
 /// version).   Ex. isMask_32(0x0000FFFFU) == true.

@@ -209,7 +209,25 @@ typedef enum cs_mode {
 	CS_MODE_BPF_EXTENDED = 1 << 0, ///< Extended BPF mode
 	CS_MODE_RISCV32 = 1 << 0, ///< RISCV RV32G
 	CS_MODE_RISCV64 = 1 << 1, ///< RISCV RV64G
-	CS_MODE_RISCVC = 1 << 2, ///< RISCV compressed instructure mode
+	CS_MODE_RISCV_C = 1 << 2, ///< RISCV compressed instructure mode
+	CS_MODE_RISCV_FD = 1 << 3,
+	CS_MODE_RISCV_V = 1 << 4,
+	CS_MODE_RISCV_ZFINX = 1 << 5,
+	CS_MODE_RISCV_ZCMP_ZCMT_ZCE = 1 << 6,
+	CS_MODE_RISCV_ZICFISS = 1 << 7,
+	CS_MODE_RISCV_E = 1 << 8,
+	CS_MODE_RISCV_A = 1 << 9,
+	CS_MODE_RISCV_COREV = 1 << 10,
+	CS_MODE_RISCV_THEAD = 1 << 11,
+	CS_MODE_RISCV_SIFIVE = 1 << 12,
+	CS_MODE_RISCV_BITMANIP = 1 << 13,
+	CS_MODE_RISCV_ZBA = 1 << 14,
+	CS_MODE_RISCV_ZBB = 1 << 15,
+	CS_MODE_RISCV_ZBC = 1 << 16,
+	CS_MODE_RISCV_ZBKB = 1 << 17,
+	CS_MODE_RISCV_ZBKC = 1 << 18,
+	CS_MODE_RISCV_ZBKX = 1 << 19,
+	CS_MODE_RISCV_ZBS = 1 << 20,
 	CS_MODE_MOS65XX_6502 = 1 << 1, ///< MOS65XXX MOS 6502
 	CS_MODE_MOS65XX_65C02 = 1 << 2, ///< MOS65XXX WDC 65c02
 	CS_MODE_MOS65XX_W65C02 = 1 << 3, ///< MOS65XXX WDC W65c02
@@ -341,6 +359,9 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_NO_DOLLAR =
 		1
 		<< 9, ///< Does not print the $ in front of Mips, LoongArch registers.
+	CS_OPT_SYNTAX_NO_ALIAS_TEXT =
+		1
+		<< 10, ///< Does not print an instruction's alias test if the instruction is an alias
 	CS_OPT_DETAIL_REAL =
 		1
 		<< 1, ///< If enabled, always sets the real instruction detail. Even if the instruction is an alias.

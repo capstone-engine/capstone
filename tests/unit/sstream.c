@@ -4,6 +4,7 @@
 #include "unit_test.h"
 #include "../SStream.h"
 #include "../utils.h"
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -594,6 +595,47 @@ bool test_replc_str()
 	return true;
 }
 
+bool test_printfFloat()
+{
+	printf("Test test_printfFloat\n");
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+
+	printfFloat(&OS, "%f", 1.5f);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "1.500000");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%.2f", 1.5f);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "1.50");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%+.2f", -2.25f);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "-2.25");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%e", 0.0f);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "0.000000e+00");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%f", NAN);
+	CHECK_OS_EQUALS_ANY_RET_FALSE(OS, "nan", "NaN", "NAN", "nan(ind)",
+				      "NaN(ind)", "NAN(ind)");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%f", INFINITY);
+	CHECK_OS_EQUALS_ANY_RET_FALSE(OS, "inf", "Inf", "INF", "infinity",
+				      "Infinity", "INFINITY");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%f", -INFINITY);
+	CHECK_OS_EQUALS_ANY_RET_FALSE(OS, "-inf", "-Inf", "-INF", "-infinity",
+				      "-Infinity", "-INFINITY");
+	SStream_Flush(&OS, NULL);
+
+	return true;
+}
+
 static int evil_vsnprintf(char *str, size_t size, const char *fmt, va_list ap)
 {
 	(void)str;
@@ -641,6 +683,7 @@ int main()
 	result &= test_stream_unsigned_imm();
 	result &= test_replc();
 	result &= test_replc_str();
+	result &= test_printfFloat();
 	result &= test_copy_mnem_opstr();
 	result &= test_trimls();
 	result &= test_underflow_in_sstream();

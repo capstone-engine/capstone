@@ -1,0 +1,120 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0xb8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclipu.wv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0xba ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclipu.wv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0xb8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclipu.wx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0xba ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclipu.wx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x4f, 0xb8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclipu.wi v8, v4, 31, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x4f, 0xba ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclipu.wi v8, v4, 31"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0xbc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclip.wv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0xbe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclip.wv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0xbc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclip.wx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0xbe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclip.wx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x4f, 0xbc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclip.wi v8, v4, 31, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x4f, 0xbe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vnclip.wi v8, v4, 31"

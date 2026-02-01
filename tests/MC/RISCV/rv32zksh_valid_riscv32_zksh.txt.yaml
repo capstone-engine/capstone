@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x13, 0x95, 0x85, 0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zksh" ]
+    expected:
+      insns:
+        -
+          asm_text: "sm3p0 a0, a1"
+
+  -
+    input:
+      bytes: [ 0x13, 0x95, 0x95, 0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zksh" ]
+    expected:
+      insns:
+        -
+          asm_text: "sm3p1 a0, a1"

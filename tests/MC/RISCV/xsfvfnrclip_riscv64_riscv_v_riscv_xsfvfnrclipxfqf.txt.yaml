@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x5b, 0x52, 0x86, 0x8a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_XSFVFNRCLIPXFQF" ]
+    expected:
+      insns:
+        -
+          asm_text: "sf.vfnrclip.xu.f.qf v4, v8, fa2"
+
+  -
+    input:
+      bytes: [ 0x5b, 0x52, 0x86, 0x88 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_XSFVFNRCLIPXFQF" ]
+    expected:
+      insns:
+        -
+          asm_text: "sf.vfnrclip.xu.f.qf v4, v8, fa2, v0.t"
+
+  -
+    input:
+      bytes: [ 0x5b, 0x52, 0x86, 0x8e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_XSFVFNRCLIPXFQF" ]
+    expected:
+      insns:
+        -
+          asm_text: "sf.vfnrclip.x.f.qf v4, v8, fa2"
+
+  -
+    input:
+      bytes: [ 0x5b, 0x52, 0x86, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_XSFVFNRCLIPXFQF" ]
+    expected:
+      insns:
+        -
+          asm_text: "sf.vfnrclip.x.f.qf v4, v8, fa2, v0.t"

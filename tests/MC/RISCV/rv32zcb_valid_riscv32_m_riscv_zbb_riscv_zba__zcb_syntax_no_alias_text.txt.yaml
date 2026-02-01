@@ -1,0 +1,160 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x61, 0x9c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.zext.b s0"
+
+  -
+    input:
+      bytes: [ 0x65, 0x9c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.sext.b s0"
+
+  -
+    input:
+      bytes: [ 0x69, 0x9c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.zext.h s0"
+
+  -
+    input:
+      bytes: [ 0x6d, 0x9c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.sext.h s0"
+
+  -
+    input:
+      bytes: [ 0x75, 0x9c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.not s0"
+
+  -
+    input:
+      bytes: [ 0x45, 0x9c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.mul s0, s1"
+
+  -
+    input:
+      bytes: [ 0x3c, 0x83 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.lbu a5, 2(a4)"
+
+  -
+    input:
+      bytes: [ 0x3c, 0x87 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.lhu a5, 2(a4)"
+
+  -
+    input:
+      bytes: [ 0x7c, 0x87 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.lh a5, 2(a4)"
+
+  -
+    input:
+      bytes: [ 0x3c, 0x8b ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.sb a5, 2(a4)"
+
+  -
+    input:
+      bytes: [ 0x3c, 0x8f ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.sh a5, 2(a4)"
+
+  -
+    input:
+      bytes: [ 0x80, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.lbu s0, 0(s1)"
+
+  -
+    input:
+      bytes: [ 0x80, 0x84 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.lhu s0, 0(s1)"
+
+  -
+    input:
+      bytes: [ 0xc0, 0x84 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.lh s0, 0(s1)"
+
+  -
+    input:
+      bytes: [ 0x80, 0x88 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.sb s0, 0(s1)"
+
+  -
+    input:
+      bytes: [ 0x80, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "m", "CS_MODE_RISCV_ZBB", "CS_MODE_RISCV_ZBA", "+zcb", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "c.sh s0, 0(s1)"

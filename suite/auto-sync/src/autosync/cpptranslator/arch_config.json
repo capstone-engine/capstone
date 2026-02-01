@@ -16,7 +16,8 @@
             "MipsInstPrinter.cpp",
             "SystemZInstPrinter.cpp",
             "XtensaInstPrinter.cpp",
-            "SparcInstPrinter.cpp"
+            "SparcInstPrinter.cpp",
+            "RISCVInstPrinter.cpp"
           ]
         },
         "InlineToStaticInline": {
@@ -311,6 +312,34 @@
     "files_for_template_search": [
       "{CPP_INC_OUT_DIR}/SparcGenDisassemblerTables.inc",
       "{LLVM_ROOT}/llvm/lib/Target/Sparc/Disassembler/SparcDisassembler.cpp"
+    ],
+    "templates_with_arg_deduction": [],
+    "manually_edited_files": []
+  },
+  "RISCV": {
+    "files_to_translate": [
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/RISCV/Disassembler/RISCVDisassembler.cpp",
+        "out": "RISCVDisassembler.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/RISCV/MCTargetDesc/RISCVInstPrinter.cpp",
+        "out": "RISCVInstPrinter.c"
+      },{
+        "in": "{LLVM_ROOT}/llvm/lib/Target/RISCV/MCTargetDesc/RISCVInstPrinter.h",
+        "out": "RISCVInstPrinter.h"
+      },
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/RISCV/MCTargetDesc/RISCVBaseInfo.h",
+        "out": "RISCVBaseInfo.h"
+      },
+      {
+        "in": "{LLVM_ROOT}/llvm/lib/Target/RISCV/MCTargetDesc/RISCVBaseInfo.cpp",
+        "out": "RISCVBaseInfo.c"
+      }
+    ],
+    "files_for_template_search": [
+      "{LLVM_ROOT}/llvm/lib/Target/RISCV/Disassembler/RISCVDisassembler.cpp",
+      "{CPP_INC_OUT_DIR}/RISCVGenDisassemblerTables.inc"
     ],
     "templates_with_arg_deduction": [],
     "manually_edited_files": []

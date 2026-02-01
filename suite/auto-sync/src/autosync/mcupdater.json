@@ -1,7 +1,8 @@
 {
     "use_assembly_tests": [
         "Xtensa",
-        "Sparc"
+        "Sparc",
+        "RISCV"
     ],
     "exclude_disassembly_tests": [
         "Xtensa"
@@ -146,6 +147,84 @@
             "sparcv9": ["CS_MODE_V9"],
             "sparcv9-unknown-linux": ["CS_MODE_V9"],
             "sparcel-linux-gnu": ["CS_MODE_LITTLE_ENDIAN"]
+        },
+        "RISCV": {
+            "riscv-no-aliases": ["CS_OPT_SYNTAX_NO_ALIAS_TEXT"],
+            
+            "+experimental-zicfiss":["CS_MODE_RISCV_EXPERIMENTAL_ZICFISS"],
+            "experimental-zicfiss": ["CS_MODE_RISCV_EXPERIMENTAL_ZICFISS"],
+
+            "a": ["CS_MODE_RISCV_A"],
+
+            "c":  ["CS_MODE_RISCV_C"],
+            "+c": ["CS_MODE_RISCV_C"],
+
+            "f": ["CS_MODE_RISCV_F"],
+            "+f": ["CS_MODE_RISCV_F"],
+            "d": ["CS_MODE_RISCV_D"],
+            "+d": ["CS_MODE_RISCV_D"],
+
+            "e": ["CS_MODE_RISCV_E"],
+
+            "riscv32": ["CS_MODE_RISCV32"],
+            "riscv64": ["CS_MODE_RISCV64"],
+
+            "v": ["CS_MODE_RISCV_V"],
+	        "zce": ["CS_MODE_RISCV_ZCE"],
+	        "zcmp": ["CS_MODE_RISCV_ZCMP"],
+	        "zcmt": ["CS_MODE_RISCV_ZCMT"],
+
+            "zdinx": ["CS_MODE_RISCV_ZDINX"],
+	        "zfinx": ["CS_MODE_RISCV_ZFINX"],
+	        "zhinx": ["CS_MODE_RISCV_ZFINX"],
+	        "zhinxmin": ["CS_MODE_RISCV_ZFINX"],
+
+
+            "zba": ["CS_MODE_RISCV_ZBA"],
+            "+zba": ["CS_MODE_RISCV_ZBA"],
+            "zbb": ["CS_MODE_RISCV_ZBB"],
+            "+zbb": ["CS_MODE_RISCV_ZBB"],
+            "zbc": ["CS_MODE_RISCV_ZBC"],
+            "+zbc": ["CS_MODE_RISCV_ZBC"],
+            "zbkb": ["CS_MODE_RISCV_ZBKB"],
+            "+zbkb": ["CS_MODE_RISCV_ZBKB"],
+            "zbkc": ["CS_MODE_RISCV_ZBKC"],
+            "+zbkc": ["CS_MODE_RISCV_ZBKC"],
+            "zbkx": ["CS_MODE_RISCV_ZBKX"],
+            "+zbkx": ["CS_MODE_RISCV_ZBKX"],
+            "zbs": ["CS_MODE_RISCV_ZBS"],
+            "+zbs": ["CS_MODE_RISCV_ZBS"],
+
+            "xcvalu": ["CS_MODE_RISCV_XCVALU"],
+            "xcvbi": ["CS_MODE_RISCV_XCVBI"],
+            "xcvbitmanip": ["CS_MODE_RISCV_XCVBITMANIP"],
+            "xcvelw": ["CS_MODE_RISCV_XCVELW"],
+            "xcvmac": ["CS_MODE_RISCV_XCVMAC"],
+            "xcvmem": ["CS_MODE_RISCV_XCVMEM"],
+            "xcvsimd": ["CS_MODE_RISCV_XCVSIMD"],
+
+            "xsfvcp": ["CS_MODE_RISCV_XSFVCP"],
+            "xsfvfnrclipxfqf": ["CS_MODE_RISCV_XSFVFNRCLIPXFQF"],
+            "xsfvfwmaccqqq": ["CS_MODE_RISCV_XSFVFWMACCQQQ"],
+            "xsfvqmaccdod": ["CS_MODE_RISCV_XSFVQMACCDOD"],
+            "xsfvqmaccqoq": ["CS_MODE_RISCV_XSFVQMACCQOQ"],
+            "+xsfvcp": ["CS_MODE_RISCV_XSFVCP"],
+            "+xsfvfnrclipxfqf": ["CS_MODE_RISCV_XSFVFNRCLIPXFQF"],
+            "+xsfvfwmaccqqq": ["CS_MODE_RISCV_XSFVFWMACCQQQ"],
+            "+xsfvqmaccdod": ["CS_MODE_RISCV_XSFVQMACCDOD"],
+            "+xsfvqmaccqoq": ["CS_MODE_RISCV_XSFVQMACCQOQ"],
+
+            "xtheadbs": ["CS_MODE_RISCV_XTHEADBS"],
+            "xtheadmemidx": ["CS_MODE_RISCV_XTHEADMEMIDX"],
+            "xtheadfmemidx": ["CS_MODE_RISCV_XTHEADFMEMIDX"],
+            "xtheadmac": ["CS_MODE_RISCV_XTHEADMAC"],
+            "xtheadmempair": ["CS_MODE_RISCV_XTHEADMEMPAIR"],
+            "xtheadba": ["CS_MODE_RISCV_XTHEADBA"],
+            "xtheadcmo": ["CS_MODE_RISCV_XTHEADCMO"],
+            "xtheadcondmov": ["CS_MODE_RISCV_XTHEADCONDMOV"],
+            "xtheadsync": ["CS_MODE_RISCV_XTHEADSYNC"],
+            "xtheadvdot": ["CS_MODE_RISCV_XTHEADVDOT"]
+
         }
     }
 }

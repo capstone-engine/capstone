@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x94, 0x4e, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "experimental-zvfbfmin" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfncvtbf16.f.f.w v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x94, 0x4e, 0x4a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "experimental-zvfbfmin" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfncvtbf16.f.f.w v8, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x94, 0x46, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "experimental-zvfbfmin" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfwcvtbf16.f.f.v v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x94, 0x46, 0x4a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "experimental-zvfbfmin" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfwcvtbf16.f.f.v v8, v4"

@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0b, 0x95, 0xc5, 0x20 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADMAC" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.mula a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x95, 0xc5, 0x28 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADMAC" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.mulah a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x95, 0xc5, 0x22 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADMAC" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.muls a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x95, 0xc5, 0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADMAC" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.mulsh a0, a1, a2"

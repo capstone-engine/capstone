@@ -1,0 +1,3 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32"|"CS_MODE_RISCV_XTHEADBS", None
+0x8b,0x12,0x13,0x88 == th.tst t0, t1, 1
+0x8b,0x12,0xf3,0x89 == th.tst t0, t1, 31

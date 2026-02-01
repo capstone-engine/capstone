@@ -1,0 +1,2 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32"|"CS_MODE_RISCV_C", None
+0x01,0x00 == nop

@@ -1,0 +1,10 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xd3, 0x00, 0x10, 0xf4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zfa", "+zfhmin", "+zvfh", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "fli.h ft1, -1.0"

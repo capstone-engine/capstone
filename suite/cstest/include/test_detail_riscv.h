@@ -14,8 +14,10 @@ typedef struct {
 
 	char *reg;
 	uint64_t imm;
+	double dimm;
 	char *mem_base;
 	int64_t mem_disp;
+	char *csr;
 } TestDetailRISCVOp;
 
 static const cyaml_schema_field_t test_detail_riscv_op_mapping_schema[] = {
@@ -27,11 +29,14 @@ static const cyaml_schema_field_t test_detail_riscv_op_mapping_schema[] = {
 	CYAML_FIELD_STRING_PTR("reg", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailRISCVOp, reg, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("imm", CYAML_FLAG_OPTIONAL, TestDetailRISCVOp, imm),
+	CYAML_FIELD_FLOAT("dimm", CYAML_FLAG_OPTIONAL, TestDetailRISCVOp, dimm),
 	CYAML_FIELD_STRING_PTR("mem_base",
 			       CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			       TestDetailRISCVOp, mem_base, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("mem_disp", CYAML_FLAG_OPTIONAL, TestDetailRISCVOp,
 			mem_disp),
+	CYAML_FIELD_STRING_PTR("csr", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			       TestDetailRISCVOp, csr, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_END
 };
 

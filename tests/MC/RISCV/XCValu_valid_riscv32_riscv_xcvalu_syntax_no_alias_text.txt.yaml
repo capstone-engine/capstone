@@ -1,0 +1,720 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x86 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addurnr t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x86 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addurnr a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x5c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.maxu t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x5c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.maxu a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subrnr t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subrnr a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x52 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.slet t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x52 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.slet a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x32, 0x73, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subrn t0, t1, t2, 0"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x32, 0x73, 0xa0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subrn t0, t1, t2, 16"
+
+  -
+    input:
+      bytes: [ 0x5b, 0xb5, 0x05, 0xbe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subrn a0, a1, zero, 31"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x88 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subnr t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x88 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subnr a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addunr t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addunr a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x22, 0x73, 0xc0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addurn t0, t1, t2, 0"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x22, 0x73, 0xe0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addurn t0, t1, t2, 16"
+
+  -
+    input:
+      bytes: [ 0x5b, 0xa5, 0x05, 0xfe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addurn a0, a1, zero, 31"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x22, 0x73, 0x40 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addun t0, t1, t2, 0"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x22, 0x73, 0x60 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addun t0, t1, t2, 16"
+
+  -
+    input:
+      bytes: [ 0x5b, 0xa5, 0x05, 0x7e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addun a0, a1, zero, 31"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x03, 0x72 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.clipu t0, t1, 0"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x03, 0x73 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.clipu t0, t1, 16"
+
+  -
+    input:
+      bytes: [ 0x2b, 0x35, 0xf0, 0x73 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.clipu a0, zero, 31"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x03, 0x70 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.clip t0, t1, 0"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x03, 0x71 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.clip t0, t1, 16"
+
+  -
+    input:
+      bytes: [ 0x2b, 0x35, 0xf0, 0x71 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.clip a0, zero, 31"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x03, 0x62 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.exthz t0, t1"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0x05, 0x62 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.exthz a0, a1"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x5a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.max t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x5a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.max a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x74 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.clipr t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x74 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.clipr a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x32, 0x73, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subn t0, t1, t2, 0"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x32, 0x73, 0x20 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subn t0, t1, t2, 16"
+
+  -
+    input:
+      bytes: [ 0x5b, 0xb5, 0x05, 0x3e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subn a0, a1, zero, 31"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x03, 0x66 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.extbz t0, t1"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0x05, 0x66 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.extbz a0, a1"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x03, 0x50 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.abs t0, t1"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0x05, 0x50 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.abs a0, a1"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x76 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.clipur t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x76 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.clipur a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x58 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.minu t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x58 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.minu a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x22, 0x73, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addn t0, t1, t2, 0"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x22, 0x73, 0x20 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addn t0, t1, t2, 16"
+
+  -
+    input:
+      bytes: [ 0x5b, 0xa5, 0x05, 0x3e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addn a0, a1, zero, 31"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x8a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subunr t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x8a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subunr a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x03, 0x64 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.extbs t0, t1"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0x05, 0x64 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.extbs a0, a1"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x54 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.sletu t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x54 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.sletu a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x56 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.min t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x56 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.min a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x8e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.suburnr t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x8e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.suburnr a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x84 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addrnr t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x84 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addrnr a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x03, 0x60 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.exths t0, t1"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0x05, 0x60 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.exths a0, a1"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x22, 0x73, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addrn t0, t1, t2, 0"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x22, 0x73, 0xa0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addrn t0, t1, t2, 16"
+
+  -
+    input:
+      bytes: [ 0x5b, 0xa5, 0x05, 0xbe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addrn a0, a1, zero, 31"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x32, 0x73, 0xc0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.suburn t0, t1, t2, 0"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x32, 0x73, 0xe0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.suburn t0, t1, t2, 16"
+
+  -
+    input:
+      bytes: [ 0x5b, 0xb5, 0x05, 0xfe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.suburn a0, a1, zero, 31"
+
+  -
+    input:
+      bytes: [ 0xab, 0x32, 0x73, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addnr t0, t1, t2"
+
+  -
+    input:
+      bytes: [ 0x2b, 0xb5, 0xc5, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.addnr a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x32, 0x73, 0x40 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subun t0, t1, t2, 0"
+
+  -
+    input:
+      bytes: [ 0xdb, 0x32, 0x73, 0x60 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subun t0, t1, t2, 16"
+
+  -
+    input:
+      bytes: [ 0x5b, 0xb5, 0x05, 0x7e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVALU", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.subun a0, a1, zero, 31"

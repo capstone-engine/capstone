@@ -1,0 +1,90 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0xaf, 0xb5, 0xd7, 0x28 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "experimental-zacas", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amocas.d a1, a3, (a5)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb5, 0xd7, 0x2c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "experimental-zacas", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amocas.d.aq a1, a3, (a5)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb5, 0xd7, 0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "experimental-zacas", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amocas.d.rl a1, a3, (a5)"
+
+  -
+    input:
+      bytes: [ 0xaf, 0xb5, 0xd7, 0x2e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "experimental-zacas", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amocas.d.aqrl a1, a3, (a5)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0xc5, 0xc5, 0x28 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "experimental-zacas", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amocas.q a0, a2, (a1)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0xc0, 0x05, 0x28 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "experimental-zacas", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amocas.q zero, zero, (a1)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0xc0, 0x05, 0x2c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "experimental-zacas", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amocas.q.aq zero, zero, (a1)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0xc0, 0x05, 0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "experimental-zacas", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amocas.q.rl zero, zero, (a1)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0xc0, 0x05, 0x2e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "experimental-zacas", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "amocas.q.aqrl zero, zero, (a1)"

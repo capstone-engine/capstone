@@ -1,0 +1,120 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x20 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnj.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x22 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnj.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x20 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnj.vf v8, v4, fa0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x22 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnj.vf v8, v4, fa0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x24 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnjn.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x26 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnjn.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x24 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnjn.vf v8, v4, fa0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x26 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnjn.vf v8, v4, fa0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x28 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnjx.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnjx.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x28 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnjx.vf v8, v4, fa0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfsgnjx.vf v8, v4, fa0"

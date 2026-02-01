@@ -94,6 +94,8 @@ void printInt32BangDec(SStream *O, int32_t val);
 
 void printFloat(SStream *O, float val);
 
+void printfFloat(SStream *ss, const char *fmt, float val);
+
 void printFloatBang(SStream *O, float val);
 
 void printExpr(SStream *O, uint64_t val);

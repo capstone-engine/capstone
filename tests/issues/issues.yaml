@@ -89,7 +89,7 @@ test_cases:
               -
                 type: RISCV_OP_IMM
                 imm: 0x8
-          groups: [ branch_relative, jump ]
+          groups: [ jump, branch_relative ]
   -
     input:
       name: "issue 2007 RISCV64 instruction groups"
@@ -120,7 +120,7 @@ test_cases:
               -
                 type: RISCV_OP_IMM
                 imm: 0x4
-          groups: [ call ]
+          groups: [ branch_relative ]
   -
     input:
       name: "issue 2007 RISCV32 instruction groups"
@@ -141,7 +141,7 @@ test_cases:
               -
                 type: RISCV_OP_IMM
                 imm: 0x8
-          groups: [ branch_relative, jump ]
+          groups: [ jump, branch_relative ]
   -
     input:
       name: "issue 2007 RISCV32 instruction groups"
@@ -172,13 +172,13 @@ test_cases:
               -
                 type: RISCV_OP_IMM
                 imm: 0x4
-          groups: [ call ]
+          groups: [ branch_relative ]
   -
     input:
       name: "issue 2007 RISCV32 instruction groups"
       bytes: [ 0x11,0x20 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCV32, CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -190,13 +190,13 @@ test_cases:
               -
                 type: RISCV_OP_IMM
                 imm: 0x4
-          groups: [ hasStdExtC, isrv32, call ]
+          groups: [ call, branch_relative, HasStdExtCOrZca, IsRV32 ]
   -
     input:
       name: "issue 2007 RISCV32 instruction groups"
       bytes: [ 0x91,0xc1 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCV32, CS_MODE_RISCVC, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -211,7 +211,7 @@ test_cases:
               -
                 type: RISCV_OP_IMM
                 imm: 0x4
-          groups: [ hasStdExtC, branch_relative, jump ]
+          groups: [ jump, branch_relative, HasStdExtCOrZca ]
   -
     input:
       name: "issue 1997 notrack jmp"
@@ -5662,7 +5662,7 @@ test_cases:
       name: "RISCV - #2632 - Memory operand type was 3 instead of 0x80"
       bytes: [ 0x0c, 0xc2 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_OPT_DETAIL, CS_MODE_RISCV32, CS_MODE_RISCVC ]
+      options: [ CS_OPT_DETAIL, CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:
@@ -6257,7 +6257,7 @@ test_cases:
       name: "issue #2731 - Should disassemble"
       bytes: [ 0x15, 0x83 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_32 ]
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_32, CS_OPT_SYNTAX_NO_ALIAS_TEXT ]
       address: 0x0
     expected:
       insns:

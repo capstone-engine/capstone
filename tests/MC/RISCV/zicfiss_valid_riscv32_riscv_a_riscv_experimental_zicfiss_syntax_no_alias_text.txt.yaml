@@ -1,0 +1,90 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x73, 0xc0, 0xc0, 0xcd ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_A", "CS_MODE_RISCV_EXPERIMENTAL_ZICFISS", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sspopchk ra"
+
+  -
+    input:
+      bytes: [ 0x73, 0xc0, 0xc2, 0xcd ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_A", "CS_MODE_RISCV_EXPERIMENTAL_ZICFISS", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sspopchk t0"
+
+  -
+    input:
+      bytes: [ 0x73, 0x40, 0x10, 0xce ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_A", "CS_MODE_RISCV_EXPERIMENTAL_ZICFISS", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sspush ra"
+
+  -
+    input:
+      bytes: [ 0x73, 0x40, 0x50, 0xce ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_A", "CS_MODE_RISCV_EXPERIMENTAL_ZICFISS", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "sspush t0"
+
+  -
+    input:
+      bytes: [ 0xf3, 0x40, 0xc0, 0xcd ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_A", "CS_MODE_RISCV_EXPERIMENTAL_ZICFISS", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssrdp ra"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x27, 0x14, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_A", "CS_MODE_RISCV_EXPERIMENTAL_ZICFISS", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssamoswap.w a4, ra, (s0)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x27, 0x14, 0x4c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_A", "CS_MODE_RISCV_EXPERIMENTAL_ZICFISS", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssamoswap.w.aq a4, ra, (s0)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x27, 0x14, 0x4a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_A", "CS_MODE_RISCV_EXPERIMENTAL_ZICFISS", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssamoswap.w.rl a4, ra, (s0)"
+
+  -
+    input:
+      bytes: [ 0x2f, 0x27, 0x14, 0x4e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_A", "CS_MODE_RISCV_EXPERIMENTAL_ZICFISS", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+    expected:
+      insns:
+        -
+          asm_text: "ssamoswap.w.aqrl a4, ra, (s0)"

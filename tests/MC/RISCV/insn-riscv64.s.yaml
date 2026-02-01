@@ -21,7 +21,7 @@ test_cases:
     input:
       bytes: [ 0x2f, 0xbe, 0xaa, 0x0a ]
       arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV64" ]
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_A" ]
     expected:
       insns:
         -
@@ -39,7 +39,7 @@ test_cases:
     input:
       bytes: [ 0x53, 0xa0, 0x31, 0xd0 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV64" ]
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_F" ]
     expected:
       insns:
         -
@@ -48,7 +48,7 @@ test_cases:
     input:
       bytes: [ 0x53, 0x81, 0x01, 0xf2 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV64" ]
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_F" ]
     expected:
       insns:
         -

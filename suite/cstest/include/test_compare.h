@@ -5,6 +5,7 @@
 #define TEST_COMPARE_H
 
 #include <stdint.h>
+#include <math.h>
 #include "test_mapping.h"
 #include "../../../utils.h"
 
@@ -146,7 +147,7 @@ typedef int32_t tbool;
 /// Compares two floating point values.
 /// It returns with @ret_val if they mismatch.
 #define compare_fp_ret(actual, expected, ret_val) \
-	if (actual != expected) { \
+	if (!((isnan(actual) && isnan(expected)) || (actual == expected))) { \
 		fprintf(stderr, #actual " != " #expected ": %f != %f\n", \
 			actual, expected); \
 		return ret_val; \
@@ -227,6 +228,17 @@ typedef int32_t tbool;
 			fprintf(stderr, \
 				#actual " != " #expected ": '%s' != '%s'\n", \
 				reg_name, expected); \
+			return ret_val; \
+		} \
+	}
+
+#define compare_string_from_int_ret(actual, expected, converter, ret_val) \
+	if (expected) { \
+		const char *actual_str = converter(actual); \
+		if (!strings_match(actual_str, expected)) { \
+			fprintf(stderr, \
+				#actual " != " #expected ": '%s' != '%s'\n", \
+				actual_str, expected); \
 			return ret_val; \
 		} \
 	}
