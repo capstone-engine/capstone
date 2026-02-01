@@ -12,6 +12,7 @@ Almost all the work was sponsored by [RizinOrg](https://rizin.re/). This release
 The developers with the biggest contributions were (alphabetically):
 - `TriCore` - @billow (Sponsored)
 - `LoongArch` - @jiegec and @FurryAcetylCoA
+- `RISC-V` - @moste00 (Sponsored)
 - `Alpha`, `HPPA` - @R33v0LT (Sponsored)
 - `AArch64`, `ARM`, `Auto-Sync`, `PPC`, `SystemZ`, modernized testing - @Rot127 (Sponsored)
 - `Mips`, `NanoMips` - @wargio
@@ -22,7 +23,7 @@ There are also multiple smaller additions
 - Architecture module registration - @oleavr
 - Building of thin binaries for Apple - @rickmark
 - Python packaging and testing - @twizmwazin, @peace-maker
-- `RISCV` operand access info - @wxrdnx
+- `RISC-V` operand access info - @wxrdnx
 
 And of course there were many more improvements done by other contributors, which add to the release just as the ones above.
 For a full list of all the developers, please see the release page.
@@ -31,7 +32,7 @@ With all that said, we hope you enjoy the new release!
 
 ## Overview
 
-For `v6` we _updated_ the following architectures: `ARM`, `AArch64`, `Mips` (adding `NanoMips`!), `SystemZ`, `PPC`.
+For `v6` we _updated_ the following architectures: `ARM`, `AArch64`, `Mips` (adding `NanoMips`!), `RISC-V`, `SystemZ`, `PPC`.
 And added support for several more: `TriCore` (already in `v5`), `Alpha`, `HPPA`, `LoongArch`.
 
 These updates are significant! While in `v5` the most up-to-date module was based on `LLVM 7`,
@@ -192,9 +193,52 @@ Nonetheless, we hope this additional information is useful to you.
   asm text. For example the instruction `fcmpeq	%fcc2, %f0, %f4` has 2 not 3 operands.
   Operands are the two registers `f0` and `f4` and the `cc_field` is set to `SPARC_CC_FIELD_FCC0`.
 
-**RISCV**
+**RISC-V**
 
+- Updated to LLVM-18
 - Operands have now read/write access information
+- Previously only the basic extensions and the compressed ISA was supported, now every extension supported by LLVM-18 also available (e.g. vector, crypto, ...)
+- Changed register names
+  * FP Regs: Instead of `RISCV_REG_F<n>_32` and `RISCV_REG_F<n>_64`, they're named `RISCV_REG_F<n>_F`
+  and `RISCV_REG_F<n>_D` for n in `0..31`
+- Added register names
+  * Vector registes and combinations thereof `RISCV_REG_V<n>[_V<n_i>]*`, examples
+    * `RISCV_REG_V21`
+    * `RISCV_REG_V9_V10`
+    * `RISCV_REG_V3_V4_V5`
+    * etc... up to 8-register combinations
+  * Half-percision (16-bit) FP registers `RISCV_REG_F<n>_H` for n in `0..31`
+- Changed instruction names
+  * Instructions ending in `_AQ_RL` now end in `_AQRL`
+- Added instruction names: massive amount, see `include/capstone/riscv.h`
+- Added `dimm` and `csr` fields inside the union data of `cs_riscv_op`, with corresponding `riscv_op_type`
+  * `dimm` is used for instructions with FP immediates
+  * `csr` is used for instructions with CSR systrem registes
+- Added ISA flags to turn ISA extensions on and off 
+  * `CS_MODE_RISCV_FD = 1 << 3`
+	* `CS_MODE_RISCV_V = 1 << 4`
+	* `CS_MODE_RISCV_ZFINX = 1 << 5`
+	* `CS_MODE_RISCV_ZCMP_ZCMT_ZCE = 1 << 6`
+	* `CS_MODE_RISCV_ZICFISS = 1 << 7`
+	* `CS_MODE_RISCV_E = 1 << 8`
+	* `CS_MODE_RISCV_A = 1 << 9`
+	* `CS_MODE_RISCV_COREV = 1 << 10`
+	* `CS_MODE_RISCV_THEAD = 1 << 11`
+	* `CS_MODE_RISCV_SIFIVE = 1 << 12`
+	* `CS_MODE_RISCV_BITMANIP = 1 << 13`
+	* `CS_MODE_RISCV_ZBA = 1 << 14`
+	* `CS_MODE_RISCV_ZBB = 1 << 15`
+	* `CS_MODE_RISCV_ZBC = 1 << 16`
+	* `CS_MODE_RISCV_ZBKB = 1 << 17`
+	* `CS_MODE_RISCV_ZBKC = 1 << 18`
+	* `CS_MODE_RISCV_ZBKX = 1 << 19`
+	* `CS_MODE_RISCV_ZBS = 1 << 20`
+
+> [!NOTE] 
+> All extensions above are disabled by default unless enabled by their option name or the corresponding command line flag in cstool. Any other extension is always enabled and can't be disabled.
+ 
+> [!NOTE] 
+> RISC-V has a massive, sprawling list of extensions, but Capstone's internal implementaton choice of using a 32-bit mode field is not enough to cover all of them. For now, those extension flags above were added because their encoding space is conflicting with either each other or other extensions. More flags can be added later if bug reports come in requesting finer-grained extension control. However, the current implementation using bitfields imposes a strict upper limit and would likely be refactored for a more expansive mechanism in the future. See [this issue](https://github.com/capstone-engine/capstone/issues/2848) for more details.
 
 **Xtensa**
 
