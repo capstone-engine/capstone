@@ -1,14 +1,28 @@
-name: Build Source Release
+name: Packages Build
 
-# Trigger whenever a release is created
 on:
+  push:
+    paths-ignore:
+      - ".gitignore"
+      - "docs/**"
+      - "ChangeLog"
+      - "CREDITS.TXT"
+      - "COMPILE_MAKE.TXT"
+      - "BUILDING.md"
+      - "CONTRIBUTING.md"
+      - "LICENSE.TXT"
+      - "LICENSE_LLVM.TXT"
+      - "README.md"
+      - "RELEASE_NOTES"
+      - "SPONSORS.TXT"
+      - "TODO"
+  pull_request:
   release:
-    types:
-      - created
+    types: [published]
 
 jobs:
   build:
-    name: build
+    name: build_linux
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -29,8 +43,19 @@ jobs:
         echo "tarball=$TARBALL" >> $GITHUB_OUTPUT
         echo "shasum=$SHASUM" >> $GITHUB_OUTPUT
 
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.archive.outputs.tarball }}
+        path: ${{ steps.archive.outputs.tarball }}
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.archive.outputs.shasum }}
+        path: ${{ steps.archive.outputs.shasum }}
+
     - name: Upload tarball and shasum to release
       uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -54,8 +79,19 @@ jobs:
         cpack -G DEB
         cpack -G RPM
 
+    - uses: actions/upload-artifact@v4
+      with:
+        name: capstone_x86.deb
+        path: ./build/*.deb
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: capstone_x86.rpm
+        path: ./build/*.rpm
+
     - name: Upload debian package to release
       uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -88,13 +124,25 @@ jobs:
         cmake --build build --config Release
         cmake --install build --config Release
 
+    # Install NSIS according to https://github.com/NSIS-Dev/ci-examples/blob/main/.github/workflows/windows-latest.yml
     - name: Package NSIS installer
       run: |
+        iwr -useb get.scoop.sh -outfile 'install.ps1'
+        .\install.ps1 -RunAsAdmin
+        scoop update
+        scoop bucket add extras
+        scoop install nsis --global
         cd build
         cpack -G NSIS
 
+    - uses: actions/upload-artifact@v4
+      with:
+        name: capstone_x64.exe
+        path: ./build/*.exe
+
     - name: Upload NSIS installer to release
       uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
