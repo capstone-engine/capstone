@@ -399,13 +399,13 @@ static void setPrefixPresent(struct InternalInstruction *insn, uint8_t prefix)
 }
 
 /*
- * setSegmentPrefixOverride - Overrides an instruction's prefix1 based on CPU mode.
+ * setSegmentOverride - Overrides an instruction's prefix1 based on CPU mode.
  *
  * @param insn      - The instruction to be overridden.
  * @param prefix    - The segment override to use.
  * @param byte      - The current decoded prefix byte. Must be a segment override.
  */
-static void setSegmentPrefixOverride(struct InternalInstruction *insn,
+static void setSegmentOverride(struct InternalInstruction *insn,
 			     SegmentOverride prefix, uint8_t byte)
 {
 	// In 32-bit or 16-bit mode all segment override prefixes are used.
@@ -564,22 +564,22 @@ static int readPrefixes(struct InternalInstruction *insn)
 		case 0x65: /* GS segment override */
 			switch (byte) {
 			case 0x2e:
-				setSegmentPrefixOverride(insn, SEG_OVERRIDE_CS, byte);
+				setSegmentOverride(insn, SEG_OVERRIDE_CS, byte);
 				break;
 			case 0x36:
-				setSegmentPrefixOverride(insn, SEG_OVERRIDE_SS, byte);
+				setSegmentOverride(insn, SEG_OVERRIDE_SS, byte);
 				break;
 			case 0x3e:
-				setSegmentPrefixOverride(insn, SEG_OVERRIDE_DS, byte);
+				setSegmentOverride(insn, SEG_OVERRIDE_DS, byte);
 				break;
 			case 0x26:
-				setSegmentPrefixOverride(insn, SEG_OVERRIDE_ES, byte);
+				setSegmentOverride(insn, SEG_OVERRIDE_ES, byte);
 				break;
 			case 0x64:
-				setSegmentPrefixOverride(insn, SEG_OVERRIDE_FS, byte);
+				setSegmentOverride(insn, SEG_OVERRIDE_FS, byte);
 				break;
 			case 0x65:
-				setSegmentPrefixOverride(insn, SEG_OVERRIDE_GS, byte);
+				setSegmentOverride(insn, SEG_OVERRIDE_GS, byte);
 				break;
 			default:
 				// debug("Unhandled override");
