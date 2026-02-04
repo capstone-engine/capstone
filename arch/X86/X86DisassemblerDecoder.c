@@ -406,7 +406,7 @@ static void setPrefixPresent(struct InternalInstruction *insn, uint8_t prefix)
  * @param byte      - The current decoded prefix byte. Must be a segment override.
  */
 static void setSegmentOverride(struct InternalInstruction *insn,
-			     SegmentOverride prefix, uint8_t byte)
+			       SegmentOverride prefix, uint8_t byte)
 {
 	// In 32-bit or 16-bit mode all segment override prefixes are used.
 	if (insn->mode != MODE_64BIT) {
