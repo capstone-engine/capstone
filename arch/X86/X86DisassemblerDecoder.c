@@ -399,6 +399,47 @@ static void setPrefixPresent(struct InternalInstruction *insn, uint8_t prefix)
 }
 
 /*
+ * setSegmentPrefixOverride - Overrides an instruction's prefix1 based on CPU mode.
+ *
+ * @param insn      - The instruction to be overridden.
+ * @param prefix    - The segment override to use.
+ * @param byte      - The current decoded prefix byte. Must be a segment override.
+ */
+static void setSegmentPrefix(struct InternalInstruction *insn,
+			     SegmentOverride prefix, uint8_t byte)
+{
+	// In 32-bit or 16-bit mode all segment override prefixes are used.
+	if (insn->mode != MODE_64BIT) {
+		insn->segmentOverride = prefix;
+		insn->prefix1 = byte;
+		return;
+	}
+
+	// In 64-bit mode, the ES/CS/SS/DS segment overrides should be ignored.
+	// In the case there are multiple segment overrides, do not override
+	// an existing FS or GS segment prefix.
+	switch (insn->prefix1) {
+	case 0x64: // FS
+	case 0x65: // GS
+		return;
+	}
+
+	// If the proposed override is for FS or GS, mark it overridden.
+	// All other segment prefixes are ignored.
+	switch (byte) {
+	case 0x64: // FS
+	case 0x65: // GS
+		insn->segmentOverride = prefix;
+		break;
+	}
+
+	// `prefix1` may later be used to decode the `notrack` prefix.
+	// The `notrack` prefix reuses the DS segment override, so we
+	// need to store the prefix even if it is ignored for the segment overrides.
+	insn->prefix1 = byte;
+}
+
+/*
  * readPrefixes - Consumes all of an instruction's prefix bytes, and marks the
  *   instruction as having them.  Also sets the instruction's default operand,
  *   address, and other relevant data sizes to report operands correctly.
@@ -523,60 +564,22 @@ static int readPrefixes(struct InternalInstruction *insn)
 		case 0x65: /* GS segment override */
 			switch (byte) {
 			case 0x2e:
-				if (insn->mode != MODE_64BIT ||
-				    (insn->prefix1 != 0x64 &&
-				     insn->prefix1 != 0x65)) {
-					if (insn->mode != MODE_64BIT) {
-						insn->segmentOverride =
-							SEG_OVERRIDE_CS;
-					}
-
-					insn->prefix1 = byte;
-				}
+				setSegmentPrefix(insn, SEG_OVERRIDE_CS, byte);
 				break;
 			case 0x36:
-				if (insn->mode != MODE_64BIT ||
-				    (insn->prefix1 != 0x64 &&
-				     insn->prefix1 != 0x65)) {
-					if (insn->mode != MODE_64BIT) {
-						insn->segmentOverride =
-							SEG_OVERRIDE_SS;
-					}
-
-					insn->prefix1 = byte;
-				}
+				setSegmentPrefix(insn, SEG_OVERRIDE_SS, byte);
 				break;
 			case 0x3e:
-				if (insn->mode != MODE_64BIT ||
-				    (insn->prefix1 != 0x64 &&
-				     insn->prefix1 != 0x65)) {
-					if (insn->mode != MODE_64BIT) {
-						insn->segmentOverride =
-							SEG_OVERRIDE_DS;
-					}
-
-					insn->prefix1 = byte;
-				}
+				setSegmentPrefix(insn, SEG_OVERRIDE_DS, byte);
 				break;
 			case 0x26:
-				if (insn->mode != MODE_64BIT ||
-				    (insn->prefix1 != 0x64 &&
-				     insn->prefix1 != 0x65)) {
-					if (insn->mode != MODE_64BIT) {
-						insn->segmentOverride =
-							SEG_OVERRIDE_ES;
-					}
-
-					insn->prefix1 = byte;
-				}
+				setSegmentPrefix(insn, SEG_OVERRIDE_ES, byte);
 				break;
 			case 0x64:
-				insn->segmentOverride = SEG_OVERRIDE_FS;
-				insn->prefix1 = byte;
+				setSegmentPrefix(insn, SEG_OVERRIDE_FS, byte);
 				break;
 			case 0x65:
-				insn->segmentOverride = SEG_OVERRIDE_GS;
-				insn->prefix1 = byte;
+				setSegmentPrefix(insn, SEG_OVERRIDE_GS, byte);
 				break;
 			default:
 				// debug("Unhandled override");
