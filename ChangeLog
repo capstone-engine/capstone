@@ -1,6 +1,15 @@
 This file details the changelog of Capstone.
 
 --------------------------------
+Version 5.0.7: February 4th, 2026
+
+## What's Changed
+* Backport for 5.0.7 by @scribam in https://github.com/capstone-engine/capstone/pull/2785
+* CVE v5 backports by @Rot127 in https://github.com/capstone-engine/capstone/pull/2835
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/5.0.6...5.0.7
+
+--------------------------------
 Version 5.0.6: March 23th, 2025
 
 ## What's Changed
