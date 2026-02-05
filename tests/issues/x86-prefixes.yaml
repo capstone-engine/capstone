@@ -1,0 +1,293 @@
+test_cases:
+  # Test segment override priority
+  -
+    input:
+      name: "x86-16: rightmost segment override should take priority"
+      bytes: [ 0x26, 0x65, 0x64, 0x3E, 0x65, 0x2E, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr cs:[bx + si], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_CS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-32: rightmost segment override should take priority"
+      bytes: [ 0x26, 0x65, 0x64, 0x3E, 0x65, 0x2E, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr cs:[eax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_CS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-64: rightmost segment override should take priority"
+      bytes: [ 0x26, 0x65, 0x64, 0x3E, 0x65, 0x2E, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr gs:[rax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_GS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-16: rightmost segment override should take priority"
+      bytes: [ 0x3E, 0x3E, 0x26, 0x36, 0x64, 0x36, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr ss:[bx + si], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_SS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-32: rightmost segment override should take priority"
+      bytes: [ 0x3E, 0x3E, 0x26, 0x36, 0x64, 0x36, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr ss:[eax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_SS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-64: rightmost segment override should take priority"
+      bytes: [ 0x3E, 0x3E, 0x26, 0x36, 0x64, 0x36, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr fs:[rax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_FS, X86_PREFIX_0, X86_PREFIX_0 ]
+  # Test segment override differences between 16/32 and 64-bit mode with ECDS and FS/GS
+  -
+    input:
+      name: "x86-16: ECSD segment overrides should override FS/GS segment overrides"
+      bytes: [ 0x64, 0x3E, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr ds:[bx + si], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_DS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-32: ECSD segment overrides should override FS/GS segment overrides"
+      bytes: [ 0x64, 0x3E, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr ds:[eax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_DS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-64: ECSD segment overrides should be ignored and leave FS override intact"
+      bytes: [ 0x64, 0x3E, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr fs:[rax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_FS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-64: ECSD segment overrides should be ignored"
+      bytes: [ 0x3E, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr [rax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_DS, X86_PREFIX_0, X86_PREFIX_0 ]
+  # Test duplicate segment override prefixes
+  -
+    input:
+      name: "x86-16: Duplicate ES override prefixes should decode successfully"
+      bytes: [ 0x26, 0x26, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr es:[bx + si], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_ES, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-32: Duplicate ES override prefixes should decode successfully"
+      bytes: [ 0x26, 0x26, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr es:[eax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_ES, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-64: Duplicate FS override prefixes should decode successfully"
+      bytes: [ 0x64, 0x64, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr fs:[rax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_FS, X86_PREFIX_0, X86_PREFIX_0 ]
+  # Test invalid REX prefix
+  -
+    input:
+      name: "x86-64: Invalid REX prefix should preserve previous segment override"
+      bytes: [ 0x64, 0x40, 0x2E, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr fs:[rax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_FS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-64: Invalid REX prefix should not add ECDS segment override"
+      bytes: [ 0x2E, 0x40, 0x2E, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "add byte ptr [rax], al"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_CS, X86_PREFIX_0, X86_PREFIX_0 ]
+  # Test whether `notrack` is correctly decoded
+  -
+    input:
+      name: "x86-16: notrack should decode correctly"
+      bytes: [ 0x3E, 0xE8, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "notrack call 4"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_DS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-32: notrack should decode correctly"
+      bytes: [ 0x3E, 0xE8, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "notrack call 6"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_DS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-64: notrack should decode correctly"
+      bytes: [ 0x3E, 0xE8, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "notrack call 6"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_DS, X86_PREFIX_0, X86_PREFIX_0 ]
+
+  -
+    input:
+      name: "x86-16: notrack should be applied when 0x3E is last segment override prefix"
+      bytes: [ 0x26, 0x64, 0x3E, 0xE8, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "notrack call 6"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_DS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-32: notrack should be applied when 0x3E is last segment override prefix"
+      bytes: [ 0x26, 0x64, 0x3E, 0xE8, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "notrack call 8"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_DS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-64: workaround: notrack should only be applied when 0x3E is last segment override prefix and no FS/GS segment override prefix is active"
+      bytes: [ 0x26, 0x64, 0x3E, 0xE8, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "call 8"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_FS, X86_PREFIX_0, X86_PREFIX_0 ]
+  -
+    input:
+      name: "x86-64: workaround: notrack should only be applied when 0x3E is last segment override prefix and no FS/GS segment override prefix is active"
+      bytes: [ 0x26, 0x2E, 0x3E, 0xE8, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "notrack call 8"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_DS, X86_PREFIX_0, X86_PREFIX_0 ]

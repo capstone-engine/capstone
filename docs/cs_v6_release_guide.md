@@ -245,6 +245,11 @@ Nonetheless, we hope this additional information is useful to you.
 - Architecture support was added (based on LLVM-18).
 - Support for `LITBASE`. Set the `LITBASE` with `cs_option(handle, CS_OPT_LITBASE, litbase_value)`.
 
+**x86-64**
+
+- Decoding of conflicting segment overrides was changed to match CPU behavior:
+  For instructions with both an FS/GS and a ES/CS/SS/DS overrides the FS/GS override now takes priority, regardless of prefix ordering.
+
 **BPF**
 
 - Added support for eBPF `ATOMIC` class instructions (using Linux mnemonics, not GNU ones. E.g. `acmpxchg64` instead of `axchg`)
