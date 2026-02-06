@@ -1,0 +1,226 @@
+test_cases:
+  -
+    input:
+      name: "x86: last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0x66, 0xF2, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "addsd xmm0, xmm1"
+  -
+    input:
+      name: "x86: last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0xF2, 0x66, 0xF3, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "addss xmm0, xmm1"
+  -
+    input:
+      name: "x86: last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0xF2, 0x3e, 0x66, 0xF3, 0x2e, 0x66, 0x66, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "addss xmm0, xmm1"
+  -
+    input:
+      name: "x86: do not ignore mandatory 66 prefix when no mandatory F2/F3 prefix is present"
+      bytes: [ 0x66, 0x3e, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "addpd xmm0, xmm1"
+  -
+    input:
+      name: "x86: SHLD should not ignore data size override prefix, because it is not a mandatory prefix"
+      bytes: [ 0xf3, 0x3e, 0x66, 0x67, 0x0f, 0xa4, 0x84, 0x17, 0x00, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "shld word ptr [edi + edx], ax, 0"
+  -
+    input:
+      name: "x86: POPCNT requires mandatory prefix, but also should allow data size override"
+      bytes: [ 0xf3, 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "popcnt eax, ebx"
+  -
+    input:
+      name: "x86: POPCNT requires mandatory prefix, but also should allow data size override"
+      bytes: [ 0x66, 0xf3, 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "popcnt ax, bx"
+  -
+    input:
+      name: "x86: POPCNT requires mandatory prefix, but also should allow data size override"
+      bytes: [ 0xf3, 0x66, 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "popcnt ax, bx"
+  -
+    input:
+      name: "x86: POPCNT without mandatory prefix should not decode successfully"
+      bytes: [ 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: POPCNT with incorrect mandatory prefix should not decode successfully"
+      bytes: [ 0xf2, 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: POPCNT without mandatory prefix but with data size override should not decode successfully"
+      bytes: [ 0x66, 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: XADD without data size override should decode correctly"
+      bytes: [ 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd eax, ebx"
+  -
+    input:
+      name: "x86: XADD with data size override should decode correctly"
+      bytes: [ 0x66, 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd ax, bx"
+  -
+    input:
+      name: "x86: XADD with redundant REP prefix should decode correctly"
+      bytes: [ 0xF2, 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd eax, ebx"
+  -
+    input:
+      name: "x86: XADD with redundant REP prefix should decode correctly"
+      bytes: [ 0xF3, 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd eax, ebx"
+  -
+    input:
+      name: "x86: XADD with redundant REP prefix and data size override should decode correctly"
+      bytes: [ 0x66, 0xF3, 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd ax, bx"
+  -
+    input:
+      name: "x86: XADD with redundant REP prefix and data size override should decode correctly"
+      bytes: [ 0xF2, 0x66, 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd ax, bx"
+  # We test CMPEQPS because it shares the same 0xB_ opcodes with XADD. XADD ignores the REP prefix, while it is relevant for CMPEQPS.
+  -
+    input:
+      name: "x86: CMPEQPS should decode correctly"
+      bytes: [ 0x0f, 0xc2, 0xc1, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpeqps xmm0, xmm1"
+  -
+    input:
+      name: "x86: CMPEQSS should decode correctly"
+      bytes: [ 0xf3, 0x0f, 0xc2, 0xc1, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpeqss xmm0, xmm1"
+  -
+    input:
+      name: "x86: CMPEQPD should decode correctly"
+      bytes: [ 0x66, 0x0f, 0xc2, 0xc1, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpeqpd xmm0, xmm1"
+  -
+    input:
+      name: "x86: CMPEQPS should decode correctly"
+      bytes: [ 0xf2, 0x0f, 0xc2, 0xc1, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpeqsd xmm0, xmm1"
+  -
+    input:
+      name: "x86: CMPXCHG should decode correctly with data size override"
+      bytes: [ 0x66, 0x0f, 0xb1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpxchg ax, bx"
+  -
+    input:
+      name: "x86: CMPXCHG should decode correctly with data size override and redundant REP prefixes"
+      bytes: [ 0xf2, 0x67, 0xf3, 0x3e, 0x66, 0x0f, 0xb1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpxchg ax, bx"
