@@ -1120,6 +1120,18 @@ static uint16_t resolveMandatoryPrefixConflict(struct InternalInstruction *insn,
 		}
 		break;
 	case THREEBYTE_38:
+		// Exception: the ADOX and CRC32 instructions.
+		// These ignore the data size override prefix even though they
+		// operate on general-purpose registers.
+		if ((insn->opcode & 0xF0) == 0xF0) {
+			resolution = IGNORE_DATA_SIZE;
+			break;
+		}
+
+		// Do not need to be resolved, all REP+DATA16 combinations are UD
+		// or separately specified.
+		resolution = DO_NOT_RESOLVE;
+		break;
 	case THREEBYTE_3A:
 		// Do not need to be resolved, all REP+DATA16 combinations are UD
 		// or separately specified.

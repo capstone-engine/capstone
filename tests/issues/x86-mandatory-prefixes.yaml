@@ -224,3 +224,43 @@ test_cases:
       insns:
       -
         asm_text: "cmpxchg ax, bx"
+  -
+    input:
+      name: "x86: ADOX with data size override should decode correctly"
+      bytes: [ 0x66, 0xF3, 0x0F, 0x38, 0xF6, 0x24, 0x27 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "adox esp, dword ptr [rdi + riz]"
+  -
+    input:
+      name: "x86: CRC32 with data size override should decode correctly"
+      bytes: [ 0x66, 0xF2, 0x0F, 0x38, 0xF1, 0x24, 0x27 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "crc32 esp, word ptr [rdi + riz]"
+  -
+    input:
+      name: "x86: CRC32 with data size override should decode correctly"
+      bytes: [ 0xF2, 0x0F, 0x38, 0xF1, 0x24, 0x27 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "crc32 esp, dword ptr [rdi + riz]"
+  -
+    input:
+      name: "x86: MOVBE should decode correctly (is encoded as CRC32 without F2)"
+      bytes: [ 0x0F, 0x38, 0xF1, 0x24, 0x27 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "movbe dword ptr [rdi + riz], esp"
