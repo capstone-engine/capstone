@@ -1067,7 +1067,10 @@ static uint16_t resolveMandatoryPrefixConflict(struct InternalInstruction *insn,
 			|| (insn->opcode & 0xF8) == 0xC8
 
 			// CMPXCHG, LSS, BTR, LFS, LGS, MOVZX
-			|| (insn->opcode & 0xB8) == 0xB0
+			|| (insn->opcode & 0xF8) == 0xB0
+
+			// Group 16, various NOPs
+			|| (insn->opcode & 0xF8) == 0x18
 
 			// UD0
 			|| insn->opcode == 0xFF) {
