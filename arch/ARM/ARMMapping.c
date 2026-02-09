@@ -1967,14 +1967,14 @@ static void add_cs_detail_template_2(MCInst *MI, arm_op_group op_group,
 /// Calls to this function are should not be added by hand! Please checkout the
 /// patch `AddCSDetail` of the CppTranslator.
 void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
-		       va_list args)
+		       size_t op_num, uint64_t templ_arg_0, uint64_t templ_arg_1)
 {
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 	switch (op_group) {
 	case ARM_OP_GROUP_RegImmShift: {
-		ARM_AM_ShiftOpc shift_opc = va_arg(args, ARM_AM_ShiftOpc);
-		unsigned shift_imm = va_arg(args, unsigned);
+		ARM_AM_ShiftOpc shift_opc = (ARM_AM_ShiftOpc)templ_arg_0;
+		unsigned shift_imm = templ_arg_1;
 		add_cs_detail_RegImmShift(MI, shift_opc, shift_imm);
 		return;
 	}
@@ -1997,22 +1997,16 @@ void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
 	case ARM_OP_GROUP_MveAddrModeRQOperand_3:
 	case ARM_OP_GROUP_MveAddrModeRQOperand_1:
 	case ARM_OP_GROUP_MveAddrModeRQOperand_2: {
-		unsigned op_num = va_arg(args, unsigned);
-		uint64_t templ_arg_0 = va_arg(args, uint64_t);
 		add_cs_detail_template_1(MI, op_group, op_num, templ_arg_0);
 		return;
 	}
 	case ARM_OP_GROUP_ComplexRotationOp_180_90:
 	case ARM_OP_GROUP_ComplexRotationOp_90_0: {
-		unsigned op_num = va_arg(args, unsigned);
-		uint64_t templ_arg_0 = va_arg(args, uint64_t);
-		uint64_t templ_arg_1 = va_arg(args, uint64_t);
 		add_cs_detail_template_2(MI, op_group, op_num, templ_arg_0,
 					 templ_arg_1);
 		return;
 	}
 	}
-	unsigned op_num = va_arg(args, unsigned);
 	add_cs_detail_general(MI, op_group, op_num);
 }
 

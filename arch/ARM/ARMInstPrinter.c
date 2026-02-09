@@ -76,7 +76,7 @@ static inline void printRegImmShift(MCInst *MI, SStream *O,
 				    ARM_AM_ShiftOpc ShOpc, unsigned ShImm,
 				    bool UseMarkup)
 {
-	add_cs_detail(MI, ARM_OP_GROUP_RegImmShift, ShOpc, ShImm);
+	add_cs_detail_2(MI, ARM_OP_GROUP_RegImmShift, -1, ShOpc, ShImm);
 	if (ShOpc == ARM_AM_no_shift || (ShOpc == ARM_AM_lsl && !ShImm))
 		return;
 	SStream_concat0(O, ", ");
@@ -406,7 +406,7 @@ static inline void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op,
 	static inline void CONCAT(printAddrMode3Operand, AlwaysPrintImm0)( \
 		MCInst * MI, unsigned Op, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
+		add_cs_detail_1(MI, \
 			      CONCAT(ARM_OP_GROUP_AddrMode3Operand, \
 				     AlwaysPrintImm0), \
 			      Op, AlwaysPrintImm0); \
@@ -486,7 +486,7 @@ static inline void printPostIdxImm8s4Operand(MCInst *MI, unsigned OpNum,
 	static inline void CONCAT(printMveAddrModeRQOperand, shift)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail( \
+		add_cs_detail_1( \
 			MI, CONCAT(ARM_OP_GROUP_MveAddrModeRQOperand, shift), \
 			OpNum, shift); \
 		MCOperand *MO1 = MCInst_getOperand(MI, (OpNum)); \
@@ -514,7 +514,7 @@ DEFINE_printMveAddrModeRQOperand(2);
 	static inline void CONCAT(printAddrMode5Operand, AlwaysPrintImm0)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
+		add_cs_detail_1(MI, \
 			      CONCAT(ARM_OP_GROUP_AddrMode5Operand, \
 				     AlwaysPrintImm0), \
 			      OpNum, AlwaysPrintImm0); \
@@ -543,7 +543,7 @@ DEFINE_printAddrMode5Operand(true);
 	static inline void CONCAT(printAddrMode5FP16Operand, AlwaysPrintImm0)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
+		add_cs_detail_1(MI, \
 			      CONCAT(ARM_OP_GROUP_AddrMode5FP16Operand, \
 				     AlwaysPrintImm0), \
 			      OpNum, AlwaysPrintImm0); \
@@ -911,7 +911,7 @@ static inline void printCoprocOptionImm(MCInst *MI, unsigned OpNum, SStream *O)
 	static inline void CONCAT(printAdrLabelOperand, scale)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(ARM_OP_GROUP_AdrLabelOperand, scale), \
+		add_cs_detail_1(MI, CONCAT(ARM_OP_GROUP_AdrLabelOperand, scale), \
 			      OpNum, scale); \
 		MCOperand *MO = MCInst_getOperand(MI, (OpNum)); \
 \
@@ -1078,7 +1078,7 @@ static inline void printT2SOOperand(MCInst *MI, unsigned OpNum, SStream *O)
 	static inline void CONCAT(printAddrModeImm12Operand, AlwaysPrintImm0)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
+		add_cs_detail_1(MI, \
 			      CONCAT(ARM_OP_GROUP_AddrModeImm12Operand, \
 				     AlwaysPrintImm0), \
 			      OpNum, AlwaysPrintImm0); \
@@ -1119,7 +1119,7 @@ DEFINE_printAddrModeImm12Operand(true);
 				  AlwaysPrintImm0)(MCInst * MI, \
 						   unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
+		add_cs_detail_1(MI, \
 			      CONCAT(ARM_OP_GROUP_T2AddrModeImm8Operand, \
 				     AlwaysPrintImm0), \
 			      OpNum, AlwaysPrintImm0); \
@@ -1155,7 +1155,7 @@ DEFINE_printT2AddrModeImm8Operand(false);
 				  AlwaysPrintImm0)(MCInst * MI, \
 						   unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, \
+		add_cs_detail_1(MI, \
 			      CONCAT(ARM_OP_GROUP_T2AddrModeImm8s4Operand, \
 				     AlwaysPrintImm0), \
 			      OpNum, AlwaysPrintImm0); \
@@ -1599,7 +1599,7 @@ static inline void printVectorListFourSpaced(MCInst *MI, unsigned OpNum,
 	static inline void CONCAT(printMVEVectorList, NumRegs)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(ARM_OP_GROUP_MVEVectorList, NumRegs), \
+		add_cs_detail_1(MI, CONCAT(ARM_OP_GROUP_MVEVectorList, NumRegs), \
 			      OpNum, NumRegs); \
 		unsigned Reg = \
 			MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
@@ -1620,7 +1620,7 @@ DEFINE_printMVEVectorList(2) DEFINE_printMVEVectorList(4)
 				  CONCAT(Angle, Remainder))( \
 		MCInst * MI, unsigned OpNo, SStream *O) \
 	{ \
-		add_cs_detail( \
+		add_cs_detail_2( \
 			MI, \
 			CONCAT(CONCAT(ARM_OP_GROUP_ComplexRotationOp, Angle), \
 			       Remainder), \
