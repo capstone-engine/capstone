@@ -6,6 +6,7 @@
 
 #include <capstone/capstone.h>
 
+#include "../../Mapping.h"
 #include "../../cs_priv.h"
 
 typedef enum {
@@ -36,17 +37,14 @@ void SystemZ_set_detail_op_mem(MCInst *MI, unsigned op_num, systemz_reg base,
 			       int64_t disp, uint64_t length, systemz_reg index,
 			       systemz_addr_mode am);
 void SystemZ_add_cs_detail(MCInst *MI, int /* systemz_op_group */ op_group,
-			   va_list args);
+			   size_t op_num);
 
 static inline void add_cs_detail(MCInst *MI,
-				 int /* aarch64_op_group */ op_group, ...)
+				 int /* systemz_op_group */ op_group, size_t op_num)
 {
-	if (!MI->flat_insn->detail)
+	if (!detail_is_set(MI))
 		return;
-	va_list args;
-	va_start(args, op_group);
-	SystemZ_add_cs_detail(MI, op_group, args);
-	va_end(args);
+	SystemZ_add_cs_detail(MI, op_group, op_num);
 }
 
 #endif // CS_SYSTEMZ_MAP_H
