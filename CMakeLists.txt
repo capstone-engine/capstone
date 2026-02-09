@@ -21,9 +21,9 @@ cmake_policy(SET CMP0042 NEW)
 # Enable support for MSVC_RUNTIME_LIBRARY
 cmake_policy(SET CMP0091 NEW)
 
-# Check if VERSION is provided externally, otherwise default to 5.0.6
+# Check if VERSION is provided externally, otherwise default to 5.0.7
 if(NOT DEFINED PROJECT_VERSION OR PROJECT_VERSION STREQUAL "")
-    set(PROJECT_VERSION "5.0.6")
+    set(PROJECT_VERSION "5.0.7")
 endif()
 
 # Use PROJECT_VERSION directly for CPack
