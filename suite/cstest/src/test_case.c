@@ -218,11 +218,11 @@ static void _print_insn(csh *handle, cs_insn *insn)
 {
 	cm_print_error("Failed instruction: %s %s", insn->mnemonic,
 		       insn->op_str);
-	cm_print_error("(0x%x", insn->bytes[0]);
+	cm_print_error(" <=> \"0x%x", insn->bytes[0]);
 	for (int i = 1; i < insn->size; i++) {
-		cm_print_error(", 0x%x", insn->bytes[i]);
+		cm_print_error(", 0x%02x", insn->bytes[i]);
 	}
-	cm_print_error("%s", ")\n");
+	cm_print_error("%s", "\"\n");
 }
 
 /// Compares the decoded instructions @insns against the @expected values and returns the result.
