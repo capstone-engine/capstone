@@ -12,6 +12,22 @@
 #include "cmocka.h"
 #include "helper.h"
 
+char *cs_strndup(const char *s, size_t n) {
+	if (!s) {
+		return NULL;
+	}
+	size_t l = strnlen(s, n);
+	if (l == SIZE_MAX) {
+		return NULL;
+	}
+	char *out = calloc(sizeof(char), l + 1);
+	if (!out) {
+		return NULL;
+	}
+	memcpy(out, s, l);
+	return out;
+}
+
 void add_str(char **src, const char *format, ...)
 {
 	char *tmp;
@@ -49,7 +65,7 @@ void replace_hex(char *src, size_t src_len)
 		value = 0;
 		valid = 0;
 
-		tmp_tmp = strndup(tmp, orig_found - tmp);
+		tmp_tmp = cs_strndup(tmp, orig_found - tmp);
 		while (*found != '\0' && isxdigit(*found)) {
 			valid = 1;
 			if (*found >= 'a' && *found <= 'f')
@@ -114,7 +130,7 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 			found++;
 		}
 
-		tmp_tmp = strndup(tmp, orig_found - tmp);
+		tmp_tmp = cs_strndup(tmp, orig_found - tmp);
 		if (valid == 1) {
 			*orig_found = '\0';
 			if (arch_bits == 16) {

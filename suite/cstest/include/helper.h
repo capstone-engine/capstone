@@ -17,5 +17,6 @@ void replace_hex(char *src, size_t src_len);
 void replace_negative(char *src, size_t src_len, size_t arch_bits);
 void norm_spaces(char *str);
 void str_to_lower(char *str);
+char *cs_strndup(const char *s, size_t n);
 
 #endif /* HELPER_H */
