@@ -88,7 +88,7 @@ jobs:
               diet-build: 'OFF',
               build_type: 'Debug',
               diet_build: false,
-              packages: 'gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross qemu-user-static',
+              packages: 'gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-armhf-cross libc6-dev-armhf-cross qemu-user-static',
               cross_file: 'cross_configs/linux_arm_ubuntu24.cmake',
             }
           - {
