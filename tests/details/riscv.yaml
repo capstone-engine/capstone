@@ -331,7 +331,7 @@ test_cases:
                 - type: RISCV_OP_IMM
                   imm: 0x4
                   access: CS_AC_READ
-            groups: [RISCV_GRP_CALL]
+            groups: [RISCV_GRP_CALL, RISCV_GRP_JUMP]
         - asm_text: "jalr ra, -4(zero)"
           details:
             riscv:
@@ -345,7 +345,7 @@ test_cases:
                 - type: RISCV_OP_IMM
                   imm: -4
                   access: CS_AC_READ
-            groups: [RISCV_GRP_CALL]
+            groups: [RISCV_GRP_CALL, RISCV_GRP_JUMP]
         - asm_text: "beq sp, tp, 4130"
           details:
             riscv:
@@ -1772,7 +1772,7 @@ test_cases:
                 - type: RISCV_OP_IMM
                   imm: 0x4
                   access: CS_AC_READ
-            groups: [RISCV_GRP_CALL]
+            groups: [RISCV_GRP_CALL, RISCV_GRP_JUMP]
   - input:
       bytes: [0xe7, 0x00, 0xc0, 0xff]
       arch: "CS_ARCH_RISCV"
@@ -1793,7 +1793,7 @@ test_cases:
                 - type: RISCV_OP_IMM
                   imm: -4
                   access: CS_AC_READ
-            groups: [RISCV_GRP_CALL]
+            groups: [RISCV_GRP_CALL, RISCV_GRP_JUMP]
   - input:
       bytes: [0x63, 0x05, 0x41, 0x00]
       arch: "CS_ARCH_RISCV"
@@ -5004,3 +5004,206 @@ test_cases:
                 - type: RISCV_OP_IMM
                   imm: 0x0
                   access: CS_AC_READ
+
+  # ================================== Test cases for RISC-V return instruction idioms ==================================
+  
+  # Standard return: JALR x0, 0(ra) - the canonical return instruction
+  - input:
+      bytes: [0x67, 0x80, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "jalr zero, 0(ra)"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: zero
+                  access: CS_AC_WRITE
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x0
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_RET]
+  
+  # Compressed return: C.JR ra - compressed form of return
+  - input:
+      bytes: [0x82, 0x80]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_MODE_RISCV_C, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.jr ra"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_RET]
+  
+  # Edge case: JALR x2, 5(ra) - unusual, classified as both CALL and RET
+  # This writes to x2 (sp) which makes it a call, but uses ra as base (ret pattern)
+  - input:
+      bytes: [0x67, 0x81, 0x50, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "jalr sp, 5(ra)"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: sp
+                  access: CS_AC_WRITE
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x5
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_CALL, RISCV_GRP_RET]
+  
+  # Edge case: JALR x0, 5(ra) - return with non-zero offset (unusual)
+  # Classified as RET because rd=x0, but offset is non-zero
+  - input:
+      bytes: [0x67, 0x80, 0x50, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "jalr zero, 5(ra)"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: zero
+                  access: CS_AC_WRITE
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x5
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_RET]
+  
+  # Edge case: JALR x1, 0(ra) - writes to ra, unusual return pattern
+  # This is classified as CALL because rd=x1 (ra), even though rs1=ra too
+  - input:
+      bytes: [0xe7, 0x80, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "jalr ra, 0(ra)"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_WRITE
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x0
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_CALL, RISCV_GRP_RET]
+  
+ 
+  # Edge case: JALR x0, -4(ra) - return with negative offset
+  - input:
+      bytes: [0x67, 0x80, 0xc0, 0xff]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "jalr zero, -4(ra)"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: zero
+                  access: CS_AC_WRITE
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: -4
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_RET]
+  
+  # Edge case: JALR x5, 0(ra) - writes to a saved register
+  # Classified as CALL because rd != x0
+  - input:
+      bytes: [0xe7, 0x82, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "jalr t0, 0(ra)"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: t0
+                  access: CS_AC_WRITE
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x0
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_CALL, RISCV_GRP_RET]
+  
+  # RV64 specific: Same tests should work in RV64 mode
+  # Standard return in RV64: JALR x0, 0(ra)
+  - input:
+      bytes: [0x67, 0x80, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV64, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "jalr zero, 0(ra)"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: zero
+                  access: CS_AC_WRITE
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x0
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_RET]
+  
+  # RV64 with compressed: C.JR ra
+  - input:
+      bytes: [0x82, 0x80]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV64, CS_OPT_DETAIL, CS_MODE_RISCV_C, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.jr ra"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_RET]
