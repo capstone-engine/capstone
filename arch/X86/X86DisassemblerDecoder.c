@@ -1117,7 +1117,7 @@ static uint16_t resolveMandatoryPrefixConflict(struct InternalInstruction *insn,
 		case 0xA0:
 			resolution = IGNORE_REP;
 			break;
-		default: // 0x80
+		default: // 0xB0
 			resolution = DO_NOT_RESOLVE;
 			break;
 		}
