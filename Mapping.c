@@ -39,7 +39,7 @@ cs_err populate_insn_map_cache(cs_struct *handle)
 	return CS_ERR_OK;
 }
 
-insn_map const *lookup_insn_map(cs_struct *handle, unsigned short id)
+const insn_map *lookup_insn_map(cs_struct *handle, unsigned short id)
 {
 	// If this is getting called, we need the cache to already be populated
 	// (this should be done when populate_insn_map_cache() gets called).

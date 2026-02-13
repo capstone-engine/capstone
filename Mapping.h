@@ -22,7 +22,7 @@ cs_err populate_insn_map_cache(cs_struct *handle);
 // Lookup the insn_map instance for an LLVM instruction ID. This method assumes
 // that this architecture uses the instruction mapping functionality available
 // from populate_insn_map_cache().
-insn_map const *lookup_insn_map(cs_struct *handle, unsigned short id);
+const insn_map *lookup_insn_map(cs_struct *handle, unsigned short id);
 
 unsigned int find_cs_id(unsigned MC_Opcode, const insn_map *imap,
 			unsigned imap_size);

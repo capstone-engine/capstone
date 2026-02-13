@@ -825,16 +825,13 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 		goto fail;
 
 	*handle = (uintptr_t)ud;
-
 	return CS_ERR_OK;
 
 fail:
 	if (ud) {
 		cs_mem_free(ud);
 	}
-
 	*handle = 0;
-
 	return err;
 }
 
