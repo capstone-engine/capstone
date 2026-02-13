@@ -1967,7 +1967,8 @@ static void add_cs_detail_template_2(MCInst *MI, arm_op_group op_group,
 /// Calls to this function are should not be added by hand! Please checkout the
 /// patch `AddCSDetail` of the CppTranslator.
 static void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
-		       size_t op_num, uint64_t templ_arg_0, uint64_t templ_arg_1)
+			      size_t op_num, uint64_t templ_arg_0,
+			      uint64_t templ_arg_1)
 {
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
@@ -2011,19 +2012,20 @@ static void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
 }
 
 void ARM_add_cs_detail_0(MCInst *MI, int /* arm_op_group */ op_group,
-		       size_t op_num)
+			 size_t op_num)
 {
 	ARM_add_cs_detail(MI, op_group, op_num, 0, 0);
 }
 
 void ARM_add_cs_detail_1(MCInst *MI, int /* arm_op_group */ op_group,
-		       size_t op_num, uint64_t templ_arg_0)
+			 size_t op_num, uint64_t templ_arg_0)
 {
 	ARM_add_cs_detail(MI, op_group, op_num, templ_arg_0, 0);
 }
 
 void ARM_add_cs_detail_2(MCInst *MI, int /* arm_op_group */ op_group,
-		       size_t op_num, uint64_t templ_arg_0, uint64_t templ_arg_1)
+			 size_t op_num, uint64_t templ_arg_0,
+			 uint64_t templ_arg_1)
 {
 	ARM_add_cs_detail(MI, op_group, op_num, templ_arg_0, templ_arg_1);
 }

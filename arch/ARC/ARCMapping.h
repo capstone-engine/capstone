@@ -39,6 +39,6 @@ void ARC_init_cs_detail(MCInst *MI);
 void ARC_set_detail_op_imm(MCInst *MI, unsigned OpNum, arc_op_type ImmType,
 			   int64_t Imm);
 void ARC_add_cs_detail_0(MCInst *MI, int /* arc_op_group */ op_group,
-		       size_t op_num);
+			 size_t op_num);
 
 #endif

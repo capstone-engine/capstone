@@ -128,7 +128,8 @@ static void printRegbitsRange(char *buffer, size_t buf_len, uint32_t data,
 				 prefix, first);
 			if (run_length > 0)
 				snprintf(buffer + strlen(buffer), buf_len,
-					 "-%s%" PRId32, prefix, first + run_length);
+					 "-%s%" PRId32, prefix,
+					 first + run_length);
 		}
 	}
 }
@@ -194,8 +195,8 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 		SStream_concat(O, "-(a%" PRId32 ")", (op->reg - M68K_REG_A0));
 		break;
 	case M68K_AM_REGI_ADDR_DISP:
-		SStream_concat(O, "%s$%" PRIx16 "(a%" PRId32 ")", op->mem.disp < 0 ? "-" : "",
-			       abs(op->mem.disp),
+		SStream_concat(O, "%s$%" PRIx16 "(a%" PRId32 ")",
+			       op->mem.disp < 0 ? "-" : "", abs(op->mem.disp),
 			       (op->mem.base_reg - M68K_REG_A0));
 		break;
 	case M68K_AM_PCI_DISP:
@@ -226,8 +227,9 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 		SStream_concat(O, "#$%" PRIx64, op->imm);
 		break;
 	case M68K_AM_PCI_INDEX_8_BIT_DISP:
-		SStream_concat(O, "$%" PRIx32 "(pc,%s%s.%c)", pc + 2 + op->mem.disp,
-			       s_spacing, getRegName(op->mem.index_reg),
+		SStream_concat(O, "$%" PRIx32 "(pc,%s%s.%c)",
+			       pc + 2 + op->mem.disp, s_spacing,
+			       getRegName(op->mem.index_reg),
 			       op->mem.index_size ? 'l' : 'w');
 		break;
 	case M68K_AM_AREGI_INDEX_8_BIT_DISP:
@@ -241,7 +243,8 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 	case M68K_AM_AREGI_INDEX_BASE_DISP:
 
 		if (op->address_mode == M68K_AM_PCI_INDEX_BASE_DISP) {
-			SStream_concat(O, "$%" PRIx32, pc + 2 + op->mem.in_disp);
+			SStream_concat(O, "$%" PRIx32,
+				       pc + 2 + op->mem.in_disp);
 		} else if (op->mem.in_disp != 0) {
 			SStream_concat(O, "%s$%" PRIx32,
 				       op->mem.in_disp >= 0 ? "" : "-",
@@ -284,7 +287,8 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 
 		if (op->address_mode == M68K_AM_PC_MEMI_POST_INDEX ||
 		    op->address_mode == M68K_AM_PC_MEMI_PRE_INDEX) {
-			SStream_concat(O, "$%" PRIx32, pc + 2 + op->mem.in_disp);
+			SStream_concat(O, "$%" PRIx32,
+				       pc + 2 + op->mem.in_disp);
 		} else if (op->mem.in_disp != 0) {
 			SStream_concat(O, "%s$%" PRIx32,
 				       op->mem.in_disp >= 0 ? "" : "-",
@@ -332,7 +336,8 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 	}
 
 	if (op->mem.bitfield)
-		SStream_concat(O, "{%" PRId8 ":%" PRId8 "}", op->mem.offset, op->mem.width);
+		SStream_concat(O, "{%" PRId8 ":%" PRId8 "}", op->mem.offset,
+			       op->mem.width);
 }
 #endif
 
@@ -374,7 +379,8 @@ void M68K_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 
 	if (MI->Opcode == M68K_INS_INVALID) {
 		if (ext->op_count)
-			SStream_concat(O, "dc.w $%" PRIx32, ext->operands[0].imm);
+			SStream_concat(O, "dc.w $%" PRIx32,
+				       ext->operands[0].imm);
 		else
 			SStream_concat(O, "dc.w $<unknown>");
 		return;
