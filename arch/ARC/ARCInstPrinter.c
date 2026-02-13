@@ -124,7 +124,7 @@ static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
 
 static void printOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, ARC_OP_GROUP_Operand, OpNum);
+	ARC_add_cs_detail_0(MI, ARC_OP_GROUP_Operand, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isReg(Op)) {
 		printRegName(O, MCOperand_getReg(Op));
@@ -143,7 +143,7 @@ static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum,
 
 static void printMemOperandRI(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, ARC_OP_GROUP_MemOperandRI, OpNum);
+	ARC_add_cs_detail_0(MI, ARC_OP_GROUP_MemOperandRI, OpNum);
 	MCOperand *base = MCInst_getOperand(MI, (OpNum));
 	MCOperand *offset = MCInst_getOperand(MI, (OpNum + 1));
 	CS_ASSERT((MCOperand_isReg(base) && "Base should be register."));
@@ -155,7 +155,7 @@ static void printMemOperandRI(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, ARC_OP_GROUP_PredicateOperand, OpNum);
+	ARC_add_cs_detail_0(MI, ARC_OP_GROUP_PredicateOperand, OpNum);
 
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 	CS_ASSERT((MCOperand_isImm(Op) && "Predicate operand is immediate."));
@@ -165,7 +165,7 @@ static void printPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printBRCCPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	add_cs_detail(MI, ARC_OP_GROUP_BRCCPredicateOperand, OpNum);
+	ARC_add_cs_detail_0(MI, ARC_OP_GROUP_BRCCPredicateOperand, OpNum);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 	CS_ASSERT((MCOperand_isImm(Op) && "Predicate operand is immediate."));
 	SStream_concat0(O, ARCBRCondCodeToString(
@@ -174,7 +174,7 @@ static void printBRCCPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 
 static void printCCOperand(MCInst *MI, int OpNum, SStream *O)
 {
-	add_cs_detail(MI, ARC_OP_GROUP_CCOperand, OpNum);
+	ARC_add_cs_detail_0(MI, ARC_OP_GROUP_CCOperand, OpNum);
 	SStream_concat0(O, ARCCondCodeToString((ARCCC_CondCode)MCOperand_getImm(
 				   MCInst_getOperand(MI, (OpNum)))));
 }
@@ -195,7 +195,7 @@ static void printU6ShiftedBy(unsigned ShiftBy, MCInst *MI, int OpNum,
 
 static void printU6(MCInst *MI, int OpNum, SStream *O)
 {
-	add_cs_detail(MI, ARC_OP_GROUP_U6, OpNum);
+	ARC_add_cs_detail_0(MI, ARC_OP_GROUP_U6, OpNum);
 	printU6ShiftedBy(0, MI, OpNum, O);
 }
 

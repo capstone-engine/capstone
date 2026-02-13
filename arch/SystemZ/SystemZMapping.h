@@ -36,15 +36,7 @@ void SystemZ_set_detail_op_imm(MCInst *MI, unsigned op_num, int64_t Imm,
 void SystemZ_set_detail_op_mem(MCInst *MI, unsigned op_num, systemz_reg base,
 			       int64_t disp, uint64_t length, systemz_reg index,
 			       systemz_addr_mode am);
-void SystemZ_add_cs_detail(MCInst *MI, int /* systemz_op_group */ op_group,
+void SystemZ_add_cs_detail_0(MCInst *MI, int /* systemz_op_group */ op_group,
 			   size_t op_num);
-
-static inline void add_cs_detail(MCInst *MI,
-				 int /* systemz_op_group */ op_group, size_t op_num)
-{
-	if (!detail_is_set(MI))
-		return;
-	SystemZ_add_cs_detail(MI, op_group, op_num);
-}
 
 #endif // CS_SYSTEMZ_MAP_H

@@ -38,14 +38,7 @@ bool LoongArch_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 
 // cs_detail related functions
 void LoongArch_init_cs_detail(MCInst *MI);
-void LoongArch_add_cs_detail(MCInst *MI, int /* loongarch_op_group */ op_group,
+void LoongArch_add_cs_detail_0(MCInst *MI, int /* loongarch_op_group */ op_group,
 			     size_t op_num);
-static inline void add_cs_detail(MCInst *MI,
-				 int /* loongarch_op_group */ op_group, size_t op_num)
-{
-	if (!detail_is_set(MI))
-		return;
-	LoongArch_add_cs_detail(MI, op_group, op_num);
-}
 
 #endif // CS_LOONGARCH_MAPPING_H
