@@ -160,7 +160,7 @@ const char *SystemZ_group_name(csh handle, unsigned int id)
 }
 
 void SystemZ_add_cs_detail_0(MCInst *MI, int /* systemz_op_group */ op_group,
-			   size_t op_num)
+			     size_t op_num)
 {
 #ifndef CAPSTONE_DIET
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))

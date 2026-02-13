@@ -337,8 +337,9 @@ static void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo,
 	static void CONCAT(printUImm, CONCAT(Bits, 0))(MCInst * MI, int opNum, \
 						       SStream *O) \
 	{ \
-		Mips_add_cs_detail_0(MI, CONCAT(Mips_OP_GROUP_UImm, CONCAT(Bits, 0)), \
-			      opNum); \
+		Mips_add_cs_detail_0( \
+			MI, CONCAT(Mips_OP_GROUP_UImm, CONCAT(Bits, 0)), \
+			opNum); \
 		MCOperand *MO = MCInst_getOperand(MI, (opNum)); \
 		if (MCOperand_isImm(MO)) { \
 			uint64_t Imm = MCOperand_getImm(MO); \
@@ -437,7 +438,7 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O)
 	case Mips_SHXS_NM:
 		if (!MCOperand_isReg(MCInst_getOperand(MI, (opNum + 1)))) {
 			Mips_add_cs_detail_0(MI, Mips_OP_GROUP_MemOperand,
-				      (opNum + 1));
+					     (opNum + 1));
 			printRegName(MI, O,
 				     MCOperand_getImm(MCInst_getOperand(
 					     MI, (opNum + 1))));

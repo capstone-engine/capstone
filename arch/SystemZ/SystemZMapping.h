@@ -37,6 +37,6 @@ void SystemZ_set_detail_op_mem(MCInst *MI, unsigned op_num, systemz_reg base,
 			       int64_t disp, uint64_t length, systemz_reg index,
 			       systemz_addr_mode am);
 void SystemZ_add_cs_detail_0(MCInst *MI, int /* systemz_op_group */ op_group,
-			   size_t op_num);
+			     size_t op_num);
 
 #endif // CS_SYSTEMZ_MAP_H

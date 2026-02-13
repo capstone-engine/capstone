@@ -2319,7 +2319,8 @@ void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned Val = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNo))); \
 		SStream_concat(O, "%s", markup("<imm:")); \
-		SStream_concat(O, "#%" PRId32, (int32_t)((Val * Angle) + Remainder)); \
+		SStream_concat(O, "#%" PRId32, \
+			       (int32_t)((Val * Angle) + Remainder)); \
 		SStream_concat0(O, markup(">")); \
 	}
 DEFINE_printComplexRotationOp(180, 90);

@@ -536,8 +536,9 @@ void LoongArch_set_detail_op_reg(MCInst *MI, unsigned OpNum, loongarch_reg Reg)
 	LoongArch_inc_op_count(MI);
 }
 
-void LoongArch_add_cs_detail_0(MCInst *MI, int /* loongarch_op_group */ op_group,
-			     size_t OpNum)
+void LoongArch_add_cs_detail_0(MCInst *MI,
+			       int /* loongarch_op_group */ op_group,
+			       size_t OpNum)
 {
 	if (!detail_is_set(MI))
 		return;

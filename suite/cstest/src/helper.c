@@ -12,7 +12,8 @@
 #include "cmocka.h"
 #include "helper.h"
 
-char *cs_strndup(const char *s, size_t n) {
+char *cs_strndup(const char *s, size_t n)
+{
 	if (!s) {
 		return NULL;
 	}
@@ -138,10 +139,12 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 				add_str(&result, "%s%hu", tmp_tmp, tmp_short);
 			} else if (arch_bits == 32) {
 				sscanf(value, "%" PRIu32, &tmp_int);
-				add_str(&result, "%s%" PRIu32, tmp_tmp, tmp_int);
+				add_str(&result, "%s%" PRIu32, tmp_tmp,
+					tmp_int);
 			} else if (arch_bits == 64) {
 				sscanf(value, "%" PRIu64, &tmp_long);
-				add_str(&result, "%s%" PRIu64, tmp_tmp, tmp_long);
+				add_str(&result, "%s%" PRIu64, tmp_tmp,
+					tmp_long);
 			}
 
 		} else

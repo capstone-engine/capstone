@@ -407,9 +407,9 @@ static inline void printAM3PreOrOffsetIndexOp(MCInst *MI, unsigned Op,
 		MCInst * MI, unsigned Op, SStream *O) \
 	{ \
 		ARM_add_cs_detail_1(MI, \
-			      CONCAT(ARM_OP_GROUP_AddrMode3Operand, \
-				     AlwaysPrintImm0), \
-			      Op, AlwaysPrintImm0); \
+				    CONCAT(ARM_OP_GROUP_AddrMode3Operand, \
+					   AlwaysPrintImm0), \
+				    Op, AlwaysPrintImm0); \
 		MCOperand *MO1 = MCInst_getOperand(MI, (Op)); \
 		if (!MCOperand_isReg(MO1)) { \
 			printOperand(MI, Op, O); \
@@ -515,9 +515,9 @@ DEFINE_printMveAddrModeRQOperand(2);
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
 		ARM_add_cs_detail_1(MI, \
-			      CONCAT(ARM_OP_GROUP_AddrMode5Operand, \
-				     AlwaysPrintImm0), \
-			      OpNum, AlwaysPrintImm0); \
+				    CONCAT(ARM_OP_GROUP_AddrMode5Operand, \
+					   AlwaysPrintImm0), \
+				    OpNum, AlwaysPrintImm0); \
 		MCOperand *MO1 = MCInst_getOperand(MI, (OpNum)); \
 		MCOperand *MO2 = MCInst_getOperand(MI, (OpNum + 1)); \
 \
@@ -544,9 +544,9 @@ DEFINE_printAddrMode5Operand(true);
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
 		ARM_add_cs_detail_1(MI, \
-			      CONCAT(ARM_OP_GROUP_AddrMode5FP16Operand, \
-				     AlwaysPrintImm0), \
-			      OpNum, AlwaysPrintImm0); \
+				    CONCAT(ARM_OP_GROUP_AddrMode5FP16Operand, \
+					   AlwaysPrintImm0), \
+				    OpNum, AlwaysPrintImm0); \
 		MCOperand *MO1 = MCInst_getOperand(MI, (OpNum)); \
 		MCOperand *MO2 = MCInst_getOperand(MI, (OpNum + 1)); \
 \
@@ -858,8 +858,8 @@ static inline void printMandatoryPredicateOperand(MCInst *MI, unsigned OpNum,
 static inline void
 printMandatoryRestrictedPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_MandatoryRestrictedPredicateOperand,
-		      OpNum);
+	ARM_add_cs_detail_0(
+		MI, ARM_OP_GROUP_MandatoryRestrictedPredicateOperand, OpNum);
 	if ((ARMCC_CondCodes)MCOperand_getImm(MCInst_getOperand(MI, (OpNum))) ==
 	    ARMCC_HS)
 		SStream_concat0(O, "cs");
@@ -871,7 +871,7 @@ static inline void
 printMandatoryInvertedPredicateOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_MandatoryInvertedPredicateOperand,
-		      OpNum);
+			    OpNum);
 	ARMCC_CondCodes CC = (ARMCC_CondCodes)MCOperand_getImm(
 		MCInst_getOperand(MI, (OpNum)));
 	SStream_concat0(O, ARMCondCodeToString(ARMCC_getOppositeCondition(CC)));
@@ -911,8 +911,9 @@ static inline void printCoprocOptionImm(MCInst *MI, unsigned OpNum, SStream *O)
 	static inline void CONCAT(printAdrLabelOperand, scale)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		ARM_add_cs_detail_1(MI, CONCAT(ARM_OP_GROUP_AdrLabelOperand, scale), \
-			      OpNum, scale); \
+		ARM_add_cs_detail_1( \
+			MI, CONCAT(ARM_OP_GROUP_AdrLabelOperand, scale), \
+			OpNum, scale); \
 		MCOperand *MO = MCInst_getOperand(MI, (OpNum)); \
 \
 		if (MCOperand_isExpr(MO)) { \
@@ -1079,9 +1080,9 @@ static inline void printT2SOOperand(MCInst *MI, unsigned OpNum, SStream *O)
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
 		ARM_add_cs_detail_1(MI, \
-			      CONCAT(ARM_OP_GROUP_AddrModeImm12Operand, \
-				     AlwaysPrintImm0), \
-			      OpNum, AlwaysPrintImm0); \
+				    CONCAT(ARM_OP_GROUP_AddrModeImm12Operand, \
+					   AlwaysPrintImm0), \
+				    OpNum, AlwaysPrintImm0); \
 		MCOperand *MO1 = MCInst_getOperand(MI, (OpNum)); \
 		MCOperand *MO2 = MCInst_getOperand(MI, (OpNum + 1)); \
 \
@@ -1120,9 +1121,9 @@ DEFINE_printAddrModeImm12Operand(true);
 						   unsigned OpNum, SStream *O) \
 	{ \
 		ARM_add_cs_detail_1(MI, \
-			      CONCAT(ARM_OP_GROUP_T2AddrModeImm8Operand, \
-				     AlwaysPrintImm0), \
-			      OpNum, AlwaysPrintImm0); \
+				    CONCAT(ARM_OP_GROUP_T2AddrModeImm8Operand, \
+					   AlwaysPrintImm0), \
+				    OpNum, AlwaysPrintImm0); \
 		MCOperand *MO1 = MCInst_getOperand(MI, (OpNum)); \
 		MCOperand *MO2 = MCInst_getOperand(MI, (OpNum + 1)); \
 \
@@ -1155,10 +1156,11 @@ DEFINE_printT2AddrModeImm8Operand(false);
 				  AlwaysPrintImm0)(MCInst * MI, \
 						   unsigned OpNum, SStream *O) \
 	{ \
-		ARM_add_cs_detail_1(MI, \
-			      CONCAT(ARM_OP_GROUP_T2AddrModeImm8s4Operand, \
-				     AlwaysPrintImm0), \
-			      OpNum, AlwaysPrintImm0); \
+		ARM_add_cs_detail_1( \
+			MI, \
+			CONCAT(ARM_OP_GROUP_T2AddrModeImm8s4Operand, \
+			       AlwaysPrintImm0), \
+			OpNum, AlwaysPrintImm0); \
 		MCOperand *MO1 = MCInst_getOperand(MI, (OpNum)); \
 		MCOperand *MO2 = MCInst_getOperand(MI, (OpNum + 1)); \
 \
@@ -1195,7 +1197,8 @@ DEFINE_printT2AddrModeImm8s4Operand(true);
 static inline void printT2AddrModeImm0_1020s4Operand(MCInst *MI, unsigned OpNum,
 						     SStream *O)
 {
-	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_T2AddrModeImm0_1020s4Operand, OpNum);
+	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_T2AddrModeImm0_1020s4Operand,
+			    OpNum);
 	MCOperand *MO1 = MCInst_getOperand(MI, (OpNum));
 	MCOperand *MO2 = MCInst_getOperand(MI, (OpNum + 1));
 
@@ -1214,7 +1217,8 @@ static inline void printT2AddrModeImm0_1020s4Operand(MCInst *MI, unsigned OpNum,
 static inline void printT2AddrModeImm8OffsetOperand(MCInst *MI, unsigned OpNum,
 						    SStream *O)
 {
-	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_T2AddrModeImm8OffsetOperand, OpNum);
+	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_T2AddrModeImm8OffsetOperand,
+			    OpNum);
 	MCOperand *MO1 = MCInst_getOperand(MI, (OpNum));
 	int32_t OffImm = (int32_t)MCOperand_getImm(MO1);
 	SStream_concat(O, "%s", ", ");
@@ -1232,7 +1236,8 @@ static inline void printT2AddrModeImm8OffsetOperand(MCInst *MI, unsigned OpNum,
 static inline void
 printT2AddrModeImm8s4OffsetOperand(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_T2AddrModeImm8s4OffsetOperand, OpNum);
+	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_T2AddrModeImm8s4OffsetOperand,
+			    OpNum);
 	MCOperand *MO1 = MCInst_getOperand(MI, (OpNum));
 	int32_t OffImm = (int32_t)MCOperand_getImm(MO1);
 
@@ -1366,9 +1371,9 @@ static inline void printFBits16(MCInst *MI, unsigned OpNum, SStream *O)
 {
 	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_FBits16, OpNum);
 	SStream_concat(O, "%s%s", markup("<imm:"), "#");
-	SStream_concat(
-		O, "%" PRIu32,
-		(uint32_t)(16 - MCOperand_getImm(MCInst_getOperand(MI, (OpNum)))));
+	SStream_concat(O, "%" PRIu32,
+		       (uint32_t)(16 - MCOperand_getImm(MCInst_getOperand(
+					       MI, (OpNum)))));
 	SStream_concat0(O, markup(">"));
 }
 
@@ -1516,7 +1521,8 @@ static inline void printVectorListFourAllLanes(MCInst *MI, unsigned OpNum,
 static inline void printVectorListTwoSpacedAllLanes(MCInst *MI, unsigned OpNum,
 						    SStream *O)
 {
-	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_VectorListTwoSpacedAllLanes, OpNum);
+	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_VectorListTwoSpacedAllLanes,
+			    OpNum);
 	unsigned Reg = MCOperand_getReg(MCInst_getOperand(MI, (OpNum)));
 	unsigned Reg0 = MCRegisterInfo_getSubReg(MI->MRI, Reg, ARM_dsub_0);
 	unsigned Reg1 = MCRegisterInfo_getSubReg(MI->MRI, Reg, ARM_dsub_2);
@@ -1530,7 +1536,8 @@ static inline void printVectorListTwoSpacedAllLanes(MCInst *MI, unsigned OpNum,
 static inline void
 printVectorListThreeSpacedAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 {
-	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_VectorListThreeSpacedAllLanes, OpNum);
+	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_VectorListThreeSpacedAllLanes,
+			    OpNum);
 	// Normally, it's not safe to use register enum values directly with
 	// addition to get the next register, but for VFP registers, the
 	// sort order is guaranteed because they're all of the form D<n>.
@@ -1546,7 +1553,8 @@ printVectorListThreeSpacedAllLanes(MCInst *MI, unsigned OpNum, SStream *O)
 static inline void printVectorListFourSpacedAllLanes(MCInst *MI, unsigned OpNum,
 						     SStream *O)
 {
-	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_VectorListFourSpacedAllLanes, OpNum);
+	ARM_add_cs_detail_0(MI, ARM_OP_GROUP_VectorListFourSpacedAllLanes,
+			    OpNum);
 	// Normally, it's not safe to use register enum values directly with
 	// addition to get the next register, but for VFP registers, the
 	// sort order is guaranteed because they're all of the form D<n>.
@@ -1599,8 +1607,9 @@ static inline void printVectorListFourSpaced(MCInst *MI, unsigned OpNum,
 	static inline void CONCAT(printMVEVectorList, NumRegs)( \
 		MCInst * MI, unsigned OpNum, SStream *O) \
 	{ \
-		ARM_add_cs_detail_1(MI, CONCAT(ARM_OP_GROUP_MVEVectorList, NumRegs), \
-			      OpNum, NumRegs); \
+		ARM_add_cs_detail_1( \
+			MI, CONCAT(ARM_OP_GROUP_MVEVectorList, NumRegs), \
+			OpNum, NumRegs); \
 		unsigned Reg = \
 			MCOperand_getReg(MCInst_getOperand(MI, (OpNum))); \
 		const char *Prefix = "{"; \
@@ -1627,7 +1636,8 @@ DEFINE_printMVEVectorList(2) DEFINE_printMVEVectorList(4)
 			OpNo, Angle, Remainder); \
 		unsigned Val = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNo))); \
-		SStream_concat(O, "#%u", (uint32_t)((Val * Angle) + Remainder)); \
+		SStream_concat(O, "#%u", \
+			       (uint32_t)((Val * Angle) + Remainder)); \
 	}
 	DEFINE_printComplexRotationOp(90, 0) DEFINE_printComplexRotationOp(180,
 									   90)
