@@ -231,12 +231,21 @@ static inline void RISCV_add_ret_group(MCInst *MI)
 	}
 	if (MI->Opcode == RISCV_JALR) {
 		// indirect jumps whose source is ra
+		cs_riscv_op *dstreg = RISCV_get_detail_op_at(MI, 0);
 		cs_riscv_op *op = RISCV_get_detail_op_at(MI, 1);
+		cs_riscv_op *op2 = RISCV_get_detail_op_at(MI, 2);
 		if ((op->type == (riscv_op_type)CS_OP_REG) &&
-		    op->reg == RISCV_REG_X1) {
+		    op->reg == RISCV_REG_X1 &&
+		    op2->type == (riscv_op_type)CS_OP_IMM && op2->imm == 0 &&
+		    dstreg->type == (riscv_op_type)CS_OP_REG &&
+		    dstreg->reg == RISCV_REG_X0) {
 			add_group(MI, RISCV_GRP_RET);
 		} else {
-			add_group(MI, RISCV_GRP_JUMP);
+			if (!((dstreg->type == (riscv_op_type)CS_OP_REG) &&
+			      dstreg->reg != RISCV_REG_X0 &&
+			      (dstreg->access & CS_AC_WRITE))) {
+				add_group(MI, RISCV_GRP_JUMP);
+			}
 		}
 	}
 }
