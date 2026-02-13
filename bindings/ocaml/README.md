@@ -1,7 +1,9 @@
 To compile Ocaml binding, Ocaml toolchain is needed. On Ubuntu Linux,
 you can install Ocaml with:
 
-    $ sudo apt-get install ocaml-nox
+```
+$ sudo apt-get install ocaml-nox
+```
 
 To compile Ocaml binding, simply run "make" on the command line.
 

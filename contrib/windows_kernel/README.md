@@ -1,8 +1,8 @@
 For Windows kernel programming, the SDK does not offer some functions
 needed by Capstone. The missing functions are: 
 
-	- Memory allocations: malloc(), calloc(), realloc() & free().
-	- Format input variables & write out result to char buffer: vsnprintf()
+- Memory allocations: malloc(), calloc(), realloc() & free().
+- Format input variables & write out result to char buffer: vsnprintf()
 
 This directory contains some code providing above-mentioned functions, so you can
 integrate Capstone with your Windows-kernel drivers using C++.

@@ -1,5 +1,5 @@
 This directory contains bindings & test code for Python, Java & OCaml.
-See <language>/README for how to compile & install each binding.
+See `<language>/README.md` for how to compile & install each binding.
 
 More bindings created & maintained by the community are available as followings.
 

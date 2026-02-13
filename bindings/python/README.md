@@ -58,7 +58,7 @@ Capstone offers some unparalleled features:
 Further information is available at http://www.capstone-engine.org
 
 
-[License]
+## License
 
 This project is released under the BSD license. If you redistribute the binary
 or source code of Capstone, please attach file LICENSE.TXT with your products.
