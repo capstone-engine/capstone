@@ -411,7 +411,7 @@ static void Mips_set_detail_op_unsigned_address(MCInst *MI, unsigned OpNum)
 	Mips_set_detail_op_imm(MI, OpNum, Target);
 }
 
-void Mips_add_cs_detail(MCInst *MI, mips_op_group op_group, size_t OpNum)
+void Mips_add_cs_detail_0(MCInst *MI, mips_op_group op_group, size_t OpNum)
 {
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;

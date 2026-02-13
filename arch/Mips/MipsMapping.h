@@ -39,14 +39,7 @@ void Mips_init_cs_detail(MCInst *MI);
 
 void Mips_set_mem_access(MCInst *MI, bool status);
 
-void Mips_add_cs_detail(MCInst *MI, mips_op_group op_group, size_t op_num);
-
-static inline void add_cs_detail(MCInst *MI, mips_op_group op_group, size_t op_num)
-{
-	if (!detail_is_set(MI))
-		return;
-	Mips_add_cs_detail(MI, op_group, op_num);
-}
+void Mips_add_cs_detail_0(MCInst *MI, mips_op_group op_group, size_t op_num);
 
 static inline void set_mem_access(MCInst *MI, bool status)
 {

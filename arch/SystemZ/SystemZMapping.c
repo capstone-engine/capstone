@@ -159,7 +159,7 @@ const char *SystemZ_group_name(csh handle, unsigned int id)
 #endif
 }
 
-void SystemZ_add_cs_detail(MCInst *MI, int /* systemz_op_group */ op_group,
+void SystemZ_add_cs_detail_0(MCInst *MI, int /* systemz_op_group */ op_group,
 			   size_t op_num)
 {
 #ifndef CAPSTONE_DIET

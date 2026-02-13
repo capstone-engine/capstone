@@ -209,7 +209,7 @@ void ARC_set_detail_op_reg(MCInst *MI, unsigned OpNum, arc_reg Reg)
 	ARC_inc_op_count(MI);
 }
 
-void ARC_add_cs_detail(MCInst *MI, int op_group, size_t OpNum)
+void ARC_add_cs_detail_0(MCInst *MI, int op_group, size_t OpNum)
 {
 	if (!detail_is_set(MI))
 		return;
