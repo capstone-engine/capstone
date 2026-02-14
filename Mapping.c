@@ -44,6 +44,7 @@ const insn_map *lookup_insn_map(cs_struct *handle, unsigned short id)
 	// If this is getting called, we need the cache to already be populated
 	// (this should be done when populate_insn_map_cache() gets called).
 	CS_ASSERT(handle->insn_cache);
+	CS_ASSERT(handle->insn_map_size);
 
 	unsigned short highest_id =
 		handle->insn_map[handle->insn_map_size - 1].id;
