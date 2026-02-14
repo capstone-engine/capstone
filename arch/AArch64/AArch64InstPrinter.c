@@ -1131,7 +1131,7 @@ void printShifter(MCInst *MI, unsigned OpNum, SStream *O)
 	    AArch64_AM_getShiftValue(Val) == 0)
 		return;
 	SStream_concat(
-		O, "%s%s%s%s#%d", ", ",
+		O, "%s%s%s%s#%u", ", ",
 		AArch64_AM_getShiftExtendName(AArch64_AM_getShiftType(Val)),
 		" ", markup("<imm:"), AArch64_AM_getShiftValue(Val));
 	SStream_concat0(O, markup(">"));
@@ -1202,7 +1202,7 @@ static void printMemExtendImpl(bool SignExtend, bool DoShift, unsigned Width,
 		if (getUseMarkup)
 			SStream_concat0(O, "<imm:");
 		unsigned ShiftAmount = DoShift ? Log2_32(Width / 8) : 0;
-		SStream_concat(O, "%s%d", "#", ShiftAmount);
+		SStream_concat(O, "%s%u", "#", ShiftAmount);
 		if (getUseMarkup)
 			SStream_concat0(O, ">");
 	}
@@ -2319,7 +2319,8 @@ void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned Val = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNo))); \
 		SStream_concat(O, "%s", markup("<imm:")); \
-		SStream_concat(O, "#%d", (Val * Angle) + Remainder); \
+		SStream_concat(O, "#%" PRId32, \
+			       (int32_t)((Val * Angle) + Remainder)); \
 		SStream_concat0(O, markup(">")); \
 	}
 DEFINE_printComplexRotationOp(180, 90);

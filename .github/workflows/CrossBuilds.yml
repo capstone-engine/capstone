@@ -16,6 +16,8 @@ on:
       - "SPONSORS.TXT"
       - "TODO"
   pull_request:
+  release:
+    types: [published]
 
 # Stop previous runs on the same branch on new push
 concurrency:
@@ -42,29 +44,35 @@ jobs:
               arch: x64,
               build-system: 'cmake',
               diet-build: 'OFF',
-              build_type: 'Debug',
+              build_type: 'Release',
+              upload_name: 'capstone_s390x',
+              build_exe: false,
               diet_build: false,
               packages: 'gcc-s390x-linux-gnu g++-s390x-linux-gnu binutils-s390x-linux-gnu libc6-dev-s390x-cross qemu-user-static',
               cross_file: 'cross_configs/linux_s390x_ubuntu24.cmake',
             }
-          # - {
-          #     name: 'QEMU Linux Mips 32',
-          #     os: ubuntu-24.04,
-          #     arch: x64,
-          #     build-system: 'cmake',
-          #     diet-build: 'OFF',
-          #     build_type: 'Debug',
-          #     diet_build: false,
-          #     packages: 'gcc-mips-linux-gnu g++-mips-linux-gnu binutils-mips-linux-gnu libc6-dev-mips-cross qemu-user-static',
-          #     cross_file: 'cross_configs/linux_mips_ubuntu24.cmake',
-          #   }
+          - {
+              name: 'QEMU Linux Mips 32',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              build_type: 'Release',
+              upload_name: 'capstone_mips32',
+              build_exe: false,
+              diet_build: false,
+              packages: 'gcc-mips-linux-gnu g++-mips-linux-gnu binutils-mips-linux-gnu libc6-dev-mips-cross qemu-user-static',
+              cross_file: 'cross_configs/linux_mips_ubuntu24.cmake',
+            }
           - {
               name: 'QEMU Linux Mips64el',
               os: ubuntu-24.04,
               arch: x64,
               build-system: 'cmake',
               diet-build: 'OFF',
-              build_type: 'Debug',
+              build_type: 'Release',
+              upload_name: 'capstone_mips64el',
+              build_exe: false,
               diet_build: false,
               packages: 'gcc-mips64el-linux-gnuabi64 g++-mips64el-linux-gnuabi64 binutils-mips64el-linux-gnuabi64 libc6-dev-mips64el-cross qemu-user-static',
               cross_file: 'cross_configs/linux_mips64_ubuntu24.cmake',
@@ -75,10 +83,40 @@ jobs:
               arch: x64,
               build-system: 'cmake',
               diet-build: 'OFF',
-              build_type: 'Debug',
+              build_type: 'Release',
+              upload_name: 'capstone_ppc64',
+              build_exe: false,
               diet_build: false,
               packages: 'gcc-powerpc64-linux-gnu g++-powerpc64-linux-gnu binutils-powerpc64-linux-gnu libc6-dev-ppc64-cross qemu-user-static',
               cross_file: 'cross_configs/linux_ppc64_ubuntu24.cmake',
+            }
+          - {
+              name: 'QEMU Linux ARM',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              build_type: 'Release',
+              upload_name: 'capstone_arm_v7',
+              build_exe: false,
+              diet_build: false,
+              packages: 'gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-armhf-cross libc6-dev-armhf-cross qemu-user-static',
+              cross_file: 'cross_configs/linux_arm_ubuntu24.cmake',
+            }
+          - {
+              name: '[BUILD ONLY] Windows i686 mingw',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              build_type: 'Release',
+              upload_name: 'capstone_win_i686',
+              build_exe: true,
+              diet_build: false,
+              # Tests are run via Python.
+              skip_tests: true,
+              packages: 'gcc-mingw-w64-i686 g++-mingw-w64-i686 mingw-w64-tools nsis',
+              cross_file: 'cross_configs/windows_i686_ubuntu24.cmake',
             }
           - {
               name: '[BUILD ONLY] Android 35 (arm64_v8a) NDK 29',
@@ -87,10 +125,12 @@ jobs:
               build-system: 'cmake',
               build_option: '-DANDROID_NDK=ndk/ -DANDROID_PLATFORM=android-35 -DANDROID_ABI=arm64-v8a',
               diet-build: 'OFF',
-              build_type: 'Debug',
+              build_type: 'Release',
+              upload_name: 'capstone_android_35_arm64_v8a',
+              build_exe: false,
               diet_build: false,
               # QEMU alone can't emulate the binaries, because the NDK doesn't
-              # provide dynamic linker.
+              # provide a dynamic linker.
               skip_tests: true,
               packages: 'qemu-user-static',
               ndk_version: 'r29',
@@ -177,3 +217,48 @@ jobs:
       if: ${{ matrix.config.skip_tests != true }}
       run: |
         ctest --test-dir build --output-on-failure -R legacy*
+
+    - name: Package binary tar.gz
+      if: ${{ matrix.config.build_exe == false }}
+      run: |
+        cd build
+        cpack -G TGZ
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ matrix.config.build_exe == false }}
+      with:
+        name: ${{ matrix.config.upload_name }}
+        path: ./build/*.tar.gz
+
+    - name: Upload binary package to release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release' && matrix.config.build_exe == false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.event.release.tag_name }}
+        files: |
+          ./build/*.tar.gz
+
+    - name: Package NSIS installer
+      if: ${{ matrix.config.build_exe }}
+      run: |
+        makensis -VERSION
+        cd build
+        cpack -G NSIS
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ matrix.config.build_exe }}
+      with:
+        name: ${{ matrix.config.upload_name }}
+        path: ./build/capstone-*.exe
+
+    - name: Upload NSIS installer to release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release' && matrix.config.build_exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.event.release.tag_name }}
+        files: |
+          ./build/capstone-*.exe
