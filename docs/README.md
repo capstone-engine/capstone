@@ -1,0 +1,66 @@
+# Documentation of Capstone disassembly framework.
+
+**Switching to 2.1 engine.**
+
+https://capstone-engine.org/version_2.1_API.html
+
+**How to compile & install Capstone.**
+
+https://capstone-engine.org/documentation.html
+
+**Programming with C language.**
+
+https://capstone-engine.org/lang_c.html
+
+**Programming with Python language.**
+
+https://capstone-engine.org/lang_python.html
+
+**Programming with Java language.**
+
+https://capstone-engine.org/lang_java.html
+
+**Customize instruction mnemonics at run-time.**
+
+https://capstone-engine.org/mnemonic.html
+
+**Retrieve access information of instruction operands.**
+
+https://capstone-engine.org/op_access.html
+
+**Build compact engine with only selected architectures.**
+
+https://capstone-engine.org/compile.html
+
+**Build "diet" engine for even smaller libraries.**
+
+https://capstone-engine.org/diet.html
+
+**Build embedded engine for firmware/OS kernel.**
+
+https://capstone-engine.org/embed.html
+
+**SKIPDATA mode to keep disassembling after hitting a broken instruction.**
+
+https://capstone-engine.org/skipdata.html
+
+**Quickly iterate instructions with cs_disasm_iter().**
+
+https://capstone-engine.org/iteration.html
+
+**Build X86-reduce engine for firmware/OS kernel.**
+
+https://capstone-engine.org/x86reduce.html
+
+**Sample applications on how to embed Capstone into Windows kernel driver.**
+
+https://github.com/aquynh/capstone/tree/master/contrib/cs_driver (in C, basic)
+https://github.com/aquynh/KernelProject (in C++)
+
+**Sample application on how to embed Capstone into Mac OSX Kext (kernel).**
+
+https://github.com/aquynh/CapstoneTest
+	
+**A Micro Capstone-Engine API Documentation in Chinese**
+
+https://github.com/kabeor/Micro-Capstone-Engine-API-Documentation/blob/master/Micro%20Capstone-Engine%20API%20Documentation.md

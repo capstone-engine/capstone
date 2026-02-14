@@ -1,6 +1,6 @@
 0. This documentation explains how to install the Python bindings for Capstone
    from source. If you want to install it from a PyPi package (recommended if
-   you are on Windows), see README.txt.
+   you are on Windows), see README.md.
 
 1. To install Capstone and the Python bindings on *nix, run the command below:
 

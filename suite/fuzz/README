@@ -1,2 +1,0 @@
-This directory contains a fuzz testing harness for Capstone.
-Run "make" to compile this code.
