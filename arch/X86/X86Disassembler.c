@@ -1382,19 +1382,17 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			if (insn.hasAdSize)
 				Flags |= X86_IP_HAS_AD_SIZE;
 
-			if (!insn.mandatoryPrefix) {
-				if (insn.hasOpSize)
-					Flags |= X86_IP_HAS_OP_SIZE;
+			if (insn.hasOpSize)
+				Flags |= X86_IP_HAS_OP_SIZE;
 
-				if (insn.repeatPrefix == 0xf2)
-					Flags |= X86_IP_HAS_REPEAT_NE;
-				else if (insn.repeatPrefix == 0xf3 &&
-					 // It should not be 'pause' f3 90
-					 insn.opcode != 0x90)
-					Flags |= X86_IP_HAS_REPEAT;
-				if (insn.hasLockPrefix)
-					Flags |= X86_IP_HAS_LOCK;
-			}
+			if (insn.repeatPrefix == 0xf2)
+				Flags |= X86_IP_HAS_REPEAT_NE;
+			else if (insn.repeatPrefix == 0xf3 &&
+				 // It should not be 'pause' f3 90
+				 insn.opcode != 0x90)
+				Flags |= X86_IP_HAS_REPEAT;
+			if (insn.hasLockPrefix)
+				Flags |= X86_IP_HAS_LOCK;
 
 			instr->flags = Flags;
 		}

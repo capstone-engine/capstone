@@ -590,9 +590,6 @@ typedef struct InternalInstruction {
 	// The repeat prefix if any
 	uint8_t repeatPrefix;
 
-	// The possible mandatory prefix
-	uint8_t mandatoryPrefix;
-
 	/* The value of the vector extension prefix(EVEX/VEX/XOP), if present */
 	uint8_t vectorExtensionPrefix[4];
 

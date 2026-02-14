@@ -1,0 +1,616 @@
+test_cases:
+  -
+    input:
+      name: "x86 (16-bit): last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0x66, 0xF2, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "addsd xmm0, xmm1"
+  -
+    input:
+      name: "x86 (16-bit): last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0xF2, 0x66, 0xF3, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "addss xmm0, xmm1"
+  -
+    input:
+      name: "x86 (16-bit): last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0xF2, 0x3e, 0x66, 0xF3, 0x2e, 0x66, 0x66, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "addss xmm0, xmm1"
+  -
+    input:
+      name: "x86 (16-bit): do not ignore mandatory 66 prefix when no mandatory F2/F3 prefix is present"
+      bytes: [ 0x66, 0x3e, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "addpd xmm0, xmm1"
+  -
+    input:
+      name: "x86 (32-bit): last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0x66, 0xF2, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "addsd xmm0, xmm1"
+  -
+    input:
+      name: "x86 (32-bit): last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0xF2, 0x66, 0xF3, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "addss xmm0, xmm1"
+  -
+    input:
+      name: "x86 (32-bit): last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0xF2, 0x3e, 0x66, 0xF3, 0x2e, 0x66, 0x66, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "addss xmm0, xmm1"
+  -
+    input:
+      name: "x86 (32-bit): do not ignore mandatory 66 prefix when no mandatory F2/F3 prefix is present"
+      bytes: [ 0x66, 0x3e, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "addpd xmm0, xmm1"
+  -
+    input:
+      name: "x86 (64-bit): last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0x66, 0xF2, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "addsd xmm0, xmm1"
+  -
+    input:
+      name: "x86 (64-bit): last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0xF2, 0x66, 0xF3, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "addss xmm0, xmm1"
+  -
+    input:
+      name: "x86 (64-bit): last mandatory F2/F3 prefix should take priority"
+      bytes: [ 0xF2, 0x3e, 0x66, 0xF3, 0x2e, 0x66, 0x66, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "addss xmm0, xmm1"
+  -
+    input:
+      name: "x86 (64-bit): do not ignore mandatory 66 prefix when no mandatory F2/F3 prefix is present"
+      bytes: [ 0x66, 0x3e, 0x0F, 0x58, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "addpd xmm0, xmm1"
+  -
+    input:
+      name: "x86 (16-bit): SHLD should not ignore data size override prefix, because it is not a mandatory prefix"
+      bytes: [ 0xf3, 0x3e, 0x66, 0x0f, 0xa4, 0x84, 0x17, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "shld dword ptr ds:[si + 23], eax, 0"
+  -
+    input:
+      name: "x86 (32-bit): SHLD should not ignore data size override prefix, because it is not a mandatory prefix"
+      bytes: [ 0xf3, 0x3e, 0x66, 0x67, 0x0f, 0xa4, 0x84, 0x17, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "shld word ptr ds:[si + 0x17], ax, 0"
+  -
+    input:
+      name: "x86 (64-bit): SHLD should not ignore data size override prefix, because it is not a mandatory prefix"
+      bytes: [ 0xf3, 0x3e, 0x66, 0x67, 0x0f, 0xa4, 0x84, 0x17, 0x00, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "shld word ptr [edi + edx], ax, 0"
+  -
+    input:
+      name: "x86: POPCNT requires mandatory prefix, but also should allow data size override"
+      bytes: [ 0xf3, 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "popcnt eax, ebx"
+  -
+    input:
+      name: "x86: POPCNT requires mandatory prefix, but also should allow data size override"
+      bytes: [ 0x66, 0xf3, 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "popcnt ax, bx"
+  -
+    input:
+      name: "x86: POPCNT requires mandatory prefix, but also should allow data size override"
+      bytes: [ 0xf3, 0x66, 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "popcnt ax, bx"
+  -
+    input:
+      name: "x86: POPCNT without mandatory prefix should not decode successfully"
+      bytes: [ 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: POPCNT with incorrect mandatory prefix should not decode successfully"
+      bytes: [ 0xf2, 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: POPCNT without mandatory prefix but with data size override should not decode successfully"
+      bytes: [ 0x66, 0x0f, 0xb8, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: XADD without data size override should decode correctly"
+      bytes: [ 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd eax, ebx"
+  -
+    input:
+      name: "x86: XADD with data size override should decode correctly"
+      bytes: [ 0x66, 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd ax, bx"
+  -
+    input:
+      name: "x86: XADD with redundant REP prefix should decode correctly"
+      bytes: [ 0xF2, 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd eax, ebx"
+  -
+    input:
+      name: "x86: XADD with redundant REP prefix should decode correctly"
+      bytes: [ 0xF3, 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd eax, ebx"
+  -
+    input:
+      name: "x86: XADD with redundant REP prefix and data size override should decode correctly"
+      bytes: [ 0x66, 0xF3, 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd ax, bx"
+  -
+    input:
+      name: "x86: XADD with redundant REP prefix and data size override should decode correctly"
+      bytes: [ 0xF2, 0x66, 0x0f, 0xc1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xadd ax, bx"
+  # We test CMPEQPS because it shares the same 0xB_ opcodes with XADD. XADD ignores the REP prefix, while it is relevant for CMPEQPS.
+  -
+    input:
+      name: "x86: CMPEQPS should decode correctly"
+      bytes: [ 0x0f, 0xc2, 0xc1, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpeqps xmm0, xmm1"
+  -
+    input:
+      name: "x86: CMPEQSS should decode correctly"
+      bytes: [ 0xf3, 0x0f, 0xc2, 0xc1, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpeqss xmm0, xmm1"
+  -
+    input:
+      name: "x86: CMPEQPD should decode correctly"
+      bytes: [ 0x66, 0x0f, 0xc2, 0xc1, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpeqpd xmm0, xmm1"
+  -
+    input:
+      name: "x86: CMPEQPS should decode correctly"
+      bytes: [ 0xf2, 0x0f, 0xc2, 0xc1, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpeqsd xmm0, xmm1"
+  -
+    input:
+      name: "x86: CMPXCHG should decode correctly with data size override"
+      bytes: [ 0x66, 0x0f, 0xb1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpxchg ax, bx"
+  -
+    input:
+      name: "x86: CMPXCHG should decode correctly with data size override and redundant REP prefixes"
+      bytes: [ 0xf2, 0x67, 0xf3, 0x3e, 0x66, 0x0f, 0xb1, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpxchg ax, bx"
+  -
+    input:
+      name: "x86: ADOX with data size override should decode correctly"
+      bytes: [ 0x66, 0xF3, 0x0F, 0x38, 0xF6, 0x24, 0x27 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "adox esp, dword ptr [rdi + riz]"
+  -
+    input:
+      name: "x86: CRC32 with data size override should decode correctly"
+      bytes: [ 0x66, 0xF2, 0x0F, 0x38, 0xF1, 0x24, 0x27 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "crc32 esp, word ptr [rdi + riz]"
+  -
+    input:
+      name: "x86: CRC32 with data size override should decode correctly"
+      bytes: [ 0xF2, 0x0F, 0x38, 0xF1, 0x24, 0x27 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "crc32 esp, dword ptr [rdi + riz]"
+  -
+    input:
+      name: "x86: MOVBE should decode correctly (is encoded as CRC32 without F2)"
+      bytes: [ 0x0F, 0x38, 0xF1, 0x24, 0x27 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "movbe dword ptr [rdi + riz], esp"
+  -
+    input:
+      name: "x86: PHADDSW should decode correctly without 66 prefix"
+      bytes: [ 0x0F, 0x38, 0x03, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "phaddsw mm0, mm1"
+  -
+    input:
+      name: "x86: PHADDSW should decode correctly with 66 prefix"
+      bytes: [ 0x66, 0x0F, 0x38, 0x03, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "phaddsw xmm0, xmm1"
+  -
+    input:
+      name: "x86: PHADDSW should fail to decode with F2 prefix"
+      bytes: [ 0xF2, 0x0F, 0x38, 0x03, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: PHADDSW should fail to decode with F3 prefix"
+      bytes: [ 0xF3, 0x0F, 0x38, 0x03, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: PHADDSW should fail to decode with F2 and 66 prefix"
+      bytes: [ 0xF2, 0x66, 0x0F, 0x38, 0x03, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: PHADDSW should fail to decode with F3 and 66 prefix"
+      bytes: [ 0xF3, 0x66, 0x0F, 0x38, 0x03, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: SYSCALL should decode correctly without prefixes"
+      bytes: [ 0x0F, 0x05 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "syscall"
+  -
+    input:
+      name: "x86: SYSCALL should decode correctly with 66 prefix"
+      bytes: [ 0x66, 0x0F, 0x05 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "syscall"
+  -
+    input:
+      name: "x86: SYSCALL should decode correctly with F2 prefix"
+      bytes: [ 0xF2, 0x0F, 0x05 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "syscall"
+  -
+    input:
+      name: "x86: SYSCALL should decode correctly with F3 prefix"
+      bytes: [ 0xF3, 0x0F, 0x05 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "syscall"
+  -
+    input:
+      name: "x86: SYSCALL should decode correctly with many ignored prefixes"
+      bytes: [ 0x67, 0xF2, 0x3E, 0x66, 0xF3, 0x66, 0x64, 0xF2, 0xF2, 0x66, 0x0F, 0x05 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "syscall"
+  -
+    input:
+      name: "x86: MOV reg, creg should decode correctly without prefixes"
+      bytes: [ 0x0F, 0x20, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov rax, cr0"
+  -
+    input:
+      name: "x86: MOV reg, creg should ignore data size override prefix"
+      bytes: [ 0x66, 0x0F, 0x20, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov rax, cr0"
+  -
+    input:
+      name: "x86: MOV reg, creg should decode correctly with F2 prefix"
+      bytes: [ 0xF2, 0x0F, 0x20, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov rax, cr0"
+  -
+    input:
+      name: "x86: MOV reg, creg should decode correctly with F3 prefix"
+      bytes: [ 0xF3, 0x0F, 0x20, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov rax, cr0"
+  -
+    input:
+      name: "x86: MOV reg, creg should decode correctly with many ignored prefixes"
+      bytes: [ 0x67, 0xF2, 0x3E, 0x66, 0xF3, 0x66, 0x64, 0xF2, 0xF2, 0x66, 0x0F, 0x20, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov rax, cr0"
+  -
+    input:
+      name: "x86: CMOVo should respect data size override"
+      bytes: [ 0x66, 0x0f, 0x40, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmovo ax, word ptr [rax]"
+  -
+    input:
+      name: "x86: PACKUSWB should be invalid with F2 prefix"
+      bytes: [ 0xF2, 0x0f, 0x67, 0xc1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: PACKUSWB should be invalid with F2, 66 prefix"
+      bytes: [ 0xF2, 0x66, 0x0f, 0x67, 0xc1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: PACKUSWB should be invalid with F3 prefix"
+      bytes: [ 0xF3, 0x0f, 0x67, 0xc1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: PACKUSWB should be invalid with F3, 66 prefix"
+      bytes: [ 0xF3, 0x66, 0x0f, 0x67, 0xc1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: NOP should respect data size override prefix"
+      bytes: [ 0xF3, 0xF2, 0x66, 0xF3, 0x0f, 0x19, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "nop word ptr [rax]"
+  -
+    input:
+      name: "x86: NOP should respect data size override prefix"
+      bytes: [ 0xF3, 0xF2, 0xF3, 0x0f, 0x19, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "nop dword ptr [rax]"
+  -
+    input:
+      name: "x86: PSLLW with F2 prefix should be invalid"
+      bytes: [ 0xF2, 0x66, 0x0F, 0xF1, 0xC1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86: RDRAND should decode correctly"
+      bytes: [ 0x0F, 0xC7, 0xF0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: 
+      -
+        asm_text: "rdrand eax"
+  -
+    input:
+      name: "x86: RDRAND should respect data size override"
+      bytes: [ 0x66, 0x0F, 0xC7, 0xF0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: 
+      -
+        asm_text: "rdrand ax"
+  -
+    input:
+      name: "x86: RDRAND should fail to decode with F2 prefix"
+      bytes: [ 0xF2, 0x0F, 0xC7, 0xF0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []

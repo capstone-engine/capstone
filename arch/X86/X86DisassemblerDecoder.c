@@ -353,15 +353,13 @@ static bool isREX(struct InternalInstruction *insn, uint8_t prefix)
 }
 
 /*
- * setPrefixPresent - Marks that a particular prefix is present as mandatory
+ * setGroup0Prefix - Updates the decoded instruction according to the group 0-prefix.
  *
- * @param insn      - The instruction to be marked as having the prefix.
- * @param prefix    - The prefix that is present.
+ * @param insn      - The instruction to be updated.
+ * @param prefix    - The group 0 prefix that is present.
  */
-static void setPrefixPresent(struct InternalInstruction *insn, uint8_t prefix)
+static void setGroup0Prefix(struct InternalInstruction *insn, uint8_t prefix)
 {
-	uint8_t nextByte;
-
 	switch (prefix) {
 	case 0xf0: // LOCK
 		insn->hasLockPrefix = true;
@@ -370,30 +368,8 @@ static void setPrefixPresent(struct InternalInstruction *insn, uint8_t prefix)
 
 	case 0xf2: // REPNE/REPNZ
 	case 0xf3: // REP or REPE/REPZ
-		if (lookAtByte(insn, &nextByte))
-			break;
-		// TODO:
-		//  1. There could be several 0x66
-		//  2. if (nextByte == 0x66) and nextNextByte != 0x0f then
-		//      it's not mandatory prefix
-		//  3. if (nextByte >= 0x40 && nextByte <= 0x4f) it's REX and we need
-		//     0x0f exactly after it to be mandatory prefix
-		if (isREX(insn, nextByte) || nextByte == 0x0f ||
-		    nextByte == 0x66)
-			// The last of 0xf2 /0xf3 is mandatory prefix
-			insn->mandatoryPrefix = prefix;
-
 		insn->repeatPrefix = prefix;
 		insn->hasLockPrefix = false;
-		break;
-
-	case 0x66:
-		if (lookAtByte(insn, &nextByte))
-			break;
-		// 0x66 can't overwrite existing mandatory prefix and should be ignored
-		if (!insn->mandatoryPrefix &&
-		    (nextByte == 0x0f || isREX(insn, nextByte)))
-			insn->mandatoryPrefix = prefix;
 		break;
 	}
 }
@@ -552,7 +528,7 @@ static int readPrefixes(struct InternalInstruction *insn)
 		case 0xf2: /* REPNE/REPNZ */
 		case 0xf3: /* REP or REPE/REPZ */
 			// only accept the last prefix
-			setPrefixPresent(insn, byte);
+			setGroup0Prefix(insn, byte);
 			insn->prefix0 = byte;
 			break;
 
@@ -585,18 +561,15 @@ static int readPrefixes(struct InternalInstruction *insn)
 				// debug("Unhandled override");
 				return -1;
 			}
-			setPrefixPresent(insn, byte);
 			break;
 
 		case 0x66: /* Operand-size override */
 			insn->hasOpSize = true;
-			setPrefixPresent(insn, byte);
 			insn->prefix2 = byte;
 			break;
 
 		case 0x67: /* Address-size override */
 			insn->hasAdSize = true;
-			setPrefixPresent(insn, byte);
 			insn->prefix3 = byte;
 			break;
 		default: /* Not a prefix byte */
@@ -943,10 +916,7 @@ static int readOpcode(struct InternalInstruction *insn)
 			// dbgprintf(insn, "Didn't find a three-byte escape prefix");
 			insn->opcodeType = TWOBYTE;
 		}
-	} else if (insn->mandatoryPrefix)
-		// The opcode with mandatory prefix must start with opcode escape.
-		// If not it's legacy repeat prefix
-		insn->mandatoryPrefix = 0;
+	}
 
 	/*
 	 * At this point we have consumed the full opcode.
@@ -1041,6 +1011,158 @@ static bool is64Bit(uint16_t id)
 
 	// not found??
 	return false;
+}
+
+typedef enum {
+	DO_NOT_RESOLVE = 0,
+	IGNORE_REP = 1,
+	IGNORE_DATA_SIZE = 2,
+} MandatoryPrefixResolution;
+
+/*
+ * shouldResolveMandatoryPrefixConflict - Resolves conflicts between the 
+ * data size override prefix and the REP/REPNZ prefixes in the attribute 
+ * mask when needed.
+ *
+ * We need to resolve these conflicts, because the TableGen lookups we 
+ * perform distinguish between instructions with and without REP.
+ * For example, there may be an entry for SHLD with a DATA16 data size 
+ * override prefix, but no entry for REP + DATA16.
+ * These entries are split, because in some cases the REP and DATA16
+ * prefixes are used as mandatory prefixes.
+ * When both are mandatory prefixes, the effect of prefixing both 
+ * to an instruction at the same time is not specified by
+ * reference manuals.
+ *
+ * Conflicts are resolved by one of these three resolutions:
+ *   - If conflicts should not be resolved, take no action.
+ *   - If conflicts should be resolved and the instruction has no 
+ *     mandatory prefixes, resolves in favor of data size override.
+ *   - If conflicts should be resolved and the instruction has mandatory 
+ *     prefixes, resolves in favor of REP/REPNZ.
+ * 
+ * @param insn - The instruction
+ * @param attrMask - The current attribute mask.
+ */
+static uint16_t resolveMandatoryPrefixConflict(struct InternalInstruction *insn,
+					       uint16_t attrMask)
+{
+	MandatoryPrefixResolution resolution = DO_NOT_RESOLVE;
+
+	// We inspect the opcode map and opcode to determine how we need to resolve
+	// a mandatory prefix conflict.
+	switch (insn->opcodeType) {
+	// No one-byte opcodes have mandatory prefixes.
+	case ONEBYTE:
+		resolution = DO_NOT_RESOLVE;
+		break;
+	case TWOBYTE:
+		// Exceptions for instructions that operate on data size-overridable
+		// operands.
+		if (
+			// XADD
+			(insn->opcode & 0xFE) == 0xC0
+
+			// BSWAP
+			|| (insn->opcode & 0xF8) == 0xC8
+
+			// CMPXCHG, LSS, BTR, LFS, LGS, MOVZX
+			|| (insn->opcode & 0xF8) == 0xB0
+
+			// Group 16, various NOPs
+			|| (insn->opcode & 0xF8) == 0x18
+
+			// UD0
+			|| insn->opcode == 0xFF) {
+			resolution = IGNORE_REP;
+			break;
+		}
+
+		// We inspect the instruction to determine if it operates on xmm
+		// registers or general-purpose registers.
+		//
+		// If it operates on general purpose registers, the data size override
+		// prefix is not a mandatory prefix and should not be ignored.
+		// In most cases, this also means that the REP prefix is not a mandatory
+		// prefix and should be ignored.
+		//
+		// If the instruction operates on xmm registers, the data size override
+		// is used to select the operation type (SS, SD, PS, or PD).
+		// In this case, the REP prefixes take priority over the data size [1]
+		// override prefixes, and when both are present the data size override
+		// prefix should be ignored.
+		//
+		// The exception is 0xB0, where the REP prefixes are mandatory prefixes
+		// but the data size override prefix should still be respected.
+		// For this case we return DO_NOT_RESOLVE, which returns attrMask as-is.
+		//
+		// [1]: https://stackoverflow.com/a/7197365
+		switch (insn->opcode & 0xf0) {
+		case 0x10:
+		case 0x50:
+		case 0x60:
+		case 0x70:
+		case 0xC0:
+		case 0xD0:
+		case 0xE0:
+		case 0xF0:
+			resolution = IGNORE_DATA_SIZE;
+			break;
+		case 0x00:
+		case 0x20:
+		case 0x30:
+		case 0x40:
+		case 0x80:
+		case 0x90:
+		case 0xA0:
+			resolution = IGNORE_REP;
+			break;
+		default: // 0xB0
+			resolution = DO_NOT_RESOLVE;
+			break;
+		}
+		break;
+	case THREEBYTE_38:
+		// Exception: the ADOX and CRC32 instructions.
+		// These ignore the data size override prefix even though they
+		// operate on general-purpose registers.
+		if ((insn->opcode & 0xF0) == 0xF0) {
+			resolution = IGNORE_DATA_SIZE;
+			break;
+		}
+
+		// Do not need to be resolved, all REP+DATA16 combinations are UD
+		// or separately specified.
+		resolution = DO_NOT_RESOLVE;
+		break;
+	case THREEBYTE_3A:
+		// Do not need to be resolved, all REP+DATA16 combinations are UD
+		// or separately specified.
+		resolution = DO_NOT_RESOLVE;
+		break;
+	case XOP8_MAP:
+	case XOP9_MAP:
+	case XOPA_MAP:
+		// These instructions do not appear to operate on XMM/SSE registers,
+		// so the REP prefixes can be safely ignored.
+		resolution = IGNORE_REP;
+		break;
+	case THREEDNOW_MAP:
+		// AMD Reference Manual Volume 3, Section 1.2.1, states that all
+		// 3DNow! instructions ignore the data size override prefix.
+		resolution = IGNORE_DATA_SIZE;
+		break;
+	}
+
+	switch (resolution) {
+	case IGNORE_REP:
+		return attrMask & ~(ATTR_XD | ATTR_XS);
+	case IGNORE_DATA_SIZE:
+		return attrMask & ~ATTR_OPSIZE;
+	default:
+	case DO_NOT_RESOLVE:
+		return attrMask;
+	}
 }
 
 /*
@@ -1139,10 +1261,10 @@ static int getID(struct InternalInstruction *insn)
 		} else {
 			return -1;
 		}
-	} else if (!insn->mandatoryPrefix) {
-		// If we don't have mandatory prefix we should use legacy prefixes here
-		if (insn->hasOpSize && (insn->mode != MODE_16BIT))
+	} else {
+		if (insn->hasOpSize && insn->mode != MODE_16BIT) {
 			attrMask |= ATTR_OPSIZE;
+		}
 		if (insn->hasAdSize)
 			attrMask |= ATTR_ADSIZE;
 		if (insn->opcodeType == ONEBYTE) {
@@ -1156,21 +1278,11 @@ static int getID(struct InternalInstruction *insn)
 			else if (insn->repeatPrefix == 0xf3)
 				attrMask |= ATTR_XS;
 		}
-	} else {
-		switch (insn->mandatoryPrefix) {
-		case 0xf2:
-			attrMask |= ATTR_XD;
-			break;
-		case 0xf3:
-			attrMask |= ATTR_XS;
-			break;
-		case 0x66:
-			if (insn->mode != MODE_16BIT)
-				attrMask |= ATTR_OPSIZE;
-			break;
-		case 0x67:
-			attrMask |= ATTR_ADSIZE;
-			break;
+
+		if ((attrMask & ATTR_OPSIZE) &&
+		    (attrMask & (ATTR_XD | ATTR_XS))) {
+			attrMask =
+				resolveMandatoryPrefixConflict(insn, attrMask);
 		}
 	}
 
