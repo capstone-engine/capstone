@@ -15,6 +15,8 @@ cs_err RISCV_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
+	if (!mri)
+		return CS_ERR_MEM;
 
 	RISCV_init(mri);
 	ud->printer = RISCV_LLVM_printInstruction;
@@ -27,6 +29,8 @@ cs_err RISCV_global_init(cs_struct *ud)
 	ud->insn_id = RISCV_get_insn_id;
 	ud->insn_name = RISCV_insn_name;
 	ud->group_name = RISCV_group_name;
+	ud->insn_map = RISCV_insns;
+	ud->insn_map_size = RISCV_insn_count;
 
 	return CS_ERR_OK;
 }

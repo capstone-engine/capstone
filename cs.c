@@ -16,6 +16,7 @@
 
 #include "utils.h"
 #include "MCRegisterInfo.h"
+#include "Mapping.h"
 
 #if defined(_KERNEL_MODE)
 #include "windows\winkernel_mm.h"
@@ -779,52 +780,59 @@ const char *CAPSTONE_API cs_strerror(cs_err code)
 CAPSTONE_EXPORT
 cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
-	cs_err err;
+	cs_err err = CS_ERR_ARCH;
 	struct cs_struct *ud = NULL;
+
 	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc ||
-	    !cs_mem_free || !cs_vsnprintf)
+	    !cs_mem_free || !cs_vsnprintf) {
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
-		return CS_ERR_MEMSETUP;
-
-	if (arch < CS_ARCH_MAX && arch_configs[arch].arch_init) {
-		// verify if requested mode is valid
-		if (mode & arch_configs[arch].arch_disallowed_mode_mask) {
-			*handle = 0;
-			return CS_ERR_MODE;
-		}
-
-		ud = cs_mem_calloc(1, sizeof(*ud));
-		if (!ud) {
-			// memory insufficient
-			return CS_ERR_MEM;
-		}
-
-		ud->errnum = CS_ERR_OK;
-		ud->arch = arch;
-		ud->mode = mode;
-		// by default, do not break instruction into details
-		ud->detail_opt = CS_OPT_OFF;
-		ud->PrintBranchImmAsAddress = true;
-
-		// default skipdata setup
-		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
-
-		err = arch_configs[ud->arch].arch_init(ud);
-		if (err) {
-			cs_mem_free(ud);
-			*handle = 0;
-			return err;
-		}
-
-		*handle = (uintptr_t)ud;
-
-		return CS_ERR_OK;
-	} else {
-		cs_mem_free(ud);
-		*handle = 0;
-		return CS_ERR_ARCH;
+		err = CS_ERR_MEMSETUP;
+		goto fail;
 	}
+
+	if (arch >= CS_ARCH_MAX || !arch_configs[arch].arch_init) {
+		err = CS_ERR_ARCH;
+		goto fail;
+	}
+
+	// verify if requested mode is valid
+	if (mode & arch_configs[arch].arch_disallowed_mode_mask) {
+		err = CS_ERR_MODE;
+		goto fail;
+	}
+
+	ud = cs_mem_calloc(1, sizeof(*ud));
+	if (!ud) {
+		err = CS_ERR_MEM;
+		goto fail;
+	}
+
+	ud->errnum = CS_ERR_OK;
+	ud->arch = arch;
+	ud->mode = mode;
+	// by default, do not break instruction into details
+	ud->detail_opt = CS_OPT_OFF;
+	ud->PrintBranchImmAsAddress = true;
+
+	// default skipdata setup
+	ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
+
+	if ((err = arch_configs[ud->arch].arch_init(ud)))
+		goto fail;
+
+	if ((err = populate_insn_map_cache(ud)))
+		goto fail;
+
+	*handle = (uintptr_t)ud;
+	return CS_ERR_OK;
+
+fail:
+	if (ud) {
+		cs_mem_free(ud);
+	}
+	*handle = 0;
+	return err;
 }
 
 CAPSTONE_EXPORT
@@ -1113,6 +1121,10 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, uintptr_t value)
 				// 2. add this instruction if we have not had it yet
 				if (!tmp) {
 					tmp = cs_mem_malloc(sizeof(*tmp));
+					if (!tmp) {
+						return CS_ERR_MEM;
+					}
+
 					tmp->insn.id = opt->id;
 					(void)strncpy(
 						tmp->insn.mnemonic,
@@ -1268,6 +1280,17 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size,
 			// allocate memory for @detail pointer
 			insn_cache->detail =
 				cs_mem_calloc(1, sizeof(cs_detail));
+			if (!insn_cache->detail) {
+				insn_cache = (cs_insn *)total;
+				for (i = 0; i < c; i++, insn_cache++)
+					cs_mem_free(insn_cache->detail);
+
+				cs_mem_free(total);
+				*insn = NULL;
+
+				handle->errnum = CS_ERR_MEM;
+				return 0;
+			}
 		} else {
 			insn_cache->detail = NULL;
 		}

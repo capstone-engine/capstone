@@ -23,6 +23,9 @@ static const insn_map insns[] = {
 #include "AlphaGenCSMappingInsn.inc"
 };
 
+const insn_map *Alpha_insns = insns;
+const unsigned int Alpha_insn_count = ARR_SIZE(insns);
+
 static const map_insn_ops insn_operands[] = {
 #include "AlphaGenCSMappingInsnOp.inc"
 };
@@ -81,30 +84,28 @@ void Alpha_set_detail_op_reg(MCInst *MI, unsigned OpNum, alpha_op_type Reg)
 // given internal insn id, return public instruction info
 void Alpha_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	unsigned short i;
+	insn_map const *insn_map = NULL;
 
-	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
-	if (i == 0) {
+	if (!(insn_map = lookup_insn_map(h, id)))
 		return;
-	}
-	insn->id = insns[i].mapid;
+	insn->id = insn_map->mapid;
 
 	if (insn->detail) {
 #ifndef CAPSTONE_DIET
-		memcpy(insn->detail->regs_read, insns[i].regs_use,
-		       sizeof(insns[i].regs_use));
+		memcpy(insn->detail->regs_read, insn_map->regs_use,
+		       sizeof(insn_map->regs_use));
 		insn->detail->regs_read_count =
-			(uint8_t)count_positive(insns[i].regs_use);
+			(uint8_t)count_positive(insn_map->regs_use);
 
-		memcpy(insn->detail->regs_write, insns[i].regs_mod,
-		       sizeof(insns[i].regs_mod));
+		memcpy(insn->detail->regs_write, insn_map->regs_mod,
+		       sizeof(insn_map->regs_mod));
 		insn->detail->regs_write_count =
-			(uint8_t)count_positive(insns[i].regs_mod);
+			(uint8_t)count_positive(insn_map->regs_mod);
 
-		memcpy(insn->detail->groups, insns[i].groups,
-		       sizeof(insns[i].groups));
+		memcpy(insn->detail->groups, insn_map->groups,
+		       sizeof(insn_map->groups));
 		insn->detail->groups_count =
-			(uint8_t)count_positive8(insns[i].groups);
+			(uint8_t)count_positive8(insn_map->groups);
 #endif
 	}
 }
