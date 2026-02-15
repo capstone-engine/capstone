@@ -159,14 +159,12 @@ const char *SystemZ_group_name(csh handle, unsigned int id)
 #endif
 }
 
-void SystemZ_add_cs_detail(MCInst *MI, int /* aarch64_op_group */ op_group,
-			   va_list args)
+void SystemZ_add_cs_detail_0(MCInst *MI, int /* systemz_op_group */ op_group,
+			     size_t op_num)
 {
 #ifndef CAPSTONE_DIET
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
-
-	unsigned op_num = va_arg(args, unsigned);
 
 	switch (op_group) {
 	default:

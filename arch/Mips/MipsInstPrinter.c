@@ -274,7 +274,7 @@ void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 	if (MCOperand_isReg(Op)) {
-		add_cs_detail(MI, Mips_OP_GROUP_Operand, OpNo);
+		Mips_add_cs_detail_0(MI, Mips_OP_GROUP_Operand, OpNo);
 		printRegName(MI, O, MCOperand_getReg(Op));
 		return;
 	}
@@ -300,7 +300,7 @@ void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			(MI, OpNo, O);
 			break;
 		default:
-			add_cs_detail(MI, Mips_OP_GROUP_Operand, OpNo);
+			Mips_add_cs_detail_0(MI, Mips_OP_GROUP_Operand, OpNo);
 			printInt64(O, MCOperand_getImm(Op));
 			break;
 		}
@@ -310,7 +310,7 @@ void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printJumpOperand(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	add_cs_detail(MI, Mips_OP_GROUP_JumpOperand, OpNo);
+	Mips_add_cs_detail_0(MI, Mips_OP_GROUP_JumpOperand, OpNo);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 	if (MCOperand_isReg(Op))
 		return printRegName(MI, O, MCOperand_getReg(Op));
@@ -324,7 +324,7 @@ static void printJumpOperand(MCInst *MI, unsigned OpNo, SStream *O)
 static void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo,
 			       SStream *O)
 {
-	add_cs_detail(MI, Mips_OP_GROUP_BranchOperand, OpNo);
+	Mips_add_cs_detail_0(MI, Mips_OP_GROUP_BranchOperand, OpNo);
 	MCOperand *Op = MCInst_getOperand(MI, (OpNo));
 	if (MCOperand_isReg(Op))
 		return printRegName(MI, O, MCOperand_getReg(Op));
@@ -337,8 +337,9 @@ static void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo,
 	static void CONCAT(printUImm, CONCAT(Bits, 0))(MCInst * MI, int opNum, \
 						       SStream *O) \
 	{ \
-		add_cs_detail(MI, CONCAT(Mips_OP_GROUP_UImm, CONCAT(Bits, 0)), \
-			      opNum); \
+		Mips_add_cs_detail_0( \
+			MI, CONCAT(Mips_OP_GROUP_UImm, CONCAT(Bits, 0)), \
+			opNum); \
 		MCOperand *MO = MCInst_getOperand(MI, (opNum)); \
 		if (MCOperand_isImm(MO)) { \
 			uint64_t Imm = MCOperand_getImm(MO); \
@@ -354,7 +355,7 @@ static void printBranchOperand(MCInst *MI, uint64_t Address, unsigned OpNo,
 	static void CONCAT(printUImm, CONCAT(Bits, Offset))( \
 		MCInst * MI, int opNum, SStream *O) \
 	{ \
-		add_cs_detail( \
+		Mips_add_cs_detail_0( \
 			MI, CONCAT(Mips_OP_GROUP_UImm, CONCAT(Bits, Offset)), \
 			opNum); \
 		MCOperand *MO = MCInst_getOperand(MI, (opNum)); \
@@ -436,8 +437,8 @@ static void printMemOperand(MCInst *MI, int opNum, SStream *O)
 	case Mips_SHX_NM:
 	case Mips_SHXS_NM:
 		if (!MCOperand_isReg(MCInst_getOperand(MI, (opNum + 1)))) {
-			add_cs_detail(MI, Mips_OP_GROUP_MemOperand,
-				      (opNum + 1));
+			Mips_add_cs_detail_0(MI, Mips_OP_GROUP_MemOperand,
+					     (opNum + 1));
 			printRegName(MI, O,
 				     MCOperand_getImm(MCInst_getOperand(
 					     MI, (opNum + 1))));
@@ -603,7 +604,7 @@ static void printRegisterList(MCInst *MI, int opNum, SStream *O)
 {
 	// - 2 because register List is always first operand of instruction and it is
 	// always followed by memory operand (base + offset).
-	add_cs_detail(MI, Mips_OP_GROUP_RegisterList, opNum);
+	Mips_add_cs_detail_0(MI, Mips_OP_GROUP_RegisterList, opNum);
 	for (int i = opNum, e = MCInst_getNumOperands(MI) - 2; i != e; ++i) {
 		if (i != opNum)
 			SStream_concat0(O, ", ");
@@ -614,7 +615,7 @@ static void printRegisterList(MCInst *MI, int opNum, SStream *O)
 
 static void printNanoMipsRegisterList(MCInst *MI, int OpNum, SStream *O)
 {
-	add_cs_detail(MI, Mips_OP_GROUP_NanoMipsRegisterList, OpNum);
+	Mips_add_cs_detail_0(MI, Mips_OP_GROUP_NanoMipsRegisterList, OpNum);
 	for (unsigned I = OpNum; I < MCInst_getNumOperands(MI); I++) {
 		SStream_concat0(O, ", ");
 		printRegName(MI, O,
@@ -626,7 +627,7 @@ static void printHi20(MCInst *MI, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
-		add_cs_detail(MI, Mips_OP_GROUP_Hi20, OpNum);
+		Mips_add_cs_detail_0(MI, Mips_OP_GROUP_Hi20, OpNum);
 		SStream_concat0(O, "%hi(");
 		printUInt64(O, MCOperand_getImm(MO));
 		SStream_concat0(O, ")");
@@ -638,7 +639,7 @@ static void printHi20PCRel(MCInst *MI, uint64_t Address, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
-		add_cs_detail(MI, Mips_OP_GROUP_Hi20PCRel, OpNum);
+		Mips_add_cs_detail_0(MI, Mips_OP_GROUP_Hi20PCRel, OpNum);
 		SStream_concat0(O, "%pcrel_hi(");
 		printUInt64(O, MCOperand_getImm(MO) + Address);
 		SStream_concat0(O, ")");
@@ -650,7 +651,7 @@ static void printPCRel(MCInst *MI, uint64_t Address, int OpNum, SStream *O)
 {
 	MCOperand *MO = MCInst_getOperand(MI, (OpNum));
 	if (MCOperand_isImm(MO)) {
-		add_cs_detail(MI, Mips_OP_GROUP_PCRel, OpNum);
+		Mips_add_cs_detail_0(MI, Mips_OP_GROUP_PCRel, OpNum);
 		printUInt64(O, MCOperand_getImm(MO) + Address);
 	} else
 		printOperand(MI, OpNum, O);

@@ -2,11 +2,8 @@
 /* By Do Minh Tuan <tuanit96@gmail.com>, 02-2019 */
 
 #include <assert.h>
-#include <stdbool.h>
 #include <stdarg.h>
-#include <stdint.h>
 #include <capstone/platform.h>
-#include <stddef.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,6 +11,23 @@
 #include <setjmp.h>
 #include "cmocka.h"
 #include "helper.h"
+
+char *cs_strndup(const char *s, size_t n)
+{
+	if (!s) {
+		return NULL;
+	}
+	size_t l = strnlen(s, n);
+	if (l == SIZE_MAX) {
+		return NULL;
+	}
+	char *out = calloc(sizeof(char), l + 1);
+	if (!out) {
+		return NULL;
+	}
+	memcpy(out, s, l);
+	return out;
+}
 
 void add_str(char **src, const char *format, ...)
 {
@@ -52,7 +66,7 @@ void replace_hex(char *src, size_t src_len)
 		value = 0;
 		valid = 0;
 
-		tmp_tmp = strndup(tmp, orig_found - tmp);
+		tmp_tmp = cs_strndup(tmp, orig_found - tmp);
 		while (*found != '\0' && isxdigit(*found)) {
 			valid = 1;
 			if (*found >= 'a' && *found <= 'f')
@@ -91,9 +105,9 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 	char *tmp, *result, *found, *origin, *orig_found;
 	int cnt, valid;
 	char *value, *tmp_tmp;
-	unsigned short int tmp_short;
-	unsigned int tmp_int;
-	unsigned long int tmp_long;
+	uint16_t tmp_short;
+	uint32_t tmp_int;
+	uint64_t tmp_long;
 
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
@@ -117,18 +131,20 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits)
 			found++;
 		}
 
-		tmp_tmp = strndup(tmp, orig_found - tmp);
+		tmp_tmp = cs_strndup(tmp, orig_found - tmp);
 		if (valid == 1) {
 			*orig_found = '\0';
 			if (arch_bits == 16) {
 				sscanf(value, "%hu", &tmp_short);
 				add_str(&result, "%s%hu", tmp_tmp, tmp_short);
 			} else if (arch_bits == 32) {
-				sscanf(value, "%u", &tmp_int);
-				add_str(&result, "%s%u", tmp_tmp, tmp_int);
+				sscanf(value, "%" PRIu32, &tmp_int);
+				add_str(&result, "%s%" PRIu32, tmp_tmp,
+					tmp_int);
 			} else if (arch_bits == 64) {
-				sscanf(value, "%lu", &tmp_long);
-				add_str(&result, "%s%lu", tmp_tmp, tmp_long);
+				sscanf(value, "%" PRIu64, &tmp_long);
+				add_str(&result, "%s%" PRIu64, tmp_tmp,
+					tmp_long);
 			}
 
 		} else

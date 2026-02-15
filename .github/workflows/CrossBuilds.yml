@@ -47,17 +47,17 @@ jobs:
               packages: 'gcc-s390x-linux-gnu g++-s390x-linux-gnu binutils-s390x-linux-gnu libc6-dev-s390x-cross qemu-user-static',
               cross_file: 'cross_configs/linux_s390x_ubuntu24.cmake',
             }
-          # - {
-          #     name: 'QEMU Linux Mips 32',
-          #     os: ubuntu-24.04,
-          #     arch: x64,
-          #     build-system: 'cmake',
-          #     diet-build: 'OFF',
-          #     build_type: 'Debug',
-          #     diet_build: false,
-          #     packages: 'gcc-mips-linux-gnu g++-mips-linux-gnu binutils-mips-linux-gnu libc6-dev-mips-cross qemu-user-static',
-          #     cross_file: 'cross_configs/linux_mips_ubuntu24.cmake',
-          #   }
+          - {
+              name: 'QEMU Linux Mips 32',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              build_type: 'Debug',
+              diet_build: false,
+              packages: 'gcc-mips-linux-gnu g++-mips-linux-gnu binutils-mips-linux-gnu libc6-dev-mips-cross qemu-user-static',
+              cross_file: 'cross_configs/linux_mips_ubuntu24.cmake',
+            }
           - {
               name: 'QEMU Linux Mips64el',
               os: ubuntu-24.04,
@@ -79,6 +79,29 @@ jobs:
               diet_build: false,
               packages: 'gcc-powerpc64-linux-gnu g++-powerpc64-linux-gnu binutils-powerpc64-linux-gnu libc6-dev-ppc64-cross qemu-user-static',
               cross_file: 'cross_configs/linux_ppc64_ubuntu24.cmake',
+            }
+          - {
+              name: 'QEMU Linux ARM',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              build_type: 'Debug',
+              diet_build: false,
+              packages: 'gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-armhf-cross libc6-dev-armhf-cross qemu-user-static',
+              cross_file: 'cross_configs/linux_arm_ubuntu24.cmake',
+            }
+          - {
+              name: '[BUILD ONLY] Windows i686 mingw',
+              os: ubuntu-24.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              build_type: 'Debug',
+              diet_build: false,
+              skip_tests: true,
+              packages: 'gcc-mingw-w64-i686 g++-mingw-w64-i686 mingw-w64-tools',
+              cross_file: 'cross_configs/windows_i686_ubuntu24.cmake',
             }
           - {
               name: '[BUILD ONLY] Android 35 (arm64_v8a) NDK 29',
