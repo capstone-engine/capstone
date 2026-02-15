@@ -1,6 +1,27 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-Alpha7: February 15th, 2026
+
+## What's Changed
+* Refactoring the RISCV architecture to Auto-Sync on LLVM by @moste00 in https://github.com/capstone-engine/capstone/pull/2756
+* Added RISCV v6 release notes by @moste00 in https://github.com/capstone-engine/capstone/pull/2846
+* Package build workflow fix by @Rot127 in https://github.com/capstone-engine/capstone/pull/2849
+* Ignore ES/CS/SS/DS segment overrides in x64 mode by @jxors in https://github.com/capstone-engine/capstone/pull/2819
+* RISCV: Details: Fix ret groups by @moste00 in https://github.com/capstone-engine/capstone/pull/2859
+* RISCV: Fix spurious return groups for JALR instructions using ra as a source for indirect jumps. by @moste00 in https://github.com/capstone-engine/capstone/pull/2860
+* x86: fix decoding of mandatory prefixes by @jxors in https://github.com/capstone-engine/capstone/pull/2856
+* Fix unchecked allocations by @Grond66 in https://github.com/capstone-engine/capstone/pull/2844
+* Convert all README's to markdown files. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2863
+* Fix 32bit build by @Rot127 in https://github.com/capstone-engine/capstone/pull/2796
+
+## New Contributors
+* @jxors made their first contribution in https://github.com/capstone-engine/capstone/pull/2819
+* @Grond66 made their first contribution in https://github.com/capstone-engine/capstone/pull/2844
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/6.0.0-Alpha6...gen-changelog
+
+-----------------------------
 Version 6.0.0-Alpha6: January 13th, 2026
 
 ## What's Changed
