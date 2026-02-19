@@ -27,3 +27,12 @@ test_cases:
     expected:
       insns: []
 
+  -
+    input:
+      name: "WASM truncated memory immediate should fail (#2865)"
+      bytes: [ 0x28, 0x01 ]
+      arch: "wasm"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns: []
