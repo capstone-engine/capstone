@@ -205,6 +205,7 @@ typedef enum cs_mode {
 	CS_MODE_M680X_CPU12 = 1 << 9, ///< M680X Motorola/Freescale/NXP CPU12
 	///< used on M68HC12/HCS12
 	CS_MODE_M680X_HCS08 = 1 << 10, ///< M680X Freescale/NXP HCS08 mode
+	CS_MODE_M680X_RS08 = 1 << 11, ///< M680X Freescale/NXP RS08 mode
 	CS_MODE_BPF_CLASSIC = 0, ///< Classic BPF mode (default)
 	CS_MODE_BPF_EXTENDED = 1 << 0, ///< Extended BPF mode
 	CS_MODE_RISCV32 = 1 << 0, ///< RISCV RV32G
