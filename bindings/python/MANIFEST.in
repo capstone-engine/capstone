@@ -1,4 +1,5 @@
 recursive-include src *
+recursive-include tests *
 recursive-include prebuilt *
 include BUILDING.md
 graft capstone/lib
