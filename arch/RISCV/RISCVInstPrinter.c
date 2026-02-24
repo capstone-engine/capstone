@@ -374,39 +374,51 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 	MI->MRI = (MCRegisterInfo *)info;
 
 	MCInst_setIsAlias(MI, false);
+
+	/* check for a non-compressed instruction */
+	MCInst Uncompressed;
+	MCInst_Init(&Uncompressed, MI->csh->arch);
+
+	MCInst *McInstr = MI;
+	bool is_uncompressed = false;
+	// side-effectful check for compressed instructions that creates the equivalent uncompressed instruction in case of true
+	// (LLVM doesn't generate an API for doing a pure check)
+	if (uncompressInst(&Uncompressed, MI)) {
+		McInstr = &Uncompressed;
+		Uncompressed.address = MI->address;
+		Uncompressed.MRI = MI->MRI;
+		Uncompressed.csh = MI->csh;
+		Uncompressed.flat_insn = MI->flat_insn;
+		is_uncompressed = true;
+	}
+
 	// print the exact instruction text and done
-	if (MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT) {
+	bool print_exact_text =
+		(MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT) ||
+		(is_uncompressed &&
+		 MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED);
+	if (print_exact_text) {
 		printInstruction(MI, MI->address, O);
 	} else {
-		/* the instruction might be an alias, including in the case of a compressed instruction */
-		MCInst Uncompressed;
-		MCInst_Init(&Uncompressed, MI->csh->arch);
-
-		MCInst *McInstr = MI;
-		if (uncompressInst(&Uncompressed, MI)) {
-			McInstr = &Uncompressed;
-			Uncompressed.address = MI->address;
-			Uncompressed.MRI = MI->MRI;
-			Uncompressed.csh = MI->csh;
-			Uncompressed.flat_insn = MI->flat_insn;
-		}
-
+		// side-effectful check for alias instructions that prints to the SStream if true
 		if (printAliasInstr(McInstr, MI->address, O)) {
 			MCInst_setIsAlias(MI, true);
+			// do we still want the exact details even if the text is alias ?
 			if (!map_use_alias_details(MI) && detail_is_set(MI)) {
 				// disable actual printing
 				SStream_Close(O);
+				// discard the alias operands
 				memset(MI->flat_insn->detail->riscv.operands, 0,
 				       sizeof(MI->flat_insn->detail->riscv
 						      .operands));
 				MI->flat_insn->detail->riscv.op_count = 0;
-				// re-disassemble again in order to obtain the full details
+				// re-disassemble again with no printing in order to obtain the full details
 				// including the whole operands array
 				printInstruction(MI, MI->address, O);
 				// re-open the stream to restore the usual state
 				SStream_Open(O);
 			}
-		} else
+		} else // the instruction is not an alias
 			printInstruction(McInstr, MI->address, O);
 	}
 	RISCV_add_groups(MI);

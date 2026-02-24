@@ -362,6 +362,9 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_NO_ALIAS_TEXT =
 		1
 		<< 10, ///< Does not print an instruction's alias test if the instruction is an alias
+	CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED =
+		1
+		<< 12, ///< Does not print an instruction's alias test if the instruction is an alias
 	CS_OPT_DETAIL_REAL =
 		1
 		<< 1, ///< If enabled, always sets the real instruction detail. Even if the instruction is an alias.

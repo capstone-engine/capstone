@@ -69,6 +69,13 @@ static struct {
 	  { CS_ARCH_RISCV, CS_ARCH_MAX },
 	  CS_OPT_SYNTAX_NO_ALIAS_TEXT,
 	  0 },
+	{ "+noaliascompressed",
+	  "Does not print the text alias of compressed RISC-V instructions, "
+	  "but still prints the text alias of non-compressed RISC-V instructions "
+	  "if +noalias is not given",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED,
+	  0 },
 	// cs_mode only
 	{ "+nofloat",
 	  "Disables floating point support",
