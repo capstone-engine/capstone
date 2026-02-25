@@ -5208,3 +5208,1020 @@ test_cases:
                   reg: ra
                   access: CS_AC_READ
             groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_RET]
+
+  # ==================================================================================================
+  # Tests for +noalias / +noaliascompressed interaction matrix
+  #
+  # Interaction matrix:
+  #   (1-) +noalias=false, +noaliascompressed=false  (neither option given):
+  #                 All instruction aliases will be printed (default behavior).
+  #   (2-) +noalias=true,  +noaliascompressed=false  (CS_OPT_SYNTAX_NO_ALIAS_TEXT only):
+  #                 All instruction aliases will NOT be printed; exact text only.
+  #   (3-) +noalias=false, +noaliascompressed=true   (CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED only):
+  #                 Non-compressed instructions show aliases normally; compressed instructions
+  #                 are printed exactly with no aliases.
+  #   (4-) +noalias=true,  +noaliascompressed=true
+  #             (both CS_OPT_SYNTAX_NO_ALIAS_TEXT & CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED:
+  #                 All instruction aliases will NOT be printed. (redundant/equivalent to 2)
+  # ==================================================================================================
+
+  # --------------------------------------------------------------------------------------------------
+  # CASE 1: +noalias=false, +noaliascompressed=false
+  #         => All instruction aliases will be printed
+  # --------------------------------------------------------------------------------------------------
+
+  # CASE1-TC1: nop alias (addi zero, zero, 0)
+  - input:
+      bytes: [0x13, 0x00, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "nop"
+          is_alias: 1
+
+  # CASE1-TC2: ret alias (jalr zero, 0(ra))
+  - input:
+      bytes: [0x67, 0x80, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "ret"
+          is_alias: 1
+
+  # CASE1-TC3: mv alias (addi a0, a1, 0)
+  - input:
+      bytes: [0x13, 0x85, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "mv a0, a1"
+          is_alias: 1
+
+  # CASE1-TC4: li alias (addi a0, zero, 5)
+  - input:
+      bytes: [0x13, 0x05, 0x50, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "li a0, 5"
+          is_alias: 1
+
+  # CASE1-TC5: beqz alias (beq a0, zero, offset)
+  - input:
+      bytes: [0x63, 0x08, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "beqz a0, 0x1010"
+          is_alias: 1
+
+  # CASE1-TC6: bnez alias (bne a0, zero, offset)
+  - input:
+      bytes: [0x63, 0x18, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "bnez a0, 0x1010"
+          is_alias: 1
+
+  # CASE1-TC7: bgez alias (bge a0, zero, offset)
+  - input:
+      bytes: [0x63, 0x58, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "bgez a0, 0x1010"
+          is_alias: 1
+
+  # CASE1-TC8: bltz alias (blt a0, zero, offset)
+  - input:
+      bytes: [0x63, 0x48, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "bltz a0, 0x1010"
+          is_alias: 1
+
+  # CASE1-TC9: bgtz alias (blt zero, a0, offset)
+  - input:
+      bytes: [0x63, 0x48, 0xa0, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "bgtz a0, 0x1010"
+          is_alias: 1
+
+  # CASE1-TC10: seqz alias (sltiu a0, a1, 1) — set pseudo, alias expected
+  - input:
+      bytes: [0x13, 0xb5, 0x15, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "seqz a0, a1"
+          is_alias: 1
+
+  # CASE1-TC11: snez alias (sltu a0, zero, a1) — set pseudo, alias expected
+  - input:
+      bytes: [0x33, 0x35, 0xb0, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "snez a0, a1"
+          is_alias: 1
+
+  # CASE1-TC12: csrr alias (csrrs rd, csr, zero)
+  - input:
+      bytes: [0x73, 0x25, 0x40, 0xb0]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "csrr a0, mhpmcounter4"
+          is_alias: 1
+
+  # CASE1-TC13: fmv.s alias (fsgnj.s fa0, fa1, fa1)
+  - input:
+      bytes: [0x53, 0x85, 0xb5, 0x20]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_F, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fmv.s fa0, fa1"
+          is_alias: 1
+
+  # CASE1-TC14: fabs.s alias (fsgnjx.s fa0, fa1, fa1)
+  - input:
+      bytes: [0x53, 0xa5, 0xb5, 0x20]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_F, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fabs.s fa0, fa1"
+          is_alias: 1
+
+  # CASE1-TC15: fneg.s alias (fsgnjn.s fa0, fa1, fa1)
+  - input:
+      bytes: [0x53, 0x95, 0xb5, 0x20]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_F, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fneg.s fa0, fa1"
+          is_alias: 1
+
+  # CASE1-TC16: c.nop compressed
+  - input:
+      bytes: [0x01, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "nop"
+          is_alias: 1
+
+  # CASE1-TC17: c.li compressed — alias form of addi rd, zero, imm
+  - input:
+      bytes: [0x55, 0x45]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "li a0, 0x15"
+          is_alias: 1
+
+  # CASE1-TC18: c.mv compressed — alias form of add rd, zero, rs
+  - input:
+      bytes: [0x62, 0x86]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "mv a2, s8"
+          is_alias: 1
+
+  # CASE1-TC19: c.beqz compressed — compressed branch alias
+  - input:
+      bytes: [0x89, 0xc1]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "beqz a1, 0x1002"
+
+  # CASE1-TC20: c.j compressed — compressed jump
+  - input:
+      bytes: [0x01, 0xa0]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "j 0x1000"
+
+  # --------------------------------------------------------------------------------------------------
+  # CASE 2: +noalias=true, +noaliascompressed=false
+  #         => All instruction aliases will NOT be printed; exact/real text only for all instructions
+  # --------------------------------------------------------------------------------------------------
+
+  # CASE2-TC1: nop -> must print as exact: addi zero, zero, 0
+  - input:
+      bytes: [0x13, 0x00, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "addi zero, zero, 0"
+
+  # CASE2-TC2: ret -> must print as exact: jalr zero, 0(ra)
+  - input:
+      bytes: [0x67, 0x80, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "jalr zero, 0(ra)"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: zero
+                  access: CS_AC_WRITE
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x0
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_RET]
+
+  # CASE2-TC3: mv -> must print as exact: addi a0, a1, 0
+  - input:
+      bytes: [0x13, 0x85, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "addi a0, a1, 0"
+
+  # CASE2-TC4: li -> must print as exact: addi a0, zero, 5
+  - input:
+      bytes: [0x13, 0x05, 0x50, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "addi a0, zero, 5"
+
+  # CASE2-TC5: beqz -> must print as exact: beq a0, zero, offset
+  - input:
+      bytes: [0x63, 0x08, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "beq a0, zero, 0x1010"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: a0
+                  access: CS_AC_READ
+                - type: RISCV_OP_REG
+                  reg: zero
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x1010
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
+
+  # CASE2-TC6: bnez -> must print as exact: bne a0, zero, offset
+  - input:
+      bytes: [0x63, 0x18, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "bne a0, zero, 0x1010"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: a0
+                  access: CS_AC_READ
+                - type: RISCV_OP_REG
+                  reg: zero
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x1010
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE]
+
+  # CASE2-TC7: bgez -> must print as exact: bge a0, zero, offset
+  - input:
+      bytes: [0x63, 0x58, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "bge a0, zero, 0x1010"
+
+  # CASE2-TC8: bltz -> must print as exact: blt a0, zero, offset
+  - input:
+      bytes: [0x63, 0x48, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "blt a0, zero, 0x1010"
+
+  # CASE2-TC9: bgtz -> must print as exact: blt zero, a0, offset
+  - input:
+      bytes: [0x63, 0x48, 0xa0, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "blt zero, a0, 0x1010"
+
+  # CASE2-TC10: seqz -> must print as exact: sltiu a0, a0, 1
+  - input:
+      bytes: [0x13, 0x35, 0x15, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "sltiu a0, a0, 1"
+
+  # CASE2-TC11: snez -> must print as exact: sltu a0, zero, a1
+  - input:
+      bytes: [0x33, 0x35, 0xb0, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "sltu a0, zero, a1"
+
+  # CASE2-TC12: csrr -> must print as exact: csrrs a0, mhpmcounter4, zero
+  - input:
+      bytes: [0x73, 0x25, 0x40, 0xb0]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "csrrs a0, mhpmcounter4, zero"
+
+  # CASE2-TC13: fmv.s -> must print as exact: fsgnj.s fa0, fa1, fa1
+  - input:
+      bytes: [0x53, 0x85, 0xb5, 0x20]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_F, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fsgnj.s fa0, fa1, fa1"
+
+  # CASE2-TC14: fabs.s -> must print as exact: fsgnjx.s fa0, fa1, fa1
+  - input:
+      bytes: [0x53, 0xa5, 0xb5, 0x20]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_F, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fsgnjx.s fa0, fa1, fa1"
+
+  # CASE2-TC15: fneg.s -> must print as exact: fsgnjn.s fa0, fa1, fa1
+  - input:
+      bytes: [0x53, 0x95, 0xb5, 0x20]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_F, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fsgnjn.s fa0, fa1, fa1"
+
+  # CASE2-TC16: fmv.d -> must print as exact: fsgnj.d fa0, fa1, fa1
+  - input:
+      bytes: [0x53, 0x85, 0xb5, 0x22]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_D, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fsgnj.d fa0, fa1, fa1"
+
+  # CASE2-TC17: fabs.d -> must print as exact: fsgnjx.d fa0, fa1, fa1
+  - input:
+      bytes: [0x53, 0xa5, 0xb5, 0x22]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_D, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fsgnjx.d fa0, fa1, fa1"
+
+  # CASE2-TC18: compressed c.nop with +noalias — still printed as c.nop (no further expansion)
+  - input:
+      bytes: [0x01, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.nop"
+
+  # CASE2-TC19: compressed c.li with +noalias — exact text, not expanded to li alias
+  - input:
+      bytes: [0x55, 0x45]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.li a0, 0x15"
+
+  # CASE2-TC20: compressed c.mv with +noalias — exact text, not expanded to mv alias
+  - input:
+      bytes: [0x62, 0x86]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.mv a2, s8"
+
+  # CASE2-TC21: compressed c.beqz with +noalias — exact, not expanded
+  - input:
+      bytes: [0x89, 0xc1]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.beqz a1, 0x1002"
+
+  # CASE2-TC22: compressed c.jr with +noalias — exact text
+  - input:
+      bytes: [0x82, 0x80]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.jr ra"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_RET]
+
+  # --------------------------------------------------------------------------------------------------
+  # CASE 3: +noalias=false (not given), +noaliascompressed=true (CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED)
+  #         => Non-compressed instructions show aliases normally;
+  #            compressed instructions are printed exactly with no aliases.
+  # --------------------------------------------------------------------------------------------------
+
+  # CASE3-TC1: nop (non-compressed) — alias printed
+  - input:
+      bytes: [0x13, 0x00, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "nop"
+          is_alias: 1
+
+  # CASE3-TC2: ret (non-compressed) — alias printed
+  - input:
+      bytes: [0x67, 0x80, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "ret"
+          is_alias: 1
+
+  # CASE3-TC3: mv (non-compressed) — alias printed
+  - input:
+      bytes: [0x13, 0x85, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "mv a0, a1"
+          is_alias: 1
+
+  # CASE3-TC4: li (non-compressed) — alias printed
+  - input:
+      bytes: [0x13, 0x05, 0x50, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "li a0, 5"
+          is_alias: 1
+
+  # CASE3-TC5: beqz (non-compressed) — alias printed
+  - input:
+      bytes: [0x63, 0x08, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "beqz a0, 0x1010"
+          is_alias: 1
+
+  # CASE3-TC6: bnez (non-compressed) — alias printed
+  - input:
+      bytes: [0x63, 0x18, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "bnez a0, 0x1010"
+          is_alias: 1
+
+  # CASE3-TC7: bgez (non-compressed) — alias printed
+  - input:
+      bytes: [0x63, 0x58, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "bgez a0, 0x1010"
+          is_alias: 1
+
+  # CASE3-TC8: bltz (non-compressed) — alias printed
+  - input:
+      bytes: [0x63, 0x48, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "bltz a0, 0x1010"
+          is_alias: 1
+
+  # CASE3-TC9: seqz (non-compressed) — alias printed
+  - input:
+      bytes: [0x13, 0x35, 0x15, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "seqz a0, a0"
+          is_alias: 1
+
+  # CASE3-TC10: snez (non-compressed) — alias printed
+  - input:
+      bytes: [0x33, 0x35, 0xb0, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "snez a0, a1"
+          is_alias: 1
+
+  # CASE3-TC11: csrr (non-compressed) — alias printed
+  - input:
+      bytes: [0x73, 0x25, 0x40, 0xb0]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "csrr a0, mhpmcounter4"
+          is_alias: 1
+
+  # CASE3-TC12: fmv.s (non-compressed) — alias printed
+  - input:
+      bytes: [0x53, 0x85, 0xb5, 0x20]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_F, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fmv.s fa0, fa1"
+          is_alias: 1
+
+  # CASE3-TC13: fabs.d (non-compressed) — alias printed
+  - input:
+      bytes: [0x53, 0xa5, 0xb5, 0x22]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_D, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fabs.d fa0, fa1"
+          is_alias: 1
+
+  # CASE3-TC14: fneg.d (non-compressed) — alias printed
+  - input:
+      bytes: [0x53, 0x95, 0xb5, 0x22]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_D, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fneg.d fa0, fa1"
+          is_alias: 1
+
+  # CASE3-TC15: c.nop (COMPRESSED) printed exactly as c.nop
+  - input:
+      bytes: [0x01, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.nop"
+          is_alias: 0
+          details:
+            groups: [RISCV_FEATURE_HasStdExtCOrZca]
+
+  # CASE3-TC16: c.li (COMPRESSED) printed exactly as c.li, NOT as "li"
+  - input:
+      bytes: [0x55, 0x45]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.li a0, 0x15"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: a0
+                  access: CS_AC_WRITE
+                - type: RISCV_OP_IMM
+                  imm: 0x15
+                  access: CS_AC_READ
+            groups: [RISCV_FEATURE_HasStdExtCOrZca]
+
+  # CASE3-TC17: c.mv (COMPRESSED) printed exactly as c.mv, NOT as "mv"
+  - input:
+      bytes: [0x62, 0x86]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.mv a2, s8"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: a2
+                  access: CS_AC_WRITE
+                - type: RISCV_OP_REG
+                  reg: s8
+                  access: CS_AC_READ
+            groups: [RISCV_FEATURE_HasStdExtCOrZca]
+
+  # CASE3-TC18: c.add (COMPRESSED) printed exactly as c.add
+  - input:
+      bytes: [0xf2, 0x97]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.add a5, t3"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: a5
+                  access: CS_AC_READ_WRITE
+                - type: RISCV_OP_REG
+                  reg: t3
+                  access: CS_AC_READ
+            groups: [RISCV_FEATURE_HasStdExtCOrZca]
+
+  # CASE3-TC19: c.beqz (COMPRESSED) printed exactly as c.beqz, NOT as "beqz"
+  - input:
+      bytes: [0x89, 0xc1]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.beqz a1, 0x1002"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: a1
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x1002
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE, RISCV_FEATURE_HasStdExtCOrZca]
+
+  # CASE3-TC20: c.bnez (COMPRESSED) printed exactly as c.bnez, NOT as "bnez"
+  - input:
+      bytes: [0x89, 0xe1]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.bnez a1, 0x1002"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: a1
+                  access: CS_AC_READ
+                - type: RISCV_OP_IMM
+                  imm: 0x1002
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE, RISCV_FEATURE_HasStdExtCOrZca]
+
+  # CASE3-TC21: c.j (COMPRESSED) printed exactly as c.j, NOT as "j"
+  - input:
+      bytes: [0x01, 0xa0]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.j 0x1000"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_IMM
+                  imm: 0x1000
+                  access: CS_AC_READ
+            groups: [RISCV_GRP_JUMP, RISCV_GRP_BRANCH_RELATIVE, RISCV_FEATURE_HasStdExtCOrZca]
+
+  # CASE3-TC22: c.jr ra (COMPRESSED) printed exactly as c.jr, NOT as "ret"
+  - input:
+      bytes: [0x82, 0x80]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.jr ra"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_RET]
+
+  # CASE3-TC23: Mixed in one test — non-compressed aliases print, compressed prints exactly.
+  - input:
+      bytes: [0x13, 0x00, 0x00, 0x00, 0x01, 0x00, 0x13, 0x85, 0x05, 0x00, 0x55, 0x45]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "nop"
+          is_alias: 1
+        - asm_text: "c.nop"
+        - asm_text: "mv a0, a1"
+          is_alias: 1
+        - asm_text: "c.li a0, 0x15"
+
+  # --------------------------------------------------------------------------------------------------
+  # CASE 4: +noalias=true, +noaliascompressed=true  [redundant — equivalent to CASE 2]
+  #         => All instruction aliases will NOT be printed (same as +noalias=true alone)
+  # --------------------------------------------------------------------------------------------------
+
+  # CASE4-TC1: nop (non-compressed) with both flags — printed as exact "addi zero, zero, 0"
+  - input:
+      bytes: [0x13, 0x00, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "addi zero, zero, 0"
+
+  # CASE4-TC2: ret (non-compressed) with both flags — printed as exact "jalr zero, 0(ra)"
+  - input:
+      bytes: [0x67, 0x80, 0x00, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "jalr zero, 0(ra)"
+
+  # CASE4-TC3: mv (non-compressed) with both flags — printed as exact "addi a0, a1, 0"
+  - input:
+      bytes: [0x13, 0x85, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "addi a0, a1, 0"
+
+  # CASE4-TC4: li (non-compressed) with both flags — printed as exact "addi a0, zero, 5"
+  - input:
+      bytes: [0x13, 0x05, 0x50, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "addi a0, zero, 5"
+
+  # CASE4-TC5: beqz (non-compressed) with both flags — exact: "beq a0, zero, 0x1010"
+  - input:
+      bytes: [0x63, 0x08, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "beq a0, zero, 0x1010"
+
+  # CASE4-TC6: bltz (non-compressed) with both flags — exact: "blt a0, zero, 0x1010"
+  - input:
+      bytes: [0x63, 0x48, 0x05, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "blt a0, zero, 0x1010"
+
+  # CASE4-TC7: seqz (non-compressed) with both flags — exact: "sltiu a0, a1, 1"
+  - input:
+      bytes: [0x13, 0x35, 0x15, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "sltiu a0, a0, 1"
+
+  # CASE4-TC8: csrr (non-compressed) with both flags — exact: "csrrs a0, mstatus, zero"
+  - input:
+      bytes: [0x73, 0x25, 0x40, 0xb0]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "csrrs a0, mhpmcounter4, zero"
+
+  # CASE4-TC9: fmv.s (non-compressed FP) with both flags — exact: "fsgnj.s fa0, fa1, fa1"
+  - input:
+      bytes: [0x53, 0x85, 0xb5, 0x20]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_F, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fsgnj.s fa0, fa1, fa1"
+
+  # CASE4-TC10: fabs.d (non-compressed FP) with both flags — exact: "fsgnjx.d fa0, fa1, fa1"
+  - input:
+      bytes: [0x53, 0xa5, 0xb5, 0x22]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_D, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "fsgnjx.d fa0, fa1, fa1"
+
+  # CASE4-TC11: c.nop (COMPRESSED) with both flags — exact: c.nop (no alias either way)
+  - input:
+      bytes: [0x01, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.nop"
+
+  # CASE4-TC12: c.li (COMPRESSED) with both flags — exact: c.li (not expanded to li or addi)
+  - input:
+      bytes: [0x55, 0x45]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.li a0, 0x15"
+
+  # CASE4-TC13: c.mv (COMPRESSED) with both flags — exact: c.mv (not expanded to mv or add)
+  - input:
+      bytes: [0x62, 0x86]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.mv a2, s8"
+
+  # CASE4-TC14: c.jr ra (COMPRESSED) with both flags — exact: c.jr ra (not expanded to ret)
+  - input:
+      bytes: [0x82, 0x80]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.jr ra"
+          details:
+            riscv:
+              operands:
+                - type: RISCV_OP_REG
+                  reg: ra
+                  access: CS_AC_READ
+            groups: [RISCV_FEATURE_HasStdExtCOrZca, RISCV_GRP_RET]
+
+  # CASE4-TC15: c.beqz (COMPRESSED) with both flags — exact: c.beqz
+  - input:
+      bytes: [0x89, 0xc1]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "c.beqz a1, 0x1002"
+
+  # CASE4-TC16: Verify redundancy — both flags give same result as +noalias alone for non-compressed.
+  #            snez (non-compressed) with both flags — exact: "sltu a0, zero, a1"
+  - input:
+      bytes: [0x33, 0x35, 0xb0, 0x00]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "sltu a0, zero, a1"
+
+  # CASE4-TC17: Mixed — addi a0, a1, 0 (non-compressed mv) + c.li (compressed)
+  #            Both flags: addi printed as "addi a0, a1, 0" (no mv alias), c.li printed as c.li
+  - input:
+      bytes: [0x13, 0x85, 0x05, 0x00, 0x55, 0x45]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED]
+      address: 0x1000
+    expected:
+      insns:
+        - asm_text: "addi a0, a1, 0"
+        - asm_text: "c.li a0, 0x15"
