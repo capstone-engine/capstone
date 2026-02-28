@@ -4,7 +4,6 @@
 from __future__ import print_function
 from capstone import *
 from capstone.mips import *
-from xprint import to_hex, to_x
 
 
 MIPS_CODE = b"\x0C\x10\x00\x97\x00\x00\x00\x00\x24\x02\x00\x0c\x8f\xa2\x00\x00\x34\x21\x34\x56"
@@ -18,7 +17,7 @@ all_tests = (
         (CS_ARCH_MIPS, CS_MODE_MIPS32R6 + CS_MODE_MICRO + CS_MODE_BIG_ENDIAN, MIPS_32R6M, "MIPS-32R6 | Micro (Big-endian)"),
         (CS_ARCH_MIPS, CS_MODE_MIPS32R6 + CS_MODE_BIG_ENDIAN, MIPS_32R6, "MIPS-32R6 (Big-endian)"),
 )
-
+mask64 = lambda v: v & 0xFFFFFFFFFFFFFFFF
 
 def print_insn_detail(insn):
     # print address, mnemonic and operands
@@ -36,15 +35,15 @@ def print_insn_detail(insn):
             if i.type == MIPS_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             if i.type == MIPS_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%x" % (c, mask64(i.imm)))
             if i.type == MIPS_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
                         % (c, insn.reg_name(i.mem.base)))
                 if i.mem.disp != 0:
-                    print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                        % (c, to_x(i.mem.disp)))
+                    print("\t\t\toperands[%u].mem.disp: 0x%x" \
+                        % (c, mask64(i.mem.disp)))
 
 
 # ## Test class Cs
@@ -52,7 +51,7 @@ def test_class():
     for (arch, mode, code, comment) in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

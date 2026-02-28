@@ -5,7 +5,6 @@
 from __future__ import print_function
 from capstone import *
 from capstone.sparc import *
-from xprint import to_hex, to_x_32
 
 
 SPARC_CODE = b"\x80\xa0\x40\x02\x85\xc2\x60\x08\x85\xe8\x20\x01\x81\xe8\x00\x00\x90\x10\x20\x01\xd5\xf6\x10\x16\x21\x00\x00\x0a\x86\x00\x40\x02\x01\x00\x00\x00\x12\xbf\xff\xff\x10\xbf\xff\xff\xa0\x02\x00\x09\x0d\xbf\xff\xff\xd4\x20\x60\x00\xd4\x4e\x00\x16\x2a\xc2\x80\x03"
@@ -15,7 +14,7 @@ all_tests = (
         (CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN, SPARC_CODE, "Sparc"),
         (CS_ARCH_SPARC, CS_MODE_BIG_ENDIAN+CS_MODE_V9, SPARCV9_CODE, "SparcV9"),
 )
-
+mask32 = lambda v: v & 0xFFFFFFFF
 
 def print_insn_detail(insn):
     # print address, mnemonic and operands
@@ -32,7 +31,7 @@ def print_insn_detail(insn):
             if i.type == SPARC_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             if i.type == SPARC_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x_32(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%x" % (c, mask32(i.imm)))
             if i.type == SPARC_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
@@ -42,8 +41,8 @@ def print_insn_detail(insn):
                     print("\t\t\toperands[%u].mem.index: REG = %s" \
                         % (c, insn.reg_name(i.mem.index)))
                 if i.mem.disp != 0:
-                    print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                        % (c, to_x_32(i.mem.disp)))
+                    print("\t\t\toperands[%u].mem.disp: 0x%x" \
+                        % (c, mask32(i.mem.disp)))
             c += 1
 
     if insn.cc:
@@ -57,7 +56,7 @@ def test_class():
     for (arch, mode, code, comment) in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

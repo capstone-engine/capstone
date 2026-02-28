@@ -5,7 +5,6 @@
 from __future__ import print_function
 from capstone import *
 from capstone.tricore import *
-from xprint import to_x, to_hex
 
 TRICORE_CODE = b"\x16\x01\x20\x01\x1d\x00\x02\x00\x8f\x70\x00\x11\x40\xae\x89\xee\x04\x09\x42\xf2\xe2\xf2\xc2\x11\x19" \
                b"\xff\xc0\x70\x19\xff\x20\x10"
@@ -13,7 +12,7 @@ TRICORE_CODE = b"\x16\x01\x20\x01\x1d\x00\x02\x00\x8f\x70\x00\x11\x40\xae\x89\xe
 all_tests = (
     (CS_ARCH_TRICORE, CS_MODE_TRICORE_162, TRICORE_CODE, "TriCore"),
 )
-
+mask64 = lambda v: v & 0xFFFFFFFFFFFFFFFF
 
 def print_insn_detail(insn):
     # print address, mnemonic and operands
@@ -30,15 +29,15 @@ def print_insn_detail(insn):
             if i.type == TRICORE_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             if i.type == TRICORE_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%x" % (c, mask64(i.imm)))
             if i.type == TRICORE_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
                           % (c, insn.reg_name(i.mem.base)))
                 if i.mem.disp != 0:
-                    print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                          % (c, to_x(i.mem.disp)))
+                    print("\t\t\toperands[%u].mem.disp: 0x%x" \
+                          % (c, mask64(i.mem.disp)))
             c += 1
 
 
@@ -47,7 +46,7 @@ def test_class():
     for (arch, mode, code, comment) in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

@@ -4,7 +4,6 @@
 from __future__ import print_function
 from capstone import *
 from capstone.ppc import *
-from xprint import to_hex, to_x_32
 
 PPC_CODE = b"\x43\x20\x0c\x07\x41\x56\xff\x17\x80\x20\x00\x00\x80\x3f\x00\x00\x10\x43\x23\x0e\xd0\x44\x00\x80\x4c\x43\x22\x02\x2d\x03\x00\x80\x7c\x43\x20\x14\x7c\x43\x20\x93\x4f\x20\x00\x21\x4c\xc8\x00\x21\x40\x82\x00\x14"
 PPC_CODE2 = b"\x10\x60\x2a\x10\x10\x64\x28\x88\x7c\x4a\x5d\x0f"
@@ -15,7 +14,7 @@ all_tests = (
         (CS_ARCH_PPC, CS_MODE_BIG_ENDIAN + CS_MODE_QPX, PPC_CODE2, "PPC-64 + QPX"),
         (CS_ARCH_PPC, CS_MODE_BIG_ENDIAN + CS_MODE_32 + CS_MODE_PS, PPC_CODE3, "PPC + PS"),
         )
-
+mask32 = lambda v: v & 0xFFFFFFFF
 
 def print_insn_detail(insn):
     # print address, mnemonic and operands
@@ -32,15 +31,15 @@ def print_insn_detail(insn):
             if i.type == PPC_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             if i.type == PPC_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x_32(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%x" % (c, mask32(i.imm)))
             if i.type == PPC_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
                     print("\t\t\toperands[%u].mem.base: REG = %s" \
                         % (c, insn.reg_name(i.mem.base)))
                 if i.mem.disp != 0:
-                    print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                        % (c, to_x_32(i.mem.disp)))
+                    print("\t\t\toperands[%u].mem.disp: 0x%x" \
+                        % (c, mask32(i.mem.disp)))
             if i.type == PPC_OP_CRX:
                 print("\t\toperands[%u].type: CRX" % c)
                 print("\t\t\toperands[%u].crx.scale: = %u" \
@@ -67,7 +66,7 @@ def test_class():
     for (arch, mode, code, comment) in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

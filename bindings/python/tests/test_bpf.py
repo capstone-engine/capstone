@@ -6,7 +6,6 @@
 from __future__ import print_function
 from capstone import *
 from capstone.bpf import *
-from xprint import to_hex, to_x_32
 
 
 CBPF_CODE = b"\x94\x09\x00\x00\x37\x13\x03\x00\x87\x00\x00\x00\x00\x00\x00\x00\x07\x00\x00\x00\x00\x00\x00\x00\x16\x00\x00\x00\x00\x00\x00\x00\x80\x00\x00\x00\x00\x00\x00\x00"
@@ -16,6 +15,7 @@ all_tests = (
         (CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC, CBPF_CODE, "cBPF Le", None),
         (CS_ARCH_BPF, CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_EXTENDED, EBPF_CODE, "eBPF Le", None),
         )
+mask32 = lambda v: v & 0xFFFFFFFF
 
 ext_name = {}
 ext_name[BPF_EXT_LEN] = '#len'
@@ -39,18 +39,18 @@ def print_insn_detail(insn):
         elif op.type == BPF_OP_IMM:
             print("IMM = " + hex(op.imm)[:-1])
         elif op.type == BPF_OP_OFF:
-            print("OFF = +0x" + to_x_32(op.off))
+            print("OFF = +0x%x" % mask32(op.off))
         elif op.type == BPF_OP_MEM:
             print("MEM")
             if op.mem.base != 0:
                 print("\t\t\toperands[%u].mem.base: REG = %s" \
                     % (c, insn.reg_name(op.mem.base)))
-            print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                % (c, to_x_32(op.mem.disp)))
+            print("\t\t\toperands[%u].mem.disp: 0x%x" \
+                % (c, mask32(op.mem.disp)))
         elif op.type == BPF_OP_MMEM:
-            print("MMEM = 0x" + to_x_32(op.mmem))
+            print("MMEM = 0x%x" % mask32(op.mmem))
         elif op.type == BPF_OP_MSH:
-            print("MSH = 4*([0x%s]&0xf)" % to_x_32(op.msh))
+            print("MSH = 4*([0x%x]&0xf)" % mask32(op.msh))
         elif op.type == BPF_OP_EXT:
             print("EXT = " + ext_name[op.ext])
 
@@ -73,7 +73,7 @@ def test_class():
     for (arch, mode, code, comment, syntax) in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

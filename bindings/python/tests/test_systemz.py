@@ -5,11 +5,10 @@
 from __future__ import print_function
 from capstone import *
 from capstone.systemz import *
-from xprint import to_x, to_hex
 
 
 SYSZ_CODE = b"\xed\x00\x00\x00\x00\x1a\x5a\x0f\x1f\xff\xc2\x09\x80\x00\x00\x00\x07\xf7\xeb\x2a\xff\xff\x7f\x57\xe3\x01\xff\xff\x7f\x57\xeb\x00\xf0\x00\x00\x24\xb2\x4f\x00\x78\xec\x18\x00\x00\xc1\x7f"
-
+mask64 = lambda v: v & 0xFFFFFFFFFFFFFFFF
 all_tests = (
         (CS_ARCH_SYSZ, 0, SYSZ_CODE, "SystemZ"),
 )
@@ -32,7 +31,7 @@ def print_insn_detail(insn):
             if i.type == SYSZ_OP_ACREG:
                 print("\t\toperands[%u].type: ACREG = %u" % (c, i.reg))
             if i.type == SYSZ_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%x" % (c, mask64(i.imm)))
             if i.type == SYSZ_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.base != 0:
@@ -42,11 +41,11 @@ def print_insn_detail(insn):
                     print("\t\t\toperands[%u].mem.index: REG = %s" \
                         % (c, insn.reg_name(i.mem.index)))
                 if i.mem.length != 0:
-                    print("\t\t\toperands[%u].mem.length: 0x%s" \
-                        % (c, to_x(i.mem.length)))
+                    print("\t\t\toperands[%u].mem.length: 0x%x" \
+                        % (c, mask64(i.mem.length)))
                 if i.mem.disp != 0:
-                    print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                        % (c, to_x(i.mem.disp)))
+                    print("\t\t\toperands[%u].mem.disp: 0x%x" \
+                        % (c, mask64(i.mem.disp)))
             c += 1
 
     if insn.cc:
@@ -59,7 +58,7 @@ def test_class():
     for (arch, mode, code, comment) in all_tests:
         print("*" * 16)
         print("Platform: %s" %comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

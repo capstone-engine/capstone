@@ -6,7 +6,6 @@ from __future__ import print_function
 from capstone import *
 import sys
 
-from xprint import to_hex
 
 _python3 = sys.version_info.major == 3
 
@@ -22,7 +21,7 @@ def test_class():
     address = 0x80001000
     for (arch, mode, code, comment) in all_tests:
         print("Platform: %s" % comment)
-        print("Code: %s " % to_hex(code))
+        print("Code: %s " % code.hex(' '))
         print("Disasm:")
 
         try:

@@ -5,11 +5,10 @@
 from __future__ import print_function
 from capstone import *
 from capstone.arm64 import *
-from xprint import to_hex, to_x
 
 
 ARM64_CODE = b"\x09\x00\x38\xd5\xbf\x40\x00\xd5\x0c\x05\x13\xd5\x20\x50\x02\x0e\x20\xe4\x3d\x0f\x00\x18\xa0\x5f\xa2\x00\xae\x9e\x9f\x37\x03\xd5\xbf\x33\x03\xd5\xdf\x3f\x03\xd5\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9\x20\x04\x81\xda\x20\x08\x02\x8b\x10\x5b\xe8\x3c"
-
+mask64 = lambda v: v & 0xFFFFFFFFFFFFFFFF
 all_tests = (
         (CS_ARCH_ARM64, CS_MODE_ARM, ARM64_CODE, "ARM-64"),
         )
@@ -31,7 +30,7 @@ def print_insn_detail(insn):
             if i.type == ARM64_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             if i.type == ARM64_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%x" % (c, mask64(i.imm)))
             if i.type == ARM64_OP_CIMM:
                 print("\t\toperands[%u].type: C-IMM = %u" % (c, i.imm))
             if i.type == ARM64_OP_FP:
@@ -45,8 +44,8 @@ def print_insn_detail(insn):
                     print("\t\t\toperands[%u].mem.index: REG = %s" \
                         % (c, insn.reg_name(i.mem.index)))
                 if i.mem.disp != 0:
-                    print("\t\t\toperands[%u].mem.disp: 0x%s" \
-                        % (c, to_x(i.mem.disp)))
+                    print("\t\t\toperands[%u].mem.disp: 0x%x" \
+                        % (c, mask64(i.mem.disp)))
             if i.type == ARM64_OP_REG_MRS:
                 print("\t\toperands[%u].type: REG_MRS = 0x%x" % (c, i.reg))
             if i.type == ARM64_OP_REG_MSR:
@@ -126,7 +125,7 @@ def test_class():
     for (arch, mode, code, comment) in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

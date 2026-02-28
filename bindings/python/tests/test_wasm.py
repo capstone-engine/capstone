@@ -5,7 +5,6 @@
 from __future__ import print_function
 from capstone import *
 from capstone.wasm import *
-from xprint import to_hex
 
 WASM_CODE = b"\x20\x00\x20\x01\x41\x20\x10\xc9\x01\x45\x0b"
 
@@ -63,7 +62,7 @@ def test_class():
     for (arch, mode, code, comment) in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:
