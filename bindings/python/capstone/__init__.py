@@ -102,6 +102,7 @@ __all__ = [
     'CS_MODE_M680X_6811',
     'CS_MODE_M680X_CPU12',
     'CS_MODE_M680X_HCS08',
+    'CS_MODE_M680X_RS08',
     'CS_MODE_BPF_CLASSIC',
     'CS_MODE_BPF_EXTENDED',
     'CS_MODE_RISCV32',
@@ -399,6 +400,7 @@ CS_MODE_M680X_6809 = (1 << 7)  # M680X M6809 mode
 CS_MODE_M680X_6811 = (1 << 8)  # M680X M68HC11 mode
 CS_MODE_M680X_CPU12 = (1 << 9)  # M680X CPU12 mode
 CS_MODE_M680X_HCS08 = (1 << 10)  # M680X HCS08 mode
+CS_MODE_M680X_RS08 = (1 << 11) # M680X RS08 mode
 CS_MODE_BPF_CLASSIC = 0          # Classic BPF mode (default)
 CS_MODE_BPF_EXTENDED = (1 << 0)  # Extended BPF mode
 CS_MODE_RISCV32 = (1 << 0)       # RISCV32 mode

@@ -45,6 +45,7 @@ typedef enum m680x_reg {
 	M680X_REG_Q, ///< M6309
 
 	M680X_REG_PC, ///< M6800/1/2/3/9, M6301/9
+	M680X_REG_SPC, ///< RS08
 
 	M680X_REG_TMP2, ///< CPU12
 	M680X_REG_TMP3, ///< CPU12
@@ -57,16 +58,16 @@ typedef enum m680x_op_type {
 	M680X_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
 	M680X_OP_REGISTER = CS_OP_REG, ///< = Register operand.
 	M680X_OP_IMMEDIATE = CS_OP_IMM, ///< = Immediate operand.
-	M680X_OP_INDEXED = CS_OP_SPECIAL + 0, ///< = Indexed addressing operand.
-	M680X_OP_EXTENDED =
-		CS_OP_SPECIAL + 1, ///< = Extended addressing operand.
+	// = Indexed addressing operand.
+	M680X_OP_INDEXED = CS_OP_SPECIAL + 0,
+	// = Extended addressing operand.
+	M680X_OP_EXTENDED = CS_OP_SPECIAL + 1,
 	M680X_OP_DIRECT = CS_OP_SPECIAL + 2, ///< = Direct addressing operand.
-	M680X_OP_RELATIVE =
-		CS_OP_SPECIAL + 3, ///< = Relative addressing operand.
-	M680X_OP_CONSTANT =
-		CS_OP_SPECIAL +
-		4, ///< = constant operand (Displayed as number only).
-	///< Used e.g. for a bit index or page number.
+	// = Relative addressing operand.
+	M680X_OP_RELATIVE = CS_OP_SPECIAL + 3,
+	// = constant operand (Displayed as number only).
+	// Used e.g. for a bit index or page number.
+	M680X_OP_CONSTANT = CS_OP_SPECIAL + 4,
 } m680x_op_type;
 
 // Supported bit values for mem.idx.offset_bits
@@ -472,6 +473,8 @@ typedef enum m680x_insn {
 	M680X_INS_SEV,
 	M680X_INS_SEX,
 	M680X_INS_SEXW,
+	M680X_INS_SHA, ///< RS08
+	M680X_INS_SLA, ///< RS08
 	M680X_INS_SLP,
 	M680X_INS_STA,
 	M680X_INS_STAA, ///< M6800/1/2/3

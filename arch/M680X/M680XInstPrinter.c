@@ -20,8 +20,9 @@
 
 #ifndef CAPSTONE_DIET
 static const char s_reg_names[][10] = {
-	"<invalid>", "a", "b", "e", "f", "0", "d", "w", "cc", "dp",   "md",
-	"hx",	     "h", "x", "y", "s", "u", "v", "q", "pc", "tmp2", "tmp3",
+	"<invalid>", "a",  "b",	 "e",  "f",   "0",    "d",    "w",
+	"cc",	     "dp", "md", "hx", "h",   "x",    "y",    "s",
+	"u",	     "v",  "q",	 "pc", "spc", "tmp2", "tmp3",
 };
 
 static const char s_instruction_names[][6] = {
@@ -62,14 +63,14 @@ static const char s_instruction_names[][6] = {
 	"rolb",	 "rold",  "rolw",  "rolx",  "ror",   "rora",  "rorb",  "rord",
 	"rorw",	 "rorx",  "rsp",   "rtc",   "rti",   "rts",   "sba",   "sbc",
 	"sbca",	 "sbcb",  "sbcd",  "sbcr",  "sec",   "sei",   "sev",   "sex",
-	"sexw",	 "slp",	  "sta",   "staa",  "stab",  "stb",   "stbt",  "std",
-	"ste",	 "stf",	  "stop",  "sthx",  "stq",   "sts",   "stu",   "stw",
-	"stx",	 "sty",	  "sub",   "suba",  "subb",  "subd",  "sube",  "subf",
-	"subr",	 "subw",  "swi",   "swi2",  "swi3",  "sync",  "tab",   "tap",
-	"tax",	 "tba",	  "tbeq",  "tbl",   "tbne",  "test",  "tfm",   "tfr",
-	"tim",	 "tpa",	  "tst",   "tsta",  "tstb",  "tstd",  "tste",  "tstf",
-	"tstw",	 "tstx",  "tsx",   "tsy",   "txa",   "txs",   "tys",   "wai",
-	"wait",	 "wav",	  "wavr",  "xgdx",  "xgdy",
+	"sexw",	 "sha",	  "sla",   "slp",   "sta",   "staa",  "stab",  "stb",
+	"stbt",	 "std",	  "ste",   "stf",   "stop",  "sthx",  "stq",   "sts",
+	"stu",	 "stw",	  "stx",   "sty",   "sub",   "suba",  "subb",  "subd",
+	"sube",	 "subf",  "subr",  "subw",  "swi",   "swi2",  "swi3",  "sync",
+	"tab",	 "tap",	  "tax",   "tba",   "tbeq",  "tbl",   "tbne",  "test",
+	"tfm",	 "tfr",	  "tim",   "tpa",   "tst",   "tsta",  "tstb",  "tstd",
+	"tste",	 "tstf",  "tstw",  "tstx",  "tsx",   "tsy",   "txa",   "txs",
+	"tys",	 "wai",	  "wait",  "wav",   "wavr",  "xgdx",  "xgdy",
 };
 
 static const name_map s_group_names[] = {

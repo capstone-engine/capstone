@@ -301,6 +301,8 @@ static const insn_props g_insn_props[] = {
 	{ NOG, uuuu, NOR, NOR, true, false }, // SEV
 	{ NOG, wrrr, NOR, NOR, true, true }, // SEX
 	{ NOG, rwww, M680X_REG_W, NOR, true, true }, // SEXW
+	{ NOG, rwww, M680X_REG_SPC, M680X_REG_A, false, false }, // SHA
+	{ NOG, rwww, M680X_REG_SPC, M680X_REG_A, false, false }, // SLA
 	{ NOG, uuuu, NOR, NOR, false, false }, // SLP
 	{ NOG, rwww, M680X_REG_A, NOR, true, false }, // STA
 	{ NOG, rwww, M680X_REG_A, NOR, true, false }, // STAA
