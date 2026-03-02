@@ -8,7 +8,6 @@ from capstone import *
 import capstone.aarch64
 import capstone.arm
 import capstone.systemz
-from xprint import to_hex
 
 
 AARCH64_CODE = b"\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9"
@@ -27,7 +26,7 @@ def test_compatibility():
     for arch, mode, code, comment in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:
