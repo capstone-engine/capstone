@@ -4,7 +4,6 @@
 from __future__ import print_function
 from capstone import *
 from capstone.m68k import *
-from xprint import to_hex, to_x
 
 M68K_CODE = b"\x4c\x00\x54\x04\x48\xe7\xe0\x30\x4c\xdf\x0c\x07\xd4\x40\x87\x5a\x4e\x71\x02\xb4\xc0\xde\xc0\xde\x5c\x00\x1d\x80\x71\x12\x01\x23\xf2\x3c\x44\x22\x40\x49\x0e\x56\x54\xc5\xf2\x3c\x44\x00\x44\x7a\x00\x00\xf2\x00\x0a\x28\x4e\xb9\x00\x00\x00\x12\x4e\x75"
 
@@ -95,7 +94,7 @@ def test_class():
     for (arch, mode, code, comment) in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s " % to_hex(code))
+        print("Code: %s " % code.hex(' '))
         print("Disasm:")
 
         try:

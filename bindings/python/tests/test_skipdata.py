@@ -5,7 +5,6 @@
 from __future__ import print_function
 from capstone import *
 import binascii
-from xprint import to_hex
 
 
 X86_CODE32 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x00\x91\x92"
@@ -28,7 +27,7 @@ def test_class():
     for (arch, mode, code, comment, syntax) in all_tests:
         print('*' * 16)
         print("Platform: %s" %comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

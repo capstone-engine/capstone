@@ -4,12 +4,14 @@
 from __future__ import print_function
 from capstone import *
 from capstone.x86 import *
-from xprint import to_hex, to_x, to_x_32
 
 
 X86_CODE64 = b"\x55\x48\x8b\x05\xb8\x13\x00\x00\xe9\xea\xbe\xad\xde\xff\x25\x23\x01\x00\x00\xe8\xdf\xbe\xad\xde\x74\xff"
 X86_CODE16 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6\x66\xe9\xb8\x00\x00\x00\x67\xff\xa0\x23\x01\x00\x00\x66\xe8\xcb\x00\x00\x00\x74\xfc"
 X86_CODE32 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6\xe9\xea\xbe\xad\xde\xff\xa0\x23\x01\x00\x00\xe8\xdf\xbe\xad\xde\x74\xff"
+
+mask32 = lambda v: v & 0xFFFFFFFF
+mask64 = lambda v: v & 0xFFFFFFFFFFFFFFFF
 
 all_tests = (
         (CS_ARCH_X86, CS_MODE_16, X86_CODE16, "X86 16bit (Intel syntax)", None),
@@ -150,7 +152,7 @@ def print_insn_detail(mode, insn):
         print("\tmodrm_offset: 0x%x" % (insn.encoding.modrm_offset))
 
     # print displacement value
-    print("\tdisp: 0x%s" % to_x_32(insn.disp))
+    print("\tdisp: 0x%x" % mask32(insn.disp))
 
     # print displacement offset (offset into instruction bytes)
     if insn.encoding.disp_offset != 0:
@@ -197,7 +199,7 @@ def print_insn_detail(mode, insn):
         print("\timm_count: %u" % count)
         for i in range(count):
             op = insn.op_find(X86_OP_IMM, i + 1)
-            print("\t\timms[%u]: 0x%s" % (i + 1, to_x(op.imm)))
+            print("\t\timms[%u]: 0x%x" % (i + 1, mask64(op.imm)))
             if insn.encoding.imm_offset != 0:
                 print("\timm_offset: 0x%x" % (insn.encoding.imm_offset))
             if insn.encoding.imm_size != 0:
@@ -211,7 +213,7 @@ def print_insn_detail(mode, insn):
             if i.type == X86_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             if i.type == X86_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%x" % (c, mask64(i.imm)))
             if i.type == X86_OP_MEM:
                 print("\t\toperands[%u].type: MEM" % c)
                 if i.mem.segment != 0:
@@ -223,7 +225,7 @@ def print_insn_detail(mode, insn):
                 if i.mem.scale != 1:
                     print("\t\t\toperands[%u].mem.scale: %u" % (c, i.mem.scale))
                 if i.mem.disp != 0:
-                    print("\t\t\toperands[%u].mem.disp: 0x%s" % (c, to_x(i.mem.disp)))
+                    print("\t\t\toperands[%u].mem.disp: 0x%x" % (c, mask64(i.mem.disp)))
 
             # AVX broadcast type
             if i.avx_bcast != X86_AVX_BCAST_INVALID:
@@ -270,7 +272,7 @@ def test_class():
     for (arch, mode, code, comment, syntax) in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

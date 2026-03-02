@@ -5,7 +5,6 @@
 from __future__ import print_function
 from capstone import *
 from capstone.sh import *
-from xprint import to_x, to_hex
 
 SH4A_CODE = b"\x0c\x31\x10\x20\x22\x21\x36\x64\x46\x25\x12\x12\x1c\x02\x08\xc1\x05\xc7\x0c\x71\x1f\x02\x22\xcf\x06\x89\x23\x00\x2b\x41\x0b\x00\x0e\x40\x32\x00\x0a\xf1\x09\x00"
 SH2A_CODE = b"\x32\x11\x92\x00\x32\x49\x31\x00"
@@ -13,7 +12,7 @@ all_tests = (
         (CS_ARCH_SH, CS_MODE_SH4A | CS_MODE_SHFPU, SH4A_CODE, "SH_SH4A"),
         (CS_ARCH_SH, CS_MODE_SH2A | CS_MODE_SHFPU | CS_MODE_BIG_ENDIAN, SH2A_CODE, "SH_SH2A"),
 )
-
+mask64 = lambda v: v & 0xFFFFFFFFFFFFFFFF
 
 reg_address_msg = [
 	"Register indirect",
@@ -43,7 +42,7 @@ def print_insn_detail(insn):
             if i.type == SH_OP_REG:
                 print("\t\toperands[%u].type: REG = %s" % (c, insn.reg_name(i.reg)))
             elif i.type == SH_OP_IMM:
-                print("\t\toperands[%u].type: IMM = 0x%s" % (c, to_x(i.imm)))
+                print("\t\toperands[%u].type: IMM = 0x%x" % (c, mask64(i.imm)))
             elif i.type == SH_OP_MEM:
                 print("\t\toperands[%u].type: MEM " % c)
                 if i.mem.address in [SH_OP_MEM_REG_IND, SH_OP_MEM_REG_POST, SH_OP_MEM_REG_PRE]:
@@ -79,7 +78,7 @@ def test_class():
     for (arch, mode, code, comment) in all_tests:
         print("*" * 16)
         print("Platform: %s" %comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

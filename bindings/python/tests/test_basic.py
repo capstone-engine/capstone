@@ -6,7 +6,6 @@ from capstone import *
 import binascii
 import sys
 
-from xprint import to_hex
 
 _python3 = sys.version_info.major == 3
 
@@ -77,7 +76,7 @@ def test_cs_disasm_quick():
         print('*' * 40)
         print("Platform: %s" % comment)
         print("Disasm:"),
-        print(to_hex(code))
+        print(code.hex(' '))
         for insn in cs_disasm_quick(arch, mode, code, 0x1000):
             print("0x%x:\t%s\t%s" % (insn.address, insn.mnemonic, insn.op_str))
         print()
@@ -107,7 +106,7 @@ def test_class():
     for arch, mode, code, comment, syntax in all_tests:
         print('*' * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:
