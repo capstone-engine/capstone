@@ -348,8 +348,6 @@ void RISCV_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 }
 
 static const char *const insn_name_maps[] = {
-	/*RISCV_INS_INVALID:*/ NULL,
-
 #include "RISCVGenCSMappingInsnName.inc"
 };
 
