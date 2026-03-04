@@ -210,6 +210,7 @@ __all__ = [
     'CS_OPT_SYNTAX_CS_REG_ALIAS',
     'CS_OPT_SYNTAX_NO_DOLLAR',
     'CS_OPT_SYNTAX_NO_ALIAS_TEXT',
+    'CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED',
 
     'CS_OPT_DETAIL',
     'CS_OPT_DETAIL_REAL',
@@ -563,6 +564,7 @@ CS_OPT_SYNTAX_CS_REG_ALIAS = (1 << 7)  # Prints common register alias which are 
 CS_OPT_SYNTAX_PERCENT = (1 << 8)  # Prints the % in front of PPC registers.
 CS_OPT_SYNTAX_NO_DOLLAR = (1 << 9) # Does not print the $ in front of Mips, LoongArch registers.
 CS_OPT_SYNTAX_NO_ALIAS_TEXT = (1 << 10) # Does not print an instruction's alias test if the instruction is an alias
+CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED = (1 << 11) # Like the one above it, but only supresses compressed instruction aliases
 CS_OPT_DETAIL_REAL = (1 << 1)  # If enabled, always sets the real instruction detail.Even if the instruction is an alias.
 
 # Capstone error type
