@@ -13,9 +13,9 @@ extern "C" {
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <libkern/libkern.h>
 #else
-#include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #endif
 
 #include "cs_operand.h"
@@ -163,6 +163,7 @@ typedef enum cs_mode {
 	CS_MODE_M68K_030 = 1 << 4, ///< M68K 68030 mode
 	CS_MODE_M68K_040 = 1 << 5, ///< M68K 68040 mode
 	CS_MODE_M68K_060 = 1 << 6, ///< M68K 68060 mode
+	CS_MODE_M68K_CPU32 = 1 << 7,
 	CS_MODE_BIG_ENDIAN = 1U << 31, ///< big-endian mode
 	CS_MODE_MIPS16 = CS_MODE_16, ///< Generic mips16
 	CS_MODE_MIPS32 = CS_MODE_32, ///< Generic mips32
@@ -450,27 +451,27 @@ typedef struct cs_opt_skipdata {
 #else
 #include "aarch64.h"
 #endif
-#include "m68k.h"
-#include "mips.h"
-#include "ppc.h"
-#include "sparc.h"
-#include "systemz.h"
-#include "x86.h"
-#include "xcore.h"
-#include "tms320c64x.h"
-#include "m680x.h"
-#include "evm.h"
-#include "riscv.h"
-#include "wasm.h"
-#include "mos65xx.h"
-#include "bpf.h"
-#include "sh.h"
-#include "tricore.h"
 #include "alpha.h"
+#include "arc.h"
+#include "bpf.h"
+#include "evm.h"
 #include "hppa.h"
 #include "loongarch.h"
+#include "m680x.h"
+#include "m68k.h"
+#include "mips.h"
+#include "mos65xx.h"
+#include "ppc.h"
+#include "riscv.h"
+#include "sh.h"
+#include "sparc.h"
+#include "systemz.h"
+#include "tms320c64x.h"
+#include "tricore.h"
+#include "wasm.h"
+#include "x86.h"
+#include "xcore.h"
 #include "xtensa.h"
-#include "arc.h"
 
 #define MAX_IMPL_W_REGS 47
 #define MAX_IMPL_R_REGS 20

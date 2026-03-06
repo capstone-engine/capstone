@@ -1,13 +1,13 @@
 /* Tang Yuhang <tyh000011112222@gmail.com> 2016 */
 /* pancake <pancake@nopcode.org> 2017 */
 
-#include <string.h>
+#include "getopt.h"
 #include <ctype.h>
 #include <errno.h>
-#include "getopt.h"
+#include <string.h>
 
-#include <capstone/capstone.h>
 #include "cstool.h"
+#include <capstone/capstone.h>
 
 #ifdef CAPSTONE_AARCH64_COMPAT_HEADER
 #define CS_ARCH_AARCH64 CS_ARCH_ARM64
@@ -418,6 +418,8 @@ static struct {
 
 	{ "m68k", "m68k + big endian", CS_ARCH_M68K, CS_MODE_BIG_ENDIAN },
 	{ "m68k40", "m68k40", CS_ARCH_M68K, CS_MODE_M68K_040 },
+	{ "m68k60", "m68k60", CS_ARCH_M68K, CS_MODE_M68K_060 },
+	{ "m68kcpu32", "m68kcpu32", CS_ARCH_M68K, CS_MODE_M68K_CPU32 },
 
 	{ "tms320c64x", "tms320c64x, big endian", CS_ARCH_TMS320C64X,
 	  CS_MODE_BIG_ENDIAN },

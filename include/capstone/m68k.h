@@ -8,8 +8,8 @@
 extern "C" {
 #endif
 
-#include "platform.h"
 #include "cs_operand.h"
+#include "platform.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable : 4201)
@@ -72,6 +72,10 @@ typedef enum m68k_reg {
 	M68K_REG_FPCR,
 	M68K_REG_FPSR,
 	M68K_REG_FPIAR,
+
+	M68K_REG_TT0,
+	M68K_REG_TT1,
+	M68K_REG_CRP,
 
 	M68K_REG_ENDING, // <-- mark the end of the list of registers
 } m68k_reg;
@@ -602,6 +606,11 @@ typedef enum m68k_insn {
 	M68K_INS_TST,
 	M68K_INS_UNLK,
 	M68K_INS_UNPK,
+	M68K_INS_BGND,
+	M68K_INS_TBLS,
+	M68K_INS_TBLU,
+	M68K_INS_TBLSN,
+	M68K_INS_TBLUN,
 	M68K_INS_ENDING, // <-- mark the end of the list of instructions
 } m68k_insn;
 

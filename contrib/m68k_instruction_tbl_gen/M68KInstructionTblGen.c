@@ -1,7 +1,7 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
 
 /* This code is used to build the static lookup table used inside the M68KDisassembler.c code
  * To run this use the Makefile in the same directory
@@ -255,6 +255,9 @@ static opcode_struct g_opcode_info[] = {
 	{ "d68020_pack_rr", 0xf1f8, 0x8140, 0x000 },
 	{ "d68020_pack_mm", 0xf1f8, 0x8148, 0x000 },
 	{ "d68000_pea", 0xffc0, 0x4840, 0x27b },
+	{ "d68060_halt", 0xffff, 0x4ac8, 0x000 },
+	{ "d68060_pulse", 0xffff, 0x4acc, 0x000 },
+	{ "d68cpu32_bgnd", 0xffff, 0x4afa, 0x000 },
 	{ "d68000_reset", 0xffff, 0x4e70, 0x000 },
 	{ "d68000_ror_s_8", 0xf1f8, 0xe018, 0x000 },
 	{ "d68000_ror_s_16", 0xf1f8, 0xe058, 0x000 },
@@ -293,6 +296,14 @@ static opcode_struct g_opcode_info[] = {
 	{ "d68000_sbcd_mm", 0xf1f8, 0x8108, 0x000 },
 	{ "d68000_scc", 0xf0c0, 0x50c0, 0xbf8 },
 	{ "d68000_stop", 0xffff, 0x4e72, 0x000 },
+	{ "d68060_lpstop", 0xffff, 0xf800, 0x000 },
+	{ "d68cpu32_tbl", 0xffc0, 0xf800, 0x000 },
+	{ "d68040_pflush", 0xffe0, 0xf500, 0x000 },
+	{ "d68040_pflush_or_cpsave", 0xfff8, 0xf510, 0x000 },
+	{ "d68040_ptest", 0xfff8, 0xf548, 0x000 },
+	{ "d68040_ptest_or_cprestore", 0xfff8, 0xf568, 0x000 },
+	{ "d68060_plpa", 0xfff8, 0xf588, 0x000 },
+	{ "d68060_plpa", 0xfff8, 0xf5c8, 0x000 },
 	{ "d68000_sub_er_8", 0xf1c0, 0x9000, 0xbff },
 	{ "d68000_sub_er_16", 0xf1c0, 0x9040, 0xfff },
 	{ "d68000_sub_er_32", 0xf1c0, 0x9080, 0xfff },

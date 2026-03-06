@@ -11,12 +11,12 @@
 #include <stdlib.h>
 #endif
 
-#include <string.h>
 #include <capstone/capstone.h>
+#include <string.h>
 
-#include "utils.h"
 #include "MCRegisterInfo.h"
 #include "Mapping.h"
+#include "utils.h"
 
 #if defined(_KERNEL_MODE)
 #include "windows\winkernel_mm.h"
@@ -57,28 +57,28 @@
 #endif
 
 #include "arch/AArch64/AArch64Module.h"
+#include "arch/ARC/ARCModule.h"
 #include "arch/ARM/ARMModule.h"
+#include "arch/Alpha/AlphaModule.h"
+#include "arch/BPF/BPFModule.h"
 #include "arch/EVM/EVMModule.h"
-#include "arch/WASM/WASMModule.h"
+#include "arch/HPPA/HPPAModule.h"
+#include "arch/LoongArch/LoongArchModule.h"
 #include "arch/M680X/M680XModule.h"
 #include "arch/M68K/M68KModule.h"
+#include "arch/MOS65XX/MOS65XXModule.h"
 #include "arch/Mips/MipsModule.h"
 #include "arch/PowerPC/PPCModule.h"
+#include "arch/RISCV/RISCVModule.h"
+#include "arch/SH/SHModule.h"
 #include "arch/Sparc/SparcModule.h"
 #include "arch/SystemZ/SystemZModule.h"
 #include "arch/TMS320C64x/TMS320C64xModule.h"
+#include "arch/TriCore/TriCoreModule.h"
+#include "arch/WASM/WASMModule.h"
 #include "arch/X86/X86Module.h"
 #include "arch/XCore/XCoreModule.h"
-#include "arch/RISCV/RISCVModule.h"
-#include "arch/MOS65XX/MOS65XXModule.h"
-#include "arch/BPF/BPFModule.h"
-#include "arch/SH/SHModule.h"
-#include "arch/TriCore/TriCoreModule.h"
-#include "arch/Alpha/AlphaModule.h"
-#include "arch/HPPA/HPPAModule.h"
-#include "arch/LoongArch/LoongArchModule.h"
 #include "arch/Xtensa/XtensaModule.h"
-#include "arch/ARC/ARCModule.h"
 
 typedef struct cs_arch_config {
 	// constructor initialization
@@ -168,7 +168,7 @@ typedef struct cs_arch_config {
 		M68K_option, \
 		~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_000 | CS_MODE_M68K_010 | \
 		  CS_MODE_M68K_020 | CS_MODE_M68K_030 | CS_MODE_M68K_040 | \
-		  CS_MODE_M68K_060), \
+		  CS_MODE_M68K_060 | CS_MODE_M68K_CPU32), \
 	}
 #define CS_ARCH_CONFIG_TMS320C64X \
 	{ \

@@ -9,8 +9,8 @@
 
 #include "M68KDisassembler.h"
 
-#include "../../cs_priv.h"
 #include "../../Mapping.h"
+#include "../../cs_priv.h"
 #include "../../utils.h"
 
 #include "../../MCInst.h"
@@ -29,6 +29,8 @@ static const char *const s_reg_names[] = {
 	"dtt1",	   "mmusr", "urp",   "srp",
 
 	"fpcr",	   "fpsr",  "fpiar",
+
+	"tt0",	   "tt1",   "crp",
 };
 
 static const char *const s_instruction_names[] = {
@@ -94,7 +96,8 @@ static const char *const s_instruction_names[] = {
 	"trapt",    "trapf",	"traphi",   "trapls",	"trapcc",    "traphs",
 	"trapcs",   "traplo",	"trapne",   "trapeq",	"trapvc",    "trapvs",
 	"trappl",   "trapmi",	"trapge",   "traplt",	"trapgt",    "traple",
-	"tst",	    "unlk",	"unpk",
+	"tst",	    "unlk",	"unpk",	    "bgnd",	"tbls",	     "tblu",
+	"tblsn",    "tblun",
 };
 #endif
 
@@ -380,7 +383,7 @@ void M68K_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	if (MI->Opcode == M68K_INS_INVALID) {
 		if (ext->op_count)
 			SStream_concat(O, "dc.w $%" PRIx32,
-				       ext->operands[0].imm);
+				       (uint32_t)ext->operands[0].imm);
 		else
 			SStream_concat(O, "dc.w $<unknown>");
 		return;
