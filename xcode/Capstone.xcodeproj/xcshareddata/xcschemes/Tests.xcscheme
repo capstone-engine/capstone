@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DC474E6319DDEA5F00BCA449"
-               BuildableName = "test"
-               BlueprintName = "test"
+               BuildableName = "test_basic"
+               BlueprintName = "test_basic"
                ReferencedContainer = "container:Capstone.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -194,27 +194,23 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-      </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC474E6319DDEA5F00BCA449"
-            BuildableName = "test"
-            BlueprintName = "test"
+            BuildableName = "test_basic"
+            BlueprintName = "test_basic"
             ReferencedContainer = "container:Capstone.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
+      <Testables>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -225,13 +221,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC474E6319DDEA5F00BCA449"
-            BuildableName = "test"
-            BlueprintName = "test"
+            BuildableName = "test_basic"
+            BlueprintName = "test_basic"
             ReferencedContainer = "container:Capstone.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -243,8 +237,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DC474E6319DDEA5F00BCA449"
-            BuildableName = "test"
-            BlueprintName = "test"
+            BuildableName = "test_basic"
+            BlueprintName = "test_basic"
             ReferencedContainer = "container:Capstone.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
