@@ -224,6 +224,7 @@
 		21CBA9C52F6B8643009FC2DD /* tricore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tricore.h; sourceTree = "<group>"; };
 		21CBA9C62F6B8643009FC2DD /* wasm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wasm.h; sourceTree = "<group>"; };
 		21CBA9C72F6B8643009FC2DD /* xtensa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xtensa.h; sourceTree = "<group>"; };
+		21CBA9D72F6B8EC8009FC2DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DC474F6819DE6F3B00BCA449 /* Capstone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Capstone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC474F6B19DE6F3B00BCA449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DCA3577B1BC2C0290094BB3F /* M68KDisassembler.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = M68KDisassembler.c; sourceTree = "<group>"; };
@@ -345,6 +346,7 @@
 		DCFE239919DDCB4900EF8EA9 = {
 			isa = PBXGroup;
 			children = (
+				21CBA9D72F6B8EC8009FC2DD /* README.md */,
 				DCFE249D19DDCDEE00EF8EA9 /* cs.c */,
 				21CBA9B12F6B7FF6009FC2DD /* Mapping.c */,
 				DCFE249E19DDCDEE00EF8EA9 /* MCInst.c */,
