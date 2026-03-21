@@ -151,3 +151,5 @@ suite/auto-sync/src/autosync.egg-info
 
 # clangd cache
 /.cache
+.build
+.swiftpm
