@@ -193,13 +193,13 @@ jobs:
         valgrind --leak-check=full cstest tests/MC
 
     - name: Compatibility header generation
-      # clang-format-17 is only available in Ubuntu 24.04
+      # clang-format-20 is only available in Ubuntu 24.04
       # Hence the check only happens for it.
       if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.os, 'ubuntu-24.04')
       run: |
         sudo apt-get -y update
-        sudo apt-get -y install clang-format-17
-        clang-format-17 --version
+        sudo apt-get -y install clang-format-20
+        clang-format-20 --version
         cp ./include/capstone/arm64.h arm64_compat_current.h
         cp ./include/capstone/systemz_compatibility.h systemz_compat_current.h
         ./suite/auto-sync/src/autosync/HeaderPatcher.py -C ./.clang-format -c --v6 ./include/capstone/aarch64.h --v5 ./include/capstone/arm64.h

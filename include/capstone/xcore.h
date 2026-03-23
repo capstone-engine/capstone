@@ -65,8 +65,8 @@ typedef enum xcore_reg {
 /// This is associated with XCORE_OP_MEM operand type above
 typedef struct xcore_op_mem {
 	uint8_t base; ///< base register, can be safely interpreted as
-		///< a value of type `xcore_reg`, but it is only
-		///< one byte wide
+	///< a value of type `xcore_reg`, but it is only
+	///< one byte wide
 	uint8_t index; ///< index register, same conditions apply here
 	int32_t disp; ///< displacement/offset value
 	int direct; ///< +1: forward, -1: backward

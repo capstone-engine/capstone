@@ -63,9 +63,9 @@ typedef struct insn_map {
 	unsigned short mapid; // The Capstone instruction id
 #ifndef CAPSTONE_DIET
 	uint16_t regs_use[MAX_IMPL_R_REGS]; ///< list of implicit registers used by
-		///< this instruction
+	///< this instruction
 	uint16_t regs_mod[MAX_IMPL_W_REGS]; ///< list of implicit registers modified
-		///< by this instruction
+	///< by this instruction
 	unsigned char groups
 		[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
 	bool branch; // branch instruction?

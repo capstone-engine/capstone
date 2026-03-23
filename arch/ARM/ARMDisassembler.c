@@ -6561,7 +6561,7 @@ static DecodeStatus DecodeLOLoop(MCInst *Inst, unsigned Insn, uint64_t Address,
 				 SBZMask = 0x00300FFE;
 			if ((Insn & ~SBZMask) != CanonicalLCTP)
 				return MCDisassembler_Fail; // a mandatory bit is wrong: hard
-					// fail
+			// fail
 			if (Insn != CanonicalLCTP)
 				Check(&S,
 				      MCDisassembler_SoftFail); // an SBZ bit is wrong: soft fail

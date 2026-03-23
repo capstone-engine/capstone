@@ -2828,7 +2828,7 @@ typedef struct {
 /// Instruction operand
 typedef struct cs_aarch64_op {
 	int vector_index; ///< Vector Index for some vector operands (or -1 if
-		///< irrelevant)
+	///< irrelevant)
 	AArch64Layout_VectorLayout vas; ///< Vector Arrangement Specifier
 	struct {
 		aarch64_shifter type; ///< shifter type of this operand
@@ -2839,8 +2839,8 @@ typedef struct cs_aarch64_op {
 	} shift;
 	aarch64_extender ext; ///< extender type of this operand
 	aarch64_op_type type; ///< operand type
-		/// Q and V regs share the same identifiers (because they are the same registers).
-		/// If this flag is set, the register operand is interpreted as a V-register.
+	/// Q and V regs share the same identifiers (because they are the same registers).
+	/// If this flag is set, the register operand is interpreted as a V-register.
 	bool is_vreg;
 	union {
 		aarch64_reg reg; ///< register value for REG operand

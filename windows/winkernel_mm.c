@@ -11,8 +11,8 @@ static const ULONG CS_WINKERNEL_POOL_TAG = 'kwsC';
 // A structure to implement realloc()
 typedef struct _CS_WINKERNEL_MEMBLOCK {
 	size_t size; // A number of bytes allocated
-	__declspec(align(MEMORY_ALLOCATION_ALIGNMENT)) char data
-		[ANYSIZE_ARRAY]; // An address returned to a caller
+	__declspec(align(MEMORY_ALLOCATION_ALIGNMENT)) char
+		data[ANYSIZE_ARRAY]; // An address returned to a caller
 } CS_WINKERNEL_MEMBLOCK;
 
 // free()

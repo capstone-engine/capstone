@@ -86,27 +86,27 @@ typedef enum m680x_op_type {
 /// Instruction's operand referring to indexed addressing
 typedef struct m680x_op_idx {
 	m680x_reg base_reg; ///< base register (or M680X_REG_INVALID if
-		///< irrelevant)
+	///< irrelevant)
 	m680x_reg offset_reg; ///< offset register (or M680X_REG_INVALID if
-		///< irrelevant)
+	///< irrelevant)
 	int16_t offset; ///< 5-,8- or 16-bit offset. See also offset_bits.
 	uint16_t offset_addr; ///< = offset addr. if base_reg == M680X_REG_PC.
-		///< calculated as offset + PC
+	///< calculated as offset + PC
 	uint8_t offset_bits; ///< offset width in bits for indexed addressing
 	int8_t inc_dec; ///< inc. or dec. value:
-		///<    0: no inc-/decrement
-		///<    1 .. 8: increment by 1 .. 8
-		///<    -1 .. -8: decrement by 1 .. 8
-		///< if flag M680X_IDX_POST_INC_DEC set it is post
-		///< inc-/decrement otherwise pre inc-/decrement
+	///<    0: no inc-/decrement
+	///<    1 .. 8: increment by 1 .. 8
+	///<    -1 .. -8: decrement by 1 .. 8
+	///< if flag M680X_IDX_POST_INC_DEC set it is post
+	///< inc-/decrement otherwise pre inc-/decrement
 	uint8_t flags; ///< 8-bit flags (see above)
 } m680x_op_idx;
 
 /// Instruction's memory operand referring to relative addressing (Bcc/LBcc)
 typedef struct m680x_op_rel {
 	uint16_t address; ///< The absolute address.
-		///< calculated as PC + offset. PC is the first
-		///< address after the instruction.
+	///< calculated as PC + offset. PC is the first
+	///< address after the instruction.
 	int16_t offset; ///< the offset/displacement value
 } m680x_op_rel;
 
