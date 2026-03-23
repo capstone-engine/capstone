@@ -363,13 +363,11 @@ static void setGroup0Prefix(struct InternalInstruction *insn, uint8_t prefix)
 	switch (prefix) {
 	case 0xf0: // LOCK
 		insn->hasLockPrefix = true;
-		insn->repeatPrefix = 0;
 		break;
 
 	case 0xf2: // REPNE/REPNZ
 	case 0xf3: // REP or REPE/REPZ
 		insn->repeatPrefix = prefix;
-		insn->hasLockPrefix = false;
 		break;
 	}
 }
@@ -482,31 +480,6 @@ static int readPrefixes(struct InternalInstruction *insn)
 			// prefix requires next byte
 			if (lookAtByte(insn, &nextByte))
 				return -1;
-
-			/*
-			 * If the byte is 0xf2 or 0xf3, and any of the following conditions are
-			 * met:
-			 * - it is followed by a LOCK (0xf0) prefix
-			 * - it is followed by an xchg instruction
-			 * then it should be disassembled as a xacquire/xrelease not repne/rep.
-			 */
-			if (((nextByte == 0xf0) ||
-			     ((nextByte & 0xfe) == 0x86 ||
-			      (nextByte & 0xf8) == 0x90))) {
-				insn->xAcquireRelease = byte;
-			}
-
-			/*
-			 * Also if the byte is 0xf3, and the following condition is met:
-			 * - it is followed by a "mov mem, reg" (opcode 0x88/0x89) or
-			 *                       "mov mem, imm" (opcode 0xc6/0xc7) instructions.
-			 * then it should be disassembled as an xrelease not rep.
-			 */
-			if (byte == 0xf3 &&
-			    (nextByte == 0x88 || nextByte == 0x89 ||
-			     nextByte == 0xc6 || nextByte == 0xc7)) {
-				insn->xAcquireRelease = byte;
-			}
 
 			if (isREX(insn, nextByte)) {
 				uint8_t nnextByte;
@@ -771,6 +744,36 @@ static int readPrefixes(struct InternalInstruction *insn)
 		// dbgprintf(insn, "Found REX prefix 0x%hhx", byte);
 	} else
 		unconsumeByte(insn);
+
+	if (insn->repeatPrefix != 0) {
+		if (lookAtByte(insn, &nextByte))
+			return -1;
+
+		/*
+		* REP prefix is present, and any of the following conditions are
+		* met:
+		* - it is followed by a LOCK (0xf0) prefix
+		* - it is followed by an xchg instruction (except for 0x90 - NOP/PAUSE)
+		* then it should be disassembled as a xacquire/xrelease not repne/rep.
+		*/
+		if ((insn->hasLockPrefix || ((nextByte & 0xfe) == 0x86 ||
+					     (nextByte & 0xf8) == 0x90)) &&
+		    nextByte != 0x90) {
+			insn->xAcquireRelease = insn->repeatPrefix;
+		}
+
+		/*
+		* Also if the REP prefix is 0xf3, and the following condition is met:
+		* - it is followed by a "mov mem, reg" (opcode 0x88/0x89) or
+		*                       "mov mem, imm" (opcode 0xc6/0xc7) instructions.
+		* then it should be disassembled as an xrelease not rep.
+		*/
+		if (insn->repeatPrefix == 0xf3 &&
+		    (nextByte == 0x88 || nextByte == 0x89 || nextByte == 0xc6 ||
+		     nextByte == 0xc7)) {
+			insn->xAcquireRelease = insn->repeatPrefix;
+		}
+	}
 
 	if (insn->mode == MODE_16BIT) {
 		insn->registerSize = (insn->hasOpSize ? 4 : 2);

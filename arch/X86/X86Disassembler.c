@@ -1374,6 +1374,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			instr->x86_prefix[2] = insn.prefix2;
 			instr->x86_prefix[3] = insn.prefix3;
 			instr->xAcquireRelease = insn.xAcquireRelease;
+			instr->x86Lock = insn.hasLockPrefix;
 
 			if (handle->detail_opt) {
 				update_pub_insn(instr->flat_insn, &insn);
