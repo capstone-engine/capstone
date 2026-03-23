@@ -25,6 +25,8 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum);
 
 void RISCV_add_groups(MCInst *MI);
 
+void RISCV_init_cs_detail(MCInst *MI);
+
 void RISCV_compact_operands(MCInst *MI);
 
 void RISCV_add_missing_write_access(MCInst *MI);

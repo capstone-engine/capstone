@@ -38,6 +38,7 @@
 #include "../../utils.h"
 #include "RISCVDisassemblerExtension.h"
 #include "RISCVBaseInfo.h"
+#include "RISCVMapping.h"
 
 #define GET_SUBTARGETINFO_ENUM
 #include "RISCVGenSubtargetInfo.inc"
@@ -745,6 +746,7 @@ bool RISCV_LLVM_getInstruction(csh handle, const uint8_t *Bytes, size_t ByteLen,
 			       MCInst *MI, uint16_t *Size, uint64_t Address,
 			       void *Info)
 {
+	RISCV_init_cs_detail(MI);
 	MI->MRI = (MCRegisterInfo *)Info;
 	return RISCV_getInstruction(MI, Size, Bytes, ByteLen, Address, NULL) !=
 	       MCDisassembler_Fail;
