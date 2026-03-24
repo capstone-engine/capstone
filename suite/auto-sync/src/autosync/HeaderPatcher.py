@@ -334,7 +334,7 @@ class CompatHeaderBuilder:
         if self.clang_format:
             sp.run(
                 [
-                    "clang-format-17",
+                    "clang-format-20",
                     "-i",
                     f"--style=file:{self.clang_format}",
                     self.v5,

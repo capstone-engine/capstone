@@ -1354,8 +1354,8 @@ void printAMNoIndex(MCInst *MI, unsigned OpNum, SStream *O)
 			MI, CONCAT(AArch64_OP_GROUP_ImmScale, Scale), OpNum, \
 			Scale); \
 		SStream_concat(O, "%s", markup("<imm:")); \
-		printInt32Bang(O, Scale *MCOperand_getImm( \
-					  MCInst_getOperand(MI, (OpNum)))); \
+		printInt32Bang(O, Scale * MCOperand_getImm(MCInst_getOperand( \
+						  MI, (OpNum)))); \
 		SStream_concat0(O, markup(">")); \
 	}
 DEFINE_printImmScale(8);
@@ -1798,8 +1798,8 @@ DEFINE_printGPRSeqPairsClassOperand(64);
 		AArch64_add_cs_detail_1( \
 			MI, CONCAT(AArch64_OP_GROUP_MatrixIndex, Scale), \
 			OpNum, Scale); \
-		printInt64(O, Scale *MCOperand_getImm( \
-				      MCInst_getOperand(MI, (OpNum)))); \
+		printInt64(O, Scale * MCOperand_getImm(MCInst_getOperand( \
+					      MI, (OpNum)))); \
 	}
 DEFINE_printMatrixIndex(8);
 DEFINE_printMatrixIndex(0);
@@ -2018,8 +2018,8 @@ DEFINE_printTypedVectorList(0, 0);
 			MI, CONCAT(AArch64_OP_GROUP_VectorIndex, Scale), \
 			OpNum, Scale); \
 		SStream_concat(O, "%s", "["); \
-		printUInt64(O, Scale *MCOperand_getImm( \
-				       MCInst_getOperand(MI, (OpNum)))); \
+		printUInt64(O, Scale * MCOperand_getImm(MCInst_getOperand( \
+					       MI, (OpNum)))); \
 		SStream_concat0(O, "]"); \
 	}
 DEFINE_printVectorIndex(1);

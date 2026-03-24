@@ -1,4 +1,4 @@
-name: Run clang-format-17
+name: Run clang-format-20
 on:
   push:
     paths:
@@ -17,16 +17,16 @@ jobs:
   analyze:
     runs-on: ubuntu-24.04
 
-    name: clang-format-17
+    name: clang-format-20
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: Install clang-format-17
+    - name: Install clang-format-20
       run: |
         sudo apt update -y
-        sudo apt install -y clang-format-17
-        clang-format-17 --version
+        sudo apt install -y clang-format-20
+        clang-format-20 --version
 
     - name: Check formatting
       run: |
