@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 
 enable_testing()
-set(UNIT_TEST_SOURCES sstream.c utils.c)
+set(UNIT_TEST_SOURCES sstream.c utils.c riscv_op_count_iter.c)
 include_directories(include)
 
 foreach(TSRC ${UNIT_TEST_SOURCES})
