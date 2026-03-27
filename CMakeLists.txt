@@ -242,6 +242,9 @@ set(HEADERS_COMMON
 ## architecture support
 if(CAPSTONE_ARM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARM)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_arm.c)
     set(SOURCES_ARM
         arch/ARM/ARMBaseInfo.c
         arch/ARM/ARMDisassembler.c
@@ -272,6 +275,9 @@ endif()
 
 if(CAPSTONE_AARCH64_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_AARCH64)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_aarch64.c)
     set(SOURCES_AARCH64
         arch/AArch64/AArch64BaseInfo.c
         arch/AArch64/AArch64Disassembler.c
@@ -301,6 +307,9 @@ endif()
 
 if(CAPSTONE_MIPS_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_MIPS)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_mips.c)
     set(SOURCES_MIPS
         arch/Mips/MipsDisassembler.c
         arch/Mips/MipsInstPrinter.c
@@ -332,6 +341,9 @@ endif()
 
 if(CAPSTONE_PPC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_POWERPC)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_powerpc.c)
     set(SOURCES_PPC
         arch/PowerPC/PPCDisassembler.c
         arch/PowerPC/PPCInstPrinter.c
@@ -360,6 +372,9 @@ endif()
 
 if(CAPSTONE_X86_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_X86)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_x86.c)
     set(SOURCES_X86
         arch/X86/X86Disassembler.c
         arch/X86/X86DisassemblerDecoder.c
@@ -413,6 +428,9 @@ endif()
 
 if(CAPSTONE_SPARC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SPARC)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_sparc.c)
     set(SOURCES_SPARC
         arch/Sparc/SparcDisassembler.c
         arch/Sparc/SparcDisassemblerExtension.c
@@ -444,6 +462,9 @@ endif()
 
 if(CAPSTONE_SYSTEMZ_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SYSTEMZ)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_systemz.c)
     set(SOURCES_SYSTEMZ
         arch/SystemZ/SystemZDisassembler.c
         arch/SystemZ/SystemZDisassemblerExtension.c
@@ -475,6 +496,9 @@ endif()
 
 if(CAPSTONE_XCORE_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_XCORE)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_xcore.c)
     set(SOURCES_XCORE
         arch/XCore/XCoreDisassembler.c
         arch/XCore/XCoreInstPrinter.c
@@ -495,6 +519,9 @@ endif()
 
 if(CAPSTONE_M68K_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_M68K)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_m68k.c)
     set(SOURCES_M68K
         arch/M68K/M68KDisassembler.c
         arch/M68K/M68KInstPrinter.c
@@ -507,6 +534,9 @@ endif()
 
 if(CAPSTONE_TMS320C64X_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_TMS320C64X)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_tms320c64x.c)
     set(SOURCES_TMS320C64X
         arch/TMS320C64x/TMS320C64xDisassembler.c
         arch/TMS320C64x/TMS320C64xInstPrinter.c
@@ -526,6 +556,9 @@ endif()
 
 if(CAPSTONE_M680X_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_M680X)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_m680x.c)
     set(SOURCES_M680X
         arch/M680X/M680XDisassembler.c
         arch/M680X/M680XInstPrinter.c
@@ -540,6 +573,9 @@ endif()
 
 if(CAPSTONE_EVM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_EVM)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_evm.c)
     set(SOURCES_EVM
         arch/EVM/EVMDisassembler.c
         arch/EVM/EVMInstPrinter.c
@@ -556,6 +592,9 @@ endif()
 
 if(CAPSTONE_WASM_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_WASM)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_wasm.c)
     set(SOURCES_WASM
         arch/WASM/WASMDisassembler.c
         arch/WASM/WASMInstPrinter.c
@@ -571,6 +610,9 @@ endif()
 
 if(CAPSTONE_MOS65XX_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_MOS65XX)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_mos65xx.c)
     set(SOURCES_MOS65XX
             arch/MOS65XX/MOS65XXModule.c
             arch/MOS65XX/MOS65XXDisassembler.c)
@@ -581,6 +623,9 @@ endif()
 
 if(CAPSTONE_BPF_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_BPF)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_bpf.c)
     set(SOURCES_BPF
         arch/BPF/BPFDisassembler.c
         arch/BPF/BPFInstPrinter.c
@@ -598,6 +643,9 @@ endif()
 
 if(CAPSTONE_RISCV_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_RISCV)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_riscv.c)
     set(SOURCES_RISCV
         arch/RISCV/RISCVBaseInfo.c
         arch/RISCV/RISCVDisassembler.c
@@ -636,6 +684,9 @@ endif()
 
 if(CAPSTONE_SH_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_SH)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_sh.c)
     set(SOURCES_SH
         arch/SH/SHDisassembler.c
         arch/SH/SHInstPrinter.c
@@ -651,6 +702,9 @@ endif()
 
 if (CAPSTONE_TRICORE_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_TRICORE)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_tricore.c)
     set(SOURCES_TRICORE
             arch/TriCore/TriCoreDisassembler.c
             arch/TriCore/TriCoreInstPrinter.c
@@ -671,6 +725,9 @@ endif ()
 
 if (CAPSTONE_ALPHA_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ALPHA)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_alpha.c)
     set(SOURCES_ALPHA
             arch/Alpha/AlphaDisassembler.c
             arch/Alpha/AlphaInstPrinter.c
@@ -694,6 +751,9 @@ endif ()
 
 if(CAPSTONE_HPPA_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_HPPA)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_hppa.c)
     set(SOURCES_HPPA
         arch/HPPA/HPPADisassembler.c
         arch/HPPA/HPPAInstPrinter.c
@@ -711,6 +771,9 @@ endif()
 
 if (CAPSTONE_LOONGARCH_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_LOONGARCH)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_loongarch.c)
     set(SOURCES_LOONGARCH
             arch/LoongArch/LoongArchDisassembler.c
             arch/LoongArch/LoongArchDisassemblerExtension.c
@@ -728,6 +791,9 @@ endif ()
 
 if(CAPSTONE_XTENSA_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_XTENSA)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_xtensa.c)
     set(SOURCES_XTENSA
         arch/Xtensa/XtensaDisassembler.c
         arch/Xtensa/XtensaInstPrinter.c
@@ -744,6 +810,9 @@ endif()
 
 if (CAPSTONE_ARC_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_ARC)
+    set(CSTOOL_SRC
+        ${CSTOOL_SRC}
+        cstool/cstool_arc.c)
     set(SOURCES_ARC
             arch/ARC/ARCDisassembler.c
             arch/ARC/ARCInstPrinter.c
@@ -1005,7 +1074,7 @@ if(CAPSTONE_INSTALL)
 endif()
 
 if(CAPSTONE_BUILD_CSTOOL)
-    file(GLOB CSTOOL_SRC cstool/*.c)
+    set(CSTOOL_SRC ${CSTOOL_SRC} cstool/getopt.c cstool/cstool.c)
     add_executable(cstool ${CSTOOL_SRC})
     target_link_libraries(cstool PRIVATE capstone)
 
