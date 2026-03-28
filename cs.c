@@ -1517,6 +1517,9 @@ CAPSTONE_EXPORT
 bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 				 uint64_t *address, cs_insn *insn)
 {
+	if (*size == 0)
+		return false;
+
 	struct cs_struct *handle;
 	uint16_t insn_size;
 	MCInst mci;
