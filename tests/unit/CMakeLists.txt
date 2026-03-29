@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.15)
 
 enable_testing()
 set(UNIT_TEST_SOURCES sstream.c utils.c)
+if(CAPSTONE_RISCV_SUPPORT)
+    list(APPEND UNIT_TEST_SOURCES riscv_op_count_iter.c)
+endif()
 include_directories(include)
 
 foreach(TSRC ${UNIT_TEST_SOURCES})

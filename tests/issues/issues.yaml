@@ -6321,3 +6321,81 @@ test_cases:
                 reg: $2
               - type: ALPHA_OP_IMM
                 imm: 0x12001b350
+  -
+    input:
+      name: "RISCV - #2881 - op_count must not accumulate across instructions (real)"
+      bytes: [ 0x41, 0x11, 0x13, 0x85, 0x15, 0x00, 0x41, 0x11 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL, CS_OPT_SYNTAX_NO_ALIAS_TEXT, CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED ]
+    expected:
+      insns:
+      -
+        asm_text: "c.addi sp, -0x10"
+        details:
+          riscv:
+            operands:
+            - type: "RISCV_OP_REG"
+              reg: "sp"
+            - type: "RISCV_OP_IMM"
+              imm: -0x10
+      -
+        asm_text: "addi a0, a1, 1"
+        details:
+          riscv:
+            operands:
+            - type: "RISCV_OP_REG"
+              reg: "a0"
+            - type: "RISCV_OP_REG"
+              reg: "a1"
+            - type: "RISCV_OP_IMM"
+              imm: 1
+      -
+        asm_text: "c.addi sp, -0x10"
+        details:
+          riscv:
+            operands:
+            - type: "RISCV_OP_REG"
+              reg: "sp"
+            - type: "RISCV_OP_IMM"
+              imm: -0x10
+  -
+    input:
+      name: "RISCV - #2881 - op_count must not accumulate across instructions (alias)"
+      bytes: [ 0x41, 0x11, 0x13, 0x85, 0x15, 0x00, 0x41, 0x11 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_MODE_RISCV_C, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "addi sp, sp, -0x10"
+        details:
+          riscv:
+            operands:
+            - type: "RISCV_OP_REG"
+              reg: "sp"
+            - type: "RISCV_OP_REG"
+              reg: "sp"
+            - type: "RISCV_OP_IMM"
+              imm: -0x10
+      -
+        asm_text: "addi a0, a1, 1"
+        details:
+          riscv:
+            operands:
+            - type: "RISCV_OP_REG"
+              reg: "a0"
+            - type: "RISCV_OP_REG"
+              reg: "a1"
+            - type: "RISCV_OP_IMM"
+              imm: 1
+      -
+        asm_text: "addi sp, sp, -0x10"
+        details:
+          riscv:
+            operands:
+            - type: "RISCV_OP_REG"
+              reg: "sp"
+            - type: "RISCV_OP_REG"
+              reg: "sp"
+            - type: "RISCV_OP_IMM"
+              imm: -0x10
