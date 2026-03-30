@@ -17,13 +17,7 @@ char *cs_strndup(const char *s, size_t n)
 	if (!s) {
 		return NULL;
 	}
-	/* Find length up to n bytes without using strnlen(),
-	 * which is not available on older platforms such as
-	 * Mac OS X 10.5 (Leopard). */
-	size_t l = 0;
-	while (l < n && s[l] != '\0') {
-		l++;
-	}
+	size_t l = cs_strnlen(s, n);
 	if (l == SIZE_MAX) {
 		return NULL;
 	}

@@ -19,4 +19,8 @@ void norm_spaces(char *str);
 void str_to_lower(char *str);
 char *cs_strndup(const char *s, size_t n);
 
+// Provided by libcapstone (utils.c). Portable strnlen replacement
+// for platforms that lack it.
+size_t cs_strnlen(const char *str, size_t n);
+
 #endif /* HELPER_H */
