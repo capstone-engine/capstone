@@ -84,3 +84,40 @@ test_cases:
       insns:
       -
         asm_text: "xrelease lock xchg qword ptr [rax], rbx"
+  # Ensure REPs for string instructions are decoded correctly
+  -
+    input:
+      name: "x86-64: multiple REPs on SCASB should decode to last rep"
+      bytes: [ 0xF2, 0xF3, 0xAE ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "repe scasb al, byte ptr [rdi]"
+  -
+    input:
+      name: "x86-64: LOCK+REP on string operation is invalid"
+      bytes: [ 0xF0, 0xF2, 0xF3, 0xAE ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86-32: multiple REPs on SCASB should decode to last rep"
+      bytes: [ 0xF2, 0xF3, 0xAE ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "repe scasb al, byte ptr es:[edi]"
+  -
+    input:
+      name: "x86-32: LOCK+REP on string operation is invalid"
+      bytes: [ 0xF0, 0xF2, 0xF3, 0xAE ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns: []
