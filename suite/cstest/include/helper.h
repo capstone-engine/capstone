@@ -21,6 +21,6 @@ char *cs_strndup(const char *s, size_t n);
 
 // Provided by libcapstone (utils.c). Portable strnlen replacement
 // for platforms that lack it.
-size_t cs_strnlen(const char *str, size_t n);
+#include "../../../utils.h"
 
 #endif /* HELPER_H */
