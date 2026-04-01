@@ -230,17 +230,25 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 		SStream_concat(O, "#$%" PRIx64, op->imm);
 		break;
 	case M68K_AM_PCI_INDEX_8_BIT_DISP:
-		SStream_concat(O, "$%" PRIx32 "(pc,%s%s.%c)",
+		SStream_concat(O, "$%" PRIx32 "(pc,%s%s.%c",
 			       pc + 2 + op->mem.disp, s_spacing,
 			       getRegName(op->mem.index_reg),
 			       op->mem.index_size ? 'l' : 'w');
+		if (op->mem.scale > 1)
+			SStream_concat(O, "%s*%s%" PRId8, s_spacing, s_spacing,
+				       op->mem.scale);
+		SStream_concat0(O, ")");
 		break;
 	case M68K_AM_AREGI_INDEX_8_BIT_DISP:
-		SStream_concat(O, "%s$%" PRIx16 "(%s,%s%s.%c)",
+		SStream_concat(O, "%s$%" PRIx16 "(%s,%s%s.%c",
 			       op->mem.disp < 0 ? "-" : "", abs(op->mem.disp),
 			       getRegName(op->mem.base_reg), s_spacing,
 			       getRegName(op->mem.index_reg),
 			       op->mem.index_size ? 'l' : 'w');
+		if (op->mem.scale > 1)
+			SStream_concat(O, "%s*%s%" PRId8, s_spacing, s_spacing,
+				       op->mem.scale);
+		SStream_concat0(O, ")");
 		break;
 	case M68K_AM_PCI_INDEX_BASE_DISP:
 	case M68K_AM_AREGI_INDEX_BASE_DISP:

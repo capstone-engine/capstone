@@ -478,7 +478,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "andi.l #$c0dec0de, (a4, d5.l * 4)"
+        asm_text: "andi.l #$c0dec0de, $0(a4, d5.l * 4)"
         details:
           regs_read: [ d5, a4 ]
           m68k:
@@ -494,8 +494,8 @@ test_cases:
                   index_size: 1
                   scale: 4
                   disp: 0
-                  disp_size: -1
-                address_mode: M68K_AM_AREGI_INDEX_BASE_DISP
+                  disp_size: 0
+                address_mode: M68K_AM_AREGI_INDEX_8_BIT_DISP
   -
     input:
       bytes: [ 0x1d, 0x80, 0x71, 0x12, 0x01, 0x23 ]
@@ -1602,3 +1602,500 @@ test_cases:
         asm_text: "dc.w $f010"
       -
         asm_text: "negx.b d0"
+
+  # Regression: btst with immediate bit number and high-byte != 0
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "btst.b #$f0, d0"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xf0
+              -
+                type: M68K_OP_REG
+
+  -
+    input:
+      bytes: [ 0x08, 0x1e, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "btst.b #$f0, (a6)+"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xf0
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_REGI_ADDR_POST_INC
+
+  -
+    input:
+      bytes: [ 0x08, 0x24, 0xff, 0xf8 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "btst.b #$f8, -(a4)"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xf8
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_REGI_ADDR_PRE_DEC
+
+  # Regression: bchg with immediate bit number
+  -
+    input:
+      bytes: [ 0x08, 0x51, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bchg.b #$f0, (a1)"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xf0
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_REGI_ADDR
+
+  # Regression: bclr with immediate bit number
+  -
+    input:
+      bytes: [ 0x08, 0x91, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bclr.b #$f0, (a1)"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xf0
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_REGI_ADDR
+
+  # Regression: bset with immediate bit number
+  -
+    input:
+      bytes: [ 0x08, 0xd1, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bset.b #$f0, (a1)"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xf0
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_REGI_ADDR
+
+  # Regression: ori.b to ccr with high-byte != 0
+  -
+    input:
+      bytes: [ 0x00, 0x3c, 0xff, 0xe8 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ori.b #$e8, ccr"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xe8
+              -
+                type: M68K_OP_REG
+
+  # Regression: andi.b to ccr with high-byte != 0
+  -
+    input:
+      bytes: [ 0x02, 0x3c, 0xff, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "andi.b #$0, ccr"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+              -
+                type: M68K_OP_REG
+
+  # Regression: eori.b to ccr with high-byte != 0
+  -
+    input:
+      bytes: [ 0x0a, 0x3c, 0xff, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "eori.b #$0, ccr"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+              -
+                type: M68K_OP_REG
+
+  # Regression: btst/bchg/bclr/bset should also work on 68040
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "btst.b #$f0, d0"
+
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_060 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "btst.b #$f0, d0"
+
+  -
+    input:
+      bytes: [ 0x08, 0x00, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "btst.b #$f0, d0"
+
+  # Regression: bchg/bclr/bset should also work on 68040 and CPU32 with high-byte immediate
+  -
+    input:
+      bytes: [ 0x08, 0x51, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bchg.b #$f0, (a1)"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xf0
+              -
+                type: M68K_OP_MEM
+
+  -
+    input:
+      bytes: [ 0x08, 0x51, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bchg.b #$f0, (a1)"
+
+  -
+    input:
+      bytes: [ 0x08, 0x91, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bclr.b #$f0, (a1)"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xf0
+              -
+                type: M68K_OP_MEM
+
+  -
+    input:
+      bytes: [ 0x08, 0x91, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bclr.b #$f0, (a1)"
+
+  -
+    input:
+      bytes: [ 0x08, 0xd1, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bset.b #$f0, (a1)"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xf0
+              -
+                type: M68K_OP_MEM
+
+  -
+    input:
+      bytes: [ 0x08, 0xd1, 0xff, 0xf0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bset.b #$f0, (a1)"
+
+  # Regression: ori/andi/eori to CCR with non-zero low byte AND non-zero high byte
+  -
+    input:
+      bytes: [ 0x00, 0x3c, 0xff, 0xe8 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ori.b #$e8, ccr"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xe8
+              -
+                type: M68K_OP_REG
+                reg: ccr
+
+  -
+    input:
+      bytes: [ 0x02, 0x3c, 0xff, 0x1f ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "andi.b #$1f, ccr"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0x1f
+              -
+                type: M68K_OP_REG
+                reg: ccr
+
+  -
+    input:
+      bytes: [ 0x0a, 0x3c, 0xff, 0xab ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "eori.b #$ab, ccr"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xab
+              -
+                type: M68K_OP_REG
+                reg: ccr
+
+  # Regression: CAS.l should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0x0e, 0xee, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $eee"
+      -
+        asm_text: "ori.b #$0, d0"
+
+  # CAS.l should still work on 68040
+  -
+    input:
+      bytes: [ 0x0e, 0xee, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cas.l d0, d0, $0(a6)"
+
+  # Regression: CAS.b should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0x0a, 0xd0, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $ad0"
+      -
+        asm_text: "ori.b #$0, d0"
+
+  # CAS.b should still work on 68040
+  -
+    input:
+      bytes: [ 0x0a, 0xd0, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cas.b d0, d0, (a0)"
+
+  # Regression: CAS.w should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0x0c, 0xd0, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $cd0"
+      -
+        asm_text: "ori.b #$0, d0"
+
+  # CAS.w should still work on 68040
+  -
+    input:
+      bytes: [ 0x0c, 0xd0, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cas.w d0, d0, (a0)"
+
+  # Regression: CAS2.w should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0x0c, 0xfc, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $cfc"
+      -
+        asm_text: "ori.b #$0, d0"
+
+  # CAS2.w should still work on 68040
+  -
+    input:
+      bytes: [ 0x0c, 0xfc, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cas2.w d0:d0,d0:d0,(d0):(d0)"
+
+  # Regression: CAS2.l should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0x0e, 0xfc, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $efc"
+      -
+        asm_text: "ori.b #$0, d0"
+
+  # CAS2.l should still work on 68040
+  -
+    input:
+      bytes: [ 0x0e, 0xfc, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cas2.l d0:d0,d0:d0,(d0):(d0)"

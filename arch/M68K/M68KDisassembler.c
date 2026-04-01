@@ -460,25 +460,16 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 		EXT_INDEX_REGISTER(extension);
 	op->mem.index_size = EXT_INDEX_LONG(extension) ? 1 : 0;
 
-	if (EXT_8BIT_DISPLACEMENT(extension) == 0) {
-		if (is_pc) {
-			op->mem.base_reg = M68K_REG_PC;
-			op->address_mode = M68K_AM_PCI_INDEX_BASE_DISP;
-		} else {
-			op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
-		}
+	if (is_pc) {
+		op->mem.base_reg = M68K_REG_PC;
+		op->address_mode = M68K_AM_PCI_INDEX_8_BIT_DISP;
 	} else {
-		if (is_pc) {
-			op->mem.base_reg = M68K_REG_PC;
-			op->address_mode = M68K_AM_PCI_INDEX_8_BIT_DISP;
-		} else {
-			op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
-			op->address_mode = M68K_AM_AREGI_INDEX_8_BIT_DISP;
-		}
-
-		op->mem.disp = (int8_t)(extension & 0xff);
-		op->mem.disp_size = 0;
+		op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
+		op->address_mode = M68K_AM_AREGI_INDEX_8_BIT_DISP;
 	}
+
+	op->mem.disp = (int8_t)(extension & 0xff);
+	op->mem.disp_size = 0;
 
 	if (EXT_INDEX_SCALE(extension)) {
 		op->mem.scale = 1 << EXT_INDEX_SCALE(extension);
@@ -1774,30 +1765,53 @@ static void d68020_cas_8(m68k_info *info)
 	/*
 	 * MC68060 traps CAS/CAS2/CHK2/CMP2 for software emulation, but they remain
 	 * valid opcodes and must still disassemble successfully.
+	 * CAS/CAS2 are NOT available on CPU32 despite its TYPE_68020 overlap.
 	 */
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	if (info->type & TYPE_CPU32) {
+		d68000_invalid(info);
+		return;
+	}
 	build_d_d_ea(info, M68K_INS_CAS, 1);
 }
 
 static void d68020_cas_16(m68k_info *info)
 {
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	if (info->type & TYPE_CPU32) {
+		d68000_invalid(info);
+		return;
+	}
 	build_d_d_ea(info, M68K_INS_CAS, 2);
 }
 
 static void d68020_cas_32(m68k_info *info)
 {
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	if (info->type & TYPE_CPU32) {
+		d68000_invalid(info);
+		return;
+	}
 	build_d_d_ea(info, M68K_INS_CAS, 4);
 }
 
 static void d68020_cas2_16(m68k_info *info)
 {
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	if (info->type & TYPE_CPU32) {
+		d68000_invalid(info);
+		return;
+	}
 	build_cas2(info, 2);
 }
 
 static void d68020_cas2_32(m68k_info *info)
 {
+	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	if (info->type & TYPE_CPU32) {
+		d68000_invalid(info);
+		return;
+	}
 	build_cas2(info, 4);
 }
 
