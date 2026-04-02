@@ -2099,7 +2099,6 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 	bool res = false;
 
 #ifndef CAPSTONE_DIET
-	// We
 	switch (MI->xAcquireRelease) {
 	case 0xF2:
 		SStream_concat(O, "xacquire|");
