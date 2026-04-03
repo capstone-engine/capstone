@@ -1,0 +1,123 @@
+test_cases:
+  # From the Intel SDM Section 6.1: XACQUIRE/XRELEASE.
+  -
+    input:
+      name: "Rightmost prefix byte should determine HLE semantic"
+      bytes: [ 0xF3, 0xF2, 0xC6, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov byte ptr [rax], 0"
+  -
+    input:
+      name: "Rightmost prefix byte should determine HLE semantic"
+      bytes: [ 0xF2, 0xF3, 0xC6, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xrelease mov byte ptr [rax], 0"
+  -
+    input:
+      name: "Rightmost prefix byte should determine HLE semantic"
+      bytes: [ 0xF2, 0xF3, 0xF0, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xrelease lock add byte ptr [rax], al"
+
+  # Prefixes may be ordered freely.
+  -
+    input:
+      name: "Rightmost prefix byte should determine HLE semantic"
+      bytes: [ 0xF0, 0xF2, 0xF3, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xrelease lock add byte ptr [rax], al"
+  -
+    input:
+      name: "Rightmost prefix byte should determine HLE semantic"
+      bytes: [ 0xF2, 0xF0, 0xF3, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xrelease lock add byte ptr [rax], al"
+  # Special cases: XCHG
+  -
+    input:
+      name: "special case: xacquire without lock on XCHG"
+      bytes: [ 0xF3, 0xF2, 0xF3, 0xF3, 0xF2, 0x87, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xacquire xchg dword ptr [rax], ebx"
+  -
+    input:
+      name: "special case: xrelease without lock on XCHG"
+      bytes: [ 0xF3, 0x87, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xrelease xchg dword ptr [rax], ebx"
+  # Separate tests with REX prefix because it is parsed separately in the decoder
+  -
+    input:
+      name: "xrelease with REX prefix"
+      bytes: [ 0xF3, 0xF0, 0x48, 0x87, 0x18 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "xrelease lock xchg qword ptr [rax], rbx"
+  # Ensure REPs for string instructions are decoded correctly
+  -
+    input:
+      name: "x86-64: multiple REPs on SCASB should decode to last rep"
+      bytes: [ 0xF2, 0xF3, 0xAE ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "repe scasb al, byte ptr [rdi]"
+  -
+    input:
+      name: "x86-64: LOCK+REP on string operation is invalid"
+      bytes: [ 0xF0, 0xF2, 0xF3, 0xAE ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86-32: multiple REPs on SCASB should decode to last rep"
+      bytes: [ 0xF2, 0xF3, 0xAE ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "repe scasb al, byte ptr es:[edi]"
+  -
+    input:
+      name: "x86-32: LOCK+REP on string operation is invalid"
+      bytes: [ 0xF0, 0xF2, 0xF3, 0xAE ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns: []

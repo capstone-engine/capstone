@@ -1929,20 +1929,6 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 	// not found
 	return false;
 }
-
-// return true if the opcode is XCHG [mem]
-static bool xchg_mem(unsigned int opcode)
-{
-	switch (opcode) {
-	default:
-		return false;
-	case X86_XCHG8rm:
-	case X86_XCHG16rm:
-	case X86_XCHG32rm:
-	case X86_XCHG64rm:
-		return true;
-	}
-}
 #endif
 
 // given MCInst's id, find out if this insn is valid for REP prefix
@@ -2112,106 +2098,79 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 	unsigned int opcode;
 	bool res = false;
 
-	switch (MI->x86_prefix[0]) {
+#ifndef CAPSTONE_DIET
+	switch (MI->xAcquireRelease) {
+	case 0xF2:
+		SStream_concat(O, "xacquire|");
+		break;
+	case 0xF3:
+		SStream_concat(O, "xrelease|");
+		break;
 	default:
 		break;
-	case 0xf0:
+	}
+#endif
+
+	if (MI->xAcquireRelease) {
+		if (MI->x86Lock) {
+			// Force LOCK prefix as group 0 prefix for XACQUIRE and XRELEASE if a LOCK is also present.
+			// This is an arbitrary choice, since there are effectively two group 0 prefixes present.
+			// The Intel SDM is not clear on how we should interpret group 0 in this case. It states:
+			// "it is only useful to include up to one prefix code from each of the four groups"
+			// ...and then defines instructions where both an F2/F3 and F0 are useful anyway.
+			MI->x86_prefix[0] = 0xF0;
+		}
+	} else {
+		switch (MI->x86_prefix[0]) {
+		case 0xF2:
+			opcode = MCInst_getOpcode(MI);
 #ifndef CAPSTONE_DIET
-		if (MI->xAcquireRelease == 0xf2)
-			SStream_concat(O, "xacquire|lock|");
-		else if (MI->xAcquireRelease == 0xf3)
-			SStream_concat(O, "xrelease|lock|");
-		else
-			SStream_concat(O, "lock|");
-#endif
-		break;
-	case 0xf2: // repne
-		opcode = MCInst_getOpcode(MI);
-
-#ifndef CAPSTONE_DIET // only care about memonic in standard (non-diet) mode
-		if (xchg_mem(opcode) && MI->xAcquireRelease) {
-			SStream_concat(O, "xacquire|");
-		} else if (valid_repne(MI->csh, opcode)) {
-			SStream_concat(O, "repne|");
-			add_cx(MI);
-		} else if (valid_bnd(MI->csh, opcode)) {
-			SStream_concat(O, "bnd|");
-		} else {
-			// invalid prefix
-			MI->x86_prefix[0] = 0;
-
-			// handle special cases
-#ifndef CAPSTONE_X86_REDUCE
-#if 0
-				if (opcode == X86_MULPDrr) {
-					MCInst_setOpcode(MI, X86_MULSDrr);
-					SStream_concat0(O, "mulsd\t");
-					res = true;
-				}
-#endif
-#endif
-		}
-#else // diet mode -> only patch opcode in special cases
-		if (!valid_repne(MI->csh, opcode)) {
-			MI->x86_prefix[0] = 0;
-		}
-#ifndef CAPSTONE_X86_REDUCE
-#if 0
-			// handle special cases
-			if (opcode == X86_MULPDrr) {
-				MCInst_setOpcode(MI, X86_MULSDrr);
+			if (valid_repne(MI->csh, opcode)) {
+				SStream_concat(O, "repne|");
+				add_cx(MI);
+			} else if (valid_bnd(MI->csh, opcode)) {
+				SStream_concat(O, "bnd|");
+			} else {
+				// invalid prefix
+				MI->x86_prefix[0] = 0;
+			}
+#else
+			if (!valid_repne(MI->csh, opcode)) {
+				MI->x86_prefix[0] = 0;
 			}
 #endif
-#endif
-#endif
-		break;
-
-	case 0xf3:
-		opcode = MCInst_getOpcode(MI);
-
-#ifndef CAPSTONE_DIET // only care about memonic in standard (non-diet) mode
-		if (xchg_mem(opcode) && MI->xAcquireRelease) {
-			SStream_concat(O, "xrelease|");
-		} else if (valid_rep(MI->csh, opcode)) {
-			SStream_concat(O, "rep|");
-			add_cx(MI);
-		} else if (valid_repe(MI->csh, opcode)) {
-			SStream_concat(O, "repe|");
-			add_cx(MI);
-		} else if (valid_ret_repz(MI->csh, opcode)) {
-			SStream_concat(O, "repz|");
-		} else {
-			// invalid prefix
-			MI->x86_prefix[0] = 0;
-
-			// handle special cases
-#ifndef CAPSTONE_X86_REDUCE
-#if 0
-				// FIXME: remove this special case?
-				if (opcode == X86_MULPDrr) {
-					MCInst_setOpcode(MI, X86_MULSSrr);
-					SStream_concat0(O, "mulss\t");
-					res = true;
-				}
-#endif
-#endif
-		}
-#else // diet mode -> only patch opcode in special cases
-		if (!valid_rep(MI->csh, opcode) &&
-		    !valid_repe(MI->csh, opcode)) {
-			MI->x86_prefix[0] = 0;
-		}
-#ifndef CAPSTONE_X86_REDUCE
-#if 0
-			// handle special cases
-			// FIXME: remove this special case?
-			if (opcode == X86_MULPDrr) {
-				MCInst_setOpcode(MI, X86_MULSSrr);
+			break;
+		case 0xF3:
+			opcode = MCInst_getOpcode(MI);
+#ifndef CAPSTONE_DIET
+			if (valid_rep(MI->csh, opcode)) {
+				SStream_concat(O, "rep|");
+				add_cx(MI);
+			} else if (valid_repe(MI->csh, opcode)) {
+				SStream_concat(O, "repe|");
+				add_cx(MI);
+			} else if (valid_ret_repz(MI->csh, opcode)) {
+				SStream_concat(O, "repz|");
+			} else {
+				// invalid prefix
+				MI->x86_prefix[0] = 0;
+			}
+#else
+			if (!valid_rep(MI->csh, opcode) &&
+			    !valid_repe(MI->csh, opcode)) {
+				MI->x86_prefix[0] = 0;
 			}
 #endif
-#endif
-#endif
-		break;
+			break;
+		default:
+			break;
+		}
+	}
+
+	// LOCK and F2/F3 may both be present (for XACQUIRE/XRELEASE).
+	// There are also XRELEASEs that can be LOCKless.
+	if (MI->x86Lock) {
+		SStream_concat(O, "lock|");
 	}
 
 	switch (MI->x86_prefix[1]) {
