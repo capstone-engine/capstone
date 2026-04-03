@@ -103,7 +103,9 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "fsmove fp0, fp3"
+        asm_text: "dc.w $f800"
+      -
+        asm_text: "bset.b d0, d0"
   -
     input:
       bytes: [ 0x4a, 0xcc ]
@@ -283,17 +285,9 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "fmovem #$0, (a0)"
-        details:
-          regs_read: [ a0 ]
-          m68k:
-            operands:
-              -
-                type: M68K_OP_REG_BITS
-                register_bits: 0x0
-              -
-                type: M68K_OP_MEM
-                address_mode: M68K_AM_REGI_ADDR
+        asm_text: "dc.w $f010"
+      -
+        asm_text: "dc.w $f000"
   -
     input:
       bytes: [ 0x48, 0xaf, 0xff, 0xff, 0x7f, 0xff ]
@@ -1587,7 +1581,9 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "fsmove fp0, fp2"
+        asm_text: "dc.w $f810"
+      -
+        asm_text: "bchg.b d0, d0"
 
   # 68030 PMOVE should not work on 68000
   -
@@ -2099,3 +2095,313 @@ test_cases:
       insns:
       -
         asm_text: "cas2.l d0:d0,d0:d0,(d0):(d0)"
+
+  # Bug 1: SBCD memory-to-memory should not read extra immediate
+  -
+    input:
+      bytes: [ 0x8f, 0x08 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sbcd.b -(a0), -(a7)"
+
+  # Bug 2: PACK should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0x83, 0x40 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $8340"
+
+  # Bug 2: PACK should work on 68020
+  -
+    input:
+      bytes: [ 0x83, 0x40, 0x00, 0x01 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pack d0, d1, #$1"
+
+  # Bug 2: UNPK should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0x83, 0x80 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $8380"
+
+  # Bug 2: UNPK should work on 68020
+  -
+    input:
+      bytes: [ 0x83, 0x80, 0x00, 0x01 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "unpk d0, d1, #$1"
+
+  # Bug 3: CHK.L should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0x41, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $4100"
+
+  # Bug 3: CHK.L should work on 68020
+  -
+    input:
+      bytes: [ 0x41, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "chk.l d0, d0"
+
+  # Bug 4: CpID=2 cpgen should be invalid
+  -
+    input:
+      bytes: [ 0xf4, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f400"
+
+  # Bug 4: CpID=2 cpbcc should be invalid
+  -
+    input:
+      bytes: [ 0xf4, 0x81 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f481"
+
+  # Bug 7: move16 should be invalid on 68000
+  -
+    input:
+      bytes: [ 0xf6, 0x20, 0x90, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f620"
+
+  # Bug 12: fsdiv should be invalid on 68020 (pre-040 s/d FPU)
+  -
+    input:
+      bytes: [ 0xf2, 0x00, 0x00, 0x60, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f200"
+      -
+        asm_text: "ori.w #$0, -(a0)"
+
+  # Bug 12: fsdiv should work on 68040
+  -
+    input:
+      bytes: [ 0xf2, 0x00, 0x00, 0x60 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "fsdiv fp0, fp0"
+
+  # cpbcc CpID=1 condition >= 32 should be invalid
+  -
+    input:
+      bytes: [ 0xf2, 0xe0 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f2e0"
+
+  # cpbcc CpID=0 condition >= 16 should be invalid
+  -
+    input:
+      bytes: [ 0xf0, 0x90 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f090"
+
+  # cpbcc CpID=0 should be invalid on 68000 (no coprocessor interface)
+  -
+    input:
+      bytes: [ 0xf0, 0x85 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f085"
+
+  # cpbcc CpID=0 should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0xf0, 0x85 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f085"
+
+  # cpsave CpID=0 should be invalid on 68000 (no coprocessor interface)
+  -
+    input:
+      bytes: [ 0xf1, 0x10 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f110"
+
+  # cpsave CpID=0 should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0xf1, 0x10 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f110"
+
+  # cprestore CpID=0 should be invalid on 68000 (no coprocessor interface)
+  -
+    input:
+      bytes: [ 0xf1, 0x50 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f150"
+
+  # cprestore CpID=0 should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0xf1, 0x50 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f150"
+
+  # Bug 13: TBL with bit 15 set should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0xf8, 0x00, 0x88, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f800"
+      -
+        asm_text: "or.b d0, d4"
+
+  # Bug 13: TBL with bit 9 set should be invalid on CPU32
+  -
+    input:
+      bytes: [ 0xf8, 0x00, 0x0a, 0x00, 0x00, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f800"
+      -
+        asm_text: "eori.b #$0, d0"
+
+  # Bug 14: PMMU pflusha valid on 68030
+  -
+    input:
+      bytes: [ 0xf0, 0x00, 0x24, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_030 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "pflusha"
+
+  # Bug 14: PMMU with invalid FC source should be invalid on 68030
+  -
+    input:
+      bytes: [ 0xf0, 0x00, 0x24, 0x04 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_030 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f000"
+      -
+        asm_text: "move.l d4, d2"
+
+  # Bug 14: PMMU cpgen CpID=0 should be invalid on 68020 (not 68030)
+  -
+    input:
+      bytes: [ 0xf0, 0x00, 0x24, 0x00 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $f000"
+      -
+        asm_text: "move.l d0, d2"
