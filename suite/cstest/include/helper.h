@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include "../../../utils.h"
+
 #define MAX_ASM_TXT_MEM 1024
 #define X86_16 0
 #define X86_32 1
@@ -18,9 +20,5 @@ void replace_negative(char *src, size_t src_len, size_t arch_bits);
 void norm_spaces(char *str);
 void str_to_lower(char *str);
 char *cs_strndup(const char *s, size_t n);
-
-// Provided by libcapstone (utils.c). Portable strnlen replacement
-// for platforms that lack it.
-#include "../../../utils.h"
 
 #endif /* HELPER_H */
