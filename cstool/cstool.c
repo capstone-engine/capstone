@@ -6,8 +6,8 @@
 #include <errno.h>
 #include <string.h>
 
-#include "cstool.h"
 #include <capstone/capstone.h>
+#include "cstool.h"
 
 #ifdef CAPSTONE_AARCH64_COMPAT_HEADER
 #define CS_ARCH_AARCH64 CS_ARCH_ARM64
