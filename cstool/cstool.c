@@ -676,117 +676,117 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 
 	switch (arch) {
 	case CS_ARCH_X86:
-#if CAPSTONE_X86_SUPPORT
+#ifdef CAPSTONE_HAS_X86
 		print_insn_detail_x86(handle, md, ins);
 #endif
 		break;
 	case CS_ARCH_ARM:
-#if CAPSTONE_ARM_SUPPORT
+#ifdef CAPSTONE_HAS_ARM
 		print_insn_detail_arm(handle, ins);
 #endif
 		break;
 	case CS_ARCH_AARCH64:
-#if CAPSTONE_AARCH64_SUPPORT
+#ifdef CAPSTONE_HAS_AARCH64
 		print_insn_detail_aarch64(handle, ins);
 #endif
 		break;
 	case CS_ARCH_MIPS:
-#if CAPSTONE_MIPS_SUPPORT
+#ifdef CAPSTONE_HAS_MIPS
 		print_insn_detail_mips(handle, ins);
 #endif
 		break;
 	case CS_ARCH_PPC:
-#if CAPSTONE_PPC_SUPPORT
+#ifdef CAPSTONE_HAS_POWERPC
 		print_insn_detail_ppc(handle, ins);
 #endif
 		break;
 	case CS_ARCH_SPARC:
-#if CAPSTONE_SPARC_SUPPORT
+#ifdef CAPSTONE_HAS_SPARC
 		print_insn_detail_sparc(handle, ins);
 #endif
 		break;
 	case CS_ARCH_SYSTEMZ:
-#if CAPSTONE_SYSTEMZ_SUPPORT
+#ifdef CAPSTONE_HAS_SYSTEMZ
 		print_insn_detail_systemz(handle, ins);
 #endif
 		break;
 	case CS_ARCH_XCORE:
-#if CAPSTONE_XCORE_SUPPORT
+#ifdef CAPSTONE_HAS_XCORE
 		print_insn_detail_xcore(handle, ins);
 #endif
 		break;
 	case CS_ARCH_M68K:
-#if CAPSTONE_M68K_SUPPORT
+#ifdef CAPSTONE_HAS_M68K
 		print_insn_detail_m68k(handle, ins);
 #endif
 		break;
 	case CS_ARCH_TMS320C64X:
-#if CAPSTONE_TMS320C64X_SUPPORT
+#ifdef CAPSTONE_HAS_TMS320C64X
 		print_insn_detail_tms320c64x(handle, ins);
 #endif
 		break;
 	case CS_ARCH_M680X:
-#if CAPSTONE_M680X_SUPPORT
+#ifdef CAPSTONE_HAS_M680X
 		print_insn_detail_m680x(handle, ins);
 #endif
 		break;
 	case CS_ARCH_EVM:
-#if CAPSTONE_EVM_SUPPORT
+#ifdef CAPSTONE_HAS_EVM
 		print_insn_detail_evm(handle, ins);
 #endif
 		break;
 	case CS_ARCH_WASM:
-#if CAPSTONE_WASM_SUPPORT
+#ifdef CAPSTONE_HAS_WASM
 		print_insn_detail_wasm(handle, ins);
 #endif
 		break;
 	case CS_ARCH_MOS65XX:
-#if CAPSTONE_MOS65XX_SUPPORT
+#ifdef CAPSTONE_HAS_MOS65XX
 		print_insn_detail_mos65xx(handle, ins);
 #endif
 		break;
 	case CS_ARCH_BPF:
-#if CAPSTONE_BPF_SUPPORT
+#ifdef CAPSTONE_HAS_BPF
 		print_insn_detail_bpf(handle, ins);
 #endif
 		break;
 	case CS_ARCH_RISCV:
-#if CAPSTONE_RISCV_SUPPORT
+#ifdef CAPSTONE_HAS_RISCV
 		print_insn_detail_riscv(handle, ins);
 #endif
 		break;
 	case CS_ARCH_SH:
-#if CAPSTONE_SH_SUPPORT
+#ifdef CAPSTONE_HAS_SH
 		print_insn_detail_sh(handle, ins);
 #endif
 		break;
 	case CS_ARCH_TRICORE:
-#if CAPSTONE_TRICORE_SUPPORT
+#ifdef CAPSTONE_HAS_TRICORE
 		print_insn_detail_tricore(handle, ins);
 #endif
 		break;
 	case CS_ARCH_ALPHA:
-#if CAPSTONE_ALPHA_SUPPORT
+#ifdef CAPSTONE_HAS_ALPHA
 		print_insn_detail_alpha(handle, ins);
 #endif
 		break;
 	case CS_ARCH_HPPA:
-#if CAPSTONE_HPPA_SUPPORT
+#ifdef CAPSTONE_HAS_HPPA
 		print_insn_detail_hppa(handle, ins);
 #endif
 		break;
 	case CS_ARCH_LOONGARCH:
-#if CAPSTONE_LOONGARCH_SUPPORT
+#ifdef CAPSTONE_HAS_LOONGARCH
 		print_insn_detail_loongarch(handle, ins);
 #endif
 		break;
 	case CS_ARCH_XTENSA:
-#if CAPSTONE_XTENSA_SUPPORT
+#ifdef CAPSTONE_HAS_XTENSA
 		print_insn_detail_xtensa(handle, ins);
 #endif
 		break;
 	case CS_ARCH_ARC:
-#if CAPSTONE_ARC_SUPPORT
+#ifdef CAPSTONE_HAS_ARC
 		print_insn_detail_arc(handle, ins);
 #endif
 		break;
