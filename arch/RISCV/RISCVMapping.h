@@ -15,6 +15,8 @@ extern const unsigned int RISCV_insn_count;
 // given internal insn id, return public instruction info
 void RISCV_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 
+void RISCV_set_alias_id(MCInst *MI, SStream *O);
+
 const char *RISCV_insn_name(csh handle, unsigned int id);
 
 const char *RISCV_group_name(csh handle, unsigned int id);
