@@ -17,7 +17,7 @@ char *cs_strndup(const char *s, size_t n)
 	if (!s) {
 		return NULL;
 	}
-	size_t l = strnlen(s, n);
+	size_t l = cs_strnlen(s, n);
 	if (l == SIZE_MAX) {
 		return NULL;
 	}

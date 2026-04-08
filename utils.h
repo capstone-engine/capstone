@@ -26,6 +26,11 @@ unsigned int count_positive8(const unsigned char *list);
 
 char *cs_strdup(const char *str);
 
+// Portable strnlen replacement. Returns the length of @str,
+// up to a maximum of @n. Needed because strnlen() is not
+// available on all platforms (e.g. Mac OS X 10.5 Leopard).
+size_t cs_strnlen(const char *str, size_t n);
+
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
 // we need this since Windows doesn't have snprintf()

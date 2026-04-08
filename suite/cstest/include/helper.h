@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include "../../../utils.h"
+
 #define MAX_ASM_TXT_MEM 1024
 #define X86_16 0
 #define X86_32 1

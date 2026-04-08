@@ -47,6 +47,21 @@ char *cs_strdup(const char *str)
 	return (char *)memmove(new, str, len);
 }
 
+// Portable strnlen replacement for platforms that lack it
+// (e.g. Mac OS X 10.5 Leopard).
+size_t cs_strnlen(const char *str, size_t n)
+{
+	if (!str)
+		return 0;
+
+	size_t l = 0;
+
+	while (l < n && str[l] != '\0')
+		l++;
+
+	return l;
+}
+
 // we need this since Windows doesn't have snprintf()
 int cs_snprintf(char *buffer, size_t size, const char *fmt, ...)
 {
