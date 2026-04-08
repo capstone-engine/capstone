@@ -6411,7 +6411,7 @@ test_cases:
       -
         asm_text: "add a0, a1, a2"
         id: RISCV_INS_ADD
-        is_alias: 0
+        is_alias: -1
   -
     input:
       name: "RISCV - #2861 - zip instruction id (last real)"
@@ -6424,7 +6424,7 @@ test_cases:
       -
         asm_text: "zip a0, a1"
         id: RISCV_INS_ZIP
-        is_alias: 0
+        is_alias: -1
   -
     input:
       name: "RISCV - #2861 - nop alias id (first alias)"
