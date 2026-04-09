@@ -235,6 +235,7 @@ static void d68000_invalid(m68k_info *info);
 static void d68030_pmmu(m68k_info *info);
 static void d68040_pflush(m68k_info *info);
 static void d68040_ptest(m68k_info *info);
+static void d68040_cpush(m68k_info *info);
 static int instruction_is_valid(m68k_info *info, const unsigned int word_check);
 
 typedef struct {
@@ -320,34 +321,108 @@ static const m68k_insn s_trap_lut[] = {
 		} \
 	} while (0)
 
-/* Extract coprocessor ID from F-line instruction word (bits 11:9).
- * CpID 0 = PMMU, CpID 1 = FPU. */
+/* ── Coprocessor ID (CpID) ───────────────────────────────────────────
+ * Bits 11:9 of the F-line instruction word select the coprocessor.   */
 #define M68K_CPID(info) (((info)->ir >> 9) & 7)
 
-/* Require CpID == 1 (FPU).  Rejects all other coprocessor IDs.
+#define M68K_CPID_MMU 0 /* PMMU (68030/68851)                     */
+#define M68K_CPID_FPU 1 /* FPU  (68881/68882/internal)            */
+#define M68K_CPID_CACHE 2 /* Cache ops — cinvl/cpushl on 68040+     */
+
+/* Require CpID == FPU.  Rejects all other coprocessor IDs.
  * Used by cpDBcc, cpScc, cpTRAPcc handlers. */
 #define REQUIRE_CPID_FPU(info) \
 	do { \
-		if (M68K_CPID(info) != 1) { \
+		if (M68K_CPID(info) != M68K_CPID_FPU) { \
 			d68000_invalid(info); \
 			return; \
 		} \
 	} while (0)
 
-/* Require CpID == 0 (PMMU) or CpID == 1 (FPU).
- * CpID 0 is rejected on CPU32 (no PMMU).  Used by cpSAVE/cpRESTORE. */
+/* Require CpID == MMU or CpID == FPU.
+ * CpID MMU is rejected on CPU32 (no PMMU).  Used by cpSAVE/cpRESTORE. */
 #define REQUIRE_CPID_FPU_OR_PMMU(info) \
 	do { \
 		int _cpid = M68K_CPID(info); \
-		if (_cpid == 0 && ((info)->type & TYPE_CPU32)) { \
+		if (_cpid == M68K_CPID_MMU && ((info)->type & TYPE_CPU32)) { \
 			d68000_invalid(info); \
 			return; \
 		} \
-		if (_cpid != 0 && _cpid != 1) { \
+		if (_cpid != M68K_CPID_MMU && _cpid != M68K_CPID_FPU) { \
 			d68000_invalid(info); \
 			return; \
 		} \
 	} while (0)
+
+/* ── IR bit-field helpers ────────────────────────────────────────────
+ * Extract commonly-used fields from the first instruction word.      */
+
+/* 6-bit coprocessor condition (bits 5:0 of IR). */
+#define M68K_IR_CONDITION(info) ((info)->ir & 0x3f)
+
+/* cinv/cpush: select cpush(1) vs cinv(0) — bit 5 of IR. */
+#define M68K_IR_IS_CPUSH(info) (((info)->ir >> 5) & 1)
+
+/* cinv/cpush: cache scope — bits 4:3 of IR (0=invalid,1=line,2=page,3=all). */
+#define M68K_IR_CACHE_SCOPE(info) (((info)->ir >> 3) & 3)
+
+/* cinv/cpush: cache selector — bits 7:6 of IR (DC/IC/BC). */
+#define M68K_IR_CACHE_SEL(info) (((info)->ir >> 6) & 3)
+
+/* ── FPU extension-word bit-field helpers ────────────────────────────
+ * The FPU command word is the 16-bit extension following the F-line. */
+
+/* R/M bit (bit 14): 1 = source from EA, 0 = source from FP register. */
+#define M68K_FEXT_RM(ext) (((ext) >> 14) & 1)
+
+/* Type / command class (bits 15:13). */
+#define M68K_FEXT_TYPE(ext) (((ext) >> 13) & 7)
+
+/* Source specifier (bits 12:10) — data format when R/M=1. */
+#define M68K_FEXT_SRC(ext) (((ext) >> 10) & 7)
+
+/* Destination FP register (bits 9:7). */
+#define M68K_FEXT_DST(ext) (((ext) >> 7) & 7)
+
+/* Opmode (bits 5:0) — FPU operation selector. */
+#define M68K_FEXT_OPMODE(ext) ((ext) & 0x3f)
+
+/* Single/double precision flag (bit 6) — 68040+ only. */
+#define M68K_FEXT_SD_FLAG(ext) (((ext) >> 6) & 1)
+
+/* FMOVECR signature: bits 15:10 == 0x17 (010111b). */
+#define M68K_FEXT_IS_FMOVECR(ext) (BITFIELD((ext), 15, 10) == 0x17)
+
+/* Register-select field for FMOVE to/from FPCR/FPSR/FPIAR (bits 12:10). */
+#define M68K_FEXT_REGSEL(ext) (((ext) >> 10) & 7)
+
+/* Direction bit for FMOVE FPCR (bit 13): 0 = ea→fpcr, 1 = fpcr→ea. */
+#define M68K_FEXT_DIR(ext) (((ext) >> 13) & 1)
+
+/* ── FPU condition-code mask ─────────────────────────────────────────
+ * FBcc/FDBcc/FScc/FTRAPcc encode the FP condition in bits 5,3:0
+ * of the extension word (or IR for FBcc).  Bit 4 is always 0,
+ * yielding the 0x2f mask.                                            */
+#define M68K_FP_COND(x) ((x) & 0x2f)
+
+/* Maximum valid condition codes per coprocessor. */
+#define M68K_PMMU_MAX_COND 16
+#define M68K_FPU_MAX_COND 32
+
+/* ── FPU source-format constants (bits 12:10 of ext word) ───────────*/
+#define M68K_FPSRC_LONG 0x00 /* .l  — 32-bit integer            */
+#define M68K_FPSRC_SINGLE 0x01 /* .s  — 32-bit IEEE single        */
+#define M68K_FPSRC_EXTENDED 0x02 /* .x  — 96-bit extended real      */
+#define M68K_FPSRC_PACKED 0x03 /* .p  — 96-bit packed decimal     */
+#define M68K_FPSRC_WORD 0x04 /* .w  — 16-bit integer            */
+#define M68K_FPSRC_DOUBLE 0x05 /* .d  — 64-bit IEEE double        */
+#define M68K_FPSRC_BYTE 0x06 /* .b  — 8-bit integer             */
+
+/* ── FPU special raw opmodes (before SD-flag masking) ───────────────
+ * FSSQRT/FDSQRT have raw 7-bit opmodes 0x41/0x45.  After the 6-bit
+ * truncation (& 0x3f) they become 0x01/0x05 with the SD flag set.   */
+#define M68K_FPOP_FSSQRT_RAW 0x01 /* 0x41 & 0x3f */
+#define M68K_FPOP_FDSQRT_RAW 0x05 /* 0x45 & 0x3f */
 
 static unsigned int peek_imm_8(const m68k_info *info)
 {
@@ -1258,21 +1333,17 @@ static void build_cpush_cinv(m68k_info *info, int op_offset)
 	cs_m68k_op *op1;
 	cs_m68k *ext = build_init_op(info, M68K_INS_INVALID, 2, 0);
 
-	switch ((info->ir >> 3) & 3) { // scope
-	// Invalid
+	switch (M68K_IR_CACHE_SCOPE(info)) {
 	case 0:
 		d68000_invalid(info);
 		return;
-		// Line
-	case 1:
+	case 1: // Line
 		MCInst_setOpcode(info->inst, op_offset + 0);
 		break;
-		// Page
-	case 2:
+	case 2: // Page
 		MCInst_setOpcode(info->inst, op_offset + 1);
 		break;
-		// All
-	case 3:
+	case 3: // All
 		ext->op_count = 1;
 		MCInst_setOpcode(info->inst, op_offset + 2);
 		break;
@@ -1283,7 +1354,7 @@ static void build_cpush_cinv(m68k_info *info, int op_offset)
 
 	op0->address_mode = M68K_AM_IMMEDIATE;
 	op0->type = M68K_OP_IMM;
-	op0->imm = (info->ir >> 6) & 3;
+	op0->imm = M68K_IR_CACHE_SEL(info);
 
 	op1->type = M68K_OP_MEM;
 	op1->address_mode = M68K_AM_REG_DIRECT_ADDR;
@@ -1996,16 +2067,14 @@ static void d68020_cpbcc_16(m68k_info *info)
 	cs_m68k *ext;
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 	int cpid = M68K_CPID(info);
-	int cond = info->ir & 0x3f;
-	if (cpid == 0) {
-		/* PMMU branch: conditions 0-15 only, not on CPU32 */
-		if (cond >= 16 || (info->type & TYPE_CPU32)) {
+	int cond = M68K_IR_CONDITION(info);
+	if (cpid == M68K_CPID_MMU) {
+		if (cond >= M68K_PMMU_MAX_COND || (info->type & TYPE_CPU32)) {
 			d68000_invalid(info);
 			return;
 		}
-	} else if (cpid == 1) {
-		/* FPU branch: conditions 0-31 only */
-		if (cond >= 32) {
+	} else if (cpid == M68K_CPID_FPU) {
+		if (cond >= M68K_FPU_MAX_COND) {
 			d68000_invalid(info);
 			return;
 		}
@@ -2014,17 +2083,14 @@ static void d68020_cpbcc_16(m68k_info *info)
 		return;
 	}
 
-	// FNOP is a special case of FBF
 	if (info->ir == 0xf280 && peek_imm_16(info) == 0) {
 		MCInst_setOpcode(info->inst, M68K_INS_FNOP);
 		info->pc += 2;
 		return;
 	}
 
-	// these are all in row with the extension so just doing a add here is fine
-	info->inst->Opcode += (info->ir & 0x2f);
-
 	ext = build_init_op(info, M68K_INS_FBF, 1, 2);
+	info->inst->Opcode += M68K_FP_COND(info->ir);
 	op0 = &ext->operands[0];
 
 	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_WORD,
@@ -2040,14 +2106,14 @@ static void d68020_cpbcc_32(m68k_info *info)
 	cs_m68k_op *op0;
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 	int cpid = M68K_CPID(info);
-	int cond = info->ir & 0x3f;
-	if (cpid == 0) {
-		if (cond >= 16 || (info->type & TYPE_CPU32)) {
+	int cond = M68K_IR_CONDITION(info);
+	if (cpid == M68K_CPID_MMU) {
+		if (cond >= M68K_PMMU_MAX_COND || (info->type & TYPE_CPU32)) {
 			d68000_invalid(info);
 			return;
 		}
-	} else if (cpid == 1) {
-		if (cond >= 32) {
+	} else if (cpid == M68K_CPID_FPU) {
+		if (cond >= M68K_FPU_MAX_COND) {
 			d68000_invalid(info);
 			return;
 		}
@@ -2056,10 +2122,8 @@ static void d68020_cpbcc_32(m68k_info *info)
 		return;
 	}
 
-	// these are all in row with the extension so just doing a add here is fine
-	info->inst->Opcode += (info->ir & 0x2f);
-
 	ext = build_init_op(info, M68K_INS_FBF, 1, 4);
+	info->inst->Opcode += M68K_FP_COND(info->ir);
 	op0 = &ext->operands[0];
 
 	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_LONG, read_imm_32(info));
@@ -2076,13 +2140,21 @@ static void d68020_cpdbcc(m68k_info *info)
 	uint32_t ext1, ext2;
 
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
+
+	if (M68K_CPID(info) == M68K_CPID_CACHE && (info->type & M68040_PLUS)) {
+		if (M68K_IR_IS_CPUSH(info))
+			d68040_cpush(info);
+		else
+			d68040_cinv(info);
+		return;
+	}
+
 	REQUIRE_CPID_FPU(info);
 
 	ext1 = read_imm_16(info);
 	ext2 = read_imm_16(info);
 
-	// these are all in row with the extension so just doing a add here is fine
-	info->inst->Opcode += (ext1 & 0x2f);
+	info->inst->Opcode += M68K_FP_COND(ext1);
 
 	ext = build_init_op(info, M68K_INS_FDBF, 2, 0);
 	op0 = &ext->operands[0];
@@ -2102,8 +2174,8 @@ static void fmove_fpcr(m68k_info *info, uint32_t extension)
 	cs_m68k_op *special;
 	cs_m68k_op *op_ea;
 
-	int regsel = (extension >> 10) & 0x7;
-	int dir = (extension >> 13) & 0x1;
+	int regsel = M68K_FEXT_REGSEL(extension);
+	int dir = M68K_FEXT_DIR(extension);
 
 	cs_m68k *ext = build_init_op(info, M68K_INS_FMOVE, 2, 4);
 
@@ -2130,7 +2202,7 @@ static void fmovem(m68k_info *info, uint32_t extension)
 {
 	cs_m68k_op *op_reglist;
 	cs_m68k_op *op_ea;
-	int dir = (extension >> 13) & 0x1;
+	int dir = M68K_FEXT_DIR(extension);
 	int mode = (extension >> 11) & 0x3;
 	uint32_t reglist = extension & 0xff;
 	cs_m68k *ext = build_init_op(info, M68K_INS_FMOVEM, 2, 0);
@@ -2179,32 +2251,25 @@ static void d68020_cpgen(m68k_info *info)
 
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 
-	/* 68030 PMMU uses coprocessor ID 0 (bits 11:9 of first word).
-	 * CpID 1 = FPU (handled below). CpID 0 on 68030 = PMMU.
-	 */
-	if (M68K_CPID(info) == 0 && (info->type & TYPE_68030)) {
+	if (M68K_CPID(info) == M68K_CPID_MMU && (info->type & TYPE_68030)) {
 		d68030_pmmu(info);
 		return;
 	}
 
-	/* Only CpID 1 (FPU) is valid for cpgen. Reject all others. */
-	if (M68K_CPID(info) != 1) {
+	if (M68K_CPID(info) != M68K_CPID_FPU) {
 		d68000_invalid(info);
 		return;
 	}
 
 	supports_single_op = true;
 
-	/* 68040+ single/double-precision FPU opcodes (bit 6 of command word = 1)
-	 * must be rejected on pre-68040 CPUs.  Peek the extension word first:
-	 * bits 15-14 == 00 identifies a general FPU operation (types 0-1) where
-	 * bit 6 is the s/d flag.  Types 4-7 (fmove_fpcr, fmovem) also have
-	 * bit 6 set in some encodings but are valid on 68020+ — they are
-	 * dispatched via the (next>>13)&7 switch and never reach the s/d path,
-	 * so we only need to guard types 0-1 here. */
+	/* 68040+ single/double-precision FPU opcodes (SD flag set in command
+	 * word) must be rejected on pre-68040 CPUs.  Only guard general FPU
+	 * operations (type 0-1); fmove_fpcr/fmovem types are dispatched
+	 * separately and never reach the SD path. */
 	{
 		uint32_t peeked = peek_imm_16(info);
-		if (((peeked >> 14) & 3) == 0 && ((peeked >> 6) & 1) &&
+		if (M68K_FEXT_TYPE(peeked) <= 1 && M68K_FEXT_SD_FLAG(peeked) &&
 		    !(info->type & M68040_PLUS)) {
 			d68000_invalid(info);
 			return;
@@ -2213,14 +2278,12 @@ static void d68020_cpgen(m68k_info *info)
 
 	next = read_imm_16(info);
 
-	rm = (next >> 14) & 0x1;
-	src = (next >> 10) & 0x7;
-	dst = (next >> 7) & 0x7;
-	opmode = next & 0x3f;
+	rm = M68K_FEXT_RM(next);
+	src = M68K_FEXT_SRC(next);
+	dst = M68K_FEXT_DST(next);
+	opmode = M68K_FEXT_OPMODE(next);
 
-	// special handling for fmovecr
-
-	if (BITFIELD(info->ir, 5, 0) == 0 && BITFIELD(next, 15, 10) == 0x17) {
+	if (BITFIELD(info->ir, 5, 0) == 0 && M68K_FEXT_IS_FMOVECR(next)) {
 		ext = build_init_op(info, M68K_INS_FMOVECR, 2, 0);
 
 		op0 = &ext->operands[0];
@@ -2228,35 +2291,35 @@ static void d68020_cpgen(m68k_info *info)
 
 		op0->address_mode = M68K_AM_IMMEDIATE;
 		op0->type = M68K_OP_IMM;
-		op0->imm = next & 0x3f;
+		op0->imm = M68K_FEXT_OPMODE(next);
 
-		op1->reg = M68K_REG_FP0 + ((next >> 7) & 7);
+		op1->reg = M68K_REG_FP0 + M68K_FEXT_DST(next);
 
 		return;
 	}
 
-	// deal with extended move stuff
-
-	switch ((next >> 13) & 0x7) {
-	// fmovem fpcr
-	case 0x4: // FMOVEM ea, FPCR
-	case 0x5: // FMOVEM FPCR, ea
+	switch (M68K_FEXT_TYPE(next)) {
+	case 0x4:
+	case 0x5:
 		fmove_fpcr(info, next);
 		return;
 
-	// fmovem list
 	case 0x6:
 	case 0x7:
 		fmovem(info, next);
 		return;
 	}
 
-	// See comment bellow on why this is being done
-
-	if ((next >> 6) & 1)
+	if (M68K_FEXT_SD_FLAG(next)) {
+		if (opmode == M68K_FPOP_FSSQRT_RAW) {
+			MCInst_setOpcode(info->inst, M68K_INS_FSSQRT);
+			goto fpu_operands;
+		} else if (opmode == M68K_FPOP_FDSQRT_RAW) {
+			MCInst_setOpcode(info->inst, M68K_INS_FDSQRT);
+			goto fpu_operands;
+		}
 		opmode &= ~4;
-
-	// special handling of some instructions here
+	}
 
 	switch (opmode) {
 	case 0x00:
@@ -2382,25 +2445,21 @@ static void d68020_cpgen(m68k_info *info)
 		break;
 	}
 
-	// Some trickery here! It's not documented but if bit 6 is set this is a s/d opcode and then
-	// if bit 2 is set it's a d. As we already have set our opcode in the code above we can just
-	// offset it as the following 2 op codes (if s/d is supported) will always be directly after it
-
-	if ((next >> 6) & 1) {
+	if (M68K_FEXT_SD_FLAG(next)) {
 		if ((next >> 2) & 1)
 			info->inst->Opcode += 2;
 		else
 			info->inst->Opcode += 1;
 	}
 
+fpu_operands:
 	ext = &info->extension;
 
 	ext->op_count = 2;
 	ext->op_size.type = M68K_SIZE_TYPE_CPU;
 	ext->op_size.cpu_size = 0;
 
-	// Special case - adjust direction of fmove
-	if ((opmode == 0x00) && ((next >> 13) & 0x1) != 0) {
+	if ((opmode == 0x00) && M68K_FEXT_DIR(next) != 0) {
 		op0 = &ext->operands[1];
 		op1 = &ext->operands[0];
 	} else {
@@ -2416,22 +2475,22 @@ static void d68020_cpgen(m68k_info *info)
 
 	if (rm == 1) {
 		switch (src) {
-		case 0x00:
+		case M68K_FPSRC_LONG:
 			ext->op_size.cpu_size = M68K_CPU_SIZE_LONG;
 			get_ea_mode_op(info, op0, info->ir, 4);
 			break;
 
-		case 0x06:
+		case M68K_FPSRC_BYTE:
 			ext->op_size.cpu_size = M68K_CPU_SIZE_BYTE;
 			get_ea_mode_op(info, op0, info->ir, 1);
 			break;
 
-		case 0x04:
+		case M68K_FPSRC_WORD:
 			ext->op_size.cpu_size = M68K_CPU_SIZE_WORD;
 			get_ea_mode_op(info, op0, info->ir, 2);
 			break;
 
-		case 0x01:
+		case M68K_FPSRC_SINGLE:
 			ext->op_size.type = M68K_SIZE_TYPE_FPU;
 			ext->op_size.fpu_size = M68K_FPU_SIZE_SINGLE;
 			get_ea_mode_op(info, op0, info->ir, 4);
@@ -2439,11 +2498,23 @@ static void d68020_cpgen(m68k_info *info)
 			op0->type = M68K_OP_FP_SINGLE;
 			break;
 
-		case 0x05:
+		case M68K_FPSRC_DOUBLE:
 			ext->op_size.type = M68K_SIZE_TYPE_FPU;
 			ext->op_size.fpu_size = M68K_FPU_SIZE_DOUBLE;
 			get_ea_mode_op(info, op0, info->ir, 8);
 			op0->type = M68K_OP_FP_DOUBLE;
+			break;
+
+		case M68K_FPSRC_EXTENDED:
+			ext->op_size.type = M68K_SIZE_TYPE_FPU;
+			ext->op_size.fpu_size = M68K_FPU_SIZE_EXTENDED;
+			get_ea_mode_op(info, op0, info->ir, 12);
+			break;
+
+		case M68K_FPSRC_PACKED:
+			ext->op_size.type = M68K_SIZE_TYPE_FPU;
+			ext->op_size.fpu_size = M68K_FPU_SIZE_EXTENDED;
+			get_ea_mode_op(info, op0, info->ir, 12);
 			break;
 
 		default:
@@ -2506,9 +2577,7 @@ static void d68020_cpscc(m68k_info *info)
 	LIMIT_CPU_TYPES(info, M68020_PLUS);
 	REQUIRE_CPID_FPU(info);
 	ext = build_init_op(info, M68K_INS_FSF, 1, 1);
-
-	// these are all in row with the extension so just doing a add here is fine
-	info->inst->Opcode += (read_imm_16(info) & 0x2f);
+	info->inst->Opcode += M68K_FP_COND(read_imm_16(info));
 
 	get_ea_mode_op(info, &ext->operands[0], info->ir, 1);
 }
@@ -2522,9 +2591,7 @@ static void d68020_cptrapcc_0(m68k_info *info)
 	extension1 = read_imm_16(info);
 
 	build_init_op(info, M68K_INS_FTRAPF, 0, 0);
-
-	// these are all in row with the extension so just doing a add here is fine
-	info->inst->Opcode += (extension1 & 0x2f);
+	info->inst->Opcode += M68K_FP_COND(extension1);
 }
 
 static void d68020_cptrapcc_16(m68k_info *info)
@@ -2539,9 +2606,7 @@ static void d68020_cptrapcc_16(m68k_info *info)
 	extension2 = read_imm_16(info);
 
 	ext = build_init_op(info, M68K_INS_FTRAPF, 1, 2);
-
-	// these are all in row with the extension so just doing a add here is fine
-	info->inst->Opcode += (extension1 & 0x2f);
+	info->inst->Opcode += M68K_FP_COND(extension1);
 
 	op0 = &ext->operands[0];
 
@@ -2562,9 +2627,7 @@ static void d68020_cptrapcc_32(m68k_info *info)
 	extension2 = read_imm_32(info);
 
 	ext = build_init_op(info, M68K_INS_FTRAPF, 1, 2);
-
-	// these are all in row with the extension so just doing a add here is fine
-	info->inst->Opcode += (extension1 & 0x2f);
+	info->inst->Opcode += M68K_FP_COND(extension1);
 
 	op0 = &ext->operands[0];
 
@@ -3812,15 +3875,15 @@ static void d68030_pmmu(m68k_info *info)
 		op1 = &ext->operands[1];
 
 		if (direction) {
-			get_ea_mode_op(info, op0, info->ir, 4);
-			op1->address_mode = M68K_AM_NONE;
-			op1->type = M68K_OP_REG;
-			op1->reg = pmmu_reg;
-		} else {
 			op0->address_mode = M68K_AM_NONE;
 			op0->type = M68K_OP_REG;
 			op0->reg = pmmu_reg;
 			get_ea_mode_op(info, op1, info->ir, 4);
+		} else {
+			get_ea_mode_op(info, op0, info->ir, 4);
+			op1->address_mode = M68K_AM_NONE;
+			op1->type = M68K_OP_REG;
+			op1->reg = pmmu_reg;
 		}
 		break;
 	}
@@ -3856,9 +3919,7 @@ static void d68030_pmmu(m68k_info *info)
 			op1 = &ext->operands[1];
 			op2 = &ext->operands[2];
 
-			op0->type = M68K_OP_IMM;
-			op0->address_mode = M68K_AM_IMMEDIATE;
-			op0->imm = fc;
+			pmmu_decode_fc(info, op0, fc);
 
 			op1->type = M68K_OP_IMM;
 			op1->address_mode = M68K_AM_IMMEDIATE;
@@ -3929,15 +3990,15 @@ static void d68030_pmmu(m68k_info *info)
 		op1 = &ext->operands[1];
 
 		if (direction) {
-			get_ea_mode_op(info, op0, info->ir, 4);
-			op1->address_mode = M68K_AM_NONE;
-			op1->type = M68K_OP_REG;
-			op1->reg = pmmu_reg;
-		} else {
 			op0->address_mode = M68K_AM_NONE;
 			op0->type = M68K_OP_REG;
 			op0->reg = pmmu_reg;
 			get_ea_mode_op(info, op1, info->ir, 4);
+		} else {
+			get_ea_mode_op(info, op0, info->ir, 4);
+			op1->address_mode = M68K_AM_NONE;
+			op1->type = M68K_OP_REG;
+			op1->reg = pmmu_reg;
 		}
 		break;
 	}
@@ -3948,7 +4009,7 @@ static void d68030_pmmu(m68k_info *info)
 		cs_m68k_op *op0;
 		cs_m68k_op *op1;
 
-		if ((cmd & 0x1fff) != 0) {
+		if ((cmd & 0x1dff) != 0) {
 			d68000_invalid(info);
 			return;
 		}
@@ -3960,15 +4021,15 @@ static void d68030_pmmu(m68k_info *info)
 		op1 = &ext->operands[1];
 
 		if (direction) {
-			get_ea_mode_op(info, op0, info->ir, 2);
-			op1->address_mode = M68K_AM_NONE;
-			op1->type = M68K_OP_REG;
-			op1->reg = M68K_REG_MMUSR;
-		} else {
 			op0->address_mode = M68K_AM_NONE;
 			op0->type = M68K_OP_REG;
 			op0->reg = M68K_REG_MMUSR;
 			get_ea_mode_op(info, op1, info->ir, 2);
+		} else {
+			get_ea_mode_op(info, op0, info->ir, 2);
+			op1->address_mode = M68K_AM_NONE;
+			op1->type = M68K_OP_REG;
+			op1->reg = M68K_REG_MMUSR;
 		}
 		break;
 	}

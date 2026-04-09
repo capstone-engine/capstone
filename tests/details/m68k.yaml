@@ -1267,7 +1267,7 @@ test_cases:
   # These use coprocessor format: first word 0xF000 | EA, second word = command
   # ==========================================================================
 
-  # PMOVE TC,(A0) : word=F010, ext=4000
+  # PMOVE (A0),TC : word=F010, ext=4000 (direction=0 → EA first: memory to register)
   -
     input:
       bytes: [ 0xf0, 0x10, 0x40, 0x00 ]
@@ -1277,10 +1277,10 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "pmove tc, (a0)"
+        asm_text: "pmove (a0), tc"
 
-  # --- PMOVE (A0),TC : move memory to Translation Control register ---
-  # Ext word: 0x4200 (PMOVE to-TC, from-ea direction bit set)
+  # --- PMOVE TC,(A0) : move Translation Control register to memory ---
+  # Ext word: 0x4200 (direction=1 → reg first: register to EA)
   # From binutils: pmove, two(0xf000,0x4200), two(0xffc0,0xffff), "08%s"
   -
     input:
@@ -1291,11 +1291,11 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "pmove (a0), tc"
+        asm_text: "pmove tc, (a0)"
 
-  # --- PMOVE SRP,(A1) : move Supervisor Root Pointer ---
+  # --- PMOVE (A1),SRP : move memory to Supervisor Root Pointer ---
   # SRP is register code 100 in bits 12-10 of ext word
-  # Ext word for SRP to-mem: 0x4800
+  # Ext word 0x4800: direction=0 → EA first (memory to register)
   # First word: 0xF011 (F000 | EA for (A1) = 010_001)
   -
     input:
@@ -1306,10 +1306,11 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "pmove srp, (a1)"
+        asm_text: "pmove (a1), srp"
 
-  # --- PMOVE CRP,(A2) : move CPU Root Pointer ---
+  # --- PMOVE (A2),CRP : move memory to CPU Root Pointer ---
   # CRP is register code 101 in bits 12-10 → ext = 0x4C00
+  # Ext word 0x4C00: direction=0 → EA first (memory to register)
   # First word: 0xF012 (F000 | EA for (A2) = 010_010)
   -
     input:
@@ -1320,10 +1321,10 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "pmove crp, (a2)"
+        asm_text: "pmove (a2), crp"
 
-  # --- PMOVE MMUSR,(A0) : move MMU Status Register ---
-  # MMUSR is register code 110 → ext = 0x6000 (different format)
+  # --- PMOVE (A0),MMUSR : move memory to MMU Status Register ---
+  # MMUSR is register code 110 → ext = 0x6000 (direction=0 → EA first)
   # From binutils: pmove, two(0xf000,0x6000), two(0xffc0,0xffff), "*w18"
   -
     input:
@@ -1334,12 +1335,12 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "pmove mmusr, (a0)"
+        asm_text: "pmove (a0), mmusr"
 
-  # --- PMOVE TT0,(A0) : move Transparent Translation Register 0 ---
+  # --- PMOVE (A0),TT0 : move memory to Transparent Translation Register 0 ---
   # From binutils: pmovefd, two(0xf000,0x0100), two(0xffc0,0xe3ff)
-  # TT0 = register 010 → ext word bits 12-10 = 010, direction = to-mem
-  # Ext: 0x0800 (TT0, to-memory)
+  # TT0 = register 010 → ext word bits 12-10 = 010
+  # Ext: 0x0800 (direction=0 → EA first: memory to register)
   -
     input:
       bytes: [ 0xf0, 0x10, 0x08, 0x00 ]
@@ -1349,10 +1350,10 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "pmove tt0, (a0)"
+        asm_text: "pmove (a0), tt0"
 
-  # --- PMOVE TT1,(A0) : move Transparent Translation Register 1 ---
-  # TT1 = register 011 → ext = 0x0C00
+  # --- PMOVE (A0),TT1 : move memory to Transparent Translation Register 1 ---
+  # TT1 = register 011 → ext = 0x0C00 (direction=0 → EA first)
   -
     input:
       bytes: [ 0xf0, 0x10, 0x0c, 0x00 ]
@@ -1362,15 +1363,12 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "pmove tt1, (a0)"
+        asm_text: "pmove (a0), tt1"
 
   # --- PFLUSH (68030 variant) ---
   # From binutils: pflush, two(0xf000,0x3800), two(0xffc0,0xfe1e)
   # Format: F000|EA, 001 FC mask 0 (An)
-  # PFLUSH #4,#4,(A0) : FC=4(SFC), mask=4
-  # Ext word: 0011 1 00 100 00100 0 = 0x3890? Let me use a simpler example.
-  # PFLUSH #0,#0,(A0) with FC from SFC:
-  # ext = 0x3800 (function code 000 = SFC, mask = 0)
+  # ext = 0x3800 (fc=0x00 → SFC register via pmmu_decode_fc, mask=0)
   -
     input:
       bytes: [ 0xf0, 0x10, 0x38, 0x00 ]
@@ -1380,7 +1378,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "pflush #$0, #$0, (a0)"
+        asm_text: "pflush sfc, #$0, (a0)"
 
   # --- PFLUSHA (68030 variant) ---
   # From binutils: pflusha, two(0xf000,0x2400), two(0xffff,0xffff)
