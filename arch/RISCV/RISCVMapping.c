@@ -40,11 +40,13 @@ const insn_map *RISCV_insns = insns;
 const unsigned int RISCV_insn_count = ARR_SIZE(insns);
 
 #ifndef CAPSTONE_DIET
-
 static const map_insn_ops insn_operands[] = {
 #include "RISCVGenCSMappingInsnOp.inc"
 };
 
+static const name_map insn_alias_mnem_map[] = {
+#include "RISCVGenCSAliasMnemMap.inc"
+};
 #endif
 
 void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
@@ -359,16 +361,26 @@ static const char *const insn_name_maps[] = {
 #include "RISCVGenCSMappingInsnName.inc"
 };
 
+// called from RISCV_LLVM_printInstruction() to avoid exporting
+// insn_alias_mnem_map and its size via extern declarations
+void RISCV_set_alias_id(MCInst *MI, SStream *O)
+{
+#ifndef CAPSTONE_DIET
+	map_set_alias_id(MI, O, insn_alias_mnem_map,
+			 ARR_SIZE(insn_alias_mnem_map));
+#endif
+}
+
 const char *RISCV_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= RISCV_INS_ENDING)
-		return NULL;
+	if (id < RISCV_INS_ENDING)
+		return insn_name_maps[id];
 
-	return insn_name_maps[id];
-#else
-	return NULL;
+	if (id < RISCV_INS_ALIAS_END)
+		return insn_alias_mnem_map[id - RISCV_INS_ALIAS_BEGIN - 1].name;
 #endif
+	return NULL;
 }
 
 #ifndef CAPSTONE_DIET
@@ -413,6 +425,12 @@ riscv_insn RISCV_map_insn(const char *name)
 		if (!strcmp(name, insn_name_maps[i]))
 			return i;
 	}
+#ifndef CAPSTONE_DIET
+	for (i = 0; i < ARR_SIZE(insn_alias_mnem_map); i++) {
+		if (!strcmp(name, insn_alias_mnem_map[i].name))
+			return insn_alias_mnem_map[i].id;
+	}
+#endif
 	return RISCV_INS_INVALID;
 }
 

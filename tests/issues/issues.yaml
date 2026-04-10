@@ -6399,3 +6399,57 @@ test_cases:
               reg: "sp"
             - type: "RISCV_OP_IMM"
               imm: -0x10
+  -
+    input:
+      name: "RISCV - #2861 - add instruction id (first real)"
+      bytes: [ 0x33, 0x85, 0xC5, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "add a0, a1, a2"
+        id: RISCV_INS_ADD
+        is_alias: -1
+  -
+    input:
+      name: "RISCV - #2861 - zip instruction id (last real)"
+      bytes: [ 0x13, 0x95, 0xF5, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_MODE_RISCV_ZBKB, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "zip a0, a1"
+        id: RISCV_INS_ZIP
+        is_alias: -1
+  -
+    input:
+      name: "RISCV - #2861 - nop alias id (first alias)"
+      bytes: [ 0x13, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "nop"
+        id: RISCV_INS_ADDI
+        is_alias: 1
+        alias_id: RISCV_INS_ALIAS_NOP
+  -
+    input:
+      name: "RISCV - #2861 - cv.mulhhu alias id (last alias)"
+      bytes: [ 0x5B, 0xD5, 0xC5, 0x40 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_MODE_RISCV_XCVMAC, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cv.mulhhu a0, a1, a2"
+        id: RISCV_INS_CV_MULHHUN
+        is_alias: 1
+        alias_id: RISCV_INS_ALIAS_CV_MULHHU
