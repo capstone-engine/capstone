@@ -2403,3 +2403,114 @@ test_cases:
         asm_text: "dc.w $f000"
       -
         asm_text: "move.l d0, d2"
+
+  # Bug 15a: Bitfield instructions (bftst etc.) must be illegal on 68000
+  # Full encoding: e8f8 0800 009c = bftst $9c.w{d0:32} on 68020+
+  # On 68000, e8f8 has size bits=11 which is undefined → dc.w, remainder = btst
+  -
+    input:
+      bytes: [ 0xe8, 0xf8, 0x08, 0x00, 0x00, 0x9c ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $e8f8"
+      -
+        asm_text: "btst.b #$9c, d0"
+
+  # Bug 15b: Bitfield instructions must be illegal on CPU32
+  # CPU32 has TYPE_68020|TYPE_CPU32, so LIMIT_CPU_TYPES_NOT_CPU32 rejects it
+  -
+    input:
+      bytes: [ 0xe8, 0xf8, 0x08, 0x00, 0x00, 0x9c ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "dc.w $e8f8"
+      -
+        asm_text: "btst.b #$9c, d0"
+
+  # Bug 15c: Bitfield instructions valid on 68020 — full 3-word encoding
+  -
+    input:
+      bytes: [ 0xe8, 0xf8, 0x08, 0x00, 0x00, 0x9c ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bftst $9c.w{0:32}"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_MEM
+                address_mode: M68K_AM_ABSOLUTE_DATA_SHORT
+
+  # Bug 16: btst PC-relative displacement (case 0x3a) must account for
+  # extra words consumed before the displacement word.
+  # Encoding: 083a 00e8 0a54 at address 0x1050
+  # btst #$e8, d16(PC) where d16=0x0a54, read at PC=0x1054
+  # Target: 0x1054 + 0x0a54 = 0x1aa8
+  # Printer: pc + 2 + disp = 0x1050 + 2 + disp => disp must be 0xa56
+  -
+    input:
+      bytes: [ 0x08, 0x3a, 0x00, 0xe8, 0x0a, 0x54 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x1050
+    expected:
+      insns:
+      -
+        asm_text: "btst.b #$e8, $1aa8(pc)"
+        details:
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0xe8
+              -
+                type: M68K_OP_MEM
+                mem:
+                  disp: 0xa56
+                  disp_size: 1
+                address_mode: M68K_AM_PCI_DISP
+
+  # Bug 17: btst PC-relative indexed (case 0x3b) must account for
+  # extra words consumed before the extension word.
+  # Encoding: 083b 0038 0039 at address 0x3400
+  # btst #$38, (d8,PC,d0.w) where ext=0x0039 (brief: d0.w*1, disp=0x39)
+  # Extension read at PC=0x3404
+  # Target: 0x3404 + 0x39 = 0x343d
+  # Printer: pc + 2 + disp = 0x3400 + 2 + disp => disp must be 0x3b
+  -
+    input:
+      bytes: [ 0x08, 0x3b, 0x00, 0x38, 0x00, 0x39 ]
+      arch: "m68k"
+      options: [ CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000 ]
+      address: 0x3400
+    expected:
+      insns:
+      -
+        asm_text: "btst.b #$38, $343d(pc, d0.w)"
+        details:
+          regs_read: [ d0, pc ]
+          m68k:
+            operands:
+              -
+                type: M68K_OP_IMM
+                imm: 0x38
+              -
+                type: M68K_OP_MEM
+                mem:
+                  base_reg: pc
+                  index_reg: d0
+                  index_size: -1
+                  disp: 0x3b
+                address_mode: M68K_AM_PCI_INDEX_8_BIT_DISP

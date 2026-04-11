@@ -494,7 +494,10 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 					uint32_t instruction, uint32_t size,
 					bool is_pc)
 {
+	uint32_t ext_addr = info->pc;
 	uint32_t extension = read_imm_16(info);
+	int32_t pc_adjust =
+		is_pc ? (int32_t)(ext_addr - info->baseAddress - 2) : 0;
 
 	op->address_mode = M68K_AM_AREGI_INDEX_BASE_DISP;
 
@@ -511,6 +514,7 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 					 read_imm_32(info) :
 					 (int16_t)read_imm_16(info)) :
 				0;
+		op->mem.in_disp += pc_adjust;
 
 		op->mem.in_disp_size =
 			EXT_BASE_DISPLACEMENT_PRESENT(extension) &&
@@ -590,6 +594,7 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 	}
 
 	op->mem.disp = (int8_t)(extension & 0xff);
+	op->mem.disp += pc_adjust;
 	op->mem.disp_size = 0;
 
 	if (EXT_INDEX_SCALE(extension)) {
@@ -712,12 +717,22 @@ static void get_ea_mode_op(m68k_info *info, cs_m68k_op *op,
 		op->imm = read_imm_32(info);
 		break;
 
-	case 0x3a:
+	case 0x3a: {
 		/* program counter with displacement */
+		/* The printer computes the effective address as
+		 * instruction_start + 2 + disp, assuming the displacement
+		 * extension word immediately follows the opcode word.
+		 * When extra words precede the EA (e.g. an immediate in
+		 * BTST #imm,disp(PC)), the displacement word is further
+		 * along.  Adjust disp so the printer still produces the
+		 * correct absolute address. */
+		uint32_t disp_addr = info->pc;
 		op->address_mode = M68K_AM_PCI_DISP;
 		op->mem.disp = (int16_t)read_imm_16(info);
+		op->mem.disp += (int16_t)(disp_addr - info->baseAddress - 2);
 		op->mem.disp_size = 1;
 		break;
+	}
 
 	case 0x3b:
 		/* program counter with index */
@@ -1761,31 +1776,33 @@ static void d68010_bkpt(m68k_info *info)
 
 static void d68020_bfchg(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	/* Bit field ops are 68020+ only; CPU32 does NOT support them
+	 * despite sharing TYPE_68020. */
+	LIMIT_CPU_TYPES_NOT_CPU32(info, M68020_PLUS);
 	build_bitfield_ins(info, M68K_INS_BFCHG, false);
 }
 
 static void d68020_bfclr(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	LIMIT_CPU_TYPES_NOT_CPU32(info, M68020_PLUS);
 	build_bitfield_ins(info, M68K_INS_BFCLR, false);
 }
 
 static void d68020_bfexts(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	LIMIT_CPU_TYPES_NOT_CPU32(info, M68020_PLUS);
 	build_bitfield_ins(info, M68K_INS_BFEXTS, true);
 }
 
 static void d68020_bfextu(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	LIMIT_CPU_TYPES_NOT_CPU32(info, M68020_PLUS);
 	build_bitfield_ins(info, M68K_INS_BFEXTU, true);
 }
 
 static void d68020_bfffo(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	LIMIT_CPU_TYPES_NOT_CPU32(info, M68020_PLUS);
 	build_bitfield_ins(info, M68K_INS_BFFFO, true);
 }
 
@@ -1794,7 +1811,7 @@ static void d68020_bfins(m68k_info *info)
 	cs_m68k *ext = &info->extension;
 	cs_m68k_op temp;
 
-	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	LIMIT_CPU_TYPES_NOT_CPU32(info, M68020_PLUS);
 	build_bitfield_ins(info, M68K_INS_BFINS, true);
 
 	// a bit hacky but we need to flip the args on only this instruction
@@ -1806,12 +1823,13 @@ static void d68020_bfins(m68k_info *info)
 
 static void d68020_bfset(m68k_info *info)
 {
-	LIMIT_CPU_TYPES(info, M68020_PLUS);
+	LIMIT_CPU_TYPES_NOT_CPU32(info, M68020_PLUS);
 	build_bitfield_ins(info, M68K_INS_BFSET, false);
 }
 
 static void d68020_bftst(m68k_info *info)
 {
+	LIMIT_CPU_TYPES_NOT_CPU32(info, M68020_PLUS);
 	build_bitfield_ins(info, M68K_INS_BFTST, false);
 }
 
