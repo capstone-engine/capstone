@@ -440,6 +440,7 @@ static struct {
 	{ "hd6309", "m680x, HD6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
 	{ "hcs08", "m680x, HCS08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
 	{ "rs08", "m680x, RS08", CS_ARCH_M680X, CS_MODE_M680X_RS08 },
+	{ "hcs12x", "m680x, HCS12X", CS_ARCH_M680X, CS_MODE_M680X_HCS12X },
 	{ "evm", "ethereum virtual machine", CS_ARCH_EVM, 0 },
 
 	{ "wasm", "web assembly", CS_ARCH_WASM, 0 },

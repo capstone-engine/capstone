@@ -3503,3 +3503,132 @@ test_cases:
                 size: 1
             flags: [M680X_FIRST_OP_IN_MNEM]
           regs_read: [ cc, a ]
+  -
+    input:
+      bytes: [ 0x18, 0x92, 0xDD, 0x18, 0xB6, 0x12, 0x34, 0x18, 0x39, 0x18, 0x35, 0x12, 0x18, 0x42, 0x18, 0xA7, 0x18, 0xC0, 0x11, 0x11, 0x18, 0xC2, 0x11, 0x11, 0x18, 0x8A, 0x11, 0x11 ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_HCS12X ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "sbex $dd"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                access: CS_AC_READ_WRITE
+                size: 2
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x00DD
+                direct_addr_set: true
+                access: CS_AC_READ_WRITE
+                size: 2
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, x ]
+      -
+        asm_text: "gldaa $1234"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                access: CS_AC_READ_WRITE
+                size: 1
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1234
+                access: CS_AC_READ_WRITE
+                size: 1
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, a ]
+          regs_write: [ cc,a ]
+      -
+        asm_text: "pshcw"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: cc
+                access: CS_AC_READ
+                size: 1
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc ]
+      -
+        asm_text: "btas $12"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0012
+                direct_addr_set: true
+                size: 1
+      -
+        asm_text: "incx"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                access: CS_AC_READ_WRITE
+                size: 2
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, x ]
+      -
+        asm_text: "sys"
+      -
+        asm_text: "suby #4369"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                access: CS_AC_READ_WRITE
+                size: 2
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 0x1111
+                access: CS_AC_READ
+                size: 2
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, y ]
+          regs_write: [ cc, y ]
+      -
+        asm_text: "sbey $1111"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                access: CS_AC_READ_WRITE
+                size: 2
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1111
+                access: CS_AC_READ_WRITE
+                size: 2
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, y ]
+          regs_write: [ cc, y ]
+      -
+        asm_text: "orx #17"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 0x11
+                access: CS_AC_READ
+                size: 1
+          regs_read: [ cc ]
+          regs_write: [ cc ]
