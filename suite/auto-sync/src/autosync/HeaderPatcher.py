@@ -138,7 +138,10 @@ class HeaderPatcher:
                 rf"\s*// generated content <{self.inc.name}{header_enum_id}> end.*(\n)"
             )
             if not re.search(regex, header_content):
-                error_exit(f"Could not locate include comments for {self.inc.name}")
+                log.debug(
+                    f"Could not locate include comments for {self.inc.name}:{ev_id}"
+                )
+                continue
 
             new_content = (
                 f"\n\t// generated content <{self.inc.name}{header_enum_id}> begin\n"
