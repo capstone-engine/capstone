@@ -48,70 +48,6 @@
 #include "M68KDisassembler.h"
 #include "M68KInstPrinter.h"
 
-/* ======================================================================== */
-/* ============================ GENERAL DEFINES =========================== */
-/* ======================================================================== */
-
-/* Bit Isolation Functions */
-#define BIT_0(A) ((A) & 0x00000001)
-#define BIT_1(A) ((A) & 0x00000002)
-#define BIT_2(A) ((A) & 0x00000004)
-#define BIT_3(A) ((A) & 0x00000008)
-#define BIT_4(A) ((A) & 0x00000010)
-#define BIT_5(A) ((A) & 0x00000020)
-#define BIT_6(A) ((A) & 0x00000040)
-#define BIT_7(A) ((A) & 0x00000080)
-#define BIT_8(A) ((A) & 0x00000100)
-#define BIT_9(A) ((A) & 0x00000200)
-#define BIT_A(A) ((A) & 0x00000400)
-#define BIT_B(A) ((A) & 0x00000800)
-#define BIT_C(A) ((A) & 0x00001000)
-#define BIT_D(A) ((A) & 0x00002000)
-#define BIT_E(A) ((A) & 0x00004000)
-#define BIT_F(A) ((A) & 0x00008000)
-#define BIT_10(A) ((A) & 0x00010000)
-#define BIT_11(A) ((A) & 0x00020000)
-#define BIT_12(A) ((A) & 0x00040000)
-#define BIT_13(A) ((A) & 0x00080000)
-#define BIT_14(A) ((A) & 0x00100000)
-#define BIT_15(A) ((A) & 0x00200000)
-#define BIT_16(A) ((A) & 0x00400000)
-#define BIT_17(A) ((A) & 0x00800000)
-#define BIT_18(A) ((A) & 0x01000000)
-#define BIT_19(A) ((A) & 0x02000000)
-#define BIT_1A(A) ((A) & 0x04000000)
-#define BIT_1B(A) ((A) & 0x08000000)
-#define BIT_1C(A) ((A) & 0x10000000)
-#define BIT_1D(A) ((A) & 0x20000000)
-#define BIT_1E(A) ((A) & 0x40000000)
-#define BIT_1F(A) ((A) & 0x80000000)
-
-/* These are the CPU types understood by this disassembler */
-#define TYPE_68000 1
-#define TYPE_68010 2
-#define TYPE_68020 4
-#define TYPE_68030 8
-#define TYPE_68040 16
-#define TYPE_68060 32
-#define TYPE_CPU32 64
-
-#define M68000_ONLY TYPE_68000
-
-#define M68010_ONLY TYPE_68010
-#define M68010_LESS (TYPE_68000 | TYPE_68010)
-#define M68010_PLUS \
-	(TYPE_68010 | TYPE_68020 | TYPE_68030 | TYPE_68040 | TYPE_68060)
-
-#define M68020_ONLY TYPE_68020
-#define M68020_LESS (TYPE_68010 | TYPE_68020)
-#define M68020_PLUS (TYPE_68020 | TYPE_68030 | TYPE_68040 | TYPE_68060)
-
-#define M68030_ONLY TYPE_68030
-#define M68030_LESS (TYPE_68010 | TYPE_68020 | TYPE_68030)
-#define M68030_PLUS (TYPE_68030 | TYPE_68040 | TYPE_68060)
-
-#define M68040_PLUS (TYPE_68040 | TYPE_68060)
-
 enum {
 	M68K_CPU_TYPE_INVALID,
 	M68K_CPU_TYPE_68000,
@@ -123,37 +59,6 @@ enum {
 	M68K_CPU_TYPE_68040, /* Supported by disassembler ONLY */
 	M68K_CPU_TYPE_68060 /* Supported by disassembler ONLY */
 };
-
-/* Extension word formats */
-#define EXT_8BIT_DISPLACEMENT(A) ((A) & 0xff)
-#define EXT_FULL(A) BIT_8(A)
-#define EXT_EFFECTIVE_ZERO(A) (((A) & 0xe4) == 0xc4 || ((A) & 0xe2) == 0xc0)
-#define EXT_BASE_REGISTER_PRESENT(A) (!BIT_7(A))
-#define EXT_INDEX_REGISTER_PRESENT(A) (!BIT_6(A))
-#define EXT_INDEX_REGISTER(A) (((A) >> 12) & 7)
-#define EXT_INDEX_PRE_POST(A) (EXT_INDEX_PRESENT(A) && (A) & 3)
-#define EXT_INDEX_PRE(A) \
-	(EXT_INDEX_PRESENT(A) && ((A) & 7) < 4 && ((A) & 7) != 0)
-#define EXT_INDEX_POST(A) (EXT_INDEX_PRESENT(A) && ((A) & 7) > 4)
-#define EXT_INDEX_SCALE(A) (((A) >> 9) & 3)
-#define EXT_INDEX_LONG(A) BIT_B(A)
-#define EXT_INDEX_AR(A) BIT_F(A)
-#define EXT_BASE_DISPLACEMENT_PRESENT(A) (((A) & 0x30) > 0x10)
-#define EXT_BASE_DISPLACEMENT_WORD(A) (((A) & 0x30) == 0x20)
-#define EXT_BASE_DISPLACEMENT_LONG(A) (((A) & 0x30) == 0x30)
-/* Outer displacement is present when I/IS[1:0] (bits 1-0) is 2 (word) or 3 (long).
- * This applies regardless of the IS bit (bit 6): when index is suppressed,
- * I/IS values 5-7 mirror 1-3 (just indirect instead of postindexed).
- * The old check ((A) & 0x47) < 0x44 incorrectly excluded IS=1 cases
- * (I/IS=6,7) which DO have outer displacements per the M68K spec.
- */
-#define EXT_OUTER_DISPLACEMENT_PRESENT(A) (((A) & 3) > 1)
-#define EXT_OUTER_DISPLACEMENT_WORD(A) (((A) & 3) == 2)
-#define EXT_OUTER_DISPLACEMENT_LONG(A) (((A) & 3) == 3)
-
-#define IS_BITSET(val, b) ((val) & (1 << (b)))
-#define BITFIELD_MASK(sb, eb) (((1 << ((sb) + 1)) - 1) & (~((1 << (eb)) - 1)))
-#define BITFIELD(val, sb, eb) ((BITFIELD_MASK(sb, eb) & (val)) >> (eb))
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -290,140 +195,6 @@ static const m68k_insn s_trap_lut[] = {
 /* =========================== UTILITY FUNCTIONS ========================== */
 /* ======================================================================== */
 
-#define LIMIT_CPU_TYPES(info, ALLOWED_CPU_TYPES) \
-	do { \
-		if (!(info->type & ALLOWED_CPU_TYPES)) { \
-			d68000_invalid(info); \
-			return; \
-		} \
-	} while (0)
-
-/* Like LIMIT_CPU_TYPES but also reverses the instruction word consumption,
- * so the invalid instruction produces size=0 (not decoded) instead of size=2.
- * Use for handlers that replace d68000_invalid in the dispatch table. */
-#define LIMIT_CPU_TYPES_UNDECODED(info, ALLOWED_CPU_TYPES) \
-	do { \
-		if (!(info->type & ALLOWED_CPU_TYPES)) { \
-			info->pc -= 2; \
-			d68000_invalid(info); \
-			return; \
-		} \
-	} while (0)
-
-/* Like LIMIT_CPU_TYPES but also rejects CPU32.  CPU32 shares TYPE_68020 but
- * lacks some 68020 instructions (CAS, CAS2, CHK.L, PACK, UNPK). */
-#define LIMIT_CPU_TYPES_NOT_CPU32(info, ALLOWED_CPU_TYPES) \
-	do { \
-		if (!(info->type & (ALLOWED_CPU_TYPES)) || \
-		    (info->type & TYPE_CPU32)) { \
-			d68000_invalid(info); \
-			return; \
-		} \
-	} while (0)
-
-/* ── Coprocessor ID (CpID) ───────────────────────────────────────────
- * Bits 11:9 of the F-line instruction word select the coprocessor.   */
-#define M68K_CPID(info) (((info)->ir >> 9) & 7)
-
-#define M68K_CPID_MMU 0 /* PMMU (68030/68851)                     */
-#define M68K_CPID_FPU 1 /* FPU  (68881/68882/internal)            */
-#define M68K_CPID_CACHE 2 /* Cache ops — cinvl/cpushl on 68040+     */
-
-/* Require CpID == FPU.  Rejects all other coprocessor IDs.
- * Used by cpDBcc, cpScc, cpTRAPcc handlers. */
-#define REQUIRE_CPID_FPU(info) \
-	do { \
-		if (M68K_CPID(info) != M68K_CPID_FPU) { \
-			d68000_invalid(info); \
-			return; \
-		} \
-	} while (0)
-
-/* Require CpID == MMU or CpID == FPU.
- * CpID MMU is rejected on CPU32 (no PMMU).  Used by cpSAVE/cpRESTORE. */
-#define REQUIRE_CPID_FPU_OR_PMMU(info) \
-	do { \
-		int _cpid = M68K_CPID(info); \
-		if (_cpid == M68K_CPID_MMU && ((info)->type & TYPE_CPU32)) { \
-			d68000_invalid(info); \
-			return; \
-		} \
-		if (_cpid != M68K_CPID_MMU && _cpid != M68K_CPID_FPU) { \
-			d68000_invalid(info); \
-			return; \
-		} \
-	} while (0)
-
-/* ── IR bit-field helpers ────────────────────────────────────────────
- * Extract commonly-used fields from the first instruction word.      */
-
-/* 6-bit coprocessor condition (bits 5:0 of IR). */
-#define M68K_IR_CONDITION(info) ((info)->ir & 0x3f)
-
-/* cinv/cpush: select cpush(1) vs cinv(0) — bit 5 of IR. */
-#define M68K_IR_IS_CPUSH(info) (((info)->ir >> 5) & 1)
-
-/* cinv/cpush: cache scope — bits 4:3 of IR (0=invalid,1=line,2=page,3=all). */
-#define M68K_IR_CACHE_SCOPE(info) (((info)->ir >> 3) & 3)
-
-/* cinv/cpush: cache selector — bits 7:6 of IR (DC/IC/BC). */
-#define M68K_IR_CACHE_SEL(info) (((info)->ir >> 6) & 3)
-
-/* ── FPU extension-word bit-field helpers ────────────────────────────
- * The FPU command word is the 16-bit extension following the F-line. */
-
-/* R/M bit (bit 14): 1 = source from EA, 0 = source from FP register. */
-#define M68K_FEXT_RM(ext) (((ext) >> 14) & 1)
-
-/* Type / command class (bits 15:13). */
-#define M68K_FEXT_TYPE(ext) (((ext) >> 13) & 7)
-
-/* Source specifier (bits 12:10) — data format when R/M=1. */
-#define M68K_FEXT_SRC(ext) (((ext) >> 10) & 7)
-
-/* Destination FP register (bits 9:7). */
-#define M68K_FEXT_DST(ext) (((ext) >> 7) & 7)
-
-/* Opmode (bits 5:0) — FPU operation selector. */
-#define M68K_FEXT_OPMODE(ext) ((ext) & 0x3f)
-
-/* Single/double precision flag (bit 6) — 68040+ only. */
-#define M68K_FEXT_SD_FLAG(ext) (((ext) >> 6) & 1)
-
-/* FMOVECR signature: bits 15:10 == 0x17 (010111b). */
-#define M68K_FEXT_IS_FMOVECR(ext) (BITFIELD((ext), 15, 10) == 0x17)
-
-/* Register-select field for FMOVE to/from FPCR/FPSR/FPIAR (bits 12:10). */
-#define M68K_FEXT_REGSEL(ext) (((ext) >> 10) & 7)
-
-/* Direction bit for FMOVE FPCR (bit 13): 0 = ea→fpcr, 1 = fpcr→ea. */
-#define M68K_FEXT_DIR(ext) (((ext) >> 13) & 1)
-
-/* ── FPU condition-code mask ─────────────────────────────────────────
- * FBcc/FDBcc/FScc/FTRAPcc encode the FP condition in bits 5,3:0
- * of the extension word (or IR for FBcc).  Bit 4 is always 0,
- * yielding the 0x2f mask.                                            */
-#define M68K_FP_COND(x) ((x) & 0x2f)
-
-/* Maximum valid condition codes per coprocessor. */
-#define M68K_PMMU_MAX_COND 16
-#define M68K_FPU_MAX_COND 32
-
-/* ── FPU source-format constants (bits 12:10 of ext word) ───────────*/
-#define M68K_FPSRC_LONG 0x00 /* .l  — 32-bit integer            */
-#define M68K_FPSRC_SINGLE 0x01 /* .s  — 32-bit IEEE single        */
-#define M68K_FPSRC_EXTENDED 0x02 /* .x  — 96-bit extended real      */
-#define M68K_FPSRC_PACKED 0x03 /* .p  — 96-bit packed decimal     */
-#define M68K_FPSRC_WORD 0x04 /* .w  — 16-bit integer            */
-#define M68K_FPSRC_DOUBLE 0x05 /* .d  — 64-bit IEEE double        */
-#define M68K_FPSRC_BYTE 0x06 /* .b  — 8-bit integer             */
-
-/* ── FPU special raw opmodes (before SD-flag masking) ───────────────
- * FSSQRT/FDSQRT have raw 7-bit opmodes 0x41/0x45.  After the 6-bit
- * truncation (& 0x3f) they become 0x01/0x05 with the SD flag set.   */
-#define M68K_FPOP_FSSQRT_RAW 0x01 /* 0x41 & 0x3f */
-#define M68K_FPOP_FDSQRT_RAW 0x05 /* 0x45 & 0x3f */
-
 static unsigned int peek_imm_8(const m68k_info *info)
 {
 	return (m68k_read_safe_16((info), (info)->pc) & 0xff);
@@ -465,19 +236,6 @@ static unsigned long long read_imm_64(m68k_info *info)
 	(info)->pc += 8;
 	return value & 0xffffffffffffffff;
 }
-
-/* Fake a split interface */
-#define get_ea_mode_str_8(instruction) get_ea_mode_str(instruction, 0)
-#define get_ea_mode_str_16(instruction) get_ea_mode_str(instruction, 1)
-#define get_ea_mode_str_32(instruction) get_ea_mode_str(instruction, 2)
-
-#define get_imm_str_s8() get_imm_str_s(0)
-#define get_imm_str_s16() get_imm_str_s(1)
-#define get_imm_str_s32() get_imm_str_s(2)
-
-#define get_imm_str_u8() get_imm_str_u(0)
-#define get_imm_str_u16() get_imm_str_u(1)
-#define get_imm_str_u32() get_imm_str_u(2)
 
 /* 100% portable signed int generators */
 static int make_int_8(int value)
@@ -779,9 +537,6 @@ static cs_m68k *build_init_op(m68k_info *info, int opcode, int count, int size)
 	return ext;
 }
 
-#define IOPS(I) (&info->extension.operands[(I)])
-#define ISIZE (info->extension.op_size.cpu_size)
-
 static void build_re_gen_1(m68k_info *info, bool isDreg, int opcode,
 			   uint8_t size)
 {
@@ -829,16 +584,24 @@ static void build_er_gen_1(m68k_info *info, bool isDreg, int opcode,
 	}
 }
 
+static void append_imm_operand(m68k_info *info, uint32_t value)
+{
+	cs_m68k *ext = &info->extension;
+	cs_m68k_op *op = &ext->operands[ext->op_count];
+	op->type = M68K_OP_IMM;
+	op->address_mode = M68K_AM_IMMEDIATE;
+	op->imm = value;
+	ext->op_count++;
+}
+
 static void build_rr(m68k_info *info, int opcode, uint8_t size, int imm)
 {
 	cs_m68k_op *op0;
 	cs_m68k_op *op1;
-	cs_m68k_op *op2;
 	cs_m68k *ext = build_init_op(info, opcode, 2, size);
 
 	op0 = &ext->operands[0];
 	op1 = &ext->operands[1];
-	op2 = &ext->operands[2];
 
 	op0->address_mode = M68K_AM_REG_DIRECT_DATA;
 	op0->reg = M68K_REG_D0 + (info->ir & 7);
@@ -846,12 +609,8 @@ static void build_rr(m68k_info *info, int opcode, uint8_t size, int imm)
 	op1->address_mode = M68K_AM_REG_DIRECT_DATA;
 	op1->reg = M68K_REG_D0 + ((info->ir >> 9) & 7);
 
-	if (imm > 0) {
-		ext->op_count = 3;
-		op2->type = M68K_OP_IMM;
-		op2->address_mode = M68K_AM_IMMEDIATE;
-		op2->imm = imm;
-	}
+	if (imm > 0)
+		append_imm_operand(info, imm);
 }
 
 static void build_r(m68k_info *info, int opcode, uint8_t size)
@@ -923,12 +682,10 @@ static void build_mm(m68k_info *info, int opcode, uint8_t size, int imm)
 {
 	cs_m68k_op *op0;
 	cs_m68k_op *op1;
-	cs_m68k_op *op2;
 	cs_m68k *ext = build_init_op(info, opcode, 2, size);
 
 	op0 = &ext->operands[0];
 	op1 = &ext->operands[1];
-	op2 = &ext->operands[2];
 
 	op0->address_mode = M68K_AM_REGI_ADDR_PRE_DEC;
 	op0->reg = M68K_REG_A0 + (info->ir & 7);
@@ -936,12 +693,8 @@ static void build_mm(m68k_info *info, int opcode, uint8_t size, int imm)
 	op1->address_mode = M68K_AM_REGI_ADDR_PRE_DEC;
 	op1->reg = M68K_REG_A0 + ((info->ir >> 9) & 7);
 
-	if (imm > 0) {
-		ext->op_count = 3;
-		op2->type = M68K_OP_IMM;
-		op2->address_mode = M68K_AM_IMMEDIATE;
-		op2->imm = imm;
-	}
+	if (imm > 0)
+		append_imm_operand(info, imm);
 }
 
 static void build_ea(m68k_info *info, int opcode, uint8_t size)
@@ -1118,12 +871,12 @@ static void build_bitfield_ins(m68k_info *info, int opcode, int has_d_arg)
 	op1 = &ext->operands[1];
 
 	if (BIT_B(extension))
-		offset = (extension >> 6) & 7;
+		offset = M68K_BITFIELD_ENCODE_REG((extension >> 6) & 7);
 	else
 		offset = (extension >> 6) & 31;
 
 	if (BIT_5(extension))
-		width = extension & 7;
+		width = M68K_BITFIELD_ENCODE_REG(extension & 7);
 	else
 		width = (uint8_t)g_5bit_data_table[extension & 31];
 
@@ -1372,7 +1125,7 @@ static void build_cpush_cinv(m68k_info *info, int op_offset)
 	op0->imm = M68K_IR_CACHE_SEL(info);
 
 	op1->type = M68K_OP_MEM;
-	op1->address_mode = M68K_AM_REG_DIRECT_ADDR;
+	op1->address_mode = M68K_AM_REGI_ADDR;
 	op1->reg = M68K_REG_A0 + (info->ir & 7);
 }
 
@@ -1880,7 +1633,6 @@ static void d68020_bsr_32(m68k_info *info)
 static void d68000_btst_r(m68k_info *info)
 {
 	build_re_1(info, M68K_INS_BTST, 2);
-	IOPS(1)->imm &= 0xff;
 	ISIZE = 1;
 }
 
@@ -3535,7 +3287,7 @@ static void d68000_roxr_s_32(m68k_info *info)
 
 static void d68000_roxr_r_8(m68k_info *info)
 {
-	build_3bit_d(info, M68K_INS_ROXR, 4);
+	build_r(info, M68K_INS_ROXR, 1);
 }
 
 static void d68000_roxr_r_16(m68k_info *info)
@@ -3780,7 +3532,8 @@ static void d68cpu32_tbl(m68k_info *info)
 	size_bits = (ext_word >> 6) & 3;
 
 	if ((ext_word & 0x8200) || size_bits == 3 ||
-	    (!is_memory && ((info->ir >> 3) & 7) != 0)) {
+	    (!is_memory && ((info->ir >> 3) & 7) != 0) ||
+	    (is_memory && ((info->ir >> 3) & 7) < 2)) {
 		d68000_invalid(info);
 		return;
 	}

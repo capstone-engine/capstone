@@ -141,13 +141,20 @@ typedef struct m68k_op_mem {
 	int16_t disp; ///< displacement value
 	uint8_t scale; ///< scale for index register
 	uint8_t bitfield; ///< set to true if the two values below should be used
-	uint8_t width; ///< used for bf* instructions
-	uint8_t offset; ///< used for bf* instructions
+	uint8_t width; ///< bitfield width (bf* insns): static 1-32, or register-encoded (see M68K_BF_*)
+	uint8_t offset; ///< bitfield offset (bf* insns): static 0-31, or register-encoded (see M68K_BF_*)
 	uint8_t index_size; ///< 0 = word, 1 = long
 	uint8_t in_disp_size; ///< 0 = word, 1 = long
 	uint8_t out_disp_size; ///< 0 = word, 1 = long
 	uint8_t disp_size; ///< 0 = byte, 1 = word
 } m68k_op_mem;
+
+/// Bitfield offset/width helpers for m68k_op_mem.
+/// When bitfield is true, offset and width hold either a static value
+/// or an encoded data-register number (bit 7 set).
+#define M68K_BF_REG_FLAG 0x80
+#define M68K_BF_IS_REG(v) ((v) & M68K_BF_REG_FLAG)
+#define M68K_BF_REG_NUM(v) ((v) & 7)
 
 /// Operand type for instruction's operands
 typedef enum m68k_op_br_disp_size {
