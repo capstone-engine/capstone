@@ -361,10 +361,10 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 		printRegAddrMode(O, pc, op);
 		break;
 	case M68K_AM_ABSOLUTE_DATA_SHORT:
-		SStream_concat(O, "$%" PRIx32 ".w", op->imm);
+		SStream_concat(O, "$%" PRIx32 ".w", (uint32_t)op->imm);
 		break;
 	case M68K_AM_ABSOLUTE_DATA_LONG:
-		SStream_concat(O, "$%" PRIx64 ".l", op->imm);
+		SStream_concat(O, "$%" PRIx64 ".l", (uint64_t)op->imm);
 		break;
 	case M68K_AM_IMMEDIATE:
 		printImmediate(O, inst, op);
