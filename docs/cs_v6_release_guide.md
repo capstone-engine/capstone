@@ -249,8 +249,12 @@ Nonetheless, we hope this additional information is useful to you.
   Note that `+noalias` "overpowers" `noaliascompressed` in the second case: despite `+noaliascompressed` being false, meaning aliases are wanted for compressed instructions, `+noalias` being true means ALL aliases are supressed, and this takes precedence. Other than that, case 1 and case 3 work as intuitively expected, and case 4 is redundant. 
   
   So a single-sentence description of this table is: if `+noalias` is given then no aliases will be printed for any instruction, but if not given then aliases will be printed for non-compressed instruction and alias printing for compressed instruction futher checks `+noaliascompressed` before proceeding.
+- Added `reg_access` capstone callback to return all read and written registers for the instructions, including registers used as part of memory operands.
+  * Note that `reg_access` does NOT treat CSRs as registers, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 
+  * Note that `reg_access` does NOT treat reading the PC's value as reading a register, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 
+
 > [!NOTE] 
-> All extensions above are disabled by default unless enabled by their option name or the corresponding command line flag in cstool. Any other extension is always enabled and can't be disabled.
+> All `CS_MODE_RISCV_*` extensions above are disabled by default unless enabled by their option name or the corresponding command line flag in cstool. Any other extension is always enabled and can't be disabled.
  
 > [!NOTE] 
 > RISC-V has a massive, sprawling list of extensions, but Capstone's internal implementaton choice of using a 32-bit mode field is not enough to cover all of them. For now, those extension flags above were added because their encoding space is conflicting with either each other or other extensions. More flags can be added later if bug reports come in requesting finer-grained extension control. However, the current implementation using bitfields imposes a strict upper limit and would likely be refactored for a more expansive mechanism in the future. See [this issue](https://github.com/capstone-engine/capstone/issues/2848) for more details.
