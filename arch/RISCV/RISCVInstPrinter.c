@@ -374,6 +374,8 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 	MI->MRI = (MCRegisterInfo *)info;
 
 	MCInst_setIsAlias(MI, false);
+	bool usesAliasDetails = map_use_alias_details(MI);
+	MI->flat_insn->usesAliasDetails = usesAliasDetails;
 
 	/* check for a non-compressed instruction */
 	MCInst Uncompressed;
@@ -404,7 +406,7 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 		if (printAliasInstr(McInstr, MI->address, O)) {
 			MCInst_setIsAlias(MI, true);
 			// do we still want the exact details even if the text is alias ?
-			if (!map_use_alias_details(MI) && detail_is_set(MI)) {
+			if (!usesAliasDetails && detail_is_set(MI)) {
 				// disable actual printing
 				SStream_Close(O);
 				// discard the alias operands
