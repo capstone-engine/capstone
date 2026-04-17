@@ -115,6 +115,7 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 				NULL;
 	tid->id = test_insn_data->id ? cs_strdup(test_insn_data->id) : NULL;
 	tid->is_alias = test_insn_data->is_alias;
+	tid->uses_alias_details = test_insn_data->uses_alias_details;
 	tid->illegal = test_insn_data->illegal;
 	tid->size = test_insn_data->size;
 	tid->mnemonic = test_insn_data->mnemonic ?
@@ -270,6 +271,19 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 			} else {
 				if (insns[i].is_alias) {
 					CS_TEST_FAIL("should not be an alias");
+				}
+			}
+		}
+		if (expec_data->uses_alias_details != 0) {
+			if (expec_data->uses_alias_details > 0) {
+				if (!insns[i].usesAliasDetails) {
+					CS_TEST_FAIL(
+						"should use alias operands");
+				}
+			} else {
+				if (insns[i].usesAliasDetails) {
+					CS_TEST_FAIL(
+						"should not use alias operands");
 				}
 			}
 		}

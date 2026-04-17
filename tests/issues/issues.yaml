@@ -6453,3 +6453,33 @@ test_cases:
         id: RISCV_INS_CV_MULHHUN
         is_alias: 1
         alias_id: RISCV_INS_ALIAS_CV_MULHHU
+  -
+    input:
+      name: "RISCV - #2896 - alias operand details (REAL)"
+      bytes: [ 0x67, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ret"
+        id: RISCV_INS_JALR
+        is_alias: 1
+        alias_id: RISCV_INS_ALIAS_RET
+        uses_alias_details: -1
+  -
+    input:
+      name: "RISCV - #2896 - alias operand details (ALIAS)"
+      bytes: [ 0x67, 0x80, 0x00, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ret"
+        id: RISCV_INS_JALR
+        is_alias: 1
+        alias_id: RISCV_INS_ALIAS_RET
+        uses_alias_details: 1
