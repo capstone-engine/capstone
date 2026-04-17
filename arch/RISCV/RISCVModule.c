@@ -31,6 +31,7 @@ cs_err RISCV_global_init(cs_struct *ud)
 	ud->group_name = RISCV_group_name;
 	ud->insn_map = RISCV_insns;
 	ud->insn_map_size = RISCV_insn_count;
+	ud->reg_access = RISCV_reg_access;
 
 	return CS_ERR_OK;
 }

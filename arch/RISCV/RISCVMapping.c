@@ -434,6 +434,39 @@ riscv_insn RISCV_map_insn(const char *name)
 	return RISCV_INS_INVALID;
 }
 
+void RISCV_reg_access(const cs_insn *insn, cs_regs regs_read,
+		      uint8_t *regs_read_count, cs_regs regs_write,
+		      uint8_t *regs_write_count)
+{
+	const cs_riscv *riscv = &(insn->detail->riscv);
+	uint8_t read_count = 0;
+	uint8_t write_count = 0;
+
+	for (int j = 0; j < riscv->op_count; j++) {
+		const cs_riscv_op *op = &riscv->operands[j];
+
+		if (op->type == RISCV_OP_REG) {
+			if ((op->access & CS_AC_WRITE) &&
+			    !arr_exist(regs_write, write_count, op->reg)) {
+				regs_write[write_count++] = (uint16_t)op->reg;
+			}
+			if ((op->access & CS_AC_READ) &&
+			    !arr_exist(regs_read, read_count, op->reg)) {
+				regs_read[read_count++] = (uint16_t)op->reg;
+			}
+		} else if (op->type == RISCV_OP_MEM) {
+			if (op->mem.base != RISCV_REG_INVALID &&
+			    !arr_exist(regs_read, read_count, op->mem.base)) {
+				regs_read[read_count++] =
+					(uint16_t)op->mem.base;
+			}
+		}
+	}
+
+	*regs_read_count = read_count;
+	*regs_write_count = write_count;
+}
+
 void RISCV_init(MCRegisterInfo *MRI)
 {
 	MCRegisterInfo_InitMCRegisterInfo(MRI, RISCVRegDesc, RISCV_REG_ENDING,
