@@ -252,6 +252,21 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 	cs_free(insns, insns_count); \
 	fail_msg(msg);
 
+#define CS_CHECK_TBOOL(expected, actual, true_msg, false_msg) \
+	do { \
+		if ((expected) != 0) { \
+			if ((expected) > 0) { \
+				if (!(actual)) { \
+					CS_TEST_FAIL(true_msg); \
+				} \
+			} else { \
+				if ((actual)) { \
+					CS_TEST_FAIL(false_msg); \
+				} \
+			} \
+		} \
+	} while (0)
+
 		if (!compare_asm_text(asm_text, expec_data->asm_text,
 				      arch_bits)) {
 			CS_TEST_FAIL("asm-text mismatch\n");
@@ -263,41 +278,14 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 				CS_TEST_FAIL("ids mismatch");
 			}
 		}
-		if (expec_data->is_alias != 0) {
-			if (expec_data->is_alias > 0) {
-				if (!insns[i].is_alias) {
-					CS_TEST_FAIL("should be an alias");
-				}
-			} else {
-				if (insns[i].is_alias) {
-					CS_TEST_FAIL("should not be an alias");
-				}
-			}
-		}
-		if (expec_data->uses_alias_details != 0) {
-			if (expec_data->uses_alias_details > 0) {
-				if (!insns[i].usesAliasDetails) {
-					CS_TEST_FAIL(
-						"should use alias operands");
-				}
-			} else {
-				if (insns[i].usesAliasDetails) {
-					CS_TEST_FAIL(
-						"should not use alias operands");
-				}
-			}
-		}
-		if (expec_data->illegal != 0) {
-			if (expec_data->illegal > 0) {
-				if (!insns[i].illegal) {
-					CS_TEST_FAIL("should be illegal");
-				}
-			} else {
-				if (insns[i].illegal) {
-					CS_TEST_FAIL("should not be illegal");
-				}
-			}
-		}
+		CS_CHECK_TBOOL(expec_data->is_alias, insns[i].is_alias,
+			       "should be an alias", "should not be an alias");
+		CS_CHECK_TBOOL(expec_data->uses_alias_details,
+			       insns[i].usesAliasDetails,
+			       "should use alias operands",
+			       "should not use alias operands");
+		CS_CHECK_TBOOL(expec_data->illegal, insns[i].illegal,
+			       "should be illegal", "should not be illegal");
 		if (expec_data->size) {
 			if (insns[i].size != expec_data->size) {
 				CS_TEST_FAIL("size mismatch");
@@ -330,6 +318,7 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 			}
 		}
 #undef CS_TEST_FAIL
+#undef CS_CHECK_TBOOL
 	}
 }
 
