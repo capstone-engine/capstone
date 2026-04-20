@@ -39,11 +39,13 @@ typedef struct {
 	unsigned value;
 	bool isFractional;
 } VLMULDecodeResult;
+
 VLMULDecodeResult decodeVLMUL(RISCVII_VLMUL VLMUL)
 {
 	switch (VLMUL) {
 	default:
 		CS_ASSERT(0 && "Unexpected LMUL value!");
+		break;
 	case RISCVII_LMUL_1:
 	case RISCVII_LMUL_2:
 	case RISCVII_LMUL_4:
@@ -61,6 +63,8 @@ VLMULDecodeResult decodeVLMUL(RISCVII_VLMUL VLMUL)
 		return result;
 	}
 	}
+	VLMULDecodeResult result = { .value = 0, .isFractional = false };
+	return result;
 }
 
 void printVType(unsigned VType, SStream *OS)
