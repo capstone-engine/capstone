@@ -62,6 +62,7 @@ typedef struct {
 	char *asm_text; // mandatory
 	char *op_str;
 	tbool is_alias;
+	tbool uses_alias_details;
 	tbool illegal;
 	uint32_t size;
 	char *alias_id;
@@ -83,6 +84,8 @@ static const cyaml_schema_field_t test_insn_data_mapping_schema[] = {
 		TestInsnData, op_str, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_INT("is_alias", CYAML_FLAG_OPTIONAL, TestInsnData,
 			is_alias),
+	CYAML_FIELD_INT("uses_alias_details", CYAML_FLAG_OPTIONAL, TestInsnData,
+			uses_alias_details),
 	CYAML_FIELD_INT("illegal", CYAML_FLAG_OPTIONAL, TestInsnData, illegal),
 	CYAML_FIELD_UINT("size", CYAML_FLAG_OPTIONAL, TestInsnData, size),
 	CYAML_FIELD_STRING_PTR("alias_id",
