@@ -172,14 +172,14 @@ static void printBitfield(SStream *O, const cs_m68k_op *op)
 		return;
 	SStream_concat0(O, "{");
 	if (M68K_BF_IS_REG(op->mem.offset))
-		SStream_concat(O, "d%d", M68K_BF_REG_NUM(op->mem.offset));
+		SStream_concat(O, "d%" PRId8, M68K_BF_REG_NUM(op->mem.offset));
 	else
-		SStream_concat(O, "%d", op->mem.offset);
+		SStream_concat(O, "%" PRId8, op->mem.offset);
 	SStream_concat0(O, ":");
 	if (M68K_BF_IS_REG(op->mem.width))
-		SStream_concat(O, "d%d", M68K_BF_REG_NUM(op->mem.width));
+		SStream_concat(O, "d%" PRId8, M68K_BF_REG_NUM(op->mem.width));
 	else
-		SStream_concat(O, "%d", op->mem.width);
+		SStream_concat(O, "%" PRId8, op->mem.width);
 	SStream_concat0(O, "}");
 }
 
@@ -468,8 +468,8 @@ void M68K_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	cs_detail *detail = NULL;
 	int i = 0;
 
-	detail = MI->flat_insn->detail;
-	if (detail) {
+	if (detail_is_set(MI)) {
+		detail = get_detail(MI);
 		int regs_read_count = MIN((int)ARR_SIZE(detail->regs_read),
 					  info->regs_read_count);
 		int regs_write_count = MIN((int)ARR_SIZE(detail->regs_write),
@@ -478,7 +478,6 @@ void M68K_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 			MIN((int)ARR_SIZE(detail->groups), info->groups_count);
 
 		memcpy(&detail->m68k, ext, sizeof(cs_m68k));
-
 		memcpy(&detail->regs_read, &info->regs_read,
 		       regs_read_count * sizeof(info->regs_read[0]));
 		detail->regs_read_count = regs_read_count;
