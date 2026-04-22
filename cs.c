@@ -79,6 +79,7 @@
 #include "arch/LoongArch/LoongArchModule.h"
 #include "arch/Xtensa/XtensaModule.h"
 #include "arch/ARC/ARCModule.h"
+#include "arch/Etca/EtcaModule.h"
 
 typedef struct cs_arch_config {
 	// constructor initialization
@@ -245,6 +246,10 @@ typedef struct cs_arch_config {
 		  CS_MODE_TRICORE_162 | CS_MODE_TRICORE_180 | \
 		  CS_MODE_LITTLE_ENDIAN), \
 	}
+#define CS_ARCH_CONFIG_ETCA \
+	{ \
+		Etca_global_init, Etca_option, ~(0), \
+	}
 #define CS_ARCH_CONFIG_ALPHA \
 	{ \
 		ALPHA_global_init, \
@@ -398,6 +403,11 @@ static const cs_arch_config arch_configs[MAX_ARCH] = {
 #else
 	{ NULL, NULL, 0 },
 #endif
+#ifdef CAPSTONE_HAS_ETCA
+	CS_ARCH_CONFIG_ETCA,
+#else
+	{ NULL, NULL, 0 },
+#endif
 };
 
 // bitmask of enabled architectures
@@ -452,6 +462,9 @@ static const uint32_t all_arch = 0
 #endif
 #ifdef CAPSTONE_HAS_SH
 				 | (1 << CS_ARCH_SH)
+#endif
+#ifdef CAPSTONE_HAS_ETCA
+				 | (1 << CS_ARCH_ETCA)
 #endif
 #ifdef CAPSTONE_HAS_TRICORE
 				 | (1 << CS_ARCH_TRICORE)
@@ -721,7 +734,7 @@ bool CAPSTONE_API cs_support(int query)
 			(1 << CS_ARCH_SH) | (1 << CS_ARCH_TRICORE) |
 			(1 << CS_ARCH_ALPHA) | (1 << CS_ARCH_HPPA) |
 			(1 << CS_ARCH_LOONGARCH) | (1 << CS_ARCH_XTENSA) |
-			(1 << CS_ARCH_ARC));
+			(1 << CS_ARCH_ARC) | (1 << CS_ARCH_ETCA));
 
 	if ((unsigned int)query < CS_ARCH_MAX)
 		return all_arch & (1 << query);
@@ -1037,6 +1050,8 @@ static uint8_t skipdata_size(cs_struct *handle)
 		return 4;
 	case CS_ARCH_SH:
 		return 2;
+	case CS_ARCH_ETCA:
+		return 1;
 	case CS_ARCH_TRICORE:
 		// TriCore instruction's length can be 2 or 4 bytes,
 		// so we just skip 2 bytes
@@ -1842,6 +1857,12 @@ int CAPSTONE_API cs_op_count(csh ud, const cs_insn *insn, unsigned int op_type)
 			    (mos65xx_op_type)op_type)
 				count++;
 		break;
+	case CS_ARCH_ETCA:
+		for (i = 0; i < insn->detail->etca.op_count; i++)
+			if (insn->detail->etca.operands[i].type ==
+			    (cs_etca_op_type)op_type)
+				count++;
+		break;
 	case CS_ARCH_WASM:
 		for (i = 0; i < insn->detail->wasm.op_count; i++)
 			if (insn->detail->wasm.operands[i].type ==
@@ -2085,6 +2106,15 @@ int CAPSTONE_API cs_op_index(csh ud, const cs_insn *insn, unsigned int op_type,
 		for (i = 0; i < insn->detail->sh.op_count; i++) {
 			if (insn->detail->sh.operands[i].type ==
 			    (sh_op_type)op_type)
+				count++;
+			if (count == post)
+				return i;
+		}
+		break;
+	case CS_ARCH_ETCA:
+		for (i = 0; i < insn->detail->etca.op_count; i++) {
+			if (insn->detail->etca.operands[i].type ==
+			    (cs_etca_op_type)op_type)
 				count++;
 			if (count == post)
 				return i;

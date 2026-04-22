@@ -106,8 +106,8 @@ if(APPLE AND NOT CAPSTONE_BUILD_MACOS_THIN)
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 endif()
 
-set(SUPPORTED_ARCHITECTURES ARM AARCH64 M68K MIPS PPC SPARC SYSTEMZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH TRICORE ALPHA HPPA LOONGARCH XTENSA ARC)
-set(SUPPORTED_ARCHITECTURE_LABELS ARM AARCH64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH TriCore Alpha HPPA LoongArch Xtensa ARC)
+set(SUPPORTED_ARCHITECTURES ARM AARCH64 M68K MIPS PPC SPARC SYSTEMZ XCORE X86 TMS320C64X M680X EVM MOS65XX WASM BPF RISCV SH Etca TRICORE ALPHA HPPA LOONGARCH XTENSA ARC)
+set(SUPPORTED_ARCHITECTURE_LABELS ARM AARCH64 M68K MIPS PowerPC Sparc SystemZ XCore x86 TMS320C64x M680x EVM MOS65XX WASM BPF RISCV SH Etca TriCore Alpha HPPA LoongArch Xtensa ARC)
 
 # If building for OSX it's best to allow CMake to handle building both architectures
 if(APPLE AND NOT CAPSTONE_BUILD_MACOS_THIN)
@@ -231,7 +231,7 @@ set(HEADERS_COMMON
     include/capstone/sh.h
     include/capstone/tricore.h
     include/capstone/platform.h
-    include/capstone/sh.h
+    include/capstone/etca.h
     include/capstone/alpha.h
     include/capstone/hppa.h
     include/capstone/loongarch.h
@@ -649,6 +649,20 @@ if(CAPSTONE_SH_SUPPORT)
     )
 endif()
 
+if(CAPSTONE_Etca_SUPPORT)
+    add_definitions(-DCAPSTONE_HAS_ETCA)
+    set(SOURCES_ETCA
+        arch/Etca/EtcaDisassembler.c
+        arch/Etca/EtcaInstPrinter.c
+        arch/Etca/EtcaModule.c
+    )
+    set(HEADERS_ETCA
+        arch/Etca/EtcaDisassembler.h
+        arch/Etca/EtcaInstPrinter.h
+        arch/Etca/EtcaModule.h
+    )
+endif()
+
 if (CAPSTONE_TRICORE_SUPPORT)
     add_definitions(-DCAPSTONE_HAS_TRICORE)
     set(SOURCES_TRICORE
@@ -781,6 +795,7 @@ set(ALL_SOURCES
     ${SOURCES_BPF}
     ${SOURCES_RISCV}
     ${SOURCES_SH}
+    ${SOURCES_ETCA}
     ${SOURCES_TRICORE}
     ${SOURCES_ALPHA}
     ${SOURCES_HPPA}
@@ -809,6 +824,7 @@ set(ALL_HEADERS
     ${HEADERS_BPF}
     ${HEADERS_RISCV}
     ${HEADERS_SH}
+    ${HEADERS_ETCA}
     ${HEADERS_TRICORE}
     ${HEADERS_ALPHA}
     ${HEADERS_HPPA}
@@ -884,6 +900,7 @@ source_group("Source\\MOS65XX" FILES ${SOURCES_MOS65XX})
 source_group("Source\\BPF" FILES ${SOURCES_BPF})
 source_group("Source\\RISCV" FILES ${SOURCES_RISCV})
 source_group("Source\\SH" FILES ${SOURCES_SH})
+source_group("Source\\Etca" FILES ${SOURCES_ETCA})
 source_group("Source\\TriCore" FILES ${SOURCES_TRICORE})
 source_group("Source\\Alpha" FILES ${SOURCES_ALPHA})
 source_group("Source\\HPPA" FILES ${SOURCES_HPPA})
@@ -910,6 +927,7 @@ source_group("Include\\MOS65XX" FILES ${HEADERS_MOS65XX})
 source_group("Include\\BPF" FILES ${HEADERS_BPF})
 source_group("Include\\RISCV" FILES ${HEADERS_RISCV})
 source_group("Include\\SH" FILES ${HEADERS_SH})
+source_group("Include\\Etca" FILES ${HEADERS_ETCA})
 source_group("Include\\TriCore" FILES ${HEADERS_TRICORE})
 source_group("Include\\Alpha" FILES ${HEADERS_ALPHA})
 source_group("Include\\HPPA" FILES ${HEADERS_HPPA})

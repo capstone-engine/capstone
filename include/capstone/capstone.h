@@ -106,6 +106,7 @@ typedef enum cs_arch {
 	CS_ARCH_LOONGARCH, ///< LoongArch architecture
 	CS_ARCH_XTENSA, ///< Xtensa architecture
 	CS_ARCH_ARC, ///< ARC architecture
+	CS_ARCH_ETCA, ///< ETC.a architecture
 	CS_ARCH_MAX,
 	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
 } cs_arch;
@@ -246,6 +247,9 @@ typedef enum cs_mode {
 	CS_MODE_SH4A = 1 << 5, ///< SH4A
 	CS_MODE_SHFPU = 1 << 6, ///< w/ FPU
 	CS_MODE_SHDSP = 1 << 7, ///< w/ DSP
+	CS_MODE_ETCA16 = CS_MODE_16,
+	CS_MODE_ETCA32 = CS_MODE_32,
+	CS_MODE_ETCA64 = CS_MODE_64,
 	CS_MODE_TRICORE_110 = 1 << 1, ///< Tricore 1.1
 	CS_MODE_TRICORE_120 = 1 << 2, ///< Tricore 1.2
 	CS_MODE_TRICORE_130 = 1 << 3, ///< Tricore 1.3
@@ -465,6 +469,7 @@ typedef struct cs_opt_skipdata {
 #include "mos65xx.h"
 #include "bpf.h"
 #include "sh.h"
+#include "etca.h"
 #include "tricore.h"
 #include "alpha.h"
 #include "hppa.h"
@@ -523,6 +528,7 @@ typedef struct cs_detail {
 		cs_bpf bpf; ///< Berkeley Packet Filter architecture (including eBPF)
 		cs_riscv riscv; ///< RISCV architecture
 		cs_sh sh; ///< SH architecture
+		cs_etca etca; ///< ETC.a architecture
 		cs_tricore tricore; ///< TriCore architecture
 		cs_alpha alpha; ///< Alpha architecture
 		cs_hppa hppa; ///< HPPA architecture

@@ -133,6 +133,11 @@ SH:
   - include/capstone/sh.h
   - tests/details/sh.yaml
 
+Etca:
+  - arch/Etca/**
+  - cstool/cstool_etca.c
+  - include/capstone/etca.h
+
 Sparc:
   - arch/Sparc/**
   - cstool/cstool_sparc.c
