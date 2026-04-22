@@ -16,7 +16,10 @@ static bool test_riscv_op_count_no_stale()
 	static const int32_t expected_op_counts[] = { 2, 3, 2 };
 
 	csh handle;
-	cs_open(CS_ARCH_RISCV, CS_MODE_RISCV64 | CS_MODE_RISCV_C, &handle);
+	if (cs_open(CS_ARCH_RISCV, CS_MODE_RISCV64 | CS_MODE_RISCV_C,
+		    &handle) != CS_ERR_OK) {
+		return false;
+	}
 	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON | CS_OPT_DETAIL_REAL);
 	cs_option(handle, CS_OPT_SYNTAX,
 		  CS_OPT_SYNTAX_NO_ALIAS_TEXT |
