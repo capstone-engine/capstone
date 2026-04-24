@@ -146,7 +146,7 @@ public class TestX86 {
         }
 
         // AVX zero opmask {z}
-        if (i.avx_zero_opmask) {
+        if (i.avx_zero_opmask != 0) {
           System.out.printf("\t\toperands[%d].avx_zero_opmask: TRUE\n", c);
         }
 

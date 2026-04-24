@@ -1,60 +1,69 @@
 // Capstone Java binding
-// By Nguyen Anh Quynh & Dang Hoang Vu,  2013
+// Copyright © 2025 Peace-Maker <peacemakerctf@gmail.com>
+// SPDX-License-Identifier: BSD-3
 
 package capstone;
 
 import com.sun.jna.Structure;
 import com.sun.jna.Union;
 
+import capstone.Capstone;
+
 import java.util.List;
 import java.util.Arrays;
 
-import static capstone.Mips_const.*;
+import static capstone.Wasm_const.*;
 
-public class Mips {
+public class Wasm {
 
-  public static class MemType extends Structure {
-    public int base;
-    public long disp;
+  public static class BrTable extends Structure {
+    public int length;
+    public long address;
+    public int default_target;
 
     @Override
     public List<String> getFieldOrder() {
-      return Arrays.asList("base", "disp");
+      return Arrays.asList("length", "address", "default_target");
     }
   }
 
   public static class OpValue extends Union {
-    public int reg;
-    public long imm;
-    public long uimm;  // TODO: uint64
-    public MemType mem;
+    public byte int7;
+    public int varuint32;
+    public long varuint64;
+    public int uint32;
+    public long uint64;
+    public int immediate[];
+    public BrTable brtable;
+
+    public OpValue() {
+      immediate = new int[2];
+    }
   }
 
   public static class Operand extends Structure {
     public int type;
+    public int size;
     public OpValue value;
-    public byte is_reglist;
-    public byte is_unsigned;
-    public int access;
 
     public void read() {
       readField("type");
-      if (type == MIPS_OP_MEM)
-        value.setType(MemType.class);
-      if (type == MIPS_OP_IMM)
+      if (type == WASM_OP_INT7)
+        value.setType(Byte.TYPE);
+      else if (type == WASM_OP_VARUINT64 || type == WASM_OP_UINT64)
         value.setType(Long.TYPE);
-      if (type == MIPS_OP_REG)
+      else if (type == WASM_OP_VARUINT32 || type == WASM_OP_UINT32 || type == WASM_OP_IMM)
         value.setType(Integer.TYPE);
-      if (type == MIPS_OP_INVALID)
+      else if (type == WASM_OP_BRTABLE)
+        value.setType(BrTable.class);
+      else if (type == WASM_OP_INVALID)
         return;
       readField("value");
-      readField("is_reglist");
-      readField("is_unsigned");
-      readField("access");
+      readField("size");
     }
     @Override
     public List<String> getFieldOrder() {
-      return Arrays.asList("type", "value", "is_reglist", "is_unsigned", "access");
+      return Arrays.asList("type", "size", "value");
     }
   }
 
@@ -63,7 +72,7 @@ public class Mips {
     public Operand [] op;
 
     public UnionOpInfo() {
-      op = new Operand[16];
+      op = new Operand[2];
     }
 
     public void read() {
@@ -80,7 +89,6 @@ public class Mips {
   }
 
   public static class OpInfo extends Capstone.OpInfo {
-
     public Operand [] op;
 
     public OpInfo(UnionOpInfo e) {

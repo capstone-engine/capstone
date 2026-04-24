@@ -1,6 +1,8 @@
 // For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT
 package capstone;
 
+import static capstone.Capstone.*;
+
 public class Sparc_const {
 	public static final int SPARC_CC_ICC_A = 8;
 

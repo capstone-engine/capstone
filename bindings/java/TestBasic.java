@@ -109,7 +109,7 @@ public class TestBasic {
           "MIPS-64-EL (Little-endian)"
           ),
       new platform(
-          Capstone.CS_ARCH_ARM64,
+          Capstone.CS_ARCH_AARCH64,
           Capstone.CS_MODE_ARM,
           new byte [] { 0x21, 0x7c, 0x02, (byte)0x9b, 0x21, 0x7c, 0x00, 0x53, 0x00, 0x40, 0x21, 0x4b, (byte)0xe1, 0x0b, 0x40, (byte)0xb9 },
           "ARM-64"
@@ -140,8 +140,8 @@ public class TestBasic {
           "SparcV9"
           ),
       new platform (
-          Capstone.CS_ARCH_SYSZ,
-          0,
+          Capstone.CS_ARCH_SYSTEMZ,
+          Capstone.CS_MODE_BIG_ENDIAN,
           SYSZ_CODE,
           "SystemZ"
           ),
@@ -162,7 +162,6 @@ public class TestBasic {
       Capstone cs = new Capstone(platforms[j].arch, platforms[j].mode);
       if (platforms[j].syntax != 0)
         cs.setSyntax(platforms[j].syntax);
-
       Capstone.CsInsn[] all_insn = cs.disasm(platforms[j].code, 0x1000);
 
       for (int i = 0; i < all_insn.length; i++) {

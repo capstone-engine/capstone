@@ -1,6 +1,8 @@
 // For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT
 package capstone;
 
+import static capstone.Capstone.*;
+
 public class Arm_const {
 
 	public static final int ARMCC_EQ = 0;

@@ -23,7 +23,7 @@ public class M680x {
     public byte flags;
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("base_reg", "offset_reg", "offset", "offset_addr", "offset_bits", "inc_dec", "flags");
     }
   }
@@ -33,7 +33,7 @@ public class M680x {
     public short offset;
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("address", "offset");
     }
   }
@@ -43,7 +43,7 @@ public class M680x {
     public byte indirect;
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("address", "indirect");
     }
   }
@@ -58,7 +58,7 @@ public class M680x {
     public byte const_val;
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("imm", "reg", "idx", "rel", "ext", "direct_addr", "const_val");
     }
   }
@@ -67,7 +67,7 @@ public class M680x {
     public int type;
     public OpValue value;
     public byte size;
-    public byte access;
+    public int access;
 
     public void read() {
       readField("type");
@@ -91,7 +91,7 @@ public class M680x {
     }
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("type", "value", "size", "access");
     }
   }
@@ -115,7 +115,7 @@ public class M680x {
     }
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("flags", "op_count", "op");
     }
   }

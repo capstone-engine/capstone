@@ -1,6 +1,8 @@
 // For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT
 package capstone;
 
+import static capstone.Capstone.*;
+
 public class Ppc_const {
 	public static final int PPC_PRED_INVALID = 0xffff;
 	public static final int PPC_PRED_LT = (0<<5)|12;

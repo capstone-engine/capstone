@@ -1,5 +1,6 @@
 // Capstone Java binding
-// By Nguyen Anh Quynh & Dang Hoang Vu,  2013
+// Copyright © 2025 Peace-Maker <peacemakerctf@gmail.com>
+// SPDX-License-Identifier: BSD-3
 
 package capstone;
 
@@ -9,13 +10,13 @@ import com.sun.jna.Union;
 import java.util.List;
 import java.util.Arrays;
 
-import static capstone.Mips_const.*;
+import static capstone.Alpha_const.*;
 
-public class Mips {
+public class Alpha {
 
   public static class MemType extends Structure {
-    public int base;
-    public long disp;
+    public byte base;
+    public int disp;
 
     @Override
     public List<String> getFieldOrder() {
@@ -26,44 +27,36 @@ public class Mips {
   public static class OpValue extends Union {
     public int reg;
     public long imm;
-    public long uimm;  // TODO: uint64
-    public MemType mem;
   }
 
   public static class Operand extends Structure {
     public int type;
     public OpValue value;
-    public byte is_reglist;
-    public byte is_unsigned;
     public int access;
 
     public void read() {
       readField("type");
-      if (type == MIPS_OP_MEM)
-        value.setType(MemType.class);
-      if (type == MIPS_OP_IMM)
-        value.setType(Long.TYPE);
-      if (type == MIPS_OP_REG)
+      if (type == ALPHA_OP_REG || type == ALPHA_OP_IMM)
         value.setType(Integer.TYPE);
-      if (type == MIPS_OP_INVALID)
+      else if (type == ALPHA_OP_INVALID)
         return;
       readField("value");
-      readField("is_reglist");
-      readField("is_unsigned");
       readField("access");
     }
+
     @Override
     public List<String> getFieldOrder() {
-      return Arrays.asList("type", "value", "is_reglist", "is_unsigned", "access");
+      return Arrays.asList("type", "value", "access");
     }
   }
 
   public static class UnionOpInfo extends Capstone.UnionOpInfo {
     public byte op_count;
+
     public Operand [] op;
 
     public UnionOpInfo() {
-      op = new Operand[16];
+      op = new Operand[3];
     }
 
     public void read() {
@@ -80,11 +73,10 @@ public class Mips {
   }
 
   public static class OpInfo extends Capstone.OpInfo {
-
     public Operand [] op;
 
-    public OpInfo(UnionOpInfo e) {
-      op = e.op;
+    public OpInfo(UnionOpInfo op_info) {
+      op = op_info.op;
     }
   }
 }

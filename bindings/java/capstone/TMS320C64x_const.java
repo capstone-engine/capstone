@@ -1,6 +1,8 @@
 // For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT
 package capstone;
 
+import static capstone.Capstone.*;
+
 public class TMS320C64x_const {
 	public static final int TMS320C64X_OP_INVALID = CS_OP_INVALID;
 	public static final int TMS320C64X_OP_REG = CS_OP_REG;

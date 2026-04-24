@@ -1,6 +1,8 @@
 // For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT
 package capstone;
 
+import static capstone.Capstone.*;
+
 public class Evm_const {
 
 	public static final int EVM_INS_STOP = 0;

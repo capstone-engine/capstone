@@ -21,9 +21,14 @@ public class X86 {
     public long disp;
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("segment", "base", "index", "scale", "disp");
     }
+  }
+
+  public static class Flags extends Union {
+    public long eflags;
+    public long fpuFlags;
   }
   
   public static class Encoding extends Structure {
@@ -34,7 +39,7 @@ public class X86 {
     public byte immSize;
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("modrmOffset", "dispOffset", "dispSize", "immOffset", "immSize");
     }
   }
@@ -45,7 +50,7 @@ public class X86 {
     public MemType mem;
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("reg", "imm", "mem");
     }
   }
@@ -54,9 +59,9 @@ public class X86 {
     public int type;
     public OpValue value;
     public byte size;
-    public byte access;
+    public int access;
     public int avx_bcast;
-    public boolean avx_zero_opmask;
+    public byte avx_zero_opmask;
 
     public void read() {
       super.read();
@@ -72,7 +77,7 @@ public class X86 {
     }
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("type", "value", "size", "access", "avx_bcast", "avx_zero_opmask");
     }
   }
@@ -93,7 +98,7 @@ public class X86 {
     public int avx_cc;
     public byte avx_sae;
     public int avx_rm;
-    public long eflags;
+    public Flags flags;
 
     public byte op_count;
 
@@ -108,9 +113,9 @@ public class X86 {
     }
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("prefix", "opcode", "rex", "addr_size",
-          "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "xop_cc", "sse_cc", "avx_cc", "avx_sae", "avx_rm", "eflags", "op_count", "op", "encoding");
+          "modrm", "sib", "disp", "sib_index", "sib_scale", "sib_base", "xop_cc", "sse_cc", "avx_cc", "avx_sae", "avx_rm", "flags", "op_count", "op", "encoding");
     }
   }
 
@@ -134,6 +139,7 @@ public class X86 {
     public boolean avxSae;
     public int avxRm;
     public long eflags;
+    public long fpuFlags;
 
     public Operand[] op;
     
@@ -155,7 +161,8 @@ public class X86 {
       avxCC = e.avx_cc;
       avxSae = e.avx_sae > 0;
       avxRm = e.avx_rm;
-      eflags = e.eflags;
+      eflags = e.flags.eflags;
+      fpuFlags = e.flags.fpuFlags;
       op = new Operand[e.op_count];
       for (int i=0; i<e.op_count; i++)
         op[i] = e.op[i];
