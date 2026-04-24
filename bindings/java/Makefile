@@ -40,6 +40,7 @@ all: gen_const capstone tests
 capstone: capstone_class
 	@mkdir -p $(BLDIR)
 	cd $(OBJDIR) && jar cf $(BLDIR)/capstone.jar capstone/*.class
+	cp $(BLDIR)/capstone.jar cstest_java/app/libs
 
 capstone_class: jna
 ifdef BUILDDIR
@@ -75,4 +76,7 @@ check:
 		echo Check $$t ... ; \
 		./run.sh $$t > /dev/null && echo OK || echo FAILED; \
 	done
+
+cstest: capstone
+	cd cstest_java && ./gradlew run -Djna.library.path=$(shell pwd)/../../build -Djna.debug_load=true --args='--verbosity=info --exclude should_fail_I.yaml --exclude should_fail_II.yaml --exclude should_fail_III.yaml --exclude should_fail_IV.yaml --exclude should_fail_V.yaml --exclude should_fail_VI.yaml'
 
