@@ -834,7 +834,7 @@ test_cases:
           mnemonic: "fstox"
           op_str: "%f0, %f4"
           details:
-            groups: [ ]
+            groups: [ Is64Bit ]
   -
     input:
       bytes: [ 0x89, 0xa0, 0x1a, 0x60 ]
