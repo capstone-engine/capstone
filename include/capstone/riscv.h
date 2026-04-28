@@ -26,12 +26,12 @@ extern "C" {
 
 //> Operand type for instruction's operands
 typedef enum riscv_op_type {
-	RISCV_OP_INVALID = CS_OP_INVALID, // = CS_OP_INVALID (Uninitialized).
-	RISCV_OP_REG = CS_OP_REG, // = CS_OP_REG (Register operand).
-	RISCV_OP_IMM = CS_OP_IMM, // = CS_OP_IMM (Immediate operand).
-	RISCV_OP_MEM = CS_OP_MEM, // = CS_OP_MEM (Memory operand).
-	RISCV_OP_FP = CS_OP_FP, // = CS_OP_FP (FP immediate operand).
-	RISCV_OP_CSR = CS_OP_SPECIAL // =  Control and Status Register.
+	RISCV_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
+	RISCV_OP_REG = CS_OP_REG, ///< = CS_OP_REG (Register operand).
+	RISCV_OP_IMM = CS_OP_IMM, ///< = CS_OP_IMM (Immediate operand).
+	RISCV_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
+	RISCV_OP_FP = CS_OP_FP, ///< = CS_OP_FP (FP immediate operand).
+	RISCV_OP_CSR = CS_OP_SPECIAL, ///< =  Control and Status Register.
 } riscv_op_type;
 
 // Instruction's operand referring to memory
