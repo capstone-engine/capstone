@@ -10,7 +10,7 @@ This release adds a huge amount of new architectures, extensions, bug fixes and 
 Almost all the work was sponsored by [RizinOrg](https://rizin.re/). This release would have simply not happened without them.
 
 The developers with the biggest contributions were (alphabetically):
-- `TriCore` - @billow (Sponsored)
+- `TriCore`, `M68K` - @billow (Sponsored)
 - `LoongArch` - @jiegec and @FurryAcetylCoA
 - `RISC-V` - @moste00 (Sponsored)
 - `Alpha`, `HPPA` - @R33v0LT (Sponsored)
@@ -277,6 +277,12 @@ Nonetheless, we hope this additional information is useful to you.
 - Added support for eBPF `JMP32` class instructions (E.g. `jslt32 r7, -0xa46e0bd, -0x33f1`)
 - Updated the syntax for eBPF legacy packet instructions (similar to LLVM mnemonics, not GNU ones (E.g. `ldabsw [skb-0x8]`). `skb` is the socket buffer.
 - Corrected the signedness interpretation of `immidiate` and `offset` operands
+
+**M68K**
+
+- Architecture support added for `cpu32`, `M68060`.
+- Enhanced bitfield instructions, PC-relative addressing, and immediate value type handling.
+- Expanded integration tests and refactored invalid assembly edge cases.
 
 **UX**
 

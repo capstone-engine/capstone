@@ -989,9 +989,9 @@ test_cases:
           asm_text: "nop"
           mnemonic: "nop"
         -
-          asm_text: "andi.l #$c0dec0de, (a4, d5.l * 4)"
+          asm_text: "andi.l #$c0dec0de, $0(a4, d5.l * 4)"
           mnemonic: "andi.l"
-          op_str: "#$c0dec0de, (a4, d5.l * 4)"
+          op_str: "#$c0dec0de, $0(a4, d5.l * 4)"
           details:
             regs_impl_read: [ d5, a4 ]
         -
