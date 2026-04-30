@@ -960,7 +960,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 
 		//printf(">>> opcode = %u\n", MCInst_getOpcode(MI));
 
-		reg = X86_insn_reg_att(MCInst_getOpcode(MI), &access1);
+		reg = X86_insn_reg_att_h(MI->csh, MCInst_getOpcode(MI), &access1);
 		if (reg) {
 			// shift all the ops right to leave 1st slot for this new register op
 			memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),

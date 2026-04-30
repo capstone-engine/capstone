@@ -697,7 +697,7 @@ static void printInstruction(MCInst *MI, SStream *O);
 
 void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	x86_reg reg, reg2;
+	x86_reg reg = X86_REG_INVALID, reg2;
 	enum cs_ac_type access1, access2;
 
 	// printf("opcode = %u\n", MCInst_getOpcode(MI));
@@ -711,7 +711,6 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 	X86_lockrep(MI, O);
 	printInstruction(MI, O);
 
-	reg = X86_insn_reg_intel(MCInst_getOpcode(MI), &access1);
 	if (MI->csh->detail) {
 #ifndef CAPSTONE_DIET
 		uint8_t access[6] = {0};
@@ -719,6 +718,7 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 
 		// first op can be embedded in the asm by llvm.
 		// so we have to add the missing register as the first operand
+		reg = X86_insn_reg_intel_h(MI->csh, MCInst_getOpcode(MI), &access1);
 		if (reg) {
 			// shift all the ops right to leave 1st slot for this new register op
 			memmove(&(MI->flat_insn->detail->x86.operands[1]), &(MI->flat_insn->detail->x86.operands[0]),
