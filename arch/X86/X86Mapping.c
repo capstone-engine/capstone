@@ -1427,8 +1427,7 @@ static inline uint16_t pack_insn_reg(x86_reg reg, enum cs_ac_type access)
 			  ((unsigned int)reg & 0x0fff));
 }
 
-static inline x86_reg unpack_insn_reg(uint16_t value,
-				      enum cs_ac_type *access)
+static inline x86_reg unpack_insn_reg(uint16_t value, enum cs_ac_type *access)
 {
 	if (access)
 		*access = (enum cs_ac_type)(value >> 12);
