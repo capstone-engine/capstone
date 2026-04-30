@@ -59,6 +59,43 @@ static bool test_overflow_check()
 	return true;
 }
 
+static bool test_truncating_appends()
+{
+	printf("Test test_truncating_appends\n");
+
+	char too_long[SSTREAM_BUF_LEN + 1] = { 0 };
+	memset(too_long, 'A', SSTREAM_BUF_LEN);
+	char full[SSTREAM_BUF_LEN] = { 0 };
+	memset(full, 'A', sizeof(full) - 1);
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+	SStream_concat0(&OS, too_long);
+	CHECK_OS_EQUAL_RET_FALSE(OS, full);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, SSTREAM_BUF_LEN - 1);
+	SStream_concat0(&OS, "B");
+	CHECK_OS_EQUAL_RET_FALSE(OS, full);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, SSTREAM_BUF_LEN - 1);
+
+	SStream_Flush(&OS, NULL);
+	SStream_concat(&OS, "%s", too_long);
+	CHECK_OS_EQUAL_RET_FALSE(OS, full);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, SSTREAM_BUF_LEN - 1);
+
+	char almost_full[SSTREAM_BUF_LEN] = { 0 };
+	memset(almost_full, 'C', SSTREAM_BUF_LEN - 2);
+	SStream_Flush(&OS, NULL);
+	SStream_concat0(&OS, almost_full);
+	SStream_concat1(&OS, 'D');
+	almost_full[SSTREAM_BUF_LEN - 2] = 'D';
+	CHECK_OS_EQUAL_RET_FALSE(OS, almost_full);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, SSTREAM_BUF_LEN - 1);
+	SStream_concat1(&OS, 'E');
+	CHECK_OS_EQUAL_RET_FALSE(OS, almost_full);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, SSTREAM_BUF_LEN - 1);
+	return true;
+}
+
 static bool test_markup_os()
 {
 	printf("Test test_markup_os\n");
@@ -670,6 +707,7 @@ int main()
 	bool result = true;
 	result &= test_markup_os();
 	result &= test_overflow_check();
+	result &= test_truncating_appends();
 	result &= test_printint8();
 	result &= test_printint16();
 	result &= test_printint32();
