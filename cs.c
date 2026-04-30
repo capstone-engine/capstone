@@ -879,6 +879,8 @@ cs_err CAPSTONE_API cs_close(csh *handle)
 	}
 
 	cs_mem_free(ud->insn_cache);
+	cs_mem_free(ud->x86_insn_lut);
+	cs_mem_free(ud->x86_insn_reg_lut);
 
 	memset(ud, 0, sizeof(*ud));
 	cs_mem_free(ud);
