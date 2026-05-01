@@ -1752,15 +1752,13 @@ void X86_build_lookup_tables(cs_struct *h)
 	unsigned int max = ARR_SIZE(insns);
 	unsigned int id_max;
 
-	if (!h || h->x86_insn_lut)
-		return;
+	CS_ASSERT_RET(h && !h->x86_insn_lut);
 
 	id_max = insns[max - 1].id;
 	h->x86_insn_lut_max = id_max;
 	h->x86_insn_lut =
 		(uint16_t *)cs_mem_malloc((id_max + 1) * sizeof(uint16_t));
-	if (!h->x86_insn_lut)
-		return;
+	CS_ASSERT_RET(h->x86_insn_lut);
 
 	memset(h->x86_insn_lut, 0xff, (id_max + 1) * sizeof(uint16_t));
 	for (i = 0; i < max; i++)
