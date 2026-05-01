@@ -98,8 +98,15 @@ extern cs_vsnprintf_t cs_vsnprintf;
 // For any release build CAPSTONE_DEBUG has to be undefined.
 #ifdef CAPSTONE_DEBUG
 #define CS_ASSERT(expr) assert(expr)
+#define CS_ASSERT_RET(expr) assert(expr)
 #else
 #define CS_ASSERT(expr)
+#define CS_ASSERT_RET(expr) \
+	do { \
+		if (!(expr)) { \
+			return; \
+		} \
+	} while (0)
 #endif
 
 #endif

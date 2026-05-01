@@ -1559,38 +1559,38 @@ void X86_build_lookup_tables(cs_struct *h)
 
 	// Build insn_reg lookup table (low 16 bits = Intel, high 16 bits = ATT).
 	h->x86_insn_reg_lut = (uint32_t *)cs_mem_calloc(id_max + 1, sizeof(uint32_t));
-	if (h->x86_insn_reg_lut) {
-		for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
-			unsigned int insn_id = insn_regs_intel[i].insn;
-			if (insn_id <= id_max)
-				h->x86_insn_reg_lut[insn_id] =
-					(h->x86_insn_reg_lut[insn_id] & 0xffff0000) |
-					pack_insn_reg(insn_regs_intel[i].reg, insn_regs_intel[i].access);
-		}
-		for (i = 0; i < ARR_SIZE(insn_regs_intel_extra); i++) {
-			unsigned int insn_id = insn_regs_intel_extra[i].insn;
-			if (insn_id && insn_id <= id_max &&
-					!(h->x86_insn_reg_lut[insn_id] & 0xffff))
-				h->x86_insn_reg_lut[insn_id] =
-					(h->x86_insn_reg_lut[insn_id] & 0xffff0000) |
-					pack_insn_reg(insn_regs_intel_extra[i].reg, insn_regs_intel_extra[i].access);
-		}
+	CS_ASSERT_RET(h->x86_insn_reg_lut);
 
-		for (i = 0; i < ARR_SIZE(insn_regs_att); i++) {
-			unsigned int insn_id = insn_regs_att[i].insn;
-			if (insn_id <= id_max)
-				h->x86_insn_reg_lut[insn_id] =
-					(h->x86_insn_reg_lut[insn_id] & 0x0000ffff) |
-					((uint32_t)pack_insn_reg(insn_regs_att[i].reg, insn_regs_att[i].access) << 16);
-		}
-		for (i = 0; i < ARR_SIZE(insn_regs_att_extra); i++) {
-			unsigned int insn_id = insn_regs_att_extra[i].insn;
-			if (insn_id && insn_id <= id_max &&
-					!(h->x86_insn_reg_lut[insn_id] >> 16))
-				h->x86_insn_reg_lut[insn_id] =
-					(h->x86_insn_reg_lut[insn_id] & 0x0000ffff) |
-					((uint32_t)pack_insn_reg(insn_regs_att_extra[i].reg, insn_regs_att_extra[i].access) << 16);
-		}
+	for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
+		unsigned int insn_id = insn_regs_intel[i].insn;
+		if (insn_id <= id_max)
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0xffff0000) |
+				pack_insn_reg(insn_regs_intel[i].reg, insn_regs_intel[i].access);
+	}
+	for (i = 0; i < ARR_SIZE(insn_regs_intel_extra); i++) {
+		unsigned int insn_id = insn_regs_intel_extra[i].insn;
+		if (insn_id && insn_id <= id_max &&
+				!(h->x86_insn_reg_lut[insn_id] & 0xffff))
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0xffff0000) |
+				pack_insn_reg(insn_regs_intel_extra[i].reg, insn_regs_intel_extra[i].access);
+	}
+
+	for (i = 0; i < ARR_SIZE(insn_regs_att); i++) {
+		unsigned int insn_id = insn_regs_att[i].insn;
+		if (insn_id <= id_max)
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0x0000ffff) |
+				((uint32_t)pack_insn_reg(insn_regs_att[i].reg, insn_regs_att[i].access) << 16);
+	}
+	for (i = 0; i < ARR_SIZE(insn_regs_att_extra); i++) {
+		unsigned int insn_id = insn_regs_att_extra[i].insn;
+		if (insn_id && insn_id <= id_max &&
+				!(h->x86_insn_reg_lut[insn_id] >> 16))
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0x0000ffff) |
+				((uint32_t)pack_insn_reg(insn_regs_att_extra[i].reg, insn_regs_att_extra[i].access) << 16);
 	}
 }
 
