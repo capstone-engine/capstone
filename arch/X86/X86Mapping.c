@@ -1549,8 +1549,7 @@ void X86_build_lookup_tables(cs_struct *h)
 	h->x86_insn_lut_max = id_max;
 
 	h->x86_insn_lut = (uint16_t *)cs_mem_malloc((id_max + 1) * sizeof(uint16_t));
-	if (!h->x86_insn_lut)
-		return;
+	CS_ASSERT_RET(h->x86_insn_lut);
 
 	memset(h->x86_insn_lut, 0xff, (id_max + 1) * sizeof(uint16_t));
 
@@ -1607,15 +1606,17 @@ x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 
 	i = binary_search1(insn_regs_intel, ARR_SIZE(insn_regs_intel), id);
 	if (i != -1) {
-		if (access)
+		if (access) {
 			*access = insn_regs_intel[i].access;
+		}
 		return insn_regs_intel[i].reg;
 	}
 
 	i = binary_search1(insn_regs_intel_extra, ARR_SIZE(insn_regs_intel_extra), id);
 	if (i != -1) {
-		if (access)
+		if (access) {
 			*access = insn_regs_intel_extra[i].access;
+		}
 		return insn_regs_intel_extra[i].reg;
 	}
 
