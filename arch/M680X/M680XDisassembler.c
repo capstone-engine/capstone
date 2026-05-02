@@ -148,6 +148,7 @@ typedef struct insn_props {
 #include "m6809.inc"
 #include "hd6309.inc"
 #include "rs08.inc"
+#include "hcs12x.inc"
 
 #include "insn_props.inc"
 
@@ -2020,6 +2021,11 @@ static const uint8_t g_rs08_reg_byte_size[23] = {
 	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2, 2, 0, 0
 };
 
+static const uint8_t g_hcs12x_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 2, 2
+};
+
 // Table to check for a valid register nibble on the M6809 CPU
 // used for TFR and EXG instruction.
 static const bool m6809_tfr_reg_valid[16] = {
@@ -2157,6 +2163,16 @@ static const cpu_tables g_cpu_tables[] = {
 	  &g_rs08_reg_byte_size[0],
 	  NULL,
 	  { M680X_INS_INVLD, M680X_INS_INVLD } },
+	{ // M680X_CPU_TYPE_HCS12X
+	  &g_cpu12_inst_page1_table[0],
+	  { NULL, NULL },
+	  { 0, 0 },
+	  { 0x18, 0x00, 0x00 },
+	  { &g_hcs12x_inst_page2_table[0], NULL, NULL },
+	  { ARR_SIZE(g_hcs12x_inst_page2_table), 0, 0 },
+	  &g_hcs12x_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
 };
 
 static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
@@ -2220,6 +2236,9 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 	else if (handle->mode & CS_MODE_M680X_RS08)
 		cpu_type = M680X_CPU_TYPE_RS08;
+
+	else if (handle->mode & CS_MODE_M680X_HCS12X)
+		cpu_type = M680X_CPU_TYPE_HCS12X;
 
 	if (cpu_type != M680X_CPU_TYPE_INVALID &&
 	    m680x_setup_internals(info, cpu_type, (uint16_t)address, code,
@@ -2287,6 +2306,12 @@ cs_err M680X_disassembler_init(cs_struct *ud)
 
 	if (M680X_REG_ENDING != ARR_SIZE(g_rs08_reg_byte_size)) {
 		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_rs08_reg_byte_size));
+
+		return CS_ERR_MODE;
+	}
+
+	if (M680X_REG_ENDING != ARR_SIZE(g_hcs12x_reg_byte_size)) {
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_hcs12x_reg_byte_size));
 
 		return CS_ERR_MODE;
 	}
