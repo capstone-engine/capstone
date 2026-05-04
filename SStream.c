@@ -255,7 +255,9 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 	va_list ap;
 	int ret;
 	size_t remaining = SStream_remaining(ss);
-	CS_ASSERT_RET(remaining > 0);
+	if (remaining == 0) {
+		return;
+	}
 
 	va_start(ap, fmt);
 	ret = cs_vsnprintf(ss->buffer + ss->index,
