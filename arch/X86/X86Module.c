@@ -36,6 +36,9 @@ cs_err X86_global_init(cs_struct *ud)
 	else
 		ud->regsize_map = regsize_map_32;
 
+	// Build per-handle O(1) lookup tables for instruction mapping
+	X86_build_lookup_tables(ud);
+
 	return CS_ERR_OK;
 }
 
