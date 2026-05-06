@@ -883,10 +883,18 @@ unsigned int find_insn(unsigned int id)
 	return -1;
 }
 
+static inline unsigned int find_insn_h(cs_struct *h, unsigned int id)
+{
+	if (h && h->x86_insn_lut && id <= h->x86_insn_lut_max)
+		return (unsigned int)(int16_t)h->x86_insn_lut[id];
+
+	return find_insn(id);
+}
+
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	unsigned int i = find_insn(id);
+	unsigned int i = find_insn_h(h, id);
 	if (i != -1) {
 		insn->id = insns[i].mapid;
 
@@ -1413,6 +1421,19 @@ struct insn_reg2 {
 	enum cs_ac_type access1, access2;
 };
 
+static inline uint16_t pack_insn_reg(x86_reg reg, enum cs_ac_type access)
+{
+	return (uint16_t)(((unsigned int)access << 12) |
+			  ((unsigned int)reg & 0x0fff));
+}
+
+static inline x86_reg unpack_insn_reg(uint16_t value, enum cs_ac_type *access)
+{
+	if (access)
+		*access = (enum cs_ac_type)(value >> 12);
+	return (x86_reg)(value & 0x0fff);
+}
+
 static const struct insn_reg insn_regs_att[] = {
 	{ X86_INSB, X86_REG_DX, CS_AC_READ },
 	{ X86_INSL, X86_REG_DX, CS_AC_READ },
@@ -1725,6 +1746,71 @@ static int binary_search2(const struct insn_reg2 *insns, unsigned int max,
 	return -1;
 }
 
+void X86_build_lookup_tables(cs_struct *h)
+{
+	unsigned int i;
+	unsigned int max = ARR_SIZE(insns);
+	unsigned int id_max;
+
+	CS_ASSERT_RET(h && !h->x86_insn_lut);
+
+	id_max = insns[max - 1].id;
+	h->x86_insn_lut_max = id_max;
+	h->x86_insn_lut =
+		(uint16_t *)cs_mem_malloc((id_max + 1) * sizeof(uint16_t));
+	CS_ASSERT_RET(h->x86_insn_lut);
+
+	memset(h->x86_insn_lut, 0xff, (id_max + 1) * sizeof(uint16_t));
+	for (i = 0; i < max; i++)
+		h->x86_insn_lut[insns[i].id] = (uint16_t)i;
+
+	h->x86_insn_reg_lut =
+		(uint32_t *)cs_mem_calloc(id_max + 1, sizeof(uint32_t));
+	if (!h->x86_insn_reg_lut)
+		return;
+
+	for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
+		unsigned int insn_id = insn_regs_intel[i].insn;
+		if (insn_id <= id_max)
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0xffff0000) |
+				pack_insn_reg(insn_regs_intel[i].reg,
+					      insn_regs_intel[i].access);
+	}
+
+	for (i = 0; i < ARR_SIZE(insn_regs_intel_extra); i++) {
+		unsigned int insn_id = insn_regs_intel_extra[i].insn;
+		if (insn_id && insn_id <= id_max &&
+		    !(h->x86_insn_reg_lut[insn_id] & 0xffff))
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0xffff0000) |
+				pack_insn_reg(insn_regs_intel_extra[i].reg,
+					      insn_regs_intel_extra[i].access);
+	}
+
+	for (i = 0; i < ARR_SIZE(insn_regs_att); i++) {
+		unsigned int insn_id = insn_regs_att[i].insn;
+		if (insn_id <= id_max)
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0x0000ffff) |
+				((uint32_t)pack_insn_reg(insn_regs_att[i].reg,
+							 insn_regs_att[i].access)
+				 << 16);
+	}
+
+	for (i = 0; i < ARR_SIZE(insn_regs_att_extra); i++) {
+		unsigned int insn_id = insn_regs_att_extra[i].insn;
+		if (insn_id && insn_id <= id_max &&
+		    !(h->x86_insn_reg_lut[insn_id] >> 16))
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0x0000ffff) |
+				((uint32_t)pack_insn_reg(
+					 insn_regs_att_extra[i].reg,
+					 insn_regs_att_extra[i].access)
+				 << 16);
+	}
+}
+
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
@@ -1751,6 +1837,19 @@ x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 
 	// not found
 	return 0;
+}
+
+x86_reg X86_insn_reg_intel_h(cs_struct *h, unsigned int id,
+			     enum cs_ac_type *access)
+{
+	if (h && h->x86_insn_reg_lut && id <= h->x86_insn_lut_max) {
+		uint16_t value = (uint16_t)(h->x86_insn_reg_lut[id] & 0xffff);
+		if (value)
+			return unpack_insn_reg(value, access);
+		return 0;
+	}
+
+	return X86_insn_reg_intel(id, access);
 }
 
 bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1,
@@ -1796,6 +1895,19 @@ x86_reg X86_insn_reg_att(unsigned int id, enum cs_ac_type *access)
 	return 0;
 }
 
+x86_reg X86_insn_reg_att_h(cs_struct *h, unsigned int id,
+			   enum cs_ac_type *access)
+{
+	if (h && h->x86_insn_reg_lut && id <= h->x86_insn_lut_max) {
+		uint16_t value = (uint16_t)(h->x86_insn_reg_lut[id] >> 16);
+		if (value)
+			return unpack_insn_reg(value, access);
+		return 0;
+	}
+
+	return X86_insn_reg_att(id, access);
+}
+
 // ATT just reuses Intel data, but with the order of registers reversed
 bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1,
 		       x86_reg *reg2, enum cs_ac_type *access2)
@@ -1820,7 +1932,7 @@ bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1,
 static bool valid_repne(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch (id) {
@@ -1890,7 +2002,7 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 static bool valid_bnd(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch (id) {
@@ -1935,7 +2047,7 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 static bool valid_rep(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch (id) {
@@ -1994,7 +2106,7 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 static bool valid_ret_repz(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 
 	if (i != -1) {
 		id = insns[i].mapid;
@@ -2010,7 +2122,7 @@ static bool valid_ret_repz(cs_struct *h, unsigned int opcode)
 static bool valid_repe(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch (id) {
@@ -2049,7 +2161,7 @@ static bool valid_repe(cs_struct *h, unsigned int opcode)
 static bool valid_notrack(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch (id) {
@@ -2318,7 +2430,7 @@ static const insn_op insn_ops[] = {
 const uint8_t *X86_get_op_access(cs_struct *h, unsigned int id,
 				 uint64_t *eflags)
 {
-	unsigned int i = find_insn(id);
+	unsigned int i = find_insn_h(h, id);
 	if (i != -1) {
 		*eflags = insn_ops[i].flags;
 		return insn_ops[i].access;

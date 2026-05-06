@@ -49,7 +49,11 @@ const char *X86_group_name(csh handle, unsigned int id);
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
 x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access);
+x86_reg X86_insn_reg_intel_h(cs_struct *h, unsigned int id,
+			     enum cs_ac_type *access);
 x86_reg X86_insn_reg_att(unsigned int id, enum cs_ac_type *access);
+x86_reg X86_insn_reg_att_h(cs_struct *h, unsigned int id,
+			   enum cs_ac_type *access);
 bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1,
 			 enum cs_ac_type *access1, x86_reg *reg2,
 			 enum cs_ac_type *access2);
@@ -95,6 +99,8 @@ uint8_t X86_immediate_size(unsigned int id, uint8_t *enc_size);
 unsigned short X86_register_map(unsigned short id);
 
 unsigned int find_insn(unsigned int id);
+
+void X86_build_lookup_tables(cs_struct *h);
 
 void X86_postprinter(csh handle, cs_insn *insn, SStream *mnem, MCInst *mci);
 
