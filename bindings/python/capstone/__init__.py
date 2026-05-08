@@ -637,8 +637,7 @@ def _load_lib(path):
     if sys.platform in ("darwin", "win32", "cygwin"):
         mode = 0
     else:
-        # linux RTLD_DEEPBIND
-        mode = 8
+        mode = os.RTLD_DEEPBIND
     lib_file = join(path, _lib)
     if os.path.exists(lib_file):
         return ctypes.CDLL(lib_file, mode=mode)
