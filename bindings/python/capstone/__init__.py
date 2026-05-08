@@ -623,11 +623,13 @@ else:
 if not hasattr(sys.modules[__name__], "__file__"):
     __file__ = inspect.getfile(inspect.currentframe())
 
+do_deepbind = False
 if sys.platform == "darwin":
     _lib = "libcapstone.dylib"
 elif sys.platform in ("win32", "cygwin"):
     _lib = "capstone.dll"
 else:
+    do_deepbind = True
     _lib = "libcapstone.so"
 
 _found = False
@@ -635,14 +637,16 @@ _found = False
 
 def _load_lib(path):
     lib_file = join(path, _lib)
+    mode = os.RTLD_DEEPBIND if do_deepbind else 0
     if os.path.exists(lib_file):
-        return ctypes.cdll.LoadLibrary(lib_file)
+        return ctypes.CDLL(lib_file, mode=mode)
     else:
         # if we're on linux, try again with .so.5 extension
         if lib_file.endswith(".so"):
             if os.path.exists(lib_file + ".{}".format(CS_VERSION_MAJOR)):
-                return ctypes.cdll.LoadLibrary(
-                    lib_file + ".{}".format(CS_VERSION_MAJOR)
+                return ctypes.CDLL(
+                    lib_file + ".{}".format(CS_VERSION_MAJOR),
+                    mode=mode
                 )
     return None
 
