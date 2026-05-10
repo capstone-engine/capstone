@@ -234,13 +234,15 @@ jobs:
 
     - name: 'Install cmake'
       if: contains(matrix.config.name, 'MSVC 64')
+      env:
+        CMAKE_VER: '4.3.2'
+        CMAKE_MSI_SHA256: '6915813bedf3a8a698b72fc858e0c2a99761be981745c3c3c99bd30e1477e142'
       shell: powershell
       run: |
-        $cmake_msi_sha256 = "6915813bedf3a8a698b72fc858e0c2a99761be981745c3c3c99bd30e1477e142"
-        $cmake_msi_url = "https://github.com/Kitware/CMake/releases/download/v4.3.2/cmake-4.3.2-windows-x86_64.msi"
+        $cmake_msi_url = "https://github.com/Kitware/CMake/releases/download/v$env:CMAKE_VER/cmake-$env:CMAKE_VER-windows-x86_64.msi"
         Invoke-WebRequest -Uri $cmake_msi_url -OutFile "cmake.msi"
         $computedHash = Get-FileHash -Path "cmake.msi" -Algorithm SHA256
-        if ($computedHash.Hash -ne $cmake_msi_sha256) {
+        if ($computedHash.Hash -ne $env:CMAKE_MSI_SHA256) {
           Write-Error "Hash verification failed! File may be corrupted."
           exit 1
         } else {
