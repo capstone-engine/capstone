@@ -630,7 +630,7 @@ elif sys.platform in ("win32", "cygwin"):
     _lib = "capstone.dll"
 else:
     _lib = "libcapstone.so"
-    mode = os.RTLD_DEEPBIND
+    mode = getattr(os, 'RTLD_DEEPBIND', 0)
 
 _found = False
 
