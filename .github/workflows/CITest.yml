@@ -232,8 +232,23 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: lukka/get-cmake@latest
-      name: Get CMake
+    - name: 'Install cmake'
+      if: contains(matrix.config.name, 'MSVC 64')
+      env:
+        CMAKE_VER: '4.3.2'
+        CMAKE_MSI_SHA256: '6915813bedf3a8a698b72fc858e0c2a99761be981745c3c3c99bd30e1477e142'
+      shell: powershell
+      run: |
+        $cmake_msi_url = "https://github.com/Kitware/CMake/releases/download/v$env:CMAKE_VER/cmake-$env:CMAKE_VER-windows-x86_64.msi"
+        Invoke-WebRequest -Uri $cmake_msi_url -OutFile "cmake.msi"
+        $computedHash = Get-FileHash -Path "cmake.msi" -Algorithm SHA256
+        if ($computedHash.Hash -ne $env:CMAKE_MSI_SHA256) {
+          Write-Error "Hash verification failed! File may be corrupted."
+          exit 1
+        } else {
+          Write-Host "Hash verification successful!"
+        }
+        Start-Process msiexec.exe -ArgumentList "/qn /i cmake.msi" -Wait
 
     - name: '🛠️ Win MSVC 64 setup'
       if: contains(matrix.config.name, 'MSVC 64')
