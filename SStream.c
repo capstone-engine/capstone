@@ -18,6 +18,47 @@
 #include "cs_priv.h"
 #include "utils.h"
 
+static size_t SStream_remaining(SStream *ss)
+{
+	assert(ss);
+	if (ss->index >= SSTREAM_BUF_LEN) {
+		ss->index = SSTREAM_BUF_LEN - 1;
+		ss->buffer[ss->index] = '\0';
+		return 0;
+	}
+	return SSTREAM_BUF_LEN - ss->index - 1;
+}
+
+static void SStream_concat_raw(SStream *ss, const char *s, size_t len)
+{
+	size_t remaining = SStream_remaining(ss);
+	if (len > remaining) {
+		len = remaining;
+	}
+	if (len > 0) {
+		memcpy(ss->buffer + ss->index, s, len);
+		ss->index += len;
+	}
+	ss->buffer[ss->index] = '\0';
+}
+
+static void SStream_concat1_raw(SStream *ss, char c)
+{
+	if (SStream_remaining(ss) == 0) {
+		return;
+	}
+	ss->buffer[ss->index] = c;
+	ss->index++;
+	ss->buffer[ss->index] = '\0';
+}
+
+static void SStream_close_markup(SStream *ss)
+{
+	if (ss->markup_stream && ss->prefixed_by_markup) {
+		SStream_concat1_raw(ss, '>');
+	}
+}
+
 void SStream_Init(SStream *ss)
 {
 	assert(ss);
@@ -177,19 +218,9 @@ void SStream_concat0(SStream *ss, const char *s)
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	if (s[0] == '\0')
 		return;
-	unsigned int len = (unsigned int)strlen(s);
 
-	SSTREAM_OVERFLOW_CHECK(ss, len);
-
-	memcpy(ss->buffer + ss->index, s, len);
-	ss->index += len;
-	ss->buffer[ss->index] = '\0';
-	if (ss->markup_stream && ss->prefixed_by_markup) {
-		SSTREAM_OVERFLOW_CHECK(ss, 1);
-		ss->buffer[ss->index] = '>';
-		ss->index += 1;
-		ss->buffer[ss->index] = '\0';
-	}
+	SStream_concat_raw(ss, s, strlen(s));
+	SStream_close_markup(ss);
 #else
 	ss->buffer[ss->index] = '\0';
 #endif
@@ -206,16 +237,8 @@ void SStream_concat1(SStream *ss, const char c)
 	if (c == '\0')
 		return;
 
-	SSTREAM_OVERFLOW_CHECK(ss, 1);
-
-	ss->buffer[ss->index] = c;
-	ss->index++;
-	ss->buffer[ss->index] = '\0';
-	if (ss->markup_stream && ss->prefixed_by_markup) {
-		SSTREAM_OVERFLOW_CHECK(ss, 1);
-		ss->buffer[ss->index] = '>';
-		ss->index++;
-	}
+	SStream_concat1_raw(ss, c);
+	SStream_close_markup(ss);
 #else
 	ss->buffer[ss->index] = '\0';
 #endif
@@ -231,21 +254,24 @@ void SStream_concat(SStream *ss, const char *fmt, ...)
 	SSTREAM_RETURN_IF_CLOSED(ss);
 	va_list ap;
 	int ret;
-
-	va_start(ap, fmt);
-	ret = cs_vsnprintf(ss->buffer + ss->index,
-			   sizeof(ss->buffer) - (ss->index + 1), fmt, ap);
-	va_end(ap);
-	if (ret < 0) {
+	size_t remaining = SStream_remaining(ss);
+	if (remaining == 0) {
 		return;
 	}
-	SSTREAM_OVERFLOW_CHECK(ss, ret);
-	ss->index += ret;
-	if (ss->markup_stream && ss->prefixed_by_markup) {
-		SSTREAM_OVERFLOW_CHECK(ss, 1);
-		ss->buffer[ss->index] = '>';
-		ss->index += 1;
+
+	va_start(ap, fmt);
+	ret = cs_vsnprintf(ss->buffer + ss->index, remaining + 1, fmt, ap);
+	va_end(ap);
+	if (ret < 0) {
+		ss->buffer[ss->index] = '\0';
+		return;
 	}
+	if ((size_t)ret > remaining) {
+		ss->index += remaining;
+	} else {
+		ss->index += (size_t)ret;
+	}
+	SStream_close_markup(ss);
 #else
 	ss->buffer[ss->index] = '\0';
 #endif
