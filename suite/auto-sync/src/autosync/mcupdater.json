@@ -223,8 +223,9 @@
             "xtheadcmo": ["CS_MODE_RISCV_XTHEADCMO"],
             "xtheadcondmov": ["CS_MODE_RISCV_XTHEADCONDMOV"],
             "xtheadsync": ["CS_MODE_RISCV_XTHEADSYNC"],
-            "xtheadvdot": ["CS_MODE_RISCV_XTHEADVDOT"]
+            "xtheadvdot": ["CS_MODE_RISCV_XTHEADVDOT"],
 
+            "xventanacondops": ["CS_MODE_RISCV_XVENTANACONDOPS"]
         }
     }
 }

@@ -69,6 +69,9 @@ bool RISCV_getFeatureBits(unsigned int mode, unsigned int feature)
 	case RISCV_FeatureVendorXTHeadVdot:
 		return mode & CS_MODE_RISCV_THEAD;
 
+	case RISCV_FeatureVendorXVentanaCondOps:
+		return mode & CS_MODE_RISCV_VENTANA;
+
 	case RISCV_FeatureStdExtZba:
 		return mode & CS_MODE_RISCV_ZBA;
 	case RISCV_FeatureStdExtZbb:

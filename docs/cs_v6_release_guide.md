@@ -233,6 +233,7 @@ Nonetheless, we hope this additional information is useful to you.
 	* `CS_MODE_RISCV_ZBKC = 1 << 18`
 	* `CS_MODE_RISCV_ZBKX = 1 << 19`
 	* `CS_MODE_RISCV_ZBS = 1 << 20`
+	* `CS_MODE_RISCV_VENTANA = 1 << 21`
 - Added two syntax options for alias control:
   * `CS_OPT_SYNTAX_NO_ALIAS_TEXT`: RISC-V assigns readable aliases to special cases of more flexible instructions, for example: `ret` is a `jalr`, a more general instruction that takes an arbitrary register as jump destination and a link register. `ret` is the special case where those 2 arguments are restricted to `ra` and `x0` respectively.
 

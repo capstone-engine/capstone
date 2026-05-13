@@ -182,6 +182,8 @@ static const cs_enum_id_map test_mode_map[] = {
 	{ .str = "CS_MODE_RISCV_XTHEADMEMPAIR", .val = CS_MODE_RISCV_THEAD },
 	{ .str = "CS_MODE_RISCV_XTHEADSYNC", .val = CS_MODE_RISCV_THEAD },
 	{ .str = "CS_MODE_RISCV_XTHEADVDOT", .val = CS_MODE_RISCV_THEAD },
+	{ .str = "CS_MODE_RISCV_XVENTANACONDOPS",
+	  .val = CS_MODE_RISCV_VENTANA },
 	{ .str = "CS_MODE_RISCV_ZBA", .val = CS_MODE_RISCV_ZBA },
 	{ .str = "CS_MODE_RISCV_ZBB", .val = CS_MODE_RISCV_ZBB },
 	{ .str = "CS_MODE_RISCV_ZBC", .val = CS_MODE_RISCV_ZBC },
