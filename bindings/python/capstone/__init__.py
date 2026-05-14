@@ -929,7 +929,7 @@ class Cs(object):
         try:
             from . import ccapstone
             # rewire disasm to use the faster version
-            self.disasm = ccapstone.Cs(self).disasm
+            setattr(self, "disasm", ccapstone.Cs(self).disasm)
         except:
             pass
 
