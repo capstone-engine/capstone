@@ -392,6 +392,8 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 		Uncompressed.csh = MI->csh;
 		Uncompressed.flat_insn = MI->flat_insn;
 		is_uncompressed = true;
+		// not the LLVM terminology, but we consider an uncompressed instruction to be an alias too
+		MCInst_setIsAlias(MI, true);
 	}
 
 	// print the exact instruction text and done
@@ -399,33 +401,41 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 		(MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT) ||
 		(is_uncompressed &&
 		 MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED);
+
+	// if alias suppression is on, print the original instruction no matter what
 	if (print_exact_text) {
 		printInstruction(MI, MI->address, O);
 	} else {
 		// side-effectful check for alias instructions that prints to the SStream if true
 		if (printAliasInstr(McInstr, MI->address, O)) {
 			MCInst_setIsAlias(MI, true);
-			// do we still want the exact details even if the text is alias ?
-			if (!usesAliasDetails && detail_is_set(MI)) {
-				// disable actual printing
-				SStream_Close(O);
-				// discard the alias operands
-				memset(MI->flat_insn->detail->riscv.operands, 0,
-				       sizeof(MI->flat_insn->detail->riscv
-						      .operands));
-				MI->flat_insn->detail->riscv.op_count = 0;
-				// re-disassemble again with no printing in order to obtain the full details
-				// including the whole operands array
-				printInstruction(MI, MI->address, O);
-				// re-open the stream to restore the usual state
-				SStream_Open(O);
-			}
-		} else // the instruction is not an alias
+		} else {
 			printInstruction(McInstr, MI->address, O);
+		}
+	}
+
+	bool isAliasInstruction = MCInst_isAlias(MI);
+	// do we still want the exact details regardless of if the text is alias or not ?
+	if (isAliasInstruction && !usesAliasDetails && detail_is_set(MI)) {
+		// disable actual printing
+		SStream_Close(O);
+		// discard the alias operands
+		memset(MI->flat_insn->detail->riscv.operands, 0,
+		       sizeof(MI->flat_insn->detail->riscv.operands));
+		MI->flat_insn->detail->riscv.op_count = 0;
+		// re-disassemble again with no printing in order to obtain the full details
+		// including the whole operands array
+		printInstruction(McInstr, MI->address, O);
+		// re-open the stream to restore the usual state
+		SStream_Open(O);
 	}
 	RISCV_add_groups(MI);
+
+	// HACKS (PLEASE INVESTIGATE)
 	RISCV_add_missing_write_access(MI);
 	RISCV_compact_operands(MI);
+	// END HACKS
+
 	RISCV_set_alias_id(MI, O);
 }
 

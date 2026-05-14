@@ -6336,6 +6336,8 @@ test_cases:
             operands:
             - type: "RISCV_OP_REG"
               reg: "sp"
+            - type: "RISCV_OP_REG"
+              reg: "sp"
             - type: "RISCV_OP_IMM"
               imm: -0x10
       -
@@ -6354,6 +6356,8 @@ test_cases:
         details:
           riscv:
             operands:
+            - type: "RISCV_OP_REG"
+              reg: "sp"
             - type: "RISCV_OP_REG"
               reg: "sp"
             - type: "RISCV_OP_IMM"
