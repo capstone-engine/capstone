@@ -1006,7 +1006,8 @@ static DecodeStatus readInstructionN(const uint8_t *Bytes, size_t BytesLen,
 	if (BytesLen < InstSize) {
 		*Size = 0;
 		return MCDisassembler_Fail;
-	} else if (InstSize > 8) {
+	}
+	if (InstSize > 8) {
 		InstSize = 8;
 	}
 
