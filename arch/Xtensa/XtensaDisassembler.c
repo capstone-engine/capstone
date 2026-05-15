@@ -996,6 +996,7 @@ static DecodeStatus readInstruction32(MCInst *MI, const uint8_t *Bytes,
 }
 
 /// Read InstSize bytes from the ArrayRef and return 24 bit data
+/// InstSize cannot be larger than 8.
 static DecodeStatus readInstructionN(const uint8_t *Bytes, size_t BytesLen,
 				     uint64_t Address, unsigned InstSize,
 				     uint64_t *Size, uint64_t *Insn,
@@ -1005,6 +1006,9 @@ static DecodeStatus readInstructionN(const uint8_t *Bytes, size_t BytesLen,
 	if (BytesLen < InstSize) {
 		*Size = 0;
 		return MCDisassembler_Fail;
+	}
+	if (InstSize > 8) {
+		InstSize = 8;
 	}
 
 	*Insn = 0;
@@ -1113,7 +1117,7 @@ static DecodeStatus getInstruction(MCInst *MI, uint64_t *Size,
 		if (Result != MCDisassembler_Fail)
 			return Result;
 
-		Result = readInstructionN(Bytes, BytesLen, Address, 48, Size,
+		Result = readInstructionN(Bytes, BytesLen, Address, 6, Size,
 					  &Insn, IsLittleEndian);
 		if (Result == MCDisassembler_Fail)
 			return MCDisassembler_Fail;
