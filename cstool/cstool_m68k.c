@@ -38,7 +38,37 @@ static const char *s_addressing_modes[] = {
 	"Absolute Data Addressing  - Short",
 	"Absolute Data Addressing  - Long",
 	"Immediate value",
+	"Branch displacement",
 };
+
+static void print_operand_flags(unsigned int op_index, uint8_t flags)
+{
+	int need_sep = 0;
+
+	if (!flags)
+		return;
+
+	printf("\t\t\toperands[%u].flags: ", op_index);
+	if (flags & M68K_OP_FLAG_REG_LOWER) {
+		printf("REG_LOWER");
+		need_sep = 1;
+	}
+	if (flags & M68K_OP_FLAG_REG_UPPER) {
+		printf("%sREG_UPPER", need_sep ? ", " : "");
+		need_sep = 1;
+	}
+	if (flags & M68K_OP_FLAG_SHIFT_LEFT) {
+		printf("%sSHIFT_LEFT", need_sep ? ", " : "");
+		need_sep = 1;
+	}
+	if (flags & M68K_OP_FLAG_SHIFT_RIGHT) {
+		printf("%sSHIFT_RIGHT", need_sep ? ", " : "");
+		need_sep = 1;
+	}
+	if (flags & M68K_OP_FLAG_MEM_UPDATE)
+		printf("%sMEM_UPDATE", need_sep ? ", " : "");
+	printf("\n");
+}
 
 static void print_read_write_regs(cs_detail *detail, csh handle)
 {
@@ -92,6 +122,9 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 			break;
 		case M68K_OP_MEM:
 			printf("\t\toperands[%u].type: MEM\n", i);
+			if (op->reg != M68K_REG_INVALID)
+				printf("\t\t\toperands[%u].reg: REG = %s\n", i,
+				       cs_reg_name(handle, op->reg));
 			if (op->mem.base_reg != M68K_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 				       i,
@@ -121,6 +154,10 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 			printf("\t\toperands[%u].type: FP_DOUBLE\n", i);
 			printf("\t\t\toperands[%u].dimm: %lf\n", i, op->dimm);
 			break;
+		case M68K_OP_SHIFT:
+			printf("\t\toperands[%u].type: SHIFT\n", i);
+			break;
 		}
+		print_operand_flags(i, op->flags);
 	}
 }

@@ -166,9 +166,7 @@ typedef struct cs_arch_config {
 	{ \
 		M68K_global_init, \
 		M68K_option, \
-		~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_000 | CS_MODE_M68K_010 | \
-		  CS_MODE_M68K_020 | CS_MODE_M68K_030 | CS_MODE_M68K_040 | \
-		  CS_MODE_M68K_060 | CS_MODE_M68K_CPU32), \
+		~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_FEATURE_MASK), \
 	}
 #define CS_ARCH_CONFIG_TMS320C64X \
 	{ \

@@ -21,83 +21,101 @@
 static const char s_spacing[] = " ";
 
 static const char *const s_reg_names[] = {
-	"invalid", "d0",    "d1",    "d2",  "d3",  "d4",   "d5",   "d6",
-	"d7",	   "a0",    "a1",    "a2",  "a3",  "a4",   "a5",   "a6",
-	"a7",	   "fp0",   "fp1",   "fp2", "fp3", "fp4",  "fp5",  "fp6",
-	"fp7",	   "pc",    "sr",    "ccr", "sfc", "dfc",  "usp",  "vbr",
-	"cacr",	   "caar",  "msp",   "isp", "tc",  "itt0", "itt1", "dtt0",
-	"dtt1",	   "mmusr", "urp",   "srp",
+	"invalid",  "d0",	"d1",	 "d2",	 "d3",	 "d4",	 "d5",	 "d6",
+	"d7",	    "a0",	"a1",	 "a2",	 "a3",	 "a4",	 "a5",	 "a6",
+	"a7",	    "fp0",	"fp1",	 "fp2",	 "fp3",	 "fp4",	 "fp5",	 "fp6",
+	"fp7",	    "pc",	"sr",	 "ccr",	 "sfc",	 "dfc",	 "usp",	 "vbr",
+	"cacr",	    "caar",	"msp",	 "isp",	 "tc",	 "itt0", "itt1", "dtt0",
+	"dtt1",	    "mmusr",	"urp",	 "srp",
 
-	"fpcr",	   "fpsr",  "fpiar",
+	"fpcr",	    "fpsr",	"fpiar",
 
-	"tt0",	   "tt1",   "crp",
+	"tt0",	    "tt1",	"crp",	 "acc",	 "acc0", "acc1", "acc2", "acc3",
+	"accext01", "accext23", "macsr", "mask",
 };
 
 static const char *const s_instruction_names[] = {
-	"invalid",  "abcd",	"add",	    "adda",	"addi",	     "addq",
-	"addx",	    "and",	"andi",	    "asl",	"asr",	     "bhs",
-	"blo",	    "bhi",	"bls",	    "bcc",	"bcs",	     "bne",
-	"beq",	    "bvc",	"bvs",	    "bpl",	"bmi",	     "bge",
-	"blt",	    "bgt",	"ble",	    "bra",	"bsr",	     "bchg",
-	"bclr",	    "bset",	"btst",	    "bfchg",	"bfclr",     "bfexts",
-	"bfextu",   "bfffo",	"bfins",    "bfset",	"bftst",     "bkpt",
-	"callm",    "cas",	"cas2",	    "chk",	"chk2",	     "clr",
-	"cmp",	    "cmpa",	"cmpi",	    "cmpm",	"cmp2",	     "cinvl",
-	"cinvp",    "cinva",	"cpushl",   "cpushp",	"cpusha",    "dbt",
-	"dbf",	    "dbhi",	"dbls",	    "dbcc",	"dbcs",	     "dbne",
-	"dbeq",	    "dbvc",	"dbvs",	    "dbpl",	"dbmi",	     "dbge",
-	"dblt",	    "dbgt",	"dble",	    "dbra",	"divs",	     "divsl",
-	"divu",	    "divul",	"eor",	    "eori",	"exg",	     "ext",
-	"extb",	    "fabs",	"fsabs",    "fdabs",	"facos",     "fadd",
-	"fsadd",    "fdadd",	"fasin",    "fatan",	"fatanh",    "fbf",
-	"fbeq",	    "fbogt",	"fboge",    "fbolt",	"fbole",     "fbogl",
-	"fbor",	    "fbun",	"fbueq",    "fbugt",	"fbuge",     "fbult",
-	"fbule",    "fbne",	"fbt",	    "fbsf",	"fbseq",     "fbgt",
-	"fbge",	    "fblt",	"fble",	    "fbgl",	"fbgle",     "fbngle",
-	"fbngl",    "fbnle",	"fbnlt",    "fbnge",	"fbngt",     "fbsne",
-	"fbst",	    "fcmp",	"fcos",	    "fcosh",	"fdbf",	     "fdbeq",
-	"fdbogt",   "fdboge",	"fdbolt",   "fdbole",	"fdbogl",    "fdbor",
-	"fdbun",    "fdbueq",	"fdbugt",   "fdbuge",	"fdbult",    "fdbule",
-	"fdbne",    "fdbt",	"fdbsf",    "fdbseq",	"fdbgt",     "fdbge",
-	"fdblt",    "fdble",	"fdbgl",    "fdbgle",	"fdbngle",   "fdbngl",
-	"fdbnle",   "fdbnlt",	"fdbnge",   "fdbngt",	"fdbsne",    "fdbst",
-	"fdiv",	    "fsdiv",	"fddiv",    "fetox",	"fetoxm1",   "fgetexp",
-	"fgetman",  "fint",	"fintrz",   "flog10",	"flog2",     "flogn",
-	"flognp1",  "fmod",	"fmove",    "fsmove",	"fdmove",    "fmovecr",
-	"fmovem",   "fmul",	"fsmul",    "fdmul",	"fneg",	     "fsneg",
-	"fdneg",    "fnop",	"frem",	    "frestore", "fsave",     "fscale",
-	"fsgldiv",  "fsglmul",	"fsin",	    "fsincos",	"fsinh",     "fsqrt",
-	"fssqrt",   "fdsqrt",	"fsf",	    "fseq",	"fsogt",     "fsoge",
-	"fsolt",    "fsole",	"fsogl",    "fsor",	"fsun",	     "fsueq",
-	"fsugt",    "fsuge",	"fsult",    "fsule",	"fsne",	     "fst",
-	"fssf",	    "fsseq",	"fsgt",	    "fsge",	"fslt",	     "fsle",
-	"fsgl",	    "fsgle",	"fsngle",   "fsngl",	"fsnle",     "fsnlt",
-	"fsnge",    "fsngt",	"fssne",    "fsst",	"fsub",	     "fssub",
-	"fdsub",    "ftan",	"ftanh",    "ftentox",	"ftrapf",    "ftrapeq",
-	"ftrapogt", "ftrapoge", "ftrapolt", "ftrapole", "ftrapogl",  "ftrapor",
-	"ftrapun",  "ftrapueq", "ftrapugt", "ftrapuge", "ftrapult",  "ftrapule",
-	"ftrapne",  "ftrapt",	"ftrapsf",  "ftrapseq", "ftrapgt",   "ftrapge",
-	"ftraplt",  "ftraple",	"ftrapgl",  "ftrapgle", "ftrapngle", "ftrapngl",
-	"ftrapnle", "ftrapnlt", "ftrapnge", "ftrapngt", "ftrapsne",  "ftrapst",
-	"ftst",	    "ftwotox",	"halt",	    "illegal",	"jmp",	     "jsr",
-	"lea",	    "link",	"lpstop",   "lsl",	"lsr",	     "move",
-	"movea",    "movec",	"movem",    "movep",	"moveq",     "moves",
-	"move16",   "muls",	"mulu",	    "nbcd",	"neg",	     "negx",
-	"nop",	    "not",	"or",	    "ori",	"pack",	     "pea",
-	"pflush",   "pflusha",	"pflushan", "pflushn",	"ploadr",    "ploadw",
-	"plpar",    "plpaw",	"pmove",    "pmovefd",	"ptestr",    "ptestw",
-	"pulse",    "rems",	"remu",	    "reset",	"rol",	     "ror",
-	"roxl",	    "roxr",	"rtd",	    "rte",	"rtm",	     "rtr",
-	"rts",	    "sbcd",	"st",	    "sf",	"shi",	     "sls",
-	"scc",	    "shs",	"scs",	    "slo",	"sne",	     "seq",
-	"svc",	    "svs",	"spl",	    "smi",	"sge",	     "slt",
-	"sgt",	    "sle",	"stop",	    "sub",	"suba",	     "subi",
-	"subq",	    "subx",	"swap",	    "tas",	"trap",	     "trapv",
-	"trapt",    "trapf",	"traphi",   "trapls",	"trapcc",    "traphs",
-	"trapcs",   "traplo",	"trapne",   "trapeq",	"trapvc",    "trapvs",
-	"trappl",   "trapmi",	"trapge",   "traplt",	"trapgt",    "traple",
-	"tst",	    "unlk",	"unpk",	    "bgnd",	"tbls",	     "tblu",
-	"tblsn",    "tblun",
+	"invalid",   "abcd",	 "add",	     "adda",	  "addi",
+	"addq",	     "addx",	 "and",	     "andi",	  "asl",
+	"asr",	     "bhs",	 "blo",	     "bhi",	  "bls",
+	"bcc",	     "bcs",	 "bne",	     "beq",	  "bvc",
+	"bvs",	     "bpl",	 "bmi",	     "bge",	  "blt",
+	"bgt",	     "ble",	 "bra",	     "bsr",	  "bchg",
+	"bclr",	     "bset",	 "btst",     "bitrev",	  "byterev",
+	"bfchg",     "bfclr",	 "bfexts",   "bfextu",	  "bfffo",
+	"bfins",     "bfset",	 "bftst",    "bkpt",	  "callm",
+	"cas",	     "cas2",	 "chk",	     "chk2",	  "clr",
+	"cmp",	     "cmpa",	 "cmpi",     "cmpm",	  "cmp2",
+	"cinvl",     "cinvp",	 "cinva",    "cpushl",	  "cpushp",
+	"cpusha",    "dbt",	 "dbf",	     "dbhi",	  "dbls",
+	"dbcc",	     "dbcs",	 "dbne",     "dbeq",	  "dbvc",
+	"dbvs",	     "dbpl",	 "dbmi",     "dbge",	  "dblt",
+	"dbgt",	     "dble",	 "dbra",     "divs",	  "divsl",
+	"divu",	     "divul",	 "eor",	     "eori",	  "exg",
+	"ext",	     "extb",	 "ff1",	     "fabs",	  "fsabs",
+	"fdabs",     "facos",	 "fadd",     "fsadd",	  "fdadd",
+	"fasin",     "fatan",	 "fatanh",   "fbf",	  "fbeq",
+	"fbogt",     "fboge",	 "fbolt",    "fbole",	  "fbogl",
+	"fbor",	     "fbun",	 "fbueq",    "fbugt",	  "fbuge",
+	"fbult",     "fbule",	 "fbne",     "fbt",	  "fbsf",
+	"fbseq",     "fbgt",	 "fbge",     "fblt",	  "fble",
+	"fbgl",	     "fbgle",	 "fbngle",   "fbngl",	  "fbnle",
+	"fbnlt",     "fbnge",	 "fbngt",    "fbsne",	  "fbst",
+	"fcmp",	     "fcos",	 "fcosh",    "fdbf",	  "fdbeq",
+	"fdbogt",    "fdboge",	 "fdbolt",   "fdbole",	  "fdbogl",
+	"fdbor",     "fdbun",	 "fdbueq",   "fdbugt",	  "fdbuge",
+	"fdbult",    "fdbule",	 "fdbne",    "fdbt",	  "fdbsf",
+	"fdbseq",    "fdbgt",	 "fdbge",    "fdblt",	  "fdble",
+	"fdbgl",     "fdbgle",	 "fdbngle",  "fdbngl",	  "fdbnle",
+	"fdbnlt",    "fdbnge",	 "fdbngt",   "fdbsne",	  "fdbst",
+	"fdiv",	     "fsdiv",	 "fddiv",    "fetox",	  "fetoxm1",
+	"fgetexp",   "fgetman",	 "fint",     "fintrz",	  "flog10",
+	"flog2",     "flogn",	 "flognp1",  "fmod",	  "fmove",
+	"fsmove",    "fdmove",	 "fmovecr",  "fmovem",	  "fmul",
+	"fsmul",     "fdmul",	 "fneg",     "fsneg",	  "fdneg",
+	"fnop",	     "frem",	 "frestore", "fsave",	  "fscale",
+	"fsgldiv",   "fsglmul",	 "fsin",     "fsincos",	  "fsinh",
+	"fsqrt",     "fssqrt",	 "fdsqrt",   "fsf",	  "fseq",
+	"fsogt",     "fsoge",	 "fsolt",    "fsole",	  "fsogl",
+	"fsor",	     "fsun",	 "fsueq",    "fsugt",	  "fsuge",
+	"fsult",     "fsule",	 "fsne",     "fst",	  "fssf",
+	"fsseq",     "fsgt",	 "fsge",     "fslt",	  "fsle",
+	"fsgl",	     "fsgle",	 "fsngle",   "fsngl",	  "fsnle",
+	"fsnlt",     "fsnge",	 "fsngt",    "fssne",	  "fsst",
+	"fsub",	     "fssub",	 "fdsub",    "ftan",	  "ftanh",
+	"ftentox",   "ftrapf",	 "ftrapeq",  "ftrapogt",  "ftrapoge",
+	"ftrapolt",  "ftrapole", "ftrapogl", "ftrapor",	  "ftrapun",
+	"ftrapueq",  "ftrapugt", "ftrapuge", "ftrapult",  "ftrapule",
+	"ftrapne",   "ftrapt",	 "ftrapsf",  "ftrapseq",  "ftrapgt",
+	"ftrapge",   "ftraplt",	 "ftraple",  "ftrapgl",	  "ftrapgle",
+	"ftrapngle", "ftrapngl", "ftrapnle", "ftrapnlt",  "ftrapnge",
+	"ftrapngt",  "ftrapsne", "ftrapst",  "ftst",	  "ftwotox",
+	"halt",	     "illegal",	 "intouch",  "jmp",	  "jsr",
+	"lea",	     "link",	 "lpstop",   "lsl",	  "lsr",
+	"mac",	     "move",	 "movea",    "movec",	  "movem",
+	"movep",     "moveq",	 "moves",    "move16",	  "mov3q",
+	"movclr",    "msac",	 "muls",     "mulu",	  "mvs",
+	"mvz",	     "nbcd",	 "neg",	     "negx",	  "nop",
+	"not",	     "or",	 "ori",	     "pack",	  "pea",
+	"pflush",    "pflusha",	 "pflushan", "pflushn",	  "ploadr",
+	"ploadw",    "plpar",	 "plpaw",    "pmove",	  "pmovefd",
+	"ptestr",    "ptestw",	 "pulse",    "rems",	  "remu",
+	"reset",     "rol",	 "ror",	     "roxl",	  "roxr",
+	"rtd",	     "rte",	 "rtm",	     "rtr",	  "rts",
+	"sats",	     "sbcd",	 "st",	     "sf",	  "shi",
+	"sls",	     "scc",	 "shs",	     "scs",	  "slo",
+	"sne",	     "seq",	 "svc",	     "svs",	  "spl",
+	"smi",	     "sge",	 "slt",	     "sgt",	  "sle",
+	"stop",	     "strldsr",	 "sub",	     "suba",	  "subi",
+	"subq",	     "subx",	 "swap",     "tas",	  "trap",
+	"trapv",     "trapt",	 "trapf",    "traphi",	  "trapls",
+	"trapcc",    "traphs",	 "trapcs",   "traplo",	  "trapne",
+	"trapeq",    "trapvc",	 "trapvs",   "trappl",	  "trapmi",
+	"trapge",    "traplt",	 "trapgt",   "traple",	  "tst",
+	"unlk",	     "unpk",	 "wddata",   "wdebug",	  "bgnd",
+	"tbls",	     "tblu",	 "tblsn",    "tblun",	  "cp0bcbusy",
+	"cp0ld",     "cp0nop",	 "cp0st",    "cp1bcbusy", "cp1ld",
+	"cp1nop",    "cp1st",	 "tpf",
 };
 #endif
 
@@ -152,6 +170,15 @@ static void registerPair(SStream *O, const cs_m68k_op *op)
 {
 	SStream_concat(O, "%s:%s", s_reg_names[op->reg_pair.reg_0],
 		       s_reg_names[op->reg_pair.reg_1]);
+}
+
+static void printRegisterName(SStream *O, const cs_m68k_op *op)
+{
+	SStream_concat(O, "%s", getRegName(op->reg));
+	if (op->flags & M68K_OP_FLAG_REG_LOWER)
+		SStream_concat0(O, "l");
+	else if (op->flags & M68K_OP_FLAG_REG_UPPER)
+		SStream_concat0(O, "u");
 }
 
 static void printScaleFactor(SStream *O, uint8_t scale, int threshold)
@@ -223,10 +250,10 @@ static void printRegAddrMode(SStream *O, unsigned int pc, const cs_m68k_op *op)
 {
 	switch (op->address_mode) {
 	case M68K_AM_REG_DIRECT_DATA:
-		SStream_concat(O, "d%" PRId32, (op->reg - M68K_REG_D0));
+		printRegisterName(O, op);
 		break;
 	case M68K_AM_REG_DIRECT_ADDR:
-		SStream_concat(O, "a%" PRId32, (op->reg - M68K_REG_A0));
+		printRegisterName(O, op);
 		break;
 	case M68K_AM_REGI_ADDR:
 		SStream_concat(O, "(a%" PRId32 ")", (op->reg - M68K_REG_A0));
@@ -344,7 +371,13 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 			registerPair(O, op);
 			break;
 		case M68K_OP_REG:
-			SStream_concat(O, "%s", s_reg_names[op->reg]);
+			printRegisterName(O, op);
+			break;
+		case M68K_OP_SHIFT:
+			if (op->flags & M68K_OP_FLAG_SHIFT_LEFT)
+				SStream_concat0(O, "<<");
+			else if (op->flags & M68K_OP_FLAG_SHIFT_RIGHT)
+				SStream_concat0(O, ">>");
 			break;
 		default:
 			break;
@@ -390,6 +423,8 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 	}
 
 	printBitfield(O, op);
+	if (op->flags & M68K_OP_FLAG_MEM_UPDATE)
+		SStream_concat0(O, "&");
 }
 
 static void printCAS2(SStream *O, unsigned int pc, const cs_m68k *ext)
@@ -420,6 +455,7 @@ static void printCacheOp(SStream *O, unsigned int pc, const cs_m68k *ext)
 		printAddressingMode(O, pc, ext, &ext->operands[i]);
 	}
 }
+
 #endif
 
 static void printOpSize(SStream *O, const cs_m68k *ext)

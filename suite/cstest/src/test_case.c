@@ -65,7 +65,7 @@ char *test_input_stringify(const TestInput *test_input, const char *prefix)
 		cs_mem_free(byte_seq);
 		return NULL;
 	}
-	char opt_seq[128] = { 0 };
+	char opt_seq[512] = { 0 };
 	str_append_no_realloc(opt_seq, sizeof(opt_seq), "[");
 	for (size_t i = 0; i < test_input->options_count; ++i) {
 		str_append_no_realloc(opt_seq, sizeof(opt_seq),

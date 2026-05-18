@@ -88,6 +88,24 @@ __all__ = [
     "CS_MODE_M68K_040",
     "CS_MODE_M68K_060",
     "CS_MODE_M68K_CPU32",
+    "CS_MODE_M68K_CF_ISA_A",
+    "CS_MODE_M68K_CF_ISA_A_PLUS",
+    "CS_MODE_M68K_CF_ISA_B",
+    "CS_MODE_M68K_CF_ISA_C",
+    "CS_MODE_M68K_CF_USP",
+    "CS_MODE_M68K_CF_DIV",
+    "CS_MODE_M68K_CF_MAC",
+    "CS_MODE_M68K_CF_EMAC",
+    "CS_MODE_M68K_CF_EMAC_B",
+    "CS_MODE_M68K_CF_FPU",
+    "CS_MODE_M68K_COLDFIRE",
+    "CS_MODE_M68K_CFV1",
+    "CS_MODE_M68K_CFV2",
+    "CS_MODE_M68K_CFV3",
+    "CS_MODE_M68K_CFV4",
+    "CS_MODE_M68K_CFV4E",
+    "CS_MODE_M68K_CFV5",
+    "CS_MODE_M68K_FEATURE_MASK",
     "CS_MODE_M680X_6301",
     "CS_MODE_M680X_6309",
     "CS_MODE_M680X_6800",
@@ -358,6 +376,56 @@ CS_MODE_M68K_030 = 1 << 4  # M68K 68030 mode
 CS_MODE_M68K_040 = 1 << 5  # M68K 68040 mode
 CS_MODE_M68K_060 = 1 << 6  # M68K 68060 mode
 CS_MODE_M68K_CPU32 = 1 << 7
+CS_MODE_M68K_CF_ISA_A = 1 << 8
+CS_MODE_M68K_CF_ISA_A_PLUS = 1 << 9
+CS_MODE_M68K_CF_ISA_B = 1 << 10
+CS_MODE_M68K_CF_ISA_C = 1 << 11
+CS_MODE_M68K_CF_USP = 1 << 12
+CS_MODE_M68K_CF_DIV = 1 << 13
+CS_MODE_M68K_CF_MAC = 1 << 14
+CS_MODE_M68K_CF_EMAC = 1 << 15
+CS_MODE_M68K_CF_EMAC_B = 1 << 16
+CS_MODE_M68K_CF_FPU = 1 << 17
+CS_MODE_M68K_COLDFIRE = (
+    CS_MODE_M68K_CF_ISA_A
+    | CS_MODE_M68K_CF_ISA_A_PLUS
+    | CS_MODE_M68K_CF_ISA_B
+    | CS_MODE_M68K_CF_ISA_C
+    | CS_MODE_M68K_CF_USP
+    | CS_MODE_M68K_CF_DIV
+    | CS_MODE_M68K_CF_MAC
+    | CS_MODE_M68K_CF_EMAC
+    | CS_MODE_M68K_CF_EMAC_B
+    | CS_MODE_M68K_CF_FPU
+)
+CS_MODE_M68K_CFV1 = CS_MODE_M68K_CF_ISA_C | CS_MODE_M68K_CF_USP
+CS_MODE_M68K_CFV2 = CS_MODE_M68K_CF_ISA_A | CS_MODE_M68K_CF_DIV
+CS_MODE_M68K_CFV3 = CS_MODE_M68K_CF_ISA_A | CS_MODE_M68K_CF_DIV
+CS_MODE_M68K_CFV4 = CS_MODE_M68K_CF_ISA_B | CS_MODE_M68K_CF_DIV
+CS_MODE_M68K_CFV4E = (
+    CS_MODE_M68K_CF_ISA_B
+    | CS_MODE_M68K_CF_DIV
+    | CS_MODE_M68K_CF_USP
+    | CS_MODE_M68K_CF_EMAC
+    | CS_MODE_M68K_CF_FPU
+)
+CS_MODE_M68K_CFV5 = (
+    CS_MODE_M68K_CF_ISA_C
+    | CS_MODE_M68K_CF_USP
+    | CS_MODE_M68K_CF_DIV
+    | CS_MODE_M68K_CF_EMAC
+    | CS_MODE_M68K_CF_EMAC_B
+)
+CS_MODE_M68K_FEATURE_MASK = (
+    CS_MODE_M68K_000
+    | CS_MODE_M68K_010
+    | CS_MODE_M68K_020
+    | CS_MODE_M68K_030
+    | CS_MODE_M68K_040
+    | CS_MODE_M68K_060
+    | CS_MODE_M68K_CPU32
+    | CS_MODE_M68K_COLDFIRE
+)
 CS_MODE_BIG_ENDIAN = 1 << 31  # big-endian mode
 CS_MODE_MIPS16 = CS_MODE_16  # Generic mips16
 CS_MODE_MIPS32 = CS_MODE_32  # Generic mips32
@@ -634,7 +702,7 @@ elif sys.platform in ("win32", "cygwin"):
     _lib = "capstone.dll"
 else:
     _lib = "libcapstone.so"
-    mode = getattr(os, 'RTLD_DEEPBIND', 0)
+    mode = getattr(os, "RTLD_DEEPBIND", 0)
 
 _found = False
 
@@ -647,10 +715,7 @@ def _load_lib(path):
         # if we're on linux, try again with .so.5 extension
         if lib_file.endswith(".so"):
             if os.path.exists(lib_file + ".{}".format(CS_VERSION_MAJOR)):
-                return ctypes.CDLL(
-                    lib_file + ".{}".format(CS_VERSION_MAJOR),
-                    mode=mode
-                )
+                return ctypes.CDLL(lib_file + ".{}".format(CS_VERSION_MAJOR), mode=mode)
     return None
 
 

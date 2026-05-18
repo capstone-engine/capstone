@@ -15,7 +15,7 @@ extern "C" {
 #pragma warning(disable : 4201)
 #endif
 
-#define M68K_OPERAND_COUNT 4
+#define M68K_OPERAND_COUNT 6
 
 /// M68K registers and special registers
 typedef enum m68k_reg {
@@ -76,6 +76,15 @@ typedef enum m68k_reg {
 	M68K_REG_TT0,
 	M68K_REG_TT1,
 	M68K_REG_CRP,
+	M68K_REG_ACC,
+	M68K_REG_ACC0,
+	M68K_REG_ACC1,
+	M68K_REG_ACC2,
+	M68K_REG_ACC3,
+	M68K_REG_ACCEXT01,
+	M68K_REG_ACCEXT23,
+	M68K_REG_MACSR,
+	M68K_REG_MASK,
 
 	M68K_REG_ENDING, // <-- mark the end of the list of registers
 } m68k_reg;
@@ -126,8 +135,21 @@ typedef enum m68k_op_type {
 	// Register pair in the same op (upper 4 bits for first reg, lower for second)
 	M68K_OP_REG_PAIR = CS_OP_SPECIAL + 3,
 	M68K_OP_BR_DISP = CS_OP_SPECIAL + 4, ///< Branch displacement
+	M68K_OP_SHIFT = CS_OP_SPECIAL + 5, ///< Shift-direction pseudo operand
 	M68K_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } m68k_op_type;
+
+/// Per-operand modifier flags.
+typedef enum m68k_op_flags {
+	M68K_OP_FLAG_NONE = 0,
+	M68K_OP_FLAG_REG_LOWER =
+		1 << 0, ///< Lower half of a ColdFire MAC word register operand
+	M68K_OP_FLAG_REG_UPPER =
+		1 << 1, ///< Upper half of a ColdFire MAC word register operand
+	M68K_OP_FLAG_SHIFT_LEFT = 1 << 2, ///< ColdFire MAC left-shift operand
+	M68K_OP_FLAG_SHIFT_RIGHT = 1 << 3, ///< ColdFire MAC right-shift operand
+	M68K_OP_FLAG_MEM_UPDATE = 1 << 4, ///< ColdFire MAC memory update marker
+} m68k_op_flags;
 
 /// Instruction's operand referring to memory
 /// This is associated with M68K_OP_MEM operand type above
@@ -189,6 +211,7 @@ typedef struct cs_m68k_op {
 	uint32_t register_bits; ///< register bits for movem etc. (always in d0-d7, a0-a7, fp0 - fp7 order)
 	m68k_op_type type;
 	m68k_address_mode address_mode; ///< M68K addressing mode for this op
+	uint8_t flags; ///< Operand modifier flags, see m68k_op_flags.
 } cs_m68k_op;
 
 /// Operation size of the CPU instructions
@@ -270,6 +293,8 @@ typedef enum m68k_insn {
 	M68K_INS_BCLR,
 	M68K_INS_BSET,
 	M68K_INS_BTST,
+	M68K_INS_BITREV,
+	M68K_INS_BYTEREV,
 	M68K_INS_BFCHG,
 	M68K_INS_BFCLR,
 	M68K_INS_BFEXTS,
@@ -322,6 +347,7 @@ typedef enum m68k_insn {
 	M68K_INS_EXG,
 	M68K_INS_EXT,
 	M68K_INS_EXTB,
+	M68K_INS_FF1,
 	M68K_INS_FABS,
 	M68K_INS_FSABS,
 	M68K_INS_FDABS,
@@ -511,6 +537,7 @@ typedef enum m68k_insn {
 	M68K_INS_FTWOTOX,
 	M68K_INS_HALT,
 	M68K_INS_ILLEGAL,
+	M68K_INS_INTOUCH,
 	M68K_INS_JMP,
 	M68K_INS_JSR,
 	M68K_INS_LEA,
@@ -518,6 +545,7 @@ typedef enum m68k_insn {
 	M68K_INS_LPSTOP,
 	M68K_INS_LSL,
 	M68K_INS_LSR,
+	M68K_INS_MAC,
 	M68K_INS_MOVE,
 	M68K_INS_MOVEA,
 	M68K_INS_MOVEC,
@@ -526,8 +554,13 @@ typedef enum m68k_insn {
 	M68K_INS_MOVEQ,
 	M68K_INS_MOVES,
 	M68K_INS_MOVE16,
+	M68K_INS_MOV3Q,
+	M68K_INS_MOVCLR,
+	M68K_INS_MSAC,
 	M68K_INS_MULS,
 	M68K_INS_MULU,
+	M68K_INS_MVS,
+	M68K_INS_MVZ,
 	M68K_INS_NBCD,
 	M68K_INS_NEG,
 	M68K_INS_NEGX,
@@ -562,6 +595,7 @@ typedef enum m68k_insn {
 	M68K_INS_RTM,
 	M68K_INS_RTR,
 	M68K_INS_RTS,
+	M68K_INS_SATS,
 	M68K_INS_SBCD,
 	M68K_INS_ST,
 	M68K_INS_SF,
@@ -582,6 +616,7 @@ typedef enum m68k_insn {
 	M68K_INS_SGT,
 	M68K_INS_SLE,
 	M68K_INS_STOP,
+	M68K_INS_STRLDSR,
 	M68K_INS_SUB,
 	M68K_INS_SUBA,
 	M68K_INS_SUBI,
@@ -612,11 +647,22 @@ typedef enum m68k_insn {
 	M68K_INS_TST,
 	M68K_INS_UNLK,
 	M68K_INS_UNPK,
+	M68K_INS_WDDATA,
+	M68K_INS_WDEBUG,
 	M68K_INS_BGND,
 	M68K_INS_TBLS,
 	M68K_INS_TBLU,
 	M68K_INS_TBLSN,
 	M68K_INS_TBLUN,
+	M68K_INS_CP0BCBUSY,
+	M68K_INS_CP0LD,
+	M68K_INS_CP0NOP,
+	M68K_INS_CP0ST,
+	M68K_INS_CP1BCBUSY,
+	M68K_INS_CP1LD,
+	M68K_INS_CP1NOP,
+	M68K_INS_CP1ST,
+	M68K_INS_TPF,
 	M68K_INS_ENDING, // <-- mark the end of the list of instructions
 } m68k_insn;
 
