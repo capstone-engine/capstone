@@ -1,6 +1,20 @@
 This file details the changelog of Capstone.
 
 --------------------------------
+Version 5.0.8: May 23th, 2026
+
+## What's Changed
+* Python binding: Removing xprint utility used in the tests in v5 branch by @Antelox in https://github.com/capstone-engine/capstone/pull/2873
+* v5: Speedup x86 decoding with the help of LUT tables by @trufae in https://github.com/capstone-engine/capstone/pull/2907
+* Backport #2886 - cs_disasm_iter: return early on zero-size input by @Rot127 in https://github.com/capstone-engine/capstone/pull/2920
+* Backport #2913 - Implement load libcapstone.so with RTLD_DEEPBIND by @Rot127 in https://github.com/capstone-engine/capstone/pull/2919
+* Backport #2915 - Use setattr to rewire Cs.disasm to avoid type checking errors by @Rot127 in https://github.com/capstone-engine/capstone/pull/2918
+* Backport of CVE-2026-47143 fix by @Rot127 in https://github.com/capstone-engine/capstone/pull/2924
+* Backport #2930 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2931
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/5.0.7...5.0.8
+
+--------------------------------
 Version 5.0.7: February 4th, 2026
 
 ## What's Changed
