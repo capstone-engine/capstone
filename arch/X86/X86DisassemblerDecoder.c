@@ -99,7 +99,7 @@ static int modRMRequired(OpcodeType type, InstructionContext insnContext,
 
 	switch (type) {
 	default:
-		break;
+		return false;
 	case ONEBYTE:
 		decision = ONEBYTE_SYM;
 		indextable = index_x86DisassemblerOneByteOpcodes;
@@ -163,7 +163,7 @@ static InstrUID decode(OpcodeType type, InstructionContext insnContext,
 
 	switch (type) {
 	default:
-		break; // never reach
+		return 0;
 	case ONEBYTE:
 		// dec = &ONEBYTE_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
 		index = index_x86DisassemblerOneByteOpcodes[insnContext];
