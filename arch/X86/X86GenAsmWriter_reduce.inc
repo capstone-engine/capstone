@@ -2375,6 +2375,10 @@ static void printInstruction(MCInst *MI, SStream *O)
     4343U,	// XSHA1
     4396U,	// XSHA256
     4621U,	// XSTORE
+    83835U,	// MOVSX32rm32
+    39389051U,	// MOVSX32rr32
+    83835U,	// MOVSX16rm32
+    39389051U,	// MOVSX16rr32
   };
 
   unsigned int opcode = MCInst_getOpcode(MI);

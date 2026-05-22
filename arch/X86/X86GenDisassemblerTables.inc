@@ -7418,9 +7418,17 @@ static const struct OperandSpecifier x86OperandSets[][6] = {
     { ENCODING_NONE, TYPE_NONE },
     { ENCODING_NONE, TYPE_NONE },
   },
+  { /* 926 */
+    { ENCODING_REG, TYPE_R16 },
+    { ENCODING_RM, TYPE_R32 },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+    { ENCODING_NONE, TYPE_NONE },
+  },
 };
 
-static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[15285] = {
+static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[15289] = {
   { /* 0 */
     0,
     /*  */
@@ -68561,6 +68569,22 @@ static const struct InstructionSpecifier x86DisassemblerInstrSpecifiers[15285] =
     0,
     /* XTEST */
   },
+  { /* 15285 */
+    87,
+    /* MOVSX32rm32 */
+  },
+  { /* 15286 */
+    687,
+    /* MOVSX32rr32 */
+  },
+  { /* 15287 */
+    171,
+    /* MOVSX16rm32 */
+  },
+  { /* 15288 */
+    926,
+    /* MOVSX16rr32 */
+  },
 };
 
 static const uint8_t x86DisassemblerContexts[16384] = {
@@ -112956,6 +112980,12 @@ static const InstrUID modRMTable[] = {
 /* Table19977 */
   0x783, /* PAVGUSBrm */
   0x784, /* PAVGUSBrr */
+/* Table19979 */
+  0x3bb5, /* MOVSX32rm32 */
+  0x3bb6, /* MOVSX32rr32 */
+/* Table19981 */
+  0x3bb7, /* MOVSX16rm32 */
+  0x3bb8, /* MOVSX16rr32 */
   0x0
 };
 
