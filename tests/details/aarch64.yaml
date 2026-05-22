@@ -1542,3 +1542,75 @@ test_cases:
             operands: []
           regs_read: []
           regs_write: []
+  -
+    input:
+      bytes: [0xca, 0x7a, 0xaa, 0xb8]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_DETAIL" ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldrsw x10, [x22, x10, lsl #2]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x10
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x22
+              mem_index: x10
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_LSL
+              shift_value: 2
+          regs_read: [x22, x10]
+          regs_write: [x10]
+  -
+    input:
+      bytes: [0x20, 0x68, 0x22, 0xf8]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_DETAIL" ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "str x0, [x1, x2]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x1
+              mem_index: x2
+              access: CS_AC_WRITE
+          regs_read: [x0, x1, x2]
+  -
+    input:
+      bytes: [0x20, 0x68, 0xa2, 0xf8]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_DETAIL" ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "prfm pldl1keep, [x1, x2]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSALIAS
+              sub_type: AARCH64_OP_PRFM
+              sys_raw_val: 0x0
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x1
+              mem_index: x2
+              access: CS_AC_READ
+          regs_read: [x1, x2]
