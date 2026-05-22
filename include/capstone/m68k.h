@@ -135,7 +135,9 @@ typedef enum m68k_op_type {
 	// Register pair in the same op (upper 4 bits for first reg, lower for second)
 	M68K_OP_REG_PAIR = CS_OP_SPECIAL + 3,
 	M68K_OP_BR_DISP = CS_OP_SPECIAL + 4, ///< Branch displacement
-	M68K_OP_SHIFT = CS_OP_SPECIAL + 5, ///< Shift-direction pseudo operand
+	/// Shift-direction pseudo operand.
+	/// Shift direction is set in cs_m68k_op.flags
+	M68K_OP_SHIFT = CS_OP_SPECIAL + 5,
 	M68K_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } m68k_op_type;
 
