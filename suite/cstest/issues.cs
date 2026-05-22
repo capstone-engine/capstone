@@ -1074,3 +1074,27 @@
 !# issue 2646
 !# CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
 0x0: 0x02,0x7f,0xff,0xa9 == mvk.S1 -1, a4 ||
+
+!# issue 1636 MOVSXD r32, r/m32 (register form, no REX.W)
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0: 0x63, 0xc7 == movsxd eax, edi
+
+!# issue 1832 MOVSXD r32, m32 (memory form, no REX.W)
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0: 0x63, 0x20 == movsxd esp, dword ptr [rax]
+
+!# issue 2442 MOVSXD r32, m32 (memory form with disp8)
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0: 0x63, 0x6b, 0x20 == movsxd ebp, dword ptr [rbx + 0x20]
+
+!# issue 2555 MOVSXD r32, m32 (memory form, no displacement)
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0: 0x63, 0x26 == movsxd esp, dword ptr [rsi]
+
+!# MOVSXD r16, r/m32 (register form, 0x66 prefix)
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0: 0x66, 0x63, 0xc1 == movsxd ax, ecx
+
+!# MOVSXD r16, m32 (memory form, 0x66 prefix)
+!# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
+0x0: 0x66, 0x63, 0x20 == movsxd sp, dword ptr [rax]
