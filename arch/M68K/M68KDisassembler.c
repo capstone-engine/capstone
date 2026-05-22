@@ -349,30 +349,51 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 }
 
 enum {
+	/* Raw effective-address encoding bits, used before get_ea_mode_op()
+	 * consumes any extension words and fills cs_m68k_op.address_mode. */
+	M68K_EA_REGISTER_MASK = 0x07,
+	M68K_EA_MODE_SHIFT = 3,
+	M68K_EA_FIELD_MASK = 0x3f,
 	M68K_EA_DATA_DIRECT_D0 = 0x00,
 	M68K_EA_ADDR_DIRECT_A7 = 0x0f,
 	M68K_EA_ADDR_INDIRECT_DISP_A7 = 0x2f,
 	M68K_EA_IMMEDIATE_FIELD = 0x3c,
 };
 
+enum {
+	M68K_EA_MODE_DATA_DIRECT = 0,
+	M68K_EA_MODE_ADDR_DIRECT = 1,
+	M68K_EA_MODE_ADDR_INDIRECT = 2,
+	M68K_EA_MODE_ADDR_INDIRECT_POST_INC = 3,
+	M68K_EA_MODE_ADDR_INDIRECT_PRE_DEC = 4,
+	M68K_EA_MODE_ADDR_INDIRECT_DISP = 5,
+	M68K_EA_MODE_ADDR_INDIRECT_INDEX = 6,
+	M68K_EA_MODE_EXTENDED = 7,
+};
+
+enum {
+	M68K_EA_EXT_ABSOLUTE_SHORT = 0,
+	M68K_EA_EXT_ABSOLUTE_LONG = 1,
+};
+
 static uint32_t m68k_ea_field(uint32_t ir)
 {
-	return ir & 0x3f;
+	return ir & M68K_EA_FIELD_MASK;
 }
 
 static uint32_t m68k_ea_mode(uint32_t ir)
 {
-	return m68k_ea_field(ir) >> 3;
+	return m68k_ea_field(ir) >> M68K_EA_MODE_SHIFT;
 }
 
 static uint32_t m68k_ea_register(uint32_t ir)
 {
-	return ir & 7;
+	return ir & M68K_EA_REGISTER_MASK;
 }
 
 static bool m68k_ea_is_data_register_direct(uint32_t ir)
 {
-	return m68k_ea_mode(ir) == 0;
+	return m68k_ea_mode(ir) == M68K_EA_MODE_DATA_DIRECT;
 }
 
 static bool m68k_ea_is_register_direct(uint32_t ir)
@@ -1002,7 +1023,8 @@ static bool cf_mac_ea_is_valid(uint32_t ir)
 	uint32_t mode = m68k_ea_mode(ir);
 
 	/* ColdFire MAC/EMAC load forms accept (An), (An)+, -(An), and d16(An). */
-	return mode >= 2 && mode <= 5;
+	return mode >= M68K_EA_MODE_ADDR_INDIRECT &&
+	       mode <= M68K_EA_MODE_ADDR_INDIRECT_DISP;
 }
 
 static bool cf_coproc_ea_is_valid(uint32_t ir)
@@ -1015,7 +1037,10 @@ static bool cf_alterable_memory_ea_is_valid(uint32_t ir)
 	uint32_t mode = m68k_ea_mode(ir);
 	uint32_t reg = m68k_ea_register(ir);
 
-	return (mode >= 2 && mode <= 6) || (mode == 7 && reg <= 1);
+	return (mode >= M68K_EA_MODE_ADDR_INDIRECT &&
+		mode <= M68K_EA_MODE_ADDR_INDIRECT_INDEX) ||
+	       (mode == M68K_EA_MODE_EXTENDED &&
+		reg <= M68K_EA_EXT_ABSOLUTE_LONG);
 }
 
 static bool cf_sr_ccr_source_ea_is_valid(uint32_t ir)
