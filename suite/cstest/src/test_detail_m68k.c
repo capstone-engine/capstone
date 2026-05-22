@@ -29,6 +29,7 @@ TestDetailM68KOpMem *test_detail_m68k_op_mem_clone(TestDetailM68KOpMem *mem)
 	clone->bitfield = mem->bitfield;
 	clone->width = mem->width;
 	clone->offset = mem->offset;
+	clone->address = mem->address;
 	clone->in_disp_size = mem->in_disp_size;
 	clone->out_disp_size = mem->out_disp_size;
 	clone->disp_size = mem->disp_size;
@@ -112,6 +113,11 @@ TestDetailM68KOp *test_detail_m68k_op_clone(TestDetailM68KOp *op)
 	clone->br_disp = op->br_disp;
 	clone->br_disp_size = op->br_disp_size;
 	clone->register_bits = op->register_bits;
+	clone->flags_count = op->flags_count;
+	if (op->flags_count > 0)
+		clone->flags = cs_mem_calloc(sizeof(char *), op->flags_count);
+	for (size_t i = 0; i < clone->flags_count; ++i)
+		clone->flags[i] = op->flags[i] ? strdup(op->flags[i]) : NULL;
 
 	clone->mem = op->mem ? test_detail_m68k_op_mem_clone(op->mem) : NULL;
 	return clone;
@@ -127,6 +133,9 @@ void test_detail_m68k_op_free(TestDetailM68KOp *op)
 	cs_mem_free(op->reg_pair_0);
 	cs_mem_free(op->reg_pair_1);
 	cs_mem_free(op->address_mode);
+	for (size_t i = 0; i < op->flags_count; ++i)
+		cs_mem_free(op->flags[i]);
+	cs_mem_free(op->flags);
 	test_detail_m68k_op_mem_free(op->mem);
 	cs_mem_free(op);
 }
@@ -147,6 +156,8 @@ bool test_expected_m68k(csh *handle, cs_m68k *actual, TestDetailM68K *expected)
 		TestDetailM68KOp *eop = expected->operands[i];
 		compare_enum_ret(op->type, eop->type, false);
 		compare_enum_ret(op->address_mode, eop->address_mode, false);
+		compare_bit_flags_ret(op->flags, eop->flags, eop->flags_count,
+				      false);
 		switch (op->type) {
 		default:
 			fprintf(stderr,
@@ -180,6 +191,9 @@ bool test_expected_m68k(csh *handle, cs_m68k *actual, TestDetailM68K *expected)
 					  false);
 			compare_uint8_ret(op->br_disp.disp_size,
 					  eop->br_disp_size, false);
+			break;
+		case M68K_OP_SHIFT:
+			// Shift direction is stored in op->flags and compared above.
 			break;
 		case M68K_OP_MEM:
 			if (!eop->mem) {
@@ -220,6 +234,10 @@ bool test_expected_m68k(csh *handle, cs_m68k *actual, TestDetailM68K *expected)
 			if (eop->mem->offset) {
 				compare_uint8_ret(op->mem.offset,
 						  eop->mem->offset, false);
+			}
+			if (eop->mem->address) {
+				compare_uint64_ret(op->mem.address,
+						   eop->mem->address, false);
 			}
 			compare_tbool_ret(op->mem.in_disp_size,
 					  eop->mem->in_disp_size, false);

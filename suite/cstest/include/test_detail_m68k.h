@@ -23,6 +23,7 @@ typedef struct {
 	uint8_t bitfield;
 	uint8_t width;
 	uint8_t offset;
+	uint64_t address;
 } TestDetailM68KOpMem;
 
 static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
@@ -51,6 +52,8 @@ static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
 			 width),
 	CYAML_FIELD_UINT("offset", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
 			 offset),
+	CYAML_FIELD_UINT("address", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
+			 address),
 	CYAML_FIELD_INT("in_disp_size",
 			CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			TestDetailM68KOpMem, in_disp_size),
@@ -80,9 +83,11 @@ typedef struct {
 	float simm;
 
 	TestDetailM68KOpMem *mem;
+	char **flags;
+	size_t flags_count;
 } TestDetailM68KOp;
 
-static const cyaml_schema_value_t test_detail_m68k_op_sys_psr_schema = {
+static const cyaml_schema_value_t test_detail_m68k_op_flag_schema = {
 	CYAML_VALUE_STRING(CYAML_FLAG_POINTER, char, 0, CYAML_UNLIMITED),
 };
 
@@ -111,6 +116,10 @@ static const cyaml_schema_field_t test_detail_m68k_op_mapping_schema[] = {
 	CYAML_FIELD_FLOAT("simm", CYAML_FLAG_OPTIONAL, TestDetailM68KOp, simm),
 	CYAML_FIELD_MAPPING_PTR("mem", CYAML_FLAG_OPTIONAL, TestDetailM68KOp,
 				mem, test_detail_m68k_op_mem_mapping_schema),
+	CYAML_FIELD_SEQUENCE("flags", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			     TestDetailM68KOp, flags,
+			     &test_detail_m68k_op_flag_schema, 0,
+			     CYAML_UNLIMITED),
 	CYAML_FIELD_END
 };
 
