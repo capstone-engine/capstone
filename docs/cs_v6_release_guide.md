@@ -281,8 +281,8 @@ Nonetheless, we hope this additional information is useful to you.
 
 **M68K**
 
-- Architecture support added for `cpu32`, `M68060`.
-- Enhanced bitfield instructions, PC-relative addressing, and immediate value type handling.
+- Architecture support added for `cpu32`, `M68060`, and ColdFire variants (`CFV1`, `CFV2`, `CFV3`, `CFV4`, `CFV4E`, `CFV5`), including feature flags for USP, DIV, MAC/EMAC, and FPU instructions.
+- Expanded operand details for bitfield instructions, PC-relative addressing, immediate value types, and memory addressing metadata.
 - Expanded integration tests and refactored invalid assembly edge cases.
 
 **UX**
@@ -482,6 +482,7 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | m68k_op_mem.in_disp, m68k_op_mem.out_disp           | These fields are now signed instead of unsigned.                                                        | The M68K architecture uses sign extended displacements for effective address calculation. |
 | m68k_op_mem.disp_size                               | Defines if the .disp field was encoded as a byte (false) or word (true)                                 | Necessary for accurate printing.                                                          |
 | m68k_op_mem.in_disp_size, m68k_op_mem.out_disp_size | Defines if the .in_disp and .out_disp fields respectively were encoded as words (false) or longs (true) | Necessary for accurate printing.                                                          |
+| `M68K_OP_MEM` storage                               | Memory operands now store base registers in `m68k_op_mem.base_reg` and absolute addresses in `m68k_op_mem.address`; `op->reg` and `op->imm` are only used for register and immediate operands. | Keeps memory-addressing details in `m68k_op_mem` consistently. |
 
 
 ### Notes about AArch64, SystemZ and ARM renaming
