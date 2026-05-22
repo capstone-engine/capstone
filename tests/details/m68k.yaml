@@ -11,10 +11,12 @@ test_cases:
             m68k:
               operands:
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR_POST_INC
                 - type: M68K_OP_MEM
-                  reg: a1
+                  mem:
+                    base_reg: a1
                   address_mode: M68K_AM_REGI_ADDR_POST_INC
   - input:
       bytes: [0x06, 0xd0, 0x00, 0x01]
@@ -32,7 +34,8 @@ test_cases:
                   address_mode: M68K_AM_IMMEDIATE
                   imm: 0x1
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
             regs_read: [a0]
             regs_impl_read: [a0]
@@ -171,10 +174,12 @@ test_cases:
               op_size_type: M68K_SIZE_TYPE_CPU
               operands:
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR_POST_INC
                 - type: M68K_OP_MEM
-                  reg: a1
+                  mem:
+                    base_reg: a1
                   address_mode: M68K_AM_REGI_ADDR_POST_INC
             regs_write: [a0, a1]
             regs_impl_write: [a0, a1]
@@ -194,7 +199,8 @@ test_cases:
                   address_mode: M68K_AM_IMMEDIATE
                   imm: 0x3
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
             regs_read: [a0]
             regs_impl_read: [a0]
@@ -214,7 +220,8 @@ test_cases:
                   address_mode: M68K_AM_IMMEDIATE
                   imm: 0x3
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
             regs_read: [a0]
             regs_impl_read: [a0]
@@ -234,7 +241,8 @@ test_cases:
                   address_mode: M68K_AM_IMMEDIATE
                   imm: 0x3
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
             regs_read: [a0]
             regs_impl_read: [a0]
@@ -254,7 +262,8 @@ test_cases:
                   address_mode: M68K_AM_IMMEDIATE
                   imm: 0x3
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
             regs_read: [a0]
             regs_impl_read: [a0]
@@ -278,7 +287,8 @@ test_cases:
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d1
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
             regs_read: [d0, a0]
             regs_write: [d1]
@@ -304,7 +314,8 @@ test_cases:
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d1
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
             regs_read: [d0, a0]
             regs_write: [d1]
@@ -330,8 +341,8 @@ test_cases:
                   mem:
                     base_reg: a0
                     disp: 0x10
-            regs_read: [d0]
-            regs_impl_read: [d0]
+            regs_read: [d0, a0]
+            regs_impl_read: [d0, a0]
   - input:
       bytes: [0x01, 0x88, 0x00, 0x10]
       arch: "m68k"
@@ -352,8 +363,8 @@ test_cases:
                   mem:
                     base_reg: a0
                     disp: 0x10
-            regs_read: [d0]
-            regs_impl_read: [d0]
+            regs_read: [d0, a0]
+            regs_impl_read: [d0, a0]
   - input:
       bytes: [0x0c, 0xfc, 0x80, 0x80, 0x90, 0xc1]
       arch: "m68k"
@@ -420,7 +431,8 @@ test_cases:
               op_size_cpu: M68K_CPU_SIZE_WORD
               operands:
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
                 - type: M68K_OP_REG
                   reg: d0
@@ -625,7 +637,8 @@ test_cases:
             m68k:
               operands:
                 - type: M68K_OP_MEM
-                  reg: a7
+                  mem:
+                    base_reg: a7
                   address_mode: M68K_AM_REGI_ADDR_POST_INC
                 - type: M68K_OP_REG_BITS
                   register_bits: 0xc07
@@ -796,6 +809,8 @@ test_cases:
               operands:
                 - type: M68K_OP_MEM
                   address_mode: M68K_AM_ABSOLUTE_DATA_LONG
+                  mem:
+                    address: 0x12
   - input:
       bytes: [0x4e, 0x75]
       arch: "m68k"
@@ -1045,7 +1060,8 @@ test_cases:
             m68k:
               operands:
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
             regs_read: [a0]
             regs_impl_read: [a0]
@@ -2287,9 +2303,9 @@ test_cases:
                   mem:
                     base_reg: a6
                     disp_size: 1
-            regs_read: [d0]
+            regs_read: [d0, a6]
             regs_write: [d0]
-            regs_impl_read: [d0]
+            regs_impl_read: [d0, a6]
             regs_impl_write: [d0]
 
   # Regression: CAS.b should be invalid on CPU32
@@ -2953,6 +2969,7 @@ test_cases:
                 - type: M68K_OP_MEM
                   mem:
                     bitfield: 1
+                    address: 0x9c
                     offset: 0x80
                     width: 32
                   address_mode: M68K_AM_ABSOLUTE_DATA_SHORT
@@ -2972,6 +2989,7 @@ test_cases:
                 - type: M68K_OP_MEM
                   mem:
                     bitfield: 1
+                    address: 0x9c
                     offset: 20
                     width: 5
                   address_mode: M68K_AM_ABSOLUTE_DATA_SHORT
@@ -2991,6 +3009,7 @@ test_cases:
                 - type: M68K_OP_MEM
                   mem:
                     bitfield: 1
+                    address: 0x9c
                     offset: 0x81
                     width: 0x80
                   address_mode: M68K_AM_ABSOLUTE_DATA_SHORT
@@ -3085,7 +3104,8 @@ test_cases:
                 - type: M68K_OP_IMM
                   imm: 0x2
                 - type: M68K_OP_MEM
-                  reg: a4
+                  mem:
+                    base_reg: a4
                   address_mode: M68K_AM_REGI_ADDR
   - input:
       bytes: [0x71, 0x00]
@@ -3240,8 +3260,9 @@ test_cases:
               op_size_cpu: M68K_CPU_SIZE_BYTE
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d1
@@ -3263,8 +3284,9 @@ test_cases:
               op_size_cpu: M68K_CPU_SIZE_WORD
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d1
@@ -3688,8 +3710,9 @@ test_cases:
               op_size_cpu: M68K_CPU_SIZE_WORD
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
                 - type: M68K_OP_REG
                   reg: fp0
             regs_read: [a0]
@@ -3713,8 +3736,9 @@ test_cases:
                 - type: M68K_OP_REG
                   reg: fp0
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             regs_read: [fp0, a0]
             regs_impl_read: [fp0, a0]
   - input:
@@ -3841,8 +3865,9 @@ test_cases:
               op_size_type: M68K_SIZE_TYPE_CPU
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
                 - type: M68K_OP_REG_BITS
                   register_bits: 196608
             regs_read: [a0]
@@ -3864,8 +3889,9 @@ test_cases:
                 - type: M68K_OP_REG_BITS
                   register_bits: 196608
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             regs_read: [fp0, fp1, a0]
             regs_impl_read: [fp0, fp1, a0]
   - input:
@@ -3881,8 +3907,9 @@ test_cases:
               op_size_type: M68K_SIZE_TYPE_CPU
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR_POST_INC
-                  reg: a0
                 - type: M68K_OP_REG_BITS
                   register_bits: 12582912
             regs_write: [a0, fp6, fp7]
@@ -3902,8 +3929,9 @@ test_cases:
                 - type: M68K_OP_REG_BITS
                   register_bits: 196608
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR_PRE_DEC
-                  reg: a0
             regs_read: [fp0, fp1]
             regs_write: [a0]
             regs_impl_read: [fp0, fp1]
@@ -3921,8 +3949,9 @@ test_cases:
               op_size_type: M68K_SIZE_TYPE_CPU
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
                 - type: M68K_OP_REG
                   reg: d1
             regs_read: [a0]
@@ -4014,8 +4043,9 @@ test_cases:
                 - type: M68K_OP_REG_BITS
                   register_bits: 3
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             regs_read: [d0, d1, a0]
             regs_impl_read: [d0, d1, a0]
   - input:
@@ -4033,8 +4063,9 @@ test_cases:
               op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_ADDR
                   reg: a0
@@ -4077,8 +4108,9 @@ test_cases:
               op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             regs_read: [a0]
             regs_impl_read: [a0]
   - input:
@@ -4277,8 +4309,9 @@ test_cases:
               op_size_cpu: M68K_CPU_SIZE_BYTE
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             regs_read: [a0]
             regs_impl_read: [a0]
   - input:
@@ -4375,8 +4408,9 @@ test_cases:
               op_size_type: M68K_SIZE_TYPE_CPU
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             groups: [jump]
             regs_read: [a0]
             regs_impl_read: [a0]
@@ -4393,8 +4427,9 @@ test_cases:
               op_size_type: M68K_SIZE_TYPE_CPU
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             groups: [jump]
             regs_read: [a0]
             regs_impl_read: [a0]
@@ -4548,7 +4583,8 @@ test_cases:
                   reg: a2
                   flags: [M68K_OP_FLAG_REG_UPPER]
                 - type: M68K_OP_MEM
-                  reg: a3
+                  mem:
+                    base_reg: a3
                   address_mode: M68K_AM_REGI_ADDR
                 - type: M68K_OP_REG
                   reg: d1
@@ -4572,7 +4608,8 @@ test_cases:
                   reg: a2
                   flags: [M68K_OP_FLAG_REG_UPPER]
                 - type: M68K_OP_MEM
-                  reg: a3
+                  mem:
+                    base_reg: a3
                   flags: [M68K_OP_FLAG_MEM_UPDATE]
                   address_mode: M68K_AM_REGI_ADDR
                 - type: M68K_OP_REG
@@ -4599,7 +4636,8 @@ test_cases:
                 - type: M68K_OP_SHIFT
                   flags: [M68K_OP_FLAG_SHIFT_LEFT]
                 - type: M68K_OP_MEM
-                  reg: a3
+                  mem:
+                    base_reg: a3
                   address_mode: M68K_AM_REGI_ADDR
                 - type: M68K_OP_REG
                   reg: d1
@@ -4812,8 +4850,9 @@ test_cases:
                 - type: M68K_OP_SHIFT
                   flags: [M68K_OP_FLAG_SHIFT_LEFT]
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a3
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a3
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d1
@@ -4847,8 +4886,9 @@ test_cases:
                 - type: M68K_OP_SHIFT
                   flags: [M68K_OP_FLAG_SHIFT_RIGHT]
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a3
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a3
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d1
@@ -6755,7 +6795,8 @@ test_cases:
             m68k:
               operands:
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
   - input:
       bytes: [0xfb, 0xd0, 0x00, 0x03]
@@ -6769,7 +6810,8 @@ test_cases:
             m68k:
               operands:
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
   - input:
       bytes: [0x42, 0xc3]
@@ -6881,8 +6923,9 @@ test_cases:
               op_size_cpu: M68K_CPU_SIZE_WORD
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             regs_read: [a0]
             regs_impl_read: [a0]
   - input:
@@ -6900,8 +6943,9 @@ test_cases:
               op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             regs_read: [a0]
             regs_impl_read: [a0]
   - input:
@@ -6917,8 +6961,9 @@ test_cases:
               op_size_type: M68K_SIZE_TYPE_CPU
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             regs_read: [a0]
             regs_impl_read: [a0]
   - input:
@@ -6934,8 +6979,9 @@ test_cases:
               op_size_type: M68K_SIZE_TYPE_CPU
               operands:
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             regs_read: [a0]
             regs_impl_read: [a0]
   - input:
@@ -7076,7 +7122,8 @@ test_cases:
             m68k:
               operands:
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
   - input:
       bytes: [0xf4, 0xe8]
@@ -7094,8 +7141,9 @@ test_cases:
                   address_mode: M68K_AM_IMMEDIATE
                   imm: 0x3
                 - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
-                  reg: a0
             regs_read: [a0]
             regs_impl_read: [a0]
 
@@ -7148,7 +7196,8 @@ test_cases:
             m68k:
               operands:
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
                 - type: M68K_OP_REG
                   reg: a2
@@ -7168,7 +7217,8 @@ test_cases:
             m68k:
               operands:
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR_POST_INC
                 - type: M68K_OP_REG
                   reg: a2
@@ -7232,7 +7282,8 @@ test_cases:
                 - type: M68K_OP_REG
                   reg: a2
                 - type: M68K_OP_MEM
-                  reg: a0
+                  mem:
+                    base_reg: a0
                   address_mode: M68K_AM_REGI_ADDR
                 - type: M68K_OP_IMM
                   imm: 0x3

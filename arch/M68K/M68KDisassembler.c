@@ -458,7 +458,7 @@ static void get_ea_mode_op(m68k_info *info, cs_m68k_op *op,
 	case 0x17:
 		/* address register indirect */
 		op->address_mode = M68K_AM_REGI_ADDR;
-		op->reg = M68K_REG_A0 + (instruction & 7);
+		op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
 		break;
 
 	case 0x18:
@@ -471,7 +471,7 @@ static void get_ea_mode_op(m68k_info *info, cs_m68k_op *op,
 	case 0x1f:
 		/* address register indirect with postincrement */
 		op->address_mode = M68K_AM_REGI_ADDR_POST_INC;
-		op->reg = M68K_REG_A0 + (instruction & 7);
+		op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
 		break;
 
 	case 0x20:
@@ -484,7 +484,7 @@ static void get_ea_mode_op(m68k_info *info, cs_m68k_op *op,
 	case 0x27:
 		/* address register indirect with predecrement */
 		op->address_mode = M68K_AM_REGI_ADDR_PRE_DEC;
-		op->reg = M68K_REG_A0 + (instruction & 7);
+		op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
 		break;
 
 	case 0x28:
@@ -517,13 +517,13 @@ static void get_ea_mode_op(m68k_info *info, cs_m68k_op *op,
 	case 0x38:
 		/* absolute short address */
 		op->address_mode = M68K_AM_ABSOLUTE_DATA_SHORT;
-		op->imm = read_imm_16(info);
+		op->mem.address = read_imm_16(info);
 		break;
 
 	case 0x39:
 		/* absolute long address */
 		op->address_mode = M68K_AM_ABSOLUTE_DATA_LONG;
-		op->imm = read_imm_32(info);
+		op->mem.address = read_imm_32(info);
 		break;
 
 	case 0x3a: {
@@ -1216,15 +1216,12 @@ static void build_move16(m68k_info *info, const uint32_t data[2],
 		const uint32_t m = modes[i];
 
 		op->type = M68K_OP_MEM;
+		op->address_mode = m;
 
-		if (m == M68K_AM_REGI_ADDR_POST_INC ||
-		    m == M68K_AM_REG_DIRECT_ADDR) {
-			op->address_mode = m;
-			op->reg = M68K_REG_A0 + d;
-		} else {
-			op->address_mode = m;
-			op->imm = d;
-		}
+		if (m == M68K_AM_REGI_ADDR_POST_INC || m == M68K_AM_REGI_ADDR)
+			op->mem.base_reg = M68K_REG_A0 + d;
+		else
+			op->mem.address = d;
 	}
 }
 
@@ -1278,7 +1275,7 @@ static void build_cpush_cinv(m68k_info *info, int op_offset)
 
 	op1->type = M68K_OP_MEM;
 	op1->address_mode = M68K_AM_REGI_ADDR;
-	op1->reg = M68K_REG_A0 + (info->ir & 7);
+	op1->mem.base_reg = M68K_REG_A0 + (info->ir & 7);
 }
 
 static void build_movep_re(m68k_info *info, int size)
@@ -1867,7 +1864,7 @@ static void dcf_intouch(m68k_info *info)
 	op = &ext->operands[0];
 	op->type = M68K_OP_MEM;
 	op->address_mode = M68K_AM_REGI_ADDR;
-	op->reg = M68K_REG_A0 + (info->ir & 7);
+	op->mem.base_reg = M68K_REG_A0 + (info->ir & 7);
 }
 
 static void dcf_build_coproc_branch(m68k_info *info, int opcode,
@@ -3775,8 +3772,7 @@ static void d68040_move16_al_pi(m68k_info *info)
 static void d68040_move16_ai_al(m68k_info *info)
 {
 	uint32_t data[2];
-	uint32_t modes[] = { M68K_AM_REG_DIRECT_ADDR,
-			     M68K_AM_ABSOLUTE_DATA_LONG };
+	uint32_t modes[] = { M68K_AM_REGI_ADDR, M68K_AM_ABSOLUTE_DATA_LONG };
 
 	LIMIT_FEATURE(info, M68040_PLUS);
 
@@ -3788,8 +3784,7 @@ static void d68040_move16_ai_al(m68k_info *info)
 static void d68040_move16_al_ai(m68k_info *info)
 {
 	uint32_t data[2];
-	uint32_t modes[] = { M68K_AM_ABSOLUTE_DATA_LONG,
-			     M68K_AM_REG_DIRECT_ADDR };
+	uint32_t modes[] = { M68K_AM_ABSOLUTE_DATA_LONG, M68K_AM_REGI_ADDR };
 
 	LIMIT_FEATURE(info, M68040_PLUS);
 
@@ -4217,14 +4212,14 @@ static void d68040_pflush(m68k_info *info)
 		op = &ext->operands[0];
 		op->address_mode = M68K_AM_REGI_ADDR;
 		op->type = M68K_OP_MEM;
-		op->reg = M68K_REG_A0 + (info->ir & 7);
+		op->mem.base_reg = M68K_REG_A0 + (info->ir & 7);
 		break;
 	case 1: /* PFLUSH (An) */
 		ext = build_init_op(info, M68K_INS_PFLUSH, 1, 0);
 		op = &ext->operands[0];
 		op->address_mode = M68K_AM_REGI_ADDR;
 		op->type = M68K_OP_MEM;
-		op->reg = M68K_REG_A0 + (info->ir & 7);
+		op->mem.base_reg = M68K_REG_A0 + (info->ir & 7);
 		break;
 	case 2: /* PFLUSHAN */
 		build_init_op(info, M68K_INS_PFLUSHAN, 0, 0);
@@ -4257,7 +4252,7 @@ static void d68040_ptest(m68k_info *info)
 	op = &ext->operands[0];
 	op->address_mode = M68K_AM_REGI_ADDR;
 	op->type = M68K_OP_MEM;
-	op->reg = M68K_REG_A0 + (info->ir & 7);
+	op->mem.base_reg = M68K_REG_A0 + (info->ir & 7);
 }
 
 static void d68060_plpa(m68k_info *info)
@@ -4280,7 +4275,7 @@ static void d68060_plpa(m68k_info *info)
 	op = &ext->operands[0];
 	op->address_mode = M68K_AM_REGI_ADDR;
 	op->type = M68K_OP_MEM;
-	op->reg = M68K_REG_A0 + (info->ir & 7);
+	op->mem.base_reg = M68K_REG_A0 + (info->ir & 7);
 }
 
 static void d68060_halt(m68k_info *info)
@@ -4995,12 +4990,12 @@ static void update_am_reg_list(m68k_info *info, cs_m68k_op *op, int write)
 
 	case M68K_AM_REGI_ADDR_POST_INC:
 	case M68K_AM_REGI_ADDR_PRE_DEC:
-		add_reg_to_rw_list(info, op->reg, 1);
+		add_reg_to_rw_list(info, op->mem.base_reg, 1);
 		break;
 
 	case M68K_AM_REGI_ADDR:
 	case M68K_AM_REGI_ADDR_DISP:
-		add_reg_to_rw_list(info, op->reg, 0);
+		add_reg_to_rw_list(info, op->mem.base_reg, 0);
 		break;
 
 	case M68K_AM_AREGI_INDEX_8_BIT_DISP:

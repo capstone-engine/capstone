@@ -1153,8 +1153,6 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
             # Shift direction is stored in aop.flags and compared above.
             pass
         elif aop.type == M68K_OP_MEM:
-            if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
-                return False
             if "mem" not in eop:
                 continue
 
@@ -1206,6 +1204,10 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
             if not compare_uint8(aop.mem.width, eop["mem"].get("width"), "width"):
                 return False
             if not compare_uint8(aop.mem.offset, eop["mem"].get("offset"), "offset"):
+                return False
+            if not compare_uint64(
+                aop.mem.address, eop["mem"].get("address"), "address"
+            ):
                 return False
         else:
             raise ValueError("Operand type not handled.")

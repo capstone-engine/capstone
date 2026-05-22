@@ -23,6 +23,7 @@ typedef struct {
 	uint8_t bitfield;
 	uint8_t width;
 	uint8_t offset;
+	uint64_t address;
 } TestDetailM68KOpMem;
 
 static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
@@ -51,6 +52,8 @@ static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
 			 width),
 	CYAML_FIELD_UINT("offset", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
 			 offset),
+	CYAML_FIELD_UINT("address", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
+			 address),
 	CYAML_FIELD_INT("in_disp_size",
 			CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			TestDetailM68KOpMem, in_disp_size),

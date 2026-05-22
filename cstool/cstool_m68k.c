@@ -6,6 +6,7 @@
 //
 //
 
+#include <inttypes.h>
 #include <stdio.h>
 #include <capstone/capstone.h>
 #include "cstool.h"
@@ -122,13 +123,15 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 			break;
 		case M68K_OP_MEM:
 			printf("\t\toperands[%u].type: MEM\n", i);
-			if (op->reg != M68K_REG_INVALID)
-				printf("\t\t\toperands[%u].reg: REG = %s\n", i,
-				       cs_reg_name(handle, op->reg));
 			if (op->mem.base_reg != M68K_REG_INVALID)
 				printf("\t\t\toperands[%u].mem.base: REG = %s\n",
 				       i,
 				       cs_reg_name(handle, op->mem.base_reg));
+			if (op->address_mode == M68K_AM_ABSOLUTE_DATA_SHORT ||
+			    op->address_mode == M68K_AM_ABSOLUTE_DATA_LONG)
+				printf("\t\t\toperands[%u].mem.address: 0x%" PRIx64
+				       "\n",
+				       i, op->mem.address);
 			if (op->mem.index_reg != M68K_REG_INVALID) {
 				printf("\t\t\toperands[%u].mem.index: REG = %s\n",
 				       i,

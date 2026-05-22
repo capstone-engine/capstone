@@ -248,6 +248,9 @@ static void printIndex8BitDisp(SStream *O, unsigned int pc,
 
 static void printRegAddrMode(SStream *O, unsigned int pc, const cs_m68k_op *op)
 {
+	m68k_reg base_reg = op->type == M68K_OP_MEM ? op->mem.base_reg :
+						      op->reg;
+
 	switch (op->address_mode) {
 	case M68K_AM_REG_DIRECT_DATA:
 		printRegisterName(O, op);
@@ -256,18 +259,18 @@ static void printRegAddrMode(SStream *O, unsigned int pc, const cs_m68k_op *op)
 		printRegisterName(O, op);
 		break;
 	case M68K_AM_REGI_ADDR:
-		SStream_concat(O, "(a%" PRId32 ")", (op->reg - M68K_REG_A0));
+		SStream_concat(O, "(a%" PRId32 ")", (base_reg - M68K_REG_A0));
 		break;
 	case M68K_AM_REGI_ADDR_POST_INC:
-		SStream_concat(O, "(a%" PRId32 ")+", (op->reg - M68K_REG_A0));
+		SStream_concat(O, "(a%" PRId32 ")+", (base_reg - M68K_REG_A0));
 		break;
 	case M68K_AM_REGI_ADDR_PRE_DEC:
-		SStream_concat(O, "-(a%" PRId32 ")", (op->reg - M68K_REG_A0));
+		SStream_concat(O, "-(a%" PRId32 ")", (base_reg - M68K_REG_A0));
 		break;
 	case M68K_AM_REGI_ADDR_DISP:
 		SStream_concat(O, "%s$%" PRIx16 "(a%" PRId32 ")",
 			       op->mem.disp < 0 ? "-" : "", abs(op->mem.disp),
-			       (op->mem.base_reg - M68K_REG_A0));
+			       (base_reg - M68K_REG_A0));
 		break;
 	case M68K_AM_PCI_DISP:
 		SStream_concat(O, "$%" PRIx32 "(pc)", pc + 2 + op->mem.disp);
@@ -394,10 +397,10 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 		printRegAddrMode(O, pc, op);
 		break;
 	case M68K_AM_ABSOLUTE_DATA_SHORT:
-		SStream_concat(O, "$%" PRIx32 ".w", (uint32_t)op->imm);
+		SStream_concat(O, "$%" PRIx32 ".w", (uint32_t)op->mem.address);
 		break;
 	case M68K_AM_ABSOLUTE_DATA_LONG:
-		SStream_concat(O, "$%" PRIx64 ".l", (uint64_t)op->imm);
+		SStream_concat(O, "$%" PRIx64 ".l", (uint64_t)op->mem.address);
 		break;
 	case M68K_AM_IMMEDIATE:
 		printImmediate(O, inst, op);

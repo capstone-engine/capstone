@@ -22,6 +22,7 @@ class M68KOpMem(ctypes.Structure):
         ("in_disp_size", ctypes.c_ubyte),
         ("out_disp_size", ctypes.c_ubyte),
         ("disp_size", ctypes.c_ubyte),
+        ("address", ctypes.c_uint64),
     )
 
 

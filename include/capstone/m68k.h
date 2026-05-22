@@ -170,6 +170,7 @@ typedef struct m68k_op_mem {
 	uint8_t in_disp_size; ///< 0 = word, 1 = long
 	uint8_t out_disp_size; ///< 0 = word, 1 = long
 	uint8_t disp_size; ///< 0 = byte, 1 = word
+	uint64_t address; ///< absolute address for absolute MEM operands
 } m68k_op_mem;
 
 /// Bitfield offset/width helpers for m68k_op_mem.
