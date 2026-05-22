@@ -6483,3 +6483,166 @@ test_cases:
         is_alias: 1
         alias_id: RISCV_INS_ALIAS_RET
         uses_alias_details: 1
+  -
+    input:
+      name: "issue 1636 MOVSXD r32, r/m32 (register form, no REX.W)"
+      bytes: [ 0x63, 0xc7 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movsxd eax, edi"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: edi
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ edi ]
+          regs_write: [ eax ]
+          groups: [ mode64 ]
+  -
+    input:
+      name: "issue 1832 MOVSXD r32, m32 (memory form, no REX.W)"
+      bytes: [ 0x63, 0x20 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movsxd esp, dword ptr [rax]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: esp
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ rax ]
+          regs_write: [ esp ]
+          groups: [ mode64 ]
+  -
+    input:
+      name: "issue 2442 MOVSXD r32, m32 (memory form with disp8)"
+      bytes: [ 0x63, 0x6b, 0x20 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movsxd ebp, dword ptr [rbx + 0x20]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ebp
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                mem_disp: 0x20
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ rbx ]
+          regs_write: [ ebp ]
+          groups: [ mode64 ]
+  -
+    input:
+      name: "issue 2555 MOVSXD r32, m32 (memory form, no displacement)"
+      bytes: [ 0x63, 0x26 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movsxd esp, dword ptr [rsi]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: esp
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: rsi
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ rsi ]
+          regs_write: [ esp ]
+          groups: [ mode64 ]
+  -
+    input:
+      name: "MOVSXD r16, r/m32 (register form, 0x66 prefix)"
+      bytes: [ 0x66, 0x63, 0xc1 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movsxd ax, ecx"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: ecx
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ ecx ]
+          regs_write: [ ax ]
+          groups: [ mode64 ]
+  -
+    input:
+      name: "MOVSXD r16, m32 (memory form, 0x66 prefix)"
+      bytes: [ 0x66, 0x63, 0x20 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movsxd sp, dword ptr [rax]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: sp
+                size: 2
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ rax ]
+          regs_write: [ sp ]
+          groups: [ mode64 ]
