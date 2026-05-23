@@ -24,6 +24,17 @@ extern "C" {
 #pragma warning(disable : 4201)
 #endif
 
+//> Floating-point rounding mode for RISC-V FP instructions
+typedef enum riscv_rounding_mode {
+	RISCV_RM_INVALID = 0, ///< not applicable (no rounding mode)
+	RISCV_RM_RNE,         ///< round to nearest, ties to even
+	RISCV_RM_RTZ,         ///< round towards zero
+	RISCV_RM_RDN,         ///< round down (towards -infinity)
+	RISCV_RM_RUP,         ///< round up (towards +infinity)
+	RISCV_RM_RMM,         ///< round to nearest, ties to max magnitude
+	RISCV_RM_DYN,         ///< dynamic rounding mode (use frm CSR)
+} riscv_rounding_mode;
+
 //> Operand type for instruction's operands
 typedef enum riscv_op_type {
 	RISCV_OP_INVALID = CS_OP_INVALID, ///< = CS_OP_INVALID (Uninitialized).
@@ -65,6 +76,7 @@ typedef struct cs_riscv {
 	// or 0 when instruction has no operand.
 	uint8_t op_count;
 	cs_riscv_op operands[NUM_RISCV_OPS]; // operands for this instruction.
+	riscv_rounding_mode rounding_mode;   // FP rounding mode, or RISCV_RM_INVALID
 } cs_riscv;
 
 //> RISCV registers

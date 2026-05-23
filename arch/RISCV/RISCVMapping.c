@@ -21,6 +21,7 @@
 #include "RISCVGenRegisterInfo.inc"
 
 #include "RISCVInstPrinter.h"
+#include "RISCVBaseInfo.h"
 
 const char *RISCV_reg_name(csh handle, unsigned int reg)
 {
@@ -53,10 +54,23 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 {
 	if (!detail_is_set(MI))
 		return;
-	// are not "true" arguments and has no Capstone equivalent
+	// rounding mode: store in detail, not as a regular operand
 	if (opgroup == RISCV_OP_GROUP_FRMArg ||
-	    opgroup == RISCV_OP_GROUP_FRMArgLegacy)
+	    opgroup == RISCV_OP_GROUP_FRMArgLegacy) {
+		unsigned frm = (unsigned)MCInst_getOperand(MI, OpNum)->ImmVal;
+		riscv_rounding_mode rm;
+		switch (frm) {
+		case RISCVFPRndMode_RNE: rm = RISCV_RM_RNE; break;
+		case RISCVFPRndMode_RTZ: rm = RISCV_RM_RTZ; break;
+		case RISCVFPRndMode_RDN: rm = RISCV_RM_RDN; break;
+		case RISCVFPRndMode_RUP: rm = RISCV_RM_RUP; break;
+		case RISCVFPRndMode_RMM: rm = RISCV_RM_RMM; break;
+		case RISCVFPRndMode_DYN: rm = RISCV_RM_DYN; break;
+		default: rm = RISCV_RM_INVALID; break;
+		}
+		RISCV_get_detail(MI)->rounding_mode = rm;
 		return;
+	}
 
 	if (opgroup == RISCV_OP_GROUP_FPImmOperand) {
 		unsigned Imm = (unsigned)MCInst_getOperand(MI, OpNum)->ImmVal;
