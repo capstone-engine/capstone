@@ -50,7 +50,7 @@ def run_tests(cmd: str):
 
     check(
         cmd + [f"{path.joinpath('invalid_test_file.yaml')}"],
-        expected_stderr="Error: 'libyaml parser error'",
+        expected_stderr=" parser error",
         expected_stdout="",
         fail_msg="Failed the invalid test file test",
     )

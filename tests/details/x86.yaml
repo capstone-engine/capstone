@@ -6173,7 +6173,7 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xff, 0x00, 0x00, 0x00 ]
-          regs_read: [ ]
+          regs_read: [ bx, si ]
           regs_write: [ ip ]
 
   -

@@ -1,6 +1,8 @@
 // For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT
 package capstone;
 
+import static capstone.Capstone.*;
+
 public class Mips_const {
 	public static final int MIPS_OP_INVALID = CS_OP_INVALID;
 	public static final int MIPS_OP_REG = CS_OP_REG;

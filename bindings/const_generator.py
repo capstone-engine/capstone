@@ -12,12 +12,14 @@ include = ['arm.h', 'aarch64.h', 'm68k.h', 'mips.h', 'x86.h', 'ppc.h', 'sparc.h'
 
 template = {
     'java': {
-            'header': "// For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT\npackage capstone;\n\npublic class %s_const {\n",
+            'header': "// For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT\npackage capstone;\n\nimport static capstone.Capstone.*;\n\npublic class %s_const {\n",
             'footer': "}",
             'line_format': '\tpublic static final int %s = %s;\n',
+            'line_format_64': '\tpublic static final long %s = %s;\n',
             'out_file': './java/capstone/%s_const.java',
             # prefixes for constant filenames of all archs - case sensitive
             'arm.h': 'Arm',
+            'aarch64.h': ['AArch64', 'AARCH64'],
             'm68k.h': 'M68k',
             'mips.h': 'Mips',
             'x86.h': 'X86',
@@ -29,6 +31,16 @@ template = {
             'm680x.h': 'M680x',
             'evm.h': 'Evm',
             'wasm.h': 'Wasm',
+            'mos65xx.h': 'Mos65xx',
+            'bpf.h': 'Bpf',
+            'riscv.h': 'Riscv',
+            'sh.h': 'Sh',
+            'tricore.h': ['Tricore', 'TRICORE'],
+            'alpha.h': ['Alpha', 'ALPHA'],
+            'hppa.h': 'Hppa',
+            'loongarch.h': 'Loongarch',
+            'xtensa.h': 'Xtensa',
+            'arc.h': 'Arc',
             'comment_open': '\t//',
             'comment_close': '',
         },
@@ -134,7 +146,6 @@ def gen(lang):
     global include, INCL_DIR
     print('Generating bindings for', lang)
     templ = template[lang]
-    print('Generating bindings for', lang)
     for target in include:
         if target not in templ:
             print("Warning: No binding found for %s" % target)
@@ -143,7 +154,9 @@ def gen(lang):
         prefixs = []
         if isinstance(prefix, list):
             prefixs = prefix
-            prefix = prefix[0].lower()
+            prefix = prefix[0]
+            if target == 'python':
+                prefix = prefix.lower()
 
         outfile = open(templ['out_file'] %(prefix), 'wb')   # open as binary prevents windows newlines
         outfile.write((templ['header'] % (prefix)).encode("utf-8"))
@@ -311,6 +324,15 @@ def gen(lang):
                         outfile.write((templ['doc_line_format'] %(doc)).encode("utf-8"))
                 else:
                     line_format = templ['line_format']
+                    if lang == 'java':
+                        try:
+                            value_int = eval(value)
+                            if value_int > 0x7fffffff:
+                                if '1<<' in value:
+                                     value = value.replace('1<<', '1L<<')
+                                line_format = templ['line_format_64']
+                        except Exception:
+                            pass
 
                 outfile.write((line_format %(name, value)).encode("utf-8"))
 

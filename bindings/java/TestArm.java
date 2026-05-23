@@ -39,10 +39,10 @@ public class TestArm {
 
     Arm.OpInfo operands = (Arm.OpInfo) ins.operands;
 
-    if (operands.op.length != 0) {
-      System.out.printf("\top_count: %d\n", operands.op.length);
-      for (int c=0; c<operands.op.length; c++) {
-        Arm.Operand i = (Arm.Operand) operands.op[c];
+    if (operands.operands.length != 0) {
+      System.out.printf("\top_count: %d\n", operands.operands.length);
+      for (int c=0; c<operands.operands.length; c++) {
+        Arm.Operand i = (Arm.Operand) operands.operands[c];
         String imm = hex(i.value.imm);
         if (i.type == ARM_OP_SYSREG)
           System.out.printf("\t\toperands[%d].type: SYSREG = %d\n", c, i.value.reg);
@@ -70,24 +70,24 @@ public class TestArm {
             System.out.printf("\t\t\toperands[%d].mem.scale: %d\n", c, (i.value.mem.scale));
           if (i.value.mem.disp != 0)
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, (i.value.mem.disp));
-          if (i.value.mem.lshift != 0)
-            System.out.printf("\t\t\toperands[%d].mem.lshift: 0x%x\n", c, (i.value.mem.lshift));
+          if (i.value.mem.align != 0)
+            System.out.printf("\t\t\toperands[%d].mem.align: 0x%x\n", c, (i.value.mem.align));
         }
         if (i.vector_index > 0)
           System.out.printf("\t\t\toperands[%d].vector_index = %d\n", c, (i.vector_index));
         if (i.shift.type != ARM_SFT_INVALID && i.shift.value > 0)
           System.out.printf("\t\t\tShift: %d = %d\n", i.shift.type, i.shift.value);
-        if (i.subtracted)
+        if (i.subtracted != 0)
           System.out.printf("\t\t\toperands[%d].subtracted = True\n", c);
       }
     }
-    if (operands.writeback)
-      System.out.println("\tWrite-back: True");
+    // if (operands.writeback)
+    //   System.out.println("\tWrite-back: True");
 
     if (operands.updateFlags)
       System.out.println("\tUpdate-flags: True");
 
-    if (operands.cc != ARM_CC_AL && operands.cc != ARM_CC_INVALID)
+    if (operands.cc != ARMCC_AL && operands.cc != ARMCC_UNDEF)
       System.out.printf("\tCode condition: %d\n",  operands.cc);
 
     if (operands.cpsMode > 0)

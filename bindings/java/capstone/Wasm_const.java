@@ -1,6 +1,8 @@
 // For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT
 package capstone;
 
+import static capstone.Capstone.*;
+
 public class Wasm_const {
 	public static final int WASM_OP_INVALID = CS_OP_INVALID;
 	public static final int WASM_OP_IMM = CS_OP_IMM;

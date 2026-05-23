@@ -18,7 +18,7 @@ public class Mips {
     public long disp;
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("base", "disp");
     }
   }
@@ -26,20 +26,19 @@ public class Mips {
   public static class OpValue extends Union {
     public int reg;
     public long imm;
+    public long uimm;  // TODO: uint64
     public MemType mem;
-
-    @Override
-    public List getFieldOrder() {
-      return Arrays.asList("reg", "imm", "mem");
-    }
   }
 
   public static class Operand extends Structure {
     public int type;
     public OpValue value;
+    public byte is_reglist;
+    public byte is_unsigned;
+    public int access;
 
     public void read() {
-      super.read();
+      readField("type");
       if (type == MIPS_OP_MEM)
         value.setType(MemType.class);
       if (type == MIPS_OP_IMM)
@@ -49,10 +48,13 @@ public class Mips {
       if (type == MIPS_OP_INVALID)
         return;
       readField("value");
+      readField("is_reglist");
+      readField("is_unsigned");
+      readField("access");
     }
     @Override
-    public List getFieldOrder() {
-      return Arrays.asList("type", "value");
+    public List<String> getFieldOrder() {
+      return Arrays.asList("type", "value", "is_reglist", "is_unsigned", "access");
     }
   }
 
@@ -61,7 +63,7 @@ public class Mips {
     public Operand [] op;
 
     public UnionOpInfo() {
-      op = new Operand[10];
+      op = new Operand[16];
     }
 
     public void read() {
@@ -72,7 +74,7 @@ public class Mips {
     }
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("op_count", "op");
     }
   }

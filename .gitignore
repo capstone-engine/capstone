@@ -1,6 +1,7 @@
 files_to_format.txt
 .DS_Store
-
+venv
+.gradle
 # Object files
 *.o
 *.ko

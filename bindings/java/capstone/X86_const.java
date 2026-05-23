@@ -1,6 +1,8 @@
 // For Capstone Engine. AUTO-GENERATED FILE, DO NOT EDIT
 package capstone;
 
+import static capstone.Capstone.*;
+
 public class X86_const {
 
 	public static final int X86_REG_INVALID = 0;
@@ -281,34 +283,34 @@ public class X86_const {
 	public static final int X86_EFLAGS_RESET_NT = 1<<28;
 	public static final int X86_EFLAGS_RESET_PF = 1<<29;
 	public static final int X86_EFLAGS_SET_CF = 1<<30;
-	public static final int X86_EFLAGS_SET_DF = 1<<31;
-	public static final int X86_EFLAGS_SET_IF = 1<<32;
-	public static final int X86_EFLAGS_TEST_OF = 1<<33;
-	public static final int X86_EFLAGS_TEST_SF = 1<<34;
-	public static final int X86_EFLAGS_TEST_ZF = 1<<35;
-	public static final int X86_EFLAGS_TEST_PF = 1<<36;
-	public static final int X86_EFLAGS_TEST_CF = 1<<37;
-	public static final int X86_EFLAGS_TEST_NT = 1<<38;
-	public static final int X86_EFLAGS_TEST_DF = 1<<39;
-	public static final int X86_EFLAGS_UNDEFINED_OF = 1<<40;
-	public static final int X86_EFLAGS_UNDEFINED_SF = 1<<41;
-	public static final int X86_EFLAGS_UNDEFINED_ZF = 1<<42;
-	public static final int X86_EFLAGS_UNDEFINED_PF = 1<<43;
-	public static final int X86_EFLAGS_UNDEFINED_AF = 1<<44;
-	public static final int X86_EFLAGS_UNDEFINED_CF = 1<<45;
-	public static final int X86_EFLAGS_RESET_RF = 1<<46;
-	public static final int X86_EFLAGS_TEST_RF = 1<<47;
-	public static final int X86_EFLAGS_TEST_IF = 1<<48;
-	public static final int X86_EFLAGS_TEST_TF = 1<<49;
-	public static final int X86_EFLAGS_TEST_AF = 1<<50;
-	public static final int X86_EFLAGS_RESET_ZF = 1<<51;
-	public static final int X86_EFLAGS_SET_OF = 1<<52;
-	public static final int X86_EFLAGS_SET_SF = 1<<53;
-	public static final int X86_EFLAGS_SET_ZF = 1<<54;
-	public static final int X86_EFLAGS_SET_AF = 1<<55;
-	public static final int X86_EFLAGS_SET_PF = 1<<56;
-	public static final int X86_EFLAGS_RESET_0F = 1<<57;
-	public static final int X86_EFLAGS_RESET_AC = 1<<58;
+	public static final long X86_EFLAGS_SET_DF = 1L<<31;
+	public static final long X86_EFLAGS_SET_IF = 1L<<32;
+	public static final long X86_EFLAGS_TEST_OF = 1L<<33;
+	public static final long X86_EFLAGS_TEST_SF = 1L<<34;
+	public static final long X86_EFLAGS_TEST_ZF = 1L<<35;
+	public static final long X86_EFLAGS_TEST_PF = 1L<<36;
+	public static final long X86_EFLAGS_TEST_CF = 1L<<37;
+	public static final long X86_EFLAGS_TEST_NT = 1L<<38;
+	public static final long X86_EFLAGS_TEST_DF = 1L<<39;
+	public static final long X86_EFLAGS_UNDEFINED_OF = 1L<<40;
+	public static final long X86_EFLAGS_UNDEFINED_SF = 1L<<41;
+	public static final long X86_EFLAGS_UNDEFINED_ZF = 1L<<42;
+	public static final long X86_EFLAGS_UNDEFINED_PF = 1L<<43;
+	public static final long X86_EFLAGS_UNDEFINED_AF = 1L<<44;
+	public static final long X86_EFLAGS_UNDEFINED_CF = 1L<<45;
+	public static final long X86_EFLAGS_RESET_RF = 1L<<46;
+	public static final long X86_EFLAGS_TEST_RF = 1L<<47;
+	public static final long X86_EFLAGS_TEST_IF = 1L<<48;
+	public static final long X86_EFLAGS_TEST_TF = 1L<<49;
+	public static final long X86_EFLAGS_TEST_AF = 1L<<50;
+	public static final long X86_EFLAGS_RESET_ZF = 1L<<51;
+	public static final long X86_EFLAGS_SET_OF = 1L<<52;
+	public static final long X86_EFLAGS_SET_SF = 1L<<53;
+	public static final long X86_EFLAGS_SET_ZF = 1L<<54;
+	public static final long X86_EFLAGS_SET_AF = 1L<<55;
+	public static final long X86_EFLAGS_SET_PF = 1L<<56;
+	public static final long X86_EFLAGS_RESET_0F = 1L<<57;
+	public static final long X86_EFLAGS_RESET_AC = 1L<<58;
 	public static final int X86_FPU_FLAGS_MODIFY_C0 = 1<<0;
 	public static final int X86_FPU_FLAGS_MODIFY_C1 = 1<<1;
 	public static final int X86_FPU_FLAGS_MODIFY_C2 = 1<<2;

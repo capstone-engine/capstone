@@ -2,11 +2,11 @@
 // By Nguyen Anh Quynh & Dang Hoang Vu,  2013
 
 import capstone.Capstone;
-import capstone.Arm64;
+import capstone.AArch64;
 
-import static capstone.Arm64_const.*;
+import static capstone.AArch64_const.*;
 
-public class TestArm64 {
+public class TestAArch64 {
 
   static byte[] hexString2Byte(String s) {
     // from http://stackoverflow.com/questions/140131/convert-a-string-representation-of-a-hex-dump-to-a-byte-array-using-java
@@ -34,46 +34,44 @@ public class TestArm64 {
   public static void print_ins_detail(Capstone.CsInsn ins) {
     System.out.printf("0x%x:\t%s\t%s\n", ins.address, ins.mnemonic, ins.opStr);
 
-    Arm64.OpInfo operands = (Arm64.OpInfo) ins.operands;
+    AArch64.OpInfo operands = (AArch64.OpInfo) ins.operands;
 
-    if (operands.op.length != 0) {
-      System.out.printf("\top_count: %d\n", operands.op.length);
-      for (int c=0; c<operands.op.length; c++) {
-        Arm64.Operand i = (Arm64.Operand) operands.op[c];
+    if (operands.operands.length != 0) {
+      System.out.printf("\top_count: %d\n", operands.operands.length);
+      for (int c=0; c<operands.operands.length; c++) {
+        AArch64.Operand i = (AArch64.Operand) operands.operands[c];
         String imm = hex(i.value.imm);
-        if (i.type == ARM64_OP_REG)
+        if (i.type == AARCH64_OP_REG)
           System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg));
-        if (i.type == ARM64_OP_REG_MRS)
+        if (i.type == AARCH64_OP_REG_MRS)
           System.out.printf("\t\toperands[%d].type: REG_MRS = 0x%x\n", c, i.value.reg);
-        if (i.type == ARM64_OP_REG_MSR)
+        if (i.type == AARCH64_OP_REG_MSR)
           System.out.printf("\t\toperands[%d].type: REG_MSR = 0x%x\n", c, i.value.reg);
-        if (i.type == ARM64_OP_PSTATE)
-          System.out.printf("\t\toperands[%d].type: PSTATE = 0x%x\n", c, i.value.imm);
-			  if (i.type == ARM64_OP_BARRIER)
-  				System.out.printf("\t\toperands[%d].type: BARRIER = 0x%x\n", c, i.value.imm);
+        // if (i.type == AARCH64_OP_PSTATE)
+        //   System.out.printf("\t\toperands[%d].type: PSTATE = 0x%x\n", c, i.value.imm);
+			  // if (i.type == AARCH64_OP_BARRIER)
+  			// 	System.out.printf("\t\toperands[%d].type: BARRIER = 0x%x\n", c, i.value.imm);
 
-        if (i.type == ARM64_OP_IMM)
+        if (i.type == AARCH64_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
-        if (i.type == ARM64_OP_CIMM)
+        if (i.type == AARCH64_OP_CIMM)
           System.out.printf("\t\toperands[%d].type: C-IMM = %d\n", c, i.value.imm);
-        if (i.type == ARM64_OP_FP)
+        if (i.type == AARCH64_OP_FP)
           System.out.printf("\t\toperands[%d].type: FP = %f\n", c, i.value.fp);
-        if (i.type == ARM64_OP_MEM) {
+        if (i.type == AARCH64_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n",c);
-          String base = ins.regName(i.value.mem.base);
-          String index = ins.regName(i.value.mem.index);
-          if (base != null)
-            System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, base);
-          if (index != null)
-            System.out.printf("\t\t\toperands[%d].mem.index: REG = %s\n", c, index);
+          if (i.value.mem.base != AARCH64_REG_INVALID)
+            System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, ins.regName(i.value.mem.base));
+          if (i.value.mem.index != AARCH64_REG_INVALID)
+            System.out.printf("\t\t\toperands[%d].mem.index: REG = %s\n", c, ins.regName(i.value.mem.index));
           if (i.value.mem.disp != 0)
             System.out.printf("\t\t\toperands[%d].mem.disp: 0x%x\n", c, i.value.mem.disp);
         }
-        if (i.shift.type != ARM64_SFT_INVALID && i.shift.value > 0)
+        if (i.shift.type != AARCH64_SFT_INVALID && i.shift.value > 0)
           System.out.printf("\t\t\tShift: type = %d, value = %d\n", i.shift.type, i.shift.value);
-        if (i.ext != ARM64_EXT_INVALID)
+        if (i.ext != AARCH64_EXT_INVALID)
           System.out.printf("\t\t\tExt: %d\n", i.ext);
-        if (i.vas != ARM64_VAS_INVALID)
+        if (i.vas != AARCH64LAYOUT_INVALID)
           System.out.printf("\t\t\tVector Arrangement Specifier: 0x%x\n", i.vas);
         if (i.vector_index != -1)
           System.out.printf("\t\t\tVector Index: %d\n", i.vector_index);
@@ -81,13 +79,13 @@ public class TestArm64 {
       }
     }
 
-    if (operands.writeback)
-      System.out.println("\tWrite-back: True");
+    // if (operands.writeback)
+    //   System.out.println("\tWrite-back: True");
 
     if (operands.updateFlags)
       System.out.println("\tUpdate-flags: True");
 
-    if (operands.cc != ARM64_CC_AL && operands.cc != ARM64_CC_INVALID)
+    if (operands.cc != AArch64CC_Invalid)
       System.out.printf("\tCode-condition: %d\n",  operands.cc);
 
   }
@@ -95,7 +93,7 @@ public class TestArm64 {
   public static void main(String argv[]) {
 
     final TestBasic.platform[] all_tests = {
-      new TestBasic.platform(Capstone.CS_ARCH_ARM64, Capstone.CS_MODE_ARM, hexString2Byte(ARM64_CODE), "ARM-64"),
+      new TestBasic.platform(Capstone.CS_ARCH_AARCH64, Capstone.CS_MODE_ARM, hexString2Byte(ARM64_CODE), "ARM-64"),
     };
 
     for (int i=0; i<all_tests.length; i++) {

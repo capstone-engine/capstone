@@ -5241,7 +5241,7 @@ test_cases:
               -
                 type: SH_OP_MEM
                 mem_disp: 0x400
-                reg: r1
+                mem_reg: r1
               -
                 type: SH_OP_REG
                 reg: r2

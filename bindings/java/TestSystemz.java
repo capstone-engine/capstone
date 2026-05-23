@@ -4,7 +4,7 @@
 import capstone.Capstone;
 import capstone.Systemz;
 
-import static capstone.Sysz_const.*;
+import static capstone.Systemz_const.*;
 
 public class TestSystemz {
 
@@ -40,18 +40,16 @@ public class TestSystemz {
       System.out.printf("\top_count: %d\n", operands.op.length);
       for (int c=0; c<operands.op.length; c++) {
         Systemz.Operand i = (Systemz.Operand) operands.op[c];
-        if (i.type == SYSZ_OP_REG)
-            System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg));
-        if (i.type == SYSZ_OP_ACREG)
-            System.out.printf("\t\toperands[%d].type: ACREG = %s\n", c, i.value.reg);
-        if (i.type == SYSZ_OP_IMM)
+        if (i.type == SYSTEMZ_OP_REG)
+          System.out.printf("\t\toperands[%d].type: REG = %s\n", c, ins.regName(i.value.reg&0xff));
+        if (i.type == SYSTEMZ_OP_IMM)
           System.out.printf("\t\toperands[%d].type: IMM = 0x%x\n", c, i.value.imm);
-        if (i.type == SYSZ_OP_MEM) {
+        if (i.type == SYSTEMZ_OP_MEM) {
           System.out.printf("\t\toperands[%d].type: MEM\n", c);
-          if (i.value.mem.base != SYSZ_REG_INVALID)
-            System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, ins.regName(i.value.mem.base));
-          if (i.value.mem.index != SYSZ_REG_INVALID)
-            System.out.printf("\t\t\toperands[%d].mem.index: REG = %s\n", c, ins.regName(i.value.mem.index));
+          if (i.value.mem.base != SYSTEMZ_REG_INVALID)
+            System.out.printf("\t\t\toperands[%d].mem.base: REG = %s\n", c, ins.regName(i.value.mem.base&0xff));
+          if (i.value.mem.index != SYSTEMZ_REG_INVALID)
+            System.out.printf("\t\t\toperands[%d].mem.index: REG = %s\n", c, ins.regName(i.value.mem.index&0xff));
           if (i.value.mem.length != 0)
             System.out.printf("\t\t\toperands[%d].mem.length: 0x%x\n", c, i.value.mem.disp);
           if (i.value.mem.disp != 0)
@@ -68,7 +66,7 @@ public class TestSystemz {
   public static void main(String argv[]) {
 
     final TestBasic.platform[] all_tests = {
-      new TestBasic.platform(Capstone.CS_ARCH_SYSZ, 0, hexString2Byte(SYSZ_CODE), "SystemZ"),
+      new TestBasic.platform(Capstone.CS_ARCH_SYSTEMZ, Capstone.CS_MODE_BIG_ENDIAN, hexString2Byte(SYSZ_CODE), "SystemZ"),
     };
 
     for (int i=0; i<all_tests.length; i++) {

@@ -20,7 +20,7 @@ public class Xcore {
     public int direct;
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("base", "index", "disp", "direct");
     }
   }
@@ -47,7 +47,7 @@ public class Xcore {
     }
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("type", "value");
     }
   }
@@ -68,7 +68,7 @@ public class Xcore {
     }
 
     @Override
-    public List getFieldOrder() {
+    public List<String> getFieldOrder() {
       return Arrays.asList("op_count", "op");
     }
   }
