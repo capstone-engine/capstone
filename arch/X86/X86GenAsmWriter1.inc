@@ -16620,6 +16620,10 @@ static void printInstruction(MCInst *MI, SStream *O)
     11025U,	// XSHA256
     11322U,	// XSTORE
     11966U,	// XTEST
+    403722517U,	// MOVSX32rm32
+    370168085U,	// MOVSX32rr32
+    403722517U,	// MOVSX16rm32
+    370168085U,	// MOVSX16rr32
   };
 
   static const uint32_t OpInfo1[] = {
@@ -31908,6 +31912,10 @@ static void printInstruction(MCInst *MI, SStream *O)
     0U,	// XSHA256
     0U,	// XSTORE
     0U,	// XTEST
+    0U,	// MOVSX32rm32
+    0U,	// MOVSX32rr32
+    0U,	// MOVSX16rm32
+    0U,	// MOVSX16rr32
   };
 
   unsigned int opcode = MCInst_getOpcode(MI);
