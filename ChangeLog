@@ -1,6 +1,54 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-Alpha8: May 23th, 2026
+
+## What's Changed
+* wasm: add missing error check in read_memoryimmediate() by @Oblivionsage in https://github.com/capstone-engine/capstone/pull/2866
+* Extend M680X support to RS08 by @historicattle in https://github.com/capstone-engine/capstone/pull/2872
+* Python binding: Removing xprint utility used in the tests in v6 branch by @Antelox in https://github.com/capstone-engine/capstone/pull/2874
+* Introduce a +noaliascompressed option to selectively enable none-aliasing for compressed instrcution only but leave aliasing for the rest of instructions by @moste00 in https://github.com/capstone-engine/capstone/pull/2869
+* riscv: remove extra RISCV_INS_INVALID by @12101111 in https://github.com/capstone-engine/capstone/pull/2876
+* update clang-format to 20 by @b1llow in https://github.com/capstone-engine/capstone/pull/2883
+* cs_disasm_iter: return early on zero-size input by @slate5 in https://github.com/capstone-engine/capstone/pull/2886
+* Fix stale values in the detail struct by @slate5 in https://github.com/capstone-engine/capstone/pull/2881
+* Add dependabot.yml by @Rot127 in https://github.com/capstone-engine/capstone/pull/2884
+* x86: correctly handle XACQUIRE/XRELEASE by @jxors in https://github.com/capstone-engine/capstone/pull/2882
+* fix: avoid strnlen() in cs_strndup for Mac OS X 10.5 portability by @Scottcjn in https://github.com/capstone-engine/capstone/pull/2889
+* Fix RISCV aliases by @slate5 in https://github.com/capstone-engine/capstone/pull/2891
+* Document the test boolean values. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2892
+* x86: simplify REX prefix parsing by @jxors in https://github.com/capstone-engine/capstone/pull/2885
+* Fix sysreg registers in RISC-V and modify the header patcher to not crash if a header doesn't include all tags of a generated .inc file by @moste00 in https://github.com/capstone-engine/capstone/pull/2894
+* RISC-V: add reg_access and test its usages in C and Python by @moste00 in https://github.com/capstone-engine/capstone/pull/2895
+* RISCV: Fix operand detection (REAL/ALIAS) by @slate5 in https://github.com/capstone-engine/capstone/pull/2897
+* Coverity fixes by @Rot127 in https://github.com/capstone-engine/capstone/pull/2901
+* Update m68k by @b1llow in https://github.com/capstone-engine/capstone/pull/2880
+* Fix position of comments to not break const_generator.py by @historicattle in https://github.com/capstone-engine/capstone/pull/2906
+* Extend M680X support to HCS12X by @historicattle in https://github.com/capstone-engine/capstone/pull/2898
+* next: Speedup x86 decoding with the help of LUT tables by @trufae in https://github.com/capstone-engine/capstone/pull/2908
+* Implements load libcapstone.so with RTLD_DEEPBIND #2912 by @AGhebrea in https://github.com/capstone-engine/capstone/pull/2913
+* Replace cmake setup with manual steps to reduce dependencies. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2916
+* Python: use setattr to rewire Cs.disasm to avoid type checking errors by @mrexodia in https://github.com/capstone-engine/capstone/pull/2915
+* Handle SStream overflow by truncating appends by @Rot127 in https://github.com/capstone-engine/capstone/pull/2921
+* RISCV: the Ventana vendor is missing in the API by @slate5 in https://github.com/capstone-engine/capstone/pull/2917
+* Fix UB of shift >63. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2922
+* Add M68K ColdFire ISA support by @b1llow in https://github.com/capstone-engine/capstone/pull/2927
+* Fix AArch64 register-offset load/store memory operand access (#2802) by @DanielBotnik in https://github.com/capstone-engine/capstone/pull/2929
+* x86: Decode MOVSXD r32, r/m32 and MOVSXD r16, r/m16 by @0xradulf in https://github.com/capstone-engine/capstone/pull/2930
+
+## New Contributors
+* @Oblivionsage made their first contribution in https://github.com/capstone-engine/capstone/pull/2866
+* @historicattle made their first contribution in https://github.com/capstone-engine/capstone/pull/2872
+* @12101111 made their first contribution in https://github.com/capstone-engine/capstone/pull/2876
+* @slate5 made their first contribution in https://github.com/capstone-engine/capstone/pull/2886
+* @Scottcjn made their first contribution in https://github.com/capstone-engine/capstone/pull/2889
+* @AGhebrea made their first contribution in https://github.com/capstone-engine/capstone/pull/2913
+* @DanielBotnik made their first contribution in https://github.com/capstone-engine/capstone/pull/2929
+* @0xradulf made their first contribution in https://github.com/capstone-engine/capstone/pull/2930
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/6.0.0-Alpha7...6.0.0-Alpha8
+
+-----------------------------
 Version 6.0.0-Alpha7: February 15th, 2026
 
 ## What's Changed
