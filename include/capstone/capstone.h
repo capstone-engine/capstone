@@ -58,7 +58,7 @@ extern "C" {
 // Capstone package version
 #define CS_VERSION_MAJOR CS_API_MAJOR
 #define CS_VERSION_MINOR CS_API_MINOR
-#define CS_VERSION_EXTRA 7
+#define CS_VERSION_EXTRA 9
 
 // Pre-release identifier.
 // A stable release.
