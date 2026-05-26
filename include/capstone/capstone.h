@@ -119,6 +119,15 @@ extern "C" {
 #define CS_aarch64_vas() AArch64Layout_VectorLayout
 #endif
 
+// Pre-release identifier.
+// A stable release.
+#define CS_VERSION_STABLE 0x0
+// The postfix version: Alpha1, Alpha2, ..., Beta1, ...
+#define CS_VERSION_ALPHA9 0xa9
+// The identifier of a pre-release (Alpha, Beta, ...).
+// It is set to CS_VERSION_STABLE, if this code is part of a stable release.
+#define CS_VERSION_PRE_RELEASE CS_VERSION_ALPHA9
+
 /// Macro to create combined version which can be compared to
 /// result of cs_version() API.
 #define CS_MAKE_VERSION(major, minor) ((major << 8) + minor)
