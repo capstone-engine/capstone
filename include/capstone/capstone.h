@@ -65,9 +65,15 @@ extern "C" {
 
 // Pre-release identifier.
 // A stable release.
-#define CS_VERSION_STABLE 0x0
+#define CS_VERSION_STABLE 0xffff
+
 // The postfix version: Alpha1, Alpha2, ..., Beta1, ...
-#define CS_VERSION_ALPHA9 0xa9
+#define CS_VERSION_ALPHA 0xa000
+#define CS_VERSION_ALPHA9 (CS_VERSION_ALPHA | 9)
+
+#define CS_VERSION_BETA 0xb000
+#define CS_VERSION_BETA1 (CS_VERSION_BETA | 1)
+
 // The identifier of a pre-release (Alpha, Beta, ...).
 // It is set to CS_VERSION_STABLE, if this code is part of a stable release.
 #define CS_VERSION_PRE_RELEASE CS_VERSION_ALPHA9
