@@ -414,7 +414,8 @@ bool map_use_alias_details(const MCInst *MI)
 {
 	assert(MI);
 	return (MI->csh->detail_opt & CS_OPT_ON) &&
-	       !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
+	       !(MI->csh->detail_opt & CS_OPT_DETAIL_REAL) &&
+	       !(MI->csh->detail_opt & CS_OPT_DETAIL_ALIAS_REAL);
 }
 
 /// Sets the setDetailOps flag to @p Val.

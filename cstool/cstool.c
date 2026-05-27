@@ -643,7 +643,7 @@ static void usage(char *prog)
 	int i, j;
 	printf("Cstool for Capstone Disassembler Engine v%u.%u.%u\n\n",
 	       CS_VERSION_MAJOR, CS_VERSION_MINOR, CS_VERSION_EXTRA);
-	printf("Syntax: %s [-d|-a|-r|-s|-u|-v] <arch+opts> <assembly-hexstring> [start-address-in-hex-format]\n",
+	printf("Syntax: %s [-d|-a|-r|-R|-s|-u|-v] <arch+opts> <assembly-hexstring> [start-address-in-hex-format]\n",
 	       prog);
 	printf("\nThe following <arch+opts> options are supported:\n");
 
@@ -676,6 +676,7 @@ static void usage(char *prog)
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
 	printf("        -r show detailed information of the real instructions (even for alias)\n");
+	printf("        -R show detailed information of the real instructions for aliases only (not for compressed)\n");
 	printf("        -a Print Capstone register alias (if any). Otherwise LLVM register names are emitted.\n");
 	printf("        -s decode in SKIPDATA mode\n");
 	printf("        -u show immediates as unsigned\n");
@@ -690,6 +691,10 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 		       cs_insn_name(handle, ins->alias_id));
 		printf("with %s operand set\n",
 		       ins->usesAliasDetails ? "ALIAS" : "REAL");
+	}
+	if (ins->uncompressed_id) {
+		printf("\tUncompressed: %" PRIu64 " (%s)\n", ins->uncompressed_id,
+		       cs_insn_name(handle, ins->uncompressed_id));
 	}
 
 	switch (arch) {
@@ -839,15 +844,19 @@ int main(int argc, char **argv)
 	bool skipdata = false;
 	bool custom_reg_alias = false;
 	bool set_real_detail = false;
+	bool set_alias_real_detail = false;
 	int args_left;
 
-	while ((c = getopt(argc, argv, "rasudhvf")) != -1) {
+	while ((c = getopt(argc, argv, "rRasudhvf")) != -1) {
 		switch (c) {
 		case 'a':
 			custom_reg_alias = true;
 			break;
 		case 'r':
 			set_real_detail = true;
+			break;
+		case 'R':
+			set_alias_real_detail = true;
 			break;
 		case 's':
 			skipdata = true;
@@ -1061,6 +1070,11 @@ int main(int argc, char **argv)
 	if (set_real_detail) {
 		cs_option(handle, CS_OPT_DETAIL,
 			  (CS_OPT_DETAIL_REAL | CS_OPT_ON));
+	}
+
+	if (set_alias_real_detail) {
+		cs_option(handle, CS_OPT_DETAIL,
+			  (CS_OPT_DETAIL_ALIAS_REAL | CS_OPT_ON));
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);

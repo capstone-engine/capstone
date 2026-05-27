@@ -372,6 +372,9 @@ typedef enum cs_opt_value {
 	CS_OPT_DETAIL_REAL =
 		1
 		<< 1, ///< If enabled, always sets the real instruction detail. Even if the instruction is an alias.
+	CS_OPT_DETAIL_ALIAS_REAL =
+		1
+		<< 2, ///< Like CS_OPT_DETAIL_REAL but only for alias instructions. Compressed instructions that are uncompressed keep alias details.
 } cs_opt_value;
 
 /// An option
@@ -550,6 +553,12 @@ typedef struct cs_insn {
 	/// Otherwise to <ARCH>_INS_INVALID.
 	/// -- Only supported by auto-sync archs --
 	uint64_t alias_id;
+
+	/// If this instruction is a compressed instruction (RISCV only),
+	/// this member is set with the ID of its non-compressed equivalent.
+	/// Otherwise 0 (i.e. <ARCH>_INS_INVALID).
+	/// -- Only supported by RISCV --
+	uint64_t uncompressed_id;
 
 	/// Address (EIP) of this instruction
 	/// This information is available even when CS_OPT_DETAIL = CS_OPT_OFF

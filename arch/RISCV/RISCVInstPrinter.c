@@ -374,6 +374,7 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 	MI->MRI = (MCRegisterInfo *)info;
 
 	MCInst_setIsAlias(MI, false);
+	MI->flat_insn->uncompressed_id = 0;
 	bool usesAliasDetails = map_use_alias_details(MI);
 	MI->flat_insn->usesAliasDetails = usesAliasDetails;
 
@@ -392,8 +393,10 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 		Uncompressed.csh = MI->csh;
 		Uncompressed.flat_insn = MI->flat_insn;
 		is_uncompressed = true;
-		// not the LLVM terminology, but we consider an uncompressed instruction to be an alias too
-		MCInst_setIsAlias(MI, true);
+		const insn_map *umap = lookup_insn_map(MI->csh,
+						       MCInst_getOpcode(&Uncompressed));
+		if (umap)
+			MI->flat_insn->uncompressed_id = umap->mapid;
 	}
 
 	// print the exact instruction text and done
@@ -414,9 +417,13 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 		}
 	}
 
-	bool isAliasInstruction = MCInst_isAlias(MI);
-	// do we still want the exact details regardless of if the text is alias or not ?
-	if (isAliasInstruction && !usesAliasDetails && detail_is_set(MI)) {
+	bool real = MI->csh->detail_opt & CS_OPT_DETAIL_REAL;
+	// CS_OPT_DETAIL_REAL takes priority: if enabled, then real details for both aliases and compressed instructions
+	// CS_OPT_DETAIL_ALIAS_REAL applies when CS_OPT_DETAIL_REAL is absent: real details for aliases only
+	bool replaceWithRealDetails = real ? (MCInst_isAlias(MI) || is_uncompressed) : MCInst_isAlias(MI);
+
+	// do we still want the exact details (regardless of if the text is alias or not) ?
+	if (replaceWithRealDetails && !usesAliasDetails && detail_is_set(MI)) {
 		// disable actual printing
 		SStream_Close(O);
 		// discard the alias operands
@@ -431,7 +438,7 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 	}
 	RISCV_add_groups(MI);
 
-	// HACKS (PLEASE INVESTIGATE)
+	// HACKS (TODO: INVESTIGATE later)
 	RISCV_add_missing_write_access(MI);
 	RISCV_compact_operands(MI);
 	// END HACKS
