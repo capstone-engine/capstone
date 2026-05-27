@@ -60,6 +60,21 @@ extern "C" {
 #define CS_VERSION_MINOR CS_API_MINOR
 #define CS_VERSION_EXTRA 7
 
+// Pre-release identifier.
+// A stable release.
+#define CS_VERSION_STABLE 0xffff
+
+// The postfix version: Alpha1, Alpha2, ..., Beta1, ...
+#define CS_VERSION_ALPHA 0xa000
+#define CS_VERSION_ALPHA9 (CS_VERSION_ALPHA | 9)
+
+#define CS_VERSION_BETA 0xb000
+#define CS_VERSION_BETA1 (CS_VERSION_BETA | 1)
+
+// The identifier of a pre-release (Alpha, Beta, ...).
+// It is set to CS_VERSION_STABLE, if this code is part of a stable release.
+#define CS_VERSION_PRE_RELEASE CS_VERSION_STABLE
+
 /// Macro for meta programming.
 /// Meant for projects using Capstone and need to support multiple
 /// versions of it.
@@ -118,21 +133,6 @@ extern "C" {
 #define CS_aarch64_shifter() aarch64_shifter
 #define CS_aarch64_vas() AArch64Layout_VectorLayout
 #endif
-
-// Pre-release identifier.
-// A stable release.
-#define CS_VERSION_STABLE 0xffff
-
-// The postfix version: Alpha1, Alpha2, ..., Beta1, ...
-#define CS_VERSION_ALPHA 0xa000
-#define CS_VERSION_ALPHA9 (CS_VERSION_ALPHA | 9)
-
-#define CS_VERSION_BETA 0xb000
-#define CS_VERSION_BETA1 (CS_VERSION_BETA | 1)
-
-// The identifier of a pre-release (Alpha, Beta, ...).
-// It is set to CS_VERSION_STABLE, if this code is part of a stable release.
-#define CS_VERSION_PRE_RELEASE CS_VERSION_ALPHA9
 
 /// Macro to create combined version which can be compared to
 /// result of cs_version() API.
