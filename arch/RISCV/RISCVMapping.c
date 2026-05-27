@@ -377,7 +377,7 @@ const char *RISCV_insn_name(csh handle, unsigned int id)
 	if (id < RISCV_INS_ENDING)
 		return insn_name_maps[id];
 
-	if (id < RISCV_INS_ALIAS_END)
+	if (id > RISCV_INS_ALIAS_BEGIN && id < RISCV_INS_ALIAS_END)
 		return insn_alias_mnem_map[id - RISCV_INS_ALIAS_BEGIN - 1].name;
 #endif
 	return NULL;
