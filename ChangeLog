@@ -1,6 +1,16 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-Alpha9: May 28th, 2026
+
+## What's Changed
+* Add post fix version by @Rot127 in https://github.com/capstone-engine/capstone/pull/2935
+* Fix reachable OOB read in M68KInstPrinter.c and RISCVMapping.c (GHSA-jrw4-wj52-2vw8).
+* Fix invalid decoding for malformed br_table instruction in WASM (GHSA-5m9f-vqcm-g5pr).
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/6.0.0-Alpha8...6.0.0-Alpha9
+
+-----------------------------
 Version 6.0.0-Alpha8: May 23th, 2026
 
 ## What's Changed
