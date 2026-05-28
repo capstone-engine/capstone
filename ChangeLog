@@ -1,6 +1,15 @@
 This file details the changelog of Capstone.
 
 --------------------------------
+Version 5.0.9: May 28th, 2026
+
+## What's Changed
+
+* Set the correct CS_VERSION_EXTRA version number in capstone.h
+* Fix reachable OOB read in M68KInstPrinter.c (GHSA-jrw4-wj52-2vw8).
+* Fix invalid decoding for malformed br_table instruction in WASM (GHSA-5m9f-vqcm-g5pr).
+
+--------------------------------
 Version 5.0.8: May 23th, 2026
 
 ## What's Changed
