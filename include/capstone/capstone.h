@@ -70,13 +70,14 @@ extern "C" {
 // The postfix version: Alpha1, Alpha2, ..., Beta1, ...
 #define CS_VERSION_ALPHA 0xa000
 #define CS_VERSION_ALPHA9 (CS_VERSION_ALPHA | 9)
+#define CS_VERSION_ALPHA10 (CS_VERSION_ALPHA | 10)
 
 #define CS_VERSION_BETA 0xb000
 #define CS_VERSION_BETA1 (CS_VERSION_BETA | 1)
 
 // The identifier of a pre-release (Alpha, Beta, ...).
 // It is set to CS_VERSION_STABLE, if this code is part of a stable release.
-#define CS_VERSION_PRE_RELEASE CS_VERSION_ALPHA9
+#define CS_VERSION_PRE_RELEASE CS_VERSION_ALPHA10
 
 /// Macro to create combined version which can be compared to
 /// result of cs_version() API.
