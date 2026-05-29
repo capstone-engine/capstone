@@ -6646,3 +6646,22 @@ test_cases:
           regs_read: [ rax ]
           regs_write: [ sp ]
           groups: [ mode64 ]
+  -
+    input:
+      name: "AArch64 - #2878 - literal load target must not be truncated to 32 bits"
+      bytes: [ 0xa8, 0x79, 0x29, 0x58 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x100c894d4
+    expected:
+      insns:
+      -
+        asm_text: "ldr x8, 0x100cdc408"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x100cdc408

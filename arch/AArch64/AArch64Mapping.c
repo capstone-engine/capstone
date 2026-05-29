@@ -2493,6 +2493,18 @@ void AArch64_set_detail_op_reg(MCInst *MI, unsigned OpNum, aarch64_reg Reg)
 	AArch64_inc_op_count(MI);
 }
 
+/// Check if the previous operand is a memory operand whose base register was
+/// just set, but which has no index and no displacement yet.
+/// This indicates the following immediate is this memory operand's
+/// displacement (e.g. the offset in `ldr x0, [x1, #8]`).
+static bool prev_is_mem_base(MCInst *MI)
+{
+	return AArch64_get_detail(MI)->op_count > 0 &&
+	       AArch64_get_detail_op(MI, -1)->type == AARCH64_OP_MEM &&
+	       AArch64_get_detail_op(MI, -1)->mem.index == AARCH64_REG_INVALID &&
+	       AArch64_get_detail_op(MI, -1)->mem.disp == 0;
+}
+
 /// Check if the previous operand is a memory operand
 /// with only the base register set AND if this base register
 /// is write-back.
@@ -2530,13 +2542,24 @@ void AArch64_set_detail_op_imm(MCInst *MI, unsigned OpNum,
 		}
 		return;
 	}
-	if (map_get_op_type(MI, OpNum) & CS_OP_MEM || prev_is_membase_wb(MI)) {
+	// An operand can be flagged as both immediate and memory
+	// (CS_OP_IMM | CS_OP_MEM). It is only stored as a memory displacement if
+	// a memory operand is actually being assembled, i.e. its base register
+	// was set right before this operand or the previous operand is a
+	// write-back base for a post-indexed offset. Otherwise the value is a
+	// standalone immediate (e.g. the PC-relative target of a literal load
+	// like `ldr x0, <label>`), which must not be truncated into the 32 bit
+	// memory displacement field.
+	if ((map_get_op_type(MI, OpNum) & CS_OP_MEM && prev_is_mem_base(MI)) ||
+	    prev_is_membase_wb(MI)) {
 		AArch64_set_detail_op_mem(MI, OpNum, Imm);
 		return;
 	}
 
-	CS_ASSERT_RET(!(map_get_op_type(MI, OpNum) & CS_OP_MEM));
-	CS_ASSERT_RET((map_get_op_type(MI, OpNum) & ~CS_OP_BOUND) == CS_OP_IMM);
+	// Operands flagged as memory only reach this point when they are not
+	// part of a memory operand currently being assembled (see above), so
+	// they are emitted as a plain immediate.
+	CS_ASSERT_RET(map_get_op_type(MI, OpNum) & CS_OP_IMM);
 	CS_ASSERT_RET(ImmType == AARCH64_OP_IMM || ImmType == AARCH64_OP_CIMM);
 
 	AArch64_get_detail_op(MI, 0)->type = ImmType;
