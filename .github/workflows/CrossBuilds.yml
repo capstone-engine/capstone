@@ -1,0 +1,246 @@
+name: Cross Build Tests
+on:
+  push:
+    paths-ignore:
+      - ".gitignore"
+      - "docs/**"
+      - "ChangeLog"
+      - "CREDITS.TXT"
+      - "COMPILE.TXT"
+      - "COMPILE_CMAKE.TXT"
+      - "COMPILE_MSVC.TXT"
+      - "HACK.TXT"
+      - "LICENSE.TXT"
+      - "LICENSE_LLVM.TXT"
+      - "README.md"
+      - "RELEASE_NOTES"
+      - "SPONSORS.TXT"
+  pull_request:
+
+# Stop previous runs on the same branch on new push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: true
+  UBSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+  ASAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+  LSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+
+jobs:
+  Linux:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {
+              name: 'QEMU Linux s390x',
+              os: ubuntu-24.04,
+              system: 'Linux',
+              processor: 's390x',
+              cc: 's390x-linux-gnu-gcc',
+              cxx: 's390x-linux-gnu-g++',
+              sysroot: '/usr/s390x-linux-gnu',
+              qemu: 'qemu-s390x-static',
+              build_type: 'Debug',
+              packages: 'gcc-s390x-linux-gnu g++-s390x-linux-gnu binutils-s390x-linux-gnu libc6-dev-s390x-cross qemu-user-static',
+              build_tests: 'ON',
+              diet_build: 'OFF',
+              toolchain_file: 'build/toolchain.cmake',
+            }
+          - {
+              name: 'QEMU Linux MIPS 32 BE',
+              os: ubuntu-24.04,
+              system: 'Linux',
+              processor: 'mips',
+              cc: 'mips-linux-gnu-gcc',
+              cxx: 'mips-linux-gnu-g++',
+              sysroot: '/usr/mips-linux-gnu',
+              qemu: 'qemu-mips-static',
+              build_type: 'Debug',
+              packages: 'gcc-mips-linux-gnu g++-mips-linux-gnu binutils-mips-linux-gnu libc6-dev-mips-cross qemu-user-static',
+              build_tests: 'ON',
+              diet_build: 'OFF',
+              toolchain_file: 'build/toolchain.cmake',
+            }
+          - {
+              name: 'QEMU Linux Mips64el',
+              os: ubuntu-24.04,
+              system: 'Linux',
+              processor: 'mips64el',
+              cc: 'mips64el-linux-gnuabi64-gcc',
+              cxx: 'mips64el-linux-gnuabi64-g++',
+              sysroot: '/usr/mips64el-linux-gnuabi64',
+              qemu: 'qemu-mips64el-static',
+              build_type: 'Debug',
+              packages: 'gcc-mips64el-linux-gnuabi64 g++-mips64el-linux-gnuabi64 binutils-mips64el-linux-gnuabi64 libc6-dev-mips64el-cross qemu-user-static',
+              build_tests: 'ON',
+              diet_build: 'OFF',
+              toolchain_file: 'build/toolchain.cmake',
+            }
+          - {
+              name: 'QEMU Linux PPC64',
+              os: ubuntu-24.04,
+              system: 'Linux',
+              processor: 'ppc64',
+              cc: 'powerpc64-linux-gnu-gcc',
+              cxx: 'powerpc64-linux-gnu-g++',
+              sysroot: '/usr/powerpc64-linux-gnu',
+              qemu: 'qemu-ppc64-static',
+              build_type: 'Debug',
+              packages: 'gcc-powerpc64-linux-gnu g++-powerpc64-linux-gnu binutils-powerpc64-linux-gnu libc6-dev-ppc64-cross qemu-user-static',
+              build_tests: 'ON',
+              diet_build: 'OFF',
+              toolchain_file: 'build/toolchain.cmake',
+            }
+          - {
+              name: 'QEMU Linux ARM',
+              os: ubuntu-24.04,
+              system: 'Linux',
+              processor: 'arm',
+              cc: 'arm-linux-gnueabihf-gcc',
+              cxx: 'arm-linux-gnueabihf-g++',
+              sysroot: '/usr/arm-linux-gnueabihf',
+              qemu: 'qemu-arm-static',
+              build_type: 'Debug',
+              packages: 'gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-armhf-cross libc6-dev-armhf-cross qemu-user-static',
+              build_tests: 'ON',
+              diet_build: 'OFF',
+              toolchain_file: 'build/toolchain.cmake',
+            }
+          - {
+              name: '[BUILD ONLY] Windows i686 mingw',
+              os: ubuntu-24.04,
+              system: 'Windows',
+              processor: 'i686',
+              cc: 'i686-w64-mingw32-gcc',
+              cxx: 'i686-w64-mingw32-g++',
+              rc: 'i686-w64-mingw32-windres',
+              find_root: '/usr/i686-w64-mingw32',
+              build_type: 'Debug',
+              skip_tests: true,
+              packages: 'gcc-mingw-w64-i686 g++-mingw-w64-i686 mingw-w64-tools',
+              build_tests: 'OFF',
+              diet_build: 'OFF',
+              toolchain_file: 'build/toolchain.cmake',
+            }
+          - {
+              name: '[BUILD ONLY] Android 35 (arm64_v8a) NDK 29',
+              os: ubuntu-24.04,
+              system: 'Android',
+              processor: 'aarch64',
+              build_option: '-DANDROID_PLATFORM=android-35 -DANDROID_ABI=arm64-v8a',
+              build_type: 'Debug',
+              # QEMU alone can't emulate the binaries, because the NDK doesn't
+              # provide dynamic linker.
+              skip_tests: true,
+              packages: 'qemu-user-static unzip wget',
+              ndk_version: 'r29',
+              build_tests: 'OFF',
+              diet_build: 'OFF',
+              toolchain_file: 'ndk/build/cmake/android.toolchain.cmake',
+            }
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install cross build dependencies
+      if: ${{ matrix.config.packages != '' }}
+      env:
+        packages: ${{ matrix.config.packages }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ${packages}
+
+    - name: Setup Android NDK
+      if: contains(matrix.config.name, 'Android')
+      env:
+        ndk_version: ${{ matrix.config.ndk_version }}
+      run: |
+        wget -q https://dl.google.com/android/repository/android-ndk-${ndk_version}-linux.zip
+        unzip -q android-ndk-${ndk_version}-linux.zip
+        mv android-ndk-${ndk_version} ndk
+        cat ndk/source.properties
+
+    - name: Write CMake cross toolchain
+      if: ${{ !contains(matrix.config.name, 'Android') }}
+      env:
+        system: ${{ matrix.config.system }}
+        processor: ${{ matrix.config.processor }}
+        cc: ${{ matrix.config.cc }}
+        cxx: ${{ matrix.config.cxx }}
+        rc: ${{ matrix.config.rc }}
+        find_root: ${{ matrix.config.find_root }}
+        sysroot: ${{ matrix.config.sysroot }}
+        qemu: ${{ matrix.config.qemu }}
+      run: |
+        mkdir -p build
+        {
+          echo "set(CMAKE_SYSTEM_NAME ${system})"
+          echo "set(CMAKE_SYSTEM_PROCESSOR ${processor})"
+          echo "set(CMAKE_C_COMPILER ${cc})"
+          echo "set(CMAKE_CXX_COMPILER ${cxx})"
+          echo "set(CMAKE_ASM_COMPILER ${cc})"
+          if [ -n "${rc}" ]; then
+            echo "set(CMAKE_RC_COMPILER ${rc})"
+          fi
+          if [ -n "${find_root}" ]; then
+            echo "set(CMAKE_FIND_ROOT_PATH ${find_root})"
+          fi
+          echo "set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)"
+          echo "set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)"
+          echo "set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)"
+          if [ "${system}" = "Linux" ]; then
+            echo "set(CMAKE_SYSROOT ${sysroot}/usr)"
+            echo "set(CMAKE_CROSSCOMPILING_EMULATOR ${qemu};-L;${sysroot})"
+          fi
+        } > build/toolchain.cmake
+
+    - name: cmake (cross build)
+      env:
+        build_option: ${{ matrix.config.build_option }}
+        build_type: ${{ matrix.config.build_type }}
+        build_tests: ${{ matrix.config.build_tests }}
+        diet_build: ${{ matrix.config.diet_build }}
+        toolchain_file: ${{ matrix.config.toolchain_file }}
+      run: |
+        cmake -DCMAKE_BUILD_TYPE=${build_type} \
+          -DBUILD_STATIC_LIBS=ON \
+          -DBUILD_SHARED_LIBS=OFF \
+          -DCAPSTONE_BUILD_TESTS=${build_tests} \
+          -DCAPSTONE_BUILD_CSTOOL=ON \
+          -DCAPSTONE_BUILD_CSTEST=OFF \
+          -S . \
+          -DCAPSTONE_BUILD_DIET=${diet_build} \
+          -DCMAKE_TOOLCHAIN_FILE=${toolchain_file} \
+          ${build_option} \
+          -B build
+        cmake --build build --config ${build_type} --parallel
+
+    - name: C tests
+      if: ${{ matrix.config.skip_tests != true }}
+      run: |
+        ctest --test-dir build --output-on-failure -R '^capstone_'
+
+    - name: cstool regressions
+      if: ${{ matrix.config.skip_tests != true }}
+      env:
+        qemu: ${{ matrix.config.qemu }}
+        sysroot: ${{ matrix.config.sysroot }}
+      run: |
+        check_cstool() {
+          expected=$1
+          shift
+          output="$(${qemu} -L "${sysroot}" build/cstool "$@")"
+          echo "${output}"
+          grep -F "${expected}" <<< "${output}"
+        }
+
+        check_cstool 'ori.l	#$12345678, d0' m68k40 008012345678
+        check_cstool 'jsr	$12345678.l' m68k40 4eb912345678
+        check_cstool 'jsr	$1234.w' m68k40 4eb81234
+        check_cstool 'dc.w	$ffff' m68k40 ffff
+        check_cstool 'mov	esi, dword ptr [rdx + rax*4]' x64 8b3482 0
