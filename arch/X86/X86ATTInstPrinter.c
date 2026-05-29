@@ -707,7 +707,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 	MCOperand *IndexReg  = MCInst_getOperand(MI, Op + X86_AddrIndexReg);
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op + X86_AddrDisp);
 	MCOperand *SegReg = MCInst_getOperand(MI, Op + X86_AddrSegmentReg);
-	uint64_t ScaleVal;
+	unsigned int ScaleVal;
 	int segreg;
 	int64_t DispVal = 1;
 
@@ -769,7 +769,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
         if (MCOperand_getReg(IndexReg) && MCOperand_getReg(IndexReg) != X86_EIZ) {
 			SStream_concat0(O, ", ");
 			_printOperand(MI, Op + X86_AddrIndexReg, O);
-			ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op + X86_AddrScaleAmt));
+			ScaleVal = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, Op + X86_AddrScaleAmt));
 			if (MI->csh->detail)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = (int)ScaleVal;
 			if (ScaleVal != 1) {

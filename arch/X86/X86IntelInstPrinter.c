@@ -929,7 +929,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 {
 	bool NeedPlus = false;
 	MCOperand *BaseReg  = MCInst_getOperand(MI, Op + X86_AddrBaseReg);
-	uint64_t ScaleVal = MCOperand_getImm(MCInst_getOperand(MI, Op + X86_AddrScaleAmt));
+	unsigned int ScaleVal = (unsigned int)MCOperand_getImm(MCInst_getOperand(MI, Op + X86_AddrScaleAmt));
 	MCOperand *IndexReg  = MCInst_getOperand(MI, Op + X86_AddrIndexReg);
 	MCOperand *DispSpec = MCInst_getOperand(MI, Op + X86_AddrDisp);
 	MCOperand *SegReg = MCInst_getOperand(MI, Op + X86_AddrSegmentReg);
