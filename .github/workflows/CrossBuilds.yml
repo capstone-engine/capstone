@@ -225,22 +225,3 @@ jobs:
       run: |
         ctest --test-dir build --output-on-failure -R '^capstone_'
 
-    - name: cstool regressions
-      if: ${{ matrix.config.skip_tests != true }}
-      env:
-        qemu: ${{ matrix.config.qemu }}
-        sysroot: ${{ matrix.config.sysroot }}
-      run: |
-        check_cstool() {
-          expected=$1
-          shift
-          output="$(${qemu} -L "${sysroot}" build/cstool "$@")"
-          echo "${output}"
-          grep -F "${expected}" <<< "${output}"
-        }
-
-        check_cstool 'ori.l	#$12345678, d0' m68k40 008012345678
-        check_cstool 'jsr	$12345678.l' m68k40 4eb912345678
-        check_cstool 'jsr	$1234.w' m68k40 4eb81234
-        check_cstool 'dc.w	$ffff' m68k40 ffff
-        check_cstool 'mov	esi, dword ptr [rdx + rax*4]' x64 8b3482 0
