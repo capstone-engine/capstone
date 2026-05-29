@@ -24,7 +24,7 @@ jobs:
           python-version: '3.11'
 
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: true
 
