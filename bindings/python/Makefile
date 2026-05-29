@@ -56,10 +56,17 @@ TESTS += test_ppc.py test_sparc.py test_systemz.py test_x86.py test_xcore.py tes
 TESTS += test_m680x.py test_skipdata.py test_mos65xx.py test_bpf.py test_riscv.py
 TESTS += test_evm.py
 
+REGRESS_TESTS = ../../suite/regress/test_arm64_atomics.py
+
 check:
 	@for t in $(TESTS); do \
 		echo Check $$t ... ; \
-		./$$t > /dev/null; \
+		( cd tests && ./$$t > /dev/null ); \
+		if [ $$? -eq 0 ]; then echo OK; else echo FAILED; exit 1; fi \
+	done
+	@for t in $(REGRESS_TESTS); do \
+		echo Check $$t ... ; \
+		$(PYTHON3) $$t > /dev/null; \
 		if [ $$? -eq 0 ]; then echo OK; else echo FAILED; exit 1; fi \
 	done
 
