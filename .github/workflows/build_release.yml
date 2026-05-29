@@ -54,7 +54,7 @@ jobs:
         path: ${{ steps.archive.outputs.shasum }}
 
     - name: Upload tarball and shasum to release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -90,7 +90,7 @@ jobs:
         path: ./build/*.rpm
 
     - name: Upload debian package to release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -141,7 +141,7 @@ jobs:
         path: ./build/*.exe
 
     - name: Upload NSIS installer to release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
