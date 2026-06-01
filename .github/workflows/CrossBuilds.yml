@@ -46,7 +46,7 @@ jobs:
               packages: 'gcc-s390x-linux-gnu g++-s390x-linux-gnu binutils-s390x-linux-gnu libc6-dev-s390x-cross qemu-user-static',
               build_tests: 'ON',
               diet_build: 'OFF',
-              toolchain_file: 'build/toolchain.cmake',
+              toolchain_file: 'toolchain.cmake',
             }
           - {
               name: 'QEMU Linux MIPS 32 BE',
@@ -61,7 +61,7 @@ jobs:
               packages: 'gcc-mips-linux-gnu g++-mips-linux-gnu binutils-mips-linux-gnu libc6-dev-mips-cross qemu-user-static',
               build_tests: 'ON',
               diet_build: 'OFF',
-              toolchain_file: 'build/toolchain.cmake',
+              toolchain_file: 'toolchain.cmake',
             }
           - {
               name: 'QEMU Linux Mips64el',
@@ -76,7 +76,7 @@ jobs:
               packages: 'gcc-mips64el-linux-gnuabi64 g++-mips64el-linux-gnuabi64 binutils-mips64el-linux-gnuabi64 libc6-dev-mips64el-cross qemu-user-static',
               build_tests: 'ON',
               diet_build: 'OFF',
-              toolchain_file: 'build/toolchain.cmake',
+              toolchain_file: 'toolchain.cmake',
             }
           - {
               name: 'QEMU Linux PPC64',
@@ -91,7 +91,7 @@ jobs:
               packages: 'gcc-powerpc64-linux-gnu g++-powerpc64-linux-gnu binutils-powerpc64-linux-gnu libc6-dev-ppc64-cross qemu-user-static',
               build_tests: 'ON',
               diet_build: 'OFF',
-              toolchain_file: 'build/toolchain.cmake',
+              toolchain_file: 'toolchain.cmake',
             }
           - {
               name: 'QEMU Linux ARM',
@@ -106,7 +106,7 @@ jobs:
               packages: 'gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-armhf-cross libc6-dev-armhf-cross qemu-user-static',
               build_tests: 'ON',
               diet_build: 'OFF',
-              toolchain_file: 'build/toolchain.cmake',
+              toolchain_file: 'toolchain.cmake',
             }
           - {
               name: '[BUILD ONLY] Windows i686 mingw',
@@ -122,7 +122,7 @@ jobs:
               packages: 'gcc-mingw-w64-i686 g++-mingw-w64-i686 mingw-w64-tools',
               build_tests: 'OFF',
               diet_build: 'OFF',
-              toolchain_file: 'build/toolchain.cmake',
+              toolchain_file: 'toolchain.cmake',
             }
           - {
               name: '[BUILD ONLY] Android 35 (arm64_v8a) NDK 29',
@@ -162,8 +162,7 @@ jobs:
         mv android-ndk-${ndk_version} ndk
         cat ndk/source.properties
 
-    - name: Write CMake cross toolchain
-      if: ${{ !contains(matrix.config.name, 'Android') }}
+    - name: cmake (cross build)
       env:
         system: ${{ matrix.config.system }}
         processor: ${{ matrix.config.processor }}
@@ -173,31 +172,6 @@ jobs:
         find_root: ${{ matrix.config.find_root }}
         sysroot: ${{ matrix.config.sysroot }}
         qemu: ${{ matrix.config.qemu }}
-      run: |
-        mkdir -p build
-        {
-          echo "set(CMAKE_SYSTEM_NAME ${system})"
-          echo "set(CMAKE_SYSTEM_PROCESSOR ${processor})"
-          echo "set(CMAKE_C_COMPILER ${cc})"
-          echo "set(CMAKE_CXX_COMPILER ${cxx})"
-          echo "set(CMAKE_ASM_COMPILER ${cc})"
-          if [ -n "${rc}" ]; then
-            echo "set(CMAKE_RC_COMPILER ${rc})"
-          fi
-          if [ -n "${find_root}" ]; then
-            echo "set(CMAKE_FIND_ROOT_PATH ${find_root})"
-          fi
-          echo "set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)"
-          echo "set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)"
-          echo "set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)"
-          if [ "${system}" = "Linux" ]; then
-            echo "set(CMAKE_SYSROOT ${sysroot}/usr)"
-            echo "set(CMAKE_CROSSCOMPILING_EMULATOR ${qemu};-L;${sysroot})"
-          fi
-        } > build/toolchain.cmake
-
-    - name: cmake (cross build)
-      env:
         build_option: ${{ matrix.config.build_option }}
         build_type: ${{ matrix.config.build_type }}
         build_tests: ${{ matrix.config.build_tests }}
@@ -222,3 +196,9 @@ jobs:
       run: |
         ctest --test-dir build --output-on-failure -R '^capstone_'
 
+    - name: cstest
+      shell: 'script -q -e -c "bash {0}"'
+      run: |
+        cd suite/cstest && ./build_cstest.sh;
+        python cstest_report.py -D -t build/cstest -d ../MC;
+        python cstest_report.py -D -t build/cstest -f issues.cs; cd ..;
