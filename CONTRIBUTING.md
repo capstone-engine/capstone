@@ -8,10 +8,12 @@ Capstone source is organized as followings.
 ├── arch            <- code handling disasm engine for each arch
 │   ├── AArch64     <- AArch64 engine
 │   ├── Alpha       <- Alpha engine
+│   ├── ARC         <- ARC engine
 │   ├── ARM         <- ARM engine
 │   ├── BPF         <- Berkeley Packet Filter engine
 │   ├── EVM         <- Ethereum engine
 │   ├── HPPA        <- HPPA engine
+│   ├── LoongArch   <- LoongArch engine
 │   ├── M680X       <- M680X engine
 │   ├── M68K        <- M68K engine
 │   ├── Mips        <- Mips engine
@@ -23,7 +25,10 @@ Capstone source is organized as followings.
 │   ├── SystemZ     <- SystemZ engine
 │   ├── TMS320C64x  <- TMS320C64x engine
 │   ├── TriCore     <- TriCore engine
-│   └── WASM        <- WASM engine
+│   ├── WASM        <- WASM engine
+│   ├── X86         <- x86 engine
+│   ├── XCore       <- XCore engine
+│   └── Xtensa      <- Xtensa engine
 ├── bindings        <- all bindings are under this dir
 │   ├── java        <- Java bindings
 │   ├── ocaml       <- Ocaml bindings
