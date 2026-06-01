@@ -1327,6 +1327,23 @@ test_cases:
         asm_text: "fadd.s #3.141500, fp0"
   -
     input:
+      name: "M68K printer integer immediates on 32-bit big endian hosts"
+      bytes: [ 0x00,0x80,0x12,0x34,0x56,0x78, 0x4e,0xb9,0x12,0x34,0x56,0x78, 0x4e,0xb8,0x12,0x34, 0xf8,0x00 ]
+      arch: "CS_ARCH_M68K"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ori.l #$12345678, d0"
+      -
+        asm_text: "jsr $12345678.l"
+      -
+        asm_text: "jsr $1234.w"
+      -
+        asm_text: "dc.w $f800"
+  -
+    input:
       name: "issue 1708 M68K floating point loads and stores generate the same op_str"
       bytes: [ 0xf2,0x27,0x74,0x00 ]
       arch: "CS_ARCH_M68K"
@@ -6297,12 +6314,36 @@ test_cases:
       name: "issue 2339"
       bytes: [ 0x8b, 0x34, 0x82 ]
       arch: "CS_ARCH_X86"
-      options: [ CS_MODE_64 ]
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
       address: 0x0
     expected:
       insns:
       -
         asm_text: "mov  esi, dword ptr [rdx + rax*4]"
+        details:
+          x86:
+            opcode: [ 0x8b, 0x00, 0x00, 0x00 ]
+            addr_size: 8
+            modrm: 0x34
+            sib: 0x82
+            sib_base: rdx
+            sib_index: rax
+            sib_scale: 4
+            operands:
+              -
+                type: X86_OP_REG
+                reg: esi
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: rdx
+                mem_index: rax
+                mem_scale: 4
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ rdx, rax ]
+          regs_write: [ esi ]
   -
     input:
       name: "alpha 64bit addresses"
