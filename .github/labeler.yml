@@ -1,268 +1,300 @@
 Auto-Sync-files:
-- changed-files:
-  - any-glob-to-any-file:
-    - suite/auto-sync/**
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - suite/auto-sync/**
 
 LLVM-core-files:
-- changed-files:
-  - any-glob-to-any-file:
-    - MC*.[ch]
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - MC*.[ch]
 
 LLVM-generated-files:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/*/*.inc
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/*/*.inc
 
 Documentation:
-- changed-files:
-  - any-glob-to-any-file:
-    - '**/*.md'
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.md'
 
 CS-core-files:
-- changed-files:
-  - any-glob-to-any-file:
-    - cs*.[ch]
-    - SStream.[ch]
-    - utis.[ch]
-    - MathExtras.h
-    - Mapping.[ch]
-    - LEB128.h
-    - cstool/cstool.[ch]
-    - cstool/getopt.[ch]
-    - include/capstone/capstone.h
-    - include/capstone/cs_operand.h
-    - include/capstone/platform.h
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - cs*.[ch]
+      - SStream.[ch]
+      - utis.[ch]
+      - MathExtras.h
+      - Mapping.[ch]
+      - LEB128.h
+      - cstool/cstool.[ch]
+      - cstool/getopt.[ch]
+      - include/capstone/capstone.h
+      - include/capstone/cs_operand.h
+      - include/capstone/platform.h
 
 ARM:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/ARM/**
-    - cstool/cstool_arm.c
-    - include/capstone/arm.h
-    - suite/MC/ARM/**
-    - tests/MC/ARM/**
-    - tests/details/arm.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/ARM/**
+      - cstool/cstool_arm.c
+      - include/capstone/arm.h
+      - suite/MC/ARM/**
+      - tests/MC/ARM/**
+      - tests/details/arm.yaml
 
 AArch64:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/AArch64/**
-    - cstool/cstool_aarch64.c
-    - include/capstone/aarch64.h
-    - include/capstone/arm64.h
-    - suite/MC/AArch64/**
-    - tests/MC/AArch64/**
-    - tests/details/aarch64.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/AArch64/**
+      - cstool/cstool_aarch64.c
+      - include/capstone/aarch64.h
+      - include/capstone/arm64.h
+      - suite/MC/AArch64/**
+      - tests/MC/AArch64/**
+      - tests/details/aarch64.yaml
 
 Alpha:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/Alpha/**
-    - cstool/cstool_alpha.c
-    - include/capstone/alpha.h
-    - suite/MC/Alpha/**
-    - tests/MC/Alpha/**
-    - tests/details/alpha.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/Alpha/**
+      - cstool/cstool_alpha.c
+      - include/capstone/alpha.h
+      - suite/MC/Alpha/**
+      - tests/MC/Alpha/**
+      - tests/details/alpha.yaml
 
 ARC:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/ARC/*
-    - cstool/cstool_arc.c
-    - include/capstone/arc.h
-    - suite/MC/ARC/*
-    - tests/test_arc.c
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/ARC/*
+      - cstool/cstool_arc.c
+      - include/capstone/arc.h
+      - suite/MC/ARC/*
+      - tests/test_arc.c
 
 BPF:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/BPF/**
-    - cstool/cstool_bpf.c
-    - include/capstone/bpf.h
-    - suite/MC/BPF/**
-    - tests/MC/BPF/**
-    - tests/details/bpf.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/BPF/**
+      - cstool/cstool_bpf.c
+      - include/capstone/bpf.h
+      - suite/MC/BPF/**
+      - tests/MC/BPF/**
+      - tests/details/bpf.yaml
 
 EVM:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/EVM/**
-    - cstool/cstool_evm.c
-    - include/capstone/evm.h
-    - tests/details/evm.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/EVM/**
+      - cstool/cstool_evm.c
+      - include/capstone/evm.h
+      - tests/details/evm.yaml
 
 HPPA:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/HPPA/**
-    - cstool/cstool_hppa.c
-    - include/capstone/hppa.h
-    - suite/MC/HPPA/**
-    - tests/MC/HPPA/**
-    - tests/details/hppa.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/HPPA/**
+      - cstool/cstool_hppa.c
+      - include/capstone/hppa.h
+      - suite/MC/HPPA/**
+      - tests/MC/HPPA/**
+      - tests/details/hppa.yaml
 
 LoongArch:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/LoongArch/**
-    - cstool/cstool_loongarch.c
-    - include/capstone/loongarch.h
-    - suite/MC/LoongArch/**
-    - tests/MC/LoongArch/**
-    - tests/details/loongarch.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/LoongArch/**
+      - cstool/cstool_loongarch.c
+      - include/capstone/loongarch.h
+      - suite/MC/LoongArch/**
+      - tests/MC/LoongArch/**
+      - tests/details/loongarch.yaml
 
 M680X:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/M680X/**
-    - cstool/cstool_m680x.c
-    - include/capstone/m680x.h
-    - tests/details/m680x.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/M680X/**
+      - cstool/cstool_m680x.c
+      - include/capstone/m680x.h
+      - tests/details/m680x.yaml
 
 M68K:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/M68K/**
-    - cstool/cstool_m68k.c
-    - include/capstone/m68k.h
-    - tests/details/m68k.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/M68K/**
+      - cstool/cstool_m68k.c
+      - include/capstone/m68k.h
+      - tests/details/m68k.yaml
 
 MOS65XX:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/MOS65XX/**
-    - cstool/cstool_mos65xx.c
-    - include/capstone/mos65xx.h
-    - tests/details/mos65xx.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/MOS65XX/**
+      - cstool/cstool_mos65xx.c
+      - include/capstone/mos65xx.h
+      - tests/details/mos65xx.yaml
 
 Mips:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/Mips/**
-    - cstool/cstool_mips.c
-    - include/capstone/mips.h
-    - suite/MC/Mips/**
-    - tests/MC/Mips/**
-    - tests/details/mips.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/Mips/**
+      - cstool/cstool_mips.c
+      - include/capstone/mips.h
+      - suite/MC/Mips/**
+      - tests/MC/Mips/**
+      - tests/details/mips.yaml
 
 PowerPC:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/PowerPC/**
-    - cstool/cstool_powerpc.c
-    - include/capstone/ppc.h
-    - suite/MC/PowerPC/**
-    - tests/MC/PowerPC/**
-    - tests/details/ppc.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/PowerPC/**
+      - cstool/cstool_powerpc.c
+      - include/capstone/ppc.h
+      - suite/MC/PowerPC/**
+      - tests/MC/PowerPC/**
+      - tests/details/ppc.yaml
 
 RISCV:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/RISCV/**
-    - cstool/cstool_riscv.c
-    - include/capstone/riscv.h
-    - suite/MC/RISCV/**
-    - tests/MC/RISCV/**
-    - tests/details/riscv.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/RISCV/**
+      - cstool/cstool_riscv.c
+      - include/capstone/riscv.h
+      - suite/MC/RISCV/**
+      - tests/MC/RISCV/**
+      - tests/details/riscv.yaml
 
 SH:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/SH/**
-    - cstool/cstool_sh.c
-    - include/capstone/sh.h
-    - tests/details/sh.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/SH/**
+      - cstool/cstool_sh.c
+      - include/capstone/sh.h
+      - tests/details/sh.yaml
 
 Sparc:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/Sparc/**
-    - cstool/cstool_sparc.c
-    - include/capstone/sparc.h
-    - suite/MC/Sparc/**
-    - tests/MC/Sparc/**
-    - tests/details/sparc.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/Sparc/**
+      - cstool/cstool_sparc.c
+      - include/capstone/sparc.h
+      - suite/MC/Sparc/**
+      - tests/MC/Sparc/**
+      - tests/details/sparc.yaml
 
 SystemZ:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/SystemZ/**
-    - cstool/cstool_systemz.c
-    - include/capstone/systemz.h
-    - include/capstone/systemz_compatibility.h
-    - suite/MC/SystemZ/**
-    - tests/MC/SystemZ/**
-    - tests/details/systemz.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/SystemZ/**
+      - cstool/cstool_systemz.c
+      - include/capstone/systemz.h
+      - include/capstone/systemz_compatibility.h
+      - suite/MC/SystemZ/**
+      - tests/MC/SystemZ/**
+      - tests/details/systemz.yaml
 
 TMS320C64x:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/TMS320C6x/**
-    - cstool/cstool_tms320c64x.c
-    - include/capstone/tms320x64x.h
-    - tests/details/tms320c64x.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/TMS320C6x/**
+      - cstool/cstool_tms320c64x.c
+      - include/capstone/tms320x64x.h
+      - tests/details/tms320c64x.yaml
 
 TriCore:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/TriCore/**
-    - cstool/cstool_tricore.c
-    - include/capstone/tricore.h
-    - suite/MC/Tricore/**
-    - tests/MC/Tricore/**
-    - tests/details/tricore.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/TriCore/**
+      - cstool/cstool_tricore.c
+      - include/capstone/tricore.h
+      - suite/MC/Tricore/**
+      - tests/MC/Tricore/**
+      - tests/details/tricore.yaml
 
 WASM:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/WASM/**
-    - cstool/cstool_wasm.c
-    - include/capstone/wasm.h
-    - tests/details/wasm.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/WASM/**
+      - cstool/cstool_wasm.c
+      - include/capstone/wasm.h
+      - tests/details/wasm.yaml
 
 X86:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/X86/**
-    - cstool/cstool_x86.c
-    - include/capstone/x86.h
-    - suite/MC/X86/**
-    - tests/MC/X86/**
-    - tests/details/x86.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/X86/**
+      - cstool/cstool_x86.c
+      - include/capstone/x86.h
+      - suite/MC/X86/**
+      - tests/MC/X86/**
+      - tests/details/x86.yaml
 
 XCore:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/XCore/**
-    - cstool/cstool_xcore.c
-    - include/capstone/xcore.h
-    - tests/details/xcore.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/XCore/**
+      - cstool/cstool_xcore.c
+      - include/capstone/xcore.h
+      - tests/details/xcore.yaml
 
 Xtensa:
-- changed-files:
-  - any-glob-to-any-file:
-    - arch/Xtensa/**
-    - cstool/cstool_xtensa.c
-    - include/capstone/xtensa.h
-    - tests/MC/Xtensa/**
-    - tests/details/xtensa.yaml
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - arch/Xtensa/**
+      - cstool/cstool_xtensa.c
+      - include/capstone/xtensa.h
+      - tests/MC/Xtensa/**
+      - tests/details/xtensa.yaml
 
 python:
-- changed-files:
-  - any-glob-to-any-file:
-    - bindings/python/**
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - bindings/python/**
 
 ocaml:
-- changed-files:
-  - any-glob-to-any-file:
-    - bindings/ocaml/**
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - bindings/ocaml/**
 
 java:
-- changed-files:
-  - any-glob-to-any-file:
-    - bindings/java/**
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
+      - bindings/java/**
 
 Github-files:
-- changed-files:
-  - any-glob-to-any-file:
+- any:
+  - changed-files:
+    - any-glob-to-any-file:
       - .github/**
