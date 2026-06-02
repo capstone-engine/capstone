@@ -249,6 +249,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		}
 	}
 
+	for (p = cs_result; *p; ++p) if (*p == '\t') *p = ' ';
 	trim_str(cs_result);
 	add_str(&cs_result, " ;");
 	//	list_part_cs_result = split(cs_result, " ; ", &size_part_cs_result);

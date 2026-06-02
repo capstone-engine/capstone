@@ -26,6 +26,46 @@ def print_tool_failure(filepath, returncode, stdout, stderr):
 	if stderr:
 		print('[-] stderr:\n{}'.format(stderr))
 
+def get_failed_tests(output):
+	failed_tests = []
+	summary_tests = []
+	in_failed_summary = False
+	for line in output.split('\n'):
+		match = re.match(r'\[\s+FAILED\s+\]\s+(.*)', line)
+		if match is None:
+			continue
+		name = match.group(1).strip()
+		if re.match(r'\d+\s+test\(s\)', name):
+			in_failed_summary = 'listed below' in name
+			continue
+		if in_failed_summary:
+			summary_tests.append(name)
+		else:
+			failed_tests.append(name)
+
+	return summary_tests if summary_tests else failed_tests
+
+def normalize_line(line):
+	return re.sub(r'\s+', '', line)
+
+def get_test_name_from_file(filepath, code):
+	try:
+		with open(filepath, 'r') as f:
+			lines = f.readlines()
+	except OSError:
+		return 'Unknown test'
+
+	test_name = ''
+	needle = normalize_line(code)
+	for i, line in enumerate(lines):
+		line = line.strip()
+		if line.startswith('!# issue') or line.startswith('// !# issue'):
+			test_name = line
+		if needle and normalize_line(line).startswith(needle):
+			return test_name if test_name else 'Line {}'.format(i + 1)
+
+	return 'Unknown test'
+
 def get_report_file(toolpath, filepath, getDetails, cmt_out):
 	cmd = [toolpath, '-f', filepath]
 	try:
@@ -47,9 +87,7 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 
 	# print('---> stdout\n', stdout)
 	# print('---> stderr\n', stderr)
-	matches = re.finditer(r'\[\s+RUN\s+\]\s+(.*)\n\[\s+FAILED\s+\]', stdout)
-	for match in matches:
-		failed_tests.append(match.group(1))
+	failed_tests = get_failed_tests(stdout + '\n' + stderr)
 #	stderr
 	counter = 0
 	details = []
@@ -59,11 +97,14 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 		elif 'LINE' in line:
 			continue
 		elif 'ERROR' in line and ' --- ' in line:
-			parts = line.split(' --- ')
-			try:
-				details.append((parts[1], failed_tests[counter], parts[2]))
-			except IndexError:
-				details.append(('', 'Unknown test', line.split(' --- ')[1]))
+			parts = line.split(' --- ', 2)
+			code = parts[1] if len(parts) > 1 else ''
+			report = parts[2] if len(parts) > 2 else line
+			if counter < len(failed_tests):
+				test_name = failed_tests[counter]
+			else:
+				test_name = get_test_name_from_file(filepath, code)
+			details.append((code, test_name, report))
 			counter += 1
 		else:
 			continue
