@@ -93,6 +93,7 @@ jobs:
       shell: 'script -q -e -c "bash -e {0}"'
       run: |
         cd suite/cstest && ./build_cstest.sh;
+        export LD_LIBRARY_PATH="${PWD}/../..:${LD_LIBRARY_PATH:-}";
         python cstest_report.py -D -t build/cstest -d ../MC;
         python cstest_report.py -D -t build/cstest -f issues.cs; cd ..;
 
