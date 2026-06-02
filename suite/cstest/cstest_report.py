@@ -14,16 +14,37 @@ def Usage(s):
 	print('Usage: {} -t <cstest_path> [-f <file_name.cs>] [-d <directory>]'.format(s))
 	sys.exit(-1)
 
+def decode_output(output):
+	if _python3:
+		return bytes.decode(output)
+	return output
+
+def print_tool_failure(filepath, returncode, stdout, stderr):
+	print('\n[-] cstest failed for {} with exit code {}'.format(filepath, returncode))
+	if stdout:
+		print('[-] stdout:\n{}'.format(stdout))
+	if stderr:
+		print('[-] stderr:\n{}'.format(stderr))
+
 def get_report_file(toolpath, filepath, getDetails, cmt_out):
 	cmd = [toolpath, '-f', filepath]
-	process = Popen(cmd, stdout=PIPE, stderr=PIPE)
+	try:
+		process = Popen(cmd, stdout=PIPE, stderr=PIPE)
+	except OSError as e:
+		print('\n[-] Failed to run {}: {}'.format(toolpath, e))
+		return 0
+
 	stdout, stderr = process.communicate()
 
 #	stdout
 	failed_tests = []
-	if _python3:
-		stdout = bytes.decode(stdout)
-		stderr = bytes.decode(stderr)
+	stdout = decode_output(stdout)
+	stderr = decode_output(stderr)
+
+	if process.returncode != 0:
+		print_tool_failure(filepath, process.returncode, stdout, stderr)
+		return 0
+
 	# print('---> stdout\n', stdout)
 	# print('---> stderr\n', stderr)
 	matches = re.finditer(r'\[\s+RUN\s+\]\s+(.*)\n\[\s+FAILED\s+\]', stdout)
@@ -75,24 +96,33 @@ def get_report_folder(toolpath, folderpath, details, cmt_out):
 				print('[-] Target:', f,)
 				result *= get_report_file(toolpath, os.sep.join(x for x in path) + os.sep + f, details, cmt_out)
 	
-	sys.exit(result ^ 1)
+	return result
+
+def validate_tool(toolpath):
+	if not toolpath:
+		print('[-] Missing cstest path')
+		return False
+	if not os.path.isfile(toolpath):
+		print('[-] cstest path does not exist: {}'.format(toolpath))
+		return False
+	if not os.access(toolpath, os.X_OK):
+		print('[-] cstest path is not executable: {}'.format(toolpath))
+		return False
+	return True
 
 if __name__ == '__main__':
-	Done = False
 	details = False
 	toolpath = ''
 	cmt_out = False
+	files = []
+	folders = []
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], "ct:f:d:D")
 		for opt, arg in opts:
 			if opt == '-f':
-				result = get_report_file(toolpath, arg, details, cmt_out)
-				if result == 0:
-					sys.exit(1)
-				Done = True
+				files.append(arg)
 			elif opt == '-d':
-				get_report_folder(toolpath, arg, details, cmt_out)
-				Done = True
+				folders.append(arg)
 			elif opt == '-t':
 				toolpath = arg
 			elif opt == '-D':
@@ -103,5 +133,15 @@ if __name__ == '__main__':
 	except getopt.GetoptError:
 		Usage(sys.argv[0])
 
-	if Done is False:
+	if not files and not folders:
 		Usage(sys.argv[0])
+	if not validate_tool(toolpath):
+		sys.exit(1)
+
+	result = 1
+	for f in files:
+		result *= get_report_file(toolpath, f, details, cmt_out)
+	for d in folders:
+		result *= get_report_folder(toolpath, d, details, cmt_out)
+
+	sys.exit(result ^ 1)
