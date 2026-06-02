@@ -56,7 +56,7 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 	elif len(details) > 0:
 		for c, f, d in details:
 			if len(f) > 0 and cmt_out is True:
-				tmp_cmd = ['sed', '-E', '-i.bak', 's/({})(.*)/\/\/ \\1\\2/g'.format(c), filepath]
+				tmp_cmd = ['sed', '-E', '-i.bak', r's/({})(.*)/\/\/ \1\2/g'.format(c), filepath]
 				sed_proc = Popen(tmp_cmd, stdout=PIPE, stderr=PIPE)
 				sed_proc.communicate()
 				tmp_cmd2 = ['rm', '-f', filepath + '.bak']

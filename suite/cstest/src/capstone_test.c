@@ -184,6 +184,9 @@ int set_function(int arch)
 		case CS_ARCH_TRICORE:
 			function = get_detail_tricore;
 			break;
+		case CS_ARCH_SH:
+			function = get_detail_sh;
+			break;
 		default:
 			return -1;
 	}
