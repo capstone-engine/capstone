@@ -173,6 +173,25 @@ static int has_token(const char *tokens, const char *token)
 	return 0;
 }
 
+static int get_mc_mode(const char *arch, const char *mode)
+{
+	if (!strcmp(arch, "CS_ARCH_ARM64"))
+		return X86_64;
+	if (!strcmp(arch, "CS_ARCH_X86")) {
+		if (has_token(mode, "CS_MODE_16"))
+			return X86_16;
+		if (has_token(mode, "CS_MODE_64"))
+			return X86_64;
+	}
+	if (!strcmp(arch, "CS_ARCH_MIPS") && has_token(mode, "CS_MODE_MIPS64"))
+		return X86_64;
+	if (!strcmp(arch, "CS_ARCH_PPC") && has_token(mode, "CS_MODE_64"))
+		return X86_64;
+	if (!strcmp(arch, "CS_ARCH_RISCV") && has_token(mode, "CS_MODE_RISCV64"))
+		return X86_64;
+	return X86_32;
+}
+
 static int setup_MC(void **state)
 {
 	csh *handle;
@@ -198,28 +217,12 @@ static int setup_MC(void **state)
 	}
 
 	arch = get_value(arches, ARR_SIZE(arches), list_params[0]);
-	if (!strcmp(list_params[0], "CS_ARCH_ARM64")) 
-		mc_mode = 2;
-	else 
-		mc_mode = 1;
+	mc_mode = get_mc_mode(list_params[0], list_params[1]);
 
 	mode = 0;
 	for (i = 0; i < ARR_SIZE(modes); ++i) {
 		if (has_token(list_params[1], modes[i].str)) {
 			mode += modes[i].value;
-			switch (modes[i].value) {
-				case CS_MODE_16:
-					mc_mode = 0;
-					break;
-				case CS_MODE_64:
-					mc_mode = 2;
-					break;
-				case CS_MODE_THUMB:
-					mc_mode = 1;
-					break;
-				default:
-					break;
-			}
 		}
 	}
 
@@ -306,29 +309,12 @@ static int setup_issue(void **state)
 		list_params = split(list_lines[counter] + 6, ", ", &size_params);
 
 	arch = get_value(arches, ARR_SIZE(arches), list_params[0]);
-
-	if (!strcmp(list_params[0], "CS_ARCH_ARM64"))
-		mc_mode = 2;
-	else
-		mc_mode = 1;
+	mc_mode = get_mc_mode(list_params[0], list_params[1]);
 
 	mode = 0;
 	for (i = 0; i < ARR_SIZE(modes); ++i) {
 		if (has_token(list_params[1], modes[i].str)) {
 			mode += modes[i].value;
-			switch (modes[i].value) {
-				case CS_MODE_16:
-					mc_mode = 0;
-					break;
-				case CS_MODE_64:
-					mc_mode = 2;
-					break;
-				case CS_MODE_THUMB:
-					mc_mode = 1;
-					break;
-				default:
-					break;
-			}
 		}
 	}
 
