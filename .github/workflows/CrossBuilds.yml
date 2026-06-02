@@ -43,7 +43,7 @@ jobs:
               sysroot: '/usr/s390x-linux-gnu',
               qemu: 'qemu-s390x-static',
               build_type: 'Debug',
-              packages: 'gcc-s390x-linux-gnu g++-s390x-linux-gnu binutils-s390x-linux-gnu libc6-dev-s390x-cross qemu-user-static pkg-config',
+              packages: 'gcc-s390x-linux-gnu g++-s390x-linux-gnu binutils-s390x-linux-gnu libc6-dev-s390x-cross qemu-user-static',
               build_tests: 'ON',
               diet_build: 'OFF',
               toolchain_file: 'toolchain.cmake',
@@ -58,7 +58,7 @@ jobs:
               sysroot: '/usr/mips-linux-gnu',
               qemu: 'qemu-mips-static',
               build_type: 'Debug',
-              packages: 'gcc-mips-linux-gnu g++-mips-linux-gnu binutils-mips-linux-gnu libc6-dev-mips-cross qemu-user-static pkg-config',
+              packages: 'gcc-mips-linux-gnu g++-mips-linux-gnu binutils-mips-linux-gnu libc6-dev-mips-cross qemu-user-static',
               build_tests: 'ON',
               diet_build: 'OFF',
               toolchain_file: 'toolchain.cmake',
@@ -73,7 +73,7 @@ jobs:
               sysroot: '/usr/mips64el-linux-gnuabi64',
               qemu: 'qemu-mips64el-static',
               build_type: 'Debug',
-              packages: 'gcc-mips64el-linux-gnuabi64 g++-mips64el-linux-gnuabi64 binutils-mips64el-linux-gnuabi64 libc6-dev-mips64el-cross qemu-user-static pkg-config',
+              packages: 'gcc-mips64el-linux-gnuabi64 g++-mips64el-linux-gnuabi64 binutils-mips64el-linux-gnuabi64 libc6-dev-mips64el-cross qemu-user-static',
               build_tests: 'ON',
               diet_build: 'OFF',
               toolchain_file: 'toolchain.cmake',
@@ -88,7 +88,7 @@ jobs:
               sysroot: '/usr/powerpc64-linux-gnu',
               qemu: 'qemu-ppc64-static',
               build_type: 'Debug',
-              packages: 'gcc-powerpc64-linux-gnu g++-powerpc64-linux-gnu binutils-powerpc64-linux-gnu libc6-dev-ppc64-cross qemu-user-static pkg-config',
+              packages: 'gcc-powerpc64-linux-gnu g++-powerpc64-linux-gnu binutils-powerpc64-linux-gnu libc6-dev-ppc64-cross qemu-user-static',
               build_tests: 'ON',
               diet_build: 'OFF',
               toolchain_file: 'toolchain.cmake',
@@ -103,7 +103,7 @@ jobs:
               sysroot: '/usr/arm-linux-gnueabihf',
               qemu: 'qemu-arm-static',
               build_type: 'Debug',
-              packages: 'gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-armhf-cross libc6-dev-armhf-cross qemu-user-static pkg-config',
+              packages: 'gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-armhf-cross libc6-dev-armhf-cross qemu-user-static',
               build_tests: 'ON',
               diet_build: 'OFF',
               toolchain_file: 'toolchain.cmake',
@@ -180,6 +180,9 @@ jobs:
           -DCMAKE_BUILD_TYPE=${build_type} \
           -DCMAKE_TOOLCHAIN_FILE="${PWD}/${toolchain_file}" \
           -DCMAKE_INSTALL_PREFIX="${PWD}/build/cmocka-install" \
+          -DCMAKE_INSTALL_LIBDIR=lib \
+          -DBUILD_SHARED_LIBS=OFF \
+          -DWITH_STATIC_LIB=ON \
           -DWITH_EXAMPLES=OFF \
           -DUNIT_TESTING=OFF
         cmake --build build/cmocka --config ${build_type} --parallel
@@ -200,16 +203,13 @@ jobs:
         build_tests: ${{ matrix.config.build_tests }}
         diet_build: ${{ matrix.config.diet_build }}
         toolchain_file: ${{ matrix.config.toolchain_file }}
-        CMAKE_PREFIX_PATH: ${{ github.workspace }}/build/cmocka-install
-        PKG_CONFIG_PATH: ${{ github.workspace }}/build/cmocka-install/lib/pkgconfig:${{ github.workspace }}/build/cmocka-install/lib64/pkgconfig
-        LIBRARY_PATH: ${{ github.workspace }}/build/cmocka-install/lib:${{ github.workspace }}/build/cmocka-install/lib64
       run: |
         cmake -DCMAKE_BUILD_TYPE=${build_type} \
           -DBUILD_STATIC_LIBS=ON \
           -DBUILD_SHARED_LIBS=OFF \
           -DCAPSTONE_BUILD_TESTS=${build_tests} \
           -DCAPSTONE_BUILD_CSTOOL=ON \
-          -DCAPSTONE_BUILD_CSTEST=${build_tests} \
+          -DCAPSTONE_BUILD_CSTEST=OFF \
           -S . \
           -DCAPSTONE_BUILD_DIET=${diet_build} \
           -DCMAKE_TOOLCHAIN_FILE=${toolchain_file} \
@@ -226,9 +226,20 @@ jobs:
       if: ${{ matrix.config.skip_tests != true }}
       shell: 'script -q -e -c "bash {0}"'
       env:
+        cc: ${{ matrix.config.cc }}
         qemu: ${{ matrix.config.qemu }}
         sysroot: ${{ matrix.config.sysroot }}
       run: |
+        cmocka_lib="$(find build/cmocka build/cmocka-install -type f \( -name 'libcmocka*.a' -o -name 'libcmocka*.so' \) | sort | head -n 1)"
+        test -n "${cmocka_lib}"
+        ${cc} suite/cstest/src/*.c \
+          -Iinclude \
+          -Isuite/cstest/include \
+          -Ibuild/cmocka-install/include \
+          -o build/cstest \
+          build/libcapstone.a \
+          "${cmocka_lib}" \
+          -pthread
         cat > build/run-cstest <<'EOF'
         #!/bin/sh
         export LD_LIBRARY_PATH="${CMOCKA_PREFIX}/lib:${CMOCKA_PREFIX}/lib64:${LD_LIBRARY_PATH}"
