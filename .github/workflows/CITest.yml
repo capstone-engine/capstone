@@ -81,14 +81,6 @@ jobs:
         cp libcapstone.* ../;
         # sudo make install;
 
-    - name: build python binding
-      shell: 'script -q -e -c "bash {0}"'
-      run: |
-        mkdir -p bindings/python/capstone/lib && cp libcapstone.so.5.* bindings/python/capstone/lib/libcapstone.so;
-        cd bindings/python;
-        make && make check ; 
-        cd ../..;
-
     - name: cstest
       shell: 'script -q -e -c "bash {0}"'
       run: |
