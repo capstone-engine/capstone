@@ -42,7 +42,7 @@ jobs:
       run: |
         ./suite/run_clang_tidy.sh build
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       if: ${{ failure() }}
       with:
         path: ct-warnings.txt
