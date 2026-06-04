@@ -21,6 +21,8 @@ static single_dict arches[] = {
 	{"CS_ARCH_BPF", CS_ARCH_BPF},
 	{"CS_ARCH_RISCV", CS_ARCH_RISCV},
 	{"CS_ARCH_TRICORE", CS_ARCH_TRICORE},
+	{"CS_ARCH_SH", CS_ARCH_SH},
+	{"CS_ARCH_TMS320C64X", CS_ARCH_TMS320C64X},
 };
 
  static single_dict modes[] = {
@@ -70,6 +72,13 @@ static single_dict arches[] = {
 	{"CS_MODE_TRICORE_160", CS_MODE_TRICORE_160},
 	{"CS_MODE_TRICORE_161", CS_MODE_TRICORE_161},
 	{"CS_MODE_TRICORE_162", CS_MODE_TRICORE_162},
+	{"CS_MODE_SH2", CS_MODE_SH2},
+	{"CS_MODE_SH2A", CS_MODE_SH2A},
+	{"CS_MODE_SH3", CS_MODE_SH3},
+	{"CS_MODE_SH4", CS_MODE_SH4},
+	{"CS_MODE_SH4A", CS_MODE_SH4A},
+	{"CS_MODE_SHFPU", CS_MODE_SHFPU},
+	{"CS_MODE_SHDSP", CS_MODE_SHDSP},
 };
 
  static double_dict options[] = {
@@ -116,6 +125,7 @@ static single_dict arches[] = {
 	{"CS_MODE_M680X_HCS08", CS_OPT_MODE, CS_MODE_M680X_HCS08},
 	{"CS_MODE_RISCV32", CS_OPT_MODE, CS_MODE_RISCV32},
 	{"CS_MODE_RISCV64", CS_OPT_MODE, CS_MODE_RISCV64},
+	{"CS_MODE_RISCVC", CS_OPT_MODE, CS_MODE_RISCVC},
 	{"CS_MODE_TRICORE_110", CS_OPT_MODE, CS_MODE_TRICORE_110},
 	{"CS_MODE_TRICORE_120", CS_OPT_MODE, CS_MODE_TRICORE_120},
 	{"CS_MODE_TRICORE_130", CS_OPT_MODE, CS_MODE_TRICORE_130},
@@ -123,6 +133,13 @@ static single_dict arches[] = {
 	{"CS_MODE_TRICORE_160", CS_OPT_MODE, CS_MODE_TRICORE_160},
 	{"CS_MODE_TRICORE_161", CS_OPT_MODE, CS_MODE_TRICORE_161},
 	{"CS_MODE_TRICORE_162", CS_OPT_MODE, CS_MODE_TRICORE_162},
+	{"CS_MODE_SH2", CS_OPT_MODE, CS_MODE_SH2},
+	{"CS_MODE_SH2A", CS_OPT_MODE, CS_MODE_SH2A},
+	{"CS_MODE_SH3", CS_OPT_MODE, CS_MODE_SH3},
+	{"CS_MODE_SH4", CS_OPT_MODE, CS_MODE_SH4},
+	{"CS_MODE_SH4A", CS_OPT_MODE, CS_MODE_SH4A},
+	{"CS_MODE_SHFPU", CS_OPT_MODE, CS_MODE_SHFPU},
+	{"CS_MODE_SHDSP", CS_OPT_MODE, CS_MODE_SHDSP},
 	{"CS_OPT_UNSIGNED", CS_OPT_UNSIGNED, CS_OPT_ON},
 };
 
@@ -134,6 +151,46 @@ static cs_mode issue_mode;
 static int getDetail;
 static int mc_mode;
 static int e_flag;
+
+static int is_token_char(int c)
+{
+	return isalnum((unsigned char)c) || c == '_';
+}
+
+static int has_token(const char *tokens, const char *token)
+{
+	const char *p;
+	size_t len;
+
+	len = strlen(token);
+	p = tokens;
+	while ((p = strstr(p, token)) != NULL) {
+		if ((p == tokens || !is_token_char((unsigned char)p[-1])) &&
+				!is_token_char((unsigned char)p[len]))
+			return 1;
+		p += len;
+	}
+	return 0;
+}
+
+static int get_mc_mode(const char *arch, const char *mode)
+{
+	if (!strcmp(arch, "CS_ARCH_ARM64"))
+		return X86_64;
+	if (!strcmp(arch, "CS_ARCH_X86")) {
+		if (has_token(mode, "CS_MODE_16"))
+			return X86_16;
+		if (has_token(mode, "CS_MODE_64"))
+			return X86_64;
+	}
+	if (!strcmp(arch, "CS_ARCH_MIPS") && has_token(mode, "CS_MODE_MIPS64"))
+		return X86_64;
+	if (!strcmp(arch, "CS_ARCH_PPC") && has_token(mode, "CS_MODE_64"))
+		return X86_64;
+	if (!strcmp(arch, "CS_ARCH_RISCV") && has_token(mode, "CS_MODE_RISCV64"))
+		return X86_64;
+	return X86_32;
+}
 
 static int setup_MC(void **state)
 {
@@ -160,28 +217,12 @@ static int setup_MC(void **state)
 	}
 
 	arch = get_value(arches, ARR_SIZE(arches), list_params[0]);
-	if (!strcmp(list_params[0], "CS_ARCH_ARM64")) 
-		mc_mode = 2;
-	else 
-		mc_mode = 1;
+	mc_mode = get_mc_mode(list_params[0], list_params[1]);
 
 	mode = 0;
 	for (i = 0; i < ARR_SIZE(modes); ++i) {
-		if (strstr(list_params[1], modes[i].str)) {
+		if (has_token(list_params[1], modes[i].str)) {
 			mode += modes[i].value;
-			switch (modes[i].value) {
-				case CS_MODE_16:
-					mc_mode = 0;
-					break;
-				case CS_MODE_64:
-					mc_mode = 2;
-					break;
-				case CS_MODE_THUMB:
-					mc_mode = 1;
-					break;
-				default:
-					break;
-			}
 		}
 	}
 
@@ -199,7 +240,7 @@ static int setup_MC(void **state)
 	}
 	
 	for (i = 0; i < ARR_SIZE(options); ++i) {
-		if (strstr(list_params[2], options[i].str)) {
+		if (has_token(list_params[2], options[i].str)) {
 			if (cs_option(*handle, options[i].first_value, options[i].second_value) != CS_ERR_OK) {
 				fprintf(stderr, "[  ERROR   ] --- Option is not supported for this arch/mode\n");
 				failed_setup = 1;
@@ -268,29 +309,12 @@ static int setup_issue(void **state)
 		list_params = split(list_lines[counter] + 6, ", ", &size_params);
 
 	arch = get_value(arches, ARR_SIZE(arches), list_params[0]);
-
-	if (!strcmp(list_params[0], "CS_ARCH_ARM64"))
-		mc_mode = 2;
-	else
-		mc_mode = 1;
+	mc_mode = get_mc_mode(list_params[0], list_params[1]);
 
 	mode = 0;
 	for (i = 0; i < ARR_SIZE(modes); ++i) {
-		if (strstr(list_params[1], modes[i].str)) {
+		if (has_token(list_params[1], modes[i].str)) {
 			mode += modes[i].value;
-			switch (modes[i].value) {
-				case CS_MODE_16:
-					mc_mode = 0;
-					break;
-				case CS_MODE_64:
-					mc_mode = 2;
-					break;
-				case CS_MODE_THUMB:
-					mc_mode = 1;
-					break;
-				default:
-					break;
-			}
 		}
 	}
 
@@ -308,7 +332,7 @@ static int setup_issue(void **state)
 	}
 	
 	for (i = 0; i < ARR_SIZE(options); ++i) {
-		if (strstr(list_params[2], options[i].str)) {
+		if (has_token(list_params[2], options[i].str)) {
 			if (cs_option(*handle, options[i].first_value, options[i].second_value) != CS_ERR_OK) {
 				fprintf(stderr, "[  ERROR   ] --- Option is not supported for this arch/mode\n");
 				failed_setup = 1;

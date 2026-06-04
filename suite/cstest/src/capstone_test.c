@@ -6,6 +6,17 @@
 
 char *(*function)(csh *, cs_mode, cs_insn*) = NULL;
 
+static void remove_char(char *src, char c)
+{
+	char *dst = src;
+
+	for (; *src; src++) {
+		if (*src != c)
+			*dst++ = *src;
+	}
+	*dst = '\0';
+}
+
 void test_single_MC(csh *handle, int mc_mode, char *line)
 {
 	char **list_part, **list_byte;
@@ -59,6 +70,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	strcpy(tmp_mc, list_part[1]);
 	replace_hex(tmp_mc);
 	replace_negative(tmp_mc, mc_mode);
+	remove_char(tmp_mc, '#');
 
 	strcpy(tmp, insn[0].mnemonic);
 	if (strlen(insn[0].op_str) > 0) {
@@ -70,6 +82,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 	strcpy(origin, tmp);
 	replace_hex(tmp);
 	replace_negative(tmp, mc_mode);
+	remove_char(tmp, '#');
 
 	if (cs_option(*handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_NOREGNAME) == CS_ERR_OK) {
 		cs_disasm(*handle, code, size_byte, offset, 0, &insn);
@@ -82,6 +95,7 @@ void test_single_MC(csh *handle, int mc_mode, char *line)
 		trim_str(tmp_noreg);
 		replace_hex(tmp_noreg);
 		replace_negative(tmp_noreg, mc_mode);
+		remove_char(tmp_noreg, '#');
 
 		if (strcmp(tmp, tmp_mc) && strcmp(tmp_noreg, tmp_mc)) {
 			fprintf(stderr, "[  ERROR   ] --- %s --- \"%s\" != \"%s\" ( \"%s\" != \"%s\" and \"%s\" != \"%s\" )\n", list_part[0], origin, list_part[1], tmp, tmp_mc, tmp_noreg, tmp_mc);
@@ -184,6 +198,9 @@ int set_function(int arch)
 		case CS_ARCH_TRICORE:
 			function = get_detail_tricore;
 			break;
+		case CS_ARCH_SH:
+			function = get_detail_sh;
+			break;
 		default:
 			return -1;
 	}
@@ -246,6 +263,7 @@ void test_single_issue(csh *handle, cs_mode mode, char *line, int detail)
 		}
 	}
 
+	for (p = cs_result; *p; ++p) if (*p == '\t') *p = ' ';
 	trim_str(cs_result);
 	add_str(&cs_result, " ;");
 	//	list_part_cs_result = split(cs_result, " ; ", &size_part_cs_result);

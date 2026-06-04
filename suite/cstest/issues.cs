@@ -253,6 +253,22 @@
 0xf2,0x1f,0x54,0x80 == fmove.d (a7)+, fp1
 0x4e,0x75 == rts
 
+!# issue M68K printer integer immediates on 32-bit big endian hosts
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0x00,0x80,0x12,0x34,0x56,0x78 == ori.l #$12345678, d0
+
+!# issue M68K printer absolute long addresses on 32-bit big endian hosts
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0x4e,0xb9,0x12,0x34,0x56,0x78 == jsr $12345678.l
+
+!# issue M68K printer absolute short addresses on 32-bit big endian hosts
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0x4e,0xb8,0x12,0x34 == jsr $1234.w
+
+!# issue M68K printer invalid words on 32-bit big endian hosts
+!# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
+0xff,0xff == dc.w $ffff
+
 !# issue 1661 M68K invalid transfer direction in MOVEC instruction
 !# CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040, None
 0x4E,0x7A,0x00,0x02 == movec cacr, d0
@@ -626,6 +642,10 @@
 !# issue 1262
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0: 0x0f,0x94,0x44,0x24,0x1f == sete byte ptr [rsp + 0x1f] ; Prefix:0x00 0x00 0x00 0x00  ; Opcode:0x0f 0x94 0x00 0x00  ; rex: 0x0 ; addr_size: 8 ; modrm: 0x44 ; disp: 0x1f ; sib: 0x24 ; sib_base: rsp ; sib_scale: 1 ; op_count: 1 ; operands[0].type: MEM ; operands[0].mem.base: REG = rsp ; operands[0].mem.disp: 0x1f ; operands[0].size: 1 ; operands[0].access: WRITE ; Registers read: rflags rsp ; EFLAGS: TEST_ZF
+
+!# issue x86 SIB scale is encoded as log2(scale)
+!# CS_ARCH_X86, CS_MODE_64, None
+0x0: 0x8b,0x34,0x82 == mov esi, dword ptr [rdx + rax*4]
 
 !# issue 1263
 !# CS_ARCH_X86, CS_MODE_64, None
@@ -1065,7 +1085,7 @@
 
 !# issue 2424
 !# CS_ARCH_SH, CS_MODE_SH2A | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
-0x0: 0x32,0x11,0x92,0x00 == movu.w @(1024,r1),r2 ; operands[0].type: MEM ; operands[0].mem.reg: REG = r1 ; operands[0].mem.disp: 0x400 ; address mode: Register Indirect with Predecrement ; operands[1].type: REG = r2
+0x0: 0x32,0x11,0x92,0x00 == movu.w @(1024,r1),r2 ; operands[0].type: MEM ; operands[0].mem.reg: REG = r1 ; operands[0].mem.disp: 0x400 ; address mode: Register Indirect with displacement ; operands[1].type: REG = r2
 
 !# issue 2646
 !# CS_ARCH_TMS320C64X, CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL

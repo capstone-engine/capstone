@@ -14,21 +14,80 @@ def Usage(s):
 	print('Usage: {} -t <cstest_path> [-f <file_name.cs>] [-d <directory>]'.format(s))
 	sys.exit(-1)
 
+def decode_output(output):
+	if _python3:
+		return bytes.decode(output)
+	return output
+
+def print_tool_failure(filepath, returncode, stdout, stderr):
+	print('\n[-] cstest failed for {} with exit code {}'.format(filepath, returncode))
+	if stdout:
+		print('[-] stdout:\n{}'.format(stdout))
+	if stderr:
+		print('[-] stderr:\n{}'.format(stderr))
+
+def get_failed_tests(output):
+	failed_tests = []
+	summary_tests = []
+	in_failed_summary = False
+	for line in output.split('\n'):
+		match = re.match(r'\[\s+FAILED\s+\]\s+(.*)', line)
+		if match is None:
+			continue
+		name = match.group(1).strip()
+		if re.match(r'\d+\s+test\(s\)', name):
+			in_failed_summary = 'listed below' in name
+			continue
+		if in_failed_summary:
+			summary_tests.append(name)
+		else:
+			failed_tests.append(name)
+
+	return summary_tests if summary_tests else failed_tests
+
+def normalize_line(line):
+	return re.sub(r'\s+', '', line)
+
+def get_test_name_from_file(filepath, code):
+	try:
+		with open(filepath, 'r') as f:
+			lines = f.readlines()
+	except OSError:
+		return 'Unknown test'
+
+	test_name = ''
+	needle = normalize_line(code)
+	for i, line in enumerate(lines):
+		line = line.strip()
+		if line.startswith('!# issue') or line.startswith('// !# issue'):
+			test_name = line
+		if needle and normalize_line(line).startswith(needle):
+			return test_name if test_name else 'Line {}'.format(i + 1)
+
+	return 'Unknown test'
+
 def get_report_file(toolpath, filepath, getDetails, cmt_out):
 	cmd = [toolpath, '-f', filepath]
-	process = Popen(cmd, stdout=PIPE, stderr=PIPE)
+	try:
+		process = Popen(cmd, stdout=PIPE, stderr=PIPE)
+	except OSError as e:
+		print('\n[-] Failed to run {}: {}'.format(toolpath, e))
+		return 0
+
 	stdout, stderr = process.communicate()
 
 #	stdout
 	failed_tests = []
-	if _python3:
-		stdout = bytes.decode(stdout)
-		stderr = bytes.decode(stderr)
+	stdout = decode_output(stdout)
+	stderr = decode_output(stderr)
+
+	if process.returncode != 0:
+		print_tool_failure(filepath, process.returncode, stdout, stderr)
+		return 0
+
 	# print('---> stdout\n', stdout)
 	# print('---> stderr\n', stderr)
-	matches = re.finditer(r'\[\s+RUN\s+\]\s+(.*)\n\[\s+FAILED\s+\]', stdout)
-	for match in matches:
-		failed_tests.append(match.group(1))
+	failed_tests = get_failed_tests(stdout + '\n' + stderr)
 #	stderr
 	counter = 0
 	details = []
@@ -38,11 +97,14 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 		elif 'LINE' in line:
 			continue
 		elif 'ERROR' in line and ' --- ' in line:
-			parts = line.split(' --- ')
-			try:
-				details.append((parts[1], failed_tests[counter], parts[2]))
-			except IndexError:
-				details.append(('', 'Unknown test', line.split(' --- ')[1]))
+			parts = line.split(' --- ', 2)
+			code = parts[1] if len(parts) > 1 else ''
+			report = parts[2] if len(parts) > 2 else line
+			if counter < len(failed_tests):
+				test_name = failed_tests[counter]
+			else:
+				test_name = get_test_name_from_file(filepath, code)
+			details.append((code, test_name, report))
 			counter += 1
 		else:
 			continue
@@ -56,7 +118,7 @@ def get_report_file(toolpath, filepath, getDetails, cmt_out):
 	elif len(details) > 0:
 		for c, f, d in details:
 			if len(f) > 0 and cmt_out is True:
-				tmp_cmd = ['sed', '-E', '-i.bak', 's/({})(.*)/\/\/ \\1\\2/g'.format(c), filepath]
+				tmp_cmd = ['sed', '-E', '-i.bak', r's/({})(.*)/\/\/ \1\2/g'.format(c), filepath]
 				sed_proc = Popen(tmp_cmd, stdout=PIPE, stderr=PIPE)
 				sed_proc.communicate()
 				tmp_cmd2 = ['rm', '-f', filepath + '.bak']
@@ -75,24 +137,33 @@ def get_report_folder(toolpath, folderpath, details, cmt_out):
 				print('[-] Target:', f,)
 				result *= get_report_file(toolpath, os.sep.join(x for x in path) + os.sep + f, details, cmt_out)
 	
-	sys.exit(result ^ 1)
+	return result
+
+def validate_tool(toolpath):
+	if not toolpath:
+		print('[-] Missing cstest path')
+		return False
+	if not os.path.isfile(toolpath):
+		print('[-] cstest path does not exist: {}'.format(toolpath))
+		return False
+	if not os.access(toolpath, os.X_OK):
+		print('[-] cstest path is not executable: {}'.format(toolpath))
+		return False
+	return True
 
 if __name__ == '__main__':
-	Done = False
 	details = False
 	toolpath = ''
 	cmt_out = False
+	files = []
+	folders = []
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], "ct:f:d:D")
 		for opt, arg in opts:
 			if opt == '-f':
-				result = get_report_file(toolpath, arg, details, cmt_out)
-				if result == 0:
-					sys.exit(1)
-				Done = True
+				files.append(arg)
 			elif opt == '-d':
-				get_report_folder(toolpath, arg, details, cmt_out)
-				Done = True
+				folders.append(arg)
 			elif opt == '-t':
 				toolpath = arg
 			elif opt == '-D':
@@ -103,5 +174,15 @@ if __name__ == '__main__':
 	except getopt.GetoptError:
 		Usage(sys.argv[0])
 
-	if Done is False:
+	if not files and not folders:
 		Usage(sys.argv[0])
+	if not validate_tool(toolpath):
+		sys.exit(1)
+
+	result = 1
+	for f in files:
+		result *= get_report_file(toolpath, f, details, cmt_out)
+	for d in folders:
+		result *= get_report_folder(toolpath, d, details, cmt_out)
+
+	sys.exit(result ^ 1)

@@ -29,7 +29,7 @@ char *get_detail_riscv(csh *handle, cs_mode mode, cs_insn *ins)
 				add_str(&result, " ; operands[%u].type: REG = %s", i, cs_reg_name(*handle, op->reg));
 				break;
 			case RISCV_OP_IMM:
-				add_str(&result, " ; operands[%u].type: IMM = 0x%x", i, op->imm);
+				add_str(&result, " ; operands[%u].type: IMM = 0x%" PRIx64, i, op->imm);
 				break;
 			case RISCV_OP_MEM:
 				add_str(&result, " ; operands[%u].type: MEM", i);
@@ -44,4 +44,3 @@ char *get_detail_riscv(csh *handle, cs_mode mode, cs_insn *ins)
 
 	return result;
 }
-

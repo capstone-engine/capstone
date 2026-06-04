@@ -157,9 +157,7 @@ void replace_negative(char *src, int mode)
 	char *tmp, *result, *found, *origin, *orig_found;
 	int cnt, valid;
 	char *value, *tmp_tmp;
-	unsigned short int tmp_short;
-	unsigned int tmp_int;
-	unsigned long int tmp_long;
+	unsigned long long tmp_value;
 
 	result = (char *)malloc(sizeof(char));
 	result[0] = '\0';
@@ -186,15 +184,13 @@ void replace_negative(char *src, int mode)
 		tmp_tmp = strndup(tmp, orig_found - tmp);
 		if (valid == 1) {
 			*orig_found = '\0';
+			tmp_value = strtoull(value, NULL, 0);
 			if (mode == X86_16) {
-				sscanf(value, "%hu", &tmp_short);
-				add_str(&result, "%s%hu", tmp_tmp, tmp_short);
+				add_str(&result, "%s%hu", tmp_tmp, (unsigned short)tmp_value);
 			} else if (mode == X86_32) {
-				sscanf(value, "%u", &tmp_int);
-				add_str(&result, "%s%u", tmp_tmp, tmp_int);
+				add_str(&result, "%s%u", tmp_tmp, (unsigned int)tmp_value);
 			} else if (mode == X86_64) {
-				sscanf(value, "%lu", &tmp_long);
-				add_str(&result, "%s%lu", tmp_tmp, tmp_long);
+				add_str(&result, "%s%llu", tmp_tmp, tmp_value);
 			}
 		}
 		else add_str(&result, "%s-", tmp_tmp);

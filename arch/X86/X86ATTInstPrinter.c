@@ -487,7 +487,7 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 	if (val > HEX_THRESHOLD)
 		SStream_concat(O, "$0x%x", val);
 	else
-		SStream_concat(O, "$%u", val);
+		SStream_concat(O, "$%"PRIu8, val);
 
 	if (MI->csh->detail) {
 		MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].type = X86_OP_IMM;
@@ -636,7 +636,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				// do not print number in negative form
 				imm = imm & 0xff;
 				if (imm >= 0 && imm <= HEX_THRESHOLD)
-					SStream_concat(O, "$%u", imm);
+					SStream_concat(O, "$%"PRIu64, imm);
 				else {
 					SStream_concat(O, "$0x%x", imm);
 				}
@@ -659,7 +659,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			case X86_INS_XOR:
 				// do not print number in negative form
 				if (imm >= 0 && imm <= HEX_THRESHOLD)
-					SStream_concat(O, "$%u", imm);
+					SStream_concat(O, "$%"PRIu64, imm);
 				else {
 					imm = arch_masks[opsize? opsize : MI->imm_size] & imm;
 					SStream_concat(O, "$0x%"PRIx64, imm);
@@ -670,7 +670,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			case X86_INS_RETF:
 				// RET imm16
 				if (imm >= 0 && imm <= HEX_THRESHOLD)
-					SStream_concat(O, "$%u", imm);
+					SStream_concat(O, "$%"PRIu64, imm);
 				else {
 					imm = 0xffff & imm;
 					SStream_concat(O, "$0x%x", imm);
@@ -773,7 +773,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			if (MI->csh->detail)
 				MI->flat_insn->detail->x86.operands[MI->flat_insn->detail->x86.op_count].mem.scale = (int)ScaleVal;
 			if (ScaleVal != 1) {
-				SStream_concat(O, ", %u", ScaleVal);
+				SStream_concat(O, ", %"PRIu64, ScaleVal);
 			}
 		}
 

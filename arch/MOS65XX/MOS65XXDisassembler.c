@@ -330,7 +330,7 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 				value = 3 + (signed short)value;
 
 			SStream_concat(O, " %s%04x", prefix, 
-				(MI->address + value) & 0xffff);
+				(unsigned int)((MI->address + value) & 0xffff));
 			break;
 
 		case MOS65XX_AM_ABS_IND:
@@ -375,16 +375,16 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 
 		case MOS65XX_AM_BLOCK:
 			SStream_concat(O, " %s%02x, %s%02x",
-				prefix, MI->Operands[0].ImmVal,
-				prefix, MI->Operands[1].ImmVal);
+				prefix, (unsigned int)MI->Operands[0].ImmVal,
+				prefix, (unsigned int)MI->Operands[1].ImmVal);
 			break;
 
 		case MOS65XX_AM_ZP_REL:
 			value =	3 + (signed char)MI->Operands[1].ImmVal;
 			/* BBR0, zp, rel  and BBS0, zp, rel */
 			SStream_concat(O, " %s%02x, %s%04x",
-				prefix, MI->Operands[0].ImmVal,
-				prefix, (MI->address + value) & 0xffff);
+				prefix, (unsigned int)MI->Operands[0].ImmVal,
+				prefix, (unsigned int)((MI->address + value) & 0xffff));
 			break;
 
 	}

@@ -248,11 +248,11 @@ void test_macros() {
 	detail.arm64 = arm64_detail;
 	CS_aarch64_op() op = { 0 };
 	detail.CS_aarch64_.operands[0] = op;
-	CS_aarch64_reg() reg = 1;
-	CS_aarch64_cc() cc = ARM64_CC_AL;
-	CS_aarch64_extender() arm64_extender = ARM64_EXT_SXTB;
-	CS_aarch64_shifter() arm64_shifter = ARM64_SFT_LSL;
-	CS_aarch64_vas() arm64_vas = ARM64_VAS_16B;
+	(void)(CS_aarch64_reg())1;
+	(void)(CS_aarch64_cc())ARM64_CC_AL;
+	(void)(CS_aarch64_extender())ARM64_EXT_SXTB;
+	(void)(CS_aarch64_shifter())ARM64_SFT_LSL;
+	(void)(CS_aarch64_vas())ARM64_VAS_16B;
 }
 
 int main()
@@ -262,4 +262,3 @@ int main()
 
 	return 0;
 }
-
