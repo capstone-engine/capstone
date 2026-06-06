@@ -748,6 +748,11 @@ bool RISCV_LLVM_getInstruction(csh handle, const uint8_t *Bytes, size_t ByteLen,
 {
 	RISCV_init_cs_detail(MI);
 	MI->MRI = (MCRegisterInfo *)Info;
-	return RISCV_getInstruction(MI, Size, Bytes, ByteLen, Address, NULL) !=
-	       MCDisassembler_Fail;
+	DecodeStatus ret =
+		RISCV_getInstruction(MI, Size, Bytes, ByteLen, Address, NULL);
+
+	MCInst_handleWriteback(MI, RISCVDescs.Insts,
+			       ARR_SIZE(RISCVDescs.Insts));
+
+	return ret != MCDisassembler_Fail;
 }
