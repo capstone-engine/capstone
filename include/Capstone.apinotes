@@ -96,6 +96,46 @@ Enumerators:
 - Name: X86_OP_MEM
   SwiftName: mem
 Tags:
+# AArch64
+- Name: aarch64_imm_range
+  SwiftName: AArch64.ImmRange
+- Name: aarch64_op_mem
+  SwiftName: AArch64.MemoryOp
+- Name: aarch64_op_pred
+  SwiftName: AArch64.PredOp
+- Name: aarch64_op_sme
+  SwiftName: AArch64.SmeOp
+- Name: aarch64_suppl_info
+  SwiftName: AArch64.SupplInfo
+- Name: aarch64_sysop
+  SwiftName: AArch64.SysOp
+- Name: aarch64_sysop_alias
+  SwiftName: AArch64.SysOp.Alias
+- Name: aarch64_sysop_imm
+  SwiftName: AArch64.SysOp.Imm
+- Name: aarch64_sysop_reg
+  SwiftName: AArch64.SysOp.Reg
+- Name: aarch64_at
+  SwiftName: AArch64.At
+  EnumExtensibility: closed
+- Name: aarch64_bti
+  SwiftName: AArch64.Bti
+  EnumExtensibility: closed
+- Name: aarch64_dbnxs
+  SwiftName: AArch64.Dbnxs
+  EnumExtensibility: closed
+- Name: aarch64_db
+  SwiftName: AArch64.Db
+  EnumExtensibility: closed
+- Name: aarch64_dc
+  SwiftName: AArch64.Dc
+  EnumExtensibility: closed
+- Name: aarch64_exactfpimm
+  SwiftName: AArch64.ExactFpImm
+  EnumExtensibility: closed
+- Name: aarch64_extender
+  SwiftName: AArch64.Extender
+  EnumExtensibility: closed
 - Name: aarch64_insn
   SwiftName: AArch64.InstructionId
   EnumExtensibility: closed
@@ -105,6 +145,154 @@ Tags:
 - Name: aarch64_reg
   SwiftName: AArch64.Register
   EnumExtensibility: closed
+- Name: aarch64_insn_group
+  SwiftName: AArch64.InstructionGroup
+  EnumExtensibility: closed
+- Name: aarch64_ic
+  SwiftName: AArch64.Ic
+  EnumExtensibility: closed
+- Name: aarch64_isb
+  SwiftName: AArch64.Isb
+  EnumExtensibility: closed
+- Name: aarch64_prfm
+  SwiftName: AArch64.Prfm
+  EnumExtensibility: closed
+- Name: aarch64_psb
+  SwiftName: AArch64.Psb
+  EnumExtensibility: closed
+- Name: aarch64_pstateimm0_15
+  SwiftName: AArch64.PStateImm0_15
+  EnumExtensibility: closed
+- Name: aarch64_pstateimm0_1
+  SwiftName: AArch64.PStateImm0_1
+  EnumExtensibility: closed
+- Name: aarch64_rprfm
+  SwiftName: AArch64.Rprfm
+  EnumExtensibility: closed
+- Name: aarch64_shifter
+  SwiftName: AArch64.Shifter
+  EnumExtensibility: closed
+- Name: aarch64_sme_op_type
+  SwiftName: AArch64.SmeOpType
+  EnumExtensibility: closed
+- Name: aarch64_svcr
+  SwiftName: AArch64.Svcr
+  EnumExtensibility: closed
+- Name: aarch64_svepredpat
+  SwiftName: AArch64.SvePredPat
+  EnumExtensibility: closed
+- Name: aarch64_sveprfm
+  SwiftName: AArch64.SvePrfm
+  EnumExtensibility: closed
+- Name: aarch64_sveveclenspecifier
+  SwiftName: AArch64.SveVecLenSpecifier
+  EnumExtensibility: closed
+- Name: aarch64_sysreg
+  SwiftName: AArch64.SystemRegister
+  EnumExtensibility: closed
+- Name: aarch64_tlbi
+  SwiftName: AArch64.Tlbi
+  EnumExtensibility: closed
+- Name: aarch64_tsb
+  SwiftName: AArch64.Tsb
+  EnumExtensibility: closed
+- Name: AArch64CondCode
+  SwiftName: AArch64.ConditionCode
+  EnumExtensibility: closed
+- Name: cs_arc
+  SwiftName: Arc
+- Name: arc_op_type
+  SwiftName: Arc.OperandType
+  EnumExtensibility: closed
+- Name: arc_insn_group
+  SwiftName: Arc.InstructionGroup
+  EnumExtensibility: closed
+- Name: arc_insn
+  SwiftName: Arc.InstructionId
+  EnumExtensibility: closed
+- Name: arc_reg
+  SwiftName: Arc.Register
+  EnumExtensibility: closed
+- Name: cs_arm
+  SwiftName: Arm
+- Name: arm_op_mem
+  SwiftName: Arm.MemoryOp
+- Name: CondCodes
+  SwiftName: Arm.ConditionCode
+  EnumExtensibility: closed
+- Name: arm_bankedreg
+  SwiftName: Arm.BankedRegister
+  EnumExtensibility: closed
+- Name: arm_cpsflag_type
+  SwiftName: Arm.CpsFlagType
+  EnumExtensibility: closed
+- Name: arm_cpsmode_type
+  SwiftName: Arm.CpsModeType
+  EnumExtensibility: closed
+- Name: arm_insn_group
+  SwiftName: Arm.InstructionGroup
+  EnumExtensibility: closed
+- Name: arm_spsr_cpsr_bits
+  SwiftName: Arm.SpsrCpsrBits
+  EnumExtensibility: closed
+- Name: arm_insn
+  SwiftName: Arm.InstructionId
+  EnumExtensibility: closed
+- Name: arm_sysreg
+  SwiftName: Arm.SystemRegister
+  EnumExtensibility: closed
+- Name: arm_op_type
+  SwiftName: Arm.OperandType
+  EnumExtensibility: closed
+- Name: arm_reg
+  SwiftName: Arm.Register
+  EnumExtensibility: closed
+- Name: arm_vectordata_type
+  SwiftName: Arm.VectorDataType
+- Name: cs_alpha
+  SwiftName: Alpha
+  EnumExtensibility: closed
+- Name: alpha_op_type
+  SwiftName: Alpha.OperandType
+  EnumExtensibility: closed
+- Name: alpha_insn_group
+  SwiftName: Alpha.InstructionGroup
+  EnumExtensibility: closed
+- Name: alpha_insn
+  SwiftName: Alpha.InstructionId
+  EnumExtensibility: closed
+- Name: alpha_reg
+  SwiftName: Alpha.Register
+  EnumExtensibility: closed
+- Name: cs_bpf
+  SwiftName: Bpf
+- Name: bpf_insn_group
+  SwiftName: Bpf.InstructionGroup
+  EnumExtensibility: closed
+- Name: bpf_insn
+  SwiftName: Bpf.InstructionId
+  EnumExtensibility: closed
+- Name: bpf_reg
+  SwiftName: Bpf.Register
+  EnumExtensibility: closed
+#- Name: <#c name#>
+#  SwiftName: <#swift name#>
+#  EnumExtensibility: closed
+#- Name: <#c name#>
+#  SwiftName: <#swift name#>
+#  EnumExtensibility: closed
+#- Name: <#c name#>
+#  SwiftName: <#swift name#>
+#  EnumExtensibility: closed
+#- Name: <#c name#>
+#  SwiftName: <#swift name#>
+#  EnumExtensibility: closed
+#- Name: <#c name#>
+#  SwiftName: <#swift name#>
+#  EnumExtensibility: closed
+#- Name: <#c name#>
+#  SwiftName: <#swift name#>
+#  EnumExtensibility: closed
 - Name: x86_insn
   SwiftName: X86.InstructionId
   EnumExtensibility: closed
@@ -166,6 +354,8 @@ Functions:
   SwiftSafety: unsafe
 - Name: cs_strerror
   ResultType: "const char * _Nonnull"
+- Name: VectorLayout
+  SwiftName: AArch64.VectorLayout
 Typedefs:
 #- Name: csh
 #  SwiftName: CapstoneHandle

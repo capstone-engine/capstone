@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2026-06-04.
 //
 
-public import capstone
+@_exported public import capstone
 
 public struct Capstone: ~Copyable {
 	public let handle: csh
