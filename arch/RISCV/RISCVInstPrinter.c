@@ -400,28 +400,52 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 		(is_uncompressed &&
 		 MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED);
 	if (print_exact_text) {
+		// while we always print real operands for NO_ALIAS_TEXT, set this explicitly
+		MI->flat_insn->usesAliasDetails = false;
 		printInstruction(MI, MI->address, O);
-	} else {
 		// side-effectful check for alias instructions that prints to the SStream if true
-		if (printAliasInstr(McInstr, MI->address, O)) {
-			MCInst_setIsAlias(MI, true);
-			// do we still want the exact details even if the text is alias ?
-			if (!usesAliasDetails && detail_is_set(MI)) {
-				// disable actual printing
-				SStream_Close(O);
-				// discard the alias operands
-				memset(MI->flat_insn->detail->riscv.operands, 0,
-				       sizeof(MI->flat_insn->detail->riscv
-						      .operands));
-				MI->flat_insn->detail->riscv.op_count = 0;
-				// re-disassemble again with no printing in order to obtain the full details
-				// including the whole operands array
-				printInstruction(MI, MI->address, O);
-				// re-open the stream to restore the usual state
-				SStream_Open(O);
+	} else if (printAliasInstr(McInstr, MI->address, O)) {
+		MCInst_setIsAlias(MI, true);
+		// do we still want the exact details even if the text is alias ?
+		if (!usesAliasDetails && detail_is_set(MI)) {
+			// disable actual printing
+			SStream_Close(O);
+			// discard the alias operands
+			memset(MI->flat_insn->detail->riscv.operands, 0,
+			       sizeof(MI->flat_insn->detail->riscv.operands));
+			MI->flat_insn->detail->riscv.op_count = 0;
+			// re-disassemble again with no printing in order to obtain the full details
+			// including the whole operands array
+			printInstruction(MI, MI->address, O);
+			// re-open the stream to restore the usual state
+			SStream_Open(O);
+		}
+		// the instruction is not an ISA alias, but it still can be an uncompressed "alias"
+	} else {
+		if (is_uncompressed) {
+			unsigned int i = find_cs_id(MCInst_getOpcode(&Uncompressed),
+						    RISCV_insns, RISCV_insn_count);
+			if (i != -1) {
+				Uncompressed.flat_insn->alias_id = RISCV_insns[i].mapid;
+				MCInst_setIsAlias(&Uncompressed, true);
 			}
-		} else // the instruction is not an alias
-			printInstruction(McInstr, MI->address, O);
+		}
+		printInstruction(McInstr, MI->address, O);
+
+		// do we still want the exact details even if the text is alias ?
+		if (!usesAliasDetails && detail_is_set(MI)) {
+			// disable actual printing
+			SStream_Close(O);
+			// discard the alias operands
+			memset(MI->flat_insn->detail->riscv.operands, 0,
+			       sizeof(MI->flat_insn->detail->riscv.operands));
+			MI->flat_insn->detail->riscv.op_count = 0;
+			// re-disassemble again with no printing in order to obtain the full details
+			// including the whole operands array
+			printInstruction(MI, MI->address, O);
+			// re-open the stream to restore the usual state
+			SStream_Open(O);
+		}
 	}
 	RISCV_add_groups(MI);
 	RISCV_compact_operands(MI);
