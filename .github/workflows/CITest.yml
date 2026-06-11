@@ -250,17 +250,16 @@ jobs:
         }
         Start-Process msiexec.exe -ArgumentList "/qn /i cmake.msi" -Wait
 
-    - name: '🛠️ Win MSVC 64 setup'
-      if: contains(matrix.config.name, 'MSVC 64')
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: 'x64'
-
-    - name: '🚧 Win MSVC 64 build'
-      if: contains(matrix.config.name, 'MSVC 64')
+    - name: 'Windows MSVC build'
+      if: contains(matrix.config.name, 'MSVC')
       shell: bash
+      env:
+        ARCH: ${{ matrix.arch }}
+        PLATFORM: ${{ matrix.platform }}
+        DIET: ${{ matrix.config.diet_build == true && '-diet' || '' }}
       run: |
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat" $env:ARCH
         cmake --version
-        cmake --preset=${{ matrix.config.platform }}-x64${{ matrix.config.diet_build == true && '-diet' || '' }}
-        cmake --build --preset build-${{ matrix.config.platform }}${{ matrix.config.diet_build == true && '-diet' || '' }}-release
-        cmake --build --preset install-${{ matrix.config.platform }}${{ matrix.config.diet_build == true && '-diet' || '' }}-release
+        cmake --preset=$env:PLATFORM-$env:ARCH$env:DIET
+        cmake --build --preset build-$env:PLATFORM$env:DIET-release
+        cmake --build --preset install-$env:PLATFORM$env:DIET-release
