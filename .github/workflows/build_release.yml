@@ -43,12 +43,12 @@ jobs:
         echo "tarball=$TARBALL" >> $GITHUB_OUTPUT
         echo "shasum=$SHASUM" >> $GITHUB_OUTPUT
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: ${{ steps.archive.outputs.tarball }}
         path: ${{ steps.archive.outputs.tarball }}
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: ${{ steps.archive.outputs.shasum }}
         path: ${{ steps.archive.outputs.shasum }}
@@ -79,12 +79,12 @@ jobs:
         cpack -G DEB
         cpack -G RPM
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: capstone_x86.deb
         path: ./build/*.deb
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: capstone_x86.rpm
         path: ./build/*.rpm
@@ -135,7 +135,7 @@ jobs:
         cd build
         cpack -G NSIS
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: capstone_x64.exe
         path: ./build/*.exe
