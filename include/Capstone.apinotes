@@ -1,7 +1,8 @@
 ---
-Name: Capstone
+Name: capstone
+#MARK: - Enumerators
 Enumerators:
-# cs_ac_type
+#MARK: cs_ac_type
 - Name: CS_AC_INVALID
   SwiftName: invalid
 - Name: CS_AC_READ
@@ -10,7 +11,7 @@ Enumerators:
   SwiftName: readWrite
 - Name: CS_AC_WRITE
   SwiftName: write
-# cs_arch
+#MARK: cs_arch
 - Name: CS_ARCH_ARM
   SwiftName: arm
 - Name: CS_ARCH_ARM64
@@ -27,26 +28,74 @@ Enumerators:
   SwiftName: x86
 - Name: CS_ARCH_PPC
   SwiftName: ppc
-#  	CS_ARCH_SPARC, ///< Sparc architecture
-#	CS_ARCH_XCORE, ///< XCore architecture
-#	CS_ARCH_M68K, ///< 68K architecture
-#	CS_ARCH_TMS320C64X, ///< TMS320C64x architecture
-#	CS_ARCH_M680X, ///< 680X architecture
-#	CS_ARCH_EVM, ///< Ethereum architecture
-#	CS_ARCH_MOS65XX, ///< MOS65XX architecture (including MOS6502)
-#	CS_ARCH_WASM, ///< WebAssembly architecture
-#	CS_ARCH_BPF, ///< Berkeley Packet Filter architecture (including eBPF)
-#	CS_ARCH_RISCV, ///< RISCV architecture
-#	CS_ARCH_SH, ///< SH architecture
-#	CS_ARCH_TRICORE, ///< TriCore architecture
-#	CS_ARCH_ALPHA, ///< Alpha architecture
-#	CS_ARCH_HPPA, ///< HPPA architecture
-#	CS_ARCH_LOONGARCH, ///< LoongArch architecture
-#	CS_ARCH_XTENSA, ///< Xtensa architecture
-#	CS_ARCH_ARC, ///< ARC architecture
-#	CS_ARCH_MAX,
-#	CS_ARCH_ALL = 0xFFFF, // All architectures - for cs_support()
-# cs_group_type
+- Name: CS_ARCH_SPARC
+  SwiftName: sparc
+- Name: CS_ARCH_XCORE
+  SwiftName: xcore
+- Name: CS_ARCH_M68K
+  SwiftName: m68k
+- Name: CS_ARCH_TMS320C64X
+  SwiftName: tms320c64x
+- Name: CS_ARCH_M680X
+  SwiftName: m680x
+- Name: CS_ARCH_MOS65XX
+  SwiftName: mos65xx
+- Name: CS_ARCH_WASM
+  SwiftName: wasm
+- Name: CS_ARCH_BPF
+  SwiftName: bpf
+- Name: CS_ARCH_RISCV
+  SwiftName: riscv
+- Name: CS_ARCH_SH
+  SwiftName: sh
+- Name: CS_ARCH_TRICORE
+  SwiftName: tricore
+- Name: CS_ARCH_ALPHA
+  SwiftName: alpha
+- Name: CS_ARCH_HPPA
+  SwiftName: hppa
+- Name: CS_ARCH_LOONGARCH
+  SwiftName: loongarch
+- Name: CS_ARCH_XTENSA
+  SwiftName: xtensa
+- Name: CS_ARCH_ARC
+  SwiftName: arc
+- Name: CS_ARCH_MAX
+  SwiftName: count
+- Name: CS_ARCH_ALL
+  SwiftName: all
+#MARK: cs_err
+- Name: CS_ERR_OK
+  SwiftName: ok
+- Name: CS_ERR_MEM
+  SwiftName: mem
+- Name: CS_ERR_ARCH
+  SwiftName: arch
+- Name: CS_ERR_HANDLE
+  SwiftName: handle
+- Name: CS_ERR_CSH
+  SwiftName: csh
+- Name: CS_ERR_MODE
+  SwiftName: mode
+- Name: CS_ERR_OPTION
+  SwiftName: option
+- Name: CS_ERR_DETAIL
+  SwiftName: detail
+- Name: CS_ERR_MEMSETUP
+  SwiftName: memSetup
+- Name: CS_ERR_VERSION
+  SwiftName: version
+- Name: CS_ERR_DIET
+  SwiftName: diet
+- Name: CS_ERR_SKIPDATA
+  SwiftName: skipData
+- Name: CS_ERR_X86_ATT
+  SwiftName: x86_att
+- Name: CS_ERR_X86_INTEL
+  SwiftName: x86_intel
+- Name: CS_ERR_X86_MASM
+  SwiftName: x86_masm
+#MARK: cs_group_type
 - Name: CS_GRP_INVALID
   SwiftName: invalid
 - Name: CS_GRP_JUMP
@@ -63,7 +112,7 @@ Enumerators:
   SwiftName: privilege
 - Name: CS_GRP_BRANCH_RELATIVE
   SwiftName: branchRelative
-# cs_opt_type
+#MARK: cs_opt_type
 - Name: CS_OPT_INVALID
   SwiftName: invalid
 - Name: CS_OPT_SYNTAX
@@ -86,7 +135,12 @@ Enumerators:
   SwiftName: onlyOffsetBranch
 - Name: CS_OPT_LITBASE
   SwiftName: litbase
-# x86_opt_type
+#MARK: cs_opt_value
+- Name: CS_OPT_OFF
+  SwiftName: off
+- Name: CS_OPT_ON
+  SwiftName: on
+#MARK: x86_opt_type
 - Name: X86_OP_INVALID
   SwiftName: invalid
 - Name: X86_OP_REG
@@ -95,8 +149,57 @@ Enumerators:
   SwiftName: imm
 - Name: X86_OP_MEM
   SwiftName: mem
+#MARK: - Tags
 Tags:
-# AArch64
+- Name: cs_ac_type
+  SwiftName: AccessSet
+  EnumKind: NSOptions
+- Name: cs_arch
+  SwiftName: CapstoneArch
+  EnumExtensibility: closed
+- Name: cs_detail
+  SwiftName: CapstoneInstruction.Detail
+- Name: cs_err
+  SwiftName: CapstoneError
+  EnumExtensibility: closed
+  SwiftConformsTo: Swift.Error
+- Name: cs_group_type
+  SwiftName: InstructionGroup
+  EnumExtensibility: closed
+- Name: cs_insn
+  SwiftName: CapstoneInstruction
+  Fields:
+  - Name: detail
+    SwiftName: unsafeMutableDetailPointer
+- Name: cs_mode
+  SwiftName: CapstoneMode
+  EnumKind: NSOptions
+- Name: cs_op_type
+  SwiftName: CapstoneOpKind
+  EnumExtensibility: closed
+- Name: cs_opt
+  SwiftName: CapstoneOption
+- Name: cs_opt_mem
+  SwiftName: CapstoneOption.Allocator
+- Name: cs_opt_mnem
+  SwiftName: CapstoneOption.Mnemonic
+- Name: cs_opt_skipdata
+  SwiftName: CapstoneOption.SkipData
+- Name: cs_opt_type
+  SwiftName: CapstoneOption.Kind
+  EnumExtensibility: closed
+- Name: cs_opt_value
+  SwiftName: CapstoneOption.Value
+  EnumKind: NSOptions
+#MARK: AArch64
+- Name: cs_aarch64
+  SwiftName: AArch64
+  #NOTE: trying to get rid of the typedef by pointing at the tag directly crashes clang
+#  Fields:
+#    - Name: cc
+#      Type: "enum AArch64CondCode"
+- Name: cs_aarch64_op
+  SwiftName: AArch64.Operand
 - Name: aarch64_imm_range
   SwiftName: AArch64.ImmRange
 - Name: aarch64_op_mem
@@ -199,8 +302,14 @@ Tags:
 - Name: AArch64CondCode
   SwiftName: AArch64.ConditionCode
   EnumExtensibility: closed
+- Name: VectorLayout
+  SwiftName: AArch64.VectorLayout
+  EnumExtensibility: closed
+#MARK: Arc
 - Name: cs_arc
   SwiftName: Arc
+- Name: cs_arc_op
+  SwiftName: Arc.Operand
 - Name: arc_op_type
   SwiftName: Arc.OperandType
   EnumExtensibility: closed
@@ -213,8 +322,11 @@ Tags:
 - Name: arc_reg
   SwiftName: Arc.Register
   EnumExtensibility: closed
+#MARK: Arm
 - Name: cs_arm
   SwiftName: Arm
+- Name: cs_arm_op
+  SwiftName: Arm.Operand
 - Name: arm_op_mem
   SwiftName: Arm.MemoryOp
 - Name: CondCodes
@@ -232,14 +344,8 @@ Tags:
 - Name: arm_insn_group
   SwiftName: Arm.InstructionGroup
   EnumExtensibility: closed
-- Name: arm_spsr_cpsr_bits
-  SwiftName: Arm.SpsrCpsrBits
-  EnumExtensibility: closed
 - Name: arm_insn
   SwiftName: Arm.InstructionId
-  EnumExtensibility: closed
-- Name: arm_sysreg
-  SwiftName: Arm.SystemRegister
   EnumExtensibility: closed
 - Name: arm_op_type
   SwiftName: Arm.OperandType
@@ -247,11 +353,36 @@ Tags:
 - Name: arm_reg
   SwiftName: Arm.Register
   EnumExtensibility: closed
+- Name: arm_setend_type
+  SwiftName: Arm.SetEndKind
+  EnumExtensibility: closed
+- Name: arm_shifter
+  SwiftName: Arm.Shifter
+  EnumExtensibility: closed
+- Name: arm_spsr_cpsr_bits
+  SwiftName: Arm.SpsrCpsrBits
+  EnumExtensibility: closed
+- Name: arm_sysreg
+  SwiftName: Arm.SystemRegister
+  EnumExtensibility: closed
 - Name: arm_vectordata_type
   SwiftName: Arm.VectorDataType
+  EnumExtensibility: closed
+- Name: PredBlockMask
+  SwiftName: Arm.PredBlockMask
+  EnumKind: NSOptions
+- Name: MemBOpt
+  SwiftName: Arm.MemoryBarrierOption
+  EnumExtensibility: closed
+- Name: VPTCodes
+  SwiftName: Arm.VptCodes
+  EnumExtensibility: closed
+#MARK: Alpha
 - Name: cs_alpha
   SwiftName: Alpha
   EnumExtensibility: closed
+- Name: cs_alpha_op
+  SwiftName: Alpha.Operand
 - Name: alpha_op_type
   SwiftName: Alpha.OperandType
   EnumExtensibility: closed
@@ -264,8 +395,11 @@ Tags:
 - Name: alpha_reg
   SwiftName: Alpha.Register
   EnumExtensibility: closed
+#MARK: BPF
 - Name: cs_bpf
   SwiftName: Bpf
+- Name: cs_bpf_op
+  SwiftName: Bpf.Operand
 - Name: bpf_insn_group
   SwiftName: Bpf.InstructionGroup
   EnumExtensibility: closed
@@ -275,24 +409,246 @@ Tags:
 - Name: bpf_reg
   SwiftName: Bpf.Register
   EnumExtensibility: closed
-#- Name: <#c name#>
-#  SwiftName: <#swift name#>
-#  EnumExtensibility: closed
-#- Name: <#c name#>
-#  SwiftName: <#swift name#>
-#  EnumExtensibility: closed
-#- Name: <#c name#>
-#  SwiftName: <#swift name#>
-#  EnumExtensibility: closed
-#- Name: <#c name#>
-#  SwiftName: <#swift name#>
-#  EnumExtensibility: closed
-#- Name: <#c name#>
-#  SwiftName: <#swift name#>
-#  EnumExtensibility: closed
-#- Name: <#c name#>
-#  SwiftName: <#swift name#>
-#  EnumExtensibility: closed
+- Name: bpf_ext_type
+  SwiftName: Bpf.Extension
+  EnumExtensibility: closed
+- Name: bpf_op_type
+  SwiftName: Bpf.Extension
+  EnumExtensibility: closed
+#MARK: EVM
+- Name: cs_evm
+  SwiftName: Evm
+- Name: evm_insn_group
+  SwiftName: Evm.InstructionGroup
+  EnumExtensibility: closed
+- Name: evm_insn
+  SwiftName: Evm.InstructionId
+  EnumExtensibility: closed
+- Name: evm_reg
+  SwiftName: Evm.Register
+  EnumExtensibility: closed
+#MARK: HPPA
+- Name: cs_hppa
+  SwiftName: Hppa
+- Name: cs_hppa_op
+  SwiftName: Hppa.Operand
+- Name: hppa_insn_group
+  SwiftName: Hppa.InstructionGroup
+  EnumExtensibility: closed
+- Name: hppa_insn
+  SwiftName: Hppa.InstructionId
+  EnumExtensibility: closed
+- Name: hppa_reg
+  SwiftName: Hppa.Register
+  EnumExtensibility: closed
+#MARK: LoongArch
+- Name: cs_loongarch
+  SwiftName: LoongArch
+- Name: cs_loongarch_op
+  SwiftName: LoongArch.Operand
+- Name: loongarch_insn_group
+  SwiftName: LoongArch.InstructionGroup
+  EnumExtensibility: closed
+- Name: loongarch_insn
+  SwiftName: LoongArch.InstructionId
+  EnumExtensibility: closed
+- Name: loongarch_insn_form
+  SwiftName: LoongArch.InstructionForm
+  EnumExtensibility: closed
+- Name: loongarch_reg
+  SwiftName: LoongArch.Register
+  EnumExtensibility: closed
+#MARK: m680x
+- Name: cs_m680x
+  SwiftName: M680x
+- Name: cs_m680x_op
+  SwiftName: M680x.Operand
+- Name: mos65xx_group_type
+  SwiftName: M680x.GroupKind
+  EnumExtensibility: closed
+- Name: m680x_insn_group
+  SwiftName: M680x.InstructionGroup
+  EnumExtensibility: closed
+- Name: m680x_insn
+  SwiftName: M680x.InstructionId
+  EnumExtensibility: closed
+- Name: m680x_reg
+  SwiftName: M680x.Register
+  EnumExtensibility: closed
+#MARK: m68k
+- Name: cs_m68k
+  SwiftName: M68k
+- Name: cs_m68k_op
+  SwiftName: M68k.Operand
+- Name: cs_m68k_op_reg_pair
+  SwiftName: M68k.RegisterPair
+- Name: m68k_insn_group
+  SwiftName: M68k.InstructionGroup
+  EnumExtensibility: closed
+- Name: m68k_insn
+  SwiftName: M68k.InstructionId
+  EnumExtensibility: closed
+- Name: m68k_reg
+  SwiftName: M68k.Register
+  EnumExtensibility: closed
+#MARK: Mips
+- Name: cs_mips
+  SwiftName: Mips
+- Name: cs_mips_op
+  SwiftName: Mips.Operand
+- Name: mips_insn_group
+  SwiftName: Mips.InstructionGroup
+  EnumExtensibility: closed
+- Name: mips_insn
+  SwiftName: Mips.InstructionId
+  EnumExtensibility: closed
+- Name: mips_reg
+  SwiftName: Mips.Register
+  EnumExtensibility: closed
+#MARK: MOS65xx
+- Name: cs_mos65xx
+  SwiftName: Mos65xx
+- Name: cs_mos65xx_op
+  SwiftName: Mos65xx.Operand
+- Name: mos65xx_insn_group
+  SwiftName: Mos65xx.InstructionGroup
+  EnumExtensibility: closed
+- Name: mos65xx_insn
+  SwiftName: Mos65xx.InstructionId
+  EnumExtensibility: closed
+- Name: mos65xx_reg
+  SwiftName: Mos65xx.Register
+  EnumExtensibility: closed
+#MARK: PowerPC
+- Name: cs_ppc
+  SwiftName: PowerPC
+- Name: cs_ppc_op
+  SwiftName: PowerPC.Operand
+- Name: ppc_insn
+  SwiftName: PowerPC.InstructionId
+  EnumExtensibility: closed
+- Name: ppc_insn_form
+  SwiftName: PowerPC.InstructionForm
+  EnumExtensibility: closed
+- Name: ppc_insn_group
+  SwiftName: PowerPC.InstructionGroup
+  EnumExtensibility: closed
+- Name: ppc_pred
+  SwiftName: PowerPC.Predicate
+  EnumKind: NSOptions
+- Name: ppc_reg
+  SwiftName: PowerPC.Register
+  EnumExtensibility: closed
+#MARK: RiscV
+- Name: cs_riscv
+  SwiftName: RiscV
+- Name: cs_riscv_op
+  SwiftName: RiscV.Operand
+- Name: riscv_insn_group
+  SwiftName: RiscV.InstructionGroup
+  EnumExtensibility: closed
+- Name: riscv_insn
+  SwiftName: RiscV.InstructionId
+  EnumExtensibility: closed
+- Name: riscv_reg
+  SwiftName: RiscV.Register
+  EnumExtensibility: closed
+- Name: riscv_sysreg
+  SwiftName: RiscV.SystemRegister
+  EnumExtensibility: closed
+#MARK: SH
+- Name: cs_sh
+  SwiftName: Sh
+- Name: cs_sh_op
+  SwiftName: Sh.Operand
+- Name: sh_insn_group
+  SwiftName: Sh.InstructionGroup
+  EnumExtensibility: closed
+- Name: sh_insn
+  SwiftName: Sh.InstructionId
+  EnumExtensibility: closed
+- Name: sh_reg
+  SwiftName: Sh.Register
+  EnumExtensibility: closed
+#MARK: Sparc
+- Name: cs_sparc
+  SwiftName: Sparc
+- Name: cs_sparc_op
+  SwiftName: Sparc.Operand
+- Name: sparc_insn_group
+  SwiftName: Sparc.InstructionGroup
+  EnumExtensibility: closed
+- Name: sparc_insn
+  SwiftName: Sparc.InstructionId
+  EnumExtensibility: closed
+- Name: sparc_reg
+  SwiftName: Sparc.Register
+  EnumExtensibility: closed
+#MARK: SystemZ
+- Name: cs_systemz
+  SwiftName: SystemZ
+- Name: cs_systemz_op
+  SwiftName: SystemZ.Operand
+- Name: systemz_insn_group
+  SwiftName: SystemZ.InstructionGroup
+  EnumExtensibility: closed
+- Name: systemz_insn
+  SwiftName: SystemZ.InstructionId
+  EnumExtensibility: closed
+- Name: systemz_reg
+  SwiftName: SystemZ.Register
+  EnumExtensibility: closed
+#MARK: TMS320c64x
+- Name: cs_tms320c64x
+  SwiftName: Tms320c64x
+- Name: cs_tms320c64x_op
+  SwiftName: Tms320c64x.Operand
+- Name: tms320c64x_insn_group
+  SwiftName: Tms320c64x.InstructionGroup
+  EnumExtensibility: closed
+- Name: tms320c64x_insn
+  SwiftName: Tms320c64x.InstructionId
+  EnumExtensibility: closed
+- Name: tms320c64x_reg
+  SwiftName: Tms320c64x.Register
+  EnumExtensibility: closed
+#MARK: Tricore
+- Name: cs_tricore
+  SwiftName: Tricore
+- Name: cs_tricore_op
+  SwiftName: Tricore.Operand
+- Name: tricore_insn_group
+  SwiftName: Tricore.InstructionGroup
+  EnumExtensibility: closed
+- Name: tricore_insn
+  SwiftName: Tricore.InstructionId
+  EnumExtensibility: closed
+- Name: tricore_reg
+  SwiftName: Tricore.Register
+  EnumExtensibility: closed
+#MARK: Wasm
+- Name: cs_wasm
+  SwiftName: Wasm
+- Name: cs_wasm_op
+  SwiftName: Wasm.Operand
+- Name: cs_wasm_brtable
+  SwiftName: Wasm.BrTable
+- Name: wasm_insn_group
+  SwiftName: Wasm.InstructionGroup
+  EnumExtensibility: closed
+- Name: wasm_insn
+  SwiftName: Wasm.InstructionId
+  EnumExtensibility: closed
+- Name: wasm_reg
+  SwiftName: Wasm.Register
+  EnumExtensibility: closed
+#MARK: x86
+- Name: cs_x86
+  SwiftName: X86
+- Name: cs_x86_op
+  SwiftName: X86.Operand
+- Name: cs_x86_encoding
+  SwiftName: X86.Encoding
 - Name: x86_insn
   SwiftName: X86.InstructionId
   EnumExtensibility: closed
@@ -302,45 +658,40 @@ Tags:
 - Name: x86_reg
   SwiftName: X86.Register
   EnumExtensibility: closed
-- Name: cs_aarch64
-  SwiftName: AArch64
-- Name: cs_aarch64_op
-  SwiftName: AArch64.Operand
-- Name: cs_ac_type
-  SwiftName: AccessSet
-  EnumKind: NSOptions
-- Name: cs_arch
-  SwiftName: CapstoneArch
+#MARK: Xcore
+- Name: cs_xcore
+  SwiftName: Xcore
+- Name: cs_xcore_op
+  SwiftName: Xcore.Operand
+- Name: xcore_insn_group
+  SwiftName: Xcore.InstructionGroup
   EnumExtensibility: closed
-- Name: cs_detail
-  SwiftName: CapstoneInstruction.Detail
-- Name: cs_err
-  SwiftName: CapstoneError
+- Name: xcore_insn
+  SwiftName: Xcore.InstructionId
   EnumExtensibility: closed
-  SwiftConformsTo: Swift.Error
-- Name: cs_group_type
-  SwiftName: InstructionGroup
+- Name: xcore_reg
+  SwiftName: Xcore.Register
   EnumExtensibility: closed
-- Name: cs_insn
-  SwiftName: CapstoneInstruction
-  Fields:
-  - Name: detail
-    SwiftName: unsafeMutableDetailPointer
-- Name: cs_mode
-  SwiftName: CapstoneMode
-  EnumKind: NSOptions
-- Name: cs_opt_type
-  SwiftName: CapstoneOptionKind
+#MARK: Xtensa
+- Name: cs_xtensa
+  SwiftName: Xtensa
+- Name: cs_xtensa_op
+  SwiftName: Xtensa.Operand
+- Name: cs_xtensa_op_mem
+  SwiftName: Xtensa.Operand.Memory
+- Name: cs_xtensa_op_type
+  SwiftName: Xtensa.Operand.Kind
   EnumExtensibility: closed
-- Name: cs_opt_value
-  SwiftName: CapstoneOptionValue
-  EnumKind: NSOptions
-- Name: cs_opt
-  SwiftName: CapstoneOption
-- Name: cs_x86
-  SwiftName: X86
-- Name: cs_x86_op
-  SwiftName: X86.Operand
+- Name: xtensa_insn_group
+  SwiftName: Xtensa.InstructionGroup
+  EnumExtensibility: closed
+- Name: xtensa_insn
+  SwiftName: Xtensa.InstructionId
+  EnumExtensibility: closed
+- Name: xtensa_reg
+  SwiftName: Xtensa.Register
+  EnumExtensibility: closed
+#MARK: - Functions
 Functions:
 - Name: cs_disasm
   Parameters:
@@ -354,9 +705,21 @@ Functions:
   SwiftSafety: unsafe
 - Name: cs_strerror
   ResultType: "const char * _Nonnull"
-- Name: VectorLayout
-  SwiftName: AArch64.VectorLayout
+#MARK: - Typedefs
 Typedefs:
+#NOTE: Making those private prevents navigating through them via docs, maybe use Type to switch fields to its tag representation?
+#- Name: AArch64CC_CondCode
+#  SwiftPrivate: true
+#- Name: AArch64Layout_VectorLayout
+#  SwiftPrivate: true
+#- Name: ARMCC_CondCodes
+#  SwiftPrivate: true
+#- Name: ARMVCC_VPTCodes
+#  SwiftPrivate: true
+#- Name: ARM_PredBlockMask
+#  SwiftPrivate: true
+#- Name: arm_mem_bo_opt
+#  SwiftPrivate: true
 #- Name: csh
 #  SwiftName: CapstoneHandle
 #  SwiftWrapper: struct

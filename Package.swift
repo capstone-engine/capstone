@@ -20,10 +20,15 @@ let package = Package(
 		.target(
 			name: "CapstoneKit",
 			dependencies: ["capstone"],
-			path: "bindings/swift",
+			path: "bindings/swift/Sources",
 			swiftSettings: [
 				.enableExperimentalFeature("SafeInteropWrappers"),
 			]
+		),
+		.testTarget(
+			name: "CapstoneKitTests",
+			dependencies: ["CapstoneKit"],
+			path: "bindings/swift/Tests"
 		),
 		.target(
 			name: "capstone",
