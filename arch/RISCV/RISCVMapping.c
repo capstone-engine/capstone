@@ -297,29 +297,6 @@ void RISCV_compact_operands(MCInst *MI)
 	       (NUM_RISCV_OPS - write_pos) * sizeof(cs_riscv_op));
 }
 
-// some RISC-V instructions have only 2 apparent operands, one of them is read-write
-// the actual operand information for those instruction should have 3 operands, the first and second are the same operand,
-// but once with read and once write access
-// when those instructions are disassembled only the operand entry with the read access is used,
-// and therefore the read-write operand is wrongly classified as only-read
-// this logic tries to correct that
-void RISCV_add_missing_write_access(MCInst *MI)
-{
-	if (!detail_is_set(MI))
-		return;
-	if (!isCompressed(MI))
-		return;
-
-	cs_riscv *riscv_details = RISCV_get_detail(MI);
-	cs_riscv_op *ops = riscv_details->operands;
-	// make the detection condition as specific as possible
-	// so it doesn't accidentally trigger for other cases
-	if (riscv_details->op_count == 2 && ops[0].type == RISCV_OP_INVALID &&
-	    ops[1].type == RISCV_OP_REG && ops[1].access == CS_AC_READ) {
-		ops[1].access |= CS_AC_WRITE;
-	}
-}
-
 // given internal insn id, return public instruction info
 void RISCV_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {

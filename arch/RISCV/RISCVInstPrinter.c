@@ -424,7 +424,6 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 			printInstruction(McInstr, MI->address, O);
 	}
 	RISCV_add_groups(MI);
-	RISCV_add_missing_write_access(MI);
 	RISCV_compact_operands(MI);
 	RISCV_set_alias_id(MI, O);
 }
