@@ -582,7 +582,7 @@ const char *M68K_insn_name(csh handle, unsigned int id)
 #ifdef CAPSTONE_DIET
 	return NULL;
 #else
-	if (id > ARR_SIZE(s_instruction_names)) {
+	if (id >= ARR_SIZE(s_instruction_names)) {
 		return NULL;
 	}
 	return s_instruction_names[id];
