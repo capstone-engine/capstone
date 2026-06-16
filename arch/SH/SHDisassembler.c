@@ -2188,6 +2188,9 @@ static bool sh_disassemble(const uint8_t *code, MCInst *MI, uint64_t address,
 	} else {
 		idx = ((insn >> 8) & 0xf0) | (insn & 0x000f);
 	}
+	if (idx >= ARR_SIZE(decode)) {
+		return MCDisassembler_Fail;
+	}
 
 	if (idx < ARR_SIZE(decode) && decode[idx]) {
 		return decode[idx](insn, address, MI, mode, info, detail);
