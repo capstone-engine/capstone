@@ -58,6 +58,13 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 	    opgroup == RISCV_OP_GROUP_FRMArgLegacy)
 		return;
 
+	if (opgroup == RISCV_OP_GROUP_VMaskReg) {
+		MCOperand *mask = MCInst_getOperand(MI, OpNum);
+		if (MCOperand_isReg(mask) &&
+		    MCOperand_getReg(mask) == RISCV_NoRegister)
+			return;
+	}
+
 	if (opgroup == RISCV_OP_GROUP_FPImmOperand) {
 		unsigned Imm = (unsigned)MCInst_getOperand(MI, OpNum)->ImmVal;
 		cs_riscv_op *op = RISCV_get_detail_op_at(MI, OpNum);
