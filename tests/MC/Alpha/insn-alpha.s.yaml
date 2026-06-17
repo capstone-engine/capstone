@@ -1934,3 +1934,57 @@ test_cases:
       insns:
         -
           asm_text: "trapb"
+  -
+    input:
+      bytes: [ 0x43, 0x04, 0x22, 0x40 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "s4addq $1,$2,$3"
+  -
+    input:
+      bytes: [ 0x43, 0xd4, 0x3b, 0x40 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "s4addq $1,0xde,$3"
+  -
+    input:
+      bytes: [ 0xe2, 0xa5, 0xe1, 0x5b ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cvttq/svc $f1,$f10"
+  -
+    input:
+      bytes: [ 0x82, 0xf5, 0xe1, 0x5b ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cvtts/sui $f1,$f10"
+  -
+    input:
+      bytes: [ 0x82, 0xf7, 0xe1, 0x5b ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cvtqs/sui $f1,$f10"
+  -
+    input:
+      bytes: [ 0xc2, 0xf7, 0xe1, 0x5b ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "cvtqt/sui $f1,$f10"
