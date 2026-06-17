@@ -462,17 +462,17 @@ static const uint8_t DecoderTable32[] = {
 /* 2215 */    MCD_OPC_FilterValue, 26, 101, 0, 0, // Skip to: 2321
 /* 2220 */    MCD_OPC_ExtractField, 14, 2,  // Inst{15-14} ...
 /* 2223 */    MCD_OPC_FilterValue, 0, 18, 0, 0, // Skip to: 2246
-/* 2228 */    MCD_OPC_CheckField, 21, 5, 31, 216, 1, 0, // Skip to: 2707
-/* 2235 */    MCD_OPC_CheckField, 0, 14, 0, 209, 1, 0, // Skip to: 2707
-/* 2242 */    MCD_OPC_Decode, 140, 3, 17, // Opcode: JMP
+/* 2228 */    MCD_OPC_CheckField, 21, 5, 31, 0, 0, 0, // (no-op: accept any Ra)
+/* 2235 */    MCD_OPC_CheckField, 0, 14, 0, 0, 0, 0, // (no-op: accept any hint)
+/* 2242 */    MCD_OPC_Decode, 140, 3, 18, // Opcode: JMP (Ra + Rb + hint14)
 /* 2246 */    MCD_OPC_FilterValue, 1, 37, 0, 0, // Skip to: 2288
 /* 2251 */    MCD_OPC_ExtractField, 16, 10,  // Inst{25-16} ...
 /* 2254 */    MCD_OPC_FilterValue, 251, 5, 11, 0, 0, // Skip to: 2271
-/* 2260 */    MCD_OPC_CheckField, 0, 14, 0, 184, 1, 0, // Skip to: 2707
-/* 2267 */    MCD_OPC_Decode, 143, 3, 14, // Opcode: JSRs
-/* 2271 */    MCD_OPC_FilterValue, 219, 6, 174, 1, 0, // Skip to: 2707
-/* 2277 */    MCD_OPC_CheckField, 0, 14, 0, 167, 1, 0, // Skip to: 2707
-/* 2284 */    MCD_OPC_Decode, 141, 3, 14, // Opcode: JSR
+/* 2260 */    MCD_OPC_CheckField, 0, 14, 0, 0, 0, 0, // (no-op: accept any hint)
+/* 2267 */    MCD_OPC_Decode, 141, 3, 18, // Opcode: JSR (Ra + Rb + hint14)
+/* 2271 */    MCD_OPC_FilterValue, 219, 6, 7, 0, 0, // Skip to: 2284 (not to 2707)
+/* 2277 */    MCD_OPC_CheckField, 0, 14, 0, 0, 0, 0, // (no-op: accept any hint)
+/* 2284 */    MCD_OPC_Decode, 141, 3, 18, // Opcode: JSR (Ra + Rb + hint14)
 /* 2288 */    MCD_OPC_FilterValue, 2, 19, 0, 0, // Skip to: 2312
 /* 2293 */    MCD_OPC_CheckField, 16, 10, 250, 7, 150, 1, 0, // Skip to: 2707
 /* 2301 */    MCD_OPC_CheckField, 0, 14, 1, 143, 1, 0, // Skip to: 2707

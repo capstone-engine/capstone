@@ -988,7 +988,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jmp $31,$26,0"
+          asm_text: "jmp $31,($26),0"
   -
     input:
       bytes: [ 0x00, 0x40, 0x5b, 0x6b ]
@@ -1889,3 +1889,39 @@ test_cases:
       insns:
         -
           asm_text: "call_pal 0x1020b"
+  -
+    input:
+      bytes: [ 0x44, 0x00, 0x00, 0x68 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jmp $0,($0),0x44"
+  -
+    input:
+      bytes: [ 0x1a, 0x00, 0x40, 0x6b ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jmp $26,($0),0x1a"
+  -
+    input:
+      bytes: [ 0x00, 0x40, 0x40, 0x6b ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jsr $26,($0),0"
+  -
+    input:
+      bytes: [ 0x1a, 0x40, 0x40, 0x6b ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "jsr $26,($0),0x1a"
