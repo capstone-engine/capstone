@@ -196,7 +196,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "bsr $26,$0xfffffffffffffff4 ..ng"
+          asm_text: "bsr $26,0xfffffffffffffff4"
   -
     input:
       bytes: [ 0x44, 0x22, 0x04, 0x83 ]

@@ -85,6 +85,19 @@ const char *Alpha_LLVM_getRegisterName(csh handle, unsigned int id)
 
 void Alpha_LLVM_printInstruction(MCInst *MI, SStream *O, void *Info)
 {
+	unsigned Opcode = MCInst_getOpcode(MI);
+	/*
+	 * The generated AsmWriter hardcodes "$31" for BR and restricts BSR to
+	 * Ra=26. Format 27 now decodes Ra as operand[0] and disp21 as
+	 * operand[1], so we must print them explicitly here.
+	 */
+	if (Opcode == Alpha_BR || Opcode == Alpha_BSR) {
+		SStream_concat0(O, Opcode == Alpha_BR ? "br " : "bsr ");
+		printOperand(MI, 0, O);
+		SStream_concat1(O, ',');
+		printOperandAddr(MI, MI->address, 1, O);
+		return;
+	}
 	printAliasInstr(MI, MI->address, O);
 	printInstruction(MI, MI->address, O);
 }

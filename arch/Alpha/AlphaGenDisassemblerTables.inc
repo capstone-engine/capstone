@@ -527,8 +527,8 @@ static const uint8_t DecoderTable32[] = {
 /* 2540 */    MCD_OPC_FilterValue, 47, 4, 0, 0, // Skip to: 2549
 /* 2545 */    MCD_OPC_Decode, 226, 3, 24, // Opcode: STQ_C
 /* 2549 */    MCD_OPC_FilterValue, 48, 11, 0, 0, // Skip to: 2565
-/* 2554 */    MCD_OPC_CheckField, 21, 5, 31, 146, 0, 0, // Skip to: 2707
-/* 2561 */    MCD_OPC_Decode, 155, 2, 25, // Opcode: BR
+/* 2554 */    MCD_OPC_CheckField, 21, 5, 31, 0, 0, 0, // Skip to: 2561 (no-op: accept any Ra)
+/* 2561 */    MCD_OPC_Decode, 155, 2, 27, // Opcode: BR (decode Ra + disp21)
 /* 2565 */    MCD_OPC_FilterValue, 49, 4, 0, 0, // Skip to: 2574
 /* 2570 */    MCD_OPC_Decode, 230, 2, 26, // Opcode: FBEQ
 /* 2574 */    MCD_OPC_FilterValue, 50, 4, 0, 0, // Skip to: 2583
@@ -536,8 +536,8 @@ static const uint8_t DecoderTable32[] = {
 /* 2583 */    MCD_OPC_FilterValue, 51, 4, 0, 0, // Skip to: 2592
 /* 2588 */    MCD_OPC_Decode, 233, 2, 26, // Opcode: FBLE
 /* 2592 */    MCD_OPC_FilterValue, 52, 11, 0, 0, // Skip to: 2608
-/* 2597 */    MCD_OPC_CheckField, 21, 5, 26, 103, 0, 0, // Skip to: 2707
-/* 2604 */    MCD_OPC_Decode, 156, 2, 25, // Opcode: BSR
+/* 2597 */    MCD_OPC_CheckField, 21, 5, 26, 0, 0, 0, // Skip to: 2604 (no-op: accept any Ra)
+/* 2604 */    MCD_OPC_Decode, 156, 2, 27, // Opcode: BSR (decode Ra + disp21)
 /* 2608 */    MCD_OPC_FilterValue, 53, 4, 0, 0, // Skip to: 2617
 /* 2613 */    MCD_OPC_Decode, 235, 2, 26, // Opcode: FBNE
 /* 2617 */    MCD_OPC_FilterValue, 54, 4, 0, 0, // Skip to: 2626
