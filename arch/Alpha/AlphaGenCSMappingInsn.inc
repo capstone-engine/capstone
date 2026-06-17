@@ -2296,7 +2296,7 @@
 },
 {
   /* COND_BRANCH imm:$opc, GPRC:$R, bb:$dst */
-  Alpha_COND_BRANCH_I /* 318 */, Alpha_INS_COND_BRANCH,
+  Alpha_COND_BRANCH_I /* 318 */, Alpha_INS_CALL_PAL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { Alpha_GRP_JUMP, Alpha_GRP_BRANCH_RELATIVE, 0 }, 1, 0, {{ 0 }},
 

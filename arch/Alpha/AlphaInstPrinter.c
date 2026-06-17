@@ -91,6 +91,11 @@ void Alpha_LLVM_printInstruction(MCInst *MI, SStream *O, void *Info)
 	 * Ra=26. Format 27 now decodes Ra as operand[0] and disp21 as
 	 * operand[1], so we must print them explicitly here.
 	 */
+	if (Opcode == Alpha_COND_BRANCH_I) {
+		SStream_concat0(O, "call_pal ");
+		printOperand(MI, 0, O);
+		return;
+	}
 	if (Opcode == Alpha_BR || Opcode == Alpha_BSR) {
 		SStream_concat0(O, Opcode == Alpha_BR ? "br " : "bsr ");
 		printOperand(MI, 0, O);

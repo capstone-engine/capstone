@@ -30,7 +30,7 @@ static InsnType fname(InsnType insn, unsigned startBit, unsigned numBits) \
 static const uint8_t DecoderTable32[] = {
 /* 0 */       MCD_OPC_ExtractField, 26, 6,  // Inst{31-26} ...
 /* 3 */       MCD_OPC_FilterValue, 0, 4, 0, 0, // Skip to: 12
-/* 8 */       MCD_OPC_Decode, 190, 2, 0, // Opcode: COND_BRANCH_I
+/* 8 */       MCD_OPC_Decode, 190, 2, 31, // Opcode: COND_BRANCH_I (CALL_PAL: 26-bit imm)
 /* 12 */      MCD_OPC_FilterValue, 8, 4, 0, 0, // Skip to: 21
 /* 17 */      MCD_OPC_Decode, 144, 3, 1, // Opcode: LDA
 /* 21 */      MCD_OPC_FilterValue, 9, 4, 0, 0, // Skip to: 30
@@ -930,6 +930,10 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     if (DecodeF4RCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 16, 5); \
     if (DecodeF8RCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
+    return S; \
+  case 31: \
+    tmp = fieldname(insn, 0, 26); \
+    MCOperand_CreateImm0(MI, tmp); \
     return S; \
   } \
 }

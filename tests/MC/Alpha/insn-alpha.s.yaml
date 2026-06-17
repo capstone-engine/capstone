@@ -1862,3 +1862,30 @@ test_cases:
       insns:
         -
           asm_text: "bsr $1,0x10"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "call_pal 0"
+  -
+    input:
+      bytes: [ 0x83, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "call_pal 0x83"
+  -
+    input:
+      bytes: [ 0x0b, 0x02, 0x01, 0x00 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "call_pal 0x1020b"

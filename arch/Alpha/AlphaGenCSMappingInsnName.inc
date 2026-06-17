@@ -47,6 +47,7 @@
   "cmptun/su", // Alpha_INS_CMPTUNsSU
   "cmpule", // Alpha_INS_CMPULE
   "cmpult", // Alpha_INS_CMPULT
+  "call_pal", // Alpha_INS_CALL_PAL
   "COND_BRANCH", // Alpha_INS_COND_BRANCH
   "cpyse", // Alpha_INS_CPYSE
   "cpysn", // Alpha_INS_CPYSN

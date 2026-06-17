@@ -163,6 +163,7 @@ typedef enum alpha_insn {
 	Alpha_INS_CMPTUNsSU,
 	Alpha_INS_CMPULE,
 	Alpha_INS_CMPULT,
+	Alpha_INS_CALL_PAL,
 	Alpha_INS_COND_BRANCH,
 	Alpha_INS_CPYSE,
 	Alpha_INS_CPYSN,

@@ -1191,11 +1191,9 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /* dst */
   { 0 }
 }},
-{ /* Alpha_COND_BRANCH_I (318) - Alpha_INS_COND_BRANCH - COND_BRANCH imm:$opc, GPRC:$R, bb:$dst */
+{ /* Alpha_COND_BRANCH_I (318) - Alpha_INS_CALL_PAL - call_pal imm:$func */
 {
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* opc */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* R */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /* dst */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* func */
   { 0 }
 }},
 { /* Alpha_CPYSES (319) - Alpha_INS_CPYSE - cpyse $RA,$RB,$RC */
