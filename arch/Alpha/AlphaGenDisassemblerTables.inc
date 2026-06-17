@@ -430,16 +430,16 @@ static const uint8_t DecoderTable32[] = {
 /* 2036 */    MCD_OPC_FilterValue, 24, 174, 0, 0, // Skip to: 2215
 /* 2041 */    MCD_OPC_ExtractField, 0, 16,  // Inst{15-0} ...
 /* 2044 */    MCD_OPC_FilterValue, 0, 11, 0, 0, // Skip to: 2060
-/* 2049 */    MCD_OPC_CheckField, 16, 10, 0, 139, 2, 0, // Skip to: 2707
+/* 2049 */    MCD_OPC_CheckField, 16, 10, 0, 0, 0, 0, // (no-op: accept any Ra/Rb)
 /* 2056 */    MCD_OPC_Decode, 241, 3, 14, // Opcode: TRAPB
 /* 2060 */    MCD_OPC_FilterValue, 128, 8, 11, 0, 0, // Skip to: 2077
-/* 2066 */    MCD_OPC_CheckField, 16, 10, 0, 122, 2, 0, // Skip to: 2707
+/* 2066 */    MCD_OPC_CheckField, 16, 10, 0, 0, 0, 0, // (no-op: accept any Ra/Rb)
 /* 2073 */    MCD_OPC_Decode, 215, 2, 14, // Opcode: EXCB
 /* 2077 */    MCD_OPC_FilterValue, 128, 128, 1, 11, 0, 0, // Skip to: 2095
-/* 2084 */    MCD_OPC_CheckField, 16, 10, 0, 104, 2, 0, // Skip to: 2707
+/* 2084 */    MCD_OPC_CheckField, 16, 10, 0, 0, 0, 0, // (no-op: accept any Ra/Rb)
 /* 2091 */    MCD_OPC_Decode, 166, 3, 14, // Opcode: MB
 /* 2095 */    MCD_OPC_FilterValue, 128, 136, 1, 11, 0, 0, // Skip to: 2113
-/* 2102 */    MCD_OPC_CheckField, 16, 10, 0, 86, 2, 0, // Skip to: 2707
+/* 2102 */    MCD_OPC_CheckField, 16, 10, 0, 0, 0, 0, // (no-op: accept any Ra/Rb)
 /* 2109 */    MCD_OPC_Decode, 246, 3, 14, // Opcode: WMB
 /* 2113 */    MCD_OPC_FilterValue, 128, 128, 2, 4, 0, 0, // Skip to: 2124
 /* 2120 */    MCD_OPC_Decode, 248, 2, 15, // Opcode: FETCH

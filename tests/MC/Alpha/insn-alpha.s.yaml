@@ -1925,3 +1925,12 @@ test_cases:
       insns:
         -
           asm_text: "jsr $26,($0),0x1a"
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0xff, 0x63 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "trapb"
