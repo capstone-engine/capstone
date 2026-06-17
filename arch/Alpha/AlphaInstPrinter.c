@@ -101,8 +101,11 @@ void Alpha_LLVM_printInstruction(MCInst *MI, SStream *O, void *Info)
 	 * The generated AsmWriter hardcodes operands for specific canonical
 	 * forms, so print all three operands explicitly here.
 	 */
-	if (Opcode == Alpha_JMP || Opcode == Alpha_JSR || Opcode == Alpha_JSRs) {
-		const char *name = (Opcode == Alpha_JMP) ? "jmp " : "jsr ";
+	if (Opcode == Alpha_JMP || Opcode == Alpha_JSR ||
+	    Opcode == Alpha_JSRs || Opcode == Alpha_RETDAG) {
+		const char *name = (Opcode == Alpha_JMP)    ? "jmp " :
+				   (Opcode == Alpha_RETDAG) ? "ret " :
+							      "jsr ";
 		SStream_concat0(O, name);
 		printOperand(MI, 0, O);
 		SStream_concat1(O, ',');

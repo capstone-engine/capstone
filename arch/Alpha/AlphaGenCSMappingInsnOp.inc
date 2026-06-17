@@ -2067,8 +2067,11 @@
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RA */
   { 0 }
 }},
-{ /* Alpha_RETDAG (446) - Alpha_INS_RET - ret $$31,($$26),1 */
+{ /* Alpha_RETDAG (446) - Alpha_INS_RET - ret $RD,($RS),$DISP */
 {
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RD */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RS */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* DISP */
   { 0 }
 }},
 { /* Alpha_RETDAGp (447) - Alpha_INS_RET - ret $$31,($$26),1 */
