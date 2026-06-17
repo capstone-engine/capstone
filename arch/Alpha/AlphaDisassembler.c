@@ -41,7 +41,7 @@ static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	unsigned Register = GPRC[RegNo];
+	unsigned Register = Alpha_R0 + RegNo;
 	MCOperand_CreateReg0(Inst, (Register));
 	return MCDisassembler_Success;
 }
