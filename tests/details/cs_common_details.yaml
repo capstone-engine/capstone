@@ -1216,15 +1216,15 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldah $15,2($13)"
+          asm_text: "ldah $29,2($27)"
           mnemonic: "ldah"
-          op_str: "$15,2($13)"
+          op_str: "$29,2($27)"
           details:
             regs_impl_write: [ $28 ]
         -
-          asm_text: "lda $15,0x7a50($15)"
+          asm_text: "lda $29,0x7a50($29)"
           mnemonic: "lda"
-          op_str: "$15,0x7a50($15)"
+          op_str: "$29,0x7a50($29)"
           details:
             regs_impl_write: [ $28 ]
         -
@@ -1234,9 +1234,9 @@ test_cases:
           details:
             regs_impl_write: [ $28 ]
         -
-          asm_text: "stq $12,0($30)"
+          asm_text: "stq $26,0($30)"
           mnemonic: "stq"
-          op_str: "$12,0($30)"
+          op_str: "$26,0($30)"
           details:
             regs_impl_write: [ $28 ]
 
@@ -1249,15 +1249,15 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ldah $15,2($13)"
+          asm_text: "ldah $29,2($27)"
           mnemonic: "ldah"
-          op_str: "$15,2($13)"
+          op_str: "$29,2($27)"
           details:
             regs_impl_write: [ $28 ]
         -
-          asm_text: "lda $15,0x7a50($15)"
+          asm_text: "lda $29,0x7a50($29)"
           mnemonic: "lda"
-          op_str: "$15,0x7a50($15)"
+          op_str: "$29,0x7a50($29)"
           details:
             regs_impl_write: [ $28 ]
         -
@@ -1267,9 +1267,9 @@ test_cases:
           details:
             regs_impl_write: [ $28 ]
         -
-          asm_text: "stq $12,0($30)"
+          asm_text: "stq $26,0($30)"
           mnemonic: "stq"
-          op_str: "$12,0($30)"
+          op_str: "$26,0($30)"
           details:
             regs_impl_write: [ $28 ]
   -

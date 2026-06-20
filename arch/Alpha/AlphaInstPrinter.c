@@ -85,6 +85,44 @@ const char *Alpha_LLVM_getRegisterName(csh handle, unsigned int id)
 
 void Alpha_LLVM_printInstruction(MCInst *MI, SStream *O, void *Info)
 {
+	unsigned Opcode = MCInst_getOpcode(MI);
+	/*
+	 * The generated AsmWriter hardcodes "$31" for BR and restricts BSR to
+	 * Ra=26. Format 27 now decodes Ra as operand[0] and disp21 as
+	 * operand[1], so we must print them explicitly here.
+	 */
+	if (Opcode == Alpha_COND_BRANCH_I) {
+		SStream_concat0(O, "call_pal ");
+		printOperand(MI, 0, O);
+		return;
+	}
+	/*
+	 * JMP/JSR/JSRs now decode with format 18 (Ra + Rb + hint14).
+	 * The generated AsmWriter hardcodes operands for specific canonical
+	 * forms, so print all three operands explicitly here.
+	 */
+	if (Opcode == Alpha_JMP || Opcode == Alpha_JSR ||
+	    Opcode == Alpha_JSRs || Opcode == Alpha_RETDAG) {
+		const char *name = (Opcode == Alpha_JMP)    ? "jmp " :
+				   (Opcode == Alpha_RETDAG) ? "ret " :
+							      "jsr ";
+		SStream_concat0(O, name);
+		printOperand(MI, 0, O);
+		SStream_concat1(O, ',');
+		SStream_concat1(O, '(');
+		printOperand(MI, 1, O);
+		SStream_concat1(O, ')');
+		SStream_concat1(O, ',');
+		printOperand(MI, 2, O);
+		return;
+	}
+	if (Opcode == Alpha_BR || Opcode == Alpha_BSR) {
+		SStream_concat0(O, Opcode == Alpha_BR ? "br " : "bsr ");
+		printOperand(MI, 0, O);
+		SStream_concat1(O, ',');
+		printOperandAddr(MI, MI->address, 1, O);
+		return;
+	}
 	printAliasInstr(MI, MI->address, O);
 	printInstruction(MI, MI->address, O);
 }

@@ -1191,11 +1191,9 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /* dst */
   { 0 }
 }},
-{ /* Alpha_COND_BRANCH_I (318) - Alpha_INS_COND_BRANCH - COND_BRANCH imm:$opc, GPRC:$R, bb:$dst */
+{ /* Alpha_COND_BRANCH_I (318) - Alpha_INS_CALL_PAL - call_pal imm:$func */
 {
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* opc */
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* R */
-  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /* dst */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* func */
   { 0 }
 }},
 { /* Alpha_CPYSES (319) - Alpha_INS_CPYSE - cpyse $RA,$RB,$RC */
@@ -1725,13 +1723,18 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RA */
   { 0 }
 }},
-{ /* Alpha_JMP (396) - Alpha_INS_JMP - jmp $$31,{$RS},0 */
+{ /* Alpha_JMP (396) - Alpha_INS_JMP - jmp $RD,($RS),$DISP */
 {
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RD */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RS */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* DISP */
   { 0 }
 }},
-{ /* Alpha_JSR (397) - Alpha_INS_JSR - jsr $$26,($$27),0 */
+{ /* Alpha_JSR (397) - Alpha_INS_JSR - jsr $RD,($RS),$DISP */
 {
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RD */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RS */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* DISP */
   { 0 }
 }},
 { /* Alpha_JSR_COROUTINE (398) - Alpha_INS_JSR_COROUTINE - jsr_coroutine $RD,($RS),$DISP */
@@ -2064,8 +2067,11 @@
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RA */
   { 0 }
 }},
-{ /* Alpha_RETDAG (446) - Alpha_INS_RET - ret $$31,($$26),1 */
+{ /* Alpha_RETDAG (446) - Alpha_INS_RET - ret $RD,($RS),$DISP */
 {
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RD */
+  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RS */
+  { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* DISP */
   { 0 }
 }},
 { /* Alpha_RETDAGp (447) - Alpha_INS_RET - ret $$31,($$26),1 */

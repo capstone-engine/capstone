@@ -196,7 +196,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "bsr $26,$0xfffffffffffffff4 ..ng"
+          asm_text: "bsr $26,0xfffffffffffffff4"
   -
     input:
       bytes: [ 0x44, 0x22, 0x04, 0x83 ]
@@ -988,7 +988,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "jmp $31,$12,0"
+          asm_text: "jmp $31,($26),0"
   -
     input:
       bytes: [ 0x6b, 0x5b, 0x40, 0x00 ]
@@ -1781,3 +1781,30 @@ test_cases:
       insns:
         -
           asm_text: "zapnot $1,0xde,$3"
+  -
+    input:
+      bytes: [ 0x68, 0x01, 0x80, 0x03 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ret $0,($1),3"
+  -
+    input:
+      bytes: [ 0x60, 0x3F, 0xE0, 0x00 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rc $1"
+  -
+    input:
+      bytes: [ 0x60, 0x3F, 0xF0, 0x00 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_BIG_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "rs $1"
