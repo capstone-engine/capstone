@@ -57,6 +57,14 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 	if (opgroup == RISCV_OP_GROUP_FRMArg ||
 	    opgroup == RISCV_OP_GROUP_FRMArgLegacy)
 		return;
+	
+	// unmasked instructions, the mask register is not real
+	if (opgroup == RISCV_OP_GROUP_VMaskReg) {
+		MCOperand *mask = MCInst_getOperand(MI, OpNum);
+		if (MCOperand_isReg(mask) &&
+		    MCOperand_getReg(mask) == RISCV_NoRegister)
+			return;
+	}
 
 	if (opgroup == RISCV_OP_GROUP_FPImmOperand) {
 		unsigned Imm = (unsigned)MCInst_getOperand(MI, OpNum)->ImmVal;
