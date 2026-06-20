@@ -15,8 +15,8 @@
 #undef GET_SUBTARGETINFO_ENUM
 
 enum {
-  Alpha_FeatureCIX = 0,
-  Alpha_NumSubtargetFeatures = 1
+  ALPHA_FeatureCIX = 0,
+  ALPHA_NumSubtargetFeatures = 1
 };
 #endif // GET_SUBTARGETINFO_ENUM
 

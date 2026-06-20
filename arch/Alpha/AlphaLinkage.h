@@ -11,9 +11,9 @@
 #include "../../SStream.h"
 #include "AlphaMapping.h"
 
-const char *Alpha_LLVM_getRegisterName(csh handle, unsigned int id);
-void Alpha_LLVM_printInstruction(MCInst *MI, SStream *O, void *Info);
-DecodeStatus Alpha_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
+const char *ALPHA_LLVM_getRegisterName(csh handle, unsigned int id);
+void ALPHA_LLVM_printInstruction(MCInst *MI, SStream *O, void *Info);
+DecodeStatus ALPHA_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
 				       size_t ByteLen, MCInst *MI,
 				       uint16_t *Size, uint64_t Address,
 				       void *Info);

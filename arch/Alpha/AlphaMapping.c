@@ -137,10 +137,10 @@ const char *Alpha_insn_name(csh handle, unsigned int id)
 
 #ifndef CAPSTONE_DIET
 static const name_map group_name_maps[] = {
-	{ Alpha_GRP_INVALID, NULL },
-	{ Alpha_GRP_CALL, "call" },
-	{ Alpha_GRP_JUMP, "jump" },
-	{ Alpha_GRP_BRANCH_RELATIVE, "branch_relative" },
+	{ ALPHA_GRP_INVALID, NULL },
+	{ ALPHA_GRP_CALL, "call" },
+	{ ALPHA_GRP_JUMP, "jump" },
+	{ ALPHA_GRP_BRANCH_RELATIVE, "branch_relative" },
 };
 #endif
 
@@ -155,12 +155,12 @@ const char *Alpha_group_name(csh handle, unsigned int id)
 
 const char *Alpha_getRegisterName(csh handle, unsigned int id)
 {
-	return Alpha_LLVM_getRegisterName(handle, id);
+	return ALPHA_LLVM_getRegisterName(handle, id);
 }
 
 void Alpha_printInst(MCInst *MI, SStream *O, void *Info)
 {
-	Alpha_LLVM_printInstruction(MI, O, Info);
+	ALPHA_LLVM_printInstruction(MI, O, Info);
 }
 
 void Alpha_set_instr_map_data(MCInst *MI)
@@ -176,7 +176,7 @@ bool Alpha_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 			  void *info)
 {
 	Alpha_init_cs_detail(instr);
-	DecodeStatus Result = Alpha_LLVM_getInstruction(
+	DecodeStatus Result = ALPHA_LLVM_getInstruction(
 		handle, code, code_len, instr, size, address, info);
 	Alpha_set_instr_map_data(instr);
 	if (Result == MCDisassembler_SoftFail) {

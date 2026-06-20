@@ -11,4 +11,4 @@
 /* Capstone's LLVM TableGen Backends: */
 /* https://github.com/capstone-engine/llvm-capstone */
 
-  Alpha_OP_GROUP_Operand = 0,
+  ALPHA_OP_GROUP_Operand = 0,

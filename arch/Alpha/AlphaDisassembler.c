@@ -41,7 +41,7 @@ static DecodeStatus DecodeGPRCRegisterClass(MCInst *Inst, unsigned RegNo,
 	if (RegNo > 31)
 		return MCDisassembler_Fail;
 
-	unsigned Register = Alpha_R0 + RegNo;
+	unsigned Register = ALPHA_R0 + RegNo;
 	MCOperand_CreateReg0(Inst, (Register));
 	return MCDisassembler_Success;
 }
@@ -74,7 +74,7 @@ static DecodeStatus DecodeF8RCRegisterClass(MCInst *Inst, unsigned RegNo,
 
 #include "AlphaGenInstrInfo.inc"
 
-DecodeStatus Alpha_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
+DecodeStatus ALPHA_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
 				       size_t ByteLen, MCInst *MI,
 				       uint16_t *Size, uint64_t Address,
 				       void *Info)
