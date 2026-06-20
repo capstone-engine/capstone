@@ -253,6 +253,7 @@ Nonetheless, we hope this additional information is useful to you.
 - Added `reg_access` capstone callback to return all read and written registers for the instructions, including registers used as part of memory operands.
   * Note that `reg_access` does NOT treat CSRs as registers, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 
   * Note that `reg_access` does NOT treat reading the PC's value as reading a register, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 
+- Added `rounding_mode`field to `cs_riscv` struct inside details struct (`insn->detail->riscv->rounding_mode`) for float and double instructions.
 
 > [!NOTE] 
 > All `CS_MODE_RISCV_*` extensions above are disabled by default unless enabled by their option name or the corresponding command line flag in cstool. Any other extension is always enabled and can't be disabled.
