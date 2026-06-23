@@ -24,6 +24,7 @@ void test_detail_riscv_free(TestDetailRISCV *detail)
 		test_detail_riscv_op_free(detail->operands[i]);
 	}
 	cs_mem_free(detail->operands);
+	cs_mem_free(detail->rounding_mode);
 	cs_mem_free(detail);
 }
 
@@ -40,6 +41,8 @@ TestDetailRISCV *test_detail_riscv_clone(const TestDetailRISCV *detail)
 		clone->operands[i] =
 			test_detail_riscv_op_clone(detail->operands[i]);
 	}
+	clone->rounding_mode =
+		detail->rounding_mode ? strdup(detail->rounding_mode) : NULL;
 
 	return clone;
 }
@@ -114,6 +117,8 @@ bool test_expected_riscv(csh *handle, const cs_riscv *actual,
 			break;
 		}
 	}
+
+	compare_enum_ret(actual->rounding_mode, expected->rounding_mode, false);
 
 	return true;
 }

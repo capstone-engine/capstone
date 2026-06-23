@@ -1329,6 +1329,11 @@ def test_expected_hppa(actual: CsInsn, expected: dict) -> bool:
 
 
 def test_expected_riscv(actual: CsInsn, expected: dict) -> bool:
+    if "rounding_mode" in expected and not compare_enum(
+        actual.rounding_mode, expected.get("rounding_mode"), "rounding_mode"
+    ):
+        return False
+
     if "operands" not in expected:
         return True
     elif not compare_uint32(

@@ -1325,9 +1325,11 @@ class CsInsn(object):
         elif arch == CS_ARCH_BPF:
             (self.operands) = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
         elif arch == CS_ARCH_RISCV:
-            (self.need_effective_addr, self.operands) = riscv.get_arch_info(
-                self._raw.detail.contents.arch.riscv
-            )
+            (
+                self.need_effective_addr,
+                self.operands,
+                self.rounding_mode,
+            ) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
         elif arch == CS_ARCH_SH:
             (self.sh_insn, self.sh_size, self.operands) = sh.get_arch_info(
                 self._raw.detail.contents.arch.sh

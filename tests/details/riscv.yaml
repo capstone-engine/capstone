@@ -907,6 +907,7 @@ test_cases:
         - asm_text: "fadd.s ft5, ft6, ft7, dyn"
           details:
             riscv:
+              rounding_mode: RISCV_RM_DYN
               operands:
                 - type: RISCV_OP_REG
                   reg: ft5
@@ -932,6 +933,7 @@ test_cases:
         - asm_text: "fmin.s fa0, fa1, fa2"
           details:
             riscv:
+              rounding_mode: RISCV_RM_INVALID
               operands:
                 - type: RISCV_OP_REG
                   reg: fa0
