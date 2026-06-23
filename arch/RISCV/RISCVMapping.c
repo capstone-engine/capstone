@@ -11,6 +11,7 @@
 #include "../../cs_simple_types.h"
 #include "../../utils.h"
 
+#include "RISCVBaseInfo.h"
 #include "RISCVMapping.h"
 
 #define GET_INSTRINFO_ENUM
@@ -53,10 +54,37 @@ void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
 {
 	if (!detail_is_set(MI))
 		return;
-	// are not "true" arguments and has no Capstone equivalent
+	// Rounding mode: store in detail, not as a regular operand.
 	if (opgroup == RISCV_OP_GROUP_FRMArg ||
-	    opgroup == RISCV_OP_GROUP_FRMArgLegacy)
+	    opgroup == RISCV_OP_GROUP_FRMArgLegacy) {
+		unsigned frm = (unsigned)MCInst_getOperand(MI, OpNum)->ImmVal;
+		riscv_rounding_mode rm;
+		switch (frm) {
+		case RISCVFPRndMode_RNE:
+			rm = RISCV_RM_RNE;
+			break;
+		case RISCVFPRndMode_RTZ:
+			rm = RISCV_RM_RTZ;
+			break;
+		case RISCVFPRndMode_RDN:
+			rm = RISCV_RM_RDN;
+			break;
+		case RISCVFPRndMode_RUP:
+			rm = RISCV_RM_RUP;
+			break;
+		case RISCVFPRndMode_RMM:
+			rm = RISCV_RM_RMM;
+			break;
+		case RISCVFPRndMode_DYN:
+			rm = RISCV_RM_DYN;
+			break;
+		default:
+			rm = RISCV_RM_INVALID;
+			break;
+		}
+		RISCV_get_detail(MI)->rounding_mode = rm;
 		return;
+	}
 
 	// unmasked instructions, the mask register is not real
 	if (opgroup == RISCV_OP_GROUP_VMaskReg) {

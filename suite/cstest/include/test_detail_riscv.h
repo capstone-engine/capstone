@@ -48,6 +48,7 @@ static const cyaml_schema_value_t test_detail_riscv_op_schema = {
 typedef struct {
 	TestDetailRISCVOp **operands;
 	uint32_t operands_count;
+	char *rounding_mode;
 } TestDetailRISCV;
 
 static const cyaml_schema_field_t test_detail_riscv_mapping_schema[] = {
@@ -55,6 +56,9 @@ static const cyaml_schema_field_t test_detail_riscv_mapping_schema[] = {
 		"operands", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 		TestDetailRISCV, operands, &test_detail_riscv_op_schema, 0,
 		CYAML_UNLIMITED), // 0-MAX options
+	CYAML_FIELD_STRING_PTR(
+		"rounding_mode", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+		TestDetailRISCV, rounding_mode, 0, CYAML_UNLIMITED),
 	CYAML_FIELD_END
 };
 

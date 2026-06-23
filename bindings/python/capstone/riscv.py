@@ -57,8 +57,13 @@ class CsRISCV(ctypes.Structure):
         ("need_effective_addr", ctypes.c_bool),
         ("op_count", ctypes.c_uint8),
         ("operands", RISCVOp * 8),
+        ("rounding_mode", ctypes.c_uint),
     )
 
 
 def get_arch_info(a):
-    return (a.need_effective_addr, copy_ctypes_list(a.operands[: a.op_count]))
+    return (
+        a.need_effective_addr,
+        copy_ctypes_list(a.operands[: a.op_count]),
+        a.rounding_mode,
+    )

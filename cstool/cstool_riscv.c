@@ -68,5 +68,14 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 		}
 	}
 
+	if (riscv->rounding_mode != RISCV_RM_INVALID) {
+		static const char *const rm_str[] = {
+			[RISCV_RM_RNE] = "rne", [RISCV_RM_RTZ] = "rtz",
+			[RISCV_RM_RDN] = "rdn", [RISCV_RM_RUP] = "rup",
+			[RISCV_RM_RMM] = "rmm", [RISCV_RM_DYN] = "dyn",
+		};
+		printf("\trounding_mode: %s\n", rm_str[riscv->rounding_mode]);
+	}
+
 	printf("\n");
 }
