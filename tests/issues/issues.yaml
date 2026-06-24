@@ -6687,3 +6687,15 @@ test_cases:
           regs_read: [ rax ]
           regs_write: [ sp ]
           groups: [ mode64 ]
+  -
+    input:
+      name: "issue 2973 AArch64 predicate-as-counter register printed in hex"
+      bytes: [ 0x12, 0x78, 0x60, 0x25 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ptrue pn10.h"
+        op_str: "pn10.h"
