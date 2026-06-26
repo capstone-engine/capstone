@@ -68,7 +68,7 @@ jobs:
           - { os: windows-11-arm, arch: ARM64, cibw_build: 'cp*', cibw_skip: '*38* *39* *310*' }
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # https://github.com/actions/upload-artifact/issues/22
       - name: Prepare a unique name for Artifacts
@@ -134,7 +134,7 @@ jobs:
     name: Make SDist
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           submodules: true
