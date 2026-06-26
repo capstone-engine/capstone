@@ -19,7 +19,7 @@ jobs:
 
     name: clang-format-20
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         fetch-depth: 0
     - name: Install clang-format-20
