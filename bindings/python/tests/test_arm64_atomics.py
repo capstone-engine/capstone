@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import unittest
 from capstone import *
 from capstone.arm64 import *
