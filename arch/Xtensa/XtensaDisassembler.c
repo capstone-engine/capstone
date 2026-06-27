@@ -235,8 +235,23 @@ static DecodeStatus DecodeMR23RegisterClass(MCInst *Inst, uint64_t RegNo,
 
 bool Xtensa_getFeatureBits(unsigned int mode, unsigned int feature)
 {
-	// we support everything
-	return true;
+	switch (feature) {
+	case Xtensa_FeatureESP32S3Ops:
+		// SIMD/AI "ee.*" ops only exist on the ESP32-S3.
+		return (mode & CS_MODE_XTENSA_ESP32S3) != 0;
+	case Xtensa_FeatureHIFI3:
+		// HiFi3 DSP ops are gated behind the ESP32-S3 in this tree.
+		return (mode & CS_MODE_XTENSA_ESP32S3) != 0;
+	case Xtensa_FeatureDensity:
+		// Code Density is a base Tensilica default option.
+		return true;
+	default:
+		// Default case is the "allow all features", which is normal
+		// Capstone behavior until
+		// https://github.com/capstone-engine/capstone/issues/1992
+		// is implemented.
+		return true;
+	}
 }
 
 // Verify SR and UR
@@ -1036,17 +1051,17 @@ DecodeToMCInst(decodeToMCInst_6, fieldFromInstruction_6, uint64_t);
 DecodeInstruction(decodeInstruction_6, fieldFromInstruction_6, decodeToMCInst_6,
 		  uint64_t);
 
-static bool hasDensity()
+static bool hasDensity(MCInst *MI)
 {
-	return true;
+	return Xtensa_getFeatureBits(MI->csh->mode, Xtensa_FeatureDensity);
 }
-static bool hasESP32S3Ops()
+static bool hasESP32S3Ops(MCInst *MI)
 {
-	return true;
+	return Xtensa_getFeatureBits(MI->csh->mode, Xtensa_FeatureESP32S3Ops);
 }
-static bool hasHIFI3()
+static bool hasHIFI3(MCInst *MI)
 {
-	return true;
+	return Xtensa_getFeatureBits(MI->csh->mode, Xtensa_FeatureHIFI3);
 }
 
 static DecodeStatus getInstruction(MCInst *MI, uint64_t *Size,
@@ -1058,7 +1073,7 @@ static DecodeStatus getInstruction(MCInst *MI, uint64_t *Size,
 	bool IsLittleEndian = MI->csh->mode & CS_MODE_LITTLE_ENDIAN;
 
 	// Parse 16-bit instructions
-	if (hasDensity()) {
+	if (hasDensity(MI)) {
 		Result = readInstruction16(MI, Bytes, BytesLen, Address, Size,
 					   &Insn, IsLittleEndian);
 		if (Result == MCDisassembler_Fail)
@@ -1084,7 +1099,7 @@ static DecodeStatus getInstruction(MCInst *MI, uint64_t *Size,
 		return Result;
 	}
 
-	if (hasESP32S3Ops()) {
+	if (hasESP32S3Ops(MI)) {
 		// Parse ESP32S3 24-bit instructions
 		Result = readInstruction24(MI, Bytes, BytesLen, Address, Size,
 					   &Insn, IsLittleEndian, true);
@@ -1111,7 +1126,7 @@ static DecodeStatus getInstruction(MCInst *MI, uint64_t *Size,
 		}
 	}
 
-	if (hasHIFI3()) {
+	if (hasHIFI3(MI)) {
 		Result = decodeInstruction_3(DecoderTableHIFI324, MI, Insn,
 					     Address, NULL);
 		if (Result != MCDisassembler_Fail)

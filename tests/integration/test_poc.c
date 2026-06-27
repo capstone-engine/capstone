@@ -197,7 +197,8 @@ static void test_ub_isintn_xtensa_offset(void)
 	static const uint8_t code[] = { 0x2f, 0x70, 0x44, 0x84 };
 
 	csh handle;
-	if (cs_open(CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32, &handle) != CS_ERR_OK)
+	if (cs_open(CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32S3, &handle) !=
+	    CS_ERR_OK)
 		return;
 	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 

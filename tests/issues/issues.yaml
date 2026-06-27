@@ -6239,7 +6239,7 @@ test_cases:
       name: "#2986 Xtensa decodeOffset_16_16Operand swapped isIntN arguments"
       bytes: [ 0x2f, 0x70, 0x44, 0x84 ]
       arch: "CS_ARCH_XTENSA"
-      options: [ CS_MODE_XTENSA_ESP32, CS_OPT_DETAIL ]
+      options: [ CS_MODE_XTENSA_ESP32S3, CS_OPT_DETAIL ]
       address: 0x0
     expected:
       insns:

@@ -262,7 +262,7 @@ typedef struct cs_arch_config {
 		Xtensa_global_init, \
 		Xtensa_option, \
 		~(CS_MODE_XTENSA_ESP32 | CS_MODE_XTENSA_ESP32S2 | \
-		  CS_MODE_XTENSA_ESP8266), \
+		  CS_MODE_XTENSA_ESP8266 | CS_MODE_XTENSA_ESP32S3), \
 	}
 
 #define CS_ARCH_CONFIG_ARC \
