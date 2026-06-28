@@ -344,7 +344,11 @@ extern void* kern_os_realloc(void* addr, size_t nsize);
 
 static void* cs_kern_os_calloc(size_t num, size_t size)
 {
-	return kern_os_malloc(num * size); // malloc bzeroes the buffer
+	size_t alloc = num * size;
+	if (num && size != alloc / num) {
+		return NULL; // overflow check
+	}
+	return kern_os_malloc(alloc); // malloc bzeroes the buffer
 }
 
 cs_malloc_t cs_mem_malloc = kern_os_malloc;
