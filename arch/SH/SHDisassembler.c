@@ -2170,8 +2170,8 @@ static bool sh_disassemble(const uint8_t *code, MCInst *MI, uint64_t address,
 					insn <<= 16;
 					insn |= code[2] << 8 | code[3];
 				} else
-					insn |= (code[3] << 24) |
-						(code[2] << 16);
+					insn |= ((uint32_t)code[3] << 24) |
+						((uint32_t)code[2] << 16);
 				dsp_result = decode_dsp_p(insn, MI, mode, info,
 							  detail);
 				break;
