@@ -168,12 +168,33 @@ static void test_integer_overflow(void)
 	}
 }
 
+/// Signed left shift overflow when assembling a little-endian SH-DSP
+/// parallel instruction word. code[3] is promoted to int and shifted
+/// left by 24, which is UB whenever its top bit is set (code[3] >= 0x80).
+static void test_ub_shift_sh_dsp_p(void)
+{
+	static const uint8_t code[] = { 0x00, 0xf8, 0x00, 0x80 };
+
+	csh handle;
+	if (cs_open(CS_ARCH_SH, CS_MODE_SH4A | CS_MODE_SHDSP, &handle) !=
+	    CS_ERR_OK)
+		return;
+	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+	cs_insn *insn = NULL;
+	size_t count = cs_disasm(handle, code, sizeof(code), 0x1000, 0, &insn);
+	cs_free(insn, count);
+	cs_close(&handle);
+	return;
+}
+
 int main()
 {
 	test_overflow_cs_insn_bytes();
 	test_overflow_cs_insn_bytes_iter();
 	test_overflow_set_reg_mem_n();
 	test_integer_overflow();
+	test_ub_shift_sh_dsp_p();
 
 	return 0;
 }
