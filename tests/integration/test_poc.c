@@ -130,12 +130,33 @@ static void test_ub_shift_sh_dsp_p(void)
 	return;
 }
 
+/// Swapped isIntN() arguments in decodeOffset_16_16Operand: the untrusted
+/// immediate is passed as the bit width N. When the 4-bit offset field is 0,
+/// N becomes 0 and isIntN shifts by (unsigned)(0 - 1), which is UB. The word
+/// below is an ee.ldf.128.ip with a zero offset field.
+static void test_ub_isintn_xtensa_offset(void)
+{
+	static const uint8_t code[] = { 0x2f, 0x70, 0x44, 0x84 };
+
+	csh handle;
+	if (cs_open(CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32, &handle) != CS_ERR_OK)
+		return;
+	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+	cs_insn *insn = NULL;
+	size_t count = cs_disasm(handle, code, sizeof(code), 0x1000, 0, &insn);
+	cs_free(insn, count);
+	cs_close(&handle);
+	return;
+}
+
 int main()
 {
 	test_overflow_cs_insn_bytes();
 	test_overflow_cs_insn_bytes_iter();
 	test_overflow_set_reg_mem_n();
 	test_ub_shift_sh_dsp_p();
+	test_ub_isintn_xtensa_offset();
 
 	return 0;
 }
