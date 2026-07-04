@@ -115,7 +115,8 @@ static const char *const s_instruction_names[] = {
 	"unlk",	     "unpk",	 "wddata",   "wdebug",	  "bgnd",
 	"tbls",	     "tblu",	 "tblsn",    "tblun",	  "cp0bcbusy",
 	"cp0ld",     "cp0nop",	 "cp0st",    "cp1bcbusy", "cp1ld",
-	"cp1nop",    "cp1st",	 "tpf",
+	"cp1nop",    "cp1st",	 "tpf",	     "maaac",	  "masac",
+	"msaac",     "mssac",
 };
 #endif
 

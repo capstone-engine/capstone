@@ -4899,6 +4899,102 @@ test_cases:
             regs_impl_read: [a1, a3]
             regs_impl_write: [a2, d1, acc0]
   - input:
+      bytes: [0xa0, 0x01, 0x00, 0x05]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_EMAC_B]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "maaac.w d1l, d0l, acc0, acc1"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_WORD
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  flags: [M68K_OP_FLAG_REG_LOWER]
+                  reg: d1
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  flags: [M68K_OP_FLAG_REG_LOWER]
+                  reg: d0
+                - type: M68K_OP_REG
+                  reg: acc0
+                - type: M68K_OP_REG
+                  reg: acc1
+  - input:
+      bytes: [0xa0, 0x02, 0x00, 0x07]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_EMAC_B]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "masac.w d2l, d0l, acc0, acc1"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_WORD
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  flags: [M68K_OP_FLAG_REG_LOWER]
+                  reg: d2
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  flags: [M68K_OP_FLAG_REG_LOWER]
+                  reg: d0
+                - type: M68K_OP_REG
+                  reg: acc0
+                - type: M68K_OP_REG
+                  reg: acc1
+  - input:
+      bytes: [0xa6, 0x02, 0x09, 0x05]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_EMAC_B]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "msaac.l d2, d3, acc0, acc1"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_LONG
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d2
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d3
+                - type: M68K_OP_REG
+                  reg: acc0
+                - type: M68K_OP_REG
+                  reg: acc1
+  - input:
+      bytes: [0xa6, 0x02, 0x09, 0x1f]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_EMAC_B]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "mssac.l d2, d3, acc2, acc3"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_LONG
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d2
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d3
+                - type: M68K_OP_REG
+                  reg: acc2
+                - type: M68K_OP_REG
+                  reg: acc3
+  - input:
       bytes: [0xd0, 0x80]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_ISA_A]

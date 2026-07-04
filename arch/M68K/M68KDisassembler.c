@@ -1450,6 +1450,13 @@ static m68k_reg cf_primary_acc_reg(const m68k_info *info)
 							      M68K_REG_ACC;
 }
 
+static m68k_insn cf_dual_acc_insn(uint16_t ext_word)
+{
+	if (ext_word & 0x0100)
+		return (ext_word & 0x2) ? M68K_INS_MSSAC : M68K_INS_MSAAC;
+	return (ext_word & 0x2) ? M68K_INS_MASAC : M68K_INS_MAAAC;
+}
+
 static m68k_reg cf_accext_reg(uint32_t ir)
 {
 	return (ir & 0x0400) ? M68K_REG_ACCEXT23 : M68K_REG_ACCEXT01;
@@ -1666,6 +1673,7 @@ static void dcf_mac_arith(m68k_info *info)
 	uint32_t acc;
 	bool is_memory;
 	bool is_emac;
+	bool is_dual_acc;
 	int size;
 
 	LIMIT_FEATURE(info, CS_MODE_M68K_CF_MAC);
@@ -1683,10 +1691,14 @@ static void dcf_mac_arith(m68k_info *info)
 	}
 
 	is_emac = m68k_has_feature(info, CS_MODE_M68K_CF_EMAC) != 0;
+	is_dual_acc = !is_memory && (ext_word & 0x1) &&
+		      m68k_has_feature(info, CS_MODE_M68K_CF_EMAC_B);
 	size = (ext_word & 0x0800) ? 4 : 2;
 
 	ext = build_init_op(info,
-			    (ext_word & 0x0100) ? M68K_INS_MSAC : M68K_INS_MAC,
+			    is_dual_acc		? cf_dual_acc_insn(ext_word) :
+			    (ext_word & 0x0100) ? M68K_INS_MSAC :
+						  M68K_INS_MAC,
 			    is_memory ? 0 : 2, size);
 	op0 = &ext->operands[0];
 	op1 = &ext->operands[1];
@@ -1731,7 +1743,13 @@ static void dcf_mac_arith(m68k_info *info)
 		cf_build_direct_reg_op(op, cf_reg_from_nibble(update));
 	}
 
-	if (is_emac) {
+	if (is_dual_acc) {
+		acc = ((info->ir & 0x80) ? 1 : 0) | ((ext_word & 0x10) ? 2 : 0);
+		op = &ext->operands[ext->op_count++];
+		cf_build_reg_op(op, cf_acc_reg(acc));
+		op = &ext->operands[ext->op_count++];
+		cf_build_reg_op(op, cf_acc_reg((ext_word >> 2) & 0x3));
+	} else if (is_emac) {
 		if (is_memory)
 			acc = ((ext_word >> 3) & 0x2) |
 			      ((~info->ir >> 7) & 0x1);

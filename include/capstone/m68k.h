@@ -666,6 +666,10 @@ typedef enum m68k_insn {
 	M68K_INS_CP1NOP,
 	M68K_INS_CP1ST,
 	M68K_INS_TPF,
+	M68K_INS_MAAAC,
+	M68K_INS_MASAC,
+	M68K_INS_MSAAC,
+	M68K_INS_MSSAC,
 	M68K_INS_ENDING, // <-- mark the end of the list of instructions
 } m68k_insn;
 
