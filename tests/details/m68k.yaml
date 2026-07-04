@@ -54,6 +54,69 @@ test_cases:
     expected:
       insns: []
   - input:
+      bytes: [0xf2, 0x3d, 0x40, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf2, 0x3e, 0x40, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf2, 0x3f, 0x40, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf0, 0x3d, 0x08, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_030]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf0, 0x3e, 0x08, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_030]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf0, 0x3f, 0x08, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_030]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf8, 0x3d, 0x01, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf8, 0x3e, 0x01, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf8, 0x3f, 0x01, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CPU32]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
       bytes: [0x06, 0xc0]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020]
