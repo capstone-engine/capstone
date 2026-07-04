@@ -57,7 +57,7 @@ void MCInst_clear(MCInst *inst)
 // does not free @Op
 void MCInst_insert0(MCInst *inst, int index, MCOperand *Op)
 {
-	CS_ASSERT_RET(index < MAX_MC_OPS);
+	CS_ASSERT_RET(index < MAX_MC_OPS && inst->size < MAX_MC_OPS);
 	int i;
 
 	for (i = inst->size; i > index; i--)
@@ -193,6 +193,7 @@ MCOperand *MCOperand_CreateReg1(MCInst *mcInst, unsigned Reg)
 
 void MCOperand_CreateReg0(MCInst *mcInst, unsigned Reg)
 {
+	CS_ASSERT_RET(mcInst->size < MAX_MC_OPS);
 	MCOperand *op = &(mcInst->Operands[mcInst->size]);
 	mcInst->size++;
 
@@ -214,7 +215,7 @@ MCOperand *MCOperand_CreateImm1(MCInst *mcInst, int64_t Val)
 
 void MCOperand_CreateImm0(MCInst *mcInst, int64_t Val)
 {
-	assert(mcInst->size < MAX_MC_OPS);
+	CS_ASSERT_RET(mcInst->size < MAX_MC_OPS);
 	MCOperand *op = &(mcInst->Operands[mcInst->size]);
 	mcInst->size++;
 
