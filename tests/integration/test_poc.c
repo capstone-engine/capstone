@@ -130,12 +130,36 @@ static void test_ub_shift_sh_dsp_p(void)
 	return;
 }
 
+/// Swapped isIntN() arguments in Xtensa decodeOffset_16_16Operand. The
+/// decoded immediate was passed as the bit width, so isIntN(Imm, 8)
+/// shifted by Imm - 1. Small Imm values make Imm - 1 wrap to a huge
+/// unsigned shift count and the signed shift/negation is UB.
+static void test_ub_isintn_xtensa_offset(void)
+{
+	static const uint8_t code[] = {
+		0x07, 0x75, 0x5d, 0xce, 0x50, 0x2b, 0x87
+	};
+
+	csh handle;
+	if (cs_open(CS_ARCH_XTENSA, CS_MODE_LITTLE_ENDIAN, &handle) !=
+	    CS_ERR_OK)
+		return;
+	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+	cs_insn *insn = NULL;
+	size_t count = cs_disasm(handle, code, sizeof(code), 0x1000, 0, &insn);
+	cs_free(insn, count);
+	cs_close(&handle);
+	return;
+}
+
 int main()
 {
 	test_overflow_cs_insn_bytes();
 	test_overflow_cs_insn_bytes_iter();
 	test_overflow_set_reg_mem_n();
 	test_ub_shift_sh_dsp_p();
+	test_ub_isintn_xtensa_offset();
 
 	return 0;
 }
