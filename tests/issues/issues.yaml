@@ -6236,6 +6236,17 @@ test_cases:
 
   -
     input:
+      name: "#2986 Xtensa decodeOffset_16_16Operand swapped isIntN arguments"
+      bytes: [ 0x2f, 0x70, 0x44, 0x84 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ CS_MODE_XTENSA_ESP32 ]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "ee.ldf.128.ip f8, f9, f7, f4, a2, 0"
+
+  -
+    input:
       name: "#2722 - CS_OPT_UNSIGNED is ignored for most archs"
       bytes: [ 0x20, 0xf0, 0x5f, 0xf8 ]
       arch: "CS_ARCH_AARCH64"
