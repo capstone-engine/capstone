@@ -137,11 +137,16 @@ typedef struct {
 	uint16_t word2_match; /* what to match after masking */
 } instruction_struct;
 
+static inline void invalid_insn(m68k_info *info)
+{
+	info->inst->Opcode = M68K_INS_INVALID;
+	info->pc = (uint32_t)info->baseAddress;
+}
+
 #define M68K_GET_EA_OR_INVALID(info, op, instruction, size) \
 	do { \
 		if (!get_ea_mode_op((info), (op), (instruction), (size))) { \
-			(info)->inst->Opcode = M68K_INS_INVALID; \
-			(info)->pc = (unsigned int)(info)->baseAddress; \
+			invalid_insn((info)); \
 			return; \
 		} \
 	} while (0)
@@ -4962,7 +4967,7 @@ static void d68020_unpk_mm(m68k_info *info)
 
 static int instruction_is_valid(m68k_info *info, const uint32_t word_check)
 {
-	const unsigned int instruction = info->ir;
+	const uint32_t instruction = info->ir;
 	const instruction_struct *i = &g_instruction_table[instruction];
 
 	if ((i->word2_mask &&
@@ -5127,12 +5132,12 @@ static void m68k_setup_internals(m68k_info *info, MCInst *inst, uint32_t pc,
 /* ======================================================================== */
 
 /* Disasemble one instruction at pc and store in str_buff */
-static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
+static uint32_t m68k_disassemble(m68k_info *info, uint32_t pc)
 {
 	MCInst *inst = info->inst;
 	cs_m68k *ext = &info->extension;
 	int i;
-	unsigned int size;
+	uint32_t size;
 
 	inst->Opcode = M68K_INS_INVALID;
 
@@ -5148,8 +5153,8 @@ static unsigned int m68k_disassemble(m68k_info *info, uint64_t pc)
 		g_instruction_table[info->ir].instruction(info);
 	}
 
-	size = info->pc - (unsigned int)pc;
-	info->pc = (unsigned int)pc;
+	size = info->pc - pc;
+	info->pc = pc;
 
 	return size;
 }
@@ -5191,7 +5196,7 @@ bool M68K_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		features = CS_MODE_M68K_000;
 
 	m68k_setup_internals(info, instr, (uint32_t)address, features);
-	sz = m68k_disassemble(info, address);
+	sz = m68k_disassemble(info, (uint32_t)address);
 
 	if (sz == 0) {
 		*size = 2;

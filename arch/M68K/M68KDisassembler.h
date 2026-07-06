@@ -265,10 +265,10 @@ typedef struct m68k_info {
 	size_t code_len;
 	uint64_t baseAddress;
 	MCInst *inst;
-	unsigned int pc; /* program counter */
-	unsigned int ir; /* instruction register */
+	uint32_t pc; /* program counter */
+	uint32_t ir; /* instruction register */
 	m68k_feature_mask features;
-	unsigned int address_mask; /* Address mask to simulate address lines */
+	uint32_t address_mask; /* Address mask to simulate address lines */
 	cs_m68k extension;
 	uint16_t regs_read
 		[MAX_IMPL_R_REGS]; // list of implicit registers read by this insn
