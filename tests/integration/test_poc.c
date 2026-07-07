@@ -130,12 +130,35 @@ static void test_ub_shift_sh_dsp_p(void)
 	return;
 }
 
+/// Signed left shift of a negative value when decoding a microMIPS
+/// LWM16/SWM16 offset. The 4-bit field is sign-extended to a negative int
+/// and then shifted left by 2, which is UB whenever the field's top bit
+/// is set (offset field >= 8).
+static void test_ub_shift_mips_mm_reglist(void)
+{
+	static const uint8_t code[] = { 0x45, 0x08 };
+
+	csh handle;
+	if (cs_open(CS_ARCH_MIPS,
+		    CS_MODE_MICRO | CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN,
+		    &handle) != CS_ERR_OK)
+		return;
+	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+	cs_insn *insn = NULL;
+	size_t count = cs_disasm(handle, code, sizeof(code), 0x1000, 0, &insn);
+	cs_free(insn, count);
+	cs_close(&handle);
+	return;
+}
+
 int main()
 {
 	test_overflow_cs_insn_bytes();
 	test_overflow_cs_insn_bytes_iter();
 	test_overflow_set_reg_mem_n();
 	test_ub_shift_sh_dsp_p();
+	test_ub_shift_mips_mm_reglist();
 
 	return 0;
 }
