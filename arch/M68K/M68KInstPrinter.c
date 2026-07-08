@@ -115,7 +115,8 @@ static const char *const s_instruction_names[] = {
 	"unlk",	     "unpk",	 "wddata",   "wdebug",	  "bgnd",
 	"tbls",	     "tblu",	 "tblsn",    "tblun",	  "cp0bcbusy",
 	"cp0ld",     "cp0nop",	 "cp0st",    "cp1bcbusy", "cp1ld",
-	"cp1nop",    "cp1st",	 "tpf",
+	"cp1nop",    "cp1st",	 "tpf",	     "maaac",	  "masac",
+	"msaac",     "mssac",
 };
 #endif
 
@@ -230,8 +231,7 @@ static void printImmediate(SStream *O, const cs_m68k *inst,
 	SStream_concat(O, "#$%" PRIx64, op->imm);
 }
 
-static void printIndex8BitDisp(SStream *O, unsigned int pc,
-			       const cs_m68k_op *op)
+static void printIndex8BitDisp(SStream *O, uint32_t pc, const cs_m68k_op *op)
 {
 	if (op->address_mode == M68K_AM_PCI_INDEX_8_BIT_DISP) {
 		SStream_concat(O, "$%" PRIx32 "(pc,%s", pc + 2 + op->mem.disp,
@@ -246,7 +246,7 @@ static void printIndex8BitDisp(SStream *O, unsigned int pc,
 	SStream_concat0(O, ")");
 }
 
-static void printRegAddrMode(SStream *O, unsigned int pc, const cs_m68k_op *op)
+static void printRegAddrMode(SStream *O, uint32_t pc, const cs_m68k_op *op)
 {
 	m68k_reg base_reg = op->type == M68K_OP_MEM ? op->mem.base_reg :
 						      op->reg;
@@ -280,7 +280,7 @@ static void printRegAddrMode(SStream *O, unsigned int pc, const cs_m68k_op *op)
 	}
 }
 
-static void printBaseDisp(SStream *O, unsigned int pc, const cs_m68k_op *op)
+static void printBaseDisp(SStream *O, uint32_t pc, const cs_m68k_op *op)
 {
 	int is_pc = (op->address_mode == M68K_AM_PCI_INDEX_BASE_DISP);
 
@@ -312,7 +312,7 @@ static void printBaseDisp(SStream *O, unsigned int pc, const cs_m68k_op *op)
 	SStream_concat0(O, ")");
 }
 
-static void printMemIndirect(SStream *O, unsigned int pc, const cs_m68k_op *op)
+static void printMemIndirect(SStream *O, uint32_t pc, const cs_m68k_op *op)
 {
 	int is_pc = (op->address_mode == M68K_AM_PC_MEMI_POST_INDEX ||
 		     op->address_mode == M68K_AM_PC_MEMI_PRE_INDEX);
@@ -361,8 +361,8 @@ static void printMemIndirect(SStream *O, unsigned int pc, const cs_m68k_op *op)
 	SStream_concat0(O, ")");
 }
 
-static void printAddressingMode(SStream *O, unsigned int pc,
-				const cs_m68k *inst, const cs_m68k_op *op)
+static void printAddressingMode(SStream *O, uint32_t pc, const cs_m68k *inst,
+				const cs_m68k_op *op)
 {
 	switch (op->address_mode) {
 	case M68K_AM_NONE:
@@ -430,7 +430,7 @@ static void printAddressingMode(SStream *O, unsigned int pc,
 		SStream_concat0(O, "&");
 }
 
-static void printCAS2(SStream *O, unsigned int pc, const cs_m68k *ext)
+static void printCAS2(SStream *O, uint32_t pc, const cs_m68k *ext)
 {
 	printAddressingMode(O, pc, ext, &ext->operands[0]);
 	SStream_concat0(O, ",");
@@ -442,7 +442,7 @@ static void printCAS2(SStream *O, unsigned int pc, const cs_m68k *ext)
 		       s_reg_names[ext->operands[2].reg_pair.reg_1]);
 }
 
-static void printCacheOp(SStream *O, unsigned int pc, const cs_m68k *ext)
+static void printCacheOp(SStream *O, uint32_t pc, const cs_m68k *ext)
 {
 	static const char *const cache_names[] = { "nc", "dc", "ic", "bc" };
 	unsigned int sel = (unsigned int)ext->operands[0].imm;
