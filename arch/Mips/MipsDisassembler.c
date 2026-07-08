@@ -2420,7 +2420,7 @@ static DecodeStatus DecodeMemMMReglistImm4Lsl2(MCInst *Inst, uint32_t Insn,
 		Offset = fieldFromInstruction_4(Insn, 4, 4);
 		break;
 	default:
-		Offset = SignExtend32((Insn & 0xf), 4);
+		Offset = (Insn & 0xf);
 		break;
 	}
 
@@ -2429,7 +2429,7 @@ static DecodeStatus DecodeMemMMReglistImm4Lsl2(MCInst *Inst, uint32_t Insn,
 		return MCDisassembler_Fail;
 
 	MCOperand_CreateReg0(Inst, (Mips_SP));
-	MCOperand_CreateImm0(Inst, (Offset * 4));
+	MCOperand_CreateImm0(Inst, (Offset << 2));
 
 	return MCDisassembler_Success;
 }

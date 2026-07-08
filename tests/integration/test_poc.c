@@ -131,9 +131,9 @@ static void test_ub_shift_sh_dsp_p(void)
 }
 
 /// Signed left shift of a negative value when decoding a microMIPS
-/// LWM16/SWM16 offset. The 4-bit field is sign-extended to a negative int
-/// and then shifted left by 2, which is UB whenever the field's top bit
-/// is set (offset field >= 8).
+/// LWM16/SWM16 offset. The ISA defines the offset as zero_extend(offset||0^2),
+/// but the 4-bit field was sign-extended to a negative int and then shifted
+/// left by 2, which is UB whenever the field's top bit is set (field >= 8).
 static void test_ub_shift_mips_mm_reglist(void)
 {
 	static const uint8_t code[] = { 0x45, 0x08 };
