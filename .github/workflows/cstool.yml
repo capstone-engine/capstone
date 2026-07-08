@@ -284,5 +284,6 @@ jobs:
         insn_bytes: ${{ matrix.config.insn_bytes }}
         cs_arch: ${{ matrix.config.cs_arch }}
       run: |
+        cstool -h
         cstool -d ${cs_arch} ${insn_bytes}
 

@@ -620,6 +620,16 @@ static const char *get_arch_name(cs_arch arch)
 	}
 }
 
+static inline bool contains_supported(cs_arch needles[CS_ARCH_MAX])
+{
+	for (size_t i = 0; i < CS_ARCH_MAX && needles[i] != CS_ARCH_MAX; i++) {
+		if (cs_support(needles[i])) {
+			return true;
+		}
+	}
+	return false;
+}
+
 static void usage(char *prog)
 {
 	int i, j;
@@ -638,6 +648,9 @@ static void usage(char *prog)
 
 	printf("\nArch specific options:\n");
 	for (i = 0; all_opts[i].name; i++) {
+		if (!contains_supported(all_opts[i].archs)) {
+			continue;
+		}
 		printf("        %-16s %s (only: ", all_opts[i].name,
 		       all_opts[i].desc);
 		for (j = 0; j < CS_ARCH_MAX; j++) {
