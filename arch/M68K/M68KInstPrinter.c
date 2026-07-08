@@ -125,6 +125,13 @@ static const char *getRegName(m68k_reg reg)
 	return s_reg_names[(int)reg];
 }
 
+// abs() is undefined for INT32_MIN, which a 32-bit displacement can hold.
+// Compute the magnitude via unsigned negation to stay well-defined.
+static uint32_t disp_abs(int32_t disp)
+{
+	return disp < 0 ? -(uint32_t)disp : (uint32_t)disp;
+}
+
 static void printRegbits(SStream *O, bool *need_sep, uint32_t data,
 			 const char *prefix)
 {
@@ -289,7 +296,7 @@ static void printBaseDisp(SStream *O, unsigned int pc, const cs_m68k_op *op)
 	} else if (op->mem.in_disp != 0) {
 		SStream_concat(O, "%s$%" PRIx32,
 			       op->mem.in_disp >= 0 ? "" : "-",
-			       abs(op->mem.in_disp));
+			       disp_abs(op->mem.in_disp));
 	}
 
 	SStream_concat0(O, "(");
@@ -328,7 +335,7 @@ static void printMemIndirect(SStream *O, unsigned int pc, const cs_m68k_op *op)
 	} else if (op->mem.in_disp != 0) {
 		SStream_concat(O, "%s$%" PRIx32,
 			       op->mem.in_disp >= 0 ? "" : "-",
-			       abs(op->mem.in_disp));
+			       disp_abs(op->mem.in_disp));
 	}
 
 	if (op->mem.base_reg != M68K_REG_INVALID) {
@@ -355,7 +362,7 @@ static void printMemIndirect(SStream *O, unsigned int pc, const cs_m68k_op *op)
 	if (op->mem.out_disp != 0) {
 		SStream_concat(O, ",%s%s$%" PRIx32, s_spacing,
 			       op->mem.out_disp >= 0 ? "" : "-",
-			       abs(op->mem.out_disp));
+			       disp_abs(op->mem.out_disp));
 	}
 
 	SStream_concat0(O, ")");

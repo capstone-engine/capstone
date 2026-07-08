@@ -130,12 +130,33 @@ static void test_ub_shift_sh_dsp_p(void)
 	return;
 }
 
+/// A 32-bit outer displacement of INT32_MIN reaches abs() in the M68K
+/// memory-indirect printer, whose negation of INT32_MIN is undefined.
+static void test_ub_abs_m68k_disp(void)
+{
+	static const uint8_t code[] = { 0x37, 0x37, 0x37, 0x37, 0x37, 0x17,
+					0x00, 0x1d, 0x80, 0x00, 0x00, 0x00 };
+
+	csh handle;
+	if (cs_open(CS_ARCH_M68K, CS_MODE_BIG_ENDIAN | CS_MODE_M68K_040,
+		    &handle) != CS_ERR_OK)
+		return;
+	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+	cs_insn *insn = NULL;
+	size_t count = cs_disasm(handle, code, sizeof(code), 0x1000, 0, &insn);
+	cs_free(insn, count);
+	cs_close(&handle);
+	return;
+}
+
 int main()
 {
 	test_overflow_cs_insn_bytes();
 	test_overflow_cs_insn_bytes_iter();
 	test_overflow_set_reg_mem_n();
 	test_ub_shift_sh_dsp_p();
+	test_ub_abs_m68k_disp();
 
 	return 0;
 }
