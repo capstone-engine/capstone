@@ -788,7 +788,7 @@ static DecodeStatus decodeOffset_16_16Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT_RET_VAL(isIntN(Imm, 8) && "Invalid immediate",
+	CS_ASSERT_RET_VAL(isIntN(8, Imm) && "Invalid immediate",
 			  MCDisassembler_Fail);
 	if ((Imm & 0xf) != 0)
 		MCOperand_CreateImm0(Inst, (Imm << 4));
