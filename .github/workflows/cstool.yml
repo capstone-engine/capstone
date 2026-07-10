@@ -1,0 +1,289 @@
+name: cstool
+on:
+  push:
+    paths-ignore:
+      - ".gitignore"
+      - "docs/**"
+      - "ChangeLog"
+      - "CREDITS.TXT"
+      - "COMPILE_MAKE.TXT"
+      - "BUILDING.md"
+      - "CONTRIBUTING.md"
+      - "LICENSE.TXT"
+      - "LICENSE_LLVM.TXT"
+      - "README.md"
+      - "RELEASE_NOTES"
+      - "SPONSORS.TXT"
+      - "TODO"
+  pull_request:
+
+# Stop previous runs on the same branch on new push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: true
+  UBSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+  ASAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+  LSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+
+jobs:
+  Linux:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {
+              name: 'CAPSTONE_X86_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_X86_SUPPORT=1',
+              insn_bytes: '8d4c320801d8',
+              cs_arch: 'x32'
+            }
+          - {
+              name: 'CAPSTONE_ARM_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_ARM_SUPPORT=1',
+              insn_bytes: 'f0ff2005',
+              cs_arch: 'arm+thumb'
+            }
+          - {
+              name: 'CAPSTONE_AARCH64_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_AARCH64_SUPPORT=1',
+              insn_bytes: '2090226f',
+              cs_arch: 'aarch64'
+            }
+          - {
+              name: 'CAPSTONE_MIPS_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_MIPS_SUPPORT=1',
+              insn_bytes: '0c10009700000000',
+              cs_arch: 'mips64r6'
+            }
+          - {
+              name: 'CAPSTONE_PPC_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_PPC_SUPPORT=1',
+              insn_bytes: '43200c074156ff17',
+              cs_arch: 'ppc64be'
+            }
+          - {
+              name: 'CAPSTONE_SPARC_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_SPARC_SUPPORT=1',
+              insn_bytes: 'bfb00c20',
+              cs_arch: 'sparc'
+            }
+          - {
+              name: 'CAPSTONE_SYSTEMZ_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_SYSTEMZ_SUPPORT=1',
+              insn_bytes: '1a00000000ed',
+              cs_arch: 'systemz_arch14'
+            }
+          - {
+              name: 'CAPSTONE_XCORE_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_XCORE_SUPPORT=1',
+              insn_bytes: 'fe0ffe171317',
+              cs_arch: 'xcore'
+            }
+          - {
+              name: 'CAPSTONE_M68K_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_M68K_SUPPORT=1',
+              insn_bytes: 'f010f000',
+              cs_arch: 'm68k'
+            }
+          - {
+              name: 'CAPSTONE_TMS320C64X_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_TMS320C64X_SUPPORT=1',
+              insn_bytes: '01ac884081ac884300000000029032960280469e053c83e60b0c8b24',
+              cs_arch: 'tms320c64x'
+            }
+          - {
+              name: 'CAPSTONE_M680X_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_M680X_SUPPORT=1',
+              insn_bytes: '6b100071100072101039',
+              cs_arch: 'm6800'
+            }
+          - {
+              name: 'CAPSTONE_EVM_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_EVM_SUPPORT=1',
+              insn_bytes: '606150',
+              cs_arch: 'evm'
+            }
+          - {
+              name: 'CAPSTONE_WASM_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_WASM_SUPPORT=1',
+              insn_bytes: '2000',
+              cs_arch: 'wasm'
+            }
+          - {
+              name: 'CAPSTONE_MOS65XX_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_MOS65XX_SUPPORT=1',
+              insn_bytes: 'a112a512',
+              cs_arch: '6502'
+            }
+          - {
+              name: 'CAPSTONE_BPF_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_BPF_SUPPORT=1',
+              insn_bytes: 'c6c70fcc431fb9f5',
+              cs_arch: 'ebpf'
+            }
+          - {
+              name: 'CAPSTONE_RISCV_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_RISCV_SUPPORT=1',
+              insn_bytes: '57144a14',
+              cs_arch: 'riscv64+v+fd'
+            }
+          - {
+              name: 'CAPSTONE_SH_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_SH_SUPPORT=1',
+              insn_bytes: '3211920032493100 ',
+              cs_arch: 'sh2a-fpu'
+            }
+          - {
+              name: 'CAPSTONE_TRICORE_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_TRICORE_SUPPORT=1',
+              insn_bytes: '17016002',
+              cs_arch: 'tc180'
+            }
+          - {
+              name: 'CAPSTONE_ALPHA_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_ALPHA_SUPPORT=1',
+              insn_bytes: 'c3002248',
+              cs_arch: 'alpha'
+            }
+          - {
+              name: 'CAPSTONE_HPPA_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_HPPA_SUPPORT=1',
+              insn_bytes: 'a04137e5',
+              cs_arch: 'hppa20be'
+            }
+          - {
+              name: 'CAPSTONE_LOONGARCH_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_LOONGARCH_SUPPORT=1',
+              insn_bytes: '40b2aa74',
+              cs_arch: 'loongarch64'
+            }
+          - {
+              name: 'CAPSTONE_XTENSA_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_XTENSA_SUPPORT=1',
+              insn_bytes: 'f60900',
+              cs_arch: 'esp8266'
+            }
+          - {
+              name: 'CAPSTONE_ARC_SUPPORT only',
+              os: ubuntu-latest,
+              diet-build: 'OFF',
+              enable-asan: 'ON',
+              build_type: 'Debug',
+              build_options: '-DCAPSTONE_ARCHITECTURE_DEFAULT=0 -DCAPSTONE_ARC_SUPPORT=1',
+              insn_bytes: '3178',
+              cs_arch: 'arc'
+            }
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: cmake
+      env:
+        asan: ${{ matrix.config.enable-asan }}
+        build_options: ${{ matrix.config.build_options }}
+        build_type: ${{ matrix.config.build_type }}
+      run: |
+        cmake -DCMAKE_BUILD_TYPE=${build_type} -DCAPSTONE_INSTALL=1 -DCAPSTONE_BUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} ${build_options} -B build .
+        sudo cmake --build build --config ${build_type} --target install
+
+    - name: Run cstest 
+      env:
+        insn_bytes: ${{ matrix.config.insn_bytes }}
+        cs_arch: ${{ matrix.config.cs_arch }}
+      run: |
+        cstool -h
+        cstool -d ${cs_arch} ${insn_bytes}
+

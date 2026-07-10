@@ -652,6 +652,16 @@ static const char *get_arch_name(cs_arch arch)
 	}
 }
 
+static inline bool contains_supported(cs_arch needles[CS_ARCH_MAX])
+{
+	for (size_t i = 0; i < CS_ARCH_MAX && needles[i] != CS_ARCH_MAX; i++) {
+		if (cs_support(needles[i])) {
+			return true;
+		}
+	}
+	return false;
+}
+
 static void usage(char *prog)
 {
 	int i, j;
@@ -670,6 +680,9 @@ static void usage(char *prog)
 
 	printf("\nArch specific options:\n");
 	for (i = 0; all_opts[i].name; i++) {
+		if (!contains_supported(all_opts[i].archs)) {
+			continue;
+		}
 		printf("        %-16s %s (only: ", all_opts[i].name,
 		       all_opts[i].desc);
 		for (j = 0; j < CS_ARCH_MAX; j++) {
@@ -708,73 +721,119 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 
 	switch (arch) {
 	case CS_ARCH_X86:
+#ifdef CAPSTONE_HAS_X86
 		print_insn_detail_x86(handle, md, ins);
+#endif
 		break;
 	case CS_ARCH_ARM:
+#ifdef CAPSTONE_HAS_ARM
 		print_insn_detail_arm(handle, ins);
+#endif
 		break;
 	case CS_ARCH_AARCH64:
+#ifdef CAPSTONE_HAS_AARCH64
 		print_insn_detail_aarch64(handle, ins);
+#endif
 		break;
 	case CS_ARCH_MIPS:
+#ifdef CAPSTONE_HAS_MIPS
 		print_insn_detail_mips(handle, ins);
+#endif
 		break;
 	case CS_ARCH_PPC:
+#ifdef CAPSTONE_HAS_POWERPC
 		print_insn_detail_ppc(handle, ins);
+#endif
 		break;
 	case CS_ARCH_SPARC:
+#ifdef CAPSTONE_HAS_SPARC
 		print_insn_detail_sparc(handle, ins);
+#endif
 		break;
 	case CS_ARCH_SYSTEMZ:
+#ifdef CAPSTONE_HAS_SYSTEMZ
 		print_insn_detail_systemz(handle, ins);
+#endif
 		break;
 	case CS_ARCH_XCORE:
+#ifdef CAPSTONE_HAS_XCORE
 		print_insn_detail_xcore(handle, ins);
+#endif
 		break;
 	case CS_ARCH_M68K:
+#ifdef CAPSTONE_HAS_M68K
 		print_insn_detail_m68k(handle, ins);
+#endif
 		break;
 	case CS_ARCH_TMS320C64X:
+#ifdef CAPSTONE_HAS_TMS320C64X
 		print_insn_detail_tms320c64x(handle, ins);
+#endif
 		break;
 	case CS_ARCH_M680X:
+#ifdef CAPSTONE_HAS_M680X
 		print_insn_detail_m680x(handle, ins);
+#endif
 		break;
 	case CS_ARCH_EVM:
+#ifdef CAPSTONE_HAS_EVM
 		print_insn_detail_evm(handle, ins);
+#endif
 		break;
 	case CS_ARCH_WASM:
+#ifdef CAPSTONE_HAS_WASM
 		print_insn_detail_wasm(handle, ins);
+#endif
 		break;
 	case CS_ARCH_MOS65XX:
+#ifdef CAPSTONE_HAS_MOS65XX
 		print_insn_detail_mos65xx(handle, ins);
+#endif
 		break;
 	case CS_ARCH_BPF:
+#ifdef CAPSTONE_HAS_BPF
 		print_insn_detail_bpf(handle, ins);
+#endif
 		break;
 	case CS_ARCH_RISCV:
+#ifdef CAPSTONE_HAS_RISCV
 		print_insn_detail_riscv(handle, ins);
+#endif
 		break;
 	case CS_ARCH_SH:
+#ifdef CAPSTONE_HAS_SH
 		print_insn_detail_sh(handle, ins);
+#endif
 		break;
 	case CS_ARCH_TRICORE:
+#ifdef CAPSTONE_HAS_TRICORE
 		print_insn_detail_tricore(handle, ins);
+#endif
 		break;
 	case CS_ARCH_ALPHA:
+#ifdef CAPSTONE_HAS_ALPHA
 		print_insn_detail_alpha(handle, ins);
+#endif
 		break;
 	case CS_ARCH_HPPA:
+#ifdef CAPSTONE_HAS_HPPA
 		print_insn_detail_hppa(handle, ins);
+#endif
 		break;
 	case CS_ARCH_LOONGARCH:
+#ifdef CAPSTONE_HAS_LOONGARCH
 		print_insn_detail_loongarch(handle, ins);
+#endif
 		break;
 	case CS_ARCH_XTENSA:
+#ifdef CAPSTONE_HAS_XTENSA
 		print_insn_detail_xtensa(handle, ins);
+#endif
 		break;
 	case CS_ARCH_ARC:
+#ifdef CAPSTONE_HAS_ARC
 		print_insn_detail_arc(handle, ins);
+#endif
 		break;
 	default:
 		break;
