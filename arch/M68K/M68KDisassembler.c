@@ -596,6 +596,16 @@ static cs_m68k *build_init_op(m68k_info *info, int opcode, int count, int size)
 	return ext;
 }
 
+static cs_m68k *build_init_fpu_condition_op(m68k_info *info, int base_opcode,
+					    uint32_t condition_word, int count,
+					    int size)
+{
+	cs_m68k *ext = build_init_op(info, base_opcode, count, size);
+	MCInst_setOpcode(info->inst, base_opcode + m68k_fpu_condition_index(
+							   condition_word));
+	return ext;
+}
+
 static void build_re_gen_1(m68k_info *info, bool isDreg, int opcode,
 			   uint8_t size)
 {
@@ -2654,19 +2664,14 @@ static void d68020_cpbcc_16(m68k_info *info)
 	cs_m68k *ext;
 	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
 	int cpid = M68K_CPID(info);
-	int cond = M68K_IR_CONDITION(info);
+	int cond = m68k_coprocessor_condition(info->ir);
 	if (cpid == M68K_CPID_MMU) {
 		if (cond >= M68K_PMMU_MAX_COND ||
 		    m68k_has_feature(info, CS_MODE_M68K_CPU32)) {
 			d68000_invalid(info);
 			return;
 		}
-	} else if (cpid == M68K_CPID_FPU) {
-		if (cond >= M68K_FPU_MAX_COND) {
-			d68000_invalid(info);
-			return;
-		}
-	} else {
+	} else if (cpid != M68K_CPID_FPU) {
 		d68000_invalid(info);
 		return;
 	}
@@ -2677,8 +2682,7 @@ static void d68020_cpbcc_16(m68k_info *info)
 		return;
 	}
 
-	ext = build_init_op(info, M68K_INS_FBF, 1, 2);
-	info->inst->Opcode += M68K_FP_COND(info->ir);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FBF, info->ir, 1, 2);
 	op0 = &ext->operands[0];
 
 	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_WORD,
@@ -2694,25 +2698,19 @@ static void d68020_cpbcc_32(m68k_info *info)
 	cs_m68k_op *op0;
 	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
 	int cpid = M68K_CPID(info);
-	int cond = M68K_IR_CONDITION(info);
+	int cond = m68k_coprocessor_condition(info->ir);
 	if (cpid == M68K_CPID_MMU) {
 		if (cond >= M68K_PMMU_MAX_COND ||
 		    m68k_has_feature(info, CS_MODE_M68K_CPU32)) {
 			d68000_invalid(info);
 			return;
 		}
-	} else if (cpid == M68K_CPID_FPU) {
-		if (cond >= M68K_FPU_MAX_COND) {
-			d68000_invalid(info);
-			return;
-		}
-	} else {
+	} else if (cpid != M68K_CPID_FPU) {
 		d68000_invalid(info);
 		return;
 	}
 
-	ext = build_init_op(info, M68K_INS_FBF, 1, 4);
-	info->inst->Opcode += M68K_FP_COND(info->ir);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FBF, info->ir, 1, 4);
 	op0 = &ext->operands[0];
 
 	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_LONG, read_imm_32(info));
@@ -2744,9 +2742,7 @@ static void d68020_cpdbcc(m68k_info *info)
 	ext1 = read_imm_16(info);
 	ext2 = read_imm_16(info);
 
-	info->inst->Opcode += M68K_FP_COND(ext1);
-
-	ext = build_init_op(info, M68K_INS_FDBF, 2, 0);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FDBF, ext1, 2, 0);
 	op0 = &ext->operands[0];
 	op1 = &ext->operands[1];
 
@@ -3200,10 +3196,11 @@ static void d68040_ptest_or_cprestore(m68k_info *info)
 static void d68020_cpscc(m68k_info *info)
 {
 	cs_m68k *ext;
+	uint32_t condition;
 	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
 	REQUIRE_CPID_FPU(info);
-	ext = build_init_op(info, M68K_INS_FSF, 1, 1);
-	info->inst->Opcode += M68K_FP_COND(read_imm_16(info));
+	condition = read_imm_16(info);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FSF, condition, 1, 1);
 
 	if (!get_ea_mode_op(info, &ext->operands[0], info->ir, 1)) {
 		invalid_insn(info);
@@ -3219,8 +3216,7 @@ static void d68020_cptrapcc_0(m68k_info *info)
 
 	extension1 = read_imm_16(info);
 
-	build_init_op(info, M68K_INS_FTRAPF, 0, 0);
-	info->inst->Opcode += M68K_FP_COND(extension1);
+	build_init_fpu_condition_op(info, M68K_INS_FTRAPF, extension1, 0, 0);
 }
 
 static void d68020_cptrapcc_16(m68k_info *info)
@@ -3234,8 +3230,8 @@ static void d68020_cptrapcc_16(m68k_info *info)
 	extension1 = read_imm_16(info);
 	extension2 = read_imm_16(info);
 
-	ext = build_init_op(info, M68K_INS_FTRAPF, 1, 2);
-	info->inst->Opcode += M68K_FP_COND(extension1);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FTRAPF, extension1, 1,
+					  2);
 
 	op0 = &ext->operands[0];
 
@@ -3255,8 +3251,8 @@ static void d68020_cptrapcc_32(m68k_info *info)
 	extension1 = read_imm_16(info);
 	extension2 = read_imm_32(info);
 
-	ext = build_init_op(info, M68K_INS_FTRAPF, 1, 2);
-	info->inst->Opcode += M68K_FP_COND(extension1);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FTRAPF, extension1, 1,
+					  2);
 
 	op0 = &ext->operands[0];
 

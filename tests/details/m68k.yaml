@@ -2783,15 +2783,15 @@ test_cases:
             regs_impl_read: [fp0]
             regs_impl_write: [fp0]
 
-  # cpbcc CpID=1 condition >= 32 should be invalid
+  # FPU cpbcc 1xxxxx predicates alias the corresponding 0xxxxx predicate.
   - input:
-      bytes: [0xf2, 0xe0]
+      bytes: [0xf2, 0xe0, 0x00, 0x00, 0x00, 0x00]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020]
       address: 0x0
     expected:
       insns:
-        - asm_text: "dc.w $f2e0"
+        - asm_text: "fbf.l $2"
 
   # cpbcc CpID=0 condition >= 16 should be invalid
   - input:
@@ -4420,6 +4420,170 @@ test_cases:
                 - type: M68K_OP_IMM
                   address_mode: M68K_AM_IMMEDIATE
                   imm: 0x12345678
+
+  # MC68881/MC68882 signaling/IEEE-aware condition predicates 0x10-0x1f.
+  - input:
+      bytes: [0xf2, 0x90, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fbsf.w $2
+  - input:
+      bytes: [0xf2, 0x94, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fblt.w $2
+  - input:
+      bytes: [0xf2, 0x98, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fbngle.w $2
+  - input:
+      bytes: [0xf2, 0x9c, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fbnge.w $2
+  - input:
+      bytes: [0xf2, 0x48, 0x00, 0x11, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fdbseq d0, $4"
+  - input:
+      bytes: [0xf2, 0x48, 0x00, 0x15, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fdble d0, $4"
+  - input:
+      bytes: [0xf2, 0x48, 0x00, 0x19, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fdbngl d0, $4"
+  - input:
+      bytes: [0xf2, 0x48, 0x00, 0x1d, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fdbngt d0, $4"
+  - input:
+      bytes: [0xf2, 0x40, 0x00, 0x12]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fsgt.b d0
+  - input:
+      bytes: [0xf2, 0x40, 0x00, 0x16]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fsgl.b d0
+  - input:
+      bytes: [0xf2, 0x40, 0x00, 0x1a]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fsnle.b d0
+  - input:
+      bytes: [0xf2, 0x40, 0x00, 0x1e]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fssne.b d0
+  - input:
+      bytes: [0xf2, 0x7c, 0x00, 0x13]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: ftrapge
+  - input:
+      bytes: [0xf2, 0x7c, 0x00, 0x17]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: ftrapgle
+  - input:
+      bytes: [0xf2, 0x7c, 0x00, 0x1b]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: ftrapnlt
+  - input:
+      bytes: [0xf2, 0x7c, 0x00, 0x1f]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: ftrapst
+
+  # Reserved 1xxxxx predicates are aliases of the corresponding 0xxxxx.
+  - input:
+      bytes: [0xf2, 0xb0, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fbsf.w $2
+  - input:
+      bytes: [0xf2, 0x48, 0x00, 0x31, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fdbseq d0, $4"
+  - input:
+      bytes: [0xf2, 0x40, 0x00, 0x32]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fsgt.b d0
+  - input:
+      bytes: [0xf2, 0x7c, 0x00, 0x33]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: ftrapge
   - input:
       bytes: [0xf2, 0x00, 0x05, 0x3a]
       arch: "m68k"

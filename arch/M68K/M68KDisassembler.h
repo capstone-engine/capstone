@@ -117,8 +117,19 @@ typedef uint32_t m68k_feature_mask;
 /* ── IR bit-field helpers ────────────────────────────────────────────
  * Extract commonly-used fields from the first instruction word.      */
 
-/* 6-bit coprocessor condition (bits 5:0 of IR). */
-#define M68K_IR_CONDITION(info) ((info)->ir & 0x3f)
+/* Coprocessor conditional predicate field (bits 5:0).
+ *
+ * Reference: Motorola MC68881/MC68882 Floating-Point Coprocessor User's
+ * Manual, first edition (1987), sections 4.7.2-4.7.3, Tables 4-20 and
+ * 4-22, pages 4-129 through 4-134. A reference copy is available at:
+ * https://www.bitsavers.org/components/motorola/68000/68020/MC68881_MC68882_Floating-Point_Coprocessor_Users_Manual_1ed_1987.pdf
+ */
+#define M68K_COPROCESSOR_CONDITION_MASK 0x3f
+
+static inline uint32_t m68k_coprocessor_condition(uint32_t word)
+{
+	return word & M68K_COPROCESSOR_CONDITION_MASK;
+}
 
 /* 4-bit condition selector used by Bcc/DBcc/Scc/TRAPcc. */
 #define M68K_IR_CONDITION_NIBBLE(info) (((info)->ir >> 8) & 0xf)
@@ -164,14 +175,19 @@ typedef uint32_t m68k_feature_mask;
 #define M68K_FEXT_DIR(ext) (((ext) >> 13) & 1)
 
 /* ── FPU condition-code mask ─────────────────────────────────────────
- * FBcc/FDBcc/FScc/FTRAPcc encode the FP condition in bits 5,3:0
- * of the extension word (or IR for FBcc).  Bit 4 is always 0,
- * yielding the 0x2f mask.                                            */
-#define M68K_FP_COND(x) ((x) & 0x2f)
+ * The FPU defines predicates 0xxxxx; 1xxxxx encodings are reserved
+ * aliases that evaluate identically. Use the low five bits to index the
+ * contiguous FBcc/FDBcc/FScc/FTRAPcc opcode ranges. See the manual
+ * reference above.                                                   */
+#define M68K_FPU_CONDITION_INDEX_MASK 0x1f
+
+static inline uint32_t m68k_fpu_condition_index(uint32_t word)
+{
+	return word & M68K_FPU_CONDITION_INDEX_MASK;
+}
 
 /* Maximum valid condition codes per coprocessor. */
 #define M68K_PMMU_MAX_COND 16
-#define M68K_FPU_MAX_COND 32
 
 /* ── FPU source-format constants (bits 12:10 of ext word) ───────────*/
 #define M68K_FPSRC_LONG 0x00 /* .l  -- 32-bit integer            */
