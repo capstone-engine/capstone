@@ -354,9 +354,14 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 	}
 }
 
+/* Raw effective-address encoding bits, used before get_ea_mode_op() consumes
+ * any extension words and fills cs_m68k_op.address_mode. The control and
+ * alterable-control classifications follow Table 4-21 on page 4-133 of the
+ * Motorola MC68881/MC68882 Floating-Point Coprocessor User's Manual, first
+ * edition (1987):
+ * https://www.bitsavers.org/components/motorola/68000/68020/MC68881_MC68882_Floating-Point_Coprocessor_Users_Manual_1ed_1987.pdf
+ */
 enum {
-	/* Raw effective-address encoding bits, used before get_ea_mode_op()
-	 * consumes any extension words and fills cs_m68k_op.address_mode. */
 	M68K_EA_REGISTER_MASK = 0x07,
 	M68K_EA_MODE_SHIFT = 3,
 	M68K_EA_FIELD_MASK = 0x3f,
@@ -380,6 +385,8 @@ enum {
 enum {
 	M68K_EA_EXT_ABSOLUTE_SHORT = 0,
 	M68K_EA_EXT_ABSOLUTE_LONG = 1,
+	M68K_EA_EXT_PC_DISPLACEMENT = 2,
+	M68K_EA_EXT_PC_INDEX = 3,
 };
 
 static uint32_t m68k_ea_field(uint32_t ir)
@@ -410,6 +417,26 @@ static bool m68k_ea_is_register_direct(uint32_t ir)
 static bool m68k_ea_is_immediate(uint32_t ir)
 {
 	return m68k_ea_field(ir) == M68K_EA_IMMEDIATE_FIELD;
+}
+
+static bool m68k_ea_is_control(uint32_t ir)
+{
+	uint32_t mode = m68k_ea_mode(ir);
+	return mode == M68K_EA_MODE_ADDR_INDIRECT ||
+	       mode == M68K_EA_MODE_ADDR_INDIRECT_DISP ||
+	       mode == M68K_EA_MODE_ADDR_INDIRECT_INDEX ||
+	       (mode == M68K_EA_MODE_EXTENDED &&
+		m68k_ea_register(ir) <= M68K_EA_EXT_PC_INDEX);
+}
+
+static bool m68k_ea_is_alterable_control(uint32_t ir)
+{
+	uint32_t mode = m68k_ea_mode(ir);
+	return mode == M68K_EA_MODE_ADDR_INDIRECT ||
+	       mode == M68K_EA_MODE_ADDR_INDIRECT_DISP ||
+	       mode == M68K_EA_MODE_ADDR_INDIRECT_INDEX ||
+	       (mode == M68K_EA_MODE_EXTENDED &&
+		m68k_ea_register(ir) <= M68K_EA_EXT_ABSOLUTE_LONG);
 }
 
 static bool m68k_ea_is_data_register_direct_or_immediate(uint32_t ir)
@@ -2792,8 +2819,8 @@ static void fmovem(m68k_info *info, uint32_t extension)
 	cs_m68k_op *op_reglist;
 	cs_m68k_op *op_ea;
 	int dir = M68K_FEXT_DIR(extension);
-	int mode = (extension >> 11) & 0x3;
-	uint32_t reglist = extension & 0xff;
+	m68k_fmovem_mode mode = m68k_fmovem_get_mode(extension);
+	uint32_t reglist = m68k_fmovem_register_list(extension);
 	cs_m68k *ext = build_init_op(info, M68K_INS_FMOVEM, 2, 0);
 
 	op_reglist = &ext->operands[0];
@@ -2813,17 +2840,36 @@ static void fmovem(m68k_info *info, uint32_t extension)
 	}
 
 	switch (mode) {
-	case 1: // Dynamic list in dn register
-		op_reglist->reg = M68K_REG_D0 + ((reglist >> 4) & 7);
+	case M68K_FMOVEM_MODE_DYNAMIC_PREDECREMENT:
+		if (m68k_fmovem_dynamic_reserved_bits_are_zero(extension) &&
+		    dir &&
+		    m68k_ea_mode(info->ir) ==
+			    M68K_EA_MODE_ADDR_INDIRECT_PRE_DEC) {
+			op_reglist->reg =
+				M68K_REG_D0 +
+				m68k_fmovem_dynamic_register(extension);
+		}
 		break;
 
-	case 0:
+	case M68K_FMOVEM_MODE_DYNAMIC_POSTINCREMENT_OR_CONTROL:
+		if (m68k_fmovem_dynamic_reserved_bits_are_zero(extension) &&
+		    (dir ? m68k_ea_is_alterable_control(info->ir) :
+			   (m68k_ea_is_control(info->ir) ||
+			    m68k_ea_mode(info->ir) ==
+				    M68K_EA_MODE_ADDR_INDIRECT_POST_INC))) {
+			op_reglist->reg =
+				M68K_REG_D0 +
+				m68k_fmovem_dynamic_register(extension);
+		}
+		break;
+
+	case M68K_FMOVEM_MODE_STATIC_PREDECREMENT:
 		op_reglist->address_mode = M68K_AM_NONE;
 		op_reglist->type = M68K_OP_REG_BITS;
 		op_reglist->register_bits = reglist << 16;
 		break;
 
-	case 2: // Static list
+	case M68K_FMOVEM_MODE_STATIC_POSTINCREMENT_OR_CONTROL:
 		op_reglist->address_mode = M68K_AM_NONE;
 		op_reglist->type = M68K_OP_REG_BITS;
 		op_reglist->register_bits = ((uint32_t)reverse_bits_8(reglist))
@@ -5256,6 +5302,13 @@ static void build_regs_read_write_counts(m68k_info *info)
 
 	if (!info->extension.op_count)
 		return;
+	if (info->inst->Opcode == M68K_INS_FMOVEM &&
+	    info->extension.op_count == 2 &&
+	    info->extension.operands[1].type == M68K_OP_REG) {
+		update_op_reg_list(info, &info->extension.operands[0], 0);
+		update_op_reg_list(info, &info->extension.operands[1], 0);
+		return;
+	}
 
 	if (info->extension.op_count == 1) {
 		update_op_reg_list(info, &info->extension.operands[0], 1);

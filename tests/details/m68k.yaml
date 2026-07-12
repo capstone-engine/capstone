@@ -4000,7 +4000,7 @@ test_cases:
             regs_impl_read: [fp0, fp1]
             regs_impl_write: [a0]
   - input:
-      bytes: [0xf2, 0x10, 0xc8, 0x10]
+      bytes: [0xf2, 0x10, 0xd8, 0x10]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
       address: 0x0
@@ -4017,10 +4017,136 @@ test_cases:
                   address_mode: M68K_AM_REGI_ADDR
                 - type: M68K_OP_REG
                   reg: d1
-            regs_read: [a0]
-            regs_write: [d1]
-            regs_impl_read: [a0]
-            regs_impl_write: [d1]
+            regs_read: [a0, d1]
+            regs_impl_read: [a0, d1]
+  - input:
+      bytes: [0xf2, 0x10, 0xf8, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem d1, (a0)"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_REG
+                  reg: d1
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
+                  address_mode: M68K_AM_REGI_ADDR
+            regs_read: [d1, a0]
+            regs_impl_read: [d1, a0]
+  - input:
+      bytes: [0xf2, 0x18, 0xd8, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem (a0)+, d1"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
+                  address_mode: M68K_AM_REGI_ADDR_POST_INC
+                - type: M68K_OP_REG
+                  reg: d1
+            regs_read: [d1]
+            regs_write: [a0]
+            regs_impl_read: [d1]
+            regs_impl_write: [a0]
+  - input:
+      bytes: [0xf2, 0x20, 0xe8, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem d1, -(a0)"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_REG
+                  reg: d1
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
+                  address_mode: M68K_AM_REGI_ADDR_PRE_DEC
+            regs_read: [d1]
+            regs_write: [a0]
+            regs_impl_read: [d1]
+            regs_impl_write: [a0]
+  - input:
+      bytes: [0xf2, 0x10, 0xf8, 0x90]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem invalid, (a0)"
+  - input:
+      bytes: [0xf2, 0x10, 0xf8, 0x11]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem invalid, (a0)"
+  - input:
+      bytes: [0xf2, 0x20, 0xc8, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem -(a0), invalid"
+  - input:
+      bytes: [0xf2, 0x10, 0xe8, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem invalid, (a0)"
+  - input:
+      bytes: [0xf2, 0x18, 0xf8, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem invalid, (a0)+"
+  - input:
+      bytes: [0xf2, 0x20, 0xd8, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem -(a0), invalid"
+  - input:
+      bytes: [0xf2, 0x3a, 0xd8, 0x10, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem $4(pc), d1"
+  - input:
+      bytes: [0xf2, 0x3a, 0xf8, 0x10, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem invalid, $4(pc)"
   - input:
       bytes: [0x20, 0x00]
       arch: "m68k"

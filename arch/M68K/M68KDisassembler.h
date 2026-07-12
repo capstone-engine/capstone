@@ -174,6 +174,45 @@ static inline uint32_t m68k_coprocessor_condition(uint32_t word)
 /* Direction bit for FMOVE FPCR (bit 13): 0 = ea->fpcr, 1 = fpcr->ea. */
 #define M68K_FEXT_DIR(ext) (((ext) >> 13) & 1)
 
+/* FMOVEM register-list encoding.
+ *
+ * Bits 12:11 select static/dynamic and predecrement versus
+ * postincrement-or-control forms. A static list occupies bits 7:0; a dynamic
+ * list has the reserved-bit format 0rrr0000, with Dn in bits 6:4.
+ *
+ * Reference: Motorola MC68881/MC68882 Floating-Point Coprocessor User's
+ * Manual, first edition (1987), section 4.7.1.6, Table 4-18, pages 4-126
+ * through 4-128:
+ * https://www.bitsavers.org/components/motorola/68000/68020/MC68881_MC68882_Floating-Point_Coprocessor_Users_Manual_1ed_1987.pdf
+ */
+typedef enum {
+	M68K_FMOVEM_MODE_STATIC_PREDECREMENT = 0,
+	M68K_FMOVEM_MODE_DYNAMIC_PREDECREMENT = 1,
+	M68K_FMOVEM_MODE_STATIC_POSTINCREMENT_OR_CONTROL = 2,
+	M68K_FMOVEM_MODE_DYNAMIC_POSTINCREMENT_OR_CONTROL = 3,
+} m68k_fmovem_mode;
+
+static inline m68k_fmovem_mode m68k_fmovem_get_mode(uint32_t extension)
+{
+	return (m68k_fmovem_mode)BITFIELD(extension, 12, 11);
+}
+
+static inline uint32_t m68k_fmovem_register_list(uint32_t extension)
+{
+	return BITFIELD(extension, 7, 0);
+}
+
+static inline bool
+m68k_fmovem_dynamic_reserved_bits_are_zero(uint32_t extension)
+{
+	return BITFIELD(extension, 7, 7) == 0 && BITFIELD(extension, 3, 0) == 0;
+}
+
+static inline uint32_t m68k_fmovem_dynamic_register(uint32_t extension)
+{
+	return BITFIELD(extension, 6, 4);
+}
+
 /* ── FPU condition-code mask ─────────────────────────────────────────
  * The FPU defines predicates 0xxxxx; 1xxxxx encodings are reserved
  * aliases that evaluate identically. Use the low five bits to index the
