@@ -2792,6 +2792,17 @@ test_cases:
     expected:
       insns:
         - asm_text: "fbf.l $2"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_fpu: M68K_FPU_SIZE_SINGLE
+              op_size_cpu: M68K_CPU_SIZE_LONG
+              operands:
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 0
+                  br_disp_size: 4
+            groups: [jump, branch_relative]
 
   # cpbcc CpID=0 condition >= 16 should be invalid
   - input:
@@ -3915,48 +3926,21 @@ test_cases:
             regs_write: [d0]
             regs_impl_read: [fpiar]
             regs_impl_write: [d0]
+  # Static predecrement lists reject memory-to-register and non-predecrement EAs.
   - input:
       bytes: [0xf2, 0x10, 0xc0, 0x03]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
       address: 0x0
     expected:
-      insns:
-        - asm_text: "fmovem (a0), fp0-fp1"
-          details:
-            m68k:
-              op_size_type: M68K_SIZE_TYPE_CPU
-              operands:
-                - type: M68K_OP_MEM
-                  mem:
-                    base_reg: a0
-                  address_mode: M68K_AM_REGI_ADDR
-                - type: M68K_OP_REG_BITS
-                  register_bits: 196608
-            regs_read: [a0]
-            regs_write: [fp0, fp1]
-            regs_impl_read: [a0]
-            regs_impl_write: [fp0, fp1]
+      insns: []
   - input:
       bytes: [0xf2, 0x10, 0xe0, 0x03]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
       address: 0x0
     expected:
-      insns:
-        - asm_text: "fmovem fp0-fp1, (a0)"
-          details:
-            m68k:
-              op_size_type: M68K_SIZE_TYPE_CPU
-              operands:
-                - type: M68K_OP_REG_BITS
-                  register_bits: 196608
-                - type: M68K_OP_MEM
-                  mem:
-                    base_reg: a0
-                  address_mode: M68K_AM_REGI_ADDR
-            regs_read: [fp0, fp1, a0]
-            regs_impl_read: [fp0, fp1, a0]
+      insns: []
   - input:
       bytes: [0xf2, 0x18, 0xd0, 0x03]
       arch: "m68k"
@@ -3999,6 +3983,96 @@ test_cases:
             regs_write: [a0]
             regs_impl_read: [fp0, fp1]
             regs_impl_write: [a0]
+
+  # Static postincrement/control lists accept control EAs in both directions.
+  - input:
+      bytes: [0xf2, 0x10, 0xd0, 0x03]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem (a0), fp6-fp7"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
+                  address_mode: M68K_AM_REGI_ADDR
+                - type: M68K_OP_REG_BITS
+                  register_bits: 12582912
+            regs_read: [a0]
+            regs_write: [fp6, fp7]
+            regs_impl_read: [a0]
+            regs_impl_write: [fp6, fp7]
+  - input:
+      bytes: [0xf2, 0x10, 0xf0, 0x03]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem fp6-fp7, (a0)"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_REG_BITS
+                  register_bits: 12582912
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
+                  address_mode: M68K_AM_REGI_ADDR
+            regs_read: [fp6, fp7, a0]
+            regs_impl_read: [fp6, fp7, a0]
+
+  # PC-relative is control but not alterable control.
+  - input:
+      bytes: [0xf2, 0x3a, 0xd0, 0x03, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmovem $4(pc), fp6-fp7"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_MEM
+                  mem:
+                    disp: 2
+                  address_mode: M68K_AM_PCI_DISP
+                - type: M68K_OP_REG_BITS
+                  register_bits: 12582912
+            regs_write: [fp6, fp7]
+            regs_impl_write: [fp6, fp7]
+  - input:
+      bytes: [0xf2, 0x3a, 0xf0, 0x03, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+
+  # Static postincrement/control lists reject the opposite update mode.
+  - input:
+      bytes: [0xf2, 0x20, 0xd0, 0x03]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf2, 0x18, 0xf0, 0x03]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+
   - input:
       bytes: [0xf2, 0x10, 0xd8, 0x10]
       arch: "m68k"
@@ -4089,48 +4163,108 @@ test_cases:
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
       address: 0x0
     expected:
-      insns:
-        - asm_text: "fmovem invalid, (a0)"
+      insns: []
   - input:
       bytes: [0xf2, 0x10, 0xf8, 0x11]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
       address: 0x0
     expected:
-      insns:
-        - asm_text: "fmovem invalid, (a0)"
+      insns: []
+  - input:
+      bytes: [0xf2, 0x10, 0xd8, 0x90]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf2, 0x10, 0xd8, 0x11]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf2, 0x20, 0xe8, 0x90]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+
+  # Bits 10:8 are fixed to zero for every FMOVEM command word.
+  - input:
+      bytes: [0xf2, 0x10, 0xd1, 0x03]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf2, 0x10, 0xd9, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+
+  - input:
+      bytes: [0xf2, 0x00, 0xf8, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf2, 0x08, 0xf8, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf2, 0x00, 0xd0, 0x03]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
+  - input:
+      bytes: [0xf2, 0x3c, 0xd0, 0x03]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns: []
   - input:
       bytes: [0xf2, 0x20, 0xc8, 0x10]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
       address: 0x0
     expected:
-      insns:
-        - asm_text: "fmovem -(a0), invalid"
+      insns: []
   - input:
       bytes: [0xf2, 0x10, 0xe8, 0x10]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
       address: 0x0
     expected:
-      insns:
-        - asm_text: "fmovem invalid, (a0)"
+      insns: []
   - input:
       bytes: [0xf2, 0x18, 0xf8, 0x10]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
       address: 0x0
     expected:
-      insns:
-        - asm_text: "fmovem invalid, (a0)+"
+      insns: []
   - input:
       bytes: [0xf2, 0x20, 0xd8, 0x10]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
       address: 0x0
     expected:
-      insns:
-        - asm_text: "fmovem -(a0), invalid"
+      insns: []
   - input:
       bytes: [0xf2, 0x3a, 0xd8, 0x10, 0x00, 0x00]
       arch: "m68k"
@@ -4139,14 +4273,25 @@ test_cases:
     expected:
       insns:
         - asm_text: "fmovem $4(pc), d1"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_MEM
+                  mem:
+                    disp: 2
+                  address_mode: M68K_AM_PCI_DISP
+                - type: M68K_OP_REG
+                  reg: d1
+            regs_read: [d1]
+            regs_impl_read: [d1]
   - input:
       bytes: [0xf2, 0x3a, 0xf8, 0x10, 0x00, 0x00]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
       address: 0x0
     expected:
-      insns:
-        - asm_text: "fmovem invalid, $4(pc)"
+      insns: []
   - input:
       bytes: [0x20, 0x00]
       arch: "m68k"
@@ -4537,11 +4682,11 @@ test_cases:
       address: 0x0
     expected:
       insns:
-        - asm_text: "ftrapf.w #$12345678"
+        - asm_text: "ftrapf.l #$12345678"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_WORD
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_IMM
                   address_mode: M68K_AM_IMMEDIATE
@@ -4556,6 +4701,16 @@ test_cases:
     expected:
       insns:
         - asm_text: fbsf.w $2
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_WORD
+              operands:
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 0
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
   - input:
       bytes: [0xf2, 0x94, 0x00, 0x00]
       arch: "m68k"
@@ -4564,6 +4719,16 @@ test_cases:
     expected:
       insns:
         - asm_text: fblt.w $2
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_WORD
+              operands:
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 0
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
   - input:
       bytes: [0xf2, 0x98, 0x00, 0x00]
       arch: "m68k"
@@ -4572,6 +4737,16 @@ test_cases:
     expected:
       insns:
         - asm_text: fbngle.w $2
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_WORD
+              operands:
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 0
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
   - input:
       bytes: [0xf2, 0x9c, 0x00, 0x00]
       arch: "m68k"
@@ -4580,6 +4755,16 @@ test_cases:
     expected:
       insns:
         - asm_text: fbnge.w $2
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_WORD
+              operands:
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 0
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
   - input:
       bytes: [0xf2, 0x48, 0x00, 0x11, 0x00, 0x00]
       arch: "m68k"
@@ -4588,6 +4773,19 @@ test_cases:
     expected:
       insns:
         - asm_text: "fdbseq d0, $4"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_REG
+                  reg: d0
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 2
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
+            regs_read: [d0]
+            regs_impl_read: [d0]
   - input:
       bytes: [0xf2, 0x48, 0x00, 0x15, 0x00, 0x00]
       arch: "m68k"
@@ -4596,6 +4794,19 @@ test_cases:
     expected:
       insns:
         - asm_text: "fdble d0, $4"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_REG
+                  reg: d0
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 2
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
+            regs_read: [d0]
+            regs_impl_read: [d0]
   - input:
       bytes: [0xf2, 0x48, 0x00, 0x19, 0x00, 0x00]
       arch: "m68k"
@@ -4604,6 +4815,19 @@ test_cases:
     expected:
       insns:
         - asm_text: "fdbngl d0, $4"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_REG
+                  reg: d0
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 2
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
+            regs_read: [d0]
+            regs_impl_read: [d0]
   - input:
       bytes: [0xf2, 0x48, 0x00, 0x1d, 0x00, 0x00]
       arch: "m68k"
@@ -4612,6 +4836,19 @@ test_cases:
     expected:
       insns:
         - asm_text: "fdbngt d0, $4"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_REG
+                  reg: d0
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 2
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
+            regs_read: [d0]
+            regs_impl_read: [d0]
   - input:
       bytes: [0xf2, 0x40, 0x00, 0x12]
       arch: "m68k"
@@ -4620,6 +4857,16 @@ test_cases:
     expected:
       insns:
         - asm_text: fsgt.b d0
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_BYTE
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d0
+            regs_write: [d0]
+            regs_impl_write: [d0]
   - input:
       bytes: [0xf2, 0x40, 0x00, 0x16]
       arch: "m68k"
@@ -4628,6 +4875,16 @@ test_cases:
     expected:
       insns:
         - asm_text: fsgl.b d0
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_BYTE
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d0
+            regs_write: [d0]
+            regs_impl_write: [d0]
   - input:
       bytes: [0xf2, 0x40, 0x00, 0x1a]
       arch: "m68k"
@@ -4636,6 +4893,16 @@ test_cases:
     expected:
       insns:
         - asm_text: fsnle.b d0
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_BYTE
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d0
+            regs_write: [d0]
+            regs_impl_write: [d0]
   - input:
       bytes: [0xf2, 0x40, 0x00, 0x1e]
       arch: "m68k"
@@ -4644,6 +4911,16 @@ test_cases:
     expected:
       insns:
         - asm_text: fssne.b d0
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_BYTE
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d0
+            regs_write: [d0]
+            regs_impl_write: [d0]
   - input:
       bytes: [0xf2, 0x7c, 0x00, 0x13]
       arch: "m68k"
@@ -4652,6 +4929,9 @@ test_cases:
     expected:
       insns:
         - asm_text: ftrapge
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
   - input:
       bytes: [0xf2, 0x7c, 0x00, 0x17]
       arch: "m68k"
@@ -4660,6 +4940,9 @@ test_cases:
     expected:
       insns:
         - asm_text: ftrapgle
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
   - input:
       bytes: [0xf2, 0x7c, 0x00, 0x1b]
       arch: "m68k"
@@ -4668,6 +4951,9 @@ test_cases:
     expected:
       insns:
         - asm_text: ftrapnlt
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
   - input:
       bytes: [0xf2, 0x7c, 0x00, 0x1f]
       arch: "m68k"
@@ -4676,6 +4962,9 @@ test_cases:
     expected:
       insns:
         - asm_text: ftrapst
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
 
   # Reserved 1xxxxx predicates are aliases of the corresponding 0xxxxx.
   - input:
@@ -4686,6 +4975,34 @@ test_cases:
     expected:
       insns:
         - asm_text: fbsf.w $2
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_WORD
+              operands:
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 0
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
+  - input:
+      bytes: [0xf2, 0xf0, 0x00, 0x00, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: fbsf.l $2
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_LONG
+              operands:
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 0
+                  br_disp_size: 4
+            groups: [jump, branch_relative]
   - input:
       bytes: [0xf2, 0x48, 0x00, 0x31, 0x00, 0x00]
       arch: "m68k"
@@ -4694,6 +5011,19 @@ test_cases:
     expected:
       insns:
         - asm_text: "fdbseq d0, $4"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              operands:
+                - type: M68K_OP_REG
+                  reg: d0
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 2
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
+            regs_read: [d0]
+            regs_impl_read: [d0]
   - input:
       bytes: [0xf2, 0x40, 0x00, 0x32]
       arch: "m68k"
@@ -4702,6 +5032,16 @@ test_cases:
     expected:
       insns:
         - asm_text: fsgt.b d0
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_BYTE
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d0
+            regs_write: [d0]
+            regs_impl_write: [d0]
   - input:
       bytes: [0xf2, 0x7c, 0x00, 0x33]
       arch: "m68k"
@@ -4710,6 +5050,25 @@ test_cases:
     expected:
       insns:
         - asm_text: ftrapge
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+  - input:
+      bytes: [0xf2, 0x7b, 0x00, 0x33, 0x12, 0x34, 0x56, 0x78]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_FPU]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "ftrapge.l #$12345678"
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_LONG
+              operands:
+                - type: M68K_OP_IMM
+                  address_mode: M68K_AM_IMMEDIATE
+                  imm: 0x12345678
   - input:
       bytes: [0xf2, 0x00, 0x05, 0x3a]
       arch: "m68k"
