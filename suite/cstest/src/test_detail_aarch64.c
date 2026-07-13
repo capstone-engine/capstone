@@ -204,7 +204,7 @@ bool test_expected_aarch64(csh *handle, cs_aarch64 *actual,
 					false);
 			compare_reg_ret(*handle, op->mem.index, eop->mem_index,
 					false);
-			compare_int32_ret(op->mem.disp, eop->mem_disp, false);
+			compare_int64_ret(op->mem.disp, eop->mem_disp, false);
 			break;
 		case AARCH64_OP_PRED:
 			compare_reg_ret(*handle, op->pred.reg, eop->pred_reg,
