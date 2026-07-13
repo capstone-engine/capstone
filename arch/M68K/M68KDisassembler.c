@@ -354,9 +354,14 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 	}
 }
 
+/* Raw effective-address encoding bits, used before get_ea_mode_op() consumes
+ * any extension words and fills cs_m68k_op.address_mode. The control and
+ * alterable-control classifications follow Table 4-21 on page 4-133 of the
+ * Motorola MC68881/MC68882 Floating-Point Coprocessor User's Manual, first
+ * edition (1987):
+ * https://www.bitsavers.org/components/motorola/68000/68020/MC68881_MC68882_Floating-Point_Coprocessor_Users_Manual_1ed_1987.pdf
+ */
 enum {
-	/* Raw effective-address encoding bits, used before get_ea_mode_op()
-	 * consumes any extension words and fills cs_m68k_op.address_mode. */
 	M68K_EA_REGISTER_MASK = 0x07,
 	M68K_EA_MODE_SHIFT = 3,
 	M68K_EA_FIELD_MASK = 0x3f,
@@ -380,6 +385,8 @@ enum {
 enum {
 	M68K_EA_EXT_ABSOLUTE_SHORT = 0,
 	M68K_EA_EXT_ABSOLUTE_LONG = 1,
+	M68K_EA_EXT_PC_DISPLACEMENT = 2,
+	M68K_EA_EXT_PC_INDEX = 3,
 };
 
 static uint32_t m68k_ea_field(uint32_t ir)
@@ -410,6 +417,26 @@ static bool m68k_ea_is_register_direct(uint32_t ir)
 static bool m68k_ea_is_immediate(uint32_t ir)
 {
 	return m68k_ea_field(ir) == M68K_EA_IMMEDIATE_FIELD;
+}
+
+static bool m68k_ea_is_control(uint32_t ir)
+{
+	uint32_t mode = m68k_ea_mode(ir);
+	return mode == M68K_EA_MODE_ADDR_INDIRECT ||
+	       mode == M68K_EA_MODE_ADDR_INDIRECT_DISP ||
+	       mode == M68K_EA_MODE_ADDR_INDIRECT_INDEX ||
+	       (mode == M68K_EA_MODE_EXTENDED &&
+		m68k_ea_register(ir) <= M68K_EA_EXT_PC_INDEX);
+}
+
+static bool m68k_ea_is_alterable_control(uint32_t ir)
+{
+	uint32_t mode = m68k_ea_mode(ir);
+	return mode == M68K_EA_MODE_ADDR_INDIRECT ||
+	       mode == M68K_EA_MODE_ADDR_INDIRECT_DISP ||
+	       mode == M68K_EA_MODE_ADDR_INDIRECT_INDEX ||
+	       (mode == M68K_EA_MODE_EXTENDED &&
+		m68k_ea_register(ir) <= M68K_EA_EXT_ABSOLUTE_LONG);
 }
 
 static bool m68k_ea_is_data_register_direct_or_immediate(uint32_t ir)
@@ -593,6 +620,16 @@ static cs_m68k *build_init_op(m68k_info *info, int opcode, int count, int size)
 	ext->op_size.type = M68K_SIZE_TYPE_CPU;
 	ext->op_size.cpu_size = size;
 
+	return ext;
+}
+
+static cs_m68k *build_init_fpu_condition_op(m68k_info *info, int base_opcode,
+					    uint32_t condition_word, int count,
+					    int size)
+{
+	cs_m68k *ext = build_init_op(info, base_opcode, count, size);
+	MCInst_setOpcode(info->inst, base_opcode + m68k_fpu_condition_index(
+							   condition_word));
 	return ext;
 }
 
@@ -2654,19 +2691,14 @@ static void d68020_cpbcc_16(m68k_info *info)
 	cs_m68k *ext;
 	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
 	int cpid = M68K_CPID(info);
-	int cond = M68K_IR_CONDITION(info);
+	int cond = m68k_coprocessor_condition(info->ir);
 	if (cpid == M68K_CPID_MMU) {
 		if (cond >= M68K_PMMU_MAX_COND ||
 		    m68k_has_feature(info, CS_MODE_M68K_CPU32)) {
 			d68000_invalid(info);
 			return;
 		}
-	} else if (cpid == M68K_CPID_FPU) {
-		if (cond >= M68K_FPU_MAX_COND) {
-			d68000_invalid(info);
-			return;
-		}
-	} else {
+	} else if (cpid != M68K_CPID_FPU) {
 		d68000_invalid(info);
 		return;
 	}
@@ -2677,8 +2709,7 @@ static void d68020_cpbcc_16(m68k_info *info)
 		return;
 	}
 
-	ext = build_init_op(info, M68K_INS_FBF, 1, 2);
-	info->inst->Opcode += M68K_FP_COND(info->ir);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FBF, info->ir, 1, 2);
 	op0 = &ext->operands[0];
 
 	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_WORD,
@@ -2694,25 +2725,19 @@ static void d68020_cpbcc_32(m68k_info *info)
 	cs_m68k_op *op0;
 	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
 	int cpid = M68K_CPID(info);
-	int cond = M68K_IR_CONDITION(info);
+	int cond = m68k_coprocessor_condition(info->ir);
 	if (cpid == M68K_CPID_MMU) {
 		if (cond >= M68K_PMMU_MAX_COND ||
 		    m68k_has_feature(info, CS_MODE_M68K_CPU32)) {
 			d68000_invalid(info);
 			return;
 		}
-	} else if (cpid == M68K_CPID_FPU) {
-		if (cond >= M68K_FPU_MAX_COND) {
-			d68000_invalid(info);
-			return;
-		}
-	} else {
+	} else if (cpid != M68K_CPID_FPU) {
 		d68000_invalid(info);
 		return;
 	}
 
-	ext = build_init_op(info, M68K_INS_FBF, 1, 4);
-	info->inst->Opcode += M68K_FP_COND(info->ir);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FBF, info->ir, 1, 4);
 	op0 = &ext->operands[0];
 
 	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_LONG, read_imm_32(info));
@@ -2744,9 +2769,7 @@ static void d68020_cpdbcc(m68k_info *info)
 	ext1 = read_imm_16(info);
 	ext2 = read_imm_16(info);
 
-	info->inst->Opcode += M68K_FP_COND(ext1);
-
-	ext = build_init_op(info, M68K_INS_FDBF, 2, 0);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FDBF, ext1, 2, 0);
 	op0 = &ext->operands[0];
 	op1 = &ext->operands[1];
 
@@ -2791,14 +2814,51 @@ static void fmove_fpcr(m68k_info *info, uint32_t extension)
 		special->reg = M68K_REG_FPIAR;
 }
 
+static bool m68k_fmovem_is_valid(uint32_t ir, uint32_t extension)
+{
+	int dir = M68K_FEXT_DIR(extension);
+	m68k_fmovem_mode mode = m68k_fmovem_get_mode(extension);
+	bool is_predecrement = m68k_ea_mode(ir) ==
+			       M68K_EA_MODE_ADDR_INDIRECT_PRE_DEC;
+	bool is_postincrement = m68k_ea_mode(ir) ==
+				M68K_EA_MODE_ADDR_INDIRECT_POST_INC;
+
+	if (BITFIELD(extension, 10, 8) != 0)
+		return false;
+
+	switch (mode) {
+	case M68K_FMOVEM_MODE_STATIC_PREDECREMENT:
+		return dir && is_predecrement;
+	case M68K_FMOVEM_MODE_DYNAMIC_PREDECREMENT:
+		return m68k_fmovem_dynamic_reserved_bits_are_zero(extension) &&
+		       dir && is_predecrement;
+	case M68K_FMOVEM_MODE_STATIC_POSTINCREMENT_OR_CONTROL:
+		return dir ? m68k_ea_is_alterable_control(ir) :
+			     (is_postincrement || m68k_ea_is_control(ir));
+	case M68K_FMOVEM_MODE_DYNAMIC_POSTINCREMENT_OR_CONTROL:
+		return m68k_fmovem_dynamic_reserved_bits_are_zero(extension) &&
+		       (dir ? m68k_ea_is_alterable_control(ir) :
+			      (is_postincrement || m68k_ea_is_control(ir)));
+	default:
+		return false;
+	}
+}
+
 static void fmovem(m68k_info *info, uint32_t extension)
 {
 	cs_m68k_op *op_reglist;
 	cs_m68k_op *op_ea;
 	int dir = M68K_FEXT_DIR(extension);
-	int mode = (extension >> 11) & 0x3;
-	uint32_t reglist = extension & 0xff;
-	cs_m68k *ext = build_init_op(info, M68K_INS_FMOVEM, 2, 0);
+	m68k_fmovem_mode mode = m68k_fmovem_get_mode(extension);
+	uint32_t reglist = m68k_fmovem_register_list(extension);
+	cs_m68k *ext;
+
+	if (!m68k_fmovem_is_valid(info->ir, extension)) {
+		invalid_insn(info);
+		return;
+	}
+
+	ext = build_init_op(info, M68K_INS_FMOVEM, 2, 0);
 
 	op_reglist = &ext->operands[0];
 	op_ea = &ext->operands[1];
@@ -2817,17 +2877,19 @@ static void fmovem(m68k_info *info, uint32_t extension)
 	}
 
 	switch (mode) {
-	case 1: // Dynamic list in dn register
-		op_reglist->reg = M68K_REG_D0 + ((reglist >> 4) & 7);
+	case M68K_FMOVEM_MODE_DYNAMIC_PREDECREMENT:
+	case M68K_FMOVEM_MODE_DYNAMIC_POSTINCREMENT_OR_CONTROL:
+		op_reglist->reg =
+			M68K_REG_D0 + m68k_fmovem_dynamic_register(extension);
 		break;
 
-	case 0:
+	case M68K_FMOVEM_MODE_STATIC_PREDECREMENT:
 		op_reglist->address_mode = M68K_AM_NONE;
 		op_reglist->type = M68K_OP_REG_BITS;
 		op_reglist->register_bits = reglist << 16;
 		break;
 
-	case 2: // Static list
+	case M68K_FMOVEM_MODE_STATIC_POSTINCREMENT_OR_CONTROL:
 		op_reglist->address_mode = M68K_AM_NONE;
 		op_reglist->type = M68K_OP_REG_BITS;
 		op_reglist->register_bits = ((uint32_t)reverse_bits_8(reglist))
@@ -3200,10 +3262,11 @@ static void d68040_ptest_or_cprestore(m68k_info *info)
 static void d68020_cpscc(m68k_info *info)
 {
 	cs_m68k *ext;
+	uint32_t condition;
 	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
 	REQUIRE_CPID_FPU(info);
-	ext = build_init_op(info, M68K_INS_FSF, 1, 1);
-	info->inst->Opcode += M68K_FP_COND(read_imm_16(info));
+	condition = read_imm_16(info);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FSF, condition, 1, 1);
 
 	if (!get_ea_mode_op(info, &ext->operands[0], info->ir, 1)) {
 		invalid_insn(info);
@@ -3219,8 +3282,7 @@ static void d68020_cptrapcc_0(m68k_info *info)
 
 	extension1 = read_imm_16(info);
 
-	build_init_op(info, M68K_INS_FTRAPF, 0, 0);
-	info->inst->Opcode += M68K_FP_COND(extension1);
+	build_init_fpu_condition_op(info, M68K_INS_FTRAPF, extension1, 0, 0);
 }
 
 static void d68020_cptrapcc_16(m68k_info *info)
@@ -3234,8 +3296,8 @@ static void d68020_cptrapcc_16(m68k_info *info)
 	extension1 = read_imm_16(info);
 	extension2 = read_imm_16(info);
 
-	ext = build_init_op(info, M68K_INS_FTRAPF, 1, 2);
-	info->inst->Opcode += M68K_FP_COND(extension1);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FTRAPF, extension1, 1,
+					  2);
 
 	op0 = &ext->operands[0];
 
@@ -3255,8 +3317,8 @@ static void d68020_cptrapcc_32(m68k_info *info)
 	extension1 = read_imm_16(info);
 	extension2 = read_imm_32(info);
 
-	ext = build_init_op(info, M68K_INS_FTRAPF, 1, 2);
-	info->inst->Opcode += M68K_FP_COND(extension1);
+	ext = build_init_fpu_condition_op(info, M68K_INS_FTRAPF, extension1, 1,
+					  4);
 
 	op0 = &ext->operands[0];
 
@@ -5260,6 +5322,13 @@ static void build_regs_read_write_counts(m68k_info *info)
 
 	if (!info->extension.op_count)
 		return;
+	if (info->inst->Opcode == M68K_INS_FMOVEM &&
+	    info->extension.op_count == 2 &&
+	    info->extension.operands[1].type == M68K_OP_REG) {
+		update_op_reg_list(info, &info->extension.operands[0], 0);
+		update_op_reg_list(info, &info->extension.operands[1], 0);
+		return;
+	}
 
 	if (info->extension.op_count == 1) {
 		update_op_reg_list(info, &info->extension.operands[0], 1);

@@ -117,8 +117,19 @@ typedef uint32_t m68k_feature_mask;
 /* ── IR bit-field helpers ────────────────────────────────────────────
  * Extract commonly-used fields from the first instruction word.      */
 
-/* 6-bit coprocessor condition (bits 5:0 of IR). */
-#define M68K_IR_CONDITION(info) ((info)->ir & 0x3f)
+/* Coprocessor conditional predicate field (bits 5:0).
+ *
+ * Reference: Motorola MC68881/MC68882 Floating-Point Coprocessor User's
+ * Manual, first edition (1987), sections 4.7.2-4.7.3, Tables 4-20 and
+ * 4-22, pages 4-129 through 4-134. A reference copy is available at:
+ * https://www.bitsavers.org/components/motorola/68000/68020/MC68881_MC68882_Floating-Point_Coprocessor_Users_Manual_1ed_1987.pdf
+ */
+#define M68K_COPROCESSOR_CONDITION_MASK 0x3f
+
+static inline uint32_t m68k_coprocessor_condition(uint32_t word)
+{
+	return word & M68K_COPROCESSOR_CONDITION_MASK;
+}
 
 /* 4-bit condition selector used by Bcc/DBcc/Scc/TRAPcc. */
 #define M68K_IR_CONDITION_NIBBLE(info) (((info)->ir >> 8) & 0xf)
@@ -163,15 +174,59 @@ typedef uint32_t m68k_feature_mask;
 /* Direction bit for FMOVE FPCR (bit 13): 0 = ea->fpcr, 1 = fpcr->ea. */
 #define M68K_FEXT_DIR(ext) (((ext) >> 13) & 1)
 
+/* FMOVEM register-list encoding.
+ *
+ * Bits 12:11 select static/dynamic and predecrement versus
+ * postincrement-or-control forms. A static list occupies bits 7:0; a dynamic
+ * list has the reserved-bit format 0rrr0000, with Dn in bits 6:4.
+ *
+ * Reference: Motorola MC68881/MC68882 Floating-Point Coprocessor User's
+ * Manual, first edition (1987), section 4.7.1.6, Table 4-18, pages 4-126
+ * through 4-128:
+ * https://www.bitsavers.org/components/motorola/68000/68020/MC68881_MC68882_Floating-Point_Coprocessor_Users_Manual_1ed_1987.pdf
+ */
+typedef enum {
+	M68K_FMOVEM_MODE_STATIC_PREDECREMENT = 0,
+	M68K_FMOVEM_MODE_DYNAMIC_PREDECREMENT = 1,
+	M68K_FMOVEM_MODE_STATIC_POSTINCREMENT_OR_CONTROL = 2,
+	M68K_FMOVEM_MODE_DYNAMIC_POSTINCREMENT_OR_CONTROL = 3,
+} m68k_fmovem_mode;
+
+static inline m68k_fmovem_mode m68k_fmovem_get_mode(uint32_t extension)
+{
+	return (m68k_fmovem_mode)BITFIELD(extension, 12, 11);
+}
+
+static inline uint32_t m68k_fmovem_register_list(uint32_t extension)
+{
+	return BITFIELD(extension, 7, 0);
+}
+
+static inline bool
+m68k_fmovem_dynamic_reserved_bits_are_zero(uint32_t extension)
+{
+	return BITFIELD(extension, 7, 7) == 0 && BITFIELD(extension, 3, 0) == 0;
+}
+
+static inline uint32_t m68k_fmovem_dynamic_register(uint32_t extension)
+{
+	return BITFIELD(extension, 6, 4);
+}
+
 /* ── FPU condition-code mask ─────────────────────────────────────────
- * FBcc/FDBcc/FScc/FTRAPcc encode the FP condition in bits 5,3:0
- * of the extension word (or IR for FBcc).  Bit 4 is always 0,
- * yielding the 0x2f mask.                                            */
-#define M68K_FP_COND(x) ((x) & 0x2f)
+ * The FPU defines predicates 0xxxxx; 1xxxxx encodings are reserved
+ * aliases that evaluate identically. Use the low five bits to index the
+ * contiguous FBcc/FDBcc/FScc/FTRAPcc opcode ranges. See the manual
+ * reference above.                                                   */
+#define M68K_FPU_CONDITION_INDEX_MASK 0x1f
+
+static inline uint32_t m68k_fpu_condition_index(uint32_t word)
+{
+	return word & M68K_FPU_CONDITION_INDEX_MASK;
+}
 
 /* Maximum valid condition codes per coprocessor. */
 #define M68K_PMMU_MAX_COND 16
-#define M68K_FPU_MAX_COND 32
 
 /* ── FPU source-format constants (bits 12:10 of ext word) ───────────*/
 #define M68K_FPSRC_LONG 0x00 /* .l  -- 32-bit integer            */
