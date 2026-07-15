@@ -486,7 +486,7 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | `M68K_OP_MEM` storage                               | Memory operands now store base registers in `m68k_op_mem.base_reg` and absolute addresses in `m68k_op_mem.address`; `op->reg` and `op->imm` are only used for register and immediate operands. | Keeps memory-addressing details in `m68k_op_mem` consistently. |
 
 
-### Notes about AArch64, SystemZ and ARM renaming
+### Notes about AArch64, SystemZ, ARM and RISC-V renaming
 
 `ARM64` was everywhere renamed to `AArch64`. And `SYSZ` to `SYSTEMZ`. This is a necessity to ensure that the update scripts stay reasonably simple.
 Capstone was very inconsistent with the naming before (sometimes `AArch64` sometimes `ARM64`. Sometimes `SYSZ` sometimes `SYSTEMZ`).
@@ -496,19 +496,21 @@ Because this would completely break maintaining Capstone `v6` and `pre-v6` in a 
 
 1. `arm64.h` is a compatibility header now, which merely maps every member to the one in the `aarch64.h` header. Defining `CAPSTONE_AARCH64_COMPAT_HEADER` before including `capstone.h` will include the headers in the right order.
 2. The `systemz.h` header includes the `systemz_compatibility.h` header if `CAPSTONE_SYSTEMZ_COMPAT_HEADER` is defined.
+3. Defining `CAPSTONE_RISCV_COMPAT_HEADER` before including `capstone.h` exposes the legacy RISC-V compressed-mode constant `CS_MODE_RISCVC` as an alias of `CS_MODE_RISCV_C`.
 
-We will continue to maintain both headers.
+We will continue to maintain both compatibility headers, `arm64.h` and `systemz_compatibility.h`.
 
 _Compatibility header_
 
-If you want to use the compatibility header and stick with the `ARM64`/`SYSZ` naming, you can define `CAPSTONE_AARCH64_COMPAT_HEADER` and `CAPSTONE_SYSTEMZ_COMPAT_HEADER` before including `capstone.h`.
+If you want to use the compatibility header and stick with the `ARM64`/`SYSZ` naming, you can define `CAPSTONE_AARCH64_COMPAT_HEADER` and `CAPSTONE_SYSTEMZ_COMPAT_HEADER` before including `capstone.h`. For the legacy RISC-V compressed-mode spelling, define `CAPSTONE_RISCV_COMPAT_HEADER` before including `capstone.h`.
 
-**Note**: The `CAPSTONE_ARM_COMPAT_HEADER` will only define macros for the `ARM_CC -> ARMCC` and `arm_cc -> ARMCC_CondCodes` renaming.
+**Note**: The `CAPSTONE_ARM_COMPAT_HEADER` will only define macros for the `ARM_CC -> ARMCC` and `arm_cc -> ARMCC_CondCodes` renaming. The `CAPSTONE_RISCV_COMPAT_HEADER` only defines `CS_MODE_RISCVC` for the `CS_MODE_RISCVC -> CS_MODE_RISCV_C` renaming.
 
 ```c
 #define CAPSTONE_SYSTEMZ_COMPAT_HEADER
 #define CAPSTONE_AARCH64_COMPAT_HEADER
 #define CAPSTONE_ARM_COMPAT_HEADER
+#define CAPSTONE_RISCV_COMPAT_HEADER
 #include <capstone/capstone.h>
 
 // Your code...

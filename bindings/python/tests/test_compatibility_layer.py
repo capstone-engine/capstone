@@ -55,6 +55,12 @@ def test_compatibility():
     print("systemz.SYSTEMZ_INS_LG = %d" % capstone.systemz.SYSTEMZ_INS_LG)
     assert capstone.systemz.SYSZ_INS_LG == capstone.systemz.SYSTEMZ_INS_LG
 
+    # Test RISC-V compressed-mode compatibility constant
+    print("CS_MODE_RISCVC = %d" % CS_MODE_RISCVC)
+    print("CS_MODE_RISCV_C = %d" % CS_MODE_RISCV_C)
+    assert CS_MODE_RISCVC == CS_MODE_RISCV_C
+    assert "CS_MODE_RISCVC" in capstone.__all__
+
     # Test ARM_CC_ constants
     print("arm.ARM_CC_MI = %d" % capstone.arm.ARM_CC_MI)
     print("arm.ARMCC_MI = %d" % capstone.arm.ARMCC_MI)
