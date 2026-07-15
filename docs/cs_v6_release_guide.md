@@ -120,6 +120,9 @@ Nonetheless, we hope this additional information is useful to you.
 - Adding new instructions of SME, SVE2 extensions. With it the new `sme` and `pred` operands are added.
 - System operands are provided with way more detail in separated operand.
 	- The `EXACTFPIMM` operand also sets the `fp` field.
+- Added `CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM` to print shifted `MOVN` and `MOVZ` instructions in their explicit form, including the `lsl` shift, instead of the equivalent `MOV` alias.
+  - The default output remains unchanged and matches LLVM's default disassembly output.
+  - The corresponding `cstool` option is `+explicitwideimm`.
 
 **PPC**
 

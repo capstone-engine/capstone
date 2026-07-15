@@ -49,5 +49,9 @@ configs = {
     "CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED": {
         "type": cs.CS_OPT_SYNTAX,
         "val": cs.CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED
+    },
+    "CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM": {
+        "type": cs.CS_OPT_SYNTAX,
+        "val": cs.CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM
     }
 }

@@ -293,7 +293,10 @@ static const TestOptionMapEntry test_option_map[] = {
 		   .val = CS_OPT_SYNTAX_NO_ALIAS_TEXT } },
 	{ .str = "CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED",
 	  .opt = { .type = CS_OPT_SYNTAX,
-		   .val = CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED } }
+		   .val = CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED } },
+	{ .str = "CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM",
+	  .opt = { .type = CS_OPT_SYNTAX,
+		   .val = CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM } },
 };
 
 static const cs_enum_id_map cs_enum_map[] = {

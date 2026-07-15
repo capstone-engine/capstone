@@ -492,7 +492,13 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			(uint64_t)MCOperand_getImm(MCInst_getOperand(MI, (1)))
 			<< Shift;
 
-		if (AArch64_AM_isMOVZMovAlias(
+		bool SuppressMovAlias =
+			(MI->csh->syntax &
+			 CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM) &&
+			Shift != 0;
+
+		if (!SuppressMovAlias &&
+		    AArch64_AM_isMOVZMovAlias(
 			    Value, Shift, Opcode == AArch64_MOVZXi ? 64 : 32)) {
 			isAlias = true;
 			MCInst_setIsAlias(MI, isAlias);
@@ -525,7 +531,13 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		if (RegWidth == 32)
 			Value = Value & 0xffffffff;
 
-		if (AArch64_AM_isMOVNMovAlias(Value, Shift, RegWidth)) {
+		bool SuppressMovAlias =
+			(MI->csh->syntax &
+			 CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM) &&
+			Shift != 0;
+
+		if (!SuppressMovAlias &&
+		    AArch64_AM_isMOVNMovAlias(Value, Shift, RegWidth)) {
 			isAlias = true;
 			MCInst_setIsAlias(MI, isAlias);
 			SStream_concat0(O, "mov ");
