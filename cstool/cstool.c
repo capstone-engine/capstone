@@ -76,6 +76,11 @@ static struct {
 	  { CS_ARCH_RISCV, CS_ARCH_MAX },
 	  CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED,
 	  0 },
+	{ "+explicitwideimm",
+	  "Prints shifted MOVN and MOVZ instructions without MOV aliases",
+	  { CS_ARCH_AARCH64, CS_ARCH_MAX },
+	  CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM,
+	  0 },
 	// cs_mode only
 	{ "+nofloat",
 	  "Disables floating point support",

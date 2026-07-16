@@ -6734,3 +6734,128 @@ test_cases:
       -
         asm_text: "ptrue pn10.h"
         op_str: "pn10.h"
+  -
+    input:
+      name: "issue 2890 AArch64 shifted MOVN retains MOV alias by default"
+      bytes: [ 0xe4, 0x02, 0xa0, 0x12 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov w4, #-0x170001"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: w4
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_IMM
+                imm: -0x170001
+                access: CS_AC_READ
+          regs_write: [ w4 ]
+
+  -
+    input:
+      name: "issue 2890 AArch64 shifted MOVN immediate printing"
+      bytes: [ 0xe4, 0x02, 0xa0, 0x12 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movn w4, #0x17, lsl #16"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: w4
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x17
+                access: CS_AC_READ
+                shift_type: AARCH64_SFT_LSL
+                shift_value: 16
+          regs_write: [ w4 ]
+
+  -
+    input:
+      name: "issue 2890 AArch64 unshifted MOVN retains MOV alias"
+      bytes: [ 0xe4, 0x02, 0x80, 0x12 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov w4, #-0x18"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: w4
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_IMM
+                imm: -0x18
+                access: CS_AC_READ
+          regs_write: [ w4 ]
+
+  -
+    input:
+      name: "issue 2890 AArch64 64-bit shifted MOVN immediate printing"
+      bytes: [ 0xe4, 0x02, 0xe0, 0x92 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movn x4, #0x17, lsl #48"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: x4
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x17
+                access: CS_AC_READ
+                shift_type: AARCH64_SFT_LSL
+                shift_value: 48
+          regs_write: [ x4 ]
+
+  -
+    input:
+      name: "issue 2890 AArch64 shifted MOVZ immediate printing"
+      bytes: [ 0xe4, 0x02, 0xa0, 0x52 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movz w4, #0x17, lsl #16"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: w4
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_IMM
+                imm: 0x17
+                access: CS_AC_READ
+                shift_type: AARCH64_SFT_LSL
+                shift_value: 16
+          regs_write: [ w4 ]

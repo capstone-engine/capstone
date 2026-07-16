@@ -227,6 +227,7 @@ __all__ = [
     "CS_OPT_SYNTAX_NO_DOLLAR",
     "CS_OPT_SYNTAX_NO_ALIAS_TEXT",
     "CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED",
+    "CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM",
     "CS_OPT_DETAIL",
     "CS_OPT_DETAIL_REAL",
     "CS_OPT_MODE",
@@ -646,6 +647,9 @@ CS_OPT_SYNTAX_NO_ALIAS_TEXT = (
 CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED = (
     1 << 11
 )  # Like the one above it, but only supresses compressed instruction aliases
+CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM = (
+    1 << 12
+)  # Prints shifted AArch64 MOVN and MOVZ instructions without MOV aliases
 CS_OPT_DETAIL_REAL = (
     1 << 1
 )  # If enabled, always sets the real instruction detail.Even if the instruction is an alias.
