@@ -502,7 +502,7 @@ We will continue to maintain both compatibility headers, `arm64.h` and `systemz_
 
 _Compatibility header_
 
-If you want to use the compatibility header and stick with the `ARM64`/`SYSZ` naming, you can define `CAPSTONE_AARCH64_COMPAT_HEADER` and `CAPSTONE_SYSTEMZ_COMPAT_HEADER` before including `capstone.h`. For the legacy RISC-V compressed-mode spelling, define `CAPSTONE_RISCV_COMPAT_HEADER` before including `capstone.h`.
+If you want to use the compatibility header and stick with the `ARM64`/`SYSZ` naming, you can define `CAPSTONE_AARCH64_COMPAT_HEADER` and `CAPSTONE_SYSTEMZ_COMPAT_HEADER` before including `capstone.h`. For the legacy RISC-V compressed-mode spelling (`CS_MODE_RISCVC`), define `CAPSTONE_RISCV_COMPAT_HEADER` before including `capstone.h`.
 
 **Note**: The `CAPSTONE_ARM_COMPAT_HEADER` will only define macros for the `ARM_CC -> ARMCC` and `arm_cc -> ARMCC_CondCodes` renaming. The `CAPSTONE_RISCV_COMPAT_HEADER` only defines `CS_MODE_RISCVC` for the `CS_MODE_RISCVC -> CS_MODE_RISCV_C` renaming.
 
