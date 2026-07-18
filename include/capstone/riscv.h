@@ -2878,6 +2878,14 @@ typedef enum riscv_insn_group {
 	RISCV_GRP_ENDING,
 } riscv_insn_group;
 
+// generated content <RISCVCompat> begin
+// clang-format off
+#ifdef CAPSTONE_RISCV_COMPAT_HEADER
+#define CS_MODE_RISCVC CS_MODE_RISCV_C
+#endif
+// clang-format on
+// generated content <RISCVCompat> end
+
 #ifdef __cplusplus
 }
 #endif

@@ -10,6 +10,12 @@ import subprocess as sp
 
 from pathlib import Path
 
+RISCV_COMPAT_MACROS = [
+    "#ifdef CAPSTONE_RISCV_COMPAT_HEADER\n",
+    "#define CS_MODE_RISCVC CS_MODE_RISCV_C\n",
+    "#endif\n",
+]
+
 AARCH64_CC_MACROS = [
     "\n",
     "#define arm64_cc AArch64CC_CondCode\n",
@@ -67,6 +73,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "-p", dest="patch", help="Patch inc file into header", action="store_true"
+    )
+    parser.add_argument(
+        "--riscv-compat",
+        dest="riscv_compat",
+        help="Patch the RISC-V compatibility macros into the RISC-V header",
+        action="store_true",
     )
     parser.add_argument(
         "-C",
@@ -158,6 +170,35 @@ class HeaderPatcher:
         else:
             self.patched_header_content = header_content
         log.info(f"Patched {self.inc.name} into {self.header.name}")
+        return True
+
+    @staticmethod
+    def patch_riscv_compat_macros(header: Path) -> bool:
+        if not (header.exists() or header.is_file()):
+            error_exit(f"header file {header.name} does not exist.")
+
+        with open(header) as f:
+            header_content = f.read()
+
+        regex = (
+            r"\n// generated content <RISCVCompat> begin.*(\n)"
+            r"(.*\n)*"
+            r"// generated content <RISCVCompat> end.*(\n)"
+        )
+        new_content = (
+            "\n// generated content <RISCVCompat> begin\n"
+            + "// clang-format off\n"
+            + "".join(RISCV_COMPAT_MACROS)
+            + "// clang-format on\n"
+            + "// generated content <RISCVCompat> end\n"
+        )
+        if not re.search(regex, header_content):
+            error_exit(f"Could not find RISCVCompat marker in {header.name}.")
+        header_content = re.sub(regex, new_content, header_content)
+
+        with open(header, "w") as f:
+            f.write(header_content)
+        log.info(f"Patched RISC-V compatibility macros into {header.name}")
         return True
 
     @staticmethod
@@ -347,8 +388,8 @@ class CompatHeaderBuilder:
 
 if __name__ == "__main__":
     args = parse_args()
-    if (not args.patch and not args.compat) or (args.patch and args.compat):
-        print("You need to specify either -c or -p")
+    if [args.patch, args.compat, args.riscv_compat].count(True) != 1:
+        print("You need to specify exactly one of -c, -p, or --riscv-compat")
         exit(1)
     if args.compat and not (args.v6 and args.v5):
         print("Generating the v5 compatibility header requires --v5 and --v6")
@@ -356,6 +397,13 @@ if __name__ == "__main__":
     if args.patch and not (args.inc and args.header):
         print("Patching headers requires --inc and --header")
         exit(1)
+    if args.riscv_compat and not args.header:
+        print("Patching RISC-V compatibility macros requires --header")
+        exit(1)
+
+    if args.riscv_compat:
+        HeaderPatcher.patch_riscv_compat_macros(args.header)
+        exit(0)
 
     if args.patch:
         patcher = HeaderPatcher(args.header, args.inc)
