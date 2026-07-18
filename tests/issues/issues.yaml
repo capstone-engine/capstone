@@ -6859,3 +6859,27 @@ test_cases:
                 shift_type: AARCH64_SFT_LSL
                 shift_value: 16
           regs_write: [ w4 ]
+
+  -
+    input:
+      name: "issue 2878 AArch64 LDR literal detail operand truncation"
+      bytes: [ 0xa8, 0x79, 0x29, 0x58 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x100c894d4
+    expected:
+      insns:
+      -
+        asm_text: "ldr x8, 0x100cdc408"
+        details:
+          aarch64:
+            operands:
+              -
+                type: AARCH64_OP_REG
+                reg: x8
+                access: CS_AC_WRITE
+              -
+                type: AARCH64_OP_MEM
+                mem_disp: 0x100cdc408
+                access: CS_AC_READ
+          regs_write: [ x8 ]

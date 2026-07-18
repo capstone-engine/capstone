@@ -2786,7 +2786,7 @@ typedef enum aarch64_reg {
 typedef struct aarch64_op_mem {
 	aarch64_reg base; ///< base register
 	aarch64_reg index; ///< index register
-	int32_t disp; ///< displacement/offset value
+	int64_t disp; ///< displacement/offset value
 } aarch64_op_mem;
 
 typedef enum {
