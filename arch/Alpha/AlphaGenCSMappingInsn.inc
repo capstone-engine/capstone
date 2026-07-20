@@ -1888,7 +1888,7 @@
 },
 {
   /* adds/su $RA,$RB,$RC */
-  ALPHA_ADDS /* 267 */, ALPHA_INS_ADDSsSU,
+  ALPHA_ADDS /* 267 */, ALPHA_INS_ADDSSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -1896,7 +1896,7 @@
 },
 {
   /* addt/su $RA,$RB,$RC */
-  ALPHA_ADDT /* 268 */, ALPHA_INS_ADDTsSU,
+  ALPHA_ADDT /* 268 */, ALPHA_INS_ADDTSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2224,7 +2224,7 @@
 },
 {
   /* cmpteq/su $RA,$RB,$RC */
-  ALPHA_CMPTEQ /* 309 */, ALPHA_INS_CMPTEQsSU,
+  ALPHA_CMPTEQ /* 309 */, ALPHA_INS_CMPTEQSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2232,7 +2232,7 @@
 },
 {
   /* cmptle/su $RA,$RB,$RC */
-  ALPHA_CMPTLE /* 310 */, ALPHA_INS_CMPTLEsSU,
+  ALPHA_CMPTLE /* 310 */, ALPHA_INS_CMPTLESSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2240,7 +2240,7 @@
 },
 {
   /* cmptlt/su $RA,$RB,$RC */
-  ALPHA_CMPTLT /* 311 */, ALPHA_INS_CMPTLTsSU,
+  ALPHA_CMPTLT /* 311 */, ALPHA_INS_CMPTLTSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2248,7 +2248,7 @@
 },
 {
   /* cmptun/su $RA,$RB,$RC */
-  ALPHA_CMPTUN /* 312 */, ALPHA_INS_CMPTUNsSU,
+  ALPHA_CMPTUN /* 312 */, ALPHA_INS_CMPTUNSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2416,7 +2416,7 @@
 },
 {
   /* cvtqs/sui $RB,$RC */
-  ALPHA_CVTQS /* 333 */, ALPHA_INS_CVTQSsSUI,
+  ALPHA_CVTQS /* 333 */, ALPHA_INS_CVTQSSSUI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2424,7 +2424,7 @@
 },
 {
   /* cvtqt/sui $RB,$RC */
-  ALPHA_CVTQT /* 334 */, ALPHA_INS_CVTQTsSUI,
+  ALPHA_CVTQT /* 334 */, ALPHA_INS_CVTQTSSUI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2432,7 +2432,7 @@
 },
 {
   /* cvtst/s $RB,$RC */
-  ALPHA_CVTST /* 335 */, ALPHA_INS_CVTSTsS,
+  ALPHA_CVTST /* 335 */, ALPHA_INS_CVTSTSS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2440,7 +2440,7 @@
 },
 {
   /* cvttq/svc $RB,$RC */
-  ALPHA_CVTTQ /* 336 */, ALPHA_INS_CVTTQsSVC,
+  ALPHA_CVTTQ /* 336 */, ALPHA_INS_CVTTQSSVC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2448,7 +2448,7 @@
 },
 {
   /* cvtts/sui $RB,$RC */
-  ALPHA_CVTTS /* 337 */, ALPHA_INS_CVTTSsSUI,
+  ALPHA_CVTTS /* 337 */, ALPHA_INS_CVTTSSSUI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2456,7 +2456,7 @@
 },
 {
   /* divs/su $RA,$RB,$RC */
-  ALPHA_DIVS /* 338 */, ALPHA_INS_DIVSsSU,
+  ALPHA_DIVS /* 338 */, ALPHA_INS_DIVSSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -2464,7 +2464,7 @@
 },
 {
   /* divt/su $RA,$RB,$RC */
-  ALPHA_DIVT /* 339 */, ALPHA_INS_DIVTsSU,
+  ALPHA_DIVT /* 339 */, ALPHA_INS_DIVTSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -3280,7 +3280,7 @@
 },
 {
   /* muls/su $RA,$RB,$RC */
-  ALPHA_MULS /* 441 */, ALPHA_INS_MULSsSU,
+  ALPHA_MULS /* 441 */, ALPHA_INS_MULSSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -3288,7 +3288,7 @@
 },
 {
   /* mult/su $RA,$RB,$RC */
-  ALPHA_MULT /* 442 */, ALPHA_INS_MULTsSU,
+  ALPHA_MULT /* 442 */, ALPHA_INS_MULTSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -3512,7 +3512,7 @@
 },
 {
   /* sqrts/su $RB,$RC */
-  ALPHA_SQRTS /* 470 */, ALPHA_INS_SQRTSsSU,
+  ALPHA_SQRTS /* 470 */, ALPHA_INS_SQRTSSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -3520,7 +3520,7 @@
 },
 {
   /* sqrtt/su $RB,$RC */
-  ALPHA_SQRTT /* 471 */, ALPHA_INS_SQRTTsSU,
+  ALPHA_SQRTT /* 471 */, ALPHA_INS_SQRTTSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -3712,7 +3712,7 @@
 },
 {
   /* subs/su $RA,$RB,$RC */
-  ALPHA_SUBS /* 495 */, ALPHA_INS_SUBSsSU,
+  ALPHA_SUBS /* 495 */, ALPHA_INS_SUBSSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 
@@ -3720,7 +3720,7 @@
 },
 {
   /* subt/su $RA,$RB,$RC */
-  ALPHA_SUBT /* 496 */, ALPHA_INS_SUBTsSU,
+  ALPHA_SUBT /* 496 */, ALPHA_INS_SUBTSSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
 

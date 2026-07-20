@@ -830,14 +830,14 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_ADDS (267) - ALPHA_INS_ADDSsSU - adds/su $RA,$RB,$RC */
+{ /* ALPHA_ADDS (267) - ALPHA_INS_ADDSSSU - adds/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RA */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_ADDT (268) - ALPHA_INS_ADDTsSU - addt/su $RA,$RB,$RC */
+{ /* ALPHA_ADDT (268) - ALPHA_INS_ADDTSSU - addt/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RA */
@@ -1128,28 +1128,28 @@
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* L */
   { 0 }
 }},
-{ /* ALPHA_CMPTEQ (309) - ALPHA_INS_CMPTEQsSU - cmpteq/su $RA,$RB,$RC */
+{ /* ALPHA_CMPTEQ (309) - ALPHA_INS_CMPTEQSSU - cmpteq/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RA */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_CMPTLE (310) - ALPHA_INS_CMPTLEsSU - cmptle/su $RA,$RB,$RC */
+{ /* ALPHA_CMPTLE (310) - ALPHA_INS_CMPTLESSU - cmptle/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RA */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_CMPTLT (311) - ALPHA_INS_CMPTLTsSU - cmptlt/su $RA,$RB,$RC */
+{ /* ALPHA_CMPTLT (311) - ALPHA_INS_CMPTLTSSU - cmptlt/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RA */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_CMPTUN (312) - ALPHA_INS_CMPTUNsSU - cmptun/su $RA,$RB,$RC */
+{ /* ALPHA_CMPTUN (312) - ALPHA_INS_CMPTUNSSU - cmptun/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RA */
@@ -1291,44 +1291,44 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_CVTQS (333) - ALPHA_INS_CVTQSsSUI - cvtqs/sui $RB,$RC */
+{ /* ALPHA_CVTQS (333) - ALPHA_INS_CVTQSSSUI - cvtqs/sui $RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_CVTQT (334) - ALPHA_INS_CVTQTsSUI - cvtqt/sui $RB,$RC */
+{ /* ALPHA_CVTQT (334) - ALPHA_INS_CVTQTSSUI - cvtqt/sui $RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_CVTST (335) - ALPHA_INS_CVTSTsS - cvtst/s $RB,$RC */
+{ /* ALPHA_CVTST (335) - ALPHA_INS_CVTSTSS - cvtst/s $RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_CVTTQ (336) - ALPHA_INS_CVTTQsSVC - cvttq/svc $RB,$RC */
+{ /* ALPHA_CVTTQ (336) - ALPHA_INS_CVTTQSSVC - cvttq/svc $RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_CVTTS (337) - ALPHA_INS_CVTTSsSUI - cvtts/sui $RB,$RC */
+{ /* ALPHA_CVTTS (337) - ALPHA_INS_CVTTSSSUI - cvtts/sui $RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_DIVS (338) - ALPHA_INS_DIVSsSU - divs/su $RA,$RB,$RC */
+{ /* ALPHA_DIVS (338) - ALPHA_INS_DIVSSSU - divs/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RA */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_DIVT (339) - ALPHA_INS_DIVTsSU - divt/su $RA,$RB,$RC */
+{ /* ALPHA_DIVT (339) - ALPHA_INS_DIVTSSU - divt/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RA */
@@ -2034,14 +2034,14 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_MULS (441) - ALPHA_INS_MULSsSU - muls/su $RA,$RB,$RC */
+{ /* ALPHA_MULS (441) - ALPHA_INS_MULSSSU - muls/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RA */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_MULT (442) - ALPHA_INS_MULTsSU - mult/su $RA,$RB,$RC */
+{ /* ALPHA_MULT (442) - ALPHA_INS_MULTSSU - mult/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RA */
@@ -2227,13 +2227,13 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_SQRTS (470) - ALPHA_INS_SQRTSsSU - sqrts/su $RB,$RC */
+{ /* ALPHA_SQRTS (470) - ALPHA_INS_SQRTSSSU - sqrts/su $RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_SQRTT (471) - ALPHA_INS_SQRTTsSU - sqrtt/su $RB,$RC */
+{ /* ALPHA_SQRTT (471) - ALPHA_INS_SQRTTSSU - sqrtt/su $RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RB */
@@ -2402,14 +2402,14 @@
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_SUBS (495) - ALPHA_INS_SUBSsSU - subs/su $RA,$RB,$RC */
+{ /* ALPHA_SUBS (495) - ALPHA_INS_SUBSSSU - subs/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RA */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f32, CS_DATA_TYPE_LAST },  }, /* RB */
   { 0 }
 }},
-{ /* ALPHA_SUBT (496) - ALPHA_INS_SUBTsSU - subt/su $RA,$RB,$RC */
+{ /* ALPHA_SUBT (496) - ALPHA_INS_SUBTSSU - subt/su $RA,$RB,$RC */
 {
   { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RC */
   { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_f64, CS_DATA_TYPE_LAST },  }, /* RA */

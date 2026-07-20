@@ -14,8 +14,8 @@
   "invalid", // ALPHA_INS_INVALID
   "addl", // ALPHA_INS_ADDL
   "addq", // ALPHA_INS_ADDQ
-  "adds/su", // ALPHA_INS_ADDSsSU
-  "addt/su", // ALPHA_INS_ADDTsSU
+  "adds/su", // ALPHA_INS_ADDSSSU
+  "addt/su", // ALPHA_INS_ADDTSSU
   "and", // ALPHA_INS_AND
   "beq", // ALPHA_INS_BEQ
   "bge", // ALPHA_INS_BGE
@@ -41,10 +41,10 @@
   "cmpeq", // ALPHA_INS_CMPEQ
   "cmple", // ALPHA_INS_CMPLE
   "cmplt", // ALPHA_INS_CMPLT
-  "cmpteq/su", // ALPHA_INS_CMPTEQsSU
-  "cmptle/su", // ALPHA_INS_CMPTLEsSU
-  "cmptlt/su", // ALPHA_INS_CMPTLTsSU
-  "cmptun/su", // ALPHA_INS_CMPTUNsSU
+  "cmpteq/su", // ALPHA_INS_CMPTEQSSU
+  "cmptle/su", // ALPHA_INS_CMPTLESSU
+  "cmptlt/su", // ALPHA_INS_CMPTLTSSU
+  "cmptun/su", // ALPHA_INS_CMPTUNSSU
   "cmpule", // ALPHA_INS_CMPULE
   "cmpult", // ALPHA_INS_CMPULT
   "call_pal", // ALPHA_INS_CALL_PAL
@@ -55,13 +55,13 @@
   "ctlz", // ALPHA_INS_CTLZ
   "ctpop", // ALPHA_INS_CTPOP
   "cttz", // ALPHA_INS_CTTZ
-  "cvtqs/sui", // ALPHA_INS_CVTQSsSUI
-  "cvtqt/sui", // ALPHA_INS_CVTQTsSUI
-  "cvtst/s", // ALPHA_INS_CVTSTsS
-  "cvttq/svc", // ALPHA_INS_CVTTQsSVC
-  "cvtts/sui", // ALPHA_INS_CVTTSsSUI
-  "divs/su", // ALPHA_INS_DIVSsSU
-  "divt/su", // ALPHA_INS_DIVTsSU
+  "cvtqs/sui", // ALPHA_INS_CVTQSSSUI
+  "cvtqt/sui", // ALPHA_INS_CVTQTSSUI
+  "cvtst/s", // ALPHA_INS_CVTSTSS
+  "cvttq/svc", // ALPHA_INS_CVTTQSSVC
+  "cvtts/sui", // ALPHA_INS_CVTTSSSUI
+  "divs/su", // ALPHA_INS_DIVSSSU
+  "divt/su", // ALPHA_INS_DIVTSSU
   "ecb", // ALPHA_INS_ECB
   "eqv", // ALPHA_INS_EQV
   "excb", // ALPHA_INS_EXCB
@@ -121,8 +121,8 @@
   "mskwl", // ALPHA_INS_MSKWL
   "mull", // ALPHA_INS_MULL
   "mulq", // ALPHA_INS_MULQ
-  "muls/su", // ALPHA_INS_MULSsSU
-  "mult/su", // ALPHA_INS_MULTsSU
+  "muls/su", // ALPHA_INS_MULSSSU
+  "mult/su", // ALPHA_INS_MULTSSU
   "ornot", // ALPHA_INS_ORNOT
   "rc", // ALPHA_INS_RC
   "ret", // ALPHA_INS_RET
@@ -139,8 +139,8 @@
   "sextb", // ALPHA_INS_SEXTB
   "sextw", // ALPHA_INS_SEXTW
   "sll", // ALPHA_INS_SLL
-  "sqrts/su", // ALPHA_INS_SQRTSsSU
-  "sqrtt/su", // ALPHA_INS_SQRTTsSU
+  "sqrts/su", // ALPHA_INS_SQRTSSSU
+  "sqrtt/su", // ALPHA_INS_SQRTTSSU
   "sra", // ALPHA_INS_SRA
   "srl", // ALPHA_INS_SRL
   "stb", // ALPHA_INS_STB
@@ -154,8 +154,8 @@
   "stw", // ALPHA_INS_STW
   "subl", // ALPHA_INS_SUBL
   "subq", // ALPHA_INS_SUBQ
-  "subs/su", // ALPHA_INS_SUBSsSU
-  "subt/su", // ALPHA_INS_SUBTsSU
+  "subs/su", // ALPHA_INS_SUBSSSU
+  "subt/su", // ALPHA_INS_SUBTSSU
   "trapb", // ALPHA_INS_TRAPB
   "umulh", // ALPHA_INS_UMULH
   "wh64", // ALPHA_INS_WH64
