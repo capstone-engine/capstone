@@ -1,6 +1,104 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-Alpha10: July 21th, 2026
+
+## API changes and additions
+
+- Enum names of the Alpha architecture are now correctly all upper case.
+  Because of an old Auto-Sync bug all the enum names were prefixed with `Alpha` instead of `ALPHA`
+  and some contained lower case letters.
+  Sadly, I just recently recognized that Alpha was effected by that bug.
+
+  While this change is very annoying for everybody using the Alpha module,
+  it must be done before the Beta release.
+  Please excuse the inconvenience!
+
+  A simple command to replace almost all of these occurrences in your code base is:
+  ```
+  find . -type f -regex ".*\.\(c\|h\)$" -exec sed -i -E "s|Alpha_([A-Z0-9_]+)|ALPHA_\1|g" {} +
+  ```
+  Author: @Rot127
+
+- RISC-V got a v5 compatibility macro for its header.
+  With its recent module update `CS_MODE_RISCVC` was renamed to `CS_MODE_RISCV_C` to be
+  more consistent with the other `CS_MODE_` enums.
+  This could break builds against a `v5` code base which only has `CS_MODE_RISCVC`.
+
+  Now you can simply define `CAPSTONE_RISCV_COMPAT_HEADER` before including `capstone.h`
+  and `CS_MODE_RISCVC` will be defined as alias for `CS_MODE_RISCV_C`
+
+  ```
+  #define CAPSTONE_RISCV_COMPAT_HEADER
+  #include <capstone/capstone.h>
+  ```
+  Author: @moste00
+
+- Prevent literal displacement truncation for AArch64 memory operands.
+  There are AArch64 displacements which are 64bit in size. But `aarch64_op_mem.disp` was an `int32_t`.
+  It was promoted to an `int64_t`.
+  Author: @amaanmujawar
+
+- Fixed several decoding bugs in the Alpha module.
+  See https://github.com/capstone-engine/capstone/pull/2967 for details.
+  Author: @mattst88
+
+- The RISC-V details now also include the FP rounding mode `cs_riscv.rounding_mode`.
+  Author: @moste00
+
+- AArch64: Add `CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM` flag to print shifted `MOVN` and
+  `MOVZ` instructions in their explicit forms instead of using the equivalent `MOV` aliases.
+
+  Example output from `cstool`:
+  ```
+  > cstool aarch64 0xe402a012
+  mov w4, #-0x170001
+
+  > cstool aarch64+explicitwideimm 0xe402a012
+  movn w4, #0x17, lsl #16
+
+  > cstool aarch64+explicitwideimm 0xe402a052
+  movz w4, #0x17, lsl #16
+  ```
+  Author: @amaanmujawar
+
+- M68K: Fixed EA decoding error and added ColdFire EMAC_B dual-acc MAC.
+  Author: @b1llow
+
+## What's Changed
+* Add CI job for building and testing on 32bit big endian by @trufae in https://github.com/capstone-engine/capstone/pull/2941
+* Fixed CONTRIBUTING.md not listing all Architectures by @rectrap in https://github.com/capstone-engine/capstone/pull/2952
+* Find writeback registers by @slate5 in https://github.com/capstone-engine/capstone/pull/2960
+* m68k: fix off-by-one bounds check in M68K_insn_name by @jmestwa-coder in https://github.com/capstone-engine/capstone/pull/2964
+* Fix OOB reads/writes - CVE-2026-55893 & CVE-2026-55894 by @Rot127 in https://github.com/capstone-engine/capstone/pull/2968
+* Alpha: fix decoder bugs and add test coverage by @mattst88 in https://github.com/capstone-engine/capstone/pull/2967
+* Fix crash due to invalid register by @moste00 in https://github.com/capstone-engine/capstone/pull/2966
+* Fix naming convention for Alpha enums by @Rot127 in https://github.com/capstone-engine/capstone/pull/2971
+* Add frm operands to float/double instructions by @moste00 in https://github.com/capstone-engine/capstone/pull/2972
+* Apply clang-format by @Rot127 in https://github.com/capstone-engine/capstone/pull/2975
+* Fix AArch64 predicate-as-counter register printed in hex by @yufengzjj in https://github.com/capstone-engine/capstone/pull/2976
+* SH: fix signed shift overflow in sh_disassemble dsp decode by @jmestwa-coder in https://github.com/capstone-engine/capstone/pull/2983
+* Guard operand append past MAX_MC_OPS in MCInst.c by @Samin061 in https://github.com/capstone-engine/capstone/pull/2985
+* M68K: Handle EA decoding error case and add ColdFire EMAC_B dual-acc MAC  by @b1llow in https://github.com/capstone-engine/capstone/pull/2987
+* Xtensa: fix swapped isIntN arguments in decodeOffset_16_16Operand by @jmestwa-coder in https://github.com/capstone-engine/capstone/pull/2986
+* Don't build cstool arch specific details printing, if not requested. by @Rot127 in https://github.com/capstone-engine/capstone/pull/2888
+* Add overflow check to cs_kern_os_calloc by @Rot127 in https://github.com/capstone-engine/capstone/pull/2980
+* M68K: Fix FPU condition and FMOVEM decoding by @b1llow in https://github.com/capstone-engine/capstone/pull/2993
+* AArch64: enh Add option for explicit shifted wide immediates by @amaanmujawar in https://github.com/capstone-engine/capstone/pull/2995
+* Add compat behaviour for RISCV for RISCVC/RISCV_C constant by @moste00 in https://github.com/capstone-engine/capstone/pull/2996
+* AArch64: fix LDR literal detail operand truncation by @amaanmujawar in https://github.com/capstone-engine/capstone/pull/2984
+
+## New Contributors
+* @rectrap made their first contribution in https://github.com/capstone-engine/capstone/pull/2952
+* @jmestwa-coder made their first contribution in https://github.com/capstone-engine/capstone/pull/2964
+* @mattst88 made their first contribution in https://github.com/capstone-engine/capstone/pull/2967
+* @yufengzjj made their first contribution in https://github.com/capstone-engine/capstone/pull/2976
+* @Samin061 made their first contribution in https://github.com/capstone-engine/capstone/pull/2985
+* @amaanmujawar made their first contribution in https://github.com/capstone-engine/capstone/pull/2995
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/6.0.0-Alpha9...6.0.0-Alpha10
+
+-----------------------------
 Version 6.0.0-Alpha9: May 28th, 2026
 
 ## What's Changed
