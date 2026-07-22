@@ -379,6 +379,40 @@ static void AArch64_check_updates_flags(MCInst *MI)
 #endif // CAPSTONE_DIET
 }
 
+/// Surfaces system-register accesses which alias an architectural
+/// register Capstone models. MRS Xt, NZCV reads (and MSR NZCV, Xt
+/// writes) the same flags every flag-setting instruction implicitly
+/// defines, but the generated implicit register lists cannot express
+/// it: MRS/MSR are single generic instructions whose system register
+/// is an immediate operand, so LLVM's static Uses/Defs do not depend
+/// on it. Add the aliased register to the implicit lists so
+/// cs_regs_access() reports it like any other NZCV reader/writer.
+/// The 128-bit pair forms MRRS/MSRR are deliberately excluded: NZCV
+/// is not a valid 128-bit system register, so those encodings are
+/// UNDEFINED rather than flag accesses.
+static void AArch64_add_sysreg_alias_access(MCInst *MI)
+{
+#ifndef CAPSTONE_DIET
+	if (!detail_is_set(MI))
+		return;
+	const unsigned opcode = MCInst_getOpcode(MI);
+	if (opcode != AArch64_MRS && opcode != AArch64_MSR)
+		return;
+	cs_detail *detail = get_detail(MI);
+	for (int i = 0; i < detail->aarch64.op_count; ++i) {
+		const cs_aarch64_op *op = &detail->aarch64.operands[i];
+		if (op->type != AARCH64_OP_SYSREG)
+			continue;
+		if (op->sysop.sub_type == AARCH64_OP_REG_MRS &&
+		    op->sysop.reg.sysreg == AARCH64_SYSREG_NZCV)
+			map_add_implicit_read(MI, AARCH64_REG_NZCV);
+		else if (op->sysop.sub_type == AARCH64_OP_REG_MSR &&
+			 op->sysop.reg.sysreg == AARCH64_SYSREG_NZCV)
+			map_add_implicit_write(MI, AARCH64_REG_NZCV);
+	}
+#endif // CAPSTONE_DIET
+}
+
 static aarch64_shifter id_to_shifter(unsigned Opcode)
 {
 	switch (Opcode) {
@@ -934,6 +968,7 @@ void AArch64_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 			AArch64_check_post_index_am(MI, O);
 	}
 	AArch64_check_updates_flags(MI);
+	AArch64_add_sysreg_alias_access(MI);
 	map_set_alias_id(MI, O, insn_alias_mnem_map,
 			 ARR_SIZE(insn_alias_mnem_map) - 1);
 	int syntax_opt = MI->csh->syntax;

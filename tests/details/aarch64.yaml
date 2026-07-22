@@ -1614,3 +1614,74 @@ test_cases:
               mem_index: x2
               access: CS_AC_READ
           regs_read: [x1, x2]
+  -
+    # MRS/MSR of NZCV access the same flags every flag-setting
+    # instruction implicitly defines, so cs_regs_access() must report
+    # them. Other system registers (TPIDR_EL0 control case) are
+    # unaffected, and the 128-bit pair forms MRRS/MSRR must NOT gain
+    # an NZCV access: NZCV is not a valid 128-bit system register, so
+    # those encodings are UNDEFINED rather than flag accesses.
+    input:
+      bytes: [ 0x00, 0x42, 0x3b, 0xd5, 0x00, 0x42, 0x1b, 0xd5, 0x42, 0xd0, 0x3b, 0xd5, 0x00, 0x42, 0x7b, 0xd5, 0x00, 0x42, 0x5b, 0xd5 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ "CS_OPT_DETAIL" ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mrs x0, NZCV"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_SYSREG
+              sub_type: AARCH64_OP_REG_MRS
+              sys_raw_val: 0xda10
+            cc: AArch64CC_Invalid
+          regs_read: [ nzcv ]
+          regs_write: [ x0 ]
+      -
+        asm_text: "msr NZCV, x0"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_SYSREG
+              sub_type: AARCH64_OP_REG_MSR
+              sys_raw_val: 0xda10
+            -
+              type: AARCH64_OP_REG
+              reg: x0
+              access: CS_AC_READ
+            cc: AArch64CC_Invalid
+          regs_read: [ x0 ]
+          regs_write: [ nzcv ]
+      -
+        asm_text: "mrs x2, TPIDR_EL0"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x2
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_SYSREG
+              sub_type: AARCH64_OP_REG_MRS
+              sys_raw_val: 0xde82
+            cc: AArch64CC_Invalid
+          regs_write: [ x2 ]
+      -
+        asm_text: "mrrs x0, x1, NZCV"
+        details:
+          # Exact-match register lists: x0/x1 only, no NZCV read.
+          regs_write: [ x0, x1 ]
+      -
+        asm_text: "msrr NZCV, x0, x1"
+        details:
+          # Exact-match register lists: x0/x1 only, no NZCV write.
+          regs_read: [ x0, x1 ]
