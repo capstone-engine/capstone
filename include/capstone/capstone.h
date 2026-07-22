@@ -78,7 +78,7 @@ extern "C" {
 
 // The identifier of a pre-release (Alpha, Beta, ...).
 // It is set to CS_VERSION_STABLE, if this code is part of a stable release.
-#define CS_VERSION_PRE_RELEASE CS_VERSION_ALPHA10
+#define CS_VERSION_PRE_RELEASE CS_VERSION_ALPHA11
 
 /// Macro to create combined version which can be compared to
 /// result of cs_version() API.
