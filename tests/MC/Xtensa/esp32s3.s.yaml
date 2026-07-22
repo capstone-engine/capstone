@@ -1,0 +1,58 @@
+test_cases:
+  # Positive: the ESP32-S3 SIMD/AI "ee.*" ops only decode when the
+  # CS_MODE_XTENSA_ESP32S3 feature is selected. Vector taken from real
+  # MT7961 firmware (it happens to also be a valid ESP32-S3 ee.vmulas).
+  -
+    input:
+      name: "ee.vmulas decodes on ESP32-S3"
+      bytes: [ 0x9e, 0x3e, 0x09, 0x40 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "CS_MODE_XTENSA_ESP32S3" ]
+      address: 0x0
+    expected:
+      insns:
+        -
+          asm_text: "ee.vmulas.u16.accx.ld.ip.qup q1, a9, 0xe0, q0, q6, q0, q1"
+          size: 4
+
+  # Negative (ESP32): without the ESP32-S3 feature the 4-byte ee.* encoding
+  # must NOT be produced. These bytes do not form a valid base/ESP32
+  # instruction, so decoding fails (zero instructions).
+  -
+    input:
+      name: "ee.vmulas must NOT decode on ESP32 (#1)"
+      bytes: [ 0x9e, 0x3e, 0x09, 0x40 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "CS_MODE_XTENSA_ESP32" ]
+      address: 0x0
+    expected:
+      insns: []
+  -
+    input:
+      name: "ee.vmulas must NOT decode on ESP32 (#2)"
+      bytes: [ 0x3e, 0x19, 0x45, 0x48 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "CS_MODE_XTENSA_ESP32" ]
+      address: 0x0
+    expected:
+      insns: []
+
+  # Negative (base Tensilica, no vendor feature bits): same expectation.
+  -
+    input:
+      name: "ee.vmulas must NOT decode on base Xtensa (#1)"
+      bytes: [ 0x9e, 0x3e, 0x09, 0x40 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+      address: 0x0
+    expected:
+      insns: []
+  -
+    input:
+      name: "ee.vmulas must NOT decode on base Xtensa (#2)"
+      bytes: [ 0x3e, 0x19, 0x45, 0x48 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+      address: 0x0
+    expected:
+      insns: []
