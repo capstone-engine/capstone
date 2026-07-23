@@ -80,7 +80,7 @@ jobs:
           echo "ARTIFACT_NAME=$name" >> $GITHUB_ENV
 
       # https://cibuildwheel.pypa.io/en/stable/faq/#macos-building-cpython-38-wheels-on-arm64
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         if: runner.os == 'macOS' && runner.arch == 'ARM64'
         with:
           python-version: 3.8
