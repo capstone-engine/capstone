@@ -1118,3 +1118,15 @@
 !# MOVSXD r16, m32 (memory form, 0x66 prefix)
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_DETAIL
 0x0: 0x66, 0x63, 0x20 == movsxd sp, dword ptr [rax]
+
+!# issue PPC record form sets Update-CR0
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x7c,0x85,0x32,0x15 == add. r4, r5, r6 ; Update-CR0: True
+
+!# issue PPC branch hint plus
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x40,0xe2,0x00,0x10 == bne+ 0x10 ; Branch hint: 1
+
+!# issue PPC branch hint minus
+!# CS_ARCH_PPC, CS_MODE_64 | CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL
+0x40,0xc2,0x00,0x10 == bne- 0x10 ; Branch hint: 2

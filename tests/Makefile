@@ -84,6 +84,7 @@ endif
 ifneq (,$(findstring powerpc,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_POWERPC
 SOURCES += test_ppc.c
+SOURCES += test_ppc_iter_detail.c
 endif
 ifneq (,$(findstring sparc,$(CAPSTONE_ARCHS)))
 CFLAGS += -DCAPSTONE_HAS_SPARC

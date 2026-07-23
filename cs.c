@@ -581,6 +581,9 @@ static void fill_insn(struct cs_struct *handle, cs_insn *insn, char *buffer, MCI
 	// we might skip some redundant bytes in front in the case of X86
 	memcpy(insn->bytes, code + insn->size - copy_size, copy_size);
 	insn->op_str[0] = '\0';
+	// mnemonic is filled below, after the post printer runs: post printers
+	// must derive any checks from insn_asm, never from insn->mnemonic
+	insn->mnemonic[0] = '\0';
 	insn->size = copy_size;
 
 	// alias instruction might have ID saved in OpcodePub
