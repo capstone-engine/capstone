@@ -6274,7 +6274,7 @@ test_cases:
       name: "Xtensa decodeOffset_64_16Operand sign extension"
       bytes: [ 0x2f, 0x71, 0x01, 0x4e ]
       arch: "CS_ARCH_XTENSA"
-      options: [ CS_MODE_XTENSA_ESP32, CS_OPT_DETAIL ]
+      options: [ CS_MODE_XTENSA_ESP32S3, CS_OPT_DETAIL ]
       address: 0x0
     expected:
       insns:
@@ -6312,7 +6312,7 @@ test_cases:
       name: "Xtensa decodeOffset_128_2Operand offset scaling"
       bytes: [ 0x74, 0xe0, 0xb5 ]
       arch: "CS_ARCH_XTENSA"
-      options: [ CS_MODE_XTENSA_ESP32, CS_OPT_DETAIL ]
+      options: [ CS_MODE_XTENSA_ESP32S3, CS_OPT_DETAIL ]
       address: 0x0
     expected:
       insns:
