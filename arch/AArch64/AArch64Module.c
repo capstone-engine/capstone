@@ -14,6 +14,9 @@ cs_err AArch64_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
+	if (mri == NULL) {
+		return CS_ERR_MEM;
+	}
 
 	AArch64_init(mri);
 	ud->printer = AArch64_printInst;

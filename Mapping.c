@@ -13,6 +13,9 @@ static unsigned short *make_id2insn(const insn_map *insns, unsigned int size)
 
 	unsigned short *cache =
 		(unsigned short *)cs_mem_calloc(max_id + 1, sizeof(*cache));
+	if (cache == NULL) {
+		return NULL;
+	}
 
 	for (i = 1; i < size; i++)
 		cache[insns[i].id] = i;
@@ -30,6 +33,9 @@ unsigned short insn_find(const insn_map *insns, unsigned int max,
 
 	if (*cache == NULL)
 		*cache = make_id2insn(insns, max);
+	if (*cache == NULL) {
+		return 0;
+	}
 
 	return (*cache)[id];
 }

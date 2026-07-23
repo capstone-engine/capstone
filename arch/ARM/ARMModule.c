@@ -14,6 +14,9 @@ cs_err ARM_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
+	if (mri == NULL) {
+		return CS_ERR_MEM;
+	}
 
 	ARM_init(mri);
 	ARM_getRegName(ud, 0);	// use default get_regname

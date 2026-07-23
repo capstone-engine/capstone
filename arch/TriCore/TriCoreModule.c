@@ -13,6 +13,9 @@ cs_err TRICORE_global_init(cs_struct *ud)
 	MCRegisterInfo *mri;
 
 	mri = cs_mem_malloc(sizeof(*mri));
+	if (mri == NULL) {
+		return CS_ERR_MEM;
+	}
 
 	TriCore_init_mri(mri);
 	ud->printer = TriCore_printInst;

@@ -781,6 +781,9 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, size_t value)
 					// 2. add this instruction if we have not had it yet
 					if (!tmp) {
 						tmp = cs_mem_malloc(sizeof(*tmp));
+						if (!tmp) {
+							return CS_ERR_MEM;
+						}
 						tmp->insn.id = opt->id;
 						(void)strncpy(tmp->insn.mnemonic, opt->mnemonic, sizeof(tmp->insn.mnemonic) - 1);
 						tmp->insn.mnemonic[sizeof(tmp->insn.mnemonic) - 1] = '\0';
@@ -923,6 +926,11 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size, uint64
 		if (handle->detail) {
 			// allocate memory for @detail pointer
 			insn_cache->detail = cs_mem_malloc(sizeof(cs_detail));
+			if (insn_cache->detail == NULL) {
+				// insufficient memory
+				handle->errnum = CS_ERR_MEM;
+				break;
+			}
 		} else {
 			insn_cache->detail = NULL;
 		}
