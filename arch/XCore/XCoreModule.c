@@ -14,6 +14,9 @@ cs_err XCore_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
+	if (mri == NULL) {
+		return CS_ERR_MEM;
+	}
 
 	XCore_init(mri);
 	ud->printer = XCore_printInst;

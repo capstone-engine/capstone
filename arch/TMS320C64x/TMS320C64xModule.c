@@ -15,6 +15,9 @@ cs_err TMS320C64x_global_init(cs_struct *ud)
 	MCRegisterInfo *mri;
 
 	mri = cs_mem_malloc(sizeof(*mri));
+	if (mri == NULL) {
+		return CS_ERR_MEM;
+	}
 
 	TMS320C64x_init(mri);
 	ud->printer = TMS320C64x_printInst;
