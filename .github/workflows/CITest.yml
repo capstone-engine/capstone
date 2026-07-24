@@ -89,6 +89,12 @@ jobs:
         python cstest_report.py -D -t build/cstest -d ../MC;
         python cstest_report.py -D -t build/cstest -f issues.cs; cd ..;
 
+    - name: test_ppc_iter_detail
+      shell: 'script -q -e -c "bash -e {0}"'
+      run: |
+        export LD_LIBRARY_PATH="${PWD}:${LD_LIBRARY_PATH:-}"
+        if [ -x build/test_ppc_iter_detail ]; then ./build/test_ppc_iter_detail; else ./tests/test_ppc_iter_detail; fi
+
   Windows:
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.name }}

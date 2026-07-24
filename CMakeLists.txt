@@ -298,7 +298,7 @@ if(CAPSTONE_PPC_SUPPORT)
         arch/PowerPC/PPCGenRegisterInfo.inc
         arch/PowerPC/PPCGenInstrInfo.inc
     )
-    set(TEST_SOURCES ${TEST_SOURCES} test_ppc.c)
+    set(TEST_SOURCES ${TEST_SOURCES} test_ppc.c test_ppc_iter_detail.c)
 endif()
 
 if(CAPSTONE_X86_SUPPORT)
