@@ -4,6 +4,13 @@ from capstone.riscv import *
 import unittest
 
 class TestRiscvRegAccess(unittest.TestCase):
+    def test_riscv_syntax_detail_constants(self):
+        self.assertEqual(CS_OPT_SYNTAX_REAL, 1 << 10)
+        self.assertEqual(CS_OPT_SYNTAX_UNCOMPRESSED_REAL, 1 << 11)
+        self.assertEqual(CS_OPT_SYNTAX_ALIAS, 1 << 13)
+        self.assertEqual(CS_OPT_DETAIL_UNCOMPRESSED_REAL, 1 << 2)
+        self.assertEqual(CS_OPT_DETAIL_ALIAS, 1 << 3)
+
     def setUp(self):
         self.cs = Cs(CS_ARCH_RISCV, CS_MODE_RISCV64)
         self.cs.option(CS_OPT_DETAIL, CS_OPT_DETAIL_REAL | CS_OPT_ON)

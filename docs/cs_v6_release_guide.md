@@ -237,22 +237,10 @@ Nonetheless, we hope this additional information is useful to you.
 	* `CS_MODE_RISCV_ZBKX = 1 << 19`
 	* `CS_MODE_RISCV_ZBS = 1 << 20`
 	* `CS_MODE_RISCV_VENTANA = 1 << 21`
-- Added two syntax options for alias control:
-  * `CS_OPT_SYNTAX_NO_ALIAS_TEXT`: RISC-V assigns readable aliases to special cases of more flexible instructions, for example: `ret` is a `jalr`, a more general instruction that takes an arbitrary register as jump destination and a link register. `ret` is the special case where those 2 arguments are restricted to `ra` and `x0` respectively.
-
-    The default behaviour of Capstone is to print those aliases whenever applicable, but this default can be suppressed by opening capstone with `CS_OPT_SYNTAX_NO_ALIAS_TEXT`. When using `cstool`, the corresponding cmdline option is `+noalias`
-  * `CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED`: some find it useful to only suppress aliases for compressed instructions, but leave other instruction printed as usual. This flag implements this restricted non-aliasing. For example the special compressed addition will normally be printed as its equivalent normal addition, but with this flag enabled it will be printed as `c.addi`, and non-compressed aliases won't be suppressed. When using `cstool`, the corresponding cmdline option is `+noaliascompressed`
-  * Interaction:
-    | Case | `+noalias` | `+noaliascompressed` | Options Set                                                                   | Behavior                                                                                                       |
-    | ---- | ---------- | -------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-    | 1    | `false`    | `false`              | *(neither)*                                                                   | All instruction aliases will be printed (default behavior)                                                     |
-    | 2    | `true`     | `false`              | `CS_OPT_SYNTAX_NO_ALIAS_TEXT` only                                            | All instruction aliases will NOT be printed; exact text only                                                   |
-    | 3    | `false`    | `true`               | `CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED` only                                 | Non-compressed instructions show aliases normally; compressed instructions are printed exactly with no aliases |
-    | 4    | `true`     | `true`               | Both `CS_OPT_SYNTAX_NO_ALIAS_TEXT` & `CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED` | All instruction aliases will NOT be printed *(redundant/equivalent to case 2)*                                 |
-  
-  Note that `+noalias` "overpowers" `noaliascompressed` in the second case: despite `+noaliascompressed` being false, meaning aliases are wanted for compressed instructions, `+noalias` being true means ALL aliases are supressed, and this takes precedence. Other than that, case 1 and case 3 work as intuitively expected, and case 4 is redundant. 
-  
-  So a single-sentence description of this table is: if `+noalias` is given then no aliases will be printed for any instruction, but if not given then aliases will be printed for non-compressed instruction and alias printing for compressed instruction futher checks `+noaliascompressed` before proceeding.
+- Added RISC-V syntax/detail options for selecting real, uncompressed-real, or alias-preferred printing/details:
+  * `CS_OPT_SYNTAX_REAL` / `CS_OPT_DETAIL_REAL`
+  * `CS_OPT_SYNTAX_UNCOMPRESSED_REAL` / `CS_OPT_DETAIL_UNCOMPRESSED_REAL`
+  * `CS_OPT_SYNTAX_ALIAS` / `CS_OPT_DETAIL_ALIAS`
 - Added `reg_access` capstone callback to return all read and written registers for the instructions, including registers used as part of memory operands.
   * Note that `reg_access` does NOT treat CSRs as registers, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 
   * Note that `reg_access` does NOT treat reading the PC's value as reading a register, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 

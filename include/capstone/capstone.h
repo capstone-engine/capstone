@@ -411,18 +411,27 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_NO_DOLLAR =
 		1
 		<< 9, ///< Does not print the $ in front of Mips, LoongArch registers.
-	CS_OPT_SYNTAX_NO_ALIAS_TEXT =
+	CS_OPT_SYNTAX_REAL =
 		1
-		<< 10, ///< Does not print an instruction's alias test if the instruction is an alias
-	CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED =
+		<< 10, ///< Prints the original decoded instruction without aliases or uncompression.
+	CS_OPT_SYNTAX_UNCOMPRESSED_REAL =
 		1
-		<< 11, ///< Does not print an instruction's alias test if the instruction is an alias
+		<< 11, ///< Prints the uncompressed real instruction when possible, without aliases.
 	CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM =
 		1
 		<< 12, ///< Prints shifted AArch64 MOVN and MOVZ instructions without MOV aliases
+	CS_OPT_SYNTAX_ALIAS =
+		1
+		<< 13, ///< Prints aliases when available. This is the default RISC-V syntax behavior.
 	CS_OPT_DETAIL_REAL =
 		1
 		<< 1, ///< If enabled, always sets the real instruction detail. Even if the instruction is an alias.
+	CS_OPT_DETAIL_UNCOMPRESSED_REAL =
+		1
+		<< 2, ///< If enabled, sets uncompressed real instruction detail when possible.
+	CS_OPT_DETAIL_ALIAS =
+		1
+		<< 3, ///< If enabled, sets alias instruction detail when possible.
 } cs_opt_value;
 
 /// An option

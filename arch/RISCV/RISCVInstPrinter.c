@@ -24,6 +24,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+#include <capstone/capstone.h>
 #include <capstone/platform.h>
 #include "../../MathExtras.h"
 
@@ -166,7 +167,8 @@ void printFRMArg(MCInst *MI, unsigned OpNo, SStream *O)
 {
 	RISCV_add_cs_detail_0(MI, RISCV_OP_GROUP_FRMArg, OpNo);
 	unsigned FRMArg = MCOperand_getImm(MCInst_getOperand(MI, (OpNo)));
-	if (!(MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT) &&
+	if (!(MI->csh->syntax & CS_OPT_SYNTAX_REAL) &&
+	    !(MI->csh->syntax & CS_OPT_SYNTAX_UNCOMPRESSED_REAL) &&
 	    FRMArg == RISCVFPRndMode_DYN)
 		return;
 	SStream_concat(O, "%s", ", ");
@@ -376,53 +378,84 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 	MCInst_setIsAlias(MI, false);
 	bool usesAliasDetails = map_use_alias_details(MI);
 	MI->flat_insn->usesAliasDetails = usesAliasDetails;
-
-	/* check for a non-compressed instruction */
+    
 	MCInst Uncompressed;
 	MCInst_Init(&Uncompressed, MI->csh->arch);
-
 	MCInst *McInstr = MI;
-	bool is_uncompressed = false;
-	// side-effectful check for compressed instructions that creates the equivalent uncompressed instruction in case of true
-	// (LLVM doesn't generate an API for doing a pure check)
-	if (uncompressInst(&Uncompressed, MI)) {
-		McInstr = &Uncompressed;
-		Uncompressed.address = MI->address;
-		Uncompressed.MRI = MI->MRI;
-		Uncompressed.csh = MI->csh;
-		Uncompressed.flat_insn = MI->flat_insn;
-		is_uncompressed = true;
+    bool is_uncompressed = false;
+
+	bool textReal = MI->csh->syntax & CS_OPT_SYNTAX_REAL;
+	bool detailReal = MI->csh->detail_opt & CS_OPT_DETAIL_REAL;
+
+	if (!textReal || (detail_is_set(MI) && !detailReal)) {
+		// side-effectful check for compressed instructions that also creates the equivalent
+		//  uncompressed instruction in case of true 
+		// (LLVM doesn't have an API for doing a pure check)
+		if (uncompressInst(&Uncompressed, MI)) {
+			McInstr = &Uncompressed;
+			Uncompressed.address = MI->address;
+			Uncompressed.MRI = MI->MRI;
+			Uncompressed.csh = MI->csh;
+			Uncompressed.flat_insn = MI->flat_insn;
+			is_uncompressed = true;
+		}
 	}
 
-	// print the exact instruction text and done
-	bool print_exact_text =
-		(MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT) ||
-		(is_uncompressed &&
-		 MI->csh->syntax & CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED);
-	if (print_exact_text) {
+	if (MI->csh->syntax & CS_OPT_SYNTAX_REAL) {
 		printInstruction(MI, MI->address, O);
 	} else {
-		// side-effectful check for alias instructions that prints to the SStream if true
-		if (printAliasInstr(McInstr, MI->address, O)) {
-			MCInst_setIsAlias(MI, true);
-			// do we still want the exact details even if the text is alias ?
-			if (!usesAliasDetails && detail_is_set(MI)) {
-				// disable actual printing
-				SStream_Close(O);
-				// discard the alias operands
-				memset(MI->flat_insn->detail->riscv.operands, 0,
-				       sizeof(MI->flat_insn->detail->riscv
-						      .operands));
-				MI->flat_insn->detail->riscv.op_count = 0;
-				// re-disassemble again with no printing in order to obtain the full details
-				// including the whole operands array
-				printInstruction(MI, MI->address, O);
-				// re-open the stream to restore the usual state
-				SStream_Open(O);
+		if (MI->csh->syntax & CS_OPT_SYNTAX_UNCOMPRESSED_REAL) {
+			printInstruction(McInstr, McInstr->address, O);
+		} else {
+			// side-effectful check for alias instructions that prints to the SStream if true
+			if (printAliasInstr(MI, MI->address, O)) {
+				MCInst_setIsAlias(MI, true);
+			} else { // the instruction is not an alias
+				if (!is_uncompressed) {
+					printInstruction(MI, MI->address, O);
+				} else if (printAliasInstr(McInstr, McInstr->address, O)) {
+					MCInst_setIsAlias(MI, true);
+				} else {
+					printInstruction(McInstr, McInstr->address, O);
+				}
 			}
-		} else // the instruction is not an alias
-			printInstruction(McInstr, MI->address, O);
+		}
 	}
+	
+	bool textAndDetailModesMatch =
+		((MI->csh->syntax & CS_OPT_SYNTAX_REAL) && 
+		 (MI->csh->detail_opt & CS_OPT_DETAIL_REAL)) 
+	||
+		((MI->csh->syntax & CS_OPT_SYNTAX_UNCOMPRESSED_REAL) && 
+		 (MI->csh->detail_opt & CS_OPT_DETAIL_UNCOMPRESSED_REAL)) 
+	||
+		((MI->csh->syntax & CS_OPT_SYNTAX_ALIAS) && 
+		 (MI->csh->detail_opt & CS_OPT_DETAIL_ALIAS));
+
+	if (detail_is_set(MI) && !textAndDetailModesMatch) {
+		SStream_Close(O);
+		// discard the alias operands
+		memset(MI->flat_insn->detail->riscv.operands, 0, sizeof(MI->flat_insn->detail->riscv.operands));
+		MI->flat_insn->detail->riscv.op_count = 0;
+	
+		// re-disassemble again with no printing in order to obtain the full details
+		// including the whole operands array
+		if (MI->csh->detail_opt & CS_OPT_DETAIL_REAL) {
+			printInstruction(MI, MI->address, O);
+		} else if (MI->csh->detail_opt & CS_OPT_DETAIL_UNCOMPRESSED_REAL) {
+			printInstruction(McInstr, McInstr->address, O);
+		} else if (!printAliasInstr(MI, MI->address, O))  {
+			if (!is_uncompressed) {
+				printInstruction(MI, MI->address, O);
+			} else if (!printAliasInstr(McInstr, McInstr->address, O)) {
+				printInstruction(McInstr, McInstr->address, O);
+			}
+		}
+	
+		// re-open the stream to restore the usual state
+		SStream_Open(O);
+	}
+
 	RISCV_add_groups(MI);
 	RISCV_compact_operands(MI);
 	RISCV_set_alias_id(MI, O);

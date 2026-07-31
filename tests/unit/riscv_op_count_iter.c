@@ -22,8 +22,8 @@ static bool test_riscv_op_count_no_stale()
 	}
 	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON | CS_OPT_DETAIL_REAL);
 	cs_option(handle, CS_OPT_SYNTAX,
-		  CS_OPT_SYNTAX_NO_ALIAS_TEXT |
-			  CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED);
+		  CS_OPT_SYNTAX_REAL |
+			  CS_OPT_SYNTAX_UNCOMPRESSED_REAL);
 	cs_insn *insn = cs_malloc(handle);
 
 	const uint8_t *start = code;
