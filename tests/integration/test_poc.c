@@ -209,6 +209,43 @@ static void test_ub_isintn_xtensa_offset(void)
 	return;
 }
 
+static void test_stack_overflow_issue_3010(void)
+{
+	static const uint8_t code[] = { 0x38, 0x6d };
+
+	csh handle;
+	if (cs_open(CS_ARCH_XTENSA, CS_MODE_LITTLE_ENDIAN, &handle) !=
+	    CS_ERR_OK) {
+		fprintf(stderr, "cs_open failed\n");
+		assert(0);
+		return;
+	}
+	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+	cs_insn *insn = cs_malloc(handle);
+	if (!insn) {
+		cs_close(&handle);
+		assert(0);
+		return;
+	}
+
+	const uint8_t *code_ptr = code;
+	size_t code_size = sizeof(code);
+	uint64_t address = 0;
+
+	while (code_size > 0 &&
+	       cs_disasm_iter(handle, &code_ptr, &code_size, &address, insn)) {
+		cs_regs regs_read, regs_write;
+		uint8_t regs_read_count = 0, regs_write_count = 0;
+		cs_regs_access(handle, insn, regs_read, &regs_read_count,
+			       regs_write, &regs_write_count);
+	}
+
+	cs_free(insn, 1);
+	cs_close(&handle);
+	return;
+}
+
 int main()
 {
 	test_overflow_cs_insn_bytes();
@@ -217,6 +254,7 @@ int main()
 	test_integer_overflow();
 	test_ub_shift_sh_dsp_p();
 	test_ub_isintn_xtensa_offset();
+	test_stack_overflow_issue_3010();
 
 	return 0;
 }
