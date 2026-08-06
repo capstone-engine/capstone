@@ -330,7 +330,9 @@ static bool opMOVx(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 			}
 			info->op.op_count++;
 
-			CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands), false);
+			CS_ASSERT_RET_VAL(info->op.op_count <
+						  ARR_SIZE(info->op.operands),
+					  false);
 			if (!set_mem_n(info, SH_OP_MEM_REG_R0, SH_REG_R0 + n, 0,
 				       size, 1 - rw, detail)) {
 				return false;
@@ -348,7 +350,9 @@ static bool opMOVx(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 			}
 			info->op.op_count++;
 
-			CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands), false);
+			CS_ASSERT_RET_VAL(info->op.op_count <
+						  ARR_SIZE(info->op.operands),
+					  false);
 			if (!set_mem_n(info, SH_OP_MEM_REG_PRE, SH_REG_R0 + n,
 				       0, size, 1 - rw, detail)) {
 				return false;
@@ -585,7 +589,8 @@ static bool opMOV_L_dsp(uint16_t code, uint64_t address, MCInst *MI,
 	}
 	info->op.op_count++;
 
-	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands), false);
+	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands),
+			  false);
 	if (!set_reg_n(info, SH_REG_R0 + m, rw, rw, detail)) {
 		return false;
 	}
@@ -1005,7 +1010,9 @@ static bool op4xxb(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 				}
 				info->op.op_count++;
 			}
-			CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands), false);
+			CS_ASSERT_RET_VAL(info->op.op_count <
+						  ARR_SIZE(info->op.operands),
+					  false);
 			if (!set_mem_n(info, memop, SH_REG_R0 + r, 0, sz,
 				       1 - rw, detail)) {
 				return false;
@@ -1073,7 +1080,8 @@ static bool opMOV_BW_dsp(uint16_t code, uint64_t address, MCInst *MI,
 	}
 	info->op.op_count++;
 
-	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands), false);
+	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands),
+			  false);
 	if (!set_reg_n(info, SH_REG_R0, rw, rw, detail)) {
 		return false;
 	}
@@ -1265,7 +1273,8 @@ opBxx(BRA, SH_GRP_JUMP) opBxx(BSR, SH_GRP_CALL)
 	}
 	info->op.op_count++;
 
-	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands), false);
+	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands),
+			  false);
 	if (!set_reg_n(info, SH_REG_R0, rw, rw, detail)) {
 		return false;
 	}
@@ -1344,7 +1353,8 @@ opFRR(FADD) opFRR(FSUB) opFRR(FMUL) opFRR(FDIV) opFRRcmp(FCMP_EQ)
 	}
 	info->op.op_count++;
 
-	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands), false);
+	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands),
+			  false);
 	if (!set_reg_n(info, SH_REG_FR0 + n, rw, rw, detail)) {
 		return false;
 	}
