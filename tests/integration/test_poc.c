@@ -251,7 +251,7 @@ static void test_stack_overflow_issue_3010(void)
 	cs_close(&handle);
 	return;
 }
-	
+
 static void test_sh_oob_read_ghsa_5q63_4654_94v6(void)
 {
 	csh handle;
