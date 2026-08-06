@@ -157,6 +157,27 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 			printf("\t\toperands[%u].type: FP_DOUBLE\n", i);
 			printf("\t\t\toperands[%u].dimm: %lf\n", i, op->dimm);
 			break;
+		case M68K_OP_FP_EXTENDED:
+			printf("\t\toperands[%u].type: FP_EXTENDED\n", i);
+			printf("\t\t\toperands[%u].fp_extended.sign_exp: "
+			       "0x%04" PRIx16 "\n",
+			       i, op->fp_extended.sign_exp);
+			printf("\t\t\toperands[%u].fp_extended.significand: "
+			       "0x%016" PRIx64 "\n",
+			       i, op->fp_extended.significand);
+			printf("\t\t\toperands[%u].fp_extended.reserved: "
+			       "0x%04" PRIx16 "\n",
+			       i, op->fp_extended.reserved);
+			break;
+		case M68K_OP_FP_PACKED:
+			printf("\t\toperands[%u].type: FP_PACKED\n", i);
+			printf("\t\t\toperands[%u].fp_packed.header: "
+			       "0x%08" PRIx32 "\n",
+			       i, op->fp_packed.header);
+			printf("\t\t\toperands[%u].fp_packed.fraction: "
+			       "0x%016" PRIx64 "\n",
+			       i, op->fp_packed.fraction);
+			break;
 		case M68K_OP_SHIFT:
 			printf("\t\toperands[%u].type: SHIFT\n", i);
 			break;

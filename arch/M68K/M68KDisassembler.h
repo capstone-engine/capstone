@@ -147,13 +147,19 @@ static inline uint32_t m68k_coprocessor_condition(uint32_t word)
 /* ── FPU extension-word bit-field helpers ────────────────────────────
  * The FPU command word is the 16-bit extension following the F-line. */
 
-/* R/M bit (bit 14): 1 = source from EA, 0 = source from FP register. */
+/* R/M bit (bit 14): 1 = effective-address operand, 0 = FP-register operand. */
 #define M68K_FEXT_RM(ext) (((ext) >> 14) & 1)
 
 /* Type / command class (bits 15:13). */
 #define M68K_FEXT_TYPE(ext) (((ext) >> 13) & 7)
+#define M68K_FEXT_TYPE_GENERAL_MAX 0x1
+#define M68K_FEXT_TYPE_FMOVE_TO_EA 0x3
+#define M68K_FEXT_TYPE_FPCR_FROM_EA 0x4
+#define M68K_FEXT_TYPE_FPCR_TO_EA 0x5
+#define M68K_FEXT_TYPE_FMOVEM_FROM_EA 0x6
+#define M68K_FEXT_TYPE_FMOVEM_TO_EA 0x7
 
-/* Source specifier (bits 12:10) -- data format when R/M=1. */
+/* Source/format specifier (bits 12:10). */
 #define M68K_FEXT_SRC(ext) (((ext) >> 10) & 7)
 
 /* Destination FP register (bits 9:7). */
@@ -236,6 +242,10 @@ static inline uint32_t m68k_fpu_condition_index(uint32_t word)
 #define M68K_FPSRC_WORD 0x04 /* .w  -- 16-bit integer            */
 #define M68K_FPSRC_DOUBLE 0x05 /* .d  -- 64-bit IEEE double        */
 #define M68K_FPSRC_BYTE 0x06 /* .b  -- 8-bit integer             */
+
+/* FMOVE register-to-memory packed-decimal destination encodings. */
+#define M68K_FPDST_PACKED_STATIC 0x03
+#define M68K_FPDST_PACKED_DYNAMIC 0x07
 
 /* ── FPU special raw opmodes (before SD-flag masking) ───────────────
  * FSSQRT/FDSQRT have raw 7-bit opmodes 0x41/0x45.  After the 6-bit

@@ -33,11 +33,28 @@ class M68KOpRegPair(ctypes.Structure):
     )
 
 
+class M68KOpFpExtended(ctypes.Structure):
+    _fields_ = (
+        ("significand", ctypes.c_uint64),
+        ("sign_exp", ctypes.c_uint16),
+        ("reserved", ctypes.c_uint16),
+    )
+
+
+class M68KOpFpPacked(ctypes.Structure):
+    _fields_ = (
+        ("header", ctypes.c_uint32),
+        ("fraction", ctypes.c_uint64),
+    )
+
+
 class M68KOpValue(ctypes.Union):
     _fields_ = (
         ("imm", ctypes.c_int64),
         ("dimm", ctypes.c_double),
         ("simm", ctypes.c_float),
+        ("fp_extended", M68KOpFpExtended),
+        ("fp_packed", M68KOpFpPacked),
         ("reg", ctypes.c_uint),
         ("reg_pair", M68KOpRegPair),
     )
@@ -72,6 +89,14 @@ class M68KOp(ctypes.Structure):
     @property
     def simm(self):
         return self.value.simm
+
+    @property
+    def fp_extended(self):
+        return self.value.fp_extended
+
+    @property
+    def fp_packed(self):
+        return self.value.fp_packed
 
     @property
     def reg(self):

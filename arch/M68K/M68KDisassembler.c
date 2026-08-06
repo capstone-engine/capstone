@@ -231,6 +231,39 @@ static unsigned long long read_imm_64(m68k_info *info)
 	return value & 0xffffffffffffffff;
 }
 
+/* Read a 12-byte Motorola extended-precision immediate: sign+exponent word,
+ * reserved word, and 64-bit significand. */
+static bool imm_bytes_available(const m68k_info *info, size_t size)
+{
+	const uint64_t addr = (info->pc - info->baseAddress) &
+			      info->address_mask;
+	return addr <= info->code_len && info->code_len - addr >= size;
+}
+
+static bool read_imm_extended(m68k_info *info, m68k_op_fp_extended *value)
+{
+	if (!imm_bytes_available(info, 12))
+		return false;
+
+	memset(value, 0, sizeof(*value));
+	value->sign_exp = (uint16_t)read_imm_16(info);
+	value->reserved = (uint16_t)read_imm_16(info);
+	value->significand = read_imm_64(info);
+	return true;
+}
+
+/* Read a 12-byte Motorola packed-decimal immediate. */
+static bool read_imm_packed(m68k_info *info, m68k_op_fp_packed *value)
+{
+	if (!imm_bytes_available(info, 12))
+		return false;
+
+	memset(value, 0, sizeof(*value));
+	value->header = read_imm_32(info);
+	value->fraction = read_imm_64(info);
+	return true;
+}
+
 /* 100% portable signed int generators */
 static int make_int_8(int value)
 {
@@ -2906,8 +2939,11 @@ static void d68020_cpgen(m68k_info *info)
 	cs_m68k_op *op0;
 	cs_m68k_op *op1;
 	bool supports_single_op;
+	bool is_fmove;
+	bool packed_destination;
+	bool ea_operand;
 	uint32_t next;
-	int rm, src, dst, opmode;
+	int command_type, src, dst, opmode;
 
 	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
 
@@ -2929,15 +2965,20 @@ static void d68020_cpgen(m68k_info *info)
 	 * operations (type 0-1); fmove_fpcr/fmovem types are dispatched
 	 * separately and never reach the SD path. */
 	uint32_t peeked = peek_imm_16(info);
-	if (M68K_FEXT_TYPE(peeked) <= 1 && M68K_FEXT_SD_FLAG(peeked))
+	if (M68K_FEXT_TYPE(peeked) <= M68K_FEXT_TYPE_GENERAL_MAX &&
+	    M68K_FEXT_SD_FLAG(peeked))
 		LIMIT_FEATURE(info, M68040_PLUS | CS_MODE_M68K_CF_FPU);
 
 	next = read_imm_16(info);
 
-	rm = M68K_FEXT_RM(next);
+	ea_operand = M68K_FEXT_RM(next) != 0;
+	command_type = M68K_FEXT_TYPE(next);
 	src = M68K_FEXT_SRC(next);
 	dst = M68K_FEXT_DST(next);
 	opmode = M68K_FEXT_OPMODE(next);
+	packed_destination = command_type == M68K_FEXT_TYPE_FMOVE_TO_EA &&
+			     (src == M68K_FPDST_PACKED_STATIC ||
+			      src == M68K_FPDST_PACKED_DYNAMIC);
 
 	if (BITFIELD(info->ir, 5, 0) == 0 && M68K_FEXT_IS_FMOVECR(next)) {
 		ext = build_init_op(info, M68K_INS_FMOVECR, 2, 0);
@@ -2954,18 +2995,26 @@ static void d68020_cpgen(m68k_info *info)
 		return;
 	}
 
-	switch (M68K_FEXT_TYPE(next)) {
-	case 0x4:
-	case 0x5:
+	switch (command_type) {
+	case M68K_FEXT_TYPE_FPCR_FROM_EA:
+	case M68K_FEXT_TYPE_FPCR_TO_EA:
 		fmove_fpcr(info, next);
 		return;
 
-	case 0x6:
-	case 0x7:
+	case M68K_FEXT_TYPE_FMOVEM_FROM_EA:
+	case M68K_FEXT_TYPE_FMOVEM_TO_EA:
 		fmovem(info, next);
 		return;
 	default:
 		break;
+	}
+
+	/* In a packed register-to-memory FMOVE, bits 6:0 encode the static
+	 * k-factor or dynamic Dn selector rather than an arithmetic opmode. */
+	if (packed_destination) {
+		MCInst_setOpcode(info->inst, M68K_INS_FMOVE);
+		supports_single_op = false;
+		goto fpu_operands;
 	}
 
 	if (M68K_FEXT_SD_FLAG(next)) {
@@ -3112,12 +3161,14 @@ static void d68020_cpgen(m68k_info *info)
 
 fpu_operands:
 	ext = &info->extension;
+	is_fmove = MCInst_getOpcode(info->inst) == M68K_INS_FMOVE;
 
 	ext->op_count = 2;
 	ext->op_size.type = M68K_SIZE_TYPE_CPU;
 	ext->op_size.cpu_size = 0;
 
-	if ((opmode == 0x00) && M68K_FEXT_DIR(next) != 0) {
+	if ((opmode == 0x00 || packed_destination) &&
+	    M68K_FEXT_DIR(next) != 0) {
 		op0 = &ext->operands[1];
 		op1 = &ext->operands[0];
 	} else {
@@ -3125,13 +3176,39 @@ fpu_operands:
 		op1 = &ext->operands[1];
 	}
 
-	if (rm == 0 && supports_single_op && src == dst) {
+	if (!ea_operand && supports_single_op && src == dst) {
 		ext->op_count = 1;
 		op0->reg = M68K_REG_FP0 + dst;
 		return;
 	}
 
-	if (rm == 1) {
+	if (packed_destination) {
+		cs_m68k_op *op_k = &ext->operands[2];
+		ext->op_size.type = M68K_SIZE_TYPE_FPU;
+		ext->op_size.fpu_size = M68K_FPU_SIZE_PACKED;
+		if (!get_ea_mode_op(info, op0, info->ir, 12)) {
+			invalid_insn(info);
+			return;
+		}
+
+		ext->op_count = 3;
+		if (src == M68K_FPDST_PACKED_STATIC) {
+			int k_factor = next & 0x7f;
+			if (k_factor & 0x40)
+				k_factor -= 0x80;
+			op_k->address_mode = M68K_AM_IMMEDIATE;
+			op_k->type = M68K_OP_IMM;
+			op_k->imm = (uint64_t)(int64_t)k_factor;
+		} else {
+			op_k->address_mode = M68K_AM_NONE;
+			op_k->type = M68K_OP_REG;
+			op_k->reg = M68K_REG_D0 + ((next >> 4) & 7);
+		}
+		op1->reg = M68K_REG_FP0 + dst;
+		return;
+	}
+
+	if (ea_operand) {
 		switch (src) {
 		case M68K_FPSRC_LONG:
 			ext->op_size.cpu_size = M68K_CPU_SIZE_LONG;
@@ -3184,7 +3261,15 @@ fpu_operands:
 		case M68K_FPSRC_EXTENDED:
 			ext->op_size.type = M68K_SIZE_TYPE_FPU;
 			ext->op_size.fpu_size = M68K_FPU_SIZE_EXTENDED;
-			if (!get_ea_mode_op(info, op0, info->ir, 12)) {
+			if (is_fmove && m68k_ea_is_immediate(info->ir)) {
+				if (!read_imm_extended(info,
+						       &op0->fp_extended)) {
+					invalid_insn(info);
+					return;
+				}
+				op0->address_mode = M68K_AM_IMMEDIATE;
+				op0->type = M68K_OP_FP_EXTENDED;
+			} else if (!get_ea_mode_op(info, op0, info->ir, 12)) {
 				invalid_insn(info);
 				return;
 			}
@@ -3193,7 +3278,16 @@ fpu_operands:
 		case M68K_FPSRC_PACKED:
 			ext->op_size.type = M68K_SIZE_TYPE_FPU;
 			ext->op_size.fpu_size = M68K_FPU_SIZE_EXTENDED;
-			if (!get_ea_mode_op(info, op0, info->ir, 12)) {
+			if (is_fmove)
+				ext->op_size.fpu_size = M68K_FPU_SIZE_PACKED;
+			if (is_fmove && m68k_ea_is_immediate(info->ir)) {
+				if (!read_imm_packed(info, &op0->fp_packed)) {
+					invalid_insn(info);
+					return;
+				}
+				op0->address_mode = M68K_AM_IMMEDIATE;
+				op0->type = M68K_OP_FP_PACKED;
+			} else if (!get_ea_mode_op(info, op0, info->ir, 12)) {
 				invalid_insn(info);
 				return;
 			}
@@ -5322,6 +5416,18 @@ static void build_regs_read_write_counts(m68k_info *info)
 
 	if (!info->extension.op_count)
 		return;
+	if (MCInst_getOpcode(info->inst) == M68K_INS_FMOVE &&
+	    info->extension.op_size.type == M68K_SIZE_TYPE_FPU &&
+	    info->extension.op_size.fpu_size == M68K_FPU_SIZE_PACKED &&
+	    info->extension.op_count == 3) {
+		/* Packed register-to-memory FMOVE reads both the FP source and
+		 * its static/dynamic k-factor; only the memory operand is a
+		 * destination. */
+		update_op_reg_list(info, &info->extension.operands[0], 0);
+		update_op_reg_list(info, &info->extension.operands[1], 1);
+		update_op_reg_list(info, &info->extension.operands[2], 0);
+		return;
+	}
 	if (info->inst->Opcode == M68K_INS_FMOVEM &&
 	    info->extension.op_count == 2 &&
 	    info->extension.operands[1].type == M68K_OP_REG) {

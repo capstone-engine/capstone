@@ -3770,6 +3770,892 @@ test_cases:
                   reg: fp1
             regs_write: [fp1]
             regs_impl_write: [fp1]
+  # Motorola 96-bit extended-precision immediate (fmove.x):
+  # canonical +1.0 is 3fff 0000 8000 0000 0000 0000.
+  # The fmove.x must consume all 16 bytes so the two nops follow directly.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0x3f,
+          0xff,
+          0x00,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x4e,
+          0x71,
+          0x4e,
+          0x71,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x #0e1, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0x3fff
+                    reserved: 0x0000
+                    significand: 0x8000000000000000
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+        - asm_text: "nop"
+        - asm_text: "nop"
+  # A complete extended immediate needs 12 operand bytes after the opcode and
+  # command word. Reject truncated input instead of decoding safe-read values.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0x3f,
+          0xff,
+          0x00,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns: []
+  # Signed value with nonzero exponent and fraction: -2.5.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0xc0,
+          0x00,
+          0x00,
+          0x00,
+          0xa0,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x #0e-2.5, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0xc000
+                    reserved: 0x0000
+                    significand: 0xa000000000000000
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Preserve significand bits that cannot be represented by binary64.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0x3f,
+          0xff,
+          0x00,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x0c,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x #0e1, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0x3fff
+                    reserved: 0x0000
+                    significand: 0x8000000000000c00
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # The original request encoding put 0x8000 in the reserved word
+  # (3fff 8000 0000 0000 0000 0000): the significand is all zero, so the
+  # value must decode to 0.0 while still consuming the full 16 bytes.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0x3f,
+          0xff,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x4e,
+          0x71,
+          0x4e,
+          0x71,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x #0e0, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0x3fff
+                    reserved: 0x8000
+                    significand: 0x0000000000000000
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+        - asm_text: "nop"
+        - asm_text: "nop"
+  # Preserve a second low-bit significand pattern without rounding it.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0x3f,
+          0xff,
+          0x00,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x04,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x #0e1, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0x3fff
+                    reserved: 0x0000
+                    significand: 0x8000000000000400
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Finite extended value outside the binary64 exponent range remains exact
+  # in detail even though the assembly-text approximation overflows.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0x7f,
+          0xfe,
+          0x00,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x #0einf, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0x7ffe
+                    reserved: 0x0000
+                    significand: 0x8000000000000000
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Preserve the sign of an extended negative zero.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x #0e-0, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0x8000
+                    reserved: 0x0000
+                    significand: 0x0000000000000000
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Special value: E=0x7fff with a zero 63-bit fraction encodes +infinity.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0x7f,
+          0xff,
+          0x00,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x #0einf, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0x7fff
+                    reserved: 0x0000
+                    significand: 0x8000000000000000
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Special value: E=0x7fff with a nonzero fraction becomes a quiet NaN.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0x7f,
+          0xff,
+          0x00,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x01,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x #0enan, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0x7fff
+                    reserved: 0x0000
+                    significand: 0x8000000000000001
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Subnormal path: E=0x3bcd with significand 0x8000000000000000 is the
+  # smallest binary64 subnormal (2^-1074, bits 0x0000000000000001).
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x48,
+          0x00,
+          0x3b,
+          0xcd,
+          0x00,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x #0e4.94066e-324, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0x3bcd
+                    reserved: 0x0000
+                    significand: 0x8000000000000000
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Extended source with a memory effective address: no inline 12-byte
+  # immediate is consumed; the operand stays a memory reference.
+  - input:
+      bytes: [0xf2, 0x10, 0x48, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.x (a0), fp0"
+          size: 4
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
+                  address_mode: M68K_AM_REGI_ADDR
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_read: [a0]
+            regs_write: [fp0]
+            regs_impl_read: [a0]
+            regs_impl_write: [fp0]
+  # Motorola 96-bit packed-decimal immediate (fmove.p). Preserve the raw
+  # representation in detail while printing its exact decimal digits.
+  # The instruction must consume all 16 bytes so the two nops follow it.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x4c,
+          0x00,
+          0x00,
+          0x25,
+          0x00,
+          0x01,
+          0x23,
+          0x45,
+          0x67,
+          0x89,
+          0x01,
+          0x23,
+          0x45,
+          0x67,
+          0x4e,
+          0x71,
+          0x4e,
+          0x71,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.p #0e1.2345678901234567e+025, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed:
+                    header: 0x00250001
+                    fraction: 0x2345678901234567
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+        - asm_text: "nop"
+        - asm_text: "nop"
+  # Reject an immediate that has only ten of its required twelve operand
+  # bytes instead of decoding safe-read sentinel values.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x4c,
+          0x00,
+          0x00,
+          0x25,
+          0x00,
+          0x01,
+          0x23,
+          0x45,
+          0x67,
+          0x89,
+          0x01,
+          0x23,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns: []
+  # Mantissa and exponent signs are independent packed-decimal fields.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x4c,
+          0x00,
+          0xc0,
+          0x02,
+          0x00,
+          0x06,
+          0x02,
+          0x30,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.p #0e-6.0230000000000000e-002, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed:
+                    header: 0xc0020006
+                    fraction: 0x0230000000000000
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Preserve the sign of packed-decimal zero.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x4c,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.p #0e-0, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed:
+                    header: 0x80000000
+                    fraction: 0x0000000000000000
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Packed special values use an all-ones exponent field. A zero fraction is
+  # infinity; a nonzero fraction is NaN, with the mantissa sign preserved.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x4c,
+          0x00,
+          0x7f,
+          0xff,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.p #0einf, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed:
+                    header: 0x7fff0000
+                    fraction: 0x0000000000000000
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x4c,
+          0x00,
+          0xff,
+          0xff,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x01,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.p #0e-nan, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed:
+                    header: 0xffff0000
+                    fraction: 0x0000000000000001
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Invalid BCD nibbles have deterministic text and remain available in the
+  # raw detail operand for callers that want to interpret them differently.
+  - input:
+      bytes:
+        [
+          0xf2,
+          0x3c,
+          0x4c,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x01,
+          0x23,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x00,
+          0x0a,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.p #<invalid-packed>, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed:
+                    header: 0x00000001
+                    fraction: 0x230000000000000a
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+            regs_impl_write: [fp0]
+  # Packed source with a memory effective address has no inline immediate.
+  - input:
+      bytes: [0xf2, 0x10, 0x4c, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.p (a0), fp0"
+          size: 4
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
+                  address_mode: M68K_AM_REGI_ADDR
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_read: [a0]
+            regs_write: [fp0]
+            regs_impl_read: [a0]
+            regs_impl_write: [fp0]
+  # Register-to-memory packed moves carry a static signed 7-bit k-factor or
+  # a dynamic data-register k-factor as a third detail operand.
+  - input:
+      bytes: [0xf2, 0x10, 0x6c, 0x05]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.p fp0, (a0){#5}"
+          size: 4
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_REG
+                  reg: fp0
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
+                  address_mode: M68K_AM_REGI_ADDR
+                - type: M68K_OP_IMM
+                  address_mode: M68K_AM_IMMEDIATE
+                  imm: 5
+            regs_read: [fp0, a0]
+            regs_impl_read: [fp0, a0]
+  - input:
+      bytes: [0xf2, 0x11, 0x6c, 0xfb]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.p fp1, (a1){#-5}"
+          size: 4
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_REG
+                  reg: fp1
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a1
+                  address_mode: M68K_AM_REGI_ADDR
+                - type: M68K_OP_IMM
+                  address_mode: M68K_AM_IMMEDIATE
+                  imm: -5
+            regs_read: [fp1, a1]
+            regs_impl_read: [fp1, a1]
+  - input:
+      bytes: [0xf2, 0x12, 0x7d, 0x30]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "fmove.p fp2, (a2){d3}"
+          size: 4
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_REG
+                  reg: fp2
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a2
+                  address_mode: M68K_AM_REGI_ADDR
+                - type: M68K_OP_REG
+                  reg: d3
+            regs_read: [fp2, a2, d3]
+            regs_impl_read: [fp2, a2, d3]
   - input:
       bytes: [0xf2, 0x10, 0x50, 0x00]
       arch: "m68k"

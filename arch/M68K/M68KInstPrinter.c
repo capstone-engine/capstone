@@ -16,6 +16,7 @@
 #include "../../MCInst.h"
 #include "../../MCInstrDesc.h"
 #include "../../MCRegisterInfo.h"
+#include "../../MathExtras.h"
 
 #ifndef CAPSTONE_DIET
 static const char s_spacing[] = " ";
@@ -211,18 +212,164 @@ static void printBitfield(SStream *O, const cs_m68k_op *op)
 	SStream_concat0(O, "}");
 }
 
+static bool packed_bcd_to_string(uint64_t packed, char digits[17])
+{
+	unsigned int i;
+
+	for (i = 0; i < 16; ++i) {
+		unsigned int digit =
+			(unsigned int)((packed >> ((15 - i) * 4)) & 0xf);
+		if (digit > 9)
+			return false;
+		digits[i] = (char)('0' + digit);
+	}
+	digits[16] = '\0';
+	return true;
+}
+
+static bool packed_exponent_to_string(uint16_t packed, char digits[4])
+{
+	unsigned int i;
+
+	for (i = 0; i < 3; ++i) {
+		unsigned int digit =
+			(unsigned int)((packed >> ((2 - i) * 4)) & 0xf);
+		if (digit > 9)
+			return false;
+		digits[i] = (char)('0' + digit);
+	}
+	digits[3] = '\0';
+	return true;
+}
+
+static void printPackedImmediate(SStream *O, const m68k_op_fp_packed *value)
+{
+	const uint32_t header = value->header;
+	const bool negative = (header & 0x80000000U) != 0;
+	const bool negative_exponent = (header & 0x40000000U) != 0;
+	const uint16_t exponent = (uint16_t)((header >> 16) & 0x0fff);
+	const unsigned int integer_digit = header & 0xf;
+	char exponent_digits[4];
+	char fraction_digits[17];
+
+	/* SE=1, y=3, and exponent=FFF encode infinity or NaN. */
+	if (((header >> 16) & 0x7fff) == 0x7fff) {
+		SStream_concat(O, "#0e%s%s", negative ? "-" : "",
+			       value->fraction == 0 ? "inf" : "nan");
+		return;
+	}
+
+	if (integer_digit == 0 && value->fraction == 0) {
+		SStream_concat(O, "#0e%s0", negative ? "-" : "");
+		return;
+	}
+
+	if (integer_digit > 9 ||
+	    !packed_exponent_to_string(exponent, exponent_digits) ||
+	    !packed_bcd_to_string(value->fraction, fraction_digits)) {
+		SStream_concat0(O, "#<invalid-packed>");
+		return;
+	}
+
+	SStream_concat(O, "#0e%s%u.%se%c%s", negative ? "-" : "", integer_digit,
+		       fraction_digits, negative_exponent ? '-' : '+',
+		       exponent_digits);
+}
+
+#if !defined(_KERNEL_MODE)
+/* Round `value >> shift` to nearest, ties to even.  Requires 1 <= shift <= 64. */
+static uint64_t round_right_to_even(uint64_t value, unsigned int shift)
+{
+	if (shift < 64) {
+		uint64_t quotient = value >> shift;
+		uint64_t remainder = value & ((1ULL << shift) - 1);
+		uint64_t halfway = 1ULL << (shift - 1);
+		if (remainder > halfway ||
+		    (remainder == halfway && (quotient & 1)))
+			return quotient + 1;
+		return quotient;
+	}
+	if (value > 0x8000000000000000ULL)
+		return 1;
+	return 0;
+}
+
+/* Convert only for assembly-text rendering.  The detail operand retains the
+ * complete external representation in fp_extended. */
+static double extended_to_double(const m68k_op_fp_extended *value)
+{
+	const uint16_t sign_exp = value->sign_exp;
+	const uint64_t significand = value->significand;
+	const uint64_t sign = ((uint64_t)(sign_exp & 0x8000)) << 48;
+	const unsigned int E = sign_exp & 0x7fff;
+
+	if (E == 0x7fff) {
+		uint64_t fraction = significand & 0x7fffffffffffffffULL;
+		if (fraction == 0)
+			return BitsToDouble(sign | 0x7ff0000000000000ULL);
+		return BitsToDouble(sign | 0x7ff0000000000000ULL |
+				    ((fraction >> 11) | 0x0008000000000000ULL));
+	}
+
+	if (E == 0 || significand == 0)
+		return BitsToDouble(sign);
+
+	{
+		unsigned int leading = CountLeadingZeros_64(significand);
+		uint64_t normalized = significand << leading;
+		int64_t e = (int64_t)E - 16383 - (int64_t)leading;
+
+		if (e > 1023)
+			return BitsToDouble(sign | 0x7ff0000000000000ULL);
+
+		if (e >= -1022) {
+			uint64_t rounded = round_right_to_even(normalized, 11);
+			if (rounded == (1ULL << 53)) {
+				rounded >>= 1;
+				++e;
+				if (e > 1023)
+					return BitsToDouble(
+						sign | 0x7ff0000000000000ULL);
+			}
+			return BitsToDouble(sign |
+					    ((uint64_t)(e + 1023) << 52) |
+					    (rounded & 0x000fffffffffffffULL));
+		}
+
+		{
+			uint64_t shift = (uint64_t)(-e - 1011);
+			uint64_t fraction =
+				shift > 64 ? 0 :
+					     round_right_to_even(
+						     normalized,
+						     (unsigned int)shift);
+			return BitsToDouble(sign | fraction);
+		}
+	}
+}
+#endif
+
 static void printImmediate(SStream *O, const cs_m68k *inst,
 			   const cs_m68k_op *op)
 {
 	if (inst->op_size.type == M68K_SIZE_TYPE_FPU) {
+		if (op->type == M68K_OP_FP_PACKED) {
+			printPackedImmediate(O, &op->fp_packed);
+			return;
+		}
 #if defined(_KERNEL_MODE)
 		SStream_concat(O, "#<float_point_unsupported>");
 		return;
 #else
-		if (inst->op_size.fpu_size == M68K_FPU_SIZE_SINGLE)
+		/* Dispatch on the operand storage type.  Extended immediates
+		 * are converted only for GNU-compatible assembly text. */
+		if (op->type == M68K_OP_FP_SINGLE)
 			SStream_concat(O, "#%f", op->simm);
-		else if (inst->op_size.fpu_size == M68K_FPU_SIZE_DOUBLE)
+		else if (op->type == M68K_OP_FP_DOUBLE)
 			SStream_concat(O, "#%f", op->dimm);
+		else if (op->type == M68K_OP_FP_EXTENDED)
+			SStream_concat(O, "#0e%g",
+				       extended_to_double(&op->fp_extended));
 		else
 			SStream_concat(O, "#<unsupported>");
 		return;
@@ -459,6 +606,22 @@ static void printCacheOp(SStream *O, uint32_t pc, const cs_m68k *ext)
 	}
 }
 
+static void printPackedMoveDestination(SStream *O, uint32_t pc,
+				       const cs_m68k *ext)
+{
+	const cs_m68k_op *k_factor = &ext->operands[2];
+
+	printAddressingMode(O, pc, ext, &ext->operands[0]);
+	SStream_concat(O, ",%s", s_spacing);
+	printAddressingMode(O, pc, ext, &ext->operands[1]);
+	SStream_concat0(O, "{");
+	if (k_factor->type == M68K_OP_IMM)
+		SStream_concat(O, "#%" PRId64, (int64_t)k_factor->imm);
+	else
+		printAddressingMode(O, pc, ext, k_factor);
+	SStream_concat0(O, "}");
+}
+
 #endif
 
 static void printOpSize(SStream *O, const cs_m68k *ext)
@@ -491,6 +654,9 @@ static void printOpSize(SStream *O, const cs_m68k *ext)
 			break;
 		case M68K_FPU_SIZE_EXTENDED:
 			SStream_concat0(O, ".x");
+			break;
+		case M68K_FPU_SIZE_PACKED:
+			SStream_concat0(O, ".p");
 			break;
 		case M68K_FPU_SIZE_NONE:
 			break;
@@ -549,6 +715,14 @@ void M68K_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 
 	if (MI->Opcode >= M68K_INS_CINVL && MI->Opcode <= M68K_INS_CPUSHA) {
 		printCacheOp(O, info->pc, ext);
+		return;
+	}
+
+	if (MI->Opcode == M68K_INS_FMOVE &&
+	    ext->op_size.type == M68K_SIZE_TYPE_FPU &&
+	    ext->op_size.fpu_size == M68K_FPU_SIZE_PACKED &&
+	    ext->op_count == 3) {
+		printPackedMoveDestination(O, info->pc, ext);
 		return;
 	}
 

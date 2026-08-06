@@ -67,6 +67,8 @@ from capstone.m68k_const import (
     M68K_OP_BR_DISP,
     M68K_OP_REG_BITS,
     M68K_OP_FP_DOUBLE,
+    M68K_OP_FP_EXTENDED,
+    M68K_OP_FP_PACKED,
     M68K_OP_FP_SINGLE,
     M68K_OP_MEM,
     M68K_OP_SHIFT,
@@ -1145,6 +1147,40 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
                 return False
         elif aop.type == M68K_OP_FP_DOUBLE:
             if not compare_dp(aop.dimm, eop.get("dimm"), "dimm"):
+                return False
+        elif aop.type == M68K_OP_FP_EXTENDED:
+            fp_extended = eop.get("fp_extended", {})
+            if not compare_uint64(
+                aop.fp_extended.significand,
+                fp_extended.get("significand"),
+                "fp_extended.significand",
+            ):
+                return False
+            if not compare_uint16(
+                aop.fp_extended.sign_exp,
+                fp_extended.get("sign_exp"),
+                "fp_extended.sign_exp",
+            ):
+                return False
+            if not compare_uint16(
+                aop.fp_extended.reserved,
+                fp_extended.get("reserved"),
+                "fp_extended.reserved",
+            ):
+                return False
+        elif aop.type == M68K_OP_FP_PACKED:
+            fp_packed = eop.get("fp_packed", {})
+            if not compare_uint32(
+                aop.fp_packed.header,
+                fp_packed.get("header"),
+                "fp_packed.header",
+            ):
+                return False
+            if not compare_uint64(
+                aop.fp_packed.fraction,
+                fp_packed.get("fraction"),
+                "fp_packed.fraction",
+            ):
                 return False
         elif aop.type == M68K_OP_FP_SINGLE:
             if not compare_fp(aop.simm, eop.get("simm"), "simm"):
