@@ -91,8 +91,10 @@ static void test_overflow_set_reg_mem_n(void)
 
 	csh handle;
 	if (cs_open(CS_ARCH_SH, CS_MODE_SH2A | CS_MODE_SHFPU, &handle) !=
-	    CS_ERR_OK)
+	    CS_ERR_OK) {
+		assert(0);
 		return;
+	}
 	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
 	cs_insn *insn = cs_malloc(handle);
@@ -177,8 +179,10 @@ static void test_ub_shift_sh_dsp_p(void)
 
 	csh handle;
 	if (cs_open(CS_ARCH_SH, CS_MODE_SH4A | CS_MODE_SHDSP, &handle) !=
-	    CS_ERR_OK)
+	    CS_ERR_OK) {
+		assert(0);
 		return;
+	}
 	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
 	cs_insn *insn = NULL;
@@ -198,8 +202,10 @@ static void test_ub_isintn_xtensa_offset(void)
 
 	csh handle;
 	if (cs_open(CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32S3, &handle) !=
-	    CS_ERR_OK)
+	    CS_ERR_OK) {
+		assert(0);
 		return;
+	}
 	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
 	cs_insn *insn = NULL;
@@ -245,6 +251,24 @@ static void test_stack_overflow_issue_3010(void)
 	cs_close(&handle);
 	return;
 }
+	
+static void test_sh_oob_read_ghsa_5q63_4654_94v6(void)
+{
+	csh handle;
+	if (cs_open(CS_ARCH_SH,
+		    CS_MODE_SH2A | CS_MODE_SHFPU | CS_MODE_BIG_ENDIAN,
+		    &handle) != CS_ERR_OK) {
+		assert(0);
+		return;
+	}
+	unsigned char code[] = { 0x39, 0x99, 0xf5, 0x39 }; /* 4 crafted bytes */
+	cs_insn *insn;
+	size_t count = cs_disasm(handle, code, sizeof(code), 0x1000, 0, &insn);
+	if (count)
+		cs_free(insn, count);
+	cs_close(&handle);
+	return;
+}
 
 int main()
 {
@@ -255,6 +279,7 @@ int main()
 	test_ub_shift_sh_dsp_p();
 	test_ub_isintn_xtensa_offset();
 	test_stack_overflow_issue_3010();
+	test_sh_oob_read_ghsa_5q63_4654_94v6();
 
 	return 0;
 }
