@@ -11,8 +11,8 @@ set(CMOCKA_LIB_FILE "${CMAKE_CURRENT_BINARY_DIR}/extern/src/cmocka_ext-build/src
 # CMocka is the unit testing library we use.
 ExternalProject_Add(cmocka_ext
     PREFIX extern
-    URL "https://cmocka.org/files/1.1/cmocka-1.1.7.tar.xz"
-    URL_HASH SHA256=810570eb0b8d64804331f82b29ff47c790ce9cd6b163e98d47a4807047ecad82
+    URL "https://gitlab.com/cmocka/cmocka/-/archive/cmocka-1.1.8/cmocka-cmocka-1.1.8.tar.gz"
+    URL_HASH SHA256=0994a7cd6b67c46b1cbfbb56c3b22ac379e1ac26fbe68e9cf7cea259b60e201c
     CMAKE_ARGS
         -DBUILD_SHARED_LIBS=OFF
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
