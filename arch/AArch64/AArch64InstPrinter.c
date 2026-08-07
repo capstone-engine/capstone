@@ -965,6 +965,10 @@ DEFINE_printMatrix(0);
 		const char *RegName = getRegisterName(MCOperand_getReg(RegOp), \
 						      AArch64_NoRegAltName); \
 \
+		/* Diet builds have no register-name table; skip printing. */ \
+		if (!RegName) \
+			return; \
+\
 		unsigned buf_len = strlen(RegName) + 1; \
 		char *Base = cs_mem_calloc(1, buf_len); \
 		memcpy(Base, RegName, buf_len); \
