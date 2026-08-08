@@ -6466,7 +6466,7 @@ test_cases:
       name: "RISCV - #2881 - op_count must not accumulate across instructions (real)"
       bytes: [ 0x41, 0x11, 0x13, 0x85, 0x15, 0x00, 0x41, 0x11 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCV64, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL, CS_OPT_SYNTAX_REAL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL ]
+      options: [ CS_MODE_RISCV64, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL, CS_OPT_SYNTAX_REAL ]
     expected:
       insns:
       -
