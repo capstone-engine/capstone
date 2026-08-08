@@ -917,7 +917,7 @@ static void enable_additional_options(csh handle, const char *input,
 			if (arch == all_opts[i].archs[j]) {
 				cs_option(handle,
 					  all_opts[i].type ? all_opts[i].type :
-								CS_OPT_SYNTAX,
+							     CS_OPT_SYNTAX,
 					  all_opts[i].opt);
 				break;
 			}

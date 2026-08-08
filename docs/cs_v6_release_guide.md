@@ -241,6 +241,21 @@ Nonetheless, we hope this additional information is useful to you.
   * `CS_OPT_SYNTAX_REAL` / `CS_OPT_DETAIL_REAL`
   * `CS_OPT_SYNTAX_UNCOMPRESSED_REAL` / `CS_OPT_DETAIL_UNCOMPRESSED_REAL`
   * `CS_OPT_SYNTAX_ALIAS` / `CS_OPT_DETAIL_ALIAS`
+
+- CS_OPT_SYNTAX_REAL/CS_OPT_DETAIL_REAL:
+The text/details are always those of the raw instruction, compressed instructions remain compressed in text and details, non-compressed stay non-compressed in text and details, and no aliases are ever printed. 
+![RISC-V real instruction selection flow](images/cs_v6_release_guide/REAL.png)
+
+- CS_OPT_SYNTAX_UNCOMPRESSED_REAL/CS_OPT_DETAIL_UNCOMPRESSED_REAL:
+The text/details for compressed instructions are those of their uncompressed equivalents, but non-compressed instructions stay non-compressed in text/details, no aliases are ever printed. 
+![RISC-V uncompressed real instruction selection flow](images/cs_v6_release_guide/UNCOMPRESSED_REAL.png)
+
+- CS_OPT_SYNTAX_ALIAS/CS_OPT_DETAIL_ALIAS:
+The text/details are of aliases whenever available, compressed instructions are first attempted to print as aliases, then uncompressed and attempted again, non-compressed instructions are attempted to print as aliases and otherwise print as themselves. Instructions that are compressed but neither alias nor uncompress to anything are printed as themselves.
+![RISC-V alias instruction selection flow](images/cs_v6_release_guide/ALIAS.png)
+
+- CS_OPT_SYNTAX_* and CS_OPT_DETAIL_* are independent and can be chosen seperately, in that case their combined effect will take effect. For example CS_OPT_SYNTAX_REAL and CS_OPT_DETAIL_UNCOMPRESSED_REAL will always preserve the text of compressed instructions but their details will be of the uncompressed equivalents.
+
 - Added `reg_access` capstone callback to return all read and written registers for the instructions, including registers used as part of memory operands.
   * Note that `reg_access` does NOT treat CSRs as registers, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 
   * Note that `reg_access` does NOT treat reading the PC's value as reading a register, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 
