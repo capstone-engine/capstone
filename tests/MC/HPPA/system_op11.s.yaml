@@ -88,7 +88,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "mtsp flags, sr1"
+          asm_text: "mtsp r0, sr1"
   -
     input:
       bytes: [ 0x00, 0x00, 0x44, 0xa0 ]
@@ -97,7 +97,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "mfsp sr1, flags"
+          asm_text: "mfsp sr1, r0"
   -
     input:
       bytes: [ 0x00, 0x00, 0x18, 0x40 ]
@@ -106,7 +106,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "mtctl flags, rctr"
+          asm_text: "mtctl r0, rctr"
   -
     input:
       bytes: [ 0x00, 0x00, 0x18, 0x40 ]
@@ -115,4 +115,4 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "mtctl flags, rctr"
+          asm_text: "mtctl r0, rctr"
