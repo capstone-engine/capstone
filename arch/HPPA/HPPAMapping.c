@@ -304,7 +304,7 @@ const char *HPPA_insn_name(csh handle, unsigned int id)
 /* Integer register names, indexed by the numbers which appear in the
    opcodes.  */
 static const char *const reg_names[] = {
-	"flags", "r1",	"rp",  "r3",  "r4",   "r5",   "r6",  "r7",
+	"r0",	 "r1",	"rp",  "r3",  "r4",   "r5",   "r6",  "r7",
 	"r8",	 "r9",	"r10", "r11", "r12",  "r13",  "r14", "r15",
 	"r16",	 "r17", "r18", "r19", "r20",  "r21",  "r22", "r23",
 	"r24",	 "r25", "r26", "dp",  "ret0", "ret1", "sp",  "r31"
