@@ -6053,8 +6053,8 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_ADDRSIZE ]
             opcode: [ 0xe2, 0x00, 0x00, 0x00 ]
-          regs_read: [ rip, rcx ]
-          regs_write: [ rip, rcx ]      # BUG: should be ecx
+          regs_read: [ rip, ecx ]
+          regs_write: [ rip, ecx ]
       -
         asm_text: "loope 0x34"
         details:
@@ -6081,8 +6081,8 @@ test_cases:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_ADDRSIZE ]
             opcode: [ 0xe1, 0x00, 0x00, 0x00 ]
             eflags: [ X86_EFLAGS_TEST_ZF ]
-          regs_read: [ rip, rcx, rflags ]
-          regs_write: [ rip, rcx ]      # BUG: should be ecx
+          regs_read: [ rip, ecx, rflags ]
+          regs_write: [ rip, ecx ]
       -
         asm_text: "loopne 0x34"
         details:
@@ -6109,8 +6109,8 @@ test_cases:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_ADDRSIZE ]
             opcode: [ 0xe0, 0x00, 0x00, 0x00 ]
             eflags: [ X86_EFLAGS_TEST_ZF ]
-          regs_read: [ rip, rcx, rflags ]
-          regs_write: [ rip, rcx ]      # BUG: should be ecx
+          regs_read: [ rip, ecx, rflags ]
+          regs_write: [ rip, ecx ]
 
   -
     input:
