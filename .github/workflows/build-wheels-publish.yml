@@ -108,7 +108,7 @@ jobs:
         uses: docker/setup-qemu-action@v4
 
       - name: '🚧 cibuildwheel run'
-        uses: pypa/cibuildwheel@v4.1.1
+        uses: pypa/cibuildwheel@v4.2.0
         env:
           CIBW_BUILD_FRONTEND: build
           CIBW_BUILD: ${{ matrix.cibw_build }}
