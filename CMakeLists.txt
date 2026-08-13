@@ -1083,6 +1083,7 @@ if(CAPSTONE_BUILD_CSTOOL)
     endif()
 endif()
 
+find_program(VALGRIND_BIN NAMES valgrind)
 if(CAPSTONE_BUILD_CSTEST)
     enable_testing()
     set(CSTEST_DIR ${PROJECT_SOURCE_DIR}/suite/cstest)

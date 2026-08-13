@@ -161,6 +161,25 @@ add_test(NAME FeaturesTests
     COMMAND cstest ${PROJECT_SOURCE_DIR}/tests/features
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
+if (VALGRIND_BIN)
+add_test(NAME valgrind_MCTests
+    COMMAND ${VALGRIND_BIN} --leak-check=full --error-exitcode=1 cstest ${PROJECT_SOURCE_DIR}/tests/MC
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+add_test(NAME valgrind_DetailTests
+    COMMAND ${VALGRIND_BIN} --leak-check=full --error-exitcode=1 cstest ${PROJECT_SOURCE_DIR}/tests/details
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+add_test(NAME valgrind_IssueTests
+    COMMAND ${VALGRIND_BIN} --leak-check=full --error-exitcode=1 cstest ${PROJECT_SOURCE_DIR}/tests/issues
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+add_test(NAME valgrind_FeaturesTests
+    COMMAND ${VALGRIND_BIN} --leak-check=full --error-exitcode=1 cstest ${PROJECT_SOURCE_DIR}/tests/features
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+endif()
+
 
 # These tests must be run independently. Otherwise we won't detect when one succeeds.
 # Because cstest will always return not 0 from the first failing test onwards.
