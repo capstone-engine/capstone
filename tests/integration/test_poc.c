@@ -270,6 +270,54 @@ static void test_sh_oob_read_ghsa_5q63_4654_94v6(void)
 	return;
 }
 
+static void test_arm_pop_ghsa_8qp8_2vg2_8mr4(void)
+{
+	uint8_t arm_bytes[132] = { 0 };
+	for (int i = 0; i < 33; i++) {
+		arm_bytes[i * 4 + 0] = 0x00;
+		arm_bytes[i * 4 + 1] = 0x00;
+		arm_bytes[i * 4 + 2] = 0xa0;
+		arm_bytes[i * 4 + 3] = 0xe1;
+	}
+	csh h = { 0 };
+	if (cs_open(CS_ARCH_ARM, CS_MODE_ARM, &h) != CS_ERR_OK) {
+		assert(0);
+		return;
+	}
+
+	if (cs_option(h, CS_OPT_DETAIL, CS_OPT_ON) != CS_ERR_OK) {
+		assert(0);
+		return;
+	}
+	cs_insn *insn;
+	size_t c = cs_disasm(h, arm_bytes, 132, 0x1000, 0, &insn);
+	if (c)
+		cs_free(insn, c);
+	cs_close(&h);
+}
+
+/// Shouldn't trigger MSAN. Just added here to check.
+static void test_tms320_ghsa_8qp8_2vg2_8mr4(void)
+{
+	uint8_t tms_bytes[] = { 0x00, 0x00, 0x18, 0x18 };
+	csh h;
+	if (cs_open(CS_ARCH_TMS320C64X, CS_MODE_BIG_ENDIAN, &h) != CS_ERR_OK) {
+		assert(0);
+		return;
+	}
+
+	if (cs_option(h, CS_OPT_DETAIL, CS_OPT_ON) != CS_ERR_OK) {
+		assert(0);
+		return;
+	}
+
+	cs_insn *insn;
+	size_t c = cs_disasm(h, tms_bytes, 4, 0x1000, 0, &insn);
+	if (c)
+		cs_free(insn, c);
+	cs_close(&h);
+}
+
 int main()
 {
 	test_overflow_cs_insn_bytes();
@@ -280,6 +328,8 @@ int main()
 	test_ub_isintn_xtensa_offset();
 	test_stack_overflow_issue_3010();
 	test_sh_oob_read_ghsa_5q63_4654_94v6();
+	test_arm_pop_ghsa_8qp8_2vg2_8mr4();
+	test_tms320_ghsa_8qp8_2vg2_8mr4();
 
 	return 0;
 }
