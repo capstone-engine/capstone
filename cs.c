@@ -1415,6 +1415,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size,
 		if (f == cache_size) {
 			// full cache, so expand the cache to contain incoming insns
 			cache_size = cache_size * 8 / 5; // * 1.6 ~ golden ratio
+			size_t old_total_size = total_size;
 			total_size += (sizeof(cs_insn) * cache_size);
 			tmp = cs_mem_realloc(total, total_size);
 			if (tmp == NULL) { // insufficient memory
@@ -1429,6 +1430,10 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size,
 				handle->errnum = CS_ERR_MEM;
 				return 0;
 			}
+			// Zero reallocated memory to prevent
+			// access to uninitialized memory down the line.
+			memset(((uint8_t *)tmp) + old_total_size, 0,
+			       total_size - old_total_size);
 
 			total = tmp;
 			// continue to fill in the cache after the last instruction

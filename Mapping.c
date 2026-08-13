@@ -458,8 +458,10 @@ static inline bool char_ends_mnem(const char c, cs_arch arch)
 void map_set_alias_id(MCInst *MI, const SStream *O,
 		      const name_map *alias_mnem_id_map, int map_size)
 {
-	if (!MCInst_isAlias(MI))
+	if (!MCInst_isAlias(MI)) {
+		MI->flat_insn->alias_id = 0;
 		return;
+	}
 
 	char alias_mnem[16] = { 0 };
 	int i = 0, j = 0;
@@ -467,7 +469,7 @@ void map_set_alias_id(MCInst *MI, const SStream *O,
 	// Skip spaces and tabs
 	while (is_blank_char(asm_str_buf[i])) {
 		if (!asm_str_buf[i]) {
-			MI->flat_insn->alias_id = -1;
+			MI->flat_insn->alias_id = 0;
 			return;
 		}
 		++i;
@@ -478,8 +480,8 @@ void map_set_alias_id(MCInst *MI, const SStream *O,
 		alias_mnem[j] = asm_str_buf[i];
 	}
 
-	MI->flat_insn->alias_id =
-		name2id(alias_mnem_id_map, map_size, alias_mnem);
+	int alias_id = name2id(alias_mnem_id_map, map_size, alias_mnem);
+	MI->flat_insn->alias_id = alias_id < 0 ? 0 : alias_id;
 }
 
 /// Does a binary search over the given map and searches for @id.

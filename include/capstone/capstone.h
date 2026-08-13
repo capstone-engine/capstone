@@ -598,7 +598,7 @@ typedef struct cs_insn {
 
 	/// If this instruction is an alias instruction, this member is set with
 	/// the alias ID.
-	/// Otherwise to <ARCH>_INS_INVALID.
+	/// Otherwise to <ARCH>_INS_INVALID (= 0).
 	/// -- Only supported by auto-sync archs --
 	uint64_t alias_id;
 
