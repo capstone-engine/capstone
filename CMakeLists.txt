@@ -82,10 +82,15 @@ option(CAPSTONE_DEBUG "Whether to enable extra debug assertions (enabled with CM
 option(CAPSTONE_ASSERTION_WARNINGS "Disables some asserts and warns instead when hit. Does not disable all asserts." OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
 option(ENABLE_ASAN "Enable address sanitizer" OFF)
+option(ENABLE_MSAN "Enable memory sanitizer" OFF)
 option(ENABLE_COVERAGE "Enable test coverage" OFF)
 
 if (NOT CAPSTONE_BUILD_SHARED_LIBS AND NOT CAPSTONE_BUILD_STATIC_LIBS)
     FATAL_ERROR("CAPSTONE_BUILD_SHARED_LIBS and CAPSTONE_BUILD_STATIC_LIBS are both unset. Nothing to build.")
+endif()
+
+if (ENABLE_ASAN AND ENABLE_MSAN)
+    message(FATAL_ERROR "ASAN and MSAN cannot be enabled at the same time. They are not compatible.")
 endif()
 
 if (ENABLE_ASAN)
@@ -93,6 +98,16 @@ if (ENABLE_ASAN)
     add_definitions(-DASAN_ENABLED)
     add_compile_options(-fsanitize=address,undefined)
     add_link_options(-fsanitize=address,undefined)
+endif()
+
+if (ENABLE_MSAN)
+    message("Enabling MSAN")
+    if (NOT CMAKE_C_COMPILER_ID STREQUAL "Clang")
+        message(WARNING "CC compiler is NOT Clang. MSAN maybe isn't supported.")
+    endif()
+    add_definitions(-DMSAN_ENABLED)
+    add_compile_options(-fsanitize=memory)
+    add_link_options(-fsanitize=memory)
 endif()
 
 if (ENABLE_COVERAGE)

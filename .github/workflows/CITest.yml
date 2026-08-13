@@ -27,6 +27,7 @@ env:
   UBSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
   ASAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
   LSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+  MSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
 
 jobs:
   Linux:
@@ -42,7 +43,9 @@ jobs:
               arch: x64,
               build-system: 'make',
               diet-build: 'OFF',
-              enable-asan: 'OFF'
+              enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              cc: 'gcc'
             }
           - {
               name: 'ubuntu-22.04 x64 cmake',
@@ -51,6 +54,8 @@ jobs:
               build-system: 'cmake',
               diet-build: 'OFF',
               enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              cc: 'gcc',
               build_type: 'Debug'
             }
           - {
@@ -60,6 +65,8 @@ jobs:
               build-system: 'cmake',
               diet-build: 'OFF',
               enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              cc: 'gcc',
               build_type: 'Debug',
               build_options: '-DCAPSTONE_ASSERTION_WARNINGS=ON'
             }
@@ -70,6 +77,8 @@ jobs:
               build-system: 'cmake',
               diet-build: 'OFF',
               enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              cc: 'gcc',
               build_type: 'Release',
               build_options: '-DCAPSTONE_ASSERTION_WARNINGS=OFF'
             }
@@ -80,6 +89,8 @@ jobs:
               build-system: 'cmake',
               diet-build: 'OFF',
               enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              cc: 'gcc',
               build_type: 'Release',
               build_options: '-DCAPSTONE_ASSERTION_WARNINGS=ON'
             }
@@ -90,6 +101,8 @@ jobs:
               build-system: 'cmake',
               diet-build: 'OFF',
               enable-asan: 'ON',
+              enable-msan: 'OFF',
+              cc: 'gcc',
               build_type: 'Debug'
             }
 
@@ -117,15 +130,33 @@ jobs:
       if: startsWith(matrix.config.build-system, 'cmake')
       env:
         asan: ${{ matrix.config.enable-asan }}
+        msan: ${{ matrix.config.enable-msan }}
+        compiler: ${{ matrix.config.cc }}
         build_option: ${{ matrix.config.build_option }}
         build_type: ${{ matrix.config.build_type }}
       run: |
         mkdir build && cd build
         # build static library
-        cmake -DCMAKE_BUILD_TYPE=${build_type} -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} -DCAPSTONE_BUILD_DIET=${diet_build} ${build_option} ..
+        cmake \
+          -DCMAKE_BUILD_TYPE=${build_type} \
+          -DCAPSTONE_INSTALL=1 \
+          -DCMAKE_C_COMPILER=${compiler} \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DENABLE_ASAN=${asan} \
+          -DENABLE_MSAN=${msan} \
+          -DCAPSTONE_BUILD_DIET=${diet_build} ${build_option} ..
         cmake --build . --config ${build_type}
+
         # build shared library
-        cmake -DCMAKE_BUILD_TYPE=${build_type} -DCAPSTONE_INSTALL=1 -DCAPSTONE_BUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ${build_option} ..
+        cmake \
+          -DCMAKE_BUILD_TYPE=${build_type} \
+          -DCAPSTONE_INSTALL=1 \
+          -DCAPSTONE_BUILD_SHARED_LIBS=1 \
+          -DCMAKE_C_COMPILER=${compiler} \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DCAPSTONE_BUILD_CSTEST=ON \
+          -DENABLE_ASAN=${asan} \
+          -DENABLE_MSAN=${msan} ${build_option} ..
         sudo cmake --build . --config ${build_type} --target install
 
     - name: Lower number of KASL randomized address bits
@@ -183,7 +214,7 @@ jobs:
         ctest --test-dir build --output-on-failure -R legacy*
 
     - name: Valgrind cstest
-      if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.enable-asan, 'OFF')
+      if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.enable-asan, 'OFF') && startsWith(matrix.config.enable-msan, 'OFF')
       run: |
         sudo apt-get -y update
         sudo apt-get -y install valgrind
