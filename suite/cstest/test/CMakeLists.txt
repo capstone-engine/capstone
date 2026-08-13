@@ -17,6 +17,14 @@ add_test(NAME unit_cstest
   COMMAND unit_test
   WORKING_DIRECTORY ${CSTEST_TEST_DIR}
 )
+
+if (VALGRIND_BIN)
+  add_test(NAME valgrind_unit_cstest
+    COMMAND ${VALGRIND_BIN} --leak-check=full --error-exitcode=1 $<TARGET_FILE:unit_test>
+    WORKING_DIRECTORY ${CSTEST_TEST_DIR}
+  )
+endif()
+
 add_test(NAME integration_py_cstest
   COMMAND python3 ${CSTEST_TEST_DIR}/integration_tests.py $<TARGET_FILE:cstest>
   WORKING_DIRECTORY ${CSTEST_TEST_DIR}

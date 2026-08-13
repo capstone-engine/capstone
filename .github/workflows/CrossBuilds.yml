@@ -169,32 +169,32 @@ jobs:
     - name: unit tests
       if: ${{ matrix.config.skip_tests != true }}
       run: |
-        ctest --test-dir build --output-on-failure -R unit_*
+        ctest --test-dir build --output-on-failure -R "^unit_*"
 
     - name: "Integration tests"
       if: ${{ matrix.config.skip_tests != true }}
       run: |
-        ctest --test-dir build --output-on-failure -R integration_c_*
+        ctest --test-dir build --output-on-failure -R "^integration_c_*"
 
     - name: cstest MC
       if: ${{ matrix.config.skip_tests != true }}
       run: |
-        ctest --test-dir build --output-on-failure -R MCTests
+        ctest --test-dir build --output-on-failure -R "^MCTests"
 
     - name: cstest details
       if: ${{ matrix.config.skip_tests != true }}
       run: |
-        ctest --test-dir build --output-on-failure -R DetailTests
+        ctest --test-dir build --output-on-failure -R "^DetailTests"
 
     - name: cstest issues
       if: ${{ matrix.config.skip_tests != true }}
       run: |
-        ctest --test-dir build --output-on-failure -R IssueTests
+        ctest --test-dir build --output-on-failure -R "^IssueTests"
 
     - name: cstest features
       if: ${{ matrix.config.skip_tests != true }}
       run: |
-        ctest --test-dir build --output-on-failure -R FeaturesTests
+        ctest --test-dir build --output-on-failure -R "^FeaturesTests"
 
     - name: Legacy integration tests
       if: ${{ matrix.config.skip_tests != true }}

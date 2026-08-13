@@ -120,6 +120,11 @@ jobs:
         wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
         unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
 
+    - name: Install test dependencies
+      run: |
+        sudo apt-get -y update
+        sudo apt-get -y install valgrind
+
     - name: make
       if: startsWith(matrix.config.build-system, 'make')
       run: |
@@ -167,12 +172,12 @@ jobs:
     - name: unit tests
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --test-dir build --output-on-failure -R unit_*
+        ctest --test-dir build --output-on-failure -R "^unit_*"
 
     - name: "Integration tests"
       if: startsWith(matrix.config.build-system, 'cmake') && matrix.config.diet-build == 'OFF'
       run: |
-        ctest --test-dir build --output-on-failure -R integration_*
+        ctest --test-dir build --output-on-failure -R "^integration_*"
 
     - name: cstool - reaches disassembler engine
       run: |
@@ -191,22 +196,22 @@ jobs:
     - name: cstest MC
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --test-dir build --output-on-failure -R MCTests
+        ctest --test-dir build --output-on-failure -R "^MCTests"
 
     - name: cstest details
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --test-dir build --output-on-failure -R DetailTests
+        ctest --test-dir build --output-on-failure -R "^DetailTests"
 
     - name: cstest issues
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --test-dir build --output-on-failure -R IssueTests
+        ctest --test-dir build --output-on-failure -R "^IssueTests"
 
     - name: cstest features
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --test-dir build --output-on-failure -R FeaturesTests
+        ctest --test-dir build --output-on-failure -R "^FeaturesTests"
 
     - name: Legacy integration tests
       if: startsWith(matrix.config.build-system, 'cmake')
@@ -216,12 +221,7 @@ jobs:
     - name: Valgrind cstest
       if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.enable-asan, 'OFF') && startsWith(matrix.config.enable-msan, 'OFF')
       run: |
-        sudo apt-get -y update
-        sudo apt-get -y install valgrind
-        valgrind --leak-check=full cstest tests/details
-        valgrind --leak-check=full cstest tests/features
-        valgrind --leak-check=full cstest tests/issues
-        valgrind --leak-check=full cstest tests/MC
+        ctest --test-dir build --output-on-failure -R valgrind_*
 
     - name: Compatibility header generation
       # clang-format-20 is only available in Ubuntu 24.04
