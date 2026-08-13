@@ -42,12 +42,13 @@ static int add_yaml_file_path(const char *fpath, char ***test_files,
 		return 1;
 	}
 
-	(*file_count)++;
-	*test_files = cs_mem_realloc(*test_files, sizeof(char *) * *file_count);
+	*test_files = cs_mem_realloc(*test_files,
+				     sizeof(char *) * ((*file_count + 1)));
 	if (!*test_files) {
 		fprintf(stderr, "[!] realloc failed\n");
 		return -1;
 	}
+	*file_count += 1;
 	test_files[0][*file_count - 1] = cs_strdup(fpath);
 	return 0;
 }
@@ -126,13 +127,15 @@ static bool collect_yaml_tests(const char *path, char ***test_files,
 			}
 		}
 		fprintf(stderr,
-			"[!] '%s' is not a yaml file neither a directory.\n",
-			path);
+			"[!] '%s' is not a yaml file nor a directory.\n", path);
 		return false;
 	}
 	while ((dir = readdir(d)) != NULL) {
 		size_t plen = strlen(path) + strlen(dir->d_name) + 1;
 		fpath = cs_mem_calloc(plen + 1, sizeof(char));
+		if (!fpath) {
+			goto error;
+		}
 		if (snprintf(fpath, plen + 1, "%s/%s", path, dir->d_name) !=
 		    plen) {
 			fprintf(stderr, "[!] snprintf failed.\n");
