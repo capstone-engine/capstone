@@ -18,23 +18,10 @@
 
 void MCInst_Init(MCInst *inst)
 {
-	// unnecessary to initialize in loop . its expensive and inst->size shuold be honored
-	inst->Operands[0].Kind = kInvalid;
-	inst->Operands[0].ImmVal = 0;
-
-	inst->Opcode = 0;
-	inst->OpcodePub = 0;
-	inst->size = 0;
-	inst->has_imm = false;
-	inst->op1_size = 0;
-	inst->writeback = false;
-	inst->ac_idx = 0;
-	inst->popcode_adjust = 0;
-	inst->assembly[0] = '\0';
-	inst->wasm_data.type = WASM_OP_INVALID;
-	inst->xAcquireRelease = 0;
-	for (int i = 0; i < MAX_MC_OPS; ++i)
+	memset(inst, 0, sizeof(MCInst));
+	for (int i = 0; i < MAX_MC_OPS; ++i) {
 		inst->tied_op_idx[i] = -1;
+	}
 }
 
 void MCInst_clear(MCInst *inst)
