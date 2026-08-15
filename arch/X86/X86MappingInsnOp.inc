@@ -39495,7 +39495,7 @@
 
 {	/* X86_VMOVUPSmr, X86_INS_VMOVUPS: vmovups */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_VMOVUPSrm, X86_INS_VMOVUPS: vmovups */

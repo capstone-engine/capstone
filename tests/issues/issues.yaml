@@ -1,6 +1,26 @@
 test_cases:
   -
     input:
+      name: "issue 2900 vmovups memory destination access"
+      bytes: [ 0xc5,0xf8,0x11,0x28 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vmovups xmmword ptr [rax], xmm5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+  -
+    input:
       name: "issue 2323 eBPF bswap16 instruction"
       bytes: [ 0xd7,0x53,0x3f,0x0c,0x10,0x00,0x00,0x00 ]
       arch: "CS_ARCH_BPF"
