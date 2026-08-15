@@ -11,7 +11,7 @@ test_cases:
         asm_text: "ldah $29,2($27)"
         details:
           regs_read: [ $27 ]
-          regs_write: [ $28, $29 ]
+          regs_write: [ $29 ]
           alpha:
             operands:
               -
@@ -27,7 +27,7 @@ test_cases:
         asm_text: "lda $29,0x7a50($29)"
         details:
           regs_read: [ $29 ]
-          regs_write: [ $28, $29 ]
+          regs_write: [ $29 ]
           alpha:
             operands:
               -
@@ -43,7 +43,7 @@ test_cases:
         asm_text: "lda $30,0xffd0($30)"
         details:
           regs_read: [ $30 ]
-          regs_write: [ $28, $30 ]
+          regs_write: [ $30 ]
           alpha:
             operands:
               -
@@ -59,7 +59,7 @@ test_cases:
         asm_text: "stq $26,0($30)"
         details:
           regs_read: [ $26, $30 ]
-          regs_write: [ $28 ]
+          regs_write: [ ]
           alpha:
             operands:
               -
@@ -83,7 +83,7 @@ test_cases:
         asm_text: "ldah $29,2($27)"
         details:
           regs_read: [ $27 ]
-          regs_write: [ $28, $29 ]
+          regs_write: [ $29 ]
           alpha:
             operands:
               -
@@ -99,7 +99,7 @@ test_cases:
         asm_text: "lda $29,0x7a50($29)"
         details:
           regs_read: [ $29 ]
-          regs_write: [ $28, $29 ]
+          regs_write: [ $29 ]
           alpha:
             operands:
               -
@@ -115,7 +115,7 @@ test_cases:
         asm_text: "lda $30,0xffd0($30)"
         details:
           regs_read: [ $30 ]
-          regs_write: [ $28, $30 ]
+          regs_write: [ $30 ]
           alpha:
             operands:
               -
@@ -131,7 +131,7 @@ test_cases:
         asm_text: "stq $26,0($30)"
         details:
           regs_read: [ $26, $30 ]
-          regs_write: [ $28 ]
+          regs_write: [ ]
           alpha:
             operands:
               -

@@ -1,0 +1,342 @@
+# Alpha memory-format instructions inherit R28 in LLVM only to reserve a
+# compiler scratch register for frame-index lowering. R28 is not an
+# architectural implicit write of the encoded instruction, so omit it from
+# Capstone's generated register-write metadata.
+# See issue #3027 for details.
+diff --git a/arch/Alpha/AlphaGenCSMappingInsn.inc b/arch/Alpha/AlphaGenCSMappingInsn.inc
+index 766648f..f6704ec 100644
+--- a/arch/Alpha/AlphaGenCSMappingInsn.inc
++++ b/arch/Alpha/AlphaGenCSMappingInsn.inc
+@@ -2954,7 +2954,7 @@
+   /* lda $RA,$DISP($RB) */
+   ALPHA_LDA /* 400 */, ALPHA_INS_LDA,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -2962,7 +2962,7 @@
+   /* ldah $RA,$DISP($RB) */
+   ALPHA_LDAH /* 401 */, ALPHA_INS_LDAH,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -2970,7 +2970,7 @@
+   /* ldah $RA,0($RB)		!gpdisp!$NUM */
+   ALPHA_LDAHg /* 402 */, ALPHA_INS_LDAH,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -2978,7 +2978,7 @@
+   /* ldah $RA,$DISP($RB)		!gprelhigh */
+   ALPHA_LDAHr /* 403 */, ALPHA_INS_LDAH,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -2986,7 +2986,7 @@
+   /* lda $RA,0($RB)		!gpdisp!$NUM */
+   ALPHA_LDAg /* 404 */, ALPHA_INS_LDA,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -2994,7 +2994,7 @@
+   /* lda $RA,$DISP($RB)		!gprellow */
+   ALPHA_LDAr /* 405 */, ALPHA_INS_LDA,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3002,7 +3002,7 @@
+   /* ldbu $RA,$DISP($RB) */
+   ALPHA_LDBU /* 406 */, ALPHA_INS_LDBU,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3010,7 +3010,7 @@
+   /* ldbu $RA,$DISP($RB)		!gprellow */
+   ALPHA_LDBUr /* 407 */, ALPHA_INS_LDBU,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3018,7 +3018,7 @@
+   /* ldl $RA,$DISP($RB) */
+   ALPHA_LDL /* 408 */, ALPHA_INS_LDL,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3026,7 +3026,7 @@
+   /* ldl_l $RA,$DISP($RB) */
+   ALPHA_LDL_L /* 409 */, ALPHA_INS_LDL_L,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3034,7 +3034,7 @@
+   /* ldl $RA,$DISP($RB)		!gprellow */
+   ALPHA_LDLr /* 410 */, ALPHA_INS_LDL,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3042,7 +3042,7 @@
+   /* ldq $RA,$DISP($RB) */
+   ALPHA_LDQ /* 411 */, ALPHA_INS_LDQ,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3050,7 +3050,7 @@
+   /* ldq_l $RA,$DISP($RB) */
+   ALPHA_LDQ_L /* 412 */, ALPHA_INS_LDQ_L,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3058,7 +3058,7 @@
+   /* ldq_u $RA,$DISP($RB) */
+   ALPHA_LDQ_U /* 413 */, ALPHA_INS_LDQ_U,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3066,7 +3066,7 @@
+   /* ldq $RA,$DISP($RB)		!literal */
+   ALPHA_LDQl /* 414 */, ALPHA_INS_LDQ,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3074,7 +3074,7 @@
+   /* ldq $RA,$DISP($RB)		!gprellow */
+   ALPHA_LDQr /* 415 */, ALPHA_INS_LDQ,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3082,7 +3082,7 @@
+   /* lds $RA,$DISP($RB) */
+   ALPHA_LDS /* 416 */, ALPHA_INS_LDS,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3090,7 +3090,7 @@
+   /* lds $RA,$DISP($RB)		!gprellow */
+   ALPHA_LDSr /* 417 */, ALPHA_INS_LDS,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3098,7 +3098,7 @@
+   /* ldt $RA,$DISP($RB) */
+   ALPHA_LDT /* 418 */, ALPHA_INS_LDT,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3106,7 +3106,7 @@
+   /* ldt $RA,$DISP($RB)		!gprellow */
+   ALPHA_LDTr /* 419 */, ALPHA_INS_LDT,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3114,7 +3114,7 @@
+   /* ldwu $RA,$DISP($RB) */
+   ALPHA_LDWU /* 420 */, ALPHA_INS_LDWU,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3122,7 +3122,7 @@
+   /* ldwu $RA,$DISP($RB)		!gprellow */
+   ALPHA_LDWUr /* 421 */, ALPHA_INS_LDWU,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3562,7 +3562,7 @@
+   /* stb $RA, $DISP($RB) */
+   ALPHA_STB /* 476 */, ALPHA_INS_STB,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3570,7 +3570,7 @@
+   /* stb $RA,$DISP($RB)		!gprellow */
+   ALPHA_STBr /* 477 */, ALPHA_INS_STB,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3578,7 +3578,7 @@
+   /* stl $RA,$DISP($RB) */
+   ALPHA_STL /* 478 */, ALPHA_INS_STL,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3586,7 +3586,7 @@
+   /* stl_c $RA,$DISP($RB) */
+   ALPHA_STL_C /* 479 */, ALPHA_INS_STL_C,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3594,7 +3594,7 @@
+   /* stl $RA,$DISP($RB)		!gprellow */
+   ALPHA_STLr /* 480 */, ALPHA_INS_STL,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3602,7 +3602,7 @@
+   /* stq $RA,$DISP($RB) */
+   ALPHA_STQ /* 481 */, ALPHA_INS_STQ,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3610,7 +3610,7 @@
+   /* stq_c $RA,$DISP($RB) */
+   ALPHA_STQ_C /* 482 */, ALPHA_INS_STQ_C,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3618,7 +3618,7 @@
+   /* stq_u $RA, $DISP($RB) */
+   ALPHA_STQ_U /* 483 */, ALPHA_INS_STQ_U,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3626,7 +3626,7 @@
+   /* stq $RA,$DISP($RB)		!gprellow */
+   ALPHA_STQr /* 484 */, ALPHA_INS_STQ,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3634,7 +3634,7 @@
+   /* sts $RA,$DISP($RB) */
+   ALPHA_STS /* 485 */, ALPHA_INS_STS,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3642,7 +3642,7 @@
+   /* sts $RA,$DISP($RB)		!gprellow */
+   ALPHA_STSr /* 486 */, ALPHA_INS_STS,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3650,7 +3650,7 @@
+   /* stt $RA,$DISP($RB) */
+   ALPHA_STT /* 487 */, ALPHA_INS_STT,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3658,7 +3658,7 @@
+   /* stt $RA,$DISP($RB)		!gprellow */
+   ALPHA_STTr /* 488 */, ALPHA_INS_STT,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3666,7 +3666,7 @@
+   /* stw $RA,$DISP($RB) */
+   ALPHA_STW /* 489 */, ALPHA_INS_STW,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
+@@ -3674,7 +3674,7 @@
+   /* stw $RA,$DISP($RB)		!gprellow */
+   ALPHA_STWr /* 490 */, ALPHA_INS_STW,
+   #ifndef CAPSTONE_DIET
+-    { 0 }, { ALPHA_REG_R28, 0 }, { 0 }, 0, 0, {{ 0 }},
++    { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }},
+
+   #endif
+ },
