@@ -21,7 +21,7 @@ static struct {
 	cs_arch archs[CS_ARCH_MAX];
 	cs_opt_value opt;
 	cs_mode mode;
-	cs_opt_type type;
+	cs_opt_type opt_type;
 } all_opts[] = {
 	// cs_opt_value only
 	{ "+att",
@@ -916,7 +916,7 @@ static void enable_additional_options(csh handle, const char *input,
 		for (j = 0; j < CS_ARCH_MAX; j++) {
 			if (arch == all_opts[i].archs[j]) {
 				cs_option(handle,
-					  all_opts[i].type ? all_opts[i].type :
+					  all_opts[i].opt_type ? all_opts[i].opt_type :
 							     CS_OPT_SYNTAX,
 					  all_opts[i].opt);
 				break;
