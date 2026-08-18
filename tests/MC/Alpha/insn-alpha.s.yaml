@@ -2015,3 +2015,57 @@ test_cases:
       insns:
         -
           asm_text: "rs $1"
+  -
+    input:
+      bytes: [ 0xb0, 0xb0, 0x42, 0x20 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lda $2,-0x4f50($2)"
+  -
+    input:
+      bytes: [ 0xf0, 0xff, 0x22, 0xa4 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "ldq $1,-0x10($2)"
+  -
+    input:
+      bytes: [ 0xf0, 0xff, 0x22, 0xb4 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stq $1,-0x10($2)"
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0x22, 0x88 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "lds $f1,-1($2)"
+  -
+    input:
+      bytes: [ 0xff, 0xff, 0x22, 0x9c ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stt $f1,-1($2)"
+  -
+    input:
+      bytes: [ 0xf0, 0xff, 0x22, 0xb8 ]
+      arch: "CS_ARCH_ALPHA"
+      options: [ "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "stl_c $1,-0x10($2)"

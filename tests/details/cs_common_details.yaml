@@ -1232,9 +1232,9 @@ test_cases:
             regs_write: [ $29 ]
             regs_impl_write: []
         -
-          asm_text: "lda $30,0xffd0($30)"
+          asm_text: "lda $30,-0x30($30)"
           mnemonic: "lda"
-          op_str: "$30,0xffd0($30)"
+          op_str: "$30,-0x30($30)"
           details:
             regs_read: [ $30 ]
             regs_write: [ $30 ]
@@ -1272,9 +1272,9 @@ test_cases:
             regs_write: [ $29 ]
             regs_impl_write: []
         -
-          asm_text: "lda $30,0xffd0($30)"
+          asm_text: "lda $30,-0x30($30)"
           mnemonic: "lda"
-          op_str: "$30,0xffd0($30)"
+          op_str: "$30,-0x30($30)"
           details:
             regs_read: [ $30 ]
             regs_write: [ $30 ]
