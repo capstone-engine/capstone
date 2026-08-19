@@ -5,6 +5,7 @@ Capstone Engine
 [![pypi package](https://badge.fury.io/py/capstone.svg)](https://pypi.python.org/pypi/capstone)
 [![pypi downloads](https://pepy.tech/badge/capstone)](https://pepy.tech/project/capstone)
 [![oss-fuzz Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/capstone.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:capstone)
+[![inspect.software](https://raw.githubusercontent.com/inspect-software/badges/main/v1/c/capstone-engine/capstone.svg)](https://inspect.software/software/capstone-engine/capstone)
 
 > [!TIP]
 > Welcome to join our community group!
