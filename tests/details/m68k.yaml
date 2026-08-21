@@ -1103,6 +1103,68 @@ test_cases:
                 - type: M68K_OP_REG
                   reg: a3
 
+  # INT32_MIN displacements must not be negated as signed 32-bit values.
+  - input:
+      bytes: [0x47, 0xf1, 0x21, 0x30, 0x80, 0x00, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "lea.l -$80000000(a1, d2.w), a3"
+          details:
+            regs_read: [d2, a1]
+            regs_write: [a3]
+            m68k:
+              operands:
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a1
+                    index_reg: d2
+                    index_size: -1
+                    in_disp: -0x80000000
+                    in_disp_size: 1
+                  address_mode: M68K_AM_AREGI_INDEX_BASE_DISP
+                - type: M68K_OP_REG
+                  reg: a3
+  - input:
+      bytes:
+        [
+          0x20,
+          0xf0,
+          0xff,
+          0xff,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+          0x80,
+          0x00,
+          0x00,
+          0x00,
+        ]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_040]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "move.l ([-$80000000], -$80000000), (a0)+"
+          details:
+            regs_write: [a0]
+            m68k:
+              operands:
+                - type: M68K_OP_MEM
+                  mem:
+                    in_disp: -0x80000000
+                    out_disp: -0x80000000
+                    in_disp_size: 1
+                    out_disp_size: 1
+                  address_mode: M68K_AM_MEMI_POST_INDEX
+                - type: M68K_OP_MEM
+                  mem:
+                    base_reg: a0
+                  address_mode: M68K_AM_REGI_ADDR_POST_INC
+
   # ==========================================================================
   # 68040/060 PFLUSH variants (Line-F 0xF5xx)
   # These are 2-byte instructions. Currently decoded as F-line emulator trap.

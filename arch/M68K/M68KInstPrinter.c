@@ -188,6 +188,11 @@ static void printScaleFactor(SStream *O, uint8_t scale, int threshold)
 		SStream_concat(O, "%s*%s%" PRId8, s_spacing, s_spacing, scale);
 }
 
+static uint32_t unsignedMagnitude(int32_t value)
+{
+	return value < 0 ? (uint32_t)(-(int64_t)value) : (uint32_t)value;
+}
+
 static void printIndexReg(SStream *O, const cs_m68k_op *op)
 {
 	SStream_concat(O, "%s.%c", getRegName(op->mem.index_reg),
@@ -289,7 +294,7 @@ static void printBaseDisp(SStream *O, uint32_t pc, const cs_m68k_op *op)
 	} else if (op->mem.in_disp != 0) {
 		SStream_concat(O, "%s$%" PRIx32,
 			       op->mem.in_disp >= 0 ? "" : "-",
-			       abs(op->mem.in_disp));
+			       unsignedMagnitude(op->mem.in_disp));
 	}
 
 	SStream_concat0(O, "(");
@@ -328,7 +333,7 @@ static void printMemIndirect(SStream *O, uint32_t pc, const cs_m68k_op *op)
 	} else if (op->mem.in_disp != 0) {
 		SStream_concat(O, "%s$%" PRIx32,
 			       op->mem.in_disp >= 0 ? "" : "-",
-			       abs(op->mem.in_disp));
+			       unsignedMagnitude(op->mem.in_disp));
 	}
 
 	if (op->mem.base_reg != M68K_REG_INVALID) {
@@ -355,7 +360,7 @@ static void printMemIndirect(SStream *O, uint32_t pc, const cs_m68k_op *op)
 	if (op->mem.out_disp != 0) {
 		SStream_concat(O, ",%s%s$%" PRIx32, s_spacing,
 			       op->mem.out_disp >= 0 ? "" : "-",
-			       abs(op->mem.out_disp));
+			       unsignedMagnitude(op->mem.out_disp));
 	}
 
 	SStream_concat0(O, ")");
