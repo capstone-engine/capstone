@@ -248,16 +248,18 @@ static inline ppc_pred PPC_get_branch_pred(uint8_t bi, uint8_t bo,
 	if ((get_cr_pred && !TestCR) || (!get_cr_pred && !DecrCTR))
 		return PPC_PRED_INVALID;
 
+	if (!get_cr_pred) {
+		// The CTR condition without the CR-bit condition. BI selects a
+		// CR bit, so it is ignored here whether or not BO also encodes
+		// a CR-bit condition.
+		return PPC_get_no_hint_pred(
+			(ppc_pred)((bo | PPC_BO_TEST_CR) & ~PPC_BO_CR_CMP));
+	}
 	if (TestCR && DecrCTR) {
 		// The CR-bit condition without the CTR condition.
 		unsigned cr_bo_cond = (bo | PPC_BO_DECR_CTR) & ~PPC_BO_CTR_CMP;
-		// The CTR condition without the CR-bit condition.
-		unsigned ctr_bo_cond = (bo | PPC_BO_TEST_CR) & ~PPC_BO_CR_CMP;
-		if (get_cr_pred)
-			return PPC_get_no_hint_pred(
-				(ppc_pred)(((bi % 4) << 5) | cr_bo_cond));
 		return PPC_get_no_hint_pred(
-			(ppc_pred)ctr_bo_cond); // BI is ignored
+			(ppc_pred)(((bi % 4) << 5) | cr_bo_cond));
 	}
 	// BO doesn't need any separation
 	return PPC_get_no_hint_pred((ppc_pred)(((bi % 4) << 5) | bo));
