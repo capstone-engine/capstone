@@ -957,6 +957,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_LOOP:
 			case X86_INS_LOOPE:
 			case X86_INS_LOOPNE:
+				// The instruction pointer register follows the mode.
 				switch (h->mode) {
 				default:
 					break;
@@ -969,14 +970,6 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insn->detail->regs_write,
 						insn->detail->regs_write_count,
 						X86_REG_EIP, X86_REG_IP);
-					arr_replace(
-						insn->detail->regs_read,
-						insn->detail->regs_read_count,
-						X86_REG_ECX, X86_REG_CX);
-					arr_replace(
-						insn->detail->regs_write,
-						insn->detail->regs_write_count,
-						X86_REG_ECX, X86_REG_CX);
 					break;
 				case CS_MODE_64:
 					arr_replace(
@@ -987,6 +980,20 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insn->detail->regs_write,
 						insn->detail->regs_write_count,
 						X86_REG_EIP, X86_REG_RIP);
+					break;
+				}
+				// The loop counter register follows the effective address
+				// size, which a 0x67 address-size prefix can override.
+				if (insn->detail->x86.addr_size == 2) {
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_ECX, X86_REG_CX);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ECX, X86_REG_CX);
+				} else if (insn->detail->x86.addr_size == 8) {
 					arr_replace(
 						insn->detail->regs_read,
 						insn->detail->regs_read_count,
@@ -995,7 +1002,6 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insn->detail->regs_write,
 						insn->detail->regs_write_count,
 						X86_REG_ECX, X86_REG_RCX);
-					break;
 				}
 			}
 
