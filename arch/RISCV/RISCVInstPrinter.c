@@ -407,7 +407,8 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 	MI->MRI = (MCRegisterInfo *)info;
 
 	MCInst_setIsAlias(MI, false);
-	bool usesAliasDetails = map_use_alias_details(MI);
+	bool usesAliasDetails = detail_is_set(MI) && isAliasDetail(MI) &&
+				!isRealDetail(MI);
 	MI->flat_insn->usesAliasDetails = usesAliasDetails;
 
 	MCInst Uncompressed;

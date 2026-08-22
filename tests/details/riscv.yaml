@@ -5071,6 +5071,7 @@ test_cases:
       insns:
         - asm_text: "nop"
           is_alias: 1
+          uses_alias_details: -1
           details:
             riscv:
               operands:

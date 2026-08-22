@@ -6613,7 +6613,7 @@ test_cases:
       name: "RISCV - #2896 - alias operand details (ALIAS)"
       bytes: [ 0x67, 0x80, 0x00, 0x00 ]
       arch: "CS_ARCH_RISCV"
-      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL ]
+      options: [ CS_MODE_RISCV64, CS_OPT_DETAIL, CS_OPT_DETAIL_ALIAS ]
       address: 0x0
     expected:
       insns:
