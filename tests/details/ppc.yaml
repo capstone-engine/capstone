@@ -1712,3 +1712,106 @@ test_cases:
                 mem_base: r26
                 mem_offset: r1
                 access: CS_AC_READ
+  -
+    input:
+      # BI selects a CR bit and has no part in the counter predicate, so a
+      # CTR-only BO must decode the same whatever BI holds. bclr is the XL
+      # form, whose BI and BO come out of a different field mask than bc's.
+      bytes: [ 0x42, 0x00, 0x00, 0x10, 0x42, 0x06, 0x00, 0x10, 0x42, 0x46, 0x00, 0x10, 0x4e, 0x06, 0x00, 0x20 ]
+      arch: "ppc"
+      options: [ CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bc 0x10, lt, 0x1010"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_IMM
+                imm: 0x10
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: "0"
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x1010
+                access: CS_AC_READ
+            bc:
+              bi: 0
+              bi_set: true
+              bo: 16
+              bo_set: true
+              pred_ctr: PPC_PRED_NZ
+      -
+        asm_text: "bc 0x10, 4*cr1+eq, 0x1014"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_IMM
+                imm: 0x10
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: "6"
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x1014
+                access: CS_AC_READ
+            bc:
+              bi: 6
+              bi_set: true
+              bo: 16
+              bo_set: true
+              pred_ctr: PPC_PRED_NZ
+      -
+        asm_text: "bc 0x12, 4*cr1+eq, 0x1018"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_IMM
+                imm: 0x12
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: "6"
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x1018
+                access: CS_AC_READ
+            bc:
+              bi: 6
+              bi_set: true
+              bo: 18
+              bo_set: true
+              pred_ctr: PPC_PRED_Z
+      -
+        asm_text: "bclr 0x10, 4*cr1+eq, 0"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_IMM
+                imm: 0x10
+                access: CS_AC_READ
+              -
+                type: PPC_OP_REG
+                reg: "6"
+                access: CS_AC_READ
+              -
+                type: PPC_OP_IMM
+                imm: 0x0
+                access: CS_AC_READ
+            bc:
+              bi: 6
+              bi_set: true
+              bo: 16
+              bo_set: true
+              pred_ctr: PPC_PRED_NZ
