@@ -1058,9 +1058,13 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 								.size;
 				}
 			}
-		} else
+		} else if (!MI->flat_insn->detail->x86.operands[0].size) {
+			// AT&T sets has_imm without a size (printPCRelImm,
+			// op_addImm) and relies on this; printOperand does set
+			// one, so it must not be overwritten here
 			MI->flat_insn->detail->x86.operands[0].size =
 				MI->imm_size;
+		}
 	}
 
 	if (MI->csh->detail_opt) {
