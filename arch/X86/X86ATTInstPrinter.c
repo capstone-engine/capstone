@@ -695,6 +695,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					SStream_concat(O, "$%" PRIu64, imm);
 			} else {
 				if (MI->csh->imm_unsigned) {
+					// the mask is for display only: the value
+					// stored in detail must stay unmasked
+					int64_t p = imm;
 					if (opsize) {
 						switch (opsize) {
 						default:
@@ -703,15 +706,15 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 						// making it effectively always positive.
 						// So this switch is never reached.
 						case 2:
-							imm &= 0xffff;
+							p &= 0xffff;
 							break;
 						case 4:
-							imm &= 0xffffffff;
+							p &= 0xffffffff;
 							break;
 						}
 					}
 
-					SStream_concat(O, "$0x%" PRIx64, imm);
+					SStream_concat(O, "$0x%" PRIx64, p);
 				} else {
 					if (imm ==
 					    0x8000000000000000LL) // imm == -imm
