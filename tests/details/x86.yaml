@@ -6752,3 +6752,106 @@ test_cases:
             eflags: [ X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_CF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF,  ]
           regs_read: [ eax, rsi, esi ]
           regs_write: [ eax, rflags ]
+  -
+    input:
+      # The implicit CL of the memory-form shift/rotate group is recorded in
+      # AT&T mode too, and rcl no longer gets an immediate 1 in its place.
+      bytes: [0xd3, 0x23, 0xd3, 0x13]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "shll %cl, (%rbx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
+      -
+        # No access on the memory operand: ROL/RCL/ROR *mCL are missing
+        # CS_AC_WRITE in X86MappingInsnOp.inc, unlike their register forms
+        # and unlike SHL/SAR/SHR *mCL. That is a separate defect, so this
+        # case must not pin it.
+        asm_text: "rcll %cl, (%rbx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+  -
+    input:
+      # The unsigned-display mask is not stored in the operand detail.
+      bytes: [0x83, 0xf8, 0xab]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT, CS_OPT_UNSIGNED ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "cmpl $0xffffffab, %eax"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: -0x55
+                size: 4
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ
+  -
+    input:
+      # push takes its size from the fixup, which the guard leaves reachable.
+      bytes: [0x6a, 0x48]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "pushq $0x48"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x48
+                size: 8
+  -
+    input:
+      # The size fixup must not overwrite the size printOperand derived from
+      # X86_immediate_size: aam's immediate is one byte, not the operand width.
+      bytes: [0xd4, 0x59]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "aam $0x59"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x59
+                size: 1
