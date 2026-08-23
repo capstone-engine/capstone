@@ -242,19 +242,27 @@ Nonetheless, we hope this additional information is useful to you.
   * `CS_OPT_SYNTAX_UNCOMPRESSED_REAL` / `CS_OPT_DETAIL_UNCOMPRESSED_REAL`
   * `CS_OPT_SYNTAX_ALIAS` / `CS_OPT_DETAIL_ALIAS`
 
-- CS_OPT_SYNTAX_REAL/CS_OPT_DETAIL_REAL:
-The text/details are always those of the raw instruction, compressed instructions remain compressed in text and details, non-compressed stay non-compressed in text and details, and no aliases are ever printed. 
-![RISC-V real instruction selection flow](images/cs_v6_release_guide/REAL.png)
+  * When configuring how the instruction text should appear, use [Syntax flags table (HTML)](html/syntax_flags_table.html)
 
-- CS_OPT_SYNTAX_UNCOMPRESSED_REAL/CS_OPT_DETAIL_UNCOMPRESSED_REAL:
-The text/details for compressed instructions are those of their uncompressed equivalents, but non-compressed instructions stay non-compressed in text/details, no aliases are ever printed. 
-![RISC-V uncompressed real instruction selection flow](images/cs_v6_release_guide/UNCOMPRESSED_REAL.png)
+    [![Syntax flags table](images/syntax_flags.png)](html/syntax_flags_table.html)
 
-- CS_OPT_SYNTAX_ALIAS/CS_OPT_DETAIL_ALIAS:
-The text/details are of aliases whenever available, compressed instructions are first attempted to print as aliases, then uncompressed and attempted again, non-compressed instructions are attempted to print as aliases and otherwise print as themselves. Instructions that are compressed but neither alias nor uncompress to anything are printed as themselves.
-![RISC-V alias instruction selection flow](images/cs_v6_release_guide/ALIAS.png)
+  * When configuring how the instruction details and operands array should be filled, use [Details flags table (HTML)](html/details_flags_table.html)
 
-- CS_OPT_SYNTAX_* and CS_OPT_DETAIL_* are independent and can be chosen seperately, in that case their combined effect will take effect. For example CS_OPT_SYNTAX_REAL and CS_OPT_DETAIL_UNCOMPRESSED_REAL will always preserve the text of compressed instructions but their details will be of the uncompressed equivalents.
+    [![Details flags table](images/details_flags.png)](html/details_flags_table.html)
+
+  * Notice that despite the apparent complexity of the rules above, there are really only 4 distinct outcomes: 
+      - An instruction is treated normally (as itself)
+      - An instruction is treated as if it's the uncompressed form of itself (if it's compressed)
+      - An instruction is treated as if it's the alias form of itself (whether compressed or not)
+      - An instruction is treated as if it's the alias form of its uncompressed form (if it's compressed)
+  * and then every flag is encoding a different bias or preference over those outcomes:
+      - Real: has no bias, every instruction is treated as itself
+      - Uncompressed Real: has a bias for the uncompressed but non-alias forms
+      - Alias: has a bias for alias forms, and considers the uncompressed form as a last-resort alias form preferable to the original
+
+- `CS_OPT_SYNTAX_*` and `CS_OPT_DETAIL_*` flag sets are independent and can be chosen separately, in that case their combined effect will take effect. For example `CS_OPT_SYNTAX_REAL` and `CS_OPT_DETAIL_UNCOMPRESSED_REAL` will always preserve the text of compressed instructions but their details will be of the uncompressed equivalents.
+
+- By default, no syntax flag given means `CS_OPT_SYNTAX_ALIAS` and no detail flag given means `CS_OPT_DETAIL_UNCOMPRESSED_REAL`
 
 - Added `reg_access` capstone callback to return all read and written registers for the instructions, including registers used as part of memory operands.
   * Note that `reg_access` does NOT treat CSRs as registers, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 

@@ -81,7 +81,8 @@ static bool isUncompressedRealSyntax(const MCInst *MI)
 
 static bool isAliasSyntax(const MCInst *MI)
 {
-	return MI->csh->syntax & CS_OPT_SYNTAX_ALIAS;
+	return !(MI->csh->syntax &
+		 (CS_OPT_SYNTAX_REAL | CS_OPT_SYNTAX_UNCOMPRESSED_REAL));
 }
 
 static bool isRealDetail(const MCInst *MI)
@@ -438,7 +439,8 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 		printInstruction(MI, MI->address, O);
 	} else {
 		if (isUncompressedRealSyntax(MI)) {
-			printInstruction(MIUncompressed, MIUncompressed->address, O);
+			printInstruction(MIUncompressed,
+					 MIUncompressed->address, O);
 		} else {
 			// Side-effectful check for alias instructions that prints to the SStream if it returns true
 			// False means no printing to stream happened
@@ -447,13 +449,15 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 			} else { // the instruction is not an alias
 				if (!is_uncompressed) {
 					printInstruction(MI, MI->address, O);
-				} else if (printAliasInstr(MIUncompressed,
-							   MIUncompressed->address,
-							   O)) {
+				} else if (printAliasInstr(
+						   MIUncompressed,
+						   MIUncompressed->address,
+						   O)) {
 					MCInst_setIsAlias(MI, true);
 				} else {
-					printInstruction(MIUncompressed,
-							 MIUncompressed->address, O);
+					printInstruction(
+						MIUncompressed,
+						MIUncompressed->address, O);
 				}
 			}
 		}
@@ -476,13 +480,18 @@ void RISCV_LLVM_printInstruction(MCInst *MI, SStream *O,
 		if (isRealDetail(MI)) {
 			printInstruction(MI, MI->address, O);
 		} else if (isUncompressedRealDetail(MI)) {
-			printInstruction(MIUncompressed, MIUncompressed->address, O);
+			printInstruction(MIUncompressed,
+					 MIUncompressed->address, O);
 		} else if (!printAliasInstr(MI, MI->address, O)) {
 			if (!is_uncompressed) {
 				printInstruction(MI, MI->address, O);
-			} else if (!printAliasInstr(MIUncompressed, MIUncompressed->address,
+			} else if (!printAliasInstr(MIUncompressed,
+						    MIUncompressed->address,
 						    O)) {
-				printInstruction(MIUncompressed, MIUncompressed->address, O);
+				printInstruction(MIUncompressed,
+						 MIUncompressed->address, O);
+			} else {
+				/* Nothing, printAliasInstr returned true and did its side effect */
 			}
 		}
 
