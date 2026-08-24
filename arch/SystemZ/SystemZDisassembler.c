@@ -78,7 +78,7 @@ static DecodeStatus decodeRegisterClass(MCInst *Inst, uint64_t RegNo,
 					const unsigned *Regs, unsigned Size,
 					bool IsAddr)
 {
-	CS_ASSERT((RegNo < Size && "Invalid register"));
+	CS_ASSERT_RET_VAL(RegNo < Size, MCDisassembler_Fail);
 	if (IsAddr && RegNo == 0) {
 		RegNo = SystemZ_NoRegister;
 	} else {
