@@ -1220,24 +1220,31 @@ test_cases:
           mnemonic: "ldah"
           op_str: "$29,2($27)"
           details:
+            regs_read: [ $27 ]
+            regs_write: [ $29 ]
             regs_impl_write: []
         -
           asm_text: "lda $29,0x7a50($29)"
           mnemonic: "lda"
           op_str: "$29,0x7a50($29)"
           details:
+            regs_read: [ $29 ]
+            regs_write: [ $29 ]
             regs_impl_write: []
         -
           asm_text: "lda $30,0xffd0($30)"
           mnemonic: "lda"
           op_str: "$30,0xffd0($30)"
           details:
+            regs_read: [ $30 ]
+            regs_write: [ $30 ]
             regs_impl_write: []
         -
           asm_text: "stq $26,0($30)"
           mnemonic: "stq"
           op_str: "$26,0($30)"
           details:
+            regs_read: [ $26, $30 ]
             regs_impl_write: []
 
   -
@@ -1253,24 +1260,31 @@ test_cases:
           mnemonic: "ldah"
           op_str: "$29,2($27)"
           details:
+            regs_read: [ $27 ]
+            regs_write: [ $29 ]
             regs_impl_write: []
         -
           asm_text: "lda $29,0x7a50($29)"
           mnemonic: "lda"
           op_str: "$29,0x7a50($29)"
           details:
+            regs_read: [ $29 ]
+            regs_write: [ $29 ]
             regs_impl_write: []
         -
           asm_text: "lda $30,0xffd0($30)"
           mnemonic: "lda"
           op_str: "$30,0xffd0($30)"
           details:
+            regs_read: [ $30 ]
+            regs_write: [ $30 ]
             regs_impl_write: []
         -
           asm_text: "stq $26,0($30)"
           mnemonic: "stq"
           op_str: "$26,0($30)"
           details:
+            regs_read: [ $26, $30 ]
             regs_impl_write: []
   -
     input:
