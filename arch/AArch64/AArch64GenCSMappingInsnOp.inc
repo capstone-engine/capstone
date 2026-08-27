@@ -46762,7 +46762,7 @@
 }},
 { /* AARCH64_SYSLxt (7060) - AARCH64_INS_SYSL - sysl	$Rt, $op1, $Cn, $Cm, $op2 */
 {
-  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* Rt */
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* Rt */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* op1 */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* Cn */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* Cm */
