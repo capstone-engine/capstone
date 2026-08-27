@@ -1685,3 +1685,118 @@ test_cases:
         details:
           # Exact-match register lists: x0/x1 only, no NZCV write.
           regs_read: [ x0, x1 ]
+  -
+    input:
+      bytes: [0x13,0x11,0x00,0x19]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stlurb	w19, [x8, #1]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w19
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x8
+              mem_disp: 1
+              access: CS_AC_WRITE
+          regs_read: [ w19, x8 ]
+  -
+    input:
+      bytes: [0x13,0x21,0x00,0x59]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stlurh	w19, [x8, #2]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w19
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x8
+              mem_disp: 2
+              access: CS_AC_WRITE
+          regs_read: [ w19, x8 ]
+  -
+    input:
+      bytes: [0x0a,0x41,0x00,0x99]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stlur	w10, [x8, #4]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w10
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x8
+              mem_disp: 4
+              access: CS_AC_WRITE
+          regs_read: [ w10, x8 ]
+  -
+    input:
+      bytes: [0x0a,0x81,0x00,0xd9]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stlur	x10, [x8, #8]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x10
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x8
+              mem_disp: 8
+              access: CS_AC_WRITE
+          regs_read: [ x10, x8 ]
+  -
+    input:
+      bytes: [0x0a,0x19,0x00,0x1d]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stlur	b10, [x8, #1]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: b10
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x8
+              mem_disp: 1
+              access: CS_AC_WRITE
+          regs_read: [ b10, x8 ]
