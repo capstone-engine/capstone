@@ -1745,6 +1745,7 @@ test_cases:
               bi_set: true
               bo: 16
               bo_set: true
+              pred_cr: PPC_PRED_INVALID
               pred_ctr: PPC_PRED_NZ
       -
         asm_text: "bc 0x10, 4*cr1+eq, 0x1014"
@@ -1768,6 +1769,7 @@ test_cases:
               bi_set: true
               bo: 16
               bo_set: true
+              pred_cr: PPC_PRED_INVALID
               pred_ctr: PPC_PRED_NZ
       -
         asm_text: "bc 0x12, 4*cr1+eq, 0x1018"
@@ -1791,6 +1793,7 @@ test_cases:
               bi_set: true
               bo: 18
               bo_set: true
+              pred_cr: PPC_PRED_INVALID
               pred_ctr: PPC_PRED_Z
       -
         asm_text: "bclr 0x10, 4*cr1+eq, 0"
@@ -1814,4 +1817,5 @@ test_cases:
               bi_set: true
               bo: 16
               bo_set: true
+              pred_cr: PPC_PRED_INVALID
               pred_ctr: PPC_PRED_NZ
