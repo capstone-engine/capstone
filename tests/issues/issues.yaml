@@ -6967,3 +6967,48 @@ test_cases:
                 mem_disp: 0x100cdc408
                 access: CS_AC_READ
           regs_write: [ x8 ]
+  -
+    input:
+      name: "issue 3038 x86-64 RET imm16 with operand-size override and REX.W"
+      bytes: [ 0x66, 0x48, 0xc2, 0x3b, 0x01 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ret 0x13b"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xc2, 0x00, 0x00, 0x00 ]
+            rex: 0x48
+            enc_imm_offset: 0x3
+            enc_imm_size: 0x2
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x13b
+          regs_read: [ rsp, ss ]
+          regs_write: [ rsp, rip ]
+          groups: [ ret, mode64 ]
+
+  -
+    input:
+      name: "issue 3038 x86-64 RET with operand-size override and REX.W"
+      bytes: [ 0x66, 0x48, 0xc3 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ret"
+        details:
+          x86:
+            prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_OPSIZE, X86_PREFIX_0 ]
+            opcode: [ 0xc3, 0x00, 0x00, 0x00 ]
+            rex: 0x48
+          regs_read: [ rsp, ss ]
+          regs_write: [ rsp, rip ]
+          groups: [ ret, mode64 ]
