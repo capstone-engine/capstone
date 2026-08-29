@@ -1254,6 +1254,7 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "PPC_PRED_GT_MINUS", .val = PPC_PRED_GT_MINUS },
 	{ .str = "PPC_PRED_GT_PLUS", .val = PPC_PRED_GT_PLUS },
 	{ .str = "PPC_PRED_GT_RESERVED", .val = PPC_PRED_GT_RESERVED },
+	{ .str = "PPC_PRED_INVALID", .val = PPC_PRED_INVALID },
 	{ .str = "PPC_PRED_LE", .val = PPC_PRED_LE },
 	{ .str = "PPC_PRED_LE_MINUS", .val = PPC_PRED_LE_MINUS },
 	{ .str = "PPC_PRED_LE_PLUS", .val = PPC_PRED_LE_PLUS },
