@@ -695,6 +695,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					SStream_concat(O, "$%" PRIu64, imm);
 			} else {
 				if (MI->csh->imm_unsigned) {
+					// the mask is for display only: the value
+					// stored in detail must stay unmasked
+					int64_t p = imm;
 					if (opsize) {
 						switch (opsize) {
 						default:
@@ -703,15 +706,15 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 						// making it effectively always positive.
 						// So this switch is never reached.
 						case 2:
-							imm &= 0xffff;
+							p &= 0xffff;
 							break;
 						case 4:
-							imm &= 0xffffffff;
+							p &= 0xffffffff;
 							break;
 						}
 					}
 
-					SStream_concat(O, "$0x%" PRIx64, imm);
+					SStream_concat(O, "$0x%" PRIx64, p);
 				} else {
 					if (imm ==
 					    0x8000000000000000LL) // imm == -imm
@@ -1055,9 +1058,13 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 								.size;
 				}
 			}
-		} else
+		} else if (!MI->flat_insn->detail->x86.operands[0].size) {
+			// AT&T sets has_imm without a size (printPCRelImm,
+			// op_addImm) and relies on this; printOperand does set
+			// one, so it must not be overwritten here
 			MI->flat_insn->detail->x86.operands[0].size =
 				MI->imm_size;
+		}
 	}
 
 	if (MI->csh->detail_opt) {
@@ -1138,6 +1145,8 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 					(ARR_SIZE(MI->flat_insn->detail->x86
 							  .operands) -
 					 1));
+			memset(&(MI->flat_insn->detail->x86.operands[0]), 0,
+			       sizeof(MI->flat_insn->detail->x86.operands[0]));
 			MI->flat_insn->detail->x86.operands[0].type =
 				X86_OP_IMM;
 			MI->flat_insn->detail->x86.operands[0].imm = 1;
@@ -1161,6 +1170,8 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 					(ARR_SIZE(MI->flat_insn->detail->x86
 							  .operands) -
 					 1));
+			memset(&(MI->flat_insn->detail->x86.operands[0]), 0,
+			       sizeof(MI->flat_insn->detail->x86.operands[0]));
 			MI->flat_insn->detail->x86.operands[0].type =
 				X86_OP_REG;
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
