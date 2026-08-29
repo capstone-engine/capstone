@@ -276,6 +276,8 @@ static void printPackedImmediate(SStream *O, const m68k_op_fp_packed *value)
 		       exponent_digits);
 }
 
+/* Issue #681: Windows kernel printf-style functions do not support
+ * floating-point format specifiers, so the text conversion is unused there. */
 #if !defined(_KERNEL_MODE)
 /* Round `value >> shift` to nearest, ties to even.  Requires 1 <= shift <= 64. */
 static uint64_t round_right_to_even(uint64_t value, unsigned int shift)
