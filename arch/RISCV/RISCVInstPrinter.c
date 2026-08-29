@@ -87,19 +87,19 @@ static bool isAliasSyntax(const MCInst *MI)
 
 static bool isRealDetail(const MCInst *MI)
 {
-	return MI->csh->detail_opt & CS_OPT_DETAIL_REAL;
+	return detail_is_set(MI) && (MI->csh->detail_opt & CS_OPT_DETAIL_REAL);
 }
 
 static bool isUncompressedRealDetail(const MCInst *MI)
 {
 	return detail_is_set(MI) &&
-	       !(MI->csh->detail_opt &
-		 (CS_OPT_DETAIL_REAL | CS_OPT_DETAIL_ALIAS));
+	       (MI->csh->detail_opt & CS_OPT_DETAIL_UNCOMPRESSED_REAL);
 }
 
 static bool isAliasDetail(const MCInst *MI)
 {
-	return MI->csh->detail_opt & CS_OPT_DETAIL_ALIAS;
+	return !(MI->csh->detail_opt &
+		 (CS_OPT_DETAIL_REAL | CS_OPT_DETAIL_UNCOMPRESSED_REAL));
 }
 
 const char *doGetRegisterName(MCRegister Reg)

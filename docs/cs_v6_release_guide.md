@@ -251,18 +251,18 @@ Nonetheless, we hope this additional information is useful to you.
     [![Details flags table](images/details_flags.png)](html/details_flags_table.html)
 
   * Notice that despite the apparent complexity of the rules above, there are really only 4 distinct outcomes: 
-      - An instruction is treated normally (as itself)
-      - An instruction is treated as if it's the uncompressed form of itself (if it's compressed)
-      - An instruction is treated as if it's the alias form of itself (whether compressed or not)
-      - An instruction is treated as if it's the alias form of its uncompressed form (if it's compressed)
+      - An instruction is treated exactly as decoded (No uncompression and no aliasing happens)
+      - An instruction is treated as if it's the uncompressed form (if it's compressed)
+      - An instruction is treated as if it's the alias form (whether compressed or not)
+      - Assuming an instruction is compressed: it is uncompressed, then the alias of the uncompressed instruction is printed.
   * and then every flag is encoding a different bias or preference over those outcomes:
-      - Real: has no bias, every instruction is treated as itself
+      - Real: has no bias, every instruction is always treated exactly as decoded
       - Uncompressed Real: has a bias for the uncompressed but non-alias forms
       - Alias: has a bias for alias forms, and considers the uncompressed form as a last-resort alias form preferable to the original
 
 - `CS_OPT_SYNTAX_*` and `CS_OPT_DETAIL_*` flag sets are independent and can be chosen separately, in that case their combined effect will take effect. For example `CS_OPT_SYNTAX_REAL` and `CS_OPT_DETAIL_UNCOMPRESSED_REAL` will always preserve the text of compressed instructions but their details will be of the uncompressed equivalents.
 
-- By default, no syntax flag given means `CS_OPT_SYNTAX_ALIAS` and no detail flag given means `CS_OPT_DETAIL_UNCOMPRESSED_REAL`
+- **The default case** is: `CS_OPT_SYNTAX_ALIAS` and `CS_OPT_DETAIL_ALIAS`
 
 - Added `reg_access` capstone callback to return all read and written registers for the instructions, including registers used as part of memory operands.
   * Note that `reg_access` does NOT treat CSRs as registers, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 

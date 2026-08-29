@@ -5065,7 +5065,7 @@ test_cases:
   - input:
       bytes: [0x13, 0x00, 0x00, 0x00]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_ALIAS]
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_ALIAS]
       address: 0x1000
     expected:
       insns:
@@ -5112,7 +5112,7 @@ test_cases:
   - input:
       bytes: [0x0a, 0x90]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, zihintntl, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_ALIAS]
+      options: [CS_MODE_RISCV32, zihintntl, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_ALIAS]
       address: 0x1000
     expected:
       insns:
@@ -5133,7 +5133,7 @@ test_cases:
   - input:
       bytes: [0x01, 0x00]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_ALIAS]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_ALIAS]
       address: 0x1000
     expected:
       insns:
@@ -5355,7 +5355,7 @@ test_cases:
   - input:
       bytes: [0x55, 0x45]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_ALIAS]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_ALIAS]
       address: 0x1000
     expected:
       insns:
@@ -5379,7 +5379,7 @@ test_cases:
   - input:
       bytes: [0x62, 0x86]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_ALIAS]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_ALIAS]
       address: 0x1000
     expected:
       insns:
@@ -5692,7 +5692,7 @@ test_cases:
   - input:
       bytes: [0x13, 0x85, 0x05, 0x00]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_REAL]
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_REAL]
       address: 0x1000
     expected:
       insns:
@@ -5737,7 +5737,7 @@ test_cases:
   - input:
       bytes: [0x0a, 0x90]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, zihintntl, CS_OPT_DETAIL, CS_OPT_SYNTAX_REAL]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, zihintntl, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_REAL]
       address: 0x1000
     expected:
       insns:
@@ -5758,7 +5758,7 @@ test_cases:
   - input:
       bytes: [0x01, 0x00]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_REAL]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_REAL]
       address: 0x1000
     expected:
       insns:
@@ -5835,7 +5835,7 @@ test_cases:
   - input:
       bytes: [0x13, 0x05, 0x50, 0x00]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_REAL]
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_REAL]
       address: 0x1000
     expected:
       insns:
@@ -5967,7 +5967,7 @@ test_cases:
   - input:
       bytes: [0x55, 0x45]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_REAL]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_REAL]
       address: 0x1000
     expected:
       insns:
@@ -5990,7 +5990,7 @@ test_cases:
   - input:
       bytes: [0x62, 0x86]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_REAL]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_REAL]
       address: 0x1000
     expected:
       insns:
@@ -6322,7 +6322,7 @@ test_cases:
   - input:
       bytes: [0x13, 0x00, 0x00, 0x00]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL]
+      options: [CS_MODE_RISCV32, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL]
       address: 0x1000
     expected:
       insns:
@@ -6368,7 +6368,7 @@ test_cases:
   - input:
       bytes: [0x0a, 0x90]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, zihintntl, CS_OPT_DETAIL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, zihintntl, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL]
       address: 0x1000
     expected:
       insns:
@@ -6389,7 +6389,7 @@ test_cases:
   - input:
       bytes: [0x01, 0x00]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL]
       address: 0x1000
     expected:
       insns:
@@ -6466,7 +6466,7 @@ test_cases:
   - input:
       bytes: [0x55, 0x45]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL]
       address: 0x1000
     expected:
       insns:
@@ -6489,7 +6489,7 @@ test_cases:
   - input:
       bytes: [0x62, 0x86]
       arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL]
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_C, CS_OPT_DETAIL, CS_OPT_DETAIL_UNCOMPRESSED_REAL, CS_OPT_SYNTAX_UNCOMPRESSED_REAL]
       address: 0x1000
     expected:
       insns:

@@ -730,7 +730,7 @@ static void usage(char *prog)
 
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
-	printf("        -r show detailed information of the uncompressed real instructions when possible\n");
+	printf("        -r show detailed information of the real instructions (even for aliases)\n");
 	printf("        -a Print Capstone register alias (if any). Otherwise LLVM register names are emitted.\n");
 	printf("        -s decode in SKIPDATA mode\n");
 	printf("        -u show immediates as unsigned\n");
@@ -952,7 +952,6 @@ int main(int argc, char **argv)
 			break;
 		case 'r':
 			set_real_detail = true;
-			detail_flag = true;
 			break;
 		case 's':
 			skipdata = true;
@@ -1165,7 +1164,7 @@ int main(int argc, char **argv)
 
 	if (set_real_detail) {
 		cs_option(handle, CS_OPT_DETAIL,
-			  (CS_OPT_DETAIL_UNCOMPRESSED_REAL | CS_OPT_ON));
+			  (CS_OPT_DETAIL_REAL | CS_OPT_ON));
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
