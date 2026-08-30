@@ -22,7 +22,7 @@ def HTM_get_imm : SDNodeXForm<imm, [{
 
 let hasSideEffects = 1, usesCustomInserter = 1  in {
 def TCHECK_RET : Pseudo<(outs gprc:$out), (ins), "#TCHECK_RET", []>;
-def TBEGIN_RET : PPCCustomInserterPseudo<(outs gprc:$out), (ins u1imm:$R), "#TBEGIN_RET", []>;
+def TBEGIN_RET : Pseudo<(outs gprc:$out), (ins u1imm:$R), "#TBEGIN_RET", []>;
 }
 
 
