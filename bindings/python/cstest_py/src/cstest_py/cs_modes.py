@@ -9,6 +9,14 @@ configs = {
         "type": cs.CS_OPT_DETAIL,
         "val": cs.CS_OPT_DETAIL_REAL | cs.CS_OPT_ON,
     },
+    "CS_OPT_DETAIL_UNCOMPRESSED_REAL": {
+        "type": cs.CS_OPT_DETAIL,
+        "val": cs.CS_OPT_DETAIL_UNCOMPRESSED_REAL | cs.CS_OPT_ON,
+    },
+    "CS_OPT_DETAIL_ALIAS": {
+        "type": cs.CS_OPT_DETAIL,
+        "val": cs.CS_OPT_DETAIL_ALIAS | cs.CS_OPT_ON,
+    },
     "CS_OPT_SKIPDATA": {"type": cs.CS_OPT_SKIPDATA, "val": cs.CS_OPT_ON},
     "CS_OPT_UNSIGNED": {"type": cs.CS_OPT_UNSIGNED, "val": cs.CS_OPT_ON},
     "CS_OPT_ONLY_OFFSET_BRANCH": {
@@ -42,13 +50,17 @@ configs = {
         "type": cs.CS_OPT_SYNTAX,
         "val": cs.CS_OPT_SYNTAX_NO_DOLLAR,
     },
-    "CS_OPT_SYNTAX_NO_ALIAS_TEXT": {
+    "CS_OPT_SYNTAX_REAL": {
         "type": cs.CS_OPT_SYNTAX,
-        "val": cs.CS_OPT_SYNTAX_NO_ALIAS_TEXT
+        "val": cs.CS_OPT_SYNTAX_REAL
     },
-    "CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED": {
+    "CS_OPT_SYNTAX_UNCOMPRESSED_REAL": {
         "type": cs.CS_OPT_SYNTAX,
-        "val": cs.CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED
+        "val": cs.CS_OPT_SYNTAX_UNCOMPRESSED_REAL
+    },
+    "CS_OPT_SYNTAX_ALIAS": {
+        "type": cs.CS_OPT_SYNTAX,
+        "val": cs.CS_OPT_SYNTAX_ALIAS
     },
     "CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM": {
         "type": cs.CS_OPT_SYNTAX,

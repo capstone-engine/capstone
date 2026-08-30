@@ -21,6 +21,7 @@ static struct {
 	cs_arch archs[CS_ARCH_MAX];
 	cs_opt_value opt;
 	cs_mode mode;
+	cs_opt_type opt_type;
 } all_opts[] = {
 	// cs_opt_value only
 	{ "+att",
@@ -64,18 +65,39 @@ static struct {
 	  { CS_ARCH_LOONGARCH, CS_ARCH_MIPS, CS_ARCH_MAX },
 	  CS_OPT_SYNTAX_NO_DOLLAR,
 	  0 },
-	{ "+noalias",
-	  "Does not print the text alias of an alias instruction",
+	{ "+real-text",
+	  "Prints the original decoded instruction without aliases or uncompression",
 	  { CS_ARCH_RISCV, CS_ARCH_MAX },
-	  CS_OPT_SYNTAX_NO_ALIAS_TEXT,
+	  CS_OPT_SYNTAX_REAL,
 	  0 },
-	{ "+noaliascompressed",
-	  "Does not print the text alias of compressed RISC-V instructions, "
-	  "but still prints the text alias of non-compressed RISC-V instructions "
-	  "if +noalias is not given",
+	{ "+uncompressed-text",
+	  "Prints the uncompressed real instruction when possible, without aliases",
 	  { CS_ARCH_RISCV, CS_ARCH_MAX },
-	  CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED,
+	  CS_OPT_SYNTAX_UNCOMPRESSED_REAL,
 	  0 },
+	{ "+alias-text",
+	  "Prints aliases when available (default RISC-V text mode)",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_SYNTAX_ALIAS,
+	  0 },
+	{ "+real-details",
+	  "Fills RISC-V details from the original decoded instruction",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_DETAIL_REAL | CS_OPT_ON,
+	  0,
+	  CS_OPT_DETAIL },
+	{ "+uncompressed-details",
+	  "Fills RISC-V details from the uncompressed real instruction when possible",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_DETAIL_UNCOMPRESSED_REAL | CS_OPT_ON,
+	  0,
+	  CS_OPT_DETAIL },
+	{ "+alias-details",
+	  "Fills RISC-V details from aliases when available (default with -d)",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_DETAIL_ALIAS | CS_OPT_ON,
+	  0,
+	  CS_OPT_DETAIL },
 	{ "+explicitwideimm",
 	  "Prints shifted MOVN and MOVZ instructions without MOV aliases",
 	  { CS_ARCH_AARCH64, CS_ARCH_MAX },
@@ -708,7 +730,7 @@ static void usage(char *prog)
 
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
-	printf("        -r show detailed information of the real instructions (even for alias)\n");
+	printf("        -r show detailed information of the real instructions (even for aliases)\n");
 	printf("        -a Print Capstone register alias (if any). Otherwise LLVM register names are emitted.\n");
 	printf("        -s decode in SKIPDATA mode\n");
 	printf("        -u show immediates as unsigned\n");
@@ -893,7 +915,10 @@ static void enable_additional_options(csh handle, const char *input,
 		}
 		for (j = 0; j < CS_ARCH_MAX; j++) {
 			if (arch == all_opts[i].archs[j]) {
-				cs_option(handle, CS_OPT_SYNTAX,
+				cs_option(handle,
+					  all_opts[i].opt_type ?
+						  all_opts[i].opt_type :
+						  CS_OPT_SYNTAX,
 					  all_opts[i].opt);
 				break;
 			}

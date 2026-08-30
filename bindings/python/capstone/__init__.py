@@ -230,11 +230,14 @@ __all__ = [
     "CS_OPT_SYNTAX_MOTOROLA",
     "CS_OPT_SYNTAX_CS_REG_ALIAS",
     "CS_OPT_SYNTAX_NO_DOLLAR",
-    "CS_OPT_SYNTAX_NO_ALIAS_TEXT",
-    "CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED",
+    "CS_OPT_SYNTAX_REAL",
+    "CS_OPT_SYNTAX_UNCOMPRESSED_REAL",
     "CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM",
+    "CS_OPT_SYNTAX_ALIAS",
     "CS_OPT_DETAIL",
     "CS_OPT_DETAIL_REAL",
+    "CS_OPT_DETAIL_UNCOMPRESSED_REAL",
+    "CS_OPT_DETAIL_ALIAS",
     "CS_OPT_MODE",
     "CS_OPT_ON",
     "CS_OPT_OFF",
@@ -651,18 +654,27 @@ CS_OPT_SYNTAX_PERCENT = 1 << 8  # Prints the % in front of PPC registers.
 CS_OPT_SYNTAX_NO_DOLLAR = (
     1 << 9
 )  # Does not print the $ in front of Mips, LoongArch registers.
-CS_OPT_SYNTAX_NO_ALIAS_TEXT = (
+CS_OPT_SYNTAX_REAL = (
     1 << 10
-)  # Does not print an instruction's alias test if the instruction is an alias
-CS_OPT_SYNTAX_NO_ALIAS_TEXT_COMPRESSED = (
+)  # Prints the original decoded instruction without aliases or uncompression.
+CS_OPT_SYNTAX_UNCOMPRESSED_REAL = (
     1 << 11
-)  # Like the one above it, but only supresses compressed instruction aliases
+)  # Prints the uncompressed real instruction when possible, without aliases.
 CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM = (
     1 << 12
 )  # Prints shifted AArch64 MOVN and MOVZ instructions without MOV aliases
+CS_OPT_SYNTAX_ALIAS = (
+    1 << 13
+)  # Prints aliases when available.
 CS_OPT_DETAIL_REAL = (
     1 << 1
-)  # If enabled, always sets the real instruction detail.Even if the instruction is an alias.
+)  # If enabled, always sets the real instruction detail. Even if the instruction is an alias.
+CS_OPT_DETAIL_UNCOMPRESSED_REAL = (
+    1 << 2
+)  # If enabled, sets uncompressed real instruction detail when possible.
+CS_OPT_DETAIL_ALIAS = (
+    1 << 3
+)  # If enabled, sets alias instruction detail when possible.
 
 # Capstone error type
 CS_ERR_OK = 0  # No error: everything was fine

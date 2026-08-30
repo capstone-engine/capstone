@@ -149,7 +149,7 @@
             "sparcel-linux-gnu": ["CS_MODE_LITTLE_ENDIAN"]
         },
         "RISCV": {
-            "riscv-no-aliases": ["CS_OPT_SYNTAX_NO_ALIAS_TEXT"],
+            "riscv-no-aliases": ["CS_OPT_SYNTAX_REAL"],
             
             "+experimental-zicfiss":["CS_MODE_RISCV_EXPERIMENTAL_ZICFISS"],
             "experimental-zicfiss": ["CS_MODE_RISCV_EXPERIMENTAL_ZICFISS"],

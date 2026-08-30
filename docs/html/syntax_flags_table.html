@@ -1,0 +1,194 @@
+<style>
+    .syntax-flags-table,
+    .syntax-flags-table table {
+        border-collapse: collapse;
+    }
+
+    .syntax-flags-table th,
+    .syntax-flags-table td {
+        border: 1px solid rgb(51, 51, 51);
+        padding: 6px 10px;
+        vertical-align: top;
+    }
+
+    .syntax-flags-table th {
+        font-weight: normal;
+        text-align: left;
+    }
+
+    .syntax-flags-table .decision-table {
+        width: 100%;
+    }
+
+    .syntax-flags-table > tbody > .flag-row > td {
+        border-top: 3px solid rgb(51, 51, 51);
+        border-bottom: 3px solid rgb(51, 51, 51);
+    }
+
+    .syntax-flags-table > tbody > .flag-row > td:first-child {
+        font-weight: 600;
+    }
+
+    .syntax-flags-table > tbody > .alias-flag-row > td:nth-child(2) {
+        vertical-align: middle;
+    }
+
+    .syntax-flags-table > tbody > .alias-flag-row > td:nth-child(3) > .decision-table {
+        margin-top: 2px;
+    }
+
+    .syntax-flags-table .alias-uncompress-decision {
+        margin-top: 1px;
+    }
+
+    .syntax-flags-table .innermost-decision {
+        min-width: 320px;
+        margin-top: 5px;
+    }
+
+    .syntax-flags-table .decision-question {
+        text-align: center;
+    }
+
+    /*
+     * This row has no visual height. Its labels are taken out of normal flow
+     * and placed over the coincident borders of the rows above and below, so
+     * “yes” and “no” read as tags on the divider rather than as another row.
+     */
+    .syntax-flags-table .decision-labels {
+        height: 0;
+    }
+
+    .syntax-flags-table .decision-labels > th {
+        position: relative;
+        height: 0;
+        padding: 0;
+        border-top: 0;
+        border-bottom: 0;
+        line-height: 0;
+        overflow: visible;
+        text-align: center;
+        vertical-align: middle;
+        z-index: 1;
+    }
+
+    .syntax-flags-table .decision-labels > th > span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 2;
+        padding: 0 4px;
+        background: white;
+        font-size: 15px;
+        font-weight: normal;
+        line-height: 1;
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+<table class="nt syntax-flags-table">
+    <thead>
+        <tr>
+            <th scope="col">Syntax Flag</th>
+            <th scope="col">Non Compressed Instruction</th>
+            <th scope="col">Compressed Instruction</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="flag-row">
+            <td>REAL</td>
+            <td>Prints as itself</td>
+            <td>Prints as itself</td>
+        </tr>
+        <tr class="flag-row">
+            <td>UNCOMPRESSED_REAL</td>
+            <td>Prints as itself</td>
+            <td>
+                <table class="nt decision-table">
+                    <tbody>
+                        <tr>
+                            <th class="decision-question" colspan="2" scope="colgroup">Can uncompress?</th>
+                        </tr>
+                        <tr class="decision-labels">
+                            <th scope="col"><span>yes</span></th>
+                            <th scope="col"><span>no</span></th>
+                        </tr>
+                        <tr>
+                            <td>Prints as the text of the uncompressed equivalent</td>
+                            <td>Prints as itself</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr class="flag-row alias-flag-row">
+            <td>ALIAS</td>
+            <td>
+                <table class="nt decision-table">
+                    <tbody>
+                        <tr>
+                            <th class="decision-question" colspan="2" scope="colgroup">Has an alias?</th>
+                        </tr>
+                        <tr class="decision-labels">
+                            <th scope="col"><span>yes</span></th>
+                            <th scope="col"><span>no</span></th>
+                        </tr>
+                        <tr>
+                            <td>Prints as the alias text</td>
+                            <td>Prints as itself</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td>
+                <table class="nt decision-table">
+                    <tbody>
+                        <tr>
+                            <th class="decision-question" colspan="2" scope="colgroup">Has an alias?</th>
+                        </tr>
+                        <tr class="decision-labels">
+                            <th scope="col"><span>yes</span></th>
+                            <th scope="col"><span>no</span></th>
+                        </tr>
+                        <tr>
+                            <td>Prints as the alias text</td>
+                            <td>
+                                <table class="nt decision-table alias-uncompress-decision">
+                                    <tbody>
+                                        <tr>
+                                            <th class="decision-question" colspan="2" scope="colgroup">Can uncompress?</th>
+                                        </tr>
+                                        <tr class="decision-labels">
+                                            <th scope="col"><span>yes</span></th>
+                                            <th scope="col"><span>no</span></th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table class="nt decision-table innermost-decision">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="decision-question" colspan="2" scope="colgroup">Uncompressed equivalent has an alias?</th>
+                                                        </tr>
+                                                        <tr class="decision-labels">
+                                                            <th scope="col"><span>yes</span></th>
+                                                            <th scope="col"><span>no</span></th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Prints as the alias text of the uncompressed equivalent</td>
+                                                            <td>Prints as the text of the uncompressed equivalent</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td>Prints as itself</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

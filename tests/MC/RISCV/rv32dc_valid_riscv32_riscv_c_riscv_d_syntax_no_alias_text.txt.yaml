@@ -3,7 +3,7 @@ test_cases:
     input:
       bytes: [ 0x7e, 0x34 ]
       arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D", "CS_OPT_SYNTAX_REAL" ]
     expected:
       insns:
         -
@@ -13,7 +13,7 @@ test_cases:
     input:
       bytes: [ 0xc6, 0xbf ]
       arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D", "CS_OPT_SYNTAX_REAL" ]
     expected:
       insns:
         -
@@ -23,7 +23,7 @@ test_cases:
     input:
       bytes: [ 0xf4, 0x3f ]
       arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D", "CS_OPT_SYNTAX_REAL" ]
     expected:
       insns:
         -
@@ -33,7 +33,7 @@ test_cases:
     input:
       bytes: [ 0xf0, 0xbd ]
       arch: "CS_ARCH_RISCV"
-      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D", "CS_OPT_SYNTAX_NO_ALIAS_TEXT" ]
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D", "CS_OPT_SYNTAX_REAL" ]
     expected:
       insns:
         -
