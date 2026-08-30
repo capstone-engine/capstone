@@ -140,8 +140,15 @@ for line in lines:
             print_line("static void printInstruction(MCInst *MI, SStream *O)\n{")
     elif 'LLVM_NO_PROFILE_INSTRUMENT_FUNCTION' in line:
         continue
-    elif 'AArch64InstPrinter::getMnemonic' in line:
+    elif arch + 'InstPrinter::getMnemonic' in line:
         print_line("static uint64_t getMnemonic(MCInst *MI, SStream *O, unsigned int opcode) {")
+    elif 'return {nullptr, Bits};' in line:
+        # Newer LLVM adds an early-out guard ("if (Bits == 0) return {NULL,
+        # Bits};") before the real return in getMnemonic, for opcodes with
+        # no recognized mnemonic pattern at all. Nothing to print in that
+        # case - just propagate the (0) Bits value, matching the folded
+        # uint64_t-returning signature used elsewhere in this conversion.
+        print_line("\t\treturn Bits;")
     elif 'return {AsmStrs+(Bits' in line:
         tmp = line.split(',')
         prntStr = tmp[0].split('{')[1]
@@ -153,13 +160,20 @@ for line in lines:
         continue
     elif 'uint64_t Bits = MnemonicInfo' in line:
         print_line("\tuint64_t Bits = getMnemonic(MI, O, opcode);")
-    elif 'const char *AArch64InstPrinter::' in line:
+    elif 'const char *' + arch + 'InstPrinter::' in line and 'getRegisterName' not in line:
         continue
     elif 'getRegisterName(' in line:
         if 'unsigned AltIdx' in line:
             print_line("static const char *getRegisterName(unsigned RegNo, unsigned AltIdx)\n{")
         else:
             print_line("static const char *getRegisterName(unsigned RegNo)\n{")
+    elif 'RegNo = Reg.id();' in line:
+        # Newer LLVM wraps register handles in MCRegister, so the raw
+        # definition reads `getRegisterName(MCRegister Reg) { unsigned RegNo
+        # = Reg.id(); ... }`. Our hardcoded signature above already declares
+        # RegNo directly as a plain unsigned parameter, so this becomes a
+        # redundant (and illegal, redeclaring the parameter) redefinition.
+        continue
     elif 'getRegisterName' in line:
         in_getRegisterName = True
         print_line(line)
@@ -668,7 +682,7 @@ for line in lines:
         line = line.replace(')', '')
         print_line(line)
     elif '#ifndef NDEBUG' in line and in_printAliasInstr:
-        print_line("""
+        alias_match_block = """
   char *AsmString;
   const size_t OpToSize = sizeof(OpToPatterns) / sizeof(PatternsForOpcode);
 
@@ -802,7 +816,47 @@ for line in lines:
   cs_mem_free(AsmString);
   return tmpString;
 }
-        """)
+        """
+        # AArch64InstPrinterValidateMCOperand was hardcoded here for AArch64
+        # (the only arch this injected block was ever written for). Only
+        # called when a K_Custom AliasPatternCond exists for this target -
+        # a real function of this exact name is then emitted directly into
+        # this same .inc file by llvm-tblgen; if the target has no K_Custom
+        # conditions (as of writing, true for PPC), the target's
+        # InstPrinter.c must provide a small stub of this name so the
+        # (unreachable) call site still compiles.
+        alias_match_block = alias_match_block.replace(
+            'AArch64InstPrinterValidateMCOperand', arch + 'InstPrinterValidateMCOperand')
+        # set_sme_index()/isSME distinguish AArch64 SME tile-slice indexing
+        # brackets (e.g. "za[w8, 0]") from ordinary memory-operand brackets;
+        # set_sme_index() only exists in AArch64InstPrinter.c. No other
+        # target has SME syntax, so every '[' / ']' there is always the
+        # ordinary memory-operand case.
+        if arch.upper() not in ('AARCH64', 'ARM64'):
+            alias_match_block = alias_match_block.replace(
+                "    bool isSME = false;\n    do {", "    do {")
+            alias_match_block = alias_match_block.replace(
+                """        if (AsmString[I] == '[') {
+          if (AsmString[I-1] != ' ') {
+            set_sme_index(MI, true);
+            isSME = true;
+          } else {
+            set_mem_access(MI, true);
+          }
+        } else if (AsmString[I] == ']') {
+          if (isSME) {
+            set_sme_index(MI, false);
+            isSME = false;
+          } else {
+            set_mem_access(MI, false);
+          }
+        }""",
+                """        if (AsmString[I] == '[') {
+          set_mem_access(MI, true);
+        } else if (AsmString[I] == ']') {
+          set_mem_access(MI, false);
+        }""")
+        print_line(alias_match_block)
         in_printAliasInstr = False
         # skip next few lines
         skip_printing = True
