@@ -91,6 +91,7 @@ void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	// Not used by ARM. Information is set after disassembly.
 }
 
+#define BETWEEN(x, y, z) (x <= y && y <= z)
 /// Patches the register names with Capstone specific alias.
 /// Those are common alias for registers (e.g. r15 = pc)
 /// which are not set in LLVM.
@@ -101,30 +102,31 @@ static void patch_cs_reg_alias(char *asm_str)
 	char *dst = asm_str;
 
 	while (*src && src_len >= 2) {
-		if (!(src[0] == 'r' && src[1] >= '0' && src[1] <= '9')) {
+		if (!(src[0] == 'r' && BETWEEN('0', src[1], '9'))) {
 			// No r0-r9 register.
 			*dst++ = *src++;
 			src_len--;
 			continue;
 		}
 
-		if (src_len < 3) {
-			break;
-		}
-		if (src[1] == '9' && !((src[2] >= '0' && src[2] <= '9'))) {
-			// r9 = sb
-			*dst++ = 's';
-			*dst++ = 'b';
-			src += 2;
+		if (src[1] == '9') {
+			if (src_len >= 3 ? !BETWEEN('0', src[2], '9') : true) {
+				// r9 = sb
+				*dst++ = 's';
+				*dst++ = 'b';
+				src += 2;
+			} else {
+				*dst++ = *src++;
+				*dst++ = *src++;
+			}
 			src_len -= 2;
 			continue;
 		}
 
-		if (src_len < 4) {
+		if (src_len < 3) {
 			break;
 		}
-		if (src[1] == '1' && src[2] >= '0' && src[2] <= '5' &&
-		    !((src[3] >= '0' && src[3] <= '9'))) {
+		if (src[1] == '1' && BETWEEN('0', src[2], '5')) {
 			switch (src[2]) {
 			case '0':
 				*dst++ = 's';
@@ -163,6 +165,7 @@ static void patch_cs_reg_alias(char *asm_str)
 	}
 	*dst = '\0';
 }
+#undef BETWEEN
 
 /// Check if PC is updated from stack. Those POP instructions
 /// are considered of group RETURN.

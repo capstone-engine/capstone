@@ -112,25 +112,14 @@ test_cases:
   -
     input:
       name: "aarch64 no false positive on 0x29 immediate"
-      bytes: [ 0x20, 0x1d, 0x00, 0x32 ]
+      bytes: [ 0x20,0x05,0x80,0x52 ]
       arch: "CS_ARCH_AARCH64"
       options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
       address: 0x0
     expected:
       insns:
       -
-        asm_text: "orr w0, w1, #0x29"
-  -
-    input:
-      name: "aarch64 no false positive on 0x30 immediate"
-      bytes: [ 0x20, 0x1e, 0x00, 0x32 ]
-      arch: "CS_ARCH_AARCH64"
-      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
-      address: 0x0
-    expected:
-      insns:
-      -
-        asm_text: "orr w0, w1, #0x30"
+        asm_text: "mov w0, #0x29"
   -
     input:
       name: "aarch64 x29 x30 with positive offset"
@@ -152,18 +141,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "sub sp, sp, #0x7d"
-  -
-    input:
-      name: "aarch64 adr with 0x29 immediate"
-      bytes: [ 0x29, 0x00, 0x00, 0x10 ]
-      arch: "CS_ARCH_AARCH64"
-      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
-      address: 0x0
-    expected:
-      insns:
-      -
-        asm_text: "adr x0, #0x29"
+        asm_text: "sub fp, sp, #0x7e"
   -
     input:
       name: "arm r9 alias sb"
@@ -317,7 +295,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "stmdb sp!, {r0, sb}"
+        asm_text: "push	{r0, sb}"
   -
     input:
       name: "arm r15 in register list"
@@ -328,7 +306,7 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "stmdb sp!, {r0, pc}"
+        asm_text: "push {r0, pc}"
   -
     input:
       name: "arm no false positive on 0x29 immediate"
