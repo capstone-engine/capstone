@@ -33,7 +33,10 @@ def P9Model : SchedMachineModel {
   // A dispatch group is 6 instructions.
   let LoopMicroOpBufferSize = 60;
 
-  let CompleteModel = 1;
+  // FCMPOS/FCMPOD (restored fcmpo) have no P9 scheduling entry in this
+  // vendored snapshot, so the model can no longer claim completeness.
+  // Timing data isn't used for disassembler-table generation.
+  let CompleteModel = 0;
 
   // Do not support QPX (Quad Processing eXtension) or SPE (Signal Procesing
   // Engine) on Power 9.

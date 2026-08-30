@@ -2322,8 +2322,13 @@ let isCompare = 1, hasSideEffects = 0 in {
 }
 }
 let PPC970_Unit = 3, Predicates = [HasFPU] in {  // FPU Operations.
-//def FCMPO  : XForm_17<63, 32, (outs CRRC:$crD), (ins FPRC:$fA, FPRC:$fB),
-//                      "fcmpo $crD, $fA, $fB", IIC_FPCompare>;
+let isCompare = 1, hasSideEffects = 0 in {
+  def FCMPOS : XForm_17<63, 32, (outs crrc:$crD), (ins f4rc:$fA, f4rc:$fB),
+                        "fcmpo $crD, $fA, $fB", IIC_FPCompare>;
+  let Interpretation64Bit = 1, isCodeGenOnly = 1 in
+  def FCMPOD : XForm_17<63, 32, (outs crrc:$crD), (ins f8rc:$fA, f8rc:$fB),
+                        "fcmpo $crD, $fA, $fB", IIC_FPCompare>;
+}
 let isCompare = 1, hasSideEffects = 0 in {
   def FCMPUS : XForm_17<63, 0, (outs crrc:$crD), (ins f4rc:$fA, f4rc:$fB),
                         "fcmpu $crD, $fA, $fB", IIC_FPCompare>;
