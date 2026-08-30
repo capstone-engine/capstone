@@ -204,7 +204,6 @@ typedef struct cs_m68k_op_reg_pair {
 } cs_m68k_op_reg_pair;
 
 /// Motorola extended-precision real in its 96-bit external representation.
-/// The fields are host-endian components, not a packed 12-byte buffer.
 typedef struct m68k_op_fp_extended {
 	/// Explicit integer bit followed by the 63-bit fractional part.
 	uint64_t significand;
@@ -215,7 +214,6 @@ typedef struct m68k_op_fp_extended {
 } m68k_op_fp_extended;
 
 /// Motorola packed-decimal real in its 96-bit external representation.
-/// The fields are host-endian components, not a packed 12-byte buffer.
 typedef struct m68k_op_fp_packed {
 	/// Raw high 32 bits: SM, SE, y, exponent, EXP3, ignored bits, MANT16.
 	uint32_t header;

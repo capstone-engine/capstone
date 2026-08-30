@@ -287,7 +287,7 @@ Nonetheless, we hope this additional information is useful to you.
 
 - Architecture support added for `cpu32`, `M68060`, and ColdFire variants (`CFV1`, `CFV2`, `CFV3`, `CFV4`, `CFV4E`, `CFV5`), including feature flags for USP, DIV, MAC/EMAC, and FPU instructions.
 - Expanded operand details for bitfield instructions, PC-relative addressing, immediate value types, and memory addressing metadata.
-- Added lossless detail operands for immediate 96-bit extended (`.x`) and packed-decimal (`.p`) values. `M68K_OP_FP_EXTENDED` stores the complete external extended representation in `fp_extended`, and `M68K_OP_FP_PACKED` stores the complete external packed-decimal representation in `fp_packed`; these fields contain host-endian components rather than packed byte buffers.
+- Added lossless detail operands for immediate 96-bit extended (`.x`) and packed-decimal (`.p`) values. Extended operands use `M68K_OP_FP_EXTENDED` with `sign_exp`, `reserved`, and `significand` in `fp_extended`; packed operands use `M68K_OP_FP_PACKED` with `header` and `fraction` in `fp_packed`.
 - Added `M68K_FPU_SIZE_PACKED` for `.p` operands. Packed register-to-memory moves expose their static immediate or dynamic data-register k-factor as a third detail operand.
 - Expanded integration tests and refactored invalid assembly edge cases.
 
@@ -490,8 +490,8 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | m68k_op_mem.disp_size                               | Defines if the .disp field was encoded as a byte (false) or word (true)                                 | Necessary for accurate printing.                                                          |
 | m68k_op_mem.in_disp_size, m68k_op_mem.out_disp_size | Defines if the .in_disp and .out_disp fields respectively were encoded as words (false) or longs (true) | Necessary for accurate printing.                                                          |
 | `M68K_OP_MEM` storage                               | Memory operands now store base registers in `m68k_op_mem.base_reg` and absolute addresses in `m68k_op_mem.address`; `op->reg` and `op->imm` are only used for register and immediate operands. | Keeps memory-addressing details in `m68k_op_mem` consistently. |
-| `M68K_OP_FP_EXTENDED`, `cs_m68k_op.fp_extended`     | Immediate `.x` operands use a dedicated type and store the complete 96-bit external representation as host-endian `sign_exp`, `significand`, and `reserved` components. | Avoids losing precision or reserved bits by converting detail data to binary64. |
-| `M68K_OP_FP_PACKED`, `cs_m68k_op.fp_packed`         | Immediate `.p` operands use a dedicated type and store the complete 96-bit external representation as host-endian `header` and `fraction` components. | Preserves every packed-decimal digit, sign, exponent, and special-value encoding. |
+| `M68K_OP_FP_EXTENDED`, `cs_m68k_op.fp_extended`     | Immediate `.x` operands use a dedicated type with `sign_exp`, `reserved`, and `significand` fields. | Avoids losing precision or reserved bits by converting detail data to binary64. |
+| `M68K_OP_FP_PACKED`, `cs_m68k_op.fp_packed`         | Immediate `.p` operands use a dedicated type with `header` and `fraction` fields. | Preserves every packed-decimal digit, sign, exponent, and special-value encoding. |
 | `M68K_FPU_SIZE_PACKED`                              | Identifies `.p` operands separately from `M68K_FPU_SIZE_EXTENDED`; both external formats occupy 12 bytes. | Allows consumers and printers to distinguish packed decimal from extended precision. |
 | Packed register-to-memory `FMOVE` operands          | A static immediate or dynamic data-register k-factor is exposed as the third detail operand. | Preserves the formatting operand encoded for packed-decimal output. |
 
