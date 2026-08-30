@@ -94,6 +94,8 @@ public class M68k_const {
 	public static final int M68K_OP_REG_PAIR = CS_OP_SPECIAL+3;
 	public static final int M68K_OP_BR_DISP = CS_OP_SPECIAL+4;
 	public static final int M68K_OP_SHIFT = CS_OP_SPECIAL+5;
+	public static final int M68K_OP_FP_EXTENDED = CS_OP_SPECIAL+6;
+	public static final int M68K_OP_FP_PACKED = CS_OP_SPECIAL+7;
 	public static final int M68K_OP_MEM = CS_OP_MEM;
 
 	public static final int M68K_OP_FLAG_NONE = 0;
@@ -118,6 +120,7 @@ public class M68k_const {
 	public static final int M68K_FPU_SIZE_SINGLE = 4;
 	public static final int M68K_FPU_SIZE_DOUBLE = 8;
 	public static final int M68K_FPU_SIZE_EXTENDED = 12;
+	public static final int M68K_FPU_SIZE_PACKED = 13;
 
 	public static final int M68K_SIZE_TYPE_INVALID = 0;
 	public static final int M68K_SIZE_TYPE_CPU = 1;

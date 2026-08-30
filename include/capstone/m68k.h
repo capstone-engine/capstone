@@ -138,6 +138,10 @@ typedef enum m68k_op_type {
 	/// Shift-direction pseudo operand.
 	/// Shift direction is set in cs_m68k_op.flags
 	M68K_OP_SHIFT = CS_OP_SPECIAL + 5,
+	/// Extended precision Floating-Point operand.
+	M68K_OP_FP_EXTENDED = CS_OP_SPECIAL + 6,
+	/// Packed decimal Floating-Point operand.
+	M68K_OP_FP_PACKED = CS_OP_SPECIAL + 7,
 	M68K_OP_MEM = CS_OP_MEM, ///< = CS_OP_MEM (Memory operand).
 } m68k_op_type;
 
@@ -199,12 +203,32 @@ typedef struct cs_m68k_op_reg_pair {
 	m68k_reg reg_1;
 } cs_m68k_op_reg_pair;
 
+/// Motorola extended-precision real in its 96-bit external representation.
+typedef struct m68k_op_fp_extended {
+	/// Explicit integer bit followed by the 63-bit fractional part.
+	uint64_t significand;
+	/// Sign in bit 15 and the 15-bit biased exponent in bits 14-0.
+	uint16_t sign_exp;
+	/// Raw reserved word from the external representation.
+	uint16_t reserved;
+} m68k_op_fp_extended;
+
+/// Motorola packed-decimal real in its 96-bit external representation.
+typedef struct m68k_op_fp_packed {
+	/// Raw high 32 bits: SM, SE, y, exponent, EXP3, ignored bits, MANT16.
+	uint32_t header;
+	/// Raw low 64 bits containing packed BCD digits MANT15 through MANT0.
+	uint64_t fraction;
+} m68k_op_fp_packed;
+
 /// Instruction operand
 typedef struct cs_m68k_op {
 	union {
 		uint64_t imm; ///< immediate value for IMM operand
 		double dimm; ///< double imm
 		float simm; ///< float imm
+		m68k_op_fp_extended fp_extended; ///< extended-precision immediate
+		m68k_op_fp_packed fp_packed; ///< packed-decimal immediate
 		m68k_reg reg; ///< register value for REG operand
 		cs_m68k_op_reg_pair reg_pair; ///< register pair in one operand
 	};
@@ -231,6 +255,8 @@ typedef enum m68k_fpu_size {
 	M68K_FPU_SIZE_SINGLE = 4, ///< 4 byte in size (single float)
 	M68K_FPU_SIZE_DOUBLE = 8, ///< 8 byte in size (double)
 	M68K_FPU_SIZE_EXTENDED = 12, ///< 12 byte in size (extended real format)
+	/// Distinct format tag for a 12-byte packed-decimal operand.
+	M68K_FPU_SIZE_PACKED = 13,
 } m68k_fpu_size;
 
 /// Type of size that is being used for the current instruction
@@ -256,7 +282,7 @@ typedef struct cs_m68k {
 	cs_m68k_op
 		operands[M68K_OPERAND_COUNT]; ///< operands for this instruction.
 	m68k_op_size
-		op_size; ///< size of data operand works on in bytes (.b, .w, .l, etc)
+		op_size; ///< size/format of the data operand (.b, .w, .x, .p, etc)
 	uint8_t op_count; ///< number of operands for the instruction
 } cs_m68k;
 

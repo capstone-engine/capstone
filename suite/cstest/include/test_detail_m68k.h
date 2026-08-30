@@ -66,6 +66,37 @@ static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
 };
 
 typedef struct {
+	uint64_t significand;
+	uint16_t sign_exp;
+	uint16_t reserved;
+} TestDetailM68KOpFpExtended;
+
+static const cyaml_schema_field_t
+	test_detail_m68k_op_fp_extended_mapping_schema[] = {
+		CYAML_FIELD_UINT("significand", CYAML_FLAG_OPTIONAL,
+				 TestDetailM68KOpFpExtended, significand),
+		CYAML_FIELD_UINT("sign_exp", CYAML_FLAG_OPTIONAL,
+				 TestDetailM68KOpFpExtended, sign_exp),
+		CYAML_FIELD_UINT("reserved", CYAML_FLAG_OPTIONAL,
+				 TestDetailM68KOpFpExtended, reserved),
+		CYAML_FIELD_END
+	};
+
+typedef struct {
+	uint32_t header;
+	uint64_t fraction;
+} TestDetailM68KOpFpPacked;
+
+static const cyaml_schema_field_t
+	test_detail_m68k_op_fp_packed_mapping_schema[] = {
+		CYAML_FIELD_UINT("header", CYAML_FLAG_OPTIONAL,
+				 TestDetailM68KOpFpPacked, header),
+		CYAML_FIELD_UINT("fraction", CYAML_FLAG_OPTIONAL,
+				 TestDetailM68KOpFpPacked, fraction),
+		CYAML_FIELD_END
+	};
+
+typedef struct {
 	char *type;
 	char *address_mode;
 
@@ -82,6 +113,8 @@ typedef struct {
 	double dimm;
 	float simm;
 
+	TestDetailM68KOpFpExtended *fp_extended;
+	TestDetailM68KOpFpPacked *fp_packed;
 	TestDetailM68KOpMem *mem;
 	char **flags;
 	size_t flags_count;
@@ -114,6 +147,12 @@ static const cyaml_schema_field_t test_detail_m68k_op_mapping_schema[] = {
 			 register_bits),
 	CYAML_FIELD_FLOAT("dimm", CYAML_FLAG_OPTIONAL, TestDetailM68KOp, dimm),
 	CYAML_FIELD_FLOAT("simm", CYAML_FLAG_OPTIONAL, TestDetailM68KOp, simm),
+	CYAML_FIELD_MAPPING_PTR("fp_extended", CYAML_FLAG_OPTIONAL,
+				TestDetailM68KOp, fp_extended,
+				test_detail_m68k_op_fp_extended_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR("fp_packed", CYAML_FLAG_OPTIONAL,
+				TestDetailM68KOp, fp_packed,
+				test_detail_m68k_op_fp_packed_mapping_schema),
 	CYAML_FIELD_MAPPING_PTR("mem", CYAML_FLAG_OPTIONAL, TestDetailM68KOp,
 				mem, test_detail_m68k_op_mem_mapping_schema),
 	CYAML_FIELD_SEQUENCE("flags", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,

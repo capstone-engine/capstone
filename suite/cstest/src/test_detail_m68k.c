@@ -113,6 +113,16 @@ TestDetailM68KOp *test_detail_m68k_op_clone(TestDetailM68KOp *op)
 	clone->br_disp = op->br_disp;
 	clone->br_disp_size = op->br_disp_size;
 	clone->register_bits = op->register_bits;
+	if (op->fp_extended) {
+		clone->fp_extended =
+			cs_mem_calloc(sizeof(TestDetailM68KOpFpExtended), 1);
+		*clone->fp_extended = *op->fp_extended;
+	}
+	if (op->fp_packed) {
+		clone->fp_packed =
+			cs_mem_calloc(sizeof(TestDetailM68KOpFpPacked), 1);
+		*clone->fp_packed = *op->fp_packed;
+	}
 	clone->flags_count = op->flags_count;
 	if (op->flags_count > 0)
 		clone->flags = cs_mem_calloc(sizeof(char *), op->flags_count);
@@ -136,6 +146,8 @@ void test_detail_m68k_op_free(TestDetailM68KOp *op)
 	for (size_t i = 0; i < op->flags_count; ++i)
 		cs_mem_free(op->flags[i]);
 	cs_mem_free(op->flags);
+	cs_mem_free(op->fp_extended);
+	cs_mem_free(op->fp_packed);
 	test_detail_m68k_op_mem_free(op->mem);
 	cs_mem_free(op);
 }
@@ -181,6 +193,25 @@ bool test_expected_m68k(csh *handle, cs_m68k *actual, TestDetailM68K *expected)
 			break;
 		case M68K_OP_FP_DOUBLE:
 			compare_fp_ret(op->dimm, eop->dimm, false);
+			break;
+		case M68K_OP_FP_EXTENDED:
+			if (!eop->fp_extended)
+				return false;
+			compare_uint64_ret(op->fp_extended.significand,
+					   eop->fp_extended->significand,
+					   false);
+			compare_uint16_ret(op->fp_extended.sign_exp,
+					   eop->fp_extended->sign_exp, false);
+			compare_uint16_ret(op->fp_extended.reserved,
+					   eop->fp_extended->reserved, false);
+			break;
+		case M68K_OP_FP_PACKED:
+			if (!eop->fp_packed)
+				return false;
+			compare_uint32_ret(op->fp_packed.header,
+					   eop->fp_packed->header, false);
+			compare_uint64_ret(op->fp_packed.fraction,
+					   eop->fp_packed->fraction, false);
 			break;
 		case M68K_OP_REG_BITS:
 			compare_uint32_ret(op->register_bits,
