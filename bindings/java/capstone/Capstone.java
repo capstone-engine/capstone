@@ -78,10 +78,10 @@ public class Capstone {
     public static class ByReference extends _cs_detail implements Structure.ByReference {};
 
     // list of all implicit registers being read.
-    public short[] regs_read = new short[16];
+    public short[] regs_read = new short[20];
     public byte regs_read_count;
     // list of all implicit registers being written.
-    public short[] regs_write = new short[20];
+    public short[] regs_write = new short[47];
     public byte regs_write_count;
     // list of semantic groups this instruction belongs to.
     public byte[] groups = new byte[16];
