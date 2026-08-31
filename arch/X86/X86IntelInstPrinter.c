@@ -810,6 +810,8 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 					(ARR_SIZE(MI->flat_insn->detail->x86
 							  .operands) -
 					 1));
+			memset(&(MI->flat_insn->detail->x86.operands[0]), 0,
+			       sizeof(MI->flat_insn->detail->x86.operands[0]));
 			MI->flat_insn->detail->x86.operands[0].type =
 				X86_OP_REG;
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
