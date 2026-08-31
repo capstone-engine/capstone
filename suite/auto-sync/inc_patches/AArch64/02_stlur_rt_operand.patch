@@ -1,0 +1,54 @@
+# AArch64 STLURB/STLURH/STLUR (the four integer FEAT_LRCPC2 unscaled
+# store-release forms) were generated with CS_OP_MEM set on the Rt data
+# operand and CS_AC_WRITE for its access. Both are wrong: Rt is a plain
+# source register, exactly as in the STUR forms these mirror.
+#
+# The stray CS_OP_MEM made the mapping fold Rt into the memory operand,
+# so `stlur x10, [x8, #8]` decoded with the data register as mem.base,
+# the real base as mem.index, and the displacement as a second MEM
+# operand -- with no register operand at all:
+#
+#   op_count: 2
+#     operands[0].type: MEM  base: x10  index: x8   access: WRITE
+#     operands[1].type: MEM  disp: 0x8              access: WRITE
+#
+# The five SIMD&FP STLUR forms (STLURbi/di/hi/qi/si) were already
+# correct and are left alone. This patch makes the four integer forms
+# match STURBi/STURHi/STURWi/STURXi.
+diff --git a/arch/AArch64/AArch64GenCSMappingInsnOp.inc b/arch/AArch64/AArch64GenCSMappingInsnOp.inc
+index 4954eb31..1c033405 100644
+--- a/arch/AArch64/AArch64GenCSMappingInsnOp.inc
++++ b/arch/AArch64/AArch64GenCSMappingInsnOp.inc
+@@ -44341,28 +44341,28 @@
+ }},
+ { /* AARCH64_STLURBi (6753) - AARCH64_INS_STLURB - stlurb	$Rt, [$Rn, $offset] */
+ {
+-  { CS_OP_REG | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* Rt */
++  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* Rt */
+   { CS_OP_REG | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* Rn */
+   { CS_OP_IMM | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* offset */
+   { 0 }
+ }},
+ { /* AARCH64_STLURHi (6754) - AARCH64_INS_STLURH - stlurh	$Rt, [$Rn, $offset] */
+ {
+-  { CS_OP_REG | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* Rt */
++  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* Rt */
+   { CS_OP_REG | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* Rn */
+   { CS_OP_IMM | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* offset */
+   { 0 }
+ }},
+ { /* AARCH64_STLURWi (6755) - AARCH64_INS_STLUR - stlur	$Rt, [$Rn, $offset] */
+ {
+-  { CS_OP_REG | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* Rt */
++  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i32, CS_DATA_TYPE_LAST } }, /* Rt */
+   { CS_OP_REG | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* Rn */
+   { CS_OP_IMM | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* offset */
+   { 0 }
+ }},
+ { /* AARCH64_STLURXi (6756) - AARCH64_INS_STLUR - stlur	$Rt, [$Rn, $offset] */
+ {
+-  { CS_OP_REG | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* Rt */
++  { CS_OP_REG, CS_AC_READ, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* Rt */
+   { CS_OP_REG | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* Rn */
+   { CS_OP_IMM | CS_OP_MEM, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST } }, /* offset */
+   { 0 }
