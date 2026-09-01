@@ -28,6 +28,8 @@ void MCInst_Init(MCInst *inst, cs_arch arch)
 	inst->size = 0;
 	inst->has_imm = false;
 	inst->op1_size = 0;
+	inst->x86_writemask_op = -1;
+	inst->x86_writemask_detail_op = -1;
 	inst->ac_idx = 0;
 	inst->popcode_adjust = 0;
 	inst->assembly[0] = '\0';
@@ -52,6 +54,8 @@ void MCInst_Init(MCInst *inst, cs_arch arch)
 void MCInst_clear(MCInst *inst)
 {
 	inst->size = 0;
+	inst->x86_writemask_op = -1;
+	inst->x86_writemask_detail_op = -1;
 }
 
 // does not free @Op
@@ -320,6 +324,8 @@ void MCInst_updateWithTmpMI(MCInst *MI, MCInst *TmpMI)
 {
 	MI->size = TmpMI->size;
 	MI->Opcode = TmpMI->Opcode;
+	MI->x86_writemask_op = TmpMI->x86_writemask_op;
+	MI->x86_writemask_detail_op = TmpMI->x86_writemask_detail_op;
 	assert(MI->size < MAX_MC_OPS);
 	memcpy(MI->Operands, TmpMI->Operands,
 	       sizeof(MI->Operands[0]) * MI->size);

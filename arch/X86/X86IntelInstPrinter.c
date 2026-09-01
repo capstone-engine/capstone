@@ -461,6 +461,20 @@ static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access,
 	access[i] = 0;
 #endif
 }
+
+static uint8_t get_detail_op_access(const MCInst *MI, const uint8_t *access,
+				    unsigned int detail_op)
+{
+	if (MI->x86_writemask_detail_op >= 0) {
+		unsigned int writemask_op = MI->x86_writemask_detail_op;
+		if (detail_op == writemask_op)
+			return CS_AC_READ;
+		if (detail_op > writemask_op)
+			detail_op--;
+	}
+
+	return detail_op < CS_X86_MAXIMUM_OPERAND_SIZE ? access[detail_op] : 0;
+}
 #endif
 
 static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
@@ -500,7 +514,8 @@ static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 			      &MI->flat_insn->detail->x86.eflags);
 		MI->flat_insn->detail->x86
 			.operands[MI->flat_insn->detail->x86.op_count]
-			.access = access[MI->flat_insn->detail->x86.op_count];
+			.access = get_detail_op_access(
+			MI, access, MI->flat_insn->detail->x86.op_count);
 #endif
 	}
 
@@ -559,7 +574,8 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 			      &MI->flat_insn->detail->x86.eflags);
 		MI->flat_insn->detail->x86
 			.operands[MI->flat_insn->detail->x86.op_count]
-			.access = access[MI->flat_insn->detail->x86.op_count];
+			.access = get_detail_op_access(
+			MI, access, MI->flat_insn->detail->x86.op_count);
 #endif
 	}
 
@@ -674,7 +690,8 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 			      &MI->flat_insn->detail->x86.eflags);
 		MI->flat_insn->detail->x86
 			.operands[MI->flat_insn->detail->x86.op_count]
-			.access = access[MI->flat_insn->detail->x86.op_count];
+			.access = get_detail_op_access(
+			MI, access, MI->flat_insn->detail->x86.op_count);
 #endif
 	}
 
@@ -740,7 +757,8 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 			      &MI->flat_insn->detail->x86.eflags);
 		MI->flat_insn->detail->x86
 			.operands[MI->flat_insn->detail->x86.op_count]
-			.access = access[MI->flat_insn->detail->x86.op_count];
+			.access = get_detail_op_access(
+			MI, access, MI->flat_insn->detail->x86.op_count);
 #endif
 
 		MI->flat_insn->detail->x86.op_count++;
@@ -810,6 +828,8 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 					(ARR_SIZE(MI->flat_insn->detail->x86
 							  .operands) -
 					 1));
+			if (MI->x86_writemask_detail_op >= 0)
+				MI->x86_writemask_detail_op++;
 			MI->flat_insn->detail->x86.operands[0].type =
 				X86_OP_REG;
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
@@ -843,8 +863,10 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 #ifndef CAPSTONE_DIET
 		get_op_access(MI->csh, MCInst_getOpcode(MI), access,
 			      &MI->flat_insn->detail->x86.eflags);
-		MI->flat_insn->detail->x86.operands[0].access = access[0];
-		MI->flat_insn->detail->x86.operands[1].access = access[1];
+		MI->flat_insn->detail->x86.operands[0].access =
+			get_detail_op_access(MI, access, 0);
+		MI->flat_insn->detail->x86.operands[1].access =
+			get_detail_op_access(MI, access, 1);
 #endif
 	}
 
@@ -904,8 +926,9 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 				      &MI->flat_insn->detail->x86.eflags);
 			MI->flat_insn->detail->x86
 				.operands[MI->flat_insn->detail->x86.op_count]
-				.access =
-				access[MI->flat_insn->detail->x86.op_count];
+				.access = get_detail_op_access(
+				MI, access,
+				MI->flat_insn->detail->x86.op_count);
 #endif
 
 			MI->flat_insn->detail->x86.op_count++;
@@ -949,6 +972,10 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					.size =
 					MI->csh->regsize_map[X86_register_map(
 						reg)];
+				if (OpNo == MI->x86_writemask_op)
+					MI->x86_writemask_detail_op =
+						MI->flat_insn->detail->x86
+							.op_count;
 
 #ifndef CAPSTONE_DIET
 				get_op_access(
@@ -957,9 +984,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->x86
 					.operands[MI->flat_insn->detail->x86
 							  .op_count]
-					.access =
-					access[MI->flat_insn->detail->x86
-						       .op_count];
+					.access = get_detail_op_access(
+					MI, access,
+					MI->flat_insn->detail->x86.op_count);
 #endif
 
 				MI->flat_insn->detail->x86.op_count++;
@@ -1096,9 +1123,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->flat_insn->detail->x86
 					.operands[MI->flat_insn->detail->x86
 							  .op_count]
-					.access =
-					access[MI->flat_insn->detail->x86
-						       .op_count];
+					.access = get_detail_op_access(
+					MI, access,
+					MI->flat_insn->detail->x86.op_count);
 #endif
 
 				MI->flat_insn->detail->x86.op_count++;
@@ -1153,7 +1180,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			      &MI->flat_insn->detail->x86.eflags);
 		MI->flat_insn->detail->x86
 			.operands[MI->flat_insn->detail->x86.op_count]
-			.access = access[MI->flat_insn->detail->x86.op_count];
+			.access = get_detail_op_access(
+			MI, access, MI->flat_insn->detail->x86.op_count);
 #endif
 	}
 
