@@ -6967,3 +6967,222 @@ test_cases:
                 mem_disp: 0x100cdc408
                 access: CS_AC_READ
           regs_write: [ x8 ]
+  -
+    input:
+      name: "issue 2565 masked operands access (Intel, zeroing)"
+      bytes: [ 0x62,0x41,0x04,0xcf,0x59,0xc5 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vmulps zmm24 {k7} {z}, zmm15, zmm13"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: zmm24
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: k7
+                access: CS_AC_READ
+                avx_zero_opmask: 1
+              -
+                type: X86_OP_REG
+                reg: zmm15
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: zmm13
+                access: CS_AC_READ
+          regs_read: [ k7, zmm15, zmm13 ]
+          regs_write: [ zmm24 ]
+  -
+    input:
+      name: "issue 2565 masked operands access (AT&T, zeroing)"
+      bytes: [ 0x62,0x41,0x04,0xcf,0x59,0xc5 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vmulps %zmm13, %zmm15, %zmm24 {%k7} {z}"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: zmm13
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: zmm15
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: zmm24
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: k7
+                access: CS_AC_READ
+                avx_zero_opmask: 1
+          regs_read: [ zmm13, zmm15, k7 ]
+          regs_write: [ zmm24 ]
+  -
+    input:
+      name: "issue 2565 masked operands access (Intel, merging)"
+      bytes: [ 0x62,0x41,0x04,0x4f,0x59,0xc5 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vmulps zmm24 {k7}, zmm15, zmm13"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: zmm24
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: k7
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: zmm15
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: zmm13
+                access: CS_AC_READ
+          regs_read: [ zmm24, k7, zmm15, zmm13 ]
+          regs_write: [ zmm24 ]
+  -
+    input:
+      name: "issue 2565 masked operands access (Intel, memory source)"
+      bytes: [ 0x62,0x41,0x04,0xcf,0x59,0x05,0x00,0x00,0x00,0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vmulps zmm24 {k7} {z}, zmm15, zmmword ptr [rip]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: zmm24
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: k7
+                access: CS_AC_READ
+                avx_zero_opmask: 1
+              -
+                type: X86_OP_REG
+                reg: zmm15
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: rip
+                access: CS_AC_READ
+          regs_read: [ k7, zmm15, rip ]
+          regs_write: [ zmm24 ]
+  -
+    input:
+      name: "issue 2565 masked operands access (Intel, unmasked control)"
+      bytes: [ 0x62,0x41,0x04,0x48,0x59,0xc5 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vmulps zmm24, zmm15, zmm13"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: zmm24
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: zmm15
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: zmm13
+                access: CS_AC_READ
+          regs_read: [ zmm15, zmm13 ]
+          regs_write: [ zmm24 ]
+  -
+    input:
+      name: "issue 2565 masked operands access (Intel, second opcode)"
+      bytes: [ 0x62,0xf1,0xfe,0x4b,0x6f,0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vmovdqu64 zmm1 {k3}, zmm0"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: zmm1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: k3
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: zmm0
+                access: CS_AC_READ
+          regs_read: [ zmm1, k3, zmm0 ]
+          regs_write: [ zmm1 ]
+  -
+    input:
+      name: "issue 2565 masked operands access (Intel, immediate)"
+      bytes: [ 0x62,0xf1,0x75,0xca,0x72,0xf3,0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "vpslld zmm1 {k2} {z}, zmm3, 4"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: zmm1
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: k2
+                access: CS_AC_READ
+                avx_zero_opmask: 1
+              -
+                type: X86_OP_REG
+                reg: zmm3
+                access: CS_AC_READ
+              -
+                type: X86_OP_IMM
+                imm: 0x4
+          regs_read: [ k2, zmm3 ]
+          regs_write: [ zmm1 ]

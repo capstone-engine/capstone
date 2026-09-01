@@ -111,6 +111,8 @@ struct MCInst {
 	uint64_t address; // address of this insn
 	cs_struct *csh; // save the main csh
 	uint8_t x86opsize; // opsize for [mem] operand
+	int8_t x86_writemask_op; // MCInst operand from ENCODING_WRITEMASK
+	int8_t x86_writemask_detail_op; // corresponding cs_x86_op index
 
 	// These flags could be used to pass some info from one target subcomponent
 	// to another, for example, from disassembler to asm printer. The values of

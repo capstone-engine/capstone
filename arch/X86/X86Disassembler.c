@@ -1124,6 +1124,7 @@ static bool translateMaskRegister(MCInst *mcInst, uint8_t maskRegNum)
 		return true;
 	}
 
+	mcInst->x86_writemask_op = MCInst_getNumOperands(mcInst);
 	MCOperand_CreateReg0(mcInst, X86_K0 + maskRegNum);
 
 	return false;
