@@ -1800,3 +1800,15 @@ test_cases:
               mem_disp: 1
               access: CS_AC_WRITE
           regs_read: [ b10, x8 ]
+  -
+    input:
+      bytes: [0x00,0x00,0x28,0xd5]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sysl	x0, #0, c0, c0, #0"
+        details:
+          regs_write: [ x0 ]
