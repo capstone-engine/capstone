@@ -877,7 +877,7 @@ bool AArch64_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 }
 
 /// Patches the register names with Capstone specific alias.
-/// Those are common alias for registers (e.g. r15 = pc)
+/// Those are common alias for registers (e.g. x30 = lr)
 /// which are not set in LLVM.
 static void patch_cs_reg_alias(char *asm_str)
 {

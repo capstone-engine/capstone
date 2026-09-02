@@ -221,7 +221,7 @@ test_cases:
         asm_text: "mov r0, pc"
   -
     input:
-      name: "arm r9 at end of string"
+      name: "arm r11 at end of string"
       bytes: [ 0x0b, 0xd0, 0xa0, 0xe1 ]
       arch: "CS_ARCH_ARM"
       options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
