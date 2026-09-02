@@ -1224,7 +1224,7 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 	}
 
 	len = cs_snprintf(p, available, "0x%02x", buffer[0]);
-	if (len < 0 || len > available - 1) {
+	if (len < 0 || (size_t)len > available - 1) {
 		opstr[0] = '\0';
 		return;
 	}

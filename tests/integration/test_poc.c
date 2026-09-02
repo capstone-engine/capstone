@@ -14,15 +14,10 @@
  * in-bounds) but returns a huge fabricated length (INT_MAX). */
 static int evil_vsnprintf(char *str, size_t size, const char *fmt, va_list ap)
 {
+	(void)str;
+	(void)size;
 	(void)fmt;
 	(void)ap;
-	if (str && size > 0) {
-		str[0] = 'A';
-		if (size > 1)
-			str[1] = 'A';
-		if (size > 2)
-			str[2] = '\0';
-	}
 	return INT_MAX;
 }
 
