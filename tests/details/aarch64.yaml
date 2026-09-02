@@ -992,6 +992,10 @@ test_cases:
               access: CS_AC_READ
               shift_type: AARCH64_SFT_ROR_REG
               shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: w3
+              access: CS_AC_READ
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1017,6 +1021,10 @@ test_cases:
               access: CS_AC_READ
               shift_type: AARCH64_SFT_LSR_REG
               shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: w3
+              access: CS_AC_READ
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1042,6 +1050,10 @@ test_cases:
               access: CS_AC_READ
               shift_type: AARCH64_SFT_ASR_REG
               shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: w3
+              access: CS_AC_READ
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1067,6 +1079,10 @@ test_cases:
               access: CS_AC_READ
               shift_type: AARCH64_SFT_LSL_REG
               shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: w3
+              access: CS_AC_READ
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1092,6 +1108,10 @@ test_cases:
               access: CS_AC_READ
               shift_type: AARCH64_SFT_ROR_REG
               shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: w3
+              access: CS_AC_READ
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1117,6 +1137,10 @@ test_cases:
               access: CS_AC_READ
               shift_type: AARCH64_SFT_LSR_REG
               shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: w3
+              access: CS_AC_READ
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1142,6 +1166,10 @@ test_cases:
               access: CS_AC_READ
               shift_type: AARCH64_SFT_ASR_REG
               shift_value: 210 # Absolute number of W3 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: w3
+              access: CS_AC_READ
           regs_read: [ w2, w3 ]
           regs_write: [ w1 ]
   -
@@ -1812,3 +1840,119 @@ test_cases:
         asm_text: "sysl	x0, #0, c0, c0, #0"
         details:
           regs_write: [ x0 ]
+  -
+    input:
+      bytes: [0x41,0x20,0xc3,0x9a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsl	x1, x2, x3"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: x2
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_LSL_REG
+              shift_value: 241 # Absolute number of X3 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: x3
+              access: CS_AC_READ
+          regs_read: [ x2, x3 ]
+          regs_write: [ x1 ]
+  -
+    input:
+      bytes: [0xa4,0x24,0xc6,0x9a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "lsr	x4, x5, x6"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x4
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: x5
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_LSR_REG
+              shift_value: 244 # Absolute number of X6 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: x6
+              access: CS_AC_READ
+          regs_read: [ x5, x6 ]
+          regs_write: [ x4 ]
+  -
+    input:
+      bytes: [0x07,0x29,0xc9,0x9a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "asr	x7, x8, x9"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x7
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: x8
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_ASR_REG
+              shift_value: 247 # Absolute number of X9 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: x9
+              access: CS_AC_READ
+          regs_read: [ x8, x9 ]
+          regs_write: [ x7 ]
+  -
+    input:
+      bytes: [0x6a,0x2d,0xcc,0x9a]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror	x10, x11, x12"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x10
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_REG
+              reg: x11
+              access: CS_AC_READ
+              shift_type: AARCH64_SFT_ROR_REG
+              shift_value: 250 # Absolute number of X12 enum value. Might change with an update.
+            -
+              type: AARCH64_OP_REG
+              reg: x12
+              access: CS_AC_READ
+          regs_read: [ x11, x12 ]
+          regs_write: [ x10 ]

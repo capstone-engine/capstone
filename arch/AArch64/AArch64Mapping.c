@@ -454,12 +454,14 @@ static void add_non_alias_details(MCInst *MI)
 			      AARCH64_OP_REG);
 
 		// The shift by register instructions don't set the shift value properly.
-		// Correct it here.
+		// Correct it here. Rm stays in the operand list: it prints as
+		// a third operand and is read. Only AArch64_reg_access knows
+		// to interpret shift.value as a register, and it de-duplicates
+		// against the operand's own read.
 		uint64_t shift = AArch64_get_detail_op(MI, -1)->reg;
 		cs_aarch64_op *op1 = AArch64_get_detail_op(MI, -2);
 		op1->shift.type = id_to_shifter(Opcode);
 		op1->shift.value = shift;
-		AArch64_dec_op_count(MI);
 		break;
 	case AArch64_FCMPDri:
 	case AArch64_FCMPEDri:
