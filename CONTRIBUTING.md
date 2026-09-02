@@ -85,12 +85,12 @@ Coding style
 
 AI guidelines
 ------------
-Using AI for contributions is in general allowed (see exception below).
-Please be aware though that everything has to be tested thoroughly.
-The larger the PR the more rigid are our requirements.
+Using AI for contributions is generally allowed (see exception below).
+Please be aware that everything has to be tested thoroughly.
+The larger the PR, the more rigid our requirements are.
 
 > [!NOTE]
-> We highly recommend to limit AI usage to small or repetitive changes.
+> We highly recommend limiting AI usage to small or repetitive changes.
 > The rule of thumb is:
 >
 > _If you spent an annoying amount of time checking the code, your task is not suitable for AI._
@@ -99,9 +99,9 @@ The larger the PR the more rigid are our requirements.
 > It is forbidden to let AI write the PR description!
 > If **you** can't explain what the change does, AI was not the right tool.
 
-Translations with AI are of course allowed.
-If you use it, please write simple and short sentences in your native language.
-So the AI doesn't translate them too flowerily.
+Translations with AI are, of course, allowed.
+If you use it, please write simple, short sentences in your native language
+so the AI doesn't translate them too floridly.
 
 Support
 -------
