@@ -2,12 +2,24 @@
 // SPDX-FileCopyrightText: 2025 Finder16
 // SPDX-FileCopyrightText: 2025 Rot127 <unisono@quyllur.org>
 
+#include <limits.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <capstone/platform.h>
 #include <capstone/capstone.h>
+
+/* Malicious vsnprintf: writes like a real vsnprintf (at most `size` bytes,
+ * in-bounds) but returns a huge fabricated length (INT_MAX). */
+static int evil_vsnprintf(char *str, size_t size, const char *fmt, va_list ap)
+{
+	(void)str;
+	(void)size;
+	(void)fmt;
+	(void)ap;
+	return INT_MAX;
+}
 
 static size_t big_skip(const uint8_t *code, size_t code_size, size_t offset,
 		       void *user_data)
@@ -318,6 +330,32 @@ static void test_tms320_ghsa_8qp8_2vg2_8mr4(void)
 	cs_close(&h);
 }
 
+int test_evil_vsnprintf_ghsa_gj26_93q5_cr54(void)
+{
+	csh handle;
+	cs_insn *insn = NULL;
+	size_t n;
+	/* Non-instruction bytes: ARM decode fails -> SKIPDATA path runs */
+	const uint8_t code[4] = { 0xff, 0xff, 0xff, 0xff };
+	cs_opt_mem mem = { malloc, calloc, realloc, free, evil_vsnprintf };
+
+	printf("[poc] registering malicious cs_opt_mem.vsnprintf (CS_OPT_MEM)\n");
+	if (cs_option(0, CS_OPT_MEM, (size_t)&mem) != CS_ERR_OK)
+		return 1;
+	if (cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle) != CS_ERR_OK)
+		return 1;
+	if (cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON) != CS_ERR_OK)
+		return 1;
+
+	printf("[poc] cs_disasm() on 0xffffffff with SKIPDATA enabled\n");
+	fflush(stdout);
+	n = cs_disasm(handle, code, sizeof(code), 0x1000, 0, &insn);
+	printf("[poc] cs_disasm returned %zu instructions without fault\n", n);
+	cs_free(insn, n);
+	cs_close(&handle);
+	return 0;
+}
+
 int main()
 {
 	test_overflow_cs_insn_bytes();
@@ -330,6 +368,7 @@ int main()
 	test_sh_oob_read_ghsa_5q63_4654_94v6();
 	test_arm_pop_ghsa_8qp8_2vg2_8mr4();
 	test_tms320_ghsa_8qp8_2vg2_8mr4();
+	test_evil_vsnprintf_ghsa_gj26_93q5_cr54();
 
 	return 0;
 }
