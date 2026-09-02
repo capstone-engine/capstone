@@ -340,4 +340,25 @@ test_cases:
       insns:
       -
         asm_text: "add r0, pc, #0x9"
-
+  -
+    input:
+      name: "arm no custom reg alias"
+      bytes: [ 0x0c, 0xe0, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov lr, r12"
+  -
+    input:
+      name: "aarch64 no custom reg alias"
+      bytes: [ 0xfd, 0x7b, 0xbf, 0xa9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stp x29, x30, [sp, #-0x10]!"
