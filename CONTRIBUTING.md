@@ -83,6 +83,22 @@ Coding style
 - We provide a `.clang-format` for C code.
 - Python files should be formatted with `black`.
 
+AI guidelines
+------------
+Using AI for contributions is in general allowed (see exception below).
+Please be aware though that everything has to be tested thoroughly.
+The larger the PR the more rigid are our requirements.
+
+> [!NOTE]
+> We highly recommend to limit AI usage to small or repetitive changes.
+> The rule of thumb is:
+>
+> _If you spent an annoying amount of time checking the code, your task is not suitable for AI._
+
+> [!IMPORTANT]
+> It is forbidden to let AI write the PR description!
+> If **you** can't explain what the change does, AI was not the right tool.
+
 Support
 -------
 

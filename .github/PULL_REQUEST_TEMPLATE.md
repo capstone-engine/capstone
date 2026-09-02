@@ -1,4 +1,11 @@
- <!-- Filling this template is mandatory -->
+#
+# IT IS NOT ALLOWED TO GENERATE THE PR DESCRIPTION WITH AI!
+#
+# See CONTRIBUTING.md for our AI guidelines.
+#
+
+
+<!-- Filling this template is mandatory -->
 
 **Your checklist for this pull request**
 - [ ] I've documented or updated the documentation of every API function and struct this PR changes.
