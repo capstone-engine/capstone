@@ -1819,3 +1819,29 @@ test_cases:
               bo_set: true
               pred_cr: PPC_PRED_INVALID
               pred_ctr: PPC_PRED_NZ
+  -
+    input:
+      bytes: [ 0x7c, 0x00, 0x04, 0x00, 0x7c, 0x80, 0x04, 0x00 ]
+      arch: "ppc"
+      options: [ CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mcrxr cr0"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: cr0
+                access: CS_AC_WRITE
+      -
+        asm_text: "mcrxr cr1"
+        details:
+         ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: cr1
+                access: CS_AC_WRITE

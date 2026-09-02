@@ -1268,772 +1268,773 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
   /* 11493 */ "bcctr \0"
   /* 11500 */ "mfctr \0"
   /* 11507 */ "mtctr \0"
-  /* 11514 */ "pmxvi16ger2s \0"
-  /* 11528 */ "addg6s \0"
-  /* 11536 */ "ps_abs \0"
-  /* 11544 */ "efdabs \0"
-  /* 11552 */ "qvfabs \0"
-  /* 11560 */ "ps_nabs \0"
-  /* 11569 */ "efdnabs \0"
-  /* 11578 */ "qvfnabs \0"
-  /* 11587 */ "efsnabs \0"
-  /* 11596 */ "evfsnabs \0"
-  /* 11606 */ "efsabs \0"
-  /* 11614 */ "evfsabs \0"
-  /* 11623 */ "evabs \0"
-  /* 11630 */ "vsum4sbs \0"
-  /* 11640 */ "vsubsbs \0"
-  /* 11649 */ "vaddsbs \0"
-  /* 11658 */ "vsum4ubs \0"
-  /* 11668 */ "vsububs \0"
-  /* 11677 */ "vaddubs \0"
-  /* 11686 */ "qvfsubs \0"
-  /* 11695 */ "qvfmsubs \0"
-  /* 11705 */ "qvfnmsubs \0"
-  /* 11716 */ "qvfadds \0"
-  /* 11725 */ "qvfmadds \0"
-  /* 11735 */ "qvfnmadds \0"
-  /* 11746 */ "qvfxxcpnmadds \0"
-  /* 11761 */ "qvfxxnpmadds \0"
-  /* 11775 */ "qvfxmadds \0"
-  /* 11786 */ "qvfxxmadds \0"
-  /* 11798 */ "qvfcfids \0"
-  /* 11808 */ "dcbtds \0"
-  /* 11816 */ "dcbtstds \0"
-  /* 11826 */ "xscvdpsxds \0"
-  /* 11838 */ "xvcvdpsxds \0"
-  /* 11850 */ "xvcvspsxds \0"
-  /* 11862 */ "xscvdpuxds \0"
-  /* 11874 */ "xvcvdpuxds \0"
-  /* 11886 */ "xvcvspuxds \0"
-  /* 11898 */ "ps_res \0"
-  /* 11906 */ "qvfres \0"
-  /* 11914 */ "qvfrsqrtes \0"
-  /* 11926 */ "efdcfs \0"
-  /* 11934 */ "mffs \0"
-  /* 11940 */ "plfs \0"
-  /* 11946 */ "mcrfs \0"
-  /* 11953 */ "pstfs \0"
-  /* 11960 */ "vsum4shs \0"
-  /* 11970 */ "vsubshs \0"
-  /* 11979 */ "vmhaddshs \0"
-  /* 11990 */ "vmhraddshs \0"
-  /* 12002 */ "vaddshs \0"
-  /* 12011 */ "vmsumshs \0"
-  /* 12021 */ "vsubuhs \0"
-  /* 12030 */ "vadduhs \0"
-  /* 12039 */ "vmsumuhs \0"
-  /* 12049 */ "subis \0"
-  /* 12056 */ "subpcis \0"
-  /* 12065 */ "addpcis \0"
-  /* 12074 */ "addis \0"
-  /* 12081 */ "lis \0"
-  /* 12086 */ "xoris \0"
-  /* 12093 */ "evsrwis \0"
-  /* 12102 */ "icbtls \0"
-  /* 12110 */ "qvfmuls \0"
-  /* 12119 */ "qvfxmuls \0"
-  /* 12129 */ "evlwhos \0"
-  /* 12138 */ "dcbfps \0"
-  /* 12146 */ "dcbstps \0"
-  /* 12155 */ "vpksdss \0"
-  /* 12164 */ "vpkshss \0"
-  /* 12173 */ "vpkswss \0"
-  /* 12182 */ "evcmpgts \0"
-  /* 12192 */ "evcmplts \0"
-  /* 12202 */ "fsqrts \0"
-  /* 12210 */ "qvfcfidus \0"
-  /* 12221 */ "vpksdus \0"
-  /* 12230 */ "vpkudus \0"
-  /* 12239 */ "subfus \0"
-  /* 12247 */ "vpkshus \0"
-  /* 12256 */ "vpkuhus \0"
-  /* 12265 */ "vpkswus \0"
-  /* 12274 */ "vpkuwus \0"
-  /* 12283 */ "fdivs \0"
-  /* 12290 */ "evsrws \0"
-  /* 12298 */ "mtvsrws \0"
-  /* 12307 */ "vsum2sws \0"
-  /* 12317 */ "vsubsws \0"
-  /* 12326 */ "vaddsws \0"
-  /* 12335 */ "vsumsws \0"
-  /* 12344 */ "vsubuws \0"
-  /* 12353 */ "vadduws \0"
-  /* 12362 */ "evdivws \0"
-  /* 12371 */ "xscvdpsxws \0"
-  /* 12383 */ "xvcvdpsxws \0"
-  /* 12395 */ "xvcvspsxws \0"
-  /* 12407 */ "xscvdpuxws \0"
-  /* 12419 */ "xvcvdpuxws \0"
-  /* 12431 */ "xvcvspuxws \0"
-  /* 12443 */ "vctsxs \0"
-  /* 12451 */ "vctuxs \0"
-  /* 12459 */ "ldat \0"
-  /* 12465 */ "stdat \0"
-  /* 12472 */ "evlhhesplat \0"
-  /* 12485 */ "evlwhsplat \0"
-  /* 12497 */ "evlhhossplat \0"
-  /* 12511 */ "evlhhousplat \0"
-  /* 12525 */ "evlwwsplat \0"
-  /* 12537 */ "lwat \0"
-  /* 12543 */ "stwat \0"
-  /* 12550 */ "dcbt \0"
-  /* 12556 */ "icbt \0"
-  /* 12562 */ "dcbtct \0"
-  /* 12570 */ "dcbtstct \0"
-  /* 12580 */ "efdcmpgt \0"
-  /* 12590 */ "qvfcmpgt \0"
-  /* 12600 */ "efscmpgt \0"
-  /* 12610 */ "evfscmpgt \0"
-  /* 12621 */ "efdtstgt \0"
-  /* 12631 */ "efststgt \0"
-  /* 12641 */ "evfststgt \0"
-  /* 12652 */ "wait \0"
-  /* 12658 */ "efdcmplt \0"
-  /* 12668 */ "qvfcmplt \0"
-  /* 12678 */ "efscmplt \0"
-  /* 12688 */ "evfscmplt \0"
-  /* 12699 */ "efdtstlt \0"
-  /* 12709 */ "efststlt \0"
-  /* 12719 */ "evfststlt \0"
-  /* 12730 */ "crnot \0"
-  /* 12737 */ "fsqrt \0"
-  /* 12744 */ "ftsqrt \0"
-  /* 12752 */ "psq_st \0"
-  /* 12760 */ "vncipherlast \0"
-  /* 12774 */ "vcipherlast \0"
-  /* 12787 */ "dcbst \0"
-  /* 12794 */ "dst \0"
-  /* 12799 */ "hashst \0"
-  /* 12807 */ "dcbtst \0"
-  /* 12815 */ "dstst \0"
-  /* 12822 */ "dcbtt \0"
-  /* 12829 */ "dstt \0"
-  /* 12835 */ "dcbtstt \0"
-  /* 12844 */ "dststt \0"
-  /* 12852 */ "lhau \0"
-  /* 12858 */ "stbu \0"
-  /* 12864 */ "lfdu \0"
-  /* 12870 */ "stfdu \0"
-  /* 12877 */ "maddhdu \0"
-  /* 12886 */ "mulhdu \0"
-  /* 12894 */ "qvfcfidu \0"
-  /* 12904 */ "qvfctidu \0"
-  /* 12914 */ "ldu \0"
-  /* 12919 */ "stdu \0"
-  /* 12925 */ "divdu \0"
-  /* 12932 */ "divdeu \0"
-  /* 12940 */ "divweu \0"
-  /* 12948 */ "sthu \0"
-  /* 12954 */ "evsrwiu \0"
-  /* 12963 */ "psq_lu \0"
-  /* 12971 */ "evlwhou \0"
-  /* 12980 */ "dcmpu \0"
-  /* 12987 */ "fcmpu \0"
-  /* 12994 */ "lfsu \0"
-  /* 13000 */ "stfsu \0"
-  /* 13007 */ "evcmpgtu \0"
-  /* 13017 */ "evcmpltu \0"
-  /* 13027 */ "psq_stu \0"
-  /* 13036 */ "mulhwu \0"
-  /* 13044 */ "qvfctiwu \0"
-  /* 13054 */ "evsrwu \0"
-  /* 13062 */ "stwu \0"
-  /* 13068 */ "evdivwu \0"
-  /* 13077 */ "lbzu \0"
-  /* 13083 */ "lhzu \0"
-  /* 13089 */ "lwzu \0"
-  /* 13095 */ "scv \0"
-  /* 13100 */ "slbmfev \0"
-  /* 13109 */ "ps_div \0"
-  /* 13117 */ "efddiv \0"
-  /* 13125 */ "fdiv \0"
-  /* 13131 */ "efsdiv \0"
-  /* 13139 */ "evfsdiv \0"
-  /* 13148 */ "ftdiv \0"
-  /* 13155 */ "vslv \0"
-  /* 13161 */ "xxleqv \0"
-  /* 13169 */ "creqv \0"
-  /* 13176 */ "eveqv \0"
-  /* 13183 */ "vsrv \0"
-  /* 13189 */ "plxv \0"
-  /* 13195 */ "pstxv \0"
-  /* 13202 */ "vextsb2w \0"
-  /* 13212 */ "vextsh2w \0"
-  /* 13222 */ "evmhesmfaaw \0"
-  /* 13235 */ "evmhosmfaaw \0"
-  /* 13248 */ "evmhessfaaw \0"
-  /* 13261 */ "evmhossfaaw \0"
-  /* 13274 */ "evaddsmiaaw \0"
-  /* 13287 */ "evmhesmiaaw \0"
-  /* 13300 */ "evsubfsmiaaw \0"
-  /* 13314 */ "evmwlsmiaaw \0"
-  /* 13327 */ "evmhosmiaaw \0"
-  /* 13340 */ "evaddumiaaw \0"
-  /* 13353 */ "evmheumiaaw \0"
-  /* 13366 */ "evsubfumiaaw \0"
-  /* 13380 */ "evmwlumiaaw \0"
-  /* 13393 */ "evmhoumiaaw \0"
-  /* 13406 */ "evaddssiaaw \0"
-  /* 13419 */ "evmhessiaaw \0"
-  /* 13432 */ "evsubfssiaaw \0"
-  /* 13446 */ "evmwlssiaaw \0"
-  /* 13459 */ "evmhossiaaw \0"
-  /* 13472 */ "evaddusiaaw \0"
-  /* 13485 */ "evmheusiaaw \0"
-  /* 13498 */ "evsubfusiaaw \0"
-  /* 13512 */ "evmwlusiaaw \0"
-  /* 13525 */ "evmhousiaaw \0"
-  /* 13538 */ "vshasigmaw \0"
-  /* 13550 */ "vsraw \0"
-  /* 13557 */ "vcntmbw \0"
-  /* 13566 */ "vprtybw \0"
-  /* 13575 */ "evaddw \0"
-  /* 13583 */ "evldw \0"
-  /* 13590 */ "evrndw \0"
-  /* 13598 */ "evstdw \0"
-  /* 13606 */ "vmrgew \0"
-  /* 13614 */ "vcmpnew \0"
-  /* 13623 */ "evsubfw \0"
-  /* 13632 */ "evsubifw \0"
-  /* 13642 */ "vnegw \0"
-  /* 13649 */ "vmrghw \0"
-  /* 13657 */ "xxmrghw \0"
-  /* 13666 */ "mulhw \0"
-  /* 13673 */ "evaddiw \0"
-  /* 13682 */ "qvfctiw \0"
-  /* 13691 */ "xxspltiw \0"
-  /* 13701 */ "vmrglw \0"
-  /* 13709 */ "xxmrglw \0"
-  /* 13718 */ "mullw \0"
-  /* 13725 */ "cmplw \0"
-  /* 13732 */ "evrlw \0"
-  /* 13739 */ "evslw \0"
-  /* 13746 */ "lmw \0"
-  /* 13751 */ "stmw \0"
-  /* 13757 */ "vpmsumw \0"
-  /* 13766 */ "evmhesmfanw \0"
-  /* 13779 */ "evmhosmfanw \0"
-  /* 13792 */ "evmhessfanw \0"
-  /* 13805 */ "evmhossfanw \0"
-  /* 13818 */ "evmhesmianw \0"
-  /* 13831 */ "evmwlsmianw \0"
-  /* 13844 */ "evmhosmianw \0"
-  /* 13857 */ "evmheumianw \0"
-  /* 13870 */ "evmwlumianw \0"
-  /* 13883 */ "evmhoumianw \0"
-  /* 13896 */ "evmhessianw \0"
-  /* 13909 */ "evmwlssianw \0"
-  /* 13922 */ "evmhossianw \0"
-  /* 13935 */ "evmheusianw \0"
-  /* 13948 */ "evmwlusianw \0"
-  /* 13961 */ "evmhousianw \0"
-  /* 13974 */ "vmrgow \0"
-  /* 13982 */ "cmpw \0"
-  /* 13988 */ "xxbrw \0"
-  /* 13995 */ "vsrw \0"
-  /* 14001 */ "vmodsw \0"
-  /* 14009 */ "vmulesw \0"
-  /* 14018 */ "vdivesw \0"
-  /* 14027 */ "vavgsw \0"
-  /* 14035 */ "vupkhsw \0"
-  /* 14044 */ "vmulhsw \0"
-  /* 14053 */ "vspltisw \0"
-  /* 14063 */ "vupklsw \0"
-  /* 14072 */ "evcntlsw \0"
-  /* 14082 */ "vminsw \0"
-  /* 14090 */ "vinsw \0"
-  /* 14097 */ "vmulosw \0"
-  /* 14106 */ "vcmpgtsw \0"
-  /* 14116 */ "extsw \0"
-  /* 14123 */ "vdivsw \0"
-  /* 14131 */ "vmaxsw \0"
-  /* 14139 */ "vspltw \0"
-  /* 14147 */ "xxspltw \0"
-  /* 14156 */ "vpopcntw \0"
-  /* 14166 */ "vinsertw \0"
-  /* 14176 */ "xxinsertw \0"
-  /* 14187 */ "pstw \0"
-  /* 14193 */ "vsubcuw \0"
-  /* 14202 */ "vaddcuw \0"
-  /* 14211 */ "vmoduw \0"
-  /* 14219 */ "vabsduw \0"
-  /* 14228 */ "vmuleuw \0"
-  /* 14237 */ "vdiveuw \0"
-  /* 14246 */ "vavguw \0"
-  /* 14254 */ "vmulhuw \0"
-  /* 14263 */ "vminuw \0"
-  /* 14271 */ "vmulouw \0"
-  /* 14280 */ "vcmpequw \0"
-  /* 14290 */ "vextractuw \0"
-  /* 14302 */ "xxextractuw \0"
-  /* 14315 */ "vcmpgtuw \0"
-  /* 14325 */ "vdivuw \0"
-  /* 14333 */ "vmaxuw \0"
-  /* 14341 */ "xxblendvw \0"
-  /* 14352 */ "divw \0"
-  /* 14358 */ "vcmpnezw \0"
-  /* 14368 */ "vclzw \0"
-  /* 14375 */ "evcntlzw \0"
-  /* 14385 */ "vctzw \0"
-  /* 14392 */ "cnttzw \0"
-  /* 14400 */ "lxvd2x \0"
-  /* 14408 */ "stxvd2x \0"
-  /* 14417 */ "lxvw4x \0"
-  /* 14425 */ "stxvw4x \0"
-  /* 14434 */ "lxvb16x \0"
-  /* 14443 */ "stxvb16x \0"
-  /* 14453 */ "lxvh8x \0"
-  /* 14461 */ "stxvh8x \0"
-  /* 14470 */ "lhax \0"
-  /* 14476 */ "tlbivax \0"
-  /* 14485 */ "qvlfiwax \0"
-  /* 14495 */ "lxsiwax \0"
-  /* 14504 */ "lwax \0"
-  /* 14510 */ "lvebx \0"
-  /* 14517 */ "stvebx \0"
-  /* 14525 */ "stxsibx \0"
-  /* 14534 */ "lxvrbx \0"
-  /* 14542 */ "stxvrbx \0"
-  /* 14551 */ "stbx \0"
-  /* 14557 */ "xxsplti32dx \0"
-  /* 14570 */ "qvlfcdx \0"
-  /* 14579 */ "qvstfcdx \0"
-  /* 14589 */ "evlddx \0"
-  /* 14597 */ "evstddx \0"
-  /* 14606 */ "qvlfdx \0"
-  /* 14614 */ "qvstfdx \0"
-  /* 14623 */ "qvlpcldx \0"
-  /* 14633 */ "qvlpcrdx \0"
-  /* 14643 */ "lxvrdx \0"
-  /* 14651 */ "stxvrdx \0"
-  /* 14660 */ "lxsdx \0"
-  /* 14667 */ "stxsdx \0"
-  /* 14675 */ "stdx \0"
-  /* 14681 */ "addex \0"
-  /* 14688 */ "evlwhex \0"
-  /* 14697 */ "evstwhex \0"
-  /* 14707 */ "diex \0"
-  /* 14713 */ "dtstex \0"
-  /* 14721 */ "evstwwex \0"
-  /* 14731 */ "dxex \0"
-  /* 14737 */ "evldhx \0"
-  /* 14745 */ "evstdhx \0"
-  /* 14754 */ "lvehx \0"
-  /* 14761 */ "stvehx \0"
-  /* 14769 */ "stxsihx \0"
-  /* 14778 */ "lxvrhx \0"
-  /* 14786 */ "stxvrhx \0"
-  /* 14795 */ "sthx \0"
-  /* 14801 */ "stbcix \0"
-  /* 14809 */ "ldcix \0"
-  /* 14816 */ "stdcix \0"
-  /* 14824 */ "sthcix \0"
-  /* 14832 */ "stwcix \0"
-  /* 14840 */ "lbzcix \0"
-  /* 14848 */ "lhzcix \0"
-  /* 14856 */ "lwzcix \0"
-  /* 14864 */ "dcffix \0"
-  /* 14872 */ "dctfix \0"
-  /* 14880 */ "xsrqpix \0"
-  /* 14889 */ "psq_lx \0"
-  /* 14897 */ "vinsblx \0"
-  /* 14906 */ "vextublx \0"
-  /* 14916 */ "vinsdlx \0"
-  /* 14925 */ "vinshlx \0"
-  /* 14934 */ "vextuhlx \0"
-  /* 14944 */ "tlbilx \0"
-  /* 14952 */ "vinsbvlx \0"
-  /* 14962 */ "vextdubvlx \0"
-  /* 14974 */ "vextddvlx \0"
-  /* 14985 */ "vinshvlx \0"
-  /* 14995 */ "vextduhvlx \0"
-  /* 15007 */ "vinswvlx \0"
-  /* 15017 */ "vextduwvlx \0"
-  /* 15029 */ "vinswlx \0"
-  /* 15038 */ "vextuwlx \0"
-  /* 15048 */ "xxpermx \0"
-  /* 15057 */ "vsbox \0"
-  /* 15064 */ "evstwhox \0"
-  /* 15074 */ "evstwwox \0"
-  /* 15084 */ "lbepx \0"
-  /* 15091 */ "stbepx \0"
-  /* 15099 */ "lfdepx \0"
-  /* 15107 */ "stfdepx \0"
-  /* 15116 */ "lhepx \0"
-  /* 15123 */ "sthepx \0"
-  /* 15131 */ "lwepx \0"
-  /* 15138 */ "stwepx \0"
-  /* 15146 */ "vupkhpx \0"
-  /* 15155 */ "vpkpx \0"
-  /* 15162 */ "vupklpx \0"
-  /* 15171 */ "lxsspx \0"
-  /* 15179 */ "stxsspx \0"
-  /* 15188 */ "lxvpx \0"
-  /* 15195 */ "stxvpx \0"
-  /* 15203 */ "lbarx \0"
-  /* 15210 */ "ldarx \0"
-  /* 15217 */ "lharx \0"
-  /* 15224 */ "lqarx \0"
-  /* 15231 */ "lwarx \0"
-  /* 15238 */ "ldbrx \0"
-  /* 15245 */ "stdbrx \0"
-  /* 15253 */ "lhbrx \0"
-  /* 15260 */ "sthbrx \0"
-  /* 15268 */ "vinsbrx \0"
-  /* 15277 */ "vextubrx \0"
-  /* 15287 */ "lwbrx \0"
-  /* 15294 */ "stwbrx \0"
-  /* 15302 */ "vinsdrx \0"
-  /* 15311 */ "vinshrx \0"
-  /* 15320 */ "vextuhrx \0"
-  /* 15330 */ "vinsbvrx \0"
-  /* 15340 */ "vextdubvrx \0"
-  /* 15352 */ "vextddvrx \0"
-  /* 15363 */ "vinshvrx \0"
-  /* 15373 */ "vextduhvrx \0"
-  /* 15385 */ "vinswvrx \0"
-  /* 15395 */ "vextduwvrx \0"
-  /* 15407 */ "vinswrx \0"
-  /* 15416 */ "vextuwrx \0"
-  /* 15426 */ "mcrxrx \0"
-  /* 15434 */ "tlbsx \0"
-  /* 15441 */ "qvlfcsx \0"
-  /* 15450 */ "qvstfcsx \0"
-  /* 15460 */ "lxvdsx \0"
-  /* 15468 */ "vcfsx \0"
-  /* 15475 */ "qvlfsx \0"
-  /* 15483 */ "qvstfsx \0"
-  /* 15492 */ "qvlpclsx \0"
-  /* 15502 */ "evlwhosx \0"
-  /* 15512 */ "qvlpcrsx \0"
-  /* 15522 */ "lxvwsx \0"
-  /* 15530 */ "evlhhesplatx \0"
-  /* 15544 */ "evlwhsplatx \0"
-  /* 15557 */ "evlhhossplatx \0"
-  /* 15572 */ "evlhhousplatx \0"
-  /* 15587 */ "evlwwsplatx \0"
-  /* 15600 */ "drintx \0"
-  /* 15608 */ "psq_stx \0"
-  /* 15617 */ "lhaux \0"
-  /* 15624 */ "lwaux \0"
-  /* 15631 */ "stbux \0"
-  /* 15638 */ "qvlfcdux \0"
-  /* 15648 */ "qvstfcdux \0"
-  /* 15659 */ "qvlfdux \0"
-  /* 15668 */ "qvstfdux \0"
-  /* 15678 */ "ldux \0"
-  /* 15684 */ "stdux \0"
-  /* 15691 */ "vcfux \0"
-  /* 15698 */ "sthux \0"
-  /* 15705 */ "psq_lux \0"
-  /* 15714 */ "evlwhoux \0"
-  /* 15724 */ "qvlfcsux \0"
-  /* 15734 */ "qvstfcsux \0"
-  /* 15745 */ "qvlfsux \0"
-  /* 15754 */ "qvstfsux \0"
-  /* 15764 */ "psq_stux \0"
-  /* 15774 */ "stwux \0"
-  /* 15781 */ "lbzux \0"
-  /* 15788 */ "lhzux \0"
-  /* 15795 */ "lwzux \0"
-  /* 15802 */ "lvx \0"
-  /* 15807 */ "stvx \0"
-  /* 15813 */ "lxvx \0"
-  /* 15819 */ "stxvx \0"
-  /* 15826 */ "evldwx \0"
-  /* 15834 */ "evstdwx \0"
-  /* 15843 */ "lvewx \0"
-  /* 15850 */ "stvewx \0"
-  /* 15858 */ "qvstfiwx \0"
-  /* 15868 */ "stxsiwx \0"
-  /* 15877 */ "lxvrwx \0"
-  /* 15885 */ "stxvrwx \0"
-  /* 15894 */ "stwx \0"
-  /* 15900 */ "lxsibzx \0"
-  /* 15909 */ "lbzx \0"
-  /* 15915 */ "lxsihzx \0"
-  /* 15924 */ "lhzx \0"
-  /* 15930 */ "qvlfiwzx \0"
-  /* 15940 */ "lxsiwzx \0"
-  /* 15949 */ "lwzx \0"
-  /* 15955 */ "copy \0"
-  /* 15961 */ "dcbz \0"
-  /* 15967 */ "plbz \0"
-  /* 15973 */ "xxsetaccz \0"
-  /* 15984 */ "efdctsidz \0"
-  /* 15995 */ "qvfctidz \0"
-  /* 16005 */ "efdctuidz \0"
-  /* 16016 */ "xscvqpsdz \0"
-  /* 16027 */ "xscvqpudz \0"
-  /* 16038 */ "plhz \0"
-  /* 16044 */ "vrfiz \0"
-  /* 16051 */ "xsrdpiz \0"
-  /* 16060 */ "xvrdpiz \0"
-  /* 16069 */ "xvrspiz \0"
-  /* 16078 */ "qvfriz \0"
-  /* 16086 */ "efdctsiz \0"
-  /* 16096 */ "efsctsiz \0"
-  /* 16106 */ "evfsctsiz \0"
-  /* 16117 */ "efdctuiz \0"
-  /* 16127 */ "efsctuiz \0"
-  /* 16137 */ "xscvqpsqz \0"
-  /* 16148 */ "xscvqpuqz \0"
-  /* 16159 */ "dmsetdmrz \0"
-  /* 16170 */ "qvfctiduz \0"
-  /* 16181 */ "qvfctiwuz \0"
-  /* 16192 */ "qvfctiwz \0"
-  /* 16202 */ "plwz \0"
-  /* 16208 */ "mfvsrwz \0"
-  /* 16217 */ "mtvsrwz \0"
-  /* 16226 */ "xscvqpswz \0"
-  /* 16237 */ "xscvqpuwz \0"
-  /* 16248 */ "evsel crD,\0"
-  /* 16259 */ "# XRay Function Patchable RET.\0"
-  /* 16290 */ "# XRay Typed Event Log.\0"
-  /* 16314 */ "# XRay Custom Event Log.\0"
-  /* 16339 */ "# XRay Function Enter.\0"
-  /* 16362 */ "# XRay Tail Call Exit.\0"
-  /* 16385 */ "# XRay Function Exit.\0"
-  /* 16407 */ "trechkpt.\0"
-  /* 16417 */ "ori 1, 1, 0\0"
-  /* 16429 */ "ori 2, 2, 0\0"
-  /* 16441 */ "#ADDISdtprelHA32\0"
-  /* 16458 */ "#ATOMIC_LOAD_SUB_I32\0"
-  /* 16479 */ "#ATOMIC_LOAD_ADD_I32\0"
-  /* 16500 */ "#ATOMIC_LOAD_NAND_I32\0"
-  /* 16522 */ "#ATOMIC_LOAD_AND_I32\0"
-  /* 16543 */ "#ATOMIC_LOAD_UMIN_I32\0"
-  /* 16565 */ "#ATOMIC_LOAD_MIN_I32\0"
-  /* 16586 */ "#ATOMIC_SWAP_I32\0"
-  /* 16603 */ "#ATOMIC_LOAD_XOR_I32\0"
-  /* 16624 */ "#ATOMIC_LOAD_OR_I32\0"
-  /* 16644 */ "#ATOMIC_LOAD_UMAX_I32\0"
-  /* 16666 */ "#ATOMIC_LOAD_MAX_I32\0"
-  /* 16687 */ "#ADDItlsgdL32\0"
-  /* 16701 */ "#ADDItlsldL32\0"
-  /* 16715 */ "#LDgotTprelL32\0"
-  /* 16730 */ "#ADDIdtprelL32\0"
-  /* 16745 */ "#EH_SJLJ_LONGJMP32\0"
-  /* 16764 */ "#EH_SJLJ_SETJMP32\0"
-  /* 16782 */ "#ADDItlsgdLADDR32\0"
-  /* 16800 */ "#ADDItlsldLADDR32\0"
-  /* 16818 */ "GETtlsldADDR32\0"
-  /* 16833 */ "GETtlsADDR32\0"
-  /* 16846 */ "#PROBED_ALLOCA_32\0"
-  /* 16864 */ "#PREPARE_PROBED_ALLOCA_32\0"
-  /* 16890 */ "#PROBED_STACKALLOC_32\0"
-  /* 16912 */ "#PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_32\0"
-  /* 16955 */ "#DFLOADf32\0"
-  /* 16966 */ "#XFLOADf32\0"
-  /* 16977 */ "#DFSTOREf32\0"
-  /* 16989 */ "#XFSTOREf32\0"
-  /* 17001 */ "#ATOMIC_LOAD_SUB_I64\0"
-  /* 17022 */ "#ATOMIC_LOAD_ADD_I64\0"
-  /* 17043 */ "#ATOMIC_LOAD_NAND_I64\0"
-  /* 17065 */ "#ATOMIC_LOAD_UMIN_I64\0"
-  /* 17087 */ "#ATOMIC_LOAD_MIN_I64\0"
-  /* 17108 */ "#ATOMIC_SWAP_I64\0"
-  /* 17125 */ "#ATOMIC_CMP_SWAP_I64\0"
-  /* 17146 */ "#ATOMIC_LOAD_XOR_I64\0"
-  /* 17167 */ "#ATOMIC_LOAD_OR_I64\0"
-  /* 17187 */ "#ATOMIC_LOAD_UMAX_I64\0"
-  /* 17209 */ "#ATOMIC_LOAD_MAX_I64\0"
-  /* 17230 */ "#EH_SJLJ_LONGJMP64\0"
-  /* 17249 */ "#EH_SJLJ_SETJMP64\0"
-  /* 17267 */ "#PROBED_ALLOCA_64\0"
-  /* 17285 */ "#PREPARE_PROBED_ALLOCA_64\0"
-  /* 17311 */ "#PROBED_STACKALLOC_64\0"
-  /* 17333 */ "#PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_64\0"
-  /* 17376 */ "#DFLOADf64\0"
-  /* 17387 */ "#XFLOADf64\0"
-  /* 17398 */ "#DFSTOREf64\0"
-  /* 17410 */ "#XFSTOREf64\0"
-  /* 17422 */ "#ATOMIC_LOAD_AND_i64\0"
-  /* 17443 */ "#SELECT_CC_SPE4\0"
-  /* 17459 */ "#SELECT_SPE4\0"
-  /* 17472 */ "#SELECT_CC_F4\0"
-  /* 17486 */ "#SELECT_F4\0"
-  /* 17497 */ "#SELECT_CC_I4\0"
-  /* 17511 */ "#SELECT_I4\0"
-  /* 17522 */ "crxor 6, 6, 6\0"
-  /* 17536 */ "creqv 6, 6, 6\0"
-  /* 17550 */ "#SELECT_CC_F16\0"
-  /* 17565 */ "#SELECT_F16\0"
-  /* 17577 */ "#ATOMIC_LOAD_SUB_I16\0"
-  /* 17598 */ "#ATOMIC_LOAD_ADD_I16\0"
-  /* 17619 */ "#ATOMIC_LOAD_NAND_I16\0"
-  /* 17641 */ "#ATOMIC_LOAD_AND_I16\0"
-  /* 17662 */ "#ATOMIC_LOAD_UMIN_I16\0"
-  /* 17684 */ "#ATOMIC_LOAD_MIN_I16\0"
-  /* 17705 */ "#ATOMIC_SWAP_I16\0"
-  /* 17722 */ "#ATOMIC_LOAD_XOR_I16\0"
-  /* 17743 */ "#ATOMIC_LOAD_OR_I16\0"
-  /* 17763 */ "#ATOMIC_LOAD_UMAX_I16\0"
-  /* 17785 */ "#ATOMIC_LOAD_MAX_I16\0"
-  /* 17806 */ "#ATOMIC_LOAD_SUB_I128\0"
-  /* 17828 */ "#ATOMIC_LOAD_ADD_I128\0"
-  /* 17850 */ "#ATOMIC_LOAD_NAND_I128\0"
-  /* 17873 */ "#ATOMIC_LOAD_AND_I128\0"
-  /* 17895 */ "#ATOMIC_SWAP_I128\0"
-  /* 17913 */ "#ATOMIC_CMP_SWAP_I128\0"
-  /* 17935 */ "#ATOMIC_LOAD_XOR_I128\0"
-  /* 17957 */ "#ATOMIC_LOAD_OR_I128\0"
-  /* 17978 */ "#ADDIStocHA8\0"
-  /* 17991 */ "#DYNALLOC8\0"
-  /* 18002 */ "#CFENCE8\0"
-  /* 18011 */ "#SELECT_CC_F8\0"
-  /* 18025 */ "#SELECT_F8\0"
-  /* 18036 */ "#ATOMIC_LOAD_SUB_I8\0"
-  /* 18056 */ "#SELECT_CC_I8\0"
-  /* 18070 */ "#ATOMIC_LOAD_ADD_I8\0"
-  /* 18090 */ "#ATOMIC_LOAD_NAND_I8\0"
-  /* 18111 */ "#ATOMIC_LOAD_AND_I8\0"
-  /* 18131 */ "#ATOMIC_LOAD_UMIN_I8\0"
-  /* 18152 */ "#ATOMIC_LOAD_MIN_I8\0"
-  /* 18172 */ "#ATOMIC_CMP_SWAP_I8\0"
-  /* 18192 */ "ATOMIC_LOAD_XOR_I8\0"
-  /* 18211 */ "#ATOMIC_LOAD_OR_I8\0"
-  /* 18230 */ "#SELECT_I8\0"
-  /* 18241 */ "#ATOMIC_LOAD_UMAX_I8\0"
-  /* 18262 */ "#ATOMIC_LOAD_MAX_I8\0"
-  /* 18282 */ "#MovePCtoLR8\0"
-  /* 18295 */ "#DYNAREAOFFSET8\0"
-  /* 18311 */ "#ANDI_rec_1_EQ_BIT8\0"
-  /* 18331 */ "#ANDI_rec_1_GT_BIT8\0"
-  /* 18351 */ "#TLSGDAIX8\0"
-  /* 18362 */ "#ADDItoc8\0"
-  /* 18372 */ "#ATOMIC_SWAP_i8\0"
-  /* 18388 */ "#ADDIStocHA\0"
-  /* 18400 */ "#ADDIStlsgdHA\0"
-  /* 18414 */ "#ADDIStlsldHA\0"
-  /* 18428 */ "#ADDISgotTprelHA\0"
-  /* 18445 */ "#ADDISdtprelHA\0"
-  /* 18460 */ "#ReadTB\0"
-  /* 18468 */ "#RESTORE_UACC\0"
-  /* 18482 */ "#SPILL_UACC\0"
-  /* 18494 */ "#RESTORE_WACC\0"
-  /* 18508 */ "#SPILL_WACC\0"
-  /* 18520 */ "#RESTORE_ACC\0"
-  /* 18533 */ "#SPILL_ACC\0"
-  /* 18544 */ "#DYNALLOC\0"
-  /* 18554 */ "#SELECT_CC_QBRC\0"
-  /* 18570 */ "#SELECT_QBRC\0"
-  /* 18583 */ "#SELECT_CC_QFRC\0"
-  /* 18599 */ "#SELECT_QFRC\0"
-  /* 18612 */ "#SELECT_CC_VSFRC\0"
-  /* 18629 */ "#SELECT_VSFRC\0"
-  /* 18643 */ "#SELECT_CC_VRRC\0"
-  /* 18659 */ "#SELECT_VRRC\0"
-  /* 18672 */ "#SELECT_CC_QSRC\0"
-  /* 18688 */ "#SELECT_QSRC\0"
-  /* 18701 */ "#SELECT_CC_VSSRC\0"
-  /* 18718 */ "#SELECT_VSSRC\0"
-  /* 18732 */ "#SELECT_CC_VSRC\0"
-  /* 18748 */ "#SELECT_VSRC\0"
-  /* 18761 */ "#SPILLTOVSR_LD\0"
-  /* 18776 */ "LIFETIME_END\0"
-  /* 18789 */ "#SETRND\0"
-  /* 18797 */ "#BUILD_QUADWORD\0"
-  /* 18813 */ "#RESTORE_QUADWORD\0"
-  /* 18831 */ "#SPILL_QUADWORD\0"
-  /* 18847 */ "#SPLIT_QUADWORD\0"
-  /* 18863 */ "PSEUDO_PROBE\0"
-  /* 18876 */ "#FENCE\0"
-  /* 18883 */ "#CFENCE\0"
-  /* 18891 */ "BUNDLE\0"
-  /* 18898 */ "#SELECT_CC_SPE\0"
-  /* 18913 */ "#SELECT_SPE\0"
-  /* 18925 */ "DBG_VALUE\0"
-  /* 18935 */ "DBG_INSTR_REF\0"
-  /* 18949 */ "DBG_PHI\0"
-  /* 18957 */ "#LDtocJTI\0"
-  /* 18967 */ "DBG_LABEL\0"
-  /* 18977 */ "#GETtlsldADDRPCREL\0"
-  /* 18996 */ "#GETtlsADDRPCREL\0"
-  /* 19013 */ "#LDtocL\0"
-  /* 19021 */ "#ADDItocL\0"
-  /* 19031 */ "#LWZtocL\0"
-  /* 19040 */ "#ADDItlsgdL\0"
-  /* 19052 */ "#ADDItlsldL\0"
-  /* 19064 */ "#LDgotTprelL\0"
-  /* 19077 */ "#ADDIdtprelL\0"
-  /* 19090 */ "#SETFLM\0"
-  /* 19098 */ "#LQX_PSEUDO\0"
-  /* 19110 */ "#STQX_PSEUDO\0"
-  /* 19123 */ "#PPCEIEIO\0"
-  /* 19133 */ "#UNENCODED_NOP\0"
-  /* 19148 */ "#UpdateGBR\0"
-  /* 19159 */ "#RESTORE_CR\0"
-  /* 19171 */ "#SPILL_CR\0"
-  /* 19181 */ "#ADDItlsgdLADDR\0"
-  /* 19197 */ "#ADDItlsldLADDR\0"
-  /* 19213 */ "#GETtlsldADDR\0"
-  /* 19227 */ "#GETtlsADDR\0"
-  /* 19239 */ "#KILL_PAIR\0"
-  /* 19250 */ "#MovePCtoLR\0"
-  /* 19262 */ "#MoveGOTtoLR\0"
-  /* 19275 */ "#TCHECK_RET\0"
-  /* 19287 */ "#TBEGIN_RET\0"
-  /* 19299 */ "#DYNAREAOFFSET\0"
-  /* 19314 */ "#RESTORE_CRBIT\0"
-  /* 19329 */ "#SPILL_CRBIT\0"
-  /* 19342 */ "#ANDI_rec_1_EQ_BIT\0"
-  /* 19361 */ "#ANDI_rec_1_GT_BIT\0"
-  /* 19380 */ "#PPC32GOT\0"
-  /* 19390 */ "#PPC32PICGOT\0"
-  /* 19403 */ "#LDtocCPT\0"
-  /* 19413 */ "LIFETIME_START\0"
-  /* 19428 */ "DBG_VALUE_LIST\0"
-  /* 19443 */ "#SPILLTOVSR_ST\0"
-  /* 19458 */ "#LIWAX\0"
-  /* 19465 */ "#SPILLTOVSR_LDX\0"
-  /* 19481 */ "GETtlsADDR32AIX\0"
-  /* 19497 */ "GETtlsTpointer32AIX\0"
-  /* 19517 */ "GETtlsADDR64AIX\0"
-  /* 19533 */ "#TLSGDAIX\0"
-  /* 19543 */ "#SPILLTOVSR_STX\0"
-  /* 19559 */ "#STIWX\0"
-  /* 19566 */ "#LIWZX\0"
-  /* 19573 */ "bca\0"
-  /* 19577 */ "slbia\0"
-  /* 19583 */ "tlbia\0"
-  /* 19589 */ "bcla\0"
-  /* 19594 */ "clrbhrb\0"
-  /* 19602 */ "bc\0"
-  /* 19605 */ "slbsync\0"
-  /* 19613 */ "tlbsync\0"
-  /* 19621 */ "msgsync\0"
-  /* 19629 */ "isync\0"
-  /* 19635 */ "msync\0"
-  /* 19641 */ "#LDtoc\0"
-  /* 19648 */ "#ADDItoc\0"
-  /* 19657 */ "#LWZtoc\0"
-  /* 19665 */ "hrfid\0"
-  /* 19671 */ "tlbre\0"
-  /* 19677 */ "tlbwe\0"
-  /* 19683 */ "#SETRNDi\0"
-  /* 19692 */ "rfci\0"
-  /* 19697 */ "rfmci\0"
-  /* 19703 */ "rfdi\0"
-  /* 19708 */ "rfi\0"
-  /* 19712 */ "bcl\0"
-  /* 19716 */ "#PADDIdtprel\0"
-  /* 19729 */ "# FEntry call\0"
-  /* 19743 */ "dssall\0"
-  /* 19750 */ "blrl\0"
-  /* 19755 */ "bctrl\0"
-  /* 19761 */ "attn\0"
-  /* 19766 */ "eieio\0"
-  /* 19772 */ "nap\0"
-  /* 19776 */ "trap\0"
-  /* 19781 */ "nop\0"
-  /* 19785 */ "#DecreaseCTR8loop\0"
-  /* 19803 */ "#DecreaseCTRloop\0"
-  /* 19820 */ "stop\0"
-  /* 19825 */ "blr\0"
-  /* 19829 */ "bctr\0"
-  /* 19834 */ "cpabort\0"
+  /* 11514 */ "mcrxr \0"
+  /* 11521 */ "pmxvi16ger2s \0"
+  /* 11535 */ "addg6s \0"
+  /* 11543 */ "ps_abs \0"
+  /* 11551 */ "efdabs \0"
+  /* 11559 */ "qvfabs \0"
+  /* 11567 */ "ps_nabs \0"
+  /* 11576 */ "efdnabs \0"
+  /* 11585 */ "qvfnabs \0"
+  /* 11594 */ "efsnabs \0"
+  /* 11603 */ "evfsnabs \0"
+  /* 11613 */ "efsabs \0"
+  /* 11621 */ "evfsabs \0"
+  /* 11630 */ "evabs \0"
+  /* 11637 */ "vsum4sbs \0"
+  /* 11647 */ "vsubsbs \0"
+  /* 11656 */ "vaddsbs \0"
+  /* 11665 */ "vsum4ubs \0"
+  /* 11675 */ "vsububs \0"
+  /* 11684 */ "vaddubs \0"
+  /* 11693 */ "qvfsubs \0"
+  /* 11702 */ "qvfmsubs \0"
+  /* 11712 */ "qvfnmsubs \0"
+  /* 11723 */ "qvfadds \0"
+  /* 11732 */ "qvfmadds \0"
+  /* 11742 */ "qvfnmadds \0"
+  /* 11753 */ "qvfxxcpnmadds \0"
+  /* 11768 */ "qvfxxnpmadds \0"
+  /* 11782 */ "qvfxmadds \0"
+  /* 11793 */ "qvfxxmadds \0"
+  /* 11805 */ "qvfcfids \0"
+  /* 11815 */ "dcbtds \0"
+  /* 11823 */ "dcbtstds \0"
+  /* 11833 */ "xscvdpsxds \0"
+  /* 11845 */ "xvcvdpsxds \0"
+  /* 11857 */ "xvcvspsxds \0"
+  /* 11869 */ "xscvdpuxds \0"
+  /* 11881 */ "xvcvdpuxds \0"
+  /* 11893 */ "xvcvspuxds \0"
+  /* 11905 */ "ps_res \0"
+  /* 11913 */ "qvfres \0"
+  /* 11921 */ "qvfrsqrtes \0"
+  /* 11933 */ "efdcfs \0"
+  /* 11941 */ "mffs \0"
+  /* 11947 */ "plfs \0"
+  /* 11953 */ "mcrfs \0"
+  /* 11960 */ "pstfs \0"
+  /* 11967 */ "vsum4shs \0"
+  /* 11977 */ "vsubshs \0"
+  /* 11986 */ "vmhaddshs \0"
+  /* 11997 */ "vmhraddshs \0"
+  /* 12009 */ "vaddshs \0"
+  /* 12018 */ "vmsumshs \0"
+  /* 12028 */ "vsubuhs \0"
+  /* 12037 */ "vadduhs \0"
+  /* 12046 */ "vmsumuhs \0"
+  /* 12056 */ "subis \0"
+  /* 12063 */ "subpcis \0"
+  /* 12072 */ "addpcis \0"
+  /* 12081 */ "addis \0"
+  /* 12088 */ "lis \0"
+  /* 12093 */ "xoris \0"
+  /* 12100 */ "evsrwis \0"
+  /* 12109 */ "icbtls \0"
+  /* 12117 */ "qvfmuls \0"
+  /* 12126 */ "qvfxmuls \0"
+  /* 12136 */ "evlwhos \0"
+  /* 12145 */ "dcbfps \0"
+  /* 12153 */ "dcbstps \0"
+  /* 12162 */ "vpksdss \0"
+  /* 12171 */ "vpkshss \0"
+  /* 12180 */ "vpkswss \0"
+  /* 12189 */ "evcmpgts \0"
+  /* 12199 */ "evcmplts \0"
+  /* 12209 */ "fsqrts \0"
+  /* 12217 */ "qvfcfidus \0"
+  /* 12228 */ "vpksdus \0"
+  /* 12237 */ "vpkudus \0"
+  /* 12246 */ "subfus \0"
+  /* 12254 */ "vpkshus \0"
+  /* 12263 */ "vpkuhus \0"
+  /* 12272 */ "vpkswus \0"
+  /* 12281 */ "vpkuwus \0"
+  /* 12290 */ "fdivs \0"
+  /* 12297 */ "evsrws \0"
+  /* 12305 */ "mtvsrws \0"
+  /* 12314 */ "vsum2sws \0"
+  /* 12324 */ "vsubsws \0"
+  /* 12333 */ "vaddsws \0"
+  /* 12342 */ "vsumsws \0"
+  /* 12351 */ "vsubuws \0"
+  /* 12360 */ "vadduws \0"
+  /* 12369 */ "evdivws \0"
+  /* 12378 */ "xscvdpsxws \0"
+  /* 12390 */ "xvcvdpsxws \0"
+  /* 12402 */ "xvcvspsxws \0"
+  /* 12414 */ "xscvdpuxws \0"
+  /* 12426 */ "xvcvdpuxws \0"
+  /* 12438 */ "xvcvspuxws \0"
+  /* 12450 */ "vctsxs \0"
+  /* 12458 */ "vctuxs \0"
+  /* 12466 */ "ldat \0"
+  /* 12472 */ "stdat \0"
+  /* 12479 */ "evlhhesplat \0"
+  /* 12492 */ "evlwhsplat \0"
+  /* 12504 */ "evlhhossplat \0"
+  /* 12518 */ "evlhhousplat \0"
+  /* 12532 */ "evlwwsplat \0"
+  /* 12544 */ "lwat \0"
+  /* 12550 */ "stwat \0"
+  /* 12557 */ "dcbt \0"
+  /* 12563 */ "icbt \0"
+  /* 12569 */ "dcbtct \0"
+  /* 12577 */ "dcbtstct \0"
+  /* 12587 */ "efdcmpgt \0"
+  /* 12597 */ "qvfcmpgt \0"
+  /* 12607 */ "efscmpgt \0"
+  /* 12617 */ "evfscmpgt \0"
+  /* 12628 */ "efdtstgt \0"
+  /* 12638 */ "efststgt \0"
+  /* 12648 */ "evfststgt \0"
+  /* 12659 */ "wait \0"
+  /* 12665 */ "efdcmplt \0"
+  /* 12675 */ "qvfcmplt \0"
+  /* 12685 */ "efscmplt \0"
+  /* 12695 */ "evfscmplt \0"
+  /* 12706 */ "efdtstlt \0"
+  /* 12716 */ "efststlt \0"
+  /* 12726 */ "evfststlt \0"
+  /* 12737 */ "crnot \0"
+  /* 12744 */ "fsqrt \0"
+  /* 12751 */ "ftsqrt \0"
+  /* 12759 */ "psq_st \0"
+  /* 12767 */ "vncipherlast \0"
+  /* 12781 */ "vcipherlast \0"
+  /* 12794 */ "dcbst \0"
+  /* 12801 */ "dst \0"
+  /* 12806 */ "hashst \0"
+  /* 12814 */ "dcbtst \0"
+  /* 12822 */ "dstst \0"
+  /* 12829 */ "dcbtt \0"
+  /* 12836 */ "dstt \0"
+  /* 12842 */ "dcbtstt \0"
+  /* 12851 */ "dststt \0"
+  /* 12859 */ "lhau \0"
+  /* 12865 */ "stbu \0"
+  /* 12871 */ "lfdu \0"
+  /* 12877 */ "stfdu \0"
+  /* 12884 */ "maddhdu \0"
+  /* 12893 */ "mulhdu \0"
+  /* 12901 */ "qvfcfidu \0"
+  /* 12911 */ "qvfctidu \0"
+  /* 12921 */ "ldu \0"
+  /* 12926 */ "stdu \0"
+  /* 12932 */ "divdu \0"
+  /* 12939 */ "divdeu \0"
+  /* 12947 */ "divweu \0"
+  /* 12955 */ "sthu \0"
+  /* 12961 */ "evsrwiu \0"
+  /* 12970 */ "psq_lu \0"
+  /* 12978 */ "evlwhou \0"
+  /* 12987 */ "dcmpu \0"
+  /* 12994 */ "fcmpu \0"
+  /* 13001 */ "lfsu \0"
+  /* 13007 */ "stfsu \0"
+  /* 13014 */ "evcmpgtu \0"
+  /* 13024 */ "evcmpltu \0"
+  /* 13034 */ "psq_stu \0"
+  /* 13043 */ "mulhwu \0"
+  /* 13051 */ "qvfctiwu \0"
+  /* 13061 */ "evsrwu \0"
+  /* 13069 */ "stwu \0"
+  /* 13075 */ "evdivwu \0"
+  /* 13084 */ "lbzu \0"
+  /* 13090 */ "lhzu \0"
+  /* 13096 */ "lwzu \0"
+  /* 13102 */ "scv \0"
+  /* 13107 */ "slbmfev \0"
+  /* 13116 */ "ps_div \0"
+  /* 13124 */ "efddiv \0"
+  /* 13132 */ "fdiv \0"
+  /* 13138 */ "efsdiv \0"
+  /* 13146 */ "evfsdiv \0"
+  /* 13155 */ "ftdiv \0"
+  /* 13162 */ "vslv \0"
+  /* 13168 */ "xxleqv \0"
+  /* 13176 */ "creqv \0"
+  /* 13183 */ "eveqv \0"
+  /* 13190 */ "vsrv \0"
+  /* 13196 */ "plxv \0"
+  /* 13202 */ "pstxv \0"
+  /* 13209 */ "vextsb2w \0"
+  /* 13219 */ "vextsh2w \0"
+  /* 13229 */ "evmhesmfaaw \0"
+  /* 13242 */ "evmhosmfaaw \0"
+  /* 13255 */ "evmhessfaaw \0"
+  /* 13268 */ "evmhossfaaw \0"
+  /* 13281 */ "evaddsmiaaw \0"
+  /* 13294 */ "evmhesmiaaw \0"
+  /* 13307 */ "evsubfsmiaaw \0"
+  /* 13321 */ "evmwlsmiaaw \0"
+  /* 13334 */ "evmhosmiaaw \0"
+  /* 13347 */ "evaddumiaaw \0"
+  /* 13360 */ "evmheumiaaw \0"
+  /* 13373 */ "evsubfumiaaw \0"
+  /* 13387 */ "evmwlumiaaw \0"
+  /* 13400 */ "evmhoumiaaw \0"
+  /* 13413 */ "evaddssiaaw \0"
+  /* 13426 */ "evmhessiaaw \0"
+  /* 13439 */ "evsubfssiaaw \0"
+  /* 13453 */ "evmwlssiaaw \0"
+  /* 13466 */ "evmhossiaaw \0"
+  /* 13479 */ "evaddusiaaw \0"
+  /* 13492 */ "evmheusiaaw \0"
+  /* 13505 */ "evsubfusiaaw \0"
+  /* 13519 */ "evmwlusiaaw \0"
+  /* 13532 */ "evmhousiaaw \0"
+  /* 13545 */ "vshasigmaw \0"
+  /* 13557 */ "vsraw \0"
+  /* 13564 */ "vcntmbw \0"
+  /* 13573 */ "vprtybw \0"
+  /* 13582 */ "evaddw \0"
+  /* 13590 */ "evldw \0"
+  /* 13597 */ "evrndw \0"
+  /* 13605 */ "evstdw \0"
+  /* 13613 */ "vmrgew \0"
+  /* 13621 */ "vcmpnew \0"
+  /* 13630 */ "evsubfw \0"
+  /* 13639 */ "evsubifw \0"
+  /* 13649 */ "vnegw \0"
+  /* 13656 */ "vmrghw \0"
+  /* 13664 */ "xxmrghw \0"
+  /* 13673 */ "mulhw \0"
+  /* 13680 */ "evaddiw \0"
+  /* 13689 */ "qvfctiw \0"
+  /* 13698 */ "xxspltiw \0"
+  /* 13708 */ "vmrglw \0"
+  /* 13716 */ "xxmrglw \0"
+  /* 13725 */ "mullw \0"
+  /* 13732 */ "cmplw \0"
+  /* 13739 */ "evrlw \0"
+  /* 13746 */ "evslw \0"
+  /* 13753 */ "lmw \0"
+  /* 13758 */ "stmw \0"
+  /* 13764 */ "vpmsumw \0"
+  /* 13773 */ "evmhesmfanw \0"
+  /* 13786 */ "evmhosmfanw \0"
+  /* 13799 */ "evmhessfanw \0"
+  /* 13812 */ "evmhossfanw \0"
+  /* 13825 */ "evmhesmianw \0"
+  /* 13838 */ "evmwlsmianw \0"
+  /* 13851 */ "evmhosmianw \0"
+  /* 13864 */ "evmheumianw \0"
+  /* 13877 */ "evmwlumianw \0"
+  /* 13890 */ "evmhoumianw \0"
+  /* 13903 */ "evmhessianw \0"
+  /* 13916 */ "evmwlssianw \0"
+  /* 13929 */ "evmhossianw \0"
+  /* 13942 */ "evmheusianw \0"
+  /* 13955 */ "evmwlusianw \0"
+  /* 13968 */ "evmhousianw \0"
+  /* 13981 */ "vmrgow \0"
+  /* 13989 */ "cmpw \0"
+  /* 13995 */ "xxbrw \0"
+  /* 14002 */ "vsrw \0"
+  /* 14008 */ "vmodsw \0"
+  /* 14016 */ "vmulesw \0"
+  /* 14025 */ "vdivesw \0"
+  /* 14034 */ "vavgsw \0"
+  /* 14042 */ "vupkhsw \0"
+  /* 14051 */ "vmulhsw \0"
+  /* 14060 */ "vspltisw \0"
+  /* 14070 */ "vupklsw \0"
+  /* 14079 */ "evcntlsw \0"
+  /* 14089 */ "vminsw \0"
+  /* 14097 */ "vinsw \0"
+  /* 14104 */ "vmulosw \0"
+  /* 14113 */ "vcmpgtsw \0"
+  /* 14123 */ "extsw \0"
+  /* 14130 */ "vdivsw \0"
+  /* 14138 */ "vmaxsw \0"
+  /* 14146 */ "vspltw \0"
+  /* 14154 */ "xxspltw \0"
+  /* 14163 */ "vpopcntw \0"
+  /* 14173 */ "vinsertw \0"
+  /* 14183 */ "xxinsertw \0"
+  /* 14194 */ "pstw \0"
+  /* 14200 */ "vsubcuw \0"
+  /* 14209 */ "vaddcuw \0"
+  /* 14218 */ "vmoduw \0"
+  /* 14226 */ "vabsduw \0"
+  /* 14235 */ "vmuleuw \0"
+  /* 14244 */ "vdiveuw \0"
+  /* 14253 */ "vavguw \0"
+  /* 14261 */ "vmulhuw \0"
+  /* 14270 */ "vminuw \0"
+  /* 14278 */ "vmulouw \0"
+  /* 14287 */ "vcmpequw \0"
+  /* 14297 */ "vextractuw \0"
+  /* 14309 */ "xxextractuw \0"
+  /* 14322 */ "vcmpgtuw \0"
+  /* 14332 */ "vdivuw \0"
+  /* 14340 */ "vmaxuw \0"
+  /* 14348 */ "xxblendvw \0"
+  /* 14359 */ "divw \0"
+  /* 14365 */ "vcmpnezw \0"
+  /* 14375 */ "vclzw \0"
+  /* 14382 */ "evcntlzw \0"
+  /* 14392 */ "vctzw \0"
+  /* 14399 */ "cnttzw \0"
+  /* 14407 */ "lxvd2x \0"
+  /* 14415 */ "stxvd2x \0"
+  /* 14424 */ "lxvw4x \0"
+  /* 14432 */ "stxvw4x \0"
+  /* 14441 */ "lxvb16x \0"
+  /* 14450 */ "stxvb16x \0"
+  /* 14460 */ "lxvh8x \0"
+  /* 14468 */ "stxvh8x \0"
+  /* 14477 */ "lhax \0"
+  /* 14483 */ "tlbivax \0"
+  /* 14492 */ "qvlfiwax \0"
+  /* 14502 */ "lxsiwax \0"
+  /* 14511 */ "lwax \0"
+  /* 14517 */ "lvebx \0"
+  /* 14524 */ "stvebx \0"
+  /* 14532 */ "stxsibx \0"
+  /* 14541 */ "lxvrbx \0"
+  /* 14549 */ "stxvrbx \0"
+  /* 14558 */ "stbx \0"
+  /* 14564 */ "xxsplti32dx \0"
+  /* 14577 */ "qvlfcdx \0"
+  /* 14586 */ "qvstfcdx \0"
+  /* 14596 */ "evlddx \0"
+  /* 14604 */ "evstddx \0"
+  /* 14613 */ "qvlfdx \0"
+  /* 14621 */ "qvstfdx \0"
+  /* 14630 */ "qvlpcldx \0"
+  /* 14640 */ "qvlpcrdx \0"
+  /* 14650 */ "lxvrdx \0"
+  /* 14658 */ "stxvrdx \0"
+  /* 14667 */ "lxsdx \0"
+  /* 14674 */ "stxsdx \0"
+  /* 14682 */ "stdx \0"
+  /* 14688 */ "addex \0"
+  /* 14695 */ "evlwhex \0"
+  /* 14704 */ "evstwhex \0"
+  /* 14714 */ "diex \0"
+  /* 14720 */ "dtstex \0"
+  /* 14728 */ "evstwwex \0"
+  /* 14738 */ "dxex \0"
+  /* 14744 */ "evldhx \0"
+  /* 14752 */ "evstdhx \0"
+  /* 14761 */ "lvehx \0"
+  /* 14768 */ "stvehx \0"
+  /* 14776 */ "stxsihx \0"
+  /* 14785 */ "lxvrhx \0"
+  /* 14793 */ "stxvrhx \0"
+  /* 14802 */ "sthx \0"
+  /* 14808 */ "stbcix \0"
+  /* 14816 */ "ldcix \0"
+  /* 14823 */ "stdcix \0"
+  /* 14831 */ "sthcix \0"
+  /* 14839 */ "stwcix \0"
+  /* 14847 */ "lbzcix \0"
+  /* 14855 */ "lhzcix \0"
+  /* 14863 */ "lwzcix \0"
+  /* 14871 */ "dcffix \0"
+  /* 14879 */ "dctfix \0"
+  /* 14887 */ "xsrqpix \0"
+  /* 14896 */ "psq_lx \0"
+  /* 14904 */ "vinsblx \0"
+  /* 14913 */ "vextublx \0"
+  /* 14923 */ "vinsdlx \0"
+  /* 14932 */ "vinshlx \0"
+  /* 14941 */ "vextuhlx \0"
+  /* 14951 */ "tlbilx \0"
+  /* 14959 */ "vinsbvlx \0"
+  /* 14969 */ "vextdubvlx \0"
+  /* 14981 */ "vextddvlx \0"
+  /* 14992 */ "vinshvlx \0"
+  /* 15002 */ "vextduhvlx \0"
+  /* 15014 */ "vinswvlx \0"
+  /* 15024 */ "vextduwvlx \0"
+  /* 15036 */ "vinswlx \0"
+  /* 15045 */ "vextuwlx \0"
+  /* 15055 */ "xxpermx \0"
+  /* 15064 */ "vsbox \0"
+  /* 15071 */ "evstwhox \0"
+  /* 15081 */ "evstwwox \0"
+  /* 15091 */ "lbepx \0"
+  /* 15098 */ "stbepx \0"
+  /* 15106 */ "lfdepx \0"
+  /* 15114 */ "stfdepx \0"
+  /* 15123 */ "lhepx \0"
+  /* 15130 */ "sthepx \0"
+  /* 15138 */ "lwepx \0"
+  /* 15145 */ "stwepx \0"
+  /* 15153 */ "vupkhpx \0"
+  /* 15162 */ "vpkpx \0"
+  /* 15169 */ "vupklpx \0"
+  /* 15178 */ "lxsspx \0"
+  /* 15186 */ "stxsspx \0"
+  /* 15195 */ "lxvpx \0"
+  /* 15202 */ "stxvpx \0"
+  /* 15210 */ "lbarx \0"
+  /* 15217 */ "ldarx \0"
+  /* 15224 */ "lharx \0"
+  /* 15231 */ "lqarx \0"
+  /* 15238 */ "lwarx \0"
+  /* 15245 */ "ldbrx \0"
+  /* 15252 */ "stdbrx \0"
+  /* 15260 */ "lhbrx \0"
+  /* 15267 */ "sthbrx \0"
+  /* 15275 */ "vinsbrx \0"
+  /* 15284 */ "vextubrx \0"
+  /* 15294 */ "lwbrx \0"
+  /* 15301 */ "stwbrx \0"
+  /* 15309 */ "vinsdrx \0"
+  /* 15318 */ "vinshrx \0"
+  /* 15327 */ "vextuhrx \0"
+  /* 15337 */ "vinsbvrx \0"
+  /* 15347 */ "vextdubvrx \0"
+  /* 15359 */ "vextddvrx \0"
+  /* 15370 */ "vinshvrx \0"
+  /* 15380 */ "vextduhvrx \0"
+  /* 15392 */ "vinswvrx \0"
+  /* 15402 */ "vextduwvrx \0"
+  /* 15414 */ "vinswrx \0"
+  /* 15423 */ "vextuwrx \0"
+  /* 15433 */ "mcrxrx \0"
+  /* 15441 */ "tlbsx \0"
+  /* 15448 */ "qvlfcsx \0"
+  /* 15457 */ "qvstfcsx \0"
+  /* 15467 */ "lxvdsx \0"
+  /* 15475 */ "vcfsx \0"
+  /* 15482 */ "qvlfsx \0"
+  /* 15490 */ "qvstfsx \0"
+  /* 15499 */ "qvlpclsx \0"
+  /* 15509 */ "evlwhosx \0"
+  /* 15519 */ "qvlpcrsx \0"
+  /* 15529 */ "lxvwsx \0"
+  /* 15537 */ "evlhhesplatx \0"
+  /* 15551 */ "evlwhsplatx \0"
+  /* 15564 */ "evlhhossplatx \0"
+  /* 15579 */ "evlhhousplatx \0"
+  /* 15594 */ "evlwwsplatx \0"
+  /* 15607 */ "drintx \0"
+  /* 15615 */ "psq_stx \0"
+  /* 15624 */ "lhaux \0"
+  /* 15631 */ "lwaux \0"
+  /* 15638 */ "stbux \0"
+  /* 15645 */ "qvlfcdux \0"
+  /* 15655 */ "qvstfcdux \0"
+  /* 15666 */ "qvlfdux \0"
+  /* 15675 */ "qvstfdux \0"
+  /* 15685 */ "ldux \0"
+  /* 15691 */ "stdux \0"
+  /* 15698 */ "vcfux \0"
+  /* 15705 */ "sthux \0"
+  /* 15712 */ "psq_lux \0"
+  /* 15721 */ "evlwhoux \0"
+  /* 15731 */ "qvlfcsux \0"
+  /* 15741 */ "qvstfcsux \0"
+  /* 15752 */ "qvlfsux \0"
+  /* 15761 */ "qvstfsux \0"
+  /* 15771 */ "psq_stux \0"
+  /* 15781 */ "stwux \0"
+  /* 15788 */ "lbzux \0"
+  /* 15795 */ "lhzux \0"
+  /* 15802 */ "lwzux \0"
+  /* 15809 */ "lvx \0"
+  /* 15814 */ "stvx \0"
+  /* 15820 */ "lxvx \0"
+  /* 15826 */ "stxvx \0"
+  /* 15833 */ "evldwx \0"
+  /* 15841 */ "evstdwx \0"
+  /* 15850 */ "lvewx \0"
+  /* 15857 */ "stvewx \0"
+  /* 15865 */ "qvstfiwx \0"
+  /* 15875 */ "stxsiwx \0"
+  /* 15884 */ "lxvrwx \0"
+  /* 15892 */ "stxvrwx \0"
+  /* 15901 */ "stwx \0"
+  /* 15907 */ "lxsibzx \0"
+  /* 15916 */ "lbzx \0"
+  /* 15922 */ "lxsihzx \0"
+  /* 15931 */ "lhzx \0"
+  /* 15937 */ "qvlfiwzx \0"
+  /* 15947 */ "lxsiwzx \0"
+  /* 15956 */ "lwzx \0"
+  /* 15962 */ "copy \0"
+  /* 15968 */ "dcbz \0"
+  /* 15974 */ "plbz \0"
+  /* 15980 */ "xxsetaccz \0"
+  /* 15991 */ "efdctsidz \0"
+  /* 16002 */ "qvfctidz \0"
+  /* 16012 */ "efdctuidz \0"
+  /* 16023 */ "xscvqpsdz \0"
+  /* 16034 */ "xscvqpudz \0"
+  /* 16045 */ "plhz \0"
+  /* 16051 */ "vrfiz \0"
+  /* 16058 */ "xsrdpiz \0"
+  /* 16067 */ "xvrdpiz \0"
+  /* 16076 */ "xvrspiz \0"
+  /* 16085 */ "qvfriz \0"
+  /* 16093 */ "efdctsiz \0"
+  /* 16103 */ "efsctsiz \0"
+  /* 16113 */ "evfsctsiz \0"
+  /* 16124 */ "efdctuiz \0"
+  /* 16134 */ "efsctuiz \0"
+  /* 16144 */ "xscvqpsqz \0"
+  /* 16155 */ "xscvqpuqz \0"
+  /* 16166 */ "dmsetdmrz \0"
+  /* 16177 */ "qvfctiduz \0"
+  /* 16188 */ "qvfctiwuz \0"
+  /* 16199 */ "qvfctiwz \0"
+  /* 16209 */ "plwz \0"
+  /* 16215 */ "mfvsrwz \0"
+  /* 16224 */ "mtvsrwz \0"
+  /* 16233 */ "xscvqpswz \0"
+  /* 16244 */ "xscvqpuwz \0"
+  /* 16255 */ "evsel crD,\0"
+  /* 16266 */ "# XRay Function Patchable RET.\0"
+  /* 16297 */ "# XRay Typed Event Log.\0"
+  /* 16321 */ "# XRay Custom Event Log.\0"
+  /* 16346 */ "# XRay Function Enter.\0"
+  /* 16369 */ "# XRay Tail Call Exit.\0"
+  /* 16392 */ "# XRay Function Exit.\0"
+  /* 16414 */ "trechkpt.\0"
+  /* 16424 */ "ori 1, 1, 0\0"
+  /* 16436 */ "ori 2, 2, 0\0"
+  /* 16448 */ "#ADDISdtprelHA32\0"
+  /* 16465 */ "#ATOMIC_LOAD_SUB_I32\0"
+  /* 16486 */ "#ATOMIC_LOAD_ADD_I32\0"
+  /* 16507 */ "#ATOMIC_LOAD_NAND_I32\0"
+  /* 16529 */ "#ATOMIC_LOAD_AND_I32\0"
+  /* 16550 */ "#ATOMIC_LOAD_UMIN_I32\0"
+  /* 16572 */ "#ATOMIC_LOAD_MIN_I32\0"
+  /* 16593 */ "#ATOMIC_SWAP_I32\0"
+  /* 16610 */ "#ATOMIC_LOAD_XOR_I32\0"
+  /* 16631 */ "#ATOMIC_LOAD_OR_I32\0"
+  /* 16651 */ "#ATOMIC_LOAD_UMAX_I32\0"
+  /* 16673 */ "#ATOMIC_LOAD_MAX_I32\0"
+  /* 16694 */ "#ADDItlsgdL32\0"
+  /* 16708 */ "#ADDItlsldL32\0"
+  /* 16722 */ "#LDgotTprelL32\0"
+  /* 16737 */ "#ADDIdtprelL32\0"
+  /* 16752 */ "#EH_SJLJ_LONGJMP32\0"
+  /* 16771 */ "#EH_SJLJ_SETJMP32\0"
+  /* 16789 */ "#ADDItlsgdLADDR32\0"
+  /* 16807 */ "#ADDItlsldLADDR32\0"
+  /* 16825 */ "GETtlsldADDR32\0"
+  /* 16840 */ "GETtlsADDR32\0"
+  /* 16853 */ "#PROBED_ALLOCA_32\0"
+  /* 16871 */ "#PREPARE_PROBED_ALLOCA_32\0"
+  /* 16897 */ "#PROBED_STACKALLOC_32\0"
+  /* 16919 */ "#PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_32\0"
+  /* 16962 */ "#DFLOADf32\0"
+  /* 16973 */ "#XFLOADf32\0"
+  /* 16984 */ "#DFSTOREf32\0"
+  /* 16996 */ "#XFSTOREf32\0"
+  /* 17008 */ "#ATOMIC_LOAD_SUB_I64\0"
+  /* 17029 */ "#ATOMIC_LOAD_ADD_I64\0"
+  /* 17050 */ "#ATOMIC_LOAD_NAND_I64\0"
+  /* 17072 */ "#ATOMIC_LOAD_UMIN_I64\0"
+  /* 17094 */ "#ATOMIC_LOAD_MIN_I64\0"
+  /* 17115 */ "#ATOMIC_SWAP_I64\0"
+  /* 17132 */ "#ATOMIC_CMP_SWAP_I64\0"
+  /* 17153 */ "#ATOMIC_LOAD_XOR_I64\0"
+  /* 17174 */ "#ATOMIC_LOAD_OR_I64\0"
+  /* 17194 */ "#ATOMIC_LOAD_UMAX_I64\0"
+  /* 17216 */ "#ATOMIC_LOAD_MAX_I64\0"
+  /* 17237 */ "#EH_SJLJ_LONGJMP64\0"
+  /* 17256 */ "#EH_SJLJ_SETJMP64\0"
+  /* 17274 */ "#PROBED_ALLOCA_64\0"
+  /* 17292 */ "#PREPARE_PROBED_ALLOCA_64\0"
+  /* 17318 */ "#PROBED_STACKALLOC_64\0"
+  /* 17340 */ "#PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_64\0"
+  /* 17383 */ "#DFLOADf64\0"
+  /* 17394 */ "#XFLOADf64\0"
+  /* 17405 */ "#DFSTOREf64\0"
+  /* 17417 */ "#XFSTOREf64\0"
+  /* 17429 */ "#ATOMIC_LOAD_AND_i64\0"
+  /* 17450 */ "#SELECT_CC_SPE4\0"
+  /* 17466 */ "#SELECT_SPE4\0"
+  /* 17479 */ "#SELECT_CC_F4\0"
+  /* 17493 */ "#SELECT_F4\0"
+  /* 17504 */ "#SELECT_CC_I4\0"
+  /* 17518 */ "#SELECT_I4\0"
+  /* 17529 */ "crxor 6, 6, 6\0"
+  /* 17543 */ "creqv 6, 6, 6\0"
+  /* 17557 */ "#SELECT_CC_F16\0"
+  /* 17572 */ "#SELECT_F16\0"
+  /* 17584 */ "#ATOMIC_LOAD_SUB_I16\0"
+  /* 17605 */ "#ATOMIC_LOAD_ADD_I16\0"
+  /* 17626 */ "#ATOMIC_LOAD_NAND_I16\0"
+  /* 17648 */ "#ATOMIC_LOAD_AND_I16\0"
+  /* 17669 */ "#ATOMIC_LOAD_UMIN_I16\0"
+  /* 17691 */ "#ATOMIC_LOAD_MIN_I16\0"
+  /* 17712 */ "#ATOMIC_SWAP_I16\0"
+  /* 17729 */ "#ATOMIC_LOAD_XOR_I16\0"
+  /* 17750 */ "#ATOMIC_LOAD_OR_I16\0"
+  /* 17770 */ "#ATOMIC_LOAD_UMAX_I16\0"
+  /* 17792 */ "#ATOMIC_LOAD_MAX_I16\0"
+  /* 17813 */ "#ATOMIC_LOAD_SUB_I128\0"
+  /* 17835 */ "#ATOMIC_LOAD_ADD_I128\0"
+  /* 17857 */ "#ATOMIC_LOAD_NAND_I128\0"
+  /* 17880 */ "#ATOMIC_LOAD_AND_I128\0"
+  /* 17902 */ "#ATOMIC_SWAP_I128\0"
+  /* 17920 */ "#ATOMIC_CMP_SWAP_I128\0"
+  /* 17942 */ "#ATOMIC_LOAD_XOR_I128\0"
+  /* 17964 */ "#ATOMIC_LOAD_OR_I128\0"
+  /* 17985 */ "#ADDIStocHA8\0"
+  /* 17998 */ "#DYNALLOC8\0"
+  /* 18009 */ "#CFENCE8\0"
+  /* 18018 */ "#SELECT_CC_F8\0"
+  /* 18032 */ "#SELECT_F8\0"
+  /* 18043 */ "#ATOMIC_LOAD_SUB_I8\0"
+  /* 18063 */ "#SELECT_CC_I8\0"
+  /* 18077 */ "#ATOMIC_LOAD_ADD_I8\0"
+  /* 18097 */ "#ATOMIC_LOAD_NAND_I8\0"
+  /* 18118 */ "#ATOMIC_LOAD_AND_I8\0"
+  /* 18138 */ "#ATOMIC_LOAD_UMIN_I8\0"
+  /* 18159 */ "#ATOMIC_LOAD_MIN_I8\0"
+  /* 18179 */ "#ATOMIC_CMP_SWAP_I8\0"
+  /* 18199 */ "ATOMIC_LOAD_XOR_I8\0"
+  /* 18218 */ "#ATOMIC_LOAD_OR_I8\0"
+  /* 18237 */ "#SELECT_I8\0"
+  /* 18248 */ "#ATOMIC_LOAD_UMAX_I8\0"
+  /* 18269 */ "#ATOMIC_LOAD_MAX_I8\0"
+  /* 18289 */ "#MovePCtoLR8\0"
+  /* 18302 */ "#DYNAREAOFFSET8\0"
+  /* 18318 */ "#ANDI_rec_1_EQ_BIT8\0"
+  /* 18338 */ "#ANDI_rec_1_GT_BIT8\0"
+  /* 18358 */ "#TLSGDAIX8\0"
+  /* 18369 */ "#ADDItoc8\0"
+  /* 18379 */ "#ATOMIC_SWAP_i8\0"
+  /* 18395 */ "#ADDIStocHA\0"
+  /* 18407 */ "#ADDIStlsgdHA\0"
+  /* 18421 */ "#ADDIStlsldHA\0"
+  /* 18435 */ "#ADDISgotTprelHA\0"
+  /* 18452 */ "#ADDISdtprelHA\0"
+  /* 18467 */ "#ReadTB\0"
+  /* 18475 */ "#RESTORE_UACC\0"
+  /* 18489 */ "#SPILL_UACC\0"
+  /* 18501 */ "#RESTORE_WACC\0"
+  /* 18515 */ "#SPILL_WACC\0"
+  /* 18527 */ "#RESTORE_ACC\0"
+  /* 18540 */ "#SPILL_ACC\0"
+  /* 18551 */ "#DYNALLOC\0"
+  /* 18561 */ "#SELECT_CC_QBRC\0"
+  /* 18577 */ "#SELECT_QBRC\0"
+  /* 18590 */ "#SELECT_CC_QFRC\0"
+  /* 18606 */ "#SELECT_QFRC\0"
+  /* 18619 */ "#SELECT_CC_VSFRC\0"
+  /* 18636 */ "#SELECT_VSFRC\0"
+  /* 18650 */ "#SELECT_CC_VRRC\0"
+  /* 18666 */ "#SELECT_VRRC\0"
+  /* 18679 */ "#SELECT_CC_QSRC\0"
+  /* 18695 */ "#SELECT_QSRC\0"
+  /* 18708 */ "#SELECT_CC_VSSRC\0"
+  /* 18725 */ "#SELECT_VSSRC\0"
+  /* 18739 */ "#SELECT_CC_VSRC\0"
+  /* 18755 */ "#SELECT_VSRC\0"
+  /* 18768 */ "#SPILLTOVSR_LD\0"
+  /* 18783 */ "LIFETIME_END\0"
+  /* 18796 */ "#SETRND\0"
+  /* 18804 */ "#BUILD_QUADWORD\0"
+  /* 18820 */ "#RESTORE_QUADWORD\0"
+  /* 18838 */ "#SPILL_QUADWORD\0"
+  /* 18854 */ "#SPLIT_QUADWORD\0"
+  /* 18870 */ "PSEUDO_PROBE\0"
+  /* 18883 */ "#FENCE\0"
+  /* 18890 */ "#CFENCE\0"
+  /* 18898 */ "BUNDLE\0"
+  /* 18905 */ "#SELECT_CC_SPE\0"
+  /* 18920 */ "#SELECT_SPE\0"
+  /* 18932 */ "DBG_VALUE\0"
+  /* 18942 */ "DBG_INSTR_REF\0"
+  /* 18956 */ "DBG_PHI\0"
+  /* 18964 */ "#LDtocJTI\0"
+  /* 18974 */ "DBG_LABEL\0"
+  /* 18984 */ "#GETtlsldADDRPCREL\0"
+  /* 19003 */ "#GETtlsADDRPCREL\0"
+  /* 19020 */ "#LDtocL\0"
+  /* 19028 */ "#ADDItocL\0"
+  /* 19038 */ "#LWZtocL\0"
+  /* 19047 */ "#ADDItlsgdL\0"
+  /* 19059 */ "#ADDItlsldL\0"
+  /* 19071 */ "#LDgotTprelL\0"
+  /* 19084 */ "#ADDIdtprelL\0"
+  /* 19097 */ "#SETFLM\0"
+  /* 19105 */ "#LQX_PSEUDO\0"
+  /* 19117 */ "#STQX_PSEUDO\0"
+  /* 19130 */ "#PPCEIEIO\0"
+  /* 19140 */ "#UNENCODED_NOP\0"
+  /* 19155 */ "#UpdateGBR\0"
+  /* 19166 */ "#RESTORE_CR\0"
+  /* 19178 */ "#SPILL_CR\0"
+  /* 19188 */ "#ADDItlsgdLADDR\0"
+  /* 19204 */ "#ADDItlsldLADDR\0"
+  /* 19220 */ "#GETtlsldADDR\0"
+  /* 19234 */ "#GETtlsADDR\0"
+  /* 19246 */ "#KILL_PAIR\0"
+  /* 19257 */ "#MovePCtoLR\0"
+  /* 19269 */ "#MoveGOTtoLR\0"
+  /* 19282 */ "#TCHECK_RET\0"
+  /* 19294 */ "#TBEGIN_RET\0"
+  /* 19306 */ "#DYNAREAOFFSET\0"
+  /* 19321 */ "#RESTORE_CRBIT\0"
+  /* 19336 */ "#SPILL_CRBIT\0"
+  /* 19349 */ "#ANDI_rec_1_EQ_BIT\0"
+  /* 19368 */ "#ANDI_rec_1_GT_BIT\0"
+  /* 19387 */ "#PPC32GOT\0"
+  /* 19397 */ "#PPC32PICGOT\0"
+  /* 19410 */ "#LDtocCPT\0"
+  /* 19420 */ "LIFETIME_START\0"
+  /* 19435 */ "DBG_VALUE_LIST\0"
+  /* 19450 */ "#SPILLTOVSR_ST\0"
+  /* 19465 */ "#LIWAX\0"
+  /* 19472 */ "#SPILLTOVSR_LDX\0"
+  /* 19488 */ "GETtlsADDR32AIX\0"
+  /* 19504 */ "GETtlsTpointer32AIX\0"
+  /* 19524 */ "GETtlsADDR64AIX\0"
+  /* 19540 */ "#TLSGDAIX\0"
+  /* 19550 */ "#SPILLTOVSR_STX\0"
+  /* 19566 */ "#STIWX\0"
+  /* 19573 */ "#LIWZX\0"
+  /* 19580 */ "bca\0"
+  /* 19584 */ "slbia\0"
+  /* 19590 */ "tlbia\0"
+  /* 19596 */ "bcla\0"
+  /* 19601 */ "clrbhrb\0"
+  /* 19609 */ "bc\0"
+  /* 19612 */ "slbsync\0"
+  /* 19620 */ "tlbsync\0"
+  /* 19628 */ "msgsync\0"
+  /* 19636 */ "isync\0"
+  /* 19642 */ "msync\0"
+  /* 19648 */ "#LDtoc\0"
+  /* 19655 */ "#ADDItoc\0"
+  /* 19664 */ "#LWZtoc\0"
+  /* 19672 */ "hrfid\0"
+  /* 19678 */ "tlbre\0"
+  /* 19684 */ "tlbwe\0"
+  /* 19690 */ "#SETRNDi\0"
+  /* 19699 */ "rfci\0"
+  /* 19704 */ "rfmci\0"
+  /* 19710 */ "rfdi\0"
+  /* 19715 */ "rfi\0"
+  /* 19719 */ "bcl\0"
+  /* 19723 */ "#PADDIdtprel\0"
+  /* 19736 */ "# FEntry call\0"
+  /* 19750 */ "dssall\0"
+  /* 19757 */ "blrl\0"
+  /* 19762 */ "bctrl\0"
+  /* 19768 */ "attn\0"
+  /* 19773 */ "eieio\0"
+  /* 19779 */ "nap\0"
+  /* 19783 */ "trap\0"
+  /* 19788 */ "nop\0"
+  /* 19792 */ "#DecreaseCTR8loop\0"
+  /* 19810 */ "#DecreaseCTRloop\0"
+  /* 19827 */ "stop\0"
+  /* 19832 */ "blr\0"
+  /* 19836 */ "bctr\0"
+  /* 19841 */ "cpabort\0"
 };
 #endif // CAPSTONE_DIET
 
@@ -2051,20 +2052,20 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// IMPLICIT_DEF
     0U,	// SUBREG_TO_REG
     0U,	// COPY_TO_REGCLASS
-    18926U,	// DBG_VALUE
-    19429U,	// DBG_VALUE_LIST
-    18936U,	// DBG_INSTR_REF
-    18950U,	// DBG_PHI
-    18968U,	// DBG_LABEL
+    18933U,	// DBG_VALUE
+    19436U,	// DBG_VALUE_LIST
+    18943U,	// DBG_INSTR_REF
+    18957U,	// DBG_PHI
+    18975U,	// DBG_LABEL
     0U,	// REG_SEQUENCE
     0U,	// COPY
-    18892U,	// BUNDLE
-    19414U,	// LIFETIME_START
-    18777U,	// LIFETIME_END
-    18864U,	// PSEUDO_PROBE
+    18899U,	// BUNDLE
+    19421U,	// LIFETIME_START
+    18784U,	// LIFETIME_END
+    18871U,	// PSEUDO_PROBE
     0U,	// ARITH_FENCE
     0U,	// STACKMAP
-    19730U,	// FENTRY_CALL
+    19737U,	// FENTRY_CALL
     0U,	// PATCHPOINT
     0U,	// LOAD_STACK_GUARD
     0U,	// PREALLOCATED_SETUP
@@ -2073,12 +2074,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// LOCAL_ESCAPE
     0U,	// FAULTING_OP
     0U,	// PATCHABLE_OP
-    16340U,	// PATCHABLE_FUNCTION_ENTER
-    16260U,	// PATCHABLE_RET
-    16386U,	// PATCHABLE_FUNCTION_EXIT
-    16363U,	// PATCHABLE_TAIL_CALL
-    16315U,	// PATCHABLE_EVENT_CALL
-    16291U,	// PATCHABLE_TYPED_EVENT_CALL
+    16347U,	// PATCHABLE_FUNCTION_ENTER
+    16267U,	// PATCHABLE_RET
+    16393U,	// PATCHABLE_FUNCTION_EXIT
+    16370U,	// PATCHABLE_TAIL_CALL
+    16322U,	// PATCHABLE_EVENT_CALL
+    16298U,	// PATCHABLE_TYPED_EVENT_CALL
     0U,	// ICALL_BRANCH_FUNNEL
     0U,	// MEMBARRIER
     0U,	// JUMP_TABLE_DEBUG_INFO
@@ -2309,18 +2310,18 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// G_VECREDUCE_UMIN
     0U,	// G_SBFX
     0U,	// G_UBFX
-    17914U,	// ATOMIC_CMP_SWAP_I128
-    17829U,	// ATOMIC_LOAD_ADD_I128
-    17874U,	// ATOMIC_LOAD_AND_I128
-    17851U,	// ATOMIC_LOAD_NAND_I128
-    17958U,	// ATOMIC_LOAD_OR_I128
-    17807U,	// ATOMIC_LOAD_SUB_I128
-    17936U,	// ATOMIC_LOAD_XOR_I128
-    17896U,	// ATOMIC_SWAP_I128
-    18798U,	// BUILD_QUADWORD
+    17921U,	// ATOMIC_CMP_SWAP_I128
+    17836U,	// ATOMIC_LOAD_ADD_I128
+    17881U,	// ATOMIC_LOAD_AND_I128
+    17858U,	// ATOMIC_LOAD_NAND_I128
+    17965U,	// ATOMIC_LOAD_OR_I128
+    17814U,	// ATOMIC_LOAD_SUB_I128
+    17943U,	// ATOMIC_LOAD_XOR_I128
+    17903U,	// ATOMIC_SWAP_I128
+    18805U,	// BUILD_QUADWORD
     35707U,	// BUILD_UACC
-    18884U,	// CFENCE
-    18003U,	// CFENCE8
+    18891U,	// CFENCE
+    18010U,	// CFENCE8
     2147522466U,	// CLRLSLDI
     2147517347U,	// CLRLSLDI_rec
     2147523021U,	// CLRLSLWI
@@ -2331,21 +2332,21 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147517501U,	// CLRRWI_rec
     1121020U,	// DCBFL
     1123551U,	// DCBFLP
-    1126251U,	// DCBFPS
+    1126258U,	// DCBFPS
     1119445U,	// DCBFx
-    1126259U,	// DCBSTPS
-    33632531U,	// DCBTCT
-    33631777U,	// DCBTDS
-    33632539U,	// DCBTSTCT
-    33631785U,	// DCBTSTDS
-    1126948U,	// DCBTSTT
-    1126920U,	// DCBTSTx
-    1126935U,	// DCBTT
-    1126663U,	// DCBTx
-    16956U,	// DFLOADf32
-    17377U,	// DFLOADf64
-    16978U,	// DFSTOREf32
-    17399U,	// DFSTOREf64
+    1126266U,	// DCBSTPS
+    33632538U,	// DCBTCT
+    33631784U,	// DCBTDS
+    33632546U,	// DCBTSTCT
+    33631792U,	// DCBTSTDS
+    1126955U,	// DCBTSTT
+    1126927U,	// DCBTSTx
+    1126942U,	// DCBTT
+    1126670U,	// DCBTx
+    16963U,	// DFLOADf32
+    17384U,	// DFLOADf64
+    16985U,	// DFSTOREf32
+    17406U,	// DFSTOREf64
     2147522476U,	// EXTLDI
     2147517358U,	// EXTLDI_rec
     2147523047U,	// EXTLWI
@@ -2360,14 +2361,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147517383U,	// INSRDI_rec
     2147523070U,	// INSRWI
     2147517510U,	// INSRWI_rec
-    19240U,	// KILL_PAIR
+    19247U,	// KILL_PAIR
     67145052U,	// LAx
     100702249U,	// LI
     100702249U,	// LI8
-    100708146U,	// LIS
-    100708146U,	// LIS8
-    19459U,	// LIWAX
-    19567U,	// LIWZX
+    100708153U,	// LIS
+    100708153U,	// LIS8
+    19466U,	// LIWAX
+    19574U,	// LIWZX
     2147522415U,	// PSUBI
     2147522660U,	// RLWIMIbm
     2147517447U,	// RLWIMIbm_rec
@@ -2383,24 +2384,24 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147517351U,	// SLDI_rec
     2147523025U,	// SLWI
     2147517476U,	// SLWI_rec
-    18762U,	// SPILLTOVSR_LD
-    19466U,	// SPILLTOVSR_LDX
-    19444U,	// SPILLTOVSR_ST
-    19544U,	// SPILLTOVSR_STX
+    18769U,	// SPILLTOVSR_LD
+    19473U,	// SPILLTOVSR_LDX
+    19451U,	// SPILLTOVSR_ST
+    19551U,	// SPILLTOVSR_STX
     2147522511U,	// SRDI
     2147517385U,	// SRDI_rec
     2147523072U,	// SRWI
     2147517512U,	// SRWI_rec
-    19560U,	// STIWX
+    19567U,	// STIWX
     2147522416U,	// SUBI
     2147520648U,	// SUBIC
     2147516828U,	// SUBIC_rec
-    2147528466U,	// SUBIS
-    100708121U,	// SUBPCIS
-    16967U,	// XFLOADf32
-    17388U,	// XFLOADf64
-    16990U,	// XFSTOREf32
-    17411U,	// XFSTOREf64
+    2147528473U,	// SUBIS
+    100708128U,	// SUBPCIS
+    16974U,	// XFLOADf32
+    17395U,	// XFLOADf64
+    16997U,	// XFSTOREf32
+    17418U,	// XFSTOREf64
     2147520856U,	// ADD4
     2147524456U,	// ADD4O
     2147517740U,	// ADD4O_rec
@@ -2427,38 +2428,38 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147517104U,	// ADDE8_rec
     2147524477U,	// ADDEO
     2147517764U,	// ADDEO_rec
-    2147531098U,	// ADDEX
-    2147531098U,	// ADDEX8
+    2147531105U,	// ADDEX
+    2147531105U,	// ADDEX8
     2147517104U,	// ADDE_rec
-    2147527945U,	// ADDG6S
-    2147527945U,	// ADDG6S8
+    2147527952U,	// ADDG6S
+    2147527952U,	// ADDG6S8
     2147522452U,	// ADDI
     2147522452U,	// ADDI8
     2147520655U,	// ADDIC
     2147520655U,	// ADDIC8
     2147516836U,	// ADDIC_rec
-    2147528491U,	// ADDIS
-    2147528491U,	// ADDIS8
-    18446U,	// ADDISdtprelHA
-    16442U,	// ADDISdtprelHA32
-    18429U,	// ADDISgotTprelHA
-    18401U,	// ADDIStlsgdHA
-    18415U,	// ADDIStlsldHA
-    18389U,	// ADDIStocHA
-    17979U,	// ADDIStocHA8
-    19078U,	// ADDIdtprelL
-    16731U,	// ADDIdtprelL32
-    19041U,	// ADDItlsgdL
-    16688U,	// ADDItlsgdL32
-    19182U,	// ADDItlsgdLADDR
-    16783U,	// ADDItlsgdLADDR32
-    19053U,	// ADDItlsldL
-    16702U,	// ADDItlsldL32
-    19198U,	// ADDItlsldLADDR
-    16801U,	// ADDItlsldLADDR32
-    19649U,	// ADDItoc
-    18363U,	// ADDItoc8
-    19022U,	// ADDItocL
+    2147528498U,	// ADDIS
+    2147528498U,	// ADDIS8
+    18453U,	// ADDISdtprelHA
+    16449U,	// ADDISdtprelHA32
+    18436U,	// ADDISgotTprelHA
+    18408U,	// ADDIStlsgdHA
+    18422U,	// ADDIStlsldHA
+    18396U,	// ADDIStocHA
+    17986U,	// ADDIStocHA8
+    19085U,	// ADDIdtprelL
+    16738U,	// ADDIdtprelL32
+    19048U,	// ADDItlsgdL
+    16695U,	// ADDItlsgdL32
+    19189U,	// ADDItlsgdLADDR
+    16790U,	// ADDItlsgdLADDR32
+    19060U,	// ADDItlsldL
+    16709U,	// ADDItlsldL32
+    19205U,	// ADDItlsldLADDR
+    16808U,	// ADDItlsldLADDR32
+    19656U,	// ADDItoc
+    18370U,	// ADDItoc8
+    19029U,	// ADDItocL
     38004U,	// ADDME
     38004U,	// ADDME8
     40852U,	// ADDME8O
@@ -2467,7 +2468,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     40852U,	// ADDMEO
     34142U,	// ADDMEO_rec
     33488U,	// ADDME_rec
-    44834U,	// ADDPCIS
+    44841U,	// ADDPCIS
     38086U,	// ADDZE
     38086U,	// ADDZE8
     40877U,	// ADDZE8O
@@ -2489,73 +2490,73 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147518496U,	// ANDIS8_rec
     2147518496U,	// ANDIS_rec
     2147517367U,	// ANDI_rec
-    19343U,	// ANDI_rec_1_EQ_BIT
-    18312U,	// ANDI_rec_1_EQ_BIT8
-    19362U,	// ANDI_rec_1_GT_BIT
-    18332U,	// ANDI_rec_1_GT_BIT8
+    19350U,	// ANDI_rec_1_EQ_BIT
+    18319U,	// ANDI_rec_1_EQ_BIT8
+    19369U,	// ANDI_rec_1_GT_BIT
+    18339U,	// ANDI_rec_1_GT_BIT8
     2147517010U,	// AND_rec
     136350466U,	// ATOMIC_CMP_SWAP_I16
     136350392U,	// ATOMIC_CMP_SWAP_I32
-    17126U,	// ATOMIC_CMP_SWAP_I64
-    18173U,	// ATOMIC_CMP_SWAP_I8
-    17599U,	// ATOMIC_LOAD_ADD_I16
-    16480U,	// ATOMIC_LOAD_ADD_I32
-    17023U,	// ATOMIC_LOAD_ADD_I64
-    18071U,	// ATOMIC_LOAD_ADD_I8
-    17642U,	// ATOMIC_LOAD_AND_I16
-    16523U,	// ATOMIC_LOAD_AND_I32
-    17423U,	// ATOMIC_LOAD_AND_I64
-    18112U,	// ATOMIC_LOAD_AND_I8
-    17786U,	// ATOMIC_LOAD_MAX_I16
-    16667U,	// ATOMIC_LOAD_MAX_I32
-    17210U,	// ATOMIC_LOAD_MAX_I64
-    18263U,	// ATOMIC_LOAD_MAX_I8
-    17685U,	// ATOMIC_LOAD_MIN_I16
-    16566U,	// ATOMIC_LOAD_MIN_I32
-    17088U,	// ATOMIC_LOAD_MIN_I64
-    18153U,	// ATOMIC_LOAD_MIN_I8
-    17620U,	// ATOMIC_LOAD_NAND_I16
-    16501U,	// ATOMIC_LOAD_NAND_I32
-    17044U,	// ATOMIC_LOAD_NAND_I64
-    18091U,	// ATOMIC_LOAD_NAND_I8
-    17744U,	// ATOMIC_LOAD_OR_I16
-    16625U,	// ATOMIC_LOAD_OR_I32
-    17168U,	// ATOMIC_LOAD_OR_I64
-    18212U,	// ATOMIC_LOAD_OR_I8
-    17578U,	// ATOMIC_LOAD_SUB_I16
-    16459U,	// ATOMIC_LOAD_SUB_I32
-    17002U,	// ATOMIC_LOAD_SUB_I64
-    18037U,	// ATOMIC_LOAD_SUB_I8
-    17764U,	// ATOMIC_LOAD_UMAX_I16
-    16645U,	// ATOMIC_LOAD_UMAX_I32
-    17188U,	// ATOMIC_LOAD_UMAX_I64
-    18242U,	// ATOMIC_LOAD_UMAX_I8
-    17663U,	// ATOMIC_LOAD_UMIN_I16
-    16544U,	// ATOMIC_LOAD_UMIN_I32
-    17066U,	// ATOMIC_LOAD_UMIN_I64
-    18132U,	// ATOMIC_LOAD_UMIN_I8
-    17723U,	// ATOMIC_LOAD_XOR_I16
-    16604U,	// ATOMIC_LOAD_XOR_I32
-    17147U,	// ATOMIC_LOAD_XOR_I64
-    18193U,	// ATOMIC_LOAD_XOR_I8
-    17706U,	// ATOMIC_SWAP_I16
-    16587U,	// ATOMIC_SWAP_I32
-    17109U,	// ATOMIC_SWAP_I64
-    18373U,	// ATOMIC_SWAP_I8
-    19762U,	// ATTN
+    17133U,	// ATOMIC_CMP_SWAP_I64
+    18180U,	// ATOMIC_CMP_SWAP_I8
+    17606U,	// ATOMIC_LOAD_ADD_I16
+    16487U,	// ATOMIC_LOAD_ADD_I32
+    17030U,	// ATOMIC_LOAD_ADD_I64
+    18078U,	// ATOMIC_LOAD_ADD_I8
+    17649U,	// ATOMIC_LOAD_AND_I16
+    16530U,	// ATOMIC_LOAD_AND_I32
+    17430U,	// ATOMIC_LOAD_AND_I64
+    18119U,	// ATOMIC_LOAD_AND_I8
+    17793U,	// ATOMIC_LOAD_MAX_I16
+    16674U,	// ATOMIC_LOAD_MAX_I32
+    17217U,	// ATOMIC_LOAD_MAX_I64
+    18270U,	// ATOMIC_LOAD_MAX_I8
+    17692U,	// ATOMIC_LOAD_MIN_I16
+    16573U,	// ATOMIC_LOAD_MIN_I32
+    17095U,	// ATOMIC_LOAD_MIN_I64
+    18160U,	// ATOMIC_LOAD_MIN_I8
+    17627U,	// ATOMIC_LOAD_NAND_I16
+    16508U,	// ATOMIC_LOAD_NAND_I32
+    17051U,	// ATOMIC_LOAD_NAND_I64
+    18098U,	// ATOMIC_LOAD_NAND_I8
+    17751U,	// ATOMIC_LOAD_OR_I16
+    16632U,	// ATOMIC_LOAD_OR_I32
+    17175U,	// ATOMIC_LOAD_OR_I64
+    18219U,	// ATOMIC_LOAD_OR_I8
+    17585U,	// ATOMIC_LOAD_SUB_I16
+    16466U,	// ATOMIC_LOAD_SUB_I32
+    17009U,	// ATOMIC_LOAD_SUB_I64
+    18044U,	// ATOMIC_LOAD_SUB_I8
+    17771U,	// ATOMIC_LOAD_UMAX_I16
+    16652U,	// ATOMIC_LOAD_UMAX_I32
+    17195U,	// ATOMIC_LOAD_UMAX_I64
+    18249U,	// ATOMIC_LOAD_UMAX_I8
+    17670U,	// ATOMIC_LOAD_UMIN_I16
+    16551U,	// ATOMIC_LOAD_UMIN_I32
+    17073U,	// ATOMIC_LOAD_UMIN_I64
+    18139U,	// ATOMIC_LOAD_UMIN_I8
+    17730U,	// ATOMIC_LOAD_XOR_I16
+    16611U,	// ATOMIC_LOAD_XOR_I32
+    17154U,	// ATOMIC_LOAD_XOR_I64
+    18200U,	// ATOMIC_LOAD_XOR_I8
+    17713U,	// ATOMIC_SWAP_I16
+    16594U,	// ATOMIC_SWAP_I32
+    17116U,	// ATOMIC_SWAP_I64
+    18380U,	// ATOMIC_SWAP_I8
+    19769U,	// ATTN
     1183316U,	// B
     1215541U,	// BA
     167804974U,	// BC
-    3361937U,	// BCC
-    4410513U,	// BCCA
-    5459089U,	// BCCCTR
-    5459089U,	// BCCCTR8
-    6507665U,	// BCCCTRL
-    6507665U,	// BCCCTRL8
-    7556241U,	// BCCL
-    8604817U,	// BCCLA
-    9653393U,	// BCCLR
-    10701969U,	// BCCLRL
+    3361944U,	// BCC
+    4410520U,	// BCCA
+    5459096U,	// BCCCTR
+    5459096U,	// BCCCTR8
+    6507672U,	// BCCCTRL
+    6507672U,	// BCCCTRL8
+    7556248U,	// BCCL
+    8604824U,	// BCCLA
+    9653400U,	// BCCLR
+    10701976U,	// BCCLRL
     11567200U,	// BCCTR
     11567200U,	// BCCTR8
     11567178U,	// BCCTRL
@@ -2578,16 +2579,16 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     167804982U,	// BCL
     11567190U,	// BCLR
     11567167U,	// BCLRL
-    19830U,	// BCTR
-    19830U,	// BCTR8
-    19756U,	// BCTRL
-    19756U,	// BCTRL8
+    19837U,	// BCTR
+    19837U,	// BCTR8
+    19763U,	// BCTRL
+    19763U,	// BCTRL8
     229393U,	// BCTRL8_LDinto_toc
     229393U,	// BCTRL8_LDinto_toc_RM
-    19756U,	// BCTRL8_RM
+    19763U,	// BCTRL8_RM
     229407U,	// BCTRL_LWZinto_toc
     229407U,	// BCTRL_LWZinto_toc_RM
-    19756U,	// BCTRL_RM
+    19763U,	// BCTRL_RM
     1186489U,	// BL
     1186489U,	// BL8
     12720825U,	// BL8_NOP
@@ -2605,9 +2606,9 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     12750171U,	// BLA8_NOP_RM
     1215835U,	// BLA8_RM
     1215835U,	// BLA_RM
-    19826U,	// BLR
-    19826U,	// BLR8
-    19751U,	// BLRL
+    19833U,	// BLR
+    19833U,	// BLR8
+    19758U,	// BLRL
     12720825U,	// BL_NOP
     12720825U,	// BL_NOP_RM
     1186489U,	// BL_RM
@@ -2617,14 +2618,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     38480U,	// BRH
     38480U,	// BRH8
     2147520711U,	// BRINC
-    46759U,	// BRW
-    46759U,	// BRW8
+    46766U,	// BRW
+    46766U,	// BRW8
     37733U,	// CBCDTD
     37733U,	// CBCDTD8
     37197U,	// CDTBCD
     37197U,	// CDTBCD8
     2147521005U,	// CFUGED
-    19595U,	// CLRBHRB
+    19602U,	// CLRBHRB
     2147520202U,	// CMPB
     2147520202U,	// CMPB8
     2147521233U,	// CMPD
@@ -2632,45 +2633,45 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147520208U,	// CMPEQB
     2147521117U,	// CMPLD
     2147522458U,	// CMPLDI
-    2147530142U,	// CMPLW
+    2147530149U,	// CMPLW
     2147523005U,	// CMPLWI
     2348846808U,	// CMPRB
     2348846808U,	// CMPRB8
-    2147530399U,	// CMPW
+    2147530406U,	// CMPW
     2147523055U,	// CMPWI
     37897U,	// CNTLZD
     2147523696U,	// CNTLZDM
     33438U,	// CNTLZD_rec
-    47146U,	// CNTLZW
-    47146U,	// CNTLZW8
+    47153U,	// CNTLZW
+    47153U,	// CNTLZW8
     35145U,	// CNTLZW8_rec
     35145U,	// CNTLZW_rec
     37912U,	// CNTTZD
     2147523713U,	// CNTTZDM
     33447U,	// CNTTZD_rec
-    47161U,	// CNTTZW
-    47161U,	// CNTTZW8
+    47168U,	// CNTTZW
+    47168U,	// CNTTZW8
     35154U,	// CNTTZW8_rec
     35154U,	// CNTTZW_rec
-    19835U,	// CP_ABORT
-    48724U,	// CP_COPY
-    48724U,	// CP_COPY8
+    19842U,	// CP_ABORT
+    48731U,	// CP_COPY
+    48731U,	// CP_COPY8
     2147517181U,	// CP_PASTE8_rec
     2147517181U,	// CP_PASTE_rec
-    17537U,	// CR6SET
-    17523U,	// CR6UNSET
+    17544U,	// CR6SET
+    17530U,	// CR6UNSET
     2147521196U,	// CRAND
     2147520617U,	// CRANDC
-    2147529586U,	// CREQV
+    2147529593U,	// CREQV
     2147521180U,	// CRNAND
     2147527799U,	// CRNOR
-    45499U,	// CRNOT
+    45506U,	// CRNOT
     2147527813U,	// CROR
     2147520732U,	// CRORC
-    2382410610U,	// CRSET
+    2382410617U,	// CRSET
     2382408874U,	// CRUNSET
     2147527850U,	// CRXOR
-    3361937U,	// CTRL_DEP
+    3361944U,	// CTRL_DEP
     2147520863U,	// DADD
     2147527062U,	// DADDQ
     2147518077U,	// DADDQ_rec
@@ -2680,29 +2681,29 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     13931733U,	// DCBF
     1123292U,	// DCBFEP
     1120083U,	// DCBI
-    1126900U,	// DCBST
+    1126907U,	// DCBST
     1123325U,	// DCBSTEP
-    14987527U,	// DCBT
+    14987534U,	// DCBT
     336885U,	// DCBTEP
-    14987784U,	// DCBTST
+    14987791U,	// DCBTST
     336902U,	// DCBTSTEP
-    1130074U,	// DCBZ
+    1130081U,	// DCBZ
     1123344U,	// DCBZEP
     1121223U,	// DCBZL
     1123308U,	// DCBZLEP
     38774U,	// DCCCI
-    47633U,	// DCFFIX
+    47640U,	// DCFFIX
     43892U,	// DCFFIXQ
     43638U,	// DCFFIXQQ
     34603U,	// DCFFIXQ_rec
     35217U,	// DCFFIX_rec
     2147524605U,	// DCMPO
     2147527263U,	// DCMPOQ
-    2147529397U,	// DCMPU
+    2147529404U,	// DCMPU
     2147527466U,	// DCMPUQ
     41789U,	// DCTDP
     34283U,	// DCTDP_rec
-    47641U,	// DCTFIX
+    47648U,	// DCTFIX
     43901U,	// DCTFIXQ
     43648U,	// DCTFIXQQ
     34613U,	// DCTFIXQ_rec
@@ -2713,7 +2714,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     371109U,	// DDEDPDQ
     362126U,	// DDEDPDQ_rec
     361063U,	// DDEDPD_rec
-    2147529536U,	// DDIV
+    2147529543U,	// DDIV
     2147527510U,	// DDIVQ
     2147518227U,	// DDIVQ_rec
     2147518661U,	// DDIV_rec
@@ -2721,7 +2722,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1452429U,	// DENBCDQ
     1443443U,	// DENBCDQ_rec
     1442275U,	// DENBCD_rec
-    2147531124U,	// DIEX
+    2147531131U,	// DIEX
     2147527517U,	// DIEXQ
     2147518235U,	// DIEXQ_rec
     2147518851U,	// DIEX_rec
@@ -2729,36 +2730,36 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147521591U,	// DIVDE
     2147524484U,	// DIVDEO
     2147517772U,	// DIVDEO_rec
-    2147529349U,	// DIVDEU
+    2147529356U,	// DIVDEU
     2147524730U,	// DIVDEUO
     2147517861U,	// DIVDEUO_rec
     2147518608U,	// DIVDEU_rec
     2147517111U,	// DIVDE_rec
     2147524470U,	// DIVDO
     2147517756U,	// DIVDO_rec
-    2147529342U,	// DIVDU
+    2147529349U,	// DIVDU
     2147524722U,	// DIVDUO
     2147517852U,	// DIVDUO_rec
     2147518600U,	// DIVDU_rec
     2147517079U,	// DIVD_rec
-    2147530769U,	// DIVW
+    2147530776U,	// DIVW
     2147521718U,	// DIVWE
     2147524517U,	// DIVWEO
     2147517809U,	// DIVWEO_rec
-    2147529357U,	// DIVWEU
+    2147529364U,	// DIVWEU
     2147524739U,	// DIVWEUO
     2147517871U,	// DIVWEUO_rec
     2147518617U,	// DIVWEU_rec
     2147517189U,	// DIVWE_rec
     2147524764U,	// DIVWO
     2147517899U,	// DIVWO_rec
-    2147529487U,	// DIVWU
+    2147529494U,	// DIVWU
     2147524748U,	// DIVWUO
     2147517881U,	// DIVWUO_rec
     2147518644U,	// DIVWU_rec
     2147518775U,	// DIVW_rec
     44099U,	// DMMR
-    1097504U,	// DMSETDMRZ
+    1097511U,	// DMSETDMRZ
     2147523461U,	// DMUL
     2147527238U,	// DMULQ
     2147518139U,	// DMULQ_rec
@@ -2784,7 +2785,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     335948374U,	// DRINTNQ
     335939267U,	// DRINTNQ_rec
     335938834U,	// DRINTN_rec
-    335953137U,	// DRINTX
+    335953144U,	// DRINTX
     335948678U,	// DRINTXQ
     335939391U,	// DRINTXQ_rec
     335940011U,	// DRINTX_rec
@@ -2802,16 +2803,16 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147527211U,	// DSCRIQ
     2147518122U,	// DSCRIQ_rec
     2147517456U,	// DSCRI_rec
-    1585024U,	// DSS
-    19744U,	// DSSALL
-    2449912315U,	// DST
-    2449912315U,	// DST64
-    2449912336U,	// DSTST
-    2449912336U,	// DSTST64
-    2449912365U,	// DSTSTT
-    2449912365U,	// DSTSTT64
-    2449912350U,	// DSTT
-    2449912350U,	// DSTT64
+    1585031U,	// DSS
+    19751U,	// DSSALL
+    2449912322U,	// DST
+    2449912322U,	// DST64
+    2449912343U,	// DSTST
+    2449912343U,	// DSTST64
+    2449912372U,	// DSTSTT
+    2449912372U,	// DSTSTT64
+    2449912357U,	// DSTT
+    2449912357U,	// DSTT64
     2147520435U,	// DSUB
     2147527028U,	// DSUBQ
     2147518059U,	// DSUBQ_rec
@@ -2820,25 +2821,25 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147527044U,	// DTSTDCQ
     2147521985U,	// DTSTDG
     2147527176U,	// DTSTDGQ
-    2147531130U,	// DTSTEX
+    2147531137U,	// DTSTEX
     2147527524U,	// DTSTEXQ
     2147521931U,	// DTSTSF
     369137658U,	// DTSTSFI
     369142297U,	// DTSTSFIQ
     2147527167U,	// DTSTSFQ
-    47500U,	// DXEX
+    47507U,	// DXEX
     43885U,	// DXEXQ
     34595U,	// DXEXQ_rec
     35210U,	// DXEX_rec
-    18545U,	// DYNALLOC
-    17992U,	// DYNALLOC8
-    19300U,	// DYNAREAOFFSET
-    18296U,	// DYNAREAOFFSET8
-    19786U,	// DecreaseCTR8loop
-    19804U,	// DecreaseCTRloop
-    44313U,	// EFDABS
+    18552U,	// DYNALLOC
+    17999U,	// DYNALLOC8
+    19307U,	// DYNAREAOFFSET
+    18303U,	// DYNAREAOFFSET8
+    19793U,	// DecreaseCTR8loop
+    19811U,	// DecreaseCTRloop
+    44320U,	// EFDABS
     2147520861U,	// EFDADD
-    44695U,	// EFDCFS
+    44702U,	// EFDCFS
     38181U,	// EFDCFSF
     39208U,	// EFDCFSI
     37417U,	// EFDCFSID
@@ -2846,25 +2847,25 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     39285U,	// EFDCFUI
     37436U,	// EFDCFUID
     2147527086U,	// EFDCMPEQ
-    2147528997U,	// EFDCMPGT
-    2147529075U,	// EFDCMPLT
+    2147529004U,	// EFDCMPGT
+    2147529082U,	// EFDCMPLT
     38255U,	// EFDCTSF
     39236U,	// EFDCTSI
-    48753U,	// EFDCTSIDZ
-    48855U,	// EFDCTSIZ
+    48760U,	// EFDCTSIDZ
+    48862U,	// EFDCTSIZ
     38319U,	// EFDCTUF
     39313U,	// EFDCTUI
-    48774U,	// EFDCTUIDZ
-    48886U,	// EFDCTUIZ
-    2147529534U,	// EFDDIV
+    48781U,	// EFDCTUIDZ
+    48893U,	// EFDCTUIZ
+    2147529541U,	// EFDDIV
     2147523459U,	// EFDMUL
-    44338U,	// EFDNABS
+    44345U,	// EFDNABS
     38361U,	// EFDNEG
     2147520433U,	// EFDSUB
     2147527136U,	// EFDTSTEQ
-    2147529038U,	// EFDTSTGT
-    2147529116U,	// EFDTSTLT
-    44375U,	// EFSABS
+    2147529045U,	// EFDTSTGT
+    2147529123U,	// EFDTSTLT
+    44382U,	// EFSABS
     2147520963U,	// EFSADD
     37365U,	// EFSCFD
     38190U,	// EFSCFSF
@@ -2872,97 +2873,97 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     38300U,	// EFSCFUF
     39294U,	// EFSCFUI
     2147527106U,	// EFSCMPEQ
-    2147529017U,	// EFSCMPGT
-    2147529095U,	// EFSCMPLT
+    2147529024U,	// EFSCMPGT
+    2147529102U,	// EFSCMPLT
     38264U,	// EFSCTSF
     39245U,	// EFSCTSI
-    48865U,	// EFSCTSIZ
+    48872U,	// EFSCTSIZ
     38328U,	// EFSCTUF
     39322U,	// EFSCTUI
-    48896U,	// EFSCTUIZ
-    2147529548U,	// EFSDIV
+    48903U,	// EFSCTUIZ
+    2147529555U,	// EFSDIV
     2147523475U,	// EFSMUL
-    44356U,	// EFSNABS
+    44363U,	// EFSNABS
     38377U,	// EFSNEG
     2147520487U,	// EFSSUB
     2147527146U,	// EFSTSTEQ
-    2147529048U,	// EFSTSTGT
-    2147529126U,	// EFSTSTLT
-    16746U,	// EH_SjLj_LongJmp32
-    17231U,	// EH_SjLj_LongJmp64
-    16765U,	// EH_SjLj_SetJmp32
-    17250U,	// EH_SjLj_SetJmp64
+    2147529055U,	// EFSTSTGT
+    2147529133U,	// EFSTSTLT
+    16753U,	// EH_SjLj_LongJmp32
+    17238U,	// EH_SjLj_LongJmp64
+    16772U,	// EH_SjLj_SetJmp32
+    17257U,	// EH_SjLj_SetJmp64
     1179649U,	// EH_SjLj_Setup
-    2147529581U,	// EQV
-    2147529581U,	// EQV8
+    2147529588U,	// EQV
+    2147529588U,	// EQV8
     2147518675U,	// EQV8_rec
     2147518675U,	// EQV_rec
-    44392U,	// EVABS
-    2181084522U,	// EVADDIW
-    46043U,	// EVADDSMIAAW
-    46175U,	// EVADDSSIAAW
-    46109U,	// EVADDUMIAAW
-    46241U,	// EVADDUSIAAW
-    2147529992U,	// EVADDW
+    44399U,	// EVABS
+    2181084529U,	// EVADDIW
+    46050U,	// EVADDSMIAAW
+    46182U,	// EVADDSSIAAW
+    46116U,	// EVADDUMIAAW
+    46248U,	// EVADDUSIAAW
+    2147529999U,	// EVADDW
     2147521203U,	// EVAND
     2147520625U,	// EVANDC
     2147527127U,	// EVCMPEQ
-    2147528599U,	// EVCMPGTS
-    2147529424U,	// EVCMPGTU
-    2147528609U,	// EVCMPLTS
-    2147529434U,	// EVCMPLTU
-    46841U,	// EVCNTLSW
-    47144U,	// EVCNTLZW
-    2147528779U,	// EVDIVWS
-    2147529485U,	// EVDIVWU
-    2147529593U,	// EVEQV
+    2147528606U,	// EVCMPGTS
+    2147529431U,	// EVCMPGTU
+    2147528616U,	// EVCMPLTS
+    2147529441U,	// EVCMPLTU
+    46848U,	// EVCNTLSW
+    47151U,	// EVCNTLZW
+    2147528786U,	// EVDIVWS
+    2147529492U,	// EVDIVWU
+    2147529600U,	// EVEQV
     36661U,	// EVEXTSB
     38563U,	// EVEXTSH
-    44383U,	// EVFSABS
+    44390U,	// EVFSABS
     2147520971U,	// EVFSADD
     38199U,	// EVFSCFSF
     39226U,	// EVFSCFSI
     38309U,	// EVFSCFUF
     39303U,	// EVFSCFUI
     2147527116U,	// EVFSCMPEQ
-    2147529027U,	// EVFSCMPGT
-    2147529105U,	// EVFSCMPLT
+    2147529034U,	// EVFSCMPGT
+    2147529112U,	// EVFSCMPLT
     38273U,	// EVFSCTSF
     39254U,	// EVFSCTSI
-    48875U,	// EVFSCTSIZ
+    48882U,	// EVFSCTSIZ
     38273U,	// EVFSCTUF
     39331U,	// EVFSCTUI
-    48875U,	// EVFSCTUIZ
-    2147529556U,	// EVFSDIV
+    48882U,	// EVFSCTUIZ
+    2147529563U,	// EVFSDIV
     2147523483U,	// EVFSMUL
-    44365U,	// EVFSNABS
+    44372U,	// EVFSNABS
     38385U,	// EVFSNEG
     2147520495U,	// EVFSSUB
     2147527156U,	// EVFSTSTEQ
-    2147529058U,	// EVFSTSTGT
-    2147529136U,	// EVFSTSTLT
+    2147529065U,	// EVFSTSTGT
+    2147529143U,	// EVFSTSTLT
     67146196U,	// EVLDD
-    134265086U,	// EVLDDX
+    134265093U,	// EVLDDX
     67147281U,	// EVLDH
-    134265234U,	// EVLDHX
-    67155216U,	// EVLDW
-    134266323U,	// EVLDWX
-    67154105U,	// EVLHHESPLAT
-    134266027U,	// EVLHHESPLATX
-    67154130U,	// EVLHHOSSPLAT
-    134266054U,	// EVLHHOSSPLATX
-    67154144U,	// EVLHHOUSPLAT
-    134266069U,	// EVLHHOUSPLATX
+    134265241U,	// EVLDHX
+    67155223U,	// EVLDW
+    134266330U,	// EVLDWX
+    67154112U,	// EVLHHESPLAT
+    134266034U,	// EVLHHESPLATX
+    67154137U,	// EVLHHOSSPLAT
+    134266061U,	// EVLHHOSSPLATX
+    67154151U,	// EVLHHOUSPLAT
+    134266076U,	// EVLHHOUSPLATX
     67146837U,	// EVLWHE
-    134265185U,	// EVLWHEX
-    67153762U,	// EVLWHOS
-    134265999U,	// EVLWHOSX
-    67154604U,	// EVLWHOU
-    134266211U,	// EVLWHOUX
-    67154118U,	// EVLWHSPLAT
-    134266041U,	// EVLWHSPLATX
-    67154158U,	// EVLWWSPLAT
-    134266084U,	// EVLWWSPLATX
+    134265192U,	// EVLWHEX
+    67153769U,	// EVLWHOS
+    134266006U,	// EVLWHOSX
+    67154611U,	// EVLWHOU
+    134266218U,	// EVLWHOUX
+    67154125U,	// EVLWHSPLAT
+    134266048U,	// EVLWHSPLATX
+    67154165U,	// EVLWWSPLAT
+    134266091U,	// EVLWWSPLATX
     2147522574U,	// EVMERGEHI
     2147524575U,	// EVMERGEHILO
     2147524564U,	// EVMERGELO
@@ -2975,24 +2976,24 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147524166U,	// EVMHEGUMIAN
     2147521761U,	// EVMHESMF
     2147519550U,	// EVMHESMFA
-    2147529639U,	// EVMHESMFAAW
-    2147530183U,	// EVMHESMFANW
+    2147529646U,	// EVMHESMFAAW
+    2147530190U,	// EVMHESMFANW
     2147522676U,	// EVMHESMI
     2147519642U,	// EVMHESMIA
-    2147529704U,	// EVMHESMIAAW
-    2147530235U,	// EVMHESMIANW
+    2147529711U,	// EVMHESMIAAW
+    2147530242U,	// EVMHESMIANW
     2147521864U,	// EVMHESSF
     2147519593U,	// EVMHESSFA
-    2147529665U,	// EVMHESSFAAW
-    2147530209U,	// EVMHESSFANW
-    2147529836U,	// EVMHESSIAAW
-    2147530313U,	// EVMHESSIANW
+    2147529672U,	// EVMHESSFAAW
+    2147530216U,	// EVMHESSFANW
+    2147529843U,	// EVMHESSIAAW
+    2147530320U,	// EVMHESSIANW
     2147522715U,	// EVMHEUMI
     2147519685U,	// EVMHEUMIA
-    2147529770U,	// EVMHEUMIAAW
-    2147530274U,	// EVMHEUMIANW
-    2147529902U,	// EVMHEUSIAAW
-    2147530352U,	// EVMHEUSIANW
+    2147529777U,	// EVMHEUMIAAW
+    2147530281U,	// EVMHEUMIANW
+    2147529909U,	// EVMHEUSIAAW
+    2147530359U,	// EVMHEUSIANW
     2147519430U,	// EVMHOGSMFAA
     2147524094U,	// EVMHOGSMFAN
     2147519478U,	// EVMHOGSMIAA
@@ -3001,24 +3002,24 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147524179U,	// EVMHOGUMIAN
     2147521781U,	// EVMHOSMF
     2147519572U,	// EVMHOSMFA
-    2147529652U,	// EVMHOSMFAAW
-    2147530196U,	// EVMHOSMFANW
+    2147529659U,	// EVMHOSMFAAW
+    2147530203U,	// EVMHOSMFANW
     2147522696U,	// EVMHOSMI
     2147519664U,	// EVMHOSMIA
-    2147529744U,	// EVMHOSMIAAW
-    2147530261U,	// EVMHOSMIANW
+    2147529751U,	// EVMHOSMIAAW
+    2147530268U,	// EVMHOSMIANW
     2147521884U,	// EVMHOSSF
     2147519615U,	// EVMHOSSFA
-    2147529678U,	// EVMHOSSFAAW
-    2147530222U,	// EVMHOSSFANW
-    2147529876U,	// EVMHOSSIAAW
-    2147530339U,	// EVMHOSSIANW
+    2147529685U,	// EVMHOSSFAAW
+    2147530229U,	// EVMHOSSFANW
+    2147529883U,	// EVMHOSSIAAW
+    2147530346U,	// EVMHOSSIANW
     2147522745U,	// EVMHOUMI
     2147519718U,	// EVMHOUMIA
-    2147529810U,	// EVMHOUMIAAW
-    2147530300U,	// EVMHOUMIANW
-    2147529942U,	// EVMHOUSIAAW
-    2147530378U,	// EVMHOUSIANW
+    2147529817U,	// EVMHOUMIAAW
+    2147530307U,	// EVMHOUMIANW
+    2147529949U,	// EVMHOUSIAAW
+    2147530385U,	// EVMHOUSIANW
     36203U,	// EVMRA
     2147521771U,	// EVMWHSMF
     2147519561U,	// EVMWHSMFA
@@ -3028,16 +3029,16 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147519604U,	// EVMWHSSFA
     2147522725U,	// EVMWHUMI
     2147519696U,	// EVMWHUMIA
-    2147529731U,	// EVMWLSMIAAW
-    2147530248U,	// EVMWLSMIANW
-    2147529863U,	// EVMWLSSIAAW
-    2147530326U,	// EVMWLSSIANW
+    2147529738U,	// EVMWLSMIAAW
+    2147530255U,	// EVMWLSMIANW
+    2147529870U,	// EVMWLSSIAAW
+    2147530333U,	// EVMWLSSIANW
     2147522735U,	// EVMWLUMI
     2147519707U,	// EVMWLUMIA
-    2147529797U,	// EVMWLUMIAAW
-    2147530287U,	// EVMWLUMIANW
-    2147529929U,	// EVMWLUSIAAW
-    2147530365U,	// EVMWLUSIANW
+    2147529804U,	// EVMWLUMIAAW
+    2147530294U,	// EVMWLUMIANW
+    2147529936U,	// EVMWLUSIAAW
+    2147530372U,	// EVMWLUSIANW
     2147521791U,	// EVMWSMF
     2147519583U,	// EVMWSMFA
     2147519443U,	// EVMWSMFAA
@@ -3059,38 +3060,38 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147527806U,	// EVNOR
     2147527819U,	// EVOR
     2147520739U,	// EVORC
-    2147530149U,	// EVRLW
+    2147530156U,	// EVRLW
     2147523013U,	// EVRLWI
-    46359U,	// EVRNDW
-    2164309881U,	// EVSEL
-    2147530156U,	// EVSLW
+    46366U,	// EVRNDW
+    2164309888U,	// EVSEL
+    2147530163U,	// EVSLW
     2147523039U,	// EVSLWI
     402692099U,	// EVSPLATFI
     402692459U,	// EVSPLATI
-    2147528510U,	// EVSRWIS
-    2147529371U,	// EVSRWIU
-    2147528707U,	// EVSRWS
-    2147529471U,	// EVSRWU
+    2147528517U,	// EVSRWIS
+    2147529378U,	// EVSRWIU
+    2147528714U,	// EVSRWS
+    2147529478U,	// EVSRWU
     67146212U,	// EVSTDD
-    134265094U,	// EVSTDDX
+    134265101U,	// EVSTDDX
     67147288U,	// EVSTDH
-    134265242U,	// EVSTDHX
-    67155231U,	// EVSTDW
-    134266331U,	// EVSTDWX
+    134265249U,	// EVSTDHX
+    67155238U,	// EVSTDW
+    134266338U,	// EVSTDWX
     67146845U,	// EVSTWHE
-    134265194U,	// EVSTWHEX
+    134265201U,	// EVSTWHEX
     67149771U,	// EVSTWHO
-    134265561U,	// EVSTWHOX
+    134265568U,	// EVSTWHOX
     67146941U,	// EVSTWWE
-    134265218U,	// EVSTWWEX
+    134265225U,	// EVSTWWEX
     67149987U,	// EVSTWWO
-    134265571U,	// EVSTWWOX
-    46069U,	// EVSUBFSMIAAW
-    46201U,	// EVSUBFSSIAAW
-    46135U,	// EVSUBFUMIAAW
-    46267U,	// EVSUBFUSIAAW
-    2147530040U,	// EVSUBFW
-    2583737665U,	// EVSUBIFW
+    134265578U,	// EVSTWWOX
+    46076U,	// EVSUBFSMIAAW
+    46208U,	// EVSUBFSSIAAW
+    46142U,	// EVSUBFUMIAAW
+    46274U,	// EVSUBFUSIAAW
+    2147530047U,	// EVSUBFW
+    2583737672U,	// EVSUBIFW
     2147527857U,	// EVXOR
     36663U,	// EXTSB
     36663U,	// EXTSB8
@@ -3102,94 +3103,94 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     38565U,	// EXTSH8_32_64
     33618U,	// EXTSH8_rec
     33618U,	// EXTSH_rec
-    46885U,	// EXTSW
+    46892U,	// EXTSW
     2147522624U,	// EXTSWSLI
     2147522624U,	// EXTSWSLI_32_64
     2147517427U,	// EXTSWSLI_32_64_rec
     2147517427U,	// EXTSWSLI_rec
-    46885U,	// EXTSW_32
-    46885U,	// EXTSW_32_64
+    46892U,	// EXTSW_32
+    46892U,	// EXTSW_32_64
     35097U,	// EXTSW_32_64_rec
     35097U,	// EXTSW_rec
-    19767U,	// EnforceIEIO
-    44323U,	// FABSD
+    19774U,	// EnforceIEIO
+    44330U,	// FABSD
     34719U,	// FABSD_rec
-    44323U,	// FABSS
+    44330U,	// FABSS
     34719U,	// FABSS_rec
     2147520871U,	// FADD
-    2147528135U,	// FADDS
+    2147528142U,	// FADDS
     2147518426U,	// FADDS_rec
     2147516926U,	// FADD_rec
     0U,	// FADDrtz
     37410U,	// FCFID
-    44569U,	// FCFIDS
+    44576U,	// FCFIDS
     34805U,	// FCFIDS_rec
-    45665U,	// FCFIDU
-    44981U,	// FCFIDUS
+    45672U,	// FCFIDU
+    44988U,	// FCFIDUS
     34881U,	// FCFIDUS_rec
     34934U,	// FCFIDU_rec
     33331U,	// FCFID_rec
     2147524612U,	// FCMPOD
     2147524612U,	// FCMPOS
-    2147529404U,	// FCMPUD
-    2147529404U,	// FCMPUS
+    2147529411U,	// FCMPUD
+    2147529411U,	// FCMPUS
     2147524216U,	// FCPSGND
     2147517668U,	// FCPSGND_rec
     2147524216U,	// FCPSGNS
     2147517668U,	// FCPSGNS_rec
     37429U,	// FCTID
-    45675U,	// FCTIDU
-    48941U,	// FCTIDUZ
+    45682U,	// FCTIDU
+    48948U,	// FCTIDUZ
     35286U,	// FCTIDUZ_rec
     34943U,	// FCTIDU_rec
-    48766U,	// FCTIDZ
+    48773U,	// FCTIDZ
     35252U,	// FCTIDZ_rec
     33339U,	// FCTID_rec
-    46453U,	// FCTIW
-    45815U,	// FCTIWU
-    48952U,	// FCTIWUZ
+    46460U,	// FCTIW
+    45822U,	// FCTIWU
+    48959U,	// FCTIWUZ
     35296U,	// FCTIWUZ_rec
     34987U,	// FCTIWU_rec
-    48963U,	// FCTIWZ
+    48970U,	// FCTIWZ
     35306U,	// FCTIWZ_rec
     35058U,	// FCTIW_rec
-    2147529542U,	// FDIV
-    2147528700U,	// FDIVS
+    2147529549U,	// FDIV
+    2147528707U,	// FDIVS
     2147518548U,	// FDIVS_rec
     2147518668U,	// FDIV_rec
-    18877U,	// FENCE
+    18884U,	// FENCE
     2147520888U,	// FMADD
-    2147528144U,	// FMADDS
+    2147528151U,	// FMADDS
     2147518434U,	// FMADDS_rec
     2147516943U,	// FMADD_rec
     44094U,	// FMR
     34678U,	// FMR_rec
     2147520460U,	// FMSUB
-    2147528114U,	// FMSUBS
+    2147528121U,	// FMSUBS
     2147518400U,	// FMSUBS_rec
     2147516745U,	// FMSUB_rec
     2147523469U,	// FMUL
-    2147528529U,	// FMULS
+    2147528536U,	// FMULS
     2147518504U,	// FMULS_rec
     2147517606U,	// FMUL_rec
-    44349U,	// FNABSD
+    44356U,	// FNABSD
     34736U,	// FNABSD_rec
-    44349U,	// FNABSS
+    44356U,	// FNABSS
     34736U,	// FNABSS_rec
     38371U,	// FNEGD
     33590U,	// FNEGD_rec
     38371U,	// FNEGS
     33590U,	// FNEGS_rec
     2147520907U,	// FNMADD
-    2147528154U,	// FNMADDS
+    2147528161U,	// FNMADDS
     2147518443U,	// FNMADDS_rec
     2147516962U,	// FNMADD_rec
     2147520479U,	// FNMSUB
-    2147528124U,	// FNMSUBS
+    2147528131U,	// FNMSUBS
     2147518409U,	// FNMSUBS_rec
     2147516764U,	// FNMSUB_rec
     38028U,	// FRE
-    44677U,	// FRES
+    44684U,	// FRES
     34823U,	// FRES_rec
     33505U,	// FRE_rec
     40203U,	// FRIMD
@@ -3204,221 +3205,222 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     34346U,	// FRIPD_rec
     42191U,	// FRIPS
     34346U,	// FRIPS_rec
-    48849U,	// FRIZD
+    48856U,	// FRIZD
     35270U,	// FRIZD_rec
-    48849U,	// FRIZS
+    48856U,	// FRIZS
     35270U,	// FRIZS_rec
     43173U,	// FRSP
     34384U,	// FRSP_rec
     38054U,	// FRSQRTE
-    44685U,	// FRSQRTES
+    44692U,	// FRSQRTES
     34830U,	// FRSQRTES_rec
     33523U,	// FRSQRTE_rec
     2147523299U,	// FSELD
     2147517573U,	// FSELD_rec
     2147523299U,	// FSELS
     2147517573U,	// FSELS_rec
-    45506U,	// FSQRT
-    44971U,	// FSQRTS
+    45513U,	// FSQRT
+    44978U,	// FSQRTS
     34864U,	// FSQRTS_rec
     34917U,	// FSQRT_rec
     2147520443U,	// FSUB
-    2147528105U,	// FSUBS
+    2147528112U,	// FSUBS
     2147518392U,	// FSUBS_rec
     2147516728U,	// FSUB_rec
-    2147529565U,	// FTDIV
-    45513U,	// FTSQRT
-    19228U,	// GETtlsADDR
-    16834U,	// GETtlsADDR32
-    19482U,	// GETtlsADDR32AIX
-    19518U,	// GETtlsADDR64AIX
-    18997U,	// GETtlsADDRPCREL
-    19498U,	// GETtlsTpointer32AIX
-    19214U,	// GETtlsldADDR
-    16819U,	// GETtlsldADDR32
-    18978U,	// GETtlsldADDRPCREL
+    2147529572U,	// FTDIV
+    45520U,	// FTSQRT
+    19235U,	// GETtlsADDR
+    16841U,	// GETtlsADDR32
+    19489U,	// GETtlsADDR32AIX
+    19525U,	// GETtlsADDR64AIX
+    19004U,	// GETtlsADDRPCREL
+    19505U,	// GETtlsTpointer32AIX
+    19221U,	// GETtlsldADDR
+    16826U,	// GETtlsldADDR32
+    18985U,	// GETtlsldADDRPCREL
     469801608U,	// HASHCHK
     469801608U,	// HASHCHK8
     469804245U,	// HASHCHKP
     469804245U,	// HASHCHKP8
-    469807616U,	// HASHST
-    469807616U,	// HASHST8
+    469807623U,	// HASHST
+    469807623U,	// HASHST8
     469805371U,	// HASHSTP
     469805371U,	// HASHSTP8
-    19666U,	// HRFID
+    19673U,	// HRFID
     1120089U,	// ICBI
     1123300U,	// ICBIEP
     561344U,	// ICBLC
     558771U,	// ICBLQ
-    569613U,	// ICBT
-    569159U,	// ICBTLS
+    569620U,	// ICBT
+    569166U,	// ICBTLS
     38781U,	// ICCCI
     2147523305U,	// ISEL
     2147523305U,	// ISEL8
-    19630U,	// ISYNC
+    19637U,	// ISYNC
     503352668U,	// LA
     503352668U,	// LA8
-    134265700U,	// LBARX
-    134265700U,	// LBARXL
-    134265581U,	// LBEPX
-    67157601U,	// LBZ
-    67157601U,	// LBZ8
-    2147531257U,	// LBZCIX
-    536916758U,	// LBZU
-    536916758U,	// LBZU8
-    570473894U,	// LBZUX
-    570473894U,	// LBZUX8
-    134266406U,	// LBZX
-    134266406U,	// LBZX8
-    2147532326U,	// LBZXTLS
-    2147532326U,	// LBZXTLS_
-    2147532326U,	// LBZXTLS_32
+    134265707U,	// LBARX
+    134265707U,	// LBARXL
+    134265588U,	// LBEPX
+    67157608U,	// LBZ
+    67157608U,	// LBZ8
+    2147531264U,	// LBZCIX
+    536916765U,	// LBZU
+    536916765U,	// LBZU8
+    570473901U,	// LBZUX
+    570473901U,	// LBZUX8
+    134266413U,	// LBZX
+    134266413U,	// LBZX8
+    2147532333U,	// LBZXTLS
+    2147532333U,	// LBZXTLS_
+    2147532333U,	// LBZXTLS_32
     67146313U,	// LD
-    134265707U,	// LDARX
-    134265707U,	// LDARXL
-    2147528876U,	// LDAT
-    134265735U,	// LDBRX
-    2147531226U,	// LDCIX
-    536916595U,	// LDU
-    570473791U,	// LDUX
-    134265125U,	// LDX
-    2147531045U,	// LDXTLS
-    2147531045U,	// LDXTLS_
-    19065U,	// LDgotTprelL
-    16716U,	// LDgotTprelL32
-    19642U,	// LDtoc
-    19404U,	// LDtocBA
-    19404U,	// LDtocCPT
-    18958U,	// LDtocJTI
-    19014U,	// LDtocL
+    134265714U,	// LDARX
+    134265714U,	// LDARXL
+    2147528883U,	// LDAT
+    134265742U,	// LDBRX
+    2147531233U,	// LDCIX
+    536916602U,	// LDU
+    570473798U,	// LDUX
+    134265132U,	// LDX
+    2147531052U,	// LDXTLS
+    2147531052U,	// LDXTLS_
+    19072U,	// LDgotTprelL
+    16723U,	// LDgotTprelL32
+    19649U,	// LDtoc
+    19411U,	// LDtocBA
+    19411U,	// LDtocCPT
+    18965U,	// LDtocJTI
+    19021U,	// LDtocL
     67146238U,	// LFD
-    134265596U,	// LFDEPX
-    536916545U,	// LFDU
-    570473774U,	// LFDUX
-    134265105U,	// LFDX
-    2147531025U,	// LFDXTLS
-    2147531025U,	// LFDXTLS_
-    134264984U,	// LFIWAX
-    134266429U,	// LFIWZX
-    67153574U,	// LFS
-    536916675U,	// LFSU
-    570473860U,	// LFSUX
-    134265974U,	// LFSX
-    2147531894U,	// LFSXTLS
-    2147531894U,	// LFSXTLS_
+    134265603U,	// LFDEPX
+    536916552U,	// LFDU
+    570473781U,	// LFDUX
+    134265112U,	// LFDX
+    2147531032U,	// LFDXTLS
+    2147531032U,	// LFDXTLS_
+    134264991U,	// LFIWAX
+    134266436U,	// LFIWZX
+    67153581U,	// LFS
+    536916682U,	// LFSU
+    570473867U,	// LFSUX
+    134265981U,	// LFSX
+    2147531901U,	// LFSXTLS
+    2147531901U,	// LFSXTLS_
     67144853U,	// LHA
     67144853U,	// LHA8
-    134265714U,	// LHARX
-    134265714U,	// LHARXL
-    536916533U,	// LHAU
-    536916533U,	// LHAU8
-    570473730U,	// LHAUX
-    570473730U,	// LHAUX8
-    134264967U,	// LHAX
-    134264967U,	// LHAX8
-    2147530887U,	// LHAXTLS
-    2147530887U,	// LHAXTLS_
-    2147530887U,	// LHAXTLS_32
-    134265750U,	// LHBRX
-    134265750U,	// LHBRX8
-    134265613U,	// LHEPX
-    67157672U,	// LHZ
-    67157672U,	// LHZ8
-    2147531265U,	// LHZCIX
-    536916764U,	// LHZU
-    536916764U,	// LHZU8
-    570473901U,	// LHZUX
-    570473901U,	// LHZUX8
-    134266421U,	// LHZX
-    134266421U,	// LHZX8
-    2147532341U,	// LHZXTLS
-    2147532341U,	// LHZXTLS_
-    2147532341U,	// LHZXTLS_32
-    67155379U,	// LMW
+    134265721U,	// LHARX
+    134265721U,	// LHARXL
+    536916540U,	// LHAU
+    536916540U,	// LHAU8
+    570473737U,	// LHAUX
+    570473737U,	// LHAUX8
+    134264974U,	// LHAX
+    134264974U,	// LHAX8
+    2147530894U,	// LHAXTLS
+    2147530894U,	// LHAXTLS_
+    2147530894U,	// LHAXTLS_32
+    134265757U,	// LHBRX
+    134265757U,	// LHBRX8
+    134265620U,	// LHEPX
+    67157679U,	// LHZ
+    67157679U,	// LHZ8
+    2147531272U,	// LHZCIX
+    536916771U,	// LHZU
+    536916771U,	// LHZU8
+    570473908U,	// LHZUX
+    570473908U,	// LHZUX8
+    134266428U,	// LHZX
+    134266428U,	// LHZX8
+    2147532348U,	// LHZXTLS
+    2147532348U,	// LHZXTLS_
+    2147532348U,	// LHZXTLS_32
+    67155386U,	// LMW
     67152444U,	// LQ
-    134265721U,	// LQARX
-    134265721U,	// LQARXL
-    19099U,	// LQX_PSEUDO
+    134265728U,	// LQARX
+    134265728U,	// LQARXL
+    19106U,	// LQX_PSEUDO
     2147523094U,	// LSWI
-    134265007U,	// LVEBX
-    134265251U,	// LVEHX
-    134266340U,	// LVEWX
+    134265014U,	// LVEBX
+    134265258U,	// LVEHX
+    134266347U,	// LVEWX
     134257525U,	// LVSL
     134261984U,	// LVSR
-    134266299U,	// LVX
+    134266306U,	// LVX
     134257594U,	// LVXL
     67145081U,	// LWA
-    134265728U,	// LWARX
-    134265728U,	// LWARXL
-    2147528954U,	// LWAT
-    570473737U,	// LWAUX
-    134265001U,	// LWAX
-    2147530921U,	// LWAXTLS
-    2147530921U,	// LWAXTLS_
-    2147530921U,	// LWAXTLS_32
-    134265001U,	// LWAX_32
+    134265735U,	// LWARX
+    134265735U,	// LWARXL
+    2147528961U,	// LWAT
+    570473744U,	// LWAUX
+    134265008U,	// LWAX
+    2147530928U,	// LWAXTLS
+    2147530928U,	// LWAXTLS_
+    2147530928U,	// LWAXTLS_32
+    134265008U,	// LWAX_32
     67145081U,	// LWA_32
-    134265784U,	// LWBRX
-    134265784U,	// LWBRX8
-    134265628U,	// LWEPX
-    67157836U,	// LWZ
-    67157836U,	// LWZ8
-    2147531273U,	// LWZCIX
-    536916770U,	// LWZU
-    536916770U,	// LWZU8
-    570473908U,	// LWZUX
-    570473908U,	// LWZUX8
-    134266446U,	// LWZX
-    134266446U,	// LWZX8
-    2147532366U,	// LWZXTLS
-    2147532366U,	// LWZXTLS_
-    2147532366U,	// LWZXTLS_32
-    19658U,	// LWZtoc
-    19032U,	// LWZtocL
+    134265791U,	// LWBRX
+    134265791U,	// LWBRX8
+    134265635U,	// LWEPX
+    67157843U,	// LWZ
+    67157843U,	// LWZ8
+    2147531280U,	// LWZCIX
+    536916777U,	// LWZU
+    536916777U,	// LWZU8
+    570473915U,	// LWZUX
+    570473915U,	// LWZUX8
+    134266453U,	// LWZX
+    134266453U,	// LWZX8
+    2147532373U,	// LWZXTLS
+    2147532373U,	// LWZXTLS_
+    2147532373U,	// LWZXTLS_32
+    19665U,	// LWZtoc
+    19039U,	// LWZtocL
     67146572U,	// LXSD
-    134265157U,	// LXSDX
-    134266397U,	// LXSIBZX
-    134266412U,	// LXSIHZX
-    134264992U,	// LXSIWAX
-    134266437U,	// LXSIWZX
+    134265164U,	// LXSDX
+    134266404U,	// LXSIBZX
+    134266419U,	// LXSIHZX
+    134264999U,	// LXSIWAX
+    134266444U,	// LXSIWZX
     67152070U,	// LXSSP
-    134265668U,	// LXSSPX
-    67154823U,	// LXV
-    134264931U,	// LXVB16X
-    134264897U,	// LXVD2X
-    134265957U,	// LXVDSX
-    134264950U,	// LXVH8X
+    134265675U,	// LXSSPX
+    67154830U,	// LXV
+    134264938U,	// LXVB16X
+    134264904U,	// LXVD2X
+    134265964U,	// LXVDSX
+    134264957U,	// LXVH8X
     436251187U,	// LXVKQ
     2147523501U,	// LXVL
     2147523376U,	// LXVLL
     67152197U,	// LXVP
     2147523398U,	// LXVPRL
     2147523340U,	// LXVPRLL
-    134265685U,	// LXVPX
-    134265031U,	// LXVRBX
-    134265140U,	// LXVRDX
-    134265275U,	// LXVRHX
+    134265692U,	// LXVPX
+    134265038U,	// LXVRBX
+    134265147U,	// LXVRDX
+    134265282U,	// LXVRHX
     2147523423U,	// LXVRL
     2147523359U,	// LXVRLL
-    134266374U,	// LXVRWX
-    134264914U,	// LXVW4X
-    134266019U,	// LXVWSX
-    134266310U,	// LXVX
+    134266381U,	// LXVRWX
+    134264921U,	// LXVW4X
+    134266026U,	// LXVWSX
+    134266317U,	// LXVX
     2147521041U,	// MADDHD
-    2147529294U,	// MADDHDU
+    2147529301U,	// MADDHDU
     2147521101U,	// MADDLD
     2147521101U,	// MADDLD8
     1584028U,	// MBAR
     38152U,	// MCRF
-    44715U,	// MCRFS
-    1096771U,	// MCRXRX
+    44722U,	// MCRFS
+    1092859U,	// MCRXR
+    1096778U,	// MCRXRX
     604017696U,	// MFBHRBE
     1092561U,	// MFCR
     1092561U,	// MFCR8
     1092845U,	// MFCTR
     1092845U,	// MFCTR8
     43964U,	// MFDCR
-    1093279U,	// MFFS
+    1093286U,	// MFFS
     40775U,	// MFFSCDRN
     637573352U,	// MFFSCDRNI
     1086505U,	// MFFSCE
@@ -3442,17 +3444,17 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     37606U,	// MFVRD
     19967160U,	// MFVRSAVE
     19967160U,	// MFVRSAVEv
-    48977U,	// MFVRWZ
+    48984U,	// MFVRWZ
     1092575U,	// MFVSCR
     37606U,	// MFVSRD
     37476U,	// MFVSRLD
-    48977U,	// MFVSRWZ
+    48984U,	// MFVSRWZ
     2147521271U,	// MODSD
-    2147530419U,	// MODSW
+    2147530426U,	// MODSW
     2147521434U,	// MODUD
-    2147530629U,	// MODUW
-    19622U,	// MSGSYNC
-    19636U,	// MSYNC
+    2147530636U,	// MODUW
+    19629U,	// MSGSYNC
+    19643U,	// MSYNC
     38174U,	// MTCRF
     38174U,	// MTCRF8
     1092852U,	// MTCTR
@@ -3484,7 +3486,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1081461U,	// MTVRSAVE
     1474677U,	// MTVRSAVEv
     36222U,	// MTVRWA
-    48986U,	// MTVRWZ
+    48993U,	// MTVRWZ
     1092583U,	// MTVSCR
     39907U,	// MTVSRBM
     805345354U,	// MTVSRBMI
@@ -3495,14 +3497,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     40252U,	// MTVSRQM
     36222U,	// MTVSRWA
     40373U,	// MTVSRWM
-    45067U,	// MTVSRWS
-    48986U,	// MTVSRWZ
+    45074U,	// MTVSRWS
+    48993U,	// MTVSRWZ
     2147521049U,	// MULHD
-    2147529303U,	// MULHDU
+    2147529310U,	// MULHDU
     2147518573U,	// MULHDU_rec
     2147516971U,	// MULHD_rec
-    2147530083U,	// MULHW
-    2147529453U,	// MULHWU
+    2147530090U,	// MULHW
+    2147529460U,	// MULHWU
     2147518626U,	// MULHWU_rec
     2147518698U,	// MULHW_rec
     2147521110U,	// MULLD
@@ -3511,18 +3513,18 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147516995U,	// MULLD_rec
     2147522612U,	// MULLI
     2147522612U,	// MULLI8
-    2147530135U,	// MULLW
+    2147530142U,	// MULLW
     2147524756U,	// MULLWO
     2147517890U,	// MULLWO_rec
     2147518714U,	// MULLW_rec
-    19263U,	// MoveGOTtoLR
-    19251U,	// MovePCtoLR
-    18283U,	// MovePCtoLR8
+    19270U,	// MoveGOTtoLR
+    19258U,	// MovePCtoLR
+    18290U,	// MovePCtoLR8
     2147521174U,	// NAND
     2147521174U,	// NAND8
     2147517009U,	// NAND8_rec
     2147517009U,	// NAND_rec
-    19773U,	// NAP
+    19780U,	// NAP
     38356U,	// NEG
     38356U,	// NEG8
     40901U,	// NEG8O
@@ -3531,9 +3533,9 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     40901U,	// NEGO
     34197U,	// NEGO_rec
     33584U,	// NEG_rec
-    19782U,	// NOP
-    16418U,	// NOP_GT_PWR6
-    16430U,	// NOP_GT_PWR7
+    19789U,	// NOP
+    16425U,	// NOP_GT_PWR6
+    16437U,	// NOP_GT_PWR7
     2147527794U,	// NOR
     2147527794U,	// NOR8
     2147518332U,	// NOR8_rec
@@ -3547,13 +3549,13 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147516875U,	// ORC_rec
     2147522851U,	// ORI
     2147522851U,	// ORI8
-    2147528504U,	// ORIS
-    2147528504U,	// ORIS8
+    2147528511U,	// ORIS
+    2147528511U,	// ORIS8
     2147518333U,	// OR_rec
     2147522451U,	// PADDI
     2147522451U,	// PADDI8
     838899603U,	// PADDI8pc
-    19717U,	// PADDIdtprel
+    19724U,	// PADDIdtprel
     838899603U,	// PADDIpc
     2147521226U,	// PDEPD
     2147521416U,	// PEXTD
@@ -3561,14 +3563,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     872451430U,	// PLA8
     906005862U,	// PLA8pc
     906005862U,	// PLApc
-    3087056480U,	// PLBZ
-    3087056480U,	// PLBZ8
-    939572832U,	// PLBZ8nopc
-    906018400U,	// PLBZ8onlypc
-    973127264U,	// PLBZ8pc
-    939572832U,	// PLBZnopc
-    906018400U,	// PLBZonlypc
-    973127264U,	// PLBZpc
+    3087056487U,	// PLBZ
+    3087056487U,	// PLBZ8
+    939572839U,	// PLBZ8nopc
+    906018407U,	// PLBZ8onlypc
+    973127271U,	// PLBZ8pc
+    939572839U,	// PLBZnopc
+    906018407U,	// PLBZonlypc
+    973127271U,	// PLBZpc
     3087045215U,	// PLD
     939561567U,	// PLDnopc
     906007135U,	// PLDonlypc
@@ -3577,10 +3579,10 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     939561469U,	// PLFDnopc
     906007037U,	// PLFDonlypc
     973115901U,	// PLFDpc
-    3087052453U,	// PLFS
-    939568805U,	// PLFSnopc
-    906014373U,	// PLFSonlypc
-    973123237U,	// PLFSpc
+    3087052460U,	// PLFS
+    939568812U,	// PLFSnopc
+    906014380U,	// PLFSonlypc
+    973123244U,	// PLFSpc
     3087043732U,	// PLHA
     3087043732U,	// PLHA8
     939560084U,	// PLHA8nopc
@@ -3589,14 +3591,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     939560084U,	// PLHAnopc
     906005652U,	// PLHAonlypc
     973114516U,	// PLHApc
-    3087056551U,	// PLHZ
-    3087056551U,	// PLHZ8
-    939572903U,	// PLHZ8nopc
-    906018471U,	// PLHZ8onlypc
-    973127335U,	// PLHZ8pc
-    939572903U,	// PLHZnopc
-    906018471U,	// PLHZonlypc
-    973127335U,	// PLHZpc
+    3087056558U,	// PLHZ
+    3087056558U,	// PLHZ8
+    939572910U,	// PLHZ8nopc
+    906018478U,	// PLHZ8onlypc
+    973127342U,	// PLHZ8pc
+    939572910U,	// PLHZnopc
+    906018478U,	// PLHZonlypc
+    973127342U,	// PLHZpc
     906008635U,	// PLI
     906008635U,	// PLI8
     3087043960U,	// PLWA
@@ -3607,14 +3609,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     939560312U,	// PLWAnopc
     906005880U,	// PLWAonlypc
     973114744U,	// PLWApc
-    3087056715U,	// PLWZ
-    3087056715U,	// PLWZ8
-    939573067U,	// PLWZ8nopc
-    906018635U,	// PLWZ8onlypc
-    973127499U,	// PLWZ8pc
-    939573067U,	// PLWZnopc
-    906018635U,	// PLWZonlypc
-    973127499U,	// PLWZpc
+    3087056722U,	// PLWZ
+    3087056722U,	// PLWZ8
+    939573074U,	// PLWZ8nopc
+    906018642U,	// PLWZ8onlypc
+    973127506U,	// PLWZ8pc
+    939573074U,	// PLWZnopc
+    906018642U,	// PLWZonlypc
+    973127506U,	// PLWZpc
     3087045451U,	// PLXSD
     939561803U,	// PLXSDnopc
     906007371U,	// PLXSDonlypc
@@ -3623,14 +3625,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     939567301U,	// PLXSSPnopc
     906012869U,	// PLXSSPonlypc
     973121733U,	// PLXSSPpc
-    3087053702U,	// PLXV
+    3087053709U,	// PLXV
     3087051076U,	// PLXVP
     939567428U,	// PLXVPnopc
     906012996U,	// PLXVPonlypc
     973121860U,	// PLXVPpc
-    939570054U,	// PLXVnopc
-    906015622U,	// PLXVonlypc
-    973124486U,	// PLXVpc
+    939570061U,	// PLXVnopc
+    906015629U,	// PLXVonlypc
+    973124493U,	// PLXVpc
     2147519182U,	// PMXVBF16GER2
     2449514143U,	// PMXVBF16GER2NN
     2449515751U,	// PMXVBF16GER2NP
@@ -3673,9 +3675,9 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2449515898U,	// PMXVF64GERWPP
     2147519209U,	// PMXVI16GER2
     2449515841U,	// PMXVI16GER2PP
-    2147527931U,	// PMXVI16GER2S
+    2147527938U,	// PMXVI16GER2S
     2449515912U,	// PMXVI16GER2SPP
-    2147527931U,	// PMXVI16GER2SW
+    2147527938U,	// PMXVI16GER2SW
     2449515912U,	// PMXVI16GER2SWPP
     2147519209U,	// PMXVI16GER2W
     2449515841U,	// PMXVI16GER2WPP
@@ -3692,26 +3694,26 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     36699U,	// POPCNTB
     36699U,	// POPCNTB8
     37742U,	// POPCNTD
-    46926U,	// POPCNTW
-    19381U,	// PPC32GOT
-    19391U,	// PPC32PICGOT
-    16865U,	// PREPARE_PROBED_ALLOCA_32
-    17286U,	// PREPARE_PROBED_ALLOCA_64
-    16913U,	// PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_32
-    17334U,	// PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_64
-    16847U,	// PROBED_ALLOCA_32
-    17268U,	// PROBED_ALLOCA_64
-    16891U,	// PROBED_STACKALLOC_32
-    17312U,	// PROBED_STACKALLOC_64
+    46933U,	// POPCNTW
+    19388U,	// PPC32GOT
+    19398U,	// PPC32PICGOT
+    16872U,	// PREPARE_PROBED_ALLOCA_32
+    17293U,	// PREPARE_PROBED_ALLOCA_64
+    16920U,	// PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_32
+    17341U,	// PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_64
+    16854U,	// PROBED_ALLOCA_32
+    17275U,	// PROBED_ALLOCA_64
+    16898U,	// PROBED_STACKALLOC_32
+    17319U,	// PROBED_STACKALLOC_64
     39576U,	// PSC_DCBZL
     1006672529U,	// PSQ_L
-    1006678692U,	// PSQ_LU
-    2147532122U,	// PSQ_LUX
-    2147531306U,	// PSQ_LX
-    1006678481U,	// PSQ_ST
-    1006678756U,	// PSQ_STU
-    2147532181U,	// PSQ_STUX
-    2147532025U,	// PSQ_STX
+    1006678699U,	// PSQ_LU
+    2147532129U,	// PSQ_LUX
+    2147531313U,	// PSQ_LX
+    1006678488U,	// PSQ_ST
+    1006678763U,	// PSQ_STU
+    2147532188U,	// PSQ_STUX
+    2147532032U,	// PSQ_STX
     3087044462U,	// PSTB
     3087044462U,	// PSTB8
     939560814U,	// PSTB8nopc
@@ -3728,10 +3730,10 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     939561475U,	// PSTFDnopc
     906007043U,	// PSTFDonlypc
     973115907U,	// PSTFDpc
-    3087052466U,	// PSTFS
-    939568818U,	// PSTFSnopc
-    906014386U,	// PSTFSonlypc
-    973123250U,	// PSTFSpc
+    3087052473U,	// PSTFS
+    939568825U,	// PSTFSnopc
+    906014393U,	// PSTFSonlypc
+    973123257U,	// PSTFSpc
     3087046352U,	// PSTH
     3087046352U,	// PSTH8
     939562704U,	// PSTH8nopc
@@ -3740,14 +3742,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     939562704U,	// PSTHnopc
     906008272U,	// PSTHonlypc
     973117136U,	// PSTHpc
-    3087054700U,	// PSTW
-    3087054700U,	// PSTW8
-    939571052U,	// PSTW8nopc
-    906016620U,	// PSTW8onlypc
-    973125484U,	// PSTW8pc
-    939571052U,	// PSTWnopc
-    906016620U,	// PSTWonlypc
-    973125484U,	// PSTWpc
+    3087054707U,	// PSTW
+    3087054707U,	// PSTW8
+    939571059U,	// PSTW8nopc
+    906016627U,	// PSTW8onlypc
+    973125491U,	// PSTW8pc
+    939571059U,	// PSTWnopc
+    906016627U,	// PSTWonlypc
+    973125491U,	// PSTWpc
     3087045458U,	// PSTXSD
     939561810U,	// PSTXSDnopc
     906007378U,	// PSTXSDonlypc
@@ -3756,15 +3758,15 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     939567309U,	// PSTXSSPnopc
     906012877U,	// PSTXSSPonlypc
     973121741U,	// PSTXSSPpc
-    3087053708U,	// PSTXV
+    3087053715U,	// PSTXV
     3087051083U,	// PSTXVP
     939567435U,	// PSTXVPnopc
     906013003U,	// PSTXVPonlypc
     973121867U,	// PSTXVPpc
-    939570060U,	// PSTXVnopc
-    906015628U,	// PSTXVonlypc
-    973124492U,	// PSTXVpc
-    44305U,	// PS_ABS
+    939570067U,	// PSTXVnopc
+    906015635U,	// PSTXVonlypc
+    973124499U,	// PSTXVpc
+    44312U,	// PS_ABS
     34710U,	// PS_ABSo
     2147520853U,	// PS_ADD
     2147516908U,	// PS_ADDo
@@ -3772,7 +3774,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147519086U,	// PS_CMPO1
     2147519035U,	// PS_CMPU0
     2147519117U,	// PS_CMPU1
-    2147529526U,	// PS_DIV
+    2147529533U,	// PS_DIV
     2147518652U,	// PS_DIVo
     2147520877U,	// PS_MADD
     2147519014U,	// PS_MADDS0
@@ -3798,7 +3800,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147519107U,	// PS_MULS1
     2147516652U,	// PS_MULS1o
     2147517590U,	// PS_MULo
-    44329U,	// PS_NABS
+    44336U,	// PS_NABS
     34726U,	// PS_NABSo
     38353U,	// PS_NEG
     33581U,	// PS_NEGo
@@ -3806,7 +3808,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147516951U,	// PS_NMADDo
     2147520467U,	// PS_NMSUB
     2147516753U,	// PS_NMSUBo
-    44667U,	// PS_RES
+    44674U,	// PS_RES
     34814U,	// PS_RESo
     38041U,	// PS_RSQRTE
     33511U,	// PS_RSQRTEo
@@ -3818,186 +3820,186 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147516571U,	// PS_SUM0o
     2147519077U,	// PS_SUM1
     2147516630U,	// PS_SUM1o
-    19124U,	// PseudoEIEIO
+    19131U,	// PseudoEIEIO
     2147522772U,	// QVALIGNI
     2147522772U,	// QVALIGNIb
     2147522772U,	// QVALIGNIs
     2147522912U,	// QVESPLATI
     2147522912U,	// QVESPLATIb
     2147522912U,	// QVESPLATIs
-    44321U,	// QVFABS
-    44321U,	// QVFABSs
+    44328U,	// QVFABS
+    44328U,	// QVFABSs
     2147520869U,	// QVFADD
-    2147528133U,	// QVFADDS
-    2147528133U,	// QVFADDSs
+    2147528140U,	// QVFADDS
+    2147528140U,	// QVFADDSs
     37408U,	// QVFCFID
-    44567U,	// QVFCFIDS
-    45663U,	// QVFCFIDU
-    44979U,	// QVFCFIDUS
+    44574U,	// QVFCFIDS
+    45670U,	// QVFCFIDU
+    44986U,	// QVFCFIDUS
     37408U,	// QVFCFIDb
     2147527096U,	// QVFCMPEQ
     2147527096U,	// QVFCMPEQb
     2147527096U,	// QVFCMPEQbs
-    2147529007U,	// QVFCMPGT
-    2147529007U,	// QVFCMPGTb
-    2147529007U,	// QVFCMPGTbs
-    2147529085U,	// QVFCMPLT
-    2147529085U,	// QVFCMPLTb
-    2147529085U,	// QVFCMPLTbs
+    2147529014U,	// QVFCMPGT
+    2147529014U,	// QVFCMPGTb
+    2147529014U,	// QVFCMPGTbs
+    2147529092U,	// QVFCMPLT
+    2147529092U,	// QVFCMPLTb
+    2147529092U,	// QVFCMPLTbs
     2147524214U,	// QVFCPSGN
     2147524214U,	// QVFCPSGNs
     37427U,	// QVFCTID
-    45673U,	// QVFCTIDU
-    48939U,	// QVFCTIDUZ
-    48764U,	// QVFCTIDZ
+    45680U,	// QVFCTIDU
+    48946U,	// QVFCTIDUZ
+    48771U,	// QVFCTIDZ
     37427U,	// QVFCTIDb
-    46451U,	// QVFCTIW
-    45813U,	// QVFCTIWU
-    48950U,	// QVFCTIWUZ
-    48961U,	// QVFCTIWZ
+    46458U,	// QVFCTIW
+    45820U,	// QVFCTIWU
+    48957U,	// QVFCTIWUZ
+    48968U,	// QVFCTIWZ
     2147523232U,	// QVFLOGICAL
     2147523232U,	// QVFLOGICALb
     2147523232U,	// QVFLOGICALs
     2147520886U,	// QVFMADD
-    2147528142U,	// QVFMADDS
-    2147528142U,	// QVFMADDSs
+    2147528149U,	// QVFMADDS
+    2147528149U,	// QVFMADDSs
     44092U,	// QVFMR
     44092U,	// QVFMRb
     44092U,	// QVFMRs
     2147520458U,	// QVFMSUB
-    2147528112U,	// QVFMSUBS
-    2147528112U,	// QVFMSUBSs
+    2147528119U,	// QVFMSUBS
+    2147528119U,	// QVFMSUBSs
     2147523467U,	// QVFMUL
-    2147528527U,	// QVFMULS
-    2147528527U,	// QVFMULSs
-    44347U,	// QVFNABS
-    44347U,	// QVFNABSs
+    2147528534U,	// QVFMULS
+    2147528534U,	// QVFMULSs
+    44354U,	// QVFNABS
+    44354U,	// QVFNABSs
     38369U,	// QVFNEG
     38369U,	// QVFNEGs
     2147520905U,	// QVFNMADD
-    2147528152U,	// QVFNMADDS
-    2147528152U,	// QVFNMADDSs
+    2147528159U,	// QVFNMADDS
+    2147528159U,	// QVFNMADDSs
     2147520477U,	// QVFNMSUB
-    2147528122U,	// QVFNMSUBS
-    2147528122U,	// QVFNMSUBSs
+    2147528129U,	// QVFNMSUBS
+    2147528129U,	// QVFNMSUBSs
     2147523959U,	// QVFPERM
     2147523959U,	// QVFPERMs
     38026U,	// QVFRE
-    44675U,	// QVFRES
-    44675U,	// QVFRESs
+    44682U,	// QVFRES
+    44682U,	// QVFRESs
     40201U,	// QVFRIM
     40201U,	// QVFRIMs
     40583U,	// QVFRIN
     40583U,	// QVFRINs
     42189U,	// QVFRIP
     42189U,	// QVFRIPs
-    48847U,	// QVFRIZ
-    48847U,	// QVFRIZs
+    48854U,	// QVFRIZ
+    48854U,	// QVFRIZs
     43171U,	// QVFRSP
     43171U,	// QVFRSPs
     38052U,	// QVFRSQRTE
-    44683U,	// QVFRSQRTES
-    44683U,	// QVFRSQRTESs
+    44690U,	// QVFRSQRTES
+    44690U,	// QVFRSQRTESs
     2147523297U,	// QVFSEL
     2147523297U,	// QVFSELb
     2147523297U,	// QVFSELbb
     2147523297U,	// QVFSELbs
     2147520441U,	// QVFSUB
-    2147528103U,	// QVFSUBS
-    2147528103U,	// QVFSUBSs
+    2147528110U,	// QVFSUBS
+    2147528110U,	// QVFSUBSs
     2147524203U,	// QVFTSTNAN
     2147524203U,	// QVFTSTNANb
     2147524203U,	// QVFTSTNANbs
     2147520942U,	// QVFXMADD
-    2147528192U,	// QVFXMADDS
+    2147528199U,	// QVFXMADDS
     2147523492U,	// QVFXMUL
-    2147528536U,	// QVFXMULS
+    2147528543U,	// QVFXMULS
     2147520915U,	// QVFXXCPNMADD
-    2147528163U,	// QVFXXCPNMADDS
+    2147528170U,	// QVFXXCPNMADDS
     2147520952U,	// QVFXXMADD
-    2147528203U,	// QVFXXMADDS
+    2147528210U,	// QVFXXMADDS
     2147520929U,	// QVFXXNPMADD
-    2147528178U,	// QVFXXNPMADDS
+    2147528185U,	// QVFXXNPMADDS
     1040226180U,	// QVGPCI
-    134266135U,	// QVLFCDUX
+    134266142U,	// QVLFCDUX
     134254050U,	// QVLFCDUXA
-    134265067U,	// QVLFCDX
+    134265074U,	// QVLFCDX
     134253970U,	// QVLFCDXA
-    134266221U,	// QVLFCSUX
+    134266228U,	// QVLFCSUX
     134254094U,	// QVLFCSUXA
-    134265938U,	// QVLFCSX
+    134265945U,	// QVLFCSX
     134254010U,	// QVLFCSXA
-    134265938U,	// QVLFCSXs
-    570473772U,	// QVLFDUX
+    134265945U,	// QVLFCSXs
+    570473779U,	// QVLFDUX
     134254073U,	// QVLFDUXA
-    134265103U,	// QVLFDX
+    134265110U,	// QVLFDX
     134253991U,	// QVLFDXA
-    134265103U,	// QVLFDXb
-    134264982U,	// QVLFIWAX
+    134265110U,	// QVLFDXb
+    134264989U,	// QVLFIWAX
     134253959U,	// QVLFIWAXA
-    134266427U,	// QVLFIWZX
+    134266434U,	// QVLFIWZX
     134254149U,	// QVLFIWZXA
-    570473858U,	// QVLFSUX
+    570473865U,	// QVLFSUX
     134254117U,	// QVLFSUXA
-    134265972U,	// QVLFSX
+    134265979U,	// QVLFSX
     134254031U,	// QVLFSXA
-    134265972U,	// QVLFSXb
-    134265972U,	// QVLFSXs
-    134265120U,	// QVLPCLDX
-    134265989U,	// QVLPCLSX
-    22068357U,	// QVLPCLSXint
-    134265130U,	// QVLPCRDX
-    134266009U,	// QVLPCRSX
-    134266145U,	// QVSTFCDUX
+    134265979U,	// QVLFSXb
+    134265979U,	// QVLFSXs
+    134265127U,	// QVLPCLDX
+    134265996U,	// QVLPCLSX
+    22068364U,	// QVLPCLSXint
+    134265137U,	// QVLPCRDX
+    134266016U,	// QVLPCRSX
+    134266152U,	// QVSTFCDUX
     134254061U,	// QVSTFCDUXA
     134257234U,	// QVSTFCDUXI
     134253865U,	// QVSTFCDUXIA
-    134265076U,	// QVSTFCDX
+    134265083U,	// QVSTFCDX
     134253980U,	// QVSTFCDXA
     134257192U,	// QVSTFCDXI
     134253819U,	// QVSTFCDXIA
-    134266231U,	// QVSTFCSUX
+    134266238U,	// QVSTFCSUX
     134254105U,	// QVSTFCSUXA
     134257257U,	// QVSTFCSUXI
     134253890U,	// QVSTFCSUXIA
-    134265947U,	// QVSTFCSX
+    134265954U,	// QVSTFCSX
     134254020U,	// QVSTFCSXA
     134257213U,	// QVSTFCSXI
     134253842U,	// QVSTFCSXIA
-    134265947U,	// QVSTFCSXs
-    570866997U,	// QVSTFDUX
+    134265954U,	// QVSTFCSXs
+    570867004U,	// QVSTFDUX
     134254083U,	// QVSTFDUXA
     134257246U,	// QVSTFDUXI
     134253878U,	// QVSTFDUXIA
-    134265111U,	// QVSTFDX
+    134265118U,	// QVSTFDX
     134254000U,	// QVSTFDXA
     134257203U,	// QVSTFDXI
     134253831U,	// QVSTFDXIA
-    134265111U,	// QVSTFDXb
-    134266355U,	// QVSTFIWX
+    134265118U,	// QVSTFDXb
+    134266362U,	// QVSTFIWX
     134254138U,	// QVSTFIWXA
-    570867083U,	// QVSTFSUX
+    570867090U,	// QVSTFSUX
     134254127U,	// QVSTFSUXA
     134257269U,	// QVSTFSUXI
     134253903U,	// QVSTFSUXIA
-    570867083U,	// QVSTFSUXs
-    134265980U,	// QVSTFSX
+    570867090U,	// QVSTFSUXs
+    134265987U,	// QVSTFSX
     134254040U,	// QVSTFSXA
     134257224U,	// QVSTFSXI
     134253854U,	// QVSTFSXIA
-    134265980U,	// QVSTFSXs
-    18521U,	// RESTORE_ACC
-    19160U,	// RESTORE_CR
-    19315U,	// RESTORE_CRBIT
-    18814U,	// RESTORE_QUADWORD
-    18469U,	// RESTORE_UACC
-    18495U,	// RESTORE_WACC
-    19693U,	// RFCI
-    19704U,	// RFDI
+    134265987U,	// QVSTFSXs
+    18528U,	// RESTORE_ACC
+    19167U,	// RESTORE_CR
+    19322U,	// RESTORE_CRBIT
+    18821U,	// RESTORE_QUADWORD
+    18476U,	// RESTORE_UACC
+    18502U,	// RESTORE_WACC
+    19700U,	// RFCI
+    19711U,	// RFDI
     691799U,	// RFEBB
-    19709U,	// RFI
-    19667U,	// RFID
-    19698U,	// RFMCI
+    19716U,	// RFI
+    19674U,	// RFID
+    19705U,	// RFMCI
     2147523266U,	// RLDCL
     2147517547U,	// RLDCL_rec
     2147527619U,	// RLDCR
@@ -4026,197 +4028,197 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147523882U,	// RLWNM8
     2147517640U,	// RLWNM8_rec
     2147517640U,	// RLWNM_rec
-    18461U,	// ReadTB
+    18468U,	// ReadTB
     1085674U,	// SC
-    1094440U,	// SCV
-    17551U,	// SELECT_CC_F16
-    17473U,	// SELECT_CC_F4
-    18012U,	// SELECT_CC_F8
-    17498U,	// SELECT_CC_I4
-    18057U,	// SELECT_CC_I8
-    18555U,	// SELECT_CC_QBRC
-    18584U,	// SELECT_CC_QFRC
-    18673U,	// SELECT_CC_QSRC
-    18899U,	// SELECT_CC_SPE
-    17444U,	// SELECT_CC_SPE4
-    18644U,	// SELECT_CC_VRRC
-    18613U,	// SELECT_CC_VSFRC
-    18733U,	// SELECT_CC_VSRC
-    18702U,	// SELECT_CC_VSSRC
-    17566U,	// SELECT_F16
-    17487U,	// SELECT_F4
-    18026U,	// SELECT_F8
-    17512U,	// SELECT_I4
-    18231U,	// SELECT_I8
-    18571U,	// SELECT_QBRC
-    18600U,	// SELECT_QFRC
-    18689U,	// SELECT_QSRC
-    18914U,	// SELECT_SPE
-    17460U,	// SELECT_SPE4
-    18660U,	// SELECT_VRRC
-    18630U,	// SELECT_VSFRC
-    18749U,	// SELECT_VSRC
-    18719U,	// SELECT_VSSRC
+    1094447U,	// SCV
+    17558U,	// SELECT_CC_F16
+    17480U,	// SELECT_CC_F4
+    18019U,	// SELECT_CC_F8
+    17505U,	// SELECT_CC_I4
+    18064U,	// SELECT_CC_I8
+    18562U,	// SELECT_CC_QBRC
+    18591U,	// SELECT_CC_QFRC
+    18680U,	// SELECT_CC_QSRC
+    18906U,	// SELECT_CC_SPE
+    17451U,	// SELECT_CC_SPE4
+    18651U,	// SELECT_CC_VRRC
+    18620U,	// SELECT_CC_VSFRC
+    18740U,	// SELECT_CC_VSRC
+    18709U,	// SELECT_CC_VSSRC
+    17573U,	// SELECT_F16
+    17494U,	// SELECT_F4
+    18033U,	// SELECT_F8
+    17519U,	// SELECT_I4
+    18238U,	// SELECT_I8
+    18578U,	// SELECT_QBRC
+    18607U,	// SELECT_QFRC
+    18696U,	// SELECT_QSRC
+    18921U,	// SELECT_SPE
+    17467U,	// SELECT_SPE4
+    18667U,	// SELECT_VRRC
+    18637U,	// SELECT_VSFRC
+    18756U,	// SELECT_VSRC
+    18726U,	// SELECT_VSSRC
     36678U,	// SETB
     36678U,	// SETB8
     36929U,	// SETBC
     36929U,	// SETBC8
     43956U,	// SETBCR
     43956U,	// SETBCR8
-    19091U,	// SETFLM
+    19098U,	// SETFLM
     36921U,	// SETNBC
     36921U,	// SETNBC8
     43947U,	// SETNBCR
     43947U,	// SETNBCR8
-    18790U,	// SETRND
-    19684U,	// SETRNDi
+    18797U,	// SETRND
+    19691U,	// SETRNDi
     33471U,	// SLBFEE_rec
-    19578U,	// SLBIA
+    19585U,	// SLBIA
     1086566U,	// SLBIE
     38345U,	// SLBIEG
     37950U,	// SLBMFEE
-    45869U,	// SLBMFEV
+    45876U,	// SLBMFEV
     38033U,	// SLBMTE
-    19606U,	// SLBSYNC
+    19613U,	// SLBSYNC
     2147521140U,	// SLD
     2147517003U,	// SLD_rec
-    2147530158U,	// SLW
-    2147530158U,	// SLW8
+    2147530165U,	// SLW
+    2147530165U,	// SLW8
     2147518722U,	// SLW8_rec
     2147518722U,	// SLW_rec
-    67157836U,	// SPELWZ
-    134266446U,	// SPELWZX
-    67155821U,	// SPESTW
-    134266391U,	// SPESTWX
-    18534U,	// SPILL_ACC
-    19172U,	// SPILL_CR
-    19330U,	// SPILL_CRBIT
-    18832U,	// SPILL_QUADWORD
-    18483U,	// SPILL_UACC
-    18509U,	// SPILL_WACC
-    18848U,	// SPLIT_QUADWORD
+    67157843U,	// SPELWZ
+    134266453U,	// SPELWZX
+    67155828U,	// SPESTW
+    134266398U,	// SPESTWX
+    18541U,	// SPILL_ACC
+    19179U,	// SPILL_CR
+    19337U,	// SPILL_CRBIT
+    18839U,	// SPILL_QUADWORD
+    18490U,	// SPILL_UACC
+    18516U,	// SPILL_WACC
+    18855U,	// SPLIT_QUADWORD
     2147520806U,	// SRAD
     2147522444U,	// SRADI
     2147522444U,	// SRADI_32
     2147517339U,	// SRADI_rec
     2147516892U,	// SRAD_rec
-    2147529968U,	// SRAW
+    2147529975U,	// SRAW
     2147522989U,	// SRAWI
     2147517464U,	// SRAWI_rec
     2147518681U,	// SRAW_rec
     2147521249U,	// SRD
     2147517040U,	// SRD_rec
-    2147530413U,	// SRW
-    2147530413U,	// SRW8
+    2147530420U,	// SRW
+    2147530420U,	// SRW8
     2147518728U,	// SRW8_rec
     2147518728U,	// SRW_rec
     67145583U,	// STB
     67145583U,	// STB8
-    2147531218U,	// STBCIX
+    2147531225U,	// STBCIX
     134252891U,	// STBCX
-    134265588U,	// STBEPX
-    537309755U,	// STBU
-    537309755U,	// STBU8
-    570866960U,	// STBUX
-    570866960U,	// STBUX8
-    134265048U,	// STBX
-    134265048U,	// STBX8
-    2147530968U,	// STBXTLS
-    2147530968U,	// STBXTLS_
-    2147530968U,	// STBXTLS_32
+    134265595U,	// STBEPX
+    537309762U,	// STBU
+    537309762U,	// STBU8
+    570866967U,	// STBUX
+    570866967U,	// STBUX8
+    134265055U,	// STBX
+    134265055U,	// STBX8
+    2147530975U,	// STBXTLS
+    2147530975U,	// STBXTLS_
+    2147530975U,	// STBXTLS_32
     67146626U,	// STD
-    2147528882U,	// STDAT
-    134265742U,	// STDBRX
-    2147531233U,	// STDCIX
+    2147528889U,	// STDAT
+    134265749U,	// STDBRX
+    2147531240U,	// STDCIX
     134252899U,	// STDCX
-    537309816U,	// STDU
-    570867013U,	// STDUX
-    134265172U,	// STDX
-    2147531092U,	// STDXTLS
-    2147531092U,	// STDXTLS_
+    537309823U,	// STDU
+    570867020U,	// STDUX
+    134265179U,	// STDX
+    2147531099U,	// STDXTLS
+    2147531099U,	// STDXTLS_
     67146244U,	// STFD
-    134265604U,	// STFDEPX
-    537309767U,	// STFDU
-    570866999U,	// STFDUX
-    134265113U,	// STFDX
-    2147531033U,	// STFDXTLS
-    2147531033U,	// STFDXTLS_
-    134266357U,	// STFIWX
-    67153587U,	// STFS
-    537309897U,	// STFSU
-    570867085U,	// STFSUX
-    134265982U,	// STFSX
-    2147531902U,	// STFSXTLS
-    2147531902U,	// STFSXTLS_
+    134265611U,	// STFDEPX
+    537309774U,	// STFDU
+    570867006U,	// STFDUX
+    134265120U,	// STFDX
+    2147531040U,	// STFDXTLS
+    2147531040U,	// STFDXTLS_
+    134266364U,	// STFIWX
+    67153594U,	// STFS
+    537309904U,	// STFSU
+    570867092U,	// STFSUX
+    134265989U,	// STFSX
+    2147531909U,	// STFSXTLS
+    2147531909U,	// STFSXTLS_
     67147473U,	// STH
     67147473U,	// STH8
-    134265757U,	// STHBRX
-    2147531241U,	// STHCIX
+    134265764U,	// STHBRX
+    2147531248U,	// STHCIX
     134252907U,	// STHCX
-    134265620U,	// STHEPX
-    537309845U,	// STHU
-    537309845U,	// STHU8
-    570867027U,	// STHUX
-    570867027U,	// STHUX8
-    134265292U,	// STHX
-    134265292U,	// STHX8
-    2147531212U,	// STHXTLS
-    2147531212U,	// STHXTLS_
-    2147531212U,	// STHXTLS_32
-    67155384U,	// STMW
-    19821U,	// STOP
+    134265627U,	// STHEPX
+    537309852U,	// STHU
+    537309852U,	// STHU8
+    570867034U,	// STHUX
+    570867034U,	// STHUX8
+    134265299U,	// STHX
+    134265299U,	// STHX8
+    2147531219U,	// STHXTLS
+    2147531219U,	// STHXTLS_
+    2147531219U,	// STHXTLS_32
+    67155391U,	// STMW
+    19828U,	// STOP
     67152578U,	// STQ
     134252915U,	// STQCX
-    19111U,	// STQX_PSEUDO
+    19118U,	// STQX_PSEUDO
     2147523100U,	// STSWI
-    134265014U,	// STVEBX
-    134265258U,	// STVEHX
-    134266347U,	// STVEWX
-    134266304U,	// STVX
+    134265021U,	// STVEBX
+    134265265U,	// STVEHX
+    134266354U,	// STVEWX
+    134266311U,	// STVX
     134257600U,	// STVXL
-    67155821U,	// STW
-    67155821U,	// STW8
-    2147528960U,	// STWAT
-    134265791U,	// STWBRX
-    2147531249U,	// STWCIX
+    67155828U,	// STW
+    67155828U,	// STW8
+    2147528967U,	// STWAT
+    134265798U,	// STWBRX
+    2147531256U,	// STWCIX
     134252923U,	// STWCX
-    134265635U,	// STWEPX
-    537309959U,	// STWU
-    537309959U,	// STWU8
-    570867103U,	// STWUX
-    570867103U,	// STWUX8
-    134266391U,	// STWX
-    134266391U,	// STWX8
-    2147532311U,	// STWXTLS
-    2147532311U,	// STWXTLS_
-    2147532311U,	// STWXTLS_32
+    134265642U,	// STWEPX
+    537309966U,	// STWU
+    537309966U,	// STWU8
+    570867110U,	// STWUX
+    570867110U,	// STWUX8
+    134266398U,	// STWX
+    134266398U,	// STWX8
+    2147532318U,	// STWXTLS
+    2147532318U,	// STWXTLS_
+    2147532318U,	// STWXTLS_32
     67146579U,	// STXSD
-    134265164U,	// STXSDX
-    134265022U,	// STXSIBX
-    134265022U,	// STXSIBXv
-    134265266U,	// STXSIHX
-    134265266U,	// STXSIHXv
-    134266365U,	// STXSIWX
+    134265171U,	// STXSDX
+    134265029U,	// STXSIBX
+    134265029U,	// STXSIBXv
+    134265273U,	// STXSIHX
+    134265273U,	// STXSIHXv
+    134266372U,	// STXSIWX
     67152078U,	// STXSSP
-    134265676U,	// STXSSPX
-    67154829U,	// STXV
-    134264940U,	// STXVB16X
-    134264905U,	// STXVD2X
-    134264958U,	// STXVH8X
+    134265683U,	// STXSSPX
+    67154836U,	// STXV
+    134264947U,	// STXVB16X
+    134264912U,	// STXVD2X
+    134264965U,	// STXVH8X
     2147523507U,	// STXVL
     2147523383U,	// STXVLL
     67152204U,	// STXVP
     2147523406U,	// STXVPRL
     2147523349U,	// STXVPRLL
-    134265692U,	// STXVPX
-    134265039U,	// STXVRBX
-    134265148U,	// STXVRDX
-    134265283U,	// STXVRHX
+    134265699U,	// STXVPX
+    134265046U,	// STXVRBX
+    134265155U,	// STXVRDX
+    134265290U,	// STXVRHX
     2147523430U,	// STXVRL
     2147523367U,	// STXVRLL
-    134266382U,	// STXVRWX
-    134264922U,	// STXVW4X
-    134266316U,	// STXVX
+    134266389U,	// STXVRWX
+    134264929U,	// STXVW4X
+    134266323U,	// STXVX
     2147521755U,	// SUBF
     2147521755U,	// SUBF8
     2147524542U,	// SUBF8O
@@ -4250,7 +4252,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     33496U,	// SUBFME_rec
     2147524542U,	// SUBFO
     2147517837U,	// SUBFO_rec
-    1073786832U,	// SUBFUS
+    1073786839U,	// SUBFUS
     1073776715U,	// SUBFUS_rec
     38093U,	// SUBFZE
     38093U,	// SUBFZE8
@@ -4272,12 +4274,12 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     1183316U,	// TAILB8
     1215541U,	// TAILBA
     1215541U,	// TAILBA8
-    19830U,	// TAILBCTR
-    19830U,	// TAILBCTR8
+    19837U,	// TAILBCTR
+    19837U,	// TAILBCTR8
     689401U,	// TBEGIN
-    19288U,	// TBEGIN_RET
+    19295U,	// TBEGIN_RET
     1088128U,	// TCHECK
-    19276U,	// TCHECK_RET
+    19283U,	// TCHECK_RET
     2263980U,	// TCRETURNai
     2263877U,	// TCRETURNai8
     2232588U,	// TCRETURNdi
@@ -4287,67 +4289,67 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2148012897U,	// TD
     2148014053U,	// TDI
     688728U,	// TEND
-    19584U,	// TLBIA
+    19591U,	// TLBIA
     252089453U,	// TLBIE
     1088209U,	// TLBIEL
-    2148219489U,	// TLBILX
-    47245U,	// TLBIVAX
+    2148219496U,	// TLBILX
+    47252U,	// TLBIVAX
     1086022U,	// TLBLD
     1087526U,	// TLBLI
-    19672U,	// TLBRE
+    19679U,	// TLBRE
     2147521667U,	// TLBRE2
-    48203U,	// TLBSX
-    2147531851U,	// TLBSX2
+    48210U,	// TLBSX
+    2147531858U,	// TLBSX2
     2147518883U,	// TLBSX2D
-    19614U,	// TLBSYNC
-    19678U,	// TLBWE
+    19621U,	// TLBSYNC
+    19685U,	// TLBWE
     2147521711U,	// TLBWE2
-    19534U,	// TLSGDAIX
-    18352U,	// TLSGDAIX8
-    19777U,	// TRAP
-    16408U,	// TRECHKPT
+    19541U,	// TLSGDAIX
+    18359U,	// TLSGDAIX8
+    19784U,	// TRAP
+    16415U,	// TRECHKPT
     1082541U,	// TRECLAIM
     690064U,	// TSR
-    2148022080U,	// TW
+    2148022087U,	// TW
     2148014627U,	// TWI
-    19134U,	// UNENCODED_NOP
-    19149U,	// UpdateGBR
+    19141U,	// UNENCODED_NOP
+    19156U,	// UpdateGBR
     2147520372U,	// VABSDUB
     2147522262U,	// VABSDUH
-    2147530636U,	// VABSDUW
+    2147530643U,	// VABSDUW
     2147527397U,	// VADDCUQ
-    2147530619U,	// VADDCUW
+    2147530626U,	// VADDCUW
     2147527428U,	// VADDECUQ
     2147523949U,	// VADDEUQM
     2147525692U,	// VADDFP
-    2147528066U,	// VADDSBS
-    2147528419U,	// VADDSHS
-    2147528743U,	// VADDSWS
+    2147528073U,	// VADDSBS
+    2147528426U,	// VADDSHS
+    2147528750U,	// VADDSWS
     2147523585U,	// VADDUBM
-    2147528094U,	// VADDUBS
+    2147528101U,	// VADDUBS
     2147523657U,	// VADDUDM
     2147523784U,	// VADDUHM
-    2147528447U,	// VADDUHS
+    2147528454U,	// VADDUHS
     2147523930U,	// VADDUQM
     2147524051U,	// VADDUWM
-    2147528770U,	// VADDUWS
+    2147528777U,	// VADDUWS
     2147521204U,	// VAND
     2147520626U,	// VANDC
     2147520246U,	// VAVGSB
     2147522148U,	// VAVGSH
-    2147530444U,	// VAVGSW
+    2147530451U,	// VAVGSW
     2147520390U,	// VAVGUB
     2147522280U,	// VAVGUH
-    2147530663U,	// VAVGUW
+    2147530670U,	// VAVGUW
     2147521145U,	// VBPERMD
     2147527245U,	// VBPERMQ
-    2449521773U,	// VCFSX
-    2147531885U,	// VCFSX_0
+    2449521780U,	// VCFSX
+    2147531892U,	// VCFSX_0
     2147521004U,	// VCFUGED
-    2449521996U,	// VCFUX
-    2147532108U,	// VCFUX_0
+    2449522003U,	// VCFUX
+    2147532115U,	// VCFUX_0
     2147527697U,	// VCIPHER
-    2147529191U,	// VCIPHERLAST
+    2147529198U,	// VCIPHERLAST
     2147520167U,	// VCLRLB
     2147520223U,	// VCLRRB
     36907U,	// VCLZB
@@ -4355,7 +4357,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147523688U,	// VCLZDM
     38718U,	// VCLZH
     36464U,	// VCLZLSBB
-    47137U,	// VCLZW
+    47144U,	// VCLZW
     2147525656U,	// VCMPBFP
     2147517951U,	// VCMPBFP_rec
     2147525755U,	// VCMPEQFP
@@ -4368,7 +4370,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147517274U,	// VCMPEQUH_rec
     2147527482U,	// VCMPEQUQ
     2147518205U,	// VCMPEQUQ_rec
-    2147530697U,	// VCMPEQUW
+    2147530704U,	// VCMPEQUW
     2147518753U,	// VCMPEQUW_rec
     2147525709U,	// VCMPGEFP
     2147517961U,	// VCMPGEFP_rec
@@ -4382,7 +4384,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147517255U,	// VCMPGTSH_rec
     2147527344U,	// VCMPGTSQ
     2147518194U,	// VCMPGTSQ_rec
-    2147530523U,	// VCMPGTSW
+    2147530530U,	// VCMPGTSW
     2147518734U,	// VCMPGTSW_rec
     2147520516U,	// VCMPGTUB
     2147516773U,	// VCMPGTUB_rec
@@ -4392,63 +4394,63 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147517285U,	// VCMPGTUH_rec
     2147527492U,	// VCMPGTUQ
     2147518216U,	// VCMPGTUQ_rec
-    2147530732U,	// VCMPGTUW
+    2147530739U,	// VCMPGTUW
     2147518764U,	// VCMPGTUW_rec
     2147520132U,	// VCMPNEB
     2147516670U,	// VCMPNEB_rec
     2147522080U,	// VCMPNEH
     2147517245U,	// VCMPNEH_rec
-    2147530031U,	// VCMPNEW
+    2147530038U,	// VCMPNEW
     2147518688U,	// VCMPNEW_rec
     2147520545U,	// VCMPNEZB
     2147516784U,	// VCMPNEZB_rec
     2147522356U,	// VCMPNEZH
     2147517296U,	// VCMPNEZH_rec
-    2147530775U,	// VCMPNEZW
+    2147530782U,	// VCMPNEZW
     2147518782U,	// VCMPNEZW_rec
     2147527336U,	// VCMPSQ
     2147527474U,	// VCMPUQ
     2147520094U,	// VCNTMBB
     2147520819U,	// VCNTMBD
     2147522056U,	// VCNTMBH
-    2147529974U,	// VCNTMBW
-    2449518748U,	// VCTSXS
-    2147528860U,	// VCTSXS_0
-    2449518756U,	// VCTUXS
-    2147528868U,	// VCTUXS_0
+    2147529981U,	// VCNTMBW
+    2449518755U,	// VCTSXS
+    2147528867U,	// VCTSXS_0
+    2449518763U,	// VCTUXS
+    2147528875U,	// VCTUXS_0
     36914U,	// VCTZB
     37905U,	// VCTZD
     2147523705U,	// VCTZDM
     38725U,	// VCTZH
     36474U,	// VCTZLSBB
-    47154U,	// VCTZW
+    47161U,	// VCTZW
     2147521287U,	// VDIVESD
     2147527327U,	// VDIVESQ
-    2147530435U,	// VDIVESW
+    2147530442U,	// VDIVESW
     2147521450U,	// VDIVEUD
     2147527457U,	// VDIVEUQ
-    2147530654U,	// VDIVEUW
+    2147530661U,	// VDIVEUW
     2147521339U,	// VDIVSD
     2147527354U,	// VDIVSQ
-    2147530540U,	// VDIVSW
+    2147530547U,	// VDIVSW
     2147521505U,	// VDIVUD
     2147527502U,	// VDIVUQ
-    2147530742U,	// VDIVUW
-    2147529594U,	// VEQV
+    2147530749U,	// VDIVUW
+    2147529601U,	// VEQV
     39886U,	// VEXPANDBM
     39968U,	// VEXPANDDM
     40074U,	// VEXPANDHM
     40241U,	// VEXPANDQM
     40362U,	// VEXPANDWM
     42078U,	// VEXPTEFP
-    2147531391U,	// VEXTDDVLX
-    2147531769U,	// VEXTDDVRX
-    2147531379U,	// VEXTDUBVLX
-    2147531757U,	// VEXTDUBVRX
-    2147531412U,	// VEXTDUHVLX
-    2147531790U,	// VEXTDUHVRX
-    2147531434U,	// VEXTDUWVLX
-    2147531812U,	// VEXTDUWVRX
+    2147531398U,	// VEXTDDVLX
+    2147531776U,	// VEXTDDVRX
+    2147531386U,	// VEXTDUBVLX
+    2147531764U,	// VEXTDUBVRX
+    2147531419U,	// VEXTDUHVLX
+    2147531797U,	// VEXTDUHVRX
+    2147531441U,	// VEXTDUWVLX
+    2147531819U,	// VEXTDUWVRX
     39916U,	// VEXTRACTBM
     2449511258U,	// VEXTRACTD
     39988U,	// VEXTRACTDM
@@ -4456,92 +4458,92 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     40261U,	// VEXTRACTQM
     2449510392U,	// VEXTRACTUB
     2449512203U,	// VEXTRACTUH
-    2449520595U,	// VEXTRACTUW
+    2449520602U,	// VEXTRACTUW
     40382U,	// VEXTRACTWM
     37102U,	// VEXTSB2D
     37102U,	// VEXTSB2Ds
-    45971U,	// VEXTSB2W
-    45971U,	// VEXTSB2Ws
+    45978U,	// VEXTSB2W
+    45978U,	// VEXTSB2Ws
     43356U,	// VEXTSD2Q
     37112U,	// VEXTSH2D
     37112U,	// VEXTSH2Ds
-    45981U,	// VEXTSH2W
-    45981U,	// VEXTSH2Ws
+    45988U,	// VEXTSH2W
+    45988U,	// VEXTSH2Ws
     37122U,	// VEXTSW2D
     37122U,	// VEXTSW2Ds
-    2147531323U,	// VEXTUBLX
-    2147531694U,	// VEXTUBRX
-    2147531351U,	// VEXTUHLX
-    2147531737U,	// VEXTUHRX
-    2147531455U,	// VEXTUWLX
-    2147531833U,	// VEXTUWRX
+    2147531330U,	// VEXTUBLX
+    2147531701U,	// VEXTUBRX
+    2147531358U,	// VEXTUHLX
+    2147531744U,	// VEXTUHRX
+    2147531462U,	// VEXTUWLX
+    2147531840U,	// VEXTUWRX
     37164U,	// VGBBD
     2147520196U,	// VGNB
-    2449521202U,	// VINSBLX
-    2449521573U,	// VINSBRX
-    2449521257U,	// VINSBVLX
-    2449521635U,	// VINSBVRX
+    2449521209U,	// VINSBLX
+    2449521580U,	// VINSBRX
+    2449521264U,	// VINSBVLX
+    2449521642U,	// VINSBVRX
     1107333921U,	// VINSD
-    2449521221U,	// VINSDLX
-    2449521607U,	// VINSDRX
+    2449521228U,	// VINSDLX
+    2449521614U,	// VINSDRX
     1107332964U,	// VINSERTB
     2449511287U,	// VINSERTD
     1107334854U,	// VINSERTH
-    2449520471U,	// VINSERTW
-    2449521230U,	// VINSHLX
-    2449521616U,	// VINSHRX
-    2449521290U,	// VINSHVLX
-    2449521668U,	// VINSHVRX
-    1107343115U,	// VINSW
-    2449521334U,	// VINSWLX
-    2449521712U,	// VINSWRX
-    2449521312U,	// VINSWVLX
-    2449521690U,	// VINSWVRX
+    2449520478U,	// VINSERTW
+    2449521237U,	// VINSHLX
+    2449521623U,	// VINSHRX
+    2449521297U,	// VINSHVLX
+    2449521675U,	// VINSHVRX
+    1107343122U,	// VINSW
+    2449521341U,	// VINSWLX
+    2449521719U,	// VINSWRX
+    2449521319U,	// VINSWVLX
+    2449521697U,	// VINSWVRX
     42052U,	// VLOGEFP
     2147525683U,	// VMADDFP
     2147525775U,	// VMAXFP
     2147520318U,	// VMAXSB
     2147521347U,	// VMAXSD
     2147522220U,	// VMAXSH
-    2147530548U,	// VMAXSW
+    2147530555U,	// VMAXSW
     2147520526U,	// VMAXUB
     2147521513U,	// VMAXUD
     2147522337U,	// VMAXUH
-    2147530750U,	// VMAXUW
-    2147528396U,	// VMHADDSHS
-    2147528407U,	// VMHRADDSHS
+    2147530757U,	// VMAXUW
+    2147528403U,	// VMHADDSHS
+    2147528414U,	// VMHRADDSHS
     2147525747U,	// VMINFP
     2147520282U,	// VMINSB
     2147521305U,	// VMINSD
     2147522184U,	// VMINSH
-    2147530499U,	// VMINSW
+    2147530506U,	// VMINSW
     2147520398U,	// VMINUB
     2147521468U,	// VMINUD
     2147522288U,	// VMINUH
-    2147530680U,	// VMINUW
+    2147530687U,	// VMINUW
     2147523773U,	// VMLADDUHM
     2147521270U,	// VMODSD
     2147527319U,	// VMODSQ
-    2147530418U,	// VMODSW
+    2147530425U,	// VMODSW
     2147521433U,	// VMODUD
     2147527438U,	// VMODUQ
-    2147530628U,	// VMODUW
-    2147530023U,	// VMRGEW
+    2147530635U,	// VMODUW
+    2147530030U,	// VMRGEW
     2147520141U,	// VMRGHB
     2147522089U,	// VMRGHH
-    2147530066U,	// VMRGHW
+    2147530073U,	// VMRGHW
     2147520159U,	// VMRGLB
     2147522097U,	// VMRGLH
-    2147530118U,	// VMRGLW
-    2147530391U,	// VMRGOW
+    2147530125U,	// VMRGLW
+    2147530398U,	// VMRGOW
     2147521423U,	// VMSUMCUD
     2147523545U,	// VMSUMMBM
     2147523742U,	// VMSUMSHM
-    2147528428U,	// VMSUMSHS
+    2147528435U,	// VMSUMSHS
     2147523594U,	// VMSUMUBM
     2147523666U,	// VMSUMUDM
     2147523793U,	// VMSUMUHM
-    2147528456U,	// VMSUMUHS
+    2147528463U,	// VMSUMUHS
     43729U,	// VMUL10CUQ
     2147527406U,	// VMUL10ECUQ
     2147527446U,	// VMUL10EUQ
@@ -4549,30 +4551,30 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147520237U,	// VMULESB
     2147521278U,	// VMULESD
     2147522139U,	// VMULESH
-    2147530426U,	// VMULESW
+    2147530433U,	// VMULESW
     2147520381U,	// VMULEUB
     2147521441U,	// VMULEUD
     2147522271U,	// VMULEUH
-    2147530645U,	// VMULEUW
+    2147530652U,	// VMULEUW
     2147521296U,	// VMULHSD
-    2147530461U,	// VMULHSW
+    2147530468U,	// VMULHSW
     2147521459U,	// VMULHUD
-    2147530671U,	// VMULHUW
+    2147530678U,	// VMULHUW
     2147521109U,	// VMULLD
     2147520290U,	// VMULOSB
     2147521320U,	// VMULOSD
     2147522192U,	// VMULOSH
-    2147530514U,	// VMULOSW
+    2147530521U,	// VMULOSW
     2147520406U,	// VMULOUB
     2147521476U,	// VMULOUD
     2147522296U,	// VMULOUH
-    2147530688U,	// VMULOUW
+    2147530695U,	// VMULOUW
     2147524060U,	// VMULUWM
     2147521189U,	// VNAND
     2147527687U,	// VNCIPHER
-    2147529177U,	// VNCIPHERLAST
+    2147529184U,	// VNCIPHERLAST
     37386U,	// VNEGD
-    46411U,	// VNEGW
+    46418U,	// VNEGW
     2147525665U,	// VNMSUBFP
     2147527807U,	// VNOR
     2147527820U,	// VOR
@@ -4582,35 +4584,35 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147527767U,	// VPERMR
     2147527840U,	// VPERMXOR
     2147521415U,	// VPEXTD
-    2147531572U,	// VPKPX
-    2147528572U,	// VPKSDSS
-    2147528638U,	// VPKSDUS
-    2147528581U,	// VPKSHSS
-    2147528664U,	// VPKSHUS
-    2147528590U,	// VPKSWSS
-    2147528682U,	// VPKSWUS
+    2147531579U,	// VPKPX
+    2147528579U,	// VPKSDSS
+    2147528645U,	// VPKSDUS
+    2147528588U,	// VPKSHSS
+    2147528671U,	// VPKSHUS
+    2147528597U,	// VPKSWSS
+    2147528689U,	// VPKSWUS
     2147523983U,	// VPKUDUM
-    2147528647U,	// VPKUDUS
+    2147528654U,	// VPKUDUS
     2147523992U,	// VPKUHUM
-    2147528673U,	// VPKUHUS
+    2147528680U,	// VPKUHUS
     2147524001U,	// VPKUWUM
-    2147528691U,	// VPKUWUS
+    2147528698U,	// VPKUWUS
     2147520187U,	// VPMSUMB
     2147521154U,	// VPMSUMD
     2147522117U,	// VPMSUMH
-    2147530174U,	// VPMSUMW
+    2147530181U,	// VPMSUMW
     36698U,	// VPOPCNTB
     37741U,	// VPOPCNTD
     38588U,	// VPOPCNTH
-    46925U,	// VPOPCNTW
+    46932U,	// VPOPCNTW
     37180U,	// VPRTYBD
     43387U,	// VPRTYBQ
-    46335U,	// VPRTYBW
+    46342U,	// VPRTYBW
     42071U,	// VREFP
     40167U,	// VRFIM
     40576U,	// VRFIN
     42155U,	// VRFIP
-    48813U,	// VRFIZ
+    48820U,	// VRFIZ
     2147520175U,	// VRLB
     2147521133U,	// VRLD
     2147522644U,	// VRLDMI
@@ -4619,14 +4621,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147527226U,	// VRLQ
     2147522668U,	// VRLQMI
     2147523873U,	// VRLQNM
-    2147530150U,	// VRLW
+    2147530157U,	// VRLW
     2147522764U,	// VRLWMI
     2147523881U,	// VRLWNM
     42088U,	// VRSQRTEFP
-    47826U,	// VSBOX
+    47833U,	// VSBOX
     2147523311U,	// VSEL
     2147520793U,	// VSHASIGMAD
-    2147529955U,	// VSHASIGMAW
+    2147529962U,	// VSHASIGMAW
     2147523446U,	// VSL
     2147520181U,	// VSLB
     2147521139U,	// VSLD
@@ -4635,30 +4637,30 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147522111U,	// VSLH
     2147524588U,	// VSLO
     2147527232U,	// VSLQ
-    2147529572U,	// VSLV
-    2147530157U,	// VSLW
+    2147529579U,	// VSLV
+    2147530164U,	// VSLW
     2449510226U,	// VSPLTB
     2449510226U,	// VSPLTBs
     2449512116U,	// VSPLTH
     2449512116U,	// VSPLTHs
     402689799U,	// VSPLTISB
     402691701U,	// VSPLTISH
-    402700006U,	// VSPLTISW
-    2449520444U,	// VSPLTW
+    402700013U,	// VSPLTISW
+    2449520451U,	// VSPLTW
     2147527905U,	// VSR
     2147520080U,	// VSRAB
     2147520805U,	// VSRAD
     2147522049U,	// VSRAH
     2147527014U,	// VSRAQ
-    2147529967U,	// VSRAW
+    2147529974U,	// VSRAW
     2147520231U,	// VSRB
     2147521256U,	// VSRD
     2147522407U,	// VSRDBI
     2147522133U,	// VSRH
     2147524716U,	// VSRO
     2147527313U,	// VSRQ
-    2147529600U,	// VSRV
-    2147530412U,	// VSRW
+    2147529607U,	// VSRV
+    2147530419U,	// VSRW
     39604U,	// VSTRIBL
     33889U,	// VSTRIBL_rec
     43938U,	// VSTRIBR
@@ -4668,43 +4670,43 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     44058U,	// VSTRIHR
     34660U,	// VSTRIHR_rec
     2147527388U,	// VSUBCUQ
-    2147530610U,	// VSUBCUW
+    2147530617U,	// VSUBCUW
     2147527418U,	// VSUBECUQ
     2147523939U,	// VSUBEUQM
     2147525675U,	// VSUBFP
-    2147528057U,	// VSUBSBS
-    2147528387U,	// VSUBSHS
-    2147528734U,	// VSUBSWS
+    2147528064U,	// VSUBSBS
+    2147528394U,	// VSUBSHS
+    2147528741U,	// VSUBSWS
     2147523576U,	// VSUBUBM
-    2147528085U,	// VSUBUBS
+    2147528092U,	// VSUBUBS
     2147523648U,	// VSUBUDM
     2147523764U,	// VSUBUHM
-    2147528438U,	// VSUBUHS
+    2147528445U,	// VSUBUHS
     2147523921U,	// VSUBUQM
     2147524042U,	// VSUBUWM
-    2147528761U,	// VSUBUWS
-    2147528724U,	// VSUM2SWS
-    2147528047U,	// VSUM4SBS
-    2147528377U,	// VSUM4SHS
-    2147528075U,	// VSUM4UBS
-    2147528752U,	// VSUMSWS
-    47915U,	// VUPKHPX
+    2147528768U,	// VSUBUWS
+    2147528731U,	// VSUM2SWS
+    2147528054U,	// VSUM4SBS
+    2147528384U,	// VSUM4SHS
+    2147528082U,	// VSUM4UBS
+    2147528759U,	// VSUMSWS
+    47922U,	// VUPKHPX
     36606U,	// VUPKHSB
     38508U,	// VUPKHSH
-    46804U,	// VUPKHSW
-    47931U,	// VUPKLPX
+    46811U,	// VUPKHSW
+    47938U,	// VUPKLPX
     36625U,	// VUPKLSB
     38527U,	// VUPKLSH
-    46832U,	// VUPKLSW
+    46839U,	// VUPKLSW
     2147527858U,	// VXOR
     2382408882U,	// V_SET0
     2382408882U,	// V_SET0B
     2382408882U,	// V_SET0H
-    24164070U,	// V_SETALLONES
-    24164070U,	// V_SETALLONESB
-    24164070U,	// V_SETALLONESH
-    1782125U,	// WAIT
-    271266157U,	// WAITP10
+    24164077U,	// V_SETALLONES
+    24164077U,	// V_SETALLONESB
+    24164077U,	// V_SETALLONESH
+    1782132U,	// WAIT
+    271266164U,	// WAITP10
     1086535U,	// WRTEE
     1087466U,	// WRTEEI
     2147527828U,	// XOR
@@ -4712,8 +4714,8 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147518338U,	// XOR8_rec
     2147522850U,	// XORI
     2147522850U,	// XORI8
-    2147528503U,	// XORIS
-    2147528503U,	// XORIS8
+    2147528510U,	// XORIS
+    2147528510U,	// XORIS8
     2147518338U,	// XOR_rec
     41771U,	// XSABSDP
     42661U,	// XSABSQP
@@ -4739,23 +4741,23 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     42578U,	// XSCVDPQP
     43104U,	// XSCVDPSP
     40749U,	// XSCVDPSPN
-    44595U,	// XSCVDPSXDS
-    44595U,	// XSCVDPSXDSs
-    45140U,	// XSCVDPSXWS
-    45140U,	// XSCVDPSXWSs
-    44631U,	// XSCVDPUXDS
-    44631U,	// XSCVDPUXDSs
-    45176U,	// XSCVDPUXWS
-    45176U,	// XSCVDPUXWSs
+    44602U,	// XSCVDPSXDS
+    44602U,	// XSCVDPSXDSs
+    45147U,	// XSCVDPSXWS
+    45147U,	// XSCVDPSXWSs
+    44638U,	// XSCVDPUXDS
+    44638U,	// XSCVDPUXDSs
+    45183U,	// XSCVDPUXWS
+    45183U,	// XSCVDPUXWSs
     41637U,	// XSCVHPDP
     41647U,	// XSCVQPDP
     40946U,	// XSCVQPDPO
-    48785U,	// XSCVQPSDZ
-    48906U,	// XSCVQPSQZ
-    48995U,	// XSCVQPSWZ
-    48796U,	// XSCVQPUDZ
-    48917U,	// XSCVQPUQZ
-    49006U,	// XSCVQPUWZ
+    48792U,	// XSCVQPSDZ
+    48913U,	// XSCVQPSQZ
+    49002U,	// XSCVQPSWZ
+    48803U,	// XSCVQPUDZ
+    48924U,	// XSCVQPUQZ
+    49013U,	// XSCVQPUWZ
     42498U,	// XSCVSDQP
     41657U,	// XSCVSPDP
     40697U,	// XSCVSPDPN
@@ -4817,11 +4819,11 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     37029U,	// XSRDPIC
     40174U,	// XSRDPIM
     42162U,	// XSRDPIP
-    48820U,	// XSRDPIZ
+    48827U,	// XSRDPIZ
     41368U,	// XSREDP
     42915U,	// XSRESP
     335943947U,	// XSRQPI
-    335952417U,	// XSRQPIX
+    335952424U,	// XSRQPIX
     335948115U,	// XSRQPXP
     43179U,	// XSRSP
     41384U,	// XSRSQRTEDP
@@ -4873,18 +4875,18 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147526732U,	// XVCPSGNSP
     40736U,	// XVCVBF16SPN
     43114U,	// XVCVDPSP
-    44607U,	// XVCVDPSXDS
-    45152U,	// XVCVDPSXWS
-    44643U,	// XVCVDPUXDS
-    45188U,	// XVCVDPUXWS
+    44614U,	// XVCVDPSXDS
+    45159U,	// XVCVDPSXWS
+    44650U,	// XVCVDPUXDS
+    45195U,	// XVCVDPUXWS
     43124U,	// XVCVHPSP
     35608U,	// XVCVSPBF16
     41667U,	// XVCVSPDP
     42145U,	// XVCVSPHP
-    44619U,	// XVCVSPSXDS
-    45164U,	// XVCVSPSXWS
-    44655U,	// XVCVSPUXDS
-    45200U,	// XVCVSPUXWS
+    44626U,	// XVCVSPSXDS
+    45171U,	// XVCVSPSXWS
+    44662U,	// XVCVSPUXDS
+    45207U,	// XVCVSPUXWS
     41313U,	// XVCVSXDDP
     42871U,	// XVCVSXDSP
     41908U,	// XVCVSXWDP
@@ -4927,9 +4929,9 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2449515900U,	// XVF64GERWPP
     2147519211U,	// XVI16GER2
     2449515843U,	// XVI16GER2PP
-    2147527933U,	// XVI16GER2S
+    2147527940U,	// XVI16GER2S
     2449515914U,	// XVI16GER2SPP
-    2147527933U,	// XVI16GER2SW
+    2147527940U,	// XVI16GER2SW
     2449515914U,	// XVI16GER2SWPP
     2147519211U,	// XVI16GER2W
     2449515843U,	// XVI16GER2WPP
@@ -4975,14 +4977,14 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     37038U,	// XVRDPIC
     40183U,	// XVRDPIM
     42171U,	// XVRDPIP
-    48829U,	// XVRDPIZ
+    48836U,	// XVRDPIZ
     41376U,	// XVREDP
     42923U,	// XVRESP
     39187U,	// XVRSPI
     37047U,	// XVRSPIC
     40192U,	// XVRSPIM
     42180U,	// XVRSPIP
-    48838U,	// XVRSPIZ
+    48845U,	// XVRSPIZ
     41396U,	// XVRSQRTEDP
     42943U,	// XVRSQRTESP
     41850U,	// XVSQRTDP
@@ -5003,22 +5005,22 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2147520534U,	// XXBLENDVB
     2147521521U,	// XXBLENDVD
     2147522345U,	// XXBLENDVH
-    2147530758U,	// XXBLENDVW
+    2147530765U,	// XXBLENDVW
     37591U,	// XXBRD
     38478U,	// XXBRH
     43658U,	// XXBRQ
-    46757U,	// XXBRW
+    46764U,	// XXBRW
     2147523244U,	// XXEVAL
-    2147530719U,	// XXEXTRACTUW
+    2147530726U,	// XXEXTRACTUW
     2147523604U,	// XXGENPCVBM
     2147523676U,	// XXGENPCVDM
     2147523803U,	// XXGENPCVHM
     2147524069U,	// XXGENPCVWM
-    2449520481U,	// XXINSERTW
+    2449520488U,	// XXINSERTW
     2147521163U,	// XXLAND
     2147520608U,	// XXLANDC
-    2147529578U,	// XXLEQV
-    2382410602U,	// XXLEQVOnes
+    2147529585U,	// XXLEQV
+    2382410609U,	// XXLEQVOnes
     2147521171U,	// XXLNAND
     2147527791U,	// XXLNOR
     2147527784U,	// XXLOR
@@ -5030,38 +5032,38 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     2382408849U,	// XXLXORz
     1478728U,	// XXMFACC
     1478728U,	// XXMFACCW
-    2147530074U,	// XXMRGHW
-    2147530126U,	// XXMRGLW
+    2147530081U,	// XXMRGHW
+    2147530133U,	// XXMRGLW
     1085521U,	// XXMTACC
     1085521U,	// XXMTACCW
     2147523975U,	// XXPERM
     2147522484U,	// XXPERMDI
     2147522484U,	// XXPERMDIs
     2147527775U,	// XXPERMR
-    2147531465U,	// XXPERMX
+    2147531472U,	// XXPERMX
     2147523317U,	// XXSEL
-    1097318U,	// XXSETACCZ
-    1097318U,	// XXSETACCZW
+    1097325U,	// XXSETACCZ
+    1097325U,	// XXSETACCZW
     2147522996U,	// XXSLDWI
     2147522996U,	// XXSLDWIs
-    1140898014U,	// XXSPLTI32DX
+    1140898021U,	// XXSPLTI32DX
     1174441621U,	// XXSPLTIB
     41446U,	// XXSPLTIDP
-    46460U,	// XXSPLTIW
-    2147530564U,	// XXSPLTW
-    2147530564U,	// XXSPLTWs
+    46467U,	// XXSPLTIW
+    2147530571U,	// XXSPLTW
+    2147530571U,	// XXSPLTWs
     2148012093U,	// gBC
     2148011065U,	// gBCA
-    25939062U,	// gBCAat
+    25939069U,	// gBCAat
     2148019430U,	// gBCCTR
     2148014935U,	// gBCCTRL
     2148014781U,	// gBCL
     2148011360U,	// gBCLA
-    25939078U,	// gBCLAat
+    25939085U,	// gBCLAat
     2148019235U,	// gBCLR
     2148014911U,	// gBCLRL
-    26987777U,	// gBCLat
-    26987667U,	// gBCat
+    26987784U,	// gBCLat
+    26987674U,	// gBCat
   };
 
   static const uint16_t OpInfo1[] = {
@@ -6438,6 +6440,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// MBAR
     0U,	// MCRF
     0U,	// MCRFS
+    0U,	// MCRXR
     0U,	// MCRXRX
     0U,	// MFBHRBE
     0U,	// MFCR
@@ -9465,6 +9468,7 @@ static MnemonicBitsInfo getMnemonic(MCInst *MI, SStream *O) {
     0U,	// MBAR
     0U,	// MCRF
     0U,	// MCRFS
+    0U,	// MCRXR
     0U,	// MCRXRX
     0U,	// MFBHRBE
     0U,	// MFCR
