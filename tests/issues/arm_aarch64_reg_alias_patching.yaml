@@ -1,0 +1,364 @@
+test_cases:
+  -
+    input:
+      name: "aarch64 x29 alias in middle"
+      bytes: [ 0xfd, 0x03, 0x00, 0x91 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov fp, sp"
+  -
+    input:
+      name: "aarch64 x30 alias in middle"
+      bytes: [ 0xfe, 0x03, 0x00, 0x91 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov lr, sp"
+  -
+    input:
+      name: "aarch64 x29 and x30 both replaced"
+      bytes: [ 0xfd, 0x7b, 0xbf, 0xa9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stp fp, lr, [sp, #-0x10]!"
+  -
+    input:
+      name: "aarch64 x29 with 0x29 hex prefix in immediate"
+      bytes: [ 0x1d, 0xa4, 0x00, 0xd1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sub fp, x0, #0x29"
+  -
+    input:
+      name: "aarch64 x30 with 0x30 hex prefix in immediate"
+      bytes: [ 0x1e, 0xc0, 0x00, 0xd1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sub lr, x0, #0x30"
+  -
+    input:
+      name: "aarch64 x29 at end of string"
+      bytes: [ 0xf4, 0x03, 0x1d, 0xaa ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov x20, fp"
+  -
+    input:
+      name: "aarch64 x30 at middle and end"
+      bytes: [ 0xfe, 0x03, 0x1e, 0xaa ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov lr, lr"
+  -
+    input:
+      name: "aarch64 x29 and x30 at end"
+      bytes: [ 0xfd, 0x03, 0x1e, 0xaa ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov fp, lr"
+  -
+    input:
+      name: "aarch64 x29 at start of string"
+      bytes: [ 0xfd, 0x03, 0x00, 0xd1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sub fp, sp, #0x0"
+  -
+    input:
+      name: "aarch64 x30 at start of string"
+      bytes: [ 0xfe, 0x03, 0x00, 0xd1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sub lr, sp, #0x0"
+  -
+    input:
+      name: "aarch64 no false positive on 0x29 immediate"
+      bytes: [ 0x20,0x05,0x80,0x52 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov w0, #0x29"
+  -
+    input:
+      name: "aarch64 x29 x30 with positive offset"
+      bytes: [ 0xfd, 0x7b, 0x01, 0xa9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stp fp, lr, [sp, #0x10]"
+  -
+    input:
+      name: "aarch64 no alias in instruction"
+      bytes: [ 0xfd, 0xfb, 0x01, 0xd1 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sub fp, sp, #0x7e"
+  -
+    input:
+      name: "arm r9 alias sb"
+      bytes: [ 0x09, 0x00, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov r0, sb"
+  -
+    input:
+      name: "arm r10 alias sl"
+      bytes: [ 0x0a, 0x00, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov r0, sl"
+  -
+    input:
+      name: "arm r11 alias fp"
+      bytes: [ 0x0b, 0x00, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov r0, fp"
+  -
+    input:
+      name: "arm r12 alias ip"
+      bytes: [ 0x0c, 0x00, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov r0, ip"
+  -
+    input:
+      name: "arm r13 alias sp"
+      bytes: [ 0x0d, 0x00, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov r0, sp"
+  -
+    input:
+      name: "arm r14 alias lr"
+      bytes: [ 0x0e, 0x00, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov r0, lr"
+  -
+    input:
+      name: "arm r15 alias pc"
+      bytes: [ 0x0f, 0x00, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov r0, pc"
+  -
+    input:
+      name: "arm r11 at end of string"
+      bytes: [ 0x0b, 0xd0, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov sp, fp"
+  -
+    input:
+      name: "arm r14 at end of string"
+      bytes: [ 0x0e, 0xd0, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov sp, lr"
+  -
+    input:
+      name: "arm r13 at start of string"
+      bytes: [ 0x0d, 0xe0, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov lr, sp"
+  -
+    input:
+      name: "arm r12 at end of string"
+      bytes: [ 0x0c, 0xe0, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov lr, ip"
+  -
+    input:
+      name: "arm r10 at end of string"
+      bytes: [ 0x0a, 0xd0, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov sp, sl"
+  -
+    input:
+      name: "arm r9 and r15 in same instruction"
+      bytes: [ 0x09, 0xf0, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov pc, sb"
+  -
+    input:
+      name: "arm r9 in register list"
+      bytes: [ 0x01, 0x02, 0x2d, 0xe9 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "push	{r0, sb}"
+  -
+    input:
+      name: "arm r15 in register list"
+      bytes: [ 0x01, 0x80, 0x2d, 0xe9 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "push {r0, pc}"
+  -
+    input:
+      name: "arm no false positive on 0x29 immediate"
+      bytes: [ 0x29, 0x00, 0xa0, 0xe3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov r0, #0x29"
+  -
+    input:
+      name: "arm no false positive on 0x2a immediate"
+      bytes: [ 0x2a, 0x00, 0xa0, 0xe3 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov r0, #0x2a"
+  -
+    input:
+      name: "arm immediate not register"
+      bytes: [ 0x09, 0x00, 0x8f, 0xe2 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_SYNTAX_CS_REG_ALIAS ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "add r0, pc, #0x9"
+  -
+    input:
+      name: "arm no custom reg alias"
+      bytes: [ 0x0c, 0xe0, 0xa0, 0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov lr, r12"
+  -
+    input:
+      name: "aarch64 no custom reg alias"
+      bytes: [ 0xfd, 0x7b, 0xbf, 0xa9 ]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "stp x29, x30, [sp, #-0x10]!"

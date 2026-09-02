@@ -877,36 +877,57 @@ bool AArch64_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 }
 
 /// Patches the register names with Capstone specific alias.
-/// Those are common alias for registers (e.g. r15 = pc)
+/// Those are common alias for registers (e.g. x30 = lr)
 /// which are not set in LLVM.
 static void patch_cs_reg_alias(char *asm_str)
 {
-	bool skip_sub = false;
-	char *x29 = strstr(asm_str, "x29");
-	if (x29 > asm_str && strstr(asm_str, "0x29") == (x29 - 1)) {
-		// Check for hex prefix
-		skip_sub = true;
+	char *src = asm_str;
+	size_t src_len = strlen(src);
+	char *dst = asm_str;
+
+	while (*src && src_len >= 3) {
+		if (src[0] == 'x' && src[1] == '2' && src[2] == '9') {
+			// Don't replace the "x29" inside a "0x29" hex literal.
+			if (src > asm_str && src[-1] == '0') {
+				*dst++ = *src++;
+				*dst++ = *src++;
+				*dst++ = *src++;
+				src_len -= 3;
+				continue;
+			}
+			// x29 = fp
+			*dst++ = 'f';
+			*dst++ = 'p';
+			src += 3;
+			src_len -= 3;
+			continue;
+		}
+
+		if (src[0] == 'x' && src[1] == '3' && src[2] == '0') {
+			// Don't replace the "x30" inside a "0x30" hex literal.
+			if (src > asm_str && src[-1] == '0') {
+				*dst++ = *src++;
+				*dst++ = *src++;
+				*dst++ = *src++;
+				src_len -= 3;
+				continue;
+			}
+			// x30 = lr
+			*dst++ = 'l';
+			*dst++ = 'r';
+			src += 3;
+			src_len -= 3;
+			continue;
+		}
+
+		*dst++ = *src++;
+		src_len--;
 	}
-	while (x29 && !skip_sub) {
-		x29[0] = 'f';
-		x29[1] = 'p';
-		memmove(x29 + 2, x29 + 3, strlen(x29 + 3));
-		asm_str[strlen(asm_str) - 1] = '\0';
-		x29 = strstr(asm_str, "x29");
+
+	while (*src) {
+		*dst++ = *src++;
 	}
-	skip_sub = false;
-	char *x30 = strstr(asm_str, "x30");
-	if (x30 > asm_str && strstr(asm_str, "0x30") == (x30 - 1)) {
-		// Check for hex prefix
-		skip_sub = true;
-	}
-	while (x30 && !skip_sub) {
-		x30[0] = 'l';
-		x30[1] = 'r';
-		memmove(x30 + 2, x30 + 3, strlen(x30 + 3));
-		asm_str[strlen(asm_str) - 1] = '\0';
-		x30 = strstr(asm_str, "x30");
-	}
+	*dst = '\0';
 }
 
 /// Adds group to the instruction which are not defined in LLVM.
