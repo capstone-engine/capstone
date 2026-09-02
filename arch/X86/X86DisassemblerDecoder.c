@@ -1143,6 +1143,13 @@ static int getID(struct InternalInstruction *insn)
 {
 	uint16_t attrMask;
 	uint16_t instructionID;
+	bool rexWOverridesOpSize;
+
+	/* REX.W overrides the operand-sized prefix for near RET in 64-bit mode */
+	rexWOverridesOpSize = insn->mode == MODE_64BIT && insn->hasOpSize &&
+			      insn->opcodeType == ONEBYTE &&
+			      (insn->opcode == 0xC2 || insn->opcode == 0xC3) &&
+			      (insn->rexPrefix & 0x08);
 
 	attrMask = ATTR_NONE;
 
@@ -1227,7 +1234,8 @@ static int getID(struct InternalInstruction *insn)
 			return -1;
 		}
 	} else {
-		if (insn->hasOpSize && insn->mode != MODE_16BIT) {
+		if (insn->hasOpSize && insn->mode != MODE_16BIT &&
+		    !rexWOverridesOpSize) {
 			attrMask |= ATTR_OPSIZE;
 		}
 		if (insn->hasAdSize)
@@ -1380,7 +1388,8 @@ static int getID(struct InternalInstruction *insn)
 		return -1;
 	}
 
-	if ((insn->mode == MODE_16BIT || insn->hasOpSize) &&
+	if ((insn->mode == MODE_16BIT ||
+	     (insn->hasOpSize && !rexWOverridesOpSize)) &&
 	    !(attrMask & ATTR_OPSIZE)) {
 		/*
 		 * The instruction tables make no distinction between instructions that
