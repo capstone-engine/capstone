@@ -99,6 +99,10 @@ The larger the PR the more rigid are our requirements.
 > It is forbidden to let AI write the PR description!
 > If **you** can't explain what the change does, AI was not the right tool.
 
+Translations with AI are of course allowed.
+If you use it, please write simple and short sentences in your native language.
+So the AI doesn't translate them too flowerily.
+
 Support
 -------
 
