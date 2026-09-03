@@ -85,9 +85,11 @@ Coding style
 
 AI guidelines
 ------------
-Using AI for contributions is generally allowed (see exception below).
+Using AI for contributions is generally allowed (see the exceptions below).
 Please be aware that everything has to be tested thoroughly.
 The larger the PR, the more rigid our requirements are.
+We ask you to specifically check the tests. They should not be verbose
+or contain duplications but should still provide the maximum amount of coverage.
 
 > [!NOTE]
 > We highly recommend limiting AI usage to small or repetitive changes.
