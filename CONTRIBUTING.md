@@ -93,10 +93,10 @@ The larger the PR, the more rigid our requirements are.
 > We highly recommend limiting AI usage to small or repetitive changes.
 > The rule of thumb is:
 >
-> _If you spent an annoying amount of time checking the code, your task is not suitable for AI._
+> _Only tasks you can very quickly check for correctness are suitable for AI._
 
 > [!IMPORTANT]
-> It is forbidden to let AI write the PR description!
+> It is forbidden to let AI write the PR description or commit messages!
 > If **you** can't explain what the change does, AI was not the right tool.
 
 Translations with AI are, of course, allowed.
