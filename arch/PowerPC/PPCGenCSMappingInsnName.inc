@@ -640,6 +640,7 @@
   "mbar", // PPC_INS_MBAR
   "mcrf", // PPC_INS_MCRF
   "mcrfs", // PPC_INS_MCRFS
+  "mcrxr", // PPC_INS_MCRXR
   "mcrxrx", // PPC_INS_MCRXRX
   "mfbhrbe", // PPC_INS_MFBHRBE
   "mfcr", // PPC_INS_MFCR
