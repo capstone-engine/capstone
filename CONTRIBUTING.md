@@ -99,7 +99,11 @@ or contain duplications but should still provide the maximum amount of coverage.
 
 > [!IMPORTANT]
 > It is forbidden to let AI write the PR description or commit messages!
-> If **you** can't explain what the change does, AI was not the right tool.
+>
+> This rule helps us maintainers because generated text is incredibly verbose,
+> hard to read, and too time-intensive to understand.
+> This rule also serves as an indicator.
+> If you struggle to explain what the change does, AI was not the right tool.
 
 Translations with AI are, of course, allowed.
 If you use it, please write simple, short sentences in your native language
