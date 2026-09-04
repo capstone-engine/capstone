@@ -298,3 +298,31 @@ jobs:
         cmake --preset=${{ matrix.config.platform }}-x64${{ matrix.config.diet_build == true && '-diet' || '' }}
         cmake --build --preset build-${{ matrix.config.platform }}${{ matrix.config.diet_build == true && '-diet' || '' }}-release
         cmake --build --preset install-${{ matrix.config.platform }}${{ matrix.config.diet_build == true && '-diet' || '' }}-release
+
+        cmake --preset=${{ matrix.config.platform }}-x64
+        cmake --build --preset build-${{ matrix.config.platform }}-release
+        cmake --build --preset install-${{ matrix.config.platform }}-release
+  macOS:
+      name: Execute tests on macOS
+      strategy:
+        fail-fast: false
+        matrix:
+          os: [macos-15]
+          xcode-version: ["16.4"]
+      runs-on: ${{ matrix.os }}
+      env:
+        GH_TOKEN: ${{ github.token }}
+      steps:
+        - uses: actions/checkout@v4
+        - name: Setup Xcode
+          uses: ./.github/actions/setup-xcode
+          with:
+            xcode-version: ${{ matrix.xcode-version }}
+        - name: Build and run tests in debug mode
+          run: |
+            swift test \
+              -c debug 
+        - name: Build and run tests in release mode
+          run: |
+            swift test \
+              -c release 

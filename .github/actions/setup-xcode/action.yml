@@ -1,0 +1,49 @@
+name: 'Setup Xcode Conditionally'
+description: 'Check current Xcode version and setup if different from required version (Avoid unessary sudo/password input for self hosted runner)'
+
+inputs:
+  xcode-version:
+    description: 'Required Xcode version'
+    required: true
+
+outputs:
+  current-version:
+    description: 'Current Xcode version'
+    value: ${{ steps.current-xcode.outputs.version }}
+  setup-skipped:
+    description: 'Whether Xcode setup was skipped'
+    value: ${{ steps.xcode-check.outputs.skip-setup }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Get current Xcode version
+      id: current-xcode
+      shell: bash
+      run: |
+        CURRENT_VERSION=$(xcode-select -p | grep -o '[0-9]\+\.[0-9]\+' || echo "none")
+        echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+        echo "Current Xcode version: $CURRENT_VERSION"
+    
+    - name: Check if Xcode version matches
+      id: xcode-check
+      shell: bash
+      run: |
+        CURRENT="${{ steps.current-xcode.outputs.version }}"
+        REQUIRED="${{ inputs.xcode-version }}"
+        if [ "$CURRENT" = "$REQUIRED" ]; then
+          echo "skip-setup=true" >> $GITHUB_OUTPUT
+          echo "✅ Xcode version matches: $CURRENT = $REQUIRED, skipping setup"
+        else
+          echo "skip-setup=false" >> $GITHUB_OUTPUT
+          echo "❌ Xcode version mismatch: $CURRENT ≠ $REQUIRED, setup required"
+        fi
+    
+    - name: Setup Xcode
+      if: steps.xcode-check.outputs.skip-setup == 'false'
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: ${{ inputs.xcode-version }}
+    - name: Swift version
+      shell: bash
+      run: swift --version
