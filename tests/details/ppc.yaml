@@ -1845,3 +1845,28 @@ test_cases:
                 type: PPC_OP_REG
                 reg: cr1
                 access: CS_AC_WRITE
+  -
+    input:
+      # Deliberately no operands: — the branch block must be compared even
+      # when the case asserts nothing about the operand list.
+      bytes: [ 0x4c, 0x16, 0x00, 0x20 ]
+      arch: "ppc"
+      options: [ CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bdnzflr 4*cr5+eq"
+        details:
+          ppc:
+            bc:
+              bi: 22
+              bi_set: true
+              bo: 0
+              bo_set: true
+              bh: PPC_BH_SUBROUTINE_RET
+              crX: cr5
+              crX_bit: PPC_BI_Z
+              pred_cr: PPC_PRED_NE
+              pred_ctr: PPC_PRED_NZ
+              hint: PPC_BR_NOT_GIVEN
