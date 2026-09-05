@@ -1287,6 +1287,8 @@ static int getID(struct InternalInstruction *insn)
 				insn->displacementSize = 4;
 			}
 			break;
+		case 0x80:
+		case 0x81:
 		case 0x82:
 		case 0x83:
 		case 0x84:
