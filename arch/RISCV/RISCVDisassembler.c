@@ -438,10 +438,9 @@ static DecodeStatus decodeRVCInstrRdRs1ImmZero(MCInst *Inst, uint32_t Insn,
 					       const void *Decoder)
 {
 	uint32_t Rd = fieldFromInstruction_4(Insn, 7, 5);
-	DecodeStatus Result =
-		DecodeGPRNoX0RegisterClass(Inst, Rd, Address, Decoder);
-	(void)Result;
-	CS_ASSERT(Result == MCDisassembler_Success && "Invalid register");
+	if (DecodeGPRNoX0RegisterClass(Inst, Rd, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
 	MCInst_addOperand2(Inst, (MCInst_getOperand(Inst, (0))));
 	MCOperand_CreateImm0(Inst, (0));
 	return MCDisassembler_Success;
@@ -491,8 +490,12 @@ static DecodeStatus decodeRVCInstrRdRs2(MCInst *Inst, uint32_t Insn,
 {
 	uint32_t Rd = fieldFromInstruction_4(Insn, 7, 5);
 	uint32_t Rs2 = fieldFromInstruction_4(Insn, 2, 5);
-	DecodeGPRRegisterClass(Inst, Rd, Address, Decoder);
-	DecodeGPRRegisterClass(Inst, Rs2, Address, Decoder);
+	if (DecodeGPRRegisterClass(Inst, Rd, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
+	if (DecodeGPRRegisterClass(Inst, Rs2, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
 	return MCDisassembler_Success;
 }
 
@@ -502,9 +505,13 @@ static DecodeStatus decodeRVCInstrRdRs1Rs2(MCInst *Inst, uint32_t Insn,
 {
 	uint32_t Rd = fieldFromInstruction_4(Insn, 7, 5);
 	uint32_t Rs2 = fieldFromInstruction_4(Insn, 2, 5);
-	DecodeGPRRegisterClass(Inst, Rd, Address, Decoder);
+	if (DecodeGPRRegisterClass(Inst, Rd, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
 	MCInst_addOperand2(Inst, (MCInst_getOperand(Inst, (0))));
-	DecodeGPRRegisterClass(Inst, Rs2, Address, Decoder);
+	if (DecodeGPRRegisterClass(Inst, Rs2, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
 	return MCDisassembler_Success;
 }
 
@@ -515,9 +522,15 @@ static DecodeStatus decodeXTHeadMemPair(MCInst *Inst, uint32_t Insn,
 	uint32_t Rs1 = fieldFromInstruction_4(Insn, 15, 5);
 	uint32_t Rd2 = fieldFromInstruction_4(Insn, 20, 5);
 	uint32_t UImm2 = fieldFromInstruction_4(Insn, 25, 2);
-	DecodeGPRRegisterClass(Inst, Rd1, Address, Decoder);
-	DecodeGPRRegisterClass(Inst, Rd2, Address, Decoder);
-	DecodeGPRRegisterClass(Inst, Rs1, Address, Decoder);
+	if (DecodeGPRRegisterClass(Inst, Rd1, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
+	if (DecodeGPRRegisterClass(Inst, Rd2, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
+	if (DecodeGPRRegisterClass(Inst, Rs1, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
 	DecodeStatus Result =
 		CONCAT(decodeUImmOperand, 2)(Inst, UImm2, Address, Decoder);
 	(void)Result;
@@ -549,8 +562,12 @@ static DecodeStatus decodeRegReg(MCInst *Inst, uint32_t Insn, uint64_t Address,
 {
 	uint32_t Rs1 = fieldFromInstruction_4(Insn, 0, 5);
 	uint32_t Rs2 = fieldFromInstruction_4(Insn, 5, 5);
-	DecodeGPRRegisterClass(Inst, Rs1, Address, Decoder);
-	DecodeGPRRegisterClass(Inst, Rs2, Address, Decoder);
+	if (DecodeGPRRegisterClass(Inst, Rs1, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
+	if (DecodeGPRRegisterClass(Inst, Rs2, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
 	return MCDisassembler_Success;
 }
 

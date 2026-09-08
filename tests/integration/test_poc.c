@@ -356,6 +356,58 @@ int test_evil_vsnprintf_ghsa_gj26_93q5_cr54(void)
 	return 0;
 }
 
+/// Several hand-written RISC-V decoders dropped the status of
+/// Decode*RegisterClass. In RVE mode (and the COREV/XTHead custom decoders) a
+/// register field can be rejected by the class decoder, which then leaves the
+/// operand uncreated while the instruction still decodes as "success". The
+/// printer later reads that missing operand: printRegReg passes a NULL register
+/// name to SStream_concat0 (NULL deref in release), and printOperand hits a
+/// slot of unknown kind. Each word below reached one of the fixed decoders.
+static void test_riscv_rve_unchecked_reg_decode(void)
+{
+	static const struct {
+		cs_mode mode;
+		uint8_t code[4];
+		size_t size;
+	} cases[] = {
+		/* decodeRegReg: COREV cv.sh with an out-of-range rs */
+		{ CS_MODE_RISCV32 | CS_MODE_RISCV_E | CS_MODE_RISCV_COREV,
+		  { 0x2b, 0x33, 0x0a, 0x2a },
+		  4 },
+		/* decodeXTHeadMemPair: th.lwd with rd2 = x17 */
+		{ CS_MODE_RISCV32 | CS_MODE_RISCV_E | CS_MODE_RISCV_THEAD,
+		  { 0x0b, 0x40, 0x11, 0xe1 },
+		  4 },
+		/* decodeRVCInstrRdRs2 / decodeRVCInstrRdRs1Rs2 */
+		{ CS_MODE_RISCV32 | CS_MODE_RISCV_E | CS_MODE_RISCV_C,
+		  { 0x46, 0x80 },
+		  2 },
+		{ CS_MODE_RISCV32 | CS_MODE_RISCV_E | CS_MODE_RISCV_C,
+		  { 0x46, 0x90 },
+		  2 },
+		/* decodeRVCInstrRdRs1ImmZero */
+		{ CS_MODE_RISCV32 | CS_MODE_RISCV_E | CS_MODE_RISCV_C,
+		  { 0x01, 0x08 },
+		  2 },
+	};
+
+	for (size_t i = 0; i < sizeof(cases) / sizeof(cases[0]); i++) {
+		csh handle;
+		if (cs_open(CS_ARCH_RISCV, cases[i].mode, &handle) !=
+		    CS_ERR_OK) {
+			assert(0);
+			return;
+		}
+		cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+		cs_insn *insn = NULL;
+		size_t count = cs_disasm(handle, cases[i].code, cases[i].size,
+					 0x1000, 0, &insn);
+		cs_free(insn, count);
+		cs_close(&handle);
+	}
+}
+
 int main()
 {
 	test_overflow_cs_insn_bytes();
@@ -369,6 +421,7 @@ int main()
 	test_arm_pop_ghsa_8qp8_2vg2_8mr4();
 	test_tms320_ghsa_8qp8_2vg2_8mr4();
 	test_evil_vsnprintf_ghsa_gj26_93q5_cr54();
+	test_riscv_rve_unchecked_reg_decode();
 
 	return 0;
 }

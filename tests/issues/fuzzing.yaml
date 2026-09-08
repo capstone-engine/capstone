@@ -36,3 +36,40 @@ test_cases:
       address: 0x0
     expected:
       insns: []
+
+  -
+    input:
+      name: "riscv: RVE COREV cv.sh with out-of-range reg must fail (decodeRegReg)"
+      bytes: [ 0x2b, 0x33, 0x0a, 0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_MODE_RISCV_E, CS_MODE_RISCV_XCVMEM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns: []
+  -
+    input:
+      name: "riscv: RVE c.add with out-of-range reg must fail (decodeRVCInstrRdRs1Rs2)"
+      bytes: [ 0x46, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_MODE_RISCV_E, CS_MODE_RISCV_C, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns: []
+  -
+    input:
+      name: "riscv: RVE c.mv with out-of-range reg must fail (decodeRVCInstrRdRs2)"
+      bytes: [ 0x46, 0x90 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_MODE_RISCV_E, CS_MODE_RISCV_C, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns: []
+  -
+    input:
+      name: "riscv: RVE compressed rd0-form with out-of-range reg must fail (decodeRVCInstrRdRs1ImmZero)"
+      bytes: [ 0x01, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV32, CS_MODE_RISCV_E, CS_MODE_RISCV_C, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns: []
