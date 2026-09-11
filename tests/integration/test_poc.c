@@ -374,9 +374,9 @@ static void test_riscv_rve_unchecked_reg_decode(void)
 		{ CS_MODE_RISCV32 | CS_MODE_RISCV_E | CS_MODE_RISCV_COREV,
 		  { 0x2b, 0x33, 0x0a, 0x2a },
 		  4 },
-		/* decodeXTHeadMemPair: th.lwd with rd2 = x17 */
+		/* decodeXTHeadMemPair: th.lwd with rd1/rs1/rd2 = x16 */
 		{ CS_MODE_RISCV32 | CS_MODE_RISCV_E | CS_MODE_RISCV_THEAD,
-		  { 0x0b, 0x40, 0x11, 0xe1 },
+		  { 0x0b, 0x48, 0x08, 0xe3 },
 		  4 },
 		/* decodeRVCInstrRdRs2 / decodeRVCInstrRdRs1Rs2 */
 		{ CS_MODE_RISCV32 | CS_MODE_RISCV_E | CS_MODE_RISCV_C,
@@ -403,6 +403,7 @@ static void test_riscv_rve_unchecked_reg_decode(void)
 		cs_insn *insn = NULL;
 		size_t count = cs_disasm(handle, cases[i].code, cases[i].size,
 					 0x1000, 0, &insn);
+		assert(count == 0);
 		cs_free(insn, count);
 		cs_close(&handle);
 	}
