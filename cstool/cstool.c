@@ -8,6 +8,7 @@
 
 #include <capstone/capstone.h>
 #include "cstool.h"
+#include "../cs_priv.h"
 
 #ifdef CAPSTONE_AARCH64_COMPAT_HEADER
 #define CS_ARCH_AARCH64 CS_ARCH_ARM64
@@ -610,7 +611,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 	if (strlen(code) == 0)
 		return NULL;
 
-	result = (uint8_t *)malloc(strlen(code));
+	result = (uint8_t *)cs_mem_malloc(strlen(code));
 	if (result != NULL) {
 		while (code[i] != '\0') {
 			if (isxdigit(code[i]) && isxdigit(code[i + 1])) {

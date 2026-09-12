@@ -243,7 +243,7 @@ char *str_append(char *str_a, const char *str_b)
 		return NULL;
 	}
 	size_t asize = strlen(str_a) + strlen(str_b) + 1;
-	str_a = realloc(str_a, asize);
+	str_a = cs_mem_realloc(str_a, asize);
 	strncat(str_a, str_b, asize - strlen(str_a));
 	return str_a;
 }
@@ -260,7 +260,7 @@ char *byte_seq_to_str(uint8_t *bytes, size_t len)
 		return NULL;
 	}
 	char single_byte[8] = { 0 };
-	char *s = calloc(sizeof(char), 32);
+	char *s = cs_mem_calloc(sizeof(char), 32);
 	for (size_t i = 0; i < len; ++i) {
 		cs_snprintf(single_byte, sizeof(single_byte),
 			    "0x%02" PRIx8 "%s", bytes[i],

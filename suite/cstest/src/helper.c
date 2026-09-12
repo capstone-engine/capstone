@@ -21,7 +21,7 @@ char *cs_strndup(const char *s, size_t n)
 	if (l == SIZE_MAX) {
 		return NULL;
 	}
-	char *out = calloc(sizeof(char), l + 1);
+	char *out = cs_mem_calloc(sizeof(char), l + 1);
 	if (!out) {
 		return NULL;
 	}
