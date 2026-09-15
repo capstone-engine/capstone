@@ -62,7 +62,10 @@ cs_err X86_option(cs_struct *handle, cs_opt_type type, size_t value)
 		else
 			handle->regsize_map = regsize_map_32;
 
-		handle->mode = (cs_mode)value;
+		handle->mode =
+			(cs_mode)(value & (CS_MODE_16 | CS_MODE_32 |
+					   CS_MODE_64 | CS_MODE_X86_JCC_INTEL |
+					   CS_MODE_X86_JCC_AMD));
 		break;
 	case CS_OPT_SYNTAX:
 		switch (value) {
