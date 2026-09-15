@@ -1089,7 +1089,7 @@ int main(int argc, char **argv)
 	choosen_arch = argv[optind];
 	if (!cs_mem_is_setup()) {
 		fprintf(stderr,
-			"ERROR: Can not allocated memory, allocators are not defined.\n");
+			"ERROR: Cannot allocate memory: allocators are not defined.\n");
 		return -3;
 	};
 	assembly = preprocess(argv[optind + 1], &size);
