@@ -6,12 +6,12 @@ coverage:
           - next
         if_not_found: failure
         target: auto
-        threshold: 0.8%
+        threshold: 0%
     patch:
       default:
         if_not_found: success
         target: auto
-        threshold: 0.8%
+        threshold: 0%
 ignore:
   - ".github"
   - "bindings/java"
