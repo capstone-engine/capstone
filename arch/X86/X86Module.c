@@ -13,6 +13,10 @@
 cs_err X86_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
+	if ((ud->mode & CS_MODE_X86_JCC_INTEL) &&
+	    (ud->mode & CS_MODE_X86_JCC_AMD))
+		return CS_ERR_MODE;
+
 	mri = cs_mem_calloc(1, sizeof(*mri));
 	if (!mri)
 		return CS_ERR_MEM;
@@ -22,7 +26,6 @@ cs_err X86_global_init(cs_struct *ud)
 	// by default, we use Intel syntax
 	ud->printer = X86_Intel_printInst;
 	ud->syntax = CS_OPT_SYNTAX_INTEL;
-	ud->x86_jcc_mode = CS_OPT_X86_JCC_DEFAULT;
 	ud->printer_info = mri;
 	ud->disasm = X86_getInstruction;
 	ud->reg_name = X86_reg_name;
@@ -34,7 +37,7 @@ cs_err X86_global_init(cs_struct *ud)
 	ud->reg_access = X86_reg_access;
 #endif
 
-	if (ud->mode == CS_MODE_64)
+	if (ud->mode & CS_MODE_64)
 		ud->regsize_map = regsize_map_64;
 	else
 		ud->regsize_map = regsize_map_32;
@@ -49,20 +52,12 @@ cs_err X86_option(cs_struct *handle, cs_opt_type type, size_t value)
 	switch (type) {
 	default:
 		break;
-	case CS_OPT_X86_JCC_MODE:
-		switch (value) {
-		default:
-			handle->errnum = CS_ERR_OPTION;
-			return CS_ERR_OPTION;
-		case CS_OPT_X86_JCC_DEFAULT:
-		case CS_OPT_X86_JCC_INTEL:
-		case CS_OPT_X86_JCC_AMD:
-			handle->x86_jcc_mode = (int)value;
-			break;
-		}
-		break;
 	case CS_OPT_MODE:
-		if (value == CS_MODE_64)
+		if ((value & CS_MODE_X86_JCC_INTEL) &&
+		    (value & CS_MODE_X86_JCC_AMD))
+			return CS_ERR_OPTION;
+
+		if (value & CS_MODE_64)
 			handle->regsize_map = regsize_map_64;
 		else
 			handle->regsize_map = regsize_map_32;

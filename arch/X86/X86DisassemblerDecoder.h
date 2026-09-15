@@ -25,6 +25,7 @@
 #include <stdio.h>
 #endif
 
+#include "../../include/capstone/capstone.h"
 #include "X86DisassemblerDecoderCommon.h"
 
 /*
@@ -613,8 +614,6 @@ typedef struct InternalInstruction {
 
 	/* The mode to disassemble for (64-bit, protected, real) */
 	DisassemblerMode mode;
-	/* Policy for operand-size-prefixed near Jcc in 64-bit mode. */
-	int jccMode;
 	/* The start of the instruction, usable with the reader */
 	uint64_t startLocation;
 	/* The length of the instruction, in bytes */
@@ -702,12 +701,11 @@ typedef struct InternalInstruction {
  *                    specific to the logger.  May be NULL.
  * @param startLoc  - The address (in the reader's address space) of the first
  *                    byte in the instruction.
- * @param mode      - The mode (16-bit, 32-bit, 64-bit) to decode in.
+ * @param mode      - Capstone mode flags.
  * @return          - Nonzero if there was an error during decode, 0 otherwise.
  */
 int decodeInstruction(struct InternalInstruction *insn, byteReader_t reader,
-		      const void *readerArg, uint64_t startLoc,
-		      DisassemblerMode mode);
+		      const void *readerArg, uint64_t startLoc, cs_mode mode);
 
 //const char *x86DisassemblerGetInstrName(unsigned Opcode, const void *mii);
 

@@ -900,6 +900,8 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 		if (h->detail_opt) {
 #ifndef CAPSTONE_DIET
+			cs_mode mode = h->mode &
+				       (CS_MODE_16 | CS_MODE_32 | CS_MODE_64);
 			memcpy(insn->detail->regs_read, insns[i].regs_use,
 			       sizeof(insns[i].regs_use));
 			insn->detail->regs_read_count =
@@ -916,7 +918,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insns[i].regs_mod);
 				break;
 			case X86_RDTSC:
-				if (h->mode == CS_MODE_64) {
+				if (mode == CS_MODE_64) {
 					memcpy(insn->detail->regs_write,
 					       insns[i].regs_mod,
 					       sizeof(insns[i].regs_mod));
@@ -932,7 +934,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				}
 				break;
 			case X86_RDTSCP:
-				if (h->mode == CS_MODE_64) {
+				if (mode == CS_MODE_64) {
 					memcpy(insn->detail->regs_write,
 					       insns[i].regs_mod,
 					       sizeof(insns[i].regs_mod));
@@ -958,7 +960,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_LOOPE:
 			case X86_INS_LOOPNE:
 				// The instruction pointer register follows the mode.
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1012,7 +1014,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_LODSD:
 			case X86_INS_LODSQ:
 			case X86_INS_LODSW:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1046,7 +1048,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_STOSD:
 			case X86_INS_STOSQ:
 			case X86_INS_STOSW:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1080,7 +1082,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_MOVSW:
 			case X86_INS_MOVSD:
 			case X86_INS_MOVSQ:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1124,7 +1126,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 			case X86_INS_ENTER:
 			case X86_INS_LEAVE:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1168,7 +1170,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_INSB:
 			case X86_INS_INSW:
 			case X86_INS_INSD:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1197,7 +1199,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_OUTSB:
 			case X86_INS_OUTSW:
 			case X86_INS_OUTSD:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_64:
@@ -1239,7 +1241,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_OUTSB:
 			case X86_INS_OUTSW:
 			case X86_INS_OUTSD:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1254,7 +1256,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 			case X86_INS_JMP:
 			case X86_INS_LJMP:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1281,7 +1283,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				break;
 
 			case X86_INS_SYSENTER: {
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1308,7 +1310,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				break;
 			} break;
 			case X86_INS_SYSEXIT: {
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1364,7 +1366,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 					X86_GRP_JUMP;
 				insn->detail->groups_count++;
 
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:

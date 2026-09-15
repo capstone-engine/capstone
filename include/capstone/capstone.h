@@ -148,6 +148,12 @@ typedef enum cs_mode {
 	CS_MODE_16 = 1 << 1, ///< 16-bit mode (X86)
 	CS_MODE_32 = 1 << 2, ///< 32-bit mode (X86)
 	CS_MODE_64 = 1 << 3, ///< 64-bit mode (X86, PPC)
+	// X86
+	CS_MODE_X86_JCC_INTEL = 1
+				<< 4, ///< Ignore 66 on near Jcc in 64-bit mode.
+	CS_MODE_X86_JCC_AMD =
+		1
+		<< 5, ///< Honor 66 on near Jcc in 64-bit mode unless REX.W overrides it.
 	// ARM
 	CS_MODE_THUMB = 1 << 4, ///< ARM's Thumb mode, including Thumb-2
 	CS_MODE_MCLASS = 1 << 5, ///< ARM's Cortex-M series
@@ -385,7 +391,6 @@ typedef enum cs_opt_type {
 	CS_OPT_UNSIGNED, ///< print immediate operands in unsigned form
 	CS_OPT_ONLY_OFFSET_BRANCH, ///< ARM, PPC, AArch64: Don't add the branch immediate value to the PC.
 	CS_OPT_LITBASE, ///< Xtensa, set the LITBASE value. LITBASE is set to 0 by default.
-	CS_OPT_X86_JCC_MODE, ///< X86: decoding policy for operand-size-prefixed near Jcc in 64-bit mode.
 } cs_opt_type;
 
 /// Runtime option value (associated with option type above)
@@ -433,12 +438,6 @@ typedef enum cs_opt_value {
 	CS_OPT_DETAIL_ALIAS =
 		1
 		<< 3, ///< If enabled, sets alias instruction detail when possible.
-	CS_OPT_X86_JCC_DEFAULT =
-		0, ///< Preserve existing near Jcc decoding (CS_OPT_X86_JCC_MODE).
-	CS_OPT_X86_JCC_INTEL =
-		1, ///< Ignore 66 on near Jcc in 64-bit mode (CS_OPT_X86_JCC_MODE).
-	CS_OPT_X86_JCC_AMD =
-		2, ///< Honor 66 on near Jcc in 64-bit mode unless REX.W overrides it (CS_OPT_X86_JCC_MODE).
 } cs_opt_value;
 
 /// An option

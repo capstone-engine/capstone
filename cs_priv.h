@@ -101,7 +101,6 @@ struct cs_struct {
 	bool ShowVSRNumsAsVR;
 	cs_opt_value detail_opt, imm_unsigned;
 	int syntax; // asm syntax for simple printer such as ARM, Mips & PPC
-	int x86_jcc_mode;
 	bool doing_mem; // handling memory operand in InstPrinter code
 	bool doing_SME_Index; // handling a SME instruction that has index
 	unsigned short *insn_cache; // index caching for mapping.c

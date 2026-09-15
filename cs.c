@@ -123,7 +123,7 @@ typedef struct cs_arch_config {
 		X86_global_init, \
 		X86_option, \
 		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
-		  CS_MODE_16), \
+		  CS_MODE_16 | CS_MODE_X86_JCC_INTEL | CS_MODE_X86_JCC_AMD), \
 	}
 #define CS_ARCH_CONFIG_PPC \
 	{ \
@@ -1201,10 +1201,6 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, uintptr_t value)
 		handle->PrintBranchImmAsAddress = value == CS_OPT_ON ? false :
 								       true;
 		return CS_ERR_OK;
-	case CS_OPT_X86_JCC_MODE:
-		if (handle->arch != CS_ARCH_X86)
-			return CS_ERR_OPTION;
-		break;
 	}
 
 	if (!arch_configs[handle->arch].arch_option)

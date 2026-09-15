@@ -19,18 +19,6 @@ configs = {
     },
     "CS_OPT_SKIPDATA": {"type": cs.CS_OPT_SKIPDATA, "val": cs.CS_OPT_ON},
     "CS_OPT_UNSIGNED": {"type": cs.CS_OPT_UNSIGNED, "val": cs.CS_OPT_ON},
-    "CS_OPT_X86_JCC_DEFAULT": {
-        "type": cs.CS_OPT_X86_JCC_MODE,
-        "val": cs.CS_OPT_X86_JCC_DEFAULT,
-    },
-    "CS_OPT_X86_JCC_INTEL": {
-        "type": cs.CS_OPT_X86_JCC_MODE,
-        "val": cs.CS_OPT_X86_JCC_INTEL,
-    },
-    "CS_OPT_X86_JCC_AMD": {
-        "type": cs.CS_OPT_X86_JCC_MODE,
-        "val": cs.CS_OPT_X86_JCC_AMD,
-    },
     "CS_OPT_ONLY_OFFSET_BRANCH": {
         "type": cs.CS_OPT_ONLY_OFFSET_BRANCH,
         "val": cs.CS_OPT_ON,
