@@ -40,11 +40,11 @@ static bool test_str_append()
 	char *str_b = NULL;
 	CHECK_NULL_RET_FALSE(str_append(str_a, str_b));
 
-	str_a = calloc(5, sizeof(char));
+	str_a = cs_mem_calloc(5, sizeof(char));
 	memcpy(str_a, "AAAA", 5);
 	CHECK_NULL_RET_FALSE(str_append(str_a, str_b));
 
-	str_b = calloc(5, sizeof(char));
+	str_b = cs_mem_calloc(5, sizeof(char));
 	str_a = str_append(str_a, str_b);
 	CHECK_STR_EQUAL_RET_FALSE(str_a, "AAAA");
 

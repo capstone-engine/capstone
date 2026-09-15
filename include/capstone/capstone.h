@@ -809,7 +809,7 @@ cs_err CAPSTONE_API cs_close(csh *handle);
 
  NOTE: in the case of CS_OPT_MEM, handle's value can be anything,
  so that cs_option(handle, CS_OPT_MEM, value) can (i.e must) be called
- even before cs_open()
+ even before cs_open(). All members of passed (cs_opt_mem *) must be defined.
 */
 CAPSTONE_EXPORT
 cs_err CAPSTONE_API cs_option(csh handle, cs_opt_type type, uintptr_t value);

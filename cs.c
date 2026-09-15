@@ -806,8 +806,7 @@ cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 	cs_err err = CS_ERR_ARCH;
 	struct cs_struct *ud = NULL;
 
-	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc ||
-	    !cs_mem_free || !cs_vsnprintf) {
+	if (!cs_mem_is_setup()) {
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
 		err = CS_ERR_MEMSETUP;
@@ -1079,7 +1078,7 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, uintptr_t value)
 		cs_mem_free = mem->free;
 		cs_vsnprintf = mem->vsnprintf;
 
-		return CS_ERR_OK;
+		return cs_mem_is_setup() ? CS_ERR_OK : CS_ERR_MEMSETUP;
 	}
 
 	handle = (struct cs_struct *)(uintptr_t)ud;

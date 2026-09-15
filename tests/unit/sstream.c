@@ -691,7 +691,8 @@ bool test_underflow_in_sstream(void)
 			   .realloc = realloc,
 			   .free = free,
 			   .vsnprintf = evil_vsnprintf };
-	cs_option(0, CS_OPT_MEM, (size_t)&mem);
+	CS_ASSERT_RET_VAL(cs_option(0, CS_OPT_MEM, (size_t)&mem) == CS_ERR_OK,
+			  false);
 
 	SStream OS;
 	SStream_Init(&OS);
