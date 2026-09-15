@@ -1,0 +1,34 @@
+coverage:
+  status:
+    project:
+      default:
+        branches:
+          - next
+        if_not_found: failure
+        target: auto
+        threshold: 0.8%
+    patch:
+      default:
+        if_not_found: success
+        target: auto
+        threshold: 0.8%
+ignore:
+  - ".github"
+  - "bindings/java"
+  - "bindings/ocaml"
+  - "bindings/vb6"
+  - "bindings/cons_generator.py"
+  - "bindings/stdout_cmp.py"
+  - "contrib"
+  - "doc"
+  - "ext_patches"
+  - "packages"
+  - "suite"
+  - "tests"
+  - "windows"
+  - "windowsce"
+  - "xcode"
+
+comment:
+  layout: "header, files, components, footer"
+  require_changes: true
