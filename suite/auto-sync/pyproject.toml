@@ -18,7 +18,7 @@ dependencies = [
   # lit 23.1.0 removed the positional execute_external=True that
   # lit_config/lit.cfg.py passes to ShTest, which fails every
   # Auto-Sync run. Pinned below it until that call is migrated.
-  "lit >= 18.1.8, < 23",
+  "lit >= 18.1.8, < 24",
 ]
 requires-python = ">= 3.11"
 
