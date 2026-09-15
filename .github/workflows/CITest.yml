@@ -45,6 +45,7 @@ jobs:
               diet-build: 'OFF',
               enable-asan: 'OFF',
               enable-msan: 'OFF',
+              enable-cov: 'OFF',
               cc: 'gcc'
             }
           - {
@@ -55,6 +56,19 @@ jobs:
               diet-build: 'OFF',
               enable-asan: 'OFF',
               enable-msan: 'OFF',
+              enable-cov: 'OFF',
+              cc: 'gcc',
+              build_type: 'Debug'
+            }
+          - {
+              name: 'ubuntu-22.04 x64 cmake - coverage',
+              os: ubuntu-22.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              enable-cov: 'ON',
               cc: 'gcc',
               build_type: 'Debug'
             }
@@ -66,6 +80,7 @@ jobs:
               diet-build: 'OFF',
               enable-asan: 'OFF',
               enable-msan: 'OFF',
+              enable-cov: 'OFF',
               cc: 'gcc',
               build_type: 'Debug',
               build_options: '-DCAPSTONE_ASSERTION_WARNINGS=ON'
@@ -78,6 +93,7 @@ jobs:
               diet-build: 'OFF',
               enable-asan: 'OFF',
               enable-msan: 'OFF',
+              enable-cov: 'OFF',
               cc: 'gcc',
               build_type: 'Release',
               build_options: '-DCAPSTONE_ASSERTION_WARNINGS=OFF'
@@ -90,6 +106,7 @@ jobs:
               diet-build: 'OFF',
               enable-asan: 'OFF',
               enable-msan: 'OFF',
+              enable-cov: 'OFF',
               cc: 'gcc',
               build_type: 'Release',
               build_options: '-DCAPSTONE_ASSERTION_WARNINGS=ON'
@@ -102,6 +119,7 @@ jobs:
               diet-build: 'OFF',
               enable-asan: 'ON',
               enable-msan: 'OFF',
+              enable-cov: 'OFF',
               cc: 'gcc',
               build_type: 'Debug'
             }
@@ -124,6 +142,7 @@ jobs:
       run: |
         sudo apt-get -y update
         sudo apt-get -y install valgrind
+        pip3 install --user gcovr
 
     - name: make
       if: startsWith(matrix.config.build-system, 'make')
@@ -136,6 +155,7 @@ jobs:
       env:
         asan: ${{ matrix.config.enable-asan }}
         msan: ${{ matrix.config.enable-msan }}
+        cov: ${{ matrix.config.enable-cov }}
         compiler: ${{ matrix.config.cc }}
         build_option: ${{ matrix.config.build_option }}
         build_type: ${{ matrix.config.build_type }}
@@ -147,6 +167,7 @@ jobs:
           -DCAPSTONE_INSTALL=1 \
           -DCMAKE_C_COMPILER=${compiler} \
           -DCMAKE_INSTALL_PREFIX=/usr \
+          -DENABLE_COVERAGE=${cov} \
           -DENABLE_ASAN=${asan} \
           -DENABLE_MSAN=${msan} \
           -DCAPSTONE_BUILD_DIET=${diet_build} ${build_option} ..
@@ -160,6 +181,7 @@ jobs:
           -DCMAKE_C_COMPILER=${compiler} \
           -DCMAKE_INSTALL_PREFIX=/usr \
           -DCAPSTONE_BUILD_CSTEST=ON \
+          -DENABLE_COVERAGE=${cov} \
           -DENABLE_ASAN=${asan} \
           -DENABLE_MSAN=${msan} ${build_option} ..
         sudo cmake --build . --config ${build_type} --target install
@@ -240,6 +262,21 @@ jobs:
         diff ./include/capstone/arm64.h arm64_compat_current.h &&
         diff ./include/capstone/systemz_compatibility.h systemz_compat_current.h &&
         diff ./include/capstone/riscv.h riscv_current.h
+
+    - name: Generate coverage data
+      if: startsWith(matrix.config.enable-cov, 'ON')
+      run: |
+        gcovr --version
+        gcovr --gcov-ignore-parse-errors=all --txt build/coverage.txt --cobertura build/coverage.xml --merge-mode-functions=separate build
+
+    - name: Upload coverage to Codecov
+      if: startsWith(matrix.config.enable-cov, 'ON')
+      uses: codecov/codecov-action@v7
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        directory: build/
+        fail_ci_if_error: true
+        verbose: true
 
   Windows:
     runs-on: ${{ matrix.config.os }}
