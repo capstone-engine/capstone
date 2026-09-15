@@ -141,6 +141,12 @@ extern cs_realloc_t cs_mem_realloc;
 extern cs_free_t cs_mem_free;
 extern cs_vsnprintf_t cs_vsnprintf;
 
+static inline bool cs_mem_is_setup()
+{
+	return cs_mem_malloc && cs_mem_calloc && cs_mem_realloc &&
+	       cs_mem_free && cs_vsnprintf;
+}
+
 /// Capstone assert macros. They can be configured to print warnings
 /// when the `expr` is false.
 /// This can be enabled by defining CAPSTONE_ASSERTION_WARNINGS.

@@ -1087,6 +1087,11 @@ int main(int argc, char **argv)
 	}
 
 	choosen_arch = argv[optind];
+	if (!cs_mem_is_setup()) {
+		fprintf(stderr,
+			"ERROR: Can not allocated memory, allocators are not defined.\n");
+		return -3;
+	};
 	assembly = preprocess(argv[optind + 1], &size);
 	if (!assembly) {
 		usage(argv[0]);
@@ -1099,7 +1104,7 @@ int main(int argc, char **argv)
 		if (temp == src || *temp != '\0' || errno == ERANGE) {
 			fprintf(stderr,
 				"ERROR: invalid address argument, quit!\n");
-			free(assembly);
+			cs_mem_free(assembly);
 			return -2;
 		}
 	}
