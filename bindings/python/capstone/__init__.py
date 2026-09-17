@@ -45,8 +45,8 @@ __all__ = [
     "CS_MODE_16",
     "CS_MODE_32",
     "CS_MODE_64",
-    "CS_MODE_X86_JCC_INTEL",
-    "CS_MODE_X86_JCC_AMD",
+    "CS_MODE_X86_INTEL",
+    "CS_MODE_X86_AMD",
     "CS_MODE_ARM",
     "CS_MODE_THUMB",
     "CS_MODE_MCLASS",
@@ -355,8 +355,8 @@ CS_MODE_ARM = 0  # ARM mode
 CS_MODE_16 = 1 << 1  # 16-bit mode (for X86)
 CS_MODE_32 = 1 << 2  # 32-bit mode (for X86)
 CS_MODE_64 = 1 << 3  # 64-bit mode (for X86, PPC)
-CS_MODE_X86_JCC_INTEL = 1 << 4
-CS_MODE_X86_JCC_AMD = 1 << 5
+CS_MODE_X86_INTEL = 1 << 4
+CS_MODE_X86_AMD = 1 << 5
 CS_MODE_THUMB = 1 << 4  # ARM's Thumb mode, including Thumb-2
 CS_MODE_MCLASS = 1 << 5  # ARM's Cortex-M series
 CS_MODE_V8 = 1 << 6  # ARMv8 A32 encodings for ARM
