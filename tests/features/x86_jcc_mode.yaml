@@ -40,7 +40,7 @@ test_cases:
       name: "Jcc AMD: JO rel16 and following MOVSD"
       bytes: [0x66, 0x0f, 0x80, 0xce, 0xfa, 0xa5, 0xd8]
       arch: CS_ARCH_X86
-      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_JCC_AMD]
+      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_AMD]
       address: 0x123450000
     expected:
       insns:
@@ -60,7 +60,7 @@ test_cases:
       name: "Jcc AMD: JNO in AT&T syntax"
       bytes: [0x66, 0x0f, 0x81, 0xce, 0xfa, 0xa5, 0xd8]
       arch: CS_ARCH_X86
-      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_JCC_AMD, CS_OPT_SYNTAX_ATT]
+      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_AMD, CS_OPT_SYNTAX_ATT]
       address: 0
     expected:
       insns:
@@ -79,7 +79,7 @@ test_cases:
       name: "Jcc AMD: JB target wraparound"
       bytes: [0x66, 0x0f, 0x82, 0x01, 0x00]
       arch: CS_ARCH_X86
-      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_JCC_AMD]
+      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_AMD]
       address: 0xfffe
     expected:
       insns:
@@ -96,7 +96,7 @@ test_cases:
       name: "Jcc AMD: REX.W overrides 66"
       bytes: [0x66, 0x48, 0x0f, 0x80, 0xce, 0xfa, 0xa5, 0xd8]
       arch: CS_ARCH_X86
-      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_JCC_AMD]
+      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_AMD]
       address: 0
     expected:
       insns:
@@ -114,7 +114,7 @@ test_cases:
       name: "Jcc AMD: 66 after REX.W"
       bytes: [0x48, 0x66, 0x0f, 0x80, 0xce, 0xfa, 0xa5, 0xd8]
       arch: CS_ARCH_X86
-      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_JCC_AMD]
+      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_AMD]
       address: 0
     expected:
       insns:
@@ -134,7 +134,7 @@ test_cases:
       name: "Jcc Intel: JG rel32"
       bytes: [0x66, 0x0f, 0x8f, 0xce, 0xfa, 0xa5, 0xd8]
       arch: CS_ARCH_X86
-      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_JCC_INTEL]
+      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_INTEL]
       address: 0
     expected:
       insns:
@@ -151,7 +151,7 @@ test_cases:
       name: "Jcc AMD: JG rel16"
       bytes: [0x66, 0x0f, 0x8f, 0xce, 0xfa]
       arch: CS_ARCH_X86
-      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_JCC_AMD]
+      options: [CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_AMD]
       address: 0
     expected:
       insns:
@@ -168,7 +168,7 @@ test_cases:
       name: "Jcc Intel flag preserves 64-bit operands and registers"
       bytes: [0x48, 0xc7, 0xc0, 0xff, 0xff, 0xff, 0xff, 0x48, 0xa1, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x0f, 0x31, 0xd9, 0x20, 0xa5, 0xe8, 0x00, 0x00, 0x00, 0x00, 0xc3]
       arch: CS_ARCH_X86
-      options: [CS_MODE_64, CS_MODE_X86_JCC_INTEL, CS_OPT_DETAIL]
+      options: [CS_MODE_64, CS_MODE_X86_INTEL, CS_OPT_DETAIL]
       address: 0x100000000
     expected:
       insns:
@@ -203,7 +203,7 @@ test_cases:
       name: "Jcc AMD flag preserves 64-bit operands and registers in AT&T syntax"
       bytes: [0x48, 0xc7, 0xc0, 0xff, 0xff, 0xff, 0xff, 0x48, 0xa1, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x0f, 0x31, 0xd9, 0x20, 0xa5, 0xe8, 0x00, 0x00, 0x00, 0x00, 0xc3]
       arch: CS_ARCH_X86
-      options: [CS_MODE_64, CS_MODE_X86_JCC_AMD, CS_OPT_DETAIL, CS_OPT_SYNTAX_ATT]
+      options: [CS_MODE_64, CS_MODE_X86_AMD, CS_OPT_DETAIL, CS_OPT_SYNTAX_ATT]
       address: 0x100000000
     expected:
       insns:

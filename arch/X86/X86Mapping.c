@@ -715,9 +715,9 @@ const char *X86_reg_name(csh handle, unsigned int reg)
 		return NULL;
 
 	if (reg == X86_REG_EFLAGS) {
-		if (ud->mode & CS_MODE_32)
+		if (x86_has_feature(ud->mode, CS_MODE_32))
 			return "eflags";
-		if (ud->mode & CS_MODE_64)
+		if (x86_has_feature(ud->mode, CS_MODE_64))
 			return "rflags";
 	}
 
@@ -900,8 +900,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 		if (h->detail_opt) {
 #ifndef CAPSTONE_DIET
-			cs_mode mode = h->mode &
-				       (CS_MODE_16 | CS_MODE_32 | CS_MODE_64);
+			cs_mode mode = x86_get_bit_mode(h->mode);
 			memcpy(insn->detail->regs_read, insns[i].regs_use,
 			       sizeof(insns[i].regs_use));
 			insn->detail->regs_read_count =
@@ -2224,9 +2223,9 @@ static void add_cx(MCInst *MI)
 	if (MI->csh->detail_opt) {
 		x86_reg cx;
 
-		if (MI->csh->mode & CS_MODE_16)
+		if (x86_has_feature(MI->csh->mode, CS_MODE_16))
 			cx = X86_REG_CX;
-		else if (MI->csh->mode & CS_MODE_32)
+		else if (x86_has_feature(MI->csh->mode, CS_MODE_32))
 			cx = X86_REG_ECX;
 		else // 64-bit
 			cx = X86_REG_RCX;

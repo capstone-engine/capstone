@@ -1307,10 +1307,10 @@ static int getID(struct InternalInstruction *insn, cs_mode mode)
 			if (insn->opcodeType != TWOBYTE)
 				break;
 
-			if ((mode &
-			     (CS_MODE_X86_JCC_INTEL | CS_MODE_X86_JCC_AMD)) &&
+			if ((x86_has_feature(mode, CS_MODE_X86_INTEL) ||
+			     x86_has_feature(mode, CS_MODE_X86_AMD)) &&
 			    insn->vectorExtensionType == TYPE_NO_VEX_XOP) {
-				if ((mode & CS_MODE_X86_JCC_AMD) &&
+				if ((x86_has_feature(mode, CS_MODE_X86_AMD)) &&
 				    !wFromREX(insn->rexPrefix)) {
 					attrMask |= ATTR_OPSIZE;
 					insn->immediateSize = 2;
@@ -2537,9 +2537,9 @@ int decodeInstruction(struct InternalInstruction *insn, byteReader_t reader,
 	insn->readerArg = readerArg;
 	insn->startLocation = startLoc;
 	insn->readerCursor = startLoc;
-	if (mode & CS_MODE_16)
+	if (x86_has_feature(mode, CS_MODE_16))
 		insn->mode = MODE_16BIT;
-	else if (mode & CS_MODE_32)
+	else if (x86_has_feature(mode, CS_MODE_32))
 		insn->mode = MODE_32BIT;
 	else
 		insn->mode = MODE_64BIT;
