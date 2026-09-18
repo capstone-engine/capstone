@@ -148,6 +148,13 @@ typedef enum cs_mode {
 	CS_MODE_16 = 1 << 1, ///< 16-bit mode (X86)
 	CS_MODE_32 = 1 << 2, ///< 32-bit mode (X86)
 	CS_MODE_64 = 1 << 3, ///< 64-bit mode (X86, PPC)
+	// X86
+	/// x86 Intel specific quirks:
+	/// - Ignore 66-prefix near Jcc in 64-bit mode.
+	CS_MODE_X86_INTEL = 1 << 4,
+	/// x86 AMD specific quirks:
+	/// - Honor 66-prefix near Jcc in 64-bit mode, unless REX.W overrides it.
+	CS_MODE_X86_AMD = 1 << 5,
 	// ARM
 	CS_MODE_THUMB = 1 << 4, ///< ARM's Thumb mode, including Thumb-2
 	CS_MODE_MCLASS = 1 << 5, ///< ARM's Cortex-M series

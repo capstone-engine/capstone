@@ -104,4 +104,14 @@ void X86_build_lookup_tables(cs_struct *h);
 
 void X86_postprinter(csh handle, cs_insn *insn, SStream *mnem, MCInst *mci);
 
+static inline bool x86_has_feature(cs_mode mode, int flag)
+{
+	return (mode & flag) == flag;
+}
+
+static inline int x86_get_bit_mode(cs_mode mode)
+{
+	return mode & (CS_MODE_64 | CS_MODE_32 | CS_MODE_16);
+}
+
 #endif

@@ -285,6 +285,10 @@ Nonetheless, we hope this additional information is useful to you.
 - Decoding of conflicting segment overrides was changed to match CPU behavior:
   For instructions with both an FS/GS and a ES/CS/SS/DS overrides the FS/GS override now takes priority, regardless of prefix ordering.
 - Decoding of instructions with multiple mandatory prefixes was fixed. (e.g., `shld` with a data size override and a redundant `F3` prefix, or `addss` with an additional `66` prefix)
+- Added `CS_MODE_X86_INTEL` and `CS_MODE_X86_AMD` to select ISA specific quirks.
+  Currently this is only:
+  - How `66`-prefixed near conditional jumps are decoded in 64-bit mode (see flag documentation).
+    Without either flag, the previous LLVM behavior is preserved.
 
 **BPF**
 

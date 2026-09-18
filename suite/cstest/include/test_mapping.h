@@ -253,6 +253,8 @@ static const cs_enum_id_map test_mode_map[] = {
 	{ .str = "CS_MODE_TRICORE_180", .val = CS_MODE_TRICORE_180 },
 	{ .str = "CS_MODE_V8", .val = CS_MODE_V8 },
 	{ .str = "CS_MODE_V9", .val = CS_MODE_V9 },
+	{ .str = "CS_MODE_X86_AMD", .val = CS_MODE_X86_AMD },
+	{ .str = "CS_MODE_X86_INTEL", .val = CS_MODE_X86_INTEL },
 	{ .str = "CS_MODE_XTENSA_ESP32", .val = CS_MODE_XTENSA_ESP32 },
 	{ .str = "CS_MODE_XTENSA_ESP32S2", .val = CS_MODE_XTENSA_ESP32S2 },
 	{ .str = "CS_MODE_XTENSA_ESP32S3", .val = CS_MODE_XTENSA_ESP32S3 },

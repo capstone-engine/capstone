@@ -123,7 +123,7 @@ typedef struct cs_arch_config {
 		X86_global_init, \
 		X86_option, \
 		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
-		  CS_MODE_16), \
+		  CS_MODE_16 | CS_MODE_X86_INTEL | CS_MODE_X86_AMD), \
 	}
 #define CS_ARCH_CONFIG_PPC \
 	{ \

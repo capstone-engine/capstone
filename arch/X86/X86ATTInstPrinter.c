@@ -75,7 +75,7 @@ static void set_mem_access(MCInst *MI, bool status)
 
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	switch (MI->csh->mode) {
+	switch (x86_get_bit_mode(MI->csh->mode)) {
 	case CS_MODE_16:
 		switch (MI->flat_insn->id) {
 		default:
@@ -185,7 +185,7 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 	case X86_FSTENVm:
 	case X86_FLDENVm:
 		// TODO: fix this in tablegen instead
-		switch (MI->csh->mode) {
+		switch (x86_get_bit_mode(MI->csh->mode)) {
 		default: // never reach
 			break;
 		case CS_MODE_16:
@@ -438,7 +438,7 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	// DI accesses are always ES-based on non-64bit mode
-	if (MI->csh->mode != CS_MODE_64) {
+	if (!(x86_has_feature(MI->csh->mode, CS_MODE_64))) {
 		SStream_concat0(O, "%es:(");
 		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->x86
@@ -562,8 +562,10 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 				.operands[MI->flat_insn->detail->x86.op_count]
 				.mem.disp = imm;
 		if (imm < 0) {
-			SStream_concat(O, "0x%" PRIx64,
-				       arch_masks[MI->csh->mode] & imm);
+			SStream_concat(
+				O, "0x%" PRIx64,
+				arch_masks[x86_get_bit_mode(MI->csh->mode)] &
+					imm);
 		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%" PRIx64, imm);
@@ -635,8 +637,11 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			      MI->address;
 
 		// truncate imm for non-64bit
-		if (MI->csh->mode != CS_MODE_64) {
+		if (!(x86_has_feature(MI->csh->mode, CS_MODE_64))) {
 			imm = imm & 0xffffffff;
+		} else if ((x86_has_feature(MI->csh->mode, CS_MODE_X86_AMD)) &&
+			   MI->imm_size == 2) {
+			imm &= 0xffff;
 		}
 
 		if (imm < 0) {
@@ -937,7 +942,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 				if (DispVal < 0) {
 					SStream_concat(
 						O, "0x%" PRIx64,
-						arch_masks[MI->csh->mode] &
+						arch_masks[x86_get_bit_mode(
+							MI->csh->mode)] &
 							DispVal);
 				} else {
 					if (DispVal > HEX_THRESHOLD)
@@ -1049,7 +1055,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	// TODO: Probably this hack should be redesigned via InstAlias in
 	// InstrInfo.td as soon as Requires clause is supported properly
 	// for InstAlias.
-	if (MI->csh->mode == CS_MODE_64 &&
+	if ((x86_has_feature(MI->csh->mode, CS_MODE_64)) &&
 	    MCInst_getOpcode(MI) == X86_CALLpcrel32) {
 		SStream_concat0(OS, "callq\t");
 		MCInst_setOpcodePub(MI, X86_INS_CALL);

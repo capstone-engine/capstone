@@ -7207,3 +7207,25 @@ test_cases:
           regs_read: [ rsp, ss ]
           regs_write: [ rsp, rip ]
           groups: [ ret, mode64 ]
+  -
+    input:
+      name: "issue 3037 x86-64 Intel JO ignores operand-size override"
+      bytes: [ 0x66,0x0f,0x80,0xce,0xfa,0xa5,0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_INTEL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jo 0xffffffffd8a5fad5"
+  -
+    input:
+      name: "issue 3037 x86-64 Intel JNO ignores operand-size override"
+      bytes: [ 0x66,0x0f,0x81,0xce,0xfa,0xa5,0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL, CS_MODE_X86_INTEL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "jno 0xffffffffd8a5fad5"

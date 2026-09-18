@@ -93,7 +93,7 @@ static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 		break;
 	}
 
-	switch (MI->csh->mode) {
+	switch (x86_get_bit_mode(MI->csh->mode)) {
 	case CS_MODE_16:
 		switch (MI->flat_insn->id) {
 		default:
@@ -209,7 +209,7 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 	case X86_FSTENVm:
 	case X86_FLDENVm:
 		// TODO: fix this in tablegen instead
-		switch (MI->csh->mode) {
+		switch (x86_get_bit_mode(MI->csh->mode)) {
 		default: // never reach
 			break;
 		case CS_MODE_16:
@@ -564,7 +564,7 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	// DI accesses are always ES-based on non-64bit mode
-	if (MI->csh->mode != CS_MODE_64) {
+	if (!(x86_has_feature(MI->csh->mode, CS_MODE_64))) {
 		SStream_concat0(O, "es:[");
 		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->x86
@@ -700,7 +700,10 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 				.mem.disp = imm;
 
 		if (imm < 0)
-			printImm(MI, O, arch_masks[MI->csh->mode] & imm, true);
+			printImm(MI, O,
+				 arch_masks[x86_get_bit_mode(MI->csh->mode)] &
+					 imm,
+				 true);
 		else
 			printImm(MI, O, imm, true);
 	}
@@ -865,8 +868,11 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 		uint8_t opsize = X86_immediate_size(MI->Opcode, NULL);
 
 		// truncate imm for non-64bit
-		if (MI->csh->mode != CS_MODE_64) {
+		if (!(x86_has_feature(MI->csh->mode, CS_MODE_64))) {
 			imm = imm & 0xffffffff;
+		} else if ((x86_has_feature(MI->csh->mode, CS_MODE_X86_AMD)) &&
+			   MI->imm_size == 2) {
+			imm &= 0xffff;
 		}
 
 		printImm(MI, O, imm, true);
@@ -1205,11 +1211,12 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 				}
 			} else {
 				// memory reference to an immediate address
-				if (MI->csh->mode == CS_MODE_64)
+				if (x86_has_feature(MI->csh->mode, CS_MODE_64))
 					MI->op1_size = 8;
 				if (DispVal < 0) {
 					printImm(MI, O,
-						 arch_masks[MI->csh->mode] &
+						 arch_masks[x86_get_bit_mode(
+							 MI->csh->mode)] &
 							 DispVal,
 						 true);
 				} else {

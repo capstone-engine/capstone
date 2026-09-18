@@ -1139,7 +1139,7 @@ static uint16_t resolveMandatoryPrefixConflict(struct InternalInstruction *insn,
  * @return      - 0 if the ModR/M could be read when needed or was not needed;
  *                nonzero otherwise.
  */
-static int getID(struct InternalInstruction *insn)
+static int getID(struct InternalInstruction *insn, cs_mode mode)
 {
 	uint16_t attrMask;
 	uint16_t instructionID;
@@ -1273,8 +1273,8 @@ static int getID(struct InternalInstruction *insn)
 		attrMask ^= ATTR_ADSIZE;
 
 	/*
-	 * In 64-bit mode all f64 superscripted opcodes ignore opcode size prefix
-	 * CALL/JMP/JCC instructions need to ignore 0x66 and consume 4 bytes
+	 * CALL/JMP ignore 66 in 64-bit mode. Near Jcc preserve their previous
+	 * behavior unless an Intel or AMD mode is selected.
 	 */
 	if ((insn->mode == MODE_64BIT) && insn->hasOpSize) {
 		switch (insn->opcode) {
@@ -1287,6 +1287,8 @@ static int getID(struct InternalInstruction *insn)
 				insn->displacementSize = 4;
 			}
 			break;
+		case 0x80:
+		case 0x81:
 		case 0x82:
 		case 0x83:
 		case 0x84:
@@ -1302,7 +1304,25 @@ static int getID(struct InternalInstruction *insn)
 		case 0x8E:
 		case 0x8F:
 			// Take care of lea and three byte ops.
-			if (insn->opcodeType == TWOBYTE) {
+			if (insn->opcodeType != TWOBYTE)
+				break;
+
+			if ((x86_has_feature(mode, CS_MODE_X86_INTEL) ||
+			     x86_has_feature(mode, CS_MODE_X86_AMD)) &&
+			    insn->vectorExtensionType == TYPE_NO_VEX_XOP) {
+				if ((x86_has_feature(mode, CS_MODE_X86_AMD)) &&
+				    !wFromREX(insn->rexPrefix)) {
+					attrMask |= ATTR_OPSIZE;
+					insn->immediateSize = 2;
+					insn->displacementSize = 2;
+					insn->immSize = 2;
+				} else {
+					attrMask &= ~ATTR_OPSIZE;
+					insn->immediateSize = 4;
+					insn->displacementSize = 4;
+					insn->immSize = 8;
+				}
+			} else if (insn->opcode >= 0x82) {
 				attrMask ^= ATTR_OPSIZE;
 				insn->immediateSize = 4;
 				insn->displacementSize = 4;
@@ -2507,22 +2527,25 @@ static bool checkPrefix(struct InternalInstruction *insn)
  *                    any internal state.
  * @param startLoc  - The address (in the reader's address space) of the first
  *                    byte in the instruction.
- * @param mode      - The mode (real mode, IA-32e, or IA-32e in 64-bit mode) to
- *                    decode the instruction in.
+ * @param mode      - Capstone mode flags.
  * @return          - 0 if instruction is valid; nonzero if not.
  */
 int decodeInstruction(struct InternalInstruction *insn, byteReader_t reader,
-		      const void *readerArg, uint64_t startLoc,
-		      DisassemblerMode mode)
+		      const void *readerArg, uint64_t startLoc, cs_mode mode)
 {
 	insn->reader = reader;
 	insn->readerArg = readerArg;
 	insn->startLocation = startLoc;
 	insn->readerCursor = startLoc;
-	insn->mode = mode;
+	if (x86_has_feature(mode, CS_MODE_16))
+		insn->mode = MODE_16BIT;
+	else if (x86_has_feature(mode, CS_MODE_32))
+		insn->mode = MODE_32BIT;
+	else
+		insn->mode = MODE_64BIT;
 	insn->numImmediatesConsumed = 0;
 
-	if (readPrefixes(insn) || readOpcode(insn) || getID(insn) ||
+	if (readPrefixes(insn) || readOpcode(insn) || getID(insn, mode) ||
 	    insn->instructionID == 0 || checkPrefix(insn) || readOperands(insn))
 		return -1;
 
