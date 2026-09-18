@@ -99,8 +99,8 @@ public class M68k_const {
 	public static final int M68K_OP_MEM = CS_OP_MEM;
 
 	public static final int M68K_OP_FLAG_NONE = 0;
-	public static final int M68K_OP_FLAG_REG_LOWER = ;
-	public static final int M68K_OP_FLAG_REG_UPPER = ;
+	public static final int M68K_OP_FLAG_REG_LOWER = 1<<0;
+	public static final int M68K_OP_FLAG_REG_UPPER = 1<<1;
 	public static final int M68K_OP_FLAG_SHIFT_LEFT = 1<<2;
 	public static final int M68K_OP_FLAG_SHIFT_RIGHT = 1<<3;
 	public static final int M68K_OP_FLAG_MEM_UPDATE = 1<<4;
@@ -529,7 +529,11 @@ public class M68k_const {
 	public static final int M68K_INS_CP1NOP = 400;
 	public static final int M68K_INS_CP1ST = 401;
 	public static final int M68K_INS_TPF = 402;
-	public static final int M68K_INS_ENDING = 403;
+	public static final int M68K_INS_MAAAC = 403;
+	public static final int M68K_INS_MASAC = 404;
+	public static final int M68K_INS_MSAAC = 405;
+	public static final int M68K_INS_MSSAC = 406;
+	public static final int M68K_INS_ENDING = 407;
 
 	public static final int M68K_GRP_INVALID = 0;
 	public static final int M68K_GRP_JUMP = 1;
