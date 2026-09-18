@@ -1,6 +1,53 @@
 This file details the changelog of Capstone.
 
 -----------------------------
+Version 6.0.0-Alpha11: September 20th, 2026
+
+## What's Changed
+* Xtensa: gate ESP32-S3 and HIFI3 ops behind CS_MODE_XTENSA_ESP32S3 by @germiBest in https://github.com/capstone-engine/capstone/pull/2979
+* AArch64: report NZCV access for MRS/MSR of NZCV by @gaul in https://github.com/capstone-engine/capstone/pull/3002
+* xtensa: sign-extend scaled offsets in decodeOffset_* helpers by @Samin061 in https://github.com/capstone-engine/capstone/pull/2997
+* Fix Xtensa test with wrong mode selection. by @Rot127 in https://github.com/capstone-engine/capstone/pull/3004
+* Xtensa: Fix Stack overflow by @Rot127 in https://github.com/capstone-engine/capstone/pull/3012
+* AArch64: Fix diet-mode NULL deref in printMatrixTileVector by @amit-sides in https://github.com/capstone-engine/capstone/pull/3017
+* HHPA: Correct name of r0 register - flags -> r0 by @Rot127 in https://github.com/capstone-engine/capstone/pull/3024
+* Fix read from uninitialized memory by @Rot127 in https://github.com/capstone-engine/capstone/pull/3011
+* Add MSAN build option to CMakeLists.txt by @Rot127 in https://github.com/capstone-engine/capstone/pull/3029
+* x86: use effective address size for the loop counter register by @phverg in https://github.com/capstone-engine/capstone/pull/3025
+* systemz: bounds-check register index in decodeRegisterClass by @jmestwa-coder in https://github.com/capstone-engine/capstone/pull/3044
+* x86: fix VMOVUPS memory operand access by @raaller in https://github.com/capstone-engine/capstone/pull/3035
+* PowerPC: Keep BI out of the CTR-only branch predicate by @phix33 in https://github.com/capstone-engine/capstone/pull/3043
+* Alpha: Fix implicit read/write details for some memory instructions by @atirna in https://github.com/capstone-engine/capstone/pull/3034
+* X86: Fix four AT&T operand-detail defects by @phix33 in https://github.com/capstone-engine/capstone/pull/3042
+* RISCV: Revamp flags to allow fine grained control over aliasing by @moste00 in https://github.com/capstone-engine/capstone/pull/3008
+* M68K: Fix fmove.x 96-bit extended immediate decode length and printing by @b1llow in https://github.com/capstone-engine/capstone/pull/3016
+* AArch64: fix Rt operand of the integer STLUR forms by @gaul in https://github.com/capstone-engine/capstone/pull/3046
+* AArch64: SYSL writes its Rt operand, it does not read it by @gaul in https://github.com/capstone-engine/capstone/pull/3045
+* x86: fix near RET decoding with 0x66 and REX.W by @raaller in https://github.com/capstone-engine/capstone/pull/3049
+* ARM/AArch64: Improve runtime of ARM/AArch64 register name patching. by @Rot127 in https://github.com/capstone-engine/capstone/pull/3048
+* Handle case of vsprintf returning oob pointer offset. by @Rot127 in https://github.com/capstone-engine/capstone/pull/3060
+* PowerPC: add mcrxr instruction support by @StilesCrisis in https://github.com/capstone-engine/capstone/pull/3065
+* X86: Zero the operand slot before filling it in the Intel implicit insert by @phix33 in https://github.com/capstone-engine/capstone/pull/3057
+* cstest: Compare the PPC branch details once and without requiring operands by @phix33 in https://github.com/capstone-engine/capstone/pull/3058
+* Add AI guidelines and requirements. by @Rot127 in https://github.com/capstone-engine/capstone/pull/3064
+* x86: Add missing access info for operand[3] of vmulps. by @raaller in https://github.com/capstone-engine/capstone/pull/3059
+* x86: fix EVEX writemask access in AT&T syntax by @raaller in https://github.com/capstone-engine/capstone/pull/3072
+* Replace all system allocations with cs_mem_ allocations. by @Rot127 in https://github.com/capstone-engine/capstone/pull/3074
+* x86: fix JO/JNO operand size in 64-bit mode by @raaller in https://github.com/capstone-engine/capstone/pull/3067
+* riscv: propagate register-class decode failure in custom decoders by @jmestwa-coder in https://github.com/capstone-engine/capstone/pull/3071
+
+## New Contributors
+* @germiBest made their first contribution in https://github.com/capstone-engine/capstone/pull/2979
+* @gaul made their first contribution in https://github.com/capstone-engine/capstone/pull/3002
+* @amit-sides made their first contribution in https://github.com/capstone-engine/capstone/pull/3017
+* @phverg made their first contribution in https://github.com/capstone-engine/capstone/pull/3025
+* @raaller made their first contribution in https://github.com/capstone-engine/capstone/pull/3035
+* @atirna made their first contribution in https://github.com/capstone-engine/capstone/pull/3034
+* @StilesCrisis made their first contribution in https://github.com/capstone-engine/capstone/pull/3065
+
+**Full Changelog**: https://github.com/capstone-engine/capstone/compare/6.0.0-Alpha10...6.0.0-Alpha11
+
+-----------------------------
 Version 6.0.0-Alpha10: July 21th, 2026
 
 ## API changes and additions
