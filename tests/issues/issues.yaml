@@ -1,6 +1,26 @@
 test_cases:
   -
     input:
+      name: "issue 2899 cmpsd operand access (AT&T)"
+      bytes: [ 0xf3, 0xa7 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "repe cmpsl %es:(%edi), (%esi)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                access: CS_AC_READ
+  -
+    input:
       name: "issue 2900 vmovups memory destination access"
       bytes: [ 0xc5,0xf8,0x11,0x28 ]
       arch: "CS_ARCH_X86"

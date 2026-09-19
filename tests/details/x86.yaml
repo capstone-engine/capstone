@@ -3836,6 +3836,13 @@ test_cases:
             prefix: [ X86_PREFIX_REPE, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xa7, 0x00, 0x00, 0x00 ]
             eflags: [ X86_EFLAGS_TEST_DF, X86_EFLAGS_MODIFY_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_MODIFY_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_MODIFY_CF ]
+            operands:
+              -
+                type: X86_OP_MEM
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                access: CS_AC_READ
           regs_read: [ edi, esi, eflags, ds, ecx, es ]
           regs_write: [ edi, esi, eflags, ecx ]
       -
