@@ -23,7 +23,8 @@ Read the documentation relevant to the task:
 - Follow nearby code and reuse existing helpers. Avoid unrelated refactoring,
   formatting, and dependencies.
 - Use the repository's `.clang-format` for C and Black for Python.
-- Update documentation when the change affects an API or documented behavior.
+- Documentation must be written by a human. AI generate documentation is forbidden. 
+- API changes must be documented in `cs_v6_release_guide.md`. This must be done by the developer.
 - Before editing generated code, check how the module is updated. Follow its
   workflow so the fix survives regeneration.
 
