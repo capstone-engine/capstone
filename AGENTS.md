@@ -20,8 +20,14 @@ Read the documentation relevant to the task:
 
 - Check the working tree before editing and preserve existing work.
 - Establish the expected behavior and keep the fix focused on the task.
-- Follow nearby code and reuse existing helpers. Avoid unrelated refactoring,
-  formatting, and dependencies.
+- For architecture code, use updated modules such as ARM, PPC, Mips,
+  SystemZ, and Xtensa as style references. Reuse existing helpers where
+  appropriate.
+- Avoid unrelated refactoring, formatting changes, or dependency changes.
+- Prefer editing existing files when the change fits their purpose.
+  Add files only when required by the task or project conventions.
+- Keep comments focused on non-obvious behavior and constraints.
+  Do not restate the code or narrate the editing process.
 - Use the repository's `.clang-format` for C and Black for Python.
 - Documentation must be written by a human. AI generate documentation is forbidden. 
 - API changes must be documented in `cs_v6_release_guide.md`. This must be done by the developer.
@@ -41,6 +47,8 @@ Read the documentation relevant to the task:
 
 ## Before finishing
 
-Review the diff and run `git diff --check`. Keep build output and investigation
-notes out of the patch. Briefly report what changed and which tests actually
-ran, including any failed, skipped, or blocked checks.
+- Review your diff for unnecessary comments, files, and abstractions.
+  Remove additions that do not help implement, explain, or test the change.
+- Run `git diff --check`. Keep build output and investigation notes out of
+  the patch. Briefly report what changed and which tests actually ran,
+  including any failed, skipped, or blocked checks.
