@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_LOONGARCH
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 /*    Rot127 <unisono@quyllur.org>, 2022-2023 */
@@ -23,3 +24,5 @@ bool LoongArch_getFeatureBits(unsigned int mode, unsigned int feature)
 	// otherwise we support everything
 	return true;
 }
+
+#endif // CAPSTONE_HAS_LOONGARCH

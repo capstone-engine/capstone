@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_ARM
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -7304,3 +7305,5 @@ DecodeStatus ARM_LLVM_getInstruction(csh handle, const uint8_t *code,
 	return getInstruction(handle, code, code_len, instr, size, address,
 			      info);
 }
+
+#endif // CAPSTONE_HAS_ARM

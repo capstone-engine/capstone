@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_LOONGARCH
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -139,3 +140,5 @@ static void printAtomicMemOp(MCInst *MI, unsigned OpNo, SStream *O)
 
 	printRegName(MI, O, MCOperand_getReg(MO));
 }
+
+#endif // CAPSTONE_HAS_LOONGARCH

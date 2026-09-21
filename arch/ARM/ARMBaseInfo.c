@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_ARM
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -99,3 +100,5 @@ ARMSysReg_lookupMClassSysRegBy8bitSYSmValue(unsigned SYSm)
 	return ARMSysReg_lookupMClassSysRegByM2M3Encoding8((1 << 8) |
 							   (SYSm & 0xFF));
 }
+
+#endif // CAPSTONE_HAS_ARM

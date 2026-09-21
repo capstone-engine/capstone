@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_MIPS
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -3429,3 +3430,5 @@ DecodeStatus Mips_LLVM_getInstruction(MCInst *Instr, uint64_t *Size,
 {
 	return getInstruction(Instr, Size, Bytes, BytesLen, Address, CStream);
 }
+
+#endif // CAPSTONE_HAS_MIPS

@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_M68K
 /* ======================================================================== */
 /* ========================= LICENSING & COPYRIGHT ======================== */
 /* ======================================================================== */
@@ -5553,3 +5554,5 @@ bool M68K_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 	return true;
 }
+
+#endif // CAPSTONE_HAS_M68K

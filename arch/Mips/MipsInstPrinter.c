@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_MIPS
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -751,3 +752,5 @@ const char *Mips_LLVM_getRegisterName(unsigned RegNo, bool noRegName)
 		return getRegisterName(RegNo);
 	}
 }
+
+#endif // CAPSTONE_HAS_MIPS

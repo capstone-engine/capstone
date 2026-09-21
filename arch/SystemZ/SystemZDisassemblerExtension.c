@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_SYSTEMZ
 /* Capstone Disassembly Engine */
 /* By Rot127 <unisono@quyllur.org>, 2022-2023 */
 
@@ -116,3 +117,5 @@ bool SystemZ_getFeatureBits(unsigned int mode, unsigned int feature)
 		return true;
 	}
 }
+
+#endif // CAPSTONE_HAS_SYSTEMZ

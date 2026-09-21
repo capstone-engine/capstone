@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_SYSTEMZ
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -413,3 +414,5 @@ DecodeStatus SystemZ_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
 {
 	return getInstruction(MI, Size, Bytes, BytesLen, MI->address, NULL);
 }
+
+#endif // CAPSTONE_HAS_SYSTEMZ

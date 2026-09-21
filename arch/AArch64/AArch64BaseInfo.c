@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_AARCH64
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -173,3 +174,5 @@ void AArch64SysReg_genericRegisterString(uint32_t Bits, char *result)
 
 #include "AArch64GenSystemOperands.inc"
 #undef GET_SVCR_IMPL
+
+#endif // CAPSTONE_HAS_AARCH64

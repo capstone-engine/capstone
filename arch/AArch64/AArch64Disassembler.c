@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_AARCH64
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -2215,3 +2216,5 @@ static DecodeStatus DecodePRFMRegInstruction(MCInst *Inst, uint32_t insn,
 
 	return Success;
 }
+
+#endif // CAPSTONE_HAS_AARCH64

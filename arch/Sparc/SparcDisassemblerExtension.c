@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_SPARC
 /* Capstone Disassembly Engine */
 /* By Rot127 <unisono@quyllur.org>, 2025 */
 
@@ -11,3 +12,5 @@ bool Sparc_getFeatureBits(unsigned int mode, unsigned int feature)
 	}
 	return true;
 }
+
+#endif // CAPSTONE_HAS_SPARC

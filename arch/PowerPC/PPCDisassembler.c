@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_POWERPC
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -456,3 +457,5 @@ DecodeStatus PPC_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
 {
 	return getInstruction(handle, Bytes, BytesLen, MI, Size, Address, Info);
 }
+
+#endif // CAPSTONE_HAS_POWERPC

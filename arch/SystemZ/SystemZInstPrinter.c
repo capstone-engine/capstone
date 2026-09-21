@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_SYSTEMZ
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -392,3 +393,5 @@ void SystemZ_LLVM_printInstruction(MCInst *MI, const char *Annotation,
 {
 	printInst(MI, MI->address, Annotation, O);
 }
+
+#endif // CAPSTONE_HAS_SYSTEMZ

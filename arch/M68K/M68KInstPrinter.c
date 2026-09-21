@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_M68K
 /* Capstone Disassembly Engine */
 /* M68K Backend by Daniel Collin <daniel@collin.com> 2015-2016 */
 
@@ -804,3 +805,5 @@ void M68K_reg_access(const cs_insn *insn, cs_regs regs_read,
 	*regs_write_count = write_count;
 }
 #endif
+
+#endif // CAPSTONE_HAS_M68K

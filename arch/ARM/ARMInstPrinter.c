@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_ARM
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -2018,3 +2019,5 @@ void ARM_LLVM_printInstruction(MCInst *MI, SStream *O,
 {
 	printInst(MI, O, info);
 }
+
+#endif // CAPSTONE_HAS_ARM

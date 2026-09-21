@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_SH
 /* Capstone Disassembly Engine */
 /* By Yoshinori Sato, 2022 */
 
@@ -422,3 +423,5 @@ const char *SH_group_name(csh handle, unsigned int id)
 	return NULL;
 #endif
 }
+
+#endif // CAPSTONE_HAS_SH

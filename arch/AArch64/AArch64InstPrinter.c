@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_AARCH64
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -2613,3 +2614,5 @@ void AArch64_LLVM_printInstruction(MCInst *MI, SStream *O,
 {
 	printInst(MI, MI->address, "", O);
 }
+
+#endif // CAPSTONE_HAS_AARCH64

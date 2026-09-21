@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_XTENSA
 /* Capstone Disassembly Engine */
 /* By billow <billow.fun@gmail.com>, 2024 */
 
@@ -47,3 +48,5 @@ cs_err Xtensa_option(cs_struct *handle, cs_opt_type type, size_t value)
 
 	return CS_ERR_OK;
 }
+
+#endif // CAPSTONE_HAS_XTENSA

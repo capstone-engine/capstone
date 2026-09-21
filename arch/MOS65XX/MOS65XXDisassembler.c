@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_MOS65XX
 /* Capstone Disassembly Engine */
 /* MOS65XX Backend by Sebastian Macke <sebastian@macke.de> 2018 */
 
@@ -574,3 +575,5 @@ const char *MOS65XX_group_name(csh handle, unsigned int id)
 	return GroupNames[(int)id];
 #endif
 }
+
+#endif // CAPSTONE_HAS_MOS65XX

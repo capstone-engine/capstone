@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_WASM
 /* Capstone Disassembly Engine */
 /* By Spike, xwings 2019 */
 
@@ -1066,3 +1067,5 @@ bool WASM_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 
 	return true;
 }
+
+#endif // CAPSTONE_HAS_WASM

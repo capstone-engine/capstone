@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_XTENSA
 /* Capstone Disassembly Engine */
 /* By billow <billow.fun@gmail.com>, 2024 */
 
@@ -286,3 +287,5 @@ void Xtensa_add_cs_detail_0(MCInst *MI, xtensa_op_group op_group, int op_num)
 	xop->access = map_get_op_access(MI, op_num);
 	Xtensa_inc_op_count(MI);
 }
+
+#endif // CAPSTONE_HAS_XTENSA

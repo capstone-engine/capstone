@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_RISCV
 #include "RISCVDisassemblerExtension.h"
 
 #define GET_SUBTARGETINFO_ENUM
@@ -91,3 +92,5 @@ bool RISCV_getFeatureBits(unsigned int mode, unsigned int feature)
 		return true;
 	}
 }
+
+#endif // CAPSTONE_HAS_RISCV

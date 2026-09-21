@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_SPARC
 /* Capstone Disassembly Engine, http://www.capstone-engine.org */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2022, */
 /*    Rot127 <unisono@quyllur.org> 2022-2023 */
@@ -353,3 +354,5 @@ DecodeStatus Sparc_LLVM_getInstruction(csh handle, const uint8_t *Bytes,
 	*Size = (uint16_t)s;
 	return status;
 }
+
+#endif // CAPSTONE_HAS_SPARC

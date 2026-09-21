@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_AARCH64
 /* Capstone Disassembly Engine */
 /* By Nguyen Anh Quynh <aquynh@gmail.com>, 2013-2019 */
 /*    Rot127 <unisono@quyllur.org>, 2022-2023 */
@@ -26,3 +27,5 @@ bool AArch64_testFeatureList(unsigned int mode, const unsigned int *features)
 	}
 	return true;
 }
+
+#endif // CAPSTONE_HAS_AARCH64
