@@ -30,7 +30,7 @@ Read the documentation relevant to the task:
   Do not restate the code or narrate the editing process.
 - Use the repository's `.clang-format` for C and Black for Python.
 - Documentation must be written by a human. AI generate documentation is forbidden. 
-- API changes must be documented in `cs_v6_release_guide.md`. This must be done by the developer.
+- API changes must be documented in `docs/cs_v6_release_guide.md`. This must be done by the developer.
 - Before editing generated code, check how the module is updated. Follow its
   workflow so the fix survives regeneration.
 
