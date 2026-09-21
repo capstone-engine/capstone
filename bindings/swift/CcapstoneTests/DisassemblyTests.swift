@@ -83,7 +83,7 @@ import Testing
         let openResult = cs_open(CS_ARCH_X86, CS_MODE_32, &handle)
         #expect(openResult == CS_ERR_OK)
 
-        let optResult = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+        let optResult = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
         #expect(optResult == CS_ERR_OK)
 
         let count = x86Code32.withUnsafeBufferPointer { buffer in
@@ -167,7 +167,7 @@ import Testing
         let openResult = cs_open(CS_ARCH_X86, CS_MODE_32, &handle)
         #expect(openResult == CS_ERR_OK)
 
-        let skipDataResult = cs_option(handle, CS_OPT_SKIPDATA, size_t(CS_OPT_ON.rawValue))
+        let skipDataResult = cs_option(handle, CS_OPT_SKIPDATA, uintptr_t(CS_OPT_ON.rawValue))
         #expect(skipDataResult == CS_ERR_OK)
 
         // Test with some invalid bytes mixed in

@@ -89,7 +89,7 @@ struct BasicTests {
         let openResult = cs_open(CS_ARCH_X86, CS_MODE_32, &handle)
 
         if openResult == CS_ERR_OK {
-            let optResult = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+            let optResult = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
             // Note: Option result may vary depending on implementation completeness
             // We mainly test that it doesn't crash
 

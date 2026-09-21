@@ -109,7 +109,7 @@ import Testing
         }
 
         // Test AT&T syntax
-        let attResult = cs_option(handle, CS_OPT_SYNTAX, size_t(CS_OPT_SYNTAX_ATT.rawValue))
+        let attResult = cs_option(handle, CS_OPT_SYNTAX, uintptr_t(CS_OPT_SYNTAX_ATT.rawValue))
         if attResult == CS_ERR_OK {
             let attCount = code.withUnsafeBufferPointer { buffer in
                 cs_disasm(handle, buffer.baseAddress, buffer.count, 0x1000, 0, &insns)

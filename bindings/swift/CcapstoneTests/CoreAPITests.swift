@@ -92,7 +92,7 @@ struct CoreAPITests {
             #expect(handle != 0, "Handle should not be 0 for valid operations")
 
             // Test option setting
-            let _ = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+            let _ = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
             // Success or failure is acceptable, depends on implementation completeness
 
             // Test error number retrieval
@@ -117,7 +117,7 @@ struct CoreAPITests {
         let errno = cs_errno(0)
         #expect(errno != CS_ERR_OK, "cs_errno on invalid handle should return error")
 
-        let optResult = cs_option(0, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+        let optResult = cs_option(0, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
         #expect(optResult != CS_ERR_OK, "cs_option on invalid handle should return error")
 
         // Test double close - using zero handle which should be safe

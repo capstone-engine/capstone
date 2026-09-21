@@ -233,9 +233,9 @@ struct PerformanceTests {
         defer { _ = cs_close(&handle) }
 
         let iterations = 10000
-        let options: [(cs_opt_type, size_t)] = [
-            (CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue)),
-            (CS_OPT_DETAIL, size_t(CS_OPT_OFF.rawValue)),
+        let options: [(cs_opt_type, uintptr_t)] = [
+            (CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue)),
+            (CS_OPT_DETAIL, uintptr_t(CS_OPT_OFF.rawValue)),
         ]
 
         let startTime = CFAbsoluteTimeGetCurrent()

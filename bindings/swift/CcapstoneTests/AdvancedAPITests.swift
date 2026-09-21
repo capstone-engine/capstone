@@ -76,7 +76,7 @@ struct AdvancedAPITests {
         defer { _ = cs_close(&handle) }
 
         // Enable detail mode
-        let detailResult = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+        let detailResult = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
         print("✓ Detail mode setting result: \(detailResult)")
 
         // Disassemble with detail mode
@@ -129,7 +129,7 @@ struct AdvancedAPITests {
         }
 
         // Test turning detail mode off
-        let detailOffResult = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_OFF.rawValue))
+        let detailOffResult = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_OFF.rawValue))
         print("  Detail mode off result: \(detailOffResult)")
     }
 
@@ -166,7 +166,7 @@ struct AdvancedAPITests {
         }
 
         // Test skip data mode (if supported)
-        let skipDataResult = cs_option(handle, CS_OPT_SKIPDATA, size_t(CS_OPT_ON.rawValue))
+        let skipDataResult = cs_option(handle, CS_OPT_SKIPDATA, uintptr_t(CS_OPT_ON.rawValue))
         print("  Skip data mode setting: \(skipDataResult)")
 
         if skipDataResult == CS_ERR_OK {
@@ -270,12 +270,12 @@ struct AdvancedAPITests {
         print("✓ Testing option combinations:")
 
         // Test various option combinations
-        let optionTests: [(cs_opt_type, size_t, String)] = [
-            (CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue), "Detail ON"),
-            (CS_OPT_SKIPDATA, size_t(CS_OPT_ON.rawValue), "Skip Data ON"),
-            (CS_OPT_SYNTAX, size_t(CS_OPT_SYNTAX_DEFAULT.rawValue), "Default Syntax"),
-            (CS_OPT_DETAIL, size_t(CS_OPT_OFF.rawValue), "Detail OFF"),
-            (CS_OPT_SKIPDATA, size_t(CS_OPT_OFF.rawValue), "Skip Data OFF"),
+        let optionTests: [(cs_opt_type, uintptr_t, String)] = [
+            (CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue), "Detail ON"),
+            (CS_OPT_SKIPDATA, uintptr_t(CS_OPT_ON.rawValue), "Skip Data ON"),
+            (CS_OPT_SYNTAX, uintptr_t(CS_OPT_SYNTAX_DEFAULT.rawValue), "Default Syntax"),
+            (CS_OPT_DETAIL, uintptr_t(CS_OPT_OFF.rawValue), "Detail OFF"),
+            (CS_OPT_SKIPDATA, uintptr_t(CS_OPT_OFF.rawValue), "Skip Data OFF"),
         ]
 
         for (option, value, description) in optionTests {
@@ -309,7 +309,7 @@ struct AdvancedAPITests {
 
         // X86-64 instruction with large displacement/immediate (if we had real long instructions)
         // For now, use what we have and test the structures
-        let _ = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+        let _ = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
 
         var insns: UnsafeMutablePointer<cs_insn>?
         let count = Self.x86Code64.withUnsafeBufferPointer { buffer in
@@ -393,7 +393,7 @@ struct AdvancedAPITests {
                         }
 
                         // Perform various operations
-                        let _ = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+                        let _ = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
 
                         var insns: UnsafeMutablePointer<cs_insn>?
                         let count = Self.x86Code64.withUnsafeBufferPointer { buffer in

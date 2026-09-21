@@ -9,7 +9,7 @@ import Testing
         let openResult = cs_open(CS_ARCH_X86, CS_MODE_64, &handle)
         #expect(openResult == CS_ERR_OK)
 
-        let optResult = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+        let optResult = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
         #expect(optResult == CS_ERR_OK)
 
         // mov rax, qword ptr [rip + 0x13b8]
@@ -70,7 +70,7 @@ import Testing
         let openResult = cs_open(CS_ARCH_ARM, CS_MODE_ARM, &handle)
         #expect(openResult == CS_ERR_OK)
 
-        let optResult = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+        let optResult = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
         #expect(optResult == CS_ERR_OK)
 
         // str lr, [sp, #-4]!
@@ -124,7 +124,7 @@ import Testing
         let openResult = cs_open(CS_ARCH_AARCH64, CS_MODE_ARM, &handle)
         #expect(openResult == CS_ERR_OK)
 
-        let optResult = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+        let optResult = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
         #expect(optResult == CS_ERR_OK)
 
         // add x1, x1, x2
@@ -178,7 +178,7 @@ import Testing
         let openResult = cs_open(CS_ARCH_MIPS, cs_mode(CS_MODE_MIPS32.rawValue | CS_MODE_BIG_ENDIAN.rawValue), &handle)
         #expect(openResult == CS_ERR_OK)
 
-        let optResult = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+        let optResult = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
         #expect(optResult == CS_ERR_OK)
 
         // jal 0x97000c
@@ -229,7 +229,7 @@ import Testing
         let openResult = cs_open(CS_ARCH_X86, CS_MODE_64, &handle)
         #expect(openResult == CS_ERR_OK)
 
-        let optResult = cs_option(handle, CS_OPT_DETAIL, size_t(CS_OPT_ON.rawValue))
+        let optResult = cs_option(handle, CS_OPT_DETAIL, uintptr_t(CS_OPT_ON.rawValue))
         #expect(optResult == CS_ERR_OK)
 
         // ret instruction
