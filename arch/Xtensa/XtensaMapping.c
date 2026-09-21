@@ -68,9 +68,20 @@ static void set_instr_map_data(MCInst *MI)
 #endif
 }
 
+void Xtensa_init_cs_detail(MCInst *MI)
+{
+	if (detail_is_set(MI)) {
+		memset(get_detail(MI), 0,
+		       offsetof(cs_detail, xtensa) + sizeof(cs_xtensa));
+	}
+}
+
 bool Xtensa_disasm(csh handle, const uint8_t *code, size_t code_len,
 		   MCInst *instr, uint16_t *size, uint64_t address, void *info)
 {
+	if (detail_is_set(instr)) {
+		Xtensa_init_cs_detail(instr);
+	}
 	DecodeStatus res = Xtensa_LLVM_getInstruction(instr, size, code,
 						      code_len, address);
 	if (res != MCDisassembler_Fail) {

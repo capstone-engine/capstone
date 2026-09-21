@@ -1,11 +1,14 @@
 // Copyright © 2024 Rot127 <unisono@quyllur.org>
 // SPDX-License-Identifier: BSD-3
 
+#include "capstone/riscv.h"
 #include "test_compare.h"
 #include "test_detail_riscv.h"
 #include <capstone/capstone.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "../arch/RISCV/RISCVInstPrinter.h"
 
 TestDetailRISCV *test_detail_riscv_new()
 {
@@ -21,6 +24,7 @@ void test_detail_riscv_free(TestDetailRISCV *detail)
 		test_detail_riscv_op_free(detail->operands[i]);
 	}
 	cs_mem_free(detail->operands);
+	cs_mem_free(detail->rounding_mode);
 	cs_mem_free(detail);
 }
 
@@ -37,6 +41,8 @@ TestDetailRISCV *test_detail_riscv_clone(const TestDetailRISCV *detail)
 		clone->operands[i] =
 			test_detail_riscv_op_clone(detail->operands[i]);
 	}
+	clone->rounding_mode =
+		detail->rounding_mode ? strdup(detail->rounding_mode) : NULL;
 
 	return clone;
 }
@@ -54,8 +60,10 @@ TestDetailRISCVOp *test_detail_riscv_op_clone(const TestDetailRISCVOp *op)
 	clone->access = op->access ? strdup(op->access) : NULL;
 	clone->reg = op->reg ? strdup(op->reg) : NULL;
 	clone->imm = op->imm;
+	clone->dimm = op->dimm;
 	clone->mem_base = op->mem_base ? strdup(op->mem_base) : NULL;
 	clone->mem_disp = op->mem_disp;
+	clone->csr = op->csr ? strdup(op->csr) : NULL;
 
 	return clone;
 }
@@ -69,6 +77,7 @@ void test_detail_riscv_op_free(TestDetailRISCVOp *op)
 	cs_mem_free(op->access);
 	cs_mem_free(op->reg);
 	cs_mem_free(op->mem_base);
+	cs_mem_free(op->csr);
 	cs_mem_free(op);
 }
 
@@ -94,13 +103,22 @@ bool test_expected_riscv(csh *handle, const cs_riscv *actual,
 		case RISCV_OP_IMM:
 			compare_uint64_ret(op->imm, eop->imm, false);
 			break;
+		case RISCV_OP_FP:
+			compare_fp_ret(op->dimm, eop->dimm, false);
+			break;
 		case RISCV_OP_MEM:
 			compare_reg_ret(*handle, op->mem.base, eop->mem_base,
 					false);
 			compare_int64_ret(op->mem.disp, eop->mem_disp, false);
 			break;
+		case RISCV_OP_CSR:
+			compare_string_from_int_ret(op->csr, eop->csr,
+						    getSysRegName, false);
+			break;
 		}
 	}
+
+	compare_enum_ret(actual->rounding_mode, expected->rounding_mode, false);
 
 	return true;
 }

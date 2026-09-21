@@ -47,6 +47,21 @@ char *cs_strdup(const char *str)
 	return (char *)memmove(new, str, len);
 }
 
+// Portable strnlen replacement for platforms that lack it
+// (e.g. Mac OS X 10.5 Leopard).
+size_t cs_strnlen(const char *str, size_t n)
+{
+	if (!str)
+		return 0;
+
+	size_t l = 0;
+
+	while (l < n && str[l] != '\0')
+		l++;
+
+	return l;
+}
+
 // we need this since Windows doesn't have snprintf()
 int cs_snprintf(char *buffer, size_t size, const char *fmt, ...)
 {
@@ -228,7 +243,7 @@ char *str_append(char *str_a, const char *str_b)
 		return NULL;
 	}
 	size_t asize = strlen(str_a) + strlen(str_b) + 1;
-	str_a = realloc(str_a, asize);
+	str_a = cs_mem_realloc(str_a, asize);
 	strncat(str_a, str_b, asize - strlen(str_a));
 	return str_a;
 }
@@ -245,7 +260,7 @@ char *byte_seq_to_str(uint8_t *bytes, size_t len)
 		return NULL;
 	}
 	char single_byte[8] = { 0 };
-	char *s = calloc(sizeof(char), 32);
+	char *s = cs_mem_calloc(sizeof(char), 32);
 	for (size_t i = 0; i < len; ++i) {
 		cs_snprintf(single_byte, sizeof(single_byte),
 			    "0x%02" PRIx8 "%s", bytes[i],

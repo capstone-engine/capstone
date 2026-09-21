@@ -27,6 +27,7 @@ env:
   UBSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
   ASAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
   LSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
+  MSAN_OPTIONS: "halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1"
 
 jobs:
   Linux:
@@ -42,7 +43,10 @@ jobs:
               arch: x64,
               build-system: 'make',
               diet-build: 'OFF',
-              enable-asan: 'OFF'
+              enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              enable-cov: 'OFF',
+              cc: 'gcc'
             }
           - {
               name: 'ubuntu-22.04 x64 cmake',
@@ -51,6 +55,21 @@ jobs:
               build-system: 'cmake',
               diet-build: 'OFF',
               enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              enable-cov: 'OFF',
+              cc: 'gcc',
+              build_type: 'Debug'
+            }
+          - {
+              name: 'ubuntu-22.04 x64 cmake - coverage',
+              os: ubuntu-22.04,
+              arch: x64,
+              build-system: 'cmake',
+              diet-build: 'OFF',
+              enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              enable-cov: 'ON',
+              cc: 'gcc',
               build_type: 'Debug'
             }
           - {
@@ -60,6 +79,9 @@ jobs:
               build-system: 'cmake',
               diet-build: 'OFF',
               enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              enable-cov: 'OFF',
+              cc: 'gcc',
               build_type: 'Debug',
               build_options: '-DCAPSTONE_ASSERTION_WARNINGS=ON'
             }
@@ -70,6 +92,9 @@ jobs:
               build-system: 'cmake',
               diet-build: 'OFF',
               enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              enable-cov: 'OFF',
+              cc: 'gcc',
               build_type: 'Release',
               build_options: '-DCAPSTONE_ASSERTION_WARNINGS=OFF'
             }
@@ -80,6 +105,9 @@ jobs:
               build-system: 'cmake',
               diet-build: 'OFF',
               enable-asan: 'OFF',
+              enable-msan: 'OFF',
+              enable-cov: 'OFF',
+              cc: 'gcc',
               build_type: 'Release',
               build_options: '-DCAPSTONE_ASSERTION_WARNINGS=ON'
             }
@@ -90,14 +118,17 @@ jobs:
               build-system: 'cmake',
               diet-build: 'OFF',
               enable-asan: 'ON',
+              enable-msan: 'OFF',
+              enable-cov: 'OFF',
+              cc: 'gcc',
               build_type: 'Debug'
             }
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.config.python-version }}
 
@@ -106,6 +137,12 @@ jobs:
         export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
         wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
         unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
+
+    - name: Install test dependencies
+      run: |
+        sudo apt-get -y update
+        sudo apt-get -y install valgrind
+        pip3 install --user gcovr
 
     - name: make
       if: startsWith(matrix.config.build-system, 'make')
@@ -117,15 +154,36 @@ jobs:
       if: startsWith(matrix.config.build-system, 'cmake')
       env:
         asan: ${{ matrix.config.enable-asan }}
+        msan: ${{ matrix.config.enable-msan }}
+        cov: ${{ matrix.config.enable-cov }}
+        compiler: ${{ matrix.config.cc }}
         build_option: ${{ matrix.config.build_option }}
         build_type: ${{ matrix.config.build_type }}
       run: |
         mkdir build && cd build
         # build static library
-        cmake -DCMAKE_BUILD_TYPE=${build_type} -DCAPSTONE_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_ASAN=${asan} -DCAPSTONE_BUILD_DIET=${diet_build} ${build_option} ..
+        cmake \
+          -DCMAKE_BUILD_TYPE=${build_type} \
+          -DCAPSTONE_INSTALL=1 \
+          -DCMAKE_C_COMPILER=${compiler} \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DENABLE_COVERAGE=${cov} \
+          -DENABLE_ASAN=${asan} \
+          -DENABLE_MSAN=${msan} \
+          -DCAPSTONE_BUILD_DIET=${diet_build} ${build_option} ..
         cmake --build . --config ${build_type}
+
         # build shared library
-        cmake -DCMAKE_BUILD_TYPE=${build_type} -DCAPSTONE_INSTALL=1 -DCAPSTONE_BUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=/usr -DCAPSTONE_BUILD_CSTEST=ON -DENABLE_ASAN=${asan} ${build_option} ..
+        cmake \
+          -DCMAKE_BUILD_TYPE=${build_type} \
+          -DCAPSTONE_INSTALL=1 \
+          -DCAPSTONE_BUILD_SHARED_LIBS=1 \
+          -DCMAKE_C_COMPILER=${compiler} \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DCAPSTONE_BUILD_CSTEST=ON \
+          -DENABLE_COVERAGE=${cov} \
+          -DENABLE_ASAN=${asan} \
+          -DENABLE_MSAN=${msan} ${build_option} ..
         sudo cmake --build . --config ${build_type} --target install
 
     - name: Lower number of KASL randomized address bits
@@ -136,12 +194,12 @@ jobs:
     - name: unit tests
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --test-dir build --output-on-failure -R unit_*
+        ctest --test-dir build --output-on-failure -R "^unit_*"
 
     - name: "Integration tests"
       if: startsWith(matrix.config.build-system, 'cmake') && matrix.config.diet-build == 'OFF'
       run: |
-        ctest --test-dir build --output-on-failure -R integration_*
+        ctest --test-dir build --output-on-failure -R "^integration_*"
 
     - name: cstool - reaches disassembler engine
       run: |
@@ -160,22 +218,22 @@ jobs:
     - name: cstest MC
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --test-dir build --output-on-failure -R MCTests
+        ctest --test-dir build --output-on-failure -R "^MCTests"
 
     - name: cstest details
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --test-dir build --output-on-failure -R DetailTests
+        ctest --test-dir build --output-on-failure -R "^DetailTests"
 
     - name: cstest issues
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --test-dir build --output-on-failure -R IssueTests
+        ctest --test-dir build --output-on-failure -R "^IssueTests"
 
     - name: cstest features
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
-        ctest --test-dir build --output-on-failure -R FeaturesTests
+        ctest --test-dir build --output-on-failure -R "^FeaturesTests"
 
     - name: Legacy integration tests
       if: startsWith(matrix.config.build-system, 'cmake')
@@ -183,29 +241,42 @@ jobs:
         ctest --test-dir build --output-on-failure -R legacy*
 
     - name: Valgrind cstest
-      if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.enable-asan, 'OFF')
+      if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.enable-asan, 'OFF') && startsWith(matrix.config.enable-msan, 'OFF')
       run: |
-        sudo apt-get -y update
-        sudo apt-get -y install valgrind
-        valgrind --leak-check=full cstest tests/details
-        valgrind --leak-check=full cstest tests/features
-        valgrind --leak-check=full cstest tests/issues
-        valgrind --leak-check=full cstest tests/MC
+        ctest --test-dir build --output-on-failure -R valgrind_*
 
     - name: Compatibility header generation
-      # clang-format-17 is only available in Ubuntu 24.04
+      # clang-format-20 is only available in Ubuntu 24.04
       # Hence the check only happens for it.
       if: startsWith(matrix.config.build-system, 'cmake') && startsWith(matrix.config.os, 'ubuntu-24.04')
       run: |
         sudo apt-get -y update
-        sudo apt-get -y install clang-format-17
-        clang-format-17 --version
+        sudo apt-get -y install clang-format-20
+        clang-format-20 --version
         cp ./include/capstone/arm64.h arm64_compat_current.h
         cp ./include/capstone/systemz_compatibility.h systemz_compat_current.h
+        cp ./include/capstone/riscv.h riscv_current.h
         ./suite/auto-sync/src/autosync/HeaderPatcher.py -C ./.clang-format -c --v6 ./include/capstone/aarch64.h --v5 ./include/capstone/arm64.h
         ./suite/auto-sync/src/autosync/HeaderPatcher.py -C ./.clang-format -c --v6 ./include/capstone/systemz.h --v5 ./include/capstone/systemz_compatibility.h
+        ./suite/auto-sync/src/autosync/HeaderPatcher.py --riscv-compat --header ./include/capstone/riscv.h
         diff ./include/capstone/arm64.h arm64_compat_current.h &&
-        diff ./include/capstone/systemz_compatibility.h systemz_compat_current.h
+        diff ./include/capstone/systemz_compatibility.h systemz_compat_current.h &&
+        diff ./include/capstone/riscv.h riscv_current.h
+
+    - name: Generate coverage data
+      if: startsWith(matrix.config.enable-cov, 'ON')
+      run: |
+        gcovr --version
+        gcovr --gcov-ignore-parse-errors=all --txt build/coverage.txt --cobertura build/coverage.xml --merge-mode-functions=separate build
+
+    - name: Upload coverage to Codecov
+      if: startsWith(matrix.config.enable-cov, 'ON')
+      uses: codecov/codecov-action@v7
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        directory: build/
+        fail_ci_if_error: true
+        verbose: true
 
   Windows:
     runs-on: ${{ matrix.config.os }}
@@ -230,10 +301,25 @@ jobs:
             diet_build: true
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
-    - uses: lukka/get-cmake@latest
-      name: Get CMake
+    - name: 'Install cmake'
+      if: contains(matrix.config.name, 'MSVC 64')
+      env:
+        CMAKE_VER: '4.3.2'
+        CMAKE_MSI_SHA256: '6915813bedf3a8a698b72fc858e0c2a99761be981745c3c3c99bd30e1477e142'
+      shell: powershell
+      run: |
+        $cmake_msi_url = "https://github.com/Kitware/CMake/releases/download/v$env:CMAKE_VER/cmake-$env:CMAKE_VER-windows-x86_64.msi"
+        Invoke-WebRequest -Uri $cmake_msi_url -OutFile "cmake.msi"
+        $computedHash = Get-FileHash -Path "cmake.msi" -Algorithm SHA256
+        if ($computedHash.Hash -ne $env:CMAKE_MSI_SHA256) {
+          Write-Error "Hash verification failed! File may be corrupted."
+          exit 1
+        } else {
+          Write-Host "Hash verification successful!"
+        }
+        Start-Process msiexec.exe -ArgumentList "/qn /i cmake.msi" -Wait
 
     - name: '🛠️ Win MSVC 64 setup'
       if: contains(matrix.config.name, 'MSVC 64')

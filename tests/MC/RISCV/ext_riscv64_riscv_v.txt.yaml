@@ -1,0 +1,120 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x43, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vzext.vf2 v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x43, 0x4a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vzext.vf2 v8, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0xa4, 0x43, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsext.vf2 v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0xa4, 0x43, 0x4a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsext.vf2 v8, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x42, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vzext.vf4 v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x42, 0x4a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vzext.vf4 v8, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0xa4, 0x42, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsext.vf4 v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0xa4, 0x42, 0x4a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsext.vf4 v8, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x41, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vzext.vf8 v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x41, 0x4a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vzext.vf8 v8, v4"
+
+  -
+    input:
+      bytes: [ 0x57, 0xa4, 0x41, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsext.vf8 v8, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0xa4, 0x41, 0x4a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsext.vf8 v8, v4"

@@ -15,40 +15,21 @@
 #include <assert.h>
 #include <string.h>
 
-// map instruction to its characteristics
-typedef struct insn_map {
-	unsigned short id; // The LLVM instruction id
-	unsigned short mapid; // The Capstone instruction id
-#ifndef CAPSTONE_DIET
-	uint16_t regs_use[MAX_IMPL_R_REGS]; ///< list of implicit registers used by
-		///< this instruction
-	uint16_t regs_mod[MAX_IMPL_W_REGS]; ///< list of implicit registers modified
-		///< by this instruction
-	unsigned char groups
-		[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
-	bool branch; // branch instruction?
-	bool indirect_branch; // indirect branch instruction?
-	union {
-		ppc_suppl_info ppc;
-		loongarch_suppl_info loongarch;
-		aarch64_suppl_info aarch64;
-		systemz_suppl_info systemz;
-		arm_suppl_info arm;
-		xtensa_suppl_info xtensa;
-		sparc_suppl_info sparc;
-	} suppl_info; // Supplementary information for each instruction.
-#endif
-} insn_map;
+// Create a cache to map LLVM instruction IDs to capstone instruction IDs, if
+// the architecture needs this.
+cs_err populate_insn_map_cache(cs_struct *handle);
 
-// look for @id in @m, given its size in @max. first time call will update
-// @cache. return 0 if not found
-unsigned short insn_find(const insn_map *m, unsigned int max, unsigned int id,
-			 unsigned short **cache);
+// Lookup the insn_map instance for an LLVM instruction ID. This method assumes
+// that this architecture uses the instruction mapping functionality available
+// from populate_insn_map_cache().
+// Returns NULL in case id is larger than the maximum mapped LLVM instruction
+// ID.
+const insn_map *lookup_insn_map(cs_struct *handle, unsigned short id);
 
 unsigned int find_cs_id(unsigned MC_Opcode, const insn_map *imap,
 			unsigned imap_size);
 
-#define MAX_NO_DATA_TYPES 16
+#define MAX_NO_DATA_TYPES 32
 
 ///< A LLVM<->CS Mapping entry of an MCOperand.
 typedef struct {
@@ -146,6 +127,24 @@ DECL_get_detail_op(xtensa, Xtensa);
 DECL_get_detail_op(bpf, BPF);
 DECL_get_detail_op(arc, ARC);
 DECL_get_detail_op(sparc, Sparc);
+
+#define DECL_get_detail_op_at(arch, ARCH) \
+	cs_##arch##_op *ARCH##_get_detail_op_at(MCInst *MI, int offset);
+
+DECL_get_detail_op_at(arm, ARM);
+DECL_get_detail_op_at(ppc, PPC);
+DECL_get_detail_op_at(tricore, TriCore);
+DECL_get_detail_op_at(aarch64, AArch64);
+DECL_get_detail_op_at(alpha, Alpha);
+DECL_get_detail_op_at(hppa, HPPA);
+DECL_get_detail_op_at(loongarch, LoongArch);
+DECL_get_detail_op_at(mips, Mips);
+DECL_get_detail_op_at(riscv, RISCV);
+DECL_get_detail_op_at(systemz, SystemZ);
+DECL_get_detail_op_at(xtensa, Xtensa);
+DECL_get_detail_op_at(bpf, BPF);
+DECL_get_detail_op_at(arc, ARC);
+DECL_get_detail_op_at(sparc, Sparc);
 
 /// Increments the detail->arch.op_count by one.
 #define DEFINE_inc_detail_op_count(arch, ARCH) \

@@ -1,0 +1,140 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x4a, 0x88 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqau.vv v8, v20, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x4a, 0x8a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqau.vv v8, v20, v4"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x45, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqau.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x45, 0x8e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqau.vx v8, a0, v4"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x4a, 0x80 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqa.vv v8, v20, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x4a, 0x82 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqa.vv v8, v20, v4"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x45, 0x84 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqa.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x45, 0x86 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqa.vx v8, a0, v4"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x4a, 0x90 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqasu.vv v8, v20, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x4a, 0x92 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqasu.vv v8, v20, v4"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x45, 0x94 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqasu.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x45, 0x96 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqasu.vx v8, a0, v4"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x45, 0x9c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqaus.vx v8, a0, v4, v0.t"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x64, 0x45, 0x9e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADVDOT" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.vmaqaus.vx v8, a0, v4"

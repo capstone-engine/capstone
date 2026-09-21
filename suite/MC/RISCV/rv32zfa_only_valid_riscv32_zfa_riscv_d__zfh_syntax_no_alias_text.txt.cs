@@ -1,0 +1,3 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32"|"CS_MODE_RISCV_D", None
+0xd3,0x85,0x14,0xe2 == fmvh.x.d a1, fs1
+0xd3,0x84,0xc5,0xb2 == fmvp.d.x fs1, a1, a2

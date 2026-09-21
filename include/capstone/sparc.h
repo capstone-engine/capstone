@@ -52,11 +52,11 @@ typedef enum sparc_cc {
 	SPARC_CC_FCC_E = 9 + SPARC_CC_FCC_BEGIN, // Equal
 	SPARC_CC_FCC_UE = 10 + SPARC_CC_FCC_BEGIN, // Unordered or Equal
 	SPARC_CC_FCC_GE = 11 + SPARC_CC_FCC_BEGIN, // Greater or Equal
-	SPARC_CC_FCC_UGE =
-		12 + SPARC_CC_FCC_BEGIN, // Unordered or Greater or Equal
+	// Unordered or Greater or Equal
+	SPARC_CC_FCC_UGE = 12 + SPARC_CC_FCC_BEGIN,
 	SPARC_CC_FCC_LE = 13 + SPARC_CC_FCC_BEGIN, // Less or Equal
-	SPARC_CC_FCC_ULE =
-		14 + SPARC_CC_FCC_BEGIN, // Unordered or Less or Equal
+	// Unordered or Less or Equal
+	SPARC_CC_FCC_ULE = 14 + SPARC_CC_FCC_BEGIN,
 	SPARC_CC_FCC_O = 15 + SPARC_CC_FCC_BEGIN, // Ordered
 
 	SPARC_CC_CPCC_BEGIN = 32, ///< Co-processor conditional branches
@@ -83,8 +83,8 @@ typedef enum sparc_cc {
 	SPARC_CC_REG_LZ = 3 + SPARC_CC_REG_BEGIN, // Less than zero
 	SPARC_CC_REG_NZ = 5 + SPARC_CC_REG_BEGIN, // Is not zero
 	SPARC_CC_REG_GZ = 6 + SPARC_CC_REG_BEGIN, // Greater than zero
-	SPARC_CC_REG_GEZ =
-		7 + SPARC_CC_REG_BEGIN, // Greater than or equal to zero
+	// Greater than or equal to zero
+	SPARC_CC_REG_GEZ = 7 + SPARC_CC_REG_BEGIN,
 
 	SPARC_CC_UNDEF = 0xffff,
 } sparc_cc;
@@ -578,8 +578,8 @@ typedef enum sparc_membar_tag {
 /// This is associated with SPARC_OP_MEM operand type above
 typedef struct sparc_op_mem {
 	sparc_reg base; ///< base register, can be safely interpreted as
-		///< a value of type `sparc_reg`, but it is only
-		///< one byte wide
+	///< a value of type `sparc_reg`, but it is only
+	///< one byte wide
 	sparc_reg index; ///< index register, same conditions apply here
 	int32_t disp; ///< displacement/offset value
 } sparc_op_mem;

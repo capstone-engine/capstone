@@ -133,6 +133,7 @@ struct MCInst {
 	cs_wasm_op wasm_data; // for WASM operand
 	MCRegisterInfo *MRI;
 	uint8_t xAcquireRelease; // X86 xacquire/xrelease
+	uint8_t x86Lock; // Set when the X86 LOCK prefix is present
 	bool isAliasInstr; // Flag if this MCInst is an alias.
 	bool fillDetailOps; // If set, detail->operands gets filled.
 	hppa_ext hppa_ext; ///< for HPPA operand. Contains info about modifiers and their effect on the instruction

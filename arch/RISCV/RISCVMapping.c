@@ -1,161 +1,364 @@
-
+#include "capstone/cs_operand.h"
+#include "capstone/riscv.h"
+#include <stdint.h>
+#include <float.h>
+#include <math.h>
 #ifdef CAPSTONE_HAS_RISCV
 
-#include <stdio.h> // debug
 #include <string.h>
 
 #include "../../Mapping.h"
-#include "../../utils.h"
 #include "../../cs_simple_types.h"
+#include "../../utils.h"
 
+#include "RISCVBaseInfo.h"
 #include "RISCVMapping.h"
-#include "RISCVInstPrinter.h"
 
 #define GET_INSTRINFO_ENUM
 #include "RISCVGenInstrInfo.inc"
 
-#ifndef CAPSTONE_DIET
-static const name_map reg_name_maps[] = {
-	{ RISCV_REG_INVALID, NULL },
+#define GET_REGINFO_ENUM
+#define GET_REGINFO_MC_DESC
+#include "RISCVGenRegisterInfo.inc"
 
-	{ RISCV_REG_X0, "zero" },     { RISCV_REG_X1, "ra" },
-	{ RISCV_REG_X2, "sp" },	      { RISCV_REG_X3, "gp" },
-	{ RISCV_REG_X4, "tp" },	      { RISCV_REG_X5, "t0" },
-	{ RISCV_REG_X6, "t1" },	      { RISCV_REG_X7, "t2" },
-	{ RISCV_REG_X8, "s0" },	      { RISCV_REG_X9, "s1" },
-	{ RISCV_REG_X10, "a0" },      { RISCV_REG_X11, "a1" },
-	{ RISCV_REG_X12, "a2" },      { RISCV_REG_X13, "a3" },
-	{ RISCV_REG_X14, "a4" },      { RISCV_REG_X15, "a5" },
-	{ RISCV_REG_X16, "a6" },      { RISCV_REG_X17, "a7" },
-	{ RISCV_REG_X18, "s2" },      { RISCV_REG_X19, "s3" },
-	{ RISCV_REG_X20, "s4" },      { RISCV_REG_X21, "s5" },
-	{ RISCV_REG_X22, "s6" },      { RISCV_REG_X23, "s7" },
-	{ RISCV_REG_X24, "s8" },      { RISCV_REG_X25, "s9" },
-	{ RISCV_REG_X26, "s10" },     { RISCV_REG_X27, "s11" },
-	{ RISCV_REG_X28, "t3" },      { RISCV_REG_X29, "t4" },
-	{ RISCV_REG_X30, "t5" },      { RISCV_REG_X31, "t6" },
-
-	{ RISCV_REG_F0_32, "ft0" },   { RISCV_REG_F0_64, "ft0" },
-	{ RISCV_REG_F1_32, "ft1" },   { RISCV_REG_F1_64, "ft1" },
-	{ RISCV_REG_F2_32, "ft2" },   { RISCV_REG_F2_64, "ft2" },
-	{ RISCV_REG_F3_32, "ft3" },   { RISCV_REG_F3_64, "ft3" },
-	{ RISCV_REG_F4_32, "ft4" },   { RISCV_REG_F4_64, "ft4" },
-	{ RISCV_REG_F5_32, "ft5" },   { RISCV_REG_F5_64, "ft5" },
-	{ RISCV_REG_F6_32, "ft6" },   { RISCV_REG_F6_64, "ft6" },
-	{ RISCV_REG_F7_32, "ft7" },   { RISCV_REG_F7_64, "ft7" },
-	{ RISCV_REG_F8_32, "fs0" },   { RISCV_REG_F8_64, "fs0" },
-	{ RISCV_REG_F9_32, "fs1" },   { RISCV_REG_F9_64, "fs1" },
-	{ RISCV_REG_F10_32, "fa0" },  { RISCV_REG_F10_64, "fa0" },
-	{ RISCV_REG_F11_32, "fa1" },  { RISCV_REG_F11_64, "fa1" },
-	{ RISCV_REG_F12_32, "fa2" },  { RISCV_REG_F12_64, "fa2" },
-	{ RISCV_REG_F13_32, "fa3" },  { RISCV_REG_F13_64, "fa3" },
-	{ RISCV_REG_F14_32, "fa4" },  { RISCV_REG_F14_64, "fa4" },
-	{ RISCV_REG_F15_32, "fa5" },  { RISCV_REG_F15_64, "fa5" },
-	{ RISCV_REG_F16_32, "fa6" },  { RISCV_REG_F16_64, "fa6" },
-	{ RISCV_REG_F17_32, "fa7" },  { RISCV_REG_F17_64, "fa7" },
-	{ RISCV_REG_F18_32, "fs2" },  { RISCV_REG_F18_64, "fs2" },
-	{ RISCV_REG_F19_32, "fs3" },  { RISCV_REG_F19_64, "fs3" },
-	{ RISCV_REG_F20_32, "fs4" },  { RISCV_REG_F20_64, "fs4" },
-	{ RISCV_REG_F21_32, "fs5" },  { RISCV_REG_F21_64, "fs5" },
-	{ RISCV_REG_F22_32, "fs6" },  { RISCV_REG_F22_64, "fs6" },
-	{ RISCV_REG_F23_32, "fs7" },  { RISCV_REG_F23_64, "fs7" },
-	{ RISCV_REG_F24_32, "fs8" },  { RISCV_REG_F24_64, "fs8" },
-	{ RISCV_REG_F25_32, "fs9" },  { RISCV_REG_F25_64, "fs9" },
-	{ RISCV_REG_F26_32, "fs10" }, { RISCV_REG_F26_64, "fs10" },
-	{ RISCV_REG_F27_32, "fs11" }, { RISCV_REG_F27_64, "fs11" },
-	{ RISCV_REG_F28_32, "ft8" },  { RISCV_REG_F28_64, "ft8" },
-	{ RISCV_REG_F29_32, "ft9" },  { RISCV_REG_F29_64, "ft9" },
-	{ RISCV_REG_F30_32, "ft10" }, { RISCV_REG_F30_64, "ft10" },
-	{ RISCV_REG_F31_32, "ft11" }, { RISCV_REG_F31_64, "ft11" },
-};
-#endif
+#include "RISCVInstPrinter.h"
 
 const char *RISCV_reg_name(csh handle, unsigned int reg)
 {
-#ifndef CAPSTONE_DIET
-	if (reg >= RISCV_REG_ENDING)
-		return NULL;
-	return reg_name_maps[reg].name;
-#else
-	return NULL;
-#endif
+	int syntax_opt = ((cs_struct *)(uintptr_t)handle)->syntax;
+
+	if (syntax_opt & CS_OPT_SYNTAX_NOREGNAME) {
+		return RISCV_LLVM_getRegisterName(reg, RISCV_NoRegAltName);
+	}
+	return RISCV_LLVM_getRegisterName(reg, RISCV_ABIRegAltName);
 }
 
 static const insn_map insns[] = {
-	// dummy item
-	{ 0,
-	  0,
-#ifndef CAPSTONE_DIET
-	  { 0 },
-	  { 0 },
-	  { 0 },
-	  0,
-	  0
-#endif
-	},
-
-#include "RISCVMappingInsn.inc"
+#include "RISCVGenCSMappingInsn.inc"
 };
 
-#ifndef CAPSTONE_DIET
+const insn_map *RISCV_insns = insns;
+const unsigned int RISCV_insn_count = ARR_SIZE(insns);
 
+#ifndef CAPSTONE_DIET
 static const map_insn_ops insn_operands[] = {
-#include "RISCVMappingInsnOp.inc"
+#include "RISCVGenCSMappingInsnOp.inc"
 };
 
+static const name_map insn_alias_mnem_map[] = {
+#include "RISCVGenCSAliasMnemMap.inc"
+};
 #endif
 
-void RISCV_add_cs_detail(MCInst *MI, unsigned OpNum)
+void RISCV_add_cs_detail_0(MCInst *MI, riscv_op_group opgroup, unsigned OpNum)
+{
+	if (!detail_is_set(MI))
+		return;
+	// Rounding mode: store in detail, not as a regular operand.
+	if (opgroup == RISCV_OP_GROUP_FRMArg ||
+	    opgroup == RISCV_OP_GROUP_FRMArgLegacy) {
+		unsigned frm = (unsigned)MCInst_getOperand(MI, OpNum)->ImmVal;
+		riscv_rounding_mode rm;
+		switch (frm) {
+		case RISCVFPRndMode_RNE:
+			rm = RISCV_RM_RNE;
+			break;
+		case RISCVFPRndMode_RTZ:
+			rm = RISCV_RM_RTZ;
+			break;
+		case RISCVFPRndMode_RDN:
+			rm = RISCV_RM_RDN;
+			break;
+		case RISCVFPRndMode_RUP:
+			rm = RISCV_RM_RUP;
+			break;
+		case RISCVFPRndMode_RMM:
+			rm = RISCV_RM_RMM;
+			break;
+		case RISCVFPRndMode_DYN:
+			rm = RISCV_RM_DYN;
+			break;
+		default:
+			rm = RISCV_RM_INVALID;
+			break;
+		}
+		RISCV_get_detail(MI)->rounding_mode = rm;
+		return;
+	}
+
+	// unmasked instructions, the mask register is not real
+	if (opgroup == RISCV_OP_GROUP_VMaskReg) {
+		MCOperand *mask = MCInst_getOperand(MI, OpNum);
+		if (MCOperand_isReg(mask) &&
+		    MCOperand_getReg(mask) == RISCV_NoRegister)
+			return;
+	}
+
+	if (opgroup == RISCV_OP_GROUP_FPImmOperand) {
+		unsigned Imm = (unsigned)MCInst_getOperand(MI, OpNum)->ImmVal;
+		cs_riscv_op *op = RISCV_get_detail_op_at(MI, OpNum);
+		op->type = RISCV_OP_FP;
+		op->access = (cs_ac_type)map_get_op_access(MI, OpNum);
+		switch (Imm) {
+		case 1: // min
+			switch (MI->Opcode) {
+			case RISCV_FLI_S:
+				op->dimm = (double)FLT_MIN;
+				break;
+			case RISCV_FLI_D:
+				op->dimm = (double)DBL_MIN;
+				break;
+			case RISCV_FLI_H:
+				op->dimm = 6.103515625e-05;
+				break;
+			default:
+				op->dimm = 0.0;
+				break;
+			}
+			break;
+		case 30: // inf
+			op->dimm = INFINITY;
+			break;
+		case 31: // nan
+			op->dimm = NAN;
+			break;
+		default:
+			op->dimm = (double)getFPImm(Imm);
+			break;
+		}
+		RISCV_inc_op_count(MI);
+		return;
+	}
+	cs_riscv_op *op = RISCV_get_detail_op_at(MI, OpNum);
+	op->type = (riscv_op_type)map_get_op_type(MI, OpNum);
+	op->access = (cs_ac_type)map_get_op_access(MI, OpNum);
+	switch (map_get_op_type(MI, OpNum)) {
+	case CS_OP_REG:
+		op->reg = MCInst_getOperand(MI, OpNum)->RegVal;
+		break;
+	case CS_OP_MEM:
+		op->mem.base = 0;
+		op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
+		break;
+	case CS_OP_IMM: {
+		uint64_t val = MCInst_getOperand(MI, OpNum)->ImmVal;
+		if (opgroup != RISCV_OP_GROUP_CSRSystemRegister) {
+			op->imm = val;
+			if (opgroup == RISCV_OP_GROUP_BranchOperand) {
+				op->imm += MI->address;
+			}
+		} else /* system register read-write */ {
+			op->type = RISCV_OP_CSR;
+			op->csr = val;
+			// CSR instruction always read-writes the system operand
+			op->access = CS_AC_READ_WRITE;
+		}
+		break;
+	}
+	case CS_OP_MEM_REG:
+		op->type = (riscv_op_type)CS_OP_MEM;
+		op->mem.base = MCInst_getOperand(MI, OpNum)->RegVal;
+		break;
+	case CS_OP_MEM_IMM:
+		// fill in the disp in the last operand
+		op = RISCV_get_detail_op_at(MI, OpNum - 1);
+		op->type = (riscv_op_type)CS_OP_MEM;
+		op->mem.disp = MCInst_getOperand(MI, OpNum)->ImmVal;
+		RISCV_dec_op_count(
+			MI); // don't increase the count, cancel the coming increment
+		break;
+	case CS_OP_INVALID:
+		break;
+	default: {
+		CS_ASSERT(0 && "unhandled operand type");
+	}
+	}
+	RISCV_inc_op_count(MI);
+}
+
+static inline void RISCV_add_adhoc_groups(MCInst *MI);
+
+void RISCV_add_groups(MCInst *MI)
 {
 	if (!detail_is_set(MI))
 		return;
 
-	cs_op_type op_type = map_get_op_type(MI, OpNum);
+	get_detail(MI)->groups_count = 0;
 
-	if (op_type == CS_OP_IMM) {
-		RISCV_get_detail_op(MI, 0)->type = RISCV_OP_IMM;
-		RISCV_get_detail_op(MI, 0)->imm = MCInst_getOpVal(MI, OpNum);
-		RISCV_get_detail_op(MI, 0)->access =
-			map_get_op_access(MI, OpNum);
-		RISCV_inc_op_count(MI);
-	} else if (op_type == CS_OP_REG) {
-		RISCV_get_detail_op(MI, 0)->type = RISCV_OP_REG;
-		RISCV_get_detail_op(MI, 0)->reg = MCInst_getOpVal(MI, OpNum);
-		RISCV_get_detail_op(MI, 0)->access =
-			map_get_op_access(MI, OpNum);
-		RISCV_inc_op_count(MI);
-	} else {
-		CS_ASSERT(0 && "Op type not handled.");
+#ifndef CAPSTONE_DIET
+	int i = 0;
+	while (insns[MI->Opcode].groups[i] != 0) {
+		add_group(MI, insns[MI->Opcode].groups[i]);
+		i++;
 	}
+#endif
+
+	RISCV_add_adhoc_groups(MI);
+}
+
+enum {
+#define GET_ENUM_VALUES_RISCVOpcode
+#include "RISCVGenCSSystemOperandsEnum.inc"
+};
+
+static inline void RISCV_add_privileged_group(MCInst *MI)
+{
+	const uint8_t *bytes = MI->flat_insn->bytes;
+	uint8_t opcode = bytes[0] & 0x80;
+	// no privileged instruction has a major opcode other than SYSTEM
+	if (opcode != RISCV_RISCVOPCODE_SYSTEM) {
+		return;
+	}
+	uint8_t func3 = (bytes[1] >> 4) & 0x7;
+	// no privileged instruction has a minor opcode other than PRIV or PRIVM
+	if (func3 != 0 && func3 != 0x4) {
+		return;
+	}
+	uint16_t func12 = readBytes16(MI, &(bytes[2])) >> 4;
+	// ecall and ebreak has SYSTEM and PRIV but aren't privileged
+	if (func12 == 0 || func12 == 1) {
+		return;
+	}
+	uint8_t func6 = func12 >> 6;
+	// a subspace under extension-defined custom SYSTEM instructions that is not privileged
+	if (func6 == 0x23 || func6 == 0x33) {
+		return;
+	}
+	add_group(MI, RISCV_GRP_PRIVILEGE);
+}
+
+static inline void RISCV_add_interrupt_group(MCInst *MI)
+{
+	if (MI->Opcode == RISCV_ECALL || MI->Opcode == RISCV_EBREAK) {
+		add_group(MI, RISCV_GRP_INT);
+	}
+}
+
+static inline void RISCV_add_interrupt_ret_group(MCInst *MI)
+{
+	if (MI->Opcode == RISCV_MRET || MI->Opcode == RISCV_SRET) {
+		add_group(MI, RISCV_GRP_IRET);
+	}
+}
+
+// calls are implemented in RISCV as plain jumps that happen to set a link register containing the return address
+// but this link register could be given as the null register x0, discarding the return address and making them jumps
+static inline void RISCV_add_call_group(MCInst *MI)
+{
+	if (MI->Opcode == RISCV_JAL || MI->Opcode == RISCV_JALR) {
+		cs_riscv_op *op = RISCV_get_detail_op_at(MI, 0);
+		if ((op->type == (riscv_op_type)CS_OP_REG) &&
+		    op->reg != RISCV_REG_X0 && (op->access & CS_AC_WRITE)) {
+			add_group(MI, RISCV_GRP_CALL);
+		}
+		if (MI->Opcode == RISCV_JAL) {
+			add_group(MI, RISCV_GRP_BRANCH_RELATIVE);
+		}
+	}
+}
+
+// returns are implemented in RISCV as a plain indirect jump that happen to reference the return address register ra == x1
+static inline void RISCV_add_ret_group(MCInst *MI)
+{
+	if (MI->Opcode == RISCV_C_JR) {
+		// indirect jumps whose source is ra
+		cs_riscv_op *op = RISCV_get_detail_op_at(MI, 0);
+		if ((op->type == (riscv_op_type)CS_OP_REG) &&
+		    op->reg == RISCV_REG_X1) {
+			add_group(MI, RISCV_GRP_RET);
+		} else {
+			add_group(MI, RISCV_GRP_JUMP);
+		}
+	}
+	if (MI->Opcode == RISCV_JALR) {
+		// indirect jumps whose source is ra
+		cs_riscv_op *dstreg = RISCV_get_detail_op_at(MI, 0);
+		cs_riscv_op *op = RISCV_get_detail_op_at(MI, 1);
+		cs_riscv_op *op2 = RISCV_get_detail_op_at(MI, 2);
+		if ((op->type == (riscv_op_type)CS_OP_REG) &&
+		    op->reg == RISCV_REG_X1 &&
+		    op2->type == (riscv_op_type)CS_OP_IMM && op2->imm == 0 &&
+		    dstreg->type == (riscv_op_type)CS_OP_REG &&
+		    dstreg->reg == RISCV_REG_X0) {
+			add_group(MI, RISCV_GRP_RET);
+		} else {
+			if (!((dstreg->type == (riscv_op_type)CS_OP_REG) &&
+			      dstreg->reg != RISCV_REG_X0 &&
+			      (dstreg->access & CS_AC_WRITE))) {
+				add_group(MI, RISCV_GRP_JUMP);
+			}
+		}
+	}
+}
+
+static inline void RISCV_add_adhoc_groups(MCInst *MI)
+{
+	RISCV_add_privileged_group(MI);
+	RISCV_add_interrupt_group(MI);
+	RISCV_add_interrupt_ret_group(MI);
+	RISCV_add_call_group(MI);
+	RISCV_add_ret_group(MI);
+}
+
+// memset all stalled values in the detail struct to 0 before disassembling any next instruction
+void RISCV_init_cs_detail(MCInst *MI)
+{
+	if (detail_is_set(MI))
+		memset(get_detail(MI), 0,
+		       offsetof(cs_detail, riscv) + sizeof(cs_riscv));
+}
+
+// for weird reasons some instructions end up with valid operands that are
+// interspersed with invalid operands, i.e. the operands array is an "island"
+// of valid operands with invalid gaps between them, this function will compactify
+// all the valid operands and pad the rest of the array to invalid
+void RISCV_compact_operands(MCInst *MI)
+{
+	if (!detail_is_set(MI))
+		return;
+	cs_riscv_op *ops = RISCV_get_detail(MI)->operands;
+	unsigned int write_pos = 0;
+
+	// Move valid elements to front
+	for (unsigned int read_pos = 0; read_pos < NUM_RISCV_OPS; read_pos++) {
+		if (ops[read_pos].type != (riscv_op_type)CS_OP_INVALID) {
+			if (write_pos != read_pos) {
+				ops[write_pos] = ops[read_pos];
+			}
+			write_pos++;
+		}
+	}
+	// fill the rest, if any, with invalid
+	memset((void *)(&ops[write_pos]), CS_OP_INVALID,
+	       (NUM_RISCV_OPS - write_pos) * sizeof(cs_riscv_op));
 }
 
 // given internal insn id, return public instruction info
 void RISCV_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	unsigned int i;
+	insn_map const *insn_map = NULL;
 
-	i = insn_find(insns, ARR_SIZE(insns), id, &h->insn_cache);
-	if (i != 0) {
-		insn->id = insns[i].mapid;
+	if ((insn_map = lookup_insn_map(h, id))) {
+		insn->id = insn_map->mapid;
 
 		if (h->detail_opt) {
 #ifndef CAPSTONE_DIET
-			memcpy(insn->detail->regs_read, insns[i].regs_use,
-			       sizeof(insns[i].regs_use));
+			memcpy(insn->detail->regs_read, insn_map->regs_use,
+			       sizeof(insn_map->regs_use));
 			insn->detail->regs_read_count =
-				(uint8_t)count_positive(insns[i].regs_use);
+				(uint8_t)count_positive(insn_map->regs_use);
 
-			memcpy(insn->detail->regs_write, insns[i].regs_mod,
-			       sizeof(insns[i].regs_mod));
+			memcpy(insn->detail->regs_write, insn_map->regs_mod,
+			       sizeof(insn_map->regs_mod));
 			insn->detail->regs_write_count =
-				(uint8_t)count_positive(insns[i].regs_mod);
+				(uint8_t)count_positive(insn_map->regs_mod);
 
-			memcpy(insn->detail->groups, insns[i].groups,
-			       sizeof(insns[i].groups));
+			memcpy(insn->detail->groups, insn_map->groups,
+			       sizeof(insn_map->groups));
 			insn->detail->groups_count =
-				(uint8_t)count_positive8(insns[i].groups);
+				(uint8_t)count_positive8(insn_map->groups);
 
-			if (insns[i].branch || insns[i].indirect_branch) {
+			if (insn_map->branch || insn_map->indirect_branch) {
 				// this insn also belongs to JUMP group. add JUMP group
 				insn->detail
 					->groups[insn->detail->groups_count] =
@@ -167,22 +370,30 @@ void RISCV_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	}
 }
 
-static const name_map insn_name_maps[] = {
-	{ RISCV_INS_INVALID, NULL },
-
-#include "RISCVGenInsnNameMaps.inc"
+static const char *const insn_name_maps[] = {
+#include "RISCVGenCSMappingInsnName.inc"
 };
+
+// called from RISCV_LLVM_printInstruction() to avoid exporting
+// insn_alias_mnem_map and its size via extern declarations
+void RISCV_set_alias_id(MCInst *MI, SStream *O)
+{
+#ifndef CAPSTONE_DIET
+	map_set_alias_id(MI, O, insn_alias_mnem_map,
+			 ARR_SIZE(insn_alias_mnem_map));
+#endif
+}
 
 const char *RISCV_insn_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
-	if (id >= RISCV_INS_ENDING)
-		return NULL;
+	if (id < RISCV_INS_ENDING)
+		return insn_name_maps[id];
 
-	return insn_name_maps[id].name;
-#else
-	return NULL;
+	if (id > RISCV_INS_ALIAS_BEGIN && id < RISCV_INS_ALIAS_END)
+		return insn_alias_mnem_map[id - RISCV_INS_ALIAS_BEGIN - 1].name;
 #endif
+	return NULL;
 }
 
 #ifndef CAPSTONE_DIET
@@ -197,30 +408,9 @@ static const name_map group_name_maps[] = {
 	{ RISCV_GRP_PRIVILEGE, "privileged" },
 	{ RISCV_GRP_BRANCH_RELATIVE, "branch_relative" },
 
-	// architecture specific
-	{ RISCV_GRP_ISRV32, "isrv32" },
-	{ RISCV_GRP_ISRV64, "isrv64" },
-	{ RISCV_GRP_HASSTDEXTA, "hasStdExtA" },
-	{ RISCV_GRP_HASSTDEXTC, "hasStdExtC" },
-	{ RISCV_GRP_HASSTDEXTD, "hasStdExtD" },
-	{ RISCV_GRP_HASSTDEXTF, "hasStdExtF" },
-	{ RISCV_GRP_HASSTDEXTM, "hasStdExtM" },
+// architecture specific
+#include "RISCVGenCSFeatureName.inc"
 
-	/*
-  	{ RISCV_GRP_ISRVA,      "isrva" },
-  	{ RISCV_GRP_ISRVC,      "isrvc" },
-  	{ RISCV_GRP_ISRVD,      "isrvd" },
-  	{ RISCV_GRP_ISRVCD,     "isrvcd" },
-  	{ RISCV_GRP_ISRVF,      "isrvf" },
-  	{ RISCV_GRP_ISRV32C,    "isrv32c" },
-  	{ RISCV_GRP_ISRV32CF,   "isrv32cf" },
-  	{ RISCV_GRP_ISRVM,      "isrvm" },
-  	{ RISCV_GRP_ISRV64A,    "isrv64a" },
-  	{ RISCV_GRP_ISRV64C,    "isrv64c" },
-  	{ RISCV_GRP_ISRV64D,    "isrv64d" },
-  	{ RISCV_GRP_ISRV64F,    "isrv64f" },
-  	{ RISCV_GRP_ISRV64M,    "isrv64m" }
-  	*/
 	{ RISCV_GRP_ENDING, NULL }
 };
 #endif
@@ -229,8 +419,10 @@ const char *RISCV_group_name(csh handle, unsigned int id)
 {
 #ifndef CAPSTONE_DIET
 	// verify group id
+	// if past the end
 	if (id >= RISCV_GRP_ENDING ||
-	    (id > RISCV_GRP_BRANCH_RELATIVE && id < RISCV_GRP_ISRV32))
+	    // or in the encoding gap between generic groups and arch-specific groups
+	    (id > RISCV_GRP_BRANCH_RELATIVE && id < RISCV_FEATURE_HASSTDEXTI))
 		return NULL;
 	return id2name(group_name_maps, ARR_SIZE(group_name_maps), id);
 #else
@@ -239,126 +431,63 @@ const char *RISCV_group_name(csh handle, unsigned int id)
 }
 
 // map instruction name to public instruction ID
-riscv_reg RISCV_map_insn(const char *name)
+riscv_insn RISCV_map_insn(const char *name)
 {
-	// handle special alias first
 	unsigned int i;
-
-	// NOTE: skip first NULL name in insn_name_maps
-	i = name2id(&insn_name_maps[1], ARR_SIZE(insn_name_maps) - 1, name);
-
-	return (i != -1) ? i : RISCV_REG_INVALID;
+	for (i = 1; i < ARR_SIZE(insn_name_maps); i++) {
+		if (!strcmp(name, insn_name_maps[i]))
+			return i;
+	}
+#ifndef CAPSTONE_DIET
+	for (i = 0; i < ARR_SIZE(insn_alias_mnem_map); i++) {
+		if (!strcmp(name, insn_alias_mnem_map[i].name))
+			return insn_alias_mnem_map[i].id;
+	}
+#endif
+	return RISCV_INS_INVALID;
 }
 
-// map internal raw register to 'public' register
-riscv_reg RISCV_map_register(unsigned int r)
+void RISCV_reg_access(const cs_insn *insn, cs_regs regs_read,
+		      uint8_t *regs_read_count, cs_regs regs_write,
+		      uint8_t *regs_write_count)
 {
-	static const unsigned int map[] = {
-		0,
-		RISCV_REG_X0,
-		RISCV_REG_X1,
-		RISCV_REG_X2,
-		RISCV_REG_X3,
-		RISCV_REG_X4,
-		RISCV_REG_X5,
-		RISCV_REG_X6,
-		RISCV_REG_X7,
-		RISCV_REG_X8,
-		RISCV_REG_X9,
-		RISCV_REG_X10,
-		RISCV_REG_X11,
-		RISCV_REG_X12,
-		RISCV_REG_X13,
-		RISCV_REG_X14,
-		RISCV_REG_X15,
-		RISCV_REG_X16,
-		RISCV_REG_X17,
-		RISCV_REG_X18,
-		RISCV_REG_X19,
-		RISCV_REG_X20,
-		RISCV_REG_X21,
-		RISCV_REG_X22,
-		RISCV_REG_X23,
-		RISCV_REG_X24,
-		RISCV_REG_X25,
-		RISCV_REG_X26,
-		RISCV_REG_X27,
-		RISCV_REG_X28,
-		RISCV_REG_X29,
-		RISCV_REG_X30,
-		RISCV_REG_X31,
+	const cs_riscv *riscv = &(insn->detail->riscv);
+	uint8_t read_count = 0;
+	uint8_t write_count = 0;
 
-		RISCV_REG_F0_32,
-		RISCV_REG_F0_64,
-		RISCV_REG_F1_32,
-		RISCV_REG_F1_64,
-		RISCV_REG_F2_32,
-		RISCV_REG_F2_64,
-		RISCV_REG_F3_32,
-		RISCV_REG_F3_64,
-		RISCV_REG_F4_32,
-		RISCV_REG_F4_64,
-		RISCV_REG_F5_32,
-		RISCV_REG_F5_64,
-		RISCV_REG_F6_32,
-		RISCV_REG_F6_64,
-		RISCV_REG_F7_32,
-		RISCV_REG_F7_64,
-		RISCV_REG_F8_32,
-		RISCV_REG_F8_64,
-		RISCV_REG_F9_32,
-		RISCV_REG_F9_64,
-		RISCV_REG_F10_32,
-		RISCV_REG_F10_64,
-		RISCV_REG_F11_32,
-		RISCV_REG_F11_64,
-		RISCV_REG_F12_32,
-		RISCV_REG_F12_64,
-		RISCV_REG_F13_32,
-		RISCV_REG_F13_64,
-		RISCV_REG_F14_32,
-		RISCV_REG_F14_64,
-		RISCV_REG_F15_32,
-		RISCV_REG_F15_64,
-		RISCV_REG_F16_32,
-		RISCV_REG_F16_64,
-		RISCV_REG_F17_32,
-		RISCV_REG_F17_64,
-		RISCV_REG_F18_32,
-		RISCV_REG_F18_64,
-		RISCV_REG_F19_32,
-		RISCV_REG_F19_64,
-		RISCV_REG_F20_32,
-		RISCV_REG_F20_64,
-		RISCV_REG_F21_32,
-		RISCV_REG_F21_64,
-		RISCV_REG_F22_32,
-		RISCV_REG_F22_64,
-		RISCV_REG_F23_32,
-		RISCV_REG_F23_64,
-		RISCV_REG_F24_32,
-		RISCV_REG_F24_64,
-		RISCV_REG_F25_32,
-		RISCV_REG_F25_64,
-		RISCV_REG_F26_32,
-		RISCV_REG_F26_64,
-		RISCV_REG_F27_32,
-		RISCV_REG_F27_64,
-		RISCV_REG_F28_32,
-		RISCV_REG_F28_64,
-		RISCV_REG_F29_32,
-		RISCV_REG_F29_64,
-		RISCV_REG_F30_32,
-		RISCV_REG_F30_64,
-		RISCV_REG_F31_32,
-		RISCV_REG_F31_64,
-	};
+	for (int j = 0; j < riscv->op_count; j++) {
+		const cs_riscv_op *op = &riscv->operands[j];
 
-	if (r < ARR_SIZE(map))
-		return map[r];
+		if (op->type == RISCV_OP_REG) {
+			if ((op->access & CS_AC_WRITE) &&
+			    !arr_exist(regs_write, write_count, op->reg)) {
+				regs_write[write_count++] = (uint16_t)op->reg;
+			}
+			if ((op->access & CS_AC_READ) &&
+			    !arr_exist(regs_read, read_count, op->reg)) {
+				regs_read[read_count++] = (uint16_t)op->reg;
+			}
+		} else if (op->type == RISCV_OP_MEM) {
+			if (op->mem.base != RISCV_REG_INVALID &&
+			    !arr_exist(regs_read, read_count, op->mem.base)) {
+				regs_read[read_count++] =
+					(uint16_t)op->mem.base;
+			}
+		}
+	}
 
-	// cannot find this register
-	return 0;
+	*regs_read_count = read_count;
+	*regs_write_count = write_count;
+}
+
+void RISCV_init(MCRegisterInfo *MRI)
+{
+	MCRegisterInfo_InitMCRegisterInfo(MRI, RISCVRegDesc, RISCV_REG_ENDING,
+					  0, 0, RISCVMCRegisterClasses,
+					  ARR_SIZE(RISCVMCRegisterClasses), 0,
+					  0, RISCVRegDiffLists, 0,
+					  RISCVSubRegIdxLists,
+					  ARR_SIZE(RISCVSubRegIdxLists), 0);
 }
 
 #endif

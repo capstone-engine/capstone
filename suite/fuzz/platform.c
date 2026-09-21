@@ -107,6 +107,9 @@ struct platform platforms[] = {
 	  CS_ARCH_M680X, (cs_mode)CS_MODE_M680X_6309, "M680X_M6808", "hd6309" },
 	{ //item 43
 	  CS_ARCH_M680X, (cs_mode)CS_MODE_M680X_HCS08, "M680X_M6808", "hcs08" },
+	{ CS_ARCH_M680X, (cs_mode)CS_MODE_M680X_RS08, "M680X_RS08", "rs08" },
+	{ CS_ARCH_M680X, (cs_mode)CS_MODE_M680X_HCS12X, "M680X_HCS12X",
+	  "hcs12x" },
 	{ //item 44
 	  CS_ARCH_RISCV, CS_MODE_RISCV32, "RISCV", "riscv32" },
 	{ //item 45

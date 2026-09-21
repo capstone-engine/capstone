@@ -38,17 +38,7 @@ bool ARC_getInstruction(csh handle, const uint8_t *code, size_t code_len,
 void ARC_init_cs_detail(MCInst *MI);
 void ARC_set_detail_op_imm(MCInst *MI, unsigned OpNum, arc_op_type ImmType,
 			   int64_t Imm);
-void ARC_add_cs_detail(MCInst *MI, int /* arc_op_group */ op_group,
-		       va_list args);
-static inline void add_cs_detail(MCInst *MI, int /* arc_op_group */ op_group,
-				 ...)
-{
-	if (!detail_is_set(MI))
-		return;
-	va_list args;
-	va_start(args, op_group);
-	ARC_add_cs_detail(MI, op_group, args);
-	va_end(args);
-}
+void ARC_add_cs_detail_0(MCInst *MI, int /* arc_op_group */ op_group,
+			 size_t op_num);
 
 #endif

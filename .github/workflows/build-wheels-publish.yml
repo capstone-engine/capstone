@@ -45,9 +45,9 @@ jobs:
         include:
           # NOTE: Making this to parallelize and speed up workflow
           # i686 - manylinux
-          # - { os: ubuntu-latest, arch: i686, cibw_build: 'cp*-manylinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: i686, cibw_build: 'cp*-manylinux*', cibw_skip: '' }
           # i686 - musllinux
-          # - { os: ubuntu-latest, arch: i686, cibw_build: 'cp*-musllinux*', cibw_skip: '' }
+          - { os: ubuntu-latest, arch: i686, cibw_build: 'cp*-musllinux*', cibw_skip: '' }
           # x86_64 - manylinux
           - { os: ubuntu-latest, arch: x86_64, cibw_build: 'cp*-manylinux*', cibw_skip: '' }
           # x86_64 - musllinux
@@ -63,12 +63,12 @@ jobs:
           # windows - amd64
           - { os: windows-latest, arch: AMD64, cibw_build: 'cp*', cibw_skip: '' }
           # windows - x86
-          # - { os: windows-latest, arch: x86, cibw_build: 'cp*', cibw_skip: '' }
+          - { os: windows-latest, arch: x86, cibw_build: 'cp*', cibw_skip: '' }
           # windows - arm64
           - { os: windows-11-arm, arch: ARM64, cibw_build: 'cp*', cibw_skip: '*38* *39* *310*' }
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # https://github.com/actions/upload-artifact/issues/22
       - name: Prepare a unique name for Artifacts
@@ -80,7 +80,7 @@ jobs:
           echo "ARTIFACT_NAME=$name" >> $GITHUB_ENV
 
       # https://cibuildwheel.pypa.io/en/stable/faq/#macos-building-cpython-38-wheels-on-arm64
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         if: runner.os == 'macOS' && runner.arch == 'ARM64'
         with:
           python-version: 3.8
@@ -105,10 +105,10 @@ jobs:
 
       - name: '🛠️ Set up QEMU'
         if: runner.os == 'Linux' && matrix.arch == 'i686'
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: '🚧 cibuildwheel run'
-        uses: pypa/cibuildwheel@v3.1.3
+        uses: pypa/cibuildwheel@v4.2.1
         env:
           CIBW_BUILD_FRONTEND: build
           CIBW_BUILD: ${{ matrix.cibw_build }}
@@ -125,7 +125,7 @@ jobs:
           package-dir: bindings/python
           output-dir: wheelhouse
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ./wheelhouse/*.whl
@@ -134,7 +134,7 @@ jobs:
     name: Make SDist
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           submodules: true
@@ -146,7 +146,7 @@ jobs:
           python3 -m pip install bindings/python/dist/*.tar.gz
           python3 -c 'import capstone; print(f"Capstone version installed from sdist: {capstone.__version__}")'
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: sdist-archive
           path: bindings/python/dist/*.tar.gz
@@ -159,7 +159,7 @@ jobs:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release'
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           merge-multiple: true
           path: dist

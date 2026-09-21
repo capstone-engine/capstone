@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include "../../../utils.h"
+
 #define MAX_ASM_TXT_MEM 1024
 #define X86_16 0
 #define X86_32 1
@@ -17,5 +19,6 @@ void replace_hex(char *src, size_t src_len);
 void replace_negative(char *src, size_t src_len, size_t arch_bits);
 void norm_spaces(char *str);
 void str_to_lower(char *str);
+char *cs_strndup(const char *s, size_t n);
 
 #endif /* HELPER_H */

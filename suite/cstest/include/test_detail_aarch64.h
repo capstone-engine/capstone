@@ -52,7 +52,7 @@ typedef struct {
 	int64_t imm;
 	char *mem_base;
 	char *mem_index;
-	int32_t mem_disp;
+	int64_t mem_disp;
 
 	int8_t imm_range_first;
 	int8_t imm_range_offset;

@@ -31,24 +31,34 @@ static void regs_rw(cs_detail *detail, enum direction rw, sh_reg reg)
 	}
 }
 
-static void set_reg_n(sh_info *info, sh_reg reg, int pos, enum direction rw,
+static bool set_reg_n(sh_info *info, sh_reg reg, int pos, enum direction rw,
 		      cs_detail *detail)
 {
+	if (pos >= ARR_SIZE(info->op.operands)) {
+		return false;
+	}
 	info->op.operands[pos].type = SH_OP_REG;
 	info->op.operands[pos].reg = reg;
 	regs_rw(detail, rw, reg);
+	return true;
 }
 
 static void set_reg(sh_info *info, sh_reg reg, enum direction rw,
 		    cs_detail *detail)
 {
-	set_reg_n(info, reg, info->op.op_count, rw, detail);
+	CS_ASSERT_RET(info->op.op_count < ARR_SIZE(info->op.operands));
+	if (!set_reg_n(info, reg, info->op.op_count, rw, detail)) {
+		return;
+	}
 	info->op.op_count++;
 }
 
-static void set_mem_n(sh_info *info, sh_op_mem_type address, sh_reg reg,
+static bool set_mem_n(sh_info *info, sh_op_mem_type address, sh_reg reg,
 		      uint32_t disp, int sz, int pos, cs_detail *detail)
 {
+	if (pos >= ARR_SIZE(info->op.operands)) {
+		return false;
+	}
 	info->op.operands[pos].type = SH_OP_MEM;
 	info->op.operands[pos].mem.address = address;
 	info->op.operands[pos].mem.reg = reg;
@@ -74,17 +84,23 @@ static void set_mem_n(sh_info *info, sh_op_mem_type address, sh_reg reg,
 		regs_read(detail, reg);
 		break;
 	}
+	return true;
 }
 
 static void set_mem(sh_info *info, sh_op_mem_type address, sh_reg reg,
 		    uint32_t disp, int sz, cs_detail *detail)
 {
-	set_mem_n(info, address, reg, disp, sz, info->op.op_count, detail);
+	CS_ASSERT_RET(info->op.op_count < ARR_SIZE(info->op.operands));
+	if (!set_mem_n(info, address, reg, disp, sz, info->op.op_count,
+		       detail)) {
+		return;
+	}
 	info->op.op_count++;
 }
 
 static void set_imm(sh_info *info, int sign, uint64_t imm)
 {
+	CS_ASSERT_RET(info->op.op_count < ARR_SIZE(info->op.operands));
 	info->op.operands[info->op.op_count].type = SH_OP_IMM;
 	if (sign && imm >= 128)
 		imm = -256 + imm;
@@ -309,10 +325,19 @@ static bool opMOVx(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 		rw = (ad >> 1);
 		{
 			nm(code, rw);
-			set_reg_n(info, SH_REG_R0 + m, rw, rw, detail);
-			set_mem_n(info, SH_OP_MEM_REG_R0, SH_REG_R0 + n, 0,
-				  size, 1 - rw, detail);
-			info->op.op_count = 2;
+			if (!set_reg_n(info, SH_REG_R0 + m, rw, rw, detail)) {
+				return false;
+			}
+			info->op.op_count++;
+
+			CS_ASSERT_RET_VAL(info->op.op_count <
+						  ARR_SIZE(info->op.operands),
+					  false);
+			if (!set_mem_n(info, SH_OP_MEM_REG_R0, SH_REG_R0 + n, 0,
+				       size, 1 - rw, detail)) {
+				return false;
+			}
+			info->op.op_count++;
 		}
 		break;
 	case 0x20: /// mov.X Rs,@-Rd
@@ -320,9 +345,19 @@ static bool opMOVx(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 		rw = (ad >> 6) & 1;
 		{
 			nm(code, rw);
-			set_reg_n(info, SH_REG_R0 + m, rw, rw, detail);
-			set_mem_n(info, SH_OP_MEM_REG_PRE, SH_REG_R0 + n, 0,
-				  size, 1 - rw, detail);
+			if (!set_reg_n(info, SH_REG_R0 + m, rw, rw, detail)) {
+				return false;
+			}
+			info->op.op_count++;
+
+			CS_ASSERT_RET_VAL(info->op.op_count <
+						  ARR_SIZE(info->op.operands),
+					  false);
+			if (!set_mem_n(info, SH_OP_MEM_REG_PRE, SH_REG_R0 + n,
+				       0, size, 1 - rw, detail)) {
+				return false;
+			}
+			info->op.op_count++;
 		}
 		break;
 	default:
@@ -548,10 +583,18 @@ static bool opMOV_L_dsp(uint16_t code, uint64_t address, MCInst *MI,
 	int rw = (code >> 14) & 1;
 	nm(code, rw);
 	MCInst_setOpcode(MI, SH_INS_MOV);
-	set_mem_n(info, SH_OP_MEM_REG_DISP, SH_REG_R0 + n, dsp, 32, 1 - rw,
-		  detail);
-	set_reg_n(info, SH_REG_R0 + m, rw, rw, detail);
-	info->op.op_count = 2;
+	if (!set_mem_n(info, SH_OP_MEM_REG_DISP, SH_REG_R0 + n, dsp, 32, 1 - rw,
+		       detail)) {
+		return false;
+	}
+	info->op.op_count++;
+
+	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands),
+			  false);
+	if (!set_reg_n(info, SH_REG_R0 + m, rw, rw, detail)) {
+		return false;
+	}
+	info->op.op_count++;
 	return MCDisassembler_Success;
 }
 
@@ -563,9 +606,14 @@ static bool opMOV_rind(uint16_t code, uint64_t address, MCInst *MI,
 	nm(code, rw);
 	MCInst_setOpcode(MI, SH_INS_MOV);
 	sz = 8 << sz;
-	set_mem_n(info, SH_OP_MEM_REG_IND, SH_REG_R0 + n, 0, sz, 1 - rw,
-		  detail);
-	set_reg_n(info, SH_REG_R0 + m, rw, rw, detail);
+	if (!set_mem_n(info, SH_OP_MEM_REG_IND, SH_REG_R0 + n, 0, sz, 1 - rw,
+		       detail)) {
+		return false;
+	}
+
+	if (!set_reg_n(info, SH_REG_R0 + m, rw, rw, detail)) {
+		return false;
+	}
 	info->op.op_count = 2;
 	return MCDisassembler_Success;
 }
@@ -581,25 +629,33 @@ static bool opMOV_rpd(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 	return MCDisassembler_Success;
 }
 
-opRR(ISA_ALL, TST, 0) opRR(ISA_ALL, AND, 0) opRR(ISA_ALL, XOR, 0) opRR(
-	ISA_ALL, OR, 0) opRR(ISA_ALL, CMP_STR, 0) opRR(ISA_ALL, XTRCT, 0)
-	opRR(ISA_ALL, MULU_W, 16) opRR(ISA_ALL, MULS_W, 16) opRR(ISA_ALL,
-								 CMP_EQ, 0)
-		opRR(ISA_ALL, CMP_HI, 0) opRR(ISA_ALL, CMP_HS,
-					      0) opRR(ISA_ALL, CMP_GE, 0)
-			opRR(ISA_ALL, CMP_GT, 0) opRR(ISA_ALL, SUB,
-						      0) opRR(ISA_ALL, SUBC, 0)
-				opRR(ISA_ALL, SUBV, 0) opRR(ISA_ALL, ADD_r, 0)
-					opRR(ISA_ALL, ADDC, 0) opRR(ISA_ALL,
-								    ADDV, 0)
-						opRR(ISA_ALL, DIV0S, 0)
-							opRR(ISA_ALL, DIV1, 0)
-	/// DMULS / DMULU - SH2
-	opRR(ISA_SH2, DMULS_L, 0) opRR(ISA_SH2, DMULU_L, 0)
+opRR(ISA_ALL, TST, 0);
+opRR(ISA_ALL, AND, 0);
+opRR(ISA_ALL, XOR, 0);
+opRR(ISA_ALL, OR, 0);
+opRR(ISA_ALL, CMP_STR, 0);
+opRR(ISA_ALL, XTRCT, 0);
+opRR(ISA_ALL, MULU_W, 16);
+opRR(ISA_ALL, MULS_W, 16);
+opRR(ISA_ALL, CMP_EQ, 0);
+opRR(ISA_ALL, CMP_HI, 0);
+opRR(ISA_ALL, CMP_HS, 0);
+opRR(ISA_ALL, CMP_GE, 0);
+opRR(ISA_ALL, CMP_GT, 0);
+opRR(ISA_ALL, SUB, 0);
+opRR(ISA_ALL, SUBC, 0);
+opRR(ISA_ALL, SUBV, 0);
+opRR(ISA_ALL, ADD_r, 0);
+opRR(ISA_ALL, ADDC, 0);
+opRR(ISA_ALL, ADDV, 0);
+opRR(ISA_ALL, DIV0S, 0);
+opRR(ISA_ALL, DIV1, 0);
+/// DMULS / DMULU - SH2
+opRR(ISA_SH2, DMULS_L, 0);
+opRR(ISA_SH2, DMULU_L, 0);
 
-		static bool op4xx0(uint16_t code, uint64_t address, MCInst *MI,
-				   cs_mode mode, sh_info *info,
-				   cs_detail *detail)
+static bool op4xx0(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
+		   sh_info *info, cs_detail *detail)
 {
 	int insn_code = (code >> 4) & 0x0f;
 	int r = (code >> 8) & 0x0f;
@@ -948,11 +1004,20 @@ static bool op4xxb(uint16_t code, uint64_t address, MCInst *MI, cs_mode mode,
 				set_groups(detail, 1, grp);
 		} else {
 			if (insn_code != 1) {
-				set_reg_n(info, SH_REG_R0, rw, rw, detail);
+				if (!set_reg_n(info, SH_REG_R0, rw, rw,
+					       detail)) {
+					return false;
+				}
 				info->op.op_count++;
 			}
-			set_mem_n(info, memop, SH_REG_R0 + r, 0, sz, 1 - rw,
-				  detail);
+			CS_ASSERT_RET_VAL(info->op.op_count <
+						  ARR_SIZE(info->op.operands),
+					  false);
+			if (!set_mem_n(info, memop, SH_REG_R0 + r, 0, sz,
+				       1 - rw, detail)) {
+				return false;
+			}
+
 			info->op.op_count++;
 		}
 		return MCDisassembler_Success;
@@ -1009,10 +1074,19 @@ static bool opMOV_BW_dsp(uint16_t code, uint64_t address, MCInst *MI,
 	int size = 1 + ((code >> 8) & 1);
 	int rw = (code >> 10) & 1;
 	MCInst_setOpcode(MI, SH_INS_MOV);
-	set_mem_n(info, SH_OP_MEM_REG_DISP, SH_REG_R0 + r, dsp * size, 8 * size,
-		  1 - rw, detail);
-	set_reg_n(info, SH_REG_R0, rw, rw, detail);
-	info->op.op_count = 2;
+	if (!set_mem_n(info, SH_OP_MEM_REG_DISP, SH_REG_R0 + r, dsp * size,
+		       8 * size, 1 - rw, detail)) {
+		return false;
+	}
+	info->op.op_count++;
+
+	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands),
+			  false);
+	if (!set_reg_n(info, SH_REG_R0, rw, rw, detail)) {
+		return false;
+	}
+
+	info->op.op_count++;
 	return MCDisassembler_Success;
 }
 
@@ -1193,10 +1267,18 @@ opBxx(BRA, SH_GRP_JUMP) opBxx(BSR, SH_GRP_CALL)
 	int dsp = (code & 0x00ff) * (sz / 8);
 	int rw = (code >> 10) & 1;
 	MCInst_setOpcode(MI, SH_INS_MOV);
-	set_mem_n(info, SH_OP_MEM_GBR_DISP, SH_REG_GBR, dsp, sz, 1 - rw,
-		  detail);
-	set_reg_n(info, SH_REG_R0, rw, rw, detail);
-	info->op.op_count = 2;
+	if (!set_mem_n(info, SH_OP_MEM_GBR_DISP, SH_REG_GBR, dsp, sz, 1 - rw,
+		       detail)) {
+		return false;
+	}
+	info->op.op_count++;
+
+	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands),
+			  false);
+	if (!set_reg_n(info, SH_REG_R0, rw, rw, detail)) {
+		return false;
+	}
+	info->op.op_count++;
 	return MCDisassembler_Success;
 }
 
@@ -1266,9 +1348,18 @@ opFRR(FADD) opFRR(FSUB) opFRR(FMUL) opFRR(FDIV) opFRRcmp(FCMP_EQ)
 {
 	nm(code, (1 - rw));
 	MCInst_setOpcode(MI, SH_INS_FMOV);
-	set_mem_n(info, address, SH_REG_R0 + m, 0, 0, 1 - rw, detail);
-	set_reg_n(info, SH_REG_FR0 + n, rw, rw, detail);
-	info->op.op_count = 2;
+	if (!set_mem_n(info, address, SH_REG_R0 + m, 0, 0, 1 - rw, detail)) {
+		return false;
+	}
+	info->op.op_count++;
+
+	CS_ASSERT_RET_VAL(info->op.op_count < ARR_SIZE(info->op.operands),
+			  false);
+	if (!set_reg_n(info, SH_REG_FR0 + n, rw, rw, detail)) {
+		return false;
+	}
+	info->op.op_count++;
+
 	return MCDisassembler_Success;
 }
 
@@ -2084,6 +2175,8 @@ static bool sh_disassemble(const uint8_t *code, MCInst *MI, uint64_t address,
 			insn |= code[2] << 8 | code[3];
 			if (decode_long(insn, address, MI, info, detail))
 				return MCDisassembler_Success;
+			else
+				return MCDisassembler_Fail;
 		}
 	}
 	/* Co-processor instructions */
@@ -2109,8 +2202,8 @@ static bool sh_disassemble(const uint8_t *code, MCInst *MI, uint64_t address,
 					insn <<= 16;
 					insn |= code[2] << 8 | code[3];
 				} else
-					insn |= (code[3] << 24) |
-						(code[2] << 16);
+					insn |= ((uint32_t)code[3] << 24) |
+						((uint32_t)code[2] << 16);
 				dsp_result = decode_dsp_p(insn, MI, mode, info,
 							  detail);
 				break;
@@ -2126,6 +2219,9 @@ static bool sh_disassemble(const uint8_t *code, MCInst *MI, uint64_t address,
 		idx = insn >> 8;
 	} else {
 		idx = ((insn >> 8) & 0xf0) | (insn & 0x000f);
+	}
+	if (idx >= ARR_SIZE(decode)) {
+		return MCDisassembler_Fail;
 	}
 
 	if (idx < ARR_SIZE(decode) && decode[idx]) {

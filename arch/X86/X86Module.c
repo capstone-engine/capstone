@@ -13,7 +13,13 @@
 cs_err X86_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
-	mri = cs_mem_malloc(sizeof(*mri));
+	if (x86_has_feature(ud->mode, CS_MODE_X86_AMD) &&
+	    x86_has_feature(ud->mode, CS_MODE_X86_INTEL))
+		return CS_ERR_MODE;
+
+	mri = cs_mem_calloc(1, sizeof(*mri));
+	if (!mri)
+		return CS_ERR_MEM;
 
 	X86_init(mri);
 
@@ -31,10 +37,12 @@ cs_err X86_global_init(cs_struct *ud)
 	ud->reg_access = X86_reg_access;
 #endif
 
-	if (ud->mode == CS_MODE_64)
+	if (x86_has_feature(ud->mode, CS_MODE_64))
 		ud->regsize_map = regsize_map_64;
 	else
 		ud->regsize_map = regsize_map_32;
+
+	X86_build_lookup_tables(ud);
 
 	return CS_ERR_OK;
 }
@@ -45,12 +53,18 @@ cs_err X86_option(cs_struct *handle, cs_opt_type type, size_t value)
 	default:
 		break;
 	case CS_OPT_MODE:
-		if (value == CS_MODE_64)
+		if ((x86_has_feature(value, CS_MODE_X86_INTEL) &&
+		     x86_has_feature(value, CS_MODE_X86_AMD)))
+			return CS_ERR_OPTION;
+
+		if (x86_has_feature(value, CS_MODE_64))
 			handle->regsize_map = regsize_map_64;
 		else
 			handle->regsize_map = regsize_map_32;
 
-		handle->mode = (cs_mode)value;
+		handle->mode = (cs_mode)(value &
+					 (CS_MODE_16 | CS_MODE_32 | CS_MODE_64 |
+					  CS_MODE_X86_INTEL | CS_MODE_X86_AMD));
 		break;
 	case CS_OPT_SYNTAX:
 		switch (value) {

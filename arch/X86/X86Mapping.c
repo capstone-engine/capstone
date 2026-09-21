@@ -715,9 +715,9 @@ const char *X86_reg_name(csh handle, unsigned int reg)
 		return NULL;
 
 	if (reg == X86_REG_EFLAGS) {
-		if (ud->mode & CS_MODE_32)
+		if (x86_has_feature(ud->mode, CS_MODE_32))
 			return "eflags";
-		if (ud->mode & CS_MODE_64)
+		if (x86_has_feature(ud->mode, CS_MODE_64))
 			return "rflags";
 	}
 
@@ -883,15 +883,24 @@ unsigned int find_insn(unsigned int id)
 	return -1;
 }
 
+static inline unsigned int find_insn_h(cs_struct *h, unsigned int id)
+{
+	if (h && h->x86_insn_lut && id <= h->x86_insn_lut_max)
+		return (unsigned int)(int16_t)h->x86_insn_lut[id];
+
+	return find_insn(id);
+}
+
 // given internal insn id, return public instruction info
 void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 {
-	unsigned int i = find_insn(id);
+	unsigned int i = find_insn_h(h, id);
 	if (i != -1) {
 		insn->id = insns[i].mapid;
 
 		if (h->detail_opt) {
 #ifndef CAPSTONE_DIET
+			cs_mode mode = x86_get_bit_mode(h->mode);
 			memcpy(insn->detail->regs_read, insns[i].regs_use,
 			       sizeof(insns[i].regs_use));
 			insn->detail->regs_read_count =
@@ -908,7 +917,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insns[i].regs_mod);
 				break;
 			case X86_RDTSC:
-				if (h->mode == CS_MODE_64) {
+				if (mode == CS_MODE_64) {
 					memcpy(insn->detail->regs_write,
 					       insns[i].regs_mod,
 					       sizeof(insns[i].regs_mod));
@@ -924,7 +933,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				}
 				break;
 			case X86_RDTSCP:
-				if (h->mode == CS_MODE_64) {
+				if (mode == CS_MODE_64) {
 					memcpy(insn->detail->regs_write,
 					       insns[i].regs_mod,
 					       sizeof(insns[i].regs_mod));
@@ -949,7 +958,8 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_LOOP:
 			case X86_INS_LOOPE:
 			case X86_INS_LOOPNE:
-				switch (h->mode) {
+				// The instruction pointer register follows the mode.
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -961,14 +971,6 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insn->detail->regs_write,
 						insn->detail->regs_write_count,
 						X86_REG_EIP, X86_REG_IP);
-					arr_replace(
-						insn->detail->regs_read,
-						insn->detail->regs_read_count,
-						X86_REG_ECX, X86_REG_CX);
-					arr_replace(
-						insn->detail->regs_write,
-						insn->detail->regs_write_count,
-						X86_REG_ECX, X86_REG_CX);
 					break;
 				case CS_MODE_64:
 					arr_replace(
@@ -979,6 +981,20 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insn->detail->regs_write,
 						insn->detail->regs_write_count,
 						X86_REG_EIP, X86_REG_RIP);
+					break;
+				}
+				// The loop counter register follows the effective address
+				// size, which a 0x67 address-size prefix can override.
+				if (insn->detail->x86.addr_size == 2) {
+					arr_replace(
+						insn->detail->regs_read,
+						insn->detail->regs_read_count,
+						X86_REG_ECX, X86_REG_CX);
+					arr_replace(
+						insn->detail->regs_write,
+						insn->detail->regs_write_count,
+						X86_REG_ECX, X86_REG_CX);
+				} else if (insn->detail->x86.addr_size == 8) {
 					arr_replace(
 						insn->detail->regs_read,
 						insn->detail->regs_read_count,
@@ -987,7 +1003,6 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 						insn->detail->regs_write,
 						insn->detail->regs_write_count,
 						X86_REG_ECX, X86_REG_RCX);
-					break;
 				}
 			}
 
@@ -998,7 +1013,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_LODSD:
 			case X86_INS_LODSQ:
 			case X86_INS_LODSW:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1032,7 +1047,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_STOSD:
 			case X86_INS_STOSQ:
 			case X86_INS_STOSW:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1066,7 +1081,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_MOVSW:
 			case X86_INS_MOVSD:
 			case X86_INS_MOVSQ:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1110,7 +1125,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 			case X86_INS_ENTER:
 			case X86_INS_LEAVE:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1154,7 +1169,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_INSB:
 			case X86_INS_INSW:
 			case X86_INS_INSD:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1183,7 +1198,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_OUTSB:
 			case X86_INS_OUTSW:
 			case X86_INS_OUTSD:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_64:
@@ -1225,7 +1240,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 			case X86_INS_OUTSB:
 			case X86_INS_OUTSW:
 			case X86_INS_OUTSD:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1240,7 +1255,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 
 			case X86_INS_JMP:
 			case X86_INS_LJMP:
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1267,7 +1282,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				break;
 
 			case X86_INS_SYSENTER: {
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1294,7 +1309,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 				break;
 			} break;
 			case X86_INS_SYSEXIT: {
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1350,7 +1365,7 @@ void X86_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 					X86_GRP_JUMP;
 				insn->detail->groups_count++;
 
-				switch (h->mode) {
+				switch (mode) {
 				default:
 					break;
 				case CS_MODE_16:
@@ -1413,6 +1428,19 @@ struct insn_reg2 {
 	enum cs_ac_type access1, access2;
 };
 
+static inline uint16_t pack_insn_reg(x86_reg reg, enum cs_ac_type access)
+{
+	return (uint16_t)(((unsigned int)access << 12) |
+			  ((unsigned int)reg & 0x0fff));
+}
+
+static inline x86_reg unpack_insn_reg(uint16_t value, enum cs_ac_type *access)
+{
+	if (access)
+		*access = (enum cs_ac_type)(value >> 12);
+	return (x86_reg)(value & 0x0fff);
+}
+
 static const struct insn_reg insn_regs_att[] = {
 	{ X86_INSB, X86_REG_DX, CS_AC_READ },
 	{ X86_INSL, X86_REG_DX, CS_AC_READ },
@@ -1457,33 +1485,61 @@ static const struct insn_reg insn_regs_att[] = {
 	{ X86_PUSHGS64, X86_REG_GS, CS_AC_READ },
 	{ X86_PUSHSS16, X86_REG_SS, CS_AC_READ },
 	{ X86_PUSHSS32, X86_REG_SS, CS_AC_READ },
+	{ X86_RCL16mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_RCL16rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_RCL32mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_RCL32rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_RCL64mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_RCL64rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_RCL8mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_RCL8rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_RCR16mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_RCR16rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_RCR32mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_RCR32rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_RCR64mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_RCR64rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_RCR8mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_RCR8rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_ROL16mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_ROL16rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_ROL32mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_ROL32rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_ROL64mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_ROL64rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_ROL8mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_ROL8rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_ROR16mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_ROR16rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_ROR32mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_ROR32rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_ROR64mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_ROR64rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_ROR8mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_ROR8rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SAL16mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SAL16rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SAL32mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SAL32rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SAL64mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SAL64rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SAL8mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SAL8rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SAR16mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SAR16rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SAR32mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SAR32rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SAR64mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SAR64rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SAR8mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SAR8rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SHL16mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHL16rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SHL32mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHL32rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SHL64mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHL64rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SHL8mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHL8rCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHLD16mrCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHLD16rrCL, X86_REG_CL, CS_AC_READ },
@@ -1491,9 +1547,13 @@ static const struct insn_reg insn_regs_att[] = {
 	{ X86_SHLD32rrCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHLD64mrCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHLD64rrCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SHR16mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHR16rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SHR32mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHR32rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SHR64mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHR64rCL, X86_REG_CL, CS_AC_READ },
+	{ X86_SHR8mCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHR8rCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHRD16mrCL, X86_REG_CL, CS_AC_READ },
 	{ X86_SHRD16rrCL, X86_REG_CL, CS_AC_READ },
@@ -1725,6 +1785,71 @@ static int binary_search2(const struct insn_reg2 *insns, unsigned int max,
 	return -1;
 }
 
+void X86_build_lookup_tables(cs_struct *h)
+{
+	unsigned int i;
+	unsigned int max = ARR_SIZE(insns);
+	unsigned int id_max;
+
+	CS_ASSERT_RET(h && !h->x86_insn_lut);
+
+	id_max = insns[max - 1].id;
+	h->x86_insn_lut_max = id_max;
+	h->x86_insn_lut =
+		(uint16_t *)cs_mem_malloc((id_max + 1) * sizeof(uint16_t));
+	CS_ASSERT_RET(h->x86_insn_lut);
+
+	memset(h->x86_insn_lut, 0xff, (id_max + 1) * sizeof(uint16_t));
+	for (i = 0; i < max; i++)
+		h->x86_insn_lut[insns[i].id] = (uint16_t)i;
+
+	h->x86_insn_reg_lut =
+		(uint32_t *)cs_mem_calloc(id_max + 1, sizeof(uint32_t));
+	if (!h->x86_insn_reg_lut)
+		return;
+
+	for (i = 0; i < ARR_SIZE(insn_regs_intel); i++) {
+		unsigned int insn_id = insn_regs_intel[i].insn;
+		if (insn_id <= id_max)
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0xffff0000) |
+				pack_insn_reg(insn_regs_intel[i].reg,
+					      insn_regs_intel[i].access);
+	}
+
+	for (i = 0; i < ARR_SIZE(insn_regs_intel_extra); i++) {
+		unsigned int insn_id = insn_regs_intel_extra[i].insn;
+		if (insn_id && insn_id <= id_max &&
+		    !(h->x86_insn_reg_lut[insn_id] & 0xffff))
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0xffff0000) |
+				pack_insn_reg(insn_regs_intel_extra[i].reg,
+					      insn_regs_intel_extra[i].access);
+	}
+
+	for (i = 0; i < ARR_SIZE(insn_regs_att); i++) {
+		unsigned int insn_id = insn_regs_att[i].insn;
+		if (insn_id <= id_max)
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0x0000ffff) |
+				((uint32_t)pack_insn_reg(insn_regs_att[i].reg,
+							 insn_regs_att[i].access)
+				 << 16);
+	}
+
+	for (i = 0; i < ARR_SIZE(insn_regs_att_extra); i++) {
+		unsigned int insn_id = insn_regs_att_extra[i].insn;
+		if (insn_id && insn_id <= id_max &&
+		    !(h->x86_insn_reg_lut[insn_id] >> 16))
+			h->x86_insn_reg_lut[insn_id] =
+				(h->x86_insn_reg_lut[insn_id] & 0x0000ffff) |
+				((uint32_t)pack_insn_reg(
+					 insn_regs_att_extra[i].reg,
+					 insn_regs_att_extra[i].access)
+				 << 16);
+	}
+}
+
 // return register of given instruction id
 // return 0 if not found
 // this is to handle instructions embedding accumulate registers into AsmStrs[]
@@ -1751,6 +1876,19 @@ x86_reg X86_insn_reg_intel(unsigned int id, enum cs_ac_type *access)
 
 	// not found
 	return 0;
+}
+
+x86_reg X86_insn_reg_intel_h(cs_struct *h, unsigned int id,
+			     enum cs_ac_type *access)
+{
+	if (h && h->x86_insn_reg_lut && id <= h->x86_insn_lut_max) {
+		uint16_t value = (uint16_t)(h->x86_insn_reg_lut[id] & 0xffff);
+		if (value)
+			return unpack_insn_reg(value, access);
+		return 0;
+	}
+
+	return X86_insn_reg_intel(id, access);
 }
 
 bool X86_insn_reg_intel2(unsigned int id, x86_reg *reg1,
@@ -1796,6 +1934,19 @@ x86_reg X86_insn_reg_att(unsigned int id, enum cs_ac_type *access)
 	return 0;
 }
 
+x86_reg X86_insn_reg_att_h(cs_struct *h, unsigned int id,
+			   enum cs_ac_type *access)
+{
+	if (h && h->x86_insn_reg_lut && id <= h->x86_insn_lut_max) {
+		uint16_t value = (uint16_t)(h->x86_insn_reg_lut[id] >> 16);
+		if (value)
+			return unpack_insn_reg(value, access);
+		return 0;
+	}
+
+	return X86_insn_reg_att(id, access);
+}
+
 // ATT just reuses Intel data, but with the order of registers reversed
 bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1,
 		       x86_reg *reg2, enum cs_ac_type *access2)
@@ -1820,7 +1971,7 @@ bool X86_insn_reg_att2(unsigned int id, x86_reg *reg1, enum cs_ac_type *access1,
 static bool valid_repne(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch (id) {
@@ -1890,7 +2041,7 @@ static bool valid_repne(cs_struct *h, unsigned int opcode)
 static bool valid_bnd(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch (id) {
@@ -1929,27 +2080,13 @@ static bool valid_bnd(cs_struct *h, unsigned int opcode)
 	// not found
 	return false;
 }
-
-// return true if the opcode is XCHG [mem]
-static bool xchg_mem(unsigned int opcode)
-{
-	switch (opcode) {
-	default:
-		return false;
-	case X86_XCHG8rm:
-	case X86_XCHG16rm:
-	case X86_XCHG32rm:
-	case X86_XCHG64rm:
-		return true;
-	}
-}
 #endif
 
 // given MCInst's id, find out if this insn is valid for REP prefix
 static bool valid_rep(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch (id) {
@@ -2008,7 +2145,7 @@ static bool valid_rep(cs_struct *h, unsigned int opcode)
 static bool valid_ret_repz(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 
 	if (i != -1) {
 		id = insns[i].mapid;
@@ -2024,7 +2161,7 @@ static bool valid_ret_repz(cs_struct *h, unsigned int opcode)
 static bool valid_repe(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch (id) {
@@ -2063,7 +2200,7 @@ static bool valid_repe(cs_struct *h, unsigned int opcode)
 static bool valid_notrack(cs_struct *h, unsigned int opcode)
 {
 	unsigned int id;
-	unsigned int i = find_insn(opcode);
+	unsigned int i = find_insn_h(h, opcode);
 	if (i != -1) {
 		id = insns[i].mapid;
 		switch (id) {
@@ -2086,9 +2223,9 @@ static void add_cx(MCInst *MI)
 	if (MI->csh->detail_opt) {
 		x86_reg cx;
 
-		if (MI->csh->mode & CS_MODE_16)
+		if (x86_has_feature(MI->csh->mode, CS_MODE_16))
 			cx = X86_REG_CX;
-		else if (MI->csh->mode & CS_MODE_32)
+		else if (x86_has_feature(MI->csh->mode, CS_MODE_32))
 			cx = X86_REG_ECX;
 		else // 64-bit
 			cx = X86_REG_RCX;
@@ -2112,106 +2249,79 @@ bool X86_lockrep(MCInst *MI, SStream *O)
 	unsigned int opcode;
 	bool res = false;
 
-	switch (MI->x86_prefix[0]) {
+#ifndef CAPSTONE_DIET
+	switch (MI->xAcquireRelease) {
+	case 0xF2:
+		SStream_concat(O, "xacquire|");
+		break;
+	case 0xF3:
+		SStream_concat(O, "xrelease|");
+		break;
 	default:
 		break;
-	case 0xf0:
+	}
+#endif
+
+	if (MI->xAcquireRelease) {
+		if (MI->x86Lock) {
+			// Force LOCK prefix as group 0 prefix for XACQUIRE and XRELEASE if a LOCK is also present.
+			// This is an arbitrary choice, since there are effectively two group 0 prefixes present.
+			// The Intel SDM is not clear on how we should interpret group 0 in this case. It states:
+			// "it is only useful to include up to one prefix code from each of the four groups"
+			// ...and then defines instructions where both an F2/F3 and F0 are useful anyway.
+			MI->x86_prefix[0] = 0xF0;
+		}
+	} else {
+		switch (MI->x86_prefix[0]) {
+		case 0xF2:
+			opcode = MCInst_getOpcode(MI);
 #ifndef CAPSTONE_DIET
-		if (MI->xAcquireRelease == 0xf2)
-			SStream_concat(O, "xacquire|lock|");
-		else if (MI->xAcquireRelease == 0xf3)
-			SStream_concat(O, "xrelease|lock|");
-		else
-			SStream_concat(O, "lock|");
-#endif
-		break;
-	case 0xf2: // repne
-		opcode = MCInst_getOpcode(MI);
-
-#ifndef CAPSTONE_DIET // only care about memonic in standard (non-diet) mode
-		if (xchg_mem(opcode) && MI->xAcquireRelease) {
-			SStream_concat(O, "xacquire|");
-		} else if (valid_repne(MI->csh, opcode)) {
-			SStream_concat(O, "repne|");
-			add_cx(MI);
-		} else if (valid_bnd(MI->csh, opcode)) {
-			SStream_concat(O, "bnd|");
-		} else {
-			// invalid prefix
-			MI->x86_prefix[0] = 0;
-
-			// handle special cases
-#ifndef CAPSTONE_X86_REDUCE
-#if 0
-				if (opcode == X86_MULPDrr) {
-					MCInst_setOpcode(MI, X86_MULSDrr);
-					SStream_concat0(O, "mulsd\t");
-					res = true;
-				}
-#endif
-#endif
-		}
-#else // diet mode -> only patch opcode in special cases
-		if (!valid_repne(MI->csh, opcode)) {
-			MI->x86_prefix[0] = 0;
-		}
-#ifndef CAPSTONE_X86_REDUCE
-#if 0
-			// handle special cases
-			if (opcode == X86_MULPDrr) {
-				MCInst_setOpcode(MI, X86_MULSDrr);
+			if (valid_repne(MI->csh, opcode)) {
+				SStream_concat(O, "repne|");
+				add_cx(MI);
+			} else if (valid_bnd(MI->csh, opcode)) {
+				SStream_concat(O, "bnd|");
+			} else {
+				// invalid prefix
+				MI->x86_prefix[0] = 0;
+			}
+#else
+			if (!valid_repne(MI->csh, opcode)) {
+				MI->x86_prefix[0] = 0;
 			}
 #endif
-#endif
-#endif
-		break;
-
-	case 0xf3:
-		opcode = MCInst_getOpcode(MI);
-
-#ifndef CAPSTONE_DIET // only care about memonic in standard (non-diet) mode
-		if (xchg_mem(opcode) && MI->xAcquireRelease) {
-			SStream_concat(O, "xrelease|");
-		} else if (valid_rep(MI->csh, opcode)) {
-			SStream_concat(O, "rep|");
-			add_cx(MI);
-		} else if (valid_repe(MI->csh, opcode)) {
-			SStream_concat(O, "repe|");
-			add_cx(MI);
-		} else if (valid_ret_repz(MI->csh, opcode)) {
-			SStream_concat(O, "repz|");
-		} else {
-			// invalid prefix
-			MI->x86_prefix[0] = 0;
-
-			// handle special cases
-#ifndef CAPSTONE_X86_REDUCE
-#if 0
-				// FIXME: remove this special case?
-				if (opcode == X86_MULPDrr) {
-					MCInst_setOpcode(MI, X86_MULSSrr);
-					SStream_concat0(O, "mulss\t");
-					res = true;
-				}
-#endif
-#endif
-		}
-#else // diet mode -> only patch opcode in special cases
-		if (!valid_rep(MI->csh, opcode) &&
-		    !valid_repe(MI->csh, opcode)) {
-			MI->x86_prefix[0] = 0;
-		}
-#ifndef CAPSTONE_X86_REDUCE
-#if 0
-			// handle special cases
-			// FIXME: remove this special case?
-			if (opcode == X86_MULPDrr) {
-				MCInst_setOpcode(MI, X86_MULSSrr);
+			break;
+		case 0xF3:
+			opcode = MCInst_getOpcode(MI);
+#ifndef CAPSTONE_DIET
+			if (valid_rep(MI->csh, opcode)) {
+				SStream_concat(O, "rep|");
+				add_cx(MI);
+			} else if (valid_repe(MI->csh, opcode)) {
+				SStream_concat(O, "repe|");
+				add_cx(MI);
+			} else if (valid_ret_repz(MI->csh, opcode)) {
+				SStream_concat(O, "repz|");
+			} else {
+				// invalid prefix
+				MI->x86_prefix[0] = 0;
+			}
+#else
+			if (!valid_rep(MI->csh, opcode) &&
+			    !valid_repe(MI->csh, opcode)) {
+				MI->x86_prefix[0] = 0;
 			}
 #endif
-#endif
-#endif
-		break;
+			break;
+		default:
+			break;
+		}
+	}
+
+	// LOCK and F2/F3 may both be present (for XACQUIRE/XRELEASE).
+	// There are also XRELEASEs that can be LOCKless.
+	if (MI->x86Lock) {
+		SStream_concat(O, "lock|");
 	}
 
 	switch (MI->x86_prefix[1]) {
@@ -2359,7 +2469,7 @@ static const insn_op insn_ops[] = {
 const uint8_t *X86_get_op_access(cs_struct *h, unsigned int id,
 				 uint64_t *eflags)
 {
-	unsigned int i = find_insn(id);
+	unsigned int i = find_insn_h(h, id);
 	if (i != -1) {
 		*eflags = insn_ops[i].flags;
 		return insn_ops[i].access;

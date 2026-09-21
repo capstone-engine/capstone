@@ -21,12 +21,19 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_F, NOR, true, false }, // ADDF
 	{ NOG, rmmm, NOR, NOR, true, false }, // ADDR
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // ADDW
+	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // ADDX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // ADDY
+	{ NOG, mmmm, M680X_REG_A, M680X_REG_B, true, false }, // ADED
+	{ NOG, mmmm, M680X_REG_A, M680X_REG_X, true, false }, // ADEX
+	{ NOG, mmmm, M680X_REG_A, M680X_REG_Y, true, false }, // ADEY
 	{ NOG, rmmm, NOR, NOR, true, false }, // AIM
 	{ NOG, mrrr, M680X_REG_S, NOR, false, false }, // AIS
 	{ NOG, mrrr, M680X_REG_HX, NOR, false, false }, // AIX
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // AND
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ANDA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ANDB
+	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // ANDX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // ANDY
 	{ NOG, mrrr, M680X_REG_CC, NOR, true, false }, // ANDCC
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ANDD
 	{ NOG, rmmm, NOR, NOR, true, false }, // ANDR
@@ -34,11 +41,16 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ASLA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ASLB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ASLD
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // ASLW
+	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // ASLX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // ASLY
 	{ NOG, mrrr, NOR, NOR, true, false }, // ASR
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // ASRA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // ASRB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ASRD
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // ASRW
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // ASRX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // ASRY
 	{ NOG, mrrr, NOR, NOR, false, false }, // BAND
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BCC
 	{ NOG, mrrr, NOR, NOR, true, false }, // BCLR
@@ -61,6 +73,8 @@ static const insn_props g_insn_props[] = {
 	{ NOG, rrrr, M680X_REG_B, NOR, true, false }, // BITB
 	{ NOG, rrrr, M680X_REG_D, NOR, true, false }, // BITD
 	{ NOG, rrrr, M680X_REG_MD, NOR, true, false }, // BITMD
+	{ NOG, rrrr, M680X_REG_X, NOR, true, false }, // BITX
+	{ NOG, rrrr, M680X_REG_Y, NOR, true, false }, // BITY
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BLE
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BLS
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BLT
@@ -76,6 +90,7 @@ static const insn_props g_insn_props[] = {
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BRN never branches
 	{ NOG, mrrr, NOR, NOR, true, false }, // BSET
 	{ M680X_GRP_CALL, uuuu, NOR, NOR, false, true }, // BSR
+	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, true }, // BTAS
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BVC
 	{ M680X_GRP_JUMP, uuuu, NOR, NOR, false, false }, // BVS
 	{ M680X_GRP_CALL, uuuu, NOR, NOR, false, true }, // CALL
@@ -94,6 +109,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, wrrr, M680X_REG_H, NOR, true, false }, // CLRH
 	{ NOG, wrrr, M680X_REG_W, NOR, true, false }, // CLRW
 	{ NOG, wrrr, M680X_REG_X, NOR, true, false }, // CLRX
+	{ NOG, wrrr, M680X_REG_Y, NOR, true, false }, // CLRY
 	{ NOG, uuuu, NOR, NOR, true, false }, // CLV
 	{ NOG, rrrr, M680X_REG_A, NOR, true, false }, // CMP
 	{ NOG, rrrr, M680X_REG_A, NOR, true, false }, // CMPA
@@ -115,7 +131,12 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_F, NOR, true, false }, // COMF
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // COMW
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // COMX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // COMY
 	{ NOG, rrrr, M680X_REG_D, NOR, true, false }, // CPD
+	{ NOG, rrrr, M680X_REG_D, NOR, true, false }, // CPED
+	{ NOG, rrrr, M680X_REG_S, NOR, true, false }, // CPES
+	{ NOG, rrrr, M680X_REG_X, NOR, true, false }, // CPEX
+	{ NOG, rrrr, M680X_REG_Y, NOR, true, false }, // CPEY
 	{ NOG, rrrr, M680X_REG_HX, NOR, true, false }, // CPHX
 	{ NOG, rrrr, M680X_REG_S, NOR, true, false }, // CPS
 	{ NOG, rrrr, M680X_REG_X, NOR, true, false }, // CPX
@@ -135,6 +156,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_F, NOR, true, false }, // DECF
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // DECW
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // DECX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // DECY
 	{ NOG, mrrr, M680X_REG_S, NOR, false, false }, // DES
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // DEX
 	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // DEY
@@ -156,9 +178,23 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // EORB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // EORD
 	{ NOG, rmmm, NOR, NOR, true, false }, // EORR
+	{ NOG, mmmm, M680X_REG_X, NOR, true, false }, // EORX
+	{ NOG, mmmm, M680X_REG_Y, NOR, true, false }, // EORY
 	{ NOG, rmmm, NOR, NOR, true, true }, // ETBL
 	{ NOG, mmmm, NOR, NOR, false, false }, // EXG
 	{ NOG, mmmm, NOR, NOR, true, true }, // FDIV
+	{ NOG, mmmm, M680X_REG_A, NOR, true, true }, // GLDAA
+	{ NOG, mmmm, M680X_REG_B, NOR, true, true }, // GLDAB
+	{ NOG, mmmm, M680X_REG_D, NOR, true, true }, // GLDD
+	{ NOG, mmmm, M680X_REG_S, NOR, true, true }, // GLDS
+	{ NOG, mmmm, M680X_REG_X, NOR, true, true }, // GLDX
+	{ NOG, mmmm, M680X_REG_Y, NOR, true, true }, // GLDY
+	{ NOG, rrrr, M680X_REG_A, NOR, true, true }, // GSTAA
+	{ NOG, rrrr, M680X_REG_B, NOR, true, true }, // GSTAB
+	{ NOG, rrrr, M680X_REG_D, NOR, true, true }, // GSTD
+	{ NOG, rrrr, M680X_REG_S, NOR, true, true }, // GSTS
+	{ NOG, rrrr, M680X_REG_X, NOR, true, true }, // GSTX
+	{ NOG, rrrr, M680X_REG_Y, NOR, true, true }, // GSTY
 	{ M680X_GRP_JUMP, muuu, NOR, NOR, false, false }, // IBEQ
 	{ M680X_GRP_JUMP, muuu, NOR, NOR, false, false }, // IBNE
 	{ NOG, mmmm, NOR, NOR, true, true }, // IDIV
@@ -172,6 +208,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_F, NOR, true, false }, // INCF
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // INCW
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // INCX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // INCY
 	{ NOG, mrrr, M680X_REG_S, NOR, false, false }, // INS
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // INX
 	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // INY
@@ -225,6 +262,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // LSRD
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // LSRW
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // LSRX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // LSRY
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // MAXA
 	{ NOG, mrrr, NOR, NOR, true, true }, // MAXM
 	{ NOG, mmrr, NOR, NOR, true, true }, // MEM
@@ -239,7 +277,9 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // NEGA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // NEGB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // NEGD
+	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // NEGW
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // NEGX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // NEGY
 	{ NOG, uuuu, NOR, NOR, false, false }, // NOP
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // NSA
 	{ NOG, rmmm, NOR, NOR, true, false }, // OIM
@@ -250,9 +290,12 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_CC, NOR, true, false }, // ORCC
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ORD
 	{ NOG, rmmm, NOR, NOR, true, false }, // ORR
+	{ NOG, rmmm, NOR, NOR, true, false }, // ORX
+	{ NOG, rmmm, NOR, NOR, true, false }, // ORY
 	{ NOG, rmmm, M680X_REG_A, NOR, false, true }, // PSHA
 	{ NOG, rmmm, M680X_REG_B, NOR, false, true }, // PSHB
 	{ NOG, rmmm, M680X_REG_CC, NOR, false, true }, // PSHC
+	{ NOG, rmmm, M680X_REG_CC, NOR, false, true }, // PSHCW
 	{ NOG, rmmm, M680X_REG_D, NOR, false, true }, // PSHD
 	{ NOG, rmmm, M680X_REG_H, NOR, false, true }, // PSHH
 	{ NOG, mrrr, M680X_REG_S, NOR, false, false }, // PSHS
@@ -264,6 +307,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, wmmm, M680X_REG_A, NOR, false, true }, // PULA
 	{ NOG, wmmm, M680X_REG_B, NOR, false, true }, // PULB
 	{ NOG, wmmm, M680X_REG_CC, NOR, false, true }, // PULC
+	{ NOG, wmmm, M680X_REG_CC, NOR, false, true }, // PULCW
 	{ NOG, wmmm, M680X_REG_D, NOR, false, true }, // PULD
 	{ NOG, wmmm, M680X_REG_H, NOR, false, true }, // PULH
 	{ NOG, mwww, M680X_REG_S, NOR, false, false }, // PULS
@@ -280,12 +324,14 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // ROLD
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // ROLW
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // ROLX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // ROLY
 	{ NOG, mrrr, NOR, NOR, true, false }, // ROR
 	{ NOG, mrrr, M680X_REG_A, NOR, true, false }, // RORA
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // RORB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // RORD
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // RORW
 	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // RORX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // RORY
 	{ NOG, wrrr, M680X_REG_S, NOR, false, false }, // RSP
 	{ M680X_GRP_RET, mwww, NOR, NOR, false, true }, // RTC
 	{ M680X_GRP_IRET, mwww, NOR, NOR, false, true }, // RTI
@@ -296,11 +342,16 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_B, NOR, true, false }, // SBCB
 	{ NOG, mrrr, M680X_REG_D, NOR, true, false }, // SBCD
 	{ NOG, rmmm, NOR, NOR, true, false }, // SBCR
+	{ NOG, mmmm, M680X_REG_D, NOR, true, false }, // SBED
+	{ NOG, mmmm, M680X_REG_X, NOR, true, false }, // SBEX
+	{ NOG, mmmm, M680X_REG_Y, NOR, true, false }, // SBEY
 	{ NOG, uuuu, NOR, NOR, true, false }, // SEC
 	{ NOG, uuuu, NOR, NOR, true, false }, // SEI
 	{ NOG, uuuu, NOR, NOR, true, false }, // SEV
 	{ NOG, wrrr, NOR, NOR, true, true }, // SEX
 	{ NOG, rwww, M680X_REG_W, NOR, true, true }, // SEXW
+	{ NOG, rwww, M680X_REG_SPC, M680X_REG_A, false, false }, // SHA
+	{ NOG, rwww, M680X_REG_SPC, M680X_REG_A, false, false }, // SLA
 	{ NOG, uuuu, NOR, NOR, false, false }, // SLP
 	{ NOG, rwww, M680X_REG_A, NOR, true, false }, // STA
 	{ NOG, rwww, M680X_REG_A, NOR, true, false }, // STAA
@@ -326,10 +377,13 @@ static const insn_props g_insn_props[] = {
 	{ NOG, mrrr, M680X_REG_F, NOR, true, false }, // SUBF
 	{ NOG, rmmm, NOR, NOR, true, false }, // SUBR
 	{ NOG, mrrr, M680X_REG_W, NOR, true, false }, // SUBW
+	{ NOG, mrrr, M680X_REG_X, NOR, true, false }, // SUBX
+	{ NOG, mrrr, M680X_REG_Y, NOR, true, false }, // SUBY
 	{ M680X_GRP_INT, mmrr, NOR, NOR, true, true }, // SWI
 	{ M680X_GRP_INT, mmrr, NOR, NOR, true, true }, // SWI2
 	{ M680X_GRP_INT, mmrr, NOR, NOR, true, true }, // SWI3
 	{ NOG, uuuu, NOR, NOR, false, false }, // SYNC
+	{ NOG, muuu, M680X_REG_PC, NOR, false, false }, // SYS
 	{ NOG, rwww, M680X_REG_A, M680X_REG_B, true, false }, // TAB
 	{ NOG, rwww, M680X_REG_A, M680X_REG_CC, false, false }, // TAP
 	{ NOG, rwww, M680X_REG_A, M680X_REG_X, false, false }, // TAX
@@ -342,6 +396,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, rwww, NOR, NOR, false, false }, // TFR
 	{ NOG, rrrr, NOR, NOR, true, false }, // TIM
 	{ NOG, rwww, M680X_REG_CC, M680X_REG_A, false, false }, // TPA
+	{ NOG, uuuu, NOR, NOR, false, false }, // TRAP
 	{ NOG, rrrr, NOR, NOR, true, false }, // TST
 	{ NOG, rrrr, M680X_REG_A, NOR, true, false }, // TSTA
 	{ NOG, rrrr, M680X_REG_B, NOR, true, false }, // TSTB
@@ -350,6 +405,7 @@ static const insn_props g_insn_props[] = {
 	{ NOG, rrrr, M680X_REG_F, NOR, true, false }, // TSTF
 	{ NOG, rrrr, M680X_REG_W, NOR, true, false }, // TSTW
 	{ NOG, rrrr, M680X_REG_X, NOR, true, false }, // TSTX
+	{ NOG, rrrr, M680X_REG_Y, NOR, true, false }, // TSTY
 	{ NOG, rwww, M680X_REG_S, M680X_REG_HX, false, false }, // TSX
 	{ NOG, rwww, M680X_REG_S, M680X_REG_Y, false, false }, // TSY
 	{ NOG, rwww, M680X_REG_X, M680X_REG_A, false, false }, // TXA
@@ -364,4 +420,3 @@ static const insn_props g_insn_props[] = {
 };
 #undef NOR
 #undef NOG
-

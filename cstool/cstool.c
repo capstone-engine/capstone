@@ -1,13 +1,14 @@
 /* Tang Yuhang <tyh000011112222@gmail.com> 2016 */
 /* pancake <pancake@nopcode.org> 2017 */
 
-#include <string.h>
+#include "getopt.h"
 #include <ctype.h>
 #include <errno.h>
-#include "getopt.h"
+#include <string.h>
 
 #include <capstone/capstone.h>
 #include "cstool.h"
+#include "../cs_priv.h"
 
 #ifdef CAPSTONE_AARCH64_COMPAT_HEADER
 #define CS_ARCH_AARCH64 CS_ARCH_ARM64
@@ -21,6 +22,7 @@ static struct {
 	cs_arch archs[CS_ARCH_MAX];
 	cs_opt_value opt;
 	cs_mode mode;
+	cs_opt_type opt_type;
 } all_opts[] = {
 	// cs_opt_value only
 	{ "+att",
@@ -63,6 +65,44 @@ static struct {
 	  "Removes $ in front of the registers",
 	  { CS_ARCH_LOONGARCH, CS_ARCH_MIPS, CS_ARCH_MAX },
 	  CS_OPT_SYNTAX_NO_DOLLAR,
+	  0 },
+	{ "+real-text",
+	  "Prints the original decoded instruction without aliases or uncompression",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_SYNTAX_REAL,
+	  0 },
+	{ "+uncompressed-text",
+	  "Prints the uncompressed real instruction when possible, without aliases",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_SYNTAX_UNCOMPRESSED_REAL,
+	  0 },
+	{ "+alias-text",
+	  "Prints aliases when available (default RISC-V text mode)",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_SYNTAX_ALIAS,
+	  0 },
+	{ "+real-details",
+	  "Fills RISC-V details from the original decoded instruction",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_DETAIL_REAL | CS_OPT_ON,
+	  0,
+	  CS_OPT_DETAIL },
+	{ "+uncompressed-details",
+	  "Fills RISC-V details from the uncompressed real instruction when possible",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_DETAIL_UNCOMPRESSED_REAL | CS_OPT_ON,
+	  0,
+	  CS_OPT_DETAIL },
+	{ "+alias-details",
+	  "Fills RISC-V details from aliases when available (default with -d)",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  CS_OPT_DETAIL_ALIAS | CS_OPT_ON,
+	  0,
+	  CS_OPT_DETAIL },
+	{ "+explicitwideimm",
+	  "Prints shifted MOVN and MOVZ instructions without MOV aliases",
+	  { CS_ARCH_AARCH64, CS_ARCH_MAX },
+	  CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM,
 	  0 },
 	// cs_mode only
 	{ "+nofloat",
@@ -135,6 +175,97 @@ static struct {
 	  { CS_ARCH_SPARC, CS_ARCH_MAX },
 	  0,
 	  CS_MODE_V9 },
+	{ "+c",
+	  "Enables RISCV C extension.",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_C },
+	{ "+fd",
+	  "Enables RISCV F and D extensions.",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_FD },
+	{ "+v",
+	  "Enables RISCV V extension.",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_V },
+	{ "+inx",
+	  "Enables RISCV Zfinx, Zdinx, and Zhinx extensions,"
+	  " zhinxmin is also enabled as it's subset of zhinx ",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_ZFINX },
+	{ "+zcmp-t-e",
+	  "Enables the following RISCV code size reduction extensions: zcmp, zcmt and zce",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_ZCMP_ZCMT_ZCE },
+	{ "a",
+	  "Enables the RISCV A extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_A },
+	{ "+zbb",
+	  "Enables the RISCV ZBB extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_ZBB },
+	{ "+zbc",
+	  "Enables the RISCV ZBC extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_ZBC },
+	{ "+zba",
+	  "Enables the RISCV ZBA extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_ZBA },
+	{ "+zbs",
+	  "Enables the RISCV ZBS extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_ZBS },
+	{ "+zbk",
+	  "Enables the RISCV crypto extensions (ZBKB, ZBKC, ZBKX)",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_ZBKB | CS_MODE_RISCV_ZBKC | CS_MODE_RISCV_ZBKX },
+	{ "+zicfiss",
+	  "Enables the RISCV ZICFISS extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_ZICFISS },
+	{ "+e",
+	  "Enables the RISCV E extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_E },
+	{ "+corev",
+	  "Enables the RISCV COREV extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_COREV },
+	{ "+thead",
+	  "Enables the RISCV T-HEAD extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_THEAD },
+	{ "+sifive",
+	  "Enables the RISCV SiFive extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_SIFIVE },
+	{ "+ventana",
+	  "Enables the RISCV ventana extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_VENTANA },
+	{ "+bitmanip",
+	  "Enables the RISCV bit manipulation extension",
+	  { CS_ARCH_RISCV, CS_ARCH_MAX },
+	  0,
+	  CS_MODE_RISCV_BITMANIP },
 	{ NULL }
 };
 
@@ -319,7 +450,26 @@ static struct {
 	{ "xcore", "xcore, big endian", CS_ARCH_XCORE, CS_MODE_BIG_ENDIAN },
 
 	{ "m68k", "m68k + big endian", CS_ARCH_M68K, CS_MODE_BIG_ENDIAN },
-	{ "m68k40", "m68k40", CS_ARCH_M68K, CS_MODE_M68K_040 },
+	{ "m68k10", "m68k, 68010", CS_ARCH_M68K, CS_MODE_M68K_010 },
+	{ "m68k20", "m68k, 68020", CS_ARCH_M68K, CS_MODE_M68K_020 },
+	{ "m68k30", "m68k, 68030", CS_ARCH_M68K, CS_MODE_M68K_030 },
+	{ "m68k40", "m68k, 68040", CS_ARCH_M68K, CS_MODE_M68K_040 },
+	{ "m68k60", "m68k, 68060", CS_ARCH_M68K, CS_MODE_M68K_060 },
+	{ "m68kcpu32", "m68k, cpu32", CS_ARCH_M68K, CS_MODE_M68K_CPU32 },
+	{ "m68kcf", "m68k, ColdFire all features", CS_ARCH_M68K,
+	  CS_MODE_BIG_ENDIAN | CS_MODE_M68K_COLDFIRE },
+	{ "m68kcfv1", "m68k, ColdFire V1", CS_ARCH_M68K,
+	  CS_MODE_BIG_ENDIAN | CS_MODE_M68K_CFV1 },
+	{ "m68kcfv2", "m68k, ColdFire V2", CS_ARCH_M68K,
+	  CS_MODE_BIG_ENDIAN | CS_MODE_M68K_CFV2 },
+	{ "m68kcfv3", "m68k, ColdFire V3", CS_ARCH_M68K,
+	  CS_MODE_BIG_ENDIAN | CS_MODE_M68K_CFV3 },
+	{ "m68kcfv4", "m68k, ColdFire V4", CS_ARCH_M68K,
+	  CS_MODE_BIG_ENDIAN | CS_MODE_M68K_CFV4 },
+	{ "m68kcfv4e", "m68k, ColdFire V4e", CS_ARCH_M68K,
+	  CS_MODE_BIG_ENDIAN | CS_MODE_M68K_CFV4E },
+	{ "m68kcfv5", "m68k, ColdFire V5", CS_ARCH_M68K,
+	  CS_MODE_BIG_ENDIAN | CS_MODE_M68K_CFV5 },
 
 	{ "tms320c64x", "tms320c64x, big endian", CS_ARCH_TMS320C64X,
 	  CS_MODE_BIG_ENDIAN },
@@ -336,7 +486,8 @@ static struct {
 	{ "hd6301", "m680x, HD6301/3", CS_ARCH_M680X, CS_MODE_M680X_6301 },
 	{ "hd6309", "m680x, HD6309", CS_ARCH_M680X, CS_MODE_M680X_6309 },
 	{ "hcs08", "m680x, HCS08", CS_ARCH_M680X, CS_MODE_M680X_HCS08 },
-
+	{ "rs08", "m680x, RS08", CS_ARCH_M680X, CS_MODE_M680X_RS08 },
+	{ "hcs12x", "m680x, HCS12X", CS_ARCH_M680X, CS_MODE_M680X_HCS12X },
 	{ "evm", "ethereum virtual machine", CS_ARCH_EVM, 0 },
 
 	{ "wasm", "web assembly", CS_ARCH_WASM, 0 },
@@ -351,9 +502,9 @@ static struct {
 	  CS_MODE_BIG_ENDIAN | CS_MODE_BPF_EXTENDED },
 
 	{ "riscv32", "Risc-V 32-bit, little endian", CS_ARCH_RISCV,
-	  CS_MODE_RISCV32 | CS_MODE_RISCVC },
+	  CS_MODE_RISCV32 | CS_MODE_RISCV_C },
 	{ "riscv64", "Risc-V 64-bit, little endian", CS_ARCH_RISCV,
-	  CS_MODE_RISCV64 | CS_MODE_RISCVC },
+	  CS_MODE_RISCV64 | CS_MODE_RISCV_C },
 
 	{ "6502", "MOS 6502", CS_ARCH_MOS65XX, CS_MODE_MOS65XX_6502 },
 	{ "65c02", "WDC 65c02", CS_ARCH_MOS65XX, CS_MODE_MOS65XX_65C02 },
@@ -412,6 +563,7 @@ static struct {
 	  CS_MODE_LOONGARCH64 },
 	{ "esp32", "Xtensa ESP32", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32 },
 	{ "esp32s2", "Xtensa ESP32S2", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32S2 },
+	{ "esp32s3", "Xtensa ESP32S3", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP32S3 },
 	{ "esp8266", "Xtensa ESP8266", CS_ARCH_XTENSA, CS_MODE_XTENSA_ESP8266 },
 
 	{ "arc", "ARC Little-Endian", CS_ARCH_ARC, CS_MODE_LITTLE_ENDIAN },
@@ -459,7 +611,7 @@ static uint8_t *preprocess(char *code, size_t *size)
 	if (strlen(code) == 0)
 		return NULL;
 
-	result = (uint8_t *)malloc(strlen(code));
+	result = (uint8_t *)cs_mem_malloc(strlen(code));
 	if (result != NULL) {
 		while (code[i] != '\0') {
 			if (isxdigit(code[i]) && isxdigit(code[i + 1])) {
@@ -529,6 +681,16 @@ static const char *get_arch_name(cs_arch arch)
 	}
 }
 
+static inline bool contains_supported(cs_arch needles[CS_ARCH_MAX])
+{
+	for (size_t i = 0; i < CS_ARCH_MAX && needles[i] != CS_ARCH_MAX; i++) {
+		if (cs_support(needles[i])) {
+			return true;
+		}
+	}
+	return false;
+}
+
 static void usage(char *prog)
 {
 	int i, j;
@@ -547,6 +709,9 @@ static void usage(char *prog)
 
 	printf("\nArch specific options:\n");
 	for (i = 0; all_opts[i].name; i++) {
+		if (!contains_supported(all_opts[i].archs)) {
+			continue;
+		}
 		printf("        %-16s %s (only: ", all_opts[i].name,
 		       all_opts[i].desc);
 		for (j = 0; j < CS_ARCH_MAX; j++) {
@@ -566,7 +731,7 @@ static void usage(char *prog)
 
 	printf("\nExtra options:\n");
 	printf("        -d show detailed information of the instructions\n");
-	printf("        -r show detailed information of the real instructions (even for alias)\n");
+	printf("        -r show detailed information of the real instructions (even for aliases)\n");
 	printf("        -a Print Capstone register alias (if any). Otherwise LLVM register names are emitted.\n");
 	printf("        -s decode in SKIPDATA mode\n");
 	printf("        -u show immediates as unsigned\n");
@@ -585,73 +750,119 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 
 	switch (arch) {
 	case CS_ARCH_X86:
+#ifdef CAPSTONE_HAS_X86
 		print_insn_detail_x86(handle, md, ins);
+#endif
 		break;
 	case CS_ARCH_ARM:
+#ifdef CAPSTONE_HAS_ARM
 		print_insn_detail_arm(handle, ins);
+#endif
 		break;
 	case CS_ARCH_AARCH64:
+#ifdef CAPSTONE_HAS_AARCH64
 		print_insn_detail_aarch64(handle, ins);
+#endif
 		break;
 	case CS_ARCH_MIPS:
+#ifdef CAPSTONE_HAS_MIPS
 		print_insn_detail_mips(handle, ins);
+#endif
 		break;
 	case CS_ARCH_PPC:
+#ifdef CAPSTONE_HAS_POWERPC
 		print_insn_detail_ppc(handle, ins);
+#endif
 		break;
 	case CS_ARCH_SPARC:
+#ifdef CAPSTONE_HAS_SPARC
 		print_insn_detail_sparc(handle, ins);
+#endif
 		break;
 	case CS_ARCH_SYSTEMZ:
+#ifdef CAPSTONE_HAS_SYSTEMZ
 		print_insn_detail_systemz(handle, ins);
+#endif
 		break;
 	case CS_ARCH_XCORE:
+#ifdef CAPSTONE_HAS_XCORE
 		print_insn_detail_xcore(handle, ins);
+#endif
 		break;
 	case CS_ARCH_M68K:
+#ifdef CAPSTONE_HAS_M68K
 		print_insn_detail_m68k(handle, ins);
+#endif
 		break;
 	case CS_ARCH_TMS320C64X:
+#ifdef CAPSTONE_HAS_TMS320C64X
 		print_insn_detail_tms320c64x(handle, ins);
+#endif
 		break;
 	case CS_ARCH_M680X:
+#ifdef CAPSTONE_HAS_M680X
 		print_insn_detail_m680x(handle, ins);
+#endif
 		break;
 	case CS_ARCH_EVM:
+#ifdef CAPSTONE_HAS_EVM
 		print_insn_detail_evm(handle, ins);
+#endif
 		break;
 	case CS_ARCH_WASM:
+#ifdef CAPSTONE_HAS_WASM
 		print_insn_detail_wasm(handle, ins);
+#endif
 		break;
 	case CS_ARCH_MOS65XX:
+#ifdef CAPSTONE_HAS_MOS65XX
 		print_insn_detail_mos65xx(handle, ins);
+#endif
 		break;
 	case CS_ARCH_BPF:
+#ifdef CAPSTONE_HAS_BPF
 		print_insn_detail_bpf(handle, ins);
+#endif
 		break;
 	case CS_ARCH_RISCV:
+#ifdef CAPSTONE_HAS_RISCV
 		print_insn_detail_riscv(handle, ins);
+#endif
 		break;
 	case CS_ARCH_SH:
+#ifdef CAPSTONE_HAS_SH
 		print_insn_detail_sh(handle, ins);
+#endif
 		break;
 	case CS_ARCH_TRICORE:
+#ifdef CAPSTONE_HAS_TRICORE
 		print_insn_detail_tricore(handle, ins);
+#endif
 		break;
 	case CS_ARCH_ALPHA:
+#ifdef CAPSTONE_HAS_ALPHA
 		print_insn_detail_alpha(handle, ins);
+#endif
 		break;
 	case CS_ARCH_HPPA:
+#ifdef CAPSTONE_HAS_HPPA
 		print_insn_detail_hppa(handle, ins);
+#endif
 		break;
 	case CS_ARCH_LOONGARCH:
+#ifdef CAPSTONE_HAS_LOONGARCH
 		print_insn_detail_loongarch(handle, ins);
+#endif
 		break;
 	case CS_ARCH_XTENSA:
+#ifdef CAPSTONE_HAS_XTENSA
 		print_insn_detail_xtensa(handle, ins);
+#endif
 		break;
 	case CS_ARCH_ARC:
+#ifdef CAPSTONE_HAS_ARC
 		print_insn_detail_arc(handle, ins);
+#endif
 		break;
 	default:
 		break;
@@ -705,7 +916,10 @@ static void enable_additional_options(csh handle, const char *input,
 		}
 		for (j = 0; j < CS_ARCH_MAX; j++) {
 			if (arch == all_opts[i].archs[j]) {
-				cs_option(handle, CS_OPT_SYNTAX,
+				cs_option(handle,
+					  all_opts[i].opt_type ?
+						  all_opts[i].opt_type :
+						  CS_OPT_SYNTAX,
 					  all_opts[i].opt);
 				break;
 			}
@@ -873,6 +1087,11 @@ int main(int argc, char **argv)
 	}
 
 	choosen_arch = argv[optind];
+	if (!cs_mem_is_setup()) {
+		fprintf(stderr,
+			"ERROR: Cannot allocate memory: allocators are not defined.\n");
+		return -3;
+	};
 	assembly = preprocess(argv[optind + 1], &size);
 	if (!assembly) {
 		usage(argv[0]);
@@ -885,7 +1104,7 @@ int main(int argc, char **argv)
 		if (temp == src || *temp != '\0' || errno == ERANGE) {
 			fprintf(stderr,
 				"ERROR: invalid address argument, quit!\n");
-			free(assembly);
+			cs_mem_free(assembly);
 			return -2;
 		}
 	}
@@ -955,6 +1174,7 @@ int main(int argc, char **argv)
 	}
 
 	count = cs_disasm(handle, assembly, size, address, 0, &insn);
+
 	if (count > 0) {
 		for (i = 0; i < count; i++) {
 			int j;

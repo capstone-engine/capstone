@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0b, 0x35, 0x05, 0x40 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVELW" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.elw a0, 1024(a0)"
+
+  -
+    input:
+      bytes: [ 0x8b, 0xb5, 0x15, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVELW" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.elw a1, 1(a1)"
+
+  -
+    input:
+      bytes: [ 0x0b, 0xb6, 0x06, 0xc0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XCVELW" ]
+    expected:
+      insns:
+        -
+          asm_text: "cv.elw a2, -1024(a3)"

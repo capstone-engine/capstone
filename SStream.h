@@ -25,14 +25,6 @@ typedef struct SStream {
 	bool unsigned_num; ///< Print all numbers as unsigned. Set with CS_OPT_UNSIGNED.
 } SStream;
 
-#define SSTREAM_OVERFLOW_CHECK(OS, len) \
-	do { \
-		if (OS->index + len + 1 > SSTREAM_BUF_LEN) { \
-			fprintf(stderr, "Buffer overflow caught!\n"); \
-			return; \
-		} \
-	} while (0)
-
 #define SSTREAM_RETURN_IF_CLOSED(OS) \
 	do { \
 		if (OS->is_closed) \
@@ -93,6 +85,8 @@ void printUInt32(SStream *O, uint32_t val);
 void printInt32BangDec(SStream *O, int32_t val);
 
 void printFloat(SStream *O, float val);
+
+void printfFloat(SStream *ss, const char *fmt, float val);
 
 void printFloatBang(SStream *O, float val);
 

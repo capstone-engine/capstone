@@ -4,6 +4,7 @@
 #include "unit_test.h"
 #include "../SStream.h"
 #include "../utils.h"
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -55,6 +56,43 @@ static bool test_overflow_check()
 		printf("Failed overflow_SStream_concat1\n");
 		return false;
 	}
+	return true;
+}
+
+static bool test_truncating_appends()
+{
+	printf("Test test_truncating_appends\n");
+
+	char too_long[SSTREAM_BUF_LEN + 1] = { 0 };
+	memset(too_long, 'A', SSTREAM_BUF_LEN);
+	char full[SSTREAM_BUF_LEN] = { 0 };
+	memset(full, 'A', sizeof(full) - 1);
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+	SStream_concat0(&OS, too_long);
+	CHECK_OS_EQUAL_RET_FALSE(OS, full);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, SSTREAM_BUF_LEN - 1);
+	SStream_concat0(&OS, "B");
+	CHECK_OS_EQUAL_RET_FALSE(OS, full);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, SSTREAM_BUF_LEN - 1);
+
+	SStream_Flush(&OS, NULL);
+	SStream_concat(&OS, "%s", too_long);
+	CHECK_OS_EQUAL_RET_FALSE(OS, full);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, SSTREAM_BUF_LEN - 1);
+
+	char almost_full[SSTREAM_BUF_LEN] = { 0 };
+	memset(almost_full, 'C', SSTREAM_BUF_LEN - 2);
+	SStream_Flush(&OS, NULL);
+	SStream_concat0(&OS, almost_full);
+	SStream_concat1(&OS, 'D');
+	almost_full[SSTREAM_BUF_LEN - 2] = 'D';
+	CHECK_OS_EQUAL_RET_FALSE(OS, almost_full);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, SSTREAM_BUF_LEN - 1);
+	SStream_concat1(&OS, 'E');
+	CHECK_OS_EQUAL_RET_FALSE(OS, almost_full);
+	CHECK_INT_EQUAL_RET_FALSE(OS.index, SSTREAM_BUF_LEN - 1);
 	return true;
 }
 
@@ -594,6 +632,47 @@ bool test_replc_str()
 	return true;
 }
 
+bool test_printfFloat()
+{
+	printf("Test test_printfFloat\n");
+
+	SStream OS = { 0 };
+	SStream_Init(&OS);
+
+	printfFloat(&OS, "%f", 1.5f);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "1.500000");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%.2f", 1.5f);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "1.50");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%+.2f", -2.25f);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "-2.25");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%e", 0.0f);
+	CHECK_OS_EQUAL_RET_FALSE(OS, "0.000000e+00");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%f", NAN);
+	CHECK_OS_EQUALS_ANY_RET_FALSE(OS, "nan", "NaN", "NAN", "nan(ind)",
+				      "NaN(ind)", "NAN(ind)");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%f", INFINITY);
+	CHECK_OS_EQUALS_ANY_RET_FALSE(OS, "inf", "Inf", "INF", "infinity",
+				      "Infinity", "INFINITY");
+	SStream_Flush(&OS, NULL);
+
+	printfFloat(&OS, "%f", -INFINITY);
+	CHECK_OS_EQUALS_ANY_RET_FALSE(OS, "-inf", "-Inf", "-INF", "-infinity",
+				      "-Infinity", "-INFINITY");
+	SStream_Flush(&OS, NULL);
+
+	return true;
+}
+
 static int evil_vsnprintf(char *str, size_t size, const char *fmt, va_list ap)
 {
 	(void)str;
@@ -612,7 +691,8 @@ bool test_underflow_in_sstream(void)
 			   .realloc = realloc,
 			   .free = free,
 			   .vsnprintf = evil_vsnprintf };
-	cs_option(0, CS_OPT_MEM, (size_t)&mem);
+	CS_ASSERT_RET_VAL(cs_option(0, CS_OPT_MEM, (size_t)&mem) == CS_ERR_OK,
+			  false);
 
 	SStream OS;
 	SStream_Init(&OS);
@@ -628,6 +708,7 @@ int main()
 	bool result = true;
 	result &= test_markup_os();
 	result &= test_overflow_check();
+	result &= test_truncating_appends();
 	result &= test_printint8();
 	result &= test_printint16();
 	result &= test_printint32();
@@ -641,6 +722,7 @@ int main()
 	result &= test_stream_unsigned_imm();
 	result &= test_replc();
 	result &= test_replc_str();
+	result &= test_printfFloat();
 	result &= test_copy_mnem_opstr();
 	result &= test_trimls();
 	result &= test_underflow_in_sstream();

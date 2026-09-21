@@ -7727,3 +7727,23 @@
 	0,
 	{ 0 }
 },
+
+{	/* X86_MOVSX32rm32, X86_INS_MOVSXD: movsxd */
+	0,
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
+},
+
+{	/* X86_MOVSX32rr32, X86_INS_MOVSXD: movsxd */
+	0,
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
+},
+
+{	/* X86_MOVSX16rm32, X86_INS_MOVSXD: movsxd */
+	0,
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
+},
+
+{	/* X86_MOVSX16rr32, X86_INS_MOVSXD: movsxd */
+	0,
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
+},

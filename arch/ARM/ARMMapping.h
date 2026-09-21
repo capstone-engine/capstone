@@ -6,6 +6,7 @@
 
 #include "../../include/capstone/capstone.h"
 #include "../../utils.h"
+#include "../../Mapping.h"
 #include "ARMBaseInfo.h"
 
 typedef enum {
@@ -50,18 +51,13 @@ void ARM_init_mri(MCRegisterInfo *MRI);
 
 // cs_detail related functions
 void ARM_init_cs_detail(MCInst *MI);
-void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
-		       va_list args);
-static inline void add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
-				 ...)
-{
-	if (!MI->flat_insn->detail)
-		return;
-	va_list args;
-	va_start(args, op_group);
-	ARM_add_cs_detail(MI, op_group, args);
-	va_end(args);
-}
+void ARM_add_cs_detail_0(MCInst *MI, int /* arm_op_group */ op_group,
+			 size_t op_num);
+void ARM_add_cs_detail_1(MCInst *MI, int /* arm_op_group */ op_group,
+			 size_t op_num, uint64_t templ_arg_0);
+void ARM_add_cs_detail_2(MCInst *MI, int /* arm_op_group */ op_group,
+			 size_t op_num, uint64_t templ_arg_0,
+			 uint64_t templ_arg_1);
 
 void ARM_insert_detail_op_reg_at(MCInst *MI, unsigned index, arm_reg Reg,
 				 cs_ac_type access);

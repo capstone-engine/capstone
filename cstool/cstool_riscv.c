@@ -5,6 +5,8 @@
 #include <capstone/capstone.h>
 #include "cstool.h"
 
+#include "../arch/RISCV/RISCVInstPrinter.h"
+
 void print_insn_detail_riscv(csh handle, cs_insn *ins)
 {
 	cs_riscv *riscv;
@@ -41,6 +43,14 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 				       i, (long)op->mem.disp);
 
 			break;
+		case RISCV_OP_FP:
+			printf("\t\toperands[%u].type: FP_IMM %f \n", i,
+			       op->dimm);
+			break;
+		case RISCV_OP_CSR:
+			printf("\t\toperands[%u].type: CSR = %s\n", i,
+			       getSysRegName(op->csr));
+			break;
 		}
 
 		switch (op->access) {
@@ -56,6 +66,15 @@ void print_insn_detail_riscv(csh handle, cs_insn *ins)
 			printf("\t\toperands[%u].access: READ | WRITE\n", i);
 			break;
 		}
+	}
+
+	if (riscv->rounding_mode != RISCV_RM_INVALID) {
+		static const char *const rm_str[] = {
+			[RISCV_RM_RNE] = "rne", [RISCV_RM_RTZ] = "rtz",
+			[RISCV_RM_RDN] = "rdn", [RISCV_RM_RUP] = "rup",
+			[RISCV_RM_RMM] = "rmm", [RISCV_RM_DYN] = "dyn",
+		};
+		printf("\trounding_mode: %s\n", rm_str[riscv->rounding_mode]);
 	}
 
 	printf("\n");

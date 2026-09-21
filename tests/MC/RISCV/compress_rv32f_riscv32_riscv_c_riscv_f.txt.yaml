@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x76, 0x70 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "flw ft0, 124(sp)"
+
+  -
+    input:
+      bytes: [ 0x82, 0xfe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsw ft0, 124(sp)"
+
+  -
+    input:
+      bytes: [ 0x60, 0x7c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "flw fs0, 124(s0)"
+
+  -
+    input:
+      bytes: [ 0x60, 0xfc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsw fs0, 124(s0)"

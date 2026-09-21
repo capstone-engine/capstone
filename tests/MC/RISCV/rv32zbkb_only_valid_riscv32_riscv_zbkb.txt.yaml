@@ -1,0 +1,30 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x93, 0x52, 0x83, 0x69 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZBKB" ]
+    expected:
+      insns:
+        -
+          asm_text: "rev8 t0, t1"
+
+  -
+    input:
+      bytes: [ 0x93, 0x12, 0xf3, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZBKB" ]
+    expected:
+      insns:
+        -
+          asm_text: "zip t0, t1"
+
+  -
+    input:
+      bytes: [ 0x93, 0x52, 0xf3, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_ZBKB" ]
+    expected:
+      insns:
+        -
+          asm_text: "unzip t0, t1"

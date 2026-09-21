@@ -71,6 +71,10 @@ typedef enum insn_hdlr_id {
 	imm8i12x_hid,
 	imm16i12x_hid,
 	exti12x_hid,
+	srt_hid,
+	tny_hid,
+	dirdir_hid,
+	immdir_hid,
 	HANDLER_ID_ENDING,
 } insn_hdlr_id;
 
@@ -143,6 +147,8 @@ typedef struct insn_props {
 #include "hcs08.inc"
 #include "m6809.inc"
 #include "hd6309.inc"
+#include "rs08.inc"
+#include "hcs12x.inc"
 
 #include "insn_props.inc"
 
@@ -840,6 +846,8 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		case opidxdr_hid:
 		case idxX16_hid:
 		case idxS16_hid:
+		case dirdir_hid:
+		case immdir_hid:
 			if ((retval = read_byte(info, &ir, address + size + 1)))
 				size += 2;
 			break;
@@ -862,6 +870,8 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		case idxX0_hid:
 		case idxX0p_hid:
 		case opidx_hid:
+		case srt_hid:
+		case tny_hid:
 			retval = true;
 			break;
 
@@ -1820,6 +1830,42 @@ static void loop_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	add_insn_group(MI->flat_insn->detail, M680X_GRP_BRAREL);
 }
 
+// handler for RS08 specific TNY instruction
+// The operand address is embedded in the the least 4 significant bits of the opcode
+static void tny_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	cs_m680x *m680x = &info->m680x;
+	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
+
+	op->type = M680X_OP_DIRECT;
+	op->direct_addr = (uint8_t)(MI->Opcode & 0x0F);
+	op->size = 1;
+}
+
+// handler for RS08 specific SRT instruction
+// The operand address is embedded in the the least 5 significant bits of the opcode
+static void srt_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	cs_m680x *m680x = &info->m680x;
+	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
+
+	op->type = M680X_OP_DIRECT;
+	op->direct_addr = (uint8_t)(MI->Opcode & 0x1F);
+	op->size = 1;
+}
+
+static void dirdir_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	direct_hdlr(MI, info, address);
+	direct_hdlr(MI, info, address);
+}
+
+static void immdir_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
+{
+	immediate_hdlr(MI, info, address);
+	direct_hdlr(MI, info, address);
+}
+
 static void (*const g_insn_handler[])(MCInst *, m680x_info *, uint16_t *) = {
 	illegal_hdlr,	  relative8_hdlr,   relative16_hdlr,
 	immediate_hdlr, // 8-bit
@@ -1832,7 +1878,8 @@ static void (*const g_insn_handler[])(MCInst *, m680x_info *, uint16_t *) = {
 	indexedS16_hdlr,  indexedXp_hdlr,   indexedX0p_hdlr, indexed12_hdlr,
 	indexed12_hdlr, // subset of indexed12
 	reg_reg12_hdlr,	  loop_hdlr,	    index_hdlr,	     imm_idx12_x_hdlr,
-	imm_idx12_x_hdlr, ext_idx12_x_hdlr,
+	imm_idx12_x_hdlr, ext_idx12_x_hdlr, srt_hdlr,	     tny_hdlr,
+	dirdir_hdlr,	  immdir_hdlr
 }; /* handler function pointers */
 
 /* Disasemble one instruction at address and store in str_buff */
@@ -1927,46 +1974,56 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 }
 
 // Tables to get the byte size of a register on the CPU
-// based on an enum m680x_reg value.
+// based on an enum m680x_reg value defined in m680x.h
 // Invalid registers return 0.
-static const uint8_t g_m6800_reg_byte_size[22] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
-	0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0
+static const uint8_t g_m6800_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0
 };
 
-static const uint8_t g_m6805_reg_byte_size[22] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
-	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 2, 0, 0
+static const uint8_t g_m6805_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0
 };
 
-static const uint8_t g_m6808_reg_byte_size[22] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
-	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2, 0, 0
+static const uint8_t g_m6808_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0
 };
 
-static const uint8_t g_m6801_reg_byte_size[22] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0
+static const uint8_t g_m6801_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0
 };
 
-static const uint8_t g_m6811_reg_byte_size[22] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 0
+static const uint8_t g_m6811_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 0, 0
 };
 
-static const uint8_t g_cpu12_reg_byte_size[22] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 2, 2
+static const uint8_t g_cpu12_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 2, 2
 };
 
-static const uint8_t g_m6809_reg_byte_size[22] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 2, 0, 0
+static const uint8_t g_m6809_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 2, 0, 0, 0
 };
 
-static const uint8_t g_hd6309_reg_byte_size[22] = {
-	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC T2 T3
-	0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 4, 2, 0, 0
+static const uint8_t g_hd6309_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 4, 2, 0, 0, 0
+};
+
+static const uint8_t g_rs08_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2, 2, 0, 0
+};
+
+static const uint8_t g_hcs12x_reg_byte_size[23] = {
+	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 2, 2
 };
 
 // Table to check for a valid register nibble on the M6809 CPU
@@ -2096,6 +2153,26 @@ static const cpu_tables g_cpu_tables[] = {
 	  &g_m6808_reg_byte_size[0],
 	  NULL,
 	  { M680X_INS_BCLR, M680X_INS_BSET } },
+	{ // M680X_CPU_TYPE_RS08
+	  &g_rs08_inst_page1_table[0],
+	  { NULL, NULL },
+	  { 0, 0 },
+	  { 0x00, 0x00, 0x00 },
+	  { NULL, NULL, NULL },
+	  { 0, 0, 0 },
+	  &g_rs08_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
+	{ // M680X_CPU_TYPE_HCS12X
+	  &g_cpu12_inst_page1_table[0],
+	  { NULL, NULL },
+	  { 0, 0 },
+	  { 0x18, 0x00, 0x00 },
+	  { &g_hcs12x_inst_page2_table[0], NULL, NULL },
+	  { ARR_SIZE(g_hcs12x_inst_page2_table), 0, 0 },
+	  &g_hcs12x_reg_byte_size[0],
+	  NULL,
+	  { M680X_INS_INVLD, M680X_INS_INVLD } },
 };
 
 static bool m680x_setup_internals(m680x_info *info, e_cpu_type cpu_type,
@@ -2157,6 +2234,12 @@ bool M680X_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	else if (handle->mode & CS_MODE_M680X_CPU12)
 		cpu_type = M680X_CPU_TYPE_CPU12;
 
+	else if (handle->mode & CS_MODE_M680X_RS08)
+		cpu_type = M680X_CPU_TYPE_RS08;
+
+	else if (handle->mode & CS_MODE_M680X_HCS12X)
+		cpu_type = M680X_CPU_TYPE_HCS12X;
+
 	if (cpu_type != M680X_CPU_TYPE_INVALID &&
 	    m680x_setup_internals(info, cpu_type, (uint16_t)address, code,
 				  (uint16_t)code_len))
@@ -2217,6 +2300,18 @@ cs_err M680X_disassembler_init(cs_struct *ud)
 
 	if (M680X_REG_ENDING != ARR_SIZE(g_m6809_reg_byte_size)) {
 		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_m6809_reg_byte_size));
+
+		return CS_ERR_MODE;
+	}
+
+	if (M680X_REG_ENDING != ARR_SIZE(g_rs08_reg_byte_size)) {
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_rs08_reg_byte_size));
+
+		return CS_ERR_MODE;
+	}
+
+	if (M680X_REG_ENDING != ARR_SIZE(g_hcs12x_reg_byte_size)) {
+		CS_ASSERT(M680X_REG_ENDING == ARR_SIZE(g_hcs12x_reg_byte_size));
 
 		return CS_ERR_MODE;
 	}

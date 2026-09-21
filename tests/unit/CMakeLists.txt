@@ -1,7 +1,16 @@
 cmake_minimum_required(VERSION 3.15)
 
 enable_testing()
-set(UNIT_TEST_SOURCES sstream.c utils.c)
+set(UNIT_TEST_SOURCES sstream.c utils.c api.c)
+if(CAPSTONE_RISCV_SUPPORT)
+    list(APPEND UNIT_TEST_SOURCES riscv_op_count_iter.c riscv_sysreg.c riscv_reg_access.c riscv_insn_name_segv.c)
+endif()
+if(CAPSTONE_M68K_SUPPORT)
+    list(APPEND UNIT_TEST_SOURCES m68k_insn_name_segv.c)
+endif()
+if(CAPSTONE_WASM_SUPPORT)
+    list(APPEND UNIT_TEST_SOURCES wasm_brtable_size.c)
+endif()
 include_directories(include)
 
 foreach(TSRC ${UNIT_TEST_SOURCES})

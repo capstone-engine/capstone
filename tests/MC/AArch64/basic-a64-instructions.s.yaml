@@ -4839,7 +4839,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "cbnz x3, #-4"
+          asm_text: "cbnz x3, #0xfffffffffffffffc"
 
   -
     input:

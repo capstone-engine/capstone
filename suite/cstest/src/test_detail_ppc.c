@@ -123,11 +123,11 @@ bool test_expected_ppc(csh *handle, const cs_ppc *actual,
 	compare_enum_ret(actual->format, expected->format, false);
 	compare_tbool_ret(actual->update_cr0, expected->update_cr0, false);
 
-	if (expected->operands_count == 0) {
-		return true;
+	if (expected->operands_count != 0) {
+		compare_uint8_ret(actual->op_count, expected->operands_count,
+				  false);
 	}
-	compare_uint8_ret(actual->op_count, expected->operands_count, false);
-	for (size_t i = 0; i < actual->op_count; ++i) {
+	for (size_t i = 0; i < expected->operands_count; ++i) {
 		const cs_ppc_op *op = &actual->operands[i];
 		TestDetailPPCOp *eop = expected->operands[i];
 		compare_enum_ret(op->type, eop->type, false);
@@ -135,7 +135,7 @@ bool test_expected_ppc(csh *handle, const cs_ppc *actual,
 		switch (op->type) {
 		default:
 			fprintf(stderr,
-				"arm op type %" PRId32 " not handled.\n",
+				"ppc op type %" PRId32 " not handled.\n",
 				op->type);
 			return false;
 		case PPC_OP_REG:
@@ -152,33 +152,31 @@ bool test_expected_ppc(csh *handle, const cs_ppc *actual,
 			compare_int_ret(op->mem.disp, eop->mem_disp, false);
 			break;
 		}
+	}
 
-		if (expected->bc) {
-			if (expected->bc->bi_set) {
-				compare_uint8_ret(actual->bc.bi,
-						  expected->bc->bi, false);
-			} else {
-				assert(expected->bc->bi == 0);
-			}
-			if (expected->bc->bo_set) {
-				compare_uint8_ret(actual->bc.bo,
-						  expected->bc->bo, false);
-			} else {
-				assert(expected->bc->bo == 0);
-			}
-			compare_enum_ret(actual->bc.bh, expected->bc->bh,
-					 false);
-			compare_reg_ret(*handle, actual->bc.crX,
-					expected->bc->crX, false);
-			compare_enum_ret(actual->bc.crX_bit,
-					 expected->bc->crX_bit, false);
-			compare_enum_ret(actual->bc.hint, expected->bc->hint,
-					 false);
-			compare_enum_ret(actual->bc.pred_cr,
-					 expected->bc->pred_cr, false);
-			compare_enum_ret(actual->bc.pred_ctr,
-					 expected->bc->pred_ctr, false);
+	if (expected->bc) {
+		if (expected->bc->bi_set) {
+			compare_uint8_ret(actual->bc.bi, expected->bc->bi,
+					  false);
+		} else {
+			assert(expected->bc->bi == 0);
 		}
+		if (expected->bc->bo_set) {
+			compare_uint8_ret(actual->bc.bo, expected->bc->bo,
+					  false);
+		} else {
+			assert(expected->bc->bo == 0);
+		}
+		compare_enum_ret(actual->bc.bh, expected->bc->bh, false);
+		compare_reg_ret(*handle, actual->bc.crX, expected->bc->crX,
+				false);
+		compare_enum_ret(actual->bc.crX_bit, expected->bc->crX_bit,
+				 false);
+		compare_enum_ret(actual->bc.hint, expected->bc->hint, false);
+		compare_enum_ret(actual->bc.pred_cr, expected->bc->pred_cr,
+				 false);
+		compare_enum_ret(actual->bc.pred_ctr, expected->bc->pred_ctr,
+				 false);
 	}
 
 	return true;

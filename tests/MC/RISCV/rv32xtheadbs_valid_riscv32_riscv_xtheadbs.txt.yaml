@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x8b, 0x12, 0x13, 0x88 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADBS" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.tst t0, t1, 1"
+
+  -
+    input:
+      bytes: [ 0x8b, 0x12, 0xf3, 0x89 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADBS" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.tst t0, t1, 31"

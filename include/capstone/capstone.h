@@ -13,9 +13,9 @@ extern "C" {
 #if defined(CAPSTONE_HAS_OSXKERNEL)
 #include <libkern/libkern.h>
 #else
-#include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #endif
 
 #include "cs_operand.h"
@@ -62,6 +62,23 @@ extern "C" {
 #define CS_VERSION_MAJOR CS_API_MAJOR
 #define CS_VERSION_MINOR CS_API_MINOR
 #define CS_VERSION_EXTRA 0
+
+// Pre-release identifier.
+// A stable release.
+#define CS_VERSION_STABLE 0xffff
+
+// The postfix version: Alpha1, Alpha2, ..., Beta1, ...
+#define CS_VERSION_ALPHA 0xa000
+#define CS_VERSION_ALPHA9 (CS_VERSION_ALPHA | 9)
+#define CS_VERSION_ALPHA10 (CS_VERSION_ALPHA | 10)
+#define CS_VERSION_ALPHA11 (CS_VERSION_ALPHA | 11)
+
+#define CS_VERSION_BETA 0xb000
+#define CS_VERSION_BETA1 (CS_VERSION_BETA | 1)
+
+// The identifier of a pre-release (Alpha, Beta, ...).
+// It is set to CS_VERSION_STABLE, if this code is part of a stable release.
+#define CS_VERSION_PRE_RELEASE CS_VERSION_ALPHA11
 
 /// Macro to create combined version which can be compared to
 /// result of cs_version() API.
@@ -131,6 +148,13 @@ typedef enum cs_mode {
 	CS_MODE_16 = 1 << 1, ///< 16-bit mode (X86)
 	CS_MODE_32 = 1 << 2, ///< 32-bit mode (X86)
 	CS_MODE_64 = 1 << 3, ///< 64-bit mode (X86, PPC)
+	// X86
+	/// x86 Intel specific quirks:
+	/// - Ignore 66-prefix near Jcc in 64-bit mode.
+	CS_MODE_X86_INTEL = 1 << 4,
+	/// x86 AMD specific quirks:
+	/// - Honor 66-prefix near Jcc in 64-bit mode, unless REX.W overrides it.
+	CS_MODE_X86_AMD = 1 << 5,
 	// ARM
 	CS_MODE_THUMB = 1 << 4, ///< ARM's Thumb mode, including Thumb-2
 	CS_MODE_MCLASS = 1 << 5, ///< ARM's Cortex-M series
@@ -163,6 +187,37 @@ typedef enum cs_mode {
 	CS_MODE_M68K_030 = 1 << 4, ///< M68K 68030 mode
 	CS_MODE_M68K_040 = 1 << 5, ///< M68K 68040 mode
 	CS_MODE_M68K_060 = 1 << 6, ///< M68K 68060 mode
+	CS_MODE_M68K_CPU32 = 1 << 7,
+	CS_MODE_M68K_CF_ISA_A = 1 << 8, ///< ColdFire ISA_A
+	CS_MODE_M68K_CF_ISA_A_PLUS = 1 << 9, ///< ColdFire ISA_A+
+	CS_MODE_M68K_CF_ISA_B = 1 << 10, ///< ColdFire ISA_B
+	CS_MODE_M68K_CF_ISA_C = 1 << 11, ///< ColdFire ISA_C
+	CS_MODE_M68K_CF_USP = 1 << 12, ///< ColdFire USP instructions
+	CS_MODE_M68K_CF_DIV = 1 << 13, ///< ColdFire hardware divide
+	CS_MODE_M68K_CF_MAC = 1 << 14, ///< ColdFire MAC
+	CS_MODE_M68K_CF_EMAC = 1 << 15, ///< ColdFire EMAC
+	CS_MODE_M68K_CF_EMAC_B = 1 << 16, ///< ColdFire EMAC_B
+	CS_MODE_M68K_CF_FPU = 1 << 17, ///< ColdFire FPU
+	CS_MODE_M68K_COLDFIRE = CS_MODE_M68K_CF_ISA_A |
+				CS_MODE_M68K_CF_ISA_A_PLUS |
+				CS_MODE_M68K_CF_ISA_B | CS_MODE_M68K_CF_ISA_C |
+				CS_MODE_M68K_CF_USP | CS_MODE_M68K_CF_DIV |
+				CS_MODE_M68K_CF_MAC | CS_MODE_M68K_CF_EMAC |
+				CS_MODE_M68K_CF_EMAC_B | CS_MODE_M68K_CF_FPU,
+	CS_MODE_M68K_CFV1 = CS_MODE_M68K_CF_ISA_C | CS_MODE_M68K_CF_USP,
+	CS_MODE_M68K_CFV2 = CS_MODE_M68K_CF_ISA_A | CS_MODE_M68K_CF_DIV,
+	CS_MODE_M68K_CFV3 = CS_MODE_M68K_CF_ISA_A | CS_MODE_M68K_CF_DIV,
+	CS_MODE_M68K_CFV4 = CS_MODE_M68K_CF_ISA_B | CS_MODE_M68K_CF_DIV,
+	CS_MODE_M68K_CFV4E = CS_MODE_M68K_CF_ISA_B | CS_MODE_M68K_CF_DIV |
+			     CS_MODE_M68K_CF_USP | CS_MODE_M68K_CF_EMAC |
+			     CS_MODE_M68K_CF_FPU,
+	CS_MODE_M68K_CFV5 = CS_MODE_M68K_CF_ISA_C | CS_MODE_M68K_CF_USP |
+			    CS_MODE_M68K_CF_DIV | CS_MODE_M68K_CF_EMAC |
+			    CS_MODE_M68K_CF_EMAC_B,
+	CS_MODE_M68K_FEATURE_MASK = CS_MODE_M68K_000 | CS_MODE_M68K_010 |
+				    CS_MODE_M68K_020 | CS_MODE_M68K_030 |
+				    CS_MODE_M68K_040 | CS_MODE_M68K_060 |
+				    CS_MODE_M68K_CPU32 | CS_MODE_M68K_COLDFIRE,
 	CS_MODE_BIG_ENDIAN = 1U << 31, ///< big-endian mode
 	CS_MODE_MIPS16 = CS_MODE_16, ///< Generic mips16
 	CS_MODE_MIPS32 = CS_MODE_32, ///< Generic mips32
@@ -205,11 +260,32 @@ typedef enum cs_mode {
 	CS_MODE_M680X_CPU12 = 1 << 9, ///< M680X Motorola/Freescale/NXP CPU12
 	///< used on M68HC12/HCS12
 	CS_MODE_M680X_HCS08 = 1 << 10, ///< M680X Freescale/NXP HCS08 mode
+	CS_MODE_M680X_RS08 = 1 << 11, ///< M680X Freescale/NXP RS08 mode
+	CS_MODE_M680X_HCS12X = 1 << 12, ///< M680X Freescale/NXP HCS12X mode
 	CS_MODE_BPF_CLASSIC = 0, ///< Classic BPF mode (default)
 	CS_MODE_BPF_EXTENDED = 1 << 0, ///< Extended BPF mode
 	CS_MODE_RISCV32 = 1 << 0, ///< RISCV RV32G
 	CS_MODE_RISCV64 = 1 << 1, ///< RISCV RV64G
-	CS_MODE_RISCVC = 1 << 2, ///< RISCV compressed instructure mode
+	CS_MODE_RISCV_C = 1 << 2, ///< RISCV compressed instructure mode
+	CS_MODE_RISCV_FD = 1 << 3,
+	CS_MODE_RISCV_V = 1 << 4,
+	CS_MODE_RISCV_ZFINX = 1 << 5,
+	CS_MODE_RISCV_ZCMP_ZCMT_ZCE = 1 << 6,
+	CS_MODE_RISCV_ZICFISS = 1 << 7,
+	CS_MODE_RISCV_E = 1 << 8,
+	CS_MODE_RISCV_A = 1 << 9,
+	CS_MODE_RISCV_COREV = 1 << 10,
+	CS_MODE_RISCV_THEAD = 1 << 11,
+	CS_MODE_RISCV_SIFIVE = 1 << 12,
+	CS_MODE_RISCV_BITMANIP = 1 << 13,
+	CS_MODE_RISCV_ZBA = 1 << 14,
+	CS_MODE_RISCV_ZBB = 1 << 15,
+	CS_MODE_RISCV_ZBC = 1 << 16,
+	CS_MODE_RISCV_ZBKB = 1 << 17,
+	CS_MODE_RISCV_ZBKC = 1 << 18,
+	CS_MODE_RISCV_ZBKX = 1 << 19,
+	CS_MODE_RISCV_ZBS = 1 << 20,
+	CS_MODE_RISCV_VENTANA = 1 << 21,
 	CS_MODE_MOS65XX_6502 = 1 << 1, ///< MOS65XXX MOS 6502
 	CS_MODE_MOS65XX_65C02 = 1 << 2, ///< MOS65XXX WDC 65c02
 	CS_MODE_MOS65XX_W65C02 = 1 << 3, ///< MOS65XXX WDC W65c02
@@ -272,6 +348,7 @@ typedef enum cs_mode {
 	CS_MODE_XTENSA_ESP32 = 1 << 1, ///< Xtensa ESP32
 	CS_MODE_XTENSA_ESP32S2 = 1 << 2, ///< Xtensa ESP32S2
 	CS_MODE_XTENSA_ESP8266 = 1 << 3, ///< Xtensa ESP328266
+	CS_MODE_XTENSA_ESP32S3 = 1 << 4, ///< Xtensa ESP32S3
 } cs_mode;
 
 typedef void *(CAPSTONE_API *cs_malloc_t)(size_t size);
@@ -341,9 +418,27 @@ typedef enum cs_opt_value {
 	CS_OPT_SYNTAX_NO_DOLLAR =
 		1
 		<< 9, ///< Does not print the $ in front of Mips, LoongArch registers.
+	CS_OPT_SYNTAX_REAL =
+		1
+		<< 10, ///< Prints the original decoded instruction without aliases or uncompression.
+	CS_OPT_SYNTAX_UNCOMPRESSED_REAL =
+		1
+		<< 11, ///< Prints the uncompressed real instruction when possible, without aliases.
+	CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM =
+		1
+		<< 12, ///< Prints shifted AArch64 MOVN and MOVZ instructions without MOV aliases
+	CS_OPT_SYNTAX_ALIAS =
+		1
+		<< 13, ///< Prints aliases when available. This is the default RISC-V syntax behavior.
 	CS_OPT_DETAIL_REAL =
 		1
 		<< 1, ///< If enabled, always sets the real instruction detail. Even if the instruction is an alias.
+	CS_OPT_DETAIL_UNCOMPRESSED_REAL =
+		1
+		<< 2, ///< If enabled, sets uncompressed real instruction detail when possible.
+	CS_OPT_DETAIL_ALIAS =
+		1
+		<< 3, ///< If enabled, sets alias instruction detail when possible.
 } cs_opt_value;
 
 /// An option
@@ -425,27 +520,27 @@ typedef struct cs_opt_skipdata {
 #else
 #include "aarch64.h"
 #endif
-#include "m68k.h"
-#include "mips.h"
-#include "ppc.h"
-#include "sparc.h"
-#include "systemz.h"
-#include "x86.h"
-#include "xcore.h"
-#include "tms320c64x.h"
-#include "m680x.h"
-#include "evm.h"
-#include "riscv.h"
-#include "wasm.h"
-#include "mos65xx.h"
-#include "bpf.h"
-#include "sh.h"
-#include "tricore.h"
 #include "alpha.h"
+#include "arc.h"
+#include "bpf.h"
+#include "evm.h"
 #include "hppa.h"
 #include "loongarch.h"
+#include "m680x.h"
+#include "m68k.h"
+#include "mips.h"
+#include "mos65xx.h"
+#include "ppc.h"
+#include "riscv.h"
+#include "sh.h"
+#include "sparc.h"
+#include "systemz.h"
+#include "tms320c64x.h"
+#include "tricore.h"
+#include "wasm.h"
+#include "x86.h"
+#include "xcore.h"
 #include "xtensa.h"
-#include "arc.h"
 
 #define MAX_IMPL_W_REGS 47
 #define MAX_IMPL_R_REGS 20
@@ -519,7 +614,7 @@ typedef struct cs_insn {
 
 	/// If this instruction is an alias instruction, this member is set with
 	/// the alias ID.
-	/// Otherwise to <ARCH>_INS_INVALID.
+	/// Otherwise to <ARCH>_INS_INVALID (= 0).
 	/// -- Only supported by auto-sync archs --
 	uint64_t alias_id;
 
@@ -721,7 +816,7 @@ cs_err CAPSTONE_API cs_close(csh *handle);
 
  NOTE: in the case of CS_OPT_MEM, handle's value can be anything,
  so that cs_option(handle, CS_OPT_MEM, value) can (i.e must) be called
- even before cs_open()
+ even before cs_open(). All members of passed (cs_opt_mem *) must be defined.
 */
 CAPSTONE_EXPORT
 cs_err CAPSTONE_API cs_option(csh handle, cs_opt_type type, uintptr_t value);

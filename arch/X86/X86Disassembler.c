@@ -1347,15 +1347,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		//memset(instr->flat_insn->detail, 0, offsetof(cs_detail, x86)+offsetof(cs_x86, operands));
 	}
 
-	if (handle->mode & CS_MODE_16)
-		ret = decodeInstruction(&insn, reader, &info, address,
-					MODE_16BIT);
-	else if (handle->mode & CS_MODE_32)
-		ret = decodeInstruction(&insn, reader, &info, address,
-					MODE_32BIT);
-	else
-		ret = decodeInstruction(&insn, reader, &info, address,
-					MODE_64BIT);
+	ret = decodeInstruction(&insn, reader, &info, address, handle->mode);
 
 	if (ret) {
 		// *size = (uint16_t)(insn.readerCursor - address);
@@ -1374,6 +1366,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			instr->x86_prefix[2] = insn.prefix2;
 			instr->x86_prefix[3] = insn.prefix3;
 			instr->xAcquireRelease = insn.xAcquireRelease;
+			instr->x86Lock = insn.hasLockPrefix;
 
 			if (handle->detail_opt) {
 				update_pub_insn(instr->flat_insn, &insn);
@@ -1382,18 +1375,24 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 			if (insn.hasAdSize)
 				Flags |= X86_IP_HAS_AD_SIZE;
 
-			if (!insn.mandatoryPrefix) {
-				if (insn.hasOpSize)
-					Flags |= X86_IP_HAS_OP_SIZE;
+			if (insn.hasOpSize)
+				Flags |= X86_IP_HAS_OP_SIZE;
 
-				if (insn.repeatPrefix == 0xf2)
-					Flags |= X86_IP_HAS_REPEAT_NE;
-				else if (insn.repeatPrefix == 0xf3 &&
-					 // It should not be 'pause' f3 90
-					 insn.opcode != 0x90)
-					Flags |= X86_IP_HAS_REPEAT;
-				if (insn.hasLockPrefix)
-					Flags |= X86_IP_HAS_LOCK;
+			if (insn.repeatPrefix == 0xf2)
+				Flags |= X86_IP_HAS_REPEAT_NE;
+			else if (insn.repeatPrefix == 0xf3 &&
+				 // It should not be 'pause' f3 90
+				 insn.opcode != 0x90)
+				Flags |= X86_IP_HAS_REPEAT;
+			if (insn.hasLockPrefix)
+				Flags |= X86_IP_HAS_LOCK;
+
+			for (int i = 0; i < X86_MAX_OPERANDS; ++i) {
+				if (insn.operands[i].encoding ==
+				    ENCODING_WRITEMASK) {
+					Flags |= X86_IP_HAS_EVEX_OPMASK;
+					break;
+				}
 			}
 
 			instr->flags = Flags;

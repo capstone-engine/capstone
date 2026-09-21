@@ -14,6 +14,9 @@ cs_err MOS65XX_global_init(cs_struct *ud)
 	mos65xx_info *info;
 
 	info = cs_mem_malloc(sizeof(*info));
+	if (!info)
+		return CS_ERR_MEM;
+
 	info->hex_prefix = NULL;
 	info->cpu_type = MOS65XX_CPU_TYPE_6502;
 	info->long_m = 0;

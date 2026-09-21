@@ -1,0 +1,3 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32"|"CS_MODE_RISCV_ZBKC", None
+0xb3,0x12,0x73,0x0a == clmul t0, t1, t2
+0xb3,0x32,0x73,0x0a == clmulh t0, t1, t2

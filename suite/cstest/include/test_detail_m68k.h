@@ -23,6 +23,7 @@ typedef struct {
 	uint8_t bitfield;
 	uint8_t width;
 	uint8_t offset;
+	uint64_t address;
 } TestDetailM68KOpMem;
 
 static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
@@ -51,6 +52,8 @@ static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
 			 width),
 	CYAML_FIELD_UINT("offset", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
 			 offset),
+	CYAML_FIELD_UINT("address", CYAML_FLAG_OPTIONAL, TestDetailM68KOpMem,
+			 address),
 	CYAML_FIELD_INT("in_disp_size",
 			CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
 			TestDetailM68KOpMem, in_disp_size),
@@ -61,6 +64,37 @@ static const cyaml_schema_field_t test_detail_m68k_op_mem_mapping_schema[] = {
 			TestDetailM68KOpMem, disp_size),
 	CYAML_FIELD_END
 };
+
+typedef struct {
+	uint64_t significand;
+	uint16_t sign_exp;
+	uint16_t reserved;
+} TestDetailM68KOpFpExtended;
+
+static const cyaml_schema_field_t
+	test_detail_m68k_op_fp_extended_mapping_schema[] = {
+		CYAML_FIELD_UINT("significand", CYAML_FLAG_OPTIONAL,
+				 TestDetailM68KOpFpExtended, significand),
+		CYAML_FIELD_UINT("sign_exp", CYAML_FLAG_OPTIONAL,
+				 TestDetailM68KOpFpExtended, sign_exp),
+		CYAML_FIELD_UINT("reserved", CYAML_FLAG_OPTIONAL,
+				 TestDetailM68KOpFpExtended, reserved),
+		CYAML_FIELD_END
+	};
+
+typedef struct {
+	uint32_t header;
+	uint64_t fraction;
+} TestDetailM68KOpFpPacked;
+
+static const cyaml_schema_field_t
+	test_detail_m68k_op_fp_packed_mapping_schema[] = {
+		CYAML_FIELD_UINT("header", CYAML_FLAG_OPTIONAL,
+				 TestDetailM68KOpFpPacked, header),
+		CYAML_FIELD_UINT("fraction", CYAML_FLAG_OPTIONAL,
+				 TestDetailM68KOpFpPacked, fraction),
+		CYAML_FIELD_END
+	};
 
 typedef struct {
 	char *type;
@@ -79,10 +113,14 @@ typedef struct {
 	double dimm;
 	float simm;
 
+	TestDetailM68KOpFpExtended *fp_extended;
+	TestDetailM68KOpFpPacked *fp_packed;
 	TestDetailM68KOpMem *mem;
+	char **flags;
+	size_t flags_count;
 } TestDetailM68KOp;
 
-static const cyaml_schema_value_t test_detail_m68k_op_sys_psr_schema = {
+static const cyaml_schema_value_t test_detail_m68k_op_flag_schema = {
 	CYAML_VALUE_STRING(CYAML_FLAG_POINTER, char, 0, CYAML_UNLIMITED),
 };
 
@@ -109,8 +147,18 @@ static const cyaml_schema_field_t test_detail_m68k_op_mapping_schema[] = {
 			 register_bits),
 	CYAML_FIELD_FLOAT("dimm", CYAML_FLAG_OPTIONAL, TestDetailM68KOp, dimm),
 	CYAML_FIELD_FLOAT("simm", CYAML_FLAG_OPTIONAL, TestDetailM68KOp, simm),
+	CYAML_FIELD_MAPPING_PTR("fp_extended", CYAML_FLAG_OPTIONAL,
+				TestDetailM68KOp, fp_extended,
+				test_detail_m68k_op_fp_extended_mapping_schema),
+	CYAML_FIELD_MAPPING_PTR("fp_packed", CYAML_FLAG_OPTIONAL,
+				TestDetailM68KOp, fp_packed,
+				test_detail_m68k_op_fp_packed_mapping_schema),
 	CYAML_FIELD_MAPPING_PTR("mem", CYAML_FLAG_OPTIONAL, TestDetailM68KOp,
 				mem, test_detail_m68k_op_mem_mapping_schema),
+	CYAML_FIELD_SEQUENCE("flags", CYAML_FLAG_POINTER | CYAML_FLAG_OPTIONAL,
+			     TestDetailM68KOp, flags,
+			     &test_detail_m68k_op_flag_schema, 0,
+			     CYAML_UNLIMITED),
 	CYAML_FIELD_END
 };
 

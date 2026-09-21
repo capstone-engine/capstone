@@ -57,6 +57,31 @@ struct insn_mnem {
 	struct insn_mnem *next; // linked list of customized mnemonics
 };
 
+// map instruction to its characteristics
+typedef struct insn_map {
+	unsigned short id; // The LLVM instruction id
+	unsigned short mapid; // The Capstone instruction id
+#ifndef CAPSTONE_DIET
+	uint16_t regs_use[MAX_IMPL_R_REGS]; ///< list of implicit registers used by
+	///< this instruction
+	uint16_t regs_mod[MAX_IMPL_W_REGS]; ///< list of implicit registers modified
+	///< by this instruction
+	unsigned char groups
+		[MAX_NUM_GROUPS]; ///< list of group this instruction belong to
+	bool branch; // branch instruction?
+	bool indirect_branch; // indirect branch instruction?
+	union {
+		ppc_suppl_info ppc;
+		loongarch_suppl_info loongarch;
+		aarch64_suppl_info aarch64;
+		systemz_suppl_info systemz;
+		arm_suppl_info arm;
+		xtensa_suppl_info xtensa;
+		sparc_suppl_info sparc;
+	} suppl_info; // Supplementary information for each instruction.
+#endif
+} insn_map;
+
 struct cs_struct {
 	cs_arch arch;
 	cs_mode mode;
@@ -79,6 +104,15 @@ struct cs_struct {
 	bool doing_mem; // handling memory operand in InstPrinter code
 	bool doing_SME_Index; // handling a SME instruction that has index
 	unsigned short *insn_cache; // index caching for mapping.c
+	uint16_t *x86_insn_lut; // x86 instruction id -> insns[] index
+	uint32_t *x86_insn_reg_lut; // x86 packed Intel/ATT implicit register entries
+	unsigned int x86_insn_lut_max;
+	// A mapping of LLVM instruction IDs to capstone instruction IDs, with
+	// some supplementary information, sorted in ascending order by LLVM
+	// instruction ID.
+	const insn_map *insn_map;
+	// The number of elements in the array pointed to by .insn_map
+	unsigned short insn_map_size;
 	bool skipdata; // set this to True if we skip data when disassembling
 	uint8_t skipdata_size; // how many bytes to skip
 	cs_opt_skipdata skipdata_setup; // user-defined skipdata setup
@@ -106,6 +140,12 @@ extern cs_calloc_t cs_mem_calloc;
 extern cs_realloc_t cs_mem_realloc;
 extern cs_free_t cs_mem_free;
 extern cs_vsnprintf_t cs_vsnprintf;
+
+static inline bool cs_mem_is_setup()
+{
+	return cs_mem_malloc && cs_mem_calloc && cs_mem_realloc &&
+	       cs_mem_free && cs_vsnprintf;
+}
 
 /// Capstone assert macros. They can be configured to print warnings
 /// when the `expr` is false.

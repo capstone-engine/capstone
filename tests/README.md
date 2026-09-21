@@ -120,6 +120,20 @@ ensure they are added on the `suite/cstest/include/test_mapping.h`. Otherwise, `
 to the values for comparison.
 - Rarely used, but useful fields are: `name`, `skip`, `skip_reason`.
 
+> [!IMPORTANT]
+> Boolean values in the YAML files are encoded like the following:
+> ```yaml
+> # 1  = true
+> # 0  = unset
+> # -1 = false
+>
+> is_alias: 1 # Equivalent to is_alias: true
+> is_alias: 0 # Equivalent to an unset is_alias field
+> is_alias: -1 # Equivalent to is_alias: false
+> ```
+> The reason is the C library parsing the YAML files.
+> It sets all unset (not present) fields to 0.
+
 #### MC regression tests
 
 The `MCUpdater` translates most test files of the LLVM MC regression tests into our YAML files.

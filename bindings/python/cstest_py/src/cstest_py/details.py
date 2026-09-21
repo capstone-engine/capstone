@@ -8,6 +8,7 @@ from capstone import (
     Cs,
     CsInsn,
 )
+import capstone
 from capstone.alpha_const import ALPHA_OP_IMM, ALPHA_OP_REG
 from capstone.bpf_const import (
     BPF_OP_REG,
@@ -66,14 +67,24 @@ from capstone.m68k_const import (
     M68K_OP_BR_DISP,
     M68K_OP_REG_BITS,
     M68K_OP_FP_DOUBLE,
+    M68K_OP_FP_EXTENDED,
+    M68K_OP_FP_PACKED,
     M68K_OP_FP_SINGLE,
     M68K_OP_MEM,
+    M68K_OP_SHIFT,
 )
 from capstone.mips_const import MIPS_OP_REG, MIPS_OP_IMM, MIPS_OP_MEM
 from capstone.mos65xx_const import MOS65XX_OP_REG, MOS65XX_OP_MEM, MOS65XX_OP_IMM
-from capstone.riscv_const import RISCV_OP_MEM, RISCV_OP_IMM, RISCV_OP_REG
+from capstone.riscv import RISCV_OP_FP
+from capstone.riscv_const import RISCV_OP_CSR, RISCV_OP_MEM, RISCV_OP_IMM, RISCV_OP_REG
 from capstone.sh_const import SH_OP_REG, SH_OP_MEM, SH_OP_IMM
-from capstone.sparc_const import SPARC_OP_REG, SPARC_OP_IMM, SPARC_OP_MEM, SPARC_OP_ASI, SPARC_OP_MEMBAR_TAG
+from capstone.sparc_const import (
+    SPARC_OP_REG,
+    SPARC_OP_IMM,
+    SPARC_OP_MEM,
+    SPARC_OP_ASI,
+    SPARC_OP_MEMBAR_TAG,
+)
 from capstone.systemz_const import SYSTEMZ_OP_REG, SYSTEMZ_OP_IMM, SYSTEMZ_OP_MEM
 from capstone.tms320c64x_const import (
     TMS320C64X_OP_REG,
@@ -399,10 +410,14 @@ def test_expected_x86(actual: CsInsn, expected: dict) -> bool:
 
 
 def test_expected_ppc(actual: CsInsn, expected: dict) -> bool:
-    if "bc" in expected and not compare_uint8(actual.bc.bo, expected["bc"].get("bo"), "bo"):
+    if "bc" in expected and not compare_uint8(
+        actual.bc.bo, expected["bc"].get("bo"), "bo"
+    ):
         return False
 
-    if "bc" in expected and not compare_uint8(actual.bc.bi, expected["bc"].get("bi"), "bi"):
+    if "bc" in expected and not compare_uint8(
+        actual.bc.bi, expected["bc"].get("bi"), "bi"
+    ):
         return False
 
     if "bc" in expected and not compare_enum(
@@ -589,9 +604,7 @@ def test_expected_arm(actual: CsInsn, expected: dict) -> bool:
         if not compare_int8(aop.neon_lane, eop.get("neon_lane"), "neon_lane"):
             return False
 
-        if not compare_int32(
-            aop.vector_index, eop.get("vector_index"), "vector_index"
-        ):
+        if not compare_int32(aop.vector_index, eop.get("vector_index"), "vector_index"):
             return False
 
         if not compare_tbool(aop.subtracted, eop.get("subtracted"), "subtracted"):
@@ -713,9 +726,7 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
         if not compare_tbool(aop.is_vreg, eop.get("is_vreg"), "is_vreg"):
             return False
 
-        if not compare_int32(
-            aop.vector_index, eop.get("vector_index"), "vector_index"
-        ):
+        if not compare_int32(aop.vector_index, eop.get("vector_index"), "vector_index"):
             return False
 
         if not compare_tbool(
@@ -758,32 +769,24 @@ def test_expected_aarch64(actual: CsInsn, expected: dict) -> bool:
             if not compare_fp(aop.value.fp, eop.get("fp"), "fp"):
                 return False
         elif aop.type == AARCH64_OP_SYSREG:
-            if not compare_enum(
-                aop.sysop.sub_type, eop.get("sub_type"), "sub_type"
-            ):
+            if not compare_enum(aop.sysop.sub_type, eop.get("sub_type"), "sub_type"):
                 return False
             if not compare_int32(
                 aop.sysop.reg.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
         elif aop.type == AARCH64_OP_SYSIMM:
-            if not compare_enum(
-                aop.sysop.sub_type, eop.get("sub_type"), "sub_type"
-            ):
+            if not compare_enum(aop.sysop.sub_type, eop.get("sub_type"), "sub_type"):
                 return False
             if not compare_int32(
                 aop.sysop.imm.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
             ):
                 return False
             # EXACTFPIMM operands
-            if not compare_fp(
-                aop.fp, eop.get("fp"), "fp"
-            ):
+            if not compare_fp(aop.fp, eop.get("fp"), "fp"):
                 return False
         elif aop.type == AARCH64_OP_SYSALIAS:
-            if not compare_enum(
-                aop.sysop.sub_type, eop.get("sub_type"), "sub_type"
-            ):
+            if not compare_enum(aop.sysop.sub_type, eop.get("sub_type"), "sub_type"):
                 return False
             if not compare_int32(
                 aop.sysop.alias.raw_val, eop.get("sys_raw_val"), "sys_raw_val"
@@ -1112,6 +1115,8 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
             return False
         if not compare_enum(aop.address_mode, eop.get("address_mode"), "address_mode"):
             return False
+        if not compare_bit_flags(aop.flags, eop.get("flags"), "flags"):
+            return False
 
         if aop.type == M68K_OP_REG:
             if not compare_reg(actual, aop.reg, eop.get("reg"), "reg"):
@@ -1143,9 +1148,46 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
         elif aop.type == M68K_OP_FP_DOUBLE:
             if not compare_dp(aop.dimm, eop.get("dimm"), "dimm"):
                 return False
+        elif aop.type == M68K_OP_FP_EXTENDED:
+            fp_extended = eop.get("fp_extended", {})
+            if not compare_uint64(
+                aop.fp_extended.significand,
+                fp_extended.get("significand"),
+                "fp_extended.significand",
+            ):
+                return False
+            if not compare_uint16(
+                aop.fp_extended.sign_exp,
+                fp_extended.get("sign_exp"),
+                "fp_extended.sign_exp",
+            ):
+                return False
+            if not compare_uint16(
+                aop.fp_extended.reserved,
+                fp_extended.get("reserved"),
+                "fp_extended.reserved",
+            ):
+                return False
+        elif aop.type == M68K_OP_FP_PACKED:
+            fp_packed = eop.get("fp_packed", {})
+            if not compare_uint32(
+                aop.fp_packed.header,
+                fp_packed.get("header"),
+                "fp_packed.header",
+            ):
+                return False
+            if not compare_uint64(
+                aop.fp_packed.fraction,
+                fp_packed.get("fraction"),
+                "fp_packed.fraction",
+            ):
+                return False
         elif aop.type == M68K_OP_FP_SINGLE:
             if not compare_fp(aop.simm, eop.get("simm"), "simm"):
                 return False
+        elif aop.type == M68K_OP_SHIFT:
+            # Shift direction is stored in aop.flags and compared above.
+            pass
         elif aop.type == M68K_OP_MEM:
             if "mem" not in eop:
                 continue
@@ -1183,9 +1225,7 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
                 return False
             if not compare_int16(aop.mem.disp, eop["mem"].get("disp"), "disp"):
                 return False
-            if not compare_int32(
-                aop.mem.in_disp, eop["mem"].get("in_disp"), "in_disp"
-            ):
+            if not compare_int32(aop.mem.in_disp, eop["mem"].get("in_disp"), "in_disp"):
                 return False
             if not compare_int32(
                 aop.mem.out_disp, eop["mem"].get("out_disp"), "out_disp"
@@ -1200,6 +1240,10 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
             if not compare_uint8(aop.mem.width, eop["mem"].get("width"), "width"):
                 return False
             if not compare_uint8(aop.mem.offset, eop["mem"].get("offset"), "offset"):
+                return False
+            if not compare_uint64(
+                aop.mem.address, eop["mem"].get("address"), "address"
+            ):
                 return False
         else:
             raise ValueError("Operand type not handled.")
@@ -1321,6 +1365,11 @@ def test_expected_hppa(actual: CsInsn, expected: dict) -> bool:
 
 
 def test_expected_riscv(actual: CsInsn, expected: dict) -> bool:
+    if "rounding_mode" in expected and not compare_enum(
+        actual.rounding_mode, expected.get("rounding_mode"), "rounding_mode"
+    ):
+        return False
+
     if "operands" not in expected:
         return True
     elif not compare_uint32(
@@ -1344,6 +1393,14 @@ def test_expected_riscv(actual: CsInsn, expected: dict) -> bool:
             if not compare_reg(actual, aop.mem.base, eop.get("mem_base"), "mem_base"):
                 return False
             if not compare_int64(aop.mem.disp, eop.get("mem_disp"), "mem_disp"):
+                return False
+        elif aop.type == RISCV_OP_FP:
+            if not compare_fp(aop.dimm, eop.get("dimm"), "dimm"):
+                return False
+        elif aop.type == RISCV_OP_CSR:
+            if not compare_uint16(
+                aop.csr, capstone.riscv.SYSREG_NAME_TO_VAL[eop.get("csr")], "csr"
+            ):
                 return False
         else:
             raise ValueError("Operand type not handled.")
@@ -1391,9 +1448,7 @@ def test_expected_SystemZ(actual: CsInsn, expected: dict) -> bool:
         len(actual.operands), len(expected.get("operands")), "operands_count"
     ):
         return False
-    elif not compare_enum(
-        actual.format, expected.get("format"), "format"
-    ):
+    elif not compare_enum(actual.format, expected.get("format"), "format"):
         return False
 
     for aop, eop in zip(actual.operands, expected["operands"]):
@@ -1554,6 +1609,7 @@ def test_expected_wasm(actual: CsInsn, expected: dict) -> bool:
         else:
             raise ValueError("Operand type not handled.")
     return True
+
 
 def test_expected_arc(actual: CsInsn, expected: dict) -> bool:
     if "operands" not in expected:

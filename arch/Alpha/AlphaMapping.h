@@ -11,6 +11,9 @@
 
 // unsigned int Alpha_map_insn_id(cs_struct *h, unsigned int id);
 
+extern const insn_map *Alpha_insns;
+extern const unsigned int Alpha_insn_count;
+
 // given internal insn id, return public instruction info
 void Alpha_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id);
 

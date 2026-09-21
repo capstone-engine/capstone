@@ -15,6 +15,8 @@ cs_err TMS320C64x_global_init(cs_struct *ud)
 	MCRegisterInfo *mri;
 
 	mri = cs_mem_malloc(sizeof(*mri));
+	if (!mri)
+		return CS_ERR_MEM;
 
 	TMS320C64x_init(mri);
 	ud->printer = TMS320C64x_printInst;
@@ -27,6 +29,8 @@ cs_err TMS320C64x_global_init(cs_struct *ud)
 	ud->insn_id = TMS320C64x_get_insn_id;
 	ud->insn_name = TMS320C64x_insn_name;
 	ud->group_name = TMS320C64x_group_name;
+	ud->insn_map = TMS320C64x_insns;
+	ud->insn_map_size = TMS320C64x_insn_count;
 
 	return CS_ERR_OK;
 }

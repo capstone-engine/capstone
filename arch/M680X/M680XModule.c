@@ -31,7 +31,8 @@ cs_err M680X_global_init(cs_struct *ud)
 	    ~(CS_MODE_M680X_6800 | CS_MODE_M680X_6801 | CS_MODE_M680X_6805 |
 	      CS_MODE_M680X_6808 | CS_MODE_M680X_6809 | CS_MODE_M680X_6811 |
 	      CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | CS_MODE_M680X_CPU12 |
-	      CS_MODE_M680X_HCS08)) {
+	      CS_MODE_M680X_HCS08 | CS_MODE_M680X_RS08 |
+	      CS_MODE_M680X_HCS12X)) {
 		// At least one mode is not supported by M680X
 		return CS_ERR_MODE;
 	}
@@ -40,7 +41,8 @@ cs_err M680X_global_init(cs_struct *ud)
 	      (CS_MODE_M680X_6800 | CS_MODE_M680X_6801 | CS_MODE_M680X_6805 |
 	       CS_MODE_M680X_6808 | CS_MODE_M680X_6809 | CS_MODE_M680X_6811 |
 	       CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | CS_MODE_M680X_CPU12 |
-	       CS_MODE_M680X_HCS08))) {
+	       CS_MODE_M680X_HCS08 | CS_MODE_M680X_RS08 |
+	       CS_MODE_M680X_HCS12X))) {
 		// At least the cpu type has to be selected. No default.
 		return CS_ERR_MODE;
 	}

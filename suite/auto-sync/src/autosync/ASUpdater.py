@@ -128,6 +128,8 @@ class ASUpdater:
                 arch="systemz",
             )
             builder.generate_v5_compat_header()
+        elif self.arch == "RISCV":
+            HeaderPatcher.patch_riscv_compat_macros(main_header)
         return patched
 
     def copy_files(self, path: Path, dest: Path) -> None:

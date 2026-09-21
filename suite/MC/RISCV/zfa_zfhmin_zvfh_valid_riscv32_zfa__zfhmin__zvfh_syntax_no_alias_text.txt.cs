@@ -1,0 +1,2 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32", None
+0xd3,0x00,0x10,0xf4 == fli.h ft1, -1.0

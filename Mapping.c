@@ -7,34 +7,53 @@
 #include "cs_priv.h"
 #include "utils.h"
 
-// create a cache for fast id lookup
-static unsigned short *make_id2insn(const insn_map *insns, unsigned int size)
+// Create a cache to map LLVM instruction IDs to capstone instruction IDs, if
+// the architecture needs this.
+cs_err populate_insn_map_cache(cs_struct *handle)
 {
-	// NOTE: assume that the max id is always put at the end of insns array
-	unsigned short max_id = insns[size - 1].id;
 	unsigned int i;
 
-	unsigned short *cache =
-		(unsigned short *)cs_mem_calloc(max_id + 1, sizeof(*cache));
+	// If this architecture doesn't use instruction mapping, do nothing
+	if (!handle->insn_map || handle->insn_map_size <= 0)
+		return CS_ERR_OK;
 
-	for (i = 1; i < size; i++)
-		cache[insns[i].id] = i;
+	// Since the instruction map is assumed to be stored in ascending
+	// order, we can get the maximum LLVM instruction id just by looking at
+	// the last element.
+	unsigned int cache_elements =
+		handle->insn_map[handle->insn_map_size - 1].id + 1;
 
-	return cache;
+	// This should not be initialized yet.
+	CS_ASSERT(!handle->insn_cache);
+
+	unsigned short *cache = cs_mem_calloc(cache_elements, sizeof(*cache));
+	if (!cache) {
+		handle->errnum = CS_ERR_MEM;
+		return CS_ERR_MEM;
+	}
+	handle->insn_cache = cache;
+
+	for (i = 1; i < handle->insn_map_size; ++i)
+		handle->insn_cache[handle->insn_map[i].id] = i;
+
+	return CS_ERR_OK;
 }
 
-// look for @id in @insns, given its size in @max. first time call will update
-// @cache. return 0 if not found
-unsigned short insn_find(const insn_map *insns, unsigned int max,
-			 unsigned int id, unsigned short **cache)
+const insn_map *lookup_insn_map(cs_struct *handle, unsigned short id)
 {
-	if (id > insns[max - 1].id)
-		return 0;
+	// If this is getting called, we need the cache to already be populated
+	// (this should be done when populate_insn_map_cache() gets called).
+	CS_ASSERT(handle->insn_cache);
+	CS_ASSERT(handle->insn_map_size);
 
-	if (*cache == NULL)
-		*cache = make_id2insn(insns, max);
+	unsigned short highest_id =
+		handle->insn_map[handle->insn_map_size - 1].id;
+	if (id > highest_id)
+		return NULL;
 
-	return (*cache)[id];
+	unsigned short i = handle->insn_cache[id];
+
+	return &handle->insn_map[i];
 }
 
 // Gives the id for the given @name if it is saved in @map.
@@ -359,6 +378,34 @@ DEFINE_get_detail_op(bpf, BPF, BPF);
 DEFINE_get_detail_op(arc, ARC, ARC);
 DEFINE_get_detail_op(sparc, Sparc, SPARC);
 
+/// Returns the operand at detail->arch.operands[index]
+/// Or NULL if detail is not set or the index would be out of bounds.
+#define DEFINE_get_detail_op_at(arch, ARCH, ARCH_UPPER) \
+	cs_##arch##_op *ARCH##_get_detail_op_at(MCInst *MI, int index) \
+	{ \
+		if (!MI->flat_insn->detail) \
+			return NULL; \
+		if (index < 0 || index >= NUM_##ARCH_UPPER##_OPS) { \
+			return NULL; \
+		} \
+		return &MI->flat_insn->detail->arch.operands[index]; \
+	}
+
+DEFINE_get_detail_op_at(arm, ARM, ARM);
+DEFINE_get_detail_op_at(ppc, PPC, PPC);
+DEFINE_get_detail_op_at(tricore, TriCore, TRICORE);
+DEFINE_get_detail_op_at(aarch64, AArch64, AARCH64);
+DEFINE_get_detail_op_at(alpha, Alpha, ALPHA);
+DEFINE_get_detail_op_at(hppa, HPPA, HPPA);
+DEFINE_get_detail_op_at(loongarch, LoongArch, LOONGARCH);
+DEFINE_get_detail_op_at(mips, Mips, MIPS);
+DEFINE_get_detail_op_at(riscv, RISCV, RISCV);
+DEFINE_get_detail_op_at(systemz, SystemZ, SYSTEMZ);
+DEFINE_get_detail_op_at(xtensa, Xtensa, XTENSA);
+DEFINE_get_detail_op_at(bpf, BPF, BPF);
+DEFINE_get_detail_op_at(arc, ARC, ARC);
+DEFINE_get_detail_op_at(sparc, Sparc, SPARC);
+
 /// Returns true if for this architecture the
 /// alias operands should be filled.
 /// TODO: Replace this with a proper option.
@@ -398,6 +445,7 @@ static inline bool char_ends_mnem(const char c, cs_arch arch)
 	default:
 		return (!c || c == ' ' || c == '\t' || c == '.');
 	case CS_ARCH_PPC:
+	case CS_ARCH_RISCV:
 		return (!c || c == ' ' || c == '\t');
 	case CS_ARCH_SPARC:
 		return (!c || c == ' ' || c == '\t' || c == ',');
@@ -410,8 +458,10 @@ static inline bool char_ends_mnem(const char c, cs_arch arch)
 void map_set_alias_id(MCInst *MI, const SStream *O,
 		      const name_map *alias_mnem_id_map, int map_size)
 {
-	if (!MCInst_isAlias(MI))
+	if (!MCInst_isAlias(MI)) {
+		MI->flat_insn->alias_id = 0;
 		return;
+	}
 
 	char alias_mnem[16] = { 0 };
 	int i = 0, j = 0;
@@ -419,7 +469,7 @@ void map_set_alias_id(MCInst *MI, const SStream *O,
 	// Skip spaces and tabs
 	while (is_blank_char(asm_str_buf[i])) {
 		if (!asm_str_buf[i]) {
-			MI->flat_insn->alias_id = -1;
+			MI->flat_insn->alias_id = 0;
 			return;
 		}
 		++i;
@@ -430,8 +480,8 @@ void map_set_alias_id(MCInst *MI, const SStream *O,
 		alias_mnem[j] = asm_str_buf[i];
 	}
 
-	MI->flat_insn->alias_id =
-		name2id(alias_mnem_id_map, map_size, alias_mnem);
+	int alias_id = name2id(alias_mnem_id_map, map_size, alias_mnem);
+	MI->flat_insn->alias_id = alias_id < 0 ? 0 : alias_id;
 }
 
 /// Does a binary search over the given map and searches for @id.

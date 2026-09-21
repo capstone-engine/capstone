@@ -65,3 +65,35 @@ test_cases:
                 - type: XTENSA_OP_IMM
                   imm: -1
                   access: CS_AC_READ
+  # ee.* op, gated behind CS_MODE_XTENSA_ESP32S3 (MT7961 firmware bytes).
+  - input:
+      bytes: [ 0x9e, 0x3e, 0x09, 0x40 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ CS_MODE_XTENSA_ESP32S3, CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "ee.vmulas.u16.accx.ld.ip.qup q1, a9, 0xe0, q0, q6, q0, q1"
+          details:
+            xtensa:
+              operands:
+                - type: XTENSA_OP_REG
+                  reg: q1
+                  access: CS_AC_WRITE
+                - type: XTENSA_OP_REG
+                  reg: a9
+                  access: CS_AC_READ
+                - type: XTENSA_OP_IMM
+                  imm: 0xe0
+                  access: CS_AC_READ
+                - type: XTENSA_OP_REG
+                  reg: q0
+                  access: CS_AC_READ
+                - type: XTENSA_OP_REG
+                  reg: q6
+                  access: CS_AC_READ
+                - type: XTENSA_OP_REG
+                  reg: q0
+                  access: CS_AC_READ
+                - type: XTENSA_OP_REG
+                  reg: q1
+                  access: CS_AC_READ

@@ -1,0 +1,50 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0b, 0x45, 0xb6, 0xe2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMPAIR" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lwd a0, a1, (a2), 1, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x45, 0xb6, 0xf4 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMPAIR" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.lwud a0, a1, (a2), 2, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x55, 0xb6, 0xe0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMPAIR" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.swd a0, a1, (a2), 0, 3"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x45, 0xb6, 0xf8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMPAIR" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.ldd a0, a1, (a2), 0, 4"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x55, 0xb6, 0xfe ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_XTHEADMEMPAIR" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.sdd a0, a1, (a2), 3, 4"

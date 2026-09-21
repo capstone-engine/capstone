@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0x32 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "zkne" ]
+    expected:
+      insns:
+        -
+          asm_text: "aes64es a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0x36 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "zkne" ]
+    expected:
+      insns:
+        -
+          asm_text: "aes64esm a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x13, 0x95, 0x55, 0x31 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "zkne" ]
+    expected:
+      insns:
+        -
+          asm_text: "aes64ks1i a0, a1, 5"
+
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0x7e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "zkne" ]
+    expected:
+      insns:
+        -
+          asm_text: "aes64ks2 a0, a1, a2"

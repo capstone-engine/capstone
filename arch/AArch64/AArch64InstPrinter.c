@@ -492,7 +492,13 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 			(uint64_t)MCOperand_getImm(MCInst_getOperand(MI, (1)))
 			<< Shift;
 
-		if (AArch64_AM_isMOVZMovAlias(
+		bool SuppressMovAlias =
+			(MI->csh->syntax &
+			 CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM) &&
+			Shift != 0;
+
+		if (!SuppressMovAlias &&
+		    AArch64_AM_isMOVZMovAlias(
 			    Value, Shift, Opcode == AArch64_MOVZXi ? 64 : 32)) {
 			isAlias = true;
 			MCInst_setIsAlias(MI, isAlias);
@@ -525,7 +531,13 @@ void printInst(MCInst *MI, uint64_t Address, const char *Annot, SStream *O)
 		if (RegWidth == 32)
 			Value = Value & 0xffffffff;
 
-		if (AArch64_AM_isMOVNMovAlias(Value, Shift, RegWidth)) {
+		bool SuppressMovAlias =
+			(MI->csh->syntax &
+			 CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM) &&
+			Shift != 0;
+
+		if (!SuppressMovAlias &&
+		    AArch64_AM_isMOVNMovAlias(Value, Shift, RegWidth)) {
 			isAlias = true;
 			MCInst_setIsAlias(MI, isAlias);
 			SStream_concat0(O, "mov ");
@@ -953,6 +965,10 @@ DEFINE_printMatrix(0);
 		const char *RegName = getRegisterName(MCOperand_getReg(RegOp), \
 						      AArch64_NoRegAltName); \
 \
+		/* Diet builds have no register-name table; skip printing. */ \
+		if (!RegName) \
+			return; \
+\
 		unsigned buf_len = strlen(RegName) + 1; \
 		char *Base = cs_mem_calloc(1, buf_len); \
 		memcpy(Base, RegName, buf_len); \
@@ -1131,7 +1147,7 @@ void printShifter(MCInst *MI, unsigned OpNum, SStream *O)
 	    AArch64_AM_getShiftValue(Val) == 0)
 		return;
 	SStream_concat(
-		O, "%s%s%s%s#%d", ", ",
+		O, "%s%s%s%s#%u", ", ",
 		AArch64_AM_getShiftExtendName(AArch64_AM_getShiftType(Val)),
 		" ", markup("<imm:"), AArch64_AM_getShiftValue(Val));
 	SStream_concat0(O, markup(">"));
@@ -1202,7 +1218,7 @@ static void printMemExtendImpl(bool SignExtend, bool DoShift, unsigned Width,
 		if (getUseMarkup)
 			SStream_concat0(O, "<imm:");
 		unsigned ShiftAmount = DoShift ? Log2_32(Width / 8) : 0;
-		SStream_concat(O, "%s%d", "#", ShiftAmount);
+		SStream_concat(O, "%s%u", "#", ShiftAmount);
 		if (getUseMarkup)
 			SStream_concat0(O, ">");
 	}
@@ -1294,7 +1310,7 @@ DEFINE_printRegWithShiftExtend(false, 128, x, 0);
 				0 && \
 				"Unsupported predicate-as-counter register"); \
 		SStream_concat(O, "%s", "pn"); \
-		printUInt32(O, (Reg - AArch64_PN0)); \
+		SStream_concat(O, "%u", (Reg - AArch64_PN0)); \
 		switch (EltSize) { \
 		case 0: \
 			break; \
@@ -1354,8 +1370,8 @@ void printAMNoIndex(MCInst *MI, unsigned OpNum, SStream *O)
 			MI, CONCAT(AArch64_OP_GROUP_ImmScale, Scale), OpNum, \
 			Scale); \
 		SStream_concat(O, "%s", markup("<imm:")); \
-		printInt32Bang(O, Scale *MCOperand_getImm( \
-					  MCInst_getOperand(MI, (OpNum)))); \
+		printInt32Bang(O, Scale * MCOperand_getImm(MCInst_getOperand( \
+						  MI, (OpNum)))); \
 		SStream_concat0(O, markup(">")); \
 	}
 DEFINE_printImmScale(8);
@@ -1798,8 +1814,8 @@ DEFINE_printGPRSeqPairsClassOperand(64);
 		AArch64_add_cs_detail_1( \
 			MI, CONCAT(AArch64_OP_GROUP_MatrixIndex, Scale), \
 			OpNum, Scale); \
-		printInt64(O, Scale *MCOperand_getImm( \
-				      MCInst_getOperand(MI, (OpNum)))); \
+		printInt64(O, Scale * MCOperand_getImm(MCInst_getOperand( \
+					      MI, (OpNum)))); \
 	}
 DEFINE_printMatrixIndex(8);
 DEFINE_printMatrixIndex(0);
@@ -2018,8 +2034,8 @@ DEFINE_printTypedVectorList(0, 0);
 			MI, CONCAT(AArch64_OP_GROUP_VectorIndex, Scale), \
 			OpNum, Scale); \
 		SStream_concat(O, "%s", "["); \
-		printUInt64(O, Scale *MCOperand_getImm( \
-				       MCInst_getOperand(MI, (OpNum)))); \
+		printUInt64(O, Scale * MCOperand_getImm(MCInst_getOperand( \
+					       MI, (OpNum)))); \
 		SStream_concat0(O, "]"); \
 	}
 DEFINE_printVectorIndex(1);
@@ -2319,7 +2335,8 @@ void printSIMDType10Operand(MCInst *MI, unsigned OpNo, SStream *O)
 		unsigned Val = \
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNo))); \
 		SStream_concat(O, "%s", markup("<imm:")); \
-		SStream_concat(O, "#%d", (Val * Angle) + Remainder); \
+		SStream_concat(O, "#%" PRId32, \
+			       (int32_t)((Val * Angle) + Remainder)); \
 		SStream_concat0(O, markup(">")); \
 	}
 DEFINE_printComplexRotationOp(180, 90);

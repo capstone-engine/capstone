@@ -536,13 +536,13 @@ void LoongArch_set_detail_op_reg(MCInst *MI, unsigned OpNum, loongarch_reg Reg)
 	LoongArch_inc_op_count(MI);
 }
 
-void LoongArch_add_cs_detail(MCInst *MI, int /* loongarch_op_group */ op_group,
-			     va_list args)
+void LoongArch_add_cs_detail_0(MCInst *MI,
+			       int /* loongarch_op_group */ op_group,
+			       size_t OpNum)
 {
 	if (!detail_is_set(MI))
 		return;
 
-	unsigned OpNum = va_arg(args, unsigned);
 	// Handle memory operands later
 	cs_op_type op_type = map_get_op_type(MI, OpNum) & ~CS_OP_MEM;
 

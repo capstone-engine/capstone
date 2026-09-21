@@ -11,11 +11,12 @@
 #include <stdlib.h>
 #endif
 
-#include <string.h>
 #include <capstone/capstone.h>
+#include <string.h>
 
-#include "utils.h"
 #include "MCRegisterInfo.h"
+#include "Mapping.h"
+#include "utils.h"
 
 #if defined(_KERNEL_MODE)
 #include "windows\winkernel_mm.h"
@@ -56,28 +57,28 @@
 #endif
 
 #include "arch/AArch64/AArch64Module.h"
+#include "arch/ARC/ARCModule.h"
 #include "arch/ARM/ARMModule.h"
+#include "arch/Alpha/AlphaModule.h"
+#include "arch/BPF/BPFModule.h"
 #include "arch/EVM/EVMModule.h"
-#include "arch/WASM/WASMModule.h"
+#include "arch/HPPA/HPPAModule.h"
+#include "arch/LoongArch/LoongArchModule.h"
 #include "arch/M680X/M680XModule.h"
 #include "arch/M68K/M68KModule.h"
+#include "arch/MOS65XX/MOS65XXModule.h"
 #include "arch/Mips/MipsModule.h"
 #include "arch/PowerPC/PPCModule.h"
+#include "arch/RISCV/RISCVModule.h"
+#include "arch/SH/SHModule.h"
 #include "arch/Sparc/SparcModule.h"
 #include "arch/SystemZ/SystemZModule.h"
 #include "arch/TMS320C64x/TMS320C64xModule.h"
+#include "arch/TriCore/TriCoreModule.h"
+#include "arch/WASM/WASMModule.h"
 #include "arch/X86/X86Module.h"
 #include "arch/XCore/XCoreModule.h"
-#include "arch/RISCV/RISCVModule.h"
-#include "arch/MOS65XX/MOS65XXModule.h"
-#include "arch/BPF/BPFModule.h"
-#include "arch/SH/SHModule.h"
-#include "arch/TriCore/TriCoreModule.h"
-#include "arch/Alpha/AlphaModule.h"
-#include "arch/HPPA/HPPAModule.h"
-#include "arch/LoongArch/LoongArchModule.h"
 #include "arch/Xtensa/XtensaModule.h"
-#include "arch/ARC/ARCModule.h"
 
 typedef struct cs_arch_config {
 	// constructor initialization
@@ -91,155 +92,184 @@ typedef struct cs_arch_config {
 
 #define CS_ARCH_CONFIG_ARM \
 	{ \
-		ARM_global_init, ARM_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 | \
-			  CS_MODE_MCLASS | CS_MODE_THUMB | \
-			  CS_MODE_BIG_ENDIAN), \
+		ARM_global_init, \
+		ARM_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_V8 | \
+		  CS_MODE_MCLASS | CS_MODE_THUMB | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_AARCH64 \
 	{ \
-		AArch64_global_init, AArch64_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | \
-			  CS_MODE_BIG_ENDIAN | CS_MODE_APPLE_PROPRIETARY), \
+		AArch64_global_init, \
+		AArch64_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_ARM | CS_MODE_BIG_ENDIAN | \
+		  CS_MODE_APPLE_PROPRIETARY), \
 	}
 #define CS_ARCH_CONFIG_MIPS \
 	{ \
-		Mips_global_init, Mips_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | \
-			  CS_MODE_MIPS16 | CS_MODE_MIPS32 | CS_MODE_MIPS64 | \
-			  CS_MODE_MICRO | CS_MODE_MIPS1 | CS_MODE_MIPS2 | \
-			  CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | \
-			  CS_MODE_MIPS32R5 | CS_MODE_MIPS32R6 | \
-			  CS_MODE_MIPS3 | CS_MODE_MIPS4 | CS_MODE_MIPS5 | \
-			  CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | \
-			  CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | \
-			  CS_MODE_OCTEON | CS_MODE_OCTEONP | \
-			  CS_MODE_NANOMIPS | CS_MODE_NMS1 | CS_MODE_I7200 | \
-			  CS_MODE_MIPS_NOFLOAT | CS_MODE_MIPS_PTR64), \
+		Mips_global_init, \
+		Mips_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | \
+		  CS_MODE_MIPS16 | CS_MODE_MIPS32 | CS_MODE_MIPS64 | \
+		  CS_MODE_MICRO | CS_MODE_MIPS1 | CS_MODE_MIPS2 | \
+		  CS_MODE_MIPS32R2 | CS_MODE_MIPS32R3 | CS_MODE_MIPS32R5 | \
+		  CS_MODE_MIPS32R6 | CS_MODE_MIPS3 | CS_MODE_MIPS4 | \
+		  CS_MODE_MIPS5 | CS_MODE_MIPS64R2 | CS_MODE_MIPS64R3 | \
+		  CS_MODE_MIPS64R5 | CS_MODE_MIPS64R6 | CS_MODE_OCTEON | \
+		  CS_MODE_OCTEONP | CS_MODE_NANOMIPS | CS_MODE_NMS1 | \
+		  CS_MODE_I7200 | CS_MODE_MIPS_NOFLOAT | CS_MODE_MIPS_PTR64), \
 	}
 #define CS_ARCH_CONFIG_X86 \
 	{ \
-		X86_global_init, X86_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
-			  CS_MODE_16), \
+		X86_global_init, \
+		X86_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
+		  CS_MODE_16 | CS_MODE_X86_INTEL | CS_MODE_X86_AMD), \
 	}
 #define CS_ARCH_CONFIG_PPC \
 	{ \
-		PPC_global_init, PPC_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
-			  CS_MODE_BIG_ENDIAN | CS_MODE_QPX | CS_MODE_PS | \
-			  CS_MODE_BOOKE | CS_MODE_SPE | CS_MODE_AIX_OS | \
-			  CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 | \
-			  CS_MODE_PWR10 | CS_MODE_PPC_ISA_FUTURE | \
-			  CS_MODE_MSYNC | CS_MODE_MODERN_AIX_AS), \
+		PPC_global_init, \
+		PPC_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_32 | CS_MODE_64 | \
+		  CS_MODE_BIG_ENDIAN | CS_MODE_QPX | CS_MODE_PS | \
+		  CS_MODE_BOOKE | CS_MODE_SPE | CS_MODE_AIX_OS | \
+		  CS_MODE_PWR7 | CS_MODE_PWR8 | CS_MODE_PWR9 | CS_MODE_PWR10 | \
+		  CS_MODE_PPC_ISA_FUTURE | CS_MODE_MSYNC | \
+		  CS_MODE_MODERN_AIX_AS), \
 	}
 #define CS_ARCH_CONFIG_SPARC \
 	{ \
-		Sparc_global_init, Sparc_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | \
-			  CS_MODE_V9 | CS_MODE_64 | CS_MODE_32), \
+		Sparc_global_init, \
+		Sparc_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN | CS_MODE_V9 | \
+		  CS_MODE_64 | CS_MODE_32), \
 	}
 #define CS_ARCH_CONFIG_SYSTEMZ \
 	{ \
-		SystemZ_global_init, SystemZ_option, \
-			~(CS_MODE_BIG_ENDIAN | CS_MODE_SYSTEMZ_ARCH8 | \
-			  CS_MODE_SYSTEMZ_ARCH9 | CS_MODE_SYSTEMZ_ARCH10 | \
-			  CS_MODE_SYSTEMZ_ARCH11 | CS_MODE_SYSTEMZ_ARCH12 | \
-			  CS_MODE_SYSTEMZ_ARCH13 | CS_MODE_SYSTEMZ_ARCH14 | \
-			  CS_MODE_SYSTEMZ_Z10 | CS_MODE_SYSTEMZ_Z196 | \
-			  CS_MODE_SYSTEMZ_ZEC12 | CS_MODE_SYSTEMZ_Z13 | \
-			  CS_MODE_SYSTEMZ_Z14 | CS_MODE_SYSTEMZ_Z15 | \
-			  CS_MODE_SYSTEMZ_Z16 | CS_MODE_SYSTEMZ_GENERIC), \
+		SystemZ_global_init, \
+		SystemZ_option, \
+		~(CS_MODE_BIG_ENDIAN | CS_MODE_SYSTEMZ_ARCH8 | \
+		  CS_MODE_SYSTEMZ_ARCH9 | CS_MODE_SYSTEMZ_ARCH10 | \
+		  CS_MODE_SYSTEMZ_ARCH11 | CS_MODE_SYSTEMZ_ARCH12 | \
+		  CS_MODE_SYSTEMZ_ARCH13 | CS_MODE_SYSTEMZ_ARCH14 | \
+		  CS_MODE_SYSTEMZ_Z10 | CS_MODE_SYSTEMZ_Z196 | \
+		  CS_MODE_SYSTEMZ_ZEC12 | CS_MODE_SYSTEMZ_Z13 | \
+		  CS_MODE_SYSTEMZ_Z14 | CS_MODE_SYSTEMZ_Z15 | \
+		  CS_MODE_SYSTEMZ_Z16 | CS_MODE_SYSTEMZ_GENERIC), \
 	}
 #define CS_ARCH_CONFIG_XCORE \
 	{ \
-		XCore_global_init, XCore_option, ~(CS_MODE_BIG_ENDIAN), \
+		XCore_global_init, \
+		XCore_option, \
+		~(CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_M68K \
 	{ \
-		M68K_global_init, M68K_option, \
-			~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_000 | \
-			  CS_MODE_M68K_010 | CS_MODE_M68K_020 | \
-			  CS_MODE_M68K_030 | CS_MODE_M68K_040 | \
-			  CS_MODE_M68K_060), \
+		M68K_global_init, \
+		M68K_option, \
+		~(CS_MODE_BIG_ENDIAN | CS_MODE_M68K_FEATURE_MASK), \
 	}
 #define CS_ARCH_CONFIG_TMS320C64X \
 	{ \
-		TMS320C64x_global_init, TMS320C64x_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
+		TMS320C64x_global_init, \
+		TMS320C64x_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_M680X \
 	{ \
-		M680X_global_init, M680X_option, \
-			~(CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | \
-			  CS_MODE_M680X_6800 | CS_MODE_M680X_6801 | \
-			  CS_MODE_M680X_6805 | CS_MODE_M680X_6808 | \
-			  CS_MODE_M680X_6809 | CS_MODE_M680X_6811 | \
-			  CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08), \
+		M680X_global_init, \
+		M680X_option, \
+		~(CS_MODE_M680X_6301 | CS_MODE_M680X_6309 | \
+		  CS_MODE_M680X_6800 | CS_MODE_M680X_6801 | \
+		  CS_MODE_M680X_6805 | CS_MODE_M680X_6808 | \
+		  CS_MODE_M680X_6809 | CS_MODE_M680X_6811 | \
+		  CS_MODE_M680X_CPU12 | CS_MODE_M680X_HCS08 | \
+		  CS_MODE_M680X_RS08 | CS_MODE_M680X_HCS12X), \
 	}
 #define CS_ARCH_CONFIG_EVM \
 	{ \
-		EVM_global_init, EVM_option, 0, \
+		EVM_global_init, \
+		EVM_option, \
+		0, \
 	}
 #define CS_ARCH_CONFIG_MOS65XX \
 	{ \
-		MOS65XX_global_init, MOS65XX_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_MOS65XX_6502 | \
-			  CS_MODE_MOS65XX_65C02 | CS_MODE_MOS65XX_W65C02 | \
-			  CS_MODE_MOS65XX_65816_LONG_MX), \
+		MOS65XX_global_init, \
+		MOS65XX_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_MOS65XX_6502 | \
+		  CS_MODE_MOS65XX_65C02 | CS_MODE_MOS65XX_W65C02 | \
+		  CS_MODE_MOS65XX_65816_LONG_MX), \
 	}
 #define CS_ARCH_CONFIG_WASM \
 	{ \
-		WASM_global_init, WASM_option, 0, \
+		WASM_global_init, \
+		WASM_option, \
+		0, \
 	}
 #define CS_ARCH_CONFIG_BPF \
 	{ \
-		BPF_global_init, BPF_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC | \
-			  CS_MODE_BPF_EXTENDED | CS_MODE_BIG_ENDIAN), \
+		BPF_global_init, \
+		BPF_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BPF_CLASSIC | \
+		  CS_MODE_BPF_EXTENDED | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_RISCV \
 	{ \
-		RISCV_global_init, RISCV_option, \
-			~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCVC), \
+		RISCV_global_init, \
+		RISCV_option, \
+		~(CS_MODE_RISCV32 | CS_MODE_RISCV64 | CS_MODE_RISCV_C | \
+		  CS_MODE_RISCV_FD | CS_MODE_RISCV_V | CS_MODE_RISCV_ZFINX | \
+		  CS_MODE_RISCV_ZCMP_ZCMT_ZCE | CS_MODE_RISCV_ZICFISS | \
+		  CS_MODE_RISCV_E | CS_MODE_RISCV_A | CS_MODE_RISCV_COREV | \
+		  CS_MODE_RISCV_SIFIVE | CS_MODE_RISCV_THEAD | \
+		  CS_MODE_RISCV_VENTANA | CS_MODE_RISCV_ZBA | \
+		  CS_MODE_RISCV_ZBB | CS_MODE_RISCV_ZBC | CS_MODE_RISCV_ZBKB | \
+		  CS_MODE_RISCV_ZBKC | CS_MODE_RISCV_ZBKX | \
+		  CS_MODE_RISCV_ZBS), \
 	}
 #define CS_ARCH_CONFIG_SH \
 	{ \
-		SH_global_init, SH_option, \
-			~(CS_MODE_SH2 | CS_MODE_SH2A | CS_MODE_SH3 | \
-			  CS_MODE_SH4 | CS_MODE_SH4A | CS_MODE_SHFPU | \
-			  CS_MODE_SHDSP | CS_MODE_BIG_ENDIAN), \
+		SH_global_init, \
+		SH_option, \
+		~(CS_MODE_SH2 | CS_MODE_SH2A | CS_MODE_SH3 | CS_MODE_SH4 | \
+		  CS_MODE_SH4A | CS_MODE_SHFPU | CS_MODE_SHDSP | \
+		  CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_TRICORE \
 	{ \
-		TRICORE_global_init, TRICORE_option, \
-			~(CS_MODE_TRICORE_110 | CS_MODE_TRICORE_120 | \
-			  CS_MODE_TRICORE_130 | CS_MODE_TRICORE_131 | \
-			  CS_MODE_TRICORE_160 | CS_MODE_TRICORE_161 | \
-			  CS_MODE_TRICORE_162 | CS_MODE_TRICORE_180 | \
-			  CS_MODE_LITTLE_ENDIAN), \
+		TRICORE_global_init, \
+		TRICORE_option, \
+		~(CS_MODE_TRICORE_110 | CS_MODE_TRICORE_120 | \
+		  CS_MODE_TRICORE_130 | CS_MODE_TRICORE_131 | \
+		  CS_MODE_TRICORE_160 | CS_MODE_TRICORE_161 | \
+		  CS_MODE_TRICORE_162 | CS_MODE_TRICORE_180 | \
+		  CS_MODE_LITTLE_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_ALPHA \
 	{ \
-		ALPHA_global_init, ALPHA_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
+		ALPHA_global_init, \
+		ALPHA_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_BIG_ENDIAN), \
 	}
 #define CS_ARCH_CONFIG_LOONGARCH \
 	{ \
-		LoongArch_global_init, LoongArch_option, \
-			~(CS_MODE_LITTLE_ENDIAN | CS_MODE_LOONGARCH32 | \
-			  CS_MODE_LOONGARCH64), \
+		LoongArch_global_init, \
+		LoongArch_option, \
+		~(CS_MODE_LITTLE_ENDIAN | CS_MODE_LOONGARCH32 | \
+		  CS_MODE_LOONGARCH64), \
 	}
 #define CS_ARCH_CONFIG_XTENSA \
 	{ \
-		Xtensa_global_init, Xtensa_option, \
-			~(CS_MODE_XTENSA_ESP32 | CS_MODE_XTENSA_ESP32S2 | \
-			  CS_MODE_XTENSA_ESP8266), \
+		Xtensa_global_init, \
+		Xtensa_option, \
+		~(CS_MODE_XTENSA_ESP32 | CS_MODE_XTENSA_ESP32S2 | \
+		  CS_MODE_XTENSA_ESP8266 | CS_MODE_XTENSA_ESP32S3), \
 	}
 
 #define CS_ARCH_CONFIG_ARC \
 	{ \
-		ARC_global_init, ARC_option, ~(CS_MODE_LITTLE_ENDIAN), \
+		ARC_global_init, \
+		ARC_option, \
+		~(CS_MODE_LITTLE_ENDIAN), \
 	}
 
 #ifdef CAPSTONE_USE_ARCH_REGISTRATION
@@ -471,7 +501,11 @@ extern void *kern_os_realloc(void *addr, size_t nsize);
 
 static void *cs_kern_os_calloc(size_t num, size_t size)
 {
-	return kern_os_malloc(num * size); // malloc bzeroes the buffer
+	size_t alloc = num * size;
+	if (num && size != alloc / num) {
+		return NULL; // overflow check
+	}
+	return kern_os_malloc(alloc); // malloc bzeroes the buffer
 }
 
 cs_malloc_t cs_mem_malloc = kern_os_malloc;
@@ -769,52 +803,58 @@ const char *CAPSTONE_API cs_strerror(cs_err code)
 CAPSTONE_EXPORT
 cs_err CAPSTONE_API cs_open(cs_arch arch, cs_mode mode, csh *handle)
 {
-	cs_err err;
+	cs_err err = CS_ERR_ARCH;
 	struct cs_struct *ud = NULL;
-	if (!cs_mem_malloc || !cs_mem_calloc || !cs_mem_realloc ||
-	    !cs_mem_free || !cs_vsnprintf)
+
+	if (!cs_mem_is_setup()) {
 		// Error: before cs_open(), dynamic memory management must be initialized
 		// with cs_option(CS_OPT_MEM)
-		return CS_ERR_MEMSETUP;
-
-	if (arch < CS_ARCH_MAX && arch_configs[arch].arch_init) {
-		// verify if requested mode is valid
-		if (mode & arch_configs[arch].arch_disallowed_mode_mask) {
-			*handle = 0;
-			return CS_ERR_MODE;
-		}
-
-		ud = cs_mem_calloc(1, sizeof(*ud));
-		if (!ud) {
-			// memory insufficient
-			return CS_ERR_MEM;
-		}
-
-		ud->errnum = CS_ERR_OK;
-		ud->arch = arch;
-		ud->mode = mode;
-		// by default, do not break instruction into details
-		ud->detail_opt = CS_OPT_OFF;
-		ud->PrintBranchImmAsAddress = true;
-
-		// default skipdata setup
-		ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
-
-		err = arch_configs[ud->arch].arch_init(ud);
-		if (err) {
-			cs_mem_free(ud);
-			*handle = 0;
-			return err;
-		}
-
-		*handle = (uintptr_t)ud;
-
-		return CS_ERR_OK;
-	} else {
-		cs_mem_free(ud);
-		*handle = 0;
-		return CS_ERR_ARCH;
+		err = CS_ERR_MEMSETUP;
+		goto fail;
 	}
+
+	if (arch >= CS_ARCH_MAX || !arch_configs[arch].arch_init) {
+		err = CS_ERR_ARCH;
+		goto fail;
+	}
+
+	// verify if requested mode is valid
+	if (mode & arch_configs[arch].arch_disallowed_mode_mask) {
+		err = CS_ERR_MODE;
+		goto fail;
+	}
+
+	ud = cs_mem_calloc(1, sizeof(*ud));
+	if (!ud) {
+		err = CS_ERR_MEM;
+		goto fail;
+	}
+
+	ud->errnum = CS_ERR_OK;
+	ud->arch = arch;
+	ud->mode = mode;
+	// by default, do not break instruction into details
+	ud->detail_opt = CS_OPT_OFF;
+	ud->PrintBranchImmAsAddress = true;
+
+	// default skipdata setup
+	ud->skipdata_setup.mnemonic = SKIPDATA_MNEM;
+
+	if ((err = arch_configs[ud->arch].arch_init(ud)))
+		goto fail;
+
+	if ((err = populate_insn_map_cache(ud)))
+		goto fail;
+
+	*handle = (uintptr_t)ud;
+	return CS_ERR_OK;
+
+fail:
+	if (ud) {
+		cs_mem_free(ud);
+	}
+	*handle = 0;
+	return err;
 }
 
 CAPSTONE_EXPORT
@@ -841,6 +881,8 @@ cs_err CAPSTONE_API cs_close(csh *handle)
 	}
 
 	cs_mem_free(ud->insn_cache);
+	cs_mem_free(ud->x86_insn_lut);
+	cs_mem_free(ud->x86_insn_reg_lut);
 
 	memset(ud, 0, sizeof(*ud));
 	cs_mem_free(ud);
@@ -994,7 +1036,7 @@ static uint8_t skipdata_size(cs_struct *handle)
 		return 8;
 	case CS_ARCH_RISCV:
 		// special compress mode
-		if (handle->mode & CS_MODE_RISCVC)
+		if (handle->mode & CS_MODE_RISCV_C)
 			return 2;
 		return 4;
 	case CS_ARCH_SH:
@@ -1036,7 +1078,7 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, uintptr_t value)
 		cs_mem_free = mem->free;
 		cs_vsnprintf = mem->vsnprintf;
 
-		return CS_ERR_OK;
+		return cs_mem_is_setup() ? CS_ERR_OK : CS_ERR_MEMSETUP;
 	}
 
 	handle = (struct cs_struct *)(uintptr_t)ud;
@@ -1103,6 +1145,10 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, uintptr_t value)
 				// 2. add this instruction if we have not had it yet
 				if (!tmp) {
 					tmp = cs_mem_malloc(sizeof(*tmp));
+					if (!tmp) {
+						return CS_ERR_MEM;
+					}
+
 					tmp->insn.id = opt->id;
 					(void)strncpy(
 						tmp->insn.mnemonic,
@@ -1177,6 +1223,10 @@ static void skipdata_opstr(char *opstr, const uint8_t *buffer, size_t size)
 	}
 
 	len = cs_snprintf(p, available, "0x%02x", buffer[0]);
+	if (len < 0 || (size_t)len > available - 1) {
+		opstr[0] = '\0';
+		return;
+	}
 	p += len;
 	available -= len;
 
@@ -1258,6 +1308,17 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size,
 			// allocate memory for @detail pointer
 			insn_cache->detail =
 				cs_mem_calloc(1, sizeof(cs_detail));
+			if (!insn_cache->detail) {
+				insn_cache = (cs_insn *)total;
+				for (i = 0; i < c; i++, insn_cache++)
+					cs_mem_free(insn_cache->detail);
+
+				cs_mem_free(total);
+				*insn = NULL;
+
+				handle->errnum = CS_ERR_MEM;
+				return 0;
+			}
 		} else {
 			insn_cache->detail = NULL;
 		}
@@ -1357,6 +1418,7 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size,
 		if (f == cache_size) {
 			// full cache, so expand the cache to contain incoming insns
 			cache_size = cache_size * 8 / 5; // * 1.6 ~ golden ratio
+			size_t old_total_size = total_size;
 			total_size += (sizeof(cs_insn) * cache_size);
 			tmp = cs_mem_realloc(total, total_size);
 			if (tmp == NULL) { // insufficient memory
@@ -1371,6 +1433,10 @@ size_t CAPSTONE_API cs_disasm(csh ud, const uint8_t *buffer, size_t size,
 				handle->errnum = CS_ERR_MEM;
 				return 0;
 			}
+			// Zero reallocated memory to prevent
+			// access to uninitialized memory down the line.
+			memset(((uint8_t *)tmp) + old_total_size, 0,
+			       total_size - old_total_size);
 
 			total = tmp;
 			// continue to fill in the cache after the last instruction
@@ -1464,6 +1530,9 @@ CAPSTONE_EXPORT
 bool CAPSTONE_API cs_disasm_iter(csh ud, const uint8_t **code, size_t *size,
 				 uint64_t *address, cs_insn *insn)
 {
+	if (*size == 0)
+		return false;
+
 	struct cs_struct *handle;
 	uint16_t insn_size;
 	MCInst mci;

@@ -14,4 +14,8 @@ int main()
 		printf("Failed the sysz compatibility header test.\n");
 		return -1;
 	}
+	if (riscv() != 0) {
+		printf("Failed the riscv compatibility header test.\n");
+		return -1;
+	}
 }

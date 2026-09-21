@@ -8,7 +8,6 @@ from capstone import *
 import capstone.aarch64
 import capstone.arm
 import capstone.systemz
-from xprint import to_hex
 
 
 AARCH64_CODE = b"\x21\x7c\x02\x9b\x21\x7c\x00\x53\x00\x40\x21\x4b\xe1\x0b\x40\xb9"
@@ -27,7 +26,7 @@ def test_compatibility():
     for arch, mode, code, comment in all_tests:
         print("*" * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:
@@ -55,6 +54,12 @@ def test_compatibility():
     print("systemz.SYSZ_INS_LG = %d" % capstone.systemz.SYSZ_INS_LG)
     print("systemz.SYSTEMZ_INS_LG = %d" % capstone.systemz.SYSTEMZ_INS_LG)
     assert capstone.systemz.SYSZ_INS_LG == capstone.systemz.SYSTEMZ_INS_LG
+
+    # Test RISC-V compressed-mode compatibility constant
+    print("CS_MODE_RISCVC = %d" % CS_MODE_RISCVC)
+    print("CS_MODE_RISCV_C = %d" % CS_MODE_RISCV_C)
+    assert CS_MODE_RISCVC == CS_MODE_RISCV_C
+    assert "CS_MODE_RISCVC" in capstone.__all__
 
     # Test ARM_CC_ constants
     print("arm.ARM_CC_MI = %d" % capstone.arm.ARM_CC_MI)

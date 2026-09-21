@@ -285,7 +285,7 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 	case MOS65XX_INS_BBS:
 	case MOS65XX_INS_RMB:
 	case MOS65XX_INS_SMB:
-		SStream_concat(O, "%d", (opcode >> 4) & 0x07);
+		SStream_concat(O, "%" PRId8, (opcode >> 4) & 0x07);
 		break;
 	default:
 		break;
@@ -306,110 +306,115 @@ void MOS65XX_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 
 	case MOS65XX_AM_IMM:
 		if (MI->imm_size == 1)
-			SStream_concat(O, " #%s%02x", prefix, value);
+			SStream_concat(O, " #%s%02" PRIx32, prefix, value);
 		else
-			SStream_concat(O, " #%s%04x", prefix, value);
+			SStream_concat(O, " #%s%04" PRIx32, prefix, value);
 		break;
 
 	case MOS65XX_AM_ZP:
-		SStream_concat(O, " %s%02x", prefix, value);
+		SStream_concat(O, " %s%02" PRIx32, prefix, value);
 		break;
 
 	case MOS65XX_AM_ABS:
-		SStream_concat(O, " %s%04x", prefix, value);
+		SStream_concat(O, " %s%04" PRIx32, prefix, value);
 		break;
 
 	case MOS65XX_AM_ABS_LONG_X:
-		SStream_concat(O, " %s%06x, x", prefix, value);
+		SStream_concat(O, " %s%06" PRIx32 ", x", prefix, value);
 		break;
 
 	case MOS65XX_AM_INT:
-		SStream_concat(O, " %s%02x", prefix, value);
+		SStream_concat(O, " %s%02" PRIx32, prefix, value);
 		break;
 
 	case MOS65XX_AM_ABS_X:
-		SStream_concat(O, " %s%04x, x", prefix, value);
+		SStream_concat(O, " %s%04" PRIx32 ", x", prefix, value);
 		break;
 
 	case MOS65XX_AM_ABS_Y:
-		SStream_concat(O, " %s%04x, y", prefix, value);
+		SStream_concat(O, " %s%04" PRIx32 ", y", prefix, value);
 		break;
 
 	case MOS65XX_AM_ABS_LONG:
-		SStream_concat(O, " %s%06x", prefix, value);
+		SStream_concat(O, " %s%06" PRIx32, prefix, value);
 		break;
 
 	case MOS65XX_AM_ZP_X:
-		SStream_concat(O, " %s%02x, x", prefix, value);
+		SStream_concat(O, " %s%02" PRIx32 ", x", prefix, value);
 		break;
 
 	case MOS65XX_AM_ZP_Y:
-		SStream_concat(O, " %s%02x, y", prefix, value);
+		SStream_concat(O, " %s%02" PRIx32 ", y", prefix, value);
 		break;
 
-	case MOS65XX_AM_REL:
+	case MOS65XX_AM_REL: {
 		if (MI->op1_size == 1)
-			value = 2 + (signed char)value;
+			value = 2 + (int8_t)value;
 		else
-			value = 3 + (signed short)value;
+			value = 3 + (int16_t)value;
 
-		SStream_concat(O, " %s%04x", prefix,
-			       (MI->address + value) & 0xffff);
+		uint32_t addr = MI->address;
+		SStream_concat(O, " %s%04" PRIx16, prefix,
+			       (addr + value) & 0xffff);
+
 		break;
-
+	}
 	case MOS65XX_AM_ABS_IND:
-		SStream_concat(O, " (%s%04x)", prefix, value);
+		SStream_concat(O, " (%s%04" PRIx32 ")", prefix, value);
 		break;
 
 	case MOS65XX_AM_ABS_X_IND:
-		SStream_concat(O, " (%s%04x, x)", prefix, value);
+		SStream_concat(O, " (%s%04" PRIx32 ", x)", prefix, value);
 		break;
 
 	case MOS65XX_AM_ABS_IND_LONG:
-		SStream_concat(O, " [%s%04x]", prefix, value);
+		SStream_concat(O, " [%s%04" PRIx32 "]", prefix, value);
 		break;
 
 	case MOS65XX_AM_ZP_IND:
-		SStream_concat(O, " (%s%02x)", prefix, value);
+		SStream_concat(O, " (%s%02" PRIx32 ")", prefix, value);
 		break;
 
 	case MOS65XX_AM_ZP_X_IND:
-		SStream_concat(O, " (%s%02x, x)", prefix, value);
+		SStream_concat(O, " (%s%02" PRIx32 ", x)", prefix, value);
 		break;
 
 	case MOS65XX_AM_ZP_IND_Y:
-		SStream_concat(O, " (%s%02x), y", prefix, value);
+		SStream_concat(O, " (%s%02" PRIx32 "), y", prefix, value);
 		break;
 
 	case MOS65XX_AM_ZP_IND_LONG:
-		SStream_concat(O, " [%s%02x]", prefix, value);
+		SStream_concat(O, " [%s%02" PRIx32 "]", prefix, value);
 		break;
 
 	case MOS65XX_AM_ZP_IND_LONG_Y:
-		SStream_concat(O, " [%s%02x], y", prefix, value);
+		SStream_concat(O, " [%s%02" PRIx32 "], y", prefix, value);
 		break;
 
 	case MOS65XX_AM_SR:
-		SStream_concat(O, " %s%02x, s", prefix, value);
+		SStream_concat(O, " %s%02" PRIx32 ", s", prefix, value);
 		break;
 
 	case MOS65XX_AM_SR_IND_Y:
-		SStream_concat(O, " (%s%02x, s), y", prefix, value);
+		SStream_concat(O, " (%s%02" PRIx32 ", s), y", prefix, value);
 		break;
 
 	case MOS65XX_AM_BLOCK:
-		SStream_concat(O, " %s%02x, %s%02x", prefix,
-			       MI->Operands[0].ImmVal, prefix,
-			       MI->Operands[1].ImmVal);
+		SStream_concat(O, " %s%02" PRIx32 ", %s%02" PRIx32, prefix,
+			       (uint32_t)MI->Operands[0].ImmVal, prefix,
+			       (uint32_t)MI->Operands[1].ImmVal);
 		break;
 
-	case MOS65XX_AM_ZP_REL:
-		value = 3 + (signed char)MI->Operands[1].ImmVal;
+	case MOS65XX_AM_ZP_REL: {
+		value = 3 + (int8_t)MI->Operands[1].ImmVal;
+		uint32_t addr = MI->address;
+		uint32_t target = (addr + value) & 0xffff;
 		/* BBR0, zp, rel  and BBS0, zp, rel */
-		SStream_concat(O, " %s%02x, %s%04x", prefix,
-			       MI->Operands[0].ImmVal, prefix,
-			       (MI->address + value) & 0xffff);
+		SStream_concat(O, " %s%02" PRIx32 ", %s%04" PRIx32, prefix,
+			       (uint32_t)MI->Operands[0].ImmVal, prefix,
+			       target);
 		break;
+	}
 	}
 #endif
 }

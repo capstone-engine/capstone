@@ -65,7 +65,7 @@ char *test_input_stringify(const TestInput *test_input, const char *prefix)
 		cs_mem_free(byte_seq);
 		return NULL;
 	}
-	char opt_seq[128] = { 0 };
+	char opt_seq[512] = { 0 };
 	str_append_no_realloc(opt_seq, sizeof(opt_seq), "[");
 	for (size_t i = 0; i < test_input->options_count; ++i) {
 		str_append_no_realloc(opt_seq, sizeof(opt_seq),
@@ -115,6 +115,7 @@ TestInsnData *test_insn_data_clone(TestInsnData *test_insn_data)
 				NULL;
 	tid->id = test_insn_data->id ? cs_strdup(test_insn_data->id) : NULL;
 	tid->is_alias = test_insn_data->is_alias;
+	tid->uses_alias_details = test_insn_data->uses_alias_details;
 	tid->illegal = test_insn_data->illegal;
 	tid->size = test_insn_data->size;
 	tid->mnemonic = test_insn_data->mnemonic ?
@@ -218,11 +219,11 @@ static void _print_insn(csh *handle, cs_insn *insn)
 {
 	cm_print_error("Failed instruction: %s %s", insn->mnemonic,
 		       insn->op_str);
-	cm_print_error("(0x%x", insn->bytes[0]);
+	cm_print_error(" <=> \"0x%x", insn->bytes[0]);
 	for (int i = 1; i < insn->size; i++) {
-		cm_print_error(", 0x%x", insn->bytes[i]);
+		cm_print_error(", 0x%02x", insn->bytes[i]);
 	}
-	cm_print_error("%s", ")\n");
+	cm_print_error("%s", "\"\n");
 }
 
 /// Compares the decoded instructions @insns against the @expected values and returns the result.
@@ -251,6 +252,21 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 	cs_free(insns, insns_count); \
 	fail_msg(msg);
 
+#define CS_CHECK_TBOOL(expected, actual, true_msg, false_msg) \
+	do { \
+		if ((expected) != 0) { \
+			if ((expected) > 0) { \
+				if (!(actual)) { \
+					CS_TEST_FAIL(true_msg); \
+				} \
+			} else { \
+				if ((actual)) { \
+					CS_TEST_FAIL(false_msg); \
+				} \
+			} \
+		} \
+	} while (0)
+
 		if (!compare_asm_text(asm_text, expec_data->asm_text,
 				      arch_bits)) {
 			CS_TEST_FAIL("asm-text mismatch\n");
@@ -262,28 +278,14 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 				CS_TEST_FAIL("ids mismatch");
 			}
 		}
-		if (expec_data->is_alias != 0) {
-			if (expec_data->is_alias > 0) {
-				if (!insns[i].is_alias) {
-					CS_TEST_FAIL("should be an alias");
-				}
-			} else {
-				if (insns[i].is_alias) {
-					CS_TEST_FAIL("should not be an alias");
-				}
-			}
-		}
-		if (expec_data->illegal != 0) {
-			if (expec_data->illegal > 0) {
-				if (!insns[i].illegal) {
-					CS_TEST_FAIL("should be illegal");
-				}
-			} else {
-				if (insns[i].illegal) {
-					CS_TEST_FAIL("should not be illegal");
-				}
-			}
-		}
+		CS_CHECK_TBOOL(expec_data->is_alias, insns[i].is_alias,
+			       "should be an alias", "should not be an alias");
+		CS_CHECK_TBOOL(expec_data->uses_alias_details,
+			       insns[i].usesAliasDetails,
+			       "should use alias operands",
+			       "should not use alias operands");
+		CS_CHECK_TBOOL(expec_data->illegal, insns[i].illegal,
+			       "should be illegal", "should not be illegal");
 		if (expec_data->size) {
 			if (insns[i].size != expec_data->size) {
 				CS_TEST_FAIL("size mismatch");
@@ -316,6 +318,7 @@ void test_expected_compare(csh *handle, TestExpected *expected, cs_insn *insns,
 			}
 		}
 #undef CS_TEST_FAIL
+#undef CS_CHECK_TBOOL
 	}
 }
 

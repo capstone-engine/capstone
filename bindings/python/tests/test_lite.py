@@ -2,7 +2,6 @@
 
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 from capstone import *
-from xprint import to_hex
 
 
 X86_CODE16 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00"
@@ -66,7 +65,7 @@ def test_cs_disasm_quick():
         print('*' * 40)
         print("Platform: %s" % comment)
         print("Disasm:"),
-        print(to_hex(code))
+        print(code.hex(' '))
         for (addr, size, mnemonic, op_str) in cs_disasm_lite(arch, mode, code, 0x1000):
             print("0x%x:\t%s\t%s" % (addr, mnemonic, op_str))
         print()
@@ -78,7 +77,7 @@ def test_class():
     for (arch, mode, code, comment, syntax) in all_tests:
         print('*' * 16)
         print("Platform: %s" % comment)
-        print("Code: %s" % to_hex(code))
+        print("Code: %s" % code.hex(' '))
         print("Disasm:")
 
         try:

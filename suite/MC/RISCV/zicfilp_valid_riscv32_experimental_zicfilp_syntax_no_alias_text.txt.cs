@@ -1,0 +1,2 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32", None
+0x17,0x60,0x01,0x00 == auipc zero, 22

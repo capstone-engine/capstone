@@ -465,6 +465,9 @@ static bool read_memoryimmediate(const uint8_t *code, size_t code_len,
 
 	len = tmp;
 	data[1] = get_varuint32(&code[len], code_len - len, &tmp);
+	if (tmp == -1) {
+		return false;
+	}
 
 	if (MI->flat_insn->detail) {
 		MI->flat_insn->detail->wasm.operands[1].type =
@@ -604,6 +607,9 @@ static bool read_brtable(const uint8_t *code, size_t code_len,
 
 	MI->wasm_data.brtable.default_target = default_target;
 	MI->wasm_data.type = WASM_OP_BRTABLE;
+	if ((uint64_t)(tmp_len + var_len) >= UINT16_MAX) {
+		return false;
+	}
 	*param_size = tmp_len + var_len;
 
 	if (MI->flat_insn->detail) {

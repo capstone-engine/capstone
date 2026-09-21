@@ -1,0 +1,60 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0x5c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zknh" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha512sig0h a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0x5e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zknh" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha512sig1h a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0x54 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zknh" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha512sig0l a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0x56 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zknh" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha512sig1l a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0x50 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zknh" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha512sum0r a0, a1, a2"
+
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0x52 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zknh" ]
+    expected:
+      insns:
+        -
+          asm_text: "sha512sum1r a0, a1, a2"

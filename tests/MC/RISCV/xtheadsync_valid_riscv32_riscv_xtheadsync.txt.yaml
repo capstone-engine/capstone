@@ -1,0 +1,50 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xb5, 0x04 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADSYNC" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.sfence.vmas a0, a1"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x80, 0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADSYNC" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.sync"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xa0, 0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADSYNC" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.sync.i"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0xb0, 0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADSYNC" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.sync.is"
+
+  -
+    input:
+      bytes: [ 0x0b, 0x00, 0x90, 0x01 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_XTHEADSYNC" ]
+    expected:
+      insns:
+        -
+          asm_text: "th.sync.s"

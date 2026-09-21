@@ -1,0 +1,20 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0xe2 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zkne" ]
+    expected:
+      insns:
+        -
+          asm_text: "aes32esi a0, a1, a2, 3"
+
+  -
+    input:
+      bytes: [ 0x33, 0x85, 0xc5, 0xe6 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "zkne" ]
+    expected:
+      insns:
+        -
+          asm_text: "aes32esmi a0, a1, a2, 3"

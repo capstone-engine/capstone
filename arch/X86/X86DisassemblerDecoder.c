@@ -99,7 +99,7 @@ static int modRMRequired(OpcodeType type, InstructionContext insnContext,
 
 	switch (type) {
 	default:
-		break;
+		return false;
 	case ONEBYTE:
 		decision = ONEBYTE_SYM;
 		indextable = index_x86DisassemblerOneByteOpcodes;
@@ -163,7 +163,7 @@ static InstrUID decode(OpcodeType type, InstructionContext insnContext,
 
 	switch (type) {
 	default:
-		break; // never reach
+		return 0;
 	case ONEBYTE:
 		// dec = &ONEBYTE_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
 		index = index_x86DisassemblerOneByteOpcodes[insnContext];
@@ -353,49 +353,64 @@ static bool isREX(struct InternalInstruction *insn, uint8_t prefix)
 }
 
 /*
- * setPrefixPresent - Marks that a particular prefix is present as mandatory
+ * setGroup0Prefix - Updates the decoded instruction according to the group 0-prefix.
  *
- * @param insn      - The instruction to be marked as having the prefix.
- * @param prefix    - The prefix that is present.
+ * @param insn      - The instruction to be updated.
+ * @param prefix    - The group 0 prefix that is present.
  */
-static void setPrefixPresent(struct InternalInstruction *insn, uint8_t prefix)
+static void setGroup0Prefix(struct InternalInstruction *insn, uint8_t prefix)
 {
-	uint8_t nextByte;
-
 	switch (prefix) {
 	case 0xf0: // LOCK
 		insn->hasLockPrefix = true;
-		insn->repeatPrefix = 0;
 		break;
 
 	case 0xf2: // REPNE/REPNZ
 	case 0xf3: // REP or REPE/REPZ
-		if (lookAtByte(insn, &nextByte))
-			break;
-		// TODO:
-		//  1. There could be several 0x66
-		//  2. if (nextByte == 0x66) and nextNextByte != 0x0f then
-		//      it's not mandatory prefix
-		//  3. if (nextByte >= 0x40 && nextByte <= 0x4f) it's REX and we need
-		//     0x0f exactly after it to be mandatory prefix
-		if (isREX(insn, nextByte) || nextByte == 0x0f ||
-		    nextByte == 0x66)
-			// The last of 0xf2 /0xf3 is mandatory prefix
-			insn->mandatoryPrefix = prefix;
-
 		insn->repeatPrefix = prefix;
-		insn->hasLockPrefix = false;
-		break;
-
-	case 0x66:
-		if (lookAtByte(insn, &nextByte))
-			break;
-		// 0x66 can't overwrite existing mandatory prefix and should be ignored
-		if (!insn->mandatoryPrefix &&
-		    (nextByte == 0x0f || isREX(insn, nextByte)))
-			insn->mandatoryPrefix = prefix;
 		break;
 	}
+}
+
+/*
+ * setSegmentOverride - Overrides an instruction's prefix1 based on CPU mode.
+ *
+ * @param insn      - The instruction to be overridden.
+ * @param prefix    - The segment override to use.
+ * @param byte      - The current decoded prefix byte. Must be a segment override.
+ */
+static void setSegmentOverride(struct InternalInstruction *insn,
+			       SegmentOverride prefix, uint8_t byte)
+{
+	// In 32-bit or 16-bit mode all segment override prefixes are used.
+	if (insn->mode != MODE_64BIT) {
+		insn->segmentOverride = prefix;
+		insn->prefix1 = byte;
+		return;
+	}
+
+	// In 64-bit mode, the ES/CS/SS/DS segment overrides should be ignored.
+	// In the case there are multiple segment overrides, do not override
+	// an existing FS or GS segment prefix.
+	switch (insn->prefix1) {
+	case 0x64: // FS
+	case 0x65: // GS
+		return;
+	}
+
+	// If the proposed override is for FS or GS, mark it overridden.
+	// All other segment prefixes are ignored.
+	switch (byte) {
+	case 0x64: // FS
+	case 0x65: // GS
+		insn->segmentOverride = prefix;
+		break;
+	}
+
+	// `prefix1` may later be used to decode the `notrack` prefix.
+	// The `notrack` prefix reuses the DS segment override, so we
+	// need to store the prefix even if it is ignored for the segment overrides.
+	insn->prefix1 = byte;
 }
 
 /*
@@ -414,48 +429,6 @@ static int readPrefixes(struct InternalInstruction *insn)
 	uint8_t nextByte;
 
 	while (isPrefix) {
-		if (insn->mode == MODE_64BIT) {
-			// eliminate consecutive redundant REX bytes in front
-			if (consumeByte(insn, &byte))
-				return -1;
-
-			if ((byte & 0xf0) == 0x40) {
-				while (true) {
-					if (lookAtByte(
-						    insn,
-						    &byte)) // out of input code
-						return -1;
-					if ((byte & 0xf0) == 0x40) {
-						// another REX prefix, but we only remember the last one
-						if (consumeByte(insn, &byte))
-							return -1;
-					} else
-						break;
-				}
-
-				// recover the last REX byte if next byte is not a legacy prefix
-				switch (byte) {
-				case 0xf2: /* REPNE/REPNZ */
-				case 0xf3: /* REP or REPE/REPZ */
-				case 0xf0: /* LOCK */
-				case 0x2e: /* CS segment override -OR- Branch not taken */
-				case 0x36: /* SS segment override -OR- Branch taken */
-				case 0x3e: /* DS segment override */
-				case 0x26: /* ES segment override */
-				case 0x64: /* FS segment override */
-				case 0x65: /* GS segment override */
-				case 0x66: /* Operand-size override */
-				case 0x67: /* Address-size override */
-					break;
-				default: /* Not a prefix byte */
-					unconsumeByte(insn);
-					break;
-				}
-			} else {
-				unconsumeByte(insn);
-			}
-		}
-
 		/* If we fail reading prefixes, just stop here and let the opcode reader deal with it */
 		if (consumeByte(insn, &byte))
 			return -1;
@@ -465,31 +438,6 @@ static int readPrefixes(struct InternalInstruction *insn)
 			// prefix requires next byte
 			if (lookAtByte(insn, &nextByte))
 				return -1;
-
-			/*
-			 * If the byte is 0xf2 or 0xf3, and any of the following conditions are
-			 * met:
-			 * - it is followed by a LOCK (0xf0) prefix
-			 * - it is followed by an xchg instruction
-			 * then it should be disassembled as a xacquire/xrelease not repne/rep.
-			 */
-			if (((nextByte == 0xf0) ||
-			     ((nextByte & 0xfe) == 0x86 ||
-			      (nextByte & 0xf8) == 0x90))) {
-				insn->xAcquireRelease = byte;
-			}
-
-			/*
-			 * Also if the byte is 0xf3, and the following condition is met:
-			 * - it is followed by a "mov mem, reg" (opcode 0x88/0x89) or
-			 *                       "mov mem, imm" (opcode 0xc6/0xc7) instructions.
-			 * then it should be disassembled as an xrelease not rep.
-			 */
-			if (byte == 0xf3 &&
-			    (nextByte == 0x88 || nextByte == 0x89 ||
-			     nextByte == 0xc6 || nextByte == 0xc7)) {
-				insn->xAcquireRelease = byte;
-			}
 
 			if (isREX(insn, nextByte)) {
 				uint8_t nnextByte;
@@ -511,8 +459,9 @@ static int readPrefixes(struct InternalInstruction *insn)
 		case 0xf2: /* REPNE/REPNZ */
 		case 0xf3: /* REP or REPE/REPZ */
 			// only accept the last prefix
-			setPrefixPresent(insn, byte);
+			setGroup0Prefix(insn, byte);
 			insn->prefix0 = byte;
+			insn->rexPrefix = 0;
 			break;
 
 		case 0x2e: /* CS segment override -OR- Branch not taken */
@@ -523,49 +472,49 @@ static int readPrefixes(struct InternalInstruction *insn)
 		case 0x65: /* GS segment override */
 			switch (byte) {
 			case 0x2e:
-				insn->segmentOverride = SEG_OVERRIDE_CS;
-				insn->prefix1 = byte;
+				setSegmentOverride(insn, SEG_OVERRIDE_CS, byte);
 				break;
 			case 0x36:
-				insn->segmentOverride = SEG_OVERRIDE_SS;
-				insn->prefix1 = byte;
+				setSegmentOverride(insn, SEG_OVERRIDE_SS, byte);
 				break;
 			case 0x3e:
-				insn->segmentOverride = SEG_OVERRIDE_DS;
-				insn->prefix1 = byte;
+				setSegmentOverride(insn, SEG_OVERRIDE_DS, byte);
 				break;
 			case 0x26:
-				insn->segmentOverride = SEG_OVERRIDE_ES;
-				insn->prefix1 = byte;
+				setSegmentOverride(insn, SEG_OVERRIDE_ES, byte);
 				break;
 			case 0x64:
-				insn->segmentOverride = SEG_OVERRIDE_FS;
-				insn->prefix1 = byte;
+				setSegmentOverride(insn, SEG_OVERRIDE_FS, byte);
 				break;
 			case 0x65:
-				insn->segmentOverride = SEG_OVERRIDE_GS;
-				insn->prefix1 = byte;
+				setSegmentOverride(insn, SEG_OVERRIDE_GS, byte);
 				break;
 			default:
 				// debug("Unhandled override");
 				return -1;
 			}
-			setPrefixPresent(insn, byte);
+			insn->rexPrefix = 0;
 			break;
 
 		case 0x66: /* Operand-size override */
 			insn->hasOpSize = true;
-			setPrefixPresent(insn, byte);
 			insn->prefix2 = byte;
+			insn->rexPrefix = 0;
 			break;
 
 		case 0x67: /* Address-size override */
 			insn->hasAdSize = true;
-			setPrefixPresent(insn, byte);
 			insn->prefix3 = byte;
+			insn->rexPrefix = 0;
 			break;
-		default: /* Not a prefix byte */
-			isPrefix = false;
+		default:
+			if (isREX(insn, byte)) {
+				/* REX prefix byte */
+				insn->rexPrefix = byte;
+			} else {
+				/* Not a prefix byte */
+				isPrefix = false;
+			}
 			break;
 		}
 	}
@@ -755,14 +704,38 @@ static int readPrefixes(struct InternalInstruction *insn)
 			// 		insn->vectorExtensionPrefix[0], insn->vectorExtensionPrefix[1],
 			// 		insn->vectorExtensionPrefix[2]);
 		}
-	} else if (isREX(insn, byte)) {
+	} else
+		unconsumeByte(insn);
+
+	if (insn->repeatPrefix != 0) {
 		if (lookAtByte(insn, &nextByte))
 			return -1;
 
-		insn->rexPrefix = byte;
-		// dbgprintf(insn, "Found REX prefix 0x%hhx", byte);
-	} else
-		unconsumeByte(insn);
+		/*
+		* REP prefix is present, and any of the following conditions are
+		* met:
+		* - it is followed by a LOCK (0xf0) prefix
+		* - it is followed by an xchg instruction (except for 0x90 - NOP/PAUSE)
+		* then it should be disassembled as a xacquire/xrelease not repne/rep.
+		*/
+		if ((insn->hasLockPrefix || ((nextByte & 0xfe) == 0x86 ||
+					     (nextByte & 0xf8) == 0x90)) &&
+		    nextByte != 0x90) {
+			insn->xAcquireRelease = insn->repeatPrefix;
+		}
+
+		/*
+		* Also if the REP prefix is 0xf3, and the following condition is met:
+		* - it is followed by a "mov mem, reg" (opcode 0x88/0x89) or
+		*                       "mov mem, imm" (opcode 0xc6/0xc7) instructions.
+		* then it should be disassembled as an xrelease not rep.
+		*/
+		if (insn->repeatPrefix == 0xf3 &&
+		    (nextByte == 0x88 || nextByte == 0x89 || nextByte == 0xc6 ||
+		     nextByte == 0xc7)) {
+			insn->xAcquireRelease = insn->repeatPrefix;
+		}
+	}
 
 	if (insn->mode == MODE_16BIT) {
 		insn->registerSize = (insn->hasOpSize ? 4 : 2);
@@ -908,10 +881,7 @@ static int readOpcode(struct InternalInstruction *insn)
 			// dbgprintf(insn, "Didn't find a three-byte escape prefix");
 			insn->opcodeType = TWOBYTE;
 		}
-	} else if (insn->mandatoryPrefix)
-		// The opcode with mandatory prefix must start with opcode escape.
-		// If not it's legacy repeat prefix
-		insn->mandatoryPrefix = 0;
+	}
 
 	/*
 	 * At this point we have consumed the full opcode.
@@ -1008,6 +978,158 @@ static bool is64Bit(uint16_t id)
 	return false;
 }
 
+typedef enum {
+	DO_NOT_RESOLVE = 0,
+	IGNORE_REP = 1,
+	IGNORE_DATA_SIZE = 2,
+} MandatoryPrefixResolution;
+
+/*
+ * shouldResolveMandatoryPrefixConflict - Resolves conflicts between the 
+ * data size override prefix and the REP/REPNZ prefixes in the attribute 
+ * mask when needed.
+ *
+ * We need to resolve these conflicts, because the TableGen lookups we 
+ * perform distinguish between instructions with and without REP.
+ * For example, there may be an entry for SHLD with a DATA16 data size 
+ * override prefix, but no entry for REP + DATA16.
+ * These entries are split, because in some cases the REP and DATA16
+ * prefixes are used as mandatory prefixes.
+ * When both are mandatory prefixes, the effect of prefixing both 
+ * to an instruction at the same time is not specified by
+ * reference manuals.
+ *
+ * Conflicts are resolved by one of these three resolutions:
+ *   - If conflicts should not be resolved, take no action.
+ *   - If conflicts should be resolved and the instruction has no 
+ *     mandatory prefixes, resolves in favor of data size override.
+ *   - If conflicts should be resolved and the instruction has mandatory 
+ *     prefixes, resolves in favor of REP/REPNZ.
+ * 
+ * @param insn - The instruction
+ * @param attrMask - The current attribute mask.
+ */
+static uint16_t resolveMandatoryPrefixConflict(struct InternalInstruction *insn,
+					       uint16_t attrMask)
+{
+	MandatoryPrefixResolution resolution = DO_NOT_RESOLVE;
+
+	// We inspect the opcode map and opcode to determine how we need to resolve
+	// a mandatory prefix conflict.
+	switch (insn->opcodeType) {
+	// No one-byte opcodes have mandatory prefixes.
+	case ONEBYTE:
+		resolution = DO_NOT_RESOLVE;
+		break;
+	case TWOBYTE:
+		// Exceptions for instructions that operate on data size-overridable
+		// operands.
+		if (
+			// XADD
+			(insn->opcode & 0xFE) == 0xC0
+
+			// BSWAP
+			|| (insn->opcode & 0xF8) == 0xC8
+
+			// CMPXCHG, LSS, BTR, LFS, LGS, MOVZX
+			|| (insn->opcode & 0xF8) == 0xB0
+
+			// Group 16, various NOPs
+			|| (insn->opcode & 0xF8) == 0x18
+
+			// UD0
+			|| insn->opcode == 0xFF) {
+			resolution = IGNORE_REP;
+			break;
+		}
+
+		// We inspect the instruction to determine if it operates on xmm
+		// registers or general-purpose registers.
+		//
+		// If it operates on general purpose registers, the data size override
+		// prefix is not a mandatory prefix and should not be ignored.
+		// In most cases, this also means that the REP prefix is not a mandatory
+		// prefix and should be ignored.
+		//
+		// If the instruction operates on xmm registers, the data size override
+		// is used to select the operation type (SS, SD, PS, or PD).
+		// In this case, the REP prefixes take priority over the data size [1]
+		// override prefixes, and when both are present the data size override
+		// prefix should be ignored.
+		//
+		// The exception is 0xB0, where the REP prefixes are mandatory prefixes
+		// but the data size override prefix should still be respected.
+		// For this case we return DO_NOT_RESOLVE, which returns attrMask as-is.
+		//
+		// [1]: https://stackoverflow.com/a/7197365
+		switch (insn->opcode & 0xf0) {
+		case 0x10:
+		case 0x50:
+		case 0x60:
+		case 0x70:
+		case 0xC0:
+		case 0xD0:
+		case 0xE0:
+		case 0xF0:
+			resolution = IGNORE_DATA_SIZE;
+			break;
+		case 0x00:
+		case 0x20:
+		case 0x30:
+		case 0x40:
+		case 0x80:
+		case 0x90:
+		case 0xA0:
+			resolution = IGNORE_REP;
+			break;
+		default: // 0xB0
+			resolution = DO_NOT_RESOLVE;
+			break;
+		}
+		break;
+	case THREEBYTE_38:
+		// Exception: the ADOX and CRC32 instructions.
+		// These ignore the data size override prefix even though they
+		// operate on general-purpose registers.
+		if ((insn->opcode & 0xF0) == 0xF0) {
+			resolution = IGNORE_DATA_SIZE;
+			break;
+		}
+
+		// Do not need to be resolved, all REP+DATA16 combinations are UD
+		// or separately specified.
+		resolution = DO_NOT_RESOLVE;
+		break;
+	case THREEBYTE_3A:
+		// Do not need to be resolved, all REP+DATA16 combinations are UD
+		// or separately specified.
+		resolution = DO_NOT_RESOLVE;
+		break;
+	case XOP8_MAP:
+	case XOP9_MAP:
+	case XOPA_MAP:
+		// These instructions do not appear to operate on XMM/SSE registers,
+		// so the REP prefixes can be safely ignored.
+		resolution = IGNORE_REP;
+		break;
+	case THREEDNOW_MAP:
+		// AMD Reference Manual Volume 3, Section 1.2.1, states that all
+		// 3DNow! instructions ignore the data size override prefix.
+		resolution = IGNORE_DATA_SIZE;
+		break;
+	}
+
+	switch (resolution) {
+	case IGNORE_REP:
+		return attrMask & ~(ATTR_XD | ATTR_XS);
+	case IGNORE_DATA_SIZE:
+		return attrMask & ~ATTR_OPSIZE;
+	default:
+	case DO_NOT_RESOLVE:
+		return attrMask;
+	}
+}
+
 /*
  * getID - Determines the ID of an instruction, consuming the ModR/M byte as
  *   appropriate for extended and escape opcodes.  Determines the attributes and
@@ -1017,10 +1139,17 @@ static bool is64Bit(uint16_t id)
  * @return      - 0 if the ModR/M could be read when needed or was not needed;
  *                nonzero otherwise.
  */
-static int getID(struct InternalInstruction *insn)
+static int getID(struct InternalInstruction *insn, cs_mode mode)
 {
 	uint16_t attrMask;
 	uint16_t instructionID;
+	bool rexWOverridesOpSize;
+
+	/* REX.W overrides the operand-sized prefix for near RET in 64-bit mode */
+	rexWOverridesOpSize = insn->mode == MODE_64BIT && insn->hasOpSize &&
+			      insn->opcodeType == ONEBYTE &&
+			      (insn->opcode == 0xC2 || insn->opcode == 0xC3) &&
+			      (insn->rexPrefix & 0x08);
 
 	attrMask = ATTR_NONE;
 
@@ -1104,10 +1233,11 @@ static int getID(struct InternalInstruction *insn)
 		} else {
 			return -1;
 		}
-	} else if (!insn->mandatoryPrefix) {
-		// If we don't have mandatory prefix we should use legacy prefixes here
-		if (insn->hasOpSize && (insn->mode != MODE_16BIT))
+	} else {
+		if (insn->hasOpSize && insn->mode != MODE_16BIT &&
+		    !rexWOverridesOpSize) {
 			attrMask |= ATTR_OPSIZE;
+		}
 		if (insn->hasAdSize)
 			attrMask |= ATTR_ADSIZE;
 		if (insn->opcodeType == ONEBYTE) {
@@ -1121,21 +1251,11 @@ static int getID(struct InternalInstruction *insn)
 			else if (insn->repeatPrefix == 0xf3)
 				attrMask |= ATTR_XS;
 		}
-	} else {
-		switch (insn->mandatoryPrefix) {
-		case 0xf2:
-			attrMask |= ATTR_XD;
-			break;
-		case 0xf3:
-			attrMask |= ATTR_XS;
-			break;
-		case 0x66:
-			if (insn->mode != MODE_16BIT)
-				attrMask |= ATTR_OPSIZE;
-			break;
-		case 0x67:
-			attrMask |= ATTR_ADSIZE;
-			break;
+
+		if ((attrMask & ATTR_OPSIZE) &&
+		    (attrMask & (ATTR_XD | ATTR_XS))) {
+			attrMask =
+				resolveMandatoryPrefixConflict(insn, attrMask);
 		}
 	}
 
@@ -1153,8 +1273,8 @@ static int getID(struct InternalInstruction *insn)
 		attrMask ^= ATTR_ADSIZE;
 
 	/*
-	 * In 64-bit mode all f64 superscripted opcodes ignore opcode size prefix
-	 * CALL/JMP/JCC instructions need to ignore 0x66 and consume 4 bytes
+	 * CALL/JMP ignore 66 in 64-bit mode. Near Jcc preserve their previous
+	 * behavior unless an Intel or AMD mode is selected.
 	 */
 	if ((insn->mode == MODE_64BIT) && insn->hasOpSize) {
 		switch (insn->opcode) {
@@ -1167,6 +1287,8 @@ static int getID(struct InternalInstruction *insn)
 				insn->displacementSize = 4;
 			}
 			break;
+		case 0x80:
+		case 0x81:
 		case 0x82:
 		case 0x83:
 		case 0x84:
@@ -1182,7 +1304,25 @@ static int getID(struct InternalInstruction *insn)
 		case 0x8E:
 		case 0x8F:
 			// Take care of lea and three byte ops.
-			if (insn->opcodeType == TWOBYTE) {
+			if (insn->opcodeType != TWOBYTE)
+				break;
+
+			if ((x86_has_feature(mode, CS_MODE_X86_INTEL) ||
+			     x86_has_feature(mode, CS_MODE_X86_AMD)) &&
+			    insn->vectorExtensionType == TYPE_NO_VEX_XOP) {
+				if ((x86_has_feature(mode, CS_MODE_X86_AMD)) &&
+				    !wFromREX(insn->rexPrefix)) {
+					attrMask |= ATTR_OPSIZE;
+					insn->immediateSize = 2;
+					insn->displacementSize = 2;
+					insn->immSize = 2;
+				} else {
+					attrMask &= ~ATTR_OPSIZE;
+					insn->immediateSize = 4;
+					insn->displacementSize = 4;
+					insn->immSize = 8;
+				}
+			} else if (insn->opcode >= 0x82) {
 				attrMask ^= ATTR_OPSIZE;
 				insn->immediateSize = 4;
 				insn->displacementSize = 4;
@@ -1268,7 +1408,8 @@ static int getID(struct InternalInstruction *insn)
 		return -1;
 	}
 
-	if ((insn->mode == MODE_16BIT || insn->hasOpSize) &&
+	if ((insn->mode == MODE_16BIT ||
+	     (insn->hasOpSize && !rexWOverridesOpSize)) &&
 	    !(attrMask & ATTR_OPSIZE)) {
 		/*
 		 * The instruction tables make no distinction between instructions that
@@ -2386,22 +2527,25 @@ static bool checkPrefix(struct InternalInstruction *insn)
  *                    any internal state.
  * @param startLoc  - The address (in the reader's address space) of the first
  *                    byte in the instruction.
- * @param mode      - The mode (real mode, IA-32e, or IA-32e in 64-bit mode) to
- *                    decode the instruction in.
+ * @param mode      - Capstone mode flags.
  * @return          - 0 if instruction is valid; nonzero if not.
  */
 int decodeInstruction(struct InternalInstruction *insn, byteReader_t reader,
-		      const void *readerArg, uint64_t startLoc,
-		      DisassemblerMode mode)
+		      const void *readerArg, uint64_t startLoc, cs_mode mode)
 {
 	insn->reader = reader;
 	insn->readerArg = readerArg;
 	insn->startLocation = startLoc;
 	insn->readerCursor = startLoc;
-	insn->mode = mode;
+	if (x86_has_feature(mode, CS_MODE_16))
+		insn->mode = MODE_16BIT;
+	else if (x86_has_feature(mode, CS_MODE_32))
+		insn->mode = MODE_32BIT;
+	else
+		insn->mode = MODE_64BIT;
 	insn->numImmediatesConsumed = 0;
 
-	if (readPrefixes(insn) || readOpcode(insn) || getID(insn) ||
+	if (readPrefixes(insn) || readOpcode(insn) || getID(insn, mode) ||
 	    insn->instructionID == 0 || checkPrefix(insn) || readOperands(insn))
 		return -1;
 

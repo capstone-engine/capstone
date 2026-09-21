@@ -10,8 +10,9 @@ This release adds a huge amount of new architectures, extensions, bug fixes and 
 Almost all the work was sponsored by [RizinOrg](https://rizin.re/). This release would have simply not happened without them.
 
 The developers with the biggest contributions were (alphabetically):
-- `TriCore` - @billow (Sponsored)
+- `TriCore`, `M68K` - @billow (Sponsored)
 - `LoongArch` - @jiegec and @FurryAcetylCoA
+- `RISC-V` - @moste00 (Sponsored)
 - `Alpha`, `HPPA` - @R33v0LT (Sponsored)
 - `AArch64`, `ARM`, `Auto-Sync`, `PPC`, `SystemZ`, modernized testing - @Rot127 (Sponsored)
 - `Mips`, `NanoMips` - @wargio
@@ -22,7 +23,7 @@ There are also multiple smaller additions
 - Architecture module registration - @oleavr
 - Building of thin binaries for Apple - @rickmark
 - Python packaging and testing - @twizmwazin, @peace-maker
-- `RISCV` operand access info - @wxrdnx
+- `RISC-V` operand access info - @wxrdnx
 
 And of course there were many more improvements done by other contributors, which add to the release just as the ones above.
 For a full list of all the developers, please see the release page.
@@ -31,7 +32,7 @@ With all that said, we hope you enjoy the new release!
 
 ## Overview
 
-For `v6` we _updated_ the following architectures: `ARM`, `AArch64`, `Mips` (adding `NanoMips`!), `SystemZ`, `PPC`.
+For `v6` we _updated_ the following architectures: `ARM`, `AArch64`, `Mips` (adding `NanoMips`!), `RISC-V`, `SystemZ`, `PPC`.
 And added support for several more: `TriCore` (already in `v5`), `Alpha`, `HPPA`, `LoongArch`.
 
 These updates are significant! While in `v5` the most up-to-date module was based on `LLVM 7`,
@@ -119,6 +120,9 @@ Nonetheless, we hope this additional information is useful to you.
 - Adding new instructions of SME, SVE2 extensions. With it the new `sme` and `pred` operands are added.
 - System operands are provided with way more detail in separated operand.
 	- The `EXACTFPIMM` operand also sets the `fp` field.
+- Added `CS_OPT_SYNTAX_AARCH64_EXPLICIT_WIDE_IMM` to print shifted `MOVN` and `MOVZ` instructions in their explicit form, including the `lsl` shift, instead of the equivalent `MOV` alias.
+  - The default output remains unchanged and matches LLVM's default disassembly output.
+  - The corresponding `cstool` option is `+explicitwideimm`.
 
 **PPC**
 
@@ -192,14 +196,99 @@ Nonetheless, we hope this additional information is useful to you.
   asm text. For example the instruction `fcmpeq	%fcc2, %f0, %f4` has 2 not 3 operands.
   Operands are the two registers `f0` and `f4` and the `cc_field` is set to `SPARC_CC_FIELD_FCC0`.
 
-**RISCV**
+**RISC-V**
 
+- Updated to LLVM-18
 - Operands have now read/write access information
+- Previously only the basic extensions and the compressed ISA was supported, now every extension supported by LLVM-18 also available (e.g. vector, crypto, ...)
+- Changed register names
+  * FP Regs: Instead of `RISCV_REG_F<n>_32` and `RISCV_REG_F<n>_64`, they're named `RISCV_REG_F<n>_F`
+  and `RISCV_REG_F<n>_D` for n in `0..31`
+- Added register names
+  * Vector registes and combinations thereof `RISCV_REG_V<n>[_V<n_i>]*`, examples
+    * `RISCV_REG_V21`
+    * `RISCV_REG_V9_V10`
+    * `RISCV_REG_V3_V4_V5`
+    * etc... up to 8-register combinations
+  * Half-percision (16-bit) FP registers `RISCV_REG_F<n>_H` for n in `0..31`
+- Changed instruction names
+  * Instructions ending in `_AQ_RL` now end in `_AQRL`
+- Added instruction names: massive amount, see `include/capstone/riscv.h`
+- Added `dimm` and `csr` fields inside the union data of `cs_riscv_op`, with corresponding `riscv_op_type`
+  * `dimm` is used for instructions with FP immediates
+  * `csr` is used for instructions with CSR systrem registes
+- Added ISA flags to turn ISA extensions on and off 
+  * `CS_MODE_RISCV_FD = 1 << 3`
+	* `CS_MODE_RISCV_V = 1 << 4`
+	* `CS_MODE_RISCV_ZFINX = 1 << 5`
+	* `CS_MODE_RISCV_ZCMP_ZCMT_ZCE = 1 << 6`
+	* `CS_MODE_RISCV_ZICFISS = 1 << 7`
+	* `CS_MODE_RISCV_E = 1 << 8`
+	* `CS_MODE_RISCV_A = 1 << 9`
+	* `CS_MODE_RISCV_COREV = 1 << 10`
+	* `CS_MODE_RISCV_THEAD = 1 << 11`
+	* `CS_MODE_RISCV_SIFIVE = 1 << 12`
+	* `CS_MODE_RISCV_BITMANIP = 1 << 13`
+	* `CS_MODE_RISCV_ZBA = 1 << 14`
+	* `CS_MODE_RISCV_ZBB = 1 << 15`
+	* `CS_MODE_RISCV_ZBC = 1 << 16`
+	* `CS_MODE_RISCV_ZBKB = 1 << 17`
+	* `CS_MODE_RISCV_ZBKC = 1 << 18`
+	* `CS_MODE_RISCV_ZBKX = 1 << 19`
+	* `CS_MODE_RISCV_ZBS = 1 << 20`
+	* `CS_MODE_RISCV_VENTANA = 1 << 21`
+- Added RISC-V syntax/detail options for selecting real, uncompressed-real, or alias-preferred printing/details:
+  * `CS_OPT_SYNTAX_REAL` / `CS_OPT_DETAIL_REAL`
+  * `CS_OPT_SYNTAX_UNCOMPRESSED_REAL` / `CS_OPT_DETAIL_UNCOMPRESSED_REAL`
+  * `CS_OPT_SYNTAX_ALIAS` / `CS_OPT_DETAIL_ALIAS`
+
+  * When configuring how the instruction text should appear, use [Syntax flags table (HTML)](html/syntax_flags_table.html)
+
+    [![Syntax flags table](images/syntax_flags.png)](html/syntax_flags_table.html)
+
+  * When configuring how the instruction details and operands array should be filled, use [Details flags table (HTML)](html/details_flags_table.html)
+
+    [![Details flags table](images/details_flags.png)](html/details_flags_table.html)
+
+  * Notice that despite the apparent complexity of the rules above, there are really only 4 distinct outcomes: 
+      - An instruction is treated exactly as decoded (No uncompression and no aliasing happens)
+      - An instruction is treated as if it's the uncompressed form (if it's compressed)
+      - An instruction is treated as if it's the alias form (whether compressed or not)
+      - Assuming an instruction is compressed: it is uncompressed, then the alias of the uncompressed instruction is printed.
+  * and then every flag is encoding a different bias or preference over those outcomes:
+      - Real: has no bias, every instruction is always treated exactly as decoded
+      - Uncompressed Real: has a bias for the uncompressed but non-alias forms
+      - Alias: has a bias for alias forms, and considers the uncompressed form as a last-resort alias form preferable to the original
+
+- `CS_OPT_SYNTAX_*` and `CS_OPT_DETAIL_*` flag sets are independent and can be chosen separately, in that case their combined effect will take effect. For example `CS_OPT_SYNTAX_REAL` and `CS_OPT_DETAIL_UNCOMPRESSED_REAL` will always preserve the text of compressed instructions but their details will be of the uncompressed equivalents.
+
+- **The default case** is: `CS_OPT_SYNTAX_ALIAS` and `CS_OPT_DETAIL_ALIAS`
+
+- Added `reg_access` capstone callback to return all read and written registers for the instructions, including registers used as part of memory operands.
+  * Note that `reg_access` does NOT treat CSRs as registers, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 
+  * Note that `reg_access` does NOT treat reading the PC's value as reading a register, detailed reasons for why can be found in [the PR implementing the feature](https://github.com/capstone-engine/capstone/pull/2895) 
+- Added `rounding_mode` field to `cs_riscv` struct inside details struct (`insn->detail->riscv->rounding_mode`) for float and double instructions.
+
+> [!NOTE] 
+> All `CS_MODE_RISCV_*` extensions above are disabled by default unless enabled by their option name or the corresponding command line flag in cstool. Any other extension is always enabled and can't be disabled.
+ 
+> [!NOTE] 
+> RISC-V has a massive, sprawling list of extensions, but Capstone's internal implementaton choice of using a 32-bit mode field is not enough to cover all of them. For now, those extension flags above were added because their encoding space is conflicting with either each other or other extensions. More flags can be added later if bug reports come in requesting finer-grained extension control. However, the current implementation using bitfields imposes a strict upper limit and would likely be refactored for a more expansive mechanism in the future. See [this issue](https://github.com/capstone-engine/capstone/issues/2848) for more details.
 
 **Xtensa**
 
 - Architecture support was added (based on LLVM-18).
 - Support for `LITBASE`. Set the `LITBASE` with `cs_option(handle, CS_OPT_LITBASE, litbase_value)`.
+
+**x86-64**
+
+- Decoding of conflicting segment overrides was changed to match CPU behavior:
+  For instructions with both an FS/GS and a ES/CS/SS/DS overrides the FS/GS override now takes priority, regardless of prefix ordering.
+- Decoding of instructions with multiple mandatory prefixes was fixed. (e.g., `shld` with a data size override and a redundant `F3` prefix, or `addss` with an additional `66` prefix)
+- Added `CS_MODE_X86_INTEL` and `CS_MODE_X86_AMD` to select ISA specific quirks.
+  Currently this is only:
+  - How `66`-prefixed near conditional jumps are decoded in 64-bit mode (see flag documentation).
+    Without either flag, the previous LLVM behavior is preserved.
 
 **BPF**
 
@@ -208,6 +297,14 @@ Nonetheless, we hope this additional information is useful to you.
 - Added support for eBPF `JMP32` class instructions (E.g. `jslt32 r7, -0xa46e0bd, -0x33f1`)
 - Updated the syntax for eBPF legacy packet instructions (similar to LLVM mnemonics, not GNU ones (E.g. `ldabsw [skb-0x8]`). `skb` is the socket buffer.
 - Corrected the signedness interpretation of `immidiate` and `offset` operands
+
+**M68K**
+
+- Architecture support added for `cpu32`, `M68060`, and ColdFire variants (`CFV1`, `CFV2`, `CFV3`, `CFV4`, `CFV4E`, `CFV5`), including feature flags for USP, DIV, MAC/EMAC, and FPU instructions.
+- Expanded operand details for bitfield instructions, PC-relative addressing, immediate value types, and memory addressing metadata.
+- Added lossless detail operands for immediate 96-bit extended (`.x`) and packed-decimal (`.p`) values. Extended operands use `M68K_OP_FP_EXTENDED` with `sign_exp`, `reserved`, and `significand` in `fp_extended`; packed operands use `M68K_OP_FP_PACKED` with `header` and `fraction` in `fp_packed`.
+- Added `M68K_FPU_SIZE_PACKED` for `.p` operands. Packed register-to-memory moves expose their static immediate or dynamic data-register k-factor as a third detail operand.
+- Expanded integration tests and refactored invalid assembly edge cases.
 
 **UX**
 
@@ -230,6 +327,7 @@ Nonetheless, we hope this additional information is useful to you.
 - CI runs tests for s390x, Mips, PPC, and Android targets.
 - `csh` and `cs_option`'s argument `value` are now of type `uintptr_t` to ensure they can be cast between integer and pointer without issues.
   This makes Capstone build on systems which strictly distinguish integers and pointers.
+- Capstone works and is tested now on 32 bit machines.
 
 ### Instruction Alias
 
@@ -313,101 +411,107 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 
 **General**
 
-| Keyword | Change | Justification |
-|---------|--------|---------------|
+| Keyword    | Change                                                                                                                       | Justification                                                                                                               |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | Make build | Building Capstone with `make` is deprecated now and is no longer supported. Build files will be removed in the next release. | It adds too much maintenance and `make` is not convenient to manage such a modular, complex project for multiple platforms. |
-| Bindings | The Java and Ocaml bindings were abandoned for a while now. So in the Alpha release they are not yet up-to-date. | Not enough maintainers. |
-| Python | Python 2 and <3.8 are dropped in the `v5` and `next` branch. | Python 2 and <3.8 are EOL. |
+| Bindings   | The Java and Ocaml bindings were abandoned for a while now. So in the Alpha release they are not yet up-to-date.             | Not enough maintainers.                                                                                                     |
+| Python     | Python 2 and <3.8 are dropped in the `v5` and `next` branch.                                                                 | Python 2 and <3.8 are EOL.                                                                                                  |
 
 **All `Auto-Sync` architectures**
 
-| Keyword | Change | Justification | Possible revert |
-|---------|--------|---------------|-----------------|
-| Post-index | Post-index memory access has the disponent now set in the `MEMORY` operand! No longer as separated `reg`/`imm` operand. | The CS memory operand had a field which was there for disponents. Not having it set, for post-index operands was inconsistent. | Edit `ARM_set_detail_op_mem()` and add an immediate operand instead of setting the disponent. |
-| Sign `mem.disp` | `mem.disp` is now always positive and the `subtracted` flag indicates if it should be subtracted. | It was inconsistent before. | Change behavior in `ARM_set_detail_op_mem()` |
-| `ARM_CC` | `ARM_CC` → `ARMCC` and value change | They match the same LLVM enum. Better for LLVM compatibility and code generation. Hints towards change in values. | Compatibility macros are defined. |
-| `ARMCC_*` | `ARMCC_EQ == 0` but `ARMCC_INVALID != 0` | They match the LLVM and the ISA now. Better for LLVM compatibility and code generation. For details see [here](https://github.com/capstone-engine/capstone/issues/2751#issuecomment-3052435282). | None. |
-| System registers | System registers are no longer saved in `cs_arm->reg`, but are separated and have more detail. | System operands follow their own encoding logic. Hence, they should be separated in the details as well. | None |
-| System operands | System operands have now the encoding of LLVM (SYSm value mostly) | See note about system registers. | None |
-| Instruction enum | Multiple instructions which were only alias were removed from the instruction enum. | Alias are always disassembled as their real instructions and an additional field identifies which alias it is. | None |
-| Instruction groups| Instruction groups, which actually were CPU features, were renamed to reflect that. | Names now match the ones in LLVM. Better for code generation. | Replace IDs with macros. |
-| CPU features | CPU features get checked more strictly (`MCLASS`, `V8` etc.) | With many new supported extensions, some instruction bytes decode to a different instruction, depending on the enabled features. Hence, it becomes necessary. | None. |
-| `writeback` | `writeback` member was moved to detail. | More architectures need a `writeback` flag. This is a simplification. | None. |
-| Register alias | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. WARNING: This option uses a naive search and replace strategy to patch the register names in the asm text. And hence adds significant runtime at scale, if enabled. | Mimic LLVM as close as possible. | Enable `CS_OPT_SYNTAX_CS_REG_ALIAS` option. |
-| Immediate | Immediate values (`arm_op.imm`) type changed to `int64_t` | Prevent loss of precision in some cases. | None. |
-| `mem.lshift` | The `mem.lshift` field was removed. It was not set properly before and just duplicates information in `shift` | Remove faulty and duplicate code. | None. |
-| Instr. alias | Capstone now clearly separates real instructions and their aliases. Previously many aliases were treated as real instructions. See above for details. | This became a simple necessity because CS operates with a copy of the LLVMs decoder without changes to the decoder logic. |
-| Operand access type | Previously, operand access type is stored in the `uint8_t access;` field within operand details. However its possible values are stored in `enum cs_ac_type`. Now, the field has `enum cs_ac_type` type instead. | The user can find the connection between the field and the enum directly. | None |
+| Keyword             | Change                                                                                                                                                                                                                                                                                                                  | Justification                                                                                                                                                                                    | Possible revert                                                                               |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| Post-index          | Post-index memory access has the disponent now set in the `MEMORY` operand! No longer as separated `reg`/`imm` operand.                                                                                                                                                                                                 | The CS memory operand had a field which was there for disponents. Not having it set, for post-index operands was inconsistent.                                                                   | Edit `ARM_set_detail_op_mem()` and add an immediate operand instead of setting the disponent. |
+| Sign `mem.disp`     | `mem.disp` is now always positive and the `subtracted` flag indicates if it should be subtracted.                                                                                                                                                                                                                       | It was inconsistent before.                                                                                                                                                                      | Change behavior in `ARM_set_detail_op_mem()`                                                  |
+| `ARM_CC`            | `ARM_CC` → `ARMCC` and value change                                                                                                                                                                                                                                                                                     | They match the same LLVM enum. Better for LLVM compatibility and code generation. Hints towards change in values.                                                                                | Compatibility macros are defined.                                                             |
+| `ARMCC_*`           | `ARMCC_EQ == 0` but `ARMCC_INVALID != 0`                                                                                                                                                                                                                                                                                | They match the LLVM and the ISA now. Better for LLVM compatibility and code generation. For details see [here](https://github.com/capstone-engine/capstone/issues/2751#issuecomment-3052435282). | None.                                                                                         |
+| System registers    | System registers are no longer saved in `cs_arm->reg`, but are separated and have more detail.                                                                                                                                                                                                                          | System operands follow their own encoding logic. Hence, they should be separated in the details as well.                                                                                         | None                                                                                          |
+| System operands     | System operands have now the encoding of LLVM (SYSm value mostly)                                                                                                                                                                                                                                                       | See note about system registers.                                                                                                                                                                 | None                                                                                          |
+| Instruction enum    | Multiple instructions which were only alias were removed from the instruction enum.                                                                                                                                                                                                                                     | Alias are always disassembled as their real instructions and an additional field identifies which alias it is.                                                                                   | None                                                                                          |
+| Instruction groups  | Instruction groups, which actually were CPU features, were renamed to reflect that.                                                                                                                                                                                                                                     | Names now match the ones in LLVM. Better for code generation.                                                                                                                                    | Replace IDs with macros.                                                                      |
+| CPU features        | CPU features get checked more strictly (`MCLASS`, `V8` etc.)                                                                                                                                                                                                                                                            | With many new supported extensions, some instruction bytes decode to a different instruction, depending on the enabled features. Hence, it becomes necessary.                                    | None.                                                                                         |
+| `writeback`         | `writeback` member was moved to detail.                                                                                                                                                                                                                                                                                 | More architectures need a `writeback` flag. This is a simplification.                                                                                                                            | None.                                                                                         |
+| Register alias      | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. WARNING: This option uses a naive search and replace strategy to patch the register names in the asm text. And hence adds significant runtime at scale, if enabled. | Mimic LLVM as close as possible.                                                                                                                                                                 | Enable `CS_OPT_SYNTAX_CS_REG_ALIAS` option.                                                   |
+| Immediate           | Immediate values (`arm_op.imm`) type changed to `int64_t`                                                                                                                                                                                                                                                               | Prevent loss of precision in some cases.                                                                                                                                                         | None.                                                                                         |
+| `mem.lshift`        | The `mem.lshift` field was removed. It was not set properly before and just duplicates information in `shift`                                                                                                                                                                                                           | Remove faulty and duplicate code.                                                                                                                                                                | None.                                                                                         |
+| Instr. alias        | Capstone now clearly separates real instructions and their aliases. Previously many aliases were treated as real instructions. See above for details.                                                                                                                                                                   | This became a simple necessity because CS operates with a copy of the LLVMs decoder without changes to the decoder logic.                                                                        |
+| Operand access type | Previously, operand access type is stored in the `uint8_t access;` field within operand details. However its possible values are stored in `enum cs_ac_type`. Now, the field has `enum cs_ac_type` type instead.                                                                                                        | The user can find the connection between the field and the enum directly.                                                                                                                        | None                                                                                          |
 
 **ARM**
 
-| Keyword | Change | Justification |
-|---------|--------|---------------|
-| `ARMCC_*` | `ARMCC_EQ == 0` but `ARMCC_INVALID != 0` | They match the LLVM and the ISA now. Better for LLVM compatibility and code generation. For details see [here](https://github.com/capstone-engine/capstone/issues/2751#issuecomment-3052435282). |
-| `ARM_CC` | `ARM_CC` → `ARMCC` and value change | They match the same LLVM enum. Better for LLVM compatibility and code generation. Hints towards change in values. |
-| Post-index | Post-index memory access has the disponent now set in the `MEMORY` operand! No longer as separated `reg`/`imm` operand. | The CS memory operand had a field which was there for disponents. Not having it set, for post-index operands was inconsistent. |
-| Sign `mem.disp` | `mem.disp` is now always positive and the `subtracted` flag indicates if it should be subtracted. | It was inconsistent before. |
-| System registers | System registers are no longer saved in `cs_arm->reg`, but are separated and have more detail. | System operands follow their own encoding logic. Hence, they should be separated in the details as well. |
-| System operands | System operands have now the encoding of LLVM (SYSm value mostly) | See note about system registers. |
-| Instruction enum | Multiple instructions which were only alias were removed from the instruction enum. | Alias are always disassembled as their real instructions and an additional field identifies which alias it is. |
-| Instruction groups| Instruction groups, which actually were CPU features, were renamed to reflect that. | Names now match the ones in LLVM. Better for code generation. |
-| CPU features | CPU features get checked more strictly (`MCLASS`, `V8` etc.) | With many new supported extensions, some instruction bytes decode to a different instruction, depending on the enabled features. Hence, it becomes necessary. |
-| `writeback` | `writeback` member was moved to detail. | More architectures need a `writeback` flag. This is a simplification. |
-| Register alias | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. WARNING: This option uses a naive search and replace strategy to patch the register names in the asm text. And hence adds significant runtime at scale, if enabled. | Mimic LLVM as close as possible. |
-| Immediate | Immediate values (`arm_op.imm`) type changed to `int64_t` | Prevent loss of precision in some cases. |
+| Keyword            | Change                                                                                                                                                                                                                                                                                                                  | Justification                                                                                                                                                                                    |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ARMCC_*`          | `ARMCC_EQ == 0` but `ARMCC_INVALID != 0`                                                                                                                                                                                                                                                                                | They match the LLVM and the ISA now. Better for LLVM compatibility and code generation. For details see [here](https://github.com/capstone-engine/capstone/issues/2751#issuecomment-3052435282). |
+| `ARM_CC`           | `ARM_CC` → `ARMCC` and value change                                                                                                                                                                                                                                                                                     | They match the same LLVM enum. Better for LLVM compatibility and code generation. Hints towards change in values.                                                                                |
+| Post-index         | Post-index memory access has the disponent now set in the `MEMORY` operand! No longer as separated `reg`/`imm` operand.                                                                                                                                                                                                 | The CS memory operand had a field which was there for disponents. Not having it set, for post-index operands was inconsistent.                                                                   |
+| Sign `mem.disp`    | `mem.disp` is now always positive and the `subtracted` flag indicates if it should be subtracted.                                                                                                                                                                                                                       | It was inconsistent before.                                                                                                                                                                      |
+| System registers   | System registers are no longer saved in `cs_arm->reg`, but are separated and have more detail.                                                                                                                                                                                                                          | System operands follow their own encoding logic. Hence, they should be separated in the details as well.                                                                                         |
+| System operands    | System operands have now the encoding of LLVM (SYSm value mostly)                                                                                                                                                                                                                                                       | See note about system registers.                                                                                                                                                                 |
+| Instruction enum   | Multiple instructions which were only alias were removed from the instruction enum.                                                                                                                                                                                                                                     | Alias are always disassembled as their real instructions and an additional field identifies which alias it is.                                                                                   |
+| Instruction groups | Instruction groups, which actually were CPU features, were renamed to reflect that.                                                                                                                                                                                                                                     | Names now match the ones in LLVM. Better for code generation.                                                                                                                                    |
+| CPU features       | CPU features get checked more strictly (`MCLASS`, `V8` etc.)                                                                                                                                                                                                                                                            | With many new supported extensions, some instruction bytes decode to a different instruction, depending on the enabled features. Hence, it becomes necessary.                                    |
+| `writeback`        | `writeback` member was moved to detail.                                                                                                                                                                                                                                                                                 | More architectures need a `writeback` flag. This is a simplification.                                                                                                                            |
+| Register alias     | Register alias (`r15 = pc` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. WARNING: This option uses a naive search and replace strategy to patch the register names in the asm text. And hence adds significant runtime at scale, if enabled. | Mimic LLVM as close as possible.                                                                                                                                                                 |
+| Immediate          | Immediate values (`arm_op.imm`) type changed to `int64_t`                                                                                                                                                                                                                                                               | Prevent loss of precision in some cases.                                                                                                                                                         |
 
 **AArch64 (formerly ARM64)**
 
-| Keyword | Change | Justification |
-|---------|--------|---------------|
-| ARM64 -> AArch64 | ARM64 was everywhere renamed to AArch64 to match the LLVM naming. | See below. |
-| Post-index | Post-index memory access has the disponent now set int the `MEMORY` operand! No longer as separated `reg`/`imm` operand. | See post-index explanation for ARM. |
-| `SME` operands | `SME` operands contain more detail now and member names are closer to the ISA terminology. | New SVE2, SME extensions required more detail. |
-| System operands | System Operands are separated into different types now. | System operands follow a special encoding. Some byte sequences match two different operands. Hence, a more detailed concept was necessary. |
-| `writeback` | `writeback` member was moved to detail. | See ARM explanation. |
-| `arm64_vas` | `arm64_vas` renamed to `AArch64Layout_VectorLayout` | LLVM compatibility. |
-| Register alias | Register alias (`x29 = fp` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. WARNING: This option uses a naive search and replace strategy to patch the register names in the asm text. And hence adds significant runtime at scale, if enabled. | Mimic LLVM as close as possible. |
-| `AArch64CC_*` | `AArch64CC_EQ == 0` but `AArch64CC_INVALID != 0` | They match the LLVM and the ISA now. Better for LLVM compatibility and code generation. For details see [here](https://github.com/capstone-engine/capstone/issues/2751#issuecomment-3052435282). |
+| Keyword          | Change                                                                                                                                                                                                                                                                                                                  | Justification                                                                                                                                                                                    |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ARM64 -> AArch64 | ARM64 was everywhere renamed to AArch64 to match the LLVM naming.                                                                                                                                                                                                                                                       | See below.                                                                                                                                                                                       |
+| Post-index       | Post-index memory access has the disponent now set int the `MEMORY` operand! No longer as separated `reg`/`imm` operand.                                                                                                                                                                                                | See post-index explanation for ARM.                                                                                                                                                              |
+| `mem.disp`       | `cs_aarch64_op.mem.disp` changed from `int32_t` to `int64_t`.                                                                                                                                                                                                                                                           | Prevent truncation of large AArch64 memory displacements.                                                                                                                                        |
+| `SME` operands   | `SME` operands contain more detail now and member names are closer to the ISA terminology.                                                                                                                                                                                                                              | New SVE2, SME extensions required more detail.                                                                                                                                                   |
+| System operands  | System Operands are separated into different types now.                                                                                                                                                                                                                                                                 | System operands follow a special encoding. Some byte sequences match two different operands. Hence, a more detailed concept was necessary.                                                       |
+| `writeback`      | `writeback` member was moved to detail.                                                                                                                                                                                                                                                                                 | See ARM explanation.                                                                                                                                                                             |
+| `arm64_vas`      | `arm64_vas` renamed to `AArch64Layout_VectorLayout`                                                                                                                                                                                                                                                                     | LLVM compatibility.                                                                                                                                                                              |
+| Register alias   | Register alias (`x29 = fp` etc.) are not printed if LLVM doesn't do it. Old Capstone register alias can be enabled by `CS_OPT_SYNTAX_CS_REG_ALIAS`. WARNING: This option uses a naive search and replace strategy to patch the register names in the asm text. And hence adds significant runtime at scale, if enabled. | Mimic LLVM as close as possible.                                                                                                                                                                 |
+| `AArch64CC_*`    | `AArch64CC_EQ == 0` but `AArch64CC_INVALID != 0`                                                                                                                                                                                                                                                                        | They match the LLVM and the ISA now. Better for LLVM compatibility and code generation. For details see [here](https://github.com/capstone-engine/capstone/issues/2751#issuecomment-3052435282). |
 
 **PPC**
 
-| Keyword | Change | Justification |
-|---------|--------|---------------|
-| `PPC_BC` | The branch conditions were completely rewritten and save now all detail known about the bits. | More branch condition details were something missing. |
-| Predicates | Predicate enums were renamed due to the changes to the branch conditions. | See `PPC_BC` |
-| Instruction alias | Many instruction alias (e.g. `BF`) were removed from the instruction enum (see new alias feature below). | Alias information is provided separately in their own fields. |
-| `crx` | `ppc_ops_crx` was removed. | It was never used in the first place. |
-| `(RA\|0)` | The `(RA\|0)` cases (see ISA for details) for which `0` is used, the `PPC_REG_ZERO` register is used. The register name of it is `0`. | Mimics LLVM behavior. |
-| `cr` `un/so` bit. | The verbose condition register names changes the `so` bit name to `un`. Just as LLVM does. | Mimics LLVM behavior. |
+| Keyword           | Change                                                                                                                                | Justification                                                 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `PPC_BC`          | The branch conditions were completely rewritten and save now all detail known about the bits.                                         | More branch condition details were something missing.         |
+| Predicates        | Predicate enums were renamed due to the changes to the branch conditions.                                                             | See `PPC_BC`                                                  |
+| Instruction alias | Many instruction alias (e.g. `BF`) were removed from the instruction enum (see new alias feature below).                              | Alias information is provided separately in their own fields. |
+| `crx`             | `ppc_ops_crx` was removed.                                                                                                            | It was never used in the first place.                         |
+| `(RA\|0)`         | The `(RA\|0)` cases (see ISA for details) for which `0` is used, the `PPC_REG_ZERO` register is used. The register name of it is `0`. | Mimics LLVM behavior.                                         |
+| `cr` `un/so` bit. | The verbose condition register names changes the `so` bit name to `un`. Just as LLVM does.                                            | Mimics LLVM behavior.                                         |
 
 **Mips**
 
-| Keyword | Change | Justification | Possible revert |
-|---------|--------|---------------|-----------------|
-| `CS_OPT_SYNTAX_NO_DOLLAR` | Adds options which removes the `$` (dollar sign) from the register name. | New Feature | Enable option. |
-| `CS_OPT_SYNTAX_NOREGNAME` | Implements the options to output raw register numbers (only the standard GPR are numeric). | Was not implemented | Enable option. |
-| `cs_mips_op.uimm` | Access for the unsigned immediate value of the IMM operand. | Was missing | None. |
-| `cs_mips_op.is_unsigned` | Defines if the IMM operand is signed (when false) or unsigned (when true). | Was missing | None. |
-| `cs_mips_op.is_reglist` | Defines if the REG operand is part of a list of registers. | Was missing | None. |
-| `cs_mips_op.access` | Defines how is this operand accessed, i.e. READ, WRITE or READ & WRITE. | Was missing | None. |
+| Keyword                   | Change                                                                                     | Justification       | Possible revert |
+| ------------------------- | ------------------------------------------------------------------------------------------ | ------------------- | --------------- |
+| `CS_OPT_SYNTAX_NO_DOLLAR` | Adds options which removes the `$` (dollar sign) from the register name.                   | New Feature         | Enable option.  |
+| `CS_OPT_SYNTAX_NOREGNAME` | Implements the options to output raw register numbers (only the standard GPR are numeric). | Was not implemented | Enable option.  |
+| `cs_mips_op.uimm`         | Access for the unsigned immediate value of the IMM operand.                                | Was missing         | None.           |
+| `cs_mips_op.is_unsigned`  | Defines if the IMM operand is signed (when false) or unsigned (when true).                 | Was missing         | None.           |
+| `cs_mips_op.is_reglist`   | Defines if the REG operand is part of a list of registers.                                 | Was missing         | None.           |
+| `cs_mips_op.access`       | Defines how is this operand accessed, i.e. READ, WRITE or READ & WRITE.                    | Was missing         | None.           |
 
 **SystemZ**
 
-| Keyword | Change | Justification |
-|---------|--------|---------------|
-| SYSZ -> SystemZ | `SYSZ` was everywhere renamed to `SystemZ` to match the LLVM naming. | See below |
-| `SYSTEMZ_CC_*` | `SYSTEMZ_CC_O = 0` and `SYSTEMZ_CC_INVALID != 0` | They match the same LLVM values. Better for LLVM compatibility and code generation. |
+| Keyword         | Change                                                               | Justification                                                                       |
+| --------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| SYSZ -> SystemZ | `SYSZ` was everywhere renamed to `SystemZ` to match the LLVM naming. | See below                                                                           |
+| `SYSTEMZ_CC_*`  | `SYSTEMZ_CC_O = 0` and `SYSTEMZ_CC_INVALID != 0`                     | They match the same LLVM values. Better for LLVM compatibility and code generation. |
 
 **M68K**
 
-| Keyword | Change | Justification |
-|---------|--------|---------------|
-| m68k_op_mem.in_disp, m68k_op_mem.out_disp | These fields are now signed instead of unsigned. | The M68K architecture uses sign extended displacements for effective address calculation. |
-| m68k_op_mem.disp_size | Defines if the .disp field was encoded as a byte (false) or word (true) | Necessary for accurate printing. |
-| m68k_op_mem.in_disp_size, m68k_op_mem.out_disp_size | Defines if the .in_disp and .out_disp fields respectively were encoded as words (false) or longs (true) | Necessary for accurate printing. |
+| Keyword                                             | Change                                                                                                  | Justification                                                                             |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| m68k_op_mem.in_disp, m68k_op_mem.out_disp           | These fields are now signed instead of unsigned.                                                        | The M68K architecture uses sign extended displacements for effective address calculation. |
+| m68k_op_mem.disp_size                               | Defines if the .disp field was encoded as a byte (false) or word (true)                                 | Necessary for accurate printing.                                                          |
+| m68k_op_mem.in_disp_size, m68k_op_mem.out_disp_size | Defines if the .in_disp and .out_disp fields respectively were encoded as words (false) or longs (true) | Necessary for accurate printing.                                                          |
+| `M68K_OP_MEM` storage                               | Memory operands now store base registers in `m68k_op_mem.base_reg` and absolute addresses in `m68k_op_mem.address`; `op->reg` and `op->imm` are only used for register and immediate operands. | Keeps memory-addressing details in `m68k_op_mem` consistently. |
+| `M68K_OP_FP_EXTENDED`, `cs_m68k_op.fp_extended`     | Immediate `.x` operands use a dedicated type with `sign_exp`, `reserved`, and `significand` fields. | Avoids losing precision or reserved bits by converting detail data to binary64. |
+| `M68K_OP_FP_PACKED`, `cs_m68k_op.fp_packed`         | Immediate `.p` operands use a dedicated type with `header` and `fraction` fields. | Preserves every packed-decimal digit, sign, exponent, and special-value encoding. |
+| `M68K_FPU_SIZE_PACKED`                              | Identifies `.p` operands separately from `M68K_FPU_SIZE_EXTENDED`; both external formats occupy 12 bytes. | Allows consumers and printers to distinguish packed decimal from extended precision. |
+| Packed register-to-memory `FMOVE` operands          | A static immediate or dynamic data-register k-factor is exposed as the third detail operand. | Preserves the formatting operand encoded for packed-decimal output. |
 
 
-### Notes about AArch64, SystemZ and ARM renaming
+### Notes about AArch64, SystemZ, ARM and RISC-V renaming
 
 `ARM64` was everywhere renamed to `AArch64`. And `SYSZ` to `SYSTEMZ`. This is a necessity to ensure that the update scripts stay reasonably simple.
 Capstone was very inconsistent with the naming before (sometimes `AArch64` sometimes `ARM64`. Sometimes `SYSZ` sometimes `SYSTEMZ`).
@@ -417,19 +521,21 @@ Because this would completely break maintaining Capstone `v6` and `pre-v6` in a 
 
 1. `arm64.h` is a compatibility header now, which merely maps every member to the one in the `aarch64.h` header. Defining `CAPSTONE_AARCH64_COMPAT_HEADER` before including `capstone.h` will include the headers in the right order.
 2. The `systemz.h` header includes the `systemz_compatibility.h` header if `CAPSTONE_SYSTEMZ_COMPAT_HEADER` is defined.
+3. Defining `CAPSTONE_RISCV_COMPAT_HEADER` before including `capstone.h` exposes the legacy RISC-V compressed-mode constant `CS_MODE_RISCVC` as an alias of `CS_MODE_RISCV_C`.
 
-We will continue to maintain both headers.
+We will continue to maintain both compatibility headers, `arm64.h` and `systemz_compatibility.h`.
 
 _Compatibility header_
 
-If you want to use the compatibility header and stick with the `ARM64`/`SYSZ` naming, you can define `CAPSTONE_AARCH64_COMPAT_HEADER` and `CAPSTONE_SYSTEMZ_COMPAT_HEADER` before including `capstone.h`.
+If you want to use the compatibility header and stick with the `ARM64`/`SYSZ` naming, you can define `CAPSTONE_AARCH64_COMPAT_HEADER` and `CAPSTONE_SYSTEMZ_COMPAT_HEADER` before including `capstone.h`. For the legacy RISC-V compressed-mode spelling (`CS_MODE_RISCVC`), define `CAPSTONE_RISCV_COMPAT_HEADER` before including `capstone.h`.
 
-**Note**: The `CAPSTONE_ARM_COMPAT_HEADER` will only define macros for the `ARM_CC -> ARMCC` and `arm_cc -> ARMCC_CondCodes` renaming.
+**Note**: The `CAPSTONE_ARM_COMPAT_HEADER` will only define macros for the `ARM_CC -> ARMCC` and `arm_cc -> ARMCC_CondCodes` renaming. The `CAPSTONE_RISCV_COMPAT_HEADER` only defines `CS_MODE_RISCVC` for the `CS_MODE_RISCVC -> CS_MODE_RISCV_C` renaming.
 
 ```c
 #define CAPSTONE_SYSTEMZ_COMPAT_HEADER
 #define CAPSTONE_AARCH64_COMPAT_HEADER
 #define CAPSTONE_ARM_COMPAT_HEADER
+#define CAPSTONE_RISCV_COMPAT_HEADER
 #include <capstone/capstone.h>
 
 // Your code...

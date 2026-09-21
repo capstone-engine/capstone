@@ -1,0 +1,3 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32"|"CS_MODE_RISCV_ZBKX", None
+0xb3,0x42,0x73,0x28 == xperm8 t0, t1, t2
+0xb3,0x22,0x73,0x28 == xperm4 t0, t1, t2

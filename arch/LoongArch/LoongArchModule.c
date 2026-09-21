@@ -15,6 +15,8 @@ cs_err LoongArch_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
+	if (!mri)
+		return CS_ERR_MEM;
 
 	LoongArch_init_mri(mri);
 

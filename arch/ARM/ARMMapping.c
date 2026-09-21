@@ -91,66 +91,81 @@ void ARM_get_insn_id(cs_struct *h, cs_insn *insn, unsigned int id)
 	// Not used by ARM. Information is set after disassembly.
 }
 
+#define BETWEEN(x, y, z) (x <= y && y <= z)
 /// Patches the register names with Capstone specific alias.
 /// Those are common alias for registers (e.g. r15 = pc)
 /// which are not set in LLVM.
 static void patch_cs_reg_alias(char *asm_str)
 {
-	char *r9 = strstr(asm_str, "r9");
-	while (r9) {
-		r9[0] = 's';
-		r9[1] = 'b';
-		r9 = strstr(asm_str, "r9");
+	char *src = asm_str;
+	size_t src_len = strlen(src);
+	char *dst = asm_str;
+
+	while (*src && src_len >= 2) {
+		if (!(src[0] == 'r' && BETWEEN('0', src[1], '9'))) {
+			// No r0-r9 register.
+			*dst++ = *src++;
+			src_len--;
+			continue;
+		}
+
+		if (src[1] == '9') {
+			if (src_len >= 3 ? !BETWEEN('0', src[2], '9') : true) {
+				// r9 = sb
+				*dst++ = 's';
+				*dst++ = 'b';
+				src += 2;
+			} else {
+				*dst++ = *src++;
+				*dst++ = *src++;
+			}
+			src_len -= 2;
+			continue;
+		}
+
+		if (src_len < 3) {
+			break;
+		}
+		if (src[1] == '1' && BETWEEN('0', src[2], '5')) {
+			switch (src[2]) {
+			case '0':
+				*dst++ = 's';
+				*dst++ = 'l';
+				break;
+			case '1':
+				*dst++ = 'f';
+				*dst++ = 'p';
+				break;
+			case '2':
+				*dst++ = 'i';
+				*dst++ = 'p';
+				break;
+			case '3':
+				*dst++ = 's';
+				*dst++ = 'p';
+				break;
+			case '4':
+				*dst++ = 'l';
+				*dst++ = 'r';
+				break;
+			case '5':
+				*dst++ = 'p';
+				*dst++ = 'c';
+				break;
+			}
+			src += 3;
+			src_len -= 3;
+			continue;
+		}
+		src_len--;
+		*dst++ = *src++;
 	}
-	char *r10 = strstr(asm_str, "r10");
-	while (r10) {
-		r10[0] = 's';
-		r10[1] = 'l';
-		memmove(r10 + 2, r10 + 3, strlen(r10 + 3));
-		asm_str[strlen(asm_str) - 1] = '\0';
-		r10 = strstr(asm_str, "r10");
+	while (*src) {
+		*dst++ = *src++;
 	}
-	char *r11 = strstr(asm_str, "r11");
-	while (r11) {
-		r11[0] = 'f';
-		r11[1] = 'p';
-		memmove(r11 + 2, r11 + 3, strlen(r11 + 3));
-		asm_str[strlen(asm_str) - 1] = '\0';
-		r11 = strstr(asm_str, "r11");
-	}
-	char *r12 = strstr(asm_str, "r12");
-	while (r12) {
-		r12[0] = 'i';
-		r12[1] = 'p';
-		memmove(r12 + 2, r12 + 3, strlen(r12 + 3));
-		asm_str[strlen(asm_str) - 1] = '\0';
-		r12 = strstr(asm_str, "r12");
-	}
-	char *r13 = strstr(asm_str, "r13");
-	while (r13) {
-		r13[0] = 's';
-		r13[1] = 'p';
-		memmove(r13 + 2, r13 + 3, strlen(r13 + 3));
-		asm_str[strlen(asm_str) - 1] = '\0';
-		r13 = strstr(asm_str, "r13");
-	}
-	char *r14 = strstr(asm_str, "r14");
-	while (r14) {
-		r14[0] = 'l';
-		r14[1] = 'r';
-		memmove(r14 + 2, r14 + 3, strlen(r14 + 3));
-		asm_str[strlen(asm_str) - 1] = '\0';
-		r14 = strstr(asm_str, "r14");
-	}
-	char *r15 = strstr(asm_str, "r15");
-	while (r15) {
-		r15[0] = 'p';
-		r15[1] = 'c';
-		memmove(r15 + 2, r15 + 3, strlen(r15 + 3));
-		asm_str[strlen(asm_str) - 1] = '\0';
-		r15 = strstr(asm_str, "r15");
-	}
+	*dst = '\0';
 }
+#undef BETWEEN
 
 /// Check if PC is updated from stack. Those POP instructions
 /// are considered of group RETURN.
@@ -1966,15 +1981,16 @@ static void add_cs_detail_template_2(MCInst *MI, arm_op_group op_group,
 /// Fills cs_detail with the data of the operand.
 /// Calls to this function are should not be added by hand! Please checkout the
 /// patch `AddCSDetail` of the CppTranslator.
-void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
-		       va_list args)
+static void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
+			      size_t op_num, uint64_t templ_arg_0,
+			      uint64_t templ_arg_1)
 {
 	if (!detail_is_set(MI) || !map_fill_detail_ops(MI))
 		return;
 	switch (op_group) {
 	case ARM_OP_GROUP_RegImmShift: {
-		ARM_AM_ShiftOpc shift_opc = va_arg(args, ARM_AM_ShiftOpc);
-		unsigned shift_imm = va_arg(args, unsigned);
+		ARM_AM_ShiftOpc shift_opc = (ARM_AM_ShiftOpc)templ_arg_0;
+		unsigned shift_imm = templ_arg_1;
 		add_cs_detail_RegImmShift(MI, shift_opc, shift_imm);
 		return;
 	}
@@ -1997,23 +2013,36 @@ void ARM_add_cs_detail(MCInst *MI, int /* arm_op_group */ op_group,
 	case ARM_OP_GROUP_MveAddrModeRQOperand_3:
 	case ARM_OP_GROUP_MveAddrModeRQOperand_1:
 	case ARM_OP_GROUP_MveAddrModeRQOperand_2: {
-		unsigned op_num = va_arg(args, unsigned);
-		uint64_t templ_arg_0 = va_arg(args, uint64_t);
 		add_cs_detail_template_1(MI, op_group, op_num, templ_arg_0);
 		return;
 	}
 	case ARM_OP_GROUP_ComplexRotationOp_180_90:
 	case ARM_OP_GROUP_ComplexRotationOp_90_0: {
-		unsigned op_num = va_arg(args, unsigned);
-		uint64_t templ_arg_0 = va_arg(args, uint64_t);
-		uint64_t templ_arg_1 = va_arg(args, uint64_t);
 		add_cs_detail_template_2(MI, op_group, op_num, templ_arg_0,
 					 templ_arg_1);
 		return;
 	}
 	}
-	unsigned op_num = va_arg(args, unsigned);
 	add_cs_detail_general(MI, op_group, op_num);
+}
+
+void ARM_add_cs_detail_0(MCInst *MI, int /* arm_op_group */ op_group,
+			 size_t op_num)
+{
+	ARM_add_cs_detail(MI, op_group, op_num, 0, 0);
+}
+
+void ARM_add_cs_detail_1(MCInst *MI, int /* arm_op_group */ op_group,
+			 size_t op_num, uint64_t templ_arg_0)
+{
+	ARM_add_cs_detail(MI, op_group, op_num, templ_arg_0, 0);
+}
+
+void ARM_add_cs_detail_2(MCInst *MI, int /* arm_op_group */ op_group,
+			 size_t op_num, uint64_t templ_arg_0,
+			 uint64_t templ_arg_1)
+{
+	ARM_add_cs_detail(MI, op_group, op_num, templ_arg_0, templ_arg_1);
 }
 
 static void insert_op(MCInst *MI, unsigned index, cs_arm_op op)

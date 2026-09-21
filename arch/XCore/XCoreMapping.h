@@ -6,6 +6,9 @@
 
 #include "capstone/capstone.h"
 
+extern const insn_map *XCore_insns;
+extern const unsigned int XCore_insn_count;
+
 // return name of register in friendly string
 const char *XCore_reg_name(csh handle, unsigned int reg);
 

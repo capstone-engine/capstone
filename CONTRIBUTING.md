@@ -8,10 +8,12 @@ Capstone source is organized as followings.
 ├── arch            <- code handling disasm engine for each arch
 │   ├── AArch64     <- AArch64 engine
 │   ├── Alpha       <- Alpha engine
+│   ├── ARC         <- ARC engine
 │   ├── ARM         <- ARM engine
 │   ├── BPF         <- Berkeley Packet Filter engine
 │   ├── EVM         <- Ethereum engine
 │   ├── HPPA        <- HPPA engine
+│   ├── LoongArch   <- LoongArch engine
 │   ├── M680X       <- M680X engine
 │   ├── M68K        <- M68K engine
 │   ├── Mips        <- Mips engine
@@ -23,7 +25,10 @@ Capstone source is organized as followings.
 │   ├── SystemZ     <- SystemZ engine
 │   ├── TMS320C64x  <- TMS320C64x engine
 │   ├── TriCore     <- TriCore engine
-│   └── WASM        <- WASM engine
+│   ├── WASM        <- WASM engine
+│   ├── X86         <- x86 engine
+│   ├── XCore       <- XCore engine
+│   └── Xtensa      <- Xtensa engine
 ├── bindings        <- all bindings are under this dir
 │   ├── java        <- Java bindings
 │   ├── ocaml       <- Ocaml bindings
@@ -77,6 +82,32 @@ Coding style
 ------------
 - We provide a `.clang-format` for C code.
 - Python files should be formatted with `black`.
+
+AI guidelines
+------------
+Using AI for contributions is generally allowed (see the exceptions below).
+Please be aware that everything has to be tested thoroughly.
+The larger the PR, the more rigid our requirements are.
+We ask you to specifically check the tests. They should not be verbose
+or contain duplications but should still provide the maximum amount of coverage.
+
+> [!NOTE]
+> We highly recommend limiting AI usage to small or repetitive changes.
+> The rule of thumb is:
+>
+> _Only tasks you can very quickly check for correctness are suitable for AI._
+
+> [!IMPORTANT]
+> It is forbidden to let AI write the PR description or commit messages!
+>
+> This rule helps us maintainers because generated text is incredibly verbose,
+> hard to read, and too time-intensive to understand.
+> This rule also serves as an indicator.
+> If you struggle to explain what the change does, AI was not the right tool.
+
+Translations with AI are, of course, allowed.
+If you use it, please write simple, short sentences in your native language
+so the AI doesn't translate them too floridly.
 
 Support
 -------

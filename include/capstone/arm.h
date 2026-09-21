@@ -425,22 +425,20 @@ typedef enum arm_op_type {
 	ARM_OP_IMM = CS_OP_IMM, ///< Immediate operand
 	ARM_OP_FP = CS_OP_FP, ///< Floating-Point operand
 	ARM_OP_PRED = CS_OP_PRED, ///< Predicate
-	ARM_OP_CIMM =
-		CS_OP_SPECIAL + 0, ///< C-Immediate (coprocessor registers)
-	ARM_OP_PIMM =
-		CS_OP_SPECIAL + 1, ///< P-Immediate (coprocessor registers)
+	// C-Immediate (coprocessor registers)
+	ARM_OP_CIMM = CS_OP_SPECIAL + 0,
+	// P-Immediate (coprocessor registers)
+	ARM_OP_PIMM = CS_OP_SPECIAL + 1,
 	ARM_OP_SETEND = CS_OP_SPECIAL + 2, ///< operand for SETEND instruction
 	ARM_OP_SYSREG = CS_OP_SPECIAL + 3, ///< MSR/MRS special register operand
 	ARM_OP_BANKEDREG = CS_OP_SPECIAL + 4, ///< Banked register operand
 	ARM_OP_SPSR = CS_OP_SPECIAL + 5, ///< Collection of SPSR bits
 	ARM_OP_CPSR = CS_OP_SPECIAL + 6, ///< Collection of CPSR bits
 	ARM_OP_SYSM = CS_OP_SPECIAL + 7, ///< Raw SYSm field
-	ARM_OP_VPRED_R =
-		CS_OP_SPECIAL +
-		8, ///< Vector predicate. Leaves inactive lanes of output vector register unchanged.
-	ARM_OP_VPRED_N =
-		CS_OP_SPECIAL +
-		9, ///< Vector predicate. Don't preserved inactive lanes of output register.
+	// Vector predicate. Leaves inactive lanes of output vector register unchanged.
+	ARM_OP_VPRED_R = CS_OP_SPECIAL + 8,
+	// Vector predicate. Don't preserved inactive lanes of output register.
+	ARM_OP_VPRED_N = CS_OP_SPECIAL + 9,
 	ARM_OP_MEM = CS_OP_MEM, ///< Memory operand
 } arm_op_type;
 

@@ -10426,8 +10426,16 @@
   #endif
 },
 {
+  /* mcrxr $BF */
+  PPC_MCRXR /* 1373 */, PPC_INS_MCRXR,
+  #ifndef CAPSTONE_DIET
+    { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_17 }}
+
+  #endif
+},
+{
   /* mcrxrx $BF */
-  PPC_MCRXRX /* 1373 */, PPC_INS_MCRXRX,
+  PPC_MCRXRX /* 1374 */, PPC_INS_MCRXRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_17 }}
 
@@ -10435,7 +10443,7 @@
 },
 {
   /* mfbhrbe $RT, $imm */
-  PPC_MFBHRBE /* 1374 */, PPC_INS_MFBHRBE,
+  PPC_MFBHRBE /* 1375 */, PPC_INS_MFBHRBE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_3P }}
 
@@ -10443,7 +10451,7 @@
 },
 {
   /* mfcr $RT */
-  PPC_MFCR /* 1375 */, PPC_INS_MFCR,
+  PPC_MFCR /* 1376 */, PPC_INS_MFCR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_3 }}
 
@@ -10451,14 +10459,14 @@
 },
 {
   /* mfcr $RT */
-  PPC_MFCR8 /* 1376 */, PPC_INS_INVALID,
+  PPC_MFCR8 /* 1377 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mfctr $RST */
-  PPC_MFCTR /* 1377 */, PPC_INS_MFCTR,
+  PPC_MFCTR /* 1378 */, PPC_INS_MFCTR,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10466,14 +10474,14 @@
 },
 {
   /* mfctr $RST */
-  PPC_MFCTR8 /* 1378 */, PPC_INS_INVALID,
+  PPC_MFCTR8 /* 1379 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mfdcr $RST, $SPR */
-  PPC_MFDCR /* 1379 */, PPC_INS_MFDCR,
+  PPC_MFDCR /* 1380 */, PPC_INS_MFDCR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISPPC4XX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10481,7 +10489,7 @@
 },
 {
   /* mffs $RST */
-  PPC_MFFS /* 1380 */, PPC_INS_MFFS,
+  PPC_MFFS /* 1381 */, PPC_INS_MFFS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10489,7 +10497,7 @@
 },
 {
   /* mffscdrn $RST, $FRB */
-  PPC_MFFSCDRN /* 1381 */, PPC_INS_MFFSCDRN,
+  PPC_MFFSCDRN /* 1382 */, PPC_INS_MFFSCDRN,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10497,7 +10505,7 @@
 },
 {
   /* mffscdrni $RST, $DRM */
-  PPC_MFFSCDRNI /* 1382 */, PPC_INS_MFFSCDRNI,
+  PPC_MFFSCDRNI /* 1383 */, PPC_INS_MFFSCDRNI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10505,7 +10513,7 @@
 },
 {
   /* mffsce $RST */
-  PPC_MFFSCE /* 1383 */, PPC_INS_MFFSCE,
+  PPC_MFFSCE /* 1384 */, PPC_INS_MFFSCE,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10513,7 +10521,7 @@
 },
 {
   /* mffscrn $RST, $FRB */
-  PPC_MFFSCRN /* 1384 */, PPC_INS_MFFSCRN,
+  PPC_MFFSCRN /* 1385 */, PPC_INS_MFFSCRN,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10521,7 +10529,7 @@
 },
 {
   /* mffscrni $RST, $RM */
-  PPC_MFFSCRNI /* 1385 */, PPC_INS_MFFSCRNI,
+  PPC_MFFSCRNI /* 1386 */, PPC_INS_MFFSCRNI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10529,7 +10537,7 @@
 },
 {
   /* mffsl $RST */
-  PPC_MFFSL /* 1386 */, PPC_INS_MFFSL,
+  PPC_MFFSL /* 1387 */, PPC_INS_MFFSL,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10537,7 +10545,7 @@
 },
 {
   /* mffs. $RST */
-  PPC_MFFS_rec /* 1387 */, PPC_INS_MFFS,
+  PPC_MFFS_rec /* 1388 */, PPC_INS_MFFS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10545,7 +10553,7 @@
 },
 {
   /* mflr $RST */
-  PPC_MFLR /* 1388 */, PPC_INS_MFLR,
+  PPC_MFLR /* 1389 */, PPC_INS_MFLR,
   #ifndef CAPSTONE_DIET
     { PPC_REG_LR, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10553,14 +10561,14 @@
 },
 {
   /* mflr $RST */
-  PPC_MFLR8 /* 1389 */, PPC_INS_INVALID,
+  PPC_MFLR8 /* 1390 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mfmsr $RST */
-  PPC_MFMSR /* 1390 */, PPC_INS_MFMSR,
+  PPC_MFMSR /* 1391 */, PPC_INS_MFMSR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10568,7 +10576,7 @@
 },
 {
   /* mfocrf $RST, $FXM */
-  PPC_MFOCRF /* 1391 */, PPC_INS_MFOCRF,
+  PPC_MFOCRF /* 1392 */, PPC_INS_MFOCRF,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_5A }}
 
@@ -10576,14 +10584,14 @@
 },
 {
   /* mfocrf $RST, $FXM */
-  PPC_MFOCRF8 /* 1392 */, PPC_INS_INVALID,
+  PPC_MFOCRF8 /* 1393 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mfpmr $RST, $SPR */
-  PPC_MFPMR /* 1393 */, PPC_INS_MFPMR,
+  PPC_MFPMR /* 1394 */, PPC_INS_MFPMR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10591,7 +10599,7 @@
 },
 {
   /* mfspr $RST, $SPR */
-  PPC_MFSPR /* 1394 */, PPC_INS_MFSPR,
+  PPC_MFSPR /* 1395 */, PPC_INS_MFSPR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10599,14 +10607,14 @@
 },
 {
   /* mfspr $RST, $SPR */
-  PPC_MFSPR8 /* 1395 */, PPC_INS_INVALID,
+  PPC_MFSPR8 /* 1396 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mfsr $RS, $SR */
-  PPC_MFSR /* 1396 */, PPC_INS_MFSR,
+  PPC_MFSR /* 1397 */, PPC_INS_MFSR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_SR }}
 
@@ -10614,7 +10622,7 @@
 },
 {
   /* mfsrin $RS, $RB */
-  PPC_MFSRIN /* 1397 */, PPC_INS_MFSRIN,
+  PPC_MFSRIN /* 1398 */, PPC_INS_MFSRIN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_SRIN }}
 
@@ -10622,7 +10630,7 @@
 },
 {
   /* mftb $RST, $SPR */
-  PPC_MFTB /* 1398 */, PPC_INS_MFTB,
+  PPC_MFTB /* 1399 */, PPC_INS_MFTB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10630,14 +10638,14 @@
 },
 {
   /* mfspr $RST, 268 */
-  PPC_MFTB8 /* 1399 */, PPC_INS_INVALID,
+  PPC_MFTB8 /* 1400 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mfspr $RST, 3 */
-  PPC_MFUDSCR /* 1400 */, PPC_INS_MFSPR,
+  PPC_MFUDSCR /* 1401 */, PPC_INS_MFSPR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10645,35 +10653,35 @@
 },
 {
   /* mfvsrd $RA, $XT */
-  PPC_MFVRD /* 1401 */, PPC_INS_INVALID,
+  PPC_MFVRD /* 1402 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mfspr $RST, 256 */
-  PPC_MFVRSAVE /* 1402 */, PPC_INS_INVALID,
+  PPC_MFVRSAVE /* 1403 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mfspr $RST, 256 */
-  PPC_MFVRSAVEv /* 1403 */, PPC_INS_INVALID,
+  PPC_MFVRSAVEv /* 1404 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mfvsrwz $RA, $XT */
-  PPC_MFVRWZ /* 1404 */, PPC_INS_INVALID,
+  PPC_MFVRWZ /* 1405 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mfvscr $VD */
-  PPC_MFVSCR /* 1405 */, PPC_INS_MFVSCR,
+  PPC_MFVSCR /* 1406 */, PPC_INS_MFVSCR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_4 }}
 
@@ -10681,7 +10689,7 @@
 },
 {
   /* mfvsrd $RA, $XT */
-  PPC_MFVSRD /* 1406 */, PPC_INS_MFVSRD,
+  PPC_MFVSRD /* 1407 */, PPC_INS_MFVSRD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -10689,7 +10697,7 @@
 },
 {
   /* mfvsrld $RA, $XT */
-  PPC_MFVSRLD /* 1407 */, PPC_INS_MFVSRLD,
+  PPC_MFVSRLD /* 1408 */, PPC_INS_MFVSRLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -10697,7 +10705,7 @@
 },
 {
   /* mfvsrwz $RA, $XT */
-  PPC_MFVSRWZ /* 1408 */, PPC_INS_MFVSRWZ,
+  PPC_MFVSRWZ /* 1409 */, PPC_INS_MFVSRWZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -10705,7 +10713,7 @@
 },
 {
   /* modsd $RST, $RA, $RB */
-  PPC_MODSD /* 1409 */, PPC_INS_MODSD,
+  PPC_MODSD /* 1410 */, PPC_INS_MODSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10713,7 +10721,7 @@
 },
 {
   /* modsw $RST, $RA, $RB */
-  PPC_MODSW /* 1410 */, PPC_INS_MODSW,
+  PPC_MODSW /* 1411 */, PPC_INS_MODSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10721,7 +10729,7 @@
 },
 {
   /* modud $RST, $RA, $RB */
-  PPC_MODUD /* 1411 */, PPC_INS_MODUD,
+  PPC_MODUD /* 1412 */, PPC_INS_MODUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10729,7 +10737,7 @@
 },
 {
   /* moduw $RST, $RA, $RB */
-  PPC_MODUW /* 1412 */, PPC_INS_MODUW,
+  PPC_MODUW /* 1413 */, PPC_INS_MODUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10737,7 +10745,7 @@
 },
 {
   /* msgsync */
-  PPC_MSGSYNC /* 1413 */, PPC_INS_MSGSYNC,
+  PPC_MSGSYNC /* 1414 */, PPC_INS_MSGSYNC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10745,14 +10753,14 @@
 },
 {
   /* msync */
-  PPC_MSYNC /* 1414 */, PPC_INS_INVALID,
+  PPC_MSYNC /* 1415 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtcrf $FXM, $RST */
-  PPC_MTCRF /* 1415 */, PPC_INS_MTCRF,
+  PPC_MTCRF /* 1416 */, PPC_INS_MTCRF,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_5 }}
 
@@ -10760,14 +10768,14 @@
 },
 {
   /* mtcrf $FXM, $RST */
-  PPC_MTCRF8 /* 1416 */, PPC_INS_INVALID,
+  PPC_MTCRF8 /* 1417 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtctr $RST */
-  PPC_MTCTR /* 1417 */, PPC_INS_MTCTR,
+  PPC_MTCTR /* 1418 */, PPC_INS_MTCTR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CTR, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10775,28 +10783,28 @@
 },
 {
   /* mtctr $RST */
-  PPC_MTCTR8 /* 1418 */, PPC_INS_INVALID,
+  PPC_MTCTR8 /* 1419 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtctr $RST */
-  PPC_MTCTR8loop /* 1419 */, PPC_INS_INVALID,
+  PPC_MTCTR8loop /* 1420 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtctr $RST */
-  PPC_MTCTRloop /* 1420 */, PPC_INS_INVALID,
+  PPC_MTCTRloop /* 1421 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtdcr $SPR, $RST */
-  PPC_MTDCR /* 1421 */, PPC_INS_MTDCR,
+  PPC_MTDCR /* 1422 */, PPC_INS_MTDCR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISPPC4XX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10804,7 +10812,7 @@
 },
 {
   /* mtfsb0 $FM */
-  PPC_MTFSB0 /* 1422 */, PPC_INS_MTFSB0,
+  PPC_MTFSB0 /* 1423 */, PPC_INS_MTFSB0,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_RM, 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10812,7 +10820,7 @@
 },
 {
   /* mtfsb1 $FM */
-  PPC_MTFSB1 /* 1423 */, PPC_INS_MTFSB1,
+  PPC_MTFSB1 /* 1424 */, PPC_INS_MTFSB1,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_RM, 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -10820,7 +10828,7 @@
 },
 {
   /* mtfsf $FLM, $FRB, $L, $W */
-  PPC_MTFSF /* 1424 */, PPC_INS_MTFSF,
+  PPC_MTFSF /* 1425 */, PPC_INS_MTFSF,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_RM, 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFLFORM_1 }}
 
@@ -10828,7 +10836,7 @@
 },
 {
   /* mtfsfi $BF, $U, $W */
-  PPC_MTFSFI /* 1425 */, PPC_INS_MTFSFI,
+  PPC_MTFSFI /* 1426 */, PPC_INS_MTFSFI,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_RM, 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XLFORM_4 }}
 
@@ -10836,7 +10844,7 @@
 },
 {
   /* mtfsfi. $BF, $U, $W */
-  PPC_MTFSFI_rec /* 1426 */, PPC_INS_MTFSFI,
+  PPC_MTFSFI_rec /* 1427 */, PPC_INS_MTFSFI,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XLFORM_4 }}
 
@@ -10844,14 +10852,14 @@
 },
 {
   /* mtfsfi $BF, $U */
-  PPC_MTFSFIb /* 1427 */, PPC_INS_INVALID,
+  PPC_MTFSFIb /* 1428 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtfsf. $FLM, $FRB, $L, $W */
-  PPC_MTFSF_rec /* 1428 */, PPC_INS_MTFSF,
+  PPC_MTFSF_rec /* 1429 */, PPC_INS_MTFSF,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFLFORM_1 }}
 
@@ -10859,14 +10867,14 @@
 },
 {
   /* mtfsf $FM, $RT */
-  PPC_MTFSFb /* 1429 */, PPC_INS_INVALID,
+  PPC_MTFSFb /* 1430 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtlr $RST */
-  PPC_MTLR /* 1430 */, PPC_INS_MTLR,
+  PPC_MTLR /* 1431 */, PPC_INS_MTLR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_LR, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10874,14 +10882,14 @@
 },
 {
   /* mtlr $RST */
-  PPC_MTLR8 /* 1431 */, PPC_INS_INVALID,
+  PPC_MTLR8 /* 1432 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtmsr $RS, $L */
-  PPC_MTMSR /* 1432 */, PPC_INS_MTMSR,
+  PPC_MTMSR /* 1433 */, PPC_INS_MTMSR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_MTMSR }}
 
@@ -10889,7 +10897,7 @@
 },
 {
   /* mtmsrd $RS, $L */
-  PPC_MTMSRD /* 1433 */, PPC_INS_MTMSRD,
+  PPC_MTMSRD /* 1434 */, PPC_INS_MTMSRD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_MTMSR }}
 
@@ -10897,7 +10905,7 @@
 },
 {
   /* mtocrf $FXM, $RST */
-  PPC_MTOCRF /* 1434 */, PPC_INS_MTOCRF,
+  PPC_MTOCRF /* 1435 */, PPC_INS_MTOCRF,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_5A }}
 
@@ -10905,14 +10913,14 @@
 },
 {
   /* mtocrf $FXM, $RST */
-  PPC_MTOCRF8 /* 1435 */, PPC_INS_INVALID,
+  PPC_MTOCRF8 /* 1436 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtpmr $SPR, $RST */
-  PPC_MTPMR /* 1436 */, PPC_INS_MTPMR,
+  PPC_MTPMR /* 1437 */, PPC_INS_MTPMR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10920,7 +10928,7 @@
 },
 {
   /* mtspr $SPR, $RST */
-  PPC_MTSPR /* 1437 */, PPC_INS_MTSPR,
+  PPC_MTSPR /* 1438 */, PPC_INS_MTSPR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10928,14 +10936,14 @@
 },
 {
   /* mtspr $SPR, $RST */
-  PPC_MTSPR8 /* 1438 */, PPC_INS_INVALID,
+  PPC_MTSPR8 /* 1439 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtsr $SR, $RS */
-  PPC_MTSR /* 1439 */, PPC_INS_MTSR,
+  PPC_MTSR /* 1440 */, PPC_INS_MTSR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_SR }}
 
@@ -10943,7 +10951,7 @@
 },
 {
   /* mtsrin $RS, $RB */
-  PPC_MTSRIN /* 1440 */, PPC_INS_MTSRIN,
+  PPC_MTSRIN /* 1441 */, PPC_INS_MTSRIN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_SRIN }}
 
@@ -10951,7 +10959,7 @@
 },
 {
   /* mtspr 3, $RST */
-  PPC_MTUDSCR /* 1441 */, PPC_INS_MTSPR,
+  PPC_MTUDSCR /* 1442 */, PPC_INS_MTSPR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFXFORM_1 }}
 
@@ -10959,42 +10967,42 @@
 },
 {
   /* mtvsrd $XT, $RA */
-  PPC_MTVRD /* 1442 */, PPC_INS_INVALID,
+  PPC_MTVRD /* 1443 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtspr 256, $RST */
-  PPC_MTVRSAVE /* 1443 */, PPC_INS_INVALID,
+  PPC_MTVRSAVE /* 1444 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtspr 256, $RST */
-  PPC_MTVRSAVEv /* 1444 */, PPC_INS_INVALID,
+  PPC_MTVRSAVEv /* 1445 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtvsrwa $XT, $RA */
-  PPC_MTVRWA /* 1445 */, PPC_INS_INVALID,
+  PPC_MTVRWA /* 1446 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtvsrwz $XT, $RA */
-  PPC_MTVRWZ /* 1446 */, PPC_INS_INVALID,
+  PPC_MTVRWZ /* 1447 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mtvscr $VB */
-  PPC_MTVSCR /* 1447 */, PPC_INS_MTVSCR,
+  PPC_MTVSCR /* 1448 */, PPC_INS_MTVSCR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_5 }}
 
@@ -11002,7 +11010,7 @@
 },
 {
   /* mtvsrbm $VD, $VB */
-  PPC_MTVSRBM /* 1448 */, PPC_INS_MTVSRBM,
+  PPC_MTVSRBM /* 1449 */, PPC_INS_MTVSRBM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -11010,7 +11018,7 @@
 },
 {
   /* mtvsrbmi $RT, $D */
-  PPC_MTVSRBMI /* 1449 */, PPC_INS_MTVSRBMI,
+  PPC_MTVSRBMI /* 1450 */, PPC_INS_MTVSRBMI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DXFORM }}
 
@@ -11018,7 +11026,7 @@
 },
 {
   /* mtvsrd $XT, $RA */
-  PPC_MTVSRD /* 1450 */, PPC_INS_MTVSRD,
+  PPC_MTVSRD /* 1451 */, PPC_INS_MTVSRD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -11026,7 +11034,7 @@
 },
 {
   /* mtvsrdd $XT, $RA, $RB */
-  PPC_MTVSRDD /* 1451 */, PPC_INS_MTVSRDD,
+  PPC_MTVSRDD /* 1452 */, PPC_INS_MTVSRDD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -11034,7 +11042,7 @@
 },
 {
   /* mtvsrdm $VD, $VB */
-  PPC_MTVSRDM /* 1452 */, PPC_INS_MTVSRDM,
+  PPC_MTVSRDM /* 1453 */, PPC_INS_MTVSRDM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -11042,7 +11050,7 @@
 },
 {
   /* mtvsrhm $VD, $VB */
-  PPC_MTVSRHM /* 1453 */, PPC_INS_MTVSRHM,
+  PPC_MTVSRHM /* 1454 */, PPC_INS_MTVSRHM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -11050,7 +11058,7 @@
 },
 {
   /* mtvsrqm $VD, $VB */
-  PPC_MTVSRQM /* 1454 */, PPC_INS_MTVSRQM,
+  PPC_MTVSRQM /* 1455 */, PPC_INS_MTVSRQM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -11058,7 +11066,7 @@
 },
 {
   /* mtvsrwa $XT, $RA */
-  PPC_MTVSRWA /* 1455 */, PPC_INS_MTVSRWA,
+  PPC_MTVSRWA /* 1456 */, PPC_INS_MTVSRWA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -11066,7 +11074,7 @@
 },
 {
   /* mtvsrwm $VD, $VB */
-  PPC_MTVSRWM /* 1456 */, PPC_INS_MTVSRWM,
+  PPC_MTVSRWM /* 1457 */, PPC_INS_MTVSRWM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -11074,7 +11082,7 @@
 },
 {
   /* mtvsrws $XT, $RA */
-  PPC_MTVSRWS /* 1457 */, PPC_INS_MTVSRWS,
+  PPC_MTVSRWS /* 1458 */, PPC_INS_MTVSRWS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -11082,7 +11090,7 @@
 },
 {
   /* mtvsrwz $XT, $RA */
-  PPC_MTVSRWZ /* 1458 */, PPC_INS_MTVSRWZ,
+  PPC_MTVSRWZ /* 1459 */, PPC_INS_MTVSRWZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -11090,7 +11098,7 @@
 },
 {
   /* mulhd $RT, $RA, $RB */
-  PPC_MULHD /* 1459 */, PPC_INS_MULHD,
+  PPC_MULHD /* 1460 */, PPC_INS_MULHD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11098,7 +11106,7 @@
 },
 {
   /* mulhdu $RT, $RA, $RB */
-  PPC_MULHDU /* 1460 */, PPC_INS_MULHDU,
+  PPC_MULHDU /* 1461 */, PPC_INS_MULHDU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11106,7 +11114,7 @@
 },
 {
   /* mulhdu. $RT, $RA, $RB */
-  PPC_MULHDU_rec /* 1461 */, PPC_INS_MULHDU,
+  PPC_MULHDU_rec /* 1462 */, PPC_INS_MULHDU,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11114,7 +11122,7 @@
 },
 {
   /* mulhd. $RT, $RA, $RB */
-  PPC_MULHD_rec /* 1462 */, PPC_INS_MULHD,
+  PPC_MULHD_rec /* 1463 */, PPC_INS_MULHD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11122,7 +11130,7 @@
 },
 {
   /* mulhw $RT, $RA, $RB */
-  PPC_MULHW /* 1463 */, PPC_INS_MULHW,
+  PPC_MULHW /* 1464 */, PPC_INS_MULHW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11130,7 +11138,7 @@
 },
 {
   /* mulhwu $RT, $RA, $RB */
-  PPC_MULHWU /* 1464 */, PPC_INS_MULHWU,
+  PPC_MULHWU /* 1465 */, PPC_INS_MULHWU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11138,7 +11146,7 @@
 },
 {
   /* mulhwu. $RT, $RA, $RB */
-  PPC_MULHWU_rec /* 1465 */, PPC_INS_MULHWU,
+  PPC_MULHWU_rec /* 1466 */, PPC_INS_MULHWU,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11146,7 +11154,7 @@
 },
 {
   /* mulhw. $RT, $RA, $RB */
-  PPC_MULHW_rec /* 1466 */, PPC_INS_MULHW,
+  PPC_MULHW_rec /* 1467 */, PPC_INS_MULHW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11154,7 +11162,7 @@
 },
 {
   /* mulld $RT, $RA, $RB */
-  PPC_MULLD /* 1467 */, PPC_INS_MULLD,
+  PPC_MULLD /* 1468 */, PPC_INS_MULLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11162,7 +11170,7 @@
 },
 {
   /* mulldo $RT, $RA, $RB */
-  PPC_MULLDO /* 1468 */, PPC_INS_MULLDO,
+  PPC_MULLDO /* 1469 */, PPC_INS_MULLDO,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_XER, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11170,7 +11178,7 @@
 },
 {
   /* mulldo. $RT, $RA, $RB */
-  PPC_MULLDO_rec /* 1469 */, PPC_INS_MULLDO,
+  PPC_MULLDO_rec /* 1470 */, PPC_INS_MULLDO,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_XER, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11178,7 +11186,7 @@
 },
 {
   /* mulld. $RT, $RA, $RB */
-  PPC_MULLD_rec /* 1470 */, PPC_INS_MULLD,
+  PPC_MULLD_rec /* 1471 */, PPC_INS_MULLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11186,7 +11194,7 @@
 },
 {
   /* mulli $RST, $RA, $D */
-  PPC_MULLI /* 1471 */, PPC_INS_MULLI,
+  PPC_MULLI /* 1472 */, PPC_INS_MULLI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -11194,14 +11202,14 @@
 },
 {
   /* mulli $RST, $RA, $D */
-  PPC_MULLI8 /* 1472 */, PPC_INS_INVALID,
+  PPC_MULLI8 /* 1473 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* mullw $RT, $RA, $RB */
-  PPC_MULLW /* 1473 */, PPC_INS_MULLW,
+  PPC_MULLW /* 1474 */, PPC_INS_MULLW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11209,7 +11217,7 @@
 },
 {
   /* mullwo $RT, $RA, $RB */
-  PPC_MULLWO /* 1474 */, PPC_INS_MULLWO,
+  PPC_MULLWO /* 1475 */, PPC_INS_MULLWO,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_XER, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11217,7 +11225,7 @@
 },
 {
   /* mullwo. $RT, $RA, $RB */
-  PPC_MULLWO_rec /* 1475 */, PPC_INS_MULLWO,
+  PPC_MULLWO_rec /* 1476 */, PPC_INS_MULLWO,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_XER, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11225,7 +11233,7 @@
 },
 {
   /* mullw. $RT, $RA, $RB */
-  PPC_MULLW_rec /* 1476 */, PPC_INS_MULLW,
+  PPC_MULLW_rec /* 1477 */, PPC_INS_MULLW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11233,28 +11241,28 @@
 },
 {
   /* #MoveGOTtoLR */
-  PPC_MoveGOTtoLR /* 1477 */, PPC_INS_INVALID,
+  PPC_MoveGOTtoLR /* 1478 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #MovePCtoLR */
-  PPC_MovePCtoLR /* 1478 */, PPC_INS_INVALID,
+  PPC_MovePCtoLR /* 1479 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #MovePCtoLR8 */
-  PPC_MovePCtoLR8 /* 1479 */, PPC_INS_INVALID,
+  PPC_MovePCtoLR8 /* 1480 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* nand $RA, $RST, $RB */
-  PPC_NAND /* 1480 */, PPC_INS_NAND,
+  PPC_NAND /* 1481 */, PPC_INS_NAND,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -11262,21 +11270,21 @@
 },
 {
   /* nand $RA, $RST, $RB */
-  PPC_NAND8 /* 1481 */, PPC_INS_INVALID,
+  PPC_NAND8 /* 1482 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* nand. $RA, $RST, $RB */
-  PPC_NAND8_rec /* 1482 */, PPC_INS_INVALID,
+  PPC_NAND8_rec /* 1483 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* nand. $RA, $RST, $RB */
-  PPC_NAND_rec /* 1483 */, PPC_INS_NAND,
+  PPC_NAND_rec /* 1484 */, PPC_INS_NAND,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -11284,7 +11292,7 @@
 },
 {
   /* nap */
-  PPC_NAP /* 1484 */, PPC_INS_NAP,
+  PPC_NAP /* 1485 */, PPC_INS_NAP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XLFORM_1 }}
 
@@ -11292,7 +11300,7 @@
 },
 {
   /* neg $RT, $RA */
-  PPC_NEG /* 1485 */, PPC_INS_NEG,
+  PPC_NEG /* 1486 */, PPC_INS_NEG,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11300,35 +11308,35 @@
 },
 {
   /* neg $RT, $RA */
-  PPC_NEG8 /* 1486 */, PPC_INS_INVALID,
+  PPC_NEG8 /* 1487 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* nego $RT, $RA */
-  PPC_NEG8O /* 1487 */, PPC_INS_INVALID,
+  PPC_NEG8O /* 1488 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* nego. $RT, $RA */
-  PPC_NEG8O_rec /* 1488 */, PPC_INS_INVALID,
+  PPC_NEG8O_rec /* 1489 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* neg. $RT, $RA */
-  PPC_NEG8_rec /* 1489 */, PPC_INS_INVALID,
+  PPC_NEG8_rec /* 1490 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* nego $RT, $RA */
-  PPC_NEGO /* 1490 */, PPC_INS_NEGO,
+  PPC_NEGO /* 1491 */, PPC_INS_NEGO,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_XER, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11336,7 +11344,7 @@
 },
 {
   /* nego. $RT, $RA */
-  PPC_NEGO_rec /* 1491 */, PPC_INS_NEGO,
+  PPC_NEGO_rec /* 1492 */, PPC_INS_NEGO,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_XER, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11344,7 +11352,7 @@
 },
 {
   /* neg. $RT, $RA */
-  PPC_NEG_rec /* 1492 */, PPC_INS_NEG,
+  PPC_NEG_rec /* 1493 */, PPC_INS_NEG,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -11352,7 +11360,7 @@
 },
 {
   /* nop */
-  PPC_NOP /* 1493 */, PPC_INS_NOP,
+  PPC_NOP /* 1494 */, PPC_INS_NOP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -11360,21 +11368,21 @@
 },
 {
   /* ori 1, 1, 0 */
-  PPC_NOP_GT_PWR6 /* 1494 */, PPC_INS_INVALID,
+  PPC_NOP_GT_PWR6 /* 1495 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ori 2, 2, 0 */
-  PPC_NOP_GT_PWR7 /* 1495 */, PPC_INS_INVALID,
+  PPC_NOP_GT_PWR7 /* 1496 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* nor $RA, $RST, $RB */
-  PPC_NOR /* 1496 */, PPC_INS_NOR,
+  PPC_NOR /* 1497 */, PPC_INS_NOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -11382,21 +11390,21 @@
 },
 {
   /* nor $RA, $RST, $RB */
-  PPC_NOR8 /* 1497 */, PPC_INS_INVALID,
+  PPC_NOR8 /* 1498 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* nor. $RA, $RST, $RB */
-  PPC_NOR8_rec /* 1498 */, PPC_INS_INVALID,
+  PPC_NOR8_rec /* 1499 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* nor. $RA, $RST, $RB */
-  PPC_NOR_rec /* 1499 */, PPC_INS_NOR,
+  PPC_NOR_rec /* 1500 */, PPC_INS_NOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -11404,7 +11412,7 @@
 },
 {
   /* or $RA, $RST, $RB */
-  PPC_OR /* 1500 */, PPC_INS_OR,
+  PPC_OR /* 1501 */, PPC_INS_OR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -11412,21 +11420,21 @@
 },
 {
   /* or $RA, $RST, $RB */
-  PPC_OR8 /* 1501 */, PPC_INS_INVALID,
+  PPC_OR8 /* 1502 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* or. $RA, $RST, $RB */
-  PPC_OR8_rec /* 1502 */, PPC_INS_INVALID,
+  PPC_OR8_rec /* 1503 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* orc $RA, $RST, $RB */
-  PPC_ORC /* 1503 */, PPC_INS_ORC,
+  PPC_ORC /* 1504 */, PPC_INS_ORC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -11434,21 +11442,21 @@
 },
 {
   /* orc $RA, $RST, $RB */
-  PPC_ORC8 /* 1504 */, PPC_INS_INVALID,
+  PPC_ORC8 /* 1505 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* orc. $RA, $RST, $RB */
-  PPC_ORC8_rec /* 1505 */, PPC_INS_INVALID,
+  PPC_ORC8_rec /* 1506 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* orc. $RA, $RST, $RB */
-  PPC_ORC_rec /* 1506 */, PPC_INS_ORC,
+  PPC_ORC_rec /* 1507 */, PPC_INS_ORC,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -11456,7 +11464,7 @@
 },
 {
   /* ori $RA, $RST, $D */
-  PPC_ORI /* 1507 */, PPC_INS_ORI,
+  PPC_ORI /* 1508 */, PPC_INS_ORI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_4 }}
 
@@ -11464,14 +11472,14 @@
 },
 {
   /* ori $RA, $RST, $D */
-  PPC_ORI8 /* 1508 */, PPC_INS_INVALID,
+  PPC_ORI8 /* 1509 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* oris $RA, $RST, $D */
-  PPC_ORIS /* 1509 */, PPC_INS_ORIS,
+  PPC_ORIS /* 1510 */, PPC_INS_ORIS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_4 }}
 
@@ -11479,14 +11487,14 @@
 },
 {
   /* oris $RA, $RST, $D */
-  PPC_ORIS8 /* 1510 */, PPC_INS_INVALID,
+  PPC_ORIS8 /* 1511 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* or. $RA, $RST, $RB */
-  PPC_OR_rec /* 1511 */, PPC_INS_OR,
+  PPC_OR_rec /* 1512 */, PPC_INS_OR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -11494,7 +11502,7 @@
 },
 {
   /* paddi $RT, $RA, $SI, 0 */
-  PPC_PADDI /* 1512 */, PPC_INS_PADDI,
+  PPC_PADDI /* 1513 */, PPC_INS_PADDI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11502,28 +11510,28 @@
 },
 {
   /* paddi $RT, $RA, $SI, 0 */
-  PPC_PADDI8 /* 1513 */, PPC_INS_INVALID,
+  PPC_PADDI8 /* 1514 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* paddi $RT, $RA, $SI, 1 */
-  PPC_PADDI8pc /* 1514 */, PPC_INS_INVALID,
+  PPC_PADDI8pc /* 1515 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #PADDIdtprel */
-  PPC_PADDIdtprel /* 1515 */, PPC_INS_INVALID,
+  PPC_PADDIdtprel /* 1516 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* paddi $RT, $RA, $SI, 1 */
-  PPC_PADDIpc /* 1516 */, PPC_INS_PADDI,
+  PPC_PADDIpc /* 1517 */, PPC_INS_PADDI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11531,7 +11539,7 @@
 },
 {
   /* pdepd $RA, $RST, $RB */
-  PPC_PDEPD /* 1517 */, PPC_INS_PDEPD,
+  PPC_PDEPD /* 1518 */, PPC_INS_PDEPD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -11539,7 +11547,7 @@
 },
 {
   /* pextd $RA, $RST, $RB */
-  PPC_PEXTD /* 1518 */, PPC_INS_PEXTD,
+  PPC_PEXTD /* 1519 */, PPC_INS_PEXTD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -11547,7 +11555,7 @@
 },
 {
   /* pla $RT, ${SI} ${RA} */
-  PPC_PLA /* 1519 */, PPC_INS_PLA,
+  PPC_PLA /* 1520 */, PPC_INS_PLA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11555,7 +11563,7 @@
 },
 {
   /* pla $RT, ${SI} ${RA} */
-  PPC_PLA8 /* 1520 */, PPC_INS_PLA,
+  PPC_PLA8 /* 1521 */, PPC_INS_PLA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11563,7 +11571,7 @@
 },
 {
   /* pla $RT, $SI */
-  PPC_PLA8pc /* 1521 */, PPC_INS_PLA,
+  PPC_PLA8pc /* 1522 */, PPC_INS_PLA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11571,7 +11579,7 @@
 },
 {
   /* pla $RT, $SI */
-  PPC_PLApc /* 1522 */, PPC_INS_PLA,
+  PPC_PLApc /* 1523 */, PPC_INS_PLA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11579,7 +11587,7 @@
 },
 {
   /* plbz $RST, $addr, 0 */
-  PPC_PLBZ /* 1523 */, PPC_INS_PLBZ,
+  PPC_PLBZ /* 1524 */, PPC_INS_PLBZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11587,35 +11595,35 @@
 },
 {
   /* plbz $RST, $addr, 0 */
-  PPC_PLBZ8 /* 1524 */, PPC_INS_INVALID,
+  PPC_PLBZ8 /* 1525 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plbz $RST, $addr */
-  PPC_PLBZ8nopc /* 1525 */, PPC_INS_INVALID,
+  PPC_PLBZ8nopc /* 1526 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plbz $RST, $D */
-  PPC_PLBZ8onlypc /* 1526 */, PPC_INS_INVALID,
+  PPC_PLBZ8onlypc /* 1527 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plbz $RST, $addr, 1 */
-  PPC_PLBZ8pc /* 1527 */, PPC_INS_INVALID,
+  PPC_PLBZ8pc /* 1528 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plbz $RST, $addr */
-  PPC_PLBZnopc /* 1528 */, PPC_INS_PLBZ,
+  PPC_PLBZnopc /* 1529 */, PPC_INS_PLBZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11623,7 +11631,7 @@
 },
 {
   /* plbz $RST, $D */
-  PPC_PLBZonlypc /* 1529 */, PPC_INS_PLBZ,
+  PPC_PLBZonlypc /* 1530 */, PPC_INS_PLBZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11631,7 +11639,7 @@
 },
 {
   /* plbz $RST, $addr, 1 */
-  PPC_PLBZpc /* 1530 */, PPC_INS_PLBZ,
+  PPC_PLBZpc /* 1531 */, PPC_INS_PLBZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11639,7 +11647,7 @@
 },
 {
   /* pld $RST, $addr, 0 */
-  PPC_PLD /* 1531 */, PPC_INS_PLD,
+  PPC_PLD /* 1532 */, PPC_INS_PLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11647,7 +11655,7 @@
 },
 {
   /* pld $RST, $addr */
-  PPC_PLDnopc /* 1532 */, PPC_INS_PLD,
+  PPC_PLDnopc /* 1533 */, PPC_INS_PLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11655,7 +11663,7 @@
 },
 {
   /* pld $RST, $D */
-  PPC_PLDonlypc /* 1533 */, PPC_INS_PLD,
+  PPC_PLDonlypc /* 1534 */, PPC_INS_PLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11663,7 +11671,7 @@
 },
 {
   /* pld $RST, $addr, 1 */
-  PPC_PLDpc /* 1534 */, PPC_INS_PLD,
+  PPC_PLDpc /* 1535 */, PPC_INS_PLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11671,7 +11679,7 @@
 },
 {
   /* plfd $RST, $addr, 0 */
-  PPC_PLFD /* 1535 */, PPC_INS_PLFD,
+  PPC_PLFD /* 1536 */, PPC_INS_PLFD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11679,7 +11687,7 @@
 },
 {
   /* plfd $RST, $addr */
-  PPC_PLFDnopc /* 1536 */, PPC_INS_PLFD,
+  PPC_PLFDnopc /* 1537 */, PPC_INS_PLFD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11687,7 +11695,7 @@
 },
 {
   /* plfd $RST, $D */
-  PPC_PLFDonlypc /* 1537 */, PPC_INS_PLFD,
+  PPC_PLFDonlypc /* 1538 */, PPC_INS_PLFD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11695,7 +11703,7 @@
 },
 {
   /* plfd $RST, $addr, 1 */
-  PPC_PLFDpc /* 1538 */, PPC_INS_PLFD,
+  PPC_PLFDpc /* 1539 */, PPC_INS_PLFD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11703,7 +11711,7 @@
 },
 {
   /* plfs $RST, $addr, 0 */
-  PPC_PLFS /* 1539 */, PPC_INS_PLFS,
+  PPC_PLFS /* 1540 */, PPC_INS_PLFS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11711,7 +11719,7 @@
 },
 {
   /* plfs $RST, $addr */
-  PPC_PLFSnopc /* 1540 */, PPC_INS_PLFS,
+  PPC_PLFSnopc /* 1541 */, PPC_INS_PLFS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11719,7 +11727,7 @@
 },
 {
   /* plfs $RST, $D */
-  PPC_PLFSonlypc /* 1541 */, PPC_INS_PLFS,
+  PPC_PLFSonlypc /* 1542 */, PPC_INS_PLFS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11727,7 +11735,7 @@
 },
 {
   /* plfs $RST, $addr, 1 */
-  PPC_PLFSpc /* 1542 */, PPC_INS_PLFS,
+  PPC_PLFSpc /* 1543 */, PPC_INS_PLFS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11735,7 +11743,7 @@
 },
 {
   /* plha $RST, $addr, 0 */
-  PPC_PLHA /* 1543 */, PPC_INS_PLHA,
+  PPC_PLHA /* 1544 */, PPC_INS_PLHA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11743,35 +11751,35 @@
 },
 {
   /* plha $RST, $addr, 0 */
-  PPC_PLHA8 /* 1544 */, PPC_INS_INVALID,
+  PPC_PLHA8 /* 1545 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plha $RST, $addr */
-  PPC_PLHA8nopc /* 1545 */, PPC_INS_INVALID,
+  PPC_PLHA8nopc /* 1546 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plha $RST, $D */
-  PPC_PLHA8onlypc /* 1546 */, PPC_INS_INVALID,
+  PPC_PLHA8onlypc /* 1547 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plha $RST, $addr, 1 */
-  PPC_PLHA8pc /* 1547 */, PPC_INS_INVALID,
+  PPC_PLHA8pc /* 1548 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plha $RST, $addr */
-  PPC_PLHAnopc /* 1548 */, PPC_INS_PLHA,
+  PPC_PLHAnopc /* 1549 */, PPC_INS_PLHA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11779,7 +11787,7 @@
 },
 {
   /* plha $RST, $D */
-  PPC_PLHAonlypc /* 1549 */, PPC_INS_PLHA,
+  PPC_PLHAonlypc /* 1550 */, PPC_INS_PLHA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11787,7 +11795,7 @@
 },
 {
   /* plha $RST, $addr, 1 */
-  PPC_PLHApc /* 1550 */, PPC_INS_PLHA,
+  PPC_PLHApc /* 1551 */, PPC_INS_PLHA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11795,7 +11803,7 @@
 },
 {
   /* plhz $RST, $addr, 0 */
-  PPC_PLHZ /* 1551 */, PPC_INS_PLHZ,
+  PPC_PLHZ /* 1552 */, PPC_INS_PLHZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11803,35 +11811,35 @@
 },
 {
   /* plhz $RST, $addr, 0 */
-  PPC_PLHZ8 /* 1552 */, PPC_INS_INVALID,
+  PPC_PLHZ8 /* 1553 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plhz $RST, $addr */
-  PPC_PLHZ8nopc /* 1553 */, PPC_INS_INVALID,
+  PPC_PLHZ8nopc /* 1554 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plhz $RST, $D */
-  PPC_PLHZ8onlypc /* 1554 */, PPC_INS_INVALID,
+  PPC_PLHZ8onlypc /* 1555 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plhz $RST, $addr, 1 */
-  PPC_PLHZ8pc /* 1555 */, PPC_INS_INVALID,
+  PPC_PLHZ8pc /* 1556 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plhz $RST, $addr */
-  PPC_PLHZnopc /* 1556 */, PPC_INS_PLHZ,
+  PPC_PLHZnopc /* 1557 */, PPC_INS_PLHZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11839,7 +11847,7 @@
 },
 {
   /* plhz $RST, $D */
-  PPC_PLHZonlypc /* 1557 */, PPC_INS_PLHZ,
+  PPC_PLHZonlypc /* 1558 */, PPC_INS_PLHZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11847,7 +11855,7 @@
 },
 {
   /* plhz $RST, $addr, 1 */
-  PPC_PLHZpc /* 1558 */, PPC_INS_PLHZ,
+  PPC_PLHZpc /* 1559 */, PPC_INS_PLHZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11855,7 +11863,7 @@
 },
 {
   /* pli $RT, $SI */
-  PPC_PLI /* 1559 */, PPC_INS_PLI,
+  PPC_PLI /* 1560 */, PPC_INS_PLI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11863,14 +11871,14 @@
 },
 {
   /* pli $RT, $SI */
-  PPC_PLI8 /* 1560 */, PPC_INS_INVALID,
+  PPC_PLI8 /* 1561 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plwa $RST, $addr, 0 */
-  PPC_PLWA /* 1561 */, PPC_INS_PLWA,
+  PPC_PLWA /* 1562 */, PPC_INS_PLWA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11878,35 +11886,35 @@
 },
 {
   /* plwa $RST, $addr, 0 */
-  PPC_PLWA8 /* 1562 */, PPC_INS_INVALID,
+  PPC_PLWA8 /* 1563 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plwa $RST, $addr */
-  PPC_PLWA8nopc /* 1563 */, PPC_INS_INVALID,
+  PPC_PLWA8nopc /* 1564 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plwa $RST, $D */
-  PPC_PLWA8onlypc /* 1564 */, PPC_INS_INVALID,
+  PPC_PLWA8onlypc /* 1565 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plwa $RST, $addr, 1 */
-  PPC_PLWA8pc /* 1565 */, PPC_INS_INVALID,
+  PPC_PLWA8pc /* 1566 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plwa $RST, $addr */
-  PPC_PLWAnopc /* 1566 */, PPC_INS_PLWA,
+  PPC_PLWAnopc /* 1567 */, PPC_INS_PLWA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11914,7 +11922,7 @@
 },
 {
   /* plwa $RST, $D */
-  PPC_PLWAonlypc /* 1567 */, PPC_INS_PLWA,
+  PPC_PLWAonlypc /* 1568 */, PPC_INS_PLWA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11922,7 +11930,7 @@
 },
 {
   /* plwa $RST, $addr, 1 */
-  PPC_PLWApc /* 1568 */, PPC_INS_PLWA,
+  PPC_PLWApc /* 1569 */, PPC_INS_PLWA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11930,7 +11938,7 @@
 },
 {
   /* plwz $RST, $addr, 0 */
-  PPC_PLWZ /* 1569 */, PPC_INS_PLWZ,
+  PPC_PLWZ /* 1570 */, PPC_INS_PLWZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11938,35 +11946,35 @@
 },
 {
   /* plwz $RST, $addr, 0 */
-  PPC_PLWZ8 /* 1570 */, PPC_INS_INVALID,
+  PPC_PLWZ8 /* 1571 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plwz $RST, $addr */
-  PPC_PLWZ8nopc /* 1571 */, PPC_INS_INVALID,
+  PPC_PLWZ8nopc /* 1572 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plwz $RST, $D */
-  PPC_PLWZ8onlypc /* 1572 */, PPC_INS_INVALID,
+  PPC_PLWZ8onlypc /* 1573 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plwz $RST, $addr, 1 */
-  PPC_PLWZ8pc /* 1573 */, PPC_INS_INVALID,
+  PPC_PLWZ8pc /* 1574 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* plwz $RST, $addr */
-  PPC_PLWZnopc /* 1574 */, PPC_INS_PLWZ,
+  PPC_PLWZnopc /* 1575 */, PPC_INS_PLWZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11974,7 +11982,7 @@
 },
 {
   /* plwz $RST, $D */
-  PPC_PLWZonlypc /* 1575 */, PPC_INS_PLWZ,
+  PPC_PLWZonlypc /* 1576 */, PPC_INS_PLWZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11982,7 +11990,7 @@
 },
 {
   /* plwz $RST, $addr, 1 */
-  PPC_PLWZpc /* 1576 */, PPC_INS_PLWZ,
+  PPC_PLWZpc /* 1577 */, PPC_INS_PLWZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11990,7 +11998,7 @@
 },
 {
   /* plxsd $RST, $addr, 0 */
-  PPC_PLXSD /* 1577 */, PPC_INS_PLXSD,
+  PPC_PLXSD /* 1578 */, PPC_INS_PLXSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -11998,7 +12006,7 @@
 },
 {
   /* plxsd $RST, $addr */
-  PPC_PLXSDnopc /* 1578 */, PPC_INS_PLXSD,
+  PPC_PLXSDnopc /* 1579 */, PPC_INS_PLXSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12006,7 +12014,7 @@
 },
 {
   /* plxsd $RST, $D */
-  PPC_PLXSDonlypc /* 1579 */, PPC_INS_PLXSD,
+  PPC_PLXSDonlypc /* 1580 */, PPC_INS_PLXSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12014,7 +12022,7 @@
 },
 {
   /* plxsd $RST, $addr, 1 */
-  PPC_PLXSDpc /* 1580 */, PPC_INS_PLXSD,
+  PPC_PLXSDpc /* 1581 */, PPC_INS_PLXSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12022,7 +12030,7 @@
 },
 {
   /* plxssp $RST, $addr, 0 */
-  PPC_PLXSSP /* 1581 */, PPC_INS_PLXSSP,
+  PPC_PLXSSP /* 1582 */, PPC_INS_PLXSSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12030,7 +12038,7 @@
 },
 {
   /* plxssp $RST, $addr */
-  PPC_PLXSSPnopc /* 1582 */, PPC_INS_PLXSSP,
+  PPC_PLXSSPnopc /* 1583 */, PPC_INS_PLXSSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12038,7 +12046,7 @@
 },
 {
   /* plxssp $RST, $D */
-  PPC_PLXSSPonlypc /* 1583 */, PPC_INS_PLXSSP,
+  PPC_PLXSSPonlypc /* 1584 */, PPC_INS_PLXSSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12046,7 +12054,7 @@
 },
 {
   /* plxssp $RST, $addr, 1 */
-  PPC_PLXSSPpc /* 1584 */, PPC_INS_PLXSSP,
+  PPC_PLXSSPpc /* 1585 */, PPC_INS_PLXSSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12054,7 +12062,7 @@
 },
 {
   /* plxv $XST, $addr, 0 */
-  PPC_PLXV /* 1585 */, PPC_INS_PLXV,
+  PPC_PLXV /* 1586 */, PPC_INS_PLXV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12062,7 +12070,7 @@
 },
 {
   /* plxvp $XTp, $addr, 0 */
-  PPC_PLXVP /* 1586 */, PPC_INS_PLXVP,
+  PPC_PLXVP /* 1587 */, PPC_INS_PLXVP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12070,7 +12078,7 @@
 },
 {
   /* plxvp $XTp, $addr */
-  PPC_PLXVPnopc /* 1587 */, PPC_INS_PLXVP,
+  PPC_PLXVPnopc /* 1588 */, PPC_INS_PLXVP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12078,7 +12086,7 @@
 },
 {
   /* plxvp $XTp, $D */
-  PPC_PLXVPonlypc /* 1588 */, PPC_INS_PLXVP,
+  PPC_PLXVPonlypc /* 1589 */, PPC_INS_PLXVP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12086,7 +12094,7 @@
 },
 {
   /* plxvp $XTp, $addr, 1 */
-  PPC_PLXVPpc /* 1589 */, PPC_INS_PLXVP,
+  PPC_PLXVPpc /* 1590 */, PPC_INS_PLXVP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12094,7 +12102,7 @@
 },
 {
   /* plxv $XST, $addr */
-  PPC_PLXVnopc /* 1590 */, PPC_INS_PLXV,
+  PPC_PLXVnopc /* 1591 */, PPC_INS_PLXV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12102,7 +12110,7 @@
 },
 {
   /* plxv $XST, $D */
-  PPC_PLXVonlypc /* 1591 */, PPC_INS_PLXV,
+  PPC_PLXVonlypc /* 1592 */, PPC_INS_PLXV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12110,7 +12118,7 @@
 },
 {
   /* plxv $XST, $addr, 1 */
-  PPC_PLXVpc /* 1592 */, PPC_INS_PLXV,
+  PPC_PLXVpc /* 1593 */, PPC_INS_PLXV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12118,7 +12126,7 @@
 },
 {
   /* pmxvbf16ger2 $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVBF16GER2 /* 1593 */, PPC_INS_PMXVBF16GER2,
+  PPC_PMXVBF16GER2 /* 1594 */, PPC_INS_PMXVBF16GER2,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12126,7 +12134,7 @@
 },
 {
   /* pmxvbf16ger2nn $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVBF16GER2NN /* 1594 */, PPC_INS_PMXVBF16GER2NN,
+  PPC_PMXVBF16GER2NN /* 1595 */, PPC_INS_PMXVBF16GER2NN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12134,7 +12142,7 @@
 },
 {
   /* pmxvbf16ger2np $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVBF16GER2NP /* 1595 */, PPC_INS_PMXVBF16GER2NP,
+  PPC_PMXVBF16GER2NP /* 1596 */, PPC_INS_PMXVBF16GER2NP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12142,7 +12150,7 @@
 },
 {
   /* pmxvbf16ger2pn $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVBF16GER2PN /* 1596 */, PPC_INS_PMXVBF16GER2PN,
+  PPC_PMXVBF16GER2PN /* 1597 */, PPC_INS_PMXVBF16GER2PN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12150,7 +12158,7 @@
 },
 {
   /* pmxvbf16ger2pp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVBF16GER2PP /* 1597 */, PPC_INS_PMXVBF16GER2PP,
+  PPC_PMXVBF16GER2PP /* 1598 */, PPC_INS_PMXVBF16GER2PP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12158,42 +12166,42 @@
 },
 {
   /* pmxvbf16ger2 $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVBF16GER2W /* 1598 */, PPC_INS_INVALID,
+  PPC_PMXVBF16GER2W /* 1599 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvbf16ger2nn $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVBF16GER2WNN /* 1599 */, PPC_INS_INVALID,
+  PPC_PMXVBF16GER2WNN /* 1600 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvbf16ger2np $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVBF16GER2WNP /* 1600 */, PPC_INS_INVALID,
+  PPC_PMXVBF16GER2WNP /* 1601 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvbf16ger2pn $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVBF16GER2WPN /* 1601 */, PPC_INS_INVALID,
+  PPC_PMXVBF16GER2WPN /* 1602 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvbf16ger2pp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVBF16GER2WPP /* 1602 */, PPC_INS_INVALID,
+  PPC_PMXVBF16GER2WPP /* 1603 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf16ger2 $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVF16GER2 /* 1603 */, PPC_INS_PMXVF16GER2,
+  PPC_PMXVF16GER2 /* 1604 */, PPC_INS_PMXVF16GER2,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12201,7 +12209,7 @@
 },
 {
   /* pmxvf16ger2nn $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVF16GER2NN /* 1604 */, PPC_INS_PMXVF16GER2NN,
+  PPC_PMXVF16GER2NN /* 1605 */, PPC_INS_PMXVF16GER2NN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12209,7 +12217,7 @@
 },
 {
   /* pmxvf16ger2np $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVF16GER2NP /* 1605 */, PPC_INS_PMXVF16GER2NP,
+  PPC_PMXVF16GER2NP /* 1606 */, PPC_INS_PMXVF16GER2NP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12217,7 +12225,7 @@
 },
 {
   /* pmxvf16ger2pn $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVF16GER2PN /* 1606 */, PPC_INS_PMXVF16GER2PN,
+  PPC_PMXVF16GER2PN /* 1607 */, PPC_INS_PMXVF16GER2PN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12225,7 +12233,7 @@
 },
 {
   /* pmxvf16ger2pp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVF16GER2PP /* 1607 */, PPC_INS_PMXVF16GER2PP,
+  PPC_PMXVF16GER2PP /* 1608 */, PPC_INS_PMXVF16GER2PP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12233,42 +12241,42 @@
 },
 {
   /* pmxvf16ger2 $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVF16GER2W /* 1608 */, PPC_INS_INVALID,
+  PPC_PMXVF16GER2W /* 1609 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf16ger2nn $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVF16GER2WNN /* 1609 */, PPC_INS_INVALID,
+  PPC_PMXVF16GER2WNN /* 1610 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf16ger2np $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVF16GER2WNP /* 1610 */, PPC_INS_INVALID,
+  PPC_PMXVF16GER2WNP /* 1611 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf16ger2pn $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVF16GER2WPN /* 1611 */, PPC_INS_INVALID,
+  PPC_PMXVF16GER2WPN /* 1612 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf16ger2pp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVF16GER2WPP /* 1612 */, PPC_INS_INVALID,
+  PPC_PMXVF16GER2WPP /* 1613 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf32ger $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF32GER /* 1613 */, PPC_INS_PMXVF32GER,
+  PPC_PMXVF32GER /* 1614 */, PPC_INS_PMXVF32GER,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12276,7 +12284,7 @@
 },
 {
   /* pmxvf32gernn $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF32GERNN /* 1614 */, PPC_INS_PMXVF32GERNN,
+  PPC_PMXVF32GERNN /* 1615 */, PPC_INS_PMXVF32GERNN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12284,7 +12292,7 @@
 },
 {
   /* pmxvf32gernp $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF32GERNP /* 1615 */, PPC_INS_PMXVF32GERNP,
+  PPC_PMXVF32GERNP /* 1616 */, PPC_INS_PMXVF32GERNP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12292,7 +12300,7 @@
 },
 {
   /* pmxvf32gerpn $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF32GERPN /* 1616 */, PPC_INS_PMXVF32GERPN,
+  PPC_PMXVF32GERPN /* 1617 */, PPC_INS_PMXVF32GERPN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12300,7 +12308,7 @@
 },
 {
   /* pmxvf32gerpp $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF32GERPP /* 1617 */, PPC_INS_PMXVF32GERPP,
+  PPC_PMXVF32GERPP /* 1618 */, PPC_INS_PMXVF32GERPP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12308,42 +12316,42 @@
 },
 {
   /* pmxvf32ger $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF32GERW /* 1618 */, PPC_INS_INVALID,
+  PPC_PMXVF32GERW /* 1619 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf32gernn $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF32GERWNN /* 1619 */, PPC_INS_INVALID,
+  PPC_PMXVF32GERWNN /* 1620 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf32gernp $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF32GERWNP /* 1620 */, PPC_INS_INVALID,
+  PPC_PMXVF32GERWNP /* 1621 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf32gerpn $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF32GERWPN /* 1621 */, PPC_INS_INVALID,
+  PPC_PMXVF32GERWPN /* 1622 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf32gerpp $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF32GERWPP /* 1622 */, PPC_INS_INVALID,
+  PPC_PMXVF32GERWPP /* 1623 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf64ger $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF64GER /* 1623 */, PPC_INS_PMXVF64GER,
+  PPC_PMXVF64GER /* 1624 */, PPC_INS_PMXVF64GER,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12351,7 +12359,7 @@
 },
 {
   /* pmxvf64gernn $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF64GERNN /* 1624 */, PPC_INS_PMXVF64GERNN,
+  PPC_PMXVF64GERNN /* 1625 */, PPC_INS_PMXVF64GERNN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12359,7 +12367,7 @@
 },
 {
   /* pmxvf64gernp $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF64GERNP /* 1625 */, PPC_INS_PMXVF64GERNP,
+  PPC_PMXVF64GERNP /* 1626 */, PPC_INS_PMXVF64GERNP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12367,7 +12375,7 @@
 },
 {
   /* pmxvf64gerpn $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF64GERPN /* 1626 */, PPC_INS_PMXVF64GERPN,
+  PPC_PMXVF64GERPN /* 1627 */, PPC_INS_PMXVF64GERPN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12375,7 +12383,7 @@
 },
 {
   /* pmxvf64gerpp $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF64GERPP /* 1627 */, PPC_INS_PMXVF64GERPP,
+  PPC_PMXVF64GERPP /* 1628 */, PPC_INS_PMXVF64GERPP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12383,42 +12391,42 @@
 },
 {
   /* pmxvf64ger $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF64GERW /* 1628 */, PPC_INS_INVALID,
+  PPC_PMXVF64GERW /* 1629 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf64gernn $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF64GERWNN /* 1629 */, PPC_INS_INVALID,
+  PPC_PMXVF64GERWNN /* 1630 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf64gernp $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF64GERWNP /* 1630 */, PPC_INS_INVALID,
+  PPC_PMXVF64GERWNP /* 1631 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf64gerpn $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF64GERWPN /* 1631 */, PPC_INS_INVALID,
+  PPC_PMXVF64GERWPN /* 1632 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvf64gerpp $AT, $XA, $XB, $XMSK, $YMSK */
-  PPC_PMXVF64GERWPP /* 1632 */, PPC_INS_INVALID,
+  PPC_PMXVF64GERWPP /* 1633 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvi16ger2 $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI16GER2 /* 1633 */, PPC_INS_PMXVI16GER2,
+  PPC_PMXVI16GER2 /* 1634 */, PPC_INS_PMXVI16GER2,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12426,7 +12434,7 @@
 },
 {
   /* pmxvi16ger2pp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI16GER2PP /* 1634 */, PPC_INS_PMXVI16GER2PP,
+  PPC_PMXVI16GER2PP /* 1635 */, PPC_INS_PMXVI16GER2PP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12434,7 +12442,7 @@
 },
 {
   /* pmxvi16ger2s $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI16GER2S /* 1635 */, PPC_INS_PMXVI16GER2S,
+  PPC_PMXVI16GER2S /* 1636 */, PPC_INS_PMXVI16GER2S,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12442,7 +12450,7 @@
 },
 {
   /* pmxvi16ger2spp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI16GER2SPP /* 1636 */, PPC_INS_PMXVI16GER2SPP,
+  PPC_PMXVI16GER2SPP /* 1637 */, PPC_INS_PMXVI16GER2SPP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12450,35 +12458,35 @@
 },
 {
   /* pmxvi16ger2s $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI16GER2SW /* 1637 */, PPC_INS_INVALID,
+  PPC_PMXVI16GER2SW /* 1638 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvi16ger2spp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI16GER2SWPP /* 1638 */, PPC_INS_INVALID,
+  PPC_PMXVI16GER2SWPP /* 1639 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvi16ger2 $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI16GER2W /* 1639 */, PPC_INS_INVALID,
+  PPC_PMXVI16GER2W /* 1640 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvi16ger2pp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI16GER2WPP /* 1640 */, PPC_INS_INVALID,
+  PPC_PMXVI16GER2WPP /* 1641 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvi4ger8 $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI4GER8 /* 1641 */, PPC_INS_PMXVI4GER8,
+  PPC_PMXVI4GER8 /* 1642 */, PPC_INS_PMXVI4GER8,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12486,7 +12494,7 @@
 },
 {
   /* pmxvi4ger8pp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI4GER8PP /* 1642 */, PPC_INS_PMXVI4GER8PP,
+  PPC_PMXVI4GER8PP /* 1643 */, PPC_INS_PMXVI4GER8PP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12494,21 +12502,21 @@
 },
 {
   /* pmxvi4ger8 $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI4GER8W /* 1643 */, PPC_INS_INVALID,
+  PPC_PMXVI4GER8W /* 1644 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvi4ger8pp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI4GER8WPP /* 1644 */, PPC_INS_INVALID,
+  PPC_PMXVI4GER8WPP /* 1645 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvi8ger4 $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI8GER4 /* 1645 */, PPC_INS_PMXVI8GER4,
+  PPC_PMXVI8GER4 /* 1646 */, PPC_INS_PMXVI8GER4,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12516,7 +12524,7 @@
 },
 {
   /* pmxvi8ger4pp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI8GER4PP /* 1646 */, PPC_INS_PMXVI8GER4PP,
+  PPC_PMXVI8GER4PP /* 1647 */, PPC_INS_PMXVI8GER4PP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12524,7 +12532,7 @@
 },
 {
   /* pmxvi8ger4spp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI8GER4SPP /* 1647 */, PPC_INS_PMXVI8GER4SPP,
+  PPC_PMXVI8GER4SPP /* 1648 */, PPC_INS_PMXVI8GER4SPP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, {{ 0 }}
 
@@ -12532,28 +12540,28 @@
 },
 {
   /* pmxvi8ger4 $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI8GER4W /* 1648 */, PPC_INS_INVALID,
+  PPC_PMXVI8GER4W /* 1649 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvi8ger4pp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI8GER4WPP /* 1649 */, PPC_INS_INVALID,
+  PPC_PMXVI8GER4WPP /* 1650 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pmxvi8ger4spp $AT, $XA, $XB, $XMSK, $YMSK, $PMSK */
-  PPC_PMXVI8GER4WSPP /* 1650 */, PPC_INS_INVALID,
+  PPC_PMXVI8GER4WSPP /* 1651 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* popcntb $RA, $RST */
-  PPC_POPCNTB /* 1651 */, PPC_INS_POPCNTB,
+  PPC_POPCNTB /* 1652 */, PPC_INS_POPCNTB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -12561,14 +12569,14 @@
 },
 {
   /* popcntb $RA, $RST */
-  PPC_POPCNTB8 /* 1652 */, PPC_INS_INVALID,
+  PPC_POPCNTB8 /* 1653 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* popcntd $RA, $RST */
-  PPC_POPCNTD /* 1653 */, PPC_INS_POPCNTD,
+  PPC_POPCNTD /* 1654 */, PPC_INS_POPCNTD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -12576,7 +12584,7 @@
 },
 {
   /* popcntw $RA, $RST */
-  PPC_POPCNTW /* 1654 */, PPC_INS_POPCNTW,
+  PPC_POPCNTW /* 1655 */, PPC_INS_POPCNTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -12584,77 +12592,77 @@
 },
 {
   /* #PPC32GOT */
-  PPC_PPC32GOT /* 1655 */, PPC_INS_INVALID,
+  PPC_PPC32GOT /* 1656 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #PPC32PICGOT */
-  PPC_PPC32PICGOT /* 1656 */, PPC_INS_INVALID,
+  PPC_PPC32PICGOT /* 1657 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #PREPARE_PROBED_ALLOCA_32 */
-  PPC_PREPARE_PROBED_ALLOCA_32 /* 1657 */, PPC_INS_INVALID,
+  PPC_PREPARE_PROBED_ALLOCA_32 /* 1658 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #PREPARE_PROBED_ALLOCA_64 */
-  PPC_PREPARE_PROBED_ALLOCA_64 /* 1658 */, PPC_INS_INVALID,
+  PPC_PREPARE_PROBED_ALLOCA_64 /* 1659 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_32 */
-  PPC_PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_32 /* 1659 */, PPC_INS_INVALID,
+  PPC_PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_32 /* 1660 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_64 */
-  PPC_PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_64 /* 1660 */, PPC_INS_INVALID,
+  PPC_PREPARE_PROBED_ALLOCA_NEGSIZE_SAME_REG_64 /* 1661 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #PROBED_ALLOCA_32 */
-  PPC_PROBED_ALLOCA_32 /* 1661 */, PPC_INS_INVALID,
+  PPC_PROBED_ALLOCA_32 /* 1662 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #PROBED_ALLOCA_64 */
-  PPC_PROBED_ALLOCA_64 /* 1662 */, PPC_INS_INVALID,
+  PPC_PROBED_ALLOCA_64 /* 1663 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #PROBED_STACKALLOC_32 */
-  PPC_PROBED_STACKALLOC_32 /* 1663 */, PPC_INS_INVALID,
+  PPC_PROBED_STACKALLOC_32 /* 1664 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #PROBED_STACKALLOC_64 */
-  PPC_PROBED_STACKALLOC_64 /* 1664 */, PPC_INS_INVALID,
+  PPC_PROBED_STACKALLOC_64 /* 1665 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* dcbz_l $RA, $RB */
-  PPC_PSC_DCBZL /* 1665 */, PPC_INS_DCBZ_L,
+  PPC_PSC_DCBZL /* 1666 */, PPC_INS_DCBZ_L,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DCBZL_FORM }}
 
@@ -12662,7 +12670,7 @@
 },
 {
   /* psq_l $FRT, $src, $W, $I */
-  PPC_PSQ_L /* 1666 */, PPC_INS_PSQ_L,
+  PPC_PSQ_L /* 1667 */, PPC_INS_PSQ_L,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_QD }}
 
@@ -12670,7 +12678,7 @@
 },
 {
   /* psq_lu $FRT, $src, $W, $I */
-  PPC_PSQ_LU /* 1667 */, PPC_INS_PSQ_LU,
+  PPC_PSQ_LU /* 1668 */, PPC_INS_PSQ_LU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_QD }}
 
@@ -12678,7 +12686,7 @@
 },
 {
   /* psq_lux $FRT, $RA, $RB, $W, $I */
-  PPC_PSQ_LUX /* 1668 */, PPC_INS_PSQ_LUX,
+  PPC_PSQ_LUX /* 1669 */, PPC_INS_PSQ_LUX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_QI }}
 
@@ -12686,7 +12694,7 @@
 },
 {
   /* psq_lx $FRT, $RA, $RB, $W, $I */
-  PPC_PSQ_LX /* 1669 */, PPC_INS_PSQ_LX,
+  PPC_PSQ_LX /* 1670 */, PPC_INS_PSQ_LX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_QI }}
 
@@ -12694,7 +12702,7 @@
 },
 {
   /* psq_st $FRT, $dst, $W, $I */
-  PPC_PSQ_ST /* 1670 */, PPC_INS_PSQ_ST,
+  PPC_PSQ_ST /* 1671 */, PPC_INS_PSQ_ST,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_QD }}
 
@@ -12702,7 +12710,7 @@
 },
 {
   /* psq_stu $FRT, $dst, $W, $I */
-  PPC_PSQ_STU /* 1671 */, PPC_INS_PSQ_STU,
+  PPC_PSQ_STU /* 1672 */, PPC_INS_PSQ_STU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_QD }}
 
@@ -12710,7 +12718,7 @@
 },
 {
   /* psq_stux $FRT, $RA, $RB, $W, $I */
-  PPC_PSQ_STUX /* 1672 */, PPC_INS_PSQ_STUX,
+  PPC_PSQ_STUX /* 1673 */, PPC_INS_PSQ_STUX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_QI }}
 
@@ -12718,7 +12726,7 @@
 },
 {
   /* psq_stx $FRT, $RA, $RB, $W, $I */
-  PPC_PSQ_STX /* 1673 */, PPC_INS_PSQ_STX,
+  PPC_PSQ_STX /* 1674 */, PPC_INS_PSQ_STX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_QI }}
 
@@ -12726,7 +12734,7 @@
 },
 {
   /* pstb $RST, $addr, 0 */
-  PPC_PSTB /* 1674 */, PPC_INS_PSTB,
+  PPC_PSTB /* 1675 */, PPC_INS_PSTB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12734,35 +12742,35 @@
 },
 {
   /* pstb $RST, $addr, 0 */
-  PPC_PSTB8 /* 1675 */, PPC_INS_INVALID,
+  PPC_PSTB8 /* 1676 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pstb $RST, $addr */
-  PPC_PSTB8nopc /* 1676 */, PPC_INS_INVALID,
+  PPC_PSTB8nopc /* 1677 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pstb $RST, $D */
-  PPC_PSTB8onlypc /* 1677 */, PPC_INS_INVALID,
+  PPC_PSTB8onlypc /* 1678 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pstb $RST, $addr, 1 */
-  PPC_PSTB8pc /* 1678 */, PPC_INS_INVALID,
+  PPC_PSTB8pc /* 1679 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pstb $RST, $addr */
-  PPC_PSTBnopc /* 1679 */, PPC_INS_PSTB,
+  PPC_PSTBnopc /* 1680 */, PPC_INS_PSTB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12770,7 +12778,7 @@
 },
 {
   /* pstb $RST, $D */
-  PPC_PSTBonlypc /* 1680 */, PPC_INS_PSTB,
+  PPC_PSTBonlypc /* 1681 */, PPC_INS_PSTB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12778,7 +12786,7 @@
 },
 {
   /* pstb $RST, $addr, 1 */
-  PPC_PSTBpc /* 1681 */, PPC_INS_PSTB,
+  PPC_PSTBpc /* 1682 */, PPC_INS_PSTB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12786,7 +12794,7 @@
 },
 {
   /* pstd $RST, $addr, 0 */
-  PPC_PSTD /* 1682 */, PPC_INS_PSTD,
+  PPC_PSTD /* 1683 */, PPC_INS_PSTD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12794,7 +12802,7 @@
 },
 {
   /* pstd $RST, $addr */
-  PPC_PSTDnopc /* 1683 */, PPC_INS_PSTD,
+  PPC_PSTDnopc /* 1684 */, PPC_INS_PSTD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12802,7 +12810,7 @@
 },
 {
   /* pstd $RST, $D */
-  PPC_PSTDonlypc /* 1684 */, PPC_INS_PSTD,
+  PPC_PSTDonlypc /* 1685 */, PPC_INS_PSTD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12810,7 +12818,7 @@
 },
 {
   /* pstd $RST, $addr, 1 */
-  PPC_PSTDpc /* 1685 */, PPC_INS_PSTD,
+  PPC_PSTDpc /* 1686 */, PPC_INS_PSTD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12818,7 +12826,7 @@
 },
 {
   /* pstfd $RST, $addr, 0 */
-  PPC_PSTFD /* 1686 */, PPC_INS_PSTFD,
+  PPC_PSTFD /* 1687 */, PPC_INS_PSTFD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12826,7 +12834,7 @@
 },
 {
   /* pstfd $RST, $addr */
-  PPC_PSTFDnopc /* 1687 */, PPC_INS_PSTFD,
+  PPC_PSTFDnopc /* 1688 */, PPC_INS_PSTFD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12834,7 +12842,7 @@
 },
 {
   /* pstfd $RST, $D */
-  PPC_PSTFDonlypc /* 1688 */, PPC_INS_PSTFD,
+  PPC_PSTFDonlypc /* 1689 */, PPC_INS_PSTFD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12842,7 +12850,7 @@
 },
 {
   /* pstfd $RST, $addr, 1 */
-  PPC_PSTFDpc /* 1689 */, PPC_INS_PSTFD,
+  PPC_PSTFDpc /* 1690 */, PPC_INS_PSTFD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12850,7 +12858,7 @@
 },
 {
   /* pstfs $RST, $addr, 0 */
-  PPC_PSTFS /* 1690 */, PPC_INS_PSTFS,
+  PPC_PSTFS /* 1691 */, PPC_INS_PSTFS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12858,7 +12866,7 @@
 },
 {
   /* pstfs $RST, $addr */
-  PPC_PSTFSnopc /* 1691 */, PPC_INS_PSTFS,
+  PPC_PSTFSnopc /* 1692 */, PPC_INS_PSTFS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12866,7 +12874,7 @@
 },
 {
   /* pstfs $RST, $D */
-  PPC_PSTFSonlypc /* 1692 */, PPC_INS_PSTFS,
+  PPC_PSTFSonlypc /* 1693 */, PPC_INS_PSTFS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12874,7 +12882,7 @@
 },
 {
   /* pstfs $RST, $addr, 1 */
-  PPC_PSTFSpc /* 1693 */, PPC_INS_PSTFS,
+  PPC_PSTFSpc /* 1694 */, PPC_INS_PSTFS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12882,7 +12890,7 @@
 },
 {
   /* psth $RST, $addr, 0 */
-  PPC_PSTH /* 1694 */, PPC_INS_PSTH,
+  PPC_PSTH /* 1695 */, PPC_INS_PSTH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12890,35 +12898,35 @@
 },
 {
   /* psth $RST, $addr, 0 */
-  PPC_PSTH8 /* 1695 */, PPC_INS_INVALID,
+  PPC_PSTH8 /* 1696 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* psth $RST, $addr */
-  PPC_PSTH8nopc /* 1696 */, PPC_INS_INVALID,
+  PPC_PSTH8nopc /* 1697 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* psth $RST, $D */
-  PPC_PSTH8onlypc /* 1697 */, PPC_INS_INVALID,
+  PPC_PSTH8onlypc /* 1698 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* psth $RST, $addr, 1 */
-  PPC_PSTH8pc /* 1698 */, PPC_INS_INVALID,
+  PPC_PSTH8pc /* 1699 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* psth $RST, $addr */
-  PPC_PSTHnopc /* 1699 */, PPC_INS_PSTH,
+  PPC_PSTHnopc /* 1700 */, PPC_INS_PSTH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12926,7 +12934,7 @@
 },
 {
   /* psth $RST, $D */
-  PPC_PSTHonlypc /* 1700 */, PPC_INS_PSTH,
+  PPC_PSTHonlypc /* 1701 */, PPC_INS_PSTH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12934,7 +12942,7 @@
 },
 {
   /* psth $RST, $addr, 1 */
-  PPC_PSTHpc /* 1701 */, PPC_INS_PSTH,
+  PPC_PSTHpc /* 1702 */, PPC_INS_PSTH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12942,7 +12950,7 @@
 },
 {
   /* pstw $RST, $addr, 0 */
-  PPC_PSTW /* 1702 */, PPC_INS_PSTW,
+  PPC_PSTW /* 1703 */, PPC_INS_PSTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12950,35 +12958,35 @@
 },
 {
   /* pstw $RST, $addr, 0 */
-  PPC_PSTW8 /* 1703 */, PPC_INS_INVALID,
+  PPC_PSTW8 /* 1704 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pstw $RST, $addr */
-  PPC_PSTW8nopc /* 1704 */, PPC_INS_INVALID,
+  PPC_PSTW8nopc /* 1705 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pstw $RST, $D */
-  PPC_PSTW8onlypc /* 1705 */, PPC_INS_INVALID,
+  PPC_PSTW8onlypc /* 1706 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pstw $RST, $addr, 1 */
-  PPC_PSTW8pc /* 1706 */, PPC_INS_INVALID,
+  PPC_PSTW8pc /* 1707 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* pstw $RST, $addr */
-  PPC_PSTWnopc /* 1707 */, PPC_INS_PSTW,
+  PPC_PSTWnopc /* 1708 */, PPC_INS_PSTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12986,7 +12994,7 @@
 },
 {
   /* pstw $RST, $D */
-  PPC_PSTWonlypc /* 1708 */, PPC_INS_PSTW,
+  PPC_PSTWonlypc /* 1709 */, PPC_INS_PSTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -12994,7 +13002,7 @@
 },
 {
   /* pstw $RST, $addr, 1 */
-  PPC_PSTWpc /* 1709 */, PPC_INS_PSTW,
+  PPC_PSTWpc /* 1710 */, PPC_INS_PSTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13002,7 +13010,7 @@
 },
 {
   /* pstxsd $RST, $addr, 0 */
-  PPC_PSTXSD /* 1710 */, PPC_INS_PSTXSD,
+  PPC_PSTXSD /* 1711 */, PPC_INS_PSTXSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13010,7 +13018,7 @@
 },
 {
   /* pstxsd $RST, $addr */
-  PPC_PSTXSDnopc /* 1711 */, PPC_INS_PSTXSD,
+  PPC_PSTXSDnopc /* 1712 */, PPC_INS_PSTXSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13018,7 +13026,7 @@
 },
 {
   /* pstxsd $RST, $D */
-  PPC_PSTXSDonlypc /* 1712 */, PPC_INS_PSTXSD,
+  PPC_PSTXSDonlypc /* 1713 */, PPC_INS_PSTXSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13026,7 +13034,7 @@
 },
 {
   /* pstxsd $RST, $addr, 1 */
-  PPC_PSTXSDpc /* 1713 */, PPC_INS_PSTXSD,
+  PPC_PSTXSDpc /* 1714 */, PPC_INS_PSTXSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13034,7 +13042,7 @@
 },
 {
   /* pstxssp $RST, $addr, 0 */
-  PPC_PSTXSSP /* 1714 */, PPC_INS_PSTXSSP,
+  PPC_PSTXSSP /* 1715 */, PPC_INS_PSTXSSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13042,7 +13050,7 @@
 },
 {
   /* pstxssp $RST, $addr */
-  PPC_PSTXSSPnopc /* 1715 */, PPC_INS_PSTXSSP,
+  PPC_PSTXSSPnopc /* 1716 */, PPC_INS_PSTXSSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13050,7 +13058,7 @@
 },
 {
   /* pstxssp $RST, $D */
-  PPC_PSTXSSPonlypc /* 1716 */, PPC_INS_PSTXSSP,
+  PPC_PSTXSSPonlypc /* 1717 */, PPC_INS_PSTXSSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13058,7 +13066,7 @@
 },
 {
   /* pstxssp $RST, $addr, 1 */
-  PPC_PSTXSSPpc /* 1717 */, PPC_INS_PSTXSSP,
+  PPC_PSTXSSPpc /* 1718 */, PPC_INS_PSTXSSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13066,7 +13074,7 @@
 },
 {
   /* pstxv $XST, $addr, 0 */
-  PPC_PSTXV /* 1718 */, PPC_INS_PSTXV,
+  PPC_PSTXV /* 1719 */, PPC_INS_PSTXV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13074,7 +13082,7 @@
 },
 {
   /* pstxvp $XTp, $addr, 0 */
-  PPC_PSTXVP /* 1719 */, PPC_INS_PSTXVP,
+  PPC_PSTXVP /* 1720 */, PPC_INS_PSTXVP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13082,7 +13090,7 @@
 },
 {
   /* pstxvp $XTp, $addr */
-  PPC_PSTXVPnopc /* 1720 */, PPC_INS_PSTXVP,
+  PPC_PSTXVPnopc /* 1721 */, PPC_INS_PSTXVP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13090,7 +13098,7 @@
 },
 {
   /* pstxvp $XTp, $D */
-  PPC_PSTXVPonlypc /* 1721 */, PPC_INS_PSTXVP,
+  PPC_PSTXVPonlypc /* 1722 */, PPC_INS_PSTXVP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13098,7 +13106,7 @@
 },
 {
   /* pstxvp $XTp, $addr, 1 */
-  PPC_PSTXVPpc /* 1722 */, PPC_INS_PSTXVP,
+  PPC_PSTXVPpc /* 1723 */, PPC_INS_PSTXVP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13106,7 +13114,7 @@
 },
 {
   /* pstxv $XST, $addr */
-  PPC_PSTXVnopc /* 1723 */, PPC_INS_PSTXV,
+  PPC_PSTXVnopc /* 1724 */, PPC_INS_PSTXV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13114,7 +13122,7 @@
 },
 {
   /* pstxv $XST, $D */
-  PPC_PSTXVonlypc /* 1724 */, PPC_INS_PSTXV,
+  PPC_PSTXVonlypc /* 1725 */, PPC_INS_PSTXV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13122,7 +13130,7 @@
 },
 {
   /* pstxv $XST, $addr, 1 */
-  PPC_PSTXVpc /* 1725 */, PPC_INS_PSTXV,
+  PPC_PSTXVpc /* 1726 */, PPC_INS_PSTXV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -13130,7 +13138,7 @@
 },
 {
   /* ps_abs $FRT, $FRB */
-  PPC_PS_ABS /* 1726 */, PPC_INS_PS_ABS,
+  PPC_PS_ABS /* 1727 */, PPC_INS_PS_ABS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13138,7 +13146,7 @@
 },
 {
   /* ps_abs. $FRT, $FRB */
-  PPC_PS_ABSo /* 1727 */, PPC_INS_PS_ABS,
+  PPC_PS_ABSo /* 1728 */, PPC_INS_PS_ABS,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13146,7 +13154,7 @@
 },
 {
   /* ps_add $FRT, $FRA, $FRB */
-  PPC_PS_ADD /* 1728 */, PPC_INS_PS_ADD,
+  PPC_PS_ADD /* 1729 */, PPC_INS_PS_ADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13154,7 +13162,7 @@
 },
 {
   /* ps_add. $FRT, $FRA, $FRB */
-  PPC_PS_ADDo /* 1729 */, PPC_INS_PS_ADD,
+  PPC_PS_ADDo /* 1730 */, PPC_INS_PS_ADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13162,7 +13170,7 @@
 },
 {
   /* ps_cmpo0 $BF, $FRA, $FRB */
-  PPC_PS_CMPO0 /* 1730 */, PPC_INS_PS_CMPO0,
+  PPC_PS_CMPO0 /* 1731 */, PPC_INS_PS_CMPO0,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_C }}
 
@@ -13170,7 +13178,7 @@
 },
 {
   /* ps_cmpo1 $BF, $FRA, $FRB */
-  PPC_PS_CMPO1 /* 1731 */, PPC_INS_PS_CMPO1,
+  PPC_PS_CMPO1 /* 1732 */, PPC_INS_PS_CMPO1,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_C }}
 
@@ -13178,7 +13186,7 @@
 },
 {
   /* ps_cmpu0 $BF, $FRA, $FRB */
-  PPC_PS_CMPU0 /* 1732 */, PPC_INS_PS_CMPU0,
+  PPC_PS_CMPU0 /* 1733 */, PPC_INS_PS_CMPU0,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_C }}
 
@@ -13186,7 +13194,7 @@
 },
 {
   /* ps_cmpu1 $BF, $FRA, $FRB */
-  PPC_PS_CMPU1 /* 1733 */, PPC_INS_PS_CMPU1,
+  PPC_PS_CMPU1 /* 1734 */, PPC_INS_PS_CMPU1,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_C }}
 
@@ -13194,7 +13202,7 @@
 },
 {
   /* ps_div $FRT, $FRA, $FRB */
-  PPC_PS_DIV /* 1734 */, PPC_INS_PS_DIV,
+  PPC_PS_DIV /* 1735 */, PPC_INS_PS_DIV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13202,7 +13210,7 @@
 },
 {
   /* ps_div. $FRT, $FRA, $FRB */
-  PPC_PS_DIVo /* 1735 */, PPC_INS_PS_DIV,
+  PPC_PS_DIVo /* 1736 */, PPC_INS_PS_DIV,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13210,7 +13218,7 @@
 },
 {
   /* ps_madd $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_MADD /* 1736 */, PPC_INS_PS_MADD,
+  PPC_PS_MADD /* 1737 */, PPC_INS_PS_MADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13218,7 +13226,7 @@
 },
 {
   /* ps_madds0 $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_MADDS0 /* 1737 */, PPC_INS_PS_MADDS0,
+  PPC_PS_MADDS0 /* 1738 */, PPC_INS_PS_MADDS0,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13226,7 +13234,7 @@
 },
 {
   /* ps_madds0. $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_MADDS0o /* 1738 */, PPC_INS_PS_MADDS0,
+  PPC_PS_MADDS0o /* 1739 */, PPC_INS_PS_MADDS0,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13234,7 +13242,7 @@
 },
 {
   /* ps_madds1 $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_MADDS1 /* 1739 */, PPC_INS_PS_MADDS1,
+  PPC_PS_MADDS1 /* 1740 */, PPC_INS_PS_MADDS1,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13242,7 +13250,7 @@
 },
 {
   /* ps_madds1. $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_MADDS1o /* 1740 */, PPC_INS_PS_MADDS1,
+  PPC_PS_MADDS1o /* 1741 */, PPC_INS_PS_MADDS1,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13250,7 +13258,7 @@
 },
 {
   /* ps_madd. $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_MADDo /* 1741 */, PPC_INS_PS_MADD,
+  PPC_PS_MADDo /* 1742 */, PPC_INS_PS_MADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13258,7 +13266,7 @@
 },
 {
   /* ps_merge00 $FRT, $FRA, $FRB */
-  PPC_PS_MERGE00 /* 1742 */, PPC_INS_PS_MERGE00,
+  PPC_PS_MERGE00 /* 1743 */, PPC_INS_PS_MERGE00,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13266,7 +13274,7 @@
 },
 {
   /* ps_merge00. $FRT, $FRA, $FRB */
-  PPC_PS_MERGE00o /* 1743 */, PPC_INS_PS_MERGE00,
+  PPC_PS_MERGE00o /* 1744 */, PPC_INS_PS_MERGE00,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13274,7 +13282,7 @@
 },
 {
   /* ps_merge01 $FRT, $FRA, $FRB */
-  PPC_PS_MERGE01 /* 1744 */, PPC_INS_PS_MERGE01,
+  PPC_PS_MERGE01 /* 1745 */, PPC_INS_PS_MERGE01,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13282,7 +13290,7 @@
 },
 {
   /* ps_merge01. $FRT, $FRA, $FRB */
-  PPC_PS_MERGE01o /* 1745 */, PPC_INS_PS_MERGE01,
+  PPC_PS_MERGE01o /* 1746 */, PPC_INS_PS_MERGE01,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13290,7 +13298,7 @@
 },
 {
   /* ps_merge10 $FRT, $FRA, $FRB */
-  PPC_PS_MERGE10 /* 1746 */, PPC_INS_PS_MERGE10,
+  PPC_PS_MERGE10 /* 1747 */, PPC_INS_PS_MERGE10,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13298,7 +13306,7 @@
 },
 {
   /* ps_merge10. $FRT, $FRA, $FRB */
-  PPC_PS_MERGE10o /* 1747 */, PPC_INS_PS_MERGE10,
+  PPC_PS_MERGE10o /* 1748 */, PPC_INS_PS_MERGE10,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13306,7 +13314,7 @@
 },
 {
   /* ps_merge11 $FRT, $FRA, $FRB */
-  PPC_PS_MERGE11 /* 1748 */, PPC_INS_PS_MERGE11,
+  PPC_PS_MERGE11 /* 1749 */, PPC_INS_PS_MERGE11,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13314,7 +13322,7 @@
 },
 {
   /* ps_merge11. $FRT, $FRA, $FRB */
-  PPC_PS_MERGE11o /* 1749 */, PPC_INS_PS_MERGE11,
+  PPC_PS_MERGE11o /* 1750 */, PPC_INS_PS_MERGE11,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13322,7 +13330,7 @@
 },
 {
   /* ps_mr $FRT, $FRB */
-  PPC_PS_MR /* 1750 */, PPC_INS_PS_MR,
+  PPC_PS_MR /* 1751 */, PPC_INS_PS_MR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13330,7 +13338,7 @@
 },
 {
   /* ps_mr. $FRT, $FRB */
-  PPC_PS_MRo /* 1751 */, PPC_INS_PS_MR,
+  PPC_PS_MRo /* 1752 */, PPC_INS_PS_MR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13338,7 +13346,7 @@
 },
 {
   /* ps_msub $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_MSUB /* 1752 */, PPC_INS_PS_MSUB,
+  PPC_PS_MSUB /* 1753 */, PPC_INS_PS_MSUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13346,7 +13354,7 @@
 },
 {
   /* ps_msub. $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_MSUBo /* 1753 */, PPC_INS_PS_MSUB,
+  PPC_PS_MSUBo /* 1754 */, PPC_INS_PS_MSUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13354,7 +13362,7 @@
 },
 {
   /* ps_mul $FRT, $FRA, $FRC */
-  PPC_PS_MUL /* 1754 */, PPC_INS_PS_MUL,
+  PPC_PS_MUL /* 1755 */, PPC_INS_PS_MUL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13362,7 +13370,7 @@
 },
 {
   /* ps_muls0 $FRT, $FRA, $FRC */
-  PPC_PS_MULS0 /* 1755 */, PPC_INS_PS_MULS0,
+  PPC_PS_MULS0 /* 1756 */, PPC_INS_PS_MULS0,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13370,7 +13378,7 @@
 },
 {
   /* ps_muls0. $FRT, $FRA, $FRC */
-  PPC_PS_MULS0o /* 1756 */, PPC_INS_PS_MULS0,
+  PPC_PS_MULS0o /* 1757 */, PPC_INS_PS_MULS0,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13378,7 +13386,7 @@
 },
 {
   /* ps_muls1 $FRT, $FRA, $FRC */
-  PPC_PS_MULS1 /* 1757 */, PPC_INS_PS_MULS1,
+  PPC_PS_MULS1 /* 1758 */, PPC_INS_PS_MULS1,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13386,7 +13394,7 @@
 },
 {
   /* ps_muls1. $FRT, $FRA, $FRC */
-  PPC_PS_MULS1o /* 1758 */, PPC_INS_PS_MULS1,
+  PPC_PS_MULS1o /* 1759 */, PPC_INS_PS_MULS1,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13394,7 +13402,7 @@
 },
 {
   /* ps_mul. $FRT, $FRA, $FRC */
-  PPC_PS_MULo /* 1759 */, PPC_INS_PS_MUL,
+  PPC_PS_MULo /* 1760 */, PPC_INS_PS_MUL,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13402,7 +13410,7 @@
 },
 {
   /* ps_nabs $FRT, $FRB */
-  PPC_PS_NABS /* 1760 */, PPC_INS_PS_NABS,
+  PPC_PS_NABS /* 1761 */, PPC_INS_PS_NABS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13410,7 +13418,7 @@
 },
 {
   /* ps_nabs. $FRT, $FRB */
-  PPC_PS_NABSo /* 1761 */, PPC_INS_PS_NABS,
+  PPC_PS_NABSo /* 1762 */, PPC_INS_PS_NABS,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13418,7 +13426,7 @@
 },
 {
   /* ps_neg $FRT, $FRB */
-  PPC_PS_NEG /* 1762 */, PPC_INS_PS_NEG,
+  PPC_PS_NEG /* 1763 */, PPC_INS_PS_NEG,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13426,7 +13434,7 @@
 },
 {
   /* ps_neg. $FRT, $FRB */
-  PPC_PS_NEGo /* 1763 */, PPC_INS_PS_NEG,
+  PPC_PS_NEGo /* 1764 */, PPC_INS_PS_NEG,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_Y }}
 
@@ -13434,7 +13442,7 @@
 },
 {
   /* ps_nmadd $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_NMADD /* 1764 */, PPC_INS_PS_NMADD,
+  PPC_PS_NMADD /* 1765 */, PPC_INS_PS_NMADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13442,7 +13450,7 @@
 },
 {
   /* ps_nmadd. $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_NMADDo /* 1765 */, PPC_INS_PS_NMADD,
+  PPC_PS_NMADDo /* 1766 */, PPC_INS_PS_NMADD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13450,7 +13458,7 @@
 },
 {
   /* ps_nmsub $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_NMSUB /* 1766 */, PPC_INS_PS_NMSUB,
+  PPC_PS_NMSUB /* 1767 */, PPC_INS_PS_NMSUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13458,7 +13466,7 @@
 },
 {
   /* ps_nmsub. $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_NMSUBo /* 1767 */, PPC_INS_PS_NMSUB,
+  PPC_PS_NMSUBo /* 1768 */, PPC_INS_PS_NMSUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13466,7 +13474,7 @@
 },
 {
   /* ps_res $FRT, $FRB */
-  PPC_PS_RES /* 1768 */, PPC_INS_PS_RES,
+  PPC_PS_RES /* 1769 */, PPC_INS_PS_RES,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13474,7 +13482,7 @@
 },
 {
   /* ps_res. $FRT, $FRB */
-  PPC_PS_RESo /* 1769 */, PPC_INS_PS_RES,
+  PPC_PS_RESo /* 1770 */, PPC_INS_PS_RES,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13482,7 +13490,7 @@
 },
 {
   /* ps_rsqrte $FRT, $FRB */
-  PPC_PS_RSQRTE /* 1770 */, PPC_INS_PS_RSQRTE,
+  PPC_PS_RSQRTE /* 1771 */, PPC_INS_PS_RSQRTE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13490,7 +13498,7 @@
 },
 {
   /* ps_rsqrte. $FRT, $FRB */
-  PPC_PS_RSQRTEo /* 1771 */, PPC_INS_PS_RSQRTE,
+  PPC_PS_RSQRTEo /* 1772 */, PPC_INS_PS_RSQRTE,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13498,7 +13506,7 @@
 },
 {
   /* ps_sel $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_SEL /* 1772 */, PPC_INS_PS_SEL,
+  PPC_PS_SEL /* 1773 */, PPC_INS_PS_SEL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13506,7 +13514,7 @@
 },
 {
   /* ps_sel. $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_SELo /* 1773 */, PPC_INS_PS_SEL,
+  PPC_PS_SELo /* 1774 */, PPC_INS_PS_SEL,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13514,7 +13522,7 @@
 },
 {
   /* ps_sub $FRT, $FRA, $FRB */
-  PPC_PS_SUB /* 1774 */, PPC_INS_PS_SUB,
+  PPC_PS_SUB /* 1775 */, PPC_INS_PS_SUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13522,7 +13530,7 @@
 },
 {
   /* ps_sub. $FRT, $FRA, $FRB */
-  PPC_PS_SUBo /* 1775 */, PPC_INS_PS_SUB,
+  PPC_PS_SUBo /* 1776 */, PPC_INS_PS_SUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13530,7 +13538,7 @@
 },
 {
   /* ps_sum0 $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_SUM0 /* 1776 */, PPC_INS_PS_SUM0,
+  PPC_PS_SUM0 /* 1777 */, PPC_INS_PS_SUM0,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13538,7 +13546,7 @@
 },
 {
   /* ps_sum0. $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_SUM0o /* 1777 */, PPC_INS_PS_SUM0,
+  PPC_PS_SUM0o /* 1778 */, PPC_INS_PS_SUM0,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13546,7 +13554,7 @@
 },
 {
   /* ps_sum1 $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_SUM1 /* 1778 */, PPC_INS_PS_SUM1,
+  PPC_PS_SUM1 /* 1779 */, PPC_INS_PS_SUM1,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13554,7 +13562,7 @@
 },
 {
   /* ps_sum1. $FRT, $FRA, $FRC, $FRB */
-  PPC_PS_SUM1o /* 1779 */, PPC_INS_PS_SUM1,
+  PPC_PS_SUM1o /* 1780 */, PPC_INS_PS_SUM1,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR1, 0 }, { PPC_FEATURE_HASPS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_PSFORM_X }}
 
@@ -13562,14 +13570,14 @@
 },
 {
   /* #PPCEIEIO */
-  PPC_PseudoEIEIO /* 1780 */, PPC_INS_INVALID,
+  PPC_PseudoEIEIO /* 1781 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvaligni $FRT, $FRA, $FRB, $idx */
-  PPC_QVALIGNI /* 1781 */, PPC_INS_QVALIGNI,
+  PPC_QVALIGNI /* 1782 */, PPC_INS_QVALIGNI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_Z23FORM_1 }}
 
@@ -13577,21 +13585,21 @@
 },
 {
   /* qvaligni $FRT, $FRA, $FRB, $idx */
-  PPC_QVALIGNIb /* 1782 */, PPC_INS_INVALID,
+  PPC_QVALIGNIb /* 1783 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvaligni $FRT, $FRA, $FRB, $idx */
-  PPC_QVALIGNIs /* 1783 */, PPC_INS_INVALID,
+  PPC_QVALIGNIs /* 1784 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvesplati $FRT, $FRA, $idx */
-  PPC_QVESPLATI /* 1784 */, PPC_INS_QVESPLATI,
+  PPC_QVESPLATI /* 1785 */, PPC_INS_QVESPLATI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_Z23FORM_1 }}
 
@@ -13599,21 +13607,21 @@
 },
 {
   /* qvesplati $FRT, $FRA, $idx */
-  PPC_QVESPLATIb /* 1785 */, PPC_INS_INVALID,
+  PPC_QVESPLATIb /* 1786 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvesplati $FRT, $FRA, $idx */
-  PPC_QVESPLATIs /* 1786 */, PPC_INS_INVALID,
+  PPC_QVESPLATIs /* 1787 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfabs $FRT, $FRB */
-  PPC_QVFABS /* 1787 */, PPC_INS_QVFABS,
+  PPC_QVFABS /* 1788 */, PPC_INS_QVFABS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13621,14 +13629,14 @@
 },
 {
   /* qvfabs $FRT, $FRB */
-  PPC_QVFABSs /* 1788 */, PPC_INS_INVALID,
+  PPC_QVFABSs /* 1789 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfadd $FRT, $FRA, $FRB */
-  PPC_QVFADD /* 1789 */, PPC_INS_QVFADD,
+  PPC_QVFADD /* 1790 */, PPC_INS_QVFADD,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -13636,14 +13644,14 @@
 },
 {
   /* qvfadds $FRT, $FRA, $FRB */
-  PPC_QVFADDS /* 1790 */, PPC_INS_INVALID,
+  PPC_QVFADDS /* 1791 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfadds $FRT, $FRA, $FRB */
-  PPC_QVFADDSs /* 1791 */, PPC_INS_QVFADDS,
+  PPC_QVFADDSs /* 1792 */, PPC_INS_QVFADDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -13651,7 +13659,7 @@
 },
 {
   /* qvfcfid $FRT, $FRB */
-  PPC_QVFCFID /* 1792 */, PPC_INS_QVFCFID,
+  PPC_QVFCFID /* 1793 */, PPC_INS_QVFCFID,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13659,7 +13667,7 @@
 },
 {
   /* qvfcfids $FRT, $FRB */
-  PPC_QVFCFIDS /* 1793 */, PPC_INS_QVFCFIDS,
+  PPC_QVFCFIDS /* 1794 */, PPC_INS_QVFCFIDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13667,7 +13675,7 @@
 },
 {
   /* qvfcfidu $FRT, $FRB */
-  PPC_QVFCFIDU /* 1794 */, PPC_INS_QVFCFIDU,
+  PPC_QVFCFIDU /* 1795 */, PPC_INS_QVFCFIDU,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13675,7 +13683,7 @@
 },
 {
   /* qvfcfidus $FRT, $FRB */
-  PPC_QVFCFIDUS /* 1795 */, PPC_INS_QVFCFIDUS,
+  PPC_QVFCFIDUS /* 1796 */, PPC_INS_QVFCFIDUS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13683,21 +13691,21 @@
 },
 {
   /* qvfcfid $FRT, $FRB */
-  PPC_QVFCFIDb /* 1796 */, PPC_INS_INVALID,
+  PPC_QVFCFIDb /* 1797 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfcmpeq $FRT, $FRA, $FRB */
-  PPC_QVFCMPEQ /* 1797 */, PPC_INS_INVALID,
+  PPC_QVFCMPEQ /* 1798 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfcmpeq $FRT, $FRA, $FRB */
-  PPC_QVFCMPEQb /* 1798 */, PPC_INS_QVFCMPEQ,
+  PPC_QVFCMPEQb /* 1799 */, PPC_INS_QVFCMPEQ,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13705,21 +13713,21 @@
 },
 {
   /* qvfcmpeq $FRT, $FRA, $FRB */
-  PPC_QVFCMPEQbs /* 1799 */, PPC_INS_INVALID,
+  PPC_QVFCMPEQbs /* 1800 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfcmpgt $FRT, $FRA, $FRB */
-  PPC_QVFCMPGT /* 1800 */, PPC_INS_INVALID,
+  PPC_QVFCMPGT /* 1801 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfcmpgt $FRT, $FRA, $FRB */
-  PPC_QVFCMPGTb /* 1801 */, PPC_INS_QVFCMPGT,
+  PPC_QVFCMPGTb /* 1802 */, PPC_INS_QVFCMPGT,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13727,21 +13735,21 @@
 },
 {
   /* qvfcmpgt $FRT, $FRA, $FRB */
-  PPC_QVFCMPGTbs /* 1802 */, PPC_INS_INVALID,
+  PPC_QVFCMPGTbs /* 1803 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfcmplt $FRT, $FRA, $FRB */
-  PPC_QVFCMPLT /* 1803 */, PPC_INS_INVALID,
+  PPC_QVFCMPLT /* 1804 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfcmplt $FRT, $FRA, $FRB */
-  PPC_QVFCMPLTb /* 1804 */, PPC_INS_QVFCMPLT,
+  PPC_QVFCMPLTb /* 1805 */, PPC_INS_QVFCMPLT,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13749,14 +13757,14 @@
 },
 {
   /* qvfcmplt $FRT, $FRA, $FRB */
-  PPC_QVFCMPLTbs /* 1805 */, PPC_INS_INVALID,
+  PPC_QVFCMPLTbs /* 1806 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfcpsgn $FRT, $FRA, $FRB */
-  PPC_QVFCPSGN /* 1806 */, PPC_INS_QVFCPSGN,
+  PPC_QVFCPSGN /* 1807 */, PPC_INS_QVFCPSGN,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13764,14 +13772,14 @@
 },
 {
   /* qvfcpsgn $FRT, $FRA, $FRB */
-  PPC_QVFCPSGNs /* 1807 */, PPC_INS_INVALID,
+  PPC_QVFCPSGNs /* 1808 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfctid $FRT, $FRB */
-  PPC_QVFCTID /* 1808 */, PPC_INS_QVFCTID,
+  PPC_QVFCTID /* 1809 */, PPC_INS_QVFCTID,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13779,7 +13787,7 @@
 },
 {
   /* qvfctidu $FRT, $FRB */
-  PPC_QVFCTIDU /* 1809 */, PPC_INS_QVFCTIDU,
+  PPC_QVFCTIDU /* 1810 */, PPC_INS_QVFCTIDU,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13787,7 +13795,7 @@
 },
 {
   /* qvfctiduz $FRT, $FRB */
-  PPC_QVFCTIDUZ /* 1810 */, PPC_INS_QVFCTIDUZ,
+  PPC_QVFCTIDUZ /* 1811 */, PPC_INS_QVFCTIDUZ,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13795,7 +13803,7 @@
 },
 {
   /* qvfctidz $FRT, $FRB */
-  PPC_QVFCTIDZ /* 1811 */, PPC_INS_QVFCTIDZ,
+  PPC_QVFCTIDZ /* 1812 */, PPC_INS_QVFCTIDZ,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13803,14 +13811,14 @@
 },
 {
   /* qvfctid $FRT, $FRB */
-  PPC_QVFCTIDb /* 1812 */, PPC_INS_INVALID,
+  PPC_QVFCTIDb /* 1813 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfctiw $FRT, $FRB */
-  PPC_QVFCTIW /* 1813 */, PPC_INS_QVFCTIW,
+  PPC_QVFCTIW /* 1814 */, PPC_INS_QVFCTIW,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13818,7 +13826,7 @@
 },
 {
   /* qvfctiwu $FRT, $FRB */
-  PPC_QVFCTIWU /* 1814 */, PPC_INS_QVFCTIWU,
+  PPC_QVFCTIWU /* 1815 */, PPC_INS_QVFCTIWU,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13826,7 +13834,7 @@
 },
 {
   /* qvfctiwuz $FRT, $FRB */
-  PPC_QVFCTIWUZ /* 1815 */, PPC_INS_QVFCTIWUZ,
+  PPC_QVFCTIWUZ /* 1816 */, PPC_INS_QVFCTIWUZ,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13834,7 +13842,7 @@
 },
 {
   /* qvfctiwz $FRT, $FRB */
-  PPC_QVFCTIWZ /* 1816 */, PPC_INS_QVFCTIWZ,
+  PPC_QVFCTIWZ /* 1817 */, PPC_INS_QVFCTIWZ,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13842,14 +13850,14 @@
 },
 {
   /* qvflogical $FRT, $FRA, $FRB, $tttt */
-  PPC_QVFLOGICAL /* 1817 */, PPC_INS_INVALID,
+  PPC_QVFLOGICAL /* 1818 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvflogical $FRT, $FRA, $FRB, $tttt */
-  PPC_QVFLOGICALb /* 1818 */, PPC_INS_QVFLOGICAL,
+  PPC_QVFLOGICALb /* 1819 */, PPC_INS_QVFLOGICAL,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_20 }}
 
@@ -13857,14 +13865,14 @@
 },
 {
   /* qvflogical $FRT, $FRA, $FRB, $tttt */
-  PPC_QVFLOGICALs /* 1819 */, PPC_INS_INVALID,
+  PPC_QVFLOGICALs /* 1820 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfmadd $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFMADD /* 1820 */, PPC_INS_QVFMADD,
+  PPC_QVFMADD /* 1821 */, PPC_INS_QVFMADD,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -13872,14 +13880,14 @@
 },
 {
   /* qvfmadds $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFMADDS /* 1821 */, PPC_INS_INVALID,
+  PPC_QVFMADDS /* 1822 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfmadds $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFMADDSs /* 1822 */, PPC_INS_QVFMADDS,
+  PPC_QVFMADDSs /* 1823 */, PPC_INS_QVFMADDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -13887,7 +13895,7 @@
 },
 {
   /* qvfmr $FRT, $FRB */
-  PPC_QVFMR /* 1823 */, PPC_INS_QVFMR,
+  PPC_QVFMR /* 1824 */, PPC_INS_QVFMR,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13895,21 +13903,21 @@
 },
 {
   /* qvfmr $FRT, $FRB */
-  PPC_QVFMRb /* 1824 */, PPC_INS_INVALID,
+  PPC_QVFMRb /* 1825 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfmr $FRT, $FRB */
-  PPC_QVFMRs /* 1825 */, PPC_INS_INVALID,
+  PPC_QVFMRs /* 1826 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfmsub $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFMSUB /* 1826 */, PPC_INS_QVFMSUB,
+  PPC_QVFMSUB /* 1827 */, PPC_INS_QVFMSUB,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -13917,14 +13925,14 @@
 },
 {
   /* qvfmsubs $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFMSUBS /* 1827 */, PPC_INS_INVALID,
+  PPC_QVFMSUBS /* 1828 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfmsubs $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFMSUBSs /* 1828 */, PPC_INS_QVFMSUBS,
+  PPC_QVFMSUBSs /* 1829 */, PPC_INS_QVFMSUBS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -13932,7 +13940,7 @@
 },
 {
   /* qvfmul $FRT, $FRA, $FRC */
-  PPC_QVFMUL /* 1829 */, PPC_INS_QVFMUL,
+  PPC_QVFMUL /* 1830 */, PPC_INS_QVFMUL,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -13940,14 +13948,14 @@
 },
 {
   /* qvfmuls $FRT, $FRA, $FRC */
-  PPC_QVFMULS /* 1830 */, PPC_INS_INVALID,
+  PPC_QVFMULS /* 1831 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfmuls $FRT, $FRA, $FRC */
-  PPC_QVFMULSs /* 1831 */, PPC_INS_QVFMULS,
+  PPC_QVFMULSs /* 1832 */, PPC_INS_QVFMULS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -13955,7 +13963,7 @@
 },
 {
   /* qvfnabs $FRT, $FRB */
-  PPC_QVFNABS /* 1832 */, PPC_INS_QVFNABS,
+  PPC_QVFNABS /* 1833 */, PPC_INS_QVFNABS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13963,14 +13971,14 @@
 },
 {
   /* qvfnabs $FRT, $FRB */
-  PPC_QVFNABSs /* 1833 */, PPC_INS_INVALID,
+  PPC_QVFNABSs /* 1834 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfneg $FRT, $FRB */
-  PPC_QVFNEG /* 1834 */, PPC_INS_QVFNEG,
+  PPC_QVFNEG /* 1835 */, PPC_INS_QVFNEG,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -13978,14 +13986,14 @@
 },
 {
   /* qvfneg $FRT, $FRB */
-  PPC_QVFNEGs /* 1835 */, PPC_INS_INVALID,
+  PPC_QVFNEGs /* 1836 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfnmadd $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFNMADD /* 1836 */, PPC_INS_QVFNMADD,
+  PPC_QVFNMADD /* 1837 */, PPC_INS_QVFNMADD,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -13993,14 +14001,14 @@
 },
 {
   /* qvfnmadds $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFNMADDS /* 1837 */, PPC_INS_INVALID,
+  PPC_QVFNMADDS /* 1838 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfnmadds $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFNMADDSs /* 1838 */, PPC_INS_QVFNMADDS,
+  PPC_QVFNMADDSs /* 1839 */, PPC_INS_QVFNMADDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14008,7 +14016,7 @@
 },
 {
   /* qvfnmsub $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFNMSUB /* 1839 */, PPC_INS_QVFNMSUB,
+  PPC_QVFNMSUB /* 1840 */, PPC_INS_QVFNMSUB,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14016,14 +14024,14 @@
 },
 {
   /* qvfnmsubs $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFNMSUBS /* 1840 */, PPC_INS_INVALID,
+  PPC_QVFNMSUBS /* 1841 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfnmsubs $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFNMSUBSs /* 1841 */, PPC_INS_QVFNMSUBS,
+  PPC_QVFNMSUBSs /* 1842 */, PPC_INS_QVFNMSUBS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14031,7 +14039,7 @@
 },
 {
   /* qvfperm $FRT, $FRA, $FRB, $FRC */
-  PPC_QVFPERM /* 1842 */, PPC_INS_QVFPERM,
+  PPC_QVFPERM /* 1843 */, PPC_INS_QVFPERM,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14039,14 +14047,14 @@
 },
 {
   /* qvfperm $FRT, $FRA, $FRB, $FRC */
-  PPC_QVFPERMs /* 1843 */, PPC_INS_INVALID,
+  PPC_QVFPERMs /* 1844 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfre $FRT, $FRB */
-  PPC_QVFRE /* 1844 */, PPC_INS_QVFRE,
+  PPC_QVFRE /* 1845 */, PPC_INS_QVFRE,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14054,7 +14062,7 @@
 },
 {
   /* qvfres $FRT, $FRB */
-  PPC_QVFRES /* 1845 */, PPC_INS_QVFRES,
+  PPC_QVFRES /* 1846 */, PPC_INS_QVFRES,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14062,14 +14070,14 @@
 },
 {
   /* qvfres $FRT, $FRB */
-  PPC_QVFRESs /* 1846 */, PPC_INS_INVALID,
+  PPC_QVFRESs /* 1847 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfrim $FRT, $FRB */
-  PPC_QVFRIM /* 1847 */, PPC_INS_QVFRIM,
+  PPC_QVFRIM /* 1848 */, PPC_INS_QVFRIM,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -14077,14 +14085,14 @@
 },
 {
   /* qvfrim $FRT, $FRB */
-  PPC_QVFRIMs /* 1848 */, PPC_INS_INVALID,
+  PPC_QVFRIMs /* 1849 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfrin $FRT, $FRB */
-  PPC_QVFRIN /* 1849 */, PPC_INS_QVFRIN,
+  PPC_QVFRIN /* 1850 */, PPC_INS_QVFRIN,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -14092,14 +14100,14 @@
 },
 {
   /* qvfrin $FRT, $FRB */
-  PPC_QVFRINs /* 1850 */, PPC_INS_INVALID,
+  PPC_QVFRINs /* 1851 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfrip $FRT, $FRB */
-  PPC_QVFRIP /* 1851 */, PPC_INS_QVFRIP,
+  PPC_QVFRIP /* 1852 */, PPC_INS_QVFRIP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -14107,14 +14115,14 @@
 },
 {
   /* qvfrip $FRT, $FRB */
-  PPC_QVFRIPs /* 1852 */, PPC_INS_INVALID,
+  PPC_QVFRIPs /* 1853 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfriz $FRT, $FRB */
-  PPC_QVFRIZ /* 1853 */, PPC_INS_QVFRIZ,
+  PPC_QVFRIZ /* 1854 */, PPC_INS_QVFRIZ,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -14122,21 +14130,21 @@
 },
 {
   /* qvfriz $FRT, $FRB */
-  PPC_QVFRIZs /* 1854 */, PPC_INS_INVALID,
+  PPC_QVFRIZs /* 1855 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfrsp $FRT, $FRB */
-  PPC_QVFRSP /* 1855 */, PPC_INS_INVALID,
+  PPC_QVFRSP /* 1856 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfrsp $FRT, $FRB */
-  PPC_QVFRSPs /* 1856 */, PPC_INS_QVFRSP,
+  PPC_QVFRSPs /* 1857 */, PPC_INS_QVFRSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -14144,7 +14152,7 @@
 },
 {
   /* qvfrsqrte $FRT, $FRB */
-  PPC_QVFRSQRTE /* 1857 */, PPC_INS_QVFRSQRTE,
+  PPC_QVFRSQRTE /* 1858 */, PPC_INS_QVFRSQRTE,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14152,7 +14160,7 @@
 },
 {
   /* qvfrsqrtes $FRT, $FRB */
-  PPC_QVFRSQRTES /* 1858 */, PPC_INS_QVFRSQRTES,
+  PPC_QVFRSQRTES /* 1859 */, PPC_INS_QVFRSQRTES,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14160,21 +14168,21 @@
 },
 {
   /* qvfrsqrtes $FRT, $FRB */
-  PPC_QVFRSQRTESs /* 1859 */, PPC_INS_INVALID,
+  PPC_QVFRSQRTESs /* 1860 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfsel $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFSEL /* 1860 */, PPC_INS_INVALID,
+  PPC_QVFSEL /* 1861 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfsel $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFSELb /* 1861 */, PPC_INS_QVFSEL,
+  PPC_QVFSELb /* 1862 */, PPC_INS_QVFSEL,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14182,21 +14190,21 @@
 },
 {
   /* qvfsel $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFSELbb /* 1862 */, PPC_INS_INVALID,
+  PPC_QVFSELbb /* 1863 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfsel $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFSELbs /* 1863 */, PPC_INS_INVALID,
+  PPC_QVFSELbs /* 1864 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfsub $FRT, $FRA, $FRB */
-  PPC_QVFSUB /* 1864 */, PPC_INS_QVFSUB,
+  PPC_QVFSUB /* 1865 */, PPC_INS_QVFSUB,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14204,14 +14212,14 @@
 },
 {
   /* qvfsubs $FRT, $FRA, $FRB */
-  PPC_QVFSUBS /* 1865 */, PPC_INS_INVALID,
+  PPC_QVFSUBS /* 1866 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfsubs $FRT, $FRA, $FRB */
-  PPC_QVFSUBSs /* 1866 */, PPC_INS_QVFSUBS,
+  PPC_QVFSUBSs /* 1867 */, PPC_INS_QVFSUBS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14219,14 +14227,14 @@
 },
 {
   /* qvftstnan $FRT, $FRA, $FRB */
-  PPC_QVFTSTNAN /* 1867 */, PPC_INS_INVALID,
+  PPC_QVFTSTNAN /* 1868 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvftstnan $FRT, $FRA, $FRB */
-  PPC_QVFTSTNANb /* 1868 */, PPC_INS_QVFTSTNAN,
+  PPC_QVFTSTNANb /* 1869 */, PPC_INS_QVFTSTNAN,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -14234,14 +14242,14 @@
 },
 {
   /* qvftstnan $FRT, $FRA, $FRB */
-  PPC_QVFTSTNANbs /* 1869 */, PPC_INS_INVALID,
+  PPC_QVFTSTNANbs /* 1870 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvfxmadd $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFXMADD /* 1870 */, PPC_INS_QVFXMADD,
+  PPC_QVFXMADD /* 1871 */, PPC_INS_QVFXMADD,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14249,7 +14257,7 @@
 },
 {
   /* qvfxmadds $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFXMADDS /* 1871 */, PPC_INS_QVFXMADDS,
+  PPC_QVFXMADDS /* 1872 */, PPC_INS_QVFXMADDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14257,7 +14265,7 @@
 },
 {
   /* qvfxmul $FRT, $FRA, $FRC */
-  PPC_QVFXMUL /* 1872 */, PPC_INS_QVFXMUL,
+  PPC_QVFXMUL /* 1873 */, PPC_INS_QVFXMUL,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14265,7 +14273,7 @@
 },
 {
   /* qvfxmuls $FRT, $FRA, $FRC */
-  PPC_QVFXMULS /* 1873 */, PPC_INS_QVFXMULS,
+  PPC_QVFXMULS /* 1874 */, PPC_INS_QVFXMULS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14273,7 +14281,7 @@
 },
 {
   /* qvfxxcpnmadd $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFXXCPNMADD /* 1874 */, PPC_INS_QVFXXCPNMADD,
+  PPC_QVFXXCPNMADD /* 1875 */, PPC_INS_QVFXXCPNMADD,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14281,7 +14289,7 @@
 },
 {
   /* qvfxxcpnmadds $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFXXCPNMADDS /* 1875 */, PPC_INS_QVFXXCPNMADDS,
+  PPC_QVFXXCPNMADDS /* 1876 */, PPC_INS_QVFXXCPNMADDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14289,7 +14297,7 @@
 },
 {
   /* qvfxxmadd $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFXXMADD /* 1876 */, PPC_INS_QVFXXMADD,
+  PPC_QVFXXMADD /* 1877 */, PPC_INS_QVFXXMADD,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14297,7 +14305,7 @@
 },
 {
   /* qvfxxmadds $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFXXMADDS /* 1877 */, PPC_INS_QVFXXMADDS,
+  PPC_QVFXXMADDS /* 1878 */, PPC_INS_QVFXXMADDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14305,7 +14313,7 @@
 },
 {
   /* qvfxxnpmadd $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFXXNPMADD /* 1878 */, PPC_INS_QVFXXNPMADD,
+  PPC_QVFXXNPMADD /* 1879 */, PPC_INS_QVFXXNPMADD,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14313,7 +14321,7 @@
 },
 {
   /* qvfxxnpmadds $FRT, $FRA, $FRC, $FRB */
-  PPC_QVFXXNPMADDS /* 1879 */, PPC_INS_QVFXXNPMADDS,
+  PPC_QVFXXNPMADDS /* 1880 */, PPC_INS_QVFXXNPMADDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_AFORM_1 }}
 
@@ -14321,7 +14329,7 @@
 },
 {
   /* qvgpci $FRT, $idx */
-  PPC_QVGPCI /* 1880 */, PPC_INS_QVGPCI,
+  PPC_QVGPCI /* 1881 */, PPC_INS_QVGPCI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_Z23FORM_3 }}
 
@@ -14329,7 +14337,7 @@
 },
 {
   /* qvlfcdux $RST, $src */
-  PPC_QVLFCDUX /* 1881 */, PPC_INS_QVLFCDUX,
+  PPC_QVLFCDUX /* 1882 */, PPC_INS_QVLFCDUX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14337,7 +14345,7 @@
 },
 {
   /* qvlfcduxa $RST, $src */
-  PPC_QVLFCDUXA /* 1882 */, PPC_INS_QVLFCDUXA,
+  PPC_QVLFCDUXA /* 1883 */, PPC_INS_QVLFCDUXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14345,7 +14353,7 @@
 },
 {
   /* qvlfcdx $RST, $src */
-  PPC_QVLFCDX /* 1883 */, PPC_INS_QVLFCDX,
+  PPC_QVLFCDX /* 1884 */, PPC_INS_QVLFCDX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14353,7 +14361,7 @@
 },
 {
   /* qvlfcdxa $RST, $src */
-  PPC_QVLFCDXA /* 1884 */, PPC_INS_QVLFCDXA,
+  PPC_QVLFCDXA /* 1885 */, PPC_INS_QVLFCDXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14361,7 +14369,7 @@
 },
 {
   /* qvlfcsux $RST, $src */
-  PPC_QVLFCSUX /* 1885 */, PPC_INS_QVLFCSUX,
+  PPC_QVLFCSUX /* 1886 */, PPC_INS_QVLFCSUX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14369,7 +14377,7 @@
 },
 {
   /* qvlfcsuxa $RST, $src */
-  PPC_QVLFCSUXA /* 1886 */, PPC_INS_QVLFCSUXA,
+  PPC_QVLFCSUXA /* 1887 */, PPC_INS_QVLFCSUXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14377,7 +14385,7 @@
 },
 {
   /* qvlfcsx $RST, $src */
-  PPC_QVLFCSX /* 1887 */, PPC_INS_QVLFCSX,
+  PPC_QVLFCSX /* 1888 */, PPC_INS_QVLFCSX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14385,7 +14393,7 @@
 },
 {
   /* qvlfcsxa $RST, $src */
-  PPC_QVLFCSXA /* 1888 */, PPC_INS_QVLFCSXA,
+  PPC_QVLFCSXA /* 1889 */, PPC_INS_QVLFCSXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14393,14 +14401,14 @@
 },
 {
   /* qvlfcsx $RST, $src */
-  PPC_QVLFCSXs /* 1889 */, PPC_INS_INVALID,
+  PPC_QVLFCSXs /* 1890 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvlfdux $RST, $src */
-  PPC_QVLFDUX /* 1890 */, PPC_INS_QVLFDUX,
+  PPC_QVLFDUX /* 1891 */, PPC_INS_QVLFDUX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14408,7 +14416,7 @@
 },
 {
   /* qvlfduxa $RST, $src */
-  PPC_QVLFDUXA /* 1891 */, PPC_INS_QVLFDUXA,
+  PPC_QVLFDUXA /* 1892 */, PPC_INS_QVLFDUXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14416,7 +14424,7 @@
 },
 {
   /* qvlfdx $RST, $src */
-  PPC_QVLFDX /* 1892 */, PPC_INS_QVLFDX,
+  PPC_QVLFDX /* 1893 */, PPC_INS_QVLFDX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14424,7 +14432,7 @@
 },
 {
   /* qvlfdxa $RST, $src */
-  PPC_QVLFDXA /* 1893 */, PPC_INS_QVLFDXA,
+  PPC_QVLFDXA /* 1894 */, PPC_INS_QVLFDXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14432,14 +14440,14 @@
 },
 {
   /* qvlfdx $RST, $src */
-  PPC_QVLFDXb /* 1894 */, PPC_INS_INVALID,
+  PPC_QVLFDXb /* 1895 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvlfiwax $RST, $src */
-  PPC_QVLFIWAX /* 1895 */, PPC_INS_QVLFIWAX,
+  PPC_QVLFIWAX /* 1896 */, PPC_INS_QVLFIWAX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14447,7 +14455,7 @@
 },
 {
   /* qvlfiwaxa $RST, $src */
-  PPC_QVLFIWAXA /* 1896 */, PPC_INS_QVLFIWAXA,
+  PPC_QVLFIWAXA /* 1897 */, PPC_INS_QVLFIWAXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14455,7 +14463,7 @@
 },
 {
   /* qvlfiwzx $RST, $src */
-  PPC_QVLFIWZX /* 1897 */, PPC_INS_QVLFIWZX,
+  PPC_QVLFIWZX /* 1898 */, PPC_INS_QVLFIWZX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14463,7 +14471,7 @@
 },
 {
   /* qvlfiwzxa $RST, $src */
-  PPC_QVLFIWZXA /* 1898 */, PPC_INS_QVLFIWZXA,
+  PPC_QVLFIWZXA /* 1899 */, PPC_INS_QVLFIWZXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14471,7 +14479,7 @@
 },
 {
   /* qvlfsux $RST, $src */
-  PPC_QVLFSUX /* 1899 */, PPC_INS_QVLFSUX,
+  PPC_QVLFSUX /* 1900 */, PPC_INS_QVLFSUX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14479,7 +14487,7 @@
 },
 {
   /* qvlfsuxa $RST, $src */
-  PPC_QVLFSUXA /* 1900 */, PPC_INS_QVLFSUXA,
+  PPC_QVLFSUXA /* 1901 */, PPC_INS_QVLFSUXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14487,7 +14495,7 @@
 },
 {
   /* qvlfsx $RST, $src */
-  PPC_QVLFSX /* 1901 */, PPC_INS_QVLFSX,
+  PPC_QVLFSX /* 1902 */, PPC_INS_QVLFSX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14495,7 +14503,7 @@
 },
 {
   /* qvlfsxa $RST, $src */
-  PPC_QVLFSXA /* 1902 */, PPC_INS_QVLFSXA,
+  PPC_QVLFSXA /* 1903 */, PPC_INS_QVLFSXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14503,21 +14511,21 @@
 },
 {
   /* qvlfsx $RST, $src */
-  PPC_QVLFSXb /* 1903 */, PPC_INS_INVALID,
+  PPC_QVLFSXb /* 1904 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvlfsx $RST, $src */
-  PPC_QVLFSXs /* 1904 */, PPC_INS_INVALID,
+  PPC_QVLFSXs /* 1905 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvlpcldx $RST, $src */
-  PPC_QVLPCLDX /* 1905 */, PPC_INS_QVLPCLDX,
+  PPC_QVLPCLDX /* 1906 */, PPC_INS_QVLPCLDX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14525,7 +14533,7 @@
 },
 {
   /* qvlpclsx $RST, $src */
-  PPC_QVLPCLSX /* 1906 */, PPC_INS_QVLPCLSX,
+  PPC_QVLPCLSX /* 1907 */, PPC_INS_QVLPCLSX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14533,14 +14541,14 @@
 },
 {
   /* qvlpclsx $RST, 0, $src */
-  PPC_QVLPCLSXint /* 1907 */, PPC_INS_INVALID,
+  PPC_QVLPCLSXint /* 1908 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvlpcrdx $RST, $src */
-  PPC_QVLPCRDX /* 1908 */, PPC_INS_QVLPCRDX,
+  PPC_QVLPCRDX /* 1909 */, PPC_INS_QVLPCRDX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14548,7 +14556,7 @@
 },
 {
   /* qvlpcrsx $RST, $src */
-  PPC_QVLPCRSX /* 1909 */, PPC_INS_QVLPCRSX,
+  PPC_QVLPCRSX /* 1910 */, PPC_INS_QVLPCRSX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14556,7 +14564,7 @@
 },
 {
   /* qvstfcdux $RST, $dst */
-  PPC_QVSTFCDUX /* 1910 */, PPC_INS_QVSTFCDUX,
+  PPC_QVSTFCDUX /* 1911 */, PPC_INS_QVSTFCDUX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14564,7 +14572,7 @@
 },
 {
   /* qvstfcduxa $RST, $dst */
-  PPC_QVSTFCDUXA /* 1911 */, PPC_INS_QVSTFCDUXA,
+  PPC_QVSTFCDUXA /* 1912 */, PPC_INS_QVSTFCDUXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14572,7 +14580,7 @@
 },
 {
   /* qvstfcduxi $RST, $dst */
-  PPC_QVSTFCDUXI /* 1912 */, PPC_INS_QVSTFCDUXI,
+  PPC_QVSTFCDUXI /* 1913 */, PPC_INS_QVSTFCDUXI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14580,7 +14588,7 @@
 },
 {
   /* qvstfcduxia $RST, $dst */
-  PPC_QVSTFCDUXIA /* 1913 */, PPC_INS_QVSTFCDUXIA,
+  PPC_QVSTFCDUXIA /* 1914 */, PPC_INS_QVSTFCDUXIA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14588,7 +14596,7 @@
 },
 {
   /* qvstfcdx $RST, $dst */
-  PPC_QVSTFCDX /* 1914 */, PPC_INS_QVSTFCDX,
+  PPC_QVSTFCDX /* 1915 */, PPC_INS_QVSTFCDX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14596,7 +14604,7 @@
 },
 {
   /* qvstfcdxa $RST, $dst */
-  PPC_QVSTFCDXA /* 1915 */, PPC_INS_QVSTFCDXA,
+  PPC_QVSTFCDXA /* 1916 */, PPC_INS_QVSTFCDXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14604,7 +14612,7 @@
 },
 {
   /* qvstfcdxi $RST, $dst */
-  PPC_QVSTFCDXI /* 1916 */, PPC_INS_QVSTFCDXI,
+  PPC_QVSTFCDXI /* 1917 */, PPC_INS_QVSTFCDXI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14612,7 +14620,7 @@
 },
 {
   /* qvstfcdxia $RST, $dst */
-  PPC_QVSTFCDXIA /* 1917 */, PPC_INS_QVSTFCDXIA,
+  PPC_QVSTFCDXIA /* 1918 */, PPC_INS_QVSTFCDXIA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14620,7 +14628,7 @@
 },
 {
   /* qvstfcsux $RST, $dst */
-  PPC_QVSTFCSUX /* 1918 */, PPC_INS_QVSTFCSUX,
+  PPC_QVSTFCSUX /* 1919 */, PPC_INS_QVSTFCSUX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14628,7 +14636,7 @@
 },
 {
   /* qvstfcsuxa $RST, $dst */
-  PPC_QVSTFCSUXA /* 1919 */, PPC_INS_QVSTFCSUXA,
+  PPC_QVSTFCSUXA /* 1920 */, PPC_INS_QVSTFCSUXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14636,7 +14644,7 @@
 },
 {
   /* qvstfcsuxi $RST, $dst */
-  PPC_QVSTFCSUXI /* 1920 */, PPC_INS_QVSTFCSUXI,
+  PPC_QVSTFCSUXI /* 1921 */, PPC_INS_QVSTFCSUXI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14644,7 +14652,7 @@
 },
 {
   /* qvstfcsuxia $RST, $dst */
-  PPC_QVSTFCSUXIA /* 1921 */, PPC_INS_QVSTFCSUXIA,
+  PPC_QVSTFCSUXIA /* 1922 */, PPC_INS_QVSTFCSUXIA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14652,7 +14660,7 @@
 },
 {
   /* qvstfcsx $RST, $dst */
-  PPC_QVSTFCSX /* 1922 */, PPC_INS_QVSTFCSX,
+  PPC_QVSTFCSX /* 1923 */, PPC_INS_QVSTFCSX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14660,7 +14668,7 @@
 },
 {
   /* qvstfcsxa $RST, $dst */
-  PPC_QVSTFCSXA /* 1923 */, PPC_INS_QVSTFCSXA,
+  PPC_QVSTFCSXA /* 1924 */, PPC_INS_QVSTFCSXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14668,7 +14676,7 @@
 },
 {
   /* qvstfcsxi $RST, $dst */
-  PPC_QVSTFCSXI /* 1924 */, PPC_INS_QVSTFCSXI,
+  PPC_QVSTFCSXI /* 1925 */, PPC_INS_QVSTFCSXI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14676,7 +14684,7 @@
 },
 {
   /* qvstfcsxia $RST, $dst */
-  PPC_QVSTFCSXIA /* 1925 */, PPC_INS_QVSTFCSXIA,
+  PPC_QVSTFCSXIA /* 1926 */, PPC_INS_QVSTFCSXIA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14684,14 +14692,14 @@
 },
 {
   /* qvstfcsx $RST, $dst */
-  PPC_QVSTFCSXs /* 1926 */, PPC_INS_INVALID,
+  PPC_QVSTFCSXs /* 1927 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvstfdux $RST, $dst */
-  PPC_QVSTFDUX /* 1927 */, PPC_INS_QVSTFDUX,
+  PPC_QVSTFDUX /* 1928 */, PPC_INS_QVSTFDUX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14699,7 +14707,7 @@
 },
 {
   /* qvstfduxa $RST, $dst */
-  PPC_QVSTFDUXA /* 1928 */, PPC_INS_QVSTFDUXA,
+  PPC_QVSTFDUXA /* 1929 */, PPC_INS_QVSTFDUXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14707,7 +14715,7 @@
 },
 {
   /* qvstfduxi $RST, $dst */
-  PPC_QVSTFDUXI /* 1929 */, PPC_INS_QVSTFDUXI,
+  PPC_QVSTFDUXI /* 1930 */, PPC_INS_QVSTFDUXI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14715,7 +14723,7 @@
 },
 {
   /* qvstfduxia $RST, $dst */
-  PPC_QVSTFDUXIA /* 1930 */, PPC_INS_QVSTFDUXIA,
+  PPC_QVSTFDUXIA /* 1931 */, PPC_INS_QVSTFDUXIA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14723,7 +14731,7 @@
 },
 {
   /* qvstfdx $RST, $dst */
-  PPC_QVSTFDX /* 1931 */, PPC_INS_QVSTFDX,
+  PPC_QVSTFDX /* 1932 */, PPC_INS_QVSTFDX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14731,7 +14739,7 @@
 },
 {
   /* qvstfdxa $RST, $dst */
-  PPC_QVSTFDXA /* 1932 */, PPC_INS_QVSTFDXA,
+  PPC_QVSTFDXA /* 1933 */, PPC_INS_QVSTFDXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14739,7 +14747,7 @@
 },
 {
   /* qvstfdxi $RST, $dst */
-  PPC_QVSTFDXI /* 1933 */, PPC_INS_QVSTFDXI,
+  PPC_QVSTFDXI /* 1934 */, PPC_INS_QVSTFDXI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14747,7 +14755,7 @@
 },
 {
   /* qvstfdxia $RST, $dst */
-  PPC_QVSTFDXIA /* 1934 */, PPC_INS_QVSTFDXIA,
+  PPC_QVSTFDXIA /* 1935 */, PPC_INS_QVSTFDXIA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14755,14 +14763,14 @@
 },
 {
   /* qvstfdx $RST, $dst */
-  PPC_QVSTFDXb /* 1935 */, PPC_INS_INVALID,
+  PPC_QVSTFDXb /* 1936 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvstfiwx $RST, $dst */
-  PPC_QVSTFIWX /* 1936 */, PPC_INS_QVSTFIWX,
+  PPC_QVSTFIWX /* 1937 */, PPC_INS_QVSTFIWX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14770,7 +14778,7 @@
 },
 {
   /* qvstfiwxa $RST, $dst */
-  PPC_QVSTFIWXA /* 1937 */, PPC_INS_QVSTFIWXA,
+  PPC_QVSTFIWXA /* 1938 */, PPC_INS_QVSTFIWXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14778,7 +14786,7 @@
 },
 {
   /* qvstfsux $RST, $dst */
-  PPC_QVSTFSUX /* 1938 */, PPC_INS_QVSTFSUX,
+  PPC_QVSTFSUX /* 1939 */, PPC_INS_QVSTFSUX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14786,7 +14794,7 @@
 },
 {
   /* qvstfsuxa $RST, $dst */
-  PPC_QVSTFSUXA /* 1939 */, PPC_INS_QVSTFSUXA,
+  PPC_QVSTFSUXA /* 1940 */, PPC_INS_QVSTFSUXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14794,7 +14802,7 @@
 },
 {
   /* qvstfsuxi $RST, $dst */
-  PPC_QVSTFSUXI /* 1940 */, PPC_INS_QVSTFSUXI,
+  PPC_QVSTFSUXI /* 1941 */, PPC_INS_QVSTFSUXI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14802,7 +14810,7 @@
 },
 {
   /* qvstfsuxia $RST, $dst */
-  PPC_QVSTFSUXIA /* 1941 */, PPC_INS_QVSTFSUXIA,
+  PPC_QVSTFSUXIA /* 1942 */, PPC_INS_QVSTFSUXIA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14810,14 +14818,14 @@
 },
 {
   /* qvstfsux $RST, $dst */
-  PPC_QVSTFSUXs /* 1942 */, PPC_INS_INVALID,
+  PPC_QVSTFSUXs /* 1943 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* qvstfsx $RST, $dst */
-  PPC_QVSTFSX /* 1943 */, PPC_INS_QVSTFSX,
+  PPC_QVSTFSX /* 1944 */, PPC_INS_QVSTFSX,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14825,7 +14833,7 @@
 },
 {
   /* qvstfsxa $RST, $dst */
-  PPC_QVSTFSXA /* 1944 */, PPC_INS_QVSTFSXA,
+  PPC_QVSTFSXA /* 1945 */, PPC_INS_QVSTFSXA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14833,7 +14841,7 @@
 },
 {
   /* qvstfsxi $RST, $dst */
-  PPC_QVSTFSXI /* 1945 */, PPC_INS_QVSTFSXI,
+  PPC_QVSTFSXI /* 1946 */, PPC_INS_QVSTFSXI,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14841,7 +14849,7 @@
 },
 {
   /* qvstfsxia $RST, $dst */
-  PPC_QVSTFSXIA /* 1946 */, PPC_INS_QVSTFSXIA,
+  PPC_QVSTFSXIA /* 1947 */, PPC_INS_QVSTFSXIA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { PPC_FEATURE_HASQPX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14849,56 +14857,56 @@
 },
 {
   /* qvstfsx $RST, $dst */
-  PPC_QVSTFSXs /* 1947 */, PPC_INS_INVALID,
+  PPC_QVSTFSXs /* 1948 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #RESTORE_ACC */
-  PPC_RESTORE_ACC /* 1948 */, PPC_INS_INVALID,
+  PPC_RESTORE_ACC /* 1949 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #RESTORE_CR */
-  PPC_RESTORE_CR /* 1949 */, PPC_INS_INVALID,
+  PPC_RESTORE_CR /* 1950 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #RESTORE_CRBIT */
-  PPC_RESTORE_CRBIT /* 1950 */, PPC_INS_INVALID,
+  PPC_RESTORE_CRBIT /* 1951 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #RESTORE_QUADWORD */
-  PPC_RESTORE_QUADWORD /* 1951 */, PPC_INS_INVALID,
+  PPC_RESTORE_QUADWORD /* 1952 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #RESTORE_UACC */
-  PPC_RESTORE_UACC /* 1952 */, PPC_INS_INVALID,
+  PPC_RESTORE_UACC /* 1953 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #RESTORE_WACC */
-  PPC_RESTORE_WACC /* 1953 */, PPC_INS_INVALID,
+  PPC_RESTORE_WACC /* 1954 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rfci */
-  PPC_RFCI /* 1954 */, PPC_INS_RFCI,
+  PPC_RFCI /* 1955 */, PPC_INS_RFCI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISBOOKE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14906,7 +14914,7 @@
 },
 {
   /* rfdi */
-  PPC_RFDI /* 1955 */, PPC_INS_RFDI,
+  PPC_RFDI /* 1956 */, PPC_INS_RFDI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISE500, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14914,7 +14922,7 @@
 },
 {
   /* rfebb $S */
-  PPC_RFEBB /* 1956 */, PPC_INS_RFEBB,
+  PPC_RFEBB /* 1957 */, PPC_INS_RFEBB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XLFORM_S }}
 
@@ -14922,7 +14930,7 @@
 },
 {
   /* rfi */
-  PPC_RFI /* 1957 */, PPC_INS_RFI,
+  PPC_RFI /* 1958 */, PPC_INS_RFI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISBOOKE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14930,7 +14938,7 @@
 },
 {
   /* rfid */
-  PPC_RFID /* 1958 */, PPC_INS_RFID,
+  PPC_RFID /* 1959 */, PPC_INS_RFID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14938,7 +14946,7 @@
 },
 {
   /* rfmci */
-  PPC_RFMCI /* 1959 */, PPC_INS_RFMCI,
+  PPC_RFMCI /* 1960 */, PPC_INS_RFMCI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISE500, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -14946,7 +14954,7 @@
 },
 {
   /* rldcl $RA, $RS, $RB, $MBE */
-  PPC_RLDCL /* 1960 */, PPC_INS_RLDCL,
+  PPC_RLDCL /* 1961 */, PPC_INS_RLDCL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDSFORM_1 }}
 
@@ -14954,7 +14962,7 @@
 },
 {
   /* rldcl. $RA, $RS, $RB, $MBE */
-  PPC_RLDCL_rec /* 1961 */, PPC_INS_RLDCL,
+  PPC_RLDCL_rec /* 1962 */, PPC_INS_RLDCL,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDSFORM_1 }}
 
@@ -14962,7 +14970,7 @@
 },
 {
   /* rldcr $RA, $RS, $RB, $MBE */
-  PPC_RLDCR /* 1962 */, PPC_INS_RLDCR,
+  PPC_RLDCR /* 1963 */, PPC_INS_RLDCR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDSFORM_1 }}
 
@@ -14970,7 +14978,7 @@
 },
 {
   /* rldcr. $RA, $RS, $RB, $MBE */
-  PPC_RLDCR_rec /* 1963 */, PPC_INS_RLDCR,
+  PPC_RLDCR_rec /* 1964 */, PPC_INS_RLDCR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDSFORM_1 }}
 
@@ -14978,7 +14986,7 @@
 },
 {
   /* rldic $RA, $RS, $SH, $MBE */
-  PPC_RLDIC /* 1964 */, PPC_INS_RLDIC,
+  PPC_RLDIC /* 1965 */, PPC_INS_RLDIC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDFORM_1 }}
 
@@ -14986,7 +14994,7 @@
 },
 {
   /* rldicl $RA, $RS, $SH, $MBE */
-  PPC_RLDICL /* 1965 */, PPC_INS_RLDICL,
+  PPC_RLDICL /* 1966 */, PPC_INS_RLDICL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDFORM_1 }}
 
@@ -14994,28 +15002,28 @@
 },
 {
   /* rldicl $RA, $RS, $SH, $MBE */
-  PPC_RLDICL_32 /* 1966 */, PPC_INS_INVALID,
+  PPC_RLDICL_32 /* 1967 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rldicl $RA, $RS, $SH, $MBE */
-  PPC_RLDICL_32_64 /* 1967 */, PPC_INS_INVALID,
+  PPC_RLDICL_32_64 /* 1968 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rldicl. $RA, $RS, $SH, $MBE */
-  PPC_RLDICL_32_rec /* 1968 */, PPC_INS_INVALID,
+  PPC_RLDICL_32_rec /* 1969 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rldicl. $RA, $RS, $SH, $MBE */
-  PPC_RLDICL_rec /* 1969 */, PPC_INS_RLDICL,
+  PPC_RLDICL_rec /* 1970 */, PPC_INS_RLDICL,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDFORM_1 }}
 
@@ -15023,7 +15031,7 @@
 },
 {
   /* rldicr $RA, $RS, $SH, $MBE */
-  PPC_RLDICR /* 1970 */, PPC_INS_RLDICR,
+  PPC_RLDICR /* 1971 */, PPC_INS_RLDICR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDFORM_1 }}
 
@@ -15031,14 +15039,14 @@
 },
 {
   /* rldicr $RA, $RS, $SH, $MBE */
-  PPC_RLDICR_32 /* 1971 */, PPC_INS_INVALID,
+  PPC_RLDICR_32 /* 1972 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rldicr. $RA, $RS, $SH, $MBE */
-  PPC_RLDICR_rec /* 1972 */, PPC_INS_RLDICR,
+  PPC_RLDICR_rec /* 1973 */, PPC_INS_RLDICR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDFORM_1 }}
 
@@ -15046,7 +15054,7 @@
 },
 {
   /* rldic. $RA, $RS, $SH, $MBE */
-  PPC_RLDIC_rec /* 1973 */, PPC_INS_RLDIC,
+  PPC_RLDIC_rec /* 1974 */, PPC_INS_RLDIC,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDFORM_1 }}
 
@@ -15054,7 +15062,7 @@
 },
 {
   /* rldimi $RA, $RS, $SH, $MBE */
-  PPC_RLDIMI /* 1974 */, PPC_INS_RLDIMI,
+  PPC_RLDIMI /* 1975 */, PPC_INS_RLDIMI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDFORM_1 }}
 
@@ -15062,7 +15070,7 @@
 },
 {
   /* rldimi. $RA, $RS, $SH, $MBE */
-  PPC_RLDIMI_rec /* 1975 */, PPC_INS_RLDIMI,
+  PPC_RLDIMI_rec /* 1976 */, PPC_INS_RLDIMI,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MDFORM_1 }}
 
@@ -15070,7 +15078,7 @@
 },
 {
   /* rlwimi $RA, $RS, $SH, $MB, $ME */
-  PPC_RLWIMI /* 1976 */, PPC_INS_RLWIMI,
+  PPC_RLWIMI /* 1977 */, PPC_INS_RLWIMI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MFORM_2 }}
 
@@ -15078,21 +15086,21 @@
 },
 {
   /* rlwimi $RA, $RS, $SH, $MB, $ME */
-  PPC_RLWIMI8 /* 1977 */, PPC_INS_INVALID,
+  PPC_RLWIMI8 /* 1978 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rlwimi. $RA, $RS, $SH, $MB, $ME */
-  PPC_RLWIMI8_rec /* 1978 */, PPC_INS_INVALID,
+  PPC_RLWIMI8_rec /* 1979 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rlwimi. $RA, $RS, $SH, $MB, $ME */
-  PPC_RLWIMI_rec /* 1979 */, PPC_INS_RLWIMI,
+  PPC_RLWIMI_rec /* 1980 */, PPC_INS_RLWIMI,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MFORM_2 }}
 
@@ -15100,7 +15108,7 @@
 },
 {
   /* rlwinm $RA, $RS, $SH, $MB, $ME */
-  PPC_RLWINM /* 1980 */, PPC_INS_RLWINM,
+  PPC_RLWINM /* 1981 */, PPC_INS_RLWINM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MFORM_2 }}
 
@@ -15108,21 +15116,21 @@
 },
 {
   /* rlwinm $RA, $RS, $SH, $MB, $ME */
-  PPC_RLWINM8 /* 1981 */, PPC_INS_INVALID,
+  PPC_RLWINM8 /* 1982 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rlwinm. $RA, $RS, $SH, $MB, $ME */
-  PPC_RLWINM8_rec /* 1982 */, PPC_INS_INVALID,
+  PPC_RLWINM8_rec /* 1983 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rlwinm. $RA, $RS, $SH, $MB, $ME */
-  PPC_RLWINM_rec /* 1983 */, PPC_INS_RLWINM,
+  PPC_RLWINM_rec /* 1984 */, PPC_INS_RLWINM,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MFORM_2 }}
 
@@ -15130,7 +15138,7 @@
 },
 {
   /* rlwnm $RA, $RS, $RB, $MB, $ME */
-  PPC_RLWNM /* 1984 */, PPC_INS_RLWNM,
+  PPC_RLWNM /* 1985 */, PPC_INS_RLWNM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MFORM_1 }}
 
@@ -15138,21 +15146,21 @@
 },
 {
   /* rlwnm $RA, $RS, $RB, $MB, $ME */
-  PPC_RLWNM8 /* 1985 */, PPC_INS_INVALID,
+  PPC_RLWNM8 /* 1986 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rlwnm. $RA, $RS, $RB, $MB, $ME */
-  PPC_RLWNM8_rec /* 1986 */, PPC_INS_INVALID,
+  PPC_RLWNM8_rec /* 1987 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* rlwnm. $RA, $RS, $RB, $MB, $ME */
-  PPC_RLWNM_rec /* 1987 */, PPC_INS_RLWNM,
+  PPC_RLWNM_rec /* 1988 */, PPC_INS_RLWNM,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_MFORM_1 }}
 
@@ -15160,14 +15168,14 @@
 },
 {
   /* #ReadTB */
-  PPC_ReadTB /* 1988 */, PPC_INS_INVALID,
+  PPC_ReadTB /* 1989 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sc $LEV */
-  PPC_SC /* 1989 */, PPC_INS_SC,
+  PPC_SC /* 1990 */, PPC_INS_SC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_SCFORM }}
 
@@ -15175,7 +15183,7 @@
 },
 {
   /* scv $LEV */
-  PPC_SCV /* 1990 */, PPC_INS_SCV,
+  PPC_SCV /* 1991 */, PPC_INS_SCV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_SCFORM }}
 
@@ -15183,203 +15191,203 @@
 },
 {
   /* #SELECT_CC_F16 */
-  PPC_SELECT_CC_F16 /* 1991 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_F16 /* 1992 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_F4 */
-  PPC_SELECT_CC_F4 /* 1992 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_F4 /* 1993 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_F8 */
-  PPC_SELECT_CC_F8 /* 1993 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_F8 /* 1994 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_I4 */
-  PPC_SELECT_CC_I4 /* 1994 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_I4 /* 1995 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_I8 */
-  PPC_SELECT_CC_I8 /* 1995 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_I8 /* 1996 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_QBRC */
-  PPC_SELECT_CC_QBRC /* 1996 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_QBRC /* 1997 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_QFRC */
-  PPC_SELECT_CC_QFRC /* 1997 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_QFRC /* 1998 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_QSRC */
-  PPC_SELECT_CC_QSRC /* 1998 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_QSRC /* 1999 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_SPE */
-  PPC_SELECT_CC_SPE /* 1999 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_SPE /* 2000 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_SPE4 */
-  PPC_SELECT_CC_SPE4 /* 2000 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_SPE4 /* 2001 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_VRRC */
-  PPC_SELECT_CC_VRRC /* 2001 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_VRRC /* 2002 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_VSFRC */
-  PPC_SELECT_CC_VSFRC /* 2002 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_VSFRC /* 2003 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_VSRC */
-  PPC_SELECT_CC_VSRC /* 2003 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_VSRC /* 2004 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_CC_VSSRC */
-  PPC_SELECT_CC_VSSRC /* 2004 */, PPC_INS_INVALID,
+  PPC_SELECT_CC_VSSRC /* 2005 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_F16 */
-  PPC_SELECT_F16 /* 2005 */, PPC_INS_INVALID,
+  PPC_SELECT_F16 /* 2006 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_F4 */
-  PPC_SELECT_F4 /* 2006 */, PPC_INS_INVALID,
+  PPC_SELECT_F4 /* 2007 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_F8 */
-  PPC_SELECT_F8 /* 2007 */, PPC_INS_INVALID,
+  PPC_SELECT_F8 /* 2008 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_I4 */
-  PPC_SELECT_I4 /* 2008 */, PPC_INS_INVALID,
+  PPC_SELECT_I4 /* 2009 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_I8 */
-  PPC_SELECT_I8 /* 2009 */, PPC_INS_INVALID,
+  PPC_SELECT_I8 /* 2010 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_QBRC */
-  PPC_SELECT_QBRC /* 2010 */, PPC_INS_INVALID,
+  PPC_SELECT_QBRC /* 2011 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_QFRC */
-  PPC_SELECT_QFRC /* 2011 */, PPC_INS_INVALID,
+  PPC_SELECT_QFRC /* 2012 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_QSRC */
-  PPC_SELECT_QSRC /* 2012 */, PPC_INS_INVALID,
+  PPC_SELECT_QSRC /* 2013 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_SPE */
-  PPC_SELECT_SPE /* 2013 */, PPC_INS_INVALID,
+  PPC_SELECT_SPE /* 2014 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_SPE4 */
-  PPC_SELECT_SPE4 /* 2014 */, PPC_INS_INVALID,
+  PPC_SELECT_SPE4 /* 2015 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_VRRC */
-  PPC_SELECT_VRRC /* 2015 */, PPC_INS_INVALID,
+  PPC_SELECT_VRRC /* 2016 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_VSFRC */
-  PPC_SELECT_VSFRC /* 2016 */, PPC_INS_INVALID,
+  PPC_SELECT_VSFRC /* 2017 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_VSRC */
-  PPC_SELECT_VSRC /* 2017 */, PPC_INS_INVALID,
+  PPC_SELECT_VSRC /* 2018 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SELECT_VSSRC */
-  PPC_SELECT_VSSRC /* 2018 */, PPC_INS_INVALID,
+  PPC_SELECT_VSSRC /* 2019 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* setb $RT, $BFA */
-  PPC_SETB /* 2019 */, PPC_INS_SETB,
+  PPC_SETB /* 2020 */, PPC_INS_SETB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_44 }}
 
@@ -15387,14 +15395,14 @@
 },
 {
   /* setb $RT, $BFA */
-  PPC_SETB8 /* 2020 */, PPC_INS_INVALID,
+  PPC_SETB8 /* 2021 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* setbc $RST, $BI */
-  PPC_SETBC /* 2021 */, PPC_INS_SETBC,
+  PPC_SETBC /* 2022 */, PPC_INS_SETBC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15402,14 +15410,14 @@
 },
 {
   /* setbc $RST, $BI */
-  PPC_SETBC8 /* 2022 */, PPC_INS_INVALID,
+  PPC_SETBC8 /* 2023 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* setbcr $RST, $BI */
-  PPC_SETBCR /* 2023 */, PPC_INS_SETBCR,
+  PPC_SETBCR /* 2024 */, PPC_INS_SETBCR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15417,21 +15425,21 @@
 },
 {
   /* setbcr $RST, $BI */
-  PPC_SETBCR8 /* 2024 */, PPC_INS_INVALID,
+  PPC_SETBCR8 /* 2025 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SETFLM */
-  PPC_SETFLM /* 2025 */, PPC_INS_INVALID,
+  PPC_SETFLM /* 2026 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* setnbc $RST, $BI */
-  PPC_SETNBC /* 2026 */, PPC_INS_SETNBC,
+  PPC_SETNBC /* 2027 */, PPC_INS_SETNBC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15439,14 +15447,14 @@
 },
 {
   /* setnbc $RST, $BI */
-  PPC_SETNBC8 /* 2027 */, PPC_INS_INVALID,
+  PPC_SETNBC8 /* 2028 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* setnbcr $RST, $BI */
-  PPC_SETNBCR /* 2028 */, PPC_INS_SETNBCR,
+  PPC_SETNBCR /* 2029 */, PPC_INS_SETNBCR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15454,28 +15462,28 @@
 },
 {
   /* setnbcr $RST, $BI */
-  PPC_SETNBCR8 /* 2029 */, PPC_INS_INVALID,
+  PPC_SETNBCR8 /* 2030 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SETRND */
-  PPC_SETRND /* 2030 */, PPC_INS_INVALID,
+  PPC_SETRND /* 2031 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SETRNDi */
-  PPC_SETRNDi /* 2031 */, PPC_INS_INVALID,
+  PPC_SETRNDi /* 2032 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* slbfee. $RST, $RB */
-  PPC_SLBFEE_rec /* 2032 */, PPC_INS_SLBFEE,
+  PPC_SLBFEE_rec /* 2033 */, PPC_INS_SLBFEE,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15483,7 +15491,7 @@
 },
 {
   /* slbia */
-  PPC_SLBIA /* 2033 */, PPC_INS_SLBIA,
+  PPC_SLBIA /* 2034 */, PPC_INS_SLBIA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15491,7 +15499,7 @@
 },
 {
   /* slbie $RB */
-  PPC_SLBIE /* 2034 */, PPC_INS_SLBIE,
+  PPC_SLBIE /* 2035 */, PPC_INS_SLBIE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15499,7 +15507,7 @@
 },
 {
   /* slbieg $RST, $RB */
-  PPC_SLBIEG /* 2035 */, PPC_INS_SLBIEG,
+  PPC_SLBIEG /* 2036 */, PPC_INS_SLBIEG,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15507,7 +15515,7 @@
 },
 {
   /* slbmfee $RST, $RB */
-  PPC_SLBMFEE /* 2036 */, PPC_INS_SLBMFEE,
+  PPC_SLBMFEE /* 2037 */, PPC_INS_SLBMFEE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15515,7 +15523,7 @@
 },
 {
   /* slbmfev $RT, $RB */
-  PPC_SLBMFEV /* 2037 */, PPC_INS_SLBMFEV,
+  PPC_SLBMFEV /* 2038 */, PPC_INS_SLBMFEV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XLFORM_1 }}
 
@@ -15523,7 +15531,7 @@
 },
 {
   /* slbmte $RST, $RB */
-  PPC_SLBMTE /* 2038 */, PPC_INS_SLBMTE,
+  PPC_SLBMTE /* 2039 */, PPC_INS_SLBMTE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15531,7 +15539,7 @@
 },
 {
   /* slbsync */
-  PPC_SLBSYNC /* 2039 */, PPC_INS_SLBSYNC,
+  PPC_SLBSYNC /* 2040 */, PPC_INS_SLBSYNC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15539,7 +15547,7 @@
 },
 {
   /* sld $RA, $RST, $RB */
-  PPC_SLD /* 2040 */, PPC_INS_SLD,
+  PPC_SLD /* 2041 */, PPC_INS_SLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15547,7 +15555,7 @@
 },
 {
   /* sld. $RA, $RST, $RB */
-  PPC_SLD_rec /* 2041 */, PPC_INS_SLD,
+  PPC_SLD_rec /* 2042 */, PPC_INS_SLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15555,7 +15563,7 @@
 },
 {
   /* slw $RA, $RST, $RB */
-  PPC_SLW /* 2042 */, PPC_INS_SLW,
+  PPC_SLW /* 2043 */, PPC_INS_SLW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15563,21 +15571,21 @@
 },
 {
   /* slw $RA, $RST, $RB */
-  PPC_SLW8 /* 2043 */, PPC_INS_INVALID,
+  PPC_SLW8 /* 2044 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* slw. $RA, $RST, $RB */
-  PPC_SLW8_rec /* 2044 */, PPC_INS_INVALID,
+  PPC_SLW8_rec /* 2045 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* slw. $RA, $RST, $RB */
-  PPC_SLW_rec /* 2045 */, PPC_INS_SLW,
+  PPC_SLW_rec /* 2046 */, PPC_INS_SLW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15585,7 +15593,7 @@
 },
 {
   /* lwz $RST, $addr */
-  PPC_SPELWZ /* 2046 */, PPC_INS_LWZ,
+  PPC_SPELWZ /* 2047 */, PPC_INS_LWZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASSPE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -15593,7 +15601,7 @@
 },
 {
   /* lwzx $RST, $addr */
-  PPC_SPELWZX /* 2047 */, PPC_INS_LWZX,
+  PPC_SPELWZX /* 2048 */, PPC_INS_LWZX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASSPE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15601,7 +15609,7 @@
 },
 {
   /* stw $RST, $addr */
-  PPC_SPESTW /* 2048 */, PPC_INS_STW,
+  PPC_SPESTW /* 2049 */, PPC_INS_STW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASSPE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -15609,7 +15617,7 @@
 },
 {
   /* stwx $RST, $addr */
-  PPC_SPESTWX /* 2049 */, PPC_INS_STWX,
+  PPC_SPESTWX /* 2050 */, PPC_INS_STWX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASSPE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15617,56 +15625,56 @@
 },
 {
   /* #SPILL_ACC */
-  PPC_SPILL_ACC /* 2050 */, PPC_INS_INVALID,
+  PPC_SPILL_ACC /* 2051 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SPILL_CR */
-  PPC_SPILL_CR /* 2051 */, PPC_INS_INVALID,
+  PPC_SPILL_CR /* 2052 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SPILL_CRBIT */
-  PPC_SPILL_CRBIT /* 2052 */, PPC_INS_INVALID,
+  PPC_SPILL_CRBIT /* 2053 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SPILL_QUADWORD */
-  PPC_SPILL_QUADWORD /* 2053 */, PPC_INS_INVALID,
+  PPC_SPILL_QUADWORD /* 2054 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SPILL_UACC */
-  PPC_SPILL_UACC /* 2054 */, PPC_INS_INVALID,
+  PPC_SPILL_UACC /* 2055 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SPILL_WACC */
-  PPC_SPILL_WACC /* 2055 */, PPC_INS_INVALID,
+  PPC_SPILL_WACC /* 2056 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #SPLIT_QUADWORD */
-  PPC_SPLIT_QUADWORD /* 2056 */, PPC_INS_INVALID,
+  PPC_SPLIT_QUADWORD /* 2057 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* srad $RA, $RST, $RB */
-  PPC_SRAD /* 2057 */, PPC_INS_SRAD,
+  PPC_SRAD /* 2058 */, PPC_INS_SRAD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15674,7 +15682,7 @@
 },
 {
   /* sradi $RA, $RS, $SH */
-  PPC_SRADI /* 2058 */, PPC_INS_SRADI,
+  PPC_SRADI /* 2059 */, PPC_INS_SRADI,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XSFORM_1 }}
 
@@ -15682,14 +15690,14 @@
 },
 {
   /* sradi $RA, $RS, $SH */
-  PPC_SRADI_32 /* 2059 */, PPC_INS_INVALID,
+  PPC_SRADI_32 /* 2060 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sradi. $RA, $RS, $SH */
-  PPC_SRADI_rec /* 2060 */, PPC_INS_SRADI,
+  PPC_SRADI_rec /* 2061 */, PPC_INS_SRADI,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XSFORM_1 }}
 
@@ -15697,7 +15705,7 @@
 },
 {
   /* srad. $RA, $RST, $RB */
-  PPC_SRAD_rec /* 2061 */, PPC_INS_SRAD,
+  PPC_SRAD_rec /* 2062 */, PPC_INS_SRAD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15705,7 +15713,7 @@
 },
 {
   /* sraw $RA, $RST, $RB */
-  PPC_SRAW /* 2062 */, PPC_INS_SRAW,
+  PPC_SRAW /* 2063 */, PPC_INS_SRAW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15713,7 +15721,7 @@
 },
 {
   /* srawi $RA, $RST, $RB */
-  PPC_SRAWI /* 2063 */, PPC_INS_SRAWI,
+  PPC_SRAWI /* 2064 */, PPC_INS_SRAWI,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15721,7 +15729,7 @@
 },
 {
   /* srawi. $RA, $RST, $RB */
-  PPC_SRAWI_rec /* 2064 */, PPC_INS_SRAWI,
+  PPC_SRAWI_rec /* 2065 */, PPC_INS_SRAWI,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15729,7 +15737,7 @@
 },
 {
   /* sraw. $RA, $RST, $RB */
-  PPC_SRAW_rec /* 2065 */, PPC_INS_SRAW,
+  PPC_SRAW_rec /* 2066 */, PPC_INS_SRAW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15737,7 +15745,7 @@
 },
 {
   /* srd $RA, $RST, $RB */
-  PPC_SRD /* 2066 */, PPC_INS_SRD,
+  PPC_SRD /* 2067 */, PPC_INS_SRD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15745,7 +15753,7 @@
 },
 {
   /* srd. $RA, $RST, $RB */
-  PPC_SRD_rec /* 2067 */, PPC_INS_SRD,
+  PPC_SRD_rec /* 2068 */, PPC_INS_SRD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15753,7 +15761,7 @@
 },
 {
   /* srw $RA, $RST, $RB */
-  PPC_SRW /* 2068 */, PPC_INS_SRW,
+  PPC_SRW /* 2069 */, PPC_INS_SRW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15761,21 +15769,21 @@
 },
 {
   /* srw $RA, $RST, $RB */
-  PPC_SRW8 /* 2069 */, PPC_INS_INVALID,
+  PPC_SRW8 /* 2070 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* srw. $RA, $RST, $RB */
-  PPC_SRW8_rec /* 2070 */, PPC_INS_INVALID,
+  PPC_SRW8_rec /* 2071 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* srw. $RA, $RST, $RB */
-  PPC_SRW_rec /* 2071 */, PPC_INS_SRW,
+  PPC_SRW_rec /* 2072 */, PPC_INS_SRW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -15783,7 +15791,7 @@
 },
 {
   /* stb $RST, $dst */
-  PPC_STB /* 2072 */, PPC_INS_STB,
+  PPC_STB /* 2073 */, PPC_INS_STB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -15791,14 +15799,14 @@
 },
 {
   /* stb $RST, $addr */
-  PPC_STB8 /* 2073 */, PPC_INS_INVALID,
+  PPC_STB8 /* 2074 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stbcix $RST, $RA, $RB */
-  PPC_STBCIX /* 2074 */, PPC_INS_STBCIX,
+  PPC_STBCIX /* 2075 */, PPC_INS_STBCIX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15806,7 +15814,7 @@
 },
 {
   /* stbcx. $RST, $addr */
-  PPC_STBCX /* 2075 */, PPC_INS_STBCX,
+  PPC_STBCX /* 2076 */, PPC_INS_STBCX,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { PPC_FEATURE_HASPARTWORDATOMICS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15814,7 +15822,7 @@
 },
 {
   /* stbepx $RST, $addr */
-  PPC_STBEPX /* 2076 */, PPC_INS_STBEPX,
+  PPC_STBEPX /* 2077 */, PPC_INS_STBEPX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISE500, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15822,7 +15830,7 @@
 },
 {
   /* stbu $RST, $dst */
-  PPC_STBU /* 2077 */, PPC_INS_STBU,
+  PPC_STBU /* 2078 */, PPC_INS_STBU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -15830,14 +15838,14 @@
 },
 {
   /* stbu $RST, $addr */
-  PPC_STBU8 /* 2078 */, PPC_INS_INVALID,
+  PPC_STBU8 /* 2079 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stbux $RST, $addr */
-  PPC_STBUX /* 2079 */, PPC_INS_STBUX,
+  PPC_STBUX /* 2080 */, PPC_INS_STBUX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15845,14 +15853,14 @@
 },
 {
   /* stbux $RST, $addr */
-  PPC_STBUX8 /* 2080 */, PPC_INS_INVALID,
+  PPC_STBUX8 /* 2081 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stbx $RST, $addr */
-  PPC_STBX /* 2081 */, PPC_INS_STBX,
+  PPC_STBX /* 2082 */, PPC_INS_STBX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15860,21 +15868,21 @@
 },
 {
   /* stbx $RST, $addr */
-  PPC_STBX8 /* 2082 */, PPC_INS_INVALID,
+  PPC_STBX8 /* 2083 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stbx $RST, $RA, $RB */
-  PPC_STBXTLS /* 2083 */, PPC_INS_INVALID,
+  PPC_STBXTLS /* 2084 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stbx $RST, $RA, $RB */
-  PPC_STBXTLS_ /* 2084 */, PPC_INS_STBX,
+  PPC_STBXTLS_ /* 2085 */, PPC_INS_STBX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15882,14 +15890,14 @@
 },
 {
   /* stbx $RST, $RA, $RB */
-  PPC_STBXTLS_32 /* 2085 */, PPC_INS_INVALID,
+  PPC_STBXTLS_32 /* 2086 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* std $RST, $addr */
-  PPC_STD /* 2086 */, PPC_INS_STD,
+  PPC_STD /* 2087 */, PPC_INS_STD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DSFORM_1 }}
 
@@ -15897,7 +15905,7 @@
 },
 {
   /* stdat $RST, $RA, $RB */
-  PPC_STDAT /* 2087 */, PPC_INS_STDAT,
+  PPC_STDAT /* 2088 */, PPC_INS_STDAT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15905,7 +15913,7 @@
 },
 {
   /* stdbrx $RST, $addr */
-  PPC_STDBRX /* 2088 */, PPC_INS_STDBRX,
+  PPC_STDBRX /* 2089 */, PPC_INS_STDBRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA2_06, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15913,7 +15921,7 @@
 },
 {
   /* stdcix $RST, $RA, $RB */
-  PPC_STDCIX /* 2089 */, PPC_INS_STDCIX,
+  PPC_STDCIX /* 2090 */, PPC_INS_STDCIX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15921,7 +15929,7 @@
 },
 {
   /* stdcx. $RST, $addr */
-  PPC_STDCX /* 2090 */, PPC_INS_STDCX,
+  PPC_STDCX /* 2091 */, PPC_INS_STDCX,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15929,7 +15937,7 @@
 },
 {
   /* stdu $RST, $addr */
-  PPC_STDU /* 2091 */, PPC_INS_STDU,
+  PPC_STDU /* 2092 */, PPC_INS_STDU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DSFORM_1 }}
 
@@ -15937,7 +15945,7 @@
 },
 {
   /* stdux $RST, $addr */
-  PPC_STDUX /* 2092 */, PPC_INS_STDUX,
+  PPC_STDUX /* 2093 */, PPC_INS_STDUX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15945,7 +15953,7 @@
 },
 {
   /* stdx $RST, $addr */
-  PPC_STDX /* 2093 */, PPC_INS_STDX,
+  PPC_STDX /* 2094 */, PPC_INS_STDX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15953,14 +15961,14 @@
 },
 {
   /* stdx $RST, $RA, $RB */
-  PPC_STDXTLS /* 2094 */, PPC_INS_INVALID,
+  PPC_STDXTLS /* 2095 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stdx $RST, $RA, $RB */
-  PPC_STDXTLS_ /* 2095 */, PPC_INS_STDX,
+  PPC_STDXTLS_ /* 2096 */, PPC_INS_STDX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15968,7 +15976,7 @@
 },
 {
   /* stfd $RST, $dst */
-  PPC_STFD /* 2096 */, PPC_INS_STFD,
+  PPC_STFD /* 2097 */, PPC_INS_STFD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -15976,7 +15984,7 @@
 },
 {
   /* stfdepx $RST, $addr */
-  PPC_STFDEPX /* 2097 */, PPC_INS_STFDEPX,
+  PPC_STFDEPX /* 2098 */, PPC_INS_STFDEPX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISE500, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -15984,7 +15992,7 @@
 },
 {
   /* stfdu $RST, $dst */
-  PPC_STFDU /* 2098 */, PPC_INS_STFDU,
+  PPC_STFDU /* 2099 */, PPC_INS_STFDU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -15992,7 +16000,7 @@
 },
 {
   /* stfdux $RST, $addr */
-  PPC_STFDUX /* 2099 */, PPC_INS_STFDUX,
+  PPC_STFDUX /* 2100 */, PPC_INS_STFDUX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16000,7 +16008,7 @@
 },
 {
   /* stfdx $RST, $addr */
-  PPC_STFDX /* 2100 */, PPC_INS_STFDX,
+  PPC_STFDX /* 2101 */, PPC_INS_STFDX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16008,14 +16016,14 @@
 },
 {
   /* stfdx $RST, $RA, $RB */
-  PPC_STFDXTLS /* 2101 */, PPC_INS_INVALID,
+  PPC_STFDXTLS /* 2102 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stfdx $RST, $RA, $RB */
-  PPC_STFDXTLS_ /* 2102 */, PPC_INS_STFDX,
+  PPC_STFDXTLS_ /* 2103 */, PPC_INS_STFDX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16023,7 +16031,7 @@
 },
 {
   /* stfiwx $RST, $addr */
-  PPC_STFIWX /* 2103 */, PPC_INS_STFIWX,
+  PPC_STFIWX /* 2104 */, PPC_INS_STFIWX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16031,7 +16039,7 @@
 },
 {
   /* stfs $RST, $dst */
-  PPC_STFS /* 2104 */, PPC_INS_STFS,
+  PPC_STFS /* 2105 */, PPC_INS_STFS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -16039,7 +16047,7 @@
 },
 {
   /* stfsu $RST, $dst */
-  PPC_STFSU /* 2105 */, PPC_INS_STFSU,
+  PPC_STFSU /* 2106 */, PPC_INS_STFSU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -16047,7 +16055,7 @@
 },
 {
   /* stfsux $RST, $addr */
-  PPC_STFSUX /* 2106 */, PPC_INS_STFSUX,
+  PPC_STFSUX /* 2107 */, PPC_INS_STFSUX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16055,7 +16063,7 @@
 },
 {
   /* stfsx $RST, $addr */
-  PPC_STFSX /* 2107 */, PPC_INS_STFSX,
+  PPC_STFSX /* 2108 */, PPC_INS_STFSX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16063,14 +16071,14 @@
 },
 {
   /* stfsx $RST, $RA, $RB */
-  PPC_STFSXTLS /* 2108 */, PPC_INS_INVALID,
+  PPC_STFSXTLS /* 2109 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stfsx $RST, $RA, $RB */
-  PPC_STFSXTLS_ /* 2109 */, PPC_INS_STFSX,
+  PPC_STFSXTLS_ /* 2110 */, PPC_INS_STFSX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_HASFPU, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16078,7 +16086,7 @@
 },
 {
   /* sth $RST, $dst */
-  PPC_STH /* 2110 */, PPC_INS_STH,
+  PPC_STH /* 2111 */, PPC_INS_STH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -16086,14 +16094,14 @@
 },
 {
   /* sth $RST, $addr */
-  PPC_STH8 /* 2111 */, PPC_INS_INVALID,
+  PPC_STH8 /* 2112 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sthbrx $RST, $addr */
-  PPC_STHBRX /* 2112 */, PPC_INS_STHBRX,
+  PPC_STHBRX /* 2113 */, PPC_INS_STHBRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16101,7 +16109,7 @@
 },
 {
   /* sthcix $RST, $RA, $RB */
-  PPC_STHCIX /* 2113 */, PPC_INS_STHCIX,
+  PPC_STHCIX /* 2114 */, PPC_INS_STHCIX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16109,7 +16117,7 @@
 },
 {
   /* sthcx. $RST, $addr */
-  PPC_STHCX /* 2114 */, PPC_INS_STHCX,
+  PPC_STHCX /* 2115 */, PPC_INS_STHCX,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { PPC_FEATURE_HASPARTWORDATOMICS, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16117,7 +16125,7 @@
 },
 {
   /* sthepx $RST, $addr */
-  PPC_STHEPX /* 2115 */, PPC_INS_STHEPX,
+  PPC_STHEPX /* 2116 */, PPC_INS_STHEPX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISE500, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16125,7 +16133,7 @@
 },
 {
   /* sthu $RST, $dst */
-  PPC_STHU /* 2116 */, PPC_INS_STHU,
+  PPC_STHU /* 2117 */, PPC_INS_STHU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -16133,14 +16141,14 @@
 },
 {
   /* sthu $RST, $addr */
-  PPC_STHU8 /* 2117 */, PPC_INS_INVALID,
+  PPC_STHU8 /* 2118 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sthux $RST, $addr */
-  PPC_STHUX /* 2118 */, PPC_INS_STHUX,
+  PPC_STHUX /* 2119 */, PPC_INS_STHUX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16148,14 +16156,14 @@
 },
 {
   /* sthux $RST, $addr */
-  PPC_STHUX8 /* 2119 */, PPC_INS_INVALID,
+  PPC_STHUX8 /* 2120 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sthx $RST, $addr */
-  PPC_STHX /* 2120 */, PPC_INS_STHX,
+  PPC_STHX /* 2121 */, PPC_INS_STHX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16163,21 +16171,21 @@
 },
 {
   /* sthx $RST, $addr */
-  PPC_STHX8 /* 2121 */, PPC_INS_INVALID,
+  PPC_STHX8 /* 2122 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sthx $RST, $RA, $RB */
-  PPC_STHXTLS /* 2122 */, PPC_INS_INVALID,
+  PPC_STHXTLS /* 2123 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* sthx $RST, $RA, $RB */
-  PPC_STHXTLS_ /* 2123 */, PPC_INS_STHX,
+  PPC_STHXTLS_ /* 2124 */, PPC_INS_STHX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16185,14 +16193,14 @@
 },
 {
   /* sthx $RST, $RA, $RB */
-  PPC_STHXTLS_32 /* 2124 */, PPC_INS_INVALID,
+  PPC_STHXTLS_32 /* 2125 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stmw $RST, $dst */
-  PPC_STMW /* 2125 */, PPC_INS_STMW,
+  PPC_STMW /* 2126 */, PPC_INS_STMW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -16200,7 +16208,7 @@
 },
 {
   /* stop */
-  PPC_STOP /* 2126 */, PPC_INS_STOP,
+  PPC_STOP /* 2127 */, PPC_INS_STOP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16208,7 +16216,7 @@
 },
 {
   /* stq $RST, $addr */
-  PPC_STQ /* 2127 */, PPC_INS_STQ,
+  PPC_STQ /* 2128 */, PPC_INS_STQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DSFORM_1 }}
 
@@ -16216,7 +16224,7 @@
 },
 {
   /* stqcx. $RST, $addr */
-  PPC_STQCX /* 2128 */, PPC_INS_STQCX,
+  PPC_STQCX /* 2129 */, PPC_INS_STQCX,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16224,14 +16232,14 @@
 },
 {
   /* #STQX_PSEUDO */
-  PPC_STQX_PSEUDO /* 2129 */, PPC_INS_INVALID,
+  PPC_STQX_PSEUDO /* 2130 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stswi $RST, $RA, $RB */
-  PPC_STSWI /* 2130 */, PPC_INS_STSWI,
+  PPC_STSWI /* 2131 */, PPC_INS_STSWI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16239,7 +16247,7 @@
 },
 {
   /* stvebx $RST, $addr */
-  PPC_STVEBX /* 2131 */, PPC_INS_STVEBX,
+  PPC_STVEBX /* 2132 */, PPC_INS_STVEBX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16247,7 +16255,7 @@
 },
 {
   /* stvehx $RST, $addr */
-  PPC_STVEHX /* 2132 */, PPC_INS_STVEHX,
+  PPC_STVEHX /* 2133 */, PPC_INS_STVEHX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16255,7 +16263,7 @@
 },
 {
   /* stvewx $RST, $addr */
-  PPC_STVEWX /* 2133 */, PPC_INS_STVEWX,
+  PPC_STVEWX /* 2134 */, PPC_INS_STVEWX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16263,7 +16271,7 @@
 },
 {
   /* stvx $RST, $addr */
-  PPC_STVX /* 2134 */, PPC_INS_STVX,
+  PPC_STVX /* 2135 */, PPC_INS_STVX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16271,7 +16279,7 @@
 },
 {
   /* stvxl $RST, $addr */
-  PPC_STVXL /* 2135 */, PPC_INS_STVXL,
+  PPC_STVXL /* 2136 */, PPC_INS_STVXL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16279,7 +16287,7 @@
 },
 {
   /* stw $RST, $dst */
-  PPC_STW /* 2136 */, PPC_INS_STW,
+  PPC_STW /* 2137 */, PPC_INS_STW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -16287,14 +16295,14 @@
 },
 {
   /* stw $RST, $addr */
-  PPC_STW8 /* 2137 */, PPC_INS_INVALID,
+  PPC_STW8 /* 2138 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stwat $RST, $RA, $RB */
-  PPC_STWAT /* 2138 */, PPC_INS_STWAT,
+  PPC_STWAT /* 2139 */, PPC_INS_STWAT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISA3_0, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16302,7 +16310,7 @@
 },
 {
   /* stwbrx $RST, $addr */
-  PPC_STWBRX /* 2139 */, PPC_INS_STWBRX,
+  PPC_STWBRX /* 2140 */, PPC_INS_STWBRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16310,7 +16318,7 @@
 },
 {
   /* stwcix $RST, $RA, $RB */
-  PPC_STWCIX /* 2140 */, PPC_INS_STWCIX,
+  PPC_STWCIX /* 2141 */, PPC_INS_STWCIX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16318,7 +16326,7 @@
 },
 {
   /* stwcx. $RST, $addr */
-  PPC_STWCX /* 2141 */, PPC_INS_STWCX,
+  PPC_STWCX /* 2142 */, PPC_INS_STWCX,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16326,7 +16334,7 @@
 },
 {
   /* stwepx $RST, $addr */
-  PPC_STWEPX /* 2142 */, PPC_INS_STWEPX,
+  PPC_STWEPX /* 2143 */, PPC_INS_STWEPX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISE500, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16334,7 +16342,7 @@
 },
 {
   /* stwu $RST, $dst */
-  PPC_STWU /* 2143 */, PPC_INS_STWU,
+  PPC_STWU /* 2144 */, PPC_INS_STWU,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -16342,14 +16350,14 @@
 },
 {
   /* stwu $RST, $addr */
-  PPC_STWU8 /* 2144 */, PPC_INS_INVALID,
+  PPC_STWU8 /* 2145 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stwux $RST, $addr */
-  PPC_STWUX /* 2145 */, PPC_INS_STWUX,
+  PPC_STWUX /* 2146 */, PPC_INS_STWUX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16357,14 +16365,14 @@
 },
 {
   /* stwux $RST, $addr */
-  PPC_STWUX8 /* 2146 */, PPC_INS_INVALID,
+  PPC_STWUX8 /* 2147 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stwx $RST, $addr */
-  PPC_STWX /* 2147 */, PPC_INS_STWX,
+  PPC_STWX /* 2148 */, PPC_INS_STWX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16372,21 +16380,21 @@
 },
 {
   /* stwx $RST, $addr */
-  PPC_STWX8 /* 2148 */, PPC_INS_INVALID,
+  PPC_STWX8 /* 2149 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stwx $RST, $RA, $RB */
-  PPC_STWXTLS /* 2149 */, PPC_INS_INVALID,
+  PPC_STWXTLS /* 2150 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stwx $RST, $RA, $RB */
-  PPC_STWXTLS_ /* 2150 */, PPC_INS_STWX,
+  PPC_STWXTLS_ /* 2151 */, PPC_INS_STWX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16394,14 +16402,14 @@
 },
 {
   /* stwx $RST, $RA, $RB */
-  PPC_STWXTLS_32 /* 2151 */, PPC_INS_INVALID,
+  PPC_STWXTLS_32 /* 2152 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stxsd $RST, $addr */
-  PPC_STXSD /* 2152 */, PPC_INS_STXSD,
+  PPC_STXSD /* 2153 */, PPC_INS_STXSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DSFORM_1 }}
 
@@ -16409,7 +16417,7 @@
 },
 {
   /* stxsdx $XT, $addr */
-  PPC_STXSDX /* 2153 */, PPC_INS_STXSDX,
+  PPC_STXSDX /* 2154 */, PPC_INS_STXSDX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16417,7 +16425,7 @@
 },
 {
   /* stxsibx $XT, $addr */
-  PPC_STXSIBX /* 2154 */, PPC_INS_STXSIBX,
+  PPC_STXSIBX /* 2155 */, PPC_INS_STXSIBX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16425,14 +16433,14 @@
 },
 {
   /* stxsibx $XT, $addr */
-  PPC_STXSIBXv /* 2155 */, PPC_INS_INVALID,
+  PPC_STXSIBXv /* 2156 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stxsihx $XT, $addr */
-  PPC_STXSIHX /* 2156 */, PPC_INS_STXSIHX,
+  PPC_STXSIHX /* 2157 */, PPC_INS_STXSIHX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16440,14 +16448,14 @@
 },
 {
   /* stxsihx $XT, $addr */
-  PPC_STXSIHXv /* 2157 */, PPC_INS_INVALID,
+  PPC_STXSIHXv /* 2158 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* stxsiwx $XT, $addr */
-  PPC_STXSIWX /* 2158 */, PPC_INS_STXSIWX,
+  PPC_STXSIWX /* 2159 */, PPC_INS_STXSIWX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16455,7 +16463,7 @@
 },
 {
   /* stxssp $RST, $addr */
-  PPC_STXSSP /* 2159 */, PPC_INS_STXSSP,
+  PPC_STXSSP /* 2160 */, PPC_INS_STXSSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DSFORM_1 }}
 
@@ -16463,7 +16471,7 @@
 },
 {
   /* stxsspx $XT, $addr */
-  PPC_STXSSPX /* 2160 */, PPC_INS_STXSSPX,
+  PPC_STXSSPX /* 2161 */, PPC_INS_STXSSPX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16471,7 +16479,7 @@
 },
 {
   /* stxv $XT, $addr */
-  PPC_STXV /* 2161 */, PPC_INS_STXV,
+  PPC_STXV /* 2162 */, PPC_INS_STXV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DQ_RD6_RS5_DQ12 }}
 
@@ -16479,7 +16487,7 @@
 },
 {
   /* stxvb16x $XT, $addr */
-  PPC_STXVB16X /* 2162 */, PPC_INS_STXVB16X,
+  PPC_STXVB16X /* 2163 */, PPC_INS_STXVB16X,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16487,7 +16495,7 @@
 },
 {
   /* stxvd2x $XT, $addr */
-  PPC_STXVD2X /* 2163 */, PPC_INS_STXVD2X,
+  PPC_STXVD2X /* 2164 */, PPC_INS_STXVD2X,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16495,7 +16503,7 @@
 },
 {
   /* stxvh8x $XT, $addr */
-  PPC_STXVH8X /* 2164 */, PPC_INS_STXVH8X,
+  PPC_STXVH8X /* 2165 */, PPC_INS_STXVH8X,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16503,7 +16511,7 @@
 },
 {
   /* stxvl $XT, $addr, $RB */
-  PPC_STXVL /* 2165 */, PPC_INS_STXVL,
+  PPC_STXVL /* 2166 */, PPC_INS_STXVL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16511,7 +16519,7 @@
 },
 {
   /* stxvll $XT, $addr, $RB */
-  PPC_STXVLL /* 2166 */, PPC_INS_STXVLL,
+  PPC_STXVLL /* 2167 */, PPC_INS_STXVLL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16519,7 +16527,7 @@
 },
 {
   /* stxvp $XTp, $addr */
-  PPC_STXVP /* 2167 */, PPC_INS_STXVP,
+  PPC_STXVP /* 2168 */, PPC_INS_STXVP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DQFORM_XTP5_RA17_MEM }}
 
@@ -16527,7 +16535,7 @@
 },
 {
   /* stxvprl $XTp, $RA, $RB */
-  PPC_STXVPRL /* 2168 */, PPC_INS_STXVPRL,
+  PPC_STXVPRL /* 2169 */, PPC_INS_STXVPRL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORMMEMOP }}
 
@@ -16535,7 +16543,7 @@
 },
 {
   /* stxvprll $XTp, $RA, $RB */
-  PPC_STXVPRLL /* 2169 */, PPC_INS_STXVPRLL,
+  PPC_STXVPRLL /* 2170 */, PPC_INS_STXVPRLL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORMMEMOP }}
 
@@ -16543,7 +16551,7 @@
 },
 {
   /* stxvpx $XTp, $addr */
-  PPC_STXVPX /* 2170 */, PPC_INS_STXVPX,
+  PPC_STXVPX /* 2171 */, PPC_INS_STXVPX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORMMEMOP }}
 
@@ -16551,7 +16559,7 @@
 },
 {
   /* stxvrbx $XT, $addr */
-  PPC_STXVRBX /* 2171 */, PPC_INS_STXVRBX,
+  PPC_STXVRBX /* 2172 */, PPC_INS_STXVRBX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16559,7 +16567,7 @@
 },
 {
   /* stxvrdx $XT, $addr */
-  PPC_STXVRDX /* 2172 */, PPC_INS_STXVRDX,
+  PPC_STXVRDX /* 2173 */, PPC_INS_STXVRDX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16567,7 +16575,7 @@
 },
 {
   /* stxvrhx $XT, $addr */
-  PPC_STXVRHX /* 2173 */, PPC_INS_STXVRHX,
+  PPC_STXVRHX /* 2174 */, PPC_INS_STXVRHX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16575,7 +16583,7 @@
 },
 {
   /* stxvrl $XT, $RA, $RB */
-  PPC_STXVRL /* 2174 */, PPC_INS_STXVRL,
+  PPC_STXVRL /* 2175 */, PPC_INS_STXVRL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16583,7 +16591,7 @@
 },
 {
   /* stxvrll $XT, $RA, $RB */
-  PPC_STXVRLL /* 2175 */, PPC_INS_STXVRLL,
+  PPC_STXVRLL /* 2176 */, PPC_INS_STXVRLL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16591,7 +16599,7 @@
 },
 {
   /* stxvrwx $XT, $addr */
-  PPC_STXVRWX /* 2176 */, PPC_INS_STXVRWX,
+  PPC_STXVRWX /* 2177 */, PPC_INS_STXVRWX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16599,7 +16607,7 @@
 },
 {
   /* stxvw4x $XT, $addr */
-  PPC_STXVW4X /* 2177 */, PPC_INS_STXVW4X,
+  PPC_STXVW4X /* 2178 */, PPC_INS_STXVW4X,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16607,7 +16615,7 @@
 },
 {
   /* stxvx $XT, $addr */
-  PPC_STXVX /* 2178 */, PPC_INS_STXVX,
+  PPC_STXVX /* 2179 */, PPC_INS_STXVX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -16615,7 +16623,7 @@
 },
 {
   /* subf $RT, $RA, $RB */
-  PPC_SUBF /* 2179 */, PPC_INS_SUBF,
+  PPC_SUBF /* 2180 */, PPC_INS_SUBF,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16623,35 +16631,35 @@
 },
 {
   /* subf $RT, $RA, $RB */
-  PPC_SUBF8 /* 2180 */, PPC_INS_INVALID,
+  PPC_SUBF8 /* 2181 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfo $RT, $RA, $RB */
-  PPC_SUBF8O /* 2181 */, PPC_INS_INVALID,
+  PPC_SUBF8O /* 2182 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfo. $RT, $RA, $RB */
-  PPC_SUBF8O_rec /* 2182 */, PPC_INS_INVALID,
+  PPC_SUBF8O_rec /* 2183 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subf. $RT, $RA, $RB */
-  PPC_SUBF8_rec /* 2183 */, PPC_INS_INVALID,
+  PPC_SUBF8_rec /* 2184 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfc $RT, $RA, $RB */
-  PPC_SUBFC /* 2184 */, PPC_INS_SUBFC,
+  PPC_SUBFC /* 2185 */, PPC_INS_SUBFC,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16659,35 +16667,35 @@
 },
 {
   /* subfc $RT, $RA, $RB */
-  PPC_SUBFC8 /* 2185 */, PPC_INS_INVALID,
+  PPC_SUBFC8 /* 2186 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfco $RT, $RA, $RB */
-  PPC_SUBFC8O /* 2186 */, PPC_INS_INVALID,
+  PPC_SUBFC8O /* 2187 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfco. $RT, $RA, $RB */
-  PPC_SUBFC8O_rec /* 2187 */, PPC_INS_INVALID,
+  PPC_SUBFC8O_rec /* 2188 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfc. $RT, $RA, $RB */
-  PPC_SUBFC8_rec /* 2188 */, PPC_INS_INVALID,
+  PPC_SUBFC8_rec /* 2189 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfco $RT, $RA, $RB */
-  PPC_SUBFCO /* 2189 */, PPC_INS_SUBFCO,
+  PPC_SUBFCO /* 2190 */, PPC_INS_SUBFCO,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, PPC_REG_XER, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16695,7 +16703,7 @@
 },
 {
   /* subfco. $RT, $RA, $RB */
-  PPC_SUBFCO_rec /* 2190 */, PPC_INS_SUBFCO,
+  PPC_SUBFCO_rec /* 2191 */, PPC_INS_SUBFCO,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, PPC_REG_XER, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16703,7 +16711,7 @@
 },
 {
   /* subfc. $RT, $RA, $RB */
-  PPC_SUBFC_rec /* 2191 */, PPC_INS_SUBFC,
+  PPC_SUBFC_rec /* 2192 */, PPC_INS_SUBFC,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16711,7 +16719,7 @@
 },
 {
   /* subfe $RT, $RA, $RB */
-  PPC_SUBFE /* 2192 */, PPC_INS_SUBFE,
+  PPC_SUBFE /* 2193 */, PPC_INS_SUBFE,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16719,35 +16727,35 @@
 },
 {
   /* subfe $RT, $RA, $RB */
-  PPC_SUBFE8 /* 2193 */, PPC_INS_INVALID,
+  PPC_SUBFE8 /* 2194 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfeo $RT, $RA, $RB */
-  PPC_SUBFE8O /* 2194 */, PPC_INS_INVALID,
+  PPC_SUBFE8O /* 2195 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfeo. $RT, $RA, $RB */
-  PPC_SUBFE8O_rec /* 2195 */, PPC_INS_INVALID,
+  PPC_SUBFE8O_rec /* 2196 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfe. $RT, $RA, $RB */
-  PPC_SUBFE8_rec /* 2196 */, PPC_INS_INVALID,
+  PPC_SUBFE8_rec /* 2197 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfeo $RT, $RA, $RB */
-  PPC_SUBFEO /* 2197 */, PPC_INS_SUBFEO,
+  PPC_SUBFEO /* 2198 */, PPC_INS_SUBFEO,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_XER, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16755,7 +16763,7 @@
 },
 {
   /* subfeo. $RT, $RA, $RB */
-  PPC_SUBFEO_rec /* 2198 */, PPC_INS_SUBFEO,
+  PPC_SUBFEO_rec /* 2199 */, PPC_INS_SUBFEO,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_XER, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16763,7 +16771,7 @@
 },
 {
   /* subfe. $RT, $RA, $RB */
-  PPC_SUBFE_rec /* 2199 */, PPC_INS_SUBFE,
+  PPC_SUBFE_rec /* 2200 */, PPC_INS_SUBFE,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16771,7 +16779,7 @@
 },
 {
   /* subfic $RST, $RA, $D */
-  PPC_SUBFIC /* 2200 */, PPC_INS_SUBFIC,
+  PPC_SUBFIC /* 2201 */, PPC_INS_SUBFIC,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -16779,14 +16787,14 @@
 },
 {
   /* subfic $RST, $RA, $D */
-  PPC_SUBFIC8 /* 2201 */, PPC_INS_INVALID,
+  PPC_SUBFIC8 /* 2202 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfme $RT, $RA */
-  PPC_SUBFME /* 2202 */, PPC_INS_SUBFME,
+  PPC_SUBFME /* 2203 */, PPC_INS_SUBFME,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16794,35 +16802,35 @@
 },
 {
   /* subfme $RT, $RA */
-  PPC_SUBFME8 /* 2203 */, PPC_INS_INVALID,
+  PPC_SUBFME8 /* 2204 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfmeo $RT, $RA */
-  PPC_SUBFME8O /* 2204 */, PPC_INS_INVALID,
+  PPC_SUBFME8O /* 2205 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfmeo. $RT, $RA */
-  PPC_SUBFME8O_rec /* 2205 */, PPC_INS_INVALID,
+  PPC_SUBFME8O_rec /* 2206 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfme. $RT, $RA */
-  PPC_SUBFME8_rec /* 2206 */, PPC_INS_INVALID,
+  PPC_SUBFME8_rec /* 2207 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfmeo $RT, $RA */
-  PPC_SUBFMEO /* 2207 */, PPC_INS_SUBFMEO,
+  PPC_SUBFMEO /* 2208 */, PPC_INS_SUBFMEO,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_XER, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16830,7 +16838,7 @@
 },
 {
   /* subfmeo. $RT, $RA */
-  PPC_SUBFMEO_rec /* 2208 */, PPC_INS_SUBFMEO,
+  PPC_SUBFMEO_rec /* 2209 */, PPC_INS_SUBFMEO,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_XER, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16838,7 +16846,7 @@
 },
 {
   /* subfme. $RT, $RA */
-  PPC_SUBFME_rec /* 2209 */, PPC_INS_SUBFME,
+  PPC_SUBFME_rec /* 2210 */, PPC_INS_SUBFME,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16846,7 +16854,7 @@
 },
 {
   /* subfo $RT, $RA, $RB */
-  PPC_SUBFO /* 2210 */, PPC_INS_SUBFO,
+  PPC_SUBFO /* 2211 */, PPC_INS_SUBFO,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_XER, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16854,7 +16862,7 @@
 },
 {
   /* subfo. $RT, $RA, $RB */
-  PPC_SUBFO_rec /* 2211 */, PPC_INS_SUBFO,
+  PPC_SUBFO_rec /* 2212 */, PPC_INS_SUBFO,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_XER, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16862,7 +16870,7 @@
 },
 {
   /* subfus $RT, $L, $RA, $RB */
-  PPC_SUBFUS /* 2212 */, PPC_INS_SUBFUS,
+  PPC_SUBFUS /* 2213 */, PPC_INS_SUBFUS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_RTAB5_L1 }}
 
@@ -16870,7 +16878,7 @@
 },
 {
   /* subfus. $RT, $L, $RA, $RB */
-  PPC_SUBFUS_rec /* 2213 */, PPC_INS_SUBFUS,
+  PPC_SUBFUS_rec /* 2214 */, PPC_INS_SUBFUS,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { PPC_FEATURE_ISISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_RTAB5_L1 }}
 
@@ -16878,7 +16886,7 @@
 },
 {
   /* subfze $RT, $RA */
-  PPC_SUBFZE /* 2214 */, PPC_INS_SUBFZE,
+  PPC_SUBFZE /* 2215 */, PPC_INS_SUBFZE,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16886,35 +16894,35 @@
 },
 {
   /* subfze $RT, $RA */
-  PPC_SUBFZE8 /* 2215 */, PPC_INS_INVALID,
+  PPC_SUBFZE8 /* 2216 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfzeo $RT, $RA */
-  PPC_SUBFZE8O /* 2216 */, PPC_INS_INVALID,
+  PPC_SUBFZE8O /* 2217 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfzeo. $RT, $RA */
-  PPC_SUBFZE8O_rec /* 2217 */, PPC_INS_INVALID,
+  PPC_SUBFZE8O_rec /* 2218 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfze. $RT, $RA */
-  PPC_SUBFZE8_rec /* 2218 */, PPC_INS_INVALID,
+  PPC_SUBFZE8_rec /* 2219 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* subfzeo $RT, $RA */
-  PPC_SUBFZEO /* 2219 */, PPC_INS_SUBFZEO,
+  PPC_SUBFZEO /* 2220 */, PPC_INS_SUBFZEO,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_XER, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16922,7 +16930,7 @@
 },
 {
   /* subfzeo. $RT, $RA */
-  PPC_SUBFZEO_rec /* 2220 */, PPC_INS_SUBFZEO,
+  PPC_SUBFZEO_rec /* 2221 */, PPC_INS_SUBFZEO,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_XER, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16930,7 +16938,7 @@
 },
 {
   /* subfze. $RT, $RA */
-  PPC_SUBFZE_rec /* 2221 */, PPC_INS_SUBFZE,
+  PPC_SUBFZE_rec /* 2222 */, PPC_INS_SUBFZE,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CARRY, 0 }, { PPC_REG_CARRY, PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16938,7 +16946,7 @@
 },
 {
   /* subf. $RT, $RA, $RB */
-  PPC_SUBF_rec /* 2222 */, PPC_INS_SUBF,
+  PPC_SUBF_rec /* 2223 */, PPC_INS_SUBF,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XOFORM_1 }}
 
@@ -16946,7 +16954,7 @@
 },
 {
   /* sync $L */
-  PPC_SYNC /* 2223 */, PPC_INS_SYNC,
+  PPC_SYNC /* 2224 */, PPC_INS_SYNC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_24_SYNC }}
 
@@ -16954,7 +16962,7 @@
 },
 {
   /* sync $L, $SC */
-  PPC_SYNCP10 /* 2224 */, PPC_INS_SYNC,
+  PPC_SYNCP10 /* 2225 */, PPC_INS_SYNC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_IMM3_IMM2 }}
 
@@ -16962,7 +16970,7 @@
 },
 {
   /* tabort. $RA */
-  PPC_TABORT /* 2225 */, PPC_INS_TABORT,
+  PPC_TABORT /* 2226 */, PPC_INS_TABORT,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16970,7 +16978,7 @@
 },
 {
   /* tabortdc. $RST, $RA, $RB */
-  PPC_TABORTDC /* 2226 */, PPC_INS_TABORTDC,
+  PPC_TABORTDC /* 2227 */, PPC_INS_TABORTDC,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16978,7 +16986,7 @@
 },
 {
   /* tabortdci. $RST, $RA, $RB */
-  PPC_TABORTDCI /* 2227 */, PPC_INS_TABORTDCI,
+  PPC_TABORTDCI /* 2228 */, PPC_INS_TABORTDCI,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16986,7 +16994,7 @@
 },
 {
   /* tabortwc. $RST, $RA, $RB */
-  PPC_TABORTWC /* 2228 */, PPC_INS_TABORTWC,
+  PPC_TABORTWC /* 2229 */, PPC_INS_TABORTWC,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -16994,7 +17002,7 @@
 },
 {
   /* tabortwci. $RST, $RA, $RB */
-  PPC_TABORTWCI /* 2229 */, PPC_INS_TABORTWCI,
+  PPC_TABORTWCI /* 2230 */, PPC_INS_TABORTWCI,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17002,49 +17010,49 @@
 },
 {
   /* b $LI */
-  PPC_TAILB /* 2230 */, PPC_INS_INVALID,
+  PPC_TAILB /* 2231 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* b $LI */
-  PPC_TAILB8 /* 2231 */, PPC_INS_INVALID,
+  PPC_TAILB8 /* 2232 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ba $LI */
-  PPC_TAILBA /* 2232 */, PPC_INS_INVALID,
+  PPC_TAILBA /* 2233 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* ba $LI */
-  PPC_TAILBA8 /* 2233 */, PPC_INS_INVALID,
+  PPC_TAILBA8 /* 2234 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* bctr */
-  PPC_TAILBCTR /* 2234 */, PPC_INS_INVALID,
+  PPC_TAILBCTR /* 2235 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* bctr */
-  PPC_TAILBCTR8 /* 2235 */, PPC_INS_INVALID,
+  PPC_TAILBCTR8 /* 2236 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* tbegin. $R */
-  PPC_TBEGIN /* 2236 */, PPC_INS_TBEGIN,
+  PPC_TBEGIN /* 2237 */, PPC_INS_TBEGIN,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_HTM0 }}
 
@@ -17052,14 +17060,14 @@
 },
 {
   /* #TBEGIN_RET */
-  PPC_TBEGIN_RET /* 2237 */, PPC_INS_INVALID,
+  PPC_TBEGIN_RET /* 2238 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* tcheck $BF */
-  PPC_TCHECK /* 2238 */, PPC_INS_TCHECK,
+  PPC_TCHECK /* 2239 */, PPC_INS_TCHECK,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_HTM3 }}
 
@@ -17067,56 +17075,56 @@
 },
 {
   /* #TCHECK_RET */
-  PPC_TCHECK_RET /* 2239 */, PPC_INS_INVALID,
+  PPC_TCHECK_RET /* 2240 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #TC_RETURNa $func $offset */
-  PPC_TCRETURNai /* 2240 */, PPC_INS_INVALID,
+  PPC_TCRETURNai /* 2241 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #TC_RETURNa8 $func $offset */
-  PPC_TCRETURNai8 /* 2241 */, PPC_INS_INVALID,
+  PPC_TCRETURNai8 /* 2242 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #TC_RETURNd $dst $offset */
-  PPC_TCRETURNdi /* 2242 */, PPC_INS_INVALID,
+  PPC_TCRETURNdi /* 2243 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #TC_RETURNd8 $dst $offset */
-  PPC_TCRETURNdi8 /* 2243 */, PPC_INS_INVALID,
+  PPC_TCRETURNdi8 /* 2244 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #TC_RETURNr $dst $offset */
-  PPC_TCRETURNri /* 2244 */, PPC_INS_INVALID,
+  PPC_TCRETURNri /* 2245 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #TC_RETURNr8 $dst $offset */
-  PPC_TCRETURNri8 /* 2245 */, PPC_INS_INVALID,
+  PPC_TCRETURNri8 /* 2246 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* td $RST, $RA, $RB */
-  PPC_TD /* 2246 */, PPC_INS_TD,
+  PPC_TD /* 2247 */, PPC_INS_TD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17124,7 +17132,7 @@
 },
 {
   /* tdi $RST, $RA, $D */
-  PPC_TDI /* 2247 */, PPC_INS_TDI,
+  PPC_TDI /* 2248 */, PPC_INS_TDI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -17132,7 +17140,7 @@
 },
 {
   /* tend. $A */
-  PPC_TEND /* 2248 */, PPC_INS_TEND,
+  PPC_TEND /* 2249 */, PPC_INS_TEND,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_HTM1 }}
 
@@ -17140,7 +17148,7 @@
 },
 {
   /* tlbia */
-  PPC_TLBIA /* 2249 */, PPC_INS_TLBIA,
+  PPC_TLBIA /* 2250 */, PPC_INS_TLBIA,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17148,7 +17156,7 @@
 },
 {
   /* tlbie $RB,$RST */
-  PPC_TLBIE /* 2250 */, PPC_INS_TLBIE,
+  PPC_TLBIE /* 2251 */, PPC_INS_TLBIE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17156,7 +17164,7 @@
 },
 {
   /* tlbiel $RB */
-  PPC_TLBIEL /* 2251 */, PPC_INS_TLBIEL,
+  PPC_TLBIEL /* 2252 */, PPC_INS_TLBIEL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17164,7 +17172,7 @@
 },
 {
   /* tlbilx $T, $RA, $RB */
-  PPC_TLBILX /* 2252 */, PPC_INS_TLBILX,
+  PPC_TLBILX /* 2253 */, PPC_INS_TLBILX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISBOOKE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17172,7 +17180,7 @@
 },
 {
   /* tlbivax $RA, $RB */
-  PPC_TLBIVAX /* 2253 */, PPC_INS_TLBIVAX,
+  PPC_TLBIVAX /* 2254 */, PPC_INS_TLBIVAX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISBOOKE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17180,7 +17188,7 @@
 },
 {
   /* tlbld $RB */
-  PPC_TLBLD /* 2254 */, PPC_INS_TLBLD,
+  PPC_TLBLD /* 2255 */, PPC_INS_TLBLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISPPC6XX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17188,7 +17196,7 @@
 },
 {
   /* tlbli $RB */
-  PPC_TLBLI /* 2255 */, PPC_INS_TLBLI,
+  PPC_TLBLI /* 2256 */, PPC_INS_TLBLI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISPPC6XX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17196,7 +17204,7 @@
 },
 {
   /* tlbre */
-  PPC_TLBRE /* 2256 */, PPC_INS_TLBRE,
+  PPC_TLBRE /* 2257 */, PPC_INS_TLBRE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISBOOKE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_24_SYNC }}
 
@@ -17204,7 +17212,7 @@
 },
 {
   /* tlbre $RST, $RA, $WS */
-  PPC_TLBRE2 /* 2257 */, PPC_INS_TLBRE,
+  PPC_TLBRE2 /* 2258 */, PPC_INS_TLBRE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISPPC4XX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_TLBWS }}
 
@@ -17212,7 +17220,7 @@
 },
 {
   /* tlbsx $RA, $RB */
-  PPC_TLBSX /* 2258 */, PPC_INS_TLBSX,
+  PPC_TLBSX /* 2259 */, PPC_INS_TLBSX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISBOOKE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17220,7 +17228,7 @@
 },
 {
   /* tlbsx $RST, $RA, $RB */
-  PPC_TLBSX2 /* 2259 */, PPC_INS_TLBSX,
+  PPC_TLBSX2 /* 2260 */, PPC_INS_TLBSX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISPPC4XX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17228,7 +17236,7 @@
 },
 {
   /* tlbsx. $RST, $RA, $RB */
-  PPC_TLBSX2D /* 2260 */, PPC_INS_TLBSX,
+  PPC_TLBSX2D /* 2261 */, PPC_INS_TLBSX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISPPC4XX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17236,7 +17244,7 @@
 },
 {
   /* tlbsync */
-  PPC_TLBSYNC /* 2261 */, PPC_INS_TLBSYNC,
+  PPC_TLBSYNC /* 2262 */, PPC_INS_TLBSYNC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17244,7 +17252,7 @@
 },
 {
   /* tlbwe */
-  PPC_TLBWE /* 2262 */, PPC_INS_TLBWE,
+  PPC_TLBWE /* 2263 */, PPC_INS_TLBWE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISBOOKE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_24_SYNC }}
 
@@ -17252,7 +17260,7 @@
 },
 {
   /* tlbwe $RST, $RA, $WS */
-  PPC_TLBWE2 /* 2263 */, PPC_INS_TLBWE,
+  PPC_TLBWE2 /* 2264 */, PPC_INS_TLBWE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISPPC4XX, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_TLBWS }}
 
@@ -17260,21 +17268,21 @@
 },
 {
   /* #TLSGDAIX */
-  PPC_TLSGDAIX /* 2264 */, PPC_INS_INVALID,
+  PPC_TLSGDAIX /* 2265 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #TLSGDAIX8 */
-  PPC_TLSGDAIX8 /* 2265 */, PPC_INS_INVALID,
+  PPC_TLSGDAIX8 /* 2266 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* trap */
-  PPC_TRAP /* 2266 */, PPC_INS_TRAP,
+  PPC_TRAP /* 2267 */, PPC_INS_TRAP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_24 }}
 
@@ -17282,7 +17290,7 @@
 },
 {
   /* trechkpt. */
-  PPC_TRECHKPT /* 2267 */, PPC_INS_TRECHKPT,
+  PPC_TRECHKPT /* 2268 */, PPC_INS_TRECHKPT,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17290,7 +17298,7 @@
 },
 {
   /* treclaim. $RA */
-  PPC_TRECLAIM /* 2268 */, PPC_INS_TRECLAIM,
+  PPC_TRECLAIM /* 2269 */, PPC_INS_TRECLAIM,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17298,7 +17306,7 @@
 },
 {
   /* tsr. $L */
-  PPC_TSR /* 2269 */, PPC_INS_TSR,
+  PPC_TSR /* 2270 */, PPC_INS_TSR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_HTM2 }}
 
@@ -17306,7 +17314,7 @@
 },
 {
   /* tw $RST, $RA, $RB */
-  PPC_TW /* 2270 */, PPC_INS_TW,
+  PPC_TW /* 2271 */, PPC_INS_TW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -17314,7 +17322,7 @@
 },
 {
   /* twi $RST, $RA, $D */
-  PPC_TWI /* 2271 */, PPC_INS_TWI,
+  PPC_TWI /* 2272 */, PPC_INS_TWI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_BASE }}
 
@@ -17322,21 +17330,21 @@
 },
 {
   /* #UNENCODED_NOP */
-  PPC_UNENCODED_NOP /* 2272 */, PPC_INS_INVALID,
+  PPC_UNENCODED_NOP /* 2273 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* #UpdateGBR */
-  PPC_UpdateGBR /* 2273 */, PPC_INS_INVALID,
+  PPC_UpdateGBR /* 2274 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vabsdub $VD, $VA, $VB */
-  PPC_VABSDUB /* 2274 */, PPC_INS_VABSDUB,
+  PPC_VABSDUB /* 2275 */, PPC_INS_VABSDUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17344,7 +17352,7 @@
 },
 {
   /* vabsduh $VD, $VA, $VB */
-  PPC_VABSDUH /* 2275 */, PPC_INS_VABSDUH,
+  PPC_VABSDUH /* 2276 */, PPC_INS_VABSDUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17352,7 +17360,7 @@
 },
 {
   /* vabsduw $VD, $VA, $VB */
-  PPC_VABSDUW /* 2276 */, PPC_INS_VABSDUW,
+  PPC_VABSDUW /* 2277 */, PPC_INS_VABSDUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17360,7 +17368,7 @@
 },
 {
   /* vaddcuq $VD, $VA, $VB */
-  PPC_VADDCUQ /* 2277 */, PPC_INS_VADDCUQ,
+  PPC_VADDCUQ /* 2278 */, PPC_INS_VADDCUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17368,7 +17376,7 @@
 },
 {
   /* vaddcuw $VD, $VA, $VB */
-  PPC_VADDCUW /* 2278 */, PPC_INS_VADDCUW,
+  PPC_VADDCUW /* 2279 */, PPC_INS_VADDCUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17376,7 +17384,7 @@
 },
 {
   /* vaddecuq $RT, $RA, $RB, $RC */
-  PPC_VADDECUQ /* 2279 */, PPC_INS_VADDECUQ,
+  PPC_VADDECUQ /* 2280 */, PPC_INS_VADDECUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -17384,7 +17392,7 @@
 },
 {
   /* vaddeuqm $RT, $RA, $RB, $RC */
-  PPC_VADDEUQM /* 2280 */, PPC_INS_VADDEUQM,
+  PPC_VADDEUQM /* 2281 */, PPC_INS_VADDEUQM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -17392,7 +17400,7 @@
 },
 {
   /* vaddfp $VD, $VA, $VB */
-  PPC_VADDFP /* 2281 */, PPC_INS_VADDFP,
+  PPC_VADDFP /* 2282 */, PPC_INS_VADDFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17400,7 +17408,7 @@
 },
 {
   /* vaddsbs $VD, $VA, $VB */
-  PPC_VADDSBS /* 2282 */, PPC_INS_VADDSBS,
+  PPC_VADDSBS /* 2283 */, PPC_INS_VADDSBS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17408,7 +17416,7 @@
 },
 {
   /* vaddshs $VD, $VA, $VB */
-  PPC_VADDSHS /* 2283 */, PPC_INS_VADDSHS,
+  PPC_VADDSHS /* 2284 */, PPC_INS_VADDSHS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17416,7 +17424,7 @@
 },
 {
   /* vaddsws $VD, $VA, $VB */
-  PPC_VADDSWS /* 2284 */, PPC_INS_VADDSWS,
+  PPC_VADDSWS /* 2285 */, PPC_INS_VADDSWS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17424,7 +17432,7 @@
 },
 {
   /* vaddubm $VD, $VA, $VB */
-  PPC_VADDUBM /* 2285 */, PPC_INS_VADDUBM,
+  PPC_VADDUBM /* 2286 */, PPC_INS_VADDUBM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17432,7 +17440,7 @@
 },
 {
   /* vaddubs $VD, $VA, $VB */
-  PPC_VADDUBS /* 2286 */, PPC_INS_VADDUBS,
+  PPC_VADDUBS /* 2287 */, PPC_INS_VADDUBS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17440,7 +17448,7 @@
 },
 {
   /* vaddudm $VD, $VA, $VB */
-  PPC_VADDUDM /* 2287 */, PPC_INS_VADDUDM,
+  PPC_VADDUDM /* 2288 */, PPC_INS_VADDUDM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17448,7 +17456,7 @@
 },
 {
   /* vadduhm $VD, $VA, $VB */
-  PPC_VADDUHM /* 2288 */, PPC_INS_VADDUHM,
+  PPC_VADDUHM /* 2289 */, PPC_INS_VADDUHM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17456,7 +17464,7 @@
 },
 {
   /* vadduhs $VD, $VA, $VB */
-  PPC_VADDUHS /* 2289 */, PPC_INS_VADDUHS,
+  PPC_VADDUHS /* 2290 */, PPC_INS_VADDUHS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17464,7 +17472,7 @@
 },
 {
   /* vadduqm $VD, $VA, $VB */
-  PPC_VADDUQM /* 2290 */, PPC_INS_VADDUQM,
+  PPC_VADDUQM /* 2291 */, PPC_INS_VADDUQM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17472,7 +17480,7 @@
 },
 {
   /* vadduwm $VD, $VA, $VB */
-  PPC_VADDUWM /* 2291 */, PPC_INS_VADDUWM,
+  PPC_VADDUWM /* 2292 */, PPC_INS_VADDUWM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17480,7 +17488,7 @@
 },
 {
   /* vadduws $VD, $VA, $VB */
-  PPC_VADDUWS /* 2292 */, PPC_INS_VADDUWS,
+  PPC_VADDUWS /* 2293 */, PPC_INS_VADDUWS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17488,7 +17496,7 @@
 },
 {
   /* vand $VD, $VA, $VB */
-  PPC_VAND /* 2293 */, PPC_INS_VAND,
+  PPC_VAND /* 2294 */, PPC_INS_VAND,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17496,7 +17504,7 @@
 },
 {
   /* vandc $VD, $VA, $VB */
-  PPC_VANDC /* 2294 */, PPC_INS_VANDC,
+  PPC_VANDC /* 2295 */, PPC_INS_VANDC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17504,7 +17512,7 @@
 },
 {
   /* vavgsb $VD, $VA, $VB */
-  PPC_VAVGSB /* 2295 */, PPC_INS_VAVGSB,
+  PPC_VAVGSB /* 2296 */, PPC_INS_VAVGSB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17512,7 +17520,7 @@
 },
 {
   /* vavgsh $VD, $VA, $VB */
-  PPC_VAVGSH /* 2296 */, PPC_INS_VAVGSH,
+  PPC_VAVGSH /* 2297 */, PPC_INS_VAVGSH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17520,7 +17528,7 @@
 },
 {
   /* vavgsw $VD, $VA, $VB */
-  PPC_VAVGSW /* 2297 */, PPC_INS_VAVGSW,
+  PPC_VAVGSW /* 2298 */, PPC_INS_VAVGSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17528,7 +17536,7 @@
 },
 {
   /* vavgub $VD, $VA, $VB */
-  PPC_VAVGUB /* 2298 */, PPC_INS_VAVGUB,
+  PPC_VAVGUB /* 2299 */, PPC_INS_VAVGUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17536,7 +17544,7 @@
 },
 {
   /* vavguh $VD, $VA, $VB */
-  PPC_VAVGUH /* 2299 */, PPC_INS_VAVGUH,
+  PPC_VAVGUH /* 2300 */, PPC_INS_VAVGUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17544,7 +17552,7 @@
 },
 {
   /* vavguw $VD, $VA, $VB */
-  PPC_VAVGUW /* 2300 */, PPC_INS_VAVGUW,
+  PPC_VAVGUW /* 2301 */, PPC_INS_VAVGUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17552,7 +17560,7 @@
 },
 {
   /* vbpermd $VD, $VA, $VB */
-  PPC_VBPERMD /* 2301 */, PPC_INS_VBPERMD,
+  PPC_VBPERMD /* 2302 */, PPC_INS_VBPERMD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17560,7 +17568,7 @@
 },
 {
   /* vbpermq $VD, $VA, $VB */
-  PPC_VBPERMQ /* 2302 */, PPC_INS_VBPERMQ,
+  PPC_VBPERMQ /* 2303 */, PPC_INS_VBPERMQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17568,7 +17576,7 @@
 },
 {
   /* vcfsx $VD, $VB, $VA */
-  PPC_VCFSX /* 2303 */, PPC_INS_VCFSX,
+  PPC_VCFSX /* 2304 */, PPC_INS_VCFSX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17576,14 +17584,14 @@
 },
 {
   /* vcfsx $VD, $VB, 0 */
-  PPC_VCFSX_0 /* 2304 */, PPC_INS_INVALID,
+  PPC_VCFSX_0 /* 2305 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vcfuged $VD, $VA, $VB */
-  PPC_VCFUGED /* 2305 */, PPC_INS_VCFUGED,
+  PPC_VCFUGED /* 2306 */, PPC_INS_VCFUGED,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17591,7 +17599,7 @@
 },
 {
   /* vcfux $VD, $VB, $VA */
-  PPC_VCFUX /* 2306 */, PPC_INS_VCFUX,
+  PPC_VCFUX /* 2307 */, PPC_INS_VCFUX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17599,14 +17607,14 @@
 },
 {
   /* vcfux $VD, $VB, 0 */
-  PPC_VCFUX_0 /* 2307 */, PPC_INS_INVALID,
+  PPC_VCFUX_0 /* 2308 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vcipher $VD, $VA, $VB */
-  PPC_VCIPHER /* 2308 */, PPC_INS_VCIPHER,
+  PPC_VCIPHER /* 2309 */, PPC_INS_VCIPHER,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17614,7 +17622,7 @@
 },
 {
   /* vcipherlast $VD, $VA, $VB */
-  PPC_VCIPHERLAST /* 2309 */, PPC_INS_VCIPHERLAST,
+  PPC_VCIPHERLAST /* 2310 */, PPC_INS_VCIPHERLAST,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17622,7 +17630,7 @@
 },
 {
   /* vclrlb $VD, $VA, $VB */
-  PPC_VCLRLB /* 2310 */, PPC_INS_VCLRLB,
+  PPC_VCLRLB /* 2311 */, PPC_INS_VCLRLB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17630,7 +17638,7 @@
 },
 {
   /* vclrrb $VD, $VA, $VB */
-  PPC_VCLRRB /* 2311 */, PPC_INS_VCLRRB,
+  PPC_VCLRRB /* 2312 */, PPC_INS_VCLRRB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17638,7 +17646,7 @@
 },
 {
   /* vclzb $VD, $VB */
-  PPC_VCLZB /* 2312 */, PPC_INS_VCLZB,
+  PPC_VCLZB /* 2313 */, PPC_INS_VCLZB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -17646,7 +17654,7 @@
 },
 {
   /* vclzd $VD, $VB */
-  PPC_VCLZD /* 2313 */, PPC_INS_VCLZD,
+  PPC_VCLZD /* 2314 */, PPC_INS_VCLZD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -17654,7 +17662,7 @@
 },
 {
   /* vclzdm $VD, $VA, $VB */
-  PPC_VCLZDM /* 2314 */, PPC_INS_VCLZDM,
+  PPC_VCLZDM /* 2315 */, PPC_INS_VCLZDM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -17662,7 +17670,7 @@
 },
 {
   /* vclzh $VD, $VB */
-  PPC_VCLZH /* 2315 */, PPC_INS_VCLZH,
+  PPC_VCLZH /* 2316 */, PPC_INS_VCLZH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -17670,7 +17678,7 @@
 },
 {
   /* vclzlsbb $VD, $VB */
-  PPC_VCLZLSBB /* 2316 */, PPC_INS_VCLZLSBB,
+  PPC_VCLZLSBB /* 2317 */, PPC_INS_VCLZLSBB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -17678,7 +17686,7 @@
 },
 {
   /* vclzw $VD, $VB */
-  PPC_VCLZW /* 2317 */, PPC_INS_VCLZW,
+  PPC_VCLZW /* 2318 */, PPC_INS_VCLZW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -17686,7 +17694,7 @@
 },
 {
   /* vcmpbfp $VD, $VA, $VB */
-  PPC_VCMPBFP /* 2318 */, PPC_INS_VCMPBFP,
+  PPC_VCMPBFP /* 2319 */, PPC_INS_VCMPBFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17694,7 +17702,7 @@
 },
 {
   /* vcmpbfp. $VD, $VA, $VB */
-  PPC_VCMPBFP_rec /* 2319 */, PPC_INS_VCMPBFP,
+  PPC_VCMPBFP_rec /* 2320 */, PPC_INS_VCMPBFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17702,7 +17710,7 @@
 },
 {
   /* vcmpeqfp $VD, $VA, $VB */
-  PPC_VCMPEQFP /* 2320 */, PPC_INS_VCMPEQFP,
+  PPC_VCMPEQFP /* 2321 */, PPC_INS_VCMPEQFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17710,7 +17718,7 @@
 },
 {
   /* vcmpeqfp. $VD, $VA, $VB */
-  PPC_VCMPEQFP_rec /* 2321 */, PPC_INS_VCMPEQFP,
+  PPC_VCMPEQFP_rec /* 2322 */, PPC_INS_VCMPEQFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17718,7 +17726,7 @@
 },
 {
   /* vcmpequb $VD, $VA, $VB */
-  PPC_VCMPEQUB /* 2322 */, PPC_INS_VCMPEQUB,
+  PPC_VCMPEQUB /* 2323 */, PPC_INS_VCMPEQUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17726,7 +17734,7 @@
 },
 {
   /* vcmpequb. $VD, $VA, $VB */
-  PPC_VCMPEQUB_rec /* 2323 */, PPC_INS_VCMPEQUB,
+  PPC_VCMPEQUB_rec /* 2324 */, PPC_INS_VCMPEQUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17734,7 +17742,7 @@
 },
 {
   /* vcmpequd $VD, $VA, $VB */
-  PPC_VCMPEQUD /* 2324 */, PPC_INS_VCMPEQUD,
+  PPC_VCMPEQUD /* 2325 */, PPC_INS_VCMPEQUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17742,7 +17750,7 @@
 },
 {
   /* vcmpequd. $VD, $VA, $VB */
-  PPC_VCMPEQUD_rec /* 2325 */, PPC_INS_VCMPEQUD,
+  PPC_VCMPEQUD_rec /* 2326 */, PPC_INS_VCMPEQUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17750,7 +17758,7 @@
 },
 {
   /* vcmpequh $VD, $VA, $VB */
-  PPC_VCMPEQUH /* 2326 */, PPC_INS_VCMPEQUH,
+  PPC_VCMPEQUH /* 2327 */, PPC_INS_VCMPEQUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17758,7 +17766,7 @@
 },
 {
   /* vcmpequh. $VD, $VA, $VB */
-  PPC_VCMPEQUH_rec /* 2327 */, PPC_INS_VCMPEQUH,
+  PPC_VCMPEQUH_rec /* 2328 */, PPC_INS_VCMPEQUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17766,7 +17774,7 @@
 },
 {
   /* vcmpequq $VD, $VA, $VB */
-  PPC_VCMPEQUQ /* 2328 */, PPC_INS_VCMPEQUQ,
+  PPC_VCMPEQUQ /* 2329 */, PPC_INS_VCMPEQUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17774,7 +17782,7 @@
 },
 {
   /* vcmpequq. $VD, $VA, $VB */
-  PPC_VCMPEQUQ_rec /* 2329 */, PPC_INS_VCMPEQUQ,
+  PPC_VCMPEQUQ_rec /* 2330 */, PPC_INS_VCMPEQUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17782,7 +17790,7 @@
 },
 {
   /* vcmpequw $VD, $VA, $VB */
-  PPC_VCMPEQUW /* 2330 */, PPC_INS_VCMPEQUW,
+  PPC_VCMPEQUW /* 2331 */, PPC_INS_VCMPEQUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17790,7 +17798,7 @@
 },
 {
   /* vcmpequw. $VD, $VA, $VB */
-  PPC_VCMPEQUW_rec /* 2331 */, PPC_INS_VCMPEQUW,
+  PPC_VCMPEQUW_rec /* 2332 */, PPC_INS_VCMPEQUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17798,7 +17806,7 @@
 },
 {
   /* vcmpgefp $VD, $VA, $VB */
-  PPC_VCMPGEFP /* 2332 */, PPC_INS_VCMPGEFP,
+  PPC_VCMPGEFP /* 2333 */, PPC_INS_VCMPGEFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17806,7 +17814,7 @@
 },
 {
   /* vcmpgefp. $VD, $VA, $VB */
-  PPC_VCMPGEFP_rec /* 2333 */, PPC_INS_VCMPGEFP,
+  PPC_VCMPGEFP_rec /* 2334 */, PPC_INS_VCMPGEFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17814,7 +17822,7 @@
 },
 {
   /* vcmpgtfp $VD, $VA, $VB */
-  PPC_VCMPGTFP /* 2334 */, PPC_INS_VCMPGTFP,
+  PPC_VCMPGTFP /* 2335 */, PPC_INS_VCMPGTFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17822,7 +17830,7 @@
 },
 {
   /* vcmpgtfp. $VD, $VA, $VB */
-  PPC_VCMPGTFP_rec /* 2335 */, PPC_INS_VCMPGTFP,
+  PPC_VCMPGTFP_rec /* 2336 */, PPC_INS_VCMPGTFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17830,7 +17838,7 @@
 },
 {
   /* vcmpgtsb $VD, $VA, $VB */
-  PPC_VCMPGTSB /* 2336 */, PPC_INS_VCMPGTSB,
+  PPC_VCMPGTSB /* 2337 */, PPC_INS_VCMPGTSB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17838,7 +17846,7 @@
 },
 {
   /* vcmpgtsb. $VD, $VA, $VB */
-  PPC_VCMPGTSB_rec /* 2337 */, PPC_INS_VCMPGTSB,
+  PPC_VCMPGTSB_rec /* 2338 */, PPC_INS_VCMPGTSB,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17846,7 +17854,7 @@
 },
 {
   /* vcmpgtsd $VD, $VA, $VB */
-  PPC_VCMPGTSD /* 2338 */, PPC_INS_VCMPGTSD,
+  PPC_VCMPGTSD /* 2339 */, PPC_INS_VCMPGTSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17854,7 +17862,7 @@
 },
 {
   /* vcmpgtsd. $VD, $VA, $VB */
-  PPC_VCMPGTSD_rec /* 2339 */, PPC_INS_VCMPGTSD,
+  PPC_VCMPGTSD_rec /* 2340 */, PPC_INS_VCMPGTSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17862,7 +17870,7 @@
 },
 {
   /* vcmpgtsh $VD, $VA, $VB */
-  PPC_VCMPGTSH /* 2340 */, PPC_INS_VCMPGTSH,
+  PPC_VCMPGTSH /* 2341 */, PPC_INS_VCMPGTSH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17870,7 +17878,7 @@
 },
 {
   /* vcmpgtsh. $VD, $VA, $VB */
-  PPC_VCMPGTSH_rec /* 2341 */, PPC_INS_VCMPGTSH,
+  PPC_VCMPGTSH_rec /* 2342 */, PPC_INS_VCMPGTSH,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17878,7 +17886,7 @@
 },
 {
   /* vcmpgtsq $VD, $VA, $VB */
-  PPC_VCMPGTSQ /* 2342 */, PPC_INS_VCMPGTSQ,
+  PPC_VCMPGTSQ /* 2343 */, PPC_INS_VCMPGTSQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17886,7 +17894,7 @@
 },
 {
   /* vcmpgtsq. $VD, $VA, $VB */
-  PPC_VCMPGTSQ_rec /* 2343 */, PPC_INS_VCMPGTSQ,
+  PPC_VCMPGTSQ_rec /* 2344 */, PPC_INS_VCMPGTSQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17894,7 +17902,7 @@
 },
 {
   /* vcmpgtsw $VD, $VA, $VB */
-  PPC_VCMPGTSW /* 2344 */, PPC_INS_VCMPGTSW,
+  PPC_VCMPGTSW /* 2345 */, PPC_INS_VCMPGTSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17902,7 +17910,7 @@
 },
 {
   /* vcmpgtsw. $VD, $VA, $VB */
-  PPC_VCMPGTSW_rec /* 2345 */, PPC_INS_VCMPGTSW,
+  PPC_VCMPGTSW_rec /* 2346 */, PPC_INS_VCMPGTSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17910,7 +17918,7 @@
 },
 {
   /* vcmpgtub $VD, $VA, $VB */
-  PPC_VCMPGTUB /* 2346 */, PPC_INS_VCMPGTUB,
+  PPC_VCMPGTUB /* 2347 */, PPC_INS_VCMPGTUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17918,7 +17926,7 @@
 },
 {
   /* vcmpgtub. $VD, $VA, $VB */
-  PPC_VCMPGTUB_rec /* 2347 */, PPC_INS_VCMPGTUB,
+  PPC_VCMPGTUB_rec /* 2348 */, PPC_INS_VCMPGTUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17926,7 +17934,7 @@
 },
 {
   /* vcmpgtud $VD, $VA, $VB */
-  PPC_VCMPGTUD /* 2348 */, PPC_INS_VCMPGTUD,
+  PPC_VCMPGTUD /* 2349 */, PPC_INS_VCMPGTUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17934,7 +17942,7 @@
 },
 {
   /* vcmpgtud. $VD, $VA, $VB */
-  PPC_VCMPGTUD_rec /* 2349 */, PPC_INS_VCMPGTUD,
+  PPC_VCMPGTUD_rec /* 2350 */, PPC_INS_VCMPGTUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17942,7 +17950,7 @@
 },
 {
   /* vcmpgtuh $VD, $VA, $VB */
-  PPC_VCMPGTUH /* 2350 */, PPC_INS_VCMPGTUH,
+  PPC_VCMPGTUH /* 2351 */, PPC_INS_VCMPGTUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17950,7 +17958,7 @@
 },
 {
   /* vcmpgtuh. $VD, $VA, $VB */
-  PPC_VCMPGTUH_rec /* 2351 */, PPC_INS_VCMPGTUH,
+  PPC_VCMPGTUH_rec /* 2352 */, PPC_INS_VCMPGTUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17958,7 +17966,7 @@
 },
 {
   /* vcmpgtuq $VD, $VA, $VB */
-  PPC_VCMPGTUQ /* 2352 */, PPC_INS_VCMPGTUQ,
+  PPC_VCMPGTUQ /* 2353 */, PPC_INS_VCMPGTUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17966,7 +17974,7 @@
 },
 {
   /* vcmpgtuq. $VD, $VA, $VB */
-  PPC_VCMPGTUQ_rec /* 2353 */, PPC_INS_VCMPGTUQ,
+  PPC_VCMPGTUQ_rec /* 2354 */, PPC_INS_VCMPGTUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17974,7 +17982,7 @@
 },
 {
   /* vcmpgtuw $VD, $VA, $VB */
-  PPC_VCMPGTUW /* 2354 */, PPC_INS_VCMPGTUW,
+  PPC_VCMPGTUW /* 2355 */, PPC_INS_VCMPGTUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17982,7 +17990,7 @@
 },
 {
   /* vcmpgtuw. $VD, $VA, $VB */
-  PPC_VCMPGTUW_rec /* 2355 */, PPC_INS_VCMPGTUW,
+  PPC_VCMPGTUW_rec /* 2356 */, PPC_INS_VCMPGTUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17990,7 +17998,7 @@
 },
 {
   /* vcmpneb $VD, $VA, $VB */
-  PPC_VCMPNEB /* 2356 */, PPC_INS_VCMPNEB,
+  PPC_VCMPNEB /* 2357 */, PPC_INS_VCMPNEB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -17998,7 +18006,7 @@
 },
 {
   /* vcmpneb. $VD, $VA, $VB */
-  PPC_VCMPNEB_rec /* 2357 */, PPC_INS_VCMPNEB,
+  PPC_VCMPNEB_rec /* 2358 */, PPC_INS_VCMPNEB,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18006,7 +18014,7 @@
 },
 {
   /* vcmpneh $VD, $VA, $VB */
-  PPC_VCMPNEH /* 2358 */, PPC_INS_VCMPNEH,
+  PPC_VCMPNEH /* 2359 */, PPC_INS_VCMPNEH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18014,7 +18022,7 @@
 },
 {
   /* vcmpneh. $VD, $VA, $VB */
-  PPC_VCMPNEH_rec /* 2359 */, PPC_INS_VCMPNEH,
+  PPC_VCMPNEH_rec /* 2360 */, PPC_INS_VCMPNEH,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18022,7 +18030,7 @@
 },
 {
   /* vcmpnew $VD, $VA, $VB */
-  PPC_VCMPNEW /* 2360 */, PPC_INS_VCMPNEW,
+  PPC_VCMPNEW /* 2361 */, PPC_INS_VCMPNEW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18030,7 +18038,7 @@
 },
 {
   /* vcmpnew. $VD, $VA, $VB */
-  PPC_VCMPNEW_rec /* 2361 */, PPC_INS_VCMPNEW,
+  PPC_VCMPNEW_rec /* 2362 */, PPC_INS_VCMPNEW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18038,7 +18046,7 @@
 },
 {
   /* vcmpnezb $VD, $VA, $VB */
-  PPC_VCMPNEZB /* 2362 */, PPC_INS_VCMPNEZB,
+  PPC_VCMPNEZB /* 2363 */, PPC_INS_VCMPNEZB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18046,7 +18054,7 @@
 },
 {
   /* vcmpnezb. $VD, $VA, $VB */
-  PPC_VCMPNEZB_rec /* 2363 */, PPC_INS_VCMPNEZB,
+  PPC_VCMPNEZB_rec /* 2364 */, PPC_INS_VCMPNEZB,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18054,7 +18062,7 @@
 },
 {
   /* vcmpnezh $VD, $VA, $VB */
-  PPC_VCMPNEZH /* 2364 */, PPC_INS_VCMPNEZH,
+  PPC_VCMPNEZH /* 2365 */, PPC_INS_VCMPNEZH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18062,7 +18070,7 @@
 },
 {
   /* vcmpnezh. $VD, $VA, $VB */
-  PPC_VCMPNEZH_rec /* 2365 */, PPC_INS_VCMPNEZH,
+  PPC_VCMPNEZH_rec /* 2366 */, PPC_INS_VCMPNEZH,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18070,7 +18078,7 @@
 },
 {
   /* vcmpnezw $VD, $VA, $VB */
-  PPC_VCMPNEZW /* 2366 */, PPC_INS_VCMPNEZW,
+  PPC_VCMPNEZW /* 2367 */, PPC_INS_VCMPNEZW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18078,7 +18086,7 @@
 },
 {
   /* vcmpnezw. $VD, $VA, $VB */
-  PPC_VCMPNEZW_rec /* 2367 */, PPC_INS_VCMPNEZW,
+  PPC_VCMPNEZW_rec /* 2368 */, PPC_INS_VCMPNEZW,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXRFORM_1 }}
 
@@ -18086,7 +18094,7 @@
 },
 {
   /* vcmpsq $BF, $VA, $VB */
-  PPC_VCMPSQ /* 2368 */, PPC_INS_VCMPSQ,
+  PPC_VCMPSQ /* 2369 */, PPC_INS_VCMPSQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_BF3_VAB5 }}
 
@@ -18094,7 +18102,7 @@
 },
 {
   /* vcmpuq $BF, $VA, $VB */
-  PPC_VCMPUQ /* 2369 */, PPC_INS_VCMPUQ,
+  PPC_VCMPUQ /* 2370 */, PPC_INS_VCMPUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_BF3_VAB5 }}
 
@@ -18102,7 +18110,7 @@
 },
 {
   /* vcntmbb $RD, $VB, $MP */
-  PPC_VCNTMBB /* 2370 */, PPC_INS_VCNTMBB,
+  PPC_VCNTMBB /* 2371 */, PPC_INS_VCNTMBB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_MP_VB5 }}
 
@@ -18110,7 +18118,7 @@
 },
 {
   /* vcntmbd $RD, $VB, $MP */
-  PPC_VCNTMBD /* 2371 */, PPC_INS_VCNTMBD,
+  PPC_VCNTMBD /* 2372 */, PPC_INS_VCNTMBD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_MP_VB5 }}
 
@@ -18118,7 +18126,7 @@
 },
 {
   /* vcntmbh $RD, $VB, $MP */
-  PPC_VCNTMBH /* 2372 */, PPC_INS_VCNTMBH,
+  PPC_VCNTMBH /* 2373 */, PPC_INS_VCNTMBH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_MP_VB5 }}
 
@@ -18126,7 +18134,7 @@
 },
 {
   /* vcntmbw $RD, $VB, $MP */
-  PPC_VCNTMBW /* 2373 */, PPC_INS_VCNTMBW,
+  PPC_VCNTMBW /* 2374 */, PPC_INS_VCNTMBW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_MP_VB5 }}
 
@@ -18134,7 +18142,7 @@
 },
 {
   /* vctsxs $VD, $VB, $VA */
-  PPC_VCTSXS /* 2374 */, PPC_INS_VCTSXS,
+  PPC_VCTSXS /* 2375 */, PPC_INS_VCTSXS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18142,14 +18150,14 @@
 },
 {
   /* vctsxs $VD, $VB, 0 */
-  PPC_VCTSXS_0 /* 2375 */, PPC_INS_INVALID,
+  PPC_VCTSXS_0 /* 2376 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vctuxs $VD, $VB, $VA */
-  PPC_VCTUXS /* 2376 */, PPC_INS_VCTUXS,
+  PPC_VCTUXS /* 2377 */, PPC_INS_VCTUXS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18157,14 +18165,14 @@
 },
 {
   /* vctuxs $VD, $VB, 0 */
-  PPC_VCTUXS_0 /* 2377 */, PPC_INS_INVALID,
+  PPC_VCTUXS_0 /* 2378 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vctzb $VD, $VB */
-  PPC_VCTZB /* 2378 */, PPC_INS_VCTZB,
+  PPC_VCTZB /* 2379 */, PPC_INS_VCTZB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18172,7 +18180,7 @@
 },
 {
   /* vctzd $VD, $VB */
-  PPC_VCTZD /* 2379 */, PPC_INS_VCTZD,
+  PPC_VCTZD /* 2380 */, PPC_INS_VCTZD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18180,7 +18188,7 @@
 },
 {
   /* vctzdm $VD, $VA, $VB */
-  PPC_VCTZDM /* 2380 */, PPC_INS_VCTZDM,
+  PPC_VCTZDM /* 2381 */, PPC_INS_VCTZDM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18188,7 +18196,7 @@
 },
 {
   /* vctzh $VD, $VB */
-  PPC_VCTZH /* 2381 */, PPC_INS_VCTZH,
+  PPC_VCTZH /* 2382 */, PPC_INS_VCTZH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18196,7 +18204,7 @@
 },
 {
   /* vctzlsbb $VD, $VB */
-  PPC_VCTZLSBB /* 2382 */, PPC_INS_VCTZLSBB,
+  PPC_VCTZLSBB /* 2383 */, PPC_INS_VCTZLSBB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18204,7 +18212,7 @@
 },
 {
   /* vctzw $VD, $VB */
-  PPC_VCTZW /* 2383 */, PPC_INS_VCTZW,
+  PPC_VCTZW /* 2384 */, PPC_INS_VCTZW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18212,7 +18220,7 @@
 },
 {
   /* vdivesd $VD, $VA, $VB */
-  PPC_VDIVESD /* 2384 */, PPC_INS_VDIVESD,
+  PPC_VDIVESD /* 2385 */, PPC_INS_VDIVESD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18220,7 +18228,7 @@
 },
 {
   /* vdivesq $VD, $VA, $VB */
-  PPC_VDIVESQ /* 2385 */, PPC_INS_VDIVESQ,
+  PPC_VDIVESQ /* 2386 */, PPC_INS_VDIVESQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18228,7 +18236,7 @@
 },
 {
   /* vdivesw $VD, $VA, $VB */
-  PPC_VDIVESW /* 2386 */, PPC_INS_VDIVESW,
+  PPC_VDIVESW /* 2387 */, PPC_INS_VDIVESW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18236,7 +18244,7 @@
 },
 {
   /* vdiveud $VD, $VA, $VB */
-  PPC_VDIVEUD /* 2387 */, PPC_INS_VDIVEUD,
+  PPC_VDIVEUD /* 2388 */, PPC_INS_VDIVEUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18244,7 +18252,7 @@
 },
 {
   /* vdiveuq $VD, $VA, $VB */
-  PPC_VDIVEUQ /* 2388 */, PPC_INS_VDIVEUQ,
+  PPC_VDIVEUQ /* 2389 */, PPC_INS_VDIVEUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18252,7 +18260,7 @@
 },
 {
   /* vdiveuw $VD, $VA, $VB */
-  PPC_VDIVEUW /* 2389 */, PPC_INS_VDIVEUW,
+  PPC_VDIVEUW /* 2390 */, PPC_INS_VDIVEUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18260,7 +18268,7 @@
 },
 {
   /* vdivsd $VD, $VA, $VB */
-  PPC_VDIVSD /* 2390 */, PPC_INS_VDIVSD,
+  PPC_VDIVSD /* 2391 */, PPC_INS_VDIVSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18268,7 +18276,7 @@
 },
 {
   /* vdivsq $VD, $VA, $VB */
-  PPC_VDIVSQ /* 2391 */, PPC_INS_VDIVSQ,
+  PPC_VDIVSQ /* 2392 */, PPC_INS_VDIVSQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18276,7 +18284,7 @@
 },
 {
   /* vdivsw $VD, $VA, $VB */
-  PPC_VDIVSW /* 2392 */, PPC_INS_VDIVSW,
+  PPC_VDIVSW /* 2393 */, PPC_INS_VDIVSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18284,7 +18292,7 @@
 },
 {
   /* vdivud $VD, $VA, $VB */
-  PPC_VDIVUD /* 2393 */, PPC_INS_VDIVUD,
+  PPC_VDIVUD /* 2394 */, PPC_INS_VDIVUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18292,7 +18300,7 @@
 },
 {
   /* vdivuq $VD, $VA, $VB */
-  PPC_VDIVUQ /* 2394 */, PPC_INS_VDIVUQ,
+  PPC_VDIVUQ /* 2395 */, PPC_INS_VDIVUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18300,7 +18308,7 @@
 },
 {
   /* vdivuw $VD, $VA, $VB */
-  PPC_VDIVUW /* 2395 */, PPC_INS_VDIVUW,
+  PPC_VDIVUW /* 2396 */, PPC_INS_VDIVUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18308,7 +18316,7 @@
 },
 {
   /* veqv $VD, $VA, $VB */
-  PPC_VEQV /* 2396 */, PPC_INS_VEQV,
+  PPC_VEQV /* 2397 */, PPC_INS_VEQV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18316,7 +18324,7 @@
 },
 {
   /* vexpandbm $VD, $VB */
-  PPC_VEXPANDBM /* 2397 */, PPC_INS_VEXPANDBM,
+  PPC_VEXPANDBM /* 2398 */, PPC_INS_VEXPANDBM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18324,7 +18332,7 @@
 },
 {
   /* vexpanddm $VD, $VB */
-  PPC_VEXPANDDM /* 2398 */, PPC_INS_VEXPANDDM,
+  PPC_VEXPANDDM /* 2399 */, PPC_INS_VEXPANDDM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18332,7 +18340,7 @@
 },
 {
   /* vexpandhm $VD, $VB */
-  PPC_VEXPANDHM /* 2399 */, PPC_INS_VEXPANDHM,
+  PPC_VEXPANDHM /* 2400 */, PPC_INS_VEXPANDHM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18340,7 +18348,7 @@
 },
 {
   /* vexpandqm $VD, $VB */
-  PPC_VEXPANDQM /* 2400 */, PPC_INS_VEXPANDQM,
+  PPC_VEXPANDQM /* 2401 */, PPC_INS_VEXPANDQM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18348,7 +18356,7 @@
 },
 {
   /* vexpandwm $VD, $VB */
-  PPC_VEXPANDWM /* 2401 */, PPC_INS_VEXPANDWM,
+  PPC_VEXPANDWM /* 2402 */, PPC_INS_VEXPANDWM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18356,7 +18364,7 @@
 },
 {
   /* vexptefp $VD, $VB */
-  PPC_VEXPTEFP /* 2402 */, PPC_INS_VEXPTEFP,
+  PPC_VEXPTEFP /* 2403 */, PPC_INS_VEXPTEFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -18364,7 +18372,7 @@
 },
 {
   /* vextddvlx $RT, $RA, $RB, $RC */
-  PPC_VEXTDDVLX /* 2403 */, PPC_INS_VEXTDDVLX,
+  PPC_VEXTDDVLX /* 2404 */, PPC_INS_VEXTDDVLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18372,7 +18380,7 @@
 },
 {
   /* vextddvrx $RT, $RA, $RB, $RC */
-  PPC_VEXTDDVRX /* 2404 */, PPC_INS_VEXTDDVRX,
+  PPC_VEXTDDVRX /* 2405 */, PPC_INS_VEXTDDVRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18380,7 +18388,7 @@
 },
 {
   /* vextdubvlx $RT, $RA, $RB, $RC */
-  PPC_VEXTDUBVLX /* 2405 */, PPC_INS_VEXTDUBVLX,
+  PPC_VEXTDUBVLX /* 2406 */, PPC_INS_VEXTDUBVLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18388,7 +18396,7 @@
 },
 {
   /* vextdubvrx $RT, $RA, $RB, $RC */
-  PPC_VEXTDUBVRX /* 2406 */, PPC_INS_VEXTDUBVRX,
+  PPC_VEXTDUBVRX /* 2407 */, PPC_INS_VEXTDUBVRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18396,7 +18404,7 @@
 },
 {
   /* vextduhvlx $RT, $RA, $RB, $RC */
-  PPC_VEXTDUHVLX /* 2407 */, PPC_INS_VEXTDUHVLX,
+  PPC_VEXTDUHVLX /* 2408 */, PPC_INS_VEXTDUHVLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18404,7 +18412,7 @@
 },
 {
   /* vextduhvrx $RT, $RA, $RB, $RC */
-  PPC_VEXTDUHVRX /* 2408 */, PPC_INS_VEXTDUHVRX,
+  PPC_VEXTDUHVRX /* 2409 */, PPC_INS_VEXTDUHVRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18412,7 +18420,7 @@
 },
 {
   /* vextduwvlx $RT, $RA, $RB, $RC */
-  PPC_VEXTDUWVLX /* 2409 */, PPC_INS_VEXTDUWVLX,
+  PPC_VEXTDUWVLX /* 2410 */, PPC_INS_VEXTDUWVLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18420,7 +18428,7 @@
 },
 {
   /* vextduwvrx $RT, $RA, $RB, $RC */
-  PPC_VEXTDUWVRX /* 2410 */, PPC_INS_VEXTDUWVRX,
+  PPC_VEXTDUWVRX /* 2411 */, PPC_INS_VEXTDUWVRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18428,7 +18436,7 @@
 },
 {
   /* vextractbm $VD, $VB */
-  PPC_VEXTRACTBM /* 2411 */, PPC_INS_VEXTRACTBM,
+  PPC_VEXTRACTBM /* 2412 */, PPC_INS_VEXTRACTBM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18436,7 +18444,7 @@
 },
 {
   /* vextractd $VD, $VB, $VA */
-  PPC_VEXTRACTD /* 2412 */, PPC_INS_VEXTRACTD,
+  PPC_VEXTRACTD /* 2413 */, PPC_INS_VEXTRACTD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18444,7 +18452,7 @@
 },
 {
   /* vextractdm $VD, $VB */
-  PPC_VEXTRACTDM /* 2413 */, PPC_INS_VEXTRACTDM,
+  PPC_VEXTRACTDM /* 2414 */, PPC_INS_VEXTRACTDM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18452,7 +18460,7 @@
 },
 {
   /* vextracthm $VD, $VB */
-  PPC_VEXTRACTHM /* 2414 */, PPC_INS_VEXTRACTHM,
+  PPC_VEXTRACTHM /* 2415 */, PPC_INS_VEXTRACTHM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18460,7 +18468,7 @@
 },
 {
   /* vextractqm $VD, $VB */
-  PPC_VEXTRACTQM /* 2415 */, PPC_INS_VEXTRACTQM,
+  PPC_VEXTRACTQM /* 2416 */, PPC_INS_VEXTRACTQM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18468,7 +18476,7 @@
 },
 {
   /* vextractub $VD, $VB, $VA */
-  PPC_VEXTRACTUB /* 2416 */, PPC_INS_VEXTRACTUB,
+  PPC_VEXTRACTUB /* 2417 */, PPC_INS_VEXTRACTUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18476,7 +18484,7 @@
 },
 {
   /* vextractuh $VD, $VB, $VA */
-  PPC_VEXTRACTUH /* 2417 */, PPC_INS_VEXTRACTUH,
+  PPC_VEXTRACTUH /* 2418 */, PPC_INS_VEXTRACTUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18484,7 +18492,7 @@
 },
 {
   /* vextractuw $VD, $VB, $VA */
-  PPC_VEXTRACTUW /* 2418 */, PPC_INS_VEXTRACTUW,
+  PPC_VEXTRACTUW /* 2419 */, PPC_INS_VEXTRACTUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18492,7 +18500,7 @@
 },
 {
   /* vextractwm $VD, $VB */
-  PPC_VEXTRACTWM /* 2419 */, PPC_INS_VEXTRACTWM,
+  PPC_VEXTRACTWM /* 2420 */, PPC_INS_VEXTRACTWM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18500,7 +18508,7 @@
 },
 {
   /* vextsb2d $VD, $VB */
-  PPC_VEXTSB2D /* 2420 */, PPC_INS_VEXTSB2D,
+  PPC_VEXTSB2D /* 2421 */, PPC_INS_VEXTSB2D,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18508,14 +18516,14 @@
 },
 {
   /* vextsb2d $VD, $VB */
-  PPC_VEXTSB2Ds /* 2421 */, PPC_INS_INVALID,
+  PPC_VEXTSB2Ds /* 2422 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vextsb2w $VD, $VB */
-  PPC_VEXTSB2W /* 2422 */, PPC_INS_VEXTSB2W,
+  PPC_VEXTSB2W /* 2423 */, PPC_INS_VEXTSB2W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18523,14 +18531,14 @@
 },
 {
   /* vextsb2w $VD, $VB */
-  PPC_VEXTSB2Ws /* 2423 */, PPC_INS_INVALID,
+  PPC_VEXTSB2Ws /* 2424 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vextsd2q $VD, $VB */
-  PPC_VEXTSD2Q /* 2424 */, PPC_INS_VEXTSD2Q,
+  PPC_VEXTSD2Q /* 2425 */, PPC_INS_VEXTSD2Q,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18538,7 +18546,7 @@
 },
 {
   /* vextsh2d $VD, $VB */
-  PPC_VEXTSH2D /* 2425 */, PPC_INS_VEXTSH2D,
+  PPC_VEXTSH2D /* 2426 */, PPC_INS_VEXTSH2D,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18546,14 +18554,14 @@
 },
 {
   /* vextsh2d $VD, $VB */
-  PPC_VEXTSH2Ds /* 2426 */, PPC_INS_INVALID,
+  PPC_VEXTSH2Ds /* 2427 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vextsh2w $VD, $VB */
-  PPC_VEXTSH2W /* 2427 */, PPC_INS_VEXTSH2W,
+  PPC_VEXTSH2W /* 2428 */, PPC_INS_VEXTSH2W,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18561,14 +18569,14 @@
 },
 {
   /* vextsh2w $VD, $VB */
-  PPC_VEXTSH2Ws /* 2428 */, PPC_INS_INVALID,
+  PPC_VEXTSH2Ws /* 2429 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vextsw2d $VD, $VB */
-  PPC_VEXTSW2D /* 2429 */, PPC_INS_VEXTSW2D,
+  PPC_VEXTSW2D /* 2430 */, PPC_INS_VEXTSW2D,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -18576,14 +18584,14 @@
 },
 {
   /* vextsw2d $VD, $VB */
-  PPC_VEXTSW2Ds /* 2430 */, PPC_INS_INVALID,
+  PPC_VEXTSW2Ds /* 2431 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vextublx $VD, $VA, $VB */
-  PPC_VEXTUBLX /* 2431 */, PPC_INS_VEXTUBLX,
+  PPC_VEXTUBLX /* 2432 */, PPC_INS_VEXTUBLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18591,7 +18599,7 @@
 },
 {
   /* vextubrx $VD, $VA, $VB */
-  PPC_VEXTUBRX /* 2432 */, PPC_INS_VEXTUBRX,
+  PPC_VEXTUBRX /* 2433 */, PPC_INS_VEXTUBRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18599,7 +18607,7 @@
 },
 {
   /* vextuhlx $VD, $VA, $VB */
-  PPC_VEXTUHLX /* 2433 */, PPC_INS_VEXTUHLX,
+  PPC_VEXTUHLX /* 2434 */, PPC_INS_VEXTUHLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18607,7 +18615,7 @@
 },
 {
   /* vextuhrx $VD, $VA, $VB */
-  PPC_VEXTUHRX /* 2434 */, PPC_INS_VEXTUHRX,
+  PPC_VEXTUHRX /* 2435 */, PPC_INS_VEXTUHRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18615,7 +18623,7 @@
 },
 {
   /* vextuwlx $VD, $VA, $VB */
-  PPC_VEXTUWLX /* 2435 */, PPC_INS_VEXTUWLX,
+  PPC_VEXTUWLX /* 2436 */, PPC_INS_VEXTUWLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18623,7 +18631,7 @@
 },
 {
   /* vextuwrx $VD, $VA, $VB */
-  PPC_VEXTUWRX /* 2436 */, PPC_INS_VEXTUWRX,
+  PPC_VEXTUWRX /* 2437 */, PPC_INS_VEXTUWRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18631,7 +18639,7 @@
 },
 {
   /* vgbbd $VD, $VB */
-  PPC_VGBBD /* 2437 */, PPC_INS_VGBBD,
+  PPC_VGBBD /* 2438 */, PPC_INS_VGBBD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -18639,7 +18647,7 @@
 },
 {
   /* vgnb $RD, $VB, $N */
-  PPC_VGNB /* 2438 */, PPC_INS_VGNB,
+  PPC_VGNB /* 2439 */, PPC_INS_VGNB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_N3_VB5 }}
 
@@ -18647,7 +18655,7 @@
 },
 {
   /* vinsblx $VD, $VA, $VB */
-  PPC_VINSBLX /* 2439 */, PPC_INS_VINSBLX,
+  PPC_VINSBLX /* 2440 */, PPC_INS_VINSBLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18655,7 +18663,7 @@
 },
 {
   /* vinsbrx $VD, $VA, $VB */
-  PPC_VINSBRX /* 2440 */, PPC_INS_VINSBRX,
+  PPC_VINSBRX /* 2441 */, PPC_INS_VINSBRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18663,7 +18671,7 @@
 },
 {
   /* vinsbvlx $VD, $VA, $VB */
-  PPC_VINSBVLX /* 2441 */, PPC_INS_VINSBVLX,
+  PPC_VINSBVLX /* 2442 */, PPC_INS_VINSBVLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18671,7 +18679,7 @@
 },
 {
   /* vinsbvrx $VD, $VA, $VB */
-  PPC_VINSBVRX /* 2442 */, PPC_INS_VINSBVRX,
+  PPC_VINSBVRX /* 2443 */, PPC_INS_VINSBVRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18679,7 +18687,7 @@
 },
 {
   /* vinsd $VD, $VB, $VA */
-  PPC_VINSD /* 2443 */, PPC_INS_VINSD,
+  PPC_VINSD /* 2444 */, PPC_INS_VINSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18687,7 +18695,7 @@
 },
 {
   /* vinsdlx $VD, $VA, $VB */
-  PPC_VINSDLX /* 2444 */, PPC_INS_VINSDLX,
+  PPC_VINSDLX /* 2445 */, PPC_INS_VINSDLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18695,7 +18703,7 @@
 },
 {
   /* vinsdrx $VD, $VA, $VB */
-  PPC_VINSDRX /* 2445 */, PPC_INS_VINSDRX,
+  PPC_VINSDRX /* 2446 */, PPC_INS_VINSDRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18703,7 +18711,7 @@
 },
 {
   /* vinsertb $VD, $VB, $VA */
-  PPC_VINSERTB /* 2446 */, PPC_INS_VINSERTB,
+  PPC_VINSERTB /* 2447 */, PPC_INS_VINSERTB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18711,7 +18719,7 @@
 },
 {
   /* vinsertd $VD, $VB, $VA */
-  PPC_VINSERTD /* 2447 */, PPC_INS_VINSERTD,
+  PPC_VINSERTD /* 2448 */, PPC_INS_VINSERTD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18719,7 +18727,7 @@
 },
 {
   /* vinserth $VD, $VB, $VA */
-  PPC_VINSERTH /* 2448 */, PPC_INS_VINSERTH,
+  PPC_VINSERTH /* 2449 */, PPC_INS_VINSERTH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18727,7 +18735,7 @@
 },
 {
   /* vinsertw $VD, $VB, $VA */
-  PPC_VINSERTW /* 2449 */, PPC_INS_VINSERTW,
+  PPC_VINSERTW /* 2450 */, PPC_INS_VINSERTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18735,7 +18743,7 @@
 },
 {
   /* vinshlx $VD, $VA, $VB */
-  PPC_VINSHLX /* 2450 */, PPC_INS_VINSHLX,
+  PPC_VINSHLX /* 2451 */, PPC_INS_VINSHLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18743,7 +18751,7 @@
 },
 {
   /* vinshrx $VD, $VA, $VB */
-  PPC_VINSHRX /* 2451 */, PPC_INS_VINSHRX,
+  PPC_VINSHRX /* 2452 */, PPC_INS_VINSHRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18751,7 +18759,7 @@
 },
 {
   /* vinshvlx $VD, $VA, $VB */
-  PPC_VINSHVLX /* 2452 */, PPC_INS_VINSHVLX,
+  PPC_VINSHVLX /* 2453 */, PPC_INS_VINSHVLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18759,7 +18767,7 @@
 },
 {
   /* vinshvrx $VD, $VA, $VB */
-  PPC_VINSHVRX /* 2453 */, PPC_INS_VINSHVRX,
+  PPC_VINSHVRX /* 2454 */, PPC_INS_VINSHVRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18767,7 +18775,7 @@
 },
 {
   /* vinsw $VD, $VB, $VA */
-  PPC_VINSW /* 2454 */, PPC_INS_VINSW,
+  PPC_VINSW /* 2455 */, PPC_INS_VINSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18775,7 +18783,7 @@
 },
 {
   /* vinswlx $VD, $VA, $VB */
-  PPC_VINSWLX /* 2455 */, PPC_INS_VINSWLX,
+  PPC_VINSWLX /* 2456 */, PPC_INS_VINSWLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18783,7 +18791,7 @@
 },
 {
   /* vinswrx $VD, $VA, $VB */
-  PPC_VINSWRX /* 2456 */, PPC_INS_VINSWRX,
+  PPC_VINSWRX /* 2457 */, PPC_INS_VINSWRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18791,7 +18799,7 @@
 },
 {
   /* vinswvlx $VD, $VA, $VB */
-  PPC_VINSWVLX /* 2457 */, PPC_INS_VINSWVLX,
+  PPC_VINSWVLX /* 2458 */, PPC_INS_VINSWVLX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18799,7 +18807,7 @@
 },
 {
   /* vinswvrx $VD, $VA, $VB */
-  PPC_VINSWVRX /* 2458 */, PPC_INS_VINSWVRX,
+  PPC_VINSWVRX /* 2459 */, PPC_INS_VINSWVRX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18807,7 +18815,7 @@
 },
 {
   /* vlogefp $VD, $VB */
-  PPC_VLOGEFP /* 2459 */, PPC_INS_VLOGEFP,
+  PPC_VLOGEFP /* 2460 */, PPC_INS_VLOGEFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -18815,7 +18823,7 @@
 },
 {
   /* vmaddfp $RT, $RA, $RC, $RB */
-  PPC_VMADDFP /* 2460 */, PPC_INS_VMADDFP,
+  PPC_VMADDFP /* 2461 */, PPC_INS_VMADDFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1 }}
 
@@ -18823,7 +18831,7 @@
 },
 {
   /* vmaxfp $VD, $VA, $VB */
-  PPC_VMAXFP /* 2461 */, PPC_INS_VMAXFP,
+  PPC_VMAXFP /* 2462 */, PPC_INS_VMAXFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18831,7 +18839,7 @@
 },
 {
   /* vmaxsb $VD, $VA, $VB */
-  PPC_VMAXSB /* 2462 */, PPC_INS_VMAXSB,
+  PPC_VMAXSB /* 2463 */, PPC_INS_VMAXSB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18839,7 +18847,7 @@
 },
 {
   /* vmaxsd $VD, $VA, $VB */
-  PPC_VMAXSD /* 2463 */, PPC_INS_VMAXSD,
+  PPC_VMAXSD /* 2464 */, PPC_INS_VMAXSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18847,7 +18855,7 @@
 },
 {
   /* vmaxsh $VD, $VA, $VB */
-  PPC_VMAXSH /* 2464 */, PPC_INS_VMAXSH,
+  PPC_VMAXSH /* 2465 */, PPC_INS_VMAXSH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18855,7 +18863,7 @@
 },
 {
   /* vmaxsw $VD, $VA, $VB */
-  PPC_VMAXSW /* 2465 */, PPC_INS_VMAXSW,
+  PPC_VMAXSW /* 2466 */, PPC_INS_VMAXSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18863,7 +18871,7 @@
 },
 {
   /* vmaxub $VD, $VA, $VB */
-  PPC_VMAXUB /* 2466 */, PPC_INS_VMAXUB,
+  PPC_VMAXUB /* 2467 */, PPC_INS_VMAXUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18871,7 +18879,7 @@
 },
 {
   /* vmaxud $VD, $VA, $VB */
-  PPC_VMAXUD /* 2467 */, PPC_INS_VMAXUD,
+  PPC_VMAXUD /* 2468 */, PPC_INS_VMAXUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18879,7 +18887,7 @@
 },
 {
   /* vmaxuh $VD, $VA, $VB */
-  PPC_VMAXUH /* 2468 */, PPC_INS_VMAXUH,
+  PPC_VMAXUH /* 2469 */, PPC_INS_VMAXUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18887,7 +18895,7 @@
 },
 {
   /* vmaxuw $VD, $VA, $VB */
-  PPC_VMAXUW /* 2469 */, PPC_INS_VMAXUW,
+  PPC_VMAXUW /* 2470 */, PPC_INS_VMAXUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18895,7 +18903,7 @@
 },
 {
   /* vmhaddshs $RT, $RA, $RB, $RC */
-  PPC_VMHADDSHS /* 2470 */, PPC_INS_VMHADDSHS,
+  PPC_VMHADDSHS /* 2471 */, PPC_INS_VMHADDSHS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18903,7 +18911,7 @@
 },
 {
   /* vmhraddshs $RT, $RA, $RB, $RC */
-  PPC_VMHRADDSHS /* 2471 */, PPC_INS_VMHRADDSHS,
+  PPC_VMHRADDSHS /* 2472 */, PPC_INS_VMHRADDSHS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18911,7 +18919,7 @@
 },
 {
   /* vminfp $VD, $VA, $VB */
-  PPC_VMINFP /* 2472 */, PPC_INS_VMINFP,
+  PPC_VMINFP /* 2473 */, PPC_INS_VMINFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18919,7 +18927,7 @@
 },
 {
   /* vminsb $VD, $VA, $VB */
-  PPC_VMINSB /* 2473 */, PPC_INS_VMINSB,
+  PPC_VMINSB /* 2474 */, PPC_INS_VMINSB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18927,7 +18935,7 @@
 },
 {
   /* vminsd $VD, $VA, $VB */
-  PPC_VMINSD /* 2474 */, PPC_INS_VMINSD,
+  PPC_VMINSD /* 2475 */, PPC_INS_VMINSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18935,7 +18943,7 @@
 },
 {
   /* vminsh $VD, $VA, $VB */
-  PPC_VMINSH /* 2475 */, PPC_INS_VMINSH,
+  PPC_VMINSH /* 2476 */, PPC_INS_VMINSH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18943,7 +18951,7 @@
 },
 {
   /* vminsw $VD, $VA, $VB */
-  PPC_VMINSW /* 2476 */, PPC_INS_VMINSW,
+  PPC_VMINSW /* 2477 */, PPC_INS_VMINSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18951,7 +18959,7 @@
 },
 {
   /* vminub $VD, $VA, $VB */
-  PPC_VMINUB /* 2477 */, PPC_INS_VMINUB,
+  PPC_VMINUB /* 2478 */, PPC_INS_VMINUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18959,7 +18967,7 @@
 },
 {
   /* vminud $VD, $VA, $VB */
-  PPC_VMINUD /* 2478 */, PPC_INS_VMINUD,
+  PPC_VMINUD /* 2479 */, PPC_INS_VMINUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18967,7 +18975,7 @@
 },
 {
   /* vminuh $VD, $VA, $VB */
-  PPC_VMINUH /* 2479 */, PPC_INS_VMINUH,
+  PPC_VMINUH /* 2480 */, PPC_INS_VMINUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18975,7 +18983,7 @@
 },
 {
   /* vminuw $VD, $VA, $VB */
-  PPC_VMINUW /* 2480 */, PPC_INS_VMINUW,
+  PPC_VMINUW /* 2481 */, PPC_INS_VMINUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18983,7 +18991,7 @@
 },
 {
   /* vmladduhm $RT, $RA, $RB, $RC */
-  PPC_VMLADDUHM /* 2481 */, PPC_INS_VMLADDUHM,
+  PPC_VMLADDUHM /* 2482 */, PPC_INS_VMLADDUHM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -18991,7 +18999,7 @@
 },
 {
   /* vmodsd $VD, $VA, $VB */
-  PPC_VMODSD /* 2482 */, PPC_INS_VMODSD,
+  PPC_VMODSD /* 2483 */, PPC_INS_VMODSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -18999,7 +19007,7 @@
 },
 {
   /* vmodsq $VD, $VA, $VB */
-  PPC_VMODSQ /* 2483 */, PPC_INS_VMODSQ,
+  PPC_VMODSQ /* 2484 */, PPC_INS_VMODSQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19007,7 +19015,7 @@
 },
 {
   /* vmodsw $VD, $VA, $VB */
-  PPC_VMODSW /* 2484 */, PPC_INS_VMODSW,
+  PPC_VMODSW /* 2485 */, PPC_INS_VMODSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19015,7 +19023,7 @@
 },
 {
   /* vmodud $VD, $VA, $VB */
-  PPC_VMODUD /* 2485 */, PPC_INS_VMODUD,
+  PPC_VMODUD /* 2486 */, PPC_INS_VMODUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19023,7 +19031,7 @@
 },
 {
   /* vmoduq $VD, $VA, $VB */
-  PPC_VMODUQ /* 2486 */, PPC_INS_VMODUQ,
+  PPC_VMODUQ /* 2487 */, PPC_INS_VMODUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19031,7 +19039,7 @@
 },
 {
   /* vmoduw $VD, $VA, $VB */
-  PPC_VMODUW /* 2487 */, PPC_INS_VMODUW,
+  PPC_VMODUW /* 2488 */, PPC_INS_VMODUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19039,7 +19047,7 @@
 },
 {
   /* vmrgew $VD, $VA, $VB */
-  PPC_VMRGEW /* 2488 */, PPC_INS_VMRGEW,
+  PPC_VMRGEW /* 2489 */, PPC_INS_VMRGEW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19047,7 +19055,7 @@
 },
 {
   /* vmrghb $VD, $VA, $VB */
-  PPC_VMRGHB /* 2489 */, PPC_INS_VMRGHB,
+  PPC_VMRGHB /* 2490 */, PPC_INS_VMRGHB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19055,7 +19063,7 @@
 },
 {
   /* vmrghh $VD, $VA, $VB */
-  PPC_VMRGHH /* 2490 */, PPC_INS_VMRGHH,
+  PPC_VMRGHH /* 2491 */, PPC_INS_VMRGHH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19063,7 +19071,7 @@
 },
 {
   /* vmrghw $VD, $VA, $VB */
-  PPC_VMRGHW /* 2491 */, PPC_INS_VMRGHW,
+  PPC_VMRGHW /* 2492 */, PPC_INS_VMRGHW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19071,7 +19079,7 @@
 },
 {
   /* vmrglb $VD, $VA, $VB */
-  PPC_VMRGLB /* 2492 */, PPC_INS_VMRGLB,
+  PPC_VMRGLB /* 2493 */, PPC_INS_VMRGLB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19079,7 +19087,7 @@
 },
 {
   /* vmrglh $VD, $VA, $VB */
-  PPC_VMRGLH /* 2493 */, PPC_INS_VMRGLH,
+  PPC_VMRGLH /* 2494 */, PPC_INS_VMRGLH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19087,7 +19095,7 @@
 },
 {
   /* vmrglw $VD, $VA, $VB */
-  PPC_VMRGLW /* 2494 */, PPC_INS_VMRGLW,
+  PPC_VMRGLW /* 2495 */, PPC_INS_VMRGLW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19095,7 +19103,7 @@
 },
 {
   /* vmrgow $VD, $VA, $VB */
-  PPC_VMRGOW /* 2495 */, PPC_INS_VMRGOW,
+  PPC_VMRGOW /* 2496 */, PPC_INS_VMRGOW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19103,7 +19111,7 @@
 },
 {
   /* vmsumcud $RT, $RA, $RB, $RC */
-  PPC_VMSUMCUD /* 2496 */, PPC_INS_VMSUMCUD,
+  PPC_VMSUMCUD /* 2497 */, PPC_INS_VMSUMCUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19111,7 +19119,7 @@
 },
 {
   /* vmsummbm $RT, $RA, $RB, $RC */
-  PPC_VMSUMMBM /* 2497 */, PPC_INS_VMSUMMBM,
+  PPC_VMSUMMBM /* 2498 */, PPC_INS_VMSUMMBM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19119,7 +19127,7 @@
 },
 {
   /* vmsumshm $RT, $RA, $RB, $RC */
-  PPC_VMSUMSHM /* 2498 */, PPC_INS_VMSUMSHM,
+  PPC_VMSUMSHM /* 2499 */, PPC_INS_VMSUMSHM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19127,7 +19135,7 @@
 },
 {
   /* vmsumshs $RT, $RA, $RB, $RC */
-  PPC_VMSUMSHS /* 2499 */, PPC_INS_VMSUMSHS,
+  PPC_VMSUMSHS /* 2500 */, PPC_INS_VMSUMSHS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19135,7 +19143,7 @@
 },
 {
   /* vmsumubm $RT, $RA, $RB, $RC */
-  PPC_VMSUMUBM /* 2500 */, PPC_INS_VMSUMUBM,
+  PPC_VMSUMUBM /* 2501 */, PPC_INS_VMSUMUBM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19143,7 +19151,7 @@
 },
 {
   /* vmsumudm $RT, $RA, $RB, $RC */
-  PPC_VMSUMUDM /* 2501 */, PPC_INS_VMSUMUDM,
+  PPC_VMSUMUDM /* 2502 */, PPC_INS_VMSUMUDM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19151,7 +19159,7 @@
 },
 {
   /* vmsumuhm $RT, $RA, $RB, $RC */
-  PPC_VMSUMUHM /* 2502 */, PPC_INS_VMSUMUHM,
+  PPC_VMSUMUHM /* 2503 */, PPC_INS_VMSUMUHM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19159,7 +19167,7 @@
 },
 {
   /* vmsumuhs $RT, $RA, $RB, $RC */
-  PPC_VMSUMUHS /* 2503 */, PPC_INS_VMSUMUHS,
+  PPC_VMSUMUHS /* 2504 */, PPC_INS_VMSUMUHS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19167,7 +19175,7 @@
 },
 {
   /* vmul10cuq $VD, $VA */
-  PPC_VMUL10CUQ /* 2504 */, PPC_INS_VMUL10CUQ,
+  PPC_VMUL10CUQ /* 2505 */, PPC_INS_VMUL10CUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_BX }}
 
@@ -19175,7 +19183,7 @@
 },
 {
   /* vmul10ecuq $VD, $VA, $VB */
-  PPC_VMUL10ECUQ /* 2505 */, PPC_INS_VMUL10ECUQ,
+  PPC_VMUL10ECUQ /* 2506 */, PPC_INS_VMUL10ECUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19183,7 +19191,7 @@
 },
 {
   /* vmul10euq $VD, $VA, $VB */
-  PPC_VMUL10EUQ /* 2506 */, PPC_INS_VMUL10EUQ,
+  PPC_VMUL10EUQ /* 2507 */, PPC_INS_VMUL10EUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19191,7 +19199,7 @@
 },
 {
   /* vmul10uq $VD, $VA */
-  PPC_VMUL10UQ /* 2507 */, PPC_INS_VMUL10UQ,
+  PPC_VMUL10UQ /* 2508 */, PPC_INS_VMUL10UQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_BX }}
 
@@ -19199,7 +19207,7 @@
 },
 {
   /* vmulesb $VD, $VA, $VB */
-  PPC_VMULESB /* 2508 */, PPC_INS_VMULESB,
+  PPC_VMULESB /* 2509 */, PPC_INS_VMULESB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19207,7 +19215,7 @@
 },
 {
   /* vmulesd $VD, $VA, $VB */
-  PPC_VMULESD /* 2509 */, PPC_INS_VMULESD,
+  PPC_VMULESD /* 2510 */, PPC_INS_VMULESD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19215,7 +19223,7 @@
 },
 {
   /* vmulesh $VD, $VA, $VB */
-  PPC_VMULESH /* 2510 */, PPC_INS_VMULESH,
+  PPC_VMULESH /* 2511 */, PPC_INS_VMULESH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19223,7 +19231,7 @@
 },
 {
   /* vmulesw $VD, $VA, $VB */
-  PPC_VMULESW /* 2511 */, PPC_INS_VMULESW,
+  PPC_VMULESW /* 2512 */, PPC_INS_VMULESW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19231,7 +19239,7 @@
 },
 {
   /* vmuleub $VD, $VA, $VB */
-  PPC_VMULEUB /* 2512 */, PPC_INS_VMULEUB,
+  PPC_VMULEUB /* 2513 */, PPC_INS_VMULEUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19239,7 +19247,7 @@
 },
 {
   /* vmuleud $VD, $VA, $VB */
-  PPC_VMULEUD /* 2513 */, PPC_INS_VMULEUD,
+  PPC_VMULEUD /* 2514 */, PPC_INS_VMULEUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19247,7 +19255,7 @@
 },
 {
   /* vmuleuh $VD, $VA, $VB */
-  PPC_VMULEUH /* 2514 */, PPC_INS_VMULEUH,
+  PPC_VMULEUH /* 2515 */, PPC_INS_VMULEUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19255,7 +19263,7 @@
 },
 {
   /* vmuleuw $VD, $VA, $VB */
-  PPC_VMULEUW /* 2515 */, PPC_INS_VMULEUW,
+  PPC_VMULEUW /* 2516 */, PPC_INS_VMULEUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19263,7 +19271,7 @@
 },
 {
   /* vmulhsd $VD, $VA, $VB */
-  PPC_VMULHSD /* 2516 */, PPC_INS_VMULHSD,
+  PPC_VMULHSD /* 2517 */, PPC_INS_VMULHSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19271,7 +19279,7 @@
 },
 {
   /* vmulhsw $VD, $VA, $VB */
-  PPC_VMULHSW /* 2517 */, PPC_INS_VMULHSW,
+  PPC_VMULHSW /* 2518 */, PPC_INS_VMULHSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19279,7 +19287,7 @@
 },
 {
   /* vmulhud $VD, $VA, $VB */
-  PPC_VMULHUD /* 2518 */, PPC_INS_VMULHUD,
+  PPC_VMULHUD /* 2519 */, PPC_INS_VMULHUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19287,7 +19295,7 @@
 },
 {
   /* vmulhuw $VD, $VA, $VB */
-  PPC_VMULHUW /* 2519 */, PPC_INS_VMULHUW,
+  PPC_VMULHUW /* 2520 */, PPC_INS_VMULHUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19295,7 +19303,7 @@
 },
 {
   /* vmulld $VD, $VA, $VB */
-  PPC_VMULLD /* 2520 */, PPC_INS_VMULLD,
+  PPC_VMULLD /* 2521 */, PPC_INS_VMULLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19303,7 +19311,7 @@
 },
 {
   /* vmulosb $VD, $VA, $VB */
-  PPC_VMULOSB /* 2521 */, PPC_INS_VMULOSB,
+  PPC_VMULOSB /* 2522 */, PPC_INS_VMULOSB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19311,7 +19319,7 @@
 },
 {
   /* vmulosd $VD, $VA, $VB */
-  PPC_VMULOSD /* 2522 */, PPC_INS_VMULOSD,
+  PPC_VMULOSD /* 2523 */, PPC_INS_VMULOSD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19319,7 +19327,7 @@
 },
 {
   /* vmulosh $VD, $VA, $VB */
-  PPC_VMULOSH /* 2523 */, PPC_INS_VMULOSH,
+  PPC_VMULOSH /* 2524 */, PPC_INS_VMULOSH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19327,7 +19335,7 @@
 },
 {
   /* vmulosw $VD, $VA, $VB */
-  PPC_VMULOSW /* 2524 */, PPC_INS_VMULOSW,
+  PPC_VMULOSW /* 2525 */, PPC_INS_VMULOSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19335,7 +19343,7 @@
 },
 {
   /* vmuloub $VD, $VA, $VB */
-  PPC_VMULOUB /* 2525 */, PPC_INS_VMULOUB,
+  PPC_VMULOUB /* 2526 */, PPC_INS_VMULOUB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19343,7 +19351,7 @@
 },
 {
   /* vmuloud $VD, $VA, $VB */
-  PPC_VMULOUD /* 2526 */, PPC_INS_VMULOUD,
+  PPC_VMULOUD /* 2527 */, PPC_INS_VMULOUD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19351,7 +19359,7 @@
 },
 {
   /* vmulouh $VD, $VA, $VB */
-  PPC_VMULOUH /* 2527 */, PPC_INS_VMULOUH,
+  PPC_VMULOUH /* 2528 */, PPC_INS_VMULOUH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19359,7 +19367,7 @@
 },
 {
   /* vmulouw $VD, $VA, $VB */
-  PPC_VMULOUW /* 2528 */, PPC_INS_VMULOUW,
+  PPC_VMULOUW /* 2529 */, PPC_INS_VMULOUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19367,7 +19375,7 @@
 },
 {
   /* vmuluwm $VD, $VA, $VB */
-  PPC_VMULUWM /* 2529 */, PPC_INS_VMULUWM,
+  PPC_VMULUWM /* 2530 */, PPC_INS_VMULUWM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19375,7 +19383,7 @@
 },
 {
   /* vnand $VD, $VA, $VB */
-  PPC_VNAND /* 2530 */, PPC_INS_VNAND,
+  PPC_VNAND /* 2531 */, PPC_INS_VNAND,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19383,7 +19391,7 @@
 },
 {
   /* vncipher $VD, $VA, $VB */
-  PPC_VNCIPHER /* 2531 */, PPC_INS_VNCIPHER,
+  PPC_VNCIPHER /* 2532 */, PPC_INS_VNCIPHER,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19391,7 +19399,7 @@
 },
 {
   /* vncipherlast $VD, $VA, $VB */
-  PPC_VNCIPHERLAST /* 2532 */, PPC_INS_VNCIPHERLAST,
+  PPC_VNCIPHERLAST /* 2533 */, PPC_INS_VNCIPHERLAST,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19399,7 +19407,7 @@
 },
 {
   /* vnegd $VD, $VB */
-  PPC_VNEGD /* 2533 */, PPC_INS_VNEGD,
+  PPC_VNEGD /* 2534 */, PPC_INS_VNEGD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -19407,7 +19415,7 @@
 },
 {
   /* vnegw $VD, $VB */
-  PPC_VNEGW /* 2534 */, PPC_INS_VNEGW,
+  PPC_VNEGW /* 2535 */, PPC_INS_VNEGW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -19415,7 +19423,7 @@
 },
 {
   /* vnmsubfp $RT, $RA, $RC, $RB */
-  PPC_VNMSUBFP /* 2535 */, PPC_INS_VNMSUBFP,
+  PPC_VNMSUBFP /* 2536 */, PPC_INS_VNMSUBFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1 }}
 
@@ -19423,7 +19431,7 @@
 },
 {
   /* vnor $VD, $VA, $VB */
-  PPC_VNOR /* 2536 */, PPC_INS_VNOR,
+  PPC_VNOR /* 2537 */, PPC_INS_VNOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19431,7 +19439,7 @@
 },
 {
   /* vor $VD, $VA, $VB */
-  PPC_VOR /* 2537 */, PPC_INS_VOR,
+  PPC_VOR /* 2538 */, PPC_INS_VOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19439,7 +19447,7 @@
 },
 {
   /* vorc $VD, $VA, $VB */
-  PPC_VORC /* 2538 */, PPC_INS_VORC,
+  PPC_VORC /* 2539 */, PPC_INS_VORC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19447,7 +19455,7 @@
 },
 {
   /* vpdepd $VD, $VA, $VB */
-  PPC_VPDEPD /* 2539 */, PPC_INS_VPDEPD,
+  PPC_VPDEPD /* 2540 */, PPC_INS_VPDEPD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19455,7 +19463,7 @@
 },
 {
   /* vperm $RT, $RA, $RB, $RC */
-  PPC_VPERM /* 2540 */, PPC_INS_VPERM,
+  PPC_VPERM /* 2541 */, PPC_INS_VPERM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19463,7 +19471,7 @@
 },
 {
   /* vpermr $RT, $RA, $RB, $RC */
-  PPC_VPERMR /* 2541 */, PPC_INS_VPERMR,
+  PPC_VPERMR /* 2542 */, PPC_INS_VPERMR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19471,7 +19479,7 @@
 },
 {
   /* vpermxor $RT, $RA, $RB, $RC */
-  PPC_VPERMXOR /* 2542 */, PPC_INS_VPERMXOR,
+  PPC_VPERMXOR /* 2543 */, PPC_INS_VPERMXOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1 }}
 
@@ -19479,7 +19487,7 @@
 },
 {
   /* vpextd $VD, $VA, $VB */
-  PPC_VPEXTD /* 2543 */, PPC_INS_VPEXTD,
+  PPC_VPEXTD /* 2544 */, PPC_INS_VPEXTD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19487,7 +19495,7 @@
 },
 {
   /* vpkpx $VD, $VA, $VB */
-  PPC_VPKPX /* 2544 */, PPC_INS_VPKPX,
+  PPC_VPKPX /* 2545 */, PPC_INS_VPKPX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19495,7 +19503,7 @@
 },
 {
   /* vpksdss $VD, $VA, $VB */
-  PPC_VPKSDSS /* 2545 */, PPC_INS_VPKSDSS,
+  PPC_VPKSDSS /* 2546 */, PPC_INS_VPKSDSS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19503,7 +19511,7 @@
 },
 {
   /* vpksdus $VD, $VA, $VB */
-  PPC_VPKSDUS /* 2546 */, PPC_INS_VPKSDUS,
+  PPC_VPKSDUS /* 2547 */, PPC_INS_VPKSDUS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19511,7 +19519,7 @@
 },
 {
   /* vpkshss $VD, $VA, $VB */
-  PPC_VPKSHSS /* 2547 */, PPC_INS_VPKSHSS,
+  PPC_VPKSHSS /* 2548 */, PPC_INS_VPKSHSS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19519,7 +19527,7 @@
 },
 {
   /* vpkshus $VD, $VA, $VB */
-  PPC_VPKSHUS /* 2548 */, PPC_INS_VPKSHUS,
+  PPC_VPKSHUS /* 2549 */, PPC_INS_VPKSHUS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19527,7 +19535,7 @@
 },
 {
   /* vpkswss $VD, $VA, $VB */
-  PPC_VPKSWSS /* 2549 */, PPC_INS_VPKSWSS,
+  PPC_VPKSWSS /* 2550 */, PPC_INS_VPKSWSS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19535,7 +19543,7 @@
 },
 {
   /* vpkswus $VD, $VA, $VB */
-  PPC_VPKSWUS /* 2550 */, PPC_INS_VPKSWUS,
+  PPC_VPKSWUS /* 2551 */, PPC_INS_VPKSWUS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19543,7 +19551,7 @@
 },
 {
   /* vpkudum $VD, $VA, $VB */
-  PPC_VPKUDUM /* 2551 */, PPC_INS_VPKUDUM,
+  PPC_VPKUDUM /* 2552 */, PPC_INS_VPKUDUM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19551,7 +19559,7 @@
 },
 {
   /* vpkudus $VD, $VA, $VB */
-  PPC_VPKUDUS /* 2552 */, PPC_INS_VPKUDUS,
+  PPC_VPKUDUS /* 2553 */, PPC_INS_VPKUDUS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19559,7 +19567,7 @@
 },
 {
   /* vpkuhum $VD, $VA, $VB */
-  PPC_VPKUHUM /* 2553 */, PPC_INS_VPKUHUM,
+  PPC_VPKUHUM /* 2554 */, PPC_INS_VPKUHUM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19567,7 +19575,7 @@
 },
 {
   /* vpkuhus $VD, $VA, $VB */
-  PPC_VPKUHUS /* 2554 */, PPC_INS_VPKUHUS,
+  PPC_VPKUHUS /* 2555 */, PPC_INS_VPKUHUS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19575,7 +19583,7 @@
 },
 {
   /* vpkuwum $VD, $VA, $VB */
-  PPC_VPKUWUM /* 2555 */, PPC_INS_VPKUWUM,
+  PPC_VPKUWUM /* 2556 */, PPC_INS_VPKUWUM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19583,7 +19591,7 @@
 },
 {
   /* vpkuwus $VD, $VA, $VB */
-  PPC_VPKUWUS /* 2556 */, PPC_INS_VPKUWUS,
+  PPC_VPKUWUS /* 2557 */, PPC_INS_VPKUWUS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19591,7 +19599,7 @@
 },
 {
   /* vpmsumb $VD, $VA, $VB */
-  PPC_VPMSUMB /* 2557 */, PPC_INS_VPMSUMB,
+  PPC_VPMSUMB /* 2558 */, PPC_INS_VPMSUMB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19599,7 +19607,7 @@
 },
 {
   /* vpmsumd $VD, $VA, $VB */
-  PPC_VPMSUMD /* 2558 */, PPC_INS_VPMSUMD,
+  PPC_VPMSUMD /* 2559 */, PPC_INS_VPMSUMD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19607,7 +19615,7 @@
 },
 {
   /* vpmsumh $VD, $VA, $VB */
-  PPC_VPMSUMH /* 2559 */, PPC_INS_VPMSUMH,
+  PPC_VPMSUMH /* 2560 */, PPC_INS_VPMSUMH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19615,7 +19623,7 @@
 },
 {
   /* vpmsumw $VD, $VA, $VB */
-  PPC_VPMSUMW /* 2560 */, PPC_INS_VPMSUMW,
+  PPC_VPMSUMW /* 2561 */, PPC_INS_VPMSUMW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19623,7 +19631,7 @@
 },
 {
   /* vpopcntb $VD, $VB */
-  PPC_VPOPCNTB /* 2561 */, PPC_INS_VPOPCNTB,
+  PPC_VPOPCNTB /* 2562 */, PPC_INS_VPOPCNTB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -19631,7 +19639,7 @@
 },
 {
   /* vpopcntd $VD, $VB */
-  PPC_VPOPCNTD /* 2562 */, PPC_INS_VPOPCNTD,
+  PPC_VPOPCNTD /* 2563 */, PPC_INS_VPOPCNTD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -19639,7 +19647,7 @@
 },
 {
   /* vpopcnth $VD, $VB */
-  PPC_VPOPCNTH /* 2563 */, PPC_INS_VPOPCNTH,
+  PPC_VPOPCNTH /* 2564 */, PPC_INS_VPOPCNTH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -19647,7 +19655,7 @@
 },
 {
   /* vpopcntw $VD, $VB */
-  PPC_VPOPCNTW /* 2564 */, PPC_INS_VPOPCNTW,
+  PPC_VPOPCNTW /* 2565 */, PPC_INS_VPOPCNTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -19655,7 +19663,7 @@
 },
 {
   /* vprtybd $VD, $VB */
-  PPC_VPRTYBD /* 2565 */, PPC_INS_VPRTYBD,
+  PPC_VPRTYBD /* 2566 */, PPC_INS_VPRTYBD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -19663,7 +19671,7 @@
 },
 {
   /* vprtybq $VD, $VB */
-  PPC_VPRTYBQ /* 2566 */, PPC_INS_VPRTYBQ,
+  PPC_VPRTYBQ /* 2567 */, PPC_INS_VPRTYBQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -19671,7 +19679,7 @@
 },
 {
   /* vprtybw $VD, $VB */
-  PPC_VPRTYBW /* 2567 */, PPC_INS_VPRTYBW,
+  PPC_VPRTYBW /* 2568 */, PPC_INS_VPRTYBW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_RD5_XO5_RS5 }}
 
@@ -19679,7 +19687,7 @@
 },
 {
   /* vrefp $VD, $VB */
-  PPC_VREFP /* 2568 */, PPC_INS_VREFP,
+  PPC_VREFP /* 2569 */, PPC_INS_VREFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -19687,7 +19695,7 @@
 },
 {
   /* vrfim $VD, $VB */
-  PPC_VRFIM /* 2569 */, PPC_INS_VRFIM,
+  PPC_VRFIM /* 2570 */, PPC_INS_VRFIM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -19695,7 +19703,7 @@
 },
 {
   /* vrfin $VD, $VB */
-  PPC_VRFIN /* 2570 */, PPC_INS_VRFIN,
+  PPC_VRFIN /* 2571 */, PPC_INS_VRFIN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -19703,7 +19711,7 @@
 },
 {
   /* vrfip $VD, $VB */
-  PPC_VRFIP /* 2571 */, PPC_INS_VRFIP,
+  PPC_VRFIP /* 2572 */, PPC_INS_VRFIP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -19711,7 +19719,7 @@
 },
 {
   /* vrfiz $VD, $VB */
-  PPC_VRFIZ /* 2572 */, PPC_INS_VRFIZ,
+  PPC_VRFIZ /* 2573 */, PPC_INS_VRFIZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -19719,7 +19727,7 @@
 },
 {
   /* vrlb $VD, $VA, $VB */
-  PPC_VRLB /* 2573 */, PPC_INS_VRLB,
+  PPC_VRLB /* 2574 */, PPC_INS_VRLB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19727,7 +19735,7 @@
 },
 {
   /* vrld $VD, $VA, $VB */
-  PPC_VRLD /* 2574 */, PPC_INS_VRLD,
+  PPC_VRLD /* 2575 */, PPC_INS_VRLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19735,7 +19743,7 @@
 },
 {
   /* vrldmi $VD, $VA, $VB */
-  PPC_VRLDMI /* 2575 */, PPC_INS_VRLDMI,
+  PPC_VRLDMI /* 2576 */, PPC_INS_VRLDMI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19743,7 +19751,7 @@
 },
 {
   /* vrldnm $VD, $VA, $VB */
-  PPC_VRLDNM /* 2576 */, PPC_INS_VRLDNM,
+  PPC_VRLDNM /* 2577 */, PPC_INS_VRLDNM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19751,7 +19759,7 @@
 },
 {
   /* vrlh $VD, $VA, $VB */
-  PPC_VRLH /* 2577 */, PPC_INS_VRLH,
+  PPC_VRLH /* 2578 */, PPC_INS_VRLH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19759,7 +19767,7 @@
 },
 {
   /* vrlq $VD, $VA, $VB */
-  PPC_VRLQ /* 2578 */, PPC_INS_VRLQ,
+  PPC_VRLQ /* 2579 */, PPC_INS_VRLQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19767,7 +19775,7 @@
 },
 {
   /* vrlqmi $VD, $VA, $VB */
-  PPC_VRLQMI /* 2579 */, PPC_INS_VRLQMI,
+  PPC_VRLQMI /* 2580 */, PPC_INS_VRLQMI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19775,7 +19783,7 @@
 },
 {
   /* vrlqnm $VD, $VA, $VB */
-  PPC_VRLQNM /* 2580 */, PPC_INS_VRLQNM,
+  PPC_VRLQNM /* 2581 */, PPC_INS_VRLQNM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19783,7 +19791,7 @@
 },
 {
   /* vrlw $VD, $VA, $VB */
-  PPC_VRLW /* 2581 */, PPC_INS_VRLW,
+  PPC_VRLW /* 2582 */, PPC_INS_VRLW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19791,7 +19799,7 @@
 },
 {
   /* vrlwmi $VD, $VA, $VB */
-  PPC_VRLWMI /* 2582 */, PPC_INS_VRLWMI,
+  PPC_VRLWMI /* 2583 */, PPC_INS_VRLWMI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19799,7 +19807,7 @@
 },
 {
   /* vrlwnm $VD, $VA, $VB */
-  PPC_VRLWNM /* 2583 */, PPC_INS_VRLWNM,
+  PPC_VRLWNM /* 2584 */, PPC_INS_VRLWNM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19807,7 +19815,7 @@
 },
 {
   /* vrsqrtefp $VD, $VB */
-  PPC_VRSQRTEFP /* 2584 */, PPC_INS_VRSQRTEFP,
+  PPC_VRSQRTEFP /* 2585 */, PPC_INS_VRSQRTEFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -19815,7 +19823,7 @@
 },
 {
   /* vsbox $VD, $VA */
-  PPC_VSBOX /* 2585 */, PPC_INS_VSBOX,
+  PPC_VSBOX /* 2586 */, PPC_INS_VSBOX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_BX }}
 
@@ -19823,7 +19831,7 @@
 },
 {
   /* vsel $RT, $RA, $RB, $RC */
-  PPC_VSEL /* 2586 */, PPC_INS_VSEL,
+  PPC_VSEL /* 2587 */, PPC_INS_VSEL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -19831,7 +19839,7 @@
 },
 {
   /* vshasigmad $VD, $VA, $ST, $SIX */
-  PPC_VSHASIGMAD /* 2587 */, PPC_INS_VSHASIGMAD,
+  PPC_VSHASIGMAD /* 2588 */, PPC_INS_VSHASIGMAD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_CR }}
 
@@ -19839,7 +19847,7 @@
 },
 {
   /* vshasigmaw $VD, $VA, $ST, $SIX */
-  PPC_VSHASIGMAW /* 2588 */, PPC_INS_VSHASIGMAW,
+  PPC_VSHASIGMAW /* 2589 */, PPC_INS_VSHASIGMAW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_CR }}
 
@@ -19847,7 +19855,7 @@
 },
 {
   /* vsl $VD, $VA, $VB */
-  PPC_VSL /* 2589 */, PPC_INS_VSL,
+  PPC_VSL /* 2590 */, PPC_INS_VSL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19855,7 +19863,7 @@
 },
 {
   /* vslb $VD, $VA, $VB */
-  PPC_VSLB /* 2590 */, PPC_INS_VSLB,
+  PPC_VSLB /* 2591 */, PPC_INS_VSLB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19863,7 +19871,7 @@
 },
 {
   /* vsld $VD, $VA, $VB */
-  PPC_VSLD /* 2591 */, PPC_INS_VSLD,
+  PPC_VSLD /* 2592 */, PPC_INS_VSLD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19871,7 +19879,7 @@
 },
 {
   /* vsldbi $VRT, $VRA, $VRB, $SD */
-  PPC_VSLDBI /* 2592 */, PPC_INS_VSLDBI,
+  PPC_VSLDBI /* 2593 */, PPC_INS_VSLDBI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VNFORM_VTAB5_SD3 }}
 
@@ -19879,7 +19887,7 @@
 },
 {
   /* vsldoi $RT, $RA, $RB, $SH */
-  PPC_VSLDOI /* 2593 */, PPC_INS_VSLDOI,
+  PPC_VSLDOI /* 2594 */, PPC_INS_VSLDOI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_2 }}
 
@@ -19887,7 +19895,7 @@
 },
 {
   /* vslh $VD, $VA, $VB */
-  PPC_VSLH /* 2594 */, PPC_INS_VSLH,
+  PPC_VSLH /* 2595 */, PPC_INS_VSLH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19895,7 +19903,7 @@
 },
 {
   /* vslo $VD, $VA, $VB */
-  PPC_VSLO /* 2595 */, PPC_INS_VSLO,
+  PPC_VSLO /* 2596 */, PPC_INS_VSLO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19903,7 +19911,7 @@
 },
 {
   /* vslq $VD, $VA, $VB */
-  PPC_VSLQ /* 2596 */, PPC_INS_VSLQ,
+  PPC_VSLQ /* 2597 */, PPC_INS_VSLQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19911,7 +19919,7 @@
 },
 {
   /* vslv $VD, $VA, $VB */
-  PPC_VSLV /* 2597 */, PPC_INS_VSLV,
+  PPC_VSLV /* 2598 */, PPC_INS_VSLV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19919,7 +19927,7 @@
 },
 {
   /* vslw $VD, $VA, $VB */
-  PPC_VSLW /* 2598 */, PPC_INS_VSLW,
+  PPC_VSLW /* 2599 */, PPC_INS_VSLW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19927,7 +19935,7 @@
 },
 {
   /* vspltb $VD, $VB, $VA */
-  PPC_VSPLTB /* 2599 */, PPC_INS_VSPLTB,
+  PPC_VSPLTB /* 2600 */, PPC_INS_VSPLTB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19935,14 +19943,14 @@
 },
 {
   /* vspltb $VD, $VB, $VA */
-  PPC_VSPLTBs /* 2600 */, PPC_INS_INVALID,
+  PPC_VSPLTBs /* 2601 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vsplth $VD, $VB, $VA */
-  PPC_VSPLTH /* 2601 */, PPC_INS_VSPLTH,
+  PPC_VSPLTH /* 2602 */, PPC_INS_VSPLTH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19950,14 +19958,14 @@
 },
 {
   /* vsplth $VD, $VB, $VA */
-  PPC_VSPLTHs /* 2602 */, PPC_INS_INVALID,
+  PPC_VSPLTHs /* 2603 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vspltisb $VD, $IMM */
-  PPC_VSPLTISB /* 2603 */, PPC_INS_VSPLTISB,
+  PPC_VSPLTISB /* 2604 */, PPC_INS_VSPLTISB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_3 }}
 
@@ -19965,7 +19973,7 @@
 },
 {
   /* vspltish $VD, $IMM */
-  PPC_VSPLTISH /* 2604 */, PPC_INS_VSPLTISH,
+  PPC_VSPLTISH /* 2605 */, PPC_INS_VSPLTISH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_3 }}
 
@@ -19973,7 +19981,7 @@
 },
 {
   /* vspltisw $VD, $IMM */
-  PPC_VSPLTISW /* 2605 */, PPC_INS_VSPLTISW,
+  PPC_VSPLTISW /* 2606 */, PPC_INS_VSPLTISW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_3 }}
 
@@ -19981,7 +19989,7 @@
 },
 {
   /* vspltw $VD, $VB, $VA */
-  PPC_VSPLTW /* 2606 */, PPC_INS_VSPLTW,
+  PPC_VSPLTW /* 2607 */, PPC_INS_VSPLTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19989,7 +19997,7 @@
 },
 {
   /* vsr $VD, $VA, $VB */
-  PPC_VSR /* 2607 */, PPC_INS_VSR,
+  PPC_VSR /* 2608 */, PPC_INS_VSR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -19997,7 +20005,7 @@
 },
 {
   /* vsrab $VD, $VA, $VB */
-  PPC_VSRAB /* 2608 */, PPC_INS_VSRAB,
+  PPC_VSRAB /* 2609 */, PPC_INS_VSRAB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20005,7 +20013,7 @@
 },
 {
   /* vsrad $VD, $VA, $VB */
-  PPC_VSRAD /* 2609 */, PPC_INS_VSRAD,
+  PPC_VSRAD /* 2610 */, PPC_INS_VSRAD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20013,7 +20021,7 @@
 },
 {
   /* vsrah $VD, $VA, $VB */
-  PPC_VSRAH /* 2610 */, PPC_INS_VSRAH,
+  PPC_VSRAH /* 2611 */, PPC_INS_VSRAH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20021,7 +20029,7 @@
 },
 {
   /* vsraq $VD, $VA, $VB */
-  PPC_VSRAQ /* 2611 */, PPC_INS_VSRAQ,
+  PPC_VSRAQ /* 2612 */, PPC_INS_VSRAQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20029,7 +20037,7 @@
 },
 {
   /* vsraw $VD, $VA, $VB */
-  PPC_VSRAW /* 2612 */, PPC_INS_VSRAW,
+  PPC_VSRAW /* 2613 */, PPC_INS_VSRAW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20037,7 +20045,7 @@
 },
 {
   /* vsrb $VD, $VA, $VB */
-  PPC_VSRB /* 2613 */, PPC_INS_VSRB,
+  PPC_VSRB /* 2614 */, PPC_INS_VSRB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20045,7 +20053,7 @@
 },
 {
   /* vsrd $VD, $VA, $VB */
-  PPC_VSRD /* 2614 */, PPC_INS_VSRD,
+  PPC_VSRD /* 2615 */, PPC_INS_VSRD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20053,7 +20061,7 @@
 },
 {
   /* vsrdbi $VRT, $VRA, $VRB, $SD */
-  PPC_VSRDBI /* 2615 */, PPC_INS_VSRDBI,
+  PPC_VSRDBI /* 2616 */, PPC_INS_VSRDBI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VNFORM_VTAB5_SD3 }}
 
@@ -20061,7 +20069,7 @@
 },
 {
   /* vsrh $VD, $VA, $VB */
-  PPC_VSRH /* 2616 */, PPC_INS_VSRH,
+  PPC_VSRH /* 2617 */, PPC_INS_VSRH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20069,7 +20077,7 @@
 },
 {
   /* vsro $VD, $VA, $VB */
-  PPC_VSRO /* 2617 */, PPC_INS_VSRO,
+  PPC_VSRO /* 2618 */, PPC_INS_VSRO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20077,7 +20085,7 @@
 },
 {
   /* vsrq $VD, $VA, $VB */
-  PPC_VSRQ /* 2618 */, PPC_INS_VSRQ,
+  PPC_VSRQ /* 2619 */, PPC_INS_VSRQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20085,7 +20093,7 @@
 },
 {
   /* vsrv $VD, $VA, $VB */
-  PPC_VSRV /* 2619 */, PPC_INS_VSRV,
+  PPC_VSRV /* 2620 */, PPC_INS_VSRV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20093,7 +20101,7 @@
 },
 {
   /* vsrw $VD, $VA, $VB */
-  PPC_VSRW /* 2620 */, PPC_INS_VSRW,
+  PPC_VSRW /* 2621 */, PPC_INS_VSRW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20101,7 +20109,7 @@
 },
 {
   /* vstribl $VT, $VB */
-  PPC_VSTRIBL /* 2621 */, PPC_INS_VSTRIBL,
+  PPC_VSTRIBL /* 2622 */, PPC_INS_VSTRIBL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_VTB5_RC }}
 
@@ -20109,7 +20117,7 @@
 },
 {
   /* vstribl. $VT, $VB */
-  PPC_VSTRIBL_rec /* 2622 */, PPC_INS_VSTRIBL,
+  PPC_VSTRIBL_rec /* 2623 */, PPC_INS_VSTRIBL,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_VTB5_RC }}
 
@@ -20117,7 +20125,7 @@
 },
 {
   /* vstribr $VT, $VB */
-  PPC_VSTRIBR /* 2623 */, PPC_INS_VSTRIBR,
+  PPC_VSTRIBR /* 2624 */, PPC_INS_VSTRIBR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_VTB5_RC }}
 
@@ -20125,7 +20133,7 @@
 },
 {
   /* vstribr. $VT, $VB */
-  PPC_VSTRIBR_rec /* 2624 */, PPC_INS_VSTRIBR,
+  PPC_VSTRIBR_rec /* 2625 */, PPC_INS_VSTRIBR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_VTB5_RC }}
 
@@ -20133,7 +20141,7 @@
 },
 {
   /* vstrihl $VT, $VB */
-  PPC_VSTRIHL /* 2625 */, PPC_INS_VSTRIHL,
+  PPC_VSTRIHL /* 2626 */, PPC_INS_VSTRIHL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_VTB5_RC }}
 
@@ -20141,7 +20149,7 @@
 },
 {
   /* vstrihl. $VT, $VB */
-  PPC_VSTRIHL_rec /* 2626 */, PPC_INS_VSTRIHL,
+  PPC_VSTRIHL_rec /* 2627 */, PPC_INS_VSTRIHL,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_VTB5_RC }}
 
@@ -20149,7 +20157,7 @@
 },
 {
   /* vstrihr $VT, $VB */
-  PPC_VSTRIHR /* 2627 */, PPC_INS_VSTRIHR,
+  PPC_VSTRIHR /* 2628 */, PPC_INS_VSTRIHR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_VTB5_RC }}
 
@@ -20157,7 +20165,7 @@
 },
 {
   /* vstrihr. $VT, $VB */
-  PPC_VSTRIHR_rec /* 2628 */, PPC_INS_VSTRIHR,
+  PPC_VSTRIHR_rec /* 2629 */, PPC_INS_VSTRIHR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_VTB5_RC }}
 
@@ -20165,7 +20173,7 @@
 },
 {
   /* vsubcuq $VD, $VA, $VB */
-  PPC_VSUBCUQ /* 2629 */, PPC_INS_VSUBCUQ,
+  PPC_VSUBCUQ /* 2630 */, PPC_INS_VSUBCUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20173,7 +20181,7 @@
 },
 {
   /* vsubcuw $VD, $VA, $VB */
-  PPC_VSUBCUW /* 2630 */, PPC_INS_VSUBCUW,
+  PPC_VSUBCUW /* 2631 */, PPC_INS_VSUBCUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20181,7 +20189,7 @@
 },
 {
   /* vsubecuq $RT, $RA, $RB, $RC */
-  PPC_VSUBECUQ /* 2631 */, PPC_INS_VSUBECUQ,
+  PPC_VSUBECUQ /* 2632 */, PPC_INS_VSUBECUQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -20189,7 +20197,7 @@
 },
 {
   /* vsubeuqm $RT, $RA, $RB, $RC */
-  PPC_VSUBEUQM /* 2632 */, PPC_INS_VSUBEUQM,
+  PPC_VSUBEUQM /* 2633 */, PPC_INS_VSUBEUQM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VAFORM_1A }}
 
@@ -20197,7 +20205,7 @@
 },
 {
   /* vsubfp $VD, $VA, $VB */
-  PPC_VSUBFP /* 2633 */, PPC_INS_VSUBFP,
+  PPC_VSUBFP /* 2634 */, PPC_INS_VSUBFP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20205,7 +20213,7 @@
 },
 {
   /* vsubsbs $VD, $VA, $VB */
-  PPC_VSUBSBS /* 2634 */, PPC_INS_VSUBSBS,
+  PPC_VSUBSBS /* 2635 */, PPC_INS_VSUBSBS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20213,7 +20221,7 @@
 },
 {
   /* vsubshs $VD, $VA, $VB */
-  PPC_VSUBSHS /* 2635 */, PPC_INS_VSUBSHS,
+  PPC_VSUBSHS /* 2636 */, PPC_INS_VSUBSHS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20221,7 +20229,7 @@
 },
 {
   /* vsubsws $VD, $VA, $VB */
-  PPC_VSUBSWS /* 2636 */, PPC_INS_VSUBSWS,
+  PPC_VSUBSWS /* 2637 */, PPC_INS_VSUBSWS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20229,7 +20237,7 @@
 },
 {
   /* vsububm $VD, $VA, $VB */
-  PPC_VSUBUBM /* 2637 */, PPC_INS_VSUBUBM,
+  PPC_VSUBUBM /* 2638 */, PPC_INS_VSUBUBM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20237,7 +20245,7 @@
 },
 {
   /* vsububs $VD, $VA, $VB */
-  PPC_VSUBUBS /* 2638 */, PPC_INS_VSUBUBS,
+  PPC_VSUBUBS /* 2639 */, PPC_INS_VSUBUBS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20245,7 +20253,7 @@
 },
 {
   /* vsubudm $VD, $VA, $VB */
-  PPC_VSUBUDM /* 2639 */, PPC_INS_VSUBUDM,
+  PPC_VSUBUDM /* 2640 */, PPC_INS_VSUBUDM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20253,7 +20261,7 @@
 },
 {
   /* vsubuhm $VD, $VA, $VB */
-  PPC_VSUBUHM /* 2640 */, PPC_INS_VSUBUHM,
+  PPC_VSUBUHM /* 2641 */, PPC_INS_VSUBUHM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20261,7 +20269,7 @@
 },
 {
   /* vsubuhs $VD, $VA, $VB */
-  PPC_VSUBUHS /* 2641 */, PPC_INS_VSUBUHS,
+  PPC_VSUBUHS /* 2642 */, PPC_INS_VSUBUHS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20269,7 +20277,7 @@
 },
 {
   /* vsubuqm $VD, $VA, $VB */
-  PPC_VSUBUQM /* 2642 */, PPC_INS_VSUBUQM,
+  PPC_VSUBUQM /* 2643 */, PPC_INS_VSUBUQM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20277,7 +20285,7 @@
 },
 {
   /* vsubuwm $VD, $VA, $VB */
-  PPC_VSUBUWM /* 2643 */, PPC_INS_VSUBUWM,
+  PPC_VSUBUWM /* 2644 */, PPC_INS_VSUBUWM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20285,7 +20293,7 @@
 },
 {
   /* vsubuws $VD, $VA, $VB */
-  PPC_VSUBUWS /* 2644 */, PPC_INS_VSUBUWS,
+  PPC_VSUBUWS /* 2645 */, PPC_INS_VSUBUWS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20293,7 +20301,7 @@
 },
 {
   /* vsum2sws $VD, $VA, $VB */
-  PPC_VSUM2SWS /* 2645 */, PPC_INS_VSUM2SWS,
+  PPC_VSUM2SWS /* 2646 */, PPC_INS_VSUM2SWS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20301,7 +20309,7 @@
 },
 {
   /* vsum4sbs $VD, $VA, $VB */
-  PPC_VSUM4SBS /* 2646 */, PPC_INS_VSUM4SBS,
+  PPC_VSUM4SBS /* 2647 */, PPC_INS_VSUM4SBS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20309,7 +20317,7 @@
 },
 {
   /* vsum4shs $VD, $VA, $VB */
-  PPC_VSUM4SHS /* 2647 */, PPC_INS_VSUM4SHS,
+  PPC_VSUM4SHS /* 2648 */, PPC_INS_VSUM4SHS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20317,7 +20325,7 @@
 },
 {
   /* vsum4ubs $VD, $VA, $VB */
-  PPC_VSUM4UBS /* 2648 */, PPC_INS_VSUM4UBS,
+  PPC_VSUM4UBS /* 2649 */, PPC_INS_VSUM4UBS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20325,7 +20333,7 @@
 },
 {
   /* vsumsws $VD, $VA, $VB */
-  PPC_VSUMSWS /* 2649 */, PPC_INS_VSUMSWS,
+  PPC_VSUMSWS /* 2650 */, PPC_INS_VSUMSWS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20333,7 +20341,7 @@
 },
 {
   /* vupkhpx $VD, $VB */
-  PPC_VUPKHPX /* 2650 */, PPC_INS_VUPKHPX,
+  PPC_VUPKHPX /* 2651 */, PPC_INS_VUPKHPX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -20341,7 +20349,7 @@
 },
 {
   /* vupkhsb $VD, $VB */
-  PPC_VUPKHSB /* 2651 */, PPC_INS_VUPKHSB,
+  PPC_VUPKHSB /* 2652 */, PPC_INS_VUPKHSB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -20349,7 +20357,7 @@
 },
 {
   /* vupkhsh $VD, $VB */
-  PPC_VUPKHSH /* 2652 */, PPC_INS_VUPKHSH,
+  PPC_VUPKHSH /* 2653 */, PPC_INS_VUPKHSH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -20357,7 +20365,7 @@
 },
 {
   /* vupkhsw $VD, $VB */
-  PPC_VUPKHSW /* 2653 */, PPC_INS_VUPKHSW,
+  PPC_VUPKHSW /* 2654 */, PPC_INS_VUPKHSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -20365,7 +20373,7 @@
 },
 {
   /* vupklpx $VD, $VB */
-  PPC_VUPKLPX /* 2654 */, PPC_INS_VUPKLPX,
+  PPC_VUPKLPX /* 2655 */, PPC_INS_VUPKLPX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -20373,7 +20381,7 @@
 },
 {
   /* vupklsb $VD, $VB */
-  PPC_VUPKLSB /* 2655 */, PPC_INS_VUPKLSB,
+  PPC_VUPKLSB /* 2656 */, PPC_INS_VUPKLSB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -20381,7 +20389,7 @@
 },
 {
   /* vupklsh $VD, $VB */
-  PPC_VUPKLSH /* 2656 */, PPC_INS_VUPKLSH,
+  PPC_VUPKLSH /* 2657 */, PPC_INS_VUPKLSH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -20389,7 +20397,7 @@
 },
 {
   /* vupklsw $VD, $VB */
-  PPC_VUPKLSW /* 2657 */, PPC_INS_VUPKLSW,
+  PPC_VUPKLSW /* 2658 */, PPC_INS_VUPKLSW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_2 }}
 
@@ -20397,7 +20405,7 @@
 },
 {
   /* vxor $VD, $VA, $VB */
-  PPC_VXOR /* 2658 */, PPC_INS_VXOR,
+  PPC_VXOR /* 2659 */, PPC_INS_VXOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_VXFORM_1 }}
 
@@ -20405,49 +20413,49 @@
 },
 {
   /* vxor $VD, $VD, $VD */
-  PPC_V_SET0 /* 2659 */, PPC_INS_INVALID,
+  PPC_V_SET0 /* 2660 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vxor $VD, $VD, $VD */
-  PPC_V_SET0B /* 2660 */, PPC_INS_INVALID,
+  PPC_V_SET0B /* 2661 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vxor $VD, $VD, $VD */
-  PPC_V_SET0H /* 2661 */, PPC_INS_INVALID,
+  PPC_V_SET0H /* 2662 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vspltisw $VD, -1 */
-  PPC_V_SETALLONES /* 2662 */, PPC_INS_INVALID,
+  PPC_V_SETALLONES /* 2663 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vspltisw $VD, -1 */
-  PPC_V_SETALLONESB /* 2663 */, PPC_INS_INVALID,
+  PPC_V_SETALLONESB /* 2664 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* vspltisw $VD, -1 */
-  PPC_V_SETALLONESH /* 2664 */, PPC_INS_INVALID,
+  PPC_V_SETALLONESH /* 2665 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* wait $L */
-  PPC_WAIT /* 2665 */, PPC_INS_WAIT,
+  PPC_WAIT /* 2666 */, PPC_INS_WAIT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_24_SYNC }}
 
@@ -20455,7 +20463,7 @@
 },
 {
   /* wait $L $PL */
-  PPC_WAITP10 /* 2666 */, PPC_INS_WAIT,
+  PPC_WAITP10 /* 2667 */, PPC_INS_WAIT,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_IMM2_IMM2 }}
 
@@ -20463,7 +20471,7 @@
 },
 {
   /* wrtee $RS */
-  PPC_WRTEE /* 2667 */, PPC_INS_WRTEE,
+  PPC_WRTEE /* 2668 */, PPC_INS_WRTEE,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISBOOKE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_MTMSR }}
 
@@ -20471,7 +20479,7 @@
 },
 {
   /* wrteei $E */
-  PPC_WRTEEI /* 2668 */, PPC_INS_WRTEEI,
+  PPC_WRTEEI /* 2669 */, PPC_INS_WRTEEI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISBOOKE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_REQUIRES }}
 
@@ -20479,7 +20487,7 @@
 },
 {
   /* xor $RA, $RST, $RB */
-  PPC_XOR /* 2669 */, PPC_INS_XOR,
+  PPC_XOR /* 2670 */, PPC_INS_XOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -20487,21 +20495,21 @@
 },
 {
   /* xor $RA, $RST, $RB */
-  PPC_XOR8 /* 2670 */, PPC_INS_INVALID,
+  PPC_XOR8 /* 2671 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xor. $RA, $RST, $RB */
-  PPC_XOR8_rec /* 2671 */, PPC_INS_INVALID,
+  PPC_XOR8_rec /* 2672 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xori $RA, $RST, $D */
-  PPC_XORI /* 2672 */, PPC_INS_XORI,
+  PPC_XORI /* 2673 */, PPC_INS_XORI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_4 }}
 
@@ -20509,14 +20517,14 @@
 },
 {
   /* xori $RA, $RST, $D */
-  PPC_XORI8 /* 2673 */, PPC_INS_INVALID,
+  PPC_XORI8 /* 2674 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xoris $RA, $RST, $D */
-  PPC_XORIS /* 2674 */, PPC_INS_XORIS,
+  PPC_XORIS /* 2675 */, PPC_INS_XORIS,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_DFORM_4 }}
 
@@ -20524,14 +20532,14 @@
 },
 {
   /* xoris $RA, $RST, $D */
-  PPC_XORIS8 /* 2675 */, PPC_INS_INVALID,
+  PPC_XORIS8 /* 2676 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xor. $RA, $RST, $RB */
-  PPC_XOR_rec /* 2676 */, PPC_INS_XOR,
+  PPC_XOR_rec /* 2677 */, PPC_INS_XOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { PPC_REG_CR0, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO_SWAPPED }}
 
@@ -20539,7 +20547,7 @@
 },
 {
   /* xsabsdp $XT, $XB */
-  PPC_XSABSDP /* 2677 */, PPC_INS_XSABSDP,
+  PPC_XSABSDP /* 2678 */, PPC_INS_XSABSDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20547,7 +20555,7 @@
 },
 {
   /* xsabsqp $RST, $RB */
-  PPC_XSABSQP /* 2678 */, PPC_INS_XSABSQP,
+  PPC_XSABSQP /* 2679 */, PPC_INS_XSABSQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20555,7 +20563,7 @@
 },
 {
   /* xsadddp $XT, $XA, $XB */
-  PPC_XSADDDP /* 2679 */, PPC_INS_XSADDDP,
+  PPC_XSADDDP /* 2680 */, PPC_INS_XSADDDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -20563,7 +20571,7 @@
 },
 {
   /* xsaddqp $RST, $RA, $RB */
-  PPC_XSADDQP /* 2680 */, PPC_INS_XSADDQP,
+  PPC_XSADDQP /* 2681 */, PPC_INS_XSADDQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20571,7 +20579,7 @@
 },
 {
   /* xsaddqpo $RST, $RA, $RB */
-  PPC_XSADDQPO /* 2681 */, PPC_INS_XSADDQPO,
+  PPC_XSADDQPO /* 2682 */, PPC_INS_XSADDQPO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20579,7 +20587,7 @@
 },
 {
   /* xsaddsp $XT, $XA, $XB */
-  PPC_XSADDSP /* 2682 */, PPC_INS_XSADDSP,
+  PPC_XSADDSP /* 2683 */, PPC_INS_XSADDSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -20587,7 +20595,7 @@
 },
 {
   /* xscmpeqdp $XT, $XA, $XB */
-  PPC_XSCMPEQDP /* 2683 */, PPC_INS_XSCMPEQDP,
+  PPC_XSCMPEQDP /* 2684 */, PPC_INS_XSCMPEQDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -20595,7 +20603,7 @@
 },
 {
   /* xscmpeqqp $RST, $RA, $RB */
-  PPC_XSCMPEQQP /* 2684 */, PPC_INS_XSCMPEQQP,
+  PPC_XSCMPEQQP /* 2685 */, PPC_INS_XSCMPEQQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20603,7 +20611,7 @@
 },
 {
   /* xscmpexpdp $CR, $XA, $XB */
-  PPC_XSCMPEXPDP /* 2685 */, PPC_INS_XSCMPEXPDP,
+  PPC_XSCMPEXPDP /* 2686 */, PPC_INS_XSCMPEXPDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_1 }}
 
@@ -20611,7 +20619,7 @@
 },
 {
   /* xscmpexpqp $BF, $RA, $RB */
-  PPC_XSCMPEXPQP /* 2686 */, PPC_INS_XSCMPEXPQP,
+  PPC_XSCMPEXPQP /* 2687 */, PPC_INS_XSCMPEXPQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_17 }}
 
@@ -20619,7 +20627,7 @@
 },
 {
   /* xscmpgedp $XT, $XA, $XB */
-  PPC_XSCMPGEDP /* 2687 */, PPC_INS_XSCMPGEDP,
+  PPC_XSCMPGEDP /* 2688 */, PPC_INS_XSCMPGEDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -20627,7 +20635,7 @@
 },
 {
   /* xscmpgeqp $RST, $RA, $RB */
-  PPC_XSCMPGEQP /* 2688 */, PPC_INS_XSCMPGEQP,
+  PPC_XSCMPGEQP /* 2689 */, PPC_INS_XSCMPGEQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20635,7 +20643,7 @@
 },
 {
   /* xscmpgtdp $XT, $XA, $XB */
-  PPC_XSCMPGTDP /* 2689 */, PPC_INS_XSCMPGTDP,
+  PPC_XSCMPGTDP /* 2690 */, PPC_INS_XSCMPGTDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -20643,7 +20651,7 @@
 },
 {
   /* xscmpgtqp $RST, $RA, $RB */
-  PPC_XSCMPGTQP /* 2690 */, PPC_INS_XSCMPGTQP,
+  PPC_XSCMPGTQP /* 2691 */, PPC_INS_XSCMPGTQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20651,7 +20659,7 @@
 },
 {
   /* xscmpodp $CR, $XA, $XB */
-  PPC_XSCMPODP /* 2691 */, PPC_INS_XSCMPODP,
+  PPC_XSCMPODP /* 2692 */, PPC_INS_XSCMPODP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_1 }}
 
@@ -20659,7 +20667,7 @@
 },
 {
   /* xscmpoqp $BF, $RA, $RB */
-  PPC_XSCMPOQP /* 2692 */, PPC_INS_XSCMPOQP,
+  PPC_XSCMPOQP /* 2693 */, PPC_INS_XSCMPOQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_17 }}
 
@@ -20667,7 +20675,7 @@
 },
 {
   /* xscmpudp $CR, $XA, $XB */
-  PPC_XSCMPUDP /* 2693 */, PPC_INS_XSCMPUDP,
+  PPC_XSCMPUDP /* 2694 */, PPC_INS_XSCMPUDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_1 }}
 
@@ -20675,7 +20683,7 @@
 },
 {
   /* xscmpuqp $BF, $RA, $RB */
-  PPC_XSCMPUQP /* 2694 */, PPC_INS_XSCMPUQP,
+  PPC_XSCMPUQP /* 2695 */, PPC_INS_XSCMPUQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_17 }}
 
@@ -20683,7 +20691,7 @@
 },
 {
   /* xscpsgndp $XT, $XA, $XB */
-  PPC_XSCPSGNDP /* 2695 */, PPC_INS_XSCPSGNDP,
+  PPC_XSCPSGNDP /* 2696 */, PPC_INS_XSCPSGNDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -20691,7 +20699,7 @@
 },
 {
   /* xscpsgnqp $RST, $RA, $RB */
-  PPC_XSCPSGNQP /* 2696 */, PPC_INS_XSCPSGNQP,
+  PPC_XSCPSGNQP /* 2697 */, PPC_INS_XSCPSGNQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20699,7 +20707,7 @@
 },
 {
   /* xscvdphp $XT, $XB */
-  PPC_XSCVDPHP /* 2697 */, PPC_INS_XSCVDPHP,
+  PPC_XSCVDPHP /* 2698 */, PPC_INS_XSCVDPHP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -20707,7 +20715,7 @@
 },
 {
   /* xscvdpqp $RST, $RB */
-  PPC_XSCVDPQP /* 2698 */, PPC_INS_XSCVDPQP,
+  PPC_XSCVDPQP /* 2699 */, PPC_INS_XSCVDPQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20715,7 +20723,7 @@
 },
 {
   /* xscvdpsp $XT, $XB */
-  PPC_XSCVDPSP /* 2699 */, PPC_INS_XSCVDPSP,
+  PPC_XSCVDPSP /* 2700 */, PPC_INS_XSCVDPSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20723,7 +20731,7 @@
 },
 {
   /* xscvdpspn $XT, $XB */
-  PPC_XSCVDPSPN /* 2700 */, PPC_INS_XSCVDPSPN,
+  PPC_XSCVDPSPN /* 2701 */, PPC_INS_XSCVDPSPN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20731,7 +20739,7 @@
 },
 {
   /* xscvdpsxds $XT, $XB */
-  PPC_XSCVDPSXDS /* 2701 */, PPC_INS_XSCVDPSXDS,
+  PPC_XSCVDPSXDS /* 2702 */, PPC_INS_XSCVDPSXDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20739,14 +20747,14 @@
 },
 {
   /* xscvdpsxds $XT, $XB */
-  PPC_XSCVDPSXDSs /* 2702 */, PPC_INS_INVALID,
+  PPC_XSCVDPSXDSs /* 2703 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xscvdpsxws $XT, $XB */
-  PPC_XSCVDPSXWS /* 2703 */, PPC_INS_XSCVDPSXWS,
+  PPC_XSCVDPSXWS /* 2704 */, PPC_INS_XSCVDPSXWS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20754,14 +20762,14 @@
 },
 {
   /* xscvdpsxws $XT, $XB */
-  PPC_XSCVDPSXWSs /* 2704 */, PPC_INS_INVALID,
+  PPC_XSCVDPSXWSs /* 2705 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xscvdpuxds $XT, $XB */
-  PPC_XSCVDPUXDS /* 2705 */, PPC_INS_XSCVDPUXDS,
+  PPC_XSCVDPUXDS /* 2706 */, PPC_INS_XSCVDPUXDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20769,14 +20777,14 @@
 },
 {
   /* xscvdpuxds $XT, $XB */
-  PPC_XSCVDPUXDSs /* 2706 */, PPC_INS_INVALID,
+  PPC_XSCVDPUXDSs /* 2707 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xscvdpuxws $XT, $XB */
-  PPC_XSCVDPUXWS /* 2707 */, PPC_INS_XSCVDPUXWS,
+  PPC_XSCVDPUXWS /* 2708 */, PPC_INS_XSCVDPUXWS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20784,14 +20792,14 @@
 },
 {
   /* xscvdpuxws $XT, $XB */
-  PPC_XSCVDPUXWSs /* 2708 */, PPC_INS_INVALID,
+  PPC_XSCVDPUXWSs /* 2709 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xscvhpdp $XT, $XB */
-  PPC_XSCVHPDP /* 2709 */, PPC_INS_XSCVHPDP,
+  PPC_XSCVHPDP /* 2710 */, PPC_INS_XSCVHPDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -20799,7 +20807,7 @@
 },
 {
   /* xscvqpdp $RST, $RB */
-  PPC_XSCVQPDP /* 2710 */, PPC_INS_XSCVQPDP,
+  PPC_XSCVQPDP /* 2711 */, PPC_INS_XSCVQPDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20807,7 +20815,7 @@
 },
 {
   /* xscvqpdpo $RST, $RB */
-  PPC_XSCVQPDPO /* 2711 */, PPC_INS_XSCVQPDPO,
+  PPC_XSCVQPDPO /* 2712 */, PPC_INS_XSCVQPDPO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20815,7 +20823,7 @@
 },
 {
   /* xscvqpsdz $RST, $RB */
-  PPC_XSCVQPSDZ /* 2712 */, PPC_INS_XSCVQPSDZ,
+  PPC_XSCVQPSDZ /* 2713 */, PPC_INS_XSCVQPSDZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20823,7 +20831,7 @@
 },
 {
   /* xscvqpsqz $RST, $RB */
-  PPC_XSCVQPSQZ /* 2713 */, PPC_INS_XSCVQPSQZ,
+  PPC_XSCVQPSQZ /* 2714 */, PPC_INS_XSCVQPSQZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20831,7 +20839,7 @@
 },
 {
   /* xscvqpswz $RST, $RB */
-  PPC_XSCVQPSWZ /* 2714 */, PPC_INS_XSCVQPSWZ,
+  PPC_XSCVQPSWZ /* 2715 */, PPC_INS_XSCVQPSWZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20839,7 +20847,7 @@
 },
 {
   /* xscvqpudz $RST, $RB */
-  PPC_XSCVQPUDZ /* 2715 */, PPC_INS_XSCVQPUDZ,
+  PPC_XSCVQPUDZ /* 2716 */, PPC_INS_XSCVQPUDZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20847,7 +20855,7 @@
 },
 {
   /* xscvqpuqz $RST, $RB */
-  PPC_XSCVQPUQZ /* 2716 */, PPC_INS_XSCVQPUQZ,
+  PPC_XSCVQPUQZ /* 2717 */, PPC_INS_XSCVQPUQZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20855,7 +20863,7 @@
 },
 {
   /* xscvqpuwz $RST, $RB */
-  PPC_XSCVQPUWZ /* 2717 */, PPC_INS_XSCVQPUWZ,
+  PPC_XSCVQPUWZ /* 2718 */, PPC_INS_XSCVQPUWZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20863,7 +20871,7 @@
 },
 {
   /* xscvsdqp $RST, $RB */
-  PPC_XSCVSDQP /* 2718 */, PPC_INS_XSCVSDQP,
+  PPC_XSCVSDQP /* 2719 */, PPC_INS_XSCVSDQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20871,7 +20879,7 @@
 },
 {
   /* xscvspdp $XT, $XB */
-  PPC_XSCVSPDP /* 2719 */, PPC_INS_XSCVSPDP,
+  PPC_XSCVSPDP /* 2720 */, PPC_INS_XSCVSPDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20879,7 +20887,7 @@
 },
 {
   /* xscvspdpn $XT, $XB */
-  PPC_XSCVSPDPN /* 2720 */, PPC_INS_XSCVSPDPN,
+  PPC_XSCVSPDPN /* 2721 */, PPC_INS_XSCVSPDPN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20887,7 +20895,7 @@
 },
 {
   /* xscvsqqp $RST, $RB */
-  PPC_XSCVSQQP /* 2721 */, PPC_INS_XSCVSQQP,
+  PPC_XSCVSQQP /* 2722 */, PPC_INS_XSCVSQQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20895,7 +20903,7 @@
 },
 {
   /* xscvsxddp $XT, $XB */
-  PPC_XSCVSXDDP /* 2722 */, PPC_INS_XSCVSXDDP,
+  PPC_XSCVSXDDP /* 2723 */, PPC_INS_XSCVSXDDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20903,7 +20911,7 @@
 },
 {
   /* xscvsxdsp $XT, $XB */
-  PPC_XSCVSXDSP /* 2723 */, PPC_INS_XSCVSXDSP,
+  PPC_XSCVSXDSP /* 2724 */, PPC_INS_XSCVSXDSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20911,7 +20919,7 @@
 },
 {
   /* xscvudqp $RST, $RB */
-  PPC_XSCVUDQP /* 2724 */, PPC_INS_XSCVUDQP,
+  PPC_XSCVUDQP /* 2725 */, PPC_INS_XSCVUDQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20919,7 +20927,7 @@
 },
 {
   /* xscvuqqp $RST, $RB */
-  PPC_XSCVUQQP /* 2725 */, PPC_INS_XSCVUQQP,
+  PPC_XSCVUQQP /* 2726 */, PPC_INS_XSCVUQQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20927,7 +20935,7 @@
 },
 {
   /* xscvuxddp $XT, $XB */
-  PPC_XSCVUXDDP /* 2726 */, PPC_INS_XSCVUXDDP,
+  PPC_XSCVUXDDP /* 2727 */, PPC_INS_XSCVUXDDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20935,7 +20943,7 @@
 },
 {
   /* xscvuxdsp $XT, $XB */
-  PPC_XSCVUXDSP /* 2727 */, PPC_INS_XSCVUXDSP,
+  PPC_XSCVUXDSP /* 2728 */, PPC_INS_XSCVUXDSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -20943,7 +20951,7 @@
 },
 {
   /* xsdivdp $XT, $XA, $XB */
-  PPC_XSDIVDP /* 2728 */, PPC_INS_XSDIVDP,
+  PPC_XSDIVDP /* 2729 */, PPC_INS_XSDIVDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -20951,7 +20959,7 @@
 },
 {
   /* xsdivqp $RST, $RA, $RB */
-  PPC_XSDIVQP /* 2729 */, PPC_INS_XSDIVQP,
+  PPC_XSDIVQP /* 2730 */, PPC_INS_XSDIVQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20959,7 +20967,7 @@
 },
 {
   /* xsdivqpo $RST, $RA, $RB */
-  PPC_XSDIVQPO /* 2730 */, PPC_INS_XSDIVQPO,
+  PPC_XSDIVQPO /* 2731 */, PPC_INS_XSDIVQPO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -20967,7 +20975,7 @@
 },
 {
   /* xsdivsp $XT, $XA, $XB */
-  PPC_XSDIVSP /* 2731 */, PPC_INS_XSDIVSP,
+  PPC_XSDIVSP /* 2732 */, PPC_INS_XSDIVSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -20975,7 +20983,7 @@
 },
 {
   /* xsiexpdp $XT, $RA, $RB */
-  PPC_XSIEXPDP /* 2732 */, PPC_INS_XSIEXPDP,
+  PPC_XSIEXPDP /* 2733 */, PPC_INS_XSIEXPDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX1FORM }}
 
@@ -20983,7 +20991,7 @@
 },
 {
   /* xsiexpqp $FRT, $FRA, $FRB */
-  PPC_XSIEXPQP /* 2733 */, PPC_INS_XSIEXPQP,
+  PPC_XSIEXPQP /* 2734 */, PPC_INS_XSIEXPQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_18 }}
 
@@ -20991,7 +20999,7 @@
 },
 {
   /* xsmaddadp $XT, $XA, $XB */
-  PPC_XSMADDADP /* 2734 */, PPC_INS_XSMADDADP,
+  PPC_XSMADDADP /* 2735 */, PPC_INS_XSMADDADP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -20999,7 +21007,7 @@
 },
 {
   /* xsmaddasp $XT, $XA, $XB */
-  PPC_XSMADDASP /* 2735 */, PPC_INS_XSMADDASP,
+  PPC_XSMADDASP /* 2736 */, PPC_INS_XSMADDASP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21007,7 +21015,7 @@
 },
 {
   /* xsmaddmdp $XT, $XA, $XB */
-  PPC_XSMADDMDP /* 2736 */, PPC_INS_XSMADDMDP,
+  PPC_XSMADDMDP /* 2737 */, PPC_INS_XSMADDMDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21015,7 +21023,7 @@
 },
 {
   /* xsmaddmsp $XT, $XA, $XB */
-  PPC_XSMADDMSP /* 2737 */, PPC_INS_XSMADDMSP,
+  PPC_XSMADDMSP /* 2738 */, PPC_INS_XSMADDMSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21023,7 +21031,7 @@
 },
 {
   /* xsmaddqp $RST, $RA, $RB */
-  PPC_XSMADDQP /* 2738 */, PPC_INS_XSMADDQP,
+  PPC_XSMADDQP /* 2739 */, PPC_INS_XSMADDQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21031,7 +21039,7 @@
 },
 {
   /* xsmaddqpo $RST, $RA, $RB */
-  PPC_XSMADDQPO /* 2739 */, PPC_INS_XSMADDQPO,
+  PPC_XSMADDQPO /* 2740 */, PPC_INS_XSMADDQPO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21039,7 +21047,7 @@
 },
 {
   /* xsmaxcdp $XT, $XA, $XB */
-  PPC_XSMAXCDP /* 2740 */, PPC_INS_XSMAXCDP,
+  PPC_XSMAXCDP /* 2741 */, PPC_INS_XSMAXCDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21047,7 +21055,7 @@
 },
 {
   /* xsmaxcqp $RST, $RA, $RB */
-  PPC_XSMAXCQP /* 2741 */, PPC_INS_XSMAXCQP,
+  PPC_XSMAXCQP /* 2742 */, PPC_INS_XSMAXCQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21055,7 +21063,7 @@
 },
 {
   /* xsmaxdp $XT, $XA, $XB */
-  PPC_XSMAXDP /* 2742 */, PPC_INS_XSMAXDP,
+  PPC_XSMAXDP /* 2743 */, PPC_INS_XSMAXDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21063,7 +21071,7 @@
 },
 {
   /* xsmaxjdp $XT, $XA, $XB */
-  PPC_XSMAXJDP /* 2743 */, PPC_INS_XSMAXJDP,
+  PPC_XSMAXJDP /* 2744 */, PPC_INS_XSMAXJDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21071,7 +21079,7 @@
 },
 {
   /* xsmincdp $XT, $XA, $XB */
-  PPC_XSMINCDP /* 2744 */, PPC_INS_XSMINCDP,
+  PPC_XSMINCDP /* 2745 */, PPC_INS_XSMINCDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21079,7 +21087,7 @@
 },
 {
   /* xsmincqp $RST, $RA, $RB */
-  PPC_XSMINCQP /* 2745 */, PPC_INS_XSMINCQP,
+  PPC_XSMINCQP /* 2746 */, PPC_INS_XSMINCQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21087,7 +21095,7 @@
 },
 {
   /* xsmindp $XT, $XA, $XB */
-  PPC_XSMINDP /* 2746 */, PPC_INS_XSMINDP,
+  PPC_XSMINDP /* 2747 */, PPC_INS_XSMINDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21095,7 +21103,7 @@
 },
 {
   /* xsminjdp $XT, $XA, $XB */
-  PPC_XSMINJDP /* 2747 */, PPC_INS_XSMINJDP,
+  PPC_XSMINJDP /* 2748 */, PPC_INS_XSMINJDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21103,7 +21111,7 @@
 },
 {
   /* xsmsubadp $XT, $XA, $XB */
-  PPC_XSMSUBADP /* 2748 */, PPC_INS_XSMSUBADP,
+  PPC_XSMSUBADP /* 2749 */, PPC_INS_XSMSUBADP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21111,7 +21119,7 @@
 },
 {
   /* xsmsubasp $XT, $XA, $XB */
-  PPC_XSMSUBASP /* 2749 */, PPC_INS_XSMSUBASP,
+  PPC_XSMSUBASP /* 2750 */, PPC_INS_XSMSUBASP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21119,7 +21127,7 @@
 },
 {
   /* xsmsubmdp $XT, $XA, $XB */
-  PPC_XSMSUBMDP /* 2750 */, PPC_INS_XSMSUBMDP,
+  PPC_XSMSUBMDP /* 2751 */, PPC_INS_XSMSUBMDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21127,7 +21135,7 @@
 },
 {
   /* xsmsubmsp $XT, $XA, $XB */
-  PPC_XSMSUBMSP /* 2751 */, PPC_INS_XSMSUBMSP,
+  PPC_XSMSUBMSP /* 2752 */, PPC_INS_XSMSUBMSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21135,7 +21143,7 @@
 },
 {
   /* xsmsubqp $RST, $RA, $RB */
-  PPC_XSMSUBQP /* 2752 */, PPC_INS_XSMSUBQP,
+  PPC_XSMSUBQP /* 2753 */, PPC_INS_XSMSUBQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21143,7 +21151,7 @@
 },
 {
   /* xsmsubqpo $RST, $RA, $RB */
-  PPC_XSMSUBQPO /* 2753 */, PPC_INS_XSMSUBQPO,
+  PPC_XSMSUBQPO /* 2754 */, PPC_INS_XSMSUBQPO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21151,7 +21159,7 @@
 },
 {
   /* xsmuldp $XT, $XA, $XB */
-  PPC_XSMULDP /* 2754 */, PPC_INS_XSMULDP,
+  PPC_XSMULDP /* 2755 */, PPC_INS_XSMULDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21159,7 +21167,7 @@
 },
 {
   /* xsmulqp $RST, $RA, $RB */
-  PPC_XSMULQP /* 2755 */, PPC_INS_XSMULQP,
+  PPC_XSMULQP /* 2756 */, PPC_INS_XSMULQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21167,7 +21175,7 @@
 },
 {
   /* xsmulqpo $RST, $RA, $RB */
-  PPC_XSMULQPO /* 2756 */, PPC_INS_XSMULQPO,
+  PPC_XSMULQPO /* 2757 */, PPC_INS_XSMULQPO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21175,7 +21183,7 @@
 },
 {
   /* xsmulsp $XT, $XA, $XB */
-  PPC_XSMULSP /* 2757 */, PPC_INS_XSMULSP,
+  PPC_XSMULSP /* 2758 */, PPC_INS_XSMULSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21183,7 +21191,7 @@
 },
 {
   /* xsnabsdp $XT, $XB */
-  PPC_XSNABSDP /* 2758 */, PPC_INS_XSNABSDP,
+  PPC_XSNABSDP /* 2759 */, PPC_INS_XSNABSDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21191,14 +21199,14 @@
 },
 {
   /* xsnabsdp $XT, $XB */
-  PPC_XSNABSDPs /* 2759 */, PPC_INS_INVALID,
+  PPC_XSNABSDPs /* 2760 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xsnabsqp $RST, $RB */
-  PPC_XSNABSQP /* 2760 */, PPC_INS_XSNABSQP,
+  PPC_XSNABSQP /* 2761 */, PPC_INS_XSNABSQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21206,7 +21214,7 @@
 },
 {
   /* xsnegdp $XT, $XB */
-  PPC_XSNEGDP /* 2761 */, PPC_INS_XSNEGDP,
+  PPC_XSNEGDP /* 2762 */, PPC_INS_XSNEGDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21214,7 +21222,7 @@
 },
 {
   /* xsnegqp $RST, $RB */
-  PPC_XSNEGQP /* 2762 */, PPC_INS_XSNEGQP,
+  PPC_XSNEGQP /* 2763 */, PPC_INS_XSNEGQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21222,7 +21230,7 @@
 },
 {
   /* xsnmaddadp $XT, $XA, $XB */
-  PPC_XSNMADDADP /* 2763 */, PPC_INS_XSNMADDADP,
+  PPC_XSNMADDADP /* 2764 */, PPC_INS_XSNMADDADP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21230,7 +21238,7 @@
 },
 {
   /* xsnmaddasp $XT, $XA, $XB */
-  PPC_XSNMADDASP /* 2764 */, PPC_INS_XSNMADDASP,
+  PPC_XSNMADDASP /* 2765 */, PPC_INS_XSNMADDASP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21238,7 +21246,7 @@
 },
 {
   /* xsnmaddmdp $XT, $XA, $XB */
-  PPC_XSNMADDMDP /* 2765 */, PPC_INS_XSNMADDMDP,
+  PPC_XSNMADDMDP /* 2766 */, PPC_INS_XSNMADDMDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21246,7 +21254,7 @@
 },
 {
   /* xsnmaddmsp $XT, $XA, $XB */
-  PPC_XSNMADDMSP /* 2766 */, PPC_INS_XSNMADDMSP,
+  PPC_XSNMADDMSP /* 2767 */, PPC_INS_XSNMADDMSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21254,7 +21262,7 @@
 },
 {
   /* xsnmaddqp $RST, $RA, $RB */
-  PPC_XSNMADDQP /* 2767 */, PPC_INS_XSNMADDQP,
+  PPC_XSNMADDQP /* 2768 */, PPC_INS_XSNMADDQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21262,7 +21270,7 @@
 },
 {
   /* xsnmaddqpo $RST, $RA, $RB */
-  PPC_XSNMADDQPO /* 2768 */, PPC_INS_XSNMADDQPO,
+  PPC_XSNMADDQPO /* 2769 */, PPC_INS_XSNMADDQPO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21270,7 +21278,7 @@
 },
 {
   /* xsnmsubadp $XT, $XA, $XB */
-  PPC_XSNMSUBADP /* 2769 */, PPC_INS_XSNMSUBADP,
+  PPC_XSNMSUBADP /* 2770 */, PPC_INS_XSNMSUBADP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21278,7 +21286,7 @@
 },
 {
   /* xsnmsubasp $XT, $XA, $XB */
-  PPC_XSNMSUBASP /* 2770 */, PPC_INS_XSNMSUBASP,
+  PPC_XSNMSUBASP /* 2771 */, PPC_INS_XSNMSUBASP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21286,7 +21294,7 @@
 },
 {
   /* xsnmsubmdp $XT, $XA, $XB */
-  PPC_XSNMSUBMDP /* 2771 */, PPC_INS_XSNMSUBMDP,
+  PPC_XSNMSUBMDP /* 2772 */, PPC_INS_XSNMSUBMDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21294,7 +21302,7 @@
 },
 {
   /* xsnmsubmsp $XT, $XA, $XB */
-  PPC_XSNMSUBMSP /* 2772 */, PPC_INS_XSNMSUBMSP,
+  PPC_XSNMSUBMSP /* 2773 */, PPC_INS_XSNMSUBMSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21302,7 +21310,7 @@
 },
 {
   /* xsnmsubqp $RST, $RA, $RB */
-  PPC_XSNMSUBQP /* 2773 */, PPC_INS_XSNMSUBQP,
+  PPC_XSNMSUBQP /* 2774 */, PPC_INS_XSNMSUBQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21310,7 +21318,7 @@
 },
 {
   /* xsnmsubqpo $RST, $RA, $RB */
-  PPC_XSNMSUBQPO /* 2774 */, PPC_INS_XSNMSUBQPO,
+  PPC_XSNMSUBQPO /* 2775 */, PPC_INS_XSNMSUBQPO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21318,7 +21326,7 @@
 },
 {
   /* xsrdpi $XT, $XB */
-  PPC_XSRDPI /* 2775 */, PPC_INS_XSRDPI,
+  PPC_XSRDPI /* 2776 */, PPC_INS_XSRDPI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21326,7 +21334,7 @@
 },
 {
   /* xsrdpic $XT, $XB */
-  PPC_XSRDPIC /* 2776 */, PPC_INS_XSRDPIC,
+  PPC_XSRDPIC /* 2777 */, PPC_INS_XSRDPIC,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21334,7 +21342,7 @@
 },
 {
   /* xsrdpim $XT, $XB */
-  PPC_XSRDPIM /* 2777 */, PPC_INS_XSRDPIM,
+  PPC_XSRDPIM /* 2778 */, PPC_INS_XSRDPIM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21342,7 +21350,7 @@
 },
 {
   /* xsrdpip $XT, $XB */
-  PPC_XSRDPIP /* 2778 */, PPC_INS_XSRDPIP,
+  PPC_XSRDPIP /* 2779 */, PPC_INS_XSRDPIP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21350,7 +21358,7 @@
 },
 {
   /* xsrdpiz $XT, $XB */
-  PPC_XSRDPIZ /* 2779 */, PPC_INS_XSRDPIZ,
+  PPC_XSRDPIZ /* 2780 */, PPC_INS_XSRDPIZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21358,7 +21366,7 @@
 },
 {
   /* xsredp $XT, $XB */
-  PPC_XSREDP /* 2780 */, PPC_INS_XSREDP,
+  PPC_XSREDP /* 2781 */, PPC_INS_XSREDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21366,7 +21374,7 @@
 },
 {
   /* xsresp $XT, $XB */
-  PPC_XSRESP /* 2781 */, PPC_INS_XSRESP,
+  PPC_XSRESP /* 2782 */, PPC_INS_XSRESP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21374,7 +21382,7 @@
 },
 {
   /* xsrqpi $R, $VRT, $VRB, $idx */
-  PPC_XSRQPI /* 2782 */, PPC_INS_XSRQPI,
+  PPC_XSRQPI /* 2783 */, PPC_INS_XSRQPI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_Z23FORM_8 }}
 
@@ -21382,7 +21390,7 @@
 },
 {
   /* xsrqpix $R, $VRT, $VRB, $idx */
-  PPC_XSRQPIX /* 2783 */, PPC_INS_XSRQPIX,
+  PPC_XSRQPIX /* 2784 */, PPC_INS_XSRQPIX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_Z23FORM_8 }}
 
@@ -21390,7 +21398,7 @@
 },
 {
   /* xsrqpxp $R, $VRT, $VRB, $idx */
-  PPC_XSRQPXP /* 2784 */, PPC_INS_XSRQPXP,
+  PPC_XSRQPXP /* 2785 */, PPC_INS_XSRQPXP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_Z23FORM_8 }}
 
@@ -21398,7 +21406,7 @@
 },
 {
   /* xsrsp $XT, $XB */
-  PPC_XSRSP /* 2785 */, PPC_INS_XSRSP,
+  PPC_XSRSP /* 2786 */, PPC_INS_XSRSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21406,7 +21414,7 @@
 },
 {
   /* xsrsqrtedp $XT, $XB */
-  PPC_XSRSQRTEDP /* 2786 */, PPC_INS_XSRSQRTEDP,
+  PPC_XSRSQRTEDP /* 2787 */, PPC_INS_XSRSQRTEDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21414,7 +21422,7 @@
 },
 {
   /* xsrsqrtesp $XT, $XB */
-  PPC_XSRSQRTESP /* 2787 */, PPC_INS_XSRSQRTESP,
+  PPC_XSRSQRTESP /* 2788 */, PPC_INS_XSRSQRTESP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21422,7 +21430,7 @@
 },
 {
   /* xssqrtdp $XT, $XB */
-  PPC_XSSQRTDP /* 2788 */, PPC_INS_XSSQRTDP,
+  PPC_XSSQRTDP /* 2789 */, PPC_INS_XSSQRTDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21430,7 +21438,7 @@
 },
 {
   /* xssqrtqp $RST, $RB */
-  PPC_XSSQRTQP /* 2789 */, PPC_INS_XSSQRTQP,
+  PPC_XSSQRTQP /* 2790 */, PPC_INS_XSSQRTQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21438,7 +21446,7 @@
 },
 {
   /* xssqrtqpo $RST, $RB */
-  PPC_XSSQRTQPO /* 2790 */, PPC_INS_XSSQRTQPO,
+  PPC_XSSQRTQPO /* 2791 */, PPC_INS_XSSQRTQPO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21446,7 +21454,7 @@
 },
 {
   /* xssqrtsp $XT, $XB */
-  PPC_XSSQRTSP /* 2791 */, PPC_INS_XSSQRTSP,
+  PPC_XSSQRTSP /* 2792 */, PPC_INS_XSSQRTSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21454,7 +21462,7 @@
 },
 {
   /* xssubdp $XT, $XA, $XB */
-  PPC_XSSUBDP /* 2792 */, PPC_INS_XSSUBDP,
+  PPC_XSSUBDP /* 2793 */, PPC_INS_XSSUBDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21462,7 +21470,7 @@
 },
 {
   /* xssubqp $RST, $RA, $RB */
-  PPC_XSSUBQP /* 2793 */, PPC_INS_XSSUBQP,
+  PPC_XSSUBQP /* 2794 */, PPC_INS_XSSUBQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21470,7 +21478,7 @@
 },
 {
   /* xssubqpo $RST, $RA, $RB */
-  PPC_XSSUBQPO /* 2794 */, PPC_INS_XSSUBQPO,
+  PPC_XSSUBQPO /* 2795 */, PPC_INS_XSSUBQPO,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21478,7 +21486,7 @@
 },
 {
   /* xssubsp $XT, $XA, $XB */
-  PPC_XSSUBSP /* 2795 */, PPC_INS_XSSUBSP,
+  PPC_XSSUBSP /* 2796 */, PPC_INS_XSSUBSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21486,7 +21494,7 @@
 },
 {
   /* xstdivdp $CR, $XA, $XB */
-  PPC_XSTDIVDP /* 2796 */, PPC_INS_XSTDIVDP,
+  PPC_XSTDIVDP /* 2797 */, PPC_INS_XSTDIVDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_1 }}
 
@@ -21494,7 +21502,7 @@
 },
 {
   /* xstsqrtdp $CR, $XB */
-  PPC_XSTSQRTDP /* 2797 */, PPC_INS_XSTSQRTDP,
+  PPC_XSTSQRTDP /* 2798 */, PPC_INS_XSTSQRTDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM_1 }}
 
@@ -21502,7 +21510,7 @@
 },
 {
   /* xststdcdp $BF, $XB, $DCMX */
-  PPC_XSTSTDCDP /* 2798 */, PPC_INS_XSTSTDCDP,
+  PPC_XSTSTDCDP /* 2799 */, PPC_INS_XSTSTDCDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_BF3_DCMX7_RS6 }}
 
@@ -21510,7 +21518,7 @@
 },
 {
   /* xststdcqp $BF, $VB, $DCMX */
-  PPC_XSTSTDCQP /* 2799 */, PPC_INS_XSTSTDCQP,
+  PPC_XSTSTDCQP /* 2800 */, PPC_INS_XSTSTDCQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_X_BF3_DCMX7_RS5 }}
 
@@ -21518,7 +21526,7 @@
 },
 {
   /* xststdcsp $BF, $XB, $DCMX */
-  PPC_XSTSTDCSP /* 2800 */, PPC_INS_XSTSTDCSP,
+  PPC_XSTSTDCSP /* 2801 */, PPC_INS_XSTSTDCSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_BF3_DCMX7_RS6 }}
 
@@ -21526,7 +21534,7 @@
 },
 {
   /* xsxexpdp $RT, $XB */
-  PPC_XSXEXPDP /* 2801 */, PPC_INS_XSXEXPDP,
+  PPC_XSXEXPDP /* 2802 */, PPC_INS_XSXEXPDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD5_XO5_RS6 }}
 
@@ -21534,7 +21542,7 @@
 },
 {
   /* xsxexpqp $RST, $RB */
-  PPC_XSXEXPQP /* 2802 */, PPC_INS_XSXEXPQP,
+  PPC_XSXEXPQP /* 2803 */, PPC_INS_XSXEXPQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21542,7 +21550,7 @@
 },
 {
   /* xsxsigdp $RT, $XB */
-  PPC_XSXSIGDP /* 2803 */, PPC_INS_XSXSIGDP,
+  PPC_XSXSIGDP /* 2804 */, PPC_INS_XSXSIGDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD5_XO5_RS6 }}
 
@@ -21550,7 +21558,7 @@
 },
 {
   /* xsxsigqp $RST, $RB */
-  PPC_XSXSIGQP /* 2804 */, PPC_INS_XSXSIGQP,
+  PPC_XSXSIGQP /* 2805 */, PPC_INS_XSXSIGQP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_BASE_R3XO }}
 
@@ -21558,7 +21566,7 @@
 },
 {
   /* xvabsdp $XT, $XB */
-  PPC_XVABSDP /* 2805 */, PPC_INS_XVABSDP,
+  PPC_XVABSDP /* 2806 */, PPC_INS_XVABSDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21566,7 +21574,7 @@
 },
 {
   /* xvabssp $XT, $XB */
-  PPC_XVABSSP /* 2806 */, PPC_INS_XVABSSP,
+  PPC_XVABSSP /* 2807 */, PPC_INS_XVABSSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21574,7 +21582,7 @@
 },
 {
   /* xvadddp $XT, $XA, $XB */
-  PPC_XVADDDP /* 2807 */, PPC_INS_XVADDDP,
+  PPC_XVADDDP /* 2808 */, PPC_INS_XVADDDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21582,7 +21590,7 @@
 },
 {
   /* xvaddsp $XT, $XA, $XB */
-  PPC_XVADDSP /* 2808 */, PPC_INS_XVADDSP,
+  PPC_XVADDSP /* 2809 */, PPC_INS_XVADDSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21590,7 +21598,7 @@
 },
 {
   /* xvbf16ger2 $AT, $XA, $XB */
-  PPC_XVBF16GER2 /* 2809 */, PPC_INS_XVBF16GER2,
+  PPC_XVBF16GER2 /* 2810 */, PPC_INS_XVBF16GER2,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -21598,7 +21606,7 @@
 },
 {
   /* xvbf16ger2nn $AT, $XA, $XB */
-  PPC_XVBF16GER2NN /* 2810 */, PPC_INS_XVBF16GER2NN,
+  PPC_XVBF16GER2NN /* 2811 */, PPC_INS_XVBF16GER2NN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -21606,7 +21614,7 @@
 },
 {
   /* xvbf16ger2np $AT, $XA, $XB */
-  PPC_XVBF16GER2NP /* 2811 */, PPC_INS_XVBF16GER2NP,
+  PPC_XVBF16GER2NP /* 2812 */, PPC_INS_XVBF16GER2NP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -21614,7 +21622,7 @@
 },
 {
   /* xvbf16ger2pn $AT, $XA, $XB */
-  PPC_XVBF16GER2PN /* 2812 */, PPC_INS_XVBF16GER2PN,
+  PPC_XVBF16GER2PN /* 2813 */, PPC_INS_XVBF16GER2PN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -21622,7 +21630,7 @@
 },
 {
   /* xvbf16ger2pp $AT, $XA, $XB */
-  PPC_XVBF16GER2PP /* 2813 */, PPC_INS_XVBF16GER2PP,
+  PPC_XVBF16GER2PP /* 2814 */, PPC_INS_XVBF16GER2PP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -21630,42 +21638,42 @@
 },
 {
   /* xvbf16ger2 $AT, $XA, $XB */
-  PPC_XVBF16GER2W /* 2814 */, PPC_INS_INVALID,
+  PPC_XVBF16GER2W /* 2815 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvbf16ger2nn $AT, $XA, $XB */
-  PPC_XVBF16GER2WNN /* 2815 */, PPC_INS_INVALID,
+  PPC_XVBF16GER2WNN /* 2816 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvbf16ger2np $AT, $XA, $XB */
-  PPC_XVBF16GER2WNP /* 2816 */, PPC_INS_INVALID,
+  PPC_XVBF16GER2WNP /* 2817 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvbf16ger2pn $AT, $XA, $XB */
-  PPC_XVBF16GER2WPN /* 2817 */, PPC_INS_INVALID,
+  PPC_XVBF16GER2WPN /* 2818 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvbf16ger2pp $AT, $XA, $XB */
-  PPC_XVBF16GER2WPP /* 2818 */, PPC_INS_INVALID,
+  PPC_XVBF16GER2WPP /* 2819 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvcmpeqdp $XT, $XA, $XB */
-  PPC_XVCMPEQDP /* 2819 */, PPC_INS_XVCMPEQDP,
+  PPC_XVCMPEQDP /* 2820 */, PPC_INS_XVCMPEQDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21673,7 +21681,7 @@
 },
 {
   /* xvcmpeqdp. $XT, $XA, $XB */
-  PPC_XVCMPEQDP_rec /* 2820 */, PPC_INS_XVCMPEQDP,
+  PPC_XVCMPEQDP_rec /* 2821 */, PPC_INS_XVCMPEQDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21681,7 +21689,7 @@
 },
 {
   /* xvcmpeqsp $XT, $XA, $XB */
-  PPC_XVCMPEQSP /* 2821 */, PPC_INS_XVCMPEQSP,
+  PPC_XVCMPEQSP /* 2822 */, PPC_INS_XVCMPEQSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21689,7 +21697,7 @@
 },
 {
   /* xvcmpeqsp. $XT, $XA, $XB */
-  PPC_XVCMPEQSP_rec /* 2822 */, PPC_INS_XVCMPEQSP,
+  PPC_XVCMPEQSP_rec /* 2823 */, PPC_INS_XVCMPEQSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21697,7 +21705,7 @@
 },
 {
   /* xvcmpgedp $XT, $XA, $XB */
-  PPC_XVCMPGEDP /* 2823 */, PPC_INS_XVCMPGEDP,
+  PPC_XVCMPGEDP /* 2824 */, PPC_INS_XVCMPGEDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21705,7 +21713,7 @@
 },
 {
   /* xvcmpgedp. $XT, $XA, $XB */
-  PPC_XVCMPGEDP_rec /* 2824 */, PPC_INS_XVCMPGEDP,
+  PPC_XVCMPGEDP_rec /* 2825 */, PPC_INS_XVCMPGEDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21713,7 +21721,7 @@
 },
 {
   /* xvcmpgesp $XT, $XA, $XB */
-  PPC_XVCMPGESP /* 2825 */, PPC_INS_XVCMPGESP,
+  PPC_XVCMPGESP /* 2826 */, PPC_INS_XVCMPGESP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21721,7 +21729,7 @@
 },
 {
   /* xvcmpgesp. $XT, $XA, $XB */
-  PPC_XVCMPGESP_rec /* 2826 */, PPC_INS_XVCMPGESP,
+  PPC_XVCMPGESP_rec /* 2827 */, PPC_INS_XVCMPGESP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21729,7 +21737,7 @@
 },
 {
   /* xvcmpgtdp $XT, $XA, $XB */
-  PPC_XVCMPGTDP /* 2827 */, PPC_INS_XVCMPGTDP,
+  PPC_XVCMPGTDP /* 2828 */, PPC_INS_XVCMPGTDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21737,7 +21745,7 @@
 },
 {
   /* xvcmpgtdp. $XT, $XA, $XB */
-  PPC_XVCMPGTDP_rec /* 2828 */, PPC_INS_XVCMPGTDP,
+  PPC_XVCMPGTDP_rec /* 2829 */, PPC_INS_XVCMPGTDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21745,7 +21753,7 @@
 },
 {
   /* xvcmpgtsp $XT, $XA, $XB */
-  PPC_XVCMPGTSP /* 2829 */, PPC_INS_XVCMPGTSP,
+  PPC_XVCMPGTSP /* 2830 */, PPC_INS_XVCMPGTSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21753,7 +21761,7 @@
 },
 {
   /* xvcmpgtsp. $XT, $XA, $XB */
-  PPC_XVCMPGTSP_rec /* 2830 */, PPC_INS_XVCMPGTSP,
+  PPC_XVCMPGTSP_rec /* 2831 */, PPC_INS_XVCMPGTSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { PPC_REG_CR6, 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_RC }}
 
@@ -21761,7 +21769,7 @@
 },
 {
   /* xvcpsgndp $XT, $XA, $XB */
-  PPC_XVCPSGNDP /* 2831 */, PPC_INS_XVCPSGNDP,
+  PPC_XVCPSGNDP /* 2832 */, PPC_INS_XVCPSGNDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21769,7 +21777,7 @@
 },
 {
   /* xvcpsgnsp $XT, $XA, $XB */
-  PPC_XVCPSGNSP /* 2832 */, PPC_INS_XVCPSGNSP,
+  PPC_XVCPSGNSP /* 2833 */, PPC_INS_XVCPSGNSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21777,7 +21785,7 @@
 },
 {
   /* xvcvbf16spn $XT, $XB */
-  PPC_XVCVBF16SPN /* 2833 */, PPC_INS_XVCVBF16SPN,
+  PPC_XVCVBF16SPN /* 2834 */, PPC_INS_XVCVBF16SPN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -21785,7 +21793,7 @@
 },
 {
   /* xvcvdpsp $XT, $XB */
-  PPC_XVCVDPSP /* 2834 */, PPC_INS_XVCVDPSP,
+  PPC_XVCVDPSP /* 2835 */, PPC_INS_XVCVDPSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21793,7 +21801,7 @@
 },
 {
   /* xvcvdpsxds $XT, $XB */
-  PPC_XVCVDPSXDS /* 2835 */, PPC_INS_XVCVDPSXDS,
+  PPC_XVCVDPSXDS /* 2836 */, PPC_INS_XVCVDPSXDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21801,7 +21809,7 @@
 },
 {
   /* xvcvdpsxws $XT, $XB */
-  PPC_XVCVDPSXWS /* 2836 */, PPC_INS_XVCVDPSXWS,
+  PPC_XVCVDPSXWS /* 2837 */, PPC_INS_XVCVDPSXWS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21809,7 +21817,7 @@
 },
 {
   /* xvcvdpuxds $XT, $XB */
-  PPC_XVCVDPUXDS /* 2837 */, PPC_INS_XVCVDPUXDS,
+  PPC_XVCVDPUXDS /* 2838 */, PPC_INS_XVCVDPUXDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21817,7 +21825,7 @@
 },
 {
   /* xvcvdpuxws $XT, $XB */
-  PPC_XVCVDPUXWS /* 2838 */, PPC_INS_XVCVDPUXWS,
+  PPC_XVCVDPUXWS /* 2839 */, PPC_INS_XVCVDPUXWS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21825,7 +21833,7 @@
 },
 {
   /* xvcvhpsp $XT, $XB */
-  PPC_XVCVHPSP /* 2839 */, PPC_INS_XVCVHPSP,
+  PPC_XVCVHPSP /* 2840 */, PPC_INS_XVCVHPSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -21833,7 +21841,7 @@
 },
 {
   /* xvcvspbf16 $XT, $XB */
-  PPC_XVCVSPBF16 /* 2840 */, PPC_INS_XVCVSPBF16,
+  PPC_XVCVSPBF16 /* 2841 */, PPC_INS_XVCVSPBF16,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -21841,7 +21849,7 @@
 },
 {
   /* xvcvspdp $XT, $XB */
-  PPC_XVCVSPDP /* 2841 */, PPC_INS_XVCVSPDP,
+  PPC_XVCVSPDP /* 2842 */, PPC_INS_XVCVSPDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21849,7 +21857,7 @@
 },
 {
   /* xvcvsphp $XT, $XB */
-  PPC_XVCVSPHP /* 2842 */, PPC_INS_XVCVSPHP,
+  PPC_XVCVSPHP /* 2843 */, PPC_INS_XVCVSPHP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -21857,7 +21865,7 @@
 },
 {
   /* xvcvspsxds $XT, $XB */
-  PPC_XVCVSPSXDS /* 2843 */, PPC_INS_XVCVSPSXDS,
+  PPC_XVCVSPSXDS /* 2844 */, PPC_INS_XVCVSPSXDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21865,7 +21873,7 @@
 },
 {
   /* xvcvspsxws $XT, $XB */
-  PPC_XVCVSPSXWS /* 2844 */, PPC_INS_XVCVSPSXWS,
+  PPC_XVCVSPSXWS /* 2845 */, PPC_INS_XVCVSPSXWS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21873,7 +21881,7 @@
 },
 {
   /* xvcvspuxds $XT, $XB */
-  PPC_XVCVSPUXDS /* 2845 */, PPC_INS_XVCVSPUXDS,
+  PPC_XVCVSPUXDS /* 2846 */, PPC_INS_XVCVSPUXDS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21881,7 +21889,7 @@
 },
 {
   /* xvcvspuxws $XT, $XB */
-  PPC_XVCVSPUXWS /* 2846 */, PPC_INS_XVCVSPUXWS,
+  PPC_XVCVSPUXWS /* 2847 */, PPC_INS_XVCVSPUXWS,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21889,7 +21897,7 @@
 },
 {
   /* xvcvsxddp $XT, $XB */
-  PPC_XVCVSXDDP /* 2847 */, PPC_INS_XVCVSXDDP,
+  PPC_XVCVSXDDP /* 2848 */, PPC_INS_XVCVSXDDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21897,7 +21905,7 @@
 },
 {
   /* xvcvsxdsp $XT, $XB */
-  PPC_XVCVSXDSP /* 2848 */, PPC_INS_XVCVSXDSP,
+  PPC_XVCVSXDSP /* 2849 */, PPC_INS_XVCVSXDSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21905,7 +21913,7 @@
 },
 {
   /* xvcvsxwdp $XT, $XB */
-  PPC_XVCVSXWDP /* 2849 */, PPC_INS_XVCVSXWDP,
+  PPC_XVCVSXWDP /* 2850 */, PPC_INS_XVCVSXWDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21913,7 +21921,7 @@
 },
 {
   /* xvcvsxwsp $XT, $XB */
-  PPC_XVCVSXWSP /* 2850 */, PPC_INS_XVCVSXWSP,
+  PPC_XVCVSXWSP /* 2851 */, PPC_INS_XVCVSXWSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21921,7 +21929,7 @@
 },
 {
   /* xvcvuxddp $XT, $XB */
-  PPC_XVCVUXDDP /* 2851 */, PPC_INS_XVCVUXDDP,
+  PPC_XVCVUXDDP /* 2852 */, PPC_INS_XVCVUXDDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21929,7 +21937,7 @@
 },
 {
   /* xvcvuxdsp $XT, $XB */
-  PPC_XVCVUXDSP /* 2852 */, PPC_INS_XVCVUXDSP,
+  PPC_XVCVUXDSP /* 2853 */, PPC_INS_XVCVUXDSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21937,7 +21945,7 @@
 },
 {
   /* xvcvuxwdp $XT, $XB */
-  PPC_XVCVUXWDP /* 2853 */, PPC_INS_XVCVUXWDP,
+  PPC_XVCVUXWDP /* 2854 */, PPC_INS_XVCVUXWDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21945,7 +21953,7 @@
 },
 {
   /* xvcvuxwsp $XT, $XB */
-  PPC_XVCVUXWSP /* 2854 */, PPC_INS_XVCVUXWSP,
+  PPC_XVCVUXWSP /* 2855 */, PPC_INS_XVCVUXWSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -21953,7 +21961,7 @@
 },
 {
   /* xvdivdp $XT, $XA, $XB */
-  PPC_XVDIVDP /* 2855 */, PPC_INS_XVDIVDP,
+  PPC_XVDIVDP /* 2856 */, PPC_INS_XVDIVDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21961,7 +21969,7 @@
 },
 {
   /* xvdivsp $XT, $XA, $XB */
-  PPC_XVDIVSP /* 2856 */, PPC_INS_XVDIVSP,
+  PPC_XVDIVSP /* 2857 */, PPC_INS_XVDIVSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -21969,7 +21977,7 @@
 },
 {
   /* xvf16ger2 $AT, $XA, $XB */
-  PPC_XVF16GER2 /* 2857 */, PPC_INS_XVF16GER2,
+  PPC_XVF16GER2 /* 2858 */, PPC_INS_XVF16GER2,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -21977,7 +21985,7 @@
 },
 {
   /* xvf16ger2nn $AT, $XA, $XB */
-  PPC_XVF16GER2NN /* 2858 */, PPC_INS_XVF16GER2NN,
+  PPC_XVF16GER2NN /* 2859 */, PPC_INS_XVF16GER2NN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -21985,7 +21993,7 @@
 },
 {
   /* xvf16ger2np $AT, $XA, $XB */
-  PPC_XVF16GER2NP /* 2859 */, PPC_INS_XVF16GER2NP,
+  PPC_XVF16GER2NP /* 2860 */, PPC_INS_XVF16GER2NP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -21993,7 +22001,7 @@
 },
 {
   /* xvf16ger2pn $AT, $XA, $XB */
-  PPC_XVF16GER2PN /* 2860 */, PPC_INS_XVF16GER2PN,
+  PPC_XVF16GER2PN /* 2861 */, PPC_INS_XVF16GER2PN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22001,7 +22009,7 @@
 },
 {
   /* xvf16ger2pp $AT, $XA, $XB */
-  PPC_XVF16GER2PP /* 2861 */, PPC_INS_XVF16GER2PP,
+  PPC_XVF16GER2PP /* 2862 */, PPC_INS_XVF16GER2PP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22009,42 +22017,42 @@
 },
 {
   /* xvf16ger2 $AT, $XA, $XB */
-  PPC_XVF16GER2W /* 2862 */, PPC_INS_INVALID,
+  PPC_XVF16GER2W /* 2863 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf16ger2nn $AT, $XA, $XB */
-  PPC_XVF16GER2WNN /* 2863 */, PPC_INS_INVALID,
+  PPC_XVF16GER2WNN /* 2864 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf16ger2np $AT, $XA, $XB */
-  PPC_XVF16GER2WNP /* 2864 */, PPC_INS_INVALID,
+  PPC_XVF16GER2WNP /* 2865 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf16ger2pn $AT, $XA, $XB */
-  PPC_XVF16GER2WPN /* 2865 */, PPC_INS_INVALID,
+  PPC_XVF16GER2WPN /* 2866 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf16ger2pp $AT, $XA, $XB */
-  PPC_XVF16GER2WPP /* 2866 */, PPC_INS_INVALID,
+  PPC_XVF16GER2WPP /* 2867 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf32ger $AT, $XA, $XB */
-  PPC_XVF32GER /* 2867 */, PPC_INS_XVF32GER,
+  PPC_XVF32GER /* 2868 */, PPC_INS_XVF32GER,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22052,7 +22060,7 @@
 },
 {
   /* xvf32gernn $AT, $XA, $XB */
-  PPC_XVF32GERNN /* 2868 */, PPC_INS_XVF32GERNN,
+  PPC_XVF32GERNN /* 2869 */, PPC_INS_XVF32GERNN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22060,7 +22068,7 @@
 },
 {
   /* xvf32gernp $AT, $XA, $XB */
-  PPC_XVF32GERNP /* 2869 */, PPC_INS_XVF32GERNP,
+  PPC_XVF32GERNP /* 2870 */, PPC_INS_XVF32GERNP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22068,7 +22076,7 @@
 },
 {
   /* xvf32gerpn $AT, $XA, $XB */
-  PPC_XVF32GERPN /* 2870 */, PPC_INS_XVF32GERPN,
+  PPC_XVF32GERPN /* 2871 */, PPC_INS_XVF32GERPN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22076,7 +22084,7 @@
 },
 {
   /* xvf32gerpp $AT, $XA, $XB */
-  PPC_XVF32GERPP /* 2871 */, PPC_INS_XVF32GERPP,
+  PPC_XVF32GERPP /* 2872 */, PPC_INS_XVF32GERPP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22084,42 +22092,42 @@
 },
 {
   /* xvf32ger $AT, $XA, $XB */
-  PPC_XVF32GERW /* 2872 */, PPC_INS_INVALID,
+  PPC_XVF32GERW /* 2873 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf32gernn $AT, $XA, $XB */
-  PPC_XVF32GERWNN /* 2873 */, PPC_INS_INVALID,
+  PPC_XVF32GERWNN /* 2874 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf32gernp $AT, $XA, $XB */
-  PPC_XVF32GERWNP /* 2874 */, PPC_INS_INVALID,
+  PPC_XVF32GERWNP /* 2875 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf32gerpn $AT, $XA, $XB */
-  PPC_XVF32GERWPN /* 2875 */, PPC_INS_INVALID,
+  PPC_XVF32GERWPN /* 2876 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf32gerpp $AT, $XA, $XB */
-  PPC_XVF32GERWPP /* 2876 */, PPC_INS_INVALID,
+  PPC_XVF32GERWPP /* 2877 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf64ger $AT, $XA, $XB */
-  PPC_XVF64GER /* 2877 */, PPC_INS_XVF64GER,
+  PPC_XVF64GER /* 2878 */, PPC_INS_XVF64GER,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22127,7 +22135,7 @@
 },
 {
   /* xvf64gernn $AT, $XA, $XB */
-  PPC_XVF64GERNN /* 2878 */, PPC_INS_XVF64GERNN,
+  PPC_XVF64GERNN /* 2879 */, PPC_INS_XVF64GERNN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22135,7 +22143,7 @@
 },
 {
   /* xvf64gernp $AT, $XA, $XB */
-  PPC_XVF64GERNP /* 2879 */, PPC_INS_XVF64GERNP,
+  PPC_XVF64GERNP /* 2880 */, PPC_INS_XVF64GERNP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22143,7 +22151,7 @@
 },
 {
   /* xvf64gerpn $AT, $XA, $XB */
-  PPC_XVF64GERPN /* 2880 */, PPC_INS_XVF64GERPN,
+  PPC_XVF64GERPN /* 2881 */, PPC_INS_XVF64GERPN,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22151,7 +22159,7 @@
 },
 {
   /* xvf64gerpp $AT, $XA, $XB */
-  PPC_XVF64GERPP /* 2881 */, PPC_INS_XVF64GERPP,
+  PPC_XVF64GERPP /* 2882 */, PPC_INS_XVF64GERPP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22159,42 +22167,42 @@
 },
 {
   /* xvf64ger $AT, $XA, $XB */
-  PPC_XVF64GERW /* 2882 */, PPC_INS_INVALID,
+  PPC_XVF64GERW /* 2883 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf64gernn $AT, $XA, $XB */
-  PPC_XVF64GERWNN /* 2883 */, PPC_INS_INVALID,
+  PPC_XVF64GERWNN /* 2884 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf64gernp $AT, $XA, $XB */
-  PPC_XVF64GERWNP /* 2884 */, PPC_INS_INVALID,
+  PPC_XVF64GERWNP /* 2885 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf64gerpn $AT, $XA, $XB */
-  PPC_XVF64GERWPN /* 2885 */, PPC_INS_INVALID,
+  PPC_XVF64GERWPN /* 2886 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvf64gerpp $AT, $XA, $XB */
-  PPC_XVF64GERWPP /* 2886 */, PPC_INS_INVALID,
+  PPC_XVF64GERWPP /* 2887 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvi16ger2 $AT, $XA, $XB */
-  PPC_XVI16GER2 /* 2887 */, PPC_INS_XVI16GER2,
+  PPC_XVI16GER2 /* 2888 */, PPC_INS_XVI16GER2,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22202,7 +22210,7 @@
 },
 {
   /* xvi16ger2pp $AT, $XA, $XB */
-  PPC_XVI16GER2PP /* 2888 */, PPC_INS_XVI16GER2PP,
+  PPC_XVI16GER2PP /* 2889 */, PPC_INS_XVI16GER2PP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22210,7 +22218,7 @@
 },
 {
   /* xvi16ger2s $AT, $XA, $XB */
-  PPC_XVI16GER2S /* 2889 */, PPC_INS_XVI16GER2S,
+  PPC_XVI16GER2S /* 2890 */, PPC_INS_XVI16GER2S,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22218,7 +22226,7 @@
 },
 {
   /* xvi16ger2spp $AT, $XA, $XB */
-  PPC_XVI16GER2SPP /* 2890 */, PPC_INS_XVI16GER2SPP,
+  PPC_XVI16GER2SPP /* 2891 */, PPC_INS_XVI16GER2SPP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22226,35 +22234,35 @@
 },
 {
   /* xvi16ger2s $AT, $XA, $XB */
-  PPC_XVI16GER2SW /* 2891 */, PPC_INS_INVALID,
+  PPC_XVI16GER2SW /* 2892 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvi16ger2spp $AT, $XA, $XB */
-  PPC_XVI16GER2SWPP /* 2892 */, PPC_INS_INVALID,
+  PPC_XVI16GER2SWPP /* 2893 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvi16ger2 $AT, $XA, $XB */
-  PPC_XVI16GER2W /* 2893 */, PPC_INS_INVALID,
+  PPC_XVI16GER2W /* 2894 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvi16ger2pp $AT, $XA, $XB */
-  PPC_XVI16GER2WPP /* 2894 */, PPC_INS_INVALID,
+  PPC_XVI16GER2WPP /* 2895 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvi4ger8 $AT, $XA, $XB */
-  PPC_XVI4GER8 /* 2895 */, PPC_INS_XVI4GER8,
+  PPC_XVI4GER8 /* 2896 */, PPC_INS_XVI4GER8,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22262,7 +22270,7 @@
 },
 {
   /* xvi4ger8pp $AT, $XA, $XB */
-  PPC_XVI4GER8PP /* 2896 */, PPC_INS_XVI4GER8PP,
+  PPC_XVI4GER8PP /* 2897 */, PPC_INS_XVI4GER8PP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22270,21 +22278,21 @@
 },
 {
   /* xvi4ger8 $AT, $XA, $XB */
-  PPC_XVI4GER8W /* 2897 */, PPC_INS_INVALID,
+  PPC_XVI4GER8W /* 2898 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvi4ger8pp $AT, $XA, $XB */
-  PPC_XVI4GER8WPP /* 2898 */, PPC_INS_INVALID,
+  PPC_XVI4GER8WPP /* 2899 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvi8ger4 $AT, $XA, $XB */
-  PPC_XVI8GER4 /* 2899 */, PPC_INS_XVI8GER4,
+  PPC_XVI8GER4 /* 2900 */, PPC_INS_XVI8GER4,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22292,7 +22300,7 @@
 },
 {
   /* xvi8ger4pp $AT, $XA, $XB */
-  PPC_XVI8GER4PP /* 2900 */, PPC_INS_XVI8GER4PP,
+  PPC_XVI8GER4PP /* 2901 */, PPC_INS_XVI8GER4PP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22300,7 +22308,7 @@
 },
 {
   /* xvi8ger4spp $AT, $XA, $XB */
-  PPC_XVI8GER4SPP /* 2901 */, PPC_INS_XVI8GER4SPP,
+  PPC_XVI8GER4SPP /* 2902 */, PPC_INS_XVI8GER4SPP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_AT3_XAB6 }}
 
@@ -22308,28 +22316,28 @@
 },
 {
   /* xvi8ger4 $AT, $XA, $XB */
-  PPC_XVI8GER4W /* 2902 */, PPC_INS_INVALID,
+  PPC_XVI8GER4W /* 2903 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvi8ger4pp $AT, $XA, $XB */
-  PPC_XVI8GER4WPP /* 2903 */, PPC_INS_INVALID,
+  PPC_XVI8GER4WPP /* 2904 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xvi8ger4spp $AT, $XA, $XB */
-  PPC_XVI8GER4WSPP /* 2904 */, PPC_INS_INVALID,
+  PPC_XVI8GER4WSPP /* 2905 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xviexpdp $XT, $XA, $XB */
-  PPC_XVIEXPDP /* 2905 */, PPC_INS_XVIEXPDP,
+  PPC_XVIEXPDP /* 2906 */, PPC_INS_XVIEXPDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22337,7 +22345,7 @@
 },
 {
   /* xviexpsp $XT, $XA, $XB */
-  PPC_XVIEXPSP /* 2906 */, PPC_INS_XVIEXPSP,
+  PPC_XVIEXPSP /* 2907 */, PPC_INS_XVIEXPSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22345,7 +22353,7 @@
 },
 {
   /* xvmaddadp $XT, $XA, $XB */
-  PPC_XVMADDADP /* 2907 */, PPC_INS_XVMADDADP,
+  PPC_XVMADDADP /* 2908 */, PPC_INS_XVMADDADP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22353,7 +22361,7 @@
 },
 {
   /* xvmaddasp $XT, $XA, $XB */
-  PPC_XVMADDASP /* 2908 */, PPC_INS_XVMADDASP,
+  PPC_XVMADDASP /* 2909 */, PPC_INS_XVMADDASP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22361,7 +22369,7 @@
 },
 {
   /* xvmaddmdp $XT, $XA, $XB */
-  PPC_XVMADDMDP /* 2909 */, PPC_INS_XVMADDMDP,
+  PPC_XVMADDMDP /* 2910 */, PPC_INS_XVMADDMDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22369,7 +22377,7 @@
 },
 {
   /* xvmaddmsp $XT, $XA, $XB */
-  PPC_XVMADDMSP /* 2910 */, PPC_INS_XVMADDMSP,
+  PPC_XVMADDMSP /* 2911 */, PPC_INS_XVMADDMSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22377,7 +22385,7 @@
 },
 {
   /* xvmaxdp $XT, $XA, $XB */
-  PPC_XVMAXDP /* 2911 */, PPC_INS_XVMAXDP,
+  PPC_XVMAXDP /* 2912 */, PPC_INS_XVMAXDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22385,7 +22393,7 @@
 },
 {
   /* xvmaxsp $XT, $XA, $XB */
-  PPC_XVMAXSP /* 2912 */, PPC_INS_XVMAXSP,
+  PPC_XVMAXSP /* 2913 */, PPC_INS_XVMAXSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22393,7 +22401,7 @@
 },
 {
   /* xvmindp $XT, $XA, $XB */
-  PPC_XVMINDP /* 2913 */, PPC_INS_XVMINDP,
+  PPC_XVMINDP /* 2914 */, PPC_INS_XVMINDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22401,7 +22409,7 @@
 },
 {
   /* xvminsp $XT, $XA, $XB */
-  PPC_XVMINSP /* 2914 */, PPC_INS_XVMINSP,
+  PPC_XVMINSP /* 2915 */, PPC_INS_XVMINSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22409,7 +22417,7 @@
 },
 {
   /* xvmsubadp $XT, $XA, $XB */
-  PPC_XVMSUBADP /* 2915 */, PPC_INS_XVMSUBADP,
+  PPC_XVMSUBADP /* 2916 */, PPC_INS_XVMSUBADP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22417,7 +22425,7 @@
 },
 {
   /* xvmsubasp $XT, $XA, $XB */
-  PPC_XVMSUBASP /* 2916 */, PPC_INS_XVMSUBASP,
+  PPC_XVMSUBASP /* 2917 */, PPC_INS_XVMSUBASP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22425,7 +22433,7 @@
 },
 {
   /* xvmsubmdp $XT, $XA, $XB */
-  PPC_XVMSUBMDP /* 2917 */, PPC_INS_XVMSUBMDP,
+  PPC_XVMSUBMDP /* 2918 */, PPC_INS_XVMSUBMDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22433,7 +22441,7 @@
 },
 {
   /* xvmsubmsp $XT, $XA, $XB */
-  PPC_XVMSUBMSP /* 2918 */, PPC_INS_XVMSUBMSP,
+  PPC_XVMSUBMSP /* 2919 */, PPC_INS_XVMSUBMSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22441,7 +22449,7 @@
 },
 {
   /* xvmuldp $XT, $XA, $XB */
-  PPC_XVMULDP /* 2919 */, PPC_INS_XVMULDP,
+  PPC_XVMULDP /* 2920 */, PPC_INS_XVMULDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22449,7 +22457,7 @@
 },
 {
   /* xvmulsp $XT, $XA, $XB */
-  PPC_XVMULSP /* 2920 */, PPC_INS_XVMULSP,
+  PPC_XVMULSP /* 2921 */, PPC_INS_XVMULSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22457,7 +22465,7 @@
 },
 {
   /* xvnabsdp $XT, $XB */
-  PPC_XVNABSDP /* 2921 */, PPC_INS_XVNABSDP,
+  PPC_XVNABSDP /* 2922 */, PPC_INS_XVNABSDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22465,7 +22473,7 @@
 },
 {
   /* xvnabssp $XT, $XB */
-  PPC_XVNABSSP /* 2922 */, PPC_INS_XVNABSSP,
+  PPC_XVNABSSP /* 2923 */, PPC_INS_XVNABSSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22473,7 +22481,7 @@
 },
 {
   /* xvnegdp $XT, $XB */
-  PPC_XVNEGDP /* 2923 */, PPC_INS_XVNEGDP,
+  PPC_XVNEGDP /* 2924 */, PPC_INS_XVNEGDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22481,7 +22489,7 @@
 },
 {
   /* xvnegsp $XT, $XB */
-  PPC_XVNEGSP /* 2924 */, PPC_INS_XVNEGSP,
+  PPC_XVNEGSP /* 2925 */, PPC_INS_XVNEGSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22489,7 +22497,7 @@
 },
 {
   /* xvnmaddadp $XT, $XA, $XB */
-  PPC_XVNMADDADP /* 2925 */, PPC_INS_XVNMADDADP,
+  PPC_XVNMADDADP /* 2926 */, PPC_INS_XVNMADDADP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22497,7 +22505,7 @@
 },
 {
   /* xvnmaddasp $XT, $XA, $XB */
-  PPC_XVNMADDASP /* 2926 */, PPC_INS_XVNMADDASP,
+  PPC_XVNMADDASP /* 2927 */, PPC_INS_XVNMADDASP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22505,7 +22513,7 @@
 },
 {
   /* xvnmaddmdp $XT, $XA, $XB */
-  PPC_XVNMADDMDP /* 2927 */, PPC_INS_XVNMADDMDP,
+  PPC_XVNMADDMDP /* 2928 */, PPC_INS_XVNMADDMDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22513,7 +22521,7 @@
 },
 {
   /* xvnmaddmsp $XT, $XA, $XB */
-  PPC_XVNMADDMSP /* 2928 */, PPC_INS_XVNMADDMSP,
+  PPC_XVNMADDMSP /* 2929 */, PPC_INS_XVNMADDMSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22521,7 +22529,7 @@
 },
 {
   /* xvnmsubadp $XT, $XA, $XB */
-  PPC_XVNMSUBADP /* 2929 */, PPC_INS_XVNMSUBADP,
+  PPC_XVNMSUBADP /* 2930 */, PPC_INS_XVNMSUBADP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22529,7 +22537,7 @@
 },
 {
   /* xvnmsubasp $XT, $XA, $XB */
-  PPC_XVNMSUBASP /* 2930 */, PPC_INS_XVNMSUBASP,
+  PPC_XVNMSUBASP /* 2931 */, PPC_INS_XVNMSUBASP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22537,7 +22545,7 @@
 },
 {
   /* xvnmsubmdp $XT, $XA, $XB */
-  PPC_XVNMSUBMDP /* 2931 */, PPC_INS_XVNMSUBMDP,
+  PPC_XVNMSUBMDP /* 2932 */, PPC_INS_XVNMSUBMDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22545,7 +22553,7 @@
 },
 {
   /* xvnmsubmsp $XT, $XA, $XB */
-  PPC_XVNMSUBMSP /* 2932 */, PPC_INS_XVNMSUBMSP,
+  PPC_XVNMSUBMSP /* 2933 */, PPC_INS_XVNMSUBMSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22553,7 +22561,7 @@
 },
 {
   /* xvrdpi $XT, $XB */
-  PPC_XVRDPI /* 2933 */, PPC_INS_XVRDPI,
+  PPC_XVRDPI /* 2934 */, PPC_INS_XVRDPI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22561,7 +22569,7 @@
 },
 {
   /* xvrdpic $XT, $XB */
-  PPC_XVRDPIC /* 2934 */, PPC_INS_XVRDPIC,
+  PPC_XVRDPIC /* 2935 */, PPC_INS_XVRDPIC,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22569,7 +22577,7 @@
 },
 {
   /* xvrdpim $XT, $XB */
-  PPC_XVRDPIM /* 2935 */, PPC_INS_XVRDPIM,
+  PPC_XVRDPIM /* 2936 */, PPC_INS_XVRDPIM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22577,7 +22585,7 @@
 },
 {
   /* xvrdpip $XT, $XB */
-  PPC_XVRDPIP /* 2936 */, PPC_INS_XVRDPIP,
+  PPC_XVRDPIP /* 2937 */, PPC_INS_XVRDPIP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22585,7 +22593,7 @@
 },
 {
   /* xvrdpiz $XT, $XB */
-  PPC_XVRDPIZ /* 2937 */, PPC_INS_XVRDPIZ,
+  PPC_XVRDPIZ /* 2938 */, PPC_INS_XVRDPIZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22593,7 +22601,7 @@
 },
 {
   /* xvredp $XT, $XB */
-  PPC_XVREDP /* 2938 */, PPC_INS_XVREDP,
+  PPC_XVREDP /* 2939 */, PPC_INS_XVREDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22601,7 +22609,7 @@
 },
 {
   /* xvresp $XT, $XB */
-  PPC_XVRESP /* 2939 */, PPC_INS_XVRESP,
+  PPC_XVRESP /* 2940 */, PPC_INS_XVRESP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22609,7 +22617,7 @@
 },
 {
   /* xvrspi $XT, $XB */
-  PPC_XVRSPI /* 2940 */, PPC_INS_XVRSPI,
+  PPC_XVRSPI /* 2941 */, PPC_INS_XVRSPI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22617,7 +22625,7 @@
 },
 {
   /* xvrspic $XT, $XB */
-  PPC_XVRSPIC /* 2941 */, PPC_INS_XVRSPIC,
+  PPC_XVRSPIC /* 2942 */, PPC_INS_XVRSPIC,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22625,7 +22633,7 @@
 },
 {
   /* xvrspim $XT, $XB */
-  PPC_XVRSPIM /* 2942 */, PPC_INS_XVRSPIM,
+  PPC_XVRSPIM /* 2943 */, PPC_INS_XVRSPIM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22633,7 +22641,7 @@
 },
 {
   /* xvrspip $XT, $XB */
-  PPC_XVRSPIP /* 2943 */, PPC_INS_XVRSPIP,
+  PPC_XVRSPIP /* 2944 */, PPC_INS_XVRSPIP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22641,7 +22649,7 @@
 },
 {
   /* xvrspiz $XT, $XB */
-  PPC_XVRSPIZ /* 2944 */, PPC_INS_XVRSPIZ,
+  PPC_XVRSPIZ /* 2945 */, PPC_INS_XVRSPIZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22649,7 +22657,7 @@
 },
 {
   /* xvrsqrtedp $XT, $XB */
-  PPC_XVRSQRTEDP /* 2945 */, PPC_INS_XVRSQRTEDP,
+  PPC_XVRSQRTEDP /* 2946 */, PPC_INS_XVRSQRTEDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22657,7 +22665,7 @@
 },
 {
   /* xvrsqrtesp $XT, $XB */
-  PPC_XVRSQRTESP /* 2946 */, PPC_INS_XVRSQRTESP,
+  PPC_XVRSQRTESP /* 2947 */, PPC_INS_XVRSQRTESP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22665,7 +22673,7 @@
 },
 {
   /* xvsqrtdp $XT, $XB */
-  PPC_XVSQRTDP /* 2947 */, PPC_INS_XVSQRTDP,
+  PPC_XVSQRTDP /* 2948 */, PPC_INS_XVSQRTDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22673,7 +22681,7 @@
 },
 {
   /* xvsqrtsp $XT, $XB */
-  PPC_XVSQRTSP /* 2948 */, PPC_INS_XVSQRTSP,
+  PPC_XVSQRTSP /* 2949 */, PPC_INS_XVSQRTSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM }}
 
@@ -22681,7 +22689,7 @@
 },
 {
   /* xvsubdp $XT, $XA, $XB */
-  PPC_XVSUBDP /* 2949 */, PPC_INS_XVSUBDP,
+  PPC_XVSUBDP /* 2950 */, PPC_INS_XVSUBDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22689,7 +22697,7 @@
 },
 {
   /* xvsubsp $XT, $XA, $XB */
-  PPC_XVSUBSP /* 2950 */, PPC_INS_XVSUBSP,
+  PPC_XVSUBSP /* 2951 */, PPC_INS_XVSUBSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22697,7 +22705,7 @@
 },
 {
   /* xvtdivdp $CR, $XA, $XB */
-  PPC_XVTDIVDP /* 2951 */, PPC_INS_XVTDIVDP,
+  PPC_XVTDIVDP /* 2952 */, PPC_INS_XVTDIVDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_1 }}
 
@@ -22705,7 +22713,7 @@
 },
 {
   /* xvtdivsp $CR, $XA, $XB */
-  PPC_XVTDIVSP /* 2952 */, PPC_INS_XVTDIVSP,
+  PPC_XVTDIVSP /* 2953 */, PPC_INS_XVTDIVSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_1 }}
 
@@ -22713,7 +22721,7 @@
 },
 {
   /* xvtlsbb $BF, $XB */
-  PPC_XVTLSBB /* 2953 */, PPC_INS_XVTLSBB,
+  PPC_XVTLSBB /* 2954 */, PPC_INS_XVTLSBB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_BF3_XO5_XB6_XO9 }}
 
@@ -22721,7 +22729,7 @@
 },
 {
   /* xvtsqrtdp $CR, $XB */
-  PPC_XVTSQRTDP /* 2954 */, PPC_INS_XVTSQRTDP,
+  PPC_XVTSQRTDP /* 2955 */, PPC_INS_XVTSQRTDP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM_1 }}
 
@@ -22729,7 +22737,7 @@
 },
 {
   /* xvtsqrtsp $CR, $XB */
-  PPC_XVTSQRTSP /* 2955 */, PPC_INS_XVTSQRTSP,
+  PPC_XVTSQRTSP /* 2956 */, PPC_INS_XVTSQRTSP,
   #ifndef CAPSTONE_DIET
     { PPC_REG_RM, 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM_1 }}
 
@@ -22737,7 +22745,7 @@
 },
 {
   /* xvtstdcdp $XT, $XB, $DCMX */
-  PPC_XVTSTDCDP /* 2956 */, PPC_INS_XVTSTDCDP,
+  PPC_XVTSTDCDP /* 2957 */, PPC_INS_XVTSTDCDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_DCMX7_RS6 }}
 
@@ -22745,7 +22753,7 @@
 },
 {
   /* xvtstdcsp $XT, $XB, $DCMX */
-  PPC_XVTSTDCSP /* 2957 */, PPC_INS_XVTSTDCSP,
+  PPC_XVTSTDCSP /* 2958 */, PPC_INS_XVTSTDCSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_DCMX7_RS6 }}
 
@@ -22753,7 +22761,7 @@
 },
 {
   /* xvxexpdp $XT, $XB */
-  PPC_XVXEXPDP /* 2958 */, PPC_INS_XVXEXPDP,
+  PPC_XVXEXPDP /* 2959 */, PPC_INS_XVXEXPDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -22761,7 +22769,7 @@
 },
 {
   /* xvxexpsp $XT, $XB */
-  PPC_XVXEXPSP /* 2959 */, PPC_INS_XVXEXPSP,
+  PPC_XVXEXPSP /* 2960 */, PPC_INS_XVXEXPSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -22769,7 +22777,7 @@
 },
 {
   /* xvxsigdp $XT, $XB */
-  PPC_XVXSIGDP /* 2960 */, PPC_INS_XVXSIGDP,
+  PPC_XVXSIGDP /* 2961 */, PPC_INS_XVXSIGDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -22777,7 +22785,7 @@
 },
 {
   /* xvxsigsp $XT, $XB */
-  PPC_XVXSIGSP /* 2961 */, PPC_INS_XVXSIGSP,
+  PPC_XVXSIGSP /* 2962 */, PPC_INS_XVXSIGSP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -22785,7 +22793,7 @@
 },
 {
   /* xxblendvb $XT, $XA, $XB, $XC */
-  PPC_XXBLENDVB /* 2962 */, PPC_INS_XXBLENDVB,
+  PPC_XXBLENDVB /* 2963 */, PPC_INS_XXBLENDVB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -22793,7 +22801,7 @@
 },
 {
   /* xxblendvd $XT, $XA, $XB, $XC */
-  PPC_XXBLENDVD /* 2963 */, PPC_INS_XXBLENDVD,
+  PPC_XXBLENDVD /* 2964 */, PPC_INS_XXBLENDVD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -22801,7 +22809,7 @@
 },
 {
   /* xxblendvh $XT, $XA, $XB, $XC */
-  PPC_XXBLENDVH /* 2964 */, PPC_INS_XXBLENDVH,
+  PPC_XXBLENDVH /* 2965 */, PPC_INS_XXBLENDVH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -22809,7 +22817,7 @@
 },
 {
   /* xxblendvw $XT, $XA, $XB, $XC */
-  PPC_XXBLENDVW /* 2965 */, PPC_INS_XXBLENDVW,
+  PPC_XXBLENDVW /* 2966 */, PPC_INS_XXBLENDVW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -22817,7 +22825,7 @@
 },
 {
   /* xxbrd $XT, $XB */
-  PPC_XXBRD /* 2966 */, PPC_INS_XXBRD,
+  PPC_XXBRD /* 2967 */, PPC_INS_XXBRD,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -22825,7 +22833,7 @@
 },
 {
   /* xxbrh $XT, $XB */
-  PPC_XXBRH /* 2967 */, PPC_INS_XXBRH,
+  PPC_XXBRH /* 2968 */, PPC_INS_XXBRH,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -22833,7 +22841,7 @@
 },
 {
   /* xxbrq $XT, $XB */
-  PPC_XXBRQ /* 2968 */, PPC_INS_XXBRQ,
+  PPC_XXBRQ /* 2969 */, PPC_INS_XXBRQ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -22841,7 +22849,7 @@
 },
 {
   /* xxbrw $XT, $XB */
-  PPC_XXBRW /* 2969 */, PPC_INS_XXBRW,
+  PPC_XXBRW /* 2970 */, PPC_INS_XXBRW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_XO5_RS6 }}
 
@@ -22849,7 +22857,7 @@
 },
 {
   /* xxeval $XT, $XA, $XB, $XC, $IMM */
-  PPC_XXEVAL /* 2970 */, PPC_INS_XXEVAL,
+  PPC_XXEVAL /* 2971 */, PPC_INS_XXEVAL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -22857,7 +22865,7 @@
 },
 {
   /* xxextractuw $XT, $XB, $UIM5 */
-  PPC_XXEXTRACTUW /* 2971 */, PPC_INS_XXEXTRACTUW,
+  PPC_XXEXTRACTUW /* 2972 */, PPC_INS_XXEXTRACTUW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_UIM5_RS6 }}
 
@@ -22865,7 +22873,7 @@
 },
 {
   /* xxgenpcvbm $XT, $VRB, $IMM */
-  PPC_XXGENPCVBM /* 2972 */, PPC_INS_XXGENPCVBM,
+  PPC_XXGENPCVBM /* 2973 */, PPC_INS_XXGENPCVBM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_XT6_IMM5_VB5 }}
 
@@ -22873,7 +22881,7 @@
 },
 {
   /* xxgenpcvdm $XT, $VRB, $IMM */
-  PPC_XXGENPCVDM /* 2973 */, PPC_INS_XXGENPCVDM,
+  PPC_XXGENPCVDM /* 2974 */, PPC_INS_XXGENPCVDM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_XT6_IMM5_VB5 }}
 
@@ -22881,7 +22889,7 @@
 },
 {
   /* xxgenpcvhm $XT, $VRB, $IMM */
-  PPC_XXGENPCVHM /* 2974 */, PPC_INS_XXGENPCVHM,
+  PPC_XXGENPCVHM /* 2975 */, PPC_INS_XXGENPCVHM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_XT6_IMM5_VB5 }}
 
@@ -22889,7 +22897,7 @@
 },
 {
   /* xxgenpcvwm $XT, $VRB, $IMM */
-  PPC_XXGENPCVWM /* 2975 */, PPC_INS_XXGENPCVWM,
+  PPC_XXGENPCVWM /* 2976 */, PPC_INS_XXGENPCVWM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_XT6_IMM5_VB5 }}
 
@@ -22897,7 +22905,7 @@
 },
 {
   /* xxinsertw $XT, $XB, $UIM5 */
-  PPC_XXINSERTW /* 2976 */, PPC_INS_XXINSERTW,
+  PPC_XXINSERTW /* 2977 */, PPC_INS_XXINSERTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2_RD6_UIM5_RS6 }}
 
@@ -22905,7 +22913,7 @@
 },
 {
   /* xxland $XT, $XA, $XB */
-  PPC_XXLAND /* 2977 */, PPC_INS_XXLAND,
+  PPC_XXLAND /* 2978 */, PPC_INS_XXLAND,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22913,7 +22921,7 @@
 },
 {
   /* xxlandc $XT, $XA, $XB */
-  PPC_XXLANDC /* 2978 */, PPC_INS_XXLANDC,
+  PPC_XXLANDC /* 2979 */, PPC_INS_XXLANDC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22921,7 +22929,7 @@
 },
 {
   /* xxleqv $XT, $XA, $XB */
-  PPC_XXLEQV /* 2979 */, PPC_INS_XXLEQV,
+  PPC_XXLEQV /* 2980 */, PPC_INS_XXLEQV,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22929,14 +22937,14 @@
 },
 {
   /* xxleqv $XT, $XT, $XT */
-  PPC_XXLEQVOnes /* 2980 */, PPC_INS_INVALID,
+  PPC_XXLEQVOnes /* 2981 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xxlnand $XT, $XA, $XB */
-  PPC_XXLNAND /* 2981 */, PPC_INS_XXLNAND,
+  PPC_XXLNAND /* 2982 */, PPC_INS_XXLNAND,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22944,7 +22952,7 @@
 },
 {
   /* xxlnor $XT, $XA, $XB */
-  PPC_XXLNOR /* 2982 */, PPC_INS_XXLNOR,
+  PPC_XXLNOR /* 2983 */, PPC_INS_XXLNOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22952,7 +22960,7 @@
 },
 {
   /* xxlor $XT, $XA, $XB */
-  PPC_XXLOR /* 2983 */, PPC_INS_XXLOR,
+  PPC_XXLOR /* 2984 */, PPC_INS_XXLOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22960,7 +22968,7 @@
 },
 {
   /* xxlorc $XT, $XA, $XB */
-  PPC_XXLORC /* 2984 */, PPC_INS_XXLORC,
+  PPC_XXLORC /* 2985 */, PPC_INS_XXLORC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22968,14 +22976,14 @@
 },
 {
   /* xxlor $XT, $XA, $XB */
-  PPC_XXLORf /* 2985 */, PPC_INS_INVALID,
+  PPC_XXLORf /* 2986 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xxlxor $XT, $XA, $XB */
-  PPC_XXLXOR /* 2986 */, PPC_INS_XXLXOR,
+  PPC_XXLXOR /* 2987 */, PPC_INS_XXLXOR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -22983,28 +22991,28 @@
 },
 {
   /* xxlxor $XT, $XT, $XT */
-  PPC_XXLXORdpz /* 2987 */, PPC_INS_INVALID,
+  PPC_XXLXORdpz /* 2988 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xxlxor $XT, $XT, $XT */
-  PPC_XXLXORspz /* 2988 */, PPC_INS_INVALID,
+  PPC_XXLXORspz /* 2989 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xxlxor $XT, $XT, $XT */
-  PPC_XXLXORz /* 2989 */, PPC_INS_INVALID,
+  PPC_XXLXORz /* 2990 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xxmfacc $AT */
-  PPC_XXMFACC /* 2990 */, PPC_INS_XXMFACC,
+  PPC_XXMFACC /* 2991 */, PPC_INS_XXMFACC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_AT3 }}
 
@@ -23012,14 +23020,14 @@
 },
 {
   /* xxmfacc $AT */
-  PPC_XXMFACCW /* 2991 */, PPC_INS_INVALID,
+  PPC_XXMFACCW /* 2992 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xxmrghw $XT, $XA, $XB */
-  PPC_XXMRGHW /* 2992 */, PPC_INS_XXMRGHW,
+  PPC_XXMRGHW /* 2993 */, PPC_INS_XXMRGHW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -23027,7 +23035,7 @@
 },
 {
   /* xxmrglw $XT, $XA, $XB */
-  PPC_XXMRGLW /* 2993 */, PPC_INS_XXMRGLW,
+  PPC_XXMRGLW /* 2994 */, PPC_INS_XXMRGLW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -23035,7 +23043,7 @@
 },
 {
   /* xxmtacc $AT */
-  PPC_XXMTACC /* 2994 */, PPC_INS_XXMTACC,
+  PPC_XXMTACC /* 2995 */, PPC_INS_XXMTACC,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_AT3 }}
 
@@ -23043,14 +23051,14 @@
 },
 {
   /* xxmtacc $AT */
-  PPC_XXMTACCW /* 2995 */, PPC_INS_INVALID,
+  PPC_XXMTACCW /* 2996 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xxperm $XT, $XA, $XB */
-  PPC_XXPERM /* 2996 */, PPC_INS_XXPERM,
+  PPC_XXPERM /* 2997 */, PPC_INS_XXPERM,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -23058,7 +23066,7 @@
 },
 {
   /* xxpermdi $XT, $XA, $XB, $D */
-  PPC_XXPERMDI /* 2997 */, PPC_INS_XXPERMDI,
+  PPC_XXPERMDI /* 2998 */, PPC_INS_XXPERMDI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_2 }}
 
@@ -23066,14 +23074,14 @@
 },
 {
   /* xxpermdi $XT, $XA, $XA, $D */
-  PPC_XXPERMDIs /* 2998 */, PPC_INS_INVALID,
+  PPC_XXPERMDIs /* 2999 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xxpermr $XT, $XA, $XB */
-  PPC_XXPERMR /* 2999 */, PPC_INS_XXPERMR,
+  PPC_XXPERMR /* 3000 */, PPC_INS_XXPERMR,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM }}
 
@@ -23081,7 +23089,7 @@
 },
 {
   /* xxpermx $XT, $XA, $XB, $XC, $IMM */
-  PPC_XXPERMX /* 3000 */, PPC_INS_XXPERMX,
+  PPC_XXPERMX /* 3001 */, PPC_INS_XXPERMX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -23089,7 +23097,7 @@
 },
 {
   /* xxsel $XT, $XA, $XB, $XC */
-  PPC_XXSEL /* 3001 */, PPC_INS_XXSEL,
+  PPC_XXSEL /* 3002 */, PPC_INS_XXSEL,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX4FORM }}
 
@@ -23097,7 +23105,7 @@
 },
 {
   /* xxsetaccz $AT */
-  PPC_XXSETACCZ /* 3002 */, PPC_INS_XXSETACCZ,
+  PPC_XXSETACCZ /* 3003 */, PPC_INS_XXSETACCZ,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { PPC_FEATURE_ISNOTISAFUTURE, 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XFORM_AT3 }}
 
@@ -23105,14 +23113,14 @@
 },
 {
   /* xxsetaccz $AT */
-  PPC_XXSETACCZW /* 3003 */, PPC_INS_INVALID,
+  PPC_XXSETACCZW /* 3004 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xxsldwi $XT, $XA, $XB, $D */
-  PPC_XXSLDWI /* 3004 */, PPC_INS_XXSLDWI,
+  PPC_XXSLDWI /* 3005 */, PPC_INS_XXSLDWI,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX3FORM_2 }}
 
@@ -23120,14 +23128,14 @@
 },
 {
   /* xxsldwi $XT, $XA, $XA, $D */
-  PPC_XXSLDWIs /* 3005 */, PPC_INS_INVALID,
+  PPC_XXSLDWIs /* 3006 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* xxsplti32dx $XT, $IX, $IMM32 */
-  PPC_XXSPLTI32DX /* 3006 */, PPC_INS_XXSPLTI32DX,
+  PPC_XXSPLTI32DX /* 3007 */, PPC_INS_XXSPLTI32DX,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -23135,7 +23143,7 @@
 },
 {
   /* xxspltib $XT, $IMM8 */
-  PPC_XXSPLTIB /* 3007 */, PPC_INS_XXSPLTIB,
+  PPC_XXSPLTIB /* 3008 */, PPC_INS_XXSPLTIB,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_X_RD6_IMM8 }}
 
@@ -23143,7 +23151,7 @@
 },
 {
   /* xxspltidp $XT, $IMM32 */
-  PPC_XXSPLTIDP /* 3008 */, PPC_INS_XXSPLTIDP,
+  PPC_XXSPLTIDP /* 3009 */, PPC_INS_XXSPLTIDP,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -23151,7 +23159,7 @@
 },
 {
   /* xxspltiw $XT, $IMM32 */
-  PPC_XXSPLTIW /* 3009 */, PPC_INS_XXSPLTIW,
+  PPC_XXSPLTIW /* 3010 */, PPC_INS_XXSPLTIW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
 
@@ -23159,7 +23167,7 @@
 },
 {
   /* xxspltw $XT, $XB, $D */
-  PPC_XXSPLTW /* 3010 */, PPC_INS_XXSPLTW,
+  PPC_XXSPLTW /* 3011 */, PPC_INS_XXSPLTW,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, { .ppc = { PPC_INSN_FORM_XX2FORM_2 }}
 
@@ -23167,14 +23175,14 @@
 },
 {
   /* xxspltw $XT, $XB, $D */
-  PPC_XXSPLTWs /* 3011 */, PPC_INS_INVALID,
+  PPC_XXSPLTWs /* 3012 */, PPC_INS_INVALID,
   #ifndef CAPSTONE_DIET
     { 0 }, { 0 }, { 0 }, 0, 0, {{ 0 }}
   #endif
 },
 {
   /* bc $BO, $BI, $BD */
-  PPC_gBC /* 3012 */, PPC_INS_BC,
+  PPC_gBC /* 3013 */, PPC_INS_BC,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_BFORM_3 }}
 
@@ -23182,7 +23190,7 @@
 },
 {
   /* bca $BO, $BI, $BD */
-  PPC_gBCA /* 3013 */, PPC_INS_BCA,
+  PPC_gBCA /* 3014 */, PPC_INS_BCA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_BFORM_3 }}
 
@@ -23190,7 +23198,7 @@
 },
 {
   /* bca$at $BO, $BI, $BD */
-  PPC_gBCAat /* 3014 */, PPC_INS_BCA,
+  PPC_gBCAat /* 3015 */, PPC_INS_BCA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_BFORM_3_AT }}
 
@@ -23198,7 +23206,7 @@
 },
 {
   /* bcctr $BO, $BI, $BH */
-  PPC_gBCCTR /* 3015 */, PPC_INS_BCCTR,
+  PPC_gBCCTR /* 3016 */, PPC_INS_BCCTR,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_XLFORM_2 }}
 
@@ -23206,7 +23214,7 @@
 },
 {
   /* bcctrl $BO, $BI, $BH */
-  PPC_gBCCTRL /* 3016 */, PPC_INS_BCCTRL,
+  PPC_gBCCTRL /* 3017 */, PPC_INS_BCCTRL,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_XLFORM_2 }}
 
@@ -23214,7 +23222,7 @@
 },
 {
   /* bcl $BO, $BI, $BD */
-  PPC_gBCL /* 3017 */, PPC_INS_BCL,
+  PPC_gBCL /* 3018 */, PPC_INS_BCL,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_BFORM_3 }}
 
@@ -23222,7 +23230,7 @@
 },
 {
   /* bcla $BO, $BI, $BD */
-  PPC_gBCLA /* 3018 */, PPC_INS_BCLA,
+  PPC_gBCLA /* 3019 */, PPC_INS_BCLA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_BFORM_3 }}
 
@@ -23230,7 +23238,7 @@
 },
 {
   /* bcla$at $BO, $BI, $BD */
-  PPC_gBCLAat /* 3019 */, PPC_INS_BCLA,
+  PPC_gBCLAat /* 3020 */, PPC_INS_BCLA,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_BFORM_3_AT }}
 
@@ -23238,7 +23246,7 @@
 },
 {
   /* bclr $BO, $BI, $BH */
-  PPC_gBCLR /* 3020 */, PPC_INS_BCLR,
+  PPC_gBCLR /* 3021 */, PPC_INS_BCLR,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_XLFORM_2 }}
 
@@ -23246,7 +23254,7 @@
 },
 {
   /* bclrl $BO, $BI, $BH */
-  PPC_gBCLRL /* 3021 */, PPC_INS_BCLRL,
+  PPC_gBCLRL /* 3022 */, PPC_INS_BCLRL,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_LR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_XLFORM_2 }}
 
@@ -23254,7 +23262,7 @@
 },
 {
   /* bcl$at $BO, $BI, $BD */
-  PPC_gBCLat /* 3022 */, PPC_INS_BCL,
+  PPC_gBCLat /* 3023 */, PPC_INS_BCL,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_LR, PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_BFORM_3_AT }}
 
@@ -23262,7 +23270,7 @@
 },
 {
   /* bc$at $BO, $BI, $BD */
-  PPC_gBCat /* 3023 */, PPC_INS_BC,
+  PPC_gBCat /* 3024 */, PPC_INS_BC,
   #ifndef CAPSTONE_DIET
     { PPC_REG_CTR, PPC_REG_RM, 0 }, { PPC_REG_CTR, 0 }, { PPC_GRP_JUMP, PPC_GRP_BRANCH_RELATIVE, 0 }, 1, 0, { .ppc = { PPC_INSN_FORM_BFORM_3_AT }}
 

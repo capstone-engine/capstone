@@ -75,7 +75,7 @@ static void set_mem_access(MCInst *MI, bool status)
 
 static void printopaquemem(MCInst *MI, unsigned OpNo, SStream *O)
 {
-	switch (MI->csh->mode) {
+	switch (x86_get_bit_mode(MI->csh->mode)) {
 	case CS_MODE_16:
 		switch (MI->flat_insn->id) {
 		default:
@@ -185,7 +185,7 @@ static void printf32mem(MCInst *MI, unsigned OpNo, SStream *O)
 	case X86_FSTENVm:
 	case X86_FLDENVm:
 		// TODO: fix this in tablegen instead
-		switch (MI->csh->mode) {
+		switch (x86_get_bit_mode(MI->csh->mode)) {
 		default: // never reach
 			break;
 		case CS_MODE_16:
@@ -315,6 +315,34 @@ static void get_op_access(cs_struct *h, unsigned int id, uint8_t *access,
 	}
 }
 
+static void fixup_evex_opmask_access(MCInst *MI)
+{
+	cs_x86 *x86 = &MI->flat_insn->detail->x86;
+	const uint8_t *arr;
+	uint8_t count, i, access_index = 0;
+	if (!(MI->flags & X86_IP_HAS_EVEX_OPMASK))
+		return;
+
+	arr = X86_get_op_access(MI->csh, MCInst_getOpcode(MI), &x86->eflags);
+	if (!arr)
+		return;
+	for (count = 0; count < CS_X86_MAXIMUM_OPERAND_SIZE; ++count) {
+		if (!arr[count])
+			break;
+	}
+	if (count < 2 || count != x86->op_count)
+		return;
+
+	for (i = count; i > 2; --i) {
+		x86->operands[access_index].access = arr[i - 1];
+		if (x86->operands[access_index].access == CS_AC_IGNORE)
+			x86->operands[access_index].access = 0;
+		access_index++;
+	}
+	x86->operands[access_index++].access = arr[0];
+	x86->operands[access_index].access = arr[1];
+}
+
 static void printSrcIdx(MCInst *MI, unsigned Op, SStream *O)
 {
 	MCOperand *SegReg;
@@ -410,7 +438,7 @@ static void printDstIdx(MCInst *MI, unsigned Op, SStream *O)
 	}
 
 	// DI accesses are always ES-based on non-64bit mode
-	if (MI->csh->mode != CS_MODE_64) {
+	if (!(x86_has_feature(MI->csh->mode, CS_MODE_64))) {
 		SStream_concat0(O, "%es:(");
 		if (MI->csh->detail_opt) {
 			MI->flat_insn->detail->x86
@@ -534,8 +562,10 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 				.operands[MI->flat_insn->detail->x86.op_count]
 				.mem.disp = imm;
 		if (imm < 0) {
-			SStream_concat(O, "0x%" PRIx64,
-				       arch_masks[MI->csh->mode] & imm);
+			SStream_concat(
+				O, "0x%" PRIx64,
+				arch_masks[x86_get_bit_mode(MI->csh->mode)] &
+					imm);
 		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%" PRIx64, imm);
@@ -555,7 +585,7 @@ static void printU8Imm(MCInst *MI, unsigned Op, SStream *O)
 	if (val > HEX_THRESHOLD)
 		SStream_concat(O, "$0x%x", val);
 	else
-		SStream_concat(O, "$%u", val);
+		SStream_concat(O, "$%" PRIu8, val);
 
 	if (MI->csh->detail_opt) {
 		MI->flat_insn->detail->x86
@@ -607,8 +637,11 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 			      MI->address;
 
 		// truncate imm for non-64bit
-		if (MI->csh->mode != CS_MODE_64) {
+		if (!(x86_has_feature(MI->csh->mode, CS_MODE_64))) {
 			imm = imm & 0xffffffff;
+		} else if ((x86_has_feature(MI->csh->mode, CS_MODE_X86_AMD)) &&
+			   MI->imm_size == 2) {
+			imm &= 0xffff;
 		}
 
 		if (imm < 0) {
@@ -695,6 +728,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					SStream_concat(O, "$%" PRIu64, imm);
 			} else {
 				if (MI->csh->imm_unsigned) {
+					// the mask is for display only: the value
+					// stored in detail must stay unmasked
+					int64_t p = imm;
 					if (opsize) {
 						switch (opsize) {
 						default:
@@ -703,15 +739,15 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 						// making it effectively always positive.
 						// So this switch is never reached.
 						case 2:
-							imm &= 0xffff;
+							p &= 0xffff;
 							break;
 						case 4:
-							imm &= 0xffffffff;
+							p &= 0xffffffff;
 							break;
 						}
 					}
 
-					SStream_concat(O, "$0x%" PRIx64, imm);
+					SStream_concat(O, "$0x%" PRIx64, p);
 				} else {
 					if (imm ==
 					    0x8000000000000000LL) // imm == -imm
@@ -745,7 +781,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			// do not print number in negative form
 			imm = imm & 0xff;
 			if (imm >= 0 && imm <= HEX_THRESHOLD)
-				SStream_concat(O, "$%u", imm);
+				SStream_concat(O, "$%" PRIu64, imm);
 			else {
 				SStream_concat(O, "$0x%x", imm);
 			}
@@ -768,7 +804,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		case X86_INS_XOR:
 			// do not print number in negative form
 			if (imm >= 0 && imm <= HEX_THRESHOLD)
-				SStream_concat(O, "$%u", imm);
+				SStream_concat(O, "$%" PRIu64, imm);
 			else {
 				imm = arch_masks[opsize ? opsize : MI->imm_size] &
 				      imm;
@@ -780,7 +816,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		case X86_INS_RETF:
 			// RET imm16
 			if (imm >= 0 && imm <= HEX_THRESHOLD)
-				SStream_concat(O, "$%u", imm);
+				SStream_concat(O, "$%" PRIu64, imm);
 			else {
 				imm = 0xffff & imm;
 				SStream_concat(O, "$0x%x", imm);
@@ -906,7 +942,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 				if (DispVal < 0) {
 					SStream_concat(
 						O, "0x%" PRIx64,
-						arch_masks[MI->csh->mode] &
+						arch_masks[x86_get_bit_mode(
+							MI->csh->mode)] &
 							DispVal);
 				} else {
 					if (DispVal > HEX_THRESHOLD)
@@ -938,7 +975,7 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 							  .op_count]
 					.mem.scale = (int)ScaleVal;
 			if (ScaleVal != 1) {
-				SStream_concat(O, ", %u", ScaleVal);
+				SStream_concat(O, ", %" PRIu64, ScaleVal);
 			}
 		}
 
@@ -1018,7 +1055,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	// TODO: Probably this hack should be redesigned via InstAlias in
 	// InstrInfo.td as soon as Requires clause is supported properly
 	// for InstAlias.
-	if (MI->csh->mode == CS_MODE_64 &&
+	if ((x86_has_feature(MI->csh->mode, CS_MODE_64)) &&
 	    MCInst_getOpcode(MI) == X86_CALLpcrel32) {
 		SStream_concat0(OS, "callq\t");
 		MCInst_setOpcodePub(MI, X86_INS_CALL);
@@ -1055,9 +1092,13 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 								.size;
 				}
 			}
-		} else
+		} else if (!MI->flat_insn->detail->x86.operands[0].size) {
+			// AT&T sets has_imm without a size (printPCRelImm,
+			// op_addImm) and relies on this; printOperand does set
+			// one, so it must not be overwritten here
 			MI->flat_insn->detail->x86.operands[0].size =
 				MI->imm_size;
+		}
 	}
 
 	if (MI->csh->detail_opt) {
@@ -1138,6 +1179,8 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 					(ARR_SIZE(MI->flat_insn->detail->x86
 							  .operands) -
 					 1));
+			memset(&(MI->flat_insn->detail->x86.operands[0]), 0,
+			       sizeof(MI->flat_insn->detail->x86.operands[0]));
 			MI->flat_insn->detail->x86.operands[0].type =
 				X86_OP_IMM;
 			MI->flat_insn->detail->x86.operands[0].imm = 1;
@@ -1151,7 +1194,8 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 
 		//printf(">>> opcode = %u\n", MCInst_getOpcode(MI));
 
-		reg = X86_insn_reg_att(MCInst_getOpcode(MI), &access1);
+		reg = X86_insn_reg_att_h(MI->csh, MCInst_getOpcode(MI),
+					 &access1);
 		if (reg) {
 			// shift all the ops right to leave 1st slot for this new register op
 			memmove(&(MI->flat_insn->detail->x86.operands[1]),
@@ -1160,6 +1204,8 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 					(ARR_SIZE(MI->flat_insn->detail->x86
 							  .operands) -
 					 1));
+			memset(&(MI->flat_insn->detail->x86.operands[0]), 0,
+			       sizeof(MI->flat_insn->detail->x86.operands[0]));
 			MI->flat_insn->detail->x86.operands[0].type =
 				X86_OP_REG;
 			MI->flat_insn->detail->x86.operands[0].reg = reg;
@@ -1196,6 +1242,7 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 			      &MI->flat_insn->detail->x86.eflags);
 		MI->flat_insn->detail->x86.operands[0].access = access[0];
 		MI->flat_insn->detail->x86.operands[1].access = access[1];
+		fixup_evex_opmask_access(MI);
 #endif
 	}
 }

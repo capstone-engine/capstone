@@ -189,7 +189,7 @@ setup(
     author_email='aquynh@gmail.com',
     description='Capstone disassembly engine',
     url='https://www.capstone-engine.org',
-    long_description=open('README.txt', encoding="utf8").read(),
+    long_description=open('README.md', encoding="utf8").read(),
     long_description_content_type='text/markdown',
     python_requires='>=3.8',
     classifiers=[

@@ -2372,7 +2372,7 @@
     },
     "Xtensa_getFeatureBits": {
       "apply_type": "OLD",
-      "old_hash": "126cff581e1a79a655c62e3489e238f7bf00647749f619230ab77061d0423295",
+      "old_hash": "54f9c8bb5264b1b92f2ebc7ba4bf70aaa7f203d537ca9e806ab6b4d69c397474",
       "new_hash": "",
       "edit": ""
     },
@@ -2390,19 +2390,19 @@
     },
     "hasDensity": {
       "apply_type": "OLD",
-      "old_hash": "da63483f075aba3c9f8937fb1900c646cb15f01b6b2e25568e6dcaa940b4798b",
+      "old_hash": "8bf85ed5fd8d904a43c0504ae5dedebaa8a4838be3c3d761f1c24e6625473d7e",
       "new_hash": "",
       "edit": ""
     },
     "hasESP32S3Ops": {
       "apply_type": "OLD",
-      "old_hash": "464131365b24dec185e04d43154a85d9765a50a18214888c26014d8d85165a99",
+      "old_hash": "87849edd4b0f36b2f057f384624847b1f2dccd52f4070f57795bcb3a46bd98cb",
       "new_hash": "",
       "edit": ""
     },
     "hasHIFI3": {
       "apply_type": "OLD",
-      "old_hash": "e1fcb3c8f47f38e571d1a81e7e522efb5c67e0aea05fd7b3980aa1eb3e71c9ff",
+      "old_hash": "7780479933da49a6e4b4c59d1cebbd6ba0c6cfa8877950d8b03e2b101f6d94dd",
       "new_hash": "",
       "edit": ""
     },

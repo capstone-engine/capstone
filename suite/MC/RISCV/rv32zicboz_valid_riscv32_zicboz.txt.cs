@@ -1,0 +1,2 @@
+# CS_ARCH_RISCV, "CS_MODE_RISCV32", None
+0x0f,0xa0,0x42,0x00 == cbo.zero (t0)

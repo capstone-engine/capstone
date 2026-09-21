@@ -1,0 +1,80 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmin.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x12 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmin.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x10 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmin.vf v8, v4, fa0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x12 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmin.vf v8, v4, fa0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x18 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmax.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x14, 0x4a, 0x1a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmax.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x18 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmax.vf v8, v4, fa0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x54, 0x45, 0x1a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V", "CS_MODE_RISCV_F" ]
+    expected:
+      insns:
+        -
+          asm_text: "vfmax.vf v8, v4, fa0"

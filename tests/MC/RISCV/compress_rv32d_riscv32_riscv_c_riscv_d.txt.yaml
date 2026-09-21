@@ -1,0 +1,40 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x06, 0x20 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D" ]
+    expected:
+      insns:
+        -
+          asm_text: "fld ft0, 64(sp)"
+
+  -
+    input:
+      bytes: [ 0x82, 0xa0 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsd ft0, 64(sp)"
+
+  -
+    input:
+      bytes: [ 0x60, 0x3c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D" ]
+    expected:
+      insns:
+        -
+          asm_text: "fld fs0, 248(s0)"
+
+  -
+    input:
+      bytes: [ 0x60, 0xbc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV32", "CS_MODE_RISCV_C", "CS_MODE_RISCV_D" ]
+    expected:
+      insns:
+        -
+          asm_text: "fsd fs0, 248(s0)"

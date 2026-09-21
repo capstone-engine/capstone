@@ -116,7 +116,7 @@ class AddCSDetail(Patch):
             )
         elif op_group_enum == b"ARM_OP_GROUP_RegImmShift":
             return (
-                f"{self.arch}_add_cs_detail_1(MI, ".encode()
+                f"{self.arch}_add_cs_detail_2(MI, ".encode()
                 + op_group_enum
                 + b", ShOpc, ShImm);"
             )

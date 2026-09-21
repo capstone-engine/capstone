@@ -3,3 +3,4 @@
 
 int arm64(void);
 int sysz(void);
+int riscv(void);

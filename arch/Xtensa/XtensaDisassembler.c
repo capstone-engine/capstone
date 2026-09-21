@@ -235,8 +235,23 @@ static DecodeStatus DecodeMR23RegisterClass(MCInst *Inst, uint64_t RegNo,
 
 bool Xtensa_getFeatureBits(unsigned int mode, unsigned int feature)
 {
-	// we support everything
-	return true;
+	switch (feature) {
+	case Xtensa_FeatureESP32S3Ops:
+		// SIMD/AI "ee.*" ops only exist on the ESP32-S3.
+		return (mode & CS_MODE_XTENSA_ESP32S3) != 0;
+	case Xtensa_FeatureHIFI3:
+		// HiFi3 DSP ops are gated behind the ESP32-S3 in this tree.
+		return (mode & CS_MODE_XTENSA_ESP32S3) != 0;
+	case Xtensa_FeatureDensity:
+		// Code Density is a base Tensilica default option.
+		return true;
+	default:
+		// Default case is the "allow all features", which is normal
+		// Capstone behavior until
+		// https://github.com/capstone-engine/capstone/issues/1992
+		// is implemented.
+		return true;
+	}
 }
 
 // Verify SR and UR
@@ -788,12 +803,9 @@ static DecodeStatus decodeOffset_16_16Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT_RET_VAL(isIntN(Imm, 8) && "Invalid immediate",
+	CS_ASSERT_RET_VAL(isUIntN(4, Imm) && "Invalid immediate",
 			  MCDisassembler_Fail);
-	if ((Imm & 0xf) != 0)
-		MCOperand_CreateImm0(Inst, (Imm << 4));
-	else
-		MCOperand_CreateImm0(Inst, (Imm));
+	MCOperand_CreateImm0(Inst, SignExtend64(Imm << 4, 8));
 	return MCDisassembler_Success;
 }
 
@@ -801,12 +813,9 @@ static DecodeStatus decodeOffset_256_8Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT_RET_VAL(isIntN(16, Imm) && "Invalid immediate",
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
 			  MCDisassembler_Fail);
-	if ((Imm & 0x7) != 0)
-		MCOperand_CreateImm0(Inst, (Imm << 3));
-	else
-		MCOperand_CreateImm0(Inst, (Imm));
+	MCOperand_CreateImm0(Inst, SignExtend64(Imm << 3, 11));
 	return MCDisassembler_Success;
 }
 
@@ -814,12 +823,9 @@ static DecodeStatus decodeOffset_256_16Operand(MCInst *Inst, uint64_t Imm,
 					       int64_t Address,
 					       const void *Decoder)
 {
-	CS_ASSERT_RET_VAL(isIntN(16, Imm) && "Invalid immediate",
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
 			  MCDisassembler_Fail);
-	if ((Imm & 0xf) != 0)
-		MCOperand_CreateImm0(Inst, (Imm << 4));
-	else
-		MCOperand_CreateImm0(Inst, (Imm));
+	MCOperand_CreateImm0(Inst, SignExtend64(Imm << 4, 12));
 	return MCDisassembler_Success;
 }
 
@@ -827,12 +833,9 @@ static DecodeStatus decodeOffset_256_4Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT_RET_VAL(isIntN(16, Imm) && "Invalid immediate",
+	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
 			  MCDisassembler_Fail);
-	if ((Imm & 0x2) != 0)
-		MCOperand_CreateImm0(Inst, (Imm << 2));
-	else
-		MCOperand_CreateImm0(Inst, (Imm));
+	MCOperand_CreateImm0(Inst, SignExtend64(Imm << 2, 10));
 	return MCDisassembler_Success;
 }
 
@@ -840,12 +843,9 @@ static DecodeStatus decodeOffset_128_2Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+	CS_ASSERT_RET_VAL(isUIntN(7, Imm) && "Invalid immediate",
 			  MCDisassembler_Fail);
-	if ((Imm & 0x1) != 0)
-		MCOperand_CreateImm0(Inst, (Imm << 1));
-	else
-		MCOperand_CreateImm0(Inst, (Imm));
+	MCOperand_CreateImm0(Inst, (Imm << 1));
 	return MCDisassembler_Success;
 }
 
@@ -853,7 +853,7 @@ static DecodeStatus decodeOffset_128_1Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT_RET_VAL(isUIntN(8, Imm) && "Invalid immediate",
+	CS_ASSERT_RET_VAL(isUIntN(7, Imm) && "Invalid immediate",
 			  MCDisassembler_Fail);
 	MCOperand_CreateImm0(Inst, (Imm));
 	return MCDisassembler_Success;
@@ -863,12 +863,9 @@ static DecodeStatus decodeOffset_64_16Operand(MCInst *Inst, uint64_t Imm,
 					      int64_t Address,
 					      const void *Decoder)
 {
-	CS_ASSERT_RET_VAL(isIntN(16, Imm) && "Invalid immediate",
+	CS_ASSERT_RET_VAL(isUIntN(6, Imm) && "Invalid immediate",
 			  MCDisassembler_Fail);
-	if ((Imm & 0xf) != 0)
-		MCOperand_CreateImm0(Inst, (Imm << 4));
-	else
-		MCOperand_CreateImm0(Inst, (Imm));
+	MCOperand_CreateImm0(Inst, SignExtend64(Imm << 4, 10));
 	return MCDisassembler_Success;
 }
 
@@ -996,6 +993,7 @@ static DecodeStatus readInstruction32(MCInst *MI, const uint8_t *Bytes,
 }
 
 /// Read InstSize bytes from the ArrayRef and return 24 bit data
+/// InstSize cannot be larger than 8.
 static DecodeStatus readInstructionN(const uint8_t *Bytes, size_t BytesLen,
 				     uint64_t Address, unsigned InstSize,
 				     uint64_t *Size, uint64_t *Insn,
@@ -1005,6 +1003,9 @@ static DecodeStatus readInstructionN(const uint8_t *Bytes, size_t BytesLen,
 	if (BytesLen < InstSize) {
 		*Size = 0;
 		return MCDisassembler_Fail;
+	}
+	if (InstSize > 8) {
+		InstSize = 8;
 	}
 
 	*Insn = 0;
@@ -1032,17 +1033,17 @@ DecodeToMCInst(decodeToMCInst_6, fieldFromInstruction_6, uint64_t);
 DecodeInstruction(decodeInstruction_6, fieldFromInstruction_6, decodeToMCInst_6,
 		  uint64_t);
 
-static bool hasDensity()
+static bool hasDensity(MCInst *MI)
 {
-	return true;
+	return Xtensa_getFeatureBits(MI->csh->mode, Xtensa_FeatureDensity);
 }
-static bool hasESP32S3Ops()
+static bool hasESP32S3Ops(MCInst *MI)
 {
-	return true;
+	return Xtensa_getFeatureBits(MI->csh->mode, Xtensa_FeatureESP32S3Ops);
 }
-static bool hasHIFI3()
+static bool hasHIFI3(MCInst *MI)
 {
-	return true;
+	return Xtensa_getFeatureBits(MI->csh->mode, Xtensa_FeatureHIFI3);
 }
 
 static DecodeStatus getInstruction(MCInst *MI, uint64_t *Size,
@@ -1054,7 +1055,7 @@ static DecodeStatus getInstruction(MCInst *MI, uint64_t *Size,
 	bool IsLittleEndian = MI->csh->mode & CS_MODE_LITTLE_ENDIAN;
 
 	// Parse 16-bit instructions
-	if (hasDensity()) {
+	if (hasDensity(MI)) {
 		Result = readInstruction16(MI, Bytes, BytesLen, Address, Size,
 					   &Insn, IsLittleEndian);
 		if (Result == MCDisassembler_Fail)
@@ -1080,7 +1081,7 @@ static DecodeStatus getInstruction(MCInst *MI, uint64_t *Size,
 		return Result;
 	}
 
-	if (hasESP32S3Ops()) {
+	if (hasESP32S3Ops(MI)) {
 		// Parse ESP32S3 24-bit instructions
 		Result = readInstruction24(MI, Bytes, BytesLen, Address, Size,
 					   &Insn, IsLittleEndian, true);
@@ -1107,13 +1108,13 @@ static DecodeStatus getInstruction(MCInst *MI, uint64_t *Size,
 		}
 	}
 
-	if (hasHIFI3()) {
+	if (hasHIFI3(MI)) {
 		Result = decodeInstruction_3(DecoderTableHIFI324, MI, Insn,
 					     Address, NULL);
 		if (Result != MCDisassembler_Fail)
 			return Result;
 
-		Result = readInstructionN(Bytes, BytesLen, Address, 48, Size,
+		Result = readInstructionN(Bytes, BytesLen, Address, 6, Size,
 					  &Insn, IsLittleEndian);
 		if (Result == MCDisassembler_Fail)
 			return MCDisassembler_Fail;

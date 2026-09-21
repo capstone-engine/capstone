@@ -3268,4 +3268,367 @@ test_cases:
           regs_write: [ cc ]
       -
         asm_text: "bgnd"
-
+  -
+    input:
+      bytes: [ 0x2F, 0x5A, 0x66, 0x3E, 0x14, 0x80, 0x73, 0x8B, 0x98, 0xDD, 0xF6, 0xC9, 0x45, 0x42, 0x4E, 0x20, 0x80, 0xBF, 0xAE, 0xED ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_RS08 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        # TNY addressing mode: The lower 4 bits of the opcode define the direct address.
+        # For 'inc $0F' (0x2F), the direct address is 0x0F.
+        asm_text: "inc $0F"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x000F
+                direct_addr_set: true
+                access: CS_AC_READ_WRITE
+                size: 1
+          regs_write: [ cc ]
+      -
+        # TNY addressing mode: The lower 4 bits of the opcode define the direct address.
+        # For 'dec $0A' (0x5A), the direct address is 0x0A.
+        asm_text: "dec $0A"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x000A
+                direct_addr_set: true
+                access: CS_AC_READ_WRITE
+                size: 1
+          regs_write: [ cc ]
+      -
+        # TNY addressing mode: The lower 4 bits of the opcode define the direct address.
+        # For 'add $06' (0x66), the direct address is 0x06.
+        asm_text: "add $06"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                access: CS_AC_READ_WRITE
+                size: 1
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0006
+                direct_addr_set: true
+                access: CS_AC_READ
+                size: 1
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_write: [ cc, a ]
+          regs_read: [ cc, a ]
+      -
+        asm_text: "mov #20, $80"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 20
+                access: CS_AC_READ
+                size: 1
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0080
+                direct_addr_set: true
+                access: CS_AC_WRITE
+                size: 1
+      -
+        # TNY addressing mode: The lower 4 bits of the opcode define the direct address.
+        # For 'sub $03' (0x73), the direct address is 0x03.
+        asm_text: "sub $03"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                access: CS_AC_READ_WRITE
+                size: 1
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0003
+                direct_addr_set: true
+                access: CS_AC_READ
+                size: 1
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_write: [ cc, a ]
+          regs_read: [ cc, a ]
+      -
+        # SRT addressing mode: The lower 5 bits of the opcode define the direct address.
+        # For 'clr $0B' (0x8B), the direct address is 0x0B.
+        asm_text: "clr $0B"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x000B
+                direct_addr_set: true
+                access: CS_AC_WRITE
+                size: 1
+      -
+        # SRT addressing mode: The lower 5 bits of the opcode define the direct address.
+        # For 'clr $18' (0x98), the direct address is 0x18.
+        asm_text: "clr $18"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0018
+                direct_addr_set: true
+                access: CS_AC_WRITE
+                size: 1
+      -
+        # SRT addressing mode: The lower 5 bits of the opcode define the direct address.
+        # For 'lda $1d' (0xDD), the direct address is 0x1D.
+        asm_text: "lda $1d"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                access: CS_AC_WRITE
+                size: 1
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x001d
+                direct_addr_set: true
+                access: CS_AC_READ
+                size: 1
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_write: [ cc, a ]
+      -
+        # SRT addressing mode: The lower 5 bits of the opcode define the direct address.
+        # For 'sta $16' (0xF6), the direct address is 0x16.
+        asm_text: "sta $16"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                access: CS_AC_READ
+                size: 1
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0016
+                direct_addr_set: true
+                access: CS_AC_WRITE
+                size: 1
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, a ]
+      -
+        # SRT addressing mode: The lower 5 bits of the opcode define the direct address.
+        # For 'lda $09' (0xC9), the direct address is 0x09.
+        asm_text: "lda $09"
+        details:
+          m680x:
+            operands: 
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                access: CS_AC_WRITE
+                size: 1
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0009
+                direct_addr_set: true
+                access: CS_AC_READ
+                size: 1
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc ]
+          
+      -
+        asm_text: "sha"
+        details:
+          regs_read: [ spc ]
+          regs_write: [ a ]
+      -
+        asm_text: "sla"
+        details:
+          regs_read: [ spc ]
+          regs_write: [ a ]
+          
+      -
+        asm_text: "mov $20, $80"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0020
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_READ
+                ext_indirect: -1
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0080
+                direct_addr_set: true
+                size: 1
+                access: CS_AC_WRITE
+                ext_indirect: -1
+      -
+        asm_text: "bgnd"
+      -
+        asm_text: "stop"
+      -
+        # SRT addressing mode: The lower 5 bits of the opcode define the direct address.
+        # For 'sta $0d' (0xED), the direct address is 0x0D.
+        asm_text: "sta $0d"
+        details:
+          m680x:
+            operands: 
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                access: CS_AC_READ
+                size: 1
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x000D
+                direct_addr_set: true
+                access: CS_AC_WRITE
+                size: 1
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, a ]
+  -
+    input:
+      bytes: [ 0x18, 0x92, 0xDD, 0x18, 0xB6, 0x12, 0x34, 0x18, 0x39, 0x18, 0x35, 0x12, 0x18, 0x42, 0x18, 0xA7, 0x18, 0xC0, 0x11, 0x11, 0x18, 0xC2, 0x11, 0x11, 0x18, 0x8A, 0x11, 0x11 ]
+      arch: "m680x"
+      options: [ CS_OPT_DETAIL, CS_MODE_M680X_HCS12X ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "sbex $dd"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                access: CS_AC_READ_WRITE
+                size: 2
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x00DD
+                direct_addr_set: true
+                access: CS_AC_READ_WRITE
+                size: 2
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, x ]
+      -
+        asm_text: "gldaa $1234"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: a
+                access: CS_AC_READ_WRITE
+                size: 1
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1234
+                access: CS_AC_READ_WRITE
+                size: 1
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, a ]
+          regs_write: [ cc,a ]
+      -
+        asm_text: "pshcw"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: cc
+                access: CS_AC_READ
+                size: 1
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc ]
+      -
+        asm_text: "btas $12"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_DIRECT
+                direct_addr: 0x0012
+                direct_addr_set: true
+                size: 1
+      -
+        asm_text: "incx"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: x
+                access: CS_AC_READ_WRITE
+                size: 2
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, x ]
+          regs_write: [ cc, x ]
+      -
+        asm_text: "sys"
+      -
+        asm_text: "suby #4369"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                access: CS_AC_READ_WRITE
+                size: 2
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 0x1111
+                access: CS_AC_READ
+                size: 2
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, y ]
+          regs_write: [ cc, y ]
+      -
+        asm_text: "sbey $1111"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_REGISTER
+                reg: y
+                access: CS_AC_READ_WRITE
+                size: 2
+              -
+                type: M680X_OP_EXTENDED
+                ext_address: 0x1111
+                access: CS_AC_READ_WRITE
+                size: 2
+            flags: [M680X_FIRST_OP_IN_MNEM]
+          regs_read: [ cc, y ]
+          regs_write: [ cc, y ]
+      -
+        asm_text: "orx #17"
+        details:
+          m680x:
+            operands:
+              -
+                type: M680X_OP_IMMEDIATE
+                imm: 0x11
+                access: CS_AC_READ
+                size: 1
+          regs_read: [ cc ]
+          regs_write: [ cc ]

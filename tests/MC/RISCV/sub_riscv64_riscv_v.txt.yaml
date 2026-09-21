@@ -1,0 +1,500 @@
+test_cases:
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsub.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsub.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x08 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsub.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x0a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsub.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x0c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrsub.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x0e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrsub.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x47, 0x0c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrsub.vi v8, v4, 15, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0xb4, 0x47, 0x0e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vrsub.vi v8, v4, 15"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xc8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsubu.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xca ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsubu.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xc8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsubu.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xca ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsubu.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xcc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsub.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xce ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsub.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xcc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsub.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xce ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsub.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xd8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsubu.wv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xda ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsubu.wv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xd8 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsubu.wx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xda ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsubu.wx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xdc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsub.wv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0xde ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsub.wv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xdc ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsub.wx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0xde ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vwsub.wx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsbc.vvm v8, v4, v20, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x02, 0x4a, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsbc.vvm v4, v4, v20, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x44, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsbc.vvm v8, v4, v8, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x48 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vsbc.vxm v8, v4, a0, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x4c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmsbc.vvm v8, v4, v20, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x02, 0x4a, 0x4c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmsbc.vvm v4, v4, v20, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x44, 0x4c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmsbc.vvm v8, v4, v8, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x4c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmsbc.vxm v8, v4, a0, v0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x4e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmsbc.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x4e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vmsbc.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x88 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vssubu.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x8a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vssubu.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x88 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vssubu.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x8a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vssubu.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vssub.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x04, 0x4a, 0x8e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vssub.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x8c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vssub.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x44, 0x45, 0x8e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vssub.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0x2c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vasub.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0x2e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vasub.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0x2c ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vasub.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0x2e ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vasub.vx v8, v4, a0"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0x28 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vasubu.vv v8, v4, v20, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x24, 0x4a, 0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vasubu.vv v8, v4, v20"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0x28 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vasubu.vx v8, v4, a0, v0.t"
+
+  -
+    input:
+      bytes: [ 0x57, 0x64, 0x45, 0x2a ]
+      arch: "CS_ARCH_RISCV"
+      options: [ "CS_MODE_RISCV64", "CS_MODE_RISCV_V" ]
+    expected:
+      insns:
+        -
+          asm_text: "vasubu.vx v8, v4, a0"

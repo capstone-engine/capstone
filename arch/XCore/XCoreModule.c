@@ -14,6 +14,8 @@ cs_err XCore_global_init(cs_struct *ud)
 {
 	MCRegisterInfo *mri;
 	mri = cs_mem_malloc(sizeof(*mri));
+	if (!mri)
+		return CS_ERR_MEM;
 
 	XCore_init(mri);
 	ud->printer = XCore_printInst;
@@ -26,6 +28,8 @@ cs_err XCore_global_init(cs_struct *ud)
 	ud->insn_id = XCore_get_insn_id;
 	ud->insn_name = XCore_insn_name;
 	ud->group_name = XCore_group_name;
+	ud->insn_map = XCore_insns;
+	ud->insn_map_size = XCore_insn_count;
 
 	return CS_ERR_OK;
 }

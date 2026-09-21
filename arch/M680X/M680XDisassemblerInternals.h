@@ -20,6 +20,8 @@ typedef enum e_cpu_type {
 	M680X_CPU_TYPE_CPU12, // M680X Motorola/Freescale CPU12 mode
 	// used on M68HC12/HCS12
 	M680X_CPU_TYPE_HCS08, // M680X Freescale HCS08 mode
+	M680X_CPU_TYPE_RS08, // M680X Freescale RSS08 mode
+	M680X_CPU_TYPE_HCS12X, // M680X Freescale HCS12X mode
 	M680X_CPU_TYPE_ENDING,
 } e_cpu_type;
 
