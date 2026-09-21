@@ -1,3 +1,4 @@
+#ifdef CAPSTONE_HAS_X86
 //===--- X86InstPrinterCommon.cpp - X86 assembly instruction printing -----===//
 //
 //                     The LLVM Compiler Infrastructure
@@ -255,3 +256,5 @@ void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
 	}
 }
 #endif
+
+#endif // CAPSTONE_HAS_X86

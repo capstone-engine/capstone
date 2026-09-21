@@ -6,16 +6,52 @@
 # The macro for each file is taken from a sibling file in the same directory
 # that already carries a guard, never guessed from the directory name.
 # Directories where no file carries a guard yet are listed in
-# explicitMacroByDirectory below.
+# explicitMacroForDirectory below.
 #
-# Idempotent: a file that already opens with a CAPSTONE_HAS_ guard is skipped.
-# Run it after every sync with upstream — upstream keeps adding architecture
-# sources without a guard, because its own CMake build excludes them by file
-# list instead, something SwiftPM cannot express.
+# Not every CAPSTONE_HAS_* macro names an architecture: CAPSTONE_HAS_OSXKERNEL
+# selects a kernel-side environment and appears in files that have no
+# architecture guard at all. Treating it as one made this script skip
+# arch/X86/X86InstPrinterCommon.c, which then stayed compiled with X86 disabled
+# and failed to link against the guarded X86Mapping.c. Hence the explicit
+# exclusion list rather than a bare CAPSTONE_HAS_ prefix match.
+#
+# Run with --check to report rather than edit; exits non-zero if any file is
+# missing its guard. Use it after every sync with upstream — upstream keeps
+# adding architecture sources without a guard, because its own CMake build
+# excludes them by file list instead, something SwiftPM cannot express.
 
 set -euo pipefail
 
 cd "$(dirname "$0")/../.."
+
+checkOnly=0
+if [ "${1:-}" = "--check" ]; then
+	checkOnly=1
+fi
+
+# CAPSTONE_HAS_* macros that do not name an architecture.
+nonArchitectureMacros="CAPSTONE_HAS_OSXKERNEL"
+
+isArchitectureMacro() {
+	for excluded in $nonArchitectureMacros; do
+		[ "$1" = "$excluded" ] && return 1
+	done
+	return 0
+}
+
+# Prints the architecture guard macro a file carries, empty if it carries none.
+guardMacroIn() {
+	local candidate
+	while read -r candidate; do
+		[ -z "$candidate" ] && continue
+		if isArchitectureMacro "$candidate"; then
+			echo "$candidate"
+			return 0
+		fi
+	done < <(grep -hoE '^#(ifdef|if defined\()\s*CAPSTONE_HAS_[A-Z0-9_]+' "$1" 2>/dev/null |
+		grep -oE 'CAPSTONE_HAS_[A-Z0-9_]+' || true)
+	echo ""
+}
 
 # Directories where not a single file carries a guard yet, so no macro can be
 # read off a sibling. Verified against CMakeLists.txt.
@@ -28,18 +64,21 @@ explicitMacroForDirectory() {
 
 guardedCount=0
 skippedCount=0
+missingCount=0
 
 for sourceFile in $(find arch -name "*.c" | sort); do
-	if grep -qE '^#ifdef CAPSTONE_HAS_|^#if defined\(CAPSTONE_HAS_' "$sourceFile"; then
+	if [ -n "$(guardMacroIn "$sourceFile")" ]; then
 		skippedCount=$((skippedCount + 1))
 		continue
 	fi
 
 	architectureDirectory=$(dirname "$sourceFile")
-	# No sibling carries a guard yet -> grep exits non-zero, which pipefail
-	# would turn into a script abort. Fall through to the explicit table.
-	guardMacro=$(grep -h -m1 -oE '^#ifdef CAPSTONE_HAS_[A-Z0-9_]+' "$architectureDirectory"/*.c 2>/dev/null |
-		sed 's/#ifdef //' | sort -u | head -1 || true)
+	guardMacro=""
+	for sibling in "$architectureDirectory"/*.c; do
+		[ "$sibling" = "$sourceFile" ] && continue
+		guardMacro=$(guardMacroIn "$sibling")
+		[ -n "$guardMacro" ] && break
+	done
 
 	if [ -z "$guardMacro" ]; then
 		guardMacro=$(explicitMacroForDirectory "$architectureDirectory")
@@ -48,6 +87,12 @@ for sourceFile in $(find arch -name "*.c" | sort); do
 	if [ -z "$guardMacro" ]; then
 		echo "ERROR: cannot determine guard macro for $sourceFile" >&2
 		exit 1
+	fi
+
+	if [ "$checkOnly" -eq 1 ]; then
+		echo "missing guard: $sourceFile (expected $guardMacro)"
+		missingCount=$((missingCount + 1))
+		continue
 	fi
 
 	# Ensure the file ends with a newline before appending #endif.
@@ -62,4 +107,9 @@ for sourceFile in $(find arch -name "*.c" | sort); do
 done
 
 echo "---"
-echo "guarded: $guardedCount, already guarded: $skippedCount"
+if [ "$checkOnly" -eq 1 ]; then
+	echo "missing: $missingCount, guarded: $skippedCount"
+	[ "$missingCount" -eq 0 ] || exit 1
+else
+	echo "guarded: $guardedCount, already guarded: $skippedCount"
+fi

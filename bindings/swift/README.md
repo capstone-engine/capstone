@@ -76,3 +76,14 @@ extensions; without the guards, disabling an architecture produces a link
 failure rather than a smaller library. The script reads the macro for each file
 off a sibling that is already guarded rather than deriving it from the
 directory name, and is idempotent.
+
+Pass `--check` to report instead of edit; it exits non-zero when any file is
+missing its guard, which makes it usable as a CI gate:
+
+```sh
+bindings/swift/UpdateArchitectureGuards.sh --check
+```
+
+Note that a missing guard only shows up when the architecture in question is
+**disabled** — with everything enabled the build links fine either way. `--check`
+catches it without having to build each combination.
