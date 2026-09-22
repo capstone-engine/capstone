@@ -114,4 +114,13 @@ static inline int x86_get_bit_mode(cs_mode mode)
 	return mode & (CS_MODE_64 | CS_MODE_32 | CS_MODE_16);
 }
 
+static inline uint64_t x86_get_address_mask(cs_mode mode)
+{
+	if (x86_has_feature(mode, CS_MODE_16))
+		return UINT16_MAX;
+	if (x86_has_feature(mode, CS_MODE_32))
+		return UINT32_MAX;
+	return UINT64_MAX;
+}
+
 #endif

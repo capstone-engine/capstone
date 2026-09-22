@@ -940,11 +940,10 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 			} else {
 				// only immediate as address of memory
 				if (DispVal < 0) {
-					SStream_concat(
-						O, "0x%" PRIx64,
-						arch_masks[x86_get_bit_mode(
-							MI->csh->mode)] &
-							DispVal);
+					SStream_concat(O, "0x%" PRIx64,
+						       x86_get_address_mask(
+							       MI->csh->mode) &
+							       DispVal);
 				} else {
 					if (DispVal > HEX_THRESHOLD)
 						SStream_concat(O, "0x%" PRIx64,

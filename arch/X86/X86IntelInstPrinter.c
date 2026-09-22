@@ -1215,8 +1215,8 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 					MI->op1_size = 8;
 				if (DispVal < 0) {
 					printImm(MI, O,
-						 arch_masks[x86_get_bit_mode(
-							 MI->csh->mode)] &
+						 x86_get_address_mask(
+							 MI->csh->mode) &
 							 DispVal,
 						 true);
 				} else {

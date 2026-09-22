@@ -7249,3 +7249,43 @@ test_cases:
       insns:
       -
         asm_text: "jno 0xffffffffd8a5fad5"
+  -
+    input:
+      name: "Coverity CID 656296: mixed 16-bit modes (AT&T)"
+      bytes: [ 0x8b, 0x06, 0xff, 0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_MODE_32, CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "movw 0xffff, %ax"
+  -
+    input:
+      name: "Coverity CID 656296: mixed 16-bit modes (Intel)"
+      bytes: [ 0x8b, 0x06, 0xff, 0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_MODE_32, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov ax, word ptr [0xffff]"
+  -
+    input:
+      name: "Coverity CID 656296: mixed 32-bit modes (AT&T)"
+      bytes: [ 0x8b, 0x05, 0xff, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "movl 0xffffffff, %eax"
+  -
+    input:
+      name: "Coverity CID 656296: mixed 32-bit modes (Intel)"
+      bytes: [ 0x8b, 0x05, 0xff, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov eax, dword ptr [0xffffffff]"
