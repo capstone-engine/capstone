@@ -701,8 +701,7 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 
 		if (imm < 0)
 			printImm(MI, O,
-				 arch_masks[x86_get_bit_mode(MI->csh->mode)] &
-					 imm,
+				 x86_get_address_mask(MI->csh->mode) & imm,
 				 true);
 		else
 			printImm(MI, O, imm, true);
