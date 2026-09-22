@@ -7249,3 +7249,24 @@ test_cases:
       insns:
       -
         asm_text: "jno 0xffffffffd8a5fad5"
+
+  -
+    input:
+      name: "Coverity CID 656295: negative memory offset with default mode (AT&T)"
+      bytes: [ 0xa1, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "movabsl 0xffffffffffffffff, %eax"
+  -
+    input:
+      name: "Coverity CID 656295: negative memory offset with default mode (Intel)"
+      bytes: [ 0xa1, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+    expected:
+      insns:
+      -
+        asm_text: "movabs eax, dword ptr [0xffffffffffffffff]"

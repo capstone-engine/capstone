@@ -562,10 +562,9 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 				.operands[MI->flat_insn->detail->x86.op_count]
 				.mem.disp = imm;
 		if (imm < 0) {
-			SStream_concat(
-				O, "0x%" PRIx64,
-				arch_masks[x86_get_bit_mode(MI->csh->mode)] &
-					imm);
+			SStream_concat(O, "0x%" PRIx64,
+				       x86_get_address_mask(MI->csh->mode) &
+					       imm);
 		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%" PRIx64, imm);
