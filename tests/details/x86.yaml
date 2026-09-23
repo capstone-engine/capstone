@@ -288,11 +288,15 @@ test_cases:
                 mem_base: bx
                 mem_index: di
                 size: 1
+                access: CS_AC_READ
               -
                 type: X86_OP_REG
                 reg: bh
                 size: 1
-          regs_read: [ bx, di ]
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_RESET_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_UNDEFINED_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_RESET_CF ]
+          regs_read: [ bx, di, bh ]
+          regs_write: [ flags ]
       -
         asm_text: "mov word ptr [bx], sp"
         details:

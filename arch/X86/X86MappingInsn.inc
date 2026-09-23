@@ -18710,7 +18710,7 @@
 {
 	X86_TEST16mr, X86_INS_TEST, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
@@ -18759,7 +18759,7 @@
 {
 	X86_TEST32mr, X86_INS_TEST, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
@@ -18857,7 +18857,7 @@
 {
 	X86_TEST8mr, X86_INS_TEST, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { X86_REG_EFLAGS, 0 }, { 0 }, 0, 0
 #endif
 },
 
