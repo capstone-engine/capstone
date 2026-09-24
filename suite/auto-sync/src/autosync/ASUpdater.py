@@ -8,7 +8,6 @@ import argparse
 import logging as log
 import os
 import shutil
-import subprocess
 import sys
 import json
 from enum import StrEnum
@@ -152,16 +151,7 @@ class ASUpdater:
             log.debug(f"Copy {path} to {dest}")
             shutil.copy(file, dest)
 
-    def check_tree_sitter(self) -> None:
-        ts_dir = get_path("{VENDOR_DIR}").joinpath("tree-sitter-cpp")
-        if not ts_dir.exists():
-            log.info("tree-sitter was not fetched. Cloning it now...")
-            subprocess.run(
-                ["git", "submodule", "update", "--init", "--recursive"], check=True
-            )
-
     def translate(self) -> None:
-        self.check_tree_sitter()
         translator_config = get_path("{CPP_TRANSLATOR_CONFIG}")
         configurator = Configurator(self.arch, translator_config)
         translator = Translator(configurator, self.wait_for_user)
