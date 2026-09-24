@@ -291,7 +291,7 @@ Tags:
   SwiftName: AArch64.SveVecLenSpecifier
   EnumExtensibility: closed
 - Name: aarch64_sysreg
-  SwiftName: AArch64.SystemRegister
+  SwiftName: AArch64.SysReg
   EnumExtensibility: closed
 - Name: aarch64_tlbi
   SwiftName: AArch64.Tlbi
@@ -362,8 +362,14 @@ Tags:
 - Name: arm_spsr_cpsr_bits
   SwiftName: Arm.SpsrCpsrBits
   EnumExtensibility: closed
+- Name: arm_suppl_info
+  SwiftName: Arm.SupplInfo
+- Name: arm_sysop
+  SwiftName: Arm.SysOp
+- Name: arm_sysop_reg
+  SwiftName: Arm.SysOpReg
 - Name: arm_sysreg
-  SwiftName: Arm.SystemRegister
+  SwiftName: Arm.SysReg
   EnumExtensibility: closed
 - Name: arm_vectordata_type
   SwiftName: Arm.VectorDataType
@@ -412,6 +418,8 @@ Tags:
 - Name: bpf_ext_type
   SwiftName: Bpf.Extension
   EnumExtensibility: closed
+- Name: bpf_op_mem
+  SwiftName: Bpf.OperandMemory
 - Name: bpf_op_type
   SwiftName: Bpf.OperandType
   EnumExtensibility: closed
@@ -424,9 +432,6 @@ Tags:
 - Name: evm_insn
   SwiftName: Evm.InstructionId
   EnumExtensibility: closed
-- Name: evm_reg
-  SwiftName: Evm.Register
-  EnumExtensibility: closed
 #MARK: HPPA
 - Name: cs_hppa
   SwiftName: Hppa
@@ -437,6 +442,18 @@ Tags:
   EnumExtensibility: closed
 - Name: hppa_insn
   SwiftName: Hppa.InstructionId
+  EnumExtensibility: closed
+- Name: hppa_ext
+  SwiftName: Hppa.ExtendedInstructionInfo
+- Name: hppa_mem
+  SwiftName: Hppa.MemoryOperand
+- Name: hppa_modifier
+  SwiftName: Hppa.Modifier
+- Name: hppa_modifier_type
+  SwiftName: Hppa.ModifierType
+  EnumExtensibility: closed
+- Name: hppa_op_type
+  SwiftName: Hppa.OperandType
   EnumExtensibility: closed
 - Name: hppa_reg
   SwiftName: Hppa.Register
@@ -455,6 +472,13 @@ Tags:
 - Name: loongarch_insn_form
   SwiftName: LoongArch.InstructionForm
   EnumExtensibility: closed
+- Name: loongarch_op_mem
+  SwiftName: LoongArch.MemoryOperand
+- Name: loongarch_op_type
+  SwiftName: LoongArch.OperandType
+  EnumExtensibility: closed
+- Name: loongarch_suppl_info
+  SwiftName: LoongArch.SupplInfo
 - Name: loongarch_reg
   SwiftName: LoongArch.Register
   EnumExtensibility: closed
@@ -463,8 +487,17 @@ Tags:
   SwiftName: M680x
 - Name: cs_m680x_op
   SwiftName: M680x.Operand
-- Name: mos65xx_group_type
-  SwiftName: M680x.GroupKind
+- Name: m680x_group_type
+  SwiftName: M680x.GroupType
+  EnumExtensibility: closed
+- Name: m680x_op_ext
+  SwiftName: M680x.ExtendOperand
+- Name: m680x_op_idx
+  SwiftName: M680x.IndexOperand
+- Name: m680x_op_rel
+  SwiftName: M680x.RelativeOperand
+- Name: m680x_op_type
+  SwiftName: M680x.OperandType
   EnumExtensibility: closed
 - Name: m680x_insn_group
   SwiftName: M680x.InstructionGroup
@@ -482,11 +515,45 @@ Tags:
   SwiftName: M68k.Operand
 - Name: cs_m68k_op_reg_pair
   SwiftName: M68k.RegisterPair
+- Name: m68k_address_mode
+  SwiftName: M68k.AddressMode
+  EnumExtensibility: closed
+- Name: m68k_cpu_size
+  SwiftName: M68k.CpuSize
+  EnumExtensibility: closed
+- Name: m68k_fpu_size
+  SwiftName: M68k.FpuSize
+  EnumExtensibility: closed
+- Name: m68k_group_type
+  SwiftName: M68k.GroupType
+  EnumExtensibility: closed
 - Name: m68k_insn_group
   SwiftName: M68k.InstructionGroup
   EnumExtensibility: closed
 - Name: m68k_insn
   SwiftName: M68k.InstructionId
+  EnumExtensibility: closed
+- Name: m68k_op_br_disp
+  SwiftName: M68k.OperandBrDisp
+- Name: m68k_op_br_disp_size
+  SwiftName: M68k.OperandBrDispSize
+  EnumExtensibility: closed
+- Name: m68k_op_flags
+  SwiftName: M68k.OperandFlags
+  EnumExtensibility: closed
+- Name: m68k_op_fp_extended
+  SwiftName: M68k.OperandExtendedFp
+- Name: m68k_op_fp_packed
+  SwiftName: M68k.OperandPackedFp
+- Name: m68k_op_mem
+  SwiftName: M68k.MemoryOperand
+- Name: m68k_op_size
+  SwiftName: M68k.OperandSize
+- Name: m68k_op_type
+  SwiftName: M68k.OperandType
+  EnumExtensibility: closed
+- Name: m68k_size_type
+  SwiftName: M68k.SizeType
   EnumExtensibility: closed
 - Name: m68k_reg
   SwiftName: M68k.Register
@@ -502,6 +569,11 @@ Tags:
 - Name: mips_insn
   SwiftName: Mips.InstructionId
   EnumExtensibility: closed
+- Name: mips_op_mem
+  SwiftName: Mips.MemoryOperand
+- Name: mips_op_type
+  SwiftName: Mips.OperandType
+  EnumExtensibility: closed
 - Name: mips_reg
   SwiftName: Mips.Register
   EnumExtensibility: closed
@@ -510,11 +582,20 @@ Tags:
   SwiftName: Mos65xx
 - Name: cs_mos65xx_op
   SwiftName: Mos65xx.Operand
+- Name: mos65xx_address_mode
+  SwiftName: Mos65xx.AddressMode
+  EnumExtensibility: closed
+- Name: mos65xx_group_type
+  SwiftName: Mos65xx.GroupType
+  EnumExtensibility: closed
 - Name: mos65xx_insn_group
   SwiftName: Mos65xx.InstructionGroup
   EnumExtensibility: closed
 - Name: mos65xx_insn
   SwiftName: Mos65xx.InstructionId
+  EnumExtensibility: closed
+- Name: mos65xx_op_type
+  SwiftName: Mos65xx.OperandType
   EnumExtensibility: closed
 - Name: mos65xx_reg
   SwiftName: Mos65xx.Register
@@ -554,7 +635,7 @@ Tags:
   SwiftName: RiscV.Register
   EnumExtensibility: closed
 - Name: riscv_sysreg
-  SwiftName: RiscV.SystemRegister
+  SwiftName: RiscV.SysReg
   EnumExtensibility: closed
 #MARK: SH
 - Name: cs_sh

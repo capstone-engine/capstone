@@ -4,6 +4,7 @@
 
 @_exported public import capstone
 
+/// Capstone handle.
 public struct Capstone: ~Copyable {
 	public let handle: csh
 
@@ -12,7 +13,7 @@ public struct Capstone: ~Copyable {
 		self.handle = handle
 	}
 
-	/// See ``cs_open``.
+	/// See ``/capstone/cs_open``.
 	@inlinable
 	public init(
 		arch: CapstoneArch,
@@ -131,8 +132,8 @@ public extension Capstone {
 				}
 			}
 		}
-		read = read.extracting(first: rcount)
-		write = write.extracting(first: rcount)
+		read = read._mutatingExtracting(first: rcount)
+		write = write._mutatingExtracting(first: rcount)
 		try err.check()
 	}
 
