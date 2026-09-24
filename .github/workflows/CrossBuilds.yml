@@ -175,6 +175,7 @@ jobs:
       run: |
         cmake -DCMAKE_BUILD_TYPE=${build_type} \
           -DCAPSTONE_BUILD_STATIC_LIBS=ON \
+          -DPROJECT_VERSION=${{ github.event.release.tag_name }} \
           -S . \
           -DCAPSTONE_BUILD_CSTEST=ON \
           -DCAPSTONE_BUILD_DIET=${diet_build} \
@@ -254,7 +255,7 @@ jobs:
         path: ./build/capstone-*.exe
 
     - name: Upload NSIS installer to release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       if: startsWith(github.ref, 'refs/tags') && github.event_name == 'release' && matrix.config.build_exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
