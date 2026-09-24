@@ -1,6 +1,76 @@
 test_cases:
   -
     input:
+      name: "issue 2576 test memory operand metadata"
+      bytes: [ 0x66, 0x85, 0x58, 0x01, 0x85, 0x58, 0x01 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "test word ptr [rax + 1], bx"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                size: 2
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: bx
+                size: 2
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_RESET_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_UNDEFINED_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_RESET_CF ]
+          regs_read: [ rax, bx ]
+          regs_write: [ rflags ]
+      -
+        asm_text: "test dword ptr [rax + 1], ebx"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: ebx
+                size: 4
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_RESET_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_UNDEFINED_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_RESET_CF ]
+          regs_read: [ rax, ebx ]
+          regs_write: [ rflags ]
+  -
+    input:
+      name: "issue 2576 test memory operand metadata (AT&T)"
+      bytes: [ 0x84, 0x05, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "testb %al, (%rip)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: rip
+                size: 1
+                access: CS_AC_READ
+            eflags: [ X86_EFLAGS_RESET_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_UNDEFINED_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_RESET_CF ]
+          regs_read: [ al, rip ]
+          regs_write: [ rflags ]
+  -
+    input:
       name: "issue 2899 cmpsd operand access (AT&T)"
       bytes: [ 0xf3, 0xa7 ]
       arch: "CS_ARCH_X86"
@@ -4546,10 +4616,12 @@ test_cases:
             operands:
               -
                 type: X86_OP_MEM
+                access: CS_AC_READ
               -
                 type: X86_OP_REG
                 reg: r15
                 access: CS_AC_READ
+            eflags: [ X86_EFLAGS_RESET_OF, X86_EFLAGS_MODIFY_SF, X86_EFLAGS_MODIFY_ZF, X86_EFLAGS_UNDEFINED_AF, X86_EFLAGS_MODIFY_PF, X86_EFLAGS_RESET_CF ]
           regs_read: [ rbp, r15 ]
           regs_write: [ rflags ]
   -
