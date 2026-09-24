@@ -13,9 +13,18 @@ let package = Package(
 	name: "capstone",
 	products: [
 		.library(name: "capstone", targets: ["capstone"]),
+		.library(name: "CapstoneKit", targets: ["CapstoneKit"]),
 	],
 	traits: traits,
 	targets: [
+		.target(
+			name: "CapstoneKit",
+			dependencies: ["capstone"],
+			path: "bindings/swift",
+			swiftSettings: [
+				.enableExperimentalFeature("SafeInteropWrappers"),
+			]
+		),
 		.target(
 			name: "capstone",
 			path: ".",
