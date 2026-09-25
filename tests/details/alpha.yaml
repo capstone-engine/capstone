@@ -40,7 +40,7 @@ test_cases:
                 type: ALPHA_OP_REG
                 reg: $29
       -
-        asm_text: "lda $30,0xffd0($30)"
+        asm_text: "lda $30,-0x30($30)"
         details:
           regs_read: [ $30 ]
           regs_write: [ $30 ]
@@ -51,7 +51,7 @@ test_cases:
                 reg: $30
               -
                 type: ALPHA_OP_IMM
-                imm: 0xffd0
+                imm: -0x30
               -
                 type: ALPHA_OP_REG
                 reg: $30
@@ -112,7 +112,7 @@ test_cases:
                 type: ALPHA_OP_REG
                 reg: $29
       -
-        asm_text: "lda $30,0xffd0($30)"
+        asm_text: "lda $30,-0x30($30)"
         details:
           regs_read: [ $30 ]
           regs_write: [ $30 ]
@@ -123,7 +123,7 @@ test_cases:
                 reg: $30
               -
                 type: ALPHA_OP_IMM
-                imm: 0xffd0
+                imm: -0x30
               -
                 type: ALPHA_OP_REG
                 reg: $30
