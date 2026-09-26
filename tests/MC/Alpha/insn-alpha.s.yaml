@@ -79,7 +79,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "beq $1,0xfffffffffffffff4"
+          asm_text: "beq $1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xf8 ]
@@ -88,7 +88,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "bge $1,0xfffffffffffffff4"
+          asm_text: "bge $1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xfc ]
@@ -97,7 +97,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "bgt $1,0xfffffffffffffff4"
+          asm_text: "bgt $1,0xfff4"
   -
     input:
       bytes: [ 0x03, 0x01, 0x22, 0x44 ]
@@ -142,7 +142,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "blbc $1,0xfffffffffffffff4"
+          asm_text: "blbc $1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xf0 ]
@@ -151,7 +151,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "blbs $1,0xfffffffffffffff4"
+          asm_text: "blbs $1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xec ]
@@ -160,7 +160,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "ble $1,0xfffffffffffffff4"
+          asm_text: "ble $1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xe8 ]
@@ -169,7 +169,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "blt $1,0xfffffffffffffff4"
+          asm_text: "blt $1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xf4 ]
@@ -178,7 +178,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "bne $1,0xfffffffffffffff4"
+          asm_text: "bne $1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0xe0, 0xc3 ]
@@ -187,7 +187,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "br $31,0xfffffffffffffff4"
+          asm_text: "br $31,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x40, 0xd3 ]
@@ -196,7 +196,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "bsr $26,0xfffffffffffffff4"
+          asm_text: "bsr $26,0xfff4"
   -
     input:
       bytes: [ 0x83, 0x04, 0x22, 0x44 ]
@@ -700,7 +700,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fbeq $f1,0xfffffffffffffff4"
+          asm_text: "fbeq $f1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xd8 ]
@@ -709,7 +709,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fbge $f1,0xfffffffffffffff4"
+          asm_text: "fbge $f1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xdc ]
@@ -718,7 +718,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fbgt $f1,0xfffffffffffffff4"
+          asm_text: "fbgt $f1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xcc ]
@@ -727,7 +727,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fble $f1,0xfffffffffffffff4"
+          asm_text: "fble $f1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xc8 ]
@@ -736,7 +736,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fblt $f1,0xfffffffffffffff4"
+          asm_text: "fblt $f1,0xfff4"
   -
     input:
       bytes: [ 0xfc, 0x3f, 0x20, 0xd4 ]
@@ -745,7 +745,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "fbne $f1,0xfffffffffffffff4"
+          asm_text: "fbne $f1,0xfff4"
   -
     input:
       bytes: [ 0x43, 0x05, 0x22, 0x5c ]
