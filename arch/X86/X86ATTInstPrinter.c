@@ -1239,8 +1239,12 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 #ifndef CAPSTONE_DIET
 		get_op_access(MI->csh, MCInst_getOpcode(MI), access,
 			      &MI->flat_insn->detail->x86.eflags);
-		MI->flat_insn->detail->x86.operands[0].access = access[0];
-		MI->flat_insn->detail->x86.operands[1].access = access[1];
+		for (i = 0; i < MI->flat_insn->detail->x86.op_count &&
+			    i < ARR_SIZE(access);
+		     i++) {
+			MI->flat_insn->detail->x86.operands[i].access =
+				access[i];
+		}
 		fixup_evex_opmask_access(MI);
 #endif
 	}

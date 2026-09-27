@@ -7394,3 +7394,283 @@ test_cases:
       insns:
       -
         asm_text: "br $31,4"
+  -
+    input:
+      name: "issue 2571 double shift operand access (Intel)"
+      bytes: [ 0x66, 0x0f, 0xa5, 0xd0, 0x0f, 0xad, 0xd0, 0x48, 0x0f, 0xa5, 0xd0, 0x66, 0x0f, 0xad, 0x10, 0x0f, 0xa5, 0x10, 0x48, 0x0f, 0xad, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "shld ax, dx, cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: dx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cl, ax, dx ]
+          regs_write: [ rflags, ax ]
+      -
+        asm_text: "shrd eax, edx, cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: edx
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cl, eax, edx ]
+          regs_write: [ rflags, eax ]
+      -
+        asm_text: "shld rax, rdx, cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: rax
+                size: 8
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: rdx
+                size: 8
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cl, rax, rdx ]
+          regs_write: [ rflags, rax ]
+      -
+        asm_text: "shrd word ptr [rax], dx, cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: dx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cl, rax, dx ]
+          regs_write: [ rflags ]
+      -
+        asm_text: "shld dword ptr [rax], edx, cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: edx
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cl, rax, edx ]
+          regs_write: [ rflags ]
+      -
+        asm_text: "shrd qword ptr [rax], rdx, cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 8
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: rdx
+                size: 8
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ cl, rax, rdx ]
+          regs_write: [ rflags ]
+  -
+    input:
+      name: "issue 2571 double shift operand access (AT&T)"
+      bytes: [ 0x66, 0x0f, 0xa5, 0xd0, 0x0f, 0xad, 0xd0, 0x48, 0x0f, 0xa5, 0xd0, 0x66, 0x0f, 0xad, 0x10, 0x0f, 0xa5, 0x10, 0x48, 0x0f, 0xad, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "shldw %cl, %dx, %ax"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: dx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_READ_WRITE
+          regs_read: [ cl, dx, ax ]
+          regs_write: [ rflags, ax ]
+      -
+        asm_text: "shrdl %cl, %edx, %eax"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: edx
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ_WRITE
+          regs_read: [ cl, edx, eax ]
+          regs_write: [ rflags, eax ]
+      -
+        asm_text: "shldq %cl, %rdx, %rax"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: rdx
+                size: 8
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: rax
+                size: 8
+                access: CS_AC_READ_WRITE
+          regs_read: [ cl, rdx, rax ]
+          regs_write: [ rflags, rax ]
+      -
+        asm_text: "shrdw %cl, %dx, (%rax)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: dx
+                size: 2
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 2
+                access: CS_AC_READ_WRITE
+          regs_read: [ cl, dx, rax ]
+          regs_write: [ rflags ]
+      -
+        asm_text: "shldl %cl, %edx, (%rax)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: edx
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 4
+                access: CS_AC_READ_WRITE
+          regs_read: [ cl, edx, rax ]
+          regs_write: [ rflags ]
+      -
+        asm_text: "shrdq %cl, %rdx, (%rax)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: rdx
+                size: 8
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 8
+                access: CS_AC_READ_WRITE
+          regs_read: [ cl, rdx, rax ]
+          regs_write: [ rflags ]
