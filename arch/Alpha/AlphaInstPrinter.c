@@ -10,6 +10,7 @@
 
 #include "../../utils.h"
 #include "../../Mapping.h"
+#include "../../MathExtras.h"
 #include "../../MCInstPrinter.h"
 
 #include "AlphaLinkage.h"
@@ -63,8 +64,9 @@ static void printOperandAddr(MCInst *MI, uint64_t Address, unsigned OpNum,
 {
 	MCOperand *Op = MCInst_getOperand(MI, (OpNum));
 
-	uint64_t Imm = MCOperand_getImm(Op);
-	uint64_t Target = Address + 4 + (int16_t)(Imm << 2);
+	// disp21 is decoded as a raw unsigned field.
+	int64_t Disp = SignExtend64(MCOperand_getImm(Op), 21);
+	uint64_t Target = Address + 4 + Disp * 4;
 
 	Alpha_set_detail_op_imm(MI, OpNum, ALPHA_OP_IMM, Target);
 	printUInt64(O, Target);
