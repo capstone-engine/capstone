@@ -2340,6 +2340,91 @@ test_cases:
                 shift_value: 8
   -
     input:
+      bytes: [ 0x41,0x01,0xb0,0xe1,0x41,0x01,0xa0,0x01,0x51,0x02,0xb0,0xe1,0x61,0x00,0xb0,0xe1 ]
+      arch: "CS_ARCH_ARM"
+      options: [ CS_MODE_ARM, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "asrs r0, r1, #2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ASR
+                shift_value: 2
+              -
+                type: ARM_OP_IMM
+                imm: 2
+                access: CS_AC_READ
+            update_flags: 1
+      -
+        asm_text: "asreq r0, r1, #2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ASR
+                shift_value: 2
+              -
+                type: ARM_OP_IMM
+                imm: 2
+                access: CS_AC_READ
+            cc: ARMCC_EQ
+      -
+        asm_text: "asrs r0, r1, r2"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+                shift_type: ARM_SFT_ASR_REG
+              -
+                type: ARM_OP_REG
+                reg: r2
+                access: CS_AC_READ
+            update_flags: 1
+      -
+        asm_text: "rrxs r0, r1"
+        is_alias: 1
+        details:
+          arm:
+            operands:
+              -
+                type: ARM_OP_REG
+                reg: r0
+                access: CS_AC_WRITE
+              -
+                type: ARM_OP_REG
+                reg: r1
+                access: CS_AC_READ
+            update_flags: 1
+  -
+    input:
       bytes: [ 0x21,0x04,0xa0,0xe1 ]
       arch: "CS_ARCH_ARM"
       options: [ CS_MODE_ARM, CS_OPT_DETAIL, CS_OPT_DETAIL_REAL ]
