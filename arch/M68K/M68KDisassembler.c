@@ -2520,7 +2520,7 @@ static void d68020_bsr_32(m68k_info *info)
 static void d68000_btst_r(m68k_info *info)
 {
 	build_re_1(info, M68K_INS_BTST, 2);
-	ISIZE = 1;
+	ISIZE = (info->ir & 0x38) ? 1 : 4;
 }
 
 static void d68000_btst_s(m68k_info *info)
