@@ -2385,24 +2385,30 @@ static void d68020_bcc_32(m68k_info *info)
 	build_bcc(info, 4, read_imm_32(info));
 }
 
+/* Bit operations are long on a data register and byte on memory. */
+static uint8_t bit_op_size(const m68k_info *info)
+{
+	return (info->ir & 0x38) ? 1 : 4;
+}
+
 static void d68000_bchg_r(m68k_info *info)
 {
-	build_re_1(info, M68K_INS_BCHG, 1);
+	build_re_1(info, M68K_INS_BCHG, bit_op_size(info));
 }
 
 static void d68000_bchg_s(m68k_info *info)
 {
-	build_imm_ea(info, M68K_INS_BCHG, 1, read_imm_8(info));
+	build_imm_ea(info, M68K_INS_BCHG, bit_op_size(info), read_imm_8(info));
 }
 
 static void d68000_bclr_r(m68k_info *info)
 {
-	build_re_1(info, M68K_INS_BCLR, 1);
+	build_re_1(info, M68K_INS_BCLR, bit_op_size(info));
 }
 
 static void d68000_bclr_s(m68k_info *info)
 {
-	build_imm_ea(info, M68K_INS_BCLR, 1, read_imm_8(info));
+	build_imm_ea(info, M68K_INS_BCLR, bit_op_size(info), read_imm_8(info));
 }
 
 static void d68010_bkpt(m68k_info *info)
@@ -2491,12 +2497,12 @@ static void d68020_bra_32(m68k_info *info)
 
 static void d68000_bset_r(m68k_info *info)
 {
-	build_re_1(info, M68K_INS_BSET, 1);
+	build_re_1(info, M68K_INS_BSET, bit_op_size(info));
 }
 
 static void d68000_bset_s(m68k_info *info)
 {
-	build_imm_ea(info, M68K_INS_BSET, 1, read_imm_8(info));
+	build_imm_ea(info, M68K_INS_BSET, bit_op_size(info), read_imm_8(info));
 }
 
 static void d68000_bsr_8(m68k_info *info)
@@ -2519,13 +2525,14 @@ static void d68020_bsr_32(m68k_info *info)
 
 static void d68000_btst_r(m68k_info *info)
 {
+	// Size 2 reads a #imm destination as its full extension word.
 	build_re_1(info, M68K_INS_BTST, 2);
-	ISIZE = 1;
+	ISIZE = bit_op_size(info);
 }
 
 static void d68000_btst_s(m68k_info *info)
 {
-	build_imm_ea(info, M68K_INS_BTST, 1, read_imm_8(info));
+	build_imm_ea(info, M68K_INS_BTST, bit_op_size(info), read_imm_8(info));
 }
 
 static void d68020_callm(m68k_info *info)
@@ -5433,6 +5440,13 @@ static void build_regs_read_write_counts(m68k_info *info)
 	    info->extension.operands[1].type == M68K_OP_REG) {
 		update_op_reg_list(info, &info->extension.operands[0], 0);
 		update_op_reg_list(info, &info->extension.operands[1], 0);
+		return;
+	}
+
+	if (MCInst_getOpcode(info->inst) == M68K_INS_BTST) {
+		for (i = 0; i < info->extension.op_count; ++i)
+			update_op_reg_list(info, &info->extension.operands[i],
+					   0);
 		return;
 	}
 

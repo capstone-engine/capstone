@@ -189,11 +189,11 @@ test_cases:
     expected:
       insns:
         - asm_text: "dc.w $f800"
-        - asm_text: "bset.b d0, d0"
+        - asm_text: "bset.l d0, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
@@ -1926,11 +1926,11 @@ test_cases:
     expected:
       insns:
         - asm_text: "dc.w $f810"
-        - asm_text: "bchg.b d0, d0"
+        - asm_text: "bchg.l d0, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
@@ -1972,7 +1972,7 @@ test_cases:
       address: 0x0
     expected:
       insns:
-        - asm_text: "btst.b #$f0, d0"
+        - asm_text: "btst.l #$f0, d0"
           details:
             m68k:
               operands:
@@ -2012,6 +2012,69 @@ test_cases:
                 - type: M68K_OP_MEM
                   address_mode: M68K_AM_REGI_ADDR_PRE_DEC
 
+  # Regression: btst with register bit number is long for Dn, byte otherwise
+  - input:
+      bytes: [0x03, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "btst.l d1, d0"
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d1
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d0
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_LONG
+            regs_read: [d1, d0]
+
+  - input:
+      bytes: [0x03, 0x10]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "btst.b d1, (a0)"
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d1
+                - type: M68K_OP_MEM
+                  address_mode: M68K_AM_REGI_ADDR
+                  mem:
+                    base_reg: a0
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_BYTE
+
+  - input:
+      bytes: [0x03, 0x3c, 0x00, 0x12]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "btst.b d1, #$12"
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d1
+                - type: M68K_OP_IMM
+                  address_mode: M68K_AM_IMMEDIATE
+                  imm: 0x12
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_BYTE
+
   # Regression: bchg with immediate bit number
   - input:
       bytes: [0x08, 0x51, 0xff, 0xf0]
@@ -2028,6 +2091,48 @@ test_cases:
                   imm: 0xf0
                 - type: M68K_OP_MEM
                   address_mode: M68K_AM_REGI_ADDR
+
+  # Regression: bit operations with immediate bit number on Dn are long
+  - input:
+      bytes: [0x08, 0x40, 0x00, 0x0a, 0x08, 0x80, 0x00, 0x0a, 0x08, 0xc0, 0x00, 0x0a]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000]
+      address: 0x0
+    expected:
+      insns:
+        - asm_text: "bchg.l #$a, d0"
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_IMM
+                  imm: 0xa
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d0
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_LONG
+        - asm_text: "bclr.l #$a, d0"
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_IMM
+                  imm: 0xa
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d0
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_LONG
+        - asm_text: "bset.l #$a, d0"
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_IMM
+                  imm: 0xa
+                - type: M68K_OP_REG
+                  address_mode: M68K_AM_REG_DIRECT_DATA
+                  reg: d0
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_LONG
 
   # Regression: bclr with immediate bit number
   - input:
@@ -2117,11 +2222,11 @@ test_cases:
       address: 0x0
     expected:
       insns:
-        - asm_text: "btst.b #$f0, d0"
+        - asm_text: "btst.l #$f0, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_IMM
                   address_mode: M68K_AM_IMMEDIATE
@@ -2129,8 +2234,8 @@ test_cases:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d0
-            regs_write: [d0]
-            regs_impl_write: [d0]
+            regs_read: [d0]
+            regs_impl_read: [d0]
 
   - input:
       bytes: [0x08, 0x00, 0xff, 0xf0]
@@ -2139,11 +2244,11 @@ test_cases:
       address: 0x0
     expected:
       insns:
-        - asm_text: "btst.b #$f0, d0"
+        - asm_text: "btst.l #$f0, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_IMM
                   address_mode: M68K_AM_IMMEDIATE
@@ -2151,8 +2256,8 @@ test_cases:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d0
-            regs_write: [d0]
-            regs_impl_write: [d0]
+            regs_read: [d0]
+            regs_impl_read: [d0]
 
   - input:
       bytes: [0x08, 0x00, 0xff, 0xf0]
@@ -2161,11 +2266,11 @@ test_cases:
       address: 0x0
     expected:
       insns:
-        - asm_text: "btst.b #$f0, d0"
+        - asm_text: "btst.l #$f0, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_IMM
                   address_mode: M68K_AM_IMMEDIATE
@@ -2173,8 +2278,8 @@ test_cases:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d0
-            regs_write: [d0]
-            regs_impl_write: [d0]
+            regs_read: [d0]
+            regs_impl_read: [d0]
 
   # Regression: bchg/bclr/bset should also work on 68040 and CPU32 with high-byte immediate
   - input:
@@ -2988,11 +3093,11 @@ test_cases:
     expected:
       insns:
         - asm_text: "dc.w $e8f8"
-        - asm_text: "btst.b #$9c, d0"
+        - asm_text: "btst.l #$9c, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_IMM
                   address_mode: M68K_AM_IMMEDIATE
@@ -3000,8 +3105,8 @@ test_cases:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d0
-            regs_write: [d0]
-            regs_impl_write: [d0]
+            regs_read: [d0]
+            regs_impl_read: [d0]
 
   # Bug 15b: Bitfield instructions must be illegal on CPU32
   # CPU32 has TYPE_68020|TYPE_CPU32, so LIMIT_CPU_TYPES_NOT_CPU32 rejects it
@@ -3013,11 +3118,11 @@ test_cases:
     expected:
       insns:
         - asm_text: "dc.w $e8f8"
-        - asm_text: "btst.b #$9c, d0"
+        - asm_text: "btst.l #$9c, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_IMM
                   address_mode: M68K_AM_IMMEDIATE
@@ -3025,8 +3130,8 @@ test_cases:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d0
-            regs_write: [d0]
-            regs_impl_write: [d0]
+            regs_read: [d0]
+            regs_impl_read: [d0]
 
   # Bug 15c: Bitfield instructions valid on 68020 — full 3-word encoding
   - input:
@@ -8344,11 +8449,11 @@ test_cases:
       address: 0x0
     expected:
       insns:
-        - asm_text: "bchg.b d0, d0"
+        - asm_text: "bchg.l d0, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
@@ -8367,11 +8472,11 @@ test_cases:
       address: 0x0
     expected:
       insns:
-        - asm_text: "bclr.b d0, d0"
+        - asm_text: "bclr.l d0, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
@@ -8390,11 +8495,11 @@ test_cases:
       address: 0x0
     expected:
       insns:
-        - asm_text: "bset.b d0, d0"
+        - asm_text: "bset.l d0, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
@@ -8413,11 +8518,11 @@ test_cases:
       address: 0x0
     expected:
       insns:
-        - asm_text: "btst.b d0, d0"
+        - asm_text: "btst.l d0, d0"
           details:
             m68k:
               op_size_type: M68K_SIZE_TYPE_CPU
-              op_size_cpu: M68K_CPU_SIZE_BYTE
+              op_size_cpu: M68K_CPU_SIZE_LONG
               operands:
                 - type: M68K_OP_REG
                   address_mode: M68K_AM_REG_DIRECT_DATA
@@ -8426,9 +8531,7 @@ test_cases:
                   address_mode: M68K_AM_REG_DIRECT_DATA
                   reg: d0
             regs_read: [d0]
-            regs_write: [d0]
             regs_impl_read: [d0]
-            regs_impl_write: [d0]
 
   # ColdFire: System Control
   - input:
