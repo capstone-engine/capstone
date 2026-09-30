@@ -936,7 +936,13 @@ static void printMemReference(MCInst *MI, unsigned Op, SStream *O)
 		if (DispVal) {
 			if (MCOperand_getReg(IndexReg) ||
 			    MCOperand_getReg(BaseReg)) {
-				printInt64(O, DispVal);
+				// printInt64() enforces CS_OPT_UNSIGNED but
+				// displacements are signed as in Intel syntax
+				if (DispVal < 0) {
+					SStream_concat1(O, '-');
+					printUInt64(O, -DispVal);
+				} else
+					printUInt64(O, DispVal);
 			} else {
 				// only immediate as address of memory
 				if (DispVal < 0) {
@@ -1183,7 +1189,8 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 			MI->flat_insn->detail->x86.operands[0].type =
 				X86_OP_IMM;
 			MI->flat_insn->detail->x86.operands[0].imm = 1;
-			MI->flat_insn->detail->x86.operands[0].size = 1;
+			MI->flat_insn->detail->x86.operands[0].size =
+				MI->flat_insn->detail->x86.operands[1].size;
 			MI->flat_insn->detail->x86.op_count++;
 		}
 

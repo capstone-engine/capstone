@@ -2627,6 +2627,17 @@ test_cases:
         asm_text: "addw $0xff80, %ax"
   -
     input:
+      name: "issue x32att unsigned displacement"
+      bytes: [ 0x8b,0x44,0x24,0xf8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_SYNTAX_ATT, CS_OPT_UNSIGNED ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movl -8(%esp), %eax"
+  -
+    input:
       name: "issue 1323"
       bytes: [ 0x70,0x47,0x00 ]
       arch: "CS_ARCH_ARM"

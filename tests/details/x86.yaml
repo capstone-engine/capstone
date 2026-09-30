@@ -6767,7 +6767,8 @@ test_cases:
     input:
       # The implicit CL of the memory-form shift/rotate group is recorded in
       # AT&T mode too, and rcl no longer gets an immediate 1 in its place.
-      bytes: [0xd3, 0x23, 0xd3, 0x13]
+      # The implicit 1 of the by-one forms takes the destination size.
+      bytes: [0xd3, 0x23, 0xd3, 0x13, 0xd1, 0x23]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT ]
       address: 0x1000
@@ -6806,6 +6807,20 @@ test_cases:
                 type: X86_OP_MEM
                 mem_base: rbx
                 size: 4
+      -
+        asm_text: "shll (%rbx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 1
+                size: 4
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
   -
     input:
       # The unsigned-display mask is not stored in the operand detail.
