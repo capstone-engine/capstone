@@ -461,6 +461,8 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "ARM_FIELD_SPSR_F", .val = ARM_FIELD_SPSR_F },
 	{ .str = "ARM_FIELD_SPSR_S", .val = ARM_FIELD_SPSR_S },
 	{ .str = "ARM_FIELD_SPSR_X", .val = ARM_FIELD_SPSR_X },
+	{ .str = "ARM_INS_ALIAS_ASR", .val = ARM_INS_ALIAS_ASR },
+	{ .str = "ARM_INS_ALIAS_RRX", .val = ARM_INS_ALIAS_RRX },
 	{ .str = "ARM_MB_ISH", .val = ARM_MB_ISH },
 	{ .str = "ARM_MB_ISHLD", .val = ARM_MB_ISHLD },
 	{ .str = "ARM_MB_ISHST", .val = ARM_MB_ISHST },
