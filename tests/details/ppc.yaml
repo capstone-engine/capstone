@@ -1870,3 +1870,21 @@ test_cases:
               pred_cr: PPC_PRED_NE
               pred_ctr: PPC_PRED_NZ
               hint: PPC_BR_NOT_GIVEN
+  -
+    input:
+      bytes: [ 0x4e,0x80,0x00,0x20,0x4e,0x80,0x04,0x21 ]
+      arch: "CS_ARCH_PPC"
+      options: [ CS_MODE_32, CS_MODE_BIG_ENDIAN, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "blr"
+        is_alias: -1
+        details:
+          groups: [ jump, ret, In32BitMode ]
+      -
+        asm_text: "bctrl"
+        is_alias: -1
+        details:
+          groups: [ call, In32BitMode ]

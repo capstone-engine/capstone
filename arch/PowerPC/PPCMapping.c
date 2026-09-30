@@ -339,7 +339,9 @@ bool PPC_getInstruction(csh handle, const uint8_t *bytes, size_t bytes_len,
 
 bool PPC_getFeatureBits(unsigned int mode, unsigned int feature)
 {
-	if (feature == PPC_FeatureQPX) {
+	if (feature == PPC_Feature64Bit) {
+		return (mode & CS_MODE_64) != 0;
+	} else if (feature == PPC_FeatureQPX) {
 		return (mode & CS_MODE_QPX) != 0;
 	} else if (feature == PPC_FeatureSPE) {
 		return (mode & CS_MODE_SPE) != 0;
