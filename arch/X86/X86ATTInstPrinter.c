@@ -1189,7 +1189,8 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 			MI->flat_insn->detail->x86.operands[0].type =
 				X86_OP_IMM;
 			MI->flat_insn->detail->x86.operands[0].imm = 1;
-			MI->flat_insn->detail->x86.operands[0].size = 1;
+			MI->flat_insn->detail->x86.operands[0].size =
+				MI->flat_insn->detail->x86.operands[1].size;
 			MI->flat_insn->detail->x86.op_count++;
 		}
 
