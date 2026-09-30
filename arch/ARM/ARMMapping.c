@@ -693,32 +693,11 @@ void ARM_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 	MI->MRI = MRI;
 	MI->fillDetailOps = detail_is_set(MI);
 	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
+	MI->flat_insn->alias_id = 0;
 	ARM_LLVM_printInstruction(MI, O, info);
-	map_set_alias_id(MI, O, insn_alias_mnem_map,
-			 ARR_SIZE(insn_alias_mnem_map) - 1);
-	unsigned Opcode = MCInst_getOpcode(MI);
-	if (Opcode == ARM_MOVsi || Opcode == ARM_MOVsr) {
-		unsigned OpNum = Opcode == ARM_MOVsi ? 2 : 3;
-		switch (ARM_AM_getSORegShOp(MCInst_getOpVal(MI, OpNum))) {
-		case ARM_AM_asr:
-			MI->flat_insn->alias_id = ARM_INS_ALIAS_ASR;
-			break;
-		case ARM_AM_lsl:
-			MI->flat_insn->alias_id = ARM_INS_ALIAS_LSL;
-			break;
-		case ARM_AM_lsr:
-			MI->flat_insn->alias_id = ARM_INS_ALIAS_LSR;
-			break;
-		case ARM_AM_ror:
-			MI->flat_insn->alias_id = ARM_INS_ALIAS_ROR;
-			break;
-		case ARM_AM_rrx:
-			MI->flat_insn->alias_id = ARM_INS_ALIAS_RRX;
-			break;
-		default:
-			break;
-		}
-	}
+	if (!MI->flat_insn->alias_id)
+		map_set_alias_id(MI, O, insn_alias_mnem_map,
+				 ARR_SIZE(insn_alias_mnem_map) - 1);
 	ARM_add_not_defined_ops(MI);
 	ARM_post_index_detection(MI);
 	ARM_check_mem_access_validity(MI);

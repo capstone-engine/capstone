@@ -2349,6 +2349,7 @@ test_cases:
       -
         asm_text: "asrs r0, r1, #2"
         is_alias: 1
+        alias_id: ARM_INS_ALIAS_ASR
         details:
           arm:
             operands:
@@ -2370,6 +2371,7 @@ test_cases:
       -
         asm_text: "asreq r0, r1, #2"
         is_alias: 1
+        alias_id: ARM_INS_ALIAS_ASR
         details:
           arm:
             operands:
@@ -2391,6 +2393,7 @@ test_cases:
       -
         asm_text: "asrs r0, r1, r2"
         is_alias: 1
+        alias_id: ARM_INS_ALIAS_ASR
         details:
           arm:
             operands:
@@ -2411,6 +2414,7 @@ test_cases:
       -
         asm_text: "rrxs r0, r1"
         is_alias: 1
+        alias_id: ARM_INS_ALIAS_RRX
         details:
           arm:
             operands:
