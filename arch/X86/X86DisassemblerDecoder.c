@@ -1605,6 +1605,7 @@ static int readDisplacement(struct InternalInstruction *insn)
 		if (consumeInt32(insn, &d32))
 			return -1;
 		insn->displacement = d32;
+		insn->displacementSize = 4;
 		break;
 	}
 
