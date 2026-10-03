@@ -6866,3 +6866,367 @@ test_cases:
                 type: X86_OP_IMM
                 imm: 0x59
                 size: 1
+  -
+    input:
+      bytes: [ 0x0f, 0x90, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "seto byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x91, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setno byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x92, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setb byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_CF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x93, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setae byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_CF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x94, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sete byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x95, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setne byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x96, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setbe byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF, X86_EFLAGS_TEST_CF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x97, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "seta byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF, X86_EFLAGS_TEST_CF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x98, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sets byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_SF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x99, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setns byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_SF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9a, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setp byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_PF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9b, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setnp byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_PF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9c, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setl byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9d, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setge byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9e, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setle byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9f, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setg byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x97, 0x44, 0x48, 0x10 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "seta 0x10(%eax, %ecx, 2)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                mem_index: ecx
+                mem_scale: 2
+                mem_disp: 0x10
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF, X86_EFLAGS_TEST_CF ]
+          regs_read: [ eflags, eax, ecx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x97, 0xc0 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "seta al"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF, X86_EFLAGS_TEST_CF ]
+          regs_read: [ rflags ]
+          regs_write: [ al ]
