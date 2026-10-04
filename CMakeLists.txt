@@ -36,7 +36,7 @@ project(capstone VERSION ${PROJECT_VERSION_BASE})
 # Print the values of PROJECT_VERSION and PROJECT_VERSION_BASE
 message(STATUS "PROJECT_VERSION: ${CPACK_PACKAGE_VERSION} CAPSTONE_VERSION: ${PROJECT_VERSION_BASE}")
 
-set(UNIX_COMPILER_OPTIONS -Werror -Wall -Warray-bounds -Wshift-negative-value -Wreturn-type -Wformat -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context -Wmisleading-indentation)
+set(UNIX_COMPILER_OPTIONS -Werror -Wall -Warray-bounds -Wshift-negative-value -Wreturn-type -Wformat -Wmissing-braces -Wunused-function -Warray-bounds -Wunused-variable -Wparentheses -Wint-in-bool-context -Wmisleading-indentation -Wunused-const-variable)
 
 # maybe-uninitialized is only supported by newer versions of GCC.
 # Unfortunately, it is pretty unreliable and reports wrong results.
