@@ -61,11 +61,33 @@ static bool test_str_append()
 	return true;
 }
 
+static bool test_append_to_str_lower()
+{
+	printf("Test test_append_to_str_lower\n");
+
+	char str_a[16] = "OP ";
+	append_to_str_lower(str_a, sizeof(str_a), "Foo");
+	CHECK_STR_EQUAL_RET_FALSE(str_a, "OP foo");
+
+	append_to_str_lower(NULL, 8, "x");
+	append_to_str_lower(str_a, sizeof(str_a), NULL);
+	CHECK_STR_EQUAL_RET_FALSE(str_a, "OP foo");
+
+	// A src longer than the remaining space must be truncated and the
+	// buffer must stay NUL terminated within its bounds.
+	char str_b[8] = "abc";
+	append_to_str_lower(str_b, sizeof(str_b), "DEFGHIJK");
+	CHECK_STR_EQUAL_RET_FALSE(str_b, "abcdefg");
+
+	return true;
+}
+
 int main()
 {
 	bool result = true;
 	result &= test_str_append();
 	result &= test_str_append_no_realloc();
+	result &= test_append_to_str_lower();
 
 	if (result) {
 		printf("All tests passed.\n");

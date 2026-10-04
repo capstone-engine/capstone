@@ -207,7 +207,7 @@ void append_to_str_lower(char *str, size_t str_size, const char *src)
 	}
 
 	int i = dest - str;
-	for (int j = 0; (i < str_size) && (j < strlen(src)); ++i, ++j) {
+	for (int j = 0; (i < str_size - 1) && (j < strlen(src)); ++i, ++j) {
 		str[i] = tolower(src[j]);
 	}
 	str[i] = '\0';
