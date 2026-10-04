@@ -6789,10 +6789,6 @@ test_cases:
                 size: 4
                 access: CS_AC_READ_WRITE
       -
-        # No access on the memory operand: ROL/RCL/ROR *mCL are missing
-        # CS_AC_WRITE in X86MappingInsnOp.inc, unlike their register forms
-        # and unlike SHL/SAR/SHR *mCL. That is a separate defect, so this
-        # case must not pin it.
         asm_text: "rcll %cl, (%rbx)"
         details:
           x86:
@@ -6806,6 +6802,260 @@ test_cases:
                 type: X86_OP_MEM
                 mem_base: rbx
                 size: 4
+                access: CS_AC_READ_WRITE
+  -
+    input:
+      # Rotates write their memory destination, as the shifts do.
+      bytes: [ 0xd0, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rol byte ptr [rbx], 1"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x1
+  -
+    input:
+      bytes: [ 0x66, 0xd3, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rol word ptr [rbx], cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+  -
+    input:
+      bytes: [ 0xc1, 0x03, 0x05 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rol dword ptr [rbx], 5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+  -
+    input:
+      bytes: [ 0x66, 0xd1, 0x0b ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror word ptr [rbx], 1"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x1
+  -
+    input:
+      bytes: [ 0xd3, 0x0b ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror dword ptr [rbx], cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+  -
+    input:
+      bytes: [ 0x48, 0xc1, 0x0b, 0x05 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror qword ptr [rbx], 5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 8
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+  -
+    input:
+      bytes: [ 0x48, 0xd3, 0x13 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcl qword ptr [rbx], cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 8
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+  -
+    input:
+      bytes: [ 0xc0, 0x13, 0x05 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcl byte ptr [rbx], 5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+  -
+    input:
+      bytes: [ 0x48, 0xd1, 0x1b ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcr qword ptr [rbx], 1"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 8
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x1
+  -
+    input:
+      bytes: [ 0xd2, 0x1b ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcr byte ptr [rbx], cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+  -
+    input:
+      bytes: [ 0x66, 0xc1, 0x1b, 0x05 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcr word ptr [rbx], 5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+  -
+    input:
+      bytes: [ 0xd1, 0x13 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcll (%rbx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x1
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
   -
     input:
       # The unsigned-display mask is not stored in the operand detail.
