@@ -5960,7 +5960,7 @@
 
 {	/* X86_SETAEm, X86_INS_SETAE: setae */
 	X86_EFLAGS_TEST_CF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETAEr, X86_INS_SETAE: setae */
@@ -5970,7 +5970,7 @@
 
 {	/* X86_SETAm, X86_INS_SETA: seta */
 	X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_CF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETAr, X86_INS_SETA: seta */
@@ -5980,7 +5980,7 @@
 
 {	/* X86_SETBEm, X86_INS_SETBE: setbe */
 	X86_EFLAGS_TEST_ZF | X86_EFLAGS_TEST_CF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETBEr, X86_INS_SETBE: setbe */
@@ -5990,7 +5990,7 @@
 
 {	/* X86_SETBm, X86_INS_SETB: setb */
 	X86_EFLAGS_TEST_CF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETBr, X86_INS_SETB: setb */
@@ -6000,7 +6000,7 @@
 
 {	/* X86_SETEm, X86_INS_SETE: sete */
 	X86_EFLAGS_TEST_ZF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETEr, X86_INS_SETE: sete */
@@ -6010,7 +6010,7 @@
 
 {	/* X86_SETGEm, X86_INS_SETGE: setge */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETGEr, X86_INS_SETGE: setge */
@@ -6020,7 +6020,7 @@
 
 {	/* X86_SETGm, X86_INS_SETG: setg */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETGr, X86_INS_SETG: setg */
@@ -6030,7 +6030,7 @@
 
 {	/* X86_SETLEm, X86_INS_SETLE: setle */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF | X86_EFLAGS_TEST_ZF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETLEr, X86_INS_SETLE: setle */
@@ -6040,7 +6040,7 @@
 
 {	/* X86_SETLm, X86_INS_SETL: setl */
 	X86_EFLAGS_TEST_OF | X86_EFLAGS_TEST_SF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETLr, X86_INS_SETL: setl */
@@ -6050,7 +6050,7 @@
 
 {	/* X86_SETNEm, X86_INS_SETNE: setne */
 	X86_EFLAGS_TEST_ZF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETNEr, X86_INS_SETNE: setne */
@@ -6060,7 +6060,7 @@
 
 {	/* X86_SETNOm, X86_INS_SETNO: setno */
 	X86_EFLAGS_TEST_OF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETNOr, X86_INS_SETNO: setno */
@@ -6070,7 +6070,7 @@
 
 {	/* X86_SETNPm, X86_INS_SETNP: setnp */
 	X86_EFLAGS_TEST_PF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETNPr, X86_INS_SETNP: setnp */
@@ -6080,7 +6080,7 @@
 
 {	/* X86_SETNSm, X86_INS_SETNS: setns */
 	X86_EFLAGS_TEST_SF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETNSr, X86_INS_SETNS: setns */
@@ -6090,7 +6090,7 @@
 
 {	/* X86_SETOm, X86_INS_SETO: seto */
 	X86_EFLAGS_TEST_OF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETOr, X86_INS_SETO: seto */
@@ -6100,7 +6100,7 @@
 
 {	/* X86_SETPm, X86_INS_SETP: setp */
 	X86_EFLAGS_TEST_PF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETPr, X86_INS_SETP: setp */
@@ -6115,7 +6115,7 @@
 
 {	/* X86_SETSm, X86_INS_SETS: sets */
 	X86_EFLAGS_TEST_SF,
-	{ CS_AC_READ, 0 }
+	{ CS_AC_WRITE, 0 }
 },
 
 {	/* X86_SETSr, X86_INS_SETS: sets */
