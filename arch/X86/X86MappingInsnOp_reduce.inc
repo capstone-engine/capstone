@@ -875,12 +875,12 @@
 
 {	/* X86_BOUNDS16rm, X86_INS_BOUND: bound */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BOUNDS32rm, X86_INS_BOUND: bound */
 	0,
-	{ CS_AC_WRITE, CS_AC_READ, 0 }
+	{ CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_BSF16rm, X86_INS_BSF: bsf */

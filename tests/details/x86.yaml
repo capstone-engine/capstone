@@ -7480,3 +7480,75 @@ test_cases:
             eflags: [ X86_EFLAGS_TEST_ZF, X86_EFLAGS_TEST_CF ]
           regs_read: [ rflags ]
           regs_write: [ al ]
+  -
+    input:
+      bytes: [0x62, 0x03]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bound eax, qword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ eax, ebx ]
+  -
+    input:
+      bytes: [0x62, 0x03]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bound %eax, (%ebx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ eax, ebx ]
+  -
+    input:
+      bytes: [0x66, 0x62, 0x03]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bound ax, dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ ax, ebx ]
