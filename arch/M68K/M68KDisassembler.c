@@ -2385,10 +2385,12 @@ static void d68020_bcc_32(m68k_info *info)
 	build_bcc(info, 4, read_imm_32(info));
 }
 
+#define CS_M68K_EA_MODE_FIELD_MASK 0x38
+
 /* Bit operations are long on a data register and byte on memory. */
 static uint8_t bit_op_size(const m68k_info *info)
 {
-	return (info->ir & 0x38) ? 1 : 4;
+	return (info->ir & CS_M68K_EA_MODE_FIELD_MASK) ? 1 : 4;
 }
 
 static void d68000_bchg_r(m68k_info *info)
