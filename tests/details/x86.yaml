@@ -7552,3 +7552,245 @@ test_cases:
                 size: 4
                 access: CS_AC_READ
           regs_read: [ ax, ebx ]
+  -
+    input:
+      bytes: [0xd9, 0x13, 0xdd, 0x13, 0xd9, 0x1b, 0xdd, 0x1b]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "fst dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_WRITE
+      -
+        asm_text: "fst qword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 8
+                access: CS_AC_WRITE
+      -
+        asm_text: "fstp dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_WRITE
+      -
+        asm_text: "fstp qword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 8
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [0xdf, 0x13, 0xdb, 0x13, 0xdf, 0x1b, 0xdb, 0x1b, 0xdf, 0x0b, 0xdb, 0x0b, 0xdd, 0x0b]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "fist word ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 2
+                access: CS_AC_WRITE
+      -
+        asm_text: "fist dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_WRITE
+      -
+        asm_text: "fistp word ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 2
+                access: CS_AC_WRITE
+      -
+        asm_text: "fistp dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_WRITE
+      -
+        asm_text: "fisttp word ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 2
+                access: CS_AC_WRITE
+      -
+        asm_text: "fisttp dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_WRITE
+      -
+        asm_text: "fisttp qword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 8
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [0xd9, 0x3b, 0x0f, 0xae, 0x1b, 0xc5, 0xf8, 0xae, 0x1b]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "fnstcw word ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 2
+                access: CS_AC_WRITE
+      -
+        asm_text: "stmxcsr dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_WRITE
+      -
+        asm_text: "vstmxcsr dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [0xdb, 0x3b, 0xdf, 0x3b, 0xdd, 0x3b, 0xd9, 0x03, 0xd9, 0x2b, 0x0f, 0xae, 0x13, 0xc5, 0xf8, 0xae, 0x13]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "fstp xword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 10
+                access: CS_AC_WRITE
+      -
+        asm_text: "fistp qword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 8
+                access: CS_AC_WRITE
+      -
+        asm_text: "fnstsw word ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 2
+                access: CS_AC_WRITE
+      -
+        asm_text: "fld dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_READ
+      -
+        asm_text: "fldcw word ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 2
+                access: CS_AC_READ
+      -
+        asm_text: "ldmxcsr dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_READ
+      -
+        asm_text: "vldmxcsr dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_READ
