@@ -6789,10 +6789,6 @@ test_cases:
                 size: 4
                 access: CS_AC_READ_WRITE
       -
-        # No access on the memory operand: ROL/RCL/ROR *mCL are missing
-        # CS_AC_WRITE in X86MappingInsnOp.inc, unlike their register forms
-        # and unlike SHL/SAR/SHR *mCL. That is a separate defect, so this
-        # case must not pin it.
         asm_text: "rcll %cl, (%rbx)"
         details:
           x86:
@@ -6806,6 +6802,260 @@ test_cases:
                 type: X86_OP_MEM
                 mem_base: rbx
                 size: 4
+                access: CS_AC_READ_WRITE
+  -
+    input:
+      # Rotates write their memory destination, as the shifts do.
+      bytes: [ 0xd0, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rol byte ptr [rbx], 1"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x1
+  -
+    input:
+      bytes: [ 0x66, 0xd3, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rol word ptr [rbx], cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+  -
+    input:
+      bytes: [ 0xc1, 0x03, 0x05 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rol dword ptr [rbx], 5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+  -
+    input:
+      bytes: [ 0x66, 0xd1, 0x0b ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror word ptr [rbx], 1"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x1
+  -
+    input:
+      bytes: [ 0xd3, 0x0b ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror dword ptr [rbx], cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+  -
+    input:
+      bytes: [ 0x48, 0xc1, 0x0b, 0x05 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ror qword ptr [rbx], 5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 8
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+  -
+    input:
+      bytes: [ 0x48, 0xd3, 0x13 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcl qword ptr [rbx], cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 8
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+  -
+    input:
+      bytes: [ 0xc0, 0x13, 0x05 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcl byte ptr [rbx], 5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+  -
+    input:
+      bytes: [ 0x48, 0xd1, 0x1b ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcr qword ptr [rbx], 1"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 8
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x1
+  -
+    input:
+      bytes: [ 0xd2, 0x1b ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcr byte ptr [rbx], cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+  -
+    input:
+      bytes: [ 0x66, 0xc1, 0x1b, 0x05 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcr word ptr [rbx], 5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 2
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+  -
+    input:
+      bytes: [ 0xd1, 0x13 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcll (%rbx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x1
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
   -
     input:
       # The unsigned-display mask is not stored in the operand detail.
@@ -6866,3 +7116,439 @@ test_cases:
                 type: X86_OP_IMM
                 imm: 0x59
                 size: 1
+  -
+    input:
+      bytes: [ 0x0f, 0x90, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "seto byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x91, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setno byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x92, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setb byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_CF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x93, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setae byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_CF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x94, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sete byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x95, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setne byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x96, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setbe byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF, X86_EFLAGS_TEST_CF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x97, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "seta byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF, X86_EFLAGS_TEST_CF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x98, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "sets byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_SF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x99, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setns byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_SF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9a, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setp byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_PF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9b, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setnp byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_PF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9c, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setl byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9d, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setge byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9e, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setle byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x9f, 0x03 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "setg byte ptr [rbx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_OF, X86_EFLAGS_TEST_SF, X86_EFLAGS_TEST_ZF ]
+          regs_read: [ rflags, rbx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x97, 0x44, 0x48, 0x10 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "seta 0x10(%eax, %ecx, 2)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                mem_index: ecx
+                mem_scale: 2
+                mem_disp: 0x10
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF, X86_EFLAGS_TEST_CF ]
+          regs_read: [ eflags, eax, ecx ]
+  -
+    input:
+      bytes: [ 0x0f, 0x97, 0xc0 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "seta al"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: al
+                size: 1
+                access: CS_AC_WRITE
+            eflags: [ X86_EFLAGS_TEST_ZF, X86_EFLAGS_TEST_CF ]
+          regs_read: [ rflags ]
+          regs_write: [ al ]
+  -
+    input:
+      bytes: [0x62, 0x03]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bound eax, qword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ eax, ebx ]
+  -
+    input:
+      bytes: [0x62, 0x03]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bound %eax, (%ebx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 8
+                access: CS_AC_READ
+          regs_read: [ eax, ebx ]
+  -
+    input:
+      bytes: [0x66, 0x62, 0x03]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "bound ax, dword ptr [ebx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: ax
+                size: 2
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: ebx
+                size: 4
+                access: CS_AC_READ
+          regs_read: [ ax, ebx ]

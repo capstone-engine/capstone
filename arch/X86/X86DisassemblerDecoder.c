@@ -1595,16 +1595,19 @@ static int readDisplacement(struct InternalInstruction *insn)
 		if (consumeInt8(insn, &d8))
 			return -1;
 		insn->displacement = d8;
+		insn->displacementSize = 1;
 		break;
 	case EA_DISP_16:
 		if (consumeInt16(insn, &d16))
 			return -1;
 		insn->displacement = d16;
+		insn->displacementSize = 2;
 		break;
 	case EA_DISP_32:
 		if (consumeInt32(insn, &d32))
 			return -1;
 		insn->displacement = d32;
+		insn->displacementSize = 4;
 		break;
 	}
 

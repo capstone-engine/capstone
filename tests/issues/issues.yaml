@@ -1,6 +1,67 @@
 test_cases:
   -
     input:
+      name: "issue 2613 mandatory prefix displacement size"
+      bytes: [ 0x66, 0x0f, 0x6f, 0x05, 0xdc, 0xa7, 0x01, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movdqa xmm0, xmmword ptr [rip + 0x1a7dc]"
+        size: 8
+        details:
+          x86:
+            disp: 0x1a7dc
+            enc_disp_offset: 0x4
+            enc_disp_size: 0x4
+  -
+    input:
+      name: "issue 2613 operand size prefix displacement size"
+      bytes: [ 0x66, 0x8b, 0x80, 0xdc, 0xa7, 0x01, 0x00, 0x66, 0x8b, 0x04, 0x25, 0xdc, 0xa7, 0x01, 0x00, 0x67, 0x66, 0x8b, 0x05, 0xdc, 0xa7, 0x01, 0x00, 0x66, 0xc7, 0x80, 0x00, 0x00, 0x00, 0x80, 0x34, 0x12 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov ax, word ptr [rax + 0x1a7dc]"
+        size: 7
+        details:
+          x86:
+            disp: 0x1a7dc
+            enc_disp_offset: 0x3
+            enc_disp_size: 0x4
+      -
+        asm_text: "mov ax, word ptr [0x1a7dc]"
+        size: 8
+        details:
+          x86:
+            disp: 0x1a7dc
+            enc_disp_offset: 0x4
+            enc_disp_size: 0x4
+      -
+        asm_text: "mov ax, word ptr [eip + 0x1a7dc]"
+        size: 8
+        details:
+          x86:
+            addr_size: 4
+            disp: 0x1a7dc
+            enc_disp_offset: 0x4
+            enc_disp_size: 0x4
+      -
+        asm_text: "mov word ptr [rax - 0x80000000], 0x1234"
+        size: 9
+        details:
+          x86:
+            disp: -0x80000000
+            enc_disp_offset: 0x3
+            enc_disp_size: 0x4
+            enc_imm_offset: 0x7
+            enc_imm_size: 0x2
+  -
+    input:
       name: "issue 2576 test memory operand metadata"
       bytes: [ 0x66, 0x85, 0x58, 0x01, 0x85, 0x58, 0x01 ]
       arch: "CS_ARCH_X86"
@@ -7674,7 +7735,6 @@ test_cases:
                 access: CS_AC_READ_WRITE
           regs_read: [ cl, rdx, rax ]
           regs_write: [ rflags ]
-
   -
     input:
       name: "issue 2989 microMIPS LWM16 reglist offset zero-extended"
@@ -7687,3 +7747,23 @@ test_cases:
       -
         asm_text: "lwm16 $s0, $ra, 0x20($sp)"
         op_str: "$s0, $ra, 0x20($sp)"
+  -
+    input:
+      name: "Coverity CID 656295: negative memory offset with default mode (AT&T)"
+      bytes: [ 0xa1, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_LITTLE_ENDIAN, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "movabsl 0xffffffffffffffff, %eax"
+  -
+    input:
+      name: "Coverity CID 656295: negative memory offset with default mode (Intel)"
+      bytes: [ 0xa1, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_LITTLE_ENDIAN ]
+    expected:
+      insns:
+      -
+        asm_text: "movabs eax, dword ptr [0xffffffffffffffff]"
