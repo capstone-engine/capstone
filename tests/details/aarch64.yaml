@@ -1812,3 +1812,111 @@ test_cases:
         asm_text: "sysl	x0, #0, c0, c0, #0"
         details:
           regs_write: [ x0 ]
+  -
+    input:
+      bytes: [0x41,0x80,0x20,0xb8]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "swp	w0, w1, [x2]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w0
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: w1
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x2
+              access: CS_AC_READ_WRITE
+          regs_read: [ w0, x2 ]
+          regs_write: [ w1 ]
+  -
+    input:
+      bytes: [0xa4,0x80,0xe3,0x38]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "swpalb	w3, w4, [x5]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w3
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: w4
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x5
+              access: CS_AC_READ_WRITE
+          regs_read: [ w3, x5 ]
+          regs_write: [ w4 ]
+  -
+    input:
+      bytes: [0xe7,0x83,0x66,0x78]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "swplh	w6, w7, [sp]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: w6
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: w7
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: sp
+              access: CS_AC_READ_WRITE
+          regs_read: [ w6, sp ]
+          regs_write: [ w7 ]
+  -
+    input:
+      bytes: [0x49,0x81,0xa8,0xf8]
+      arch: "CS_ARCH_AARCH64"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "swpa	x8, x9, [x10]"
+        details:
+          aarch64:
+            operands:
+            -
+              type: AARCH64_OP_REG
+              reg: x8
+              access: CS_AC_READ
+            -
+              type: AARCH64_OP_REG
+              reg: x9
+              access: CS_AC_WRITE
+            -
+              type: AARCH64_OP_MEM
+              mem_base: x10
+              access: CS_AC_READ_WRITE
+          regs_read: [ x8, x10 ]
+          regs_write: [ x9 ]
