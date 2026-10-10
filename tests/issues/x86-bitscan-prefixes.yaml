@@ -1,0 +1,293 @@
+test_cases:
+  -
+    input:
+      name: "issue 2911: decode the complete stream after F2 BSF"
+      bytes: [ 0x0f, 0xa4, 0xd3, 0x57, 0xf2, 0x0f, 0xbc, 0xda, 0x69, 0xda, 0xbf, 0x86, 0x31, 0x30 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "shld ebx, edx, 0x57"
+        size: 4
+      -
+        asm_text: "bsf ebx, edx"
+        size: 4
+        details:
+          x86:
+            enc_modrm_offset: 3
+      -
+        asm_text: "imul ebx, edx, 0x303186bf"
+        size: 6
+  -
+    input:
+      name: "F2 bit scans and F3 count instructions in 16-bit mode"
+      bytes: [ 0xf2, 0x0f, 0xbc, 0xda, 0xf2, 0x0f, 0xbd, 0xda, 0xf3, 0x0f, 0xbc, 0xda, 0xf3, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf bx, dx"
+        size: 4
+      -
+        asm_text: "bsr bx, dx"
+        size: 4
+      -
+        asm_text: "tzcnt bx, dx"
+        size: 4
+      -
+        asm_text: "lzcnt bx, dx"
+        size: 4
+  -
+    input:
+      name: "F2 bit scans and F3 count instructions in 32-bit mode"
+      bytes: [ 0xf2, 0x0f, 0xbc, 0xda, 0xf2, 0x0f, 0xbd, 0xda, 0xf3, 0x0f, 0xbc, 0xda, 0xf3, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf ebx, edx"
+        size: 4
+      -
+        asm_text: "bsr ebx, edx"
+        size: 4
+      -
+        asm_text: "tzcnt ebx, edx"
+        size: 4
+      -
+        asm_text: "lzcnt ebx, edx"
+        size: 4
+  -
+    input:
+      name: "F2 bit scans and F3 count instructions in 64-bit mode"
+      bytes: [ 0xf2, 0x0f, 0xbc, 0xda, 0xf2, 0x0f, 0xbd, 0xda, 0xf3, 0x0f, 0xbc, 0xda, 0xf3, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf ebx, edx"
+        size: 4
+      -
+        asm_text: "bsr ebx, edx"
+        size: 4
+      -
+        asm_text: "tzcnt ebx, edx"
+        size: 4
+      -
+        asm_text: "lzcnt ebx, edx"
+        size: 4
+  -
+    input:
+      name: "F2 preserves operand-size overrides in 16-bit mode"
+      bytes: [ 0xf2, 0x66, 0x0f, 0xbc, 0xda, 0x66, 0xf2, 0x0f, 0xbd, 0xda, 0x66, 0xf3, 0x0f, 0xbc, 0xda, 0xf3, 0x66, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf ebx, edx"
+        size: 5
+      -
+        asm_text: "bsr ebx, edx"
+        size: 5
+      -
+        asm_text: "tzcnt ebx, edx"
+        size: 5
+      -
+        asm_text: "lzcnt ebx, edx"
+        size: 5
+  -
+    input:
+      name: "F2 preserves operand-size overrides in 32-bit mode"
+      bytes: [ 0xf2, 0x66, 0x0f, 0xbc, 0xda, 0x66, 0xf2, 0x0f, 0xbd, 0xda, 0x66, 0xf3, 0x0f, 0xbc, 0xda, 0xf3, 0x66, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf bx, dx"
+        size: 5
+      -
+        asm_text: "bsr bx, dx"
+        size: 5
+      -
+        asm_text: "tzcnt bx, dx"
+        size: 5
+      -
+        asm_text: "lzcnt bx, dx"
+        size: 5
+  -
+    input:
+      name: "F2 preserves operand-size overrides in 64-bit mode"
+      bytes: [ 0xf2, 0x66, 0x0f, 0xbc, 0xda, 0x66, 0xf2, 0x0f, 0xbd, 0xda, 0x66, 0xf3, 0x0f, 0xbc, 0xda, 0xf3, 0x66, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf bx, dx"
+        size: 5
+      -
+        asm_text: "bsr bx, dx"
+        size: 5
+      -
+        asm_text: "tzcnt bx, dx"
+        size: 5
+      -
+        asm_text: "lzcnt bx, dx"
+        size: 5
+  -
+    input:
+      name: "F2 bit scans preserve REX.W and extended registers"
+      bytes: [ 0xf2, 0x48, 0x0f, 0xbc, 0xda, 0xf2, 0x48, 0x0f, 0xbd, 0xda, 0xf2, 0x4d, 0x0f, 0xbc, 0xda, 0xf2, 0x45, 0x0f, 0xbd, 0xda, 0xf3, 0x48, 0x0f, 0xbc, 0xda, 0xf3, 0x48, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf rbx, rdx"
+        size: 5
+      -
+        asm_text: "bsr rbx, rdx"
+        size: 5
+      -
+        asm_text: "bsf r11, r10"
+        size: 5
+      -
+        asm_text: "bsr r11d, r10d"
+        size: 5
+      -
+        asm_text: "tzcnt rbx, rdx"
+        size: 5
+      -
+        asm_text: "lzcnt rbx, rdx"
+        size: 5
+  -
+    input:
+      name: "F2 bit scans with 16-bit memory addressing and size overrides"
+      bytes: [ 0xf2, 0x0f, 0xbc, 0x18, 0xf2, 0x67, 0x66, 0x0f, 0xbd, 0x58, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf bx, word ptr [bx + si]"
+        size: 4
+        details:
+          x86:
+            enc_modrm_offset: 3
+      -
+        asm_text: "bsr ebx, dword ptr [eax + 4]"
+        size: 7
+        details:
+          x86:
+            enc_modrm_offset: 5
+            enc_disp_offset: 6
+            enc_disp_size: 1
+  -
+    input:
+      name: "F2 bit scans with 32-bit memory operands and displacement"
+      bytes: [ 0xf2, 0x0f, 0xbc, 0x58, 0x04, 0xf2, 0x66, 0x0f, 0xbd, 0x58, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf ebx, dword ptr [eax + 4]"
+        size: 5
+        details:
+          x86:
+            enc_modrm_offset: 3
+            enc_disp_offset: 4
+            enc_disp_size: 1
+      -
+        asm_text: "bsr bx, word ptr [eax + 4]"
+        size: 6
+        details:
+          x86:
+            enc_modrm_offset: 4
+            enc_disp_offset: 5
+            enc_disp_size: 1
+  -
+    input:
+      name: "F2 bit scans with 64-bit mode address and operand-size overrides"
+      bytes: [ 0xf2, 0x67, 0x0f, 0xbc, 0x58, 0x04, 0xf2, 0x66, 0x67, 0x0f, 0xbd, 0x58, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf ebx, dword ptr [eax + 4]"
+        size: 6
+        details:
+          x86:
+            enc_modrm_offset: 4
+            enc_disp_offset: 5
+            enc_disp_size: 1
+      -
+        asm_text: "bsr bx, word ptr [eax + 4]"
+        size: 7
+        details:
+          x86:
+            enc_modrm_offset: 5
+            enc_disp_offset: 6
+            enc_disp_size: 1
+  -
+    input:
+      name: "The final F2 prefix selects bit scans"
+      bytes: [ 0xf3, 0xf2, 0x0f, 0xbc, 0xda, 0xf3, 0xf2, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf ebx, edx"
+        size: 5
+      -
+        asm_text: "bsr ebx, edx"
+        size: 5
+  -
+    input:
+      name: "The final F3 prefix still selects count instructions"
+      bytes: [ 0xf2, 0xf3, 0x0f, 0xbc, 0xda, 0xf2, 0xf3, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "tzcnt ebx, edx"
+        size: 5
+      -
+        asm_text: "lzcnt ebx, edx"
+        size: 5
+  -
+    input:
+      name: "F2 bit scans in AT&T syntax"
+      bytes: [ 0xf2, 0x0f, 0xbc, 0xda, 0xf2, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "bsfl %edx, %ebx"
+        size: 4
+      -
+        asm_text: "bsrl %edx, %ebx"
+        size: 4
+  -
+    input:
+      name: "Unprefixed bit scans remain unchanged"
+      bytes: [ 0x0f, 0xbc, 0xda, 0x0f, 0xbd, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "bsf ebx, edx"
+        size: 3
+      -
+        asm_text: "bsr ebx, edx"
+        size: 3

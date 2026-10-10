@@ -1252,6 +1252,11 @@ static int getID(struct InternalInstruction *insn, cs_mode mode)
 				attrMask |= ATTR_XS;
 		}
 
+		/* BSF/BSR ignore F2; F3 selects TZCNT/LZCNT instead. */
+		if (insn->opcodeType == TWOBYTE &&
+		    (insn->opcode == 0xBC || insn->opcode == 0xBD))
+			attrMask &= ~ATTR_XD;
+
 		if ((attrMask & ATTR_OPSIZE) &&
 		    (attrMask & (ATTR_XD | ATTR_XS))) {
 			attrMask =
