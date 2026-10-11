@@ -36,5 +36,6 @@ let package = Package(
 			] + architectures
 				.map { CSetting.define("CAPSTONE_HAS_\($0)", .when(traits: [$0])) }
 		),
+		.testTarget(name: "CapstoneTests", dependencies: ["capstone"], path: "bindings/swift/CapstoneTests"),
 	]
 )

@@ -335,3 +335,31 @@ jobs:
         cmake --preset=${{ matrix.config.platform }}-x64${{ matrix.config.diet_build == true && '-diet' || '' }}
         cmake --build --preset build-${{ matrix.config.platform }}${{ matrix.config.diet_build == true && '-diet' || '' }}-release
         cmake --build --preset install-${{ matrix.config.platform }}${{ matrix.config.diet_build == true && '-diet' || '' }}-release
+
+  Swift:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {
+              name: 'macOS x64 swift test',
+              os: macos-latest
+            }
+          - {
+              name: 'ubuntu-24.04 x64 swift test',
+              os: ubuntu-24.04
+            }
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - name: Set up Swift
+      if: startsWith(matrix.config.os, 'ubuntu')
+      uses: swift-actions/setup-swift@v3
+      with:
+        swift-version: '6.2'
+
+    - name: swift test
+      run: swift test
