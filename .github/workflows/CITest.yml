@@ -357,7 +357,7 @@ jobs:
 
     - name: Set up Swift
       if: startsWith(matrix.config.os, 'ubuntu')
-      uses: swift-actions/setup-swift@v3
+      uses: swift-actions/setup-swift@v2
       with:
         swift-version: '6.2'
 
