@@ -2545,6 +2545,35 @@ test_cases:
         asm_text: "xchg cx, ax"
   -
     input:
+      name: "issue 1226 x16 cbw/cwd"
+      bytes: [ 0x98, 0x99, 0x66, 0x98, 0x66, 0x99 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "cbw"
+        details:
+          regs_read: [ al ]
+          regs_write: [ ax ]
+      -
+        asm_text: "cwd"
+        details:
+          regs_read: [ ax ]
+          regs_write: [ ax, dx ]
+      -
+        asm_text: "cwde"
+        details:
+          regs_read: [ ax ]
+          regs_write: [ eax ]
+      -
+        asm_text: "cdq"
+        details:
+          regs_read: [ eax ]
+          regs_write: [ eax, edx ]
+  -
+    input:
       name: "issue ROL 1, ATT syntax"
       bytes: [ 0x66,0x48,0xf3,0xd1,0xc0 ]
       arch: "CS_ARCH_X86"
