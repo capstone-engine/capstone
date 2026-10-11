@@ -950,11 +950,6 @@ static bool is16BitEquivalent(unsigned orig, unsigned equiv)
 	size_t i;
 	uint16_t idx;
 
-	/* CDQ/CWD and CWDE/CBW are missing from x86_16_bit_eq_tbl. */
-	if ((orig == X86_CDQ && equiv == X86_CWD) ||
-	    (orig == X86_CWDE && equiv == X86_CBW))
-		return true;
-
 	if ((idx = x86_16_bit_eq_lookup[orig]) != 0) {
 		for (i = idx - 1; i < ARR_SIZE(x86_16_bit_eq_tbl) &&
 				  x86_16_bit_eq_tbl[i].first == orig;
