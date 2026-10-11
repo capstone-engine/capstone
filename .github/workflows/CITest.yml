@@ -353,13 +353,11 @@ jobs:
             }
 
     steps:
-    - uses: actions/checkout@v7
-
-    - name: Set up Swift
-      if: startsWith(matrix.config.os, 'ubuntu')
-      uses: swift-actions/setup-swift@v2
+    - uses: swift-actions/setup-swift@v3
       with:
         swift-version: '6.2'
-
-    - name: swift test
+    - uses: actions/checkout@v7
+    - name: Build
+      run: swift build
+    - name: Run tests
       run: swift test
