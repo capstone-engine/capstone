@@ -409,6 +409,28 @@ static void test_riscv_rve_unchecked_reg_decode(void)
 	}
 }
 
+/// Signed left shift of a negative value when decoding a microMIPS
+/// LWM16/SWM16 offset. The ISA defines the offset as zero_extend(offset||0^2),
+/// but the 4-bit field was sign-extended to a negative int and then shifted
+/// left by 2, which is UB whenever the field's top bit is set (field >= 8).
+static void test_ub_shift_mips_mm_reglist(void)
+{
+	static const uint8_t code[] = { 0x45, 0x08 };
+
+	csh handle;
+	if (cs_open(CS_ARCH_MIPS,
+		    CS_MODE_MICRO | CS_MODE_MIPS32 | CS_MODE_BIG_ENDIAN,
+		    &handle) != CS_ERR_OK)
+		return;
+	cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+
+	cs_insn *insn = NULL;
+	size_t count = cs_disasm(handle, code, sizeof(code), 0x1000, 0, &insn);
+	cs_free(insn, count);
+	cs_close(&handle);
+	return;
+}
+
 int main()
 {
 	test_overflow_cs_insn_bytes();
@@ -423,6 +445,7 @@ int main()
 	test_tms320_ghsa_8qp8_2vg2_8mr4();
 	test_evil_vsnprintf_ghsa_gj26_93q5_cr54();
 	test_riscv_rve_unchecked_reg_decode();
+	test_ub_shift_mips_mm_reglist();
 
 	return 0;
 }

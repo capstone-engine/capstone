@@ -2420,7 +2420,7 @@ static DecodeStatus DecodeMemMMReglistImm4Lsl2(MCInst *Inst, uint32_t Insn,
 		Offset = fieldFromInstruction_4(Insn, 4, 4);
 		break;
 	default:
-		Offset = SignExtend32((Insn & 0xf), 4);
+		Offset = fieldFromInstruction_4(Insn, 0, 4);
 		break;
 	}
 

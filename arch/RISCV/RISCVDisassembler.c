@@ -450,10 +450,9 @@ static DecodeStatus decodeCSSPushPopchk(MCInst *Inst, uint32_t Insn,
 					uint64_t Address, const void *Decoder)
 {
 	uint32_t Rs1 = fieldFromInstruction_4(Insn, 7, 5);
-	DecodeStatus Result =
-		DecodeGPRX1X5RegisterClass(Inst, Rs1, Address, Decoder);
-	(void)Result;
-	CS_ASSERT(Result == MCDisassembler_Success && "Invalid register");
+	if (DecodeGPRX1X5RegisterClass(Inst, Rs1, Address, Decoder) ==
+	    MCDisassembler_Fail)
+		return MCDisassembler_Fail;
 	return MCDisassembler_Success;
 }
 

@@ -733,7 +733,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPRCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 16); \
-    MCOperand_CreateImm0(MI, tmp); \
+    MCOperand_CreateImm0(MI, (int16_t)tmp); \
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPRCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \
@@ -871,7 +871,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeF4RCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 16); \
-    MCOperand_CreateImm0(MI, tmp); \
+    MCOperand_CreateImm0(MI, (int16_t)tmp); \
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPRCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \
@@ -879,7 +879,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeF8RCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 16); \
-    MCOperand_CreateImm0(MI, tmp); \
+    MCOperand_CreateImm0(MI, (int16_t)tmp); \
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPRCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \
@@ -889,7 +889,7 @@ static DecodeStatus fname(DecodeStatus S, unsigned Idx, InsnType insn, MCInst *M
     tmp = fieldname(insn, 21, 5); \
     if (DecodeGPRCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     tmp = fieldname(insn, 0, 16); \
-    MCOperand_CreateImm0(MI, tmp); \
+    MCOperand_CreateImm0(MI, (int16_t)tmp); \
     tmp = fieldname(insn, 16, 5); \
     if (DecodeGPRCRegisterClass(MI, tmp, Address, Decoder) == MCDisassembler_Fail) { return MCDisassembler_Fail; } \
     return S; \

@@ -1,3 +1,6 @@
+# Copyright © 2024 Andrew Quijano <andrewquijano92@gmail.com>
+# SPDX-License-Identifier: MIT
+
 # Used to dynamically set the package file name based on the generator
 foreach(generator ${CPACK_GENERATOR})
     if("${generator}" STREQUAL "DEB")
@@ -8,6 +11,8 @@ foreach(generator ${CPACK_GENERATOR})
         set(CPACK_PACKAGE_FILE_NAME ${CPACK_NSIS_PACKAGE_FILE_NAME})
     elseif("${generator}" STREQUAL "DragNDrop")
         set(CPACK_PACKAGE_FILE_NAME ${CPACK_DMG_PACKAGE_FILE_NAME})
+    elseif("${generator}" STREQUAL "TGZ")
+        set(CPACK_PACKAGE_FILE_NAME ${CPACK_TGZ_PACKAGE_FILE_NAME})
     else()
         set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-unknown")
     endif()

@@ -1252,6 +1252,11 @@ static int getID(struct InternalInstruction *insn, cs_mode mode)
 				attrMask |= ATTR_XS;
 		}
 
+		/* BSF/BSR ignore F2; F3 selects TZCNT/LZCNT instead. */
+		if (insn->opcodeType == TWOBYTE &&
+		    (insn->opcode == 0xBC || insn->opcode == 0xBD))
+			attrMask &= ~ATTR_XD;
+
 		if ((attrMask & ATTR_OPSIZE) &&
 		    (attrMask & (ATTR_XD | ATTR_XS))) {
 			attrMask =
@@ -1595,16 +1600,19 @@ static int readDisplacement(struct InternalInstruction *insn)
 		if (consumeInt8(insn, &d8))
 			return -1;
 		insn->displacement = d8;
+		insn->displacementSize = 1;
 		break;
 	case EA_DISP_16:
 		if (consumeInt16(insn, &d16))
 			return -1;
 		insn->displacement = d16;
+		insn->displacementSize = 2;
 		break;
 	case EA_DISP_32:
 		if (consumeInt32(insn, &d32))
 			return -1;
 		insn->displacement = d32;
+		insn->displacementSize = 4;
 		break;
 	}
 

@@ -562,10 +562,9 @@ static void printMemOffset(MCInst *MI, unsigned Op, SStream *O)
 				.operands[MI->flat_insn->detail->x86.op_count]
 				.mem.disp = imm;
 		if (imm < 0) {
-			SStream_concat(
-				O, "0x%" PRIx64,
-				arch_masks[x86_get_bit_mode(MI->csh->mode)] &
-					imm);
+			SStream_concat(O, "0x%" PRIx64,
+				       x86_get_address_mask(MI->csh->mode) &
+					       imm);
 		} else {
 			if (imm > HEX_THRESHOLD)
 				SStream_concat(O, "0x%" PRIx64, imm);
@@ -1239,8 +1238,12 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 #ifndef CAPSTONE_DIET
 		get_op_access(MI->csh, MCInst_getOpcode(MI), access,
 			      &MI->flat_insn->detail->x86.eflags);
-		MI->flat_insn->detail->x86.operands[0].access = access[0];
-		MI->flat_insn->detail->x86.operands[1].access = access[1];
+		for (i = 0; i < MI->flat_insn->detail->x86.op_count &&
+			    i < ARR_SIZE(access);
+		     i++) {
+			MI->flat_insn->detail->x86.operands[i].access =
+				access[i];
+		}
 		fixup_evex_opmask_access(MI);
 #endif
 	}

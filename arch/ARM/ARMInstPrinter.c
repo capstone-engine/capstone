@@ -1696,10 +1696,13 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		MCInst_setIsAlias(MI, isAlias);
 		// FIXME: Thumb variants?
 		MCOperand *MO3 = MCInst_getOperand(MI, (3));
+		ARM_AM_ShiftOpc ShOpc =
+			ARM_AM_getSORegShOp(MCOperand_getImm(MO3));
+		MI->flat_insn->alias_id =
+			ARM_INS_ALIAS_ASR + ShOpc - ARM_AM_asr;
 
 		SStream_concat1(O, ' ');
-		SStream_concat0(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp(
-					   MCOperand_getImm(MO3))));
+		SStream_concat0(O, ARM_AM_getShiftOpcStr(ShOpc));
 		printSBitModifierOperand(MI, 6, O);
 		printPredicateOperand(MI, 4, O);
 
@@ -1723,9 +1726,12 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		MCInst_setIsAlias(MI, isAlias);
 		// FIXME: Thumb variants?
 		MCOperand *MO2 = MCInst_getOperand(MI, (2));
+		unsigned ShImm = MCOperand_getImm(MO2);
+		ARM_AM_ShiftOpc ShOpc = ARM_AM_getSORegShOp(ShImm);
+		MI->flat_insn->alias_id =
+			ARM_INS_ALIAS_ASR + ShOpc - ARM_AM_asr;
 
-		SStream_concat0(O, ARM_AM_getShiftOpcStr(ARM_AM_getSORegShOp(
-					   MCOperand_getImm(MO2))));
+		SStream_concat0(O, ARM_AM_getShiftOpcStr(ShOpc));
 		printSBitModifierOperand(MI, 5, O);
 		printPredicateOperand(MI, 3, O);
 
@@ -1735,7 +1741,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		SStream_concat0(O, ", ");
 		printOperand(MI, 1, O);
 
-		if (ARM_AM_getSORegShOp(MCOperand_getImm(MO2)) == ARM_AM_rrx) {
+		if (ShOpc == ARM_AM_rrx) {
 			if (useAliasDetails)
 				return;
 			else
@@ -1743,8 +1749,7 @@ static void printInst(MCInst *MI, SStream *O, void *info)
 		}
 
 		SStream_concat(O, "%s%s%s%d", ", ", markup("<imm:"), "#",
-			       translateShiftImm(ARM_AM_getSORegOffset(
-				       MCOperand_getImm(MO2))));
+			       translateShiftImm(ARM_AM_getSORegOffset(ShImm)));
 		SStream_concat0(O, markup(">"));
 		if (useAliasDetails)
 			return;
