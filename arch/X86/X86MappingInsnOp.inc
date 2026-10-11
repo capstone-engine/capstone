@@ -38695,12 +38695,12 @@
 
 {	/* X86_VMOVSDZmr, X86_INS_VMOVSD: vmovsd */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_VMOVSDZmrk, X86_INS_VMOVSD: vmovsd */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_VMOVSDZrm, X86_INS_VMOVSD: vmovsd */
@@ -38750,7 +38750,7 @@
 
 {	/* X86_VMOVSDmr, X86_INS_VMOVSD: vmovsd */
 	0,
-	{ CS_AC_READ, CS_AC_READ, 0 }
+	{ CS_AC_WRITE, CS_AC_READ, 0 }
 },
 
 {	/* X86_VMOVSDrm, X86_INS_VMOVSD: vmovsd */
