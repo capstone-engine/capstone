@@ -7794,3 +7794,145 @@ test_cases:
                 mem_base: ebx
                 size: 4
                 access: CS_AC_READ
+  -
+    input:
+      bytes: [0xc5, 0xfb, 0x11, 0x02, 0x62, 0xf1, 0xff, 0x08, 0x11, 0x02, 0x62, 0xf1, 0xff, 0x09, 0x11, 0x02]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "vmovsd qword ptr [rdx], xmm0"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+      -
+        asm_text: "vmovsd qword ptr [rdx], xmm0"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+      -
+        asm_text: "vmovsd qword ptr [rdx] {k1}, xmm0"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: k1
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: xmm0
+                access: CS_AC_READ
+          regs_read: [ rdx, k1, xmm0 ]
+  -
+    input:
+      bytes: [0xc5, 0xfb, 0x11, 0x02]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "vmovsd qword ptr [edx], xmm0"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [0xc5, 0xfb, 0x10, 0x02, 0x62, 0xf1, 0xff, 0x08, 0x10, 0x02, 0xc5, 0xf3, 0x10, 0xc2]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "vmovsd xmm0, qword ptr [rdx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                access: CS_AC_READ
+      -
+        asm_text: "vmovsd xmm0, qword ptr [rdx]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                access: CS_AC_READ
+      -
+        asm_text: "vmovsd xmm0, xmm1, xmm2"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [0xc5, 0xfb, 0x11, 0x02, 0x62, 0xf1, 0xff, 0x09, 0x11, 0x02]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "vmovsd %xmm0, (%rdx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                access: CS_AC_WRITE
+      -
+        asm_text: "vmovsd %xmm0, (%rdx) {%k1}"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: xmm0
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: k1
+                access: CS_AC_READ
+          regs_read: [ xmm0, rdx, k1 ]
