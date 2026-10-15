@@ -109,3 +109,23 @@ test_cases:
         details:
           regs_read: [ r2 ]
 
+  -
+    input:
+      bytes: [ 0x00, 0x80, 0x00, 0x00, 0x01, 0x70, 0x12, 0x34, 0x02, 0x81, 0x00, 0x00 ]
+      arch: "sh"
+      options: [ CS_OPT_DETAIL, CS_MODE_SH2A, CS_MODE_SHFPU, CS_MODE_BIG_ENDIAN ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movi20 #-524288,r0"
+        details:
+          regs_write: [ r0 ]
+      -
+        asm_text: "movi20 #463412,r1"
+        details:
+          regs_write: [ r1 ]
+      -
+        asm_text: "movi20s #-134217728,r2"
+        details:
+          regs_write: [ r2 ]
