@@ -440,6 +440,12 @@ typedef enum cs_opt_value {
 	CS_OPT_DETAIL_ALIAS =
 		1
 		<< 3, ///< If enabled, sets alias instruction detail when possible.
+	CS_OPT_DETAIL_INTEL_ORDER =
+		1
+		<< 4, ///< X86: provide operand details in Intel order (a no-op under Intel syntax)
+	CS_OPT_DETAIL_ATT_ORDER =
+		1
+		<< 5, ///< X86: provide operand details in AT&T order (a no-op under AT&T syntax)
 } cs_opt_value;
 
 /// An option

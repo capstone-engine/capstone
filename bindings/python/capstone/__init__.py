@@ -240,6 +240,8 @@ __all__ = [
     "CS_OPT_DETAIL_REAL",
     "CS_OPT_DETAIL_UNCOMPRESSED_REAL",
     "CS_OPT_DETAIL_ALIAS",
+    "CS_OPT_DETAIL_INTEL_ORDER",
+    "CS_OPT_DETAIL_ATT_ORDER",
     "CS_OPT_MODE",
     "CS_OPT_ON",
     "CS_OPT_OFF",
@@ -679,6 +681,12 @@ CS_OPT_DETAIL_UNCOMPRESSED_REAL = (
 CS_OPT_DETAIL_ALIAS = (
     1 << 3
 )  # If enabled, sets alias instruction detail when possible.
+CS_OPT_DETAIL_INTEL_ORDER = (
+    1 << 4
+)  # X86: provide operand details in Intel order (a no-op under Intel syntax)
+CS_OPT_DETAIL_ATT_ORDER = (
+    1 << 5
+)  # X86: provide operand details in AT&T order (a no-op under AT&T syntax)
 
 # Capstone error type
 CS_ERR_OK = 0  # No error: everything was fine

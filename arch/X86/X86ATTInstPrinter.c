@@ -64,7 +64,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
-	if (MI->csh->detail_opt != CS_OPT_ON)
+	if (!MI->csh->detail_opt)
 		return;
 
 	MI->csh->doing_mem = status;
@@ -1035,7 +1035,7 @@ static void printRegName(SStream *OS, unsigned RegNo)
 	SStream_concat(OS, "%%%s", getRegisterName(RegNo));
 }
 
-void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
+static void att_printInst(MCInst *MI, SStream *OS, void *info)
 {
 	x86_reg reg, reg2;
 	enum cs_ac_type access1, access2;
@@ -1247,6 +1247,17 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 		fixup_evex_opmask_access(MI);
 #endif
 	}
+}
+
+void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
+{
+	if (MI->csh->detail_opt & CS_OPT_DETAIL_INTEL_ORDER) {
+		X86_printInst_detail_syntax(MI, OS, info, att_printInst,
+					    X86_Intel_printInst,
+					    CS_OPT_SYNTAX_INTEL);
+		return;
+	}
+	att_printInst(MI, OS, info);
 }
 
 #endif

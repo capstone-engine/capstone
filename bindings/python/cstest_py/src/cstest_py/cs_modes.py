@@ -17,6 +17,14 @@ configs = {
         "type": cs.CS_OPT_DETAIL,
         "val": cs.CS_OPT_DETAIL_ALIAS | cs.CS_OPT_ON,
     },
+    "CS_OPT_DETAIL_INTEL_ORDER": {
+        "type": cs.CS_OPT_DETAIL,
+        "val": cs.CS_OPT_DETAIL_INTEL_ORDER | cs.CS_OPT_ON,
+    },
+    "CS_OPT_DETAIL_ATT_ORDER": {
+        "type": cs.CS_OPT_DETAIL,
+        "val": cs.CS_OPT_DETAIL_ATT_ORDER | cs.CS_OPT_ON,
+    },
     "CS_OPT_SKIPDATA": {"type": cs.CS_OPT_SKIPDATA, "val": cs.CS_OPT_ON},
     "CS_OPT_UNSIGNED": {"type": cs.CS_OPT_UNSIGNED, "val": cs.CS_OPT_ON},
     "CS_OPT_ONLY_OFFSET_BRANCH": {

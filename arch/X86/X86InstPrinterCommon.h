@@ -12,5 +12,9 @@
 void printSSEAVXCC(MCInst *MI, unsigned Op, SStream *O);
 void printXOPCC(MCInst *MI, unsigned Op, SStream *O);
 void printRoundingControl(MCInst *MI, unsigned Op, SStream *O);
+void X86_printInst_detail_syntax(MCInst *MI, SStream *OS, void *info,
+				 void (*text)(MCInst *, SStream *, void *),
+				 void (*detail)(MCInst *, SStream *, void *),
+				 int detail_syntax);
 
 #endif
