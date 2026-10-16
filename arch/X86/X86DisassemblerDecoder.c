@@ -2095,6 +2095,11 @@ static int readOperands(struct InternalInstruction *insn)
 	hasVVVV = !readVVVV(insn);
 	needVVVV = hasVVVV && (insn->vvvv != 0);
 
+	if ((insn->instructionID == X86_UD0 ||
+	     insn->instructionID == X86_UD1) &&
+	    readModRM(insn))
+		return -1;
+
 	for (i = 0; i < X86_MAX_OPERANDS; ++i) {
 		const OperandSpecifier *op =
 			&x86OperandSets[insn->spec->operands][i];

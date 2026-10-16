@@ -7807,6 +7807,215 @@ test_cases:
         op_str: "$s0, $ra, 0x20($sp)"
   -
     input:
+      name: "issue 3118: ModRM and displacement lengths (16-bit)"
+      bytes: [ 0x0f, 0xb9, 0xc0, 0x0f, 0xff, 0x00, 0x0f, 0xb9, 0x40, 0x7f, 0x0f, 0xff, 0x86, 0x34, 0x12, 0x0f, 0x0b, 0x90 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ud1"
+        size: 3
+        details:
+          x86:
+            modrm: 0xc0
+            enc_modrm_offset: 2
+      -
+        asm_text: "ud0"
+        size: 3
+      -
+        asm_text: "ud1"
+        size: 4
+        details:
+          x86:
+            disp: 0x7f
+            enc_disp_offset: 3
+            enc_disp_size: 1
+      -
+        asm_text: "ud0"
+        size: 5
+        details:
+          x86:
+            disp: 0x1234
+            enc_disp_offset: 3
+            enc_disp_size: 2
+      -
+        asm_text: "ud2"
+        size: 2
+      -
+        asm_text: "nop"
+        size: 1
+  -
+    input:
+      name: "issue 3118: ModRM and displacement lengths (32-bit)"
+      bytes: [ 0x0f, 0xff, 0xc0, 0x0f, 0xb9, 0x00, 0x0f, 0xff, 0x45, 0x7f, 0x0f, 0xb9, 0x80, 0x78, 0x56, 0x34, 0x12, 0x90 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ud0"
+        size: 3
+      -
+        asm_text: "ud1"
+        size: 3
+      -
+        asm_text: "ud0"
+        size: 4
+      -
+        asm_text: "ud1"
+        size: 7
+        details:
+          x86:
+            disp: 0x12345678
+            enc_disp_offset: 3
+            enc_disp_size: 4
+      -
+        asm_text: "nop"
+        size: 1
+  -
+    input:
+      name: "issue 3118: RIP-relative and SIB lengths (64-bit)"
+      bytes: [ 0x0f, 0xb9, 0xc0, 0x0f, 0xff, 0x00, 0x0f, 0xb9, 0x05, 0x78, 0x56, 0x34, 0x12, 0x0f, 0xff, 0x44, 0x24, 0xf0, 0x90 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ud1"
+        size: 3
+      -
+        asm_text: "ud0"
+        size: 3
+      -
+        asm_text: "ud1"
+        size: 7
+        details:
+          x86:
+            disp: 0x12345678
+            enc_disp_offset: 3
+            enc_disp_size: 4
+      -
+        asm_text: "ud0"
+        size: 5
+        details:
+          x86:
+            sib: 0x24
+            disp: -0x10
+            enc_disp_offset: 4
+            enc_disp_size: 1
+      -
+        asm_text: "nop"
+        size: 1
+  -
+    input:
+      name: "issue 3118: address override and SIB (16-bit)"
+      bytes: [ 0x67, 0x0f, 0xff, 0x84, 0x25, 0x78, 0x56, 0x34, 0x12 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ud0"
+        size: 9
+        details:
+          x86:
+            addr_size: 4
+            sib: 0x25
+            enc_modrm_offset: 3
+            enc_disp_offset: 5
+            enc_disp_size: 4
+  -
+    input:
+      name: "issue 3118: operand and address overrides (32-bit)"
+      bytes: [ 0x66, 0x67, 0x0f, 0xb9, 0x06, 0x34, 0x12 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ud1"
+        size: 7
+        details:
+          x86:
+            addr_size: 2
+            enc_modrm_offset: 4
+            enc_disp_offset: 5
+            enc_disp_size: 2
+  -
+    input:
+      name: "issue 3118: REX, overrides and SIB (64-bit)"
+      bytes: [ 0x66, 0x67, 0x4d, 0x0f, 0xb9, 0x84, 0x25, 0x78, 0x56, 0x34, 0x12 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "ud1"
+        size: 11
+        details:
+          x86:
+            rex: 0x4d
+            addr_size: 4
+            enc_modrm_offset: 5
+            enc_disp_offset: 7
+            enc_disp_size: 4
+  -
+    input:
+      name: "issue 3118: missing UD0 ModRM"
+      bytes: [ 0x0f, 0xff ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3118: missing UD1 ModRM"
+      bytes: [ 0x0f, 0xb9 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3118: missing SIB"
+      bytes: [ 0x0f, 0xff, 0x04 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3118: incomplete displacement"
+      bytes: [ 0x0f, 0xb9, 0x84, 0x25, 0x78, 0x56, 0x34 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3118: maximum instruction length"
+      bytes: [ 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x0f, 0xff, 0x04, 0x25, 0x78, 0x56, 0x34, 0x12, 0x90 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "ud0"
+        size: 15
+      -
+        asm_text: "nop"
+        size: 1
+  -
+    input:
+      name: "issue 3118: instruction exceeds 15 bytes"
+      bytes: [ 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x0f, 0xff, 0x04, 0x25, 0x78, 0x56, 0x34, 0x12 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
       name: "Coverity CID 656295: negative memory offset with default mode (AT&T)"
       bytes: [ 0xa1, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]
       arch: "CS_ARCH_X86"
