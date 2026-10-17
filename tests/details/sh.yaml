@@ -118,14 +118,38 @@ test_cases:
     expected:
       insns:
       -
-        asm_text: "movi20 #-524288,r0"
+        asm_text: "movi20 #-0x80000,r0"
         details:
+          sh:
+            operands:
+              -
+                type: SH_OP_IMM
+                imm: -0x80000
+              -
+                type: SH_OP_REG
+                reg: r0
           regs_write: [ r0 ]
       -
-        asm_text: "movi20 #463412,r1"
+        asm_text: "movi20 #0x71234,r1"
         details:
+          sh:
+            operands:
+              -
+                type: SH_OP_IMM
+                imm: 0x71234
+              -
+                type: SH_OP_REG
+                reg: r1
           regs_write: [ r1 ]
       -
-        asm_text: "movi20s #-134217728,r2"
+        asm_text: "movi20s #-0x8000000,r2"
         details:
+          sh:
+            operands:
+              -
+                type: SH_OP_IMM
+                imm: -0x8000000
+              -
+                type: SH_OP_REG
+                reg: r2
           regs_write: [ r2 ]
