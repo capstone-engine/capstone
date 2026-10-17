@@ -936,11 +936,13 @@
 }},
 { /* ALPHA_BR (283) - ALPHA_INS_BR - br $$31,$DISP */
 {
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* Ra */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /* DISP */
   { 0 }
 }},
 { /* ALPHA_BSR (284) - ALPHA_INS_BSR - bsr $$26,$$$DISP ..ng */
 {
+  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* Ra */
   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /* DISP */
   { 0 }
 }},

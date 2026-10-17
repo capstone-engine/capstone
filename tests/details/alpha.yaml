@@ -143,3 +143,45 @@ test_cases:
               -
                 type: ALPHA_OP_REG
                 reg: $30
+  -
+    input:
+      bytes: [ 0x00, 0x00, 0x20, 0xc0 ]
+      arch: "alpha"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "br $1,4"
+        details:
+          alpha:
+            operands:
+              -
+                type: ALPHA_OP_REG
+                access: CS_AC_WRITE
+                reg: $1
+              -
+                type: ALPHA_OP_IMM
+                access: CS_AC_READ
+                imm: 0x4
+  -
+    input:
+      bytes: [ 0x02, 0x00, 0x40, 0xd3 ]
+      arch: "alpha"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "bsr $26,0xc"
+        details:
+          alpha:
+            operands:
+              -
+                type: ALPHA_OP_REG
+                access: CS_AC_WRITE
+                reg: $26
+              -
+                type: ALPHA_OP_IMM
+                access: CS_AC_READ
+                imm: 0xc
