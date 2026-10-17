@@ -7807,6 +7807,164 @@ test_cases:
         op_str: "$s0, $ra, 0x20($sp)"
   -
     input:
+      name: "issue 3116: MOV CS from register (16-bit)"
+      bytes: [ 0x8e, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: MOV CS from memory (16-bit)"
+      bytes: [ 0x8e, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: MOV CS from register (32-bit)"
+      bytes: [ 0x8e, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: MOV CS from memory (32-bit)"
+      bytes: [ 0x8e, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: MOV CS from register (64-bit)"
+      bytes: [ 0x8e, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: MOV CS from memory (64-bit)"
+      bytes: [ 0x8e, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: MOV CS with operand-size override"
+      bytes: [ 0x66, 0x8e, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: MOV CS with address-size override"
+      bytes: [ 0x67, 0x8e, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: MOV CS with REX.W"
+      bytes: [ 0x48, 0x8e, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: MOV CS with REX.R"
+      bytes: [ 0x44, 0x8e, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: MOV CS with REX.RB, SIB and displacement"
+      bytes: [ 0x45, 0x8e, 0x4c, 0x24, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3116: valid segment MOV directions (16-bit)"
+      bytes: [ 0x8e, 0xd0, 0x8e, 0x10, 0x8c, 0xc8, 0x8c, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov ss, ax"
+      -
+        asm_text: "mov ss, word ptr [bx + si]"
+      -
+        asm_text: "mov ax, cs"
+      -
+        asm_text: "mov word ptr [bx + si], cs"
+  -
+    input:
+      name: "issue 3116: valid segment MOV directions (32-bit)"
+      bytes: [ 0x8e, 0xd0, 0x8e, 0x10, 0x8c, 0xc8, 0x8c, 0x08, 0x66, 0x8c, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov ss, eax"
+      -
+        asm_text: "mov ss, word ptr [eax]"
+      -
+        asm_text: "mov eax, cs"
+      -
+        asm_text: "mov word ptr [eax], cs"
+      -
+        asm_text: "mov ax, cs"
+  -
+    input:
+      name: "issue 3116: valid segment MOV directions (64-bit)"
+      bytes: [ 0x8e, 0xc0, 0x8e, 0xd0, 0x8e, 0xd8, 0x8e, 0xe0, 0x8e, 0xe8, 0x8e, 0x00, 0x8e, 0x10, 0x8e, 0x18, 0x8e, 0x20, 0x8e, 0x28, 0x8c, 0xc8, 0x8c, 0x08, 0x45, 0x8e, 0xe8, 0x45, 0x8c, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "mov es, eax"
+      -
+        asm_text: "mov ss, eax"
+      -
+        asm_text: "mov ds, eax"
+      -
+        asm_text: "mov fs, eax"
+      -
+        asm_text: "mov gs, eax"
+      -
+        asm_text: "mov es, word ptr [rax]"
+      -
+        asm_text: "mov ss, word ptr [rax]"
+      -
+        asm_text: "mov ds, word ptr [rax]"
+      -
+        asm_text: "mov fs, word ptr [rax]"
+      -
+        asm_text: "mov gs, word ptr [rax]"
+      -
+        asm_text: "mov eax, cs"
+      -
+        asm_text: "mov word ptr [rax], cs"
+      -
+        asm_text: "mov gs, r8d"
+      -
+        asm_text: "mov r8d, cs"
+  -
+    input:
       name: "Coverity CID 656295: negative memory offset with default mode (AT&T)"
       bytes: [ 0xa1, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]
       arch: "CS_ARCH_X86"
