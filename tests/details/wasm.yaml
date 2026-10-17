@@ -56,3 +56,41 @@ test_cases:
         details:
           groups: [ WASM_GRP_CONTROL ]
 
+  -
+    input:
+      bytes: [ 0x41, 0x7f, 0x41, 0xff, 0xff, 0xff, 0xff, 0x07, 0x42, 0x80, 0x7f ]
+      arch: "wasm"
+      options: [ CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "i32.const 0xffffffff"
+        details:
+          groups: [ WASM_GRP_NUMBERIC ]
+          wasm:
+            operands:
+              -
+                type: WASM_OP_VARUINT32
+                varuint32: 0xffffffff
+                size: 1
+      -
+        asm_text: "i32.const 0x7fffffff"
+        details:
+          groups: [ WASM_GRP_NUMBERIC ]
+          wasm:
+            operands:
+              -
+                type: WASM_OP_VARUINT32
+                varuint32: 0x7fffffff
+                size: 5
+      -
+        asm_text: "i64.const 0xffffffffffffff80"
+        details:
+          groups: [ WASM_GRP_NUMBERIC ]
+          wasm:
+            operands:
+              -
+                type: WASM_OP_VARUINT64
+                varuint64: 0xffffffffffffff80
+                size: 2
