@@ -254,7 +254,9 @@ void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
 		break; // never reach
 	}
 }
+#endif
 
+#if !defined(CAPSTONE_DIET) && !defined(CAPSTONE_X86_ATT_DISABLE)
 // text with detail off, then the detail from the other syntax's printer
 void X86_printInst_detail_syntax(MCInst *MI, SStream *OS, void *info,
 				 void (*text)(MCInst *, SStream *, void *),

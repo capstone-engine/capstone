@@ -44,6 +44,7 @@
 #include "../../MCRegisterInfo.h"
 
 #include "X86InstPrinter.h"
+#include "../../Mapping.h"
 #include "X86Mapping.h"
 #include "X86InstPrinterCommon.h"
 
@@ -64,7 +65,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
-	if (!MI->csh->detail_opt)
+	if (!detail_is_set(MI))
 		return;
 
 	MI->csh->doing_mem = status;

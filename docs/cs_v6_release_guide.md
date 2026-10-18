@@ -291,7 +291,7 @@ Nonetheless, we hope this additional information is useful to you.
     Without either flag, the previous LLVM behavior is preserved.
 - Added `CS_OPT_DETAIL_INTEL_ORDER` and `CS_OPT_DETAIL_ATT_ORDER` to get the operand details in Intel or AT&T order regardless of the printed syntax.
   - The default is unchanged: the details follow the printed syntax.
-  - The corresponding `cstool` options are `+details-intel-order` and `+details-att-order`.
+  - The corresponding `cstool` options are `+intel-details` and `+att-details`.
 
 **BPF**
 
