@@ -1,0 +1,23 @@
+# Alpha BR/BSR decode Ra as operand[0] and disp21 as operand[1] (see the
+# format-27 handling in AlphaInstPrinter.c). The upstream asm strings hardcode
+# the Ra register ($31 / $26), so the generated operand map only lists the
+# disp. Add the missing Ra register operand so the detail operand types match
+# the two operands the decoder and printer actually produce.
+diff --git a/arch/Alpha/AlphaGenCSMappingInsnOp.inc b/arch/Alpha/AlphaGenCSMappingInsnOp.inc
+index 602f68b..c8b4a8a 100644
+--- a/arch/Alpha/AlphaGenCSMappingInsnOp.inc
++++ b/arch/Alpha/AlphaGenCSMappingInsnOp.inc
+@@ -936,11 +936,13 @@
+ }},
+ { /* ALPHA_BR (283) - ALPHA_INS_BR - br $$31,$DISP */
+ {
++  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* Ra */
+   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /* DISP */
+   { 0 }
+ }},
+ { /* ALPHA_BSR (284) - ALPHA_INS_BSR - bsr $$26,$$$DISP ..ng */
+ {
++  { CS_OP_REG, CS_AC_WRITE, { CS_DATA_TYPE_i64, CS_DATA_TYPE_LAST },  }, /* Ra */
+   { CS_OP_IMM, CS_AC_READ, { CS_DATA_TYPE_Other, CS_DATA_TYPE_LAST },  }, /* DISP */
+   { 0 }
+ }},
