@@ -99,6 +99,18 @@ static struct {
 	  CS_OPT_DETAIL_ALIAS | CS_OPT_ON,
 	  0,
 	  CS_OPT_DETAIL },
+	{ "+intel-details",
+	  "Fills x86 details in Intel operand order while printing AT&T syntax",
+	  { CS_ARCH_X86, CS_ARCH_MAX },
+	  CS_OPT_DETAIL_INTEL_ORDER | CS_OPT_ON,
+	  0,
+	  CS_OPT_DETAIL },
+	{ "+att-details",
+	  "Fills x86 details in AT&T operand order while printing Intel syntax",
+	  { CS_ARCH_X86, CS_ARCH_MAX },
+	  CS_OPT_DETAIL_ATT_ORDER | CS_OPT_ON,
+	  0,
+	  CS_OPT_DETAIL },
 	{ "+explicitwideimm",
 	  "Prints shifted MOVN and MOVZ instructions without MOV aliases",
 	  { CS_ARCH_AARCH64, CS_ARCH_MAX },
@@ -882,6 +894,20 @@ static void print_details(csh handle, cs_arch arch, cs_mode md, cs_insn *ins)
 	printf("\n");
 }
 
+// options are "+name" tokens; a name must not match inside a longer one
+static bool has_option(const char *input, const char *name)
+{
+	size_t len = strlen(name);
+	const char *p = input;
+	while ((p = strstr(p, name))) {
+		if (p[len] == '\0' || p[len] == '+') {
+			return true;
+		}
+		p += len;
+	}
+	return false;
+}
+
 static cs_mode find_additional_modes(const char *input, cs_arch arch)
 {
 	if (!input) {
@@ -890,7 +916,7 @@ static cs_mode find_additional_modes(const char *input, cs_arch arch)
 	cs_mode mode = 0;
 	int i, j;
 	for (i = 0; all_opts[i].name; i++) {
-		if (all_opts[i].opt || !strstr(input, all_opts[i].name)) {
+		if (all_opts[i].opt || !has_option(input, all_opts[i].name)) {
 			continue;
 		}
 		for (j = 0; j < CS_ARCH_MAX; j++) {
@@ -911,7 +937,7 @@ static void enable_additional_options(csh handle, const char *input,
 	}
 	int i, j;
 	for (i = 0; all_opts[i].name; i++) {
-		if (all_opts[i].mode || !strstr(input, all_opts[i].name)) {
+		if (all_opts[i].mode || !has_option(input, all_opts[i].name)) {
 			continue;
 		}
 		for (j = 0; j < CS_ARCH_MAX; j++) {

@@ -44,6 +44,7 @@
 #include "../../MCRegisterInfo.h"
 
 #include "X86InstPrinter.h"
+#include "../../Mapping.h"
 #include "X86Mapping.h"
 #include "X86InstPrinterCommon.h"
 
@@ -64,7 +65,7 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O);
 
 static void set_mem_access(MCInst *MI, bool status)
 {
-	if (MI->csh->detail_opt != CS_OPT_ON)
+	if (!detail_is_set(MI))
 		return;
 
 	MI->csh->doing_mem = status;
@@ -779,7 +780,7 @@ static void printMemOffs64(MCInst *MI, unsigned OpNo, SStream *O)
 
 static void printInstruction(MCInst *MI, SStream *O);
 
-void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
+static void intel_printInst(MCInst *MI, SStream *O, void *Info)
 {
 	x86_reg reg = X86_REG_INVALID, reg2;
 	enum cs_ac_type access1, access2;
@@ -858,6 +859,19 @@ void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
 
 	if (MI->op1_size == 0 && reg)
 		MI->op1_size = MI->csh->regsize_map[reg];
+}
+
+void X86_Intel_printInst(MCInst *MI, SStream *O, void *Info)
+{
+#if !defined(CAPSTONE_DIET) && !defined(CAPSTONE_X86_ATT_DISABLE)
+	if (MI->csh->detail_opt & CS_OPT_DETAIL_ATT_ORDER) {
+		X86_printInst_detail_syntax(MI, O, Info, intel_printInst,
+					    X86_ATT_printInst,
+					    CS_OPT_SYNTAX_ATT);
+		return;
+	}
+#endif
+	intel_printInst(MI, O, Info);
 }
 
 /// printPCRelImm - This is used to print an immediate value that ends up
