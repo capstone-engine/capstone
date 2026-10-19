@@ -280,7 +280,8 @@ static DecodeStatus decodeVMaskReg(MCInst *Inst, uint64_t RegNo,
 				   N)(MCInst * Inst, uint32_t Imm, \
 				      int64_t Address, const void *Decoder) \
 	{ \
-		CS_ASSERT(isUIntN(N, Imm) && "Invalid immediate"); \
+		if (!isUIntN(N, Imm)) \
+			return MCDisassembler_Fail; \
 		MCOperand_CreateImm0(Inst, (Imm)); \
 		return MCDisassembler_Success; \
 	}
