@@ -7,6 +7,7 @@
 #include "WASMDisassembler.h"
 #include "WASMMapping.h"
 #include "../../cs_priv.h"
+#include "../../LEB128.h"
 
 static const short opcodes[256] = {
 	WASM_INS_UNREACHABLE,
@@ -299,79 +300,6 @@ static uint32_t get_varuint32(const uint8_t *code, size_t code_len,
 	return data;
 }
 
-// input 	| code: code pointer start from varint32
-//       	| code_len: real code len count from varint
-//       	| leng: return value, means length of varint. -1 means error
-// return	| varint, sign-extended and stored as two's complement
-static uint32_t get_varint32(const uint8_t *code, size_t code_len, size_t *leng)
-{
-	uint32_t data = 0;
-	int i;
-
-	for (i = 0;; i++) {
-		if (code_len < i + 1) {
-			*leng = -1;
-			return 0;
-		}
-
-		// The unused bits of the last byte must match the sign bit.
-		if (i > 4 || (i == 4 && (code[i] & 0x78) != 0 &&
-			      (code[i] & 0x78) != 0x78)) {
-			*leng = -1;
-			return 0;
-		}
-
-		data = data + (((uint32_t)code[i] & 0x7f) << (i * 7));
-		if (code[i] >> 7 == 0) {
-			if (i < 4 && (code[i] & 0x40)) {
-				data |= UINT32_MAX << ((i + 1) * 7);
-			}
-			break;
-		}
-	}
-
-	*leng = i + 1;
-
-	return data;
-}
-
-// input 	| code : code pointer start from varint64
-//       	| code_len : real code len count from varint
-//       	| leng: return value, means length of varint. -1 means error
-// return 	| varint, sign-extended and stored as two's complement
-static uint64_t get_varint64(const uint8_t *code, size_t code_len, size_t *leng)
-{
-	uint64_t data;
-	int i;
-
-	data = 0;
-	for (i = 0;; i++) {
-		if (code_len < i + 1) {
-			*leng = -1;
-			return 0;
-		}
-
-		// The unused bits of the last byte must match the sign bit.
-		if (i > 9 || (i == 9 && (code[i] & 0x7f) != 0 &&
-			      (code[i] & 0x7f) != 0x7f)) {
-			*leng = -1;
-			return 0;
-		}
-
-		data = data + (((uint64_t)code[i] & 0x7f) << (i * 7));
-		if (code[i] >> 7 == 0) {
-			if (i < 9 && (code[i] & 0x40)) {
-				data |= UINT64_MAX << ((i + 1) * 7);
-			}
-			break;
-		}
-	}
-
-	*leng = i + 1;
-
-	return data;
-}
-
 // input	| code : code pointer start from uint32
 //			| dest : the pointer where we store the uint32
 // return	| None
@@ -452,11 +380,13 @@ static bool read_varuint32(const uint8_t *code, size_t code_len,
 static bool read_varint32(const uint8_t *code, size_t code_len,
 			  uint16_t *param_size, MCInst *MI)
 {
-	size_t len = 0;
-	uint32_t data;
+	unsigned len = 0;
+	const char *error = NULL;
+	int64_t data;
 
-	data = get_varint32(code, code_len, &len);
-	if (len == -1) {
+	data = decodeSLEB128(code, &len, code + code_len, &error);
+	// An s32 immediate is at most 5 bytes long and must fit into 32 bits.
+	if (error || len > 5 || data < INT32_MIN || data > INT32_MAX) {
 		return false;
 	}
 
@@ -484,11 +414,13 @@ static bool read_varint32(const uint8_t *code, size_t code_len,
 static bool read_varint64(const uint8_t *code, size_t code_len,
 			  uint16_t *param_size, MCInst *MI)
 {
-	size_t len = 0;
-	uint64_t data;
+	unsigned len = 0;
+	const char *error = NULL;
+	int64_t data;
 
-	data = get_varint64(code, code_len, &len);
-	if (len == -1) {
+	data = decodeSLEB128(code, &len, code + code_len, &error);
+	// An s64 immediate is at most 10 bytes long.
+	if (error || len > 10) {
 		return false;
 	}
 
