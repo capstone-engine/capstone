@@ -6805,6 +6805,346 @@ test_cases:
                 access: CS_AC_READ_WRITE
   -
     input:
+      # CS_OPT_DETAIL_INTEL_ORDER: the AT&T text keeps its order, the operand
+      # details come in Intel order, as the Intel printer builds them.
+      bytes: [0xd3, 0x23]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT, CS_OPT_DETAIL_INTEL_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "shll %cl, (%rbx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [0x48, 0x89, 0xc3]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT, CS_OPT_DETAIL_INTEL_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movq %rax, %rbx"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: rbx
+                size: 8
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: rax
+                size: 8
+                access: CS_AC_READ
+  -
+    input:
+      bytes: [0x6b, 0xc3, 0x05]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT, CS_OPT_DETAIL_INTEL_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "imull $5, %ebx, %eax"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_REG
+                reg: ebx
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+                size: 4
+  -
+    input:
+      # The rep prefix registers are recorded once.
+      bytes: [0xf3, 0xa4]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT, CS_OPT_DETAIL_INTEL_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rep movsb (%rsi), (%rdi)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rdi
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: rsi
+                size: 1
+                access: CS_AC_READ
+          regs_read: [ rdi, rsi, rflags, rcx ]
+          regs_write: [ rdi, rsi, rcx ]
+  -
+    input:
+      # The implicit 1 of the rotate-by-one form.
+      bytes: [0xd1, 0x13]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT, CS_OPT_DETAIL_INTEL_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rcll (%rbx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_IMM
+                imm: 0x1
+                access: CS_AC_READ
+  -
+    input:
+      # An xmm store keeps the Intel operand sizes (the memory access is not
+      # pinned: the Intel handle reports it wrong today).
+      bytes: [0x66, 0x0f, 0xd6, 0x00]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT, CS_OPT_DETAIL_INTEL_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "movq %xmm0, (%rax)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rax
+                size: 8
+              -
+                type: X86_OP_REG
+                reg: xmm0
+                size: 16
+                access: CS_AC_READ
+  -
+    input:
+      # The 64-bit call returns early in the AT&T printer.
+      bytes: [0xe8, 0x00, 0x00, 0x00, 0x00]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT, CS_OPT_DETAIL_INTEL_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "callq 5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+                size: 8
+  -
+    input:
+      # CS_OPT_DETAIL_INTEL_ORDER is a no-op under Intel syntax.
+      bytes: [0xd3, 0x23]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_DETAIL_INTEL_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "shl dword ptr [rbx], cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+  -
+    input:
+      # CS_OPT_DETAIL_ATT_ORDER: the Intel text keeps its order, the operand
+      # details come in AT&T order, as the AT&T printer builds them.
+      bytes: [0xd3, 0x23]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_DETAIL_ATT_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "shl dword ptr [rbx], cl"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
+  -
+    input:
+      bytes: [0x48, 0x89, 0xc3]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_DETAIL_ATT_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "mov rbx, rax"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: rax
+                size: 8
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: rbx
+                size: 8
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [0x6b, 0xc3, 0x05]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_DETAIL_ATT_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "imul eax, ebx, 5"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x5
+                size: 4
+              -
+                type: X86_OP_REG
+                reg: ebx
+                size: 4
+                access: CS_AC_READ
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_WRITE
+  -
+    input:
+      # The rep prefix registers are recorded once in this direction too.
+      bytes: [0xf3, 0xa4]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_DETAIL_ATT_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rep movsb byte ptr [rdi], byte ptr [rsi]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rsi
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: rdi
+                size: 1
+                access: CS_AC_WRITE
+          regs_read: [ rdi, rsi, rflags, rcx ]
+          regs_write: [ rdi, rsi, rcx ]
+  -
+    input:
+      # CS_OPT_DETAIL_ATT_ORDER is a no-op under AT&T syntax.
+      bytes: [0xd3, 0x23]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_SYNTAX_ATT, CS_OPT_DETAIL_ATT_ORDER ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "shll %cl, (%rbx)"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: cl
+                size: 1
+                access: CS_AC_READ
+              -
+                type: X86_OP_MEM
+                mem_base: rbx
+                size: 4
+                access: CS_AC_READ_WRITE
+  -
+    input:
+      # Any detail flag beyond CS_OPT_ON keeps the string operands as memory:
+      # the x86 printers used to compare the option against CS_OPT_ON exactly.
+      bytes: [0xf3, 0xa4]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_64, CS_OPT_DETAIL_REAL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "rep movsb byte ptr [rdi], byte ptr [rsi]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: rdi
+                size: 1
+                access: CS_AC_WRITE
+              -
+                type: X86_OP_MEM
+                mem_base: rsi
+                size: 1
+                access: CS_AC_READ
+  -
+    input:
       # Rotates write their memory destination, as the shifts do.
       bytes: [ 0xd0, 0x03 ]
       arch: "x86"

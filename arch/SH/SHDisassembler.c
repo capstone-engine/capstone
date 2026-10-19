@@ -1531,11 +1531,11 @@ static bool decode_long(uint32_t code, uint64_t address, MCInst *MI,
 			insn = SH_INS_MOVI20S;
 		} else {
 			// MOVI20
-			if (imm & (1 << (28 - 1)))
+			if (imm & (1 << (20 - 1)))
 				imm |= ~((1 << 20) - 1);
 			insn = SH_INS_MOVI20;
 		}
-		set_imm(info, 0, imm);
+		set_imm(info, 0, (int32_t)imm);
 		set_reg(info, SH_REG_R0 + n, write, detail);
 		break;
 	case 0x3:

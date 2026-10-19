@@ -255,3 +255,31 @@ void printRoundingControl(MCInst *MI, unsigned Op, SStream *O)
 	}
 }
 #endif
+
+#if !defined(CAPSTONE_DIET) && !defined(CAPSTONE_X86_ATT_DISABLE)
+// text with detail off, then the detail from the other syntax's printer
+void X86_printInst_detail_syntax(MCInst *MI, SStream *OS, void *info,
+				 void (*text)(MCInst *, SStream *, void *),
+				 void (*detail)(MCInst *, SStream *, void *),
+				 int detail_syntax)
+{
+	MCInst before = *MI;
+	cs_opt_value detail_opt = MI->csh->detail_opt;
+	int syntax = MI->csh->syntax;
+	SStream scratch;
+
+	MI->csh->detail_opt = CS_OPT_OFF;
+	text(MI, OS, info);
+	*MI = before;
+	// order flags masked so the other printer's wrapper does not bounce back
+	MI->csh->detail_opt =
+		(cs_opt_value)((detail_opt & ~(CS_OPT_DETAIL_INTEL_ORDER |
+					       CS_OPT_DETAIL_ATT_ORDER)) |
+			       CS_OPT_ON);
+	MI->csh->syntax = detail_syntax;
+	SStream_Init(&scratch);
+	detail(MI, &scratch, info);
+	MI->csh->syntax = syntax;
+	MI->csh->detail_opt = detail_opt;
+}
+#endif
