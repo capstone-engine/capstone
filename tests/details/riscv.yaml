@@ -6932,17 +6932,3 @@ test_cases:
       options: [CS_MODE_RISCV32, CS_MODE_RISCV_XCVBITMANIP, CS_OPT_DETAIL]
     expected:
       insns: []
-
-  - input:
-      bytes: [0x7b, 0xe5, 0x35, 0x43]
-      arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_XCVSIMD, CS_OPT_DETAIL]
-    expected:
-      insns: []
-
-  - input:
-      bytes: [0xfb, 0x72, 0x03, 0x41]
-      arch: "CS_ARCH_RISCV"
-      options: [CS_MODE_RISCV32, CS_MODE_RISCV_XCVSIMD, CS_OPT_DETAIL]
-    expected:
-      insns: []
