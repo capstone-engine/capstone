@@ -8163,6 +8163,483 @@ test_cases:
       insns: []
   -
     input:
+      name: "issue 2366: x87 arithmetic dependencies (16-bit)"
+      bytes: [ 0xd8, 0xc1, 0xdc, 0xc1, 0xde, 0xc1, 0xd8, 0x00, 0xdc, 0x00, 0xda, 0x00, 0xde, 0x00, 0xd8, 0xc9, 0xdc, 0xc9, 0xde, 0xc9, 0xd8, 0x08, 0xdc, 0x08, 0xda, 0x08, 0xde, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "fadd st(1)"
+        details:
+          regs_impl_read: [ st(0) ]
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fadd st(1), st(0)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+              -
+                access: CS_AC_READ
+          regs_read: [ st(1), st(0) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "faddp st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fadd dword ptr [bx + si]"
+        details:
+          regs_read: [ st(0), bx, si ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fadd qword ptr [bx + si]"
+        details:
+          regs_read: [ st(0), bx, si ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fiadd dword ptr [bx + si]"
+        details:
+          regs_read: [ st(0), bx, si ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fiadd word ptr [bx + si]"
+        details:
+          regs_read: [ st(0), bx, si ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fmul st(1)"
+        details:
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fmul st(1), st(0)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+              -
+                access: CS_AC_READ
+          regs_read: [ st(1), st(0) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fmulp st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fmul dword ptr [bx + si]"
+        details:
+          regs_read: [ st(0), bx, si ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fmul qword ptr [bx + si]"
+        details:
+          regs_read: [ st(0), bx, si ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fimul dword ptr [bx + si]"
+        details:
+          regs_read: [ st(0), bx, si ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fimul word ptr [bx + si]"
+        details:
+          regs_read: [ st(0), bx, si ]
+          regs_write: [ fpsw, st(0) ]
+  -
+    input:
+      name: "issue 2366: x87 arithmetic dependencies (32-bit)"
+      bytes: [ 0xd8, 0xe1, 0xdc, 0xe9, 0xde, 0xe9, 0xd8, 0x20, 0xdc, 0x20, 0xda, 0x20, 0xde, 0x20, 0xd8, 0xe9, 0xdc, 0xe1, 0xde, 0xe1, 0xd8, 0x28, 0xdc, 0x28, 0xda, 0x28, 0xde, 0x28 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "fsub st(1)"
+        details:
+          regs_impl_read: [ st(0) ]
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fsub st(1), st(0)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+              -
+                access: CS_AC_READ
+          regs_read: [ st(1), st(0) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fsubp st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fsub dword ptr [eax]"
+        details:
+          regs_read: [ st(0), eax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fsub qword ptr [eax]"
+        details:
+          regs_read: [ st(0), eax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fisub dword ptr [eax]"
+        details:
+          regs_read: [ st(0), eax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fisub word ptr [eax]"
+        details:
+          regs_read: [ st(0), eax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fsubr st(1)"
+        details:
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fsubr st(1), st(0)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+              -
+                access: CS_AC_READ
+          regs_read: [ st(1), st(0) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fsubrp st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fsubr dword ptr [eax]"
+        details:
+          regs_read: [ st(0), eax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fsubr qword ptr [eax]"
+        details:
+          regs_read: [ st(0), eax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fisubr dword ptr [eax]"
+        details:
+          regs_read: [ st(0), eax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fisubr word ptr [eax]"
+        details:
+          regs_read: [ st(0), eax ]
+          regs_write: [ fpsw, st(0) ]
+  -
+    input:
+      name: "issue 2366: x87 arithmetic dependencies (64-bit)"
+      bytes: [ 0xd8, 0xf1, 0xdc, 0xf9, 0xde, 0xf9, 0xd8, 0x30, 0xdc, 0x30, 0xda, 0x30, 0xde, 0x30, 0xd8, 0xf9, 0xdc, 0xf1, 0xde, 0xf1, 0xd8, 0x38, 0xdc, 0x38, 0xda, 0x38, 0xde, 0x38 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "fdiv st(1)"
+        details:
+          regs_impl_read: [ st(0) ]
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fdiv st(1), st(0)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+              -
+                access: CS_AC_READ
+          regs_read: [ st(1), st(0) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fdivp st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fdiv dword ptr [rax]"
+        details:
+          regs_read: [ st(0), rax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fdiv qword ptr [rax]"
+        details:
+          regs_read: [ st(0), rax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fidiv dword ptr [rax]"
+        details:
+          regs_read: [ st(0), rax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fidiv word ptr [rax]"
+        details:
+          regs_read: [ st(0), rax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fdivr st(1)"
+        details:
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fdivr st(1), st(0)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+              -
+                access: CS_AC_READ
+          regs_read: [ st(1), st(0) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fdivrp st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fdivr dword ptr [rax]"
+        details:
+          regs_read: [ st(0), rax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fdivr qword ptr [rax]"
+        details:
+          regs_read: [ st(0), rax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fidivr dword ptr [rax]"
+        details:
+          regs_read: [ st(0), rax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fidivr word ptr [rax]"
+        details:
+          regs_read: [ st(0), rax ]
+          regs_write: [ fpsw, st(0) ]
+  -
+    input:
+      name: "issue 2366: x87 operand order (AT&T)"
+      bytes: [ 0xdc, 0xc1, 0xdc, 0xc9, 0xdc, 0xe9, 0xdc, 0xe1, 0xdc, 0xf9, 0xdc, 0xf1, 0xd8, 0xc1, 0xde, 0xc1, 0xde, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "fadd %st(0), %st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fmul %st(0), %st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fsubr %st(0), %st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fsub %st(0), %st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fdivr %st(0), %st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fdiv %st(0), %st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fadd %st(1)"
+        details:
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "faddp %st(1)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(1) ]
+          regs_write: [ fpsw, st(1) ]
+      -
+        asm_text: "fiadds (%rax)"
+        details:
+          regs_read: [ st(0), rax ]
+          regs_write: [ fpsw, st(0) ]
+  -
+    input:
+      name: "issue 2366: x87 ST(0) overlap and ST(7)"
+      bytes: [ 0xd8, 0xc0, 0xdc, 0xc0, 0xde, 0xc0, 0xd8, 0xff, 0xdc, 0xf7, 0xde, 0xf7 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "fadd st(0)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ
+          regs_impl_read: [ st(0) ]
+          regs_read: [ st(0) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fadd st(0), st(0)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+              -
+                access: CS_AC_READ
+          regs_read: [ st(0) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "faddp st(0)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fdivr st(7)"
+        details:
+          regs_read: [ st(0), st(7) ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fdivr st(7), st(0)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+              -
+                access: CS_AC_READ
+          regs_read: [ st(7), st(0) ]
+          regs_write: [ fpsw, st(7) ]
+      -
+        asm_text: "fdivrp st(7)"
+        details:
+          x86:
+            operands:
+              -
+                access: CS_AC_READ_WRITE
+          regs_read: [ st(0), st(7) ]
+          regs_write: [ fpsw, st(7) ]
+  -
+    input:
+      name: "issue 2366: x87 prefixed memory addressing"
+      bytes: [ 0x66, 0xd8, 0x40, 0xf0, 0x67, 0xdc, 0x84, 0x25, 0x78, 0x56, 0x34, 0x12, 0x43, 0xde, 0x44, 0x8c, 0x80 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "fadd dword ptr [rax - 0x10]"
+        details:
+          regs_impl_read: [ st(0) ]
+          regs_read: [ st(0), rax ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fadd qword ptr [ebp + 0x12345678]"
+        details:
+          regs_read: [ st(0), ebp ]
+          regs_write: [ fpsw, st(0) ]
+      -
+        asm_text: "fiadd word ptr [r12 + r9*4 - 0x80]"
+        details:
+          regs_read: [ st(0), r12, r9 ]
+          regs_write: [ fpsw, st(0) ]
+  -
+    input:
       name: "Coverity CID 656295: negative memory offset with default mode (AT&T)"
       bytes: [ 0xa1, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]
       arch: "CS_ARCH_X86"

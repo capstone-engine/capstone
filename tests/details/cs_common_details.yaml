@@ -22,7 +22,8 @@ test_cases:
           mnemonic: "fadd"
           op_str: "dword ptr [bx + di + 0x34c6]"
           details:
-            regs_impl_write: [ fpsw ]
+            regs_impl_read: [ st(0) ]
+            regs_impl_write: [ fpsw, st(0) ]
             groups: [ fpu ]
         -
           asm_text: "adc al, byte ptr [bx + si]"

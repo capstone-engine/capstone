@@ -83,8 +83,8 @@ test_cases:
                 size: 4
                 access: CS_AC_READ
             fpu_flags: [ X86_FPU_FLAGS_MODIFY_C1, X86_FPU_FLAGS_UNDEFINED_C0, X86_FPU_FLAGS_UNDEFINED_C2, X86_FPU_FLAGS_UNDEFINED_C3]
-          regs_read: [ bx, di ]
-          regs_write: [ fpsw ]
+          regs_read: [ st(0), bx, di ]
+          regs_write: [ fpsw, st(0) ]
       -
         asm_text: "adc al, byte ptr [bx + si]"
         details:
