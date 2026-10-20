@@ -381,12 +381,13 @@ static bool read_varint32(const uint8_t *code, size_t code_len,
 			  uint16_t *param_size, MCInst *MI)
 {
 	unsigned len = 0;
-	const char *error = NULL;
+	leb128_err error = LEB128_OK;
 	int64_t data;
 
 	data = decodeSLEB128(code, &len, code + code_len, &error);
 	// An s32 immediate is at most 5 bytes long and must fit into 32 bits.
-	if (error || len > 5 || data < INT32_MIN || data > INT32_MAX) {
+	if (error != LEB128_OK || len > 5 || data < INT32_MIN ||
+	    data > INT32_MAX) {
 		return false;
 	}
 
@@ -415,12 +416,12 @@ static bool read_varint64(const uint8_t *code, size_t code_len,
 			  uint16_t *param_size, MCInst *MI)
 {
 	unsigned len = 0;
-	const char *error = NULL;
+	leb128_err error = LEB128_OK;
 	int64_t data;
 
 	data = decodeSLEB128(code, &len, code + code_len, &error);
 	// An s64 immediate is at most 10 bytes long.
-	if (error || len > 10) {
+	if (error != LEB128_OK || len > 10) {
 		return false;
 	}
 

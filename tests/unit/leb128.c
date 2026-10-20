@@ -11,10 +11,10 @@ static bool check_sleb128(const uint8_t *bytes, size_t len, int64_t expected,
 			  unsigned expected_n)
 {
 	unsigned n = 0;
-	const char *error = NULL;
+	leb128_err error = LEB128_ERR_TOO_BIG;
 	int64_t value = decodeSLEB128(bytes, &n, bytes + len, &error);
-	if (error) {
-		printf("Unexpected error: %s\n", error);
+	if (error != LEB128_OK) {
+		printf("Unexpected error: %d\n", error);
 		return false;
 	}
 	if (value != expected) {
@@ -29,13 +29,13 @@ static bool check_sleb128(const uint8_t *bytes, size_t len, int64_t expected,
 }
 
 static bool check_sleb128_error(const uint8_t *bytes, size_t len,
-				unsigned expected_n)
+				leb128_err expected_error, unsigned expected_n)
 {
 	unsigned n = 0;
-	const char *error = NULL;
+	leb128_err error = LEB128_OK;
 	int64_t value = decodeSLEB128(bytes, &n, bytes + len, &error);
-	if (!error) {
-		printf("Expected an error, got %" PRId64 "\n", value);
+	if (error != expected_error) {
+		printf("Error %d != %d\n", error, expected_error);
 		return false;
 	}
 	if (value != 0) {
@@ -58,11 +58,11 @@ static bool check_sleb128_error(const uint8_t *bytes, size_t len,
 		} \
 	} while (0)
 
-#define CHECK_SLEB128_ERROR(expected_n, ...) \
+#define CHECK_SLEB128_ERROR(expected_error, expected_n, ...) \
 	do { \
 		const uint8_t bytes__[] = { __VA_ARGS__ }; \
 		if (!check_sleb128_error(bytes__, sizeof(bytes__), \
-					 expected_n)) { \
+					 expected_error, expected_n)) { \
 			return false; \
 		} \
 	} while (0)
@@ -112,24 +112,24 @@ static bool test_decode_sleb128_errors()
 	printf("Test test_decode_sleb128_errors\n");
 
 	// Encoding extends past the end of the buffer.
-	CHECK_SLEB128_ERROR(1, 0x80);
-	CHECK_SLEB128_ERROR(2, 0xff, 0xff);
+	CHECK_SLEB128_ERROR(LEB128_ERR_PAST_END, 1, 0x80);
+	CHECK_SLEB128_ERROR(LEB128_ERR_PAST_END, 2, 0xff, 0xff);
 	{
 		const uint8_t bytes[] = { 0x7f };
-		if (!check_sleb128_error(bytes, 0, 0)) {
+		if (!check_sleb128_error(bytes, 0, LEB128_ERR_PAST_END, 0)) {
 			return false;
 		}
 	}
 
 	// Value does not fit into int64_t.
-	CHECK_SLEB128_ERROR(9, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-			    0xff, 0x01);
-	CHECK_SLEB128_ERROR(9, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,
-			    0x80, 0x7e);
-	CHECK_SLEB128_ERROR(10, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,
-			    0x80, 0x80, 0x7f);
-	CHECK_SLEB128_ERROR(10, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-			    0xff, 0xff, 0x00);
+	CHECK_SLEB128_ERROR(LEB128_ERR_TOO_BIG, 9, 0xff, 0xff, 0xff, 0xff, 0xff,
+			    0xff, 0xff, 0xff, 0xff, 0x01);
+	CHECK_SLEB128_ERROR(LEB128_ERR_TOO_BIG, 9, 0x80, 0x80, 0x80, 0x80, 0x80,
+			    0x80, 0x80, 0x80, 0x80, 0x7e);
+	CHECK_SLEB128_ERROR(LEB128_ERR_TOO_BIG, 10, 0x80, 0x80, 0x80, 0x80,
+			    0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x7f);
+	CHECK_SLEB128_ERROR(LEB128_ERR_TOO_BIG, 10, 0xff, 0xff, 0xff, 0xff,
+			    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00);
 
 	return true;
 }
