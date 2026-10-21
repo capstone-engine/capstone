@@ -8658,3 +8658,133 @@ test_cases:
       insns:
       -
         asm_text: "movabs eax, dword ptr [0xffffffffffffffff]"
+  -
+    input:
+      name: "issue 2577: vaddpd rounding access 64-bit intel"
+      bytes: [ 0x62, 0xf1, 0xed, 0x38, 0x58, 0xcb, 0x62, 0xf1, 0xed, 0x19, 0x58, 0xcb, 0x62, 0xf1, 0xed, 0xf9, 0x58, 0xcb ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "vaddpd zmm1, zmm2, zmm3, {rd-sae}"
+        details:
+          x86:
+            operands:
+              -
+                reg: zmm1
+                access: CS_AC_WRITE
+              -
+                reg: zmm2
+                access: CS_AC_READ
+              -
+                reg: zmm3
+                access: CS_AC_READ
+          regs_read: [ zmm2, zmm3 ]
+          regs_write: [ zmm1 ]
+          groups: [ avx512 ]
+      -
+        asm_text: "vaddpd zmm1 {k1}, zmm2, zmm3, {rn-sae}"
+        details:
+          x86:
+            operands:
+              -
+                reg: zmm1
+                access: CS_AC_READ_WRITE
+              -
+                reg: k1
+                access: CS_AC_READ
+              -
+                reg: zmm2
+                access: CS_AC_READ
+              -
+                reg: zmm3
+                access: CS_AC_READ
+          regs_read: [ zmm1, k1, zmm2, zmm3 ]
+          regs_write: [ zmm1 ]
+          groups: [ avx512 ]
+      -
+        asm_text: "vaddpd zmm1 {k1} {z}, zmm2, zmm3, {rz-sae}"
+        details:
+          x86:
+            operands:
+              -
+                reg: zmm1
+                access: CS_AC_WRITE
+              -
+                reg: k1
+                access: CS_AC_READ
+              -
+                reg: zmm2
+                access: CS_AC_READ
+              -
+                reg: zmm3
+                access: CS_AC_READ
+          regs_read: [ k1, zmm2, zmm3 ]
+          regs_write: [ zmm1 ]
+          groups: [ avx512 ]
+  -
+    input:
+      name: "issue 2577: vaddpd rounding access 32-bit att"
+      bytes: [ 0x62, 0xf1, 0xed, 0x58, 0x58, 0xcb, 0x62, 0xf1, 0xed, 0x39, 0x58, 0xcb, 0x62, 0xf1, 0xed, 0x99, 0x58, 0xcb ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "vaddpd {ru-sae}, %zmm3, %zmm2, %zmm1"
+        details:
+          x86:
+            operands:
+              -
+                reg: zmm3
+                access: CS_AC_READ
+              -
+                reg: zmm2
+                access: CS_AC_READ
+              -
+                reg: zmm1
+                access: CS_AC_WRITE
+          regs_read: [ zmm3, zmm2 ]
+          regs_write: [ zmm1 ]
+          groups: [ avx512 ]
+      -
+        asm_text: "vaddpd {rd-sae}, %zmm3, %zmm2, %zmm1 {%k1}"
+        details:
+          x86:
+            operands:
+              -
+                reg: zmm3
+                access: CS_AC_READ
+              -
+                reg: zmm2
+                access: CS_AC_READ
+              -
+                reg: zmm1
+                access: CS_AC_READ_WRITE
+              -
+                reg: k1
+                access: CS_AC_READ
+          regs_read: [ zmm3, zmm2, zmm1, k1 ]
+          regs_write: [ zmm1 ]
+          groups: [ avx512 ]
+      -
+        asm_text: "vaddpd {rn-sae}, %zmm3, %zmm2, %zmm1 {%k1} {z}"
+        details:
+          x86:
+            operands:
+              -
+                reg: zmm3
+                access: CS_AC_READ
+              -
+                reg: zmm2
+                access: CS_AC_READ
+              -
+                reg: zmm1
+                access: CS_AC_WRITE
+              -
+                reg: k1
+                access: CS_AC_READ
+          regs_read: [ zmm3, zmm2, k1 ]
+          regs_write: [ zmm1 ]
+          groups: [ avx512 ]
