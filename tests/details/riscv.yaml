@@ -6925,3 +6925,10 @@ test_cases:
                   reg: v4
                   access: CS_AC_READ
 
+
+  - input:
+      bytes: [0x5b, 0x95, 0x25, 0xcb]
+      arch: "CS_ARCH_RISCV"
+      options: [CS_MODE_RISCV32, CS_MODE_RISCV_XCVBITMANIP, CS_OPT_DETAIL]
+    expected:
+      insns: []
