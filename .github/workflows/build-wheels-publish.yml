@@ -112,6 +112,7 @@ jobs:
         uses: docker/setup-qemu-action@v4
 
       - name: '🚧 cibuildwheel run'
+        timeout-minutes: 40
         uses: pypa/cibuildwheel@v4.3.1
         env:
           CIBW_BUILD_FRONTEND: build
