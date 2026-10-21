@@ -19501,21 +19501,21 @@
 {
 	X86_VADDPDZrrb, X86_INS_VADDPD, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_VADDPDZrrbk, X86_INS_VADDPD, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
 },
 
 {
 	X86_VADDPDZrrbkz, X86_INS_VADDPD, 0,
 #ifndef CAPSTONE_DIET
-	{ 0 }, { 0 }, { 0 }, 0, 0
+	{ 0 }, { 0 }, { X86_GRP_AVX512, 0 }, 0, 0
 #endif
 },
 

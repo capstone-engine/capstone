@@ -13930,17 +13930,17 @@
 
 {	/* X86_VADDPDZrrb, X86_INS_VADDPD: vaddpd */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_VADDPDZrrbk, X86_INS_VADDPD: vaddpd */
 	0,
-	{ 0 }
+	{ CS_AC_READ | CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_VADDPDZrrbkz, X86_INS_VADDPD: vaddpd */
 	0,
-	{ 0 }
+	{ CS_AC_WRITE, CS_AC_READ, CS_AC_READ, CS_AC_READ, 0 }
 },
 
 {	/* X86_VADDPDZrrk, X86_INS_VADDPD: vaddpd */
