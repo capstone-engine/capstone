@@ -97,3 +97,23 @@ test_cases:
                 - type: XTENSA_OP_REG
                   reg: q1
                   access: CS_AC_READ
+  - input:
+      bytes: [ 0x00, 0xe8, 0x01 ]
+      arch: "CS_ARCH_XTENSA"
+      options: [ CS_OPT_DETAIL ]
+    expected:
+      insns:
+        - asm_text: "slli a14, a8, 0x20"
+          details:
+            xtensa:
+              format: XTENSA_INSN_FORM_RRR
+              operands:
+                - type: XTENSA_OP_REG
+                  reg: a14
+                  access: CS_AC_WRITE
+                - type: XTENSA_OP_REG
+                  reg: a8
+                  access: CS_AC_READ
+                - type: XTENSA_OP_IMM
+                  imm: 0x20
+                  access: CS_AC_READ

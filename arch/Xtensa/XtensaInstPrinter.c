@@ -266,9 +266,10 @@ static inline void printShimm0_31_AsmOperand(MCInst *MI, int OpNum, SStream *O)
 	if (MCOperand_isImm(MCInst_getOperand(MI, (OpNum)))) {
 		int64_t Value =
 			MCOperand_getImm(MCInst_getOperand(MI, (OpNum)));
+		// SLLI encodes 32 - sa, so the encoded field 0 decodes to 32.
 		CS_ASSERT_RET(
-			(Value >= 0 && Value <= 31) &&
-			"Invalid argument, value must be in range [0,31]");
+			(Value >= 0 && Value <= 32) &&
+			"Invalid argument, value must be in range [0,32]");
 		printInt64(O, Value);
 	} else
 		printOperand(MI, OpNum, O);
