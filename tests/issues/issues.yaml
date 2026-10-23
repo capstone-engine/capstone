@@ -8788,3 +8788,71 @@ test_cases:
           regs_read: [ zmm3, zmm2, k1 ]
           regs_write: [ zmm1 ]
           groups: [ avx512 ]
+  -
+    input:
+      name: "issue 2566: reserved prefetch hints (64-bit)"
+      bytes: [ 0x4a, 0x0f, 0x0d, 0x28, 0x0f, 0x0d, 0x20, 0x0f, 0x0d, 0x35, 0x78, 0x56, 0x34, 0x12, 0x4f, 0x0f, 0x0d, 0x7c, 0x6c, 0x80, 0x0f, 0x0d, 0x08, 0x0f, 0x0d, 0x10 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "prefetch byte ptr [rax]"
+        size: 4
+        details:
+          x86:
+            modrm: 0x28
+      -
+        asm_text: "prefetch byte ptr [rax]"
+        size: 3
+      -
+        asm_text: "prefetch byte ptr [rip + 0x12345678]"
+        size: 7
+      -
+        asm_text: "prefetch byte ptr [r12 + r13*2 - 0x80]"
+        size: 6
+      -
+        asm_text: "prefetchw byte ptr [rax]"
+        size: 3
+      -
+        asm_text: "prefetchwt1 byte ptr [rax]"
+        size: 3
+  -
+    input:
+      name: "issue 2566: reserved prefetch hints (16-bit)"
+      bytes: [ 0x0f, 0x0d, 0x20, 0x67, 0x0f, 0x0d, 0x6c, 0x8d, 0x80, 0x66, 0x0f, 0x0d, 0x36, 0x34, 0x12 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "prefetch byte ptr [bx + si]"
+        size: 3
+      -
+        asm_text: "prefetch byte ptr [ebp + ecx*4 - 0x80]"
+        size: 6
+      -
+        asm_text: "prefetch byte ptr [0x1234]"
+        size: 6
+  -
+    input:
+      name: "issue 2566: reserved prefetch hints (32-bit att)"
+      bytes: [ 0x0f, 0x0d, 0x7c, 0x8d, 0x80, 0x67, 0x0f, 0x0d, 0x26, 0x34, 0x12 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "prefetch -0x80(%ebp, %ecx, 4)"
+        size: 5
+      -
+        asm_text: "prefetch 0x1234"
+        size: 6
+  -
+    input:
+      name: "issue 2566: register operand is invalid"
+      bytes: [ 0x0f, 0x0d, 0xe8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
