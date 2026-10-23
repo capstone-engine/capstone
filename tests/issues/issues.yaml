@@ -8788,3 +8788,67 @@ test_cases:
           regs_read: [ zmm3, zmm2, k1 ]
           regs_write: [ zmm1 ]
           groups: [ avx512 ]
+  -
+    input:
+      name: "issue 2539: MMX PABS groups"
+      bytes: [ 0x0f, 0x38, 0x1c, 0xc1, 0x0f, 0x38, 0x1d, 0xc1, 0x0f, 0x38, 0x1e, 0xc1, 0x0f, 0x38, 0x1c, 0x00, 0x0f, 0x38, 0x1d, 0x45, 0xf0, 0x0f, 0x38, 0x1e, 0x01 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "pabsb mm0, mm1"
+        details:
+          groups: [ ssse3 ]
+      -
+        asm_text: "pabsw mm0, mm1"
+        details:
+          groups: [ ssse3 ]
+      -
+        asm_text: "pabsd mm0, mm1"
+        details:
+          groups: [ ssse3 ]
+      -
+        asm_text: "pabsb mm0, qword ptr [eax]"
+        details:
+          groups: [ ssse3 ]
+      -
+        asm_text: "pabsw mm0, qword ptr [ebp - 0x10]"
+        details:
+          groups: [ ssse3 ]
+      -
+        asm_text: "pabsd mm0, qword ptr [ecx]"
+        details:
+          groups: [ ssse3 ]
+  -
+    input:
+      name: "issue 2539: XMM PABS groups"
+      bytes: [ 0x66, 0x0f, 0x38, 0x1c, 0xc1, 0x66, 0x0f, 0x38, 0x1d, 0xc1, 0x66, 0x0f, 0x38, 0x1e, 0xc1, 0x66, 0x0f, 0x38, 0x1c, 0x00, 0x66, 0x0f, 0x38, 0x1d, 0x45, 0xf0, 0x66, 0x0f, 0x38, 0x1e, 0x01 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "pabsb xmm0, xmm1"
+        details:
+          groups: [ ssse3 ]
+      -
+        asm_text: "pabsw xmm0, xmm1"
+        details:
+          groups: [ ssse3 ]
+      -
+        asm_text: "pabsd xmm0, xmm1"
+        details:
+          groups: [ ssse3 ]
+      -
+        asm_text: "pabsb xmm0, xmmword ptr [rax]"
+        details:
+          groups: [ ssse3 ]
+      -
+        asm_text: "pabsw xmm0, xmmword ptr [rbp - 0x10]"
+        details:
+          groups: [ ssse3 ]
+      -
+        asm_text: "pabsd xmm0, xmmword ptr [rcx]"
+        details:
+          groups: [ ssse3 ]
