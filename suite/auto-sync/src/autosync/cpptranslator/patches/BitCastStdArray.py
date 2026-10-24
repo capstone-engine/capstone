@@ -31,9 +31,9 @@ class BitCastStdArray(Patch):
             "       (identifier) @arr_name"
             "       (call_expression"
             "           (template_function"
-            '               ((identifier) @tfid (#eq @tfid "bit_cast"))'
+            '               ((identifier) @tfid (#eq? @tfid "bit_cast"))'
             "               (template_argument_list"
-            '                   ((type_descriptor) @td (#match @td "std::array<.*>"))'
+            '                   ((type_descriptor) @td (#match? @td "std::array<.*>"))'
             "                )"
             "           )"
             "           (argument_list) @cast_target"

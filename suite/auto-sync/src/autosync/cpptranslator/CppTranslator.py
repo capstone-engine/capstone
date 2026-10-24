@@ -5,8 +5,8 @@
 
 import argparse
 import logging as log
-import sys
 import re
+import sys
 from pathlib import Path
 
 import termcolor
@@ -16,6 +16,7 @@ from autosync.cpptranslator.Configurator import Configurator
 from autosync.cpptranslator.patches.AddCSDetail import AddCSDetail
 from autosync.cpptranslator.patches.AddOperand import AddOperand
 from autosync.cpptranslator.patches.Assert import Assert
+from autosync.cpptranslator.patches.BadConditionCode import BadConditionCode
 from autosync.cpptranslator.patches.BitCastStdArray import BitCastStdArray
 from autosync.cpptranslator.patches.CheckDecoderStatus import CheckDecoderStatus
 from autosync.cpptranslator.patches.ClassConstructorDef import ClassConstructorDef
@@ -48,10 +49,10 @@ from autosync.cpptranslator.patches.InlineToStaticInline import InlineToStaticIn
 from autosync.cpptranslator.patches.IsOptionalDef import IsOptionalDef
 from autosync.cpptranslator.patches.IsPredicate import IsPredicate
 from autosync.cpptranslator.patches.IsRegImm import IsOperandRegImm
+from autosync.cpptranslator.patches.isUInt import IsUInt
+from autosync.cpptranslator.patches.LLVM_DEBUG import LLVM_DEBUG
 from autosync.cpptranslator.patches.LLVMFallThrough import LLVMFallThrough
 from autosync.cpptranslator.patches.LLVMunreachable import LLVMUnreachable
-from autosync.cpptranslator.patches.BadConditionCode import BadConditionCode
-from autosync.cpptranslator.patches.LLVM_DEBUG import LLVM_DEBUG
 from autosync.cpptranslator.patches.MethodToFunctions import MethodToFunction
 from autosync.cpptranslator.patches.MethodTypeQualifier import MethodTypeQualifier
 from autosync.cpptranslator.patches.NamespaceAnon import NamespaceAnon
@@ -83,6 +84,7 @@ from autosync.cpptranslator.patches.TemplateRefs import TemplateRefs
 from autosync.cpptranslator.patches.UseMarkup import UseMarkup
 from autosync.cpptranslator.patches.UsingDeclaration import UsingDeclaration
 from autosync.cpptranslator.TemplateCollector import TemplateCollector
+from autosync.cpptranslator.tree_sitter_compatibility import query_captures_22_3
 from autosync.Helper import (
     convert_loglevel,
     get_header,
@@ -90,8 +92,6 @@ from autosync.Helper import (
     print_prominent_warning,
     run_clang_format,
 )
-from autosync.cpptranslator.patches.isUInt import IsUInt
-from autosync.cpptranslator.tree_sitter_compatibility import query_captures_22_3
 
 
 class Translator:
@@ -434,7 +434,7 @@ class Translator:
                 # Each patch has a capture which includes the whole subtree searched for.
                 # Additionally, it can include captures within this subtree.
                 # Here we bundle these captures together.
-                query: Query = self.ts_cpp_lang.query(pattern)
+                query: Query = Query(self.ts_cpp_lang, pattern)
                 captures_bundle: [[(Node, str)]] = list()
                 for q in query_captures_22_3(query, self.tree.root_node):
                     if q[1] == patch.get_main_capture_name():
