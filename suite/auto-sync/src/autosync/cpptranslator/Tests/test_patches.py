@@ -5,16 +5,16 @@
 # SPDX-License-Identifier: BSD-3
 
 import unittest
-
 from pathlib import Path
-from tree_sitter import Node, Query
+
+from tree_sitter import Node, Query, Tree
 
 from autosync.cpptranslator import CppTranslator
-
 from autosync.cpptranslator.Configurator import Configurator
 from autosync.cpptranslator.patches.AddCSDetail import AddCSDetail
 from autosync.cpptranslator.patches.AddOperand import AddOperand
 from autosync.cpptranslator.patches.Assert import Assert
+from autosync.cpptranslator.patches.BadConditionCode import BadConditionCode
 from autosync.cpptranslator.patches.BitCastStdArray import BitCastStdArray
 from autosync.cpptranslator.patches.CheckDecoderStatus import CheckDecoderStatus
 from autosync.cpptranslator.patches.ClassesDef import ClassesDef
@@ -46,16 +46,17 @@ from autosync.cpptranslator.patches.InlineToStaticInline import InlineToStaticIn
 from autosync.cpptranslator.patches.IsOptionalDef import IsOptionalDef
 from autosync.cpptranslator.patches.IsPredicate import IsPredicate
 from autosync.cpptranslator.patches.IsRegImm import IsOperandRegImm
-from autosync.cpptranslator.patches.LLVMFallThrough import LLVMFallThrough
+from autosync.cpptranslator.patches.isUInt import IsUInt
 from autosync.cpptranslator.patches.LLVM_DEBUG import LLVM_DEBUG
+from autosync.cpptranslator.patches.LLVMFallThrough import LLVMFallThrough
 from autosync.cpptranslator.patches.LLVMunreachable import LLVMUnreachable
-from autosync.cpptranslator.patches.Override import Override
 from autosync.cpptranslator.patches.MethodToFunctions import MethodToFunction
 from autosync.cpptranslator.patches.MethodTypeQualifier import MethodTypeQualifier
 from autosync.cpptranslator.patches.NamespaceAnon import NamespaceAnon
 from autosync.cpptranslator.patches.NamespaceArch import NamespaceArch
 from autosync.cpptranslator.patches.NamespaceLLVM import NamespaceLLVM
 from autosync.cpptranslator.patches.OutStreamParam import OutStreamParam
+from autosync.cpptranslator.patches.Override import Override
 from autosync.cpptranslator.patches.PredicateBlockFunctions import (
     PredicateBlockFunctions,
 )
@@ -79,10 +80,8 @@ from autosync.cpptranslator.patches.TemplateRefs import TemplateRefs
 from autosync.cpptranslator.patches.UseMarkup import UseMarkup
 from autosync.cpptranslator.patches.UsingDeclaration import UsingDeclaration
 from autosync.cpptranslator.TemplateCollector import TemplateCollector
-from autosync.cpptranslator.patches.BadConditionCode import BadConditionCode
-from autosync.Helper import get_path
-from autosync.cpptranslator.patches.isUInt import IsUInt
 from autosync.cpptranslator.tree_sitter_compatibility import query_captures_22_3
+from autosync.Helper import get_path
 
 
 class TestPatches(unittest.TestCase):
@@ -97,16 +96,21 @@ class TestPatches(unittest.TestCase):
         )
 
     def check_patching_result(
-        self, patch, syntax, expected, filename: Path = None, tree: dict = None
+        self,
+        patch,
+        syntax: bytes,
+        expected,
+        filename: Path | None = None,
+        tree: Tree | None = None,
     ):
         kwargs = self.translator.get_patch_kwargs(patch)
         if filename:
             kwargs["filename"] = filename
 
-        query: Query = self.ts_cpp_lang.query(patch.get_search_pattern())
+        query: Query = Query(self.ts_cpp_lang, patch.get_search_pattern())
         tree = self.parser.parse(syntax)
         kwargs["tree"] = tree
-        captures_bundle: [[(Node, str)]] = list()
+        captures_bundle: list[list[tuple[Node, str]]] = []
         for q in query_captures_22_3(query, tree.root_node):
             if q[1] == patch.get_main_capture_name():
                 captures_bundle.append([q])
@@ -485,7 +489,7 @@ public:
             b"VPTBlock_instrInVPTBlock(&(MI->csh->VPTBlock))",
         )
 
-    def test_predicateblockfunctions(self):
+    def test_printAnnotation(self):
         patch = PrintAnnotation(0)
         syntax = b"printAnnotation();"
         self.check_patching_result(patch, syntax, b"")
