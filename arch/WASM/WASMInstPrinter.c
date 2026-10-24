@@ -17,7 +17,7 @@ void WASM_printInst(MCInst *MI, struct SStream *O, void *PrinterInfo)
 		break;
 
 	case WASM_OP_VARUINT64:
-		SStream_concat(O, "\t0x%lx", MI->wasm_data.varuint64);
+		SStream_concat(O, "\t0x%" PRIx64, MI->wasm_data.varuint64);
 		break;
 
 	case WASM_OP_UINT32:
