@@ -173,6 +173,10 @@ static InstrUID decode(OpcodeType type, InstructionContext insnContext,
 			dec = &emptyDecision.modRMDecisions[opcode];
 		break;
 	case TWOBYTE:
+		// Reserved PREFETCH hints /4-/7 alias /0 on AMD processors.
+		if (opcode == 0x0d && modFromModRM(modRM) != 3 &&
+		    regFromModRM(modRM) >= 4)
+			modRM &= 0xc7;
 		//dec = &TWOBYTE_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
 		index = index_x86DisassemblerTwoByteOpcodes[insnContext];
 		if (index)
