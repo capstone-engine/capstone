@@ -3,6 +3,7 @@
 
 import logging as log
 import re
+import sys
 from pathlib import Path
 
 from tree_sitter import Language, Node, Parser, Query
@@ -20,7 +21,7 @@ class TemplateRefInstance:
     name: bytes
     args: bytes
     args_list: list
-    dependent_calls = list()
+    dependent_calls = []
 
     # Holds the indices of the caller template parameters which set the templ. parameters
     # of this TemplateCallInstance.
@@ -28,7 +29,7 @@ class TemplateRefInstance:
     #
     # Only used if this is an incomplete TemplateInstance
     # (parameters are set by the template parameters of the calling function).
-    caller_param_indices: [{str: int}] = list()
+    caller_param_indices: list[dict[str, int]] = []
 
     def __init__(
         self, name: bytes, args: bytes, start_point, start_byte, end_point, end_byte
@@ -47,12 +48,8 @@ class TemplateRefInstance:
             self.name == other.name
             and self.args == other.args
             and any(
-                [
-                    a == b
-                    for a, b in zip(
-                        self.caller_param_indices, other.caller_param_indices
-                    )
-                ]
+                a == b
+                for a, b in zip(self.caller_param_indices, other.caller_param_indices)
             )
             and self.start_byte == other.start_byte
             and self.start_point == other.start_point
@@ -82,17 +79,17 @@ class TemplateCollector:
 
     # List of completed template instances indexed by their name.
     # One function can have multiple template instances. Depending on the template arguments
-    template_refs: {bytes: [TemplateRefInstance]} = dict()
+    template_refs: dict[bytes, list[TemplateRefInstance]] = {}
     # List of incomplete template instances indexed by the **function name they depend on**!
-    incomplete_template_refs: {bytes: [TemplateRefInstance]} = dict()
-    sources: [{str: bytes}] = list()
+    incomplete_template_refs: dict[bytes, list[TemplateRefInstance]] = {}
+    sources: list[dict[str, bytes]] = []
 
     def __init__(
         self,
         ts_parser: Parser,
         ts_cpp: Language,
-        searchable_files: [Path],
-        temp_arg_deduction: [bytes],
+        searchable_files: list[Path],
+        temp_arg_deduction: list[bytes],
     ):
         self.parser = ts_parser
         self.lang_cpp = ts_cpp
@@ -107,7 +104,7 @@ class TemplateCollector:
             log.debug(f"Search for template references in {path}")
 
             tree = self.parser.parse(src)
-            query: Query = self.lang_cpp.query(self.get_template_pattern())
+            query: Query = Query(self.lang_cpp, self.get_template_pattern())
             capture_bundles = self.get_capture_bundles(query, tree)
 
             for cb in capture_bundles:
@@ -131,7 +128,7 @@ class TemplateCollector:
 
                 if not self.contains_template_dependent_param(src, ti, cb[0]):
                     if name not in self.template_refs:
-                        self.template_refs[name] = list()
+                        self.template_refs[name] = []
                     # The template function has no parameter which is part of a previous
                     # template definition. So all template parameters are well-defined.
                     # Add it to the well-defined list.
@@ -148,8 +145,8 @@ class TemplateCollector:
         ):
             # Dict with new template calls which were previously incomplete
             # because one or more parameters were unknown.
-            new_completed_tcs: {str: list} = dict()
-            tc_instance_list: [TemplateRefInstance]
+            new_completed_tcs: dict[str, list] = {}
+            tc_instance_list: list[TemplateRefInstance]
             for caller_name, tc_instance_list in self.template_refs.items():
                 # Check if this caller has a dependent template call.
                 # In other words: If a template parameter of this caller is given
@@ -166,7 +163,7 @@ class TemplateCollector:
                         )
                         callee_name = new_tc.name
                         if callee_name not in new_completed_tcs:
-                            new_completed_tcs[callee_name] = list()
+                            new_completed_tcs[callee_name] = []
                         if new_tc not in new_completed_tcs[callee_name]:
                             new_completed_tcs[callee_name].append(new_tc)
                 del self.incomplete_template_refs[caller_name]
@@ -206,7 +203,7 @@ class TemplateCollector:
         return new_tc
 
     def contains_template_dependent_param(
-        self, src, ti: TemplateRefInstance, parse_tree: (Node, str)
+        self, src, ti: TemplateRefInstance, parse_tree: tuple[Node, str]
     ) -> bool:
         """Here we check if one of the template parameters of the given template call,
         is a parameter of the callers template definition.
@@ -237,7 +234,7 @@ class TemplateCollector:
         node: Node = parse_tree[0]
         while node.type != "function_definition":
             node = node.parent
-        if not node.prev_named_sibling.type == "template_parameter_list":
+        if node.prev_named_sibling.type != "template_parameter_list":
             # Caller is a normal function definition.
             # Nothing to do here.
             return False
@@ -262,7 +259,7 @@ class TemplateCollector:
             return False
 
         if caller_fcn_name not in self.incomplete_template_refs:
-            self.incomplete_template_refs[caller_fcn_name] = list()
+            self.incomplete_template_refs[caller_fcn_name] = []
         if ti not in self.incomplete_template_refs[caller_fcn_name]:
             self.incomplete_template_refs[caller_fcn_name].append(ti)
         return True
@@ -271,7 +268,7 @@ class TemplateCollector:
         for sf in self.searchable_files:
             if not Path.exists(sf):
                 log.fatal(f"TemplateCollector: Could not find '{sf}' for search.")
-                exit(1)
+                sys.exit(1)
             log.debug(f"TemplateCollector: Read {sf}")
             with open(sf) as f:
                 file = {"path": sf, "content": bytes(f.read(), "utf8")}
@@ -279,7 +276,7 @@ class TemplateCollector:
 
     @staticmethod
     def get_capture_bundles(query, tree):
-        captures_bundle: list[list[tuple[Node, str]]] = list()
+        captures_bundle: list[list[tuple[Node, str]]] = []
         for q in query_captures_22_3(query, tree.root_node):
             if q[1] == "templ_ref":
                 captures_bundle.append([q])
@@ -302,11 +299,11 @@ class TemplateCollector:
     @staticmethod
     def templ_params_to_list(templ_params: bytes) -> list[bytes]:
         if not templ_params:
-            return list()
+            return []
 
         params = templ_params.strip(b"<>").split(b",")
         params = [p.strip() for p in params]
-        res = list()
+        res = []
         for p in params:
             if len(p.split(b" ")) == 2:
                 # Typename specified for parameter. Remove it.
@@ -325,7 +322,9 @@ class TemplateCollector:
         return b"<" + b", ".join(temp_param_list) + b">"
 
     @staticmethod
-    def get_macro_c_call(name: bytes, arg_param_list: [bytes], fcn_args: bytes = b""):
+    def get_macro_c_call(
+        name: bytes, arg_param_list: list[bytes], fcn_args: bytes = b""
+    ):
         res = b""
         fa = [name] + arg_param_list
         for x in fa[:-1]:
@@ -343,4 +342,4 @@ class TemplateCollector:
             "\t\t\t- The function is a template with argument deduction and has no `template<...>` preamble. "
             "Add it in the config as exception in this case."
         )
-        exit(1)
+        sys.exit(1)

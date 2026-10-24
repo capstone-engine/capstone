@@ -1,7 +1,7 @@
 # Copyright © 2022 Rot127 <unisono@quyllur.org>
 # SPDX-License-Identifier: BSD-3
 
-from tree_sitter import Node
+from tree_sitter import Node, Query, QueryCursor
 
 from autosync.cpptranslator.patches.Helper import get_text, get_text_from_node
 from autosync.cpptranslator.patches.Patch import Patch
@@ -33,7 +33,7 @@ class StreamOperations(Patch):
     def get_patch(self, captures: [(Node, str)], src: bytes, **kwargs) -> bytes:
         bin_expr = captures[1][0]
         # Extract operands passed to the stream into a list.
-        ops = list()
+        ops = []
         while bin_expr.type == "binary_expression":
             ops.append(bin_expr.named_children[1])
             bin_expr = bin_expr.named_children[0]
@@ -49,7 +49,7 @@ class StreamOperations(Patch):
         # SStream_concat0 - Copies a string and null terminates the buffer.
         last_op: Node = ops[-1]
         op: Node = ops[0]
-        string_ops = list()
+        string_ops = []
         i = 0
         while op != last_op:
             if op.type == "char_literal":
@@ -114,12 +114,13 @@ class StreamOperations(Patch):
                     )
                 )) @decl
 """
-            query = kwargs["ts_cpp_lang"].query(queue_str)
+            query = Query(kwargs["ts_cpp_lang"], queue_str)
             root_node = kwargs["tree"].root_node
+            cursor = QueryCursor(query)
             query_result = list(
                 filter(
                     lambda x: "typ" in x[1],
-                    query.matches(root_node),
+                    cursor.matches(root_node),
                 )
             )
             if len(query_result) == 0:
