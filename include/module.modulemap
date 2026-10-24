@@ -1,0 +1,4 @@
+module capstone {
+	umbrella header "capstone/capstone.h"
+	export *
+}
