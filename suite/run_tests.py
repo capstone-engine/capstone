@@ -17,15 +17,23 @@ parser.add_argument(
     action="store_true",
     help="Read the .json test files, converted from the .yaml files, in the test suites.",
 )
-json_flag = " --json" if parser.parse_args().json else ""
+parser.add_argument(
+    "--jobs",
+    type=int,
+    default=1,
+    help="Number of processes cstest_py tests the files of a suite with.",
+)
+args = parser.parse_args()
+json_flag = " --json" if args.json else ""
+jobs_flag = f" -j {args.jobs}"
 
 tests = [
     f"{sys.executable} {root_dir}/bindings/python/tests/test_all.py",
     f"{sys.executable} {root_dir}/suite/cstest/test/integration_tests.py cstest_py",
-    f"cstest_py {root_dir}/tests/MC/{json_flag}",
-    f"cstest_py {root_dir}/tests/details/{json_flag}",
-    f"cstest_py {root_dir}/tests/issues/{json_flag}",
-    f"cstest_py {root_dir}/tests/features/{json_flag}",
+    f"cstest_py {root_dir}/tests/MC/{json_flag}{jobs_flag}",
+    f"cstest_py {root_dir}/tests/details/{json_flag}{jobs_flag}",
+    f"cstest_py {root_dir}/tests/issues/{json_flag}{jobs_flag}",
+    f"cstest_py {root_dir}/tests/features/{json_flag}{jobs_flag}",
 ]
 
 expected_to_fail = [

@@ -6,8 +6,11 @@
 from __future__ import annotations
 
 import argparse
+import io
 import json
 import logging
+import multiprocessing
+import queue
 import sys
 import os
 import yaml
@@ -29,6 +32,13 @@ from enum import Enum
 from pathlib import Path
 
 log = logging.getLogger("__name__")
+# The format only uses the level and message. Skip collecting the rest.
+logging._srcfile = None
+logging.logThreads = False
+logging.logProcesses = False
+logging.logMultiprocessing = False
+logging.logAsyncioTasks = False
+log_format = logging.Formatter("%(levelname)-5s - %(message)s", None, "%")
 
 # yaml.safe_load() always uses the pure Python parser.
 YamlLoader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
@@ -106,6 +116,17 @@ class TestStats:
 
     def get_test_case_count(self) -> int:
         return self.test_case_count
+
+    def merge(self, other: TestStats):
+        self.test_case_count += other.test_case_count
+        self.success += other.success
+        self.failed += other.failed
+        self.skipped += other.skipped
+        self.errors += other.errors
+        self.invalid_files += other.invalid_files
+        self.total_valid_files += other.total_valid_files
+        self.err_msgs.extend(other.err_msgs)
+        self.failing_files.update(other.failing_files)
 
     def print_evaluate(self):
         if self.total_file_count == 0:
@@ -352,8 +373,14 @@ class TestFile:
 
 class CSTest:
     def __init__(
-        self, path: Path, exclude: list[Path], include: list[Path], use_json: bool
+        self,
+        path: Path,
+        exclude: list[Path],
+        include: list[Path],
+        use_json: bool,
+        jobs: int = 1,
     ):
+        self.jobs = jobs
         suffixes = [".json"] if use_json else [".yaml", ".yml"]
         self.yaml_paths: list[Path] = list()
 
@@ -386,43 +413,125 @@ class CSTest:
                 end=f"{' ' * 20}\r",
                 flush=True,
             )
-            try:
-                tf = TestFile(tfile)
+            tf = parse_file(tfile, self.stats)
+            if tf:
                 total_test_cases += tf.num_test_cases()
                 self.test_files.append(tf)
-            except yaml.YAMLError as e:
-                self.stats.add_error_msg(str(e))
-                self.stats.add_invalid_file_dp(tfile)
-                log.error("Error: 'libyaml parser error'")
-                log.error(f"{e}")
-                log.error(f"Failed to parse test file '{tfile}'")
-            except ValueError as e:
-                self.stats.add_error_msg(str(e))
-                self.stats.add_invalid_file_dp(tfile)
-                log.error(f"Error: ValueError: {e}")
-                log.error(f"Failed to parse test file '{tfile}'")
-            finally:
-                count += 1
+            count += 1
         self.stats.set_total_valid_files(len(self.test_files))
         self.stats.set_total_test_cases(total_test_cases)
         log.info(f"Found {self.stats.get_test_case_count()} test cases.{' ' * 20}")
 
     def run_tests(self):
-        self.parse_files()
-        for tf in self.test_files:
-            log.info(f"Test file: {tf}\n")
-            for tc in tf.test_cases:
-                log.info(f"Run test: {tc}")
-                try:
-                    result = tc.test()
-                except Exception as e:
-                    result = TestResult.ERROR
-                    self.stats.add_error_msg(str(e))
-                if result == TestResult.FAILED or result == TestResult.ERROR:
-                    self.stats.add_failing_file(tf.path)
-                self.stats.add_test_case_data_point(result)
-                log.info(result)
+        if self.jobs > 1:
+            self.run_tests_parallel()
+        else:
+            self.parse_files()
+            for tf in self.test_files:
+                run_file(tf, self.stats)
         self.stats.print_evaluate()
+
+    def run_tests_parallel(self):
+        # Largest files first, so the small ones even out the end of the run.
+        files = sorted(self.yaml_paths, key=lambda p: p.stat().st_size, reverse=True)
+        tasks = multiprocessing.Queue()
+        for f in files + [None] * self.jobs:
+            tasks.put(f)
+        results = multiprocessing.Queue()
+        workers = [
+            multiprocessing.Process(target=worker, args=(tasks, results, log.level))
+            for _ in range(self.jobs - 1)
+        ]
+        for w in workers:
+            w.start()
+
+        def report(result: tuple[str, TestStats]):
+            sys.stdout.write(result[0])
+            self.stats.merge(result[1])
+
+        # The parent tests files as well, and prints the workers' results in between.
+        handlers = log.handlers
+        log_to_buffer(log.level)
+        done = 0
+        for f in iter(tasks.get, None):
+            report(test_file(f))
+            done += 1
+            while not results.empty():
+                report(results.get())
+                done += 1
+        log.handlers = handlers
+        while done < len(files):
+            try:
+                report(results.get(timeout=1))
+                done += 1
+            except queue.Empty:
+                if not any(w.is_alive() for w in workers):
+                    log.error(
+                        f"Workers exited without the results of {len(files) - done} files"
+                    )
+                    exit(-1)
+        for w in workers:
+            w.join()
+
+
+def parse_file(tfile: Path, stats: TestStats) -> TestFile | None:
+    try:
+        return TestFile(tfile)
+    except yaml.YAMLError as e:
+        stats.add_error_msg(str(e))
+        stats.add_invalid_file_dp(tfile)
+        log.error("Error: 'libyaml parser error'")
+        log.error(f"{e}")
+        log.error(f"Failed to parse test file '{tfile}'")
+    except ValueError as e:
+        stats.add_error_msg(str(e))
+        stats.add_invalid_file_dp(tfile)
+        log.error(f"Error: ValueError: {e}")
+        log.error(f"Failed to parse test file '{tfile}'")
+    return None
+
+
+def run_file(tf: TestFile, stats: TestStats):
+    log.info(f"Test file: {tf}\n")
+    for tc in tf.test_cases:
+        log.info(f"Run test: {tc}")
+        try:
+            result = tc.test()
+        except Exception as e:
+            result = TestResult.ERROR
+            stats.add_error_msg(str(e))
+        if result == TestResult.FAILED or result == TestResult.ERROR:
+            stats.add_failing_file(tf.path)
+        stats.add_test_case_data_point(result)
+        log.info(result)
+
+
+log_buffer = io.StringIO()
+
+
+def log_to_buffer(level: int):
+    handler = logging.StreamHandler(log_buffer)
+    handler.setFormatter(log_format)
+    log.handlers = [handler]
+    log.setLevel(level)
+
+
+def test_file(tfile: Path) -> tuple[str, TestStats]:
+    log_buffer.seek(0)
+    log_buffer.truncate()
+    stats = TestStats(1)
+    tf = parse_file(tfile, stats)
+    if tf:
+        stats.set_total_valid_files(1)
+        stats.set_total_test_cases(tf.num_test_cases())
+        run_file(tf, stats)
+    return log_buffer.getvalue(), stats
+
+
+def worker(tasks, results, level: int):
+    log_to_buffer(level)
+    for f in iter(tasks.get, None):
+        results.put(test_file(f))
 
 
 def parse_args() -> argparse.Namespace:
@@ -464,6 +573,13 @@ def parse_args() -> argparse.Namespace:
         help="Search for .json test files, converted from the .yaml files, instead.",
         action="store_true",
     )
+    parser.add_argument(
+        "-j",
+        dest="jobs",
+        help="Number of processes to test the files with.",
+        type=int,
+        default=1,
+    )
     arguments = parser.parse_args()
     return arguments
 
@@ -478,7 +594,6 @@ def main():
         "critical": logging.CRITICAL,
     }
     args = parse_args()
-    format = logging.Formatter("%(levelname)-5s - %(message)s", None, "%")
     log.setLevel(log_levels[args.verbosity])
 
     h1 = logging.StreamHandler(sys.stdout)
@@ -486,15 +601,17 @@ def main():
         lambda record: record.levelno >= log_levels[args.verbosity]
         and record.levelno < logging.WARNING
     )
-    h1.setFormatter(format)
+    h1.setFormatter(log_format)
 
     h2 = logging.StreamHandler(sys.stderr)
     h2.setLevel(logging.WARNING)
-    h2.setFormatter(format)
+    h2.setFormatter(log_format)
 
     log.addHandler(h1)
     log.addHandler(h2)
-    CSTest(args.search_dir, args.exclude, args.include, args.use_json).run_tests()
+    CSTest(
+        args.search_dir, args.exclude, args.include, args.use_json, args.jobs
+    ).run_tests()
 
 
 if __name__ == "__main__":

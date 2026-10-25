@@ -152,7 +152,7 @@ jobs:
           CIBW_TEST_SKIP: "cp38-macosx_*:arm64"
           CIBW_TEST_COMMAND: >
             python -m pip install --find-links {project}/pyyaml_wheel {package}/cstest_py &&
-            python {project}/suite/run_tests.py --json
+            python {project}/suite/run_tests.py --json --jobs ${{ matrix.arch == 'riscv64' && '$(nproc)' || '1' }}
         with:
           package-dir: bindings/python
           output-dir: wheelhouse
