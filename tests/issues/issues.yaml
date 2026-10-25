@@ -8920,3 +8920,114 @@ test_cases:
       options: [ CS_MODE_64 ]
     expected:
       insns: []
+  -
+    input:
+      name: "issue 3117: x87 register aliases"
+      bytes: [ 0xdc, 0xd1, 0xdc, 0xd9, 0xdd, 0xca, 0xde, 0xd3, 0xdf, 0xcc, 0xde, 0xd9 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "fcom st(1)"
+        size: 2
+        details:
+          x86:
+            opcode: [ 0xdc, 0x00, 0x00, 0x00 ]
+            modrm: 0xd1
+      -
+        asm_text: "fcomp st(1)"
+        size: 2
+        details:
+          x86:
+            opcode: [ 0xdc, 0x00, 0x00, 0x00 ]
+            modrm: 0xd9
+      -
+        asm_text: "fxch st(2)"
+        size: 2
+        details:
+          x86:
+            opcode: [ 0xdd, 0x00, 0x00, 0x00 ]
+            modrm: 0xca
+      -
+        asm_text: "fcomp st(3)"
+        size: 2
+        details:
+          x86:
+            opcode: [ 0xde, 0x00, 0x00, 0x00 ]
+            modrm: 0xd3
+      -
+        asm_text: "fxch st(4)"
+        size: 2
+        details:
+          x86:
+            opcode: [ 0xdf, 0x00, 0x00, 0x00 ]
+            modrm: 0xcc
+      -
+        asm_text: "fcompp"
+        size: 2
+        details:
+          x86:
+            operands: []
+  -
+    input:
+      name: "issue 3117: x87 aliases with prefixes (16-bit)"
+      bytes: [ 0x66, 0xdc, 0xd0, 0x67, 0xdc, 0xdf, 0x66, 0xdd, 0xc8, 0x67, 0xde, 0xd7, 0x66, 0xdf, 0xcf ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "fcom st(0)"
+        size: 3
+      -
+        asm_text: "fcomp st(7)"
+        size: 3
+      -
+        asm_text: "fxch st(0)"
+        size: 3
+      -
+        asm_text: "fcomp st(7)"
+        size: 3
+      -
+        asm_text: "fxch st(7)"
+        size: 3
+  -
+    input:
+      name: "issue 3117: x87 aliases (32-bit AT&T)"
+      bytes: [ 0xdc, 0xd7, 0xdc, 0xd8, 0xdd, 0xcf, 0xde, 0xd0, 0xdf, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+    expected:
+      insns:
+      -
+        asm_text: "fcom %st(7)"
+        size: 2
+      -
+        asm_text: "fcomp %st(0)"
+        size: 2
+      -
+        asm_text: "fxch %st(7)"
+        size: 2
+      -
+        asm_text: "fcomp %st(0)"
+        size: 2
+      -
+        asm_text: "fxch %st(0)"
+        size: 2
+  -
+    input:
+      name: "issue 3117: DE D8 is invalid"
+      bytes: [ 0xde, 0xd8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "issue 3117: DE DA is invalid"
+      bytes: [ 0xde, 0xda ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns: []

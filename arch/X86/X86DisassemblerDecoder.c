@@ -165,6 +165,16 @@ static InstrUID decode(OpcodeType type, InstructionContext insnContext,
 	default:
 		return 0;
 	case ONEBYTE:
+		// Reserved x87 register encodings alias FCOM, FCOMP and FXCH.
+		if (opcode == 0xdc && (modRM & 0xf0) == 0xd0)
+			opcode = 0xd8;
+		else if ((opcode == 0xdd || opcode == 0xdf) &&
+			 (modRM & 0xf8) == 0xc8)
+			opcode = 0xd9;
+		else if (opcode == 0xde && (modRM & 0xf8) == 0xd0) {
+			opcode = 0xd8;
+			modRM |= 0x08;
+		}
 		// dec = &ONEBYTE_SYM.opcodeDecisions[insnContext].modRMDecisions[opcode];
 		index = index_x86DisassemblerOneByteOpcodes[insnContext];
 		if (index)
