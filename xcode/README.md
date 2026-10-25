@@ -2,21 +2,31 @@ Xcode Project for Capstone
 ================================================================================
 
 The *Capstone.xcodeproj* project is an Xcode project that mimics the Visual
-Studio solution for Capstone. It embeds nicely into Xcode workspaces. It has 13
-targets, two of which are the most likely to be of interest:
+Studio solution for Capstone. It embeds nicely into Xcode workspaces. It has 3
+targets:
 
 * CapstoneStatic, producing `libcapstone.a`, Capstone as a static library;
 * CapstoneDynamic, producing `libcapstone.dylib`, Capstone as a shared library;
-* test, test_arm, test_aarch64, test_detail, test_mips, test_ppc, test_skipdata,
-	test_sparc, test_systemz, test_xcore, testing all the things.
+* CapstoneFramework, producing `Capstone.framework`, Capstone as a macOS
+  framework bundle containing the library and public headers.
 
 The project is configured to include all targets and use the system
 implementations of `malloc`, `calloc`, `realloc`, `free` and `vsnprintf`. This
-can be modified by editing the *Preprocessor Macros* build setting of either
-CapstoneStatic or CapstoneDynamic, whichever you plan to use. These settings are
-all at the target level: no specific overrides were used at the project level.
+can be modified by editing the *Preprocessor Macros* build setting of the
+target you plan to use. These settings are all at the target level: no specific
+overrides were used at the project level.
 
-### A Word of Warning: Static vs. Shared Library
+### Building
+
+The project can be built in Xcode or using `xcodebuild`:
+
+```sh
+xcodebuild -target CapstoneStatic -configuration Release
+xcodebuild -target CapstoneDynamic -configuration Release
+xcodebuild -target CapstoneFramework -configuration Release
+```
+
+### Including the Xcode project in a workspace
 
 There is a bug in how Xcode handles static libraries and dynamic libraries of
 the same name. Currently, if you integrate the Capstone project in a workspace
