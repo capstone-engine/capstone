@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2024 Antelox <anteloxrce@gmail.com>
 # SPDX-License-Identifier: BSD-3
 
+import argparse
 import logging
 import subprocess
 import sys
@@ -9,13 +10,22 @@ from pathlib import Path
 logger = logging.getLogger('tests')
 logging.basicConfig(level=logging.INFO)
 root_dir = Path(__file__).parent.parent.resolve()
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--json",
+    action="store_true",
+    help="Read the .json test files, converted from the .yaml files, in the test suites.",
+)
+json_flag = " --json" if parser.parse_args().json else ""
+
 tests = [
     f"{sys.executable} {root_dir}/bindings/python/tests/test_all.py",
     f"{sys.executable} {root_dir}/suite/cstest/test/integration_tests.py cstest_py",
-    f"cstest_py {root_dir}/tests/MC/",
-    f"cstest_py {root_dir}/tests/details/",
-    f"cstest_py {root_dir}/tests/issues/",
-    f"cstest_py {root_dir}/tests/features/",
+    f"cstest_py {root_dir}/tests/MC/{json_flag}",
+    f"cstest_py {root_dir}/tests/details/{json_flag}",
+    f"cstest_py {root_dir}/tests/issues/{json_flag}",
+    f"cstest_py {root_dir}/tests/features/{json_flag}",
 ]
 
 expected_to_fail = [

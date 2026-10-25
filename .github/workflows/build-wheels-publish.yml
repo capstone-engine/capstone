@@ -83,6 +83,33 @@ jobs:
           name=$(echo -n "$name" | sed -e 's/[ \t:\/\\"<>|*?]/-/g' -e 's/--*/-/g' | sed -e 's/\-$//')
           echo "ARTIFACT_NAME=$name" >> $GITHUB_ENV
 
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.x'
+
+      # Parsing the YAML test files dominates the test time under QEMU.
+      # Convert them once on the native host; the tests read the JSON files.
+      - name: 'Convert YAML test files to JSON'
+        shell: bash
+        run: |
+          python -m pip install pyyaml
+          python -c '
+          import json, sys, yaml
+          from pathlib import Path
+          loader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+          for d in sys.argv[1:]:
+              for p in Path(d).rglob("*.yaml"):
+                  data = yaml.load(p.read_text(encoding="utf8"), Loader=loader)
+                  p.with_suffix(".json").write_text(json.dumps(data), encoding="utf8")
+          ' tests/MC tests/details tests/issues tests/features
+
+      # PyYAML has no riscv64 wheels, so each emulated test environment would
+      # build it from the sdist. Build a pure Python wheel natively instead.
+      - name: 'Build pure Python PyYAML wheel'
+        shell: bash
+        run: |
+          PYYAML_FORCE_LIBYAML=0 python -m pip wheel --no-deps --no-binary pyyaml pyyaml -w pyyaml_wheel
+
       # https://cibuildwheel.pypa.io/en/stable/faq/#macos-building-cpython-38-wheels-on-arm64
       - uses: actions/setup-python@v7
         if: runner.os == 'macOS' && runner.arch == 'ARM64'
@@ -124,8 +151,8 @@ jobs:
           # https://github.com/pypa/cibuildwheel/pull/1169
           CIBW_TEST_SKIP: "cp38-macosx_*:arm64"
           CIBW_TEST_COMMAND: >
-            python -m pip install {package}/cstest_py &&
-            python {project}/suite/run_tests.py
+            python -m pip install --find-links {project}/pyyaml_wheel {package}/cstest_py &&
+            python {project}/suite/run_tests.py --json
         with:
           package-dir: bindings/python
           output-dir: wheelhouse

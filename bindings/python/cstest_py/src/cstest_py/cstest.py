@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import sys
 import os
@@ -28,6 +29,9 @@ from enum import Enum
 from pathlib import Path
 
 log = logging.getLogger("__name__")
+
+# yaml.safe_load() always uses the pure Python parser.
+YamlLoader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
 
 
 def get_cs_int_attr(cs, attr: str, err_msg_pre: str):
@@ -328,10 +332,10 @@ class TestFile:
     def __init__(self, tfile_path: Path):
         self.path = tfile_path
         with open(tfile_path) as f:
-            try:
-                self.content = yaml.safe_load(f)
-            except yaml.YAMLError as e:
-                raise e
+            if tfile_path.suffix == ".json":
+                self.content = json.load(f)
+            else:
+                self.content = yaml.load(f, Loader=YamlLoader)
         self.test_cases = list()
         if not self.content:
             raise ValueError("Empty file")
@@ -347,7 +351,10 @@ class TestFile:
 
 
 class CSTest:
-    def __init__(self, path: Path, exclude: list[Path], include: list[Path]):
+    def __init__(
+        self, path: Path, exclude: list[Path], include: list[Path], use_json: bool
+    ):
+        suffixes = [".json"] if use_json else [".yaml", ".yml"]
         self.yaml_paths: list[Path] = list()
 
         log.info(f"Search test files in {path}")
@@ -357,7 +364,7 @@ class CSTest:
             for root, dirs, files in os.walk(path, onerror=print):
                 for file in files:
                     f = Path(root).joinpath(file)
-                    if f.suffix not in [".yaml", ".yml"]:
+                    if f.suffix not in suffixes:
                         continue
                     if f.name in exclude:
                         continue
@@ -451,6 +458,12 @@ def parse_args() -> argparse.Namespace:
         choices=["debug", "info", "warning", "error", "fatal", "critical"],
         default="info",
     )
+    parser.add_argument(
+        "--json",
+        dest="use_json",
+        help="Search for .json test files, converted from the .yaml files, instead.",
+        action="store_true",
+    )
     arguments = parser.parse_args()
     return arguments
 
@@ -481,7 +494,7 @@ def main():
 
     log.addHandler(h1)
     log.addHandler(h2)
-    CSTest(args.search_dir, args.exclude, args.include).run_tests()
+    CSTest(args.search_dir, args.exclude, args.include, args.use_json).run_tests()
 
 
 if __name__ == "__main__":
