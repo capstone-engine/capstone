@@ -32,6 +32,9 @@
 #define GET_REGINFO_MC_DESC
 #define GET_REGINFO_ENUM
 #include "SparcGenRegisterInfo.inc"
+
+#define GET_INSTRINFO_ENUM
+#include "SparcGenInstrInfo.inc"
 static const unsigned IntRegDecoderTable[] = {
 	SP_G0,  SP_G1,  SP_G2,  SP_G3,
 	SP_G4,  SP_G5,  SP_G6,  SP_G7,
@@ -203,6 +206,8 @@ static DecodeStatus DecodeSWAP(MCInst *Inst, unsigned insn, uint64_t Address,
 #include "SparcGenSubtargetInfo.inc"
 #include "SparcGenDisassemblerTables.inc"
 
+static DecodeStatus decodeIntPairMem(MCInst *MI, uint32_t insn, uint64_t Address);
+
 /// readInstruction - read four bytes and return 32 bit word.
 static DecodeStatus readInstruction32(const uint8_t *code, size_t len, uint32_t *Insn)
 {
@@ -235,6 +240,8 @@ bool Sparc_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 
 	Result = decodeInstruction_4(DecoderTableSparc32, MI, Insn, address,
 			(MCRegisterInfo *)info, 0);
+	if (Result == MCDisassembler_Fail)
+		Result = decodeIntPairMem(MI, Insn, address);
 	if (Result != MCDisassembler_Fail) {
 		*size = 4;
 		return true;
@@ -296,6 +303,34 @@ static DecodeStatus DecodeLoadInt(MCInst *Inst, unsigned insn, uint64_t Address,
 {
 	return DecodeMem(Inst, insn, Address, Decoder, true,
 			DecodeIntRegsRegisterClass);
+}
+
+// An odd register pair is undefined; round it down like LLVM does.
+static DecodeStatus DecodeIntPairRegisterClass(MCInst *Inst, unsigned RegNo,
+		uint64_t Address, const void *Decoder)
+{
+	return DecodeIntRegsRegisterClass(Inst, RegNo & ~1U, Address, Decoder);
+}
+
+// The generated table predates LLVM's integer LDD and STD.
+static DecodeStatus decodeIntPairMem(MCInst *MI, uint32_t insn, uint64_t Address)
+{
+	bool isImm = fieldFromInstruction_4(insn, 13, 1);
+	if (fieldFromInstruction_4(insn, 30, 2) != 3)
+		return MCDisassembler_Fail;
+	if (!isImm && fieldFromInstruction_4(insn, 5, 8))
+		return MCDisassembler_Fail;
+
+	switch (fieldFromInstruction_4(insn, 19, 6)) {
+	case 0x03:
+		MCInst_setOpcode(MI, isImm ? SP_LDDri : SP_LDDrr);
+		return DecodeMem(MI, insn, Address, NULL, true, DecodeIntPairRegisterClass);
+	case 0x07:
+		MCInst_setOpcode(MI, isImm ? SP_STDri : SP_STDrr);
+		return DecodeMem(MI, insn, Address, NULL, false, DecodeIntPairRegisterClass);
+	default:
+		return MCDisassembler_Fail;
+	}
 }
 
 static DecodeStatus DecodeLoadFP(MCInst *Inst, unsigned insn, uint64_t Address,

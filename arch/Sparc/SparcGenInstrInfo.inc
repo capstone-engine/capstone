@@ -508,7 +508,11 @@ enum {
     SP_XORXrr	= 491,
     SP_XORri	= 492,
     SP_XORrr	= 493,
-    SP_INSTRUCTION_LIST_END = 494
+    SP_LDDri	= 494,
+    SP_LDDrr	= 495,
+    SP_STDri	= 496,
+    SP_STDrr	= 497,
+    SP_INSTRUCTION_LIST_END = 498
 };
 
 #endif // GET_INSTRINFO_ENUM

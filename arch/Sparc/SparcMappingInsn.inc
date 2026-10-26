@@ -2641,3 +2641,27 @@
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
+{
+	SP_LDDri, SPARC_INS_LDD,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+{
+	SP_LDDrr, SPARC_INS_LDD,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+{
+	SP_STDri, SPARC_INS_STD,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+{
+	SP_STDrr, SPARC_INS_STD,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
