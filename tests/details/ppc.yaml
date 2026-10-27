@@ -1870,3 +1870,36 @@ test_cases:
               pred_cr: PPC_PRED_NE
               pred_ctr: PPC_PRED_NZ
               hint: PPC_BR_NOT_GIVEN
+  -
+    input:
+      bytes: [ 0x06, 0x10, 0x00, 0x00, 0xc8, 0x20, 0x00, 0x10, 0x06, 0x10, 0x00, 0x00, 0x98, 0x20, 0x00, 0x10 ]
+      arch: "ppc"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "plfd f1, 0x10(0), 1"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: f1
+                access: CS_AC_WRITE
+              -
+                type: PPC_OP_MEM
+                mem_disp: 0x10
+                access: CS_AC_READ
+      -
+        asm_text: "pstb r1, 0x10(0), 1"
+        details:
+          ppc:
+            operands:
+              -
+                type: PPC_OP_REG
+                reg: r1
+                access: CS_AC_READ
+              -
+                type: PPC_OP_MEM
+                mem_disp: 0x10
+                access: CS_AC_WRITE
