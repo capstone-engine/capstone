@@ -113,7 +113,7 @@ jobs:
 
       - name: '🚧 cibuildwheel run'
         timeout-minutes: 40
-        uses: pypa/cibuildwheel@v4.3.1
+        uses: pypa/cibuildwheel@v4.3.4
         env:
           CIBW_BUILD_FRONTEND: build
           CIBW_BUILD: ${{ matrix.cibw_build }}
