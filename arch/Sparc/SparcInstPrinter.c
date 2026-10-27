@@ -103,6 +103,21 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 {
 	switch (MCInst_getOpcode(MI)) {
 		default: return false;
+		case SP_LDDri:
+		case SP_LDDrr:
+				 SStream_concat0(O, "ldd\t[");
+				 printMemOperand(MI, 1, O, NULL);
+				 SStream_concat0(O, "], ");
+				 printOperand(MI, 0, O);
+				 return true;
+		case SP_STDri:
+		case SP_STDrr:
+				 SStream_concat0(O, "std\t");
+				 printOperand(MI, 2, O);
+				 SStream_concat0(O, ", [");
+				 printMemOperand(MI, 0, O, NULL);
+				 SStream_concat0(O, "]");
+				 return true;
 		case SP_JMPLrr:
 		case SP_JMPLri:
 				 if (MCInst_getNumOperands(MI) != 3)
