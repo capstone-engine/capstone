@@ -23,7 +23,8 @@ log.basicConfig(
 archs = {
     "universal2": ["x86_64", "arm64"],
     "x86_64": [r"x86[_-]64"],
-    "arm64": ["arm64"],
+    # file reports Windows ARM64 binaries as "ARM64" or "Aarch64", depending on its version
+    "arm64": [r"arm64|ARM64|Aarch64"],
     "aarch64": ["ARM aarch64"],
     "i686": ["Intel 80386"],
     "win32": [r"INVALID"],

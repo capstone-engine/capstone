@@ -12,6 +12,10 @@ jobs:
       matrix:
         os: [ubuntu-24.04, windows-2022, macOS-14]
         python-version: ["3.8", "3.12"]
+        include:
+          # CPython does not have a Windows ARM64 release before 3.11
+          - os: windows-11-arm
+            python-version: "3.12"
 
     steps:
     - uses: actions/checkout@v4
@@ -24,6 +28,8 @@ jobs:
     - name: Setup MSVC
       if: runner.os == 'Windows'
       uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: ${{ runner.arch }}
 
     - name: Build and install capstone
       run: pip install ./bindings/python

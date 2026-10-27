@@ -8,13 +8,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, windows-11-arm, macos-latest]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up MSVC x64
-        if: matrix.os == 'windows-latest'
+      - name: Set up MSVC
+        if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ runner.arch }}
 
       - name: Set up QEMU
         if: runner.os == 'Linux'
@@ -32,7 +34,7 @@ jobs:
         env:
           CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
           CIBW_ARCHS_LINUX: "x86_64 i686 aarch64" # ppc64le s390x really slow
-          CIBW_ARCHS_WINDOWS: "AMD64" # ARM64  Seems ARM64 will rebuild amd64 wheel for unknow reason.
+          CIBW_ARCHS_WINDOWS: "auto64" # AMD64 on windows-latest, ARM64 on windows-11-arm
           CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-*"
           CIBW_SKIP: ""
         with:
@@ -44,12 +46,12 @@ jobs:
           name: artifacts-${{ matrix.os }}
 
       - name: Check binaries (Windows)
-        if: matrix.os == 'windows-latest'
+        if: runner.os == 'Windows'
         run: |
           python3.exe suite/check_wheel_bin_arch.py ./wheelhouse/
 
       - name: Check binaries (Unix)
-        if: matrix.os != 'windows-latest'
+        if: runner.os != 'Windows'
         run: |
           ./suite/check_wheel_bin_arch.py ./wheelhouse/
 
