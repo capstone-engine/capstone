@@ -1,12 +1,28 @@
 # Capstone Python bindings, by Nicolas PLANEL <nplanel@gmail.com>
 
 import ctypes
+
 from . import copy_ctypes_list
 from .m68k_const import *
 
 
 # define the API
 class M68KOpMem(ctypes.Structure):
+    base_reg: int
+    index_reg: int
+    in_base_reg: int
+    in_disp: int
+    out_disp: int
+    disp: int
+    scale: int
+    bitfield: int
+    width: int
+    offset: int
+    index_size: int
+    in_disp_size: int
+    out_disp_size: int
+    disp_size: int
+    address: int
     _fields_ = (
         ("base_reg", ctypes.c_uint),
         ("index_reg", ctypes.c_uint),
@@ -27,6 +43,8 @@ class M68KOpMem(ctypes.Structure):
 
 
 class M68KOpRegPair(ctypes.Structure):
+    reg_0: int
+    reg_1: int
     _fields_ = (
         ("reg_0", ctypes.c_uint),
         ("reg_1", ctypes.c_uint),
@@ -34,6 +52,9 @@ class M68KOpRegPair(ctypes.Structure):
 
 
 class M68KOpFpExtended(ctypes.Structure):
+    significand: int
+    sign_exp: int
+    reserved: int
     _fields_ = (
         ("significand", ctypes.c_uint64),
         ("sign_exp", ctypes.c_uint16),
@@ -42,6 +63,8 @@ class M68KOpFpExtended(ctypes.Structure):
 
 
 class M68KOpFpPacked(ctypes.Structure):
+    header: int
+    fraction: int
     _fields_ = (
         ("header", ctypes.c_uint32),
         ("fraction", ctypes.c_uint64),
@@ -49,6 +72,13 @@ class M68KOpFpPacked(ctypes.Structure):
 
 
 class M68KOpValue(ctypes.Union):
+    imm: int
+    dimm: float
+    simm: float
+    fp_extended: M68KOpFpExtended
+    fp_packed: M68KOpFpPacked
+    reg: int
+    reg_pair: M68KOpRegPair
     _fields_ = (
         ("imm", ctypes.c_int64),
         ("dimm", ctypes.c_double),
@@ -61,6 +91,8 @@ class M68KOpValue(ctypes.Union):
 
 
 class M68KOpBrDisp(ctypes.Structure):
+    disp: int
+    disp_size: int
     _fields_ = (
         ("disp", ctypes.c_int),
         ("disp_size", ctypes.c_ubyte),
@@ -68,6 +100,13 @@ class M68KOpBrDisp(ctypes.Structure):
 
 
 class M68KOp(ctypes.Structure):
+    value: M68KOpValue
+    mem: M68KOpMem
+    br_disp: M68KOpBrDisp
+    register_bits: int
+    type: int
+    address_mode: int
+    flags: int
     _fields_ = (
         ("value", M68KOpValue),
         ("mem", M68KOpMem),
@@ -106,26 +145,24 @@ class M68KOp(ctypes.Structure):
     def reg_pair(self):
         return self.value.reg_pair
 
-    @property
-    def mem(self):
-        return self.mem
-
-    @property
-    def register_bits(self):
-        return self.register_bits
+    # @property
+    # def mem(self):
+    #     return self.mem
 
 
 class M68KOpSize(ctypes.Structure):
+    type: int
+    size: int
     _fields_ = (
         ("type", ctypes.c_uint),
         ("size", ctypes.c_uint),
     )
 
-    def get(a):
-        return copy_ctypes_list(type, size)
-
 
 class CsM68K(ctypes.Structure):
+    operands: tuple[M68KOp, ...]
+    op_size: M68KOpSize
+    op_count: int
     M68K_OPERAND_COUNT = 6
     _fields_ = (
         ("operands", M68KOp * M68K_OPERAND_COUNT),

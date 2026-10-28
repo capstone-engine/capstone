@@ -1,11 +1,14 @@
 # Capstone Python bindings, by billow <billow.fun@gmail.com>
 
 import ctypes
+
 from . import copy_ctypes_list
 from .xtensa_const import *
 
 
 class XtensaOpMem(ctypes.Structure):
+    base: int
+    disp: int
     _fields_ = (
         ("base", ctypes.c_uint8),
         ("disp", ctypes.c_int32),
@@ -13,6 +16,9 @@ class XtensaOpMem(ctypes.Structure):
 
 
 class XtensaOpValue(ctypes.Union):
+    reg: int
+    imm: int
+    mem: XtensaOpMem
     _fields_ = (
         ("reg", ctypes.c_uint8),
         ("imm", ctypes.c_int32),
@@ -21,6 +27,9 @@ class XtensaOpValue(ctypes.Union):
 
 
 class XtensaOp(ctypes.Structure):
+    type: int
+    access: int
+    value: XtensaOpValue
     _fields_ = (
         ("type", ctypes.c_uint8),
         ("access", ctypes.c_uint8),
@@ -42,6 +51,9 @@ class XtensaOp(ctypes.Structure):
 
 # Instruction structure
 class CsXtensa(ctypes.Structure):
+    op_count: int
+    operands: tuple[XtensaOp, ...]
+    format: int
     _fields_ = (
         ("op_count", ctypes.c_uint8),
         ("operands", XtensaOp * 8),

@@ -1,117 +1,190 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+
 from . import copy_ctypes_list
 from .aarch64_const import *
 
+
 # define the API
 class AArch64OpMem(ctypes.Structure):
+    base: int
+    index: int
+    disp: int
     _fields_ = (
-        ('base', ctypes.c_uint),
-        ('index', ctypes.c_uint),
-        ('disp', ctypes.c_int32),
+        ("base", ctypes.c_uint),
+        ("index", ctypes.c_uint),
+        ("disp", ctypes.c_int32),
     )
+
 
 class AArch64ImmRange(ctypes.Structure):
+    first: int
+    offset: int
     _fields_ = (
-        ('first', ctypes.c_int8),
-        ('offset', ctypes.c_int8),
+        ("first", ctypes.c_int8),
+        ("offset", ctypes.c_int8),
     )
+
 
 class AArch64SMESliceOffset(ctypes.Union):
-    _fields_ = (
-        ('imm', ctypes.c_int8),
-        ('imm_range', AArch64ImmRange)
-    )
+    imm: int
+    imm_range: AArch64ImmRange
+    _fields_ = (("imm", ctypes.c_int8), ("imm_range", AArch64ImmRange))
+
 
 class AArch64OpSme(ctypes.Structure):
+    type: int
+    tile: int
+    slice_reg: int
+    slice_offset: AArch64SMESliceOffset
+    has_range_offset: bool
+    is_vertical: bool
     _fields_ = (
-        ('type', ctypes.c_uint),
-        ('tile', ctypes.c_uint),
-        ('slice_reg', ctypes.c_uint),
-        ('slice_offset', AArch64SMESliceOffset),
-        ('has_range_offset', ctypes.c_bool),
-        ('is_vertical', ctypes.c_bool),
+        ("type", ctypes.c_uint),
+        ("tile", ctypes.c_uint),
+        ("slice_reg", ctypes.c_uint),
+        ("slice_offset", AArch64SMESliceOffset),
+        ("has_range_offset", ctypes.c_bool),
+        ("is_vertical", ctypes.c_bool),
     )
+
 
 class AArch64OpPred(ctypes.Structure):
+    reg: int
+    vec_select: int
+    imm_index: int
     _fields_ = (
-        ('reg', ctypes.c_uint),
-        ('vec_select', ctypes.c_uint),
-        ('imm_index', ctypes.c_int),
+        ("reg", ctypes.c_uint),
+        ("vec_select", ctypes.c_uint),
+        ("imm_index", ctypes.c_int),
     )
+
 
 class AArch64OpShift(ctypes.Structure):
+    type: int
+    value: int
     _fields_ = (
-        ('type', ctypes.c_uint),
-        ('value', ctypes.c_uint),
+        ("type", ctypes.c_uint),
+        ("value", ctypes.c_uint),
     )
+
 
 class AArch64SysOpSysReg(ctypes.Union):
+    sysreg: int
+    tlbi: int
+    ic: int
+    raw_val: int
     _fields_ = (
-        ('sysreg', ctypes.c_uint),
-        ('tlbi', ctypes.c_uint),
-        ('ic', ctypes.c_uint),
-        ('raw_val', ctypes.c_int),
+        ("sysreg", ctypes.c_uint),
+        ("tlbi", ctypes.c_uint),
+        ("ic", ctypes.c_uint),
+        ("raw_val", ctypes.c_int),
     )
+
 
 class AArch64SysOpSysImm(ctypes.Union):
+    dbnxs: int
+    exactfpimm: int
+    raw_val: int
     _fields_ = (
-        ('dbnxs', ctypes.c_uint),
-        ('exactfpimm', ctypes.c_uint),
-        ('raw_val', ctypes.c_int),
+        ("dbnxs", ctypes.c_uint),
+        ("exactfpimm", ctypes.c_uint),
+        ("raw_val", ctypes.c_int),
     )
+
 
 class AArch64SysOpSysAlias(ctypes.Union):
+    svcr: int
+    at: int
+    db: int
+    dc: int
+    isb: int
+    tsb: int
+    prfm: int
+    sveprfm: int
+    rprfm: int
+    pstateimm0_15: int
+    pstateimm0_1: int
+    psb: int
+    bti: int
+    svepredpat: int
+    sveveclenspecifier: int
+    raw_val: int
     _fields_ = (
-        ('svcr', ctypes.c_uint),
-        ('at', ctypes.c_uint),
-        ('db', ctypes.c_uint),
-        ('dc', ctypes.c_uint),
-        ('isb', ctypes.c_uint),
-        ('tsb', ctypes.c_uint),
-        ('prfm', ctypes.c_uint),
-        ('sveprfm', ctypes.c_uint),
-        ('rprfm', ctypes.c_uint),
-        ('pstateimm0_15', ctypes.c_uint),
-        ('pstateimm0_1', ctypes.c_uint),
-        ('psb', ctypes.c_uint),
-        ('bti', ctypes.c_uint),
-        ('svepredpat', ctypes.c_uint),
-        ('sveveclenspecifier', ctypes.c_uint),
-        ('raw_val', ctypes.c_int),
+        ("svcr", ctypes.c_uint),
+        ("at", ctypes.c_uint),
+        ("db", ctypes.c_uint),
+        ("dc", ctypes.c_uint),
+        ("isb", ctypes.c_uint),
+        ("tsb", ctypes.c_uint),
+        ("prfm", ctypes.c_uint),
+        ("sveprfm", ctypes.c_uint),
+        ("rprfm", ctypes.c_uint),
+        ("pstateimm0_15", ctypes.c_uint),
+        ("pstateimm0_1", ctypes.c_uint),
+        ("psb", ctypes.c_uint),
+        ("bti", ctypes.c_uint),
+        ("svepredpat", ctypes.c_uint),
+        ("sveveclenspecifier", ctypes.c_uint),
+        ("raw_val", ctypes.c_int),
     )
+
+
 class AArch64SysOp(ctypes.Structure):
+    reg: AArch64SysOpSysReg
+    imm: AArch64SysOpSysImm
+    alias: AArch64SysOpSysAlias
+    sub_type: int
     _fields_ = (
-        ('reg', AArch64SysOpSysReg),
-        ('imm', AArch64SysOpSysImm),
-        ('alias', AArch64SysOpSysAlias),
-        ('sub_type', ctypes.c_uint),
+        ("reg", AArch64SysOpSysReg),
+        ("imm", AArch64SysOpSysImm),
+        ("alias", AArch64SysOpSysAlias),
+        ("sub_type", ctypes.c_uint),
     )
+
 
 class AArch64OpValue(ctypes.Union):
+    reg: int
+    imm: int
+    imm_range: AArch64ImmRange
+    fp: float
+    mem: AArch64OpMem
+    sme: AArch64OpSme
+    pred: AArch64OpPred
     _fields_ = (
-        ('reg', ctypes.c_uint),
-        ('imm', ctypes.c_int64),
-        ('imm_range', AArch64ImmRange),
-        ('fp', ctypes.c_double),
-        ('mem', AArch64OpMem),
-        ('sme', AArch64OpSme),
-        ('pred', AArch64OpPred),
+        ("reg", ctypes.c_uint),
+        ("imm", ctypes.c_int64),
+        ("imm_range", AArch64ImmRange),
+        ("fp", ctypes.c_double),
+        ("mem", AArch64OpMem),
+        ("sme", AArch64OpSme),
+        ("pred", AArch64OpPred),
     )
 
+
 class AArch64Op(ctypes.Structure):
+    vector_index: int
+    vas: int
+    shift: AArch64OpShift
+    ext: int
+    type: int
+    is_vreg: bool
+    value: AArch64OpValue
+    sysop: AArch64SysOp
+    access: int
+    is_list_member: bool
     _fields_ = (
-        ('vector_index', ctypes.c_int),
-        ('vas', ctypes.c_uint),
-        ('shift', AArch64OpShift),
-        ('ext', ctypes.c_uint),
-        ('type', ctypes.c_uint),
-        ('is_vreg', ctypes.c_bool),
-        ('value', AArch64OpValue),
-        ('sysop', AArch64SysOp),
-        ('access', ctypes.c_uint),
-        ('is_list_member', ctypes.c_bool),
+        ("vector_index", ctypes.c_int),
+        ("vas", ctypes.c_uint),
+        ("shift", AArch64OpShift),
+        ("ext", ctypes.c_uint),
+        ("type", ctypes.c_uint),
+        ("is_vreg", ctypes.c_bool),
+        ("value", AArch64OpValue),
+        ("sysop", AArch64SysOp),
+        ("access", ctypes.c_uint),
+        ("is_list_member", ctypes.c_bool),
     )
 
     @property
@@ -135,25 +208,35 @@ class AArch64Op(ctypes.Structure):
         return self.value.imm_range
 
     @property
-    def sysop(self):
-        return self.sysop
-
-    @property
     def sme(self):
         return self.value.sme
 
+    @property
+    def pred(self):
+        return self.value.pred
 
 
 class CsAArch64(ctypes.Structure):
+    cc: int
+    update_flags: bool
+    post_index: bool
+    is_doing_sme: bool
+    op_count: int
+    operands: tuple[AArch64Op, ...]
     _fields_ = (
-        ('cc', ctypes.c_uint),
-        ('update_flags', ctypes.c_bool),
-        ('post_index', ctypes.c_bool),
-        ('is_doing_sme', ctypes.c_bool),
-        ('op_count', ctypes.c_uint8),
-        ('operands', AArch64Op * 8),
+        ("cc", ctypes.c_uint),
+        ("update_flags", ctypes.c_bool),
+        ("post_index", ctypes.c_bool),
+        ("is_doing_sme", ctypes.c_bool),
+        ("op_count", ctypes.c_uint8),
+        ("operands", AArch64Op * 16),
     )
 
-def get_arch_info(a):
-    return (a.cc, a.update_flags, a.post_index, copy_ctypes_list(a.operands[:a.op_count]))
 
+def get_arch_info(a):
+    return (
+        a.cc,
+        a.update_flags,
+        a.post_index,
+        copy_ctypes_list(a.operands[: a.op_count]),
+    )

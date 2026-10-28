@@ -2,11 +2,15 @@
 # SPDX-License-Identifier: BSD-3
 
 import ctypes
+
 from . import copy_ctypes_list
 from .loongarch_const import *
 
 
 class LoongArchOpMem(ctypes.Structure):
+    base: int
+    index: int
+    disp: int
     _fields_ = (
         ("base", ctypes.c_uint),
         ("index", ctypes.c_uint),
@@ -15,6 +19,9 @@ class LoongArchOpMem(ctypes.Structure):
 
 
 class LoongArchOpValue(ctypes.Union):
+    reg: int
+    imm: int
+    mem: LoongArchOpMem
     _fields_ = (
         ("reg", ctypes.c_uint),
         ("imm", ctypes.c_int64),
@@ -23,6 +30,9 @@ class LoongArchOpValue(ctypes.Union):
 
 
 class LoongArchOp(ctypes.Structure):
+    type: int
+    value: LoongArchOpValue
+    access: int
     _fields_ = (
         ("type", ctypes.c_uint8),
         ("value", LoongArchOpValue),
@@ -44,12 +54,15 @@ class LoongArchOp(ctypes.Structure):
 
 # Instruction structure
 class CsLoongArch(ctypes.Structure):
+    format: int
+    op_count: int
+    operands: tuple[LoongArchOp, ...]
     _fields_ = (
         ("format", ctypes.c_int),
         ("op_count", ctypes.c_uint8),
-        ("operands", LoongArchOp * 8)
+        ("operands", LoongArchOp * 8),
     )
 
 
 def get_arch_info(a):
-    return a.format, copy_ctypes_list(a.operands[: a.op_count])
+    return (a.format, copy_ctypes_list(a.operands[: a.op_count]))

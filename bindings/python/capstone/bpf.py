@@ -2,33 +2,51 @@
 # BPF by david942j <david942j@gmail.com>, 2019
 
 import ctypes
+
 from . import copy_ctypes_list
 from .bpf_const import *
 
+
 class BPFOpMem(ctypes.Structure):
+    base: int
+    disp: int
     _fields_ = (
-        ('base', ctypes.c_int),
-        ('disp', ctypes.c_int32),
+        ("base", ctypes.c_int),
+        ("disp", ctypes.c_int32),
     )
+
 
 class BPFOpValue(ctypes.Union):
+    reg: int
+    imm: int
+    off: int
+    mem: BPFOpMem
+    mmem: int
+    msh: int
+    ext: int
     _fields_ = (
-        ('reg', ctypes.c_int),
-        ('imm', ctypes.c_uint64),
-        ('off', ctypes.c_uint32),
-        ('mem', BPFOpMem),
-        ('mmem', ctypes.c_uint32),
-        ('msh', ctypes.c_uint32),
-        ('ext', ctypes.c_uint32),
+        ("reg", ctypes.c_int),
+        ("imm", ctypes.c_uint64),
+        ("off", ctypes.c_uint32),
+        ("mem", BPFOpMem),
+        ("mmem", ctypes.c_uint32),
+        ("msh", ctypes.c_uint32),
+        ("ext", ctypes.c_uint32),
     )
 
+
 class BPFOp(ctypes.Structure):
+    type: int
+    value: BPFOpValue
+    is_signed: bool
+    is_pkt: bool
+    access: int
     _fields_ = (
-        ('type', ctypes.c_uint),
-        ('value', BPFOpValue),
-        ('is_signed', ctypes.c_bool),
-        ('is_pkt', ctypes.c_bool),
-        ('access', ctypes.c_uint),
+        ("type", ctypes.c_uint),
+        ("value", BPFOpValue),
+        ("is_signed", ctypes.c_bool),
+        ("is_pkt", ctypes.c_bool),
+        ("access", ctypes.c_uint),
     )
 
     @property
@@ -59,12 +77,15 @@ class BPFOp(ctypes.Structure):
     def ext(self):
         return self.value.ext
 
+
 class CsBPF(ctypes.Structure):
+    op_count: int
+    operands: tuple[BPFOp, ...]
     _fields_ = (
-        ('op_count', ctypes.c_uint8),
-        ('operands', BPFOp * 4),
+        ("op_count", ctypes.c_uint8),
+        ("operands", BPFOp * 4),
     )
 
-def get_arch_info(a):
-    return (copy_ctypes_list(a.operands[:a.op_count]))
 
+def get_arch_info(a):
+    return copy_ctypes_list(a.operands[: a.op_count])
