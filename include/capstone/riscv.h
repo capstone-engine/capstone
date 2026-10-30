@@ -2646,6 +2646,7 @@ typedef enum riscv_insn {
 	RISCV_INS_XPERM4,
 	RISCV_INS_XPERM8,
 	RISCV_INS_ZIP,
+	RISCV_INS_C_SLLI_HINT,
 
 	// clang-format on
 	// generated content <RISCVGenCSInsnEnum.inc> end
