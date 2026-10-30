@@ -1,0 +1,37 @@
+# The compressed c.slli hint form (rd=x0) decodes to a different operand
+# count than the regular c.slli form, but TableGen derives the Capstone
+# instruction enum from the mnemonic. Both forms therefore got
+# RISCV_INS_C_SLLI and consumers could read past the shorter operand array.
+# Give the hint form its own enum and map its opcode to it.
+# See issue #3131 for details.
+diff --git a/arch/RISCV/RISCVGenCSInsnEnum.inc b/arch/RISCV/RISCVGenCSInsnEnum.inc
+index 068f6212..c7a4fade 100644
+--- a/arch/RISCV/RISCVGenCSInsnEnum.inc
++++ b/arch/RISCV/RISCVGenCSInsnEnum.inc
+@@ -1686,3 +1686,4 @@
+   RISCV_INS_XPERM4,
+   RISCV_INS_XPERM8,
+   RISCV_INS_ZIP,
++  RISCV_INS_C_SLLI_HINT,
+diff --git a/arch/RISCV/RISCVGenCSMappingInsn.inc b/arch/RISCV/RISCVGenCSMappingInsn.inc
+index cc494074..740866a7 100644
+--- a/arch/RISCV/RISCVGenCSMappingInsn.inc
++++ b/arch/RISCV/RISCVGenCSMappingInsn.inc
+@@ -83176,7 +83176,7 @@
+ },
+ {
+   /* c.slli	$rd, $imm */
+-  RISCV_C_SLLI_HINT /* 11799 */, RISCV_INS_C_SLLI,
++  RISCV_C_SLLI_HINT /* 11799 */, RISCV_INS_C_SLLI_HINT,
+   #ifndef CAPSTONE_DIET
+     { 0 }, { 0 }, { RISCV_FEATURE_HASSTDEXTCORZCA, RISCV_FEATURE_HASRVCHINTS, 0 }, 0, 0, {{ 0 }}
+ 
+diff --git a/arch/RISCV/RISCVGenCSMappingInsnName.inc b/arch/RISCV/RISCVGenCSMappingInsnName.inc
+index 1199c277..2c41707a 100644
+--- a/arch/RISCV/RISCVGenCSMappingInsnName.inc
++++ b/arch/RISCV/RISCVGenCSMappingInsnName.inc
+@@ -1686,3 +1686,4 @@
+   "xperm4", // RISCV_INS_XPERM4
+   "xperm8", // RISCV_INS_XPERM8
+   "zip", // RISCV_INS_ZIP
++  "c_slli", // RISCV_INS_C_SLLI_HINT

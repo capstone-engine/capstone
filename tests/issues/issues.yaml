@@ -6856,6 +6856,37 @@ test_cases:
         uses_alias_details: 1
   -
     input:
+      name: "RISCV - #3131 - c.slli hint has a distinct id and operand count"
+      bytes: [ 0x06, 0x05, 0x06, 0x00 ]
+      arch: "CS_ARCH_RISCV"
+      options: [ CS_MODE_RISCV64, CS_MODE_RISCV_C, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "slli a0, a0, 1"
+        id: RISCV_INS_C_SLLI
+        details:
+          riscv:
+            operands:
+            - type: "RISCV_OP_REG"
+              reg: "a0"
+            - type: "RISCV_OP_REG"
+              reg: "a0"
+            - type: "RISCV_OP_IMM"
+              imm: 1
+      -
+        asm_text: "c.slli zero, 1"
+        id: RISCV_INS_C_SLLI_HINT
+        details:
+          riscv:
+            operands:
+            - type: "RISCV_OP_REG"
+              reg: "zero"
+            - type: "RISCV_OP_IMM"
+              imm: 1
+  -
+    input:
       name: "issue 1636 MOVSXD r32, r/m32 (register form, no REX.W)"
       bytes: [ 0x63, 0xc7 ]
       arch: "CS_ARCH_X86"
