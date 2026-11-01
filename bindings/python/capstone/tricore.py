@@ -1,6 +1,7 @@
 # Capstone Python bindings, by billow <billow.fun@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .tricore_const import *
@@ -52,16 +53,7 @@ class TriCoreOp(ctypes.Structure):
 # Instruction structure
 class CsTriCore(ctypes.Structure):
     op_count: int
-    operands: tuple[
-        TriCoreOp,
-        TriCoreOp,
-        TriCoreOp,
-        TriCoreOp,
-        TriCoreOp,
-        TriCoreOp,
-        TriCoreOp,
-        TriCoreOp,
-    ]
+    operands: Sequence[TriCoreOp]
     update_flags: bool
     _fields_ = (
         ("op_count", ctypes.c_uint8),

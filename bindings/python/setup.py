@@ -203,7 +203,7 @@ setup(
     ],
     cmdclass={'build_py': CustomBuild, 'sdist': CustomSDist},
     package_data={
-        "capstone": ["lib/*", "include/capstone/*"],
+        "capstone": ["lib/*", "include/capstone/*", "py.typed"],
     },
     has_ext_modules=lambda: True,  # It's not a Pure Python wheel
     # to have ABI3 tagged wheel

@@ -7,8 +7,8 @@ from .evm_const import *
 
 # define the API
 class CsEvm(ctypes.Structure):
-    pop: bytes
-    push: bytes
+    pop: int
+    push: int
     fee: int
     _fields_ = (
         ("pop", ctypes.c_byte),

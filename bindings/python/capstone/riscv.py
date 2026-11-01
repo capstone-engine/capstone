@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .riscv_const import *
@@ -19,7 +20,7 @@ class RISCVOpMem(ctypes.Structure):
 class RISCVOpValue(ctypes.Union):
     reg: int
     imm: int
-    dimm: int
+    dimm: float
     mem: RISCVOpMem
     csr: int
     _fields_ = (
@@ -65,7 +66,7 @@ class RISCVOp(ctypes.Structure):
 class CsRISCV(ctypes.Structure):
     need_effective_addr: bool
     op_count: int
-    operands: tuple[RISCVOp, ...]
+    operands: Sequence[RISCVOp]
     rounding_mode: int
     _fields_ = (
         ("need_effective_addr", ctypes.c_bool),

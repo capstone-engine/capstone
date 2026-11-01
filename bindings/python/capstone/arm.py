@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .arm_const import *
@@ -134,7 +135,7 @@ class CsArm(ctypes.Structure):
     mem_barrier: int
     pred_mask: int
     op_count: int
-    operands: tuple[ArmOp, ...]
+    operands: Sequence[ArmOp]
     _fields_ = (
         ("usermode", ctypes.c_bool),
         ("vector_size", ctypes.c_int),

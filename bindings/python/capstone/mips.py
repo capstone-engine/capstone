@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .mips_const import *
@@ -58,7 +59,7 @@ class MipsOp(ctypes.Structure):
 
 class CsMips(ctypes.Structure):
     op_count: int
-    operands: tuple[MipsOp, ...]
+    operands: Sequence[MipsOp]
     _fields_ = (
         ("op_count", ctypes.c_uint8),
         ("operands", MipsOp * 16),

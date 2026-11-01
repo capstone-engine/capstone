@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .systemz_const import *
@@ -62,7 +63,7 @@ class CsSystemZ(ctypes.Structure):
     cc: int
     format: int
     op_count: int
-    operands: tuple[SystemZOp, ...]
+    operands: Sequence[SystemZOp]
     _fields_ = (
         ("cc", ctypes.c_uint),
         ("format", ctypes.c_int),

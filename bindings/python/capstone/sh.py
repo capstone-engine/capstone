@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Peace-Maker <peacemakerctf@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .sh_const import *
@@ -20,8 +21,8 @@ class SHOpMem(ctypes.Structure):
 
 class SHOpDsp(ctypes.Structure):
     insn: int
-    operand: tuple[int, int]
-    r: tuple[int, ...]
+    operand: Sequence[int]
+    r: Sequence[int]
     cc: int
     imm: int
     size: int
@@ -77,7 +78,7 @@ class CsSH(ctypes.Structure):
     insn: int
     size: int
     op_count: int
-    operands: tuple[SHOp, SHOp, SHOp]
+    operands: Sequence[SHOp]
     _fields_ = (
         ("insn", ctypes.c_uint),
         ("size", ctypes.c_uint8),

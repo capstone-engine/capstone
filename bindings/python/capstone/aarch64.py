@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .aarch64_const import *
@@ -222,7 +223,7 @@ class CsAArch64(ctypes.Structure):
     post_index: bool
     is_doing_sme: bool
     op_count: int
-    operands: tuple[AArch64Op, ...]
+    operands: Sequence[AArch64Op]
     _fields_ = (
         ("cc", ctypes.c_uint),
         ("update_flags", ctypes.c_bool),

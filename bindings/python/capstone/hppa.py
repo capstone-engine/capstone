@@ -1,6 +1,9 @@
 # Capstone Python bindings, by Dmitry Sibirtsev <sibirtsevdl@gmail.com>
 
+from __future__ import annotations
+
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .hppa_const import *
@@ -16,7 +19,7 @@ class HPPAOpMem(ctypes.Structure):
 
 
 class HPPAModifierValue(ctypes.Union):
-    str_mod: str
+    str_mod: bytes | None
     int_mod: int
     _fields_ = (("str_mod", ctypes.c_char_p), ("int_mod", ctypes.c_uint32))
 
@@ -28,7 +31,7 @@ class HPPAModifier(ctypes.Structure):
 
 
 class HPPAExt(ctypes.Structure):
-    modifiers: tuple[HPPAModifier, ...]
+    modifiers: Sequence[HPPAModifier]
     mod_num: int
     b_writable: bool
     cmplt: bool
@@ -73,7 +76,7 @@ class HPPAOp(ctypes.Structure):
 # Instruction structure
 class CsHPPA(ctypes.Structure):
     op_count: int
-    operands: tuple[HPPAOp, ...]
+    operands: Sequence[HPPAOp]
     _fields_ = (("op_count", ctypes.c_uint8), ("operands", HPPAOp * 5))
 
 

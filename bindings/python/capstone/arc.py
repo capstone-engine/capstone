@@ -1,6 +1,7 @@
 # Capstone Python bindings, by R33v0LT <sibirtsevdl@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .arc_const import *
@@ -34,7 +35,7 @@ class ARCOp(ctypes.Structure):
 # Instruction structure
 class CsARC(ctypes.Structure):
     op_count: int
-    operands: tuple[ARCOp, ...]
+    operands: Sequence[ARCOp]
     _fields_ = (
         ("op_count", ctypes.c_uint8),
         ("operands", ARCOp * 8),

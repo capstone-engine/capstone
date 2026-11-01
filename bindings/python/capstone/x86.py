@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .x86_const import *
@@ -87,8 +88,8 @@ class CsX86Encoding(ctypes.Structure):
 
 
 class CsX86(ctypes.Structure):
-    prefix: tuple[int, int, int, int]
-    opcode: tuple[int, int, int, int]
+    prefix: Sequence[int]
+    opcode: Sequence[int]
     rex: int
     addr_size: int
     modrm: int
@@ -100,20 +101,11 @@ class CsX86(ctypes.Structure):
     xop_cc: int
     sse_cc: int
     avx_cc: int
-    avx_sae: int
+    avx_sae: bool
     avx_rm: int
     flags: X86Flags
     op_count: int
-    operands: tuple[
-        X86Op,
-        X86Op,
-        X86Op,
-        X86Op,
-        X86Op,
-        X86Op,
-        X86Op,
-        X86Op,
-    ]
+    operands: Sequence[X86Op]
     encoding: CsX86Encoding
     _fields_ = (
         ("prefix", ctypes.c_uint8 * 4),

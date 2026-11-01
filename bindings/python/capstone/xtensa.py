@@ -1,6 +1,7 @@
 # Capstone Python bindings, by billow <billow.fun@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .xtensa_const import *
@@ -52,7 +53,7 @@ class XtensaOp(ctypes.Structure):
 # Instruction structure
 class CsXtensa(ctypes.Structure):
     op_count: int
-    operands: tuple[XtensaOp, ...]
+    operands: Sequence[XtensaOp]
     format: int
     _fields_ = (
         ("op_count", ctypes.c_uint8),

@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Peace-Maker <peacemakerctf@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .wasm_const import *
@@ -24,7 +25,7 @@ class WASMOpValue(ctypes.Union):
     varuint64: int
     uint32: int
     uint64: int
-    immediate: tuple[int, int]
+    immediate: Sequence[int]
     brtable: WASMBrTable
     _fields_ = (
         ("int7", ctypes.c_int8),
@@ -78,7 +79,7 @@ class WASMOp(ctypes.Structure):
 
 class CsWasm(ctypes.Structure):
     op_count: int
-    operands: tuple[WASMOp, WASMOp]
+    operands: Sequence[WASMOp]
     _fields_ = (
         ("op_count", ctypes.c_uint8),
         ("operands", WASMOp * 2),

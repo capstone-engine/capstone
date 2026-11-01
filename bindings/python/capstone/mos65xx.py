@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .mos65xx_const import *
@@ -43,7 +44,7 @@ class CsMOS65xx(ctypes.Structure):
     am: int
     modifies_flags: int
     op_count: int
-    operands: tuple[MOS65xxOp, MOS65xxOp, MOS65xxOp]
+    operands: Sequence[MOS65xxOp]
     _fields_ = (
         ("am", ctypes.c_uint),
         ("modifies_flags", ctypes.c_uint8),

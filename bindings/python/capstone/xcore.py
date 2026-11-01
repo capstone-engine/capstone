@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .xcore_const import *
@@ -54,7 +55,7 @@ class XcoreOp(ctypes.Structure):
 
 class CsXcore(ctypes.Structure):
     op_count: int
-    operands: tuple[XcoreOp, ...]
+    operands: Sequence[XcoreOp]
     _fields_ = (
         ("op_count", ctypes.c_uint8),
         ("operands", XcoreOp * 8),

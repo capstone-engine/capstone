@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nicolas PLANEL <nplanel@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .m68k_const import *
@@ -145,10 +146,6 @@ class M68KOp(ctypes.Structure):
     def reg_pair(self):
         return self.value.reg_pair
 
-    # @property
-    # def mem(self):
-    #     return self.mem
-
 
 class M68KOpSize(ctypes.Structure):
     type: int
@@ -160,12 +157,11 @@ class M68KOpSize(ctypes.Structure):
 
 
 class CsM68K(ctypes.Structure):
-    operands: tuple[M68KOp, ...]
+    operands: Sequence[M68KOp]
     op_size: M68KOpSize
     op_count: int
-    M68K_OPERAND_COUNT = 6
     _fields_ = (
-        ("operands", M68KOp * M68K_OPERAND_COUNT),
+        ("operands", M68KOp * 6),
         ("op_size", M68KOpSize),
         ("op_count", ctypes.c_uint8),
     )

@@ -1029,7 +1029,7 @@ class _dummy_cs(object):
 # NOTE: you might want to use more efficient Cs class & its methods.
 def cs_disasm_quick(arch, mode, code, offset, count=0):
     # verify version compatibility with the core before doing anything
-    (major, minor, _combined) = cs_version()
+    major, minor, _combined = cs_version()
     if major != CS_API_MAJOR or minor != CS_API_MINOR:
         # our binding version is different from the core's API version
         raise CsError(CS_ERR_VERSION)
@@ -1066,7 +1066,7 @@ def cs_disasm_quick(arch, mode, code, offset, count=0):
 # NOTE: you might want to use more efficient Cs class & its methods.
 def cs_disasm_lite(arch, mode, code, offset, count=0):
     # verify version compatibility with the core before doing anything
-    (major, minor, _combined) = cs_version()
+    major, minor, _combined = cs_version()
     if major != CS_API_MAJOR or minor != CS_API_MINOR:
         # our binding version is different from the core's API version
         raise CsError(CS_ERR_VERSION)
@@ -1283,7 +1283,7 @@ class CsInsn(object):
                 self.operands,
             ) = arm.get_arch_info(self._raw.detail.contents.arch.arm)
         elif arch == CS_ARCH_AARCH64:
-            (self.cc, self.update_flags, self.post_index, self.operands) = (
+            self.cc, self.update_flags, self.post_index, self.operands = (
                 aarch64.get_arch_info(self._raw.detail.contents.arch.aarch64)
             )
         elif arch == CS_ARCH_X86:
@@ -1314,45 +1314,45 @@ class CsInsn(object):
                 self.operands,
             ) = x86.get_arch_info(self._raw.detail.contents.arch.x86)
         elif arch == CS_ARCH_M68K:
-            (self.operands, self.op_size) = m68k.get_arch_info(
+            self.operands, self.op_size = m68k.get_arch_info(
                 self._raw.detail.contents.arch.m68k
             )
         elif arch == CS_ARCH_MIPS:
             self.operands = mips.get_arch_info(self._raw.detail.contents.arch.mips)
         elif arch == CS_ARCH_PPC:
-            (self.bc, self.update_cr0, self.format, self.operands) = ppc.get_arch_info(
+            self.bc, self.update_cr0, self.format, self.operands = ppc.get_arch_info(
                 self._raw.detail.contents.arch.ppc
             )
         elif arch == CS_ARCH_SPARC:
-            (self.cc, self.cc_field, self.hint, self.format, self.operands) = (
+            self.cc, self.cc_field, self.hint, self.format, self.operands = (
                 sparc.get_arch_info(self._raw.detail.contents.arch.sparc)
             )
         elif arch == CS_ARCH_SYSTEMZ:
-            (self.cc, self.format, self.operands) = systemz.get_arch_info(
+            self.cc, self.format, self.operands = systemz.get_arch_info(
                 self._raw.detail.contents.arch.systemz
             )
         elif arch == CS_ARCH_XCORE:
-            (self.operands) = xcore.get_arch_info(self._raw.detail.contents.arch.xcore)
+            self.operands = xcore.get_arch_info(self._raw.detail.contents.arch.xcore)
         elif arch == CS_ARCH_TMS320C64X:
-            (self.condition, self.funit, self.parallel, self.operands) = (
+            self.condition, self.funit, self.parallel, self.operands = (
                 tms320c64x.get_arch_info(self._raw.detail.contents.arch.tms320c64x)
             )
         elif arch == CS_ARCH_M680X:
-            (self.flags, self.operands) = m680x.get_arch_info(
+            self.flags, self.operands = m680x.get_arch_info(
                 self._raw.detail.contents.arch.m680x
             )
         elif arch == CS_ARCH_EVM:
-            (self.pop, self.push, self.fee) = evm.get_arch_info(
+            self.pop, self.push, self.fee = evm.get_arch_info(
                 self._raw.detail.contents.arch.evm
             )
         elif arch == CS_ARCH_MOS65XX:
-            (self.am, self.modifies_flags, self.operands) = mos65xx.get_arch_info(
+            self.am, self.modifies_flags, self.operands = mos65xx.get_arch_info(
                 self._raw.detail.contents.arch.mos65xx
             )
         elif arch == CS_ARCH_WASM:
-            (self.operands) = wasm.get_arch_info(self._raw.detail.contents.arch.wasm)
+            self.operands = wasm.get_arch_info(self._raw.detail.contents.arch.wasm)
         elif arch == CS_ARCH_BPF:
-            (self.operands) = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
+            self.operands = bpf.get_arch_info(self._raw.detail.contents.arch.bpf)
         elif arch == CS_ARCH_RISCV:
             (
                 self.need_effective_addr,
@@ -1360,27 +1360,25 @@ class CsInsn(object):
                 self.rounding_mode,
             ) = riscv.get_arch_info(self._raw.detail.contents.arch.riscv)
         elif arch == CS_ARCH_SH:
-            (self.sh_insn, self.sh_size, self.operands) = sh.get_arch_info(
+            self.sh_insn, self.sh_size, self.operands = sh.get_arch_info(
                 self._raw.detail.contents.arch.sh
             )
         elif arch == CS_ARCH_TRICORE:
-            (self.update_flags, self.operands) = tricore.get_arch_info(
+            self.update_flags, self.operands = tricore.get_arch_info(
                 self._raw.detail.contents.arch.tricore
             )
         elif arch == CS_ARCH_ALPHA:
-            (self.operands) = alpha.get_arch_info(self._raw.detail.contents.arch.alpha)
+            self.operands = alpha.get_arch_info(self._raw.detail.contents.arch.alpha)
         elif arch == CS_ARCH_HPPA:
-            (self.operands) = hppa.get_arch_info(self._raw.detail.contents.arch.hppa)
+            self.operands = hppa.get_arch_info(self._raw.detail.contents.arch.hppa)
         elif arch == CS_ARCH_LOONGARCH:
-            (self.format, self.operands) = loongarch.get_arch_info(
+            self.format, self.operands = loongarch.get_arch_info(
                 self._raw.detail.contents.arch.loongarch
             )
         elif arch == CS_ARCH_ARC:
-            (self.operands) = arc.get_arch_info(self._raw.detail.contents.arch.arc)
+            self.operands = arc.get_arch_info(self._raw.detail.contents.arch.arc)
         elif arch == CS_ARCH_XTENSA:
-            (self.operands) = xtensa.get_arch_info(
-                self._raw.detail.contents.arch.xtensa
-            )
+            self.operands = xtensa.get_arch_info(self._raw.detail.contents.arch.xtensa)
 
     def __getattr__(self, name):
         if not self._cs._detail:
@@ -1525,7 +1523,7 @@ class CsInsn(object):
 class Cs(object):
     def __init__(self, arch, mode):
         # verify version compatibility with the core before doing anything
-        (major, minor, _combined) = cs_version()
+        major, minor, _combined = cs_version()
         if major != CS_API_MAJOR or minor != CS_API_MINOR:
             self.csh = None
             # our binding version is different from the core's API version
@@ -1920,6 +1918,6 @@ def debug():
         if cs_support(CS_SUPPORT_X86_REDUCE):
             all_archs += "_reduce"
 
-    (major, minor, _combined) = cs_version()
+    major, minor, _combined = cs_version()
 
     return f"python-{diet}{all_archs}-c{major}.{minor}-b{CS_API_MAJOR}.{CS_API_MINOR}"

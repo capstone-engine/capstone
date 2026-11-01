@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: BSD-3
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .loongarch_const import *
@@ -56,7 +57,7 @@ class LoongArchOp(ctypes.Structure):
 class CsLoongArch(ctypes.Structure):
     format: int
     op_count: int
-    operands: tuple[LoongArchOp, ...]
+    operands: Sequence[LoongArchOp]
     _fields_ = (
         ("format", ctypes.c_int),
         ("op_count", ctypes.c_uint8),

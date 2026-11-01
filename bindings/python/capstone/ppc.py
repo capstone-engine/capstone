@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .ppc_const import *
@@ -78,7 +79,7 @@ class CsPpc(ctypes.Structure):
     update_cr0: bool
     format: int
     op_count: int
-    operands: tuple[PpcOp, ...]
+    operands: Sequence[PpcOp]
     _fields_ = (
         ("bc", PpcBC),
         ("update_cr0", ctypes.c_bool),

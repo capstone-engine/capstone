@@ -2,6 +2,7 @@
 # BPF by david942j <david942j@gmail.com>, 2019
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .bpf_const import *
@@ -80,7 +81,7 @@ class BPFOp(ctypes.Structure):
 
 class CsBPF(ctypes.Structure):
     op_count: int
-    operands: tuple[BPFOp, ...]
+    operands: Sequence[BPFOp]
     _fields_ = (
         ("op_count", ctypes.c_uint8),
         ("operands", BPFOp * 4),

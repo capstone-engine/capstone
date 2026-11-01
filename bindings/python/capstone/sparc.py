@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .sparc_const import *
@@ -70,7 +71,7 @@ class CsSparc(ctypes.Structure):
     hint: int
     format: int
     op_count: int
-    operands: tuple[SparcOp, ...]
+    operands: Sequence[SparcOp]
     _fields_ = (
         ("cc", ctypes.c_uint),
         ("cc_field", ctypes.c_uint),

@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Wolfgang Schwotzer <wolfgang.schwotzer@gmx.net>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .m680x_const import *
@@ -107,7 +108,7 @@ class M680xOp(ctypes.Structure):
 class CsM680x(ctypes.Structure):
     flags: int
     op_count: int
-    operands: tuple[M680xOp, ...]
+    operands: Sequence[M680xOp]
     _fields_ = (
         ("flags", ctypes.c_uint8),
         ("op_count", ctypes.c_uint8),

@@ -1,4 +1,5 @@
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .alpha_const import *
@@ -44,7 +45,7 @@ class AlphaOp(ctypes.Structure):
 # Instruction structure
 class CsAlpha(ctypes.Structure):
     op_count: int
-    operands: tuple[AlphaOp, AlphaOp, AlphaOp]
+    operands: Sequence[AlphaOp]
     _fields_ = (("op_count", ctypes.c_uint8), ("operands", AlphaOp * 3))
 
 

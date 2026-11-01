@@ -2,6 +2,7 @@
 
 import copy
 import ctypes
+from collections.abc import Sequence
 
 from .tms320c64x_const import *
 
@@ -80,7 +81,7 @@ class TMS320C64xOp(ctypes.Structure):
 
 class CsTMS320C64x(ctypes.Structure):
     op_count: int
-    operands: tuple[TMS320C64xOp, ...]
+    operands: Sequence[TMS320C64xOp]
     condition: TMS320C64xCondition
     funit: TMS320C64xFunctionalUnit
     parallel: int
