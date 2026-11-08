@@ -205,6 +205,11 @@ jobs:
       run: |
         sh suite/run_invalid_cstool.sh
 
+    - name: cstool - output layout
+      if: matrix.config.diet-build == 'OFF'
+      run: |
+        sh suite/run_cstool_output.sh
+
     - name: cstest negatives
       if: startsWith(matrix.config.build-system, 'cmake')
       run: |
