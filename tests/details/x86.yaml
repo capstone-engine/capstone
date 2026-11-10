@@ -3189,6 +3189,7 @@ test_cases:
             opcode: [ 0xcb, 0x00, 0x00, 0x00 ]
           regs_read: [ sp, ss ]
           regs_write: [ sp, ip, cs ]
+          groups: [ ret ]
       -
         asm_text: "ret 0x1234"
         details:
@@ -3205,6 +3206,7 @@ test_cases:
             opcode: [ 0xca, 0x00, 0x00, 0x00 ]
           regs_read: [ sp, ss ]
           regs_write: [ sp, ip, cs ]
+          groups: [ ret ]
   -
     input:
       name: "Return from procedure, 32-bit decode mode"
@@ -3235,6 +3237,7 @@ test_cases:
             opcode: [ 0xcb, 0x00, 0x00, 0x00 ]
           regs_read: [ esp, ss ]
           regs_write: [ esp, eip, cs ]
+          groups: [ ret ]
       -
         asm_text: "ret 0x1234"
         details:
@@ -3251,6 +3254,7 @@ test_cases:
             opcode: [ 0xca, 0x00, 0x00, 0x00 ]
           regs_read: [ esp, ss ]
           regs_write: [ esp, eip, cs ]
+          groups: [ ret ]
   -
     input:
       name: "Return from procedure, 64-bit decode mode"
@@ -3259,6 +3263,10 @@ test_cases:
        0xcb,               # retf (far)
        0xc2, 0x34, 0x12,   # ret 0x1234 (near)
        0xca, 0x34, 0x12,   # retf 0x1234 (far)
+       0x66, 0xcb,
+       0x66, 0xca, 0x34, 0x12,
+       0x48, 0xcb,
+       0x48, 0xca, 0x34, 0x12,
       ]
       arch: "x86"
       options: [ CS_OPT_DETAIL, CS_MODE_64 ]
@@ -3279,8 +3287,9 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xcb, 0x00, 0x00, 0x00 ]
-          regs_read: [ esp, ss ]
-          regs_write: [ esp, eip, cs ]      # BUG: decoded as X86_LRETL instead of X86_LRETQ
+          regs_read: [ rsp, ss ]
+          regs_write: [ rsp, rip, cs ]
+          groups: [ ret ]
       -
         asm_text: "ret 0x1234"
         details:
@@ -3295,8 +3304,37 @@ test_cases:
           x86:
             prefix: [ X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0, X86_PREFIX_0 ]
             opcode: [ 0xca, 0x00, 0x00, 0x00 ]
-          regs_read: [ esp, ss ]
-          regs_write: [ esp, eip, cs ]      # BUG: decoded as X86_LRETIL instead of X86_LRETIQ
+          regs_read: [ rsp, ss ]
+          regs_write: [ rsp, rip, cs ]
+          groups: [ ret ]
+      -
+        asm_text: "retf"
+        size: 2
+        details:
+          regs_read: [ rsp, ss ]
+          regs_write: [ rsp, rip, cs ]
+          groups: [ ret ]
+      -
+        asm_text: "retf 0x1234"
+        size: 4
+        details:
+          regs_read: [ rsp, ss ]
+          regs_write: [ rsp, rip, cs ]
+          groups: [ ret ]
+      -
+        asm_text: "retfq"
+        size: 2
+        details:
+          regs_read: [ rsp, ss ]
+          regs_write: [ rsp, rip, cs ]
+          groups: [ ret, mode64 ]
+      -
+        asm_text: "retfq 0x1234"
+        size: 4
+        details:
+          regs_read: [ rsp, ss ]
+          regs_write: [ rsp, rip, cs ]
+          groups: [ ret, mode64 ]
 
   -
     input:
