@@ -1,6 +1,12 @@
 Capstone Engine
 ===============
 
+> [!IMPORTANT]
+>
+> Capstone v5 will soon be deprecated. Please migrate to Capstone v6 Beta.
+> You can find details about migration in our release guide:
+> https://github.com/capstone-engine/capstone/blob/next/docs/cs_v6_release_guide.md
+
 [![Build status](https://ci.appveyor.com/api/projects/status/a4wvbn89wu3pinas/branch/next?svg=true)](https://ci.appveyor.com/project/aquynh/capstone/branch/next)
 [![pypi package](https://badge.fury.io/py/capstone.svg)](https://pypi.python.org/pypi/capstone)
 [![pypi downloads](https://pepy.tech/badge/capstone)](https://pepy.tech/project/capstone)
