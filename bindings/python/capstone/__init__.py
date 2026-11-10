@@ -353,6 +353,19 @@ from pathlib import PurePath
 
 import inspect
 
+import warnings
+
+# Capstone v5 will soon be deprecated. Please migrate to Capstone v6 Beta.
+# You can find details about migration in our release guide.
+# Set CAPSTONE_NO_DEPRECATION_WARNING=1 to silence.
+if not os.environ.get('CAPSTONE_NO_DEPRECATION_WARNING'):
+    warnings.warn(
+        "Capstone v5 will soon be deprecated. Please migrate to Capstone v6 "
+        "Beta. You can find details about migration in our release guide.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+
 if sys.version_info >= (3, 9):
     import importlib.resources as resources
 else:

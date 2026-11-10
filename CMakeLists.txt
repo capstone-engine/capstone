@@ -60,6 +60,12 @@ option(CAPSTONE_USE_DEFAULT_ALLOC "Use default memory allocation functions" ON)
 option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" ON)
 option(CAPSTONE_DEBUG "Whether to enable extra debug assertions" OFF)
 option(CAPSTONE_INSTALL "Generate install target" ${PROJECT_IS_TOP_LEVEL})
+option(CAPSTONE_NO_DEPRECATION_WARNING "Disable the deprecation warning" OFF)
+
+# Capstone v5 will soon be deprecated. Set CAPSTONE_NO_DEPRECATION_WARNING to silence the notice.
+if(NOT DEFINED ENV{CAPSTONE_NO_DEPRECATION_WARNING} AND NOT CAPSTONE_NO_DEPRECATION_WARNING)
+    message(DEPRECATION "Capstone v5 will soon be deprecated. Please migrate to Capstone v6 Beta. You can find details about migration in our release guide.")
+endif()
 
 if (NOT BUILD_SHARED_LIBS AND NOT BUILD_STATIC_LIBS)
     FATAL_ERROR("BUILD_SHARED_LIBS and BUILD_STATIC_LIBS are both unset. Nothing to build.")
