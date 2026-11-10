@@ -59,7 +59,9 @@ jobs:
         export LD_LIBRARY_PATH=`pwd`/tests/:$LD_LIBRARY_PATH
         wget https://github.com/groundx/capstonefuzz/raw/master/corpus/corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip
         unzip -q corpus-libFuzzer-capstone_fuzz_disasmnext-latest.zip -d suite/fuzz
-        git clone https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
+        wget https://gitlab.com/cmocka/cmocka/-/archive/cmocka-1.1.8/cmocka-cmocka-1.1.8.tar.gz
+        tar -xzf cmocka-cmocka-1.1.8.tar.gz
+        mv cmocka-cmocka-1.1.8 suite/cstest/cmocka
         chmod +x suite/cstest/build_cstest.sh
 
     - name: make

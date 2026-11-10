@@ -35,7 +35,7 @@ jobs:
           CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
           CIBW_ARCHS_LINUX: "x86_64 i686 aarch64" # ppc64le s390x really slow
           CIBW_ARCHS_WINDOWS: "auto64" # AMD64 on windows-latest, ARM64 on windows-11-arm
-          CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-*"
+          CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-* cp314-* cp315-*"
           CIBW_SKIP: ""
         with:
           package-dir: bindings/python
