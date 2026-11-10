@@ -206,7 +206,7 @@ static DecodeStatus DecodeSWAP(MCInst *Inst, unsigned insn, uint64_t Address,
 #include "SparcGenSubtargetInfo.inc"
 #include "SparcGenDisassemblerTables.inc"
 
-static DecodeStatus decodeIntPairMem(MCInst *MI, uint32_t insn, uint64_t Address);
+static DecodeStatus decodeMemFallback(MCInst *MI, uint32_t insn, uint64_t Address);
 
 /// readInstruction - read four bytes and return 32 bit word.
 static DecodeStatus readInstruction32(const uint8_t *code, size_t len, uint32_t *Insn)
@@ -241,7 +241,7 @@ bool Sparc_getInstruction(csh ud, const uint8_t *code, size_t code_len, MCInst *
 	Result = decodeInstruction_4(DecoderTableSparc32, MI, Insn, address,
 			(MCRegisterInfo *)info, 0);
 	if (Result == MCDisassembler_Fail)
-		Result = decodeIntPairMem(MI, Insn, address);
+		Result = decodeMemFallback(MI, Insn, address);
 	if (Result != MCDisassembler_Fail) {
 		*size = 4;
 		return true;
@@ -312,8 +312,8 @@ static DecodeStatus DecodeIntPairRegisterClass(MCInst *Inst, unsigned RegNo,
 	return DecodeIntRegsRegisterClass(Inst, RegNo & ~1U, Address, Decoder);
 }
 
-// The generated table predates LLVM's integer LDD and STD.
-static DecodeStatus decodeIntPairMem(MCInst *MI, uint32_t insn, uint64_t Address)
+// The generated table predates LLVM's integer LDD, STD and LDSTUB.
+static DecodeStatus decodeMemFallback(MCInst *MI, uint32_t insn, uint64_t Address)
 {
 	bool isImm = fieldFromInstruction_4(insn, 13, 1);
 	if (fieldFromInstruction_4(insn, 30, 2) != 3)
@@ -328,6 +328,9 @@ static DecodeStatus decodeIntPairMem(MCInst *MI, uint32_t insn, uint64_t Address
 	case 0x07:
 		MCInst_setOpcode(MI, isImm ? SP_STDri : SP_STDrr);
 		return DecodeMem(MI, insn, Address, NULL, false, DecodeIntPairRegisterClass);
+	case 0x0d:
+		MCInst_setOpcode(MI, isImm ? SP_LDSTUBri : SP_LDSTUBrr);
+		return DecodeLoadInt(MI, insn, Address, NULL);
 	default:
 		return MCDisassembler_Fail;
 	}

@@ -490,6 +490,9 @@ typedef enum sparc_insn {
 	SPARC_INS_RET,
 	SPARC_INS_RETL,
 
+	// added after 5.0, appended to keep earlier ids stable
+	SPARC_INS_LDSTUB,
+
 	SPARC_INS_ENDING,   // <-- mark the end of the list of instructions
 } sparc_insn;
 

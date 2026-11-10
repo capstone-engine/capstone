@@ -418,7 +418,8 @@ public class Sparc_const {
 	public static final int SPARC_INS_XOR = 276;
 	public static final int SPARC_INS_RET = 277;
 	public static final int SPARC_INS_RETL = 278;
-	public static final int SPARC_INS_ENDING = 279;
+	public static final int SPARC_INS_LDSTUB = 279;
+	public static final int SPARC_INS_ENDING = 280;
 
 	public static final int SPARC_GRP_INVALID = 0;
 	public static final int SPARC_GRP_JUMP = 1;

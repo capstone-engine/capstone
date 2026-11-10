@@ -2665,3 +2665,15 @@
 	{ 0 }, { 0 }, { 0 }, 0, 0
 #endif
 },
+{
+	SP_LDSTUBri, SPARC_INS_LDSTUB,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},
+{
+	SP_LDSTUBrr, SPARC_INS_LDSTUB,
+#ifndef CAPSTONE_DIET
+	{ 0 }, { 0 }, { 0 }, 0, 0
+#endif
+},

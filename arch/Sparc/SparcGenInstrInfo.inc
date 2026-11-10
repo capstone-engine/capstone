@@ -512,7 +512,9 @@ enum {
     SP_LDDrr	= 495,
     SP_STDri	= 496,
     SP_STDrr	= 497,
-    SP_INSTRUCTION_LIST_END = 498
+    SP_LDSTUBri	= 498,
+    SP_LDSTUBrr	= 499,
+    SP_INSTRUCTION_LIST_END = 500
 };
 
 #endif // GET_INSTRINFO_ENUM

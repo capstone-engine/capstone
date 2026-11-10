@@ -477,6 +477,9 @@ static const name_map insn_name_maps[] = {
 	// alias instructions
 	{ SPARC_INS_RET, "ret" },
 	{ SPARC_INS_RETL, "retl" },
+
+	// added after 5.0, appended to keep earlier ids stable
+	{ SPARC_INS_LDSTUB, "ldstub" },
 };
 
 #ifndef CAPSTONE_DIET

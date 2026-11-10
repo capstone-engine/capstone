@@ -110,6 +110,13 @@ static bool printSparcAliasInstr(MCInst *MI, SStream *O)
 				 SStream_concat0(O, "], ");
 				 printOperand(MI, 0, O);
 				 return true;
+		case SP_LDSTUBri:
+		case SP_LDSTUBrr:
+				 SStream_concat0(O, "ldstub\t[");
+				 printMemOperand(MI, 1, O, NULL);
+				 SStream_concat0(O, "], ");
+				 printOperand(MI, 0, O);
+				 return true;
 		case SP_STDri:
 		case SP_STDrr:
 				 SStream_concat0(O, "std\t");
