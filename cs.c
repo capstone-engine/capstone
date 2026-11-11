@@ -1205,7 +1205,11 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, uintptr_t value)
 	if (!arch_configs[handle->arch].arch_option)
 		return CS_ERR_ARCH;
 
-	return arch_configs[handle->arch].arch_option(handle, type, value);
+	cs_err err =
+		arch_configs[handle->arch].arch_option(handle, type, value);
+	if (type == CS_OPT_MODE && err == CS_ERR_OK && handle->skipdata_size)
+		handle->skipdata_size = skipdata_size(handle);
+	return err;
 }
 
 // generate @op_str for data instruction of SKIPDATA
