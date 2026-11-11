@@ -137,6 +137,13 @@ struct MCInst {
 	bool isAliasInstr; // Flag if this MCInst is an alias.
 	bool fillDetailOps; // If set, detail->operands gets filled.
 	hppa_ext hppa_ext; ///< for HPPA operand. Contains info about modifiers and their effect on the instruction
+	struct {
+		tms320c64x_reg condition_reg;
+		bool condition_zero;
+		uint8_t side;
+		uint8_t crosspath;
+		bool parallel;
+	} tms320c64x;
 	MCAsmInfo MAI; ///< The equivalent to MCAsmInfo in LLVM. It holds flags relevant for the asm style to print.
 };
 
