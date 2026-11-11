@@ -41,9 +41,36 @@ static bool test_cs_mem_setup_fail()
 	return true;
 }
 
+#ifdef CAPSTONE_HAS_X86
+static bool test_cs_detail_off()
+{
+	printf("Test test_cs_detail_off\n");
+	csh handle;
+	CHECK_INT_EQUAL_RET_FALSE(
+		(size_t)cs_open(CS_ARCH_X86, CS_MODE_64, &handle), CS_ERR_OK);
+	const cs_opt_value options[] = { CS_OPT_ON, CS_OPT_OFF, CS_OPT_ON };
+	for (size_t i = 0; i < sizeof(options) / sizeof(options[0]); i++) {
+		CHECK_INT_EQUAL_RET_FALSE(
+			(size_t)cs_option(handle, CS_OPT_DETAIL, options[i]),
+			CS_ERR_OK);
+		cs_insn *insn = cs_malloc(handle);
+		if (!insn)
+			return false;
+		CHECK_INT_EQUAL_RET_FALSE((size_t)(insn->detail != NULL),
+					  options[i] == CS_OPT_ON);
+		cs_free(insn, 1);
+	}
+	cs_close(&handle);
+	return true;
+}
+#endif
+
 int main()
 {
 	bool result = true;
+#ifdef CAPSTONE_HAS_X86
+	result &= test_cs_detail_off();
+#endif
 	result &= test_cs_mem_setup_fail();
 
 	if (result) {
