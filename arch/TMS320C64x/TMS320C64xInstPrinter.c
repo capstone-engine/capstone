@@ -8,6 +8,7 @@
 
 #include "TMS320C64xInstPrinter.h"
 #include "../../MCInst.h"
+#include "../../Mapping.h"
 #include "../../utils.h"
 #include "../../SStream.h"
 #include "../../MCRegisterInfo.h"
@@ -25,105 +26,97 @@ static void printRegPair(MCInst *MI, unsigned OpNo, SStream *O);
 void TMS320C64x_post_printer(csh ud, cs_insn *insn, SStream *insn_asm,
 			     MCInst *mci)
 {
+#ifndef CAPSTONE_DIET
 	SStream ss;
 	const char *op_str_ptr, *p2;
 	char tmp[8] = { 0 };
 	unsigned int unit = 0;
-	int i;
-	cs_tms320c64x *tms320c64x;
+	const insn_map *map = lookup_insn_map(mci->csh, MCInst_getOpcode(mci));
 
-	if (mci->csh->detail_opt) {
-		tms320c64x = &mci->flat_insn->detail->tms320c64x;
-
-		for (i = 0; i < insn->detail->groups_count; i++) {
-			switch (insn->detail->groups[i]) {
-			case TMS320C64X_GRP_FUNIT_D:
-				unit = TMS320C64X_FUNIT_D;
-				break;
-			case TMS320C64X_GRP_FUNIT_L:
-				unit = TMS320C64X_FUNIT_L;
-				break;
-			case TMS320C64X_GRP_FUNIT_M:
-				unit = TMS320C64X_FUNIT_M;
-				break;
-			case TMS320C64X_GRP_FUNIT_S:
-				unit = TMS320C64X_FUNIT_S;
-				break;
-			case TMS320C64X_GRP_FUNIT_NO:
-				unit = TMS320C64X_FUNIT_NO;
-				break;
-			}
-			if (unit != 0)
-				break;
-		}
-		tms320c64x->funit.unit = unit;
-
-		SStream_Init(&ss);
-		if (tms320c64x->condition.reg != TMS320C64X_REG_INVALID)
-			SStream_concat(
-				&ss, "[%c%s]|",
-				(tms320c64x->condition.zero == 1) ? '!' : '|',
-				cs_reg_name(ud, tms320c64x->condition.reg));
-
-		// Sorry for all the fixes below. I don't have time to add more helper SStream functions.
-		// Before that they messed around with the private buffer of the stream.
-		// So it is better now. But still not efficient.
-		op_str_ptr = strchr(SStream_rbuf(insn_asm), '\t');
-
-		if ((op_str_ptr != NULL) &&
-		    (((p2 = strchr(op_str_ptr, '[')) != NULL) ||
-		     ((p2 = strchr(op_str_ptr, '(')) != NULL))) {
-			while ((p2 > op_str_ptr) &&
-			       ((*p2 != 'a') && (*p2 != 'b')))
-				p2--;
-			if (p2 == op_str_ptr) {
-				SStream_Flush(insn_asm, NULL);
-				SStream_concat0(insn_asm, "Invalid!");
-				return;
-			}
-			if (*p2 == 'a')
-				strncpy(tmp, "1T", sizeof(tmp));
-			else
-				strncpy(tmp, "2T", sizeof(tmp));
-		} else {
-			tmp[0] = '\0';
-		}
-		SStream mnem_post = { 0 };
-		SStream_Init(&mnem_post);
-		switch (tms320c64x->funit.unit) {
-		case TMS320C64X_FUNIT_D:
-			SStream_concat(&mnem_post, ".D%s%u", tmp,
-				       tms320c64x->funit.side);
+	for (size_t i = 0; map && i < ARR_SIZE(map->groups) && map->groups[i];
+	     i++) {
+		switch (map->groups[i]) {
+		case TMS320C64X_GRP_FUNIT_D:
+			unit = TMS320C64X_FUNIT_D;
 			break;
-		case TMS320C64X_FUNIT_L:
-			SStream_concat(&mnem_post, ".L%s%u", tmp,
-				       tms320c64x->funit.side);
+		case TMS320C64X_GRP_FUNIT_L:
+			unit = TMS320C64X_FUNIT_L;
 			break;
-		case TMS320C64X_FUNIT_M:
-			SStream_concat(&mnem_post, ".M%s%u", tmp,
-				       tms320c64x->funit.side);
+		case TMS320C64X_GRP_FUNIT_M:
+			unit = TMS320C64X_FUNIT_M;
 			break;
-		case TMS320C64X_FUNIT_S:
-			SStream_concat(&mnem_post, ".S%s%u", tmp,
-				       tms320c64x->funit.side);
+		case TMS320C64X_GRP_FUNIT_S:
+			unit = TMS320C64X_FUNIT_S;
+			break;
+		case TMS320C64X_GRP_FUNIT_NO:
+			unit = TMS320C64X_FUNIT_NO;
 			break;
 		}
-		if (tms320c64x->funit.crosspath > 0)
-			SStream_concat0(&mnem_post, "X");
-
-		if (op_str_ptr != NULL) {
-			// There is an op_str
-			SStream_concat1(&mnem_post, '\t');
-			SStream_replc_str(insn_asm, '\t',
-					  SStream_rbuf(&mnem_post));
-		}
-
-		if (tms320c64x->parallel != 0)
-			SStream_concat0(insn_asm, "\t||");
-		SStream_concat0(&ss, SStream_rbuf(insn_asm));
-		SStream_Flush(insn_asm, NULL);
-		SStream_concat0(insn_asm, SStream_rbuf(&ss));
+		if (unit != 0)
+			break;
 	}
+	if (insn->detail)
+		insn->detail->tms320c64x.funit.unit = unit;
+
+	SStream_Init(&ss);
+	if (mci->tms320c64x.condition_reg != TMS320C64X_REG_INVALID)
+		SStream_concat(&ss, "[%c%s]|",
+			       mci->tms320c64x.condition_zero ? '!' : '|',
+			       cs_reg_name(ud, mci->tms320c64x.condition_reg));
+
+	// Sorry for all the fixes below. I don't have time to add more helper SStream functions.
+	// Before that they messed around with the private buffer of the stream.
+	// So it is better now. But still not efficient.
+	op_str_ptr = strchr(SStream_rbuf(insn_asm), '\t');
+
+	if ((op_str_ptr != NULL) &&
+	    (((p2 = strchr(op_str_ptr, '[')) != NULL) ||
+	     ((p2 = strchr(op_str_ptr, '(')) != NULL))) {
+		while ((p2 > op_str_ptr) && ((*p2 != 'a') && (*p2 != 'b')))
+			p2--;
+		if (p2 == op_str_ptr) {
+			SStream_Flush(insn_asm, NULL);
+			SStream_concat0(insn_asm, "Invalid!");
+			return;
+		}
+		if (*p2 == 'a')
+			strncpy(tmp, "1T", sizeof(tmp));
+		else
+			strncpy(tmp, "2T", sizeof(tmp));
+	} else {
+		tmp[0] = '\0';
+	}
+	SStream mnem_post = { 0 };
+	SStream_Init(&mnem_post);
+	switch (unit) {
+	case TMS320C64X_FUNIT_D:
+		SStream_concat(&mnem_post, ".D%s%u", tmp, mci->tms320c64x.side);
+		break;
+	case TMS320C64X_FUNIT_L:
+		SStream_concat(&mnem_post, ".L%s%u", tmp, mci->tms320c64x.side);
+		break;
+	case TMS320C64X_FUNIT_M:
+		SStream_concat(&mnem_post, ".M%s%u", tmp, mci->tms320c64x.side);
+		break;
+	case TMS320C64X_FUNIT_S:
+		SStream_concat(&mnem_post, ".S%s%u", tmp, mci->tms320c64x.side);
+		break;
+	}
+	if (mci->tms320c64x.crosspath > 0)
+		SStream_concat0(&mnem_post, "X");
+
+	if (op_str_ptr != NULL) {
+		// There is an op_str
+		SStream_concat1(&mnem_post, '\t');
+		SStream_replc_str(insn_asm, '\t', SStream_rbuf(&mnem_post));
+	}
+
+	if (mci->tms320c64x.parallel)
+		SStream_concat0(insn_asm, "\t||");
+	SStream_concat0(&ss, SStream_rbuf(insn_asm));
+	SStream_Flush(insn_asm, NULL);
+	SStream_concat0(insn_asm, SStream_rbuf(&ss));
+#endif
 }
 
 #define PRINT_ALIAS_INSTR
