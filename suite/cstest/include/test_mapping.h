@@ -1511,6 +1511,8 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "RISCV_INS_ALIAS_NOP", .val = RISCV_INS_ALIAS_NOP },
 	{ .str = "RISCV_INS_ALIAS_RET", .val = RISCV_INS_ALIAS_RET },
 	{ .str = "RISCV_INS_CV_MULHHUN", .val = RISCV_INS_CV_MULHHUN },
+	{ .str = "RISCV_INS_C_SLLI", .val = RISCV_INS_C_SLLI },
+	{ .str = "RISCV_INS_C_SLLI_HINT", .val = RISCV_INS_C_SLLI_HINT },
 	{ .str = "RISCV_INS_JALR", .val = RISCV_INS_JALR },
 	{ .str = "RISCV_INS_ZIP", .val = RISCV_INS_ZIP },
 	{ .str = "RISCV_OP_CSR", .val = RISCV_OP_CSR },
