@@ -863,6 +863,15 @@ test_cases:
       insns:
         -
           asm_text: "callx r2"
+  -
+    input:
+      bytes: [ 0x8d, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ]
+      arch: "CS_ARCH_BPF"
+      options: [ "CS_MODE_BPF_EXTENDED", "CS_MODE_LITTLE_ENDIAN" ]
+    expected:
+      insns:
+        -
+          asm_text: "callx r3"
 
   - input:
       bytes: [ 0x06, 0xc7, 0x0f, 0xcc, 0x43, 0x1f, 0xb9, 0xf5 ]
