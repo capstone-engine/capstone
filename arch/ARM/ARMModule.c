@@ -39,7 +39,12 @@ cs_err ARM_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	switch (type) {
 	case CS_OPT_MODE:
-		handle->mode |= (cs_mode)value;
+		/* Assign only the bits with mode semantics for ARM
+		   (CS_MODE_THUMB / CS_MODE_MCLASS / CS_MODE_V8 / CS_MODE_BIG_ENDIAN),
+		   like the other backends, so switching back to ARM works.
+		   CS_MODE_ARM is 0 and cannot be combined by OR-ing. */
+		handle->mode = (cs_mode)((cs_mode)value &
+			(CS_MODE_THUMB | CS_MODE_MCLASS | CS_MODE_V8 | CS_MODE_BIG_ENDIAN));
 		break;
 	case CS_OPT_SYNTAX:
 		handle->syntax |= (int)value;
