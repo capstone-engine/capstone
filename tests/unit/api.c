@@ -73,7 +73,7 @@ static bool test_arm_mode_switch(void)
 		return false;
 	bool result = cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON) ==
 		      CS_ERR_OK;
-	for (size_t i = 0; i < sizeof(steps) / sizeof(steps[0]); ++i) {
+	for (size_t i = 0; i < ARR_SIZE(steps); ++i) {
 		if (cs_option(handle, CS_OPT_MODE, steps[i].mode) !=
 		    CS_ERR_OK) {
 			result = false;
