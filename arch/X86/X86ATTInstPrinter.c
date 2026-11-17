@@ -787,6 +787,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 			}
 			break;
 
+		case X86_INS_ENTER:
+			// ENTER imm16, imm8: both are unsigned
+			opsize = encsize = OpNo == 0 ? 2 : 1;
+			imm &= arch_masks[opsize];
+			SStream_concat0(O, "$");
+			printUInt64(O, imm);
+			break;
+
 		case X86_INS_LCALL:
 		case X86_INS_LJMP:
 		case X86_INS_JMP:
@@ -1076,7 +1084,8 @@ static void att_printInst(MCInst *MI, SStream *OS, void *info)
 		if (MI->flat_insn->detail->x86.op_count > 1) {
 			if (MI->flat_insn->id != X86_INS_LCALL &&
 			    MI->flat_insn->id != X86_INS_LJMP &&
-			    MI->flat_insn->id != X86_INS_JMP) {
+			    MI->flat_insn->id != X86_INS_JMP &&
+			    MI->flat_insn->id != X86_INS_ENTER) {
 				for (i = 0;
 				     i < MI->flat_insn->detail->x86.op_count;
 				     i++) {
