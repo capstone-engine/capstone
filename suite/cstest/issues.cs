@@ -671,6 +671,38 @@
 !# CS_ARCH_X86, CS_MODE_16, None
 0xf3,0x0f,0xae,0x20 == ptwrite dword ptr [bx + si]
 
+!# issue x32 reserved hint NOP 0F 1C /1
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0x0f,0x1c,0x08 == nop dword ptr [eax] ; operands[0].type: MEM ; operands[0].size: 4
+
+!# issue x32 reserved hint NOP register form
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x18,0xc0 == nop eax
+
+!# issue x16 reserved hint NOP takes 16-bit operands
+!# CS_ARCH_X86, CS_MODE_16, None
+0x0f,0x18,0x20 == nop word ptr [bx + si]
+
+!# issue x16 cldemote takes no 66 prefix
+!# CS_ARCH_X86, CS_MODE_16, None
+0x66,0x0f,0x1c,0x00 == nop dword ptr [bx + si]
+
+!# issue x32 cldemote takes no F3 prefix
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x0f,0x1c,0x00 == nop dword ptr [eax]
+
+!# issue x32 cldemote without prefixes
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x1c,0x00 == cldemote byte ptr [eax]
+
+!# issue x16 an ignored F3 prefix keeps 16-bit operands
+!# CS_ARCH_X86, CS_MODE_16, None
+0xf3,0x0f,0x40,0x00 == cmovo ax, word ptr [bx + si]
+
+!# issue x64 REX.W reserved hint NOP
+!# CS_ARCH_X86, CS_MODE_64, None
+0x48,0x0f,0x1d,0x00 == nop qword ptr [rax]
+
 !# issue 1323
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
 0x0: 0x70,0x47,0x00 == bx lr ; op_count: 1 ; operands[0].type: REG = lr ; operands[0].access: READ ; Registers read: lr ; Registers modified: pc ; Groups: thumb jump 
