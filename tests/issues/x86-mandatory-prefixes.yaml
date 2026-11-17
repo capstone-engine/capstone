@@ -614,3 +614,63 @@ test_cases:
       options: [ CS_MODE_64 ]
     expected:
       insns: []
+  -
+    input:
+      name: "x86 (16-bit): 66 is the mandatory prefix of COMISD"
+      bytes: [ 0x66, 0x0f, 0x2f, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "comisd xmm0, qword ptr [bx + si]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: xmm0
+                size: 16
+              -
+                type: X86_OP_MEM
+                mem_base: bx
+                mem_index: si
+                size: 8
+  -
+    input:
+      name: "x86 (16-bit): 66 is the mandatory prefix of CMPPD, which shares its mnemonic with CMPPS"
+      bytes: [ 0x66, 0x0f, 0xc2, 0xc0, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmpeqpd xmm0, xmm0"
+  -
+    input:
+      name: "x86 (16-bit): 66 selects the XMM form of PXOR"
+      bytes: [ 0x66, 0x0f, 0xef, 0xc0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "pxor xmm0, xmm0"
+  -
+    input:
+      name: "x86 (16-bit): 66 is the data size override of BSWAP"
+      bytes: [ 0x66, 0x0f, 0xc8 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "bswap eax"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_REG
+                reg: eax
+                size: 4
+                access: CS_AC_READ_WRITE
