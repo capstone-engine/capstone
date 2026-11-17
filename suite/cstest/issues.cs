@@ -659,6 +659,10 @@
 !# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
 0x66,0x0f,0xc8 == bswap eax ; operands[0].type: REG = eax ; operands[0].size: 4 ; operands[0].access: READ | WRITE
 
+!# issue x16 F3 is the mandatory prefix of ptwrite
+!# CS_ARCH_X86, CS_MODE_16, None
+0xf3,0x0f,0xae,0x20 == ptwrite dword ptr [bx + si]
+
 !# issue 1323
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
 0x0: 0x70,0x47,0x00 == bx lr ; op_count: 1 ; operands[0].type: REG = lr ; operands[0].access: READ ; Registers read: lr ; Registers modified: pc ; Groups: thumb jump 
