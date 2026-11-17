@@ -623,6 +623,26 @@
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT | CS_OPT_UNSIGNED
 0x66,0x83,0xc0,0x80 == addw $0xff80, %ax
 
+!# issue x32 unsigned push
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_UNSIGNED | CS_OPT_DETAIL
+0x6a,0xff == push 0xffffffff ; operands[0].type: IMM = 0xffffffffffffffff ; operands[0].size: 4
+
+!# issue x16 unsigned push
+!# CS_ARCH_X86, CS_MODE_16, CS_OPT_UNSIGNED | CS_OPT_DETAIL
+0x6a,0xff == push 0xffff ; operands[0].type: IMM = 0xffffffffffffffff ; operands[0].size: 2
+
+!# issue x32masm unsigned push
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_MASM | CS_OPT_UNSIGNED
+0x6a,0xff == push 0ffffffffh
+
+!# issue x32 enter unsigned
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0xc8,0xfe,0xfe,0xfe == enter 0xfefe, 0xfe ; operands[0].type: IMM = 0xfefe ; operands[0].size: 2 ; operands[1].type: IMM = 0xfe ; operands[1].size: 1
+
+!# issue x32att enter unsigned
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT | CS_OPT_DETAIL
+0xc8,0xfe,0xfe,0xfe == enter $0xfefe, $0xfe ; operands[0].type: IMM = 0xfefe ; operands[0].size: 2 ; operands[1].type: IMM = 0xfe ; operands[1].size: 1
+
 !# issue 1323
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
 0x0: 0x70,0x47,0x00 == bx lr ; op_count: 1 ; operands[0].type: REG = lr ; operands[0].access: READ ; Registers read: lr ; Registers modified: pc ; Groups: thumb jump 
