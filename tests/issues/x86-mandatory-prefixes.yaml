@@ -614,3 +614,37 @@ test_cases:
       options: [ CS_MODE_64 ]
     expected:
       insns: []
+  -
+    input:
+      name: "x86 (16-bit): XSAVE does not take a 66 prefix"
+      bytes: [ 0x66, 0x0f, 0xae, 0x20 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86 (32-bit): XSAVE does not take a 66 prefix with an address size override"
+      bytes: [ 0x67, 0x66, 0x0f, 0xae, 0x20 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns: []
+  -
+    input:
+      name: "x86 (16-bit): F3 is the mandatory prefix of PTWRITE"
+      bytes: [ 0xf3, 0x0f, 0xae, 0x20 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "ptwrite dword ptr [bx + si]"
+  -
+    input:
+      name: "x86 (16-bit): 0F AE without its ModR/M byte is rejected"
+      bytes: [ 0xf2, 0x0f, 0xae ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns: []
