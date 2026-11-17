@@ -805,7 +805,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				imm = imm & 0xffff;
 				opsize = 2;
 			} else
-				opsize = 4;
+				opsize = MI->imm_size;
+			// the encoded immediate is the selector, read last
+			encsize = 2;
 			SStream_concat(O, "$0x%" PRIx64, imm);
 			break;
 
