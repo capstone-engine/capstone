@@ -643,6 +643,22 @@
 !# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT | CS_OPT_DETAIL
 0xc8,0xfe,0xfe,0xfe == enter $0xfefe, $0xfe ; operands[0].type: IMM = 0xfefe ; operands[0].size: 2 ; operands[1].type: IMM = 0xfe ; operands[1].size: 1
 
+!# issue x16 mandatory 66 prefix of comisd
+!# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
+0x66,0x0f,0x2f,0x00 == comisd xmm0, qword ptr [bx + si] ; operands[1].type: MEM ; operands[1].size: 8
+
+!# issue x16 mandatory 66 prefix of cmppd
+!# CS_ARCH_X86, CS_MODE_16, None
+0x66,0x0f,0xc2,0xc0,0x00 == cmpeqpd xmm0, xmm0
+
+!# issue x16 66 prefix selects the xmm pxor
+!# CS_ARCH_X86, CS_MODE_16, None
+0x66,0x0f,0xef,0xc0 == pxor xmm0, xmm0
+
+!# issue x16 66 prefix is the data size override of bswap
+!# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
+0x66,0x0f,0xc8 == bswap eax ; operands[0].type: REG = eax ; operands[0].size: 4 ; operands[0].access: READ | WRITE
+
 !# issue 1323
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL
 0x0: 0x70,0x47,0x00 == bx lr ; op_count: 1 ; operands[0].type: REG = lr ; operands[0].access: READ ; Registers read: lr ; Registers modified: pc ; Groups: thumb jump 
