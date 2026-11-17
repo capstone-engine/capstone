@@ -916,6 +916,28 @@ static int readOpcode(struct InternalInstruction *insn)
 #endif
 
 /*
+ * isReservedNop - Determines whether an instruction of 0F 18-1E is a reserved
+ *   hint NOP: undefined, a NOP of its own or cldemote, which takes no 66, F2
+ *   or F3 prefix.
+ *
+ * @param id - The instruction ID decoded from the tables
+ */
+static bool isReservedNop(const struct InternalInstruction *insn, uint16_t id)
+{
+	unsigned int i;
+
+	if (insn->opcodeType != TWOBYTE || insn->opcode < 0x18 ||
+	    insn->opcode > 0x1e || insn->vectorExtensionType != TYPE_NO_VEX_XOP)
+		return false;
+	if (!id)
+		return true;
+	if (id == X86_CLDEMOTE)
+		return insn->hasOpSize || insn->repeatPrefix;
+	i = find_insn(id);
+	return i != -1 && insns[i].mapid == X86_INS_NOP;
+}
+
+/*
  * getIDWithAttrMask - Determines the ID of an instruction, consuming
  *   the ModR/M byte as appropriate for extended and escape opcodes,
  *   and using a supplied attribute mask.
@@ -947,6 +969,14 @@ static int getIDWithAttrMask(uint16_t *instructionID,
 	} else {
 		*instructionID = decode(insn->opcodeType, instructionClass,
 					insn->opcode, 0);
+	}
+
+	// decode them like the NOP 0F 1F to size them in 16-bit mode too
+	if (isReservedNop(insn, *instructionID)) {
+		if (readModRM(insn))
+			return -1;
+		*instructionID =
+			decode(TWOBYTE, instructionClass, 0x1f, insn->modRM);
 	}
 
 	return 0;
@@ -1504,6 +1534,14 @@ static int getID(struct InternalInstruction *insn, cs_mode mode)
 
 			return 0;
 		}
+
+		// F2/F3 only ignored (rep nop): size it without them
+		if (!instructionIDWithOpsize &&
+		    (attrMask & (ATTR_XS | ATTR_XD)) &&
+		    getIDWithAttrMask(&instructionIDWithOpsize, insn,
+				      (attrMask & ~(ATTR_XS | ATTR_XD)) |
+					      ATTR_OPSIZE))
+			instructionIDWithOpsize = 0;
 
 		if (is16BitEquivalent(instructionID, instructionIDWithOpsize) ?
 			    (insn->mode == MODE_16BIT) ^ insn->hasOpSize :

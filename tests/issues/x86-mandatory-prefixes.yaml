@@ -700,3 +700,90 @@ test_cases:
       insns:
       -
         asm_text: "ptwrite dword ptr [bx + si]"
+  -
+    input:
+      name: "x86 (32-bit): reserved hint NOP 0F 1C /1 decodes as NOP"
+      bytes: [ 0x0f, 0x1c, 0x08 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "nop dword ptr [eax]"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: eax
+                size: 4
+  -
+    input:
+      name: "x86 (32-bit): reserved hint NOP register form"
+      bytes: [ 0x0f, 0x18, 0xc0 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "nop eax"
+  -
+    input:
+      name: "x86 (16-bit): reserved hint NOP takes 16-bit operands"
+      bytes: [ 0x0f, 0x18, 0x20 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "nop word ptr [bx + si]"
+  -
+    input:
+      name: "x86 (16-bit): CLDEMOTE takes no 66 prefix, which makes it a 32-bit NOP"
+      bytes: [ 0x66, 0x0f, 0x1c, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "nop dword ptr [bx + si]"
+  -
+    input:
+      name: "x86 (32-bit): CLDEMOTE takes no F3 prefix"
+      bytes: [ 0xf3, 0x0f, 0x1c, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "nop dword ptr [eax]"
+  -
+    input:
+      name: "x86 (32-bit): CLDEMOTE without prefixes"
+      bytes: [ 0x0f, 0x1c, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_32 ]
+    expected:
+      insns:
+      -
+        asm_text: "cldemote byte ptr [eax]"
+  -
+    input:
+      name: "x86 (16-bit): an ignored F3 prefix keeps 16-bit operands"
+      bytes: [ 0xf3, 0x0f, 0x40, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_16 ]
+    expected:
+      insns:
+      -
+        asm_text: "cmovo ax, word ptr [bx + si]"
+  -
+    input:
+      name: "x86 (64-bit): REX.W reserved hint NOP"
+      bytes: [ 0x48, 0x0f, 0x1d, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64 ]
+    expected:
+      insns:
+      -
+        asm_text: "nop qword ptr [rax]"
