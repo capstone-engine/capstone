@@ -1006,7 +1006,13 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		// printf(">>> id = %u\n", MI->flat_insn->id);
 		switch (MI->flat_insn->id) {
 		default:
-			printImm(MI, O, imm, MI->csh->imm_unsigned);
+			// mask by the immediate size like the AT&T printer does:
+			// "push -1" has no previous operand to size it
+			if (MI->csh->imm_unsigned && imm < 0 &&
+			    (opsize == 2 || opsize == 4))
+				printImm(MI, O, imm & arch_masks[opsize], true);
+			else
+				printImm(MI, O, imm, MI->csh->imm_unsigned);
 			break;
 
 		case X86_INS_MOVABS:
@@ -1020,6 +1026,13 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		case X86_INS_INT:
 			// do not print number in negative form
 			imm = imm & 0xff;
+			printImm(MI, O, imm, true);
+			break;
+
+		case X86_INS_ENTER:
+			// ENTER imm16, imm8: both are unsigned
+			opsize = encsize = OpNo == 0 ? 2 : 1;
+			imm &= arch_masks[opsize];
 			printImm(MI, O, imm, true);
 			break;
 
