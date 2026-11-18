@@ -1094,7 +1094,10 @@ cs_err CAPSTONE_API cs_option(csh ud, cs_opt_type type, uintptr_t value)
 		return CS_ERR_OK;
 
 	case CS_OPT_DETAIL:
-		handle->detail_opt |= (cs_opt_value)value;
+		if (value == CS_OPT_OFF)
+			handle->detail_opt = CS_OPT_OFF;
+		else
+			handle->detail_opt |= (cs_opt_value)value;
 		return CS_ERR_OK;
 
 	case CS_OPT_SKIPDATA:
