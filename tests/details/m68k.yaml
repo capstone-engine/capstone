@@ -9228,6 +9228,13 @@ test_cases:
             m68k:
               op_size_type: M68K_SIZE_TYPE_FPU
               op_size_fpu: M68K_FPU_SIZE_PACKED
+              operands:
+                - type: M68K_OP_MEM
+                  address_mode: M68K_AM_REGI_ADDR
+                  mem:
+                    base_reg: a0
+                - type: M68K_OP_REG
+                  reg: fp0
 
   - input:
       bytes: [0xf2, 0x3c, 0x4c, 0x22, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0x4e, 0x71]
@@ -9384,10 +9391,15 @@ test_cases:
           size: 16
           details:
             m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
               op_size_fpu: M68K_FPU_SIZE_EXTENDED
               operands:
                 - type: M68K_OP_FP_EXTENDED
                   address_mode: M68K_AM_IMMEDIATE
+                  fp_extended:
+                    sign_exp: 0x3fff
+                    reserved: 0x0000
+                    significand: 0x8000000000000000
                 - type: M68K_OP_REG
                   reg: fp0
 
