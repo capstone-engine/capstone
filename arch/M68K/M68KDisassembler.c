@@ -164,6 +164,14 @@ static const m68k_insn s_branch_lut[] = {
 	M68K_INS_BGE,	  M68K_INS_BLT,	    M68K_INS_BGT, M68K_INS_BLE,
 };
 
+/* MC68851 PBcc condition field, M68000PRM section 6 (PBcc). */
+static const m68k_insn s_pbcc_lut[] = {
+	M68K_INS_PBBS, M68K_INS_PBBC, M68K_INS_PBLS, M68K_INS_PBLC,
+	M68K_INS_PBSS, M68K_INS_PBSC, M68K_INS_PBAS, M68K_INS_PBAC,
+	M68K_INS_PBWS, M68K_INS_PBWC, M68K_INS_PBIS, M68K_INS_PBIC,
+	M68K_INS_PBGS, M68K_INS_PBGC, M68K_INS_PBCS, M68K_INS_PBCC,
+};
+
 static const m68k_insn s_dbcc_lut[] = {
 	M68K_INS_DBT,  M68K_INS_DBF,  M68K_INS_DBHI, M68K_INS_DBLS,
 	M68K_INS_DBCC, M68K_INS_DBCS, M68K_INS_DBNE, M68K_INS_DBEQ,
@@ -2727,43 +2735,48 @@ static void make_cpbcc_operand(cs_m68k_op *op, int size, int displacement)
 	op->br_disp.disp_size = size;
 }
 
-static void d68020_cpbcc_16(m68k_info *info)
+static void build_cpbcc(m68k_info *info, m68k_op_br_disp_size size)
 {
-	cs_m68k_op *op0;
-	cs_m68k *ext;
-	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
-	REQUIRE_CPID_FPU(info);
+	m68k_insn opcode;
+	int32_t displacement;
 
-	if (info->ir == 0xf280 && peek_imm_16(info) == 0) {
-		MCInst_setOpcode(info->inst, M68K_INS_FNOP);
-		info->pc += 2;
-		return;
+	if (M68K_CPID(info) == M68K_CPID_MMU) {
+		const unsigned int condition = info->ir & 0x3f;
+		/* PBcc requires an external MC68851 on the 68020. */
+		LIMIT_FEATURE_EXCLUDING(info, M68020_ONLY, CS_MODE_M68K_CPU32);
+		if (condition >= ARR_SIZE(s_pbcc_lut)) {
+			d68000_invalid(info);
+			return;
+		}
+		opcode = s_pbcc_lut[condition];
+	} else {
+		LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
+		REQUIRE_CPID_FPU(info);
+		opcode = M68K_INS_FBF + m68k_fpu_condition_index(info->ir);
 	}
 
-	ext = build_init_fpu_condition_op(info, M68K_INS_FBF, info->ir, 1, 2);
-	op0 = &ext->operands[0];
+	if (!imm_bytes_available(info, size)) {
+		invalid_insn(info);
+		return;
+	}
+	displacement = size == M68K_OP_BR_DISP_SIZE_WORD ?
+			       make_int_16(read_imm_16(info)) :
+			       (int32_t)read_imm_32(info);
+	if (info->ir == 0xf280 && displacement == 0) {
+		MCInst_setOpcode(info->inst, M68K_INS_FNOP);
+		return;
+	}
+	build_relative_branch(info, opcode, size, displacement);
+}
 
-	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_WORD,
-			   make_int_16(read_imm_16(info)));
-
-	set_insn_group(info, M68K_GRP_JUMP);
-	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
+static void d68020_cpbcc_16(m68k_info *info)
+{
+	build_cpbcc(info, M68K_OP_BR_DISP_SIZE_WORD);
 }
 
 static void d68020_cpbcc_32(m68k_info *info)
 {
-	cs_m68k *ext;
-	cs_m68k_op *op0;
-	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
-	REQUIRE_CPID_FPU(info);
-
-	ext = build_init_fpu_condition_op(info, M68K_INS_FBF, info->ir, 1, 4);
-	op0 = &ext->operands[0];
-
-	make_cpbcc_operand(op0, M68K_OP_BR_DISP_SIZE_LONG, read_imm_32(info));
-
-	set_insn_group(info, M68K_GRP_JUMP);
-	set_insn_group(info, M68K_GRP_BRANCH_RELATIVE);
+	build_cpbcc(info, M68K_OP_BR_DISP_SIZE_LONG);
 }
 
 static void d68020_cpdbcc(m68k_info *info)

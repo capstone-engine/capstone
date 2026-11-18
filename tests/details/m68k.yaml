@@ -2913,7 +2913,7 @@ test_cases:
   - input:
       bytes: [0xf0, 0x90]
       arch: "m68k"
-      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_000]
+      options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_020]
       address: 0x0
     expected:
       insns:
@@ -9256,26 +9256,114 @@ test_cases:
     expected:
       insns: []
 
+  # MC68020 with an MC68851: the displacement is relative to the opcode + 2.
   - input:
-      bytes: [0xf0, 0x81, 0x4e, 0x71]
+      bytes: [0xf0, 0x81, 0xff, 0xfc, 0x4e, 0x71]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+      address: 0x1000
     expected:
       insns:
-        - asm_text: "dc.w $f081"
-          size: 2
+        - asm_text: "pbbc.w $ffe"
+          id: M68K_INS_PBBC
+          size: 4
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_WORD
+              operands:
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: -4
+                  br_disp_size: 2
+            groups: [jump, branch_relative]
         - asm_text: "nop"
 
   - input:
-      bytes: [0xf0, 0xc5, 0x4e, 0x71, 0x4e, 0x71]
+      bytes: [0xf0, 0xc5, 0x00, 0x01, 0x00, 0x00, 0x4e, 0x71]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+      address: 0x1000
     expected:
       insns:
-        - asm_text: "dc.w $f0c5"
-          size: 2
+        - asm_text: "pbsc.l $11002"
+          id: M68K_INS_PBSC
+          size: 6
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_CPU
+              op_size_cpu: M68K_CPU_SIZE_LONG
+              operands:
+                - type: M68K_OP_BR_DISP
+                  address_mode: M68K_AM_BRANCH_DISPLACEMENT
+                  br_disp: 65536
+                  br_disp_size: 4
+            groups: [jump, branch_relative]
         - asm_text: "nop"
+
+  # Check the other PMMU condition names, including zero displacement on PBBS.
+  - input:
+      bytes: [0xf0, 0x80, 0, 0, 0xf0, 0x82, 0, 0, 0xf0, 0x83, 0, 0,
+              0xf0, 0x84, 0, 0, 0xf0, 0x86, 0, 0, 0xf0, 0x87, 0, 0,
+              0xf0, 0x88, 0, 0, 0xf0, 0x89, 0, 0, 0xf0, 0x8a, 0, 0,
+              0xf0, 0x8b, 0, 0, 0xf0, 0x8c, 0, 0, 0xf0, 0x8d, 0, 0,
+              0xf0, 0x8e, 0, 0, 0xf0, 0xcf, 0xff, 0xfe, 0xff, 0xfc]
+      arch: "m68k"
+      options: [CS_MODE_M68K_020]
+      address: 0x20000
+    expected:
+      insns:
+        - asm_text: "pbbs.w $20002"
+        - asm_text: "pbls.w $20006"
+        - asm_text: "pblc.w $2000a"
+        - asm_text: "pbss.w $2000e"
+        - asm_text: "pbas.w $20012"
+        - asm_text: "pbac.w $20016"
+        - asm_text: "pbws.w $2001a"
+        - asm_text: "pbwc.w $2001e"
+        - asm_text: "pbis.w $20022"
+        - asm_text: "pbic.w $20026"
+        - asm_text: "pbgs.w $2002a"
+        - asm_text: "pbgc.w $2002e"
+        - asm_text: "pbcs.w $20032"
+        - asm_text: "pbcc.l $10032"
+
+  - input:
+      bytes: [0xf0, 0x81, 0x4e, 0x71]
+      arch: "m68k"
+      options: [CS_MODE_M68K_030]
+    expected:
+      insns:
+        - asm_text: "dc.w $f081"
         - asm_text: "nop"
+
+  - input:
+      bytes: [0xf0, 0x8f, 0x00]
+      arch: "m68k"
+      options: [CS_MODE_M68K_020]
+    expected:
+      insns: []
+
+  - input:
+      bytes: [0xf0, 0xcf, 0x00, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_MODE_M68K_020]
+    expected:
+      insns: []
+
+  - input:
+      bytes: [0xf2, 0x80]
+      arch: "m68k"
+      options: [CS_MODE_M68K_020]
+    expected:
+      insns: []
+
+  - input:
+      bytes: [0xf2, 0xc0, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_MODE_M68K_020]
+    expected:
+      insns: []
 
   - input:
       bytes: [0xf2, 0x81, 0x4e, 0x71]

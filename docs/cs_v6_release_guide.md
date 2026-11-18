@@ -512,6 +512,7 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | `M68K_OP_FP_PACKED`, `cs_m68k_op.fp_packed`         | Immediate `.p` operands use a dedicated type with `header` and `fraction` fields. | Preserves every packed-decimal digit, sign, exponent, and special-value encoding. |
 | `M68K_FPU_SIZE_PACKED`                              | Identifies `.p` operands separately from `M68K_FPU_SIZE_EXTENDED`; both external formats occupy 12 bytes. | Allows consumers and printers to distinguish packed decimal from extended precision. |
 | Packed register-to-memory `FMOVE` operands          | A static immediate or dynamic data-register k-factor is exposed as the third detail operand. | Preserves the formatting operand encoded for packed-decimal output. |
+| MC68851 `PBcc` | Each of the 16 PMMU branch conditions has its own instruction ID and mnemonic. | `insn.id` identifies the condition shown in the disassembly. |
 
 
 ### Notes about AArch64, SystemZ, ARM and RISC-V renaming

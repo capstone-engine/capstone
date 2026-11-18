@@ -117,7 +117,10 @@ static const char *const s_instruction_names[] = {
 	"tbls",	     "tblu",	 "tblsn",    "tblun",	  "cp0bcbusy",
 	"cp0ld",     "cp0nop",	 "cp0st",    "cp1bcbusy", "cp1ld",
 	"cp1nop",    "cp1st",	 "tpf",	     "maaac",	  "masac",
-	"msaac",     "mssac",
+	"msaac",     "mssac",	 "pbbs",     "pbbc",	  "pbls",
+	"pblc",	     "pbss",	 "pbsc",     "pbas",	  "pbac",
+	"pbws",	     "pbwc",	 "pbis",     "pbic",	  "pbgs",
+	"pbgc",	     "pbcs",	 "pbcc",
 };
 #endif
 
