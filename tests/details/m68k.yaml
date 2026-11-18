@@ -9215,3 +9215,97 @@ test_cases:
     expected:
       insns:
         - asm_text: "dc.w $4e68"
+
+  - input:
+      bytes: [0xf2, 0x10, 0x4c, 0x22]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "fadd.p (a0), fp0"
+          size: 4
+          details:
+            m68k:
+              op_size_type: M68K_SIZE_TYPE_FPU
+              op_size_fpu: M68K_FPU_SIZE_PACKED
+
+  - input:
+      bytes: [0xf2, 0x3c, 0x4c, 0x22, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0x4e, 0x71]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "fadd.p #0e1.0000000000000000e+000, fp0"
+          size: 16
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed:
+                    header: 1
+                    fraction: 0
+                - type: M68K_OP_REG
+                  reg: fp0
+        - asm_text: "nop"
+
+  - input:
+      bytes: [0xf2, 0x00, 0x00, 0xff]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+    expected:
+      insns: []
+
+  - input:
+      bytes: [0xf0, 0x81, 0x4e, 0x71]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "dc.w $f081"
+          size: 2
+        - asm_text: "nop"
+
+  - input:
+      bytes: [0xf0, 0xc5, 0x4e, 0x71, 0x4e, 0x71]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "dc.w $f0c5"
+          size: 2
+        - asm_text: "nop"
+        - asm_text: "nop"
+
+  - input:
+      bytes: [0xf2, 0x81, 0x4e, 0x71]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_CPU32]
+    expected:
+      insns:
+        - asm_text: "dc.w $f281"
+        - asm_text: "nop"
+
+  - input:
+      bytes: [0xf2, 0x3c, 0x48, 0x22, 0x3f, 0xff, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "fadd.x #0e1, fp0"
+          size: 16
+          details:
+            m68k:
+              op_size_fpu: M68K_FPU_SIZE_EXTENDED
+              operands:
+                - type: M68K_OP_FP_EXTENDED
+                  address_mode: M68K_AM_IMMEDIATE
+                - type: M68K_OP_REG
+                  reg: fp0
+
+  - input:
+      bytes: [0xf2, 0x00, 0x00, 0x4e]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+    expected:
+      insns: []

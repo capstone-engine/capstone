@@ -2732,18 +2732,7 @@ static void d68020_cpbcc_16(m68k_info *info)
 	cs_m68k_op *op0;
 	cs_m68k *ext;
 	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
-	int cpid = M68K_CPID(info);
-	int cond = m68k_coprocessor_condition(info->ir);
-	if (cpid == M68K_CPID_MMU) {
-		if (cond >= M68K_PMMU_MAX_COND ||
-		    m68k_has_feature(info, CS_MODE_M68K_CPU32)) {
-			d68000_invalid(info);
-			return;
-		}
-	} else if (cpid != M68K_CPID_FPU) {
-		d68000_invalid(info);
-		return;
-	}
+	REQUIRE_CPID_FPU(info);
 
 	if (info->ir == 0xf280 && peek_imm_16(info) == 0) {
 		MCInst_setOpcode(info->inst, M68K_INS_FNOP);
@@ -2766,18 +2755,7 @@ static void d68020_cpbcc_32(m68k_info *info)
 	cs_m68k *ext;
 	cs_m68k_op *op0;
 	LIMIT_FEATURE(info, M68020_PLUS | CS_MODE_M68K_CF_FPU);
-	int cpid = M68K_CPID(info);
-	int cond = m68k_coprocessor_condition(info->ir);
-	if (cpid == M68K_CPID_MMU) {
-		if (cond >= M68K_PMMU_MAX_COND ||
-		    m68k_has_feature(info, CS_MODE_M68K_CPU32)) {
-			d68000_invalid(info);
-			return;
-		}
-	} else if (cpid != M68K_CPID_FPU) {
-		d68000_invalid(info);
-		return;
-	}
+	REQUIRE_CPID_FPU(info);
 
 	ext = build_init_fpu_condition_op(info, M68K_INS_FBF, info->ir, 1, 4);
 	op0 = &ext->operands[0];
@@ -2948,7 +2926,6 @@ static void d68020_cpgen(m68k_info *info)
 	cs_m68k_op *op0;
 	cs_m68k_op *op1;
 	bool supports_single_op;
-	bool is_fmove;
 	bool packed_destination;
 	bool ea_operand;
 	uint32_t next;
@@ -2962,20 +2939,14 @@ static void d68020_cpgen(m68k_info *info)
 		return;
 	}
 
-	if (M68K_CPID(info) != M68K_CPID_FPU) {
-		d68000_invalid(info);
-		return;
-	}
+	REQUIRE_CPID_FPU(info);
 
 	supports_single_op = true;
 
-	/* 68040+ single/double-precision FPU opcodes (SD flag set in command
-	 * word) must be rejected on pre-68040 CPUs.  Only guard general FPU
-	 * operations (type 0-1); fmove_fpcr/fmovem types are dispatched
-	 * separately and never reach the SD path. */
-	uint32_t peeked = peek_imm_16(info);
-	if (M68K_FEXT_TYPE(peeked) <= M68K_FEXT_TYPE_GENERAL_MAX &&
-	    M68K_FEXT_SD_FLAG(peeked))
+	next = peek_imm_16(info);
+	if ((M68K_FEXT_TYPE(next) == M68K_FEXT_TYPE_FP_REG ||
+	     M68K_FEXT_TYPE(next) == M68K_FEXT_TYPE_FP_EA) &&
+	    !M68K_FEXT_IS_FMOVECR(next) && M68K_FEXT_SD_FLAG(next))
 		LIMIT_FEATURE(info, M68040_PLUS | CS_MODE_M68K_CF_FPU);
 
 	next = read_imm_16(info);
@@ -3024,17 +2995,6 @@ static void d68020_cpgen(m68k_info *info)
 		MCInst_setOpcode(info->inst, M68K_INS_FMOVE);
 		supports_single_op = false;
 		goto fpu_operands;
-	}
-
-	if (M68K_FEXT_SD_FLAG(next)) {
-		if (opmode == M68K_FPOP_FSSQRT_RAW) {
-			MCInst_setOpcode(info->inst, M68K_INS_FSSQRT);
-			goto fpu_operands;
-		} else if (opmode == M68K_FPOP_FDSQRT_RAW) {
-			MCInst_setOpcode(info->inst, M68K_INS_FDSQRT);
-			goto fpu_operands;
-		}
-		opmode &= ~4;
 	}
 
 	switch (opmode) {
@@ -3157,20 +3117,58 @@ static void d68020_cpgen(m68k_info *info)
 	case 0x3a:
 		MCInst_setOpcode(info->inst, M68K_INS_FTST);
 		break;
-	default:
+	case 0x40:
+	case 0x44:
+		MCInst_setOpcode(info->inst, opmode == 0x40 ? M68K_INS_FSMOVE :
+							      M68K_INS_FDMOVE);
+		supports_single_op = false;
 		break;
-	}
-
-	if (M68K_FEXT_SD_FLAG(next)) {
-		if ((next >> 2) & 1)
-			info->inst->Opcode += 2;
-		else
-			info->inst->Opcode += 1;
+	case 0x41:
+	case 0x45:
+		MCInst_setOpcode(info->inst, opmode == 0x41 ? M68K_INS_FSSQRT :
+							      M68K_INS_FDSQRT);
+		break;
+	case 0x58:
+	case 0x5c:
+		MCInst_setOpcode(info->inst, opmode == 0x58 ? M68K_INS_FSABS :
+							      M68K_INS_FDABS);
+		break;
+	case 0x5a:
+	case 0x5e:
+		MCInst_setOpcode(info->inst, opmode == 0x5a ? M68K_INS_FSNEG :
+							      M68K_INS_FDNEG);
+		break;
+	case 0x60:
+	case 0x64:
+		MCInst_setOpcode(info->inst, opmode == 0x60 ? M68K_INS_FSDIV :
+							      M68K_INS_FDDIV);
+		supports_single_op = false;
+		break;
+	case 0x62:
+	case 0x66:
+		MCInst_setOpcode(info->inst, opmode == 0x62 ? M68K_INS_FSADD :
+							      M68K_INS_FDADD);
+		supports_single_op = false;
+		break;
+	case 0x63:
+	case 0x67:
+		MCInst_setOpcode(info->inst, opmode == 0x63 ? M68K_INS_FSMUL :
+							      M68K_INS_FDMUL);
+		supports_single_op = false;
+		break;
+	case 0x68:
+	case 0x6c:
+		MCInst_setOpcode(info->inst, opmode == 0x68 ? M68K_INS_FSSUB :
+							      M68K_INS_FDSUB);
+		supports_single_op = false;
+		break;
+	default:
+		invalid_insn(info);
+		return;
 	}
 
 fpu_operands:
 	ext = &info->extension;
-	is_fmove = MCInst_getOpcode(info->inst) == M68K_INS_FMOVE;
 
 	ext->op_count = 2;
 	ext->op_size.type = M68K_SIZE_TYPE_CPU;
@@ -3270,7 +3268,7 @@ fpu_operands:
 		case M68K_FPSRC_EXTENDED:
 			ext->op_size.type = M68K_SIZE_TYPE_FPU;
 			ext->op_size.fpu_size = M68K_FPU_SIZE_EXTENDED;
-			if (is_fmove && m68k_ea_is_immediate(info->ir)) {
+			if (m68k_ea_is_immediate(info->ir)) {
 				if (!read_imm_extended(info,
 						       &op0->fp_extended)) {
 					invalid_insn(info);
@@ -3286,10 +3284,8 @@ fpu_operands:
 
 		case M68K_FPSRC_PACKED:
 			ext->op_size.type = M68K_SIZE_TYPE_FPU;
-			ext->op_size.fpu_size = M68K_FPU_SIZE_EXTENDED;
-			if (is_fmove)
-				ext->op_size.fpu_size = M68K_FPU_SIZE_PACKED;
-			if (is_fmove && m68k_ea_is_immediate(info->ir)) {
+			ext->op_size.fpu_size = M68K_FPU_SIZE_PACKED;
+			if (m68k_ea_is_immediate(info->ir)) {
 				if (!read_imm_packed(info, &op0->fp_packed)) {
 					invalid_insn(info);
 					return;

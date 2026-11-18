@@ -117,20 +117,6 @@ typedef uint32_t m68k_feature_mask;
 /* ── IR bit-field helpers ────────────────────────────────────────────
  * Extract commonly-used fields from the first instruction word.      */
 
-/* Coprocessor conditional predicate field (bits 5:0).
- *
- * Reference: Motorola MC68881/MC68882 Floating-Point Coprocessor User's
- * Manual, first edition (1987), sections 4.7.2-4.7.3, Tables 4-20 and
- * 4-22, pages 4-129 through 4-134. A reference copy is available at:
- * https://www.bitsavers.org/components/motorola/68000/68020/MC68881_MC68882_Floating-Point_Coprocessor_Users_Manual_1ed_1987.pdf
- */
-#define M68K_COPROCESSOR_CONDITION_MASK 0x3f
-
-static inline uint32_t m68k_coprocessor_condition(uint32_t word)
-{
-	return word & M68K_COPROCESSOR_CONDITION_MASK;
-}
-
 /* 4-bit condition selector used by Bcc/DBcc/Scc/TRAPcc. */
 #define M68K_IR_CONDITION_NIBBLE(info) (((info)->ir >> 8) & 0xf)
 #define M68K_CONDITION_FALSE 1
@@ -152,7 +138,8 @@ static inline uint32_t m68k_coprocessor_condition(uint32_t word)
 
 /* Type / command class (bits 15:13). */
 #define M68K_FEXT_TYPE(ext) (((ext) >> 13) & 7)
-#define M68K_FEXT_TYPE_GENERAL_MAX 0x1
+#define M68K_FEXT_TYPE_FP_REG 0x0
+#define M68K_FEXT_TYPE_FP_EA 0x2
 #define M68K_FEXT_TYPE_FMOVE_TO_EA 0x3
 #define M68K_FEXT_TYPE_FPCR_FROM_EA 0x4
 #define M68K_FEXT_TYPE_FPCR_TO_EA 0x5
@@ -165,8 +152,8 @@ static inline uint32_t m68k_coprocessor_condition(uint32_t word)
 /* Destination FP register (bits 9:7). */
 #define M68K_FEXT_DST(ext) (((ext) >> 7) & 7)
 
-/* Opmode (bits 5:0) -- FPU operation selector. */
-#define M68K_FEXT_OPMODE(ext) ((ext) & 0x3f)
+/* Opmode (bits 6:0) -- FPU operation selector. */
+#define M68K_FEXT_OPMODE(ext) ((ext) & 0x7f)
 
 /* Single/double precision flag (bit 6) -- 68040+ only. */
 #define M68K_FEXT_SD_FLAG(ext) (((ext) >> 6) & 1)
@@ -231,9 +218,6 @@ static inline uint32_t m68k_fpu_condition_index(uint32_t word)
 	return word & M68K_FPU_CONDITION_INDEX_MASK;
 }
 
-/* Maximum valid condition codes per coprocessor. */
-#define M68K_PMMU_MAX_COND 16
-
 /* ── FPU source-format constants (bits 12:10 of ext word) ───────────*/
 #define M68K_FPSRC_LONG 0x00 /* .l  -- 32-bit integer            */
 #define M68K_FPSRC_SINGLE 0x01 /* .s  -- 32-bit IEEE single        */
@@ -246,12 +230,6 @@ static inline uint32_t m68k_fpu_condition_index(uint32_t word)
 /* FMOVE register-to-memory packed-decimal destination encodings. */
 #define M68K_FPDST_PACKED_STATIC 0x03
 #define M68K_FPDST_PACKED_DYNAMIC 0x07
-
-/* ── FPU special raw opmodes (before SD-flag masking) ───────────────
- * FSSQRT/FDSQRT have raw 7-bit opmodes 0x41/0x45.  After the 6-bit
- * truncation (& 0x3f) they become 0x01/0x05 with the SD flag set.   */
-#define M68K_FPOP_FSSQRT_RAW 0x01 /* 0x41 & 0x3f */
-#define M68K_FPOP_FDSQRT_RAW 0x05 /* 0x45 & 0x3f */
 
 /* ── Feature guard macros ────────────────────────────────────────────
  * These reference the `info` parameter available at each call site.
@@ -288,11 +266,11 @@ static inline uint32_t m68k_fpu_condition_index(uint32_t word)
 		} \
 	} while (0)
 
-/* Require CpID == FPU.  Rejects all other coprocessor IDs.
- * Used by cpDBcc, cpScc, cpTRAPcc handlers. */
+/* CPU32 lacks the 68020 coprocessor interface. */
 #define REQUIRE_CPID_FPU(info) \
 	do { \
-		if (M68K_CPID(info) != M68K_CPID_FPU) { \
+		if (M68K_CPID(info) != M68K_CPID_FPU || \
+		    m68k_has_feature(info, CS_MODE_M68K_CPU32)) { \
 			d68000_invalid(info); \
 			return; \
 		} \
