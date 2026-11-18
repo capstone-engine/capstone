@@ -39,7 +39,11 @@ cs_err ARM_option(cs_struct *handle, cs_opt_type type, size_t value)
 {
 	switch (type) {
 	case CS_OPT_MODE:
-		handle->mode |= (cs_mode)value;
+		if (handle->mode != (cs_mode)value) {
+			handle->mode = (cs_mode)value;
+			handle->ITBlock.size = 0;
+			handle->VPTBlock.size = 0;
+		}
 		break;
 	case CS_OPT_SYNTAX:
 		handle->syntax |= (int)value;
