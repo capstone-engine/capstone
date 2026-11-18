@@ -139,6 +139,7 @@ typedef uint32_t m68k_feature_mask;
 /* Type / command class (bits 15:13). */
 #define M68K_FEXT_TYPE(ext) (((ext) >> 13) & 7)
 #define M68K_FEXT_TYPE_FP_REG 0x0
+#define M68K_FEXT_TYPE_RESERVED 0x1
 #define M68K_FEXT_TYPE_FP_EA 0x2
 #define M68K_FEXT_TYPE_FMOVE_TO_EA 0x3
 #define M68K_FEXT_TYPE_FPCR_FROM_EA 0x4

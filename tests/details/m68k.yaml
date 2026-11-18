@@ -9409,3 +9409,99 @@ test_cases:
       options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
     expected:
       insns: []
+
+  # ColdFire precision-store spellings emitted by GNU binutils.
+  - input:
+      bytes: [0xf2, 0x10, 0x64, 0x40, 0xf2, 0x11, 0x74, 0xc4]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_CFV4E]
+    expected:
+      insns:
+        - asm_text: "fsmove.s fp0, (a0)"
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_REG
+                  reg: fp0
+                - type: M68K_OP_MEM
+                  address_mode: M68K_AM_REGI_ADDR
+                  mem:
+                    base_reg: a0
+            regs_read: [fp0, a0]
+        - asm_text: "fdmove.d fp1, (a1)"
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_REG
+                  reg: fp1
+                - type: M68K_OP_MEM
+                  address_mode: M68K_AM_REGI_ADDR
+                  mem:
+                    base_reg: a1
+            regs_read: [fp1, a1]
+
+  # The MC68881 ignores the low seven bits for non-packed stores.
+  - input:
+      bytes: [0xf2, 0x10, 0x64, 0xc0]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "fmove.s fp1, (a0)"
+          details:
+            regs_read: [fp1, a0]
+
+  - input:
+      bytes: [0xf2, 0x00, 0x05, 0x33, 0x4e, 0x71]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "fsincos.x fp1, fp3:fp2"
+          size: 4
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_REG
+                  reg: fp1
+                - type: M68K_OP_REG_PAIR
+                  reg_pair_0: fp3
+                  reg_pair_1: fp2
+            regs_read: [fp1]
+            regs_write: [fp3, fp2]
+        - asm_text: "nop"
+
+  - input:
+      bytes: [0xf2, 0x10, 0x54, 0x37]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_030]
+    expected:
+      insns:
+        - asm_text: "fsincos.d (a0), fp7:fp0"
+          details:
+            regs_read: [a0]
+            regs_write: [fp7, fp0]
+
+  - input:
+      bytes: [0xf2, 0x00, 0x20, 0x62, 0x4e, 0x71]
+      arch: "m68k"
+      options: [CS_MODE_M68K_030]
+    expected:
+      insns:
+        - asm_text: "dc.w $f200"
+        - asm_text: "movea.l -(a2), a0"
+        - asm_text: "nop"
+
+  - input:
+      bytes: [0xf2, 0x3c, 0x4c, 0x22, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0x4e, 0x71]
+      arch: "m68k"
+      options: [CS_MODE_M68K_CFV4E]
+    expected:
+      insns: []
+
+  - input:
+      bytes: [0xf2, 0x3c, 0x48, 0x22, 0x3f, 0xff, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0, 0x4e, 0x71]
+      arch: "m68k"
+      options: [CS_MODE_M68K_CFV4E]
+    expected:
+      insns: []

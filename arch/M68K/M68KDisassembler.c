@@ -2941,6 +2941,8 @@ static void d68020_cpgen(m68k_info *info)
 	bool supports_single_op;
 	bool packed_destination;
 	bool ea_operand;
+	bool to_ea;
+	bool coldfire;
 	uint32_t next;
 	int command_type, src, dst, opmode;
 
@@ -2957,21 +2959,26 @@ static void d68020_cpgen(m68k_info *info)
 	supports_single_op = true;
 
 	next = peek_imm_16(info);
-	if ((M68K_FEXT_TYPE(next) == M68K_FEXT_TYPE_FP_REG ||
-	     M68K_FEXT_TYPE(next) == M68K_FEXT_TYPE_FP_EA) &&
+	command_type = M68K_FEXT_TYPE(next);
+	if (command_type == M68K_FEXT_TYPE_RESERVED) {
+		d68000_invalid(info);
+		return;
+	}
+	if ((command_type == M68K_FEXT_TYPE_FP_REG ||
+	     command_type == M68K_FEXT_TYPE_FP_EA) &&
 	    !M68K_FEXT_IS_FMOVECR(next) && M68K_FEXT_SD_FLAG(next))
 		LIMIT_FEATURE(info, M68040_PLUS | CS_MODE_M68K_CF_FPU);
 
 	next = read_imm_16(info);
 
 	ea_operand = M68K_FEXT_RM(next) != 0;
-	command_type = M68K_FEXT_TYPE(next);
+	to_ea = command_type == M68K_FEXT_TYPE_FMOVE_TO_EA;
+	coldfire = m68k_has_feature(info, CS_MODE_M68K_CF_FPU);
 	src = M68K_FEXT_SRC(next);
 	dst = M68K_FEXT_DST(next);
 	opmode = M68K_FEXT_OPMODE(next);
-	packed_destination = command_type == M68K_FEXT_TYPE_FMOVE_TO_EA &&
-			     (src == M68K_FPDST_PACKED_STATIC ||
-			      src == M68K_FPDST_PACKED_DYNAMIC);
+	packed_destination = to_ea && (src == M68K_FPDST_PACKED_STATIC ||
+				       src == M68K_FPDST_PACKED_DYNAMIC);
 
 	if (BITFIELD(info->ir, 5, 0) == 0 && M68K_FEXT_IS_FMOVECR(next)) {
 		ext = build_init_op(info, M68K_INS_FMOVECR, 2, 0);
@@ -3002,11 +3009,37 @@ static void d68020_cpgen(m68k_info *info)
 		break;
 	}
 
-	/* In a packed register-to-memory FMOVE, bits 6:0 encode the static
-	 * k-factor or dynamic Dn selector rather than an arithmetic opmode. */
-	if (packed_destination) {
-		MCInst_setOpcode(info->inst, M68K_INS_FMOVE);
-		supports_single_op = false;
+	if (coldfire && ea_operand &&
+	    (src == M68K_FPSRC_EXTENDED || src == M68K_FPSRC_PACKED ||
+	     src == M68K_FPDST_PACKED_DYNAMIC)) {
+		invalid_insn(info);
+		return;
+	}
+
+	if (to_ea) {
+		m68k_insn opcode = M68K_INS_FMOVE;
+		if (m68k_ea_is_immediate(info->ir)) {
+			invalid_insn(info);
+			return;
+		}
+		/* GNU binutils emits these two ColdFire store aliases. Classic
+		 * FMOVE uses the low seven bits only for a packed k-factor. */
+		if (coldfire) {
+			switch (opmode) {
+			case 0x00:
+				break;
+			case 0x40:
+				opcode = M68K_INS_FSMOVE;
+				break;
+			case 0x44:
+				opcode = M68K_INS_FDMOVE;
+				break;
+			default:
+				invalid_insn(info);
+				return;
+			}
+		}
+		MCInst_setOpcode(info->inst, opcode);
 		goto fpu_operands;
 	}
 
@@ -3123,6 +3156,18 @@ static void d68020_cpgen(m68k_info *info)
 		MCInst_setOpcode(info->inst, M68K_INS_FSUB);
 		supports_single_op = false;
 		break;
+	case 0x30:
+	case 0x31:
+	case 0x32:
+	case 0x33:
+	case 0x34:
+	case 0x35:
+	case 0x36:
+	case 0x37:
+		LIMIT_FEATURE(info, M68020_PLUS);
+		MCInst_setOpcode(info->inst, M68K_INS_FSINCOS);
+		supports_single_op = false;
+		break;
 	case 0x38:
 		MCInst_setOpcode(info->inst, M68K_INS_FCMP);
 		supports_single_op = false;
@@ -3187,8 +3232,7 @@ fpu_operands:
 	ext->op_size.type = M68K_SIZE_TYPE_CPU;
 	ext->op_size.cpu_size = 0;
 
-	if ((opmode == 0x00 || packed_destination) &&
-	    M68K_FEXT_DIR(next) != 0) {
+	if (to_ea) {
 		op0 = &ext->operands[1];
 		op1 = &ext->operands[0];
 	} else {
@@ -3320,7 +3364,17 @@ fpu_operands:
 		op0->reg = M68K_REG_FP0 + src;
 	}
 
-	op1->reg = M68K_REG_FP0 + dst;
+	if (MCInst_getOpcode(info->inst) == M68K_INS_FSINCOS) {
+		if (!ea_operand) {
+			ext->op_size.type = M68K_SIZE_TYPE_FPU;
+			ext->op_size.fpu_size = M68K_FPU_SIZE_EXTENDED;
+		}
+		op1->type = M68K_OP_REG_PAIR;
+		op1->reg_pair.reg_0 = M68K_REG_FP0 + (opmode & 7);
+		op1->reg_pair.reg_1 = M68K_REG_FP0 + dst;
+	} else {
+		op1->reg = M68K_REG_FP0 + dst;
+	}
 }
 
 static void d68020_cprestore(m68k_info *info)
