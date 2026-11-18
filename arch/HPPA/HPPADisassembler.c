@@ -1265,7 +1265,7 @@ static void fill_idxmem_mods(uint32_t insn, hppa_ext *hppa_ext, cs_mode mode,
 static bool decode_idxmem(const cs_struct *ud, MCInst *MI, uint32_t insn)
 {
 	uint32_t ext = get_insn_field(insn, 22, 25);
-	uint32_t im5;
+	int32_t im5;
 	uint32_t r = get_insn_field(insn, 11, 15);
 	uint32_t b = get_insn_field(insn, 6, 10);
 	uint32_t t = get_insn_field(insn, 27, 31);
@@ -1406,13 +1406,17 @@ static void fill_ldst_dw_mods(uint32_t insn, hppa_ext *hppa_ext, uint32_t im)
 		push_str_modifier(hppa_ext, "o");
 	} else {
 		push_str_modifier(hppa_ext, short_ldst_compl_names[cmplt]);
+		// ,ma and ,mb update the base register
+		if (CMPLT_HAS_MODIFY_BIT(cmplt)) {
+			hppa_ext->b_writeble = true;
+		}
 	}
 }
 
 static bool decode_ldst_dw(const cs_struct *ud, MCInst *MI, uint32_t insn)
 {
 	uint32_t opcode = insn >> 26;
-	uint32_t im = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
+	int32_t im = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
 	im &= ~7;
 	uint32_t ext = get_insn_bit(insn, 30);
 	uint32_t r = get_insn_field(insn, 11, 15);
@@ -1462,6 +1466,7 @@ static void fill_ldst_w_insn_name(MCInst *MI, uint32_t insn)
 
 static void fill_ldst_w_mods(uint32_t insn, hppa_ext *hppa_ext, int32_t im)
 {
+	hppa_ext->b_writeble = true;
 	if (im >= 0) {
 		push_str_modifier(hppa_ext, "mb");
 	} else {
@@ -1478,6 +1483,7 @@ static bool decode_ldst_w(const cs_struct *ud, MCInst *MI, uint32_t insn)
 	uint32_t r = get_insn_field(insn, 11, 15);
 	uint32_t b = get_insn_field(insn, 6, 10);
 	uint32_t s = get_insn_field(insn, 16, 17);
+	uint32_t right = get_insn_bit(insn, 30);
 	if (opcode == 0x17) {
 		MCOperand_CreateImm0(MI, im);
 		CREATE_SR_REG(MI, s);
@@ -1485,13 +1491,13 @@ static bool decode_ldst_w(const cs_struct *ud, MCInst *MI, uint32_t insn)
 		if (ext == 1) {
 			CREATE_GR_REG(MI, r);
 		} else {
-			CREATE_FPR_REG(MI, r);
+			create_float_reg_spec(MI, r, right);
 		}
 	} else {
 		if (ext == 1) {
 			CREATE_GR_REG(MI, r);
 		} else {
-			CREATE_FPR_REG(MI, r);
+			create_float_reg_spec(MI, r, right);
 		}
 		MCOperand_CreateImm0(MI, im);
 		CREATE_SR_REG(MI, s);
@@ -2217,7 +2223,8 @@ static bool decode_branch(const cs_struct *ud, MCInst *MI, uint32_t insn)
 		case 0x04:
 		case 0x05:
 			MCOperand_CreateImm0(MI, extract_22(insn));
-			CREATE_GR_REG(MI, t);
+			// The t field holds displacement bits, these forms always link to rp.
+			CREATE_GR_REG(MI, 2);
 			break;
 		case 0x02:
 			if (bit_19 == 1) {
@@ -2329,39 +2336,79 @@ static void fill_corpdw_insn_name(MCInst *MI, uint32_t insn)
 		}
 	}
 	if (opcode == 0x09) {
+		bool fpu = uid <= 0x01;
 		switch (ext) {
 		case 0x00:
-			MCInst_setOpcode(MI, HPPA_INS_CLDWX);
+			MCInst_setOpcode(MI,
+					 fpu ? HPPA_INS_FLDWX : HPPA_INS_CLDWX);
 			break;
 		case 0x01:
-			MCInst_setOpcode(MI, HPPA_INS_CSTWX);
+			MCInst_setOpcode(MI,
+					 fpu ? HPPA_INS_FSTWX : HPPA_INS_CSTWX);
 			break;
 		case 0x02:
-			MCInst_setOpcode(MI, HPPA_INS_CLDWS);
+			MCInst_setOpcode(MI,
+					 fpu ? HPPA_INS_FLDWS : HPPA_INS_CLDWS);
 			break;
 		case 0x03:
-			MCInst_setOpcode(MI, HPPA_INS_CSTWS);
+			MCInst_setOpcode(MI,
+					 fpu ? HPPA_INS_FSTWS : HPPA_INS_CSTWS);
 			break;
 		default:
 			break;
 		}
 	} else {
+		bool fpu = uid == 0x00;
 		switch (ext) {
 		case 0x00:
-			MCInst_setOpcode(MI, HPPA_INS_CLDDX);
+			MCInst_setOpcode(MI,
+					 fpu ? HPPA_INS_FLDDX : HPPA_INS_CLDDX);
 			break;
 		case 0x01:
-			MCInst_setOpcode(MI, HPPA_INS_CSTDX);
+			MCInst_setOpcode(MI,
+					 fpu ? HPPA_INS_FSTDX : HPPA_INS_CSTDX);
 			break;
 		case 0x02:
-			MCInst_setOpcode(MI, HPPA_INS_CLDDS);
+			MCInst_setOpcode(MI,
+					 fpu ? HPPA_INS_FLDDS : HPPA_INS_CLDDS);
 			break;
 		case 0x03:
-			MCInst_setOpcode(MI, HPPA_INS_CSTDS);
+			MCInst_setOpcode(MI,
+					 fpu ? HPPA_INS_FSTDS : HPPA_INS_CSTDS);
 			break;
 		default:
 			break;
 		}
+	}
+}
+
+static bool is_float_ld(uint32_t opcode)
+{
+	switch (opcode) {
+	case HPPA_INS_FLDW:
+	case HPPA_INS_FLDWX:
+	case HPPA_INS_FLDWS:
+	case HPPA_INS_FLDD:
+	case HPPA_INS_FLDDX:
+	case HPPA_INS_FLDDS:
+		return true;
+	default:
+		return false;
+	}
+}
+
+static bool is_float_st(uint32_t opcode)
+{
+	switch (opcode) {
+	case HPPA_INS_FSTW:
+	case HPPA_INS_FSTWX:
+	case HPPA_INS_FSTWS:
+	case HPPA_INS_FSTD:
+	case HPPA_INS_FSTDX:
+	case HPPA_INS_FSTDS:
+		return true;
+	default:
+		return false;
 	}
 }
 
@@ -2420,34 +2467,35 @@ static bool decode_corpdw(const cs_struct *ud, MCInst *MI, uint32_t insn)
 	uint32_t b = get_insn_field(insn, 6, 10);
 	uint32_t s = get_insn_field(insn, 16, 17);
 	uint32_t t = get_insn_field(insn, 27, 31);
+	// The word forms of the floating-point unit access the right half for uid 1.
+	uint32_t right = get_insn_field(insn, 31, 26) == 0x09 &&
+			 get_insn_field(insn, 23, 25) == 1;
 	uint32_t opcode = MCInst_getOpcode(MI);
 	switch (ext) {
 	case 0x00:
 	case 0x02:
 		if (ext == 0x02) {
-			x = LowSignExtend64(x, 5);
-			MCOperand_CreateImm0(MI, x);
+			MCOperand_CreateImm0(MI, LowSignExtend64(x, 5));
 		} else {
 			CREATE_GR_REG(MI, x);
 		}
 		CREATE_SR_REG(MI, s);
 		CREATE_GR_REG(MI, b);
-		if (opcode == HPPA_INS_FLDW || opcode == HPPA_INS_FLDD) {
-			CREATE_FPR_REG(MI, t);
+		if (is_float_ld(opcode)) {
+			create_float_reg_spec(MI, t, right);
 		} else {
 			CREATE_GR_REG(MI, t);
 		}
 		break;
 	case 0x01:
 	case 0x03:
-		if (opcode == HPPA_INS_FSTW || opcode == HPPA_INS_FSTD) {
-			CREATE_FPR_REG(MI, t);
+		if (is_float_st(opcode)) {
+			create_float_reg_spec(MI, t, right);
 		} else {
 			CREATE_GR_REG(MI, t);
 		}
 		if (ext == 0x03) {
-			x = LowSignExtend64(x, 5);
-			MCOperand_CreateImm0(MI, x);
+			MCOperand_CreateImm0(MI, LowSignExtend64(x, 5));
 		} else {
 			CREATE_GR_REG(MI, x);
 		}
@@ -3560,7 +3608,8 @@ static bool decode_float_ldst(const cs_struct *ud, MCInst *MI, uint32_t insn)
 {
 	uint32_t opcode = insn >> 26;
 	uint32_t a = get_insn_bit(insn, 29);
-	uint32_t disp = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
+	uint32_t right = get_insn_bit(insn, 30);
+	int32_t disp = extract_16(insn, MODE_IS_HPPA_20W(ud->mode));
 	disp &= ~3;
 
 	if (opcode == HPPA_OP_TYPE_FLDW) {
@@ -3568,10 +3617,10 @@ static bool decode_float_ldst(const cs_struct *ud, MCInst *MI, uint32_t insn)
 		MCOperand_CreateImm0(MI, disp);
 		CREATE_SR_REG(MI, get_insn_field(insn, 16, 17));
 		CREATE_GR_REG(MI, get_insn_field(insn, 6, 10));
-		CREATE_FPR_REG(MI, get_insn_field(insn, 11, 15));
+		create_float_reg_spec(MI, get_insn_field(insn, 11, 15), right);
 	} else {
 		MCInst_setOpcode(MI, HPPA_INS_FSTW);
-		CREATE_FPR_REG(MI, get_insn_field(insn, 11, 15));
+		create_float_reg_spec(MI, get_insn_field(insn, 11, 15), right);
 		MCOperand_CreateImm0(MI, disp);
 		CREATE_SR_REG(MI, get_insn_field(insn, 16, 17));
 		CREATE_GR_REG(MI, get_insn_field(insn, 6, 10));
@@ -3582,6 +3631,7 @@ static bool decode_float_ldst(const cs_struct *ud, MCInst *MI, uint32_t insn)
 	} else {
 		push_str_modifier(HPPA_EXT_REF(MI), "mb");
 	}
+	HPPA_EXT_REF(MI)->b_writeble = true;
 	return true;
 }
 
@@ -3631,6 +3681,7 @@ static bool decode_load(const cs_struct *ud, MCInst *MI, uint32_t insn)
 			} else {
 				push_str_modifier(HPPA_EXT_REF(MI), "ma");
 			}
+			HPPA_EXT_REF(MI)->b_writeble = true;
 		}
 		MCOperand_CreateImm0(MI, d);
 	} else {
@@ -3654,6 +3705,7 @@ static bool decode_store(const cs_struct *ud, MCInst *MI, uint32_t insn)
 			} else {
 				push_str_modifier(HPPA_EXT_REF(MI), "ma");
 			}
+			HPPA_EXT_REF(MI)->b_writeble = true;
 		}
 		MCOperand_CreateImm0(MI, d);
 	} else {
