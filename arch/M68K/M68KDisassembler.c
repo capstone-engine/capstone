@@ -3356,9 +3356,9 @@ fpu_operands:
 			break;
 
 		default:
-			ext->op_size.type = M68K_SIZE_TYPE_FPU;
-			ext->op_size.fpu_size = M68K_FPU_SIZE_EXTENDED;
-			break;
+			/* Source format 7 is only defined for FMOVECR. */
+			invalid_insn(info);
+			return;
 		}
 	} else {
 		op0->reg = M68K_REG_FP0 + src;
@@ -5545,7 +5545,28 @@ static void m68k_setup_internals(m68k_info *info, MCInst *inst, uint32_t pc,
 /* ================================= API ================================== */
 /* ======================================================================== */
 
-/* Disasemble one instruction at pc and store in str_buff */
+static bool valid_register(m68k_reg reg)
+{
+	return reg > M68K_REG_INVALID && reg < M68K_REG_ENDING;
+}
+
+static bool valid_operand(const cs_m68k_op *op)
+{
+	switch (op->type) {
+	case M68K_OP_INVALID:
+		return false;
+	case M68K_OP_REG:
+		return valid_register(op->reg);
+	case M68K_OP_REG_PAIR:
+		return valid_register(op->reg_pair.reg_0) &&
+		       valid_register(op->reg_pair.reg_1);
+	case M68K_OP_MEM:
+		return op->address_mode != M68K_AM_NONE;
+	default:
+		return true;
+	}
+}
+
 static uint32_t m68k_disassemble(m68k_info *info, uint32_t pc)
 {
 	MCInst *inst = info->inst;
@@ -5565,6 +5586,12 @@ static uint32_t m68k_disassemble(m68k_info *info, uint32_t pc)
 	if (instruction_is_valid(info, peek_imm_32(info) & 0xffff)) {
 		info->ir = read_imm_16(info);
 		g_instruction_table[info->ir].instruction(info);
+		for (i = 0; i < ext->op_count; ++i) {
+			if (!valid_operand(&ext->operands[i])) {
+				invalid_insn(info);
+				break;
+			}
+		}
 	}
 
 	size = info->pc - pc;
@@ -5612,7 +5639,7 @@ bool M68K_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	m68k_setup_internals(info, instr, (uint32_t)address, features);
 	sz = m68k_disassemble(info, (uint32_t)address);
 
-	if (sz == 0) {
+	if (sz == 0 || sz > code_len) {
 		*size = 2;
 		return false;
 	}
@@ -5624,11 +5651,6 @@ bool M68K_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 	M68K_printInst(instr, &ss, info);
 #endif
 
-	// Make sure we always stay within range
-	if (sz > (uint32_t)code_len)
-		*size = (uint16_t)code_len;
-	else
-		*size = sz;
-
+	*size = (uint16_t)sz;
 	return true;
 }

@@ -270,7 +270,8 @@ static void printPackedImmediate(SStream *O, const m68k_op_fp_packed *value)
 	if (integer_digit > 9 ||
 	    !packed_exponent_to_string(exponent, exponent_digits) ||
 	    !packed_bcd_to_string(value->fraction, fraction_digits)) {
-		SStream_concat0(O, "#<invalid-packed>");
+		SStream_concat(O, "#:%08" PRIx32 "%016" PRIx64, header,
+			       value->fraction);
 		return;
 	}
 

@@ -4617,8 +4617,7 @@ test_cases:
                   reg: fp0
             regs_write: [fp0]
             regs_impl_write: [fp0]
-  # Invalid BCD nibbles have deterministic text and remain available in the
-  # raw detail operand for callers that want to interpret them differently.
+  # Preserve non-BCD digits in the hexadecimal floating-point literal.
   - input:
       bytes:
         [
@@ -4644,7 +4643,7 @@ test_cases:
       address: 0x0
     expected:
       insns:
-        - asm_text: "fmove.p #<invalid-packed>, fp0"
+        - asm_text: "fmove.p #:00000001230000000000000a, fp0"
           size: 16
           details:
             m68k:
@@ -4917,6 +4916,13 @@ test_cases:
             regs_write: [d0]
             regs_impl_read: [fpiar]
             regs_impl_write: [d0]
+  - input:
+      bytes: [0xf2, 0x10, 0x80, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns: []
+
   # Static predecrement lists reject memory-to-register and non-predecrement EAs.
   - input:
       bytes: [0xf2, 0x10, 0xc0, 0x03]
@@ -8707,6 +8713,12 @@ test_cases:
             regs_impl_read: [cacr]
             regs_impl_write: [d1]
   - input:
+      bytes: [0x4e, 0x7b, 0x0f, 0xff]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+    expected:
+      insns: []
+  - input:
       bytes: [0xfb, 0x50]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_BIG_ENDIAN, CS_MODE_M68K_CF_ISA_A]
@@ -9260,6 +9272,37 @@ test_cases:
       bytes: [0xf2, 0x00, 0x00, 0xff]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
+    expected:
+      insns: []
+
+  - input:
+      bytes: [0xf2, 0x10, 0x5c, 0x22]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns: []
+
+  - input:
+      bytes: [0xf2, 0x00, 0x5c, 0x22]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "fmovecr #$22, fp0"
+          size: 4
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_IMM
+                  imm: 0x22
+                - type: M68K_OP_REG
+                  reg: fp0
+            regs_write: [fp0]
+
+  - input:
+      bytes: [0x30, 0x3c]
+      arch: "m68k"
+      options: [CS_MODE_M68K_000]
     expected:
       insns: []
 
