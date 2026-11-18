@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSD-3
 
 #include "../../include/capstone/capstone.h"
+#include "../../utils.h"
 #include "unit_test.h"
 #include <stdio.h>
 #include <string.h>
