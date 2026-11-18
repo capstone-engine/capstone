@@ -34,7 +34,7 @@ static const char s_instruction_names[][6] = {
 	"asr",	 "asra",  "asrb",  "asrd",  "asrw",  "asrx",  "asry",  "band",
 	"bcc",	 "bclr",  "bcs",   "beor",  "beq",   "bge",   "bgnd",  "bgt",
 	"bhcc",	 "bhcs",  "bhi",   "biand", "bieor", "bih",   "bil",   "bior",
-	"bit",	 "bita",  "bitb",  "bitx",  "bity",  "bitd",  "bitmd", "ble",
+	"bit",	 "bita",  "bitb",  "bitd",  "bitmd", "bitx",  "bity",  "ble",
 	"bls",	 "blt",	  "bmc",   "bmi",   "bms",   "bne",   "bor",   "bpl",
 	"brclr", "brset", "bra",   "brn",   "bset",  "bsr",   "btas",  "bvc",
 	"bvs",	 "call",  "cba",   "cbeq",  "cbeqa", "cbeqx", "clc",   "cli",

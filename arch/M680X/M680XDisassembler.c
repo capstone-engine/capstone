@@ -852,6 +852,17 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 				size += 2;
 			break;
 
+		case index_hid:
+			// CALL [D,r] (postbyte 111rr111) and CALL [oprx16,r]
+			// (postbyte 111rr011) read the page from memory,
+			// so they have no page byte.
+			if (i == 1 && insn_description->hid[0] == idx12_hid &&
+			    read_byte(info, &ir, address) &&
+			    ((ir & 0xe7) == 0xe7 || (ir & 0xe7) == 0xe3))
+				break;
+
+			// intentionally fall through
+
 		case rel8_hid:
 		case dir_hid:
 		case rbits_hid:
@@ -860,7 +871,6 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		case idxXp_hid:
 		case idxY_hid:
 		case idxS_hid:
-		case index_hid:
 			if ((retval = read_byte(info, &ir, address + size)))
 				size++;
 			break;
@@ -1109,6 +1119,10 @@ static void set_operand_size(m680x_info *info, cs_m680x_op *op,
 		op->size = 2;
 	else if (info->insn == M680X_INS_EMACS)
 		op->size = 4;
+	else if (g_insn_props[info->insn].reg0 == M680X_REG_W &&
+		 !info->cpu->reg_byte_size[M680X_REG_W])
+		// HCS12X xxxW: 16-bit memory word (see m680x_disassemble)
+		op->size = 2;
 	else if ((m680x->op_count > 0) &&
 		 (m680x->operands[0].type == M680X_OP_REGISTER))
 		op->size = m680x->operands[0].size;
@@ -1545,7 +1559,17 @@ static void indexed12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 static void index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
-	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
+	cs_m680x_op *op;
+
+	// CALL [D,r] and CALL [oprx16,r] read the page from memory,
+	// so they have no page byte.
+	if (info->insn == M680X_INS_CALL && m680x->op_count > 0 &&
+	    m680x->operands[m680x->op_count - 1].type == M680X_OP_INDEXED &&
+	    (m680x->operands[m680x->op_count - 1].idx.flags &
+	     M680X_IDX_INDIRECT))
+		return;
+
+	op = &m680x->operands[m680x->op_count++];
 
 	op->type = M680X_OP_CONSTANT;
 	read_byte(info, &op->const_val, (*address)++);
@@ -1914,6 +1938,12 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 		MCInst_setOpcode(MI, insn_description.opcode);
 
 		reg = g_insn_props[info->insn].reg0;
+
+		// The HD6309 xxxW instructions operate on register W. On the
+		// HCS12X (no register W) they operate on a 16-bit memory
+		// word, which then gets the access of the register operand.
+		if (reg == M680X_REG_W && !info->cpu->reg_byte_size[reg])
+			reg = M680X_REG_INVALID;
 
 		if (reg != M680X_REG_INVALID) {
 			if (reg == M680X_REG_HX &&
