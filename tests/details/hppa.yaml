@@ -2677,3 +2677,267 @@ test_cases:
                 mem_space: sr1
                 mem_base: rp
                 access: CS_AC_READ_WRITE
+  -
+    input:
+      bytes: [ 0xeb, 0xff, 0xb8, 0x9d ]
+      arch: "hppa"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_HPPA_20, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "b,l 0xfffffffffffffc54, rp"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_TARGET
+                imm: -0x3ac
+              -
+                type: HPPA_OP_REG
+                reg: rp
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x0f, 0xc9, 0x10, 0x83, 0x53, 0xc3, 0x20, 0x01, 0x5b, 0xd6, 0x20, 0x07, 0x27, 0xc1, 0x10, 0x56 ]
+      arch: "hppa"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_HPPA_20, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldw -0xc(sp), r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: -0xc
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: sp
+                access: CS_AC_READ
+              -
+                type: HPPA_OP_REG
+                reg: r3
+                access: CS_AC_WRITE
+      -
+        asm_text: "ldd -0x1000(sp), r3"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: -0x1000
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: sp
+                access: CS_AC_READ
+              -
+                type: HPPA_OP_REG
+                reg: r3
+                access: CS_AC_WRITE
+      -
+        asm_text: "fldw,mb -0x1000(sp), fr22R"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: -0x1000
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: sp
+              -
+                type: HPPA_OP_REG
+                reg: fr22R
+                access: CS_AC_WRITE
+      -
+        asm_text: "fldw -0x10(sp), fr22R"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: -0x10
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: sp
+                access: CS_AC_READ
+              -
+                type: HPPA_OP_REG
+                reg: fr22R
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x4f, 0xc5, 0x3f, 0x81, 0x6f, 0xc3, 0x00, 0x80, 0x5f, 0x5c, 0x02, 0x04, 0x7b, 0x45, 0x3e, 0x05, 0x53, 0x5c, 0x02, 0x08, 0x73, 0x43, 0x3e, 0x0d, 0x53, 0x5c, 0x02, 0x00 ]
+      arch: "hppa"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_HPPA_20, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldw,mb -0x40(sp), r5"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: -0x40
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: sp
+                access: CS_AC_READ_WRITE
+              -
+                type: HPPA_OP_REG
+                reg: r5
+                access: CS_AC_WRITE
+      -
+        asm_text: "stw,ma r3, 0x40(sp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: HPPA_OP_DISP
+                imm: 0x40
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: sp
+                access: CS_AC_READ_WRITE
+      -
+        asm_text: "ldw,mb 0x100(r26), ret0"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0x100
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: r26
+                access: CS_AC_READ_WRITE
+              -
+                type: HPPA_OP_REG
+                reg: ret0
+                access: CS_AC_WRITE
+      -
+        asm_text: "fstw,mb fr5, -0x100(r26)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: fr5
+                access: CS_AC_READ
+              -
+                type: HPPA_OP_DISP
+                imm: -0x100
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: r26
+                access: CS_AC_READ_WRITE
+      -
+        asm_text: "ldd,ma 0x100(r26), ret0"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0x100
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: r26
+                access: CS_AC_READ_WRITE
+              -
+                type: HPPA_OP_REG
+                reg: ret0
+                access: CS_AC_WRITE
+      -
+        asm_text: "std,mb r3, -0x100(r26)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: HPPA_OP_DISP
+                imm: -0x100
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: r26
+                access: CS_AC_READ_WRITE
+      -
+        asm_text: "ldd 0x100(r26), ret0"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: 0x100
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: r26
+                access: CS_AC_READ
+              -
+                type: HPPA_OP_REG
+                reg: ret0
+                access: CS_AC_WRITE
+  -
+    input:
+      bytes: [ 0x4f, 0xc5, 0x3f, 0x81, 0x6f, 0xc3, 0x00, 0x80 ]
+      arch: "hppa"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_HPPA_11, CS_OPT_DETAIL ]
+      address: 0x0
+    expected:
+      insns:
+      -
+        asm_text: "ldwm -0x40(sp), r5"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_DISP
+                imm: -0x40
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: sp
+                access: CS_AC_READ_WRITE
+              -
+                type: HPPA_OP_REG
+                reg: r5
+                access: CS_AC_WRITE
+      -
+        asm_text: "stwm r3, 0x40(sp)"
+        details:
+          hppa:
+            operands:
+              -
+                type: HPPA_OP_REG
+                reg: r3
+                access: CS_AC_READ
+              -
+                type: HPPA_OP_DISP
+                imm: 0x40
+              -
+                type: HPPA_OP_MEM
+                mem_space: sr0
+                mem_base: sp
+                access: CS_AC_READ_WRITE

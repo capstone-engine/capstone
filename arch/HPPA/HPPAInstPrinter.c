@@ -709,6 +709,8 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 						base_access = CS_AC_READ;
 					} else if (*fmt == 'W') {
 						base_access = CS_AC_WRITE;
+					} else if (*fmt == 'w') {
+						base_access = CS_AC_READ_WRITE;
 					} else if (*fmt == 'b') {
 						base_access = CS_AC_READ;
 						if (hppa_ext->b_writeble)
