@@ -448,6 +448,10 @@ static void add_cs_detail_general(MCInst *MI, ppc_op_group op_group,
 		break;
 	}
 	case PPC_OP_GROUP_ImmZeroOperand:
+		if (doing_mem(MI))
+			// PC-relative memory operand. The zero is not a base register.
+			break;
+		// fallthrough
 	case PPC_OP_GROUP_U1ImmOperand:
 	case PPC_OP_GROUP_U2ImmOperand:
 	case PPC_OP_GROUP_U3ImmOperand:
