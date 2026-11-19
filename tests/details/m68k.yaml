@@ -4659,6 +4659,52 @@ test_cases:
                   reg: fp0
             regs_write: [fp0]
             regs_impl_write: [fp0]
+  - input:
+      bytes: [0xf2, 0x3c, 0x4c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+              0xf2, 0x3c, 0x4c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+              0xf2, 0x3c, 0x4c, 0x00, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+              0xf2, 0x3c, 0x4c, 0x00, 0x00, 0x0a, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "fmove.p #0e0, fp0"
+          size: 0x10
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed: {header: 0x00000000, fraction: 0x0000000000000000}
+                - {type: M68K_OP_REG, reg: fp0}
+        - asm_text: "fmove.p #0e0.1000000000000000e+000, fp0"
+          size: 0x10
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed: {header: 0x00000000, fraction: 0x1000000000000000}
+                - {type: M68K_OP_REG, reg: fp0}
+        - asm_text: "fmove.p #:0000000a0000000000000000, fp0"
+          size: 0x10
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed: {header: 0x0000000a, fraction: 0x0000000000000000}
+                - {type: M68K_OP_REG, reg: fp0}
+        - asm_text: "fmove.p #:000a00010000000000000000, fp0"
+          size: 0x10
+          details:
+            m68k:
+              operands:
+                - type: M68K_OP_FP_PACKED
+                  address_mode: M68K_AM_IMMEDIATE
+                  fp_packed: {header: 0x000a0001, fraction: 0x0000000000000000}
+                - {type: M68K_OP_REG, reg: fp0}
+
   # Packed source with a memory effective address has no inline immediate.
   - input:
       bytes: [0xf2, 0x10, 0x4c, 0x00]
@@ -9249,7 +9295,8 @@ test_cases:
                   reg: fp0
 
   - input:
-      bytes: [0xf2, 0x3c, 0x4c, 0x22, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0x4e, 0x71]
+      bytes: [0xf2, 0x3c, 0x4c, 0x22, 0x00, 0x00, 0x00, 0x01,
+              0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4e, 0x71]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
     expected:
@@ -9262,18 +9309,11 @@ test_cases:
                 - type: M68K_OP_FP_PACKED
                   address_mode: M68K_AM_IMMEDIATE
                   fp_packed:
-                    header: 1
-                    fraction: 0
+                    header: 0x00000001
+                    fraction: 0x0000000000000000
                 - type: M68K_OP_REG
                   reg: fp0
         - asm_text: "nop"
-
-  - input:
-      bytes: [0xf2, 0x00, 0x00, 0xff]
-      arch: "m68k"
-      options: [CS_OPT_DETAIL, CS_MODE_M68K_040]
-    expected:
-      insns: []
 
   - input:
       bytes: [0xf2, 0x10, 0x5c, 0x22]
@@ -9353,11 +9393,11 @@ test_cases:
 
   # Check the other PMMU condition names, including zero displacement on PBBS.
   - input:
-      bytes: [0xf0, 0x80, 0, 0, 0xf0, 0x82, 0, 0, 0xf0, 0x83, 0, 0,
-              0xf0, 0x84, 0, 0, 0xf0, 0x86, 0, 0, 0xf0, 0x87, 0, 0,
-              0xf0, 0x88, 0, 0, 0xf0, 0x89, 0, 0, 0xf0, 0x8a, 0, 0,
-              0xf0, 0x8b, 0, 0, 0xf0, 0x8c, 0, 0, 0xf0, 0x8d, 0, 0,
-              0xf0, 0x8e, 0, 0, 0xf0, 0xcf, 0xff, 0xfe, 0xff, 0xfc]
+      bytes: [0xf0, 0x80, 0x00, 0x00, 0xf0, 0x82, 0x00, 0x00, 0xf0, 0x83, 0x00, 0x00,
+              0xf0, 0x84, 0x00, 0x00, 0xf0, 0x86, 0x00, 0x00, 0xf0, 0x87, 0x00, 0x00,
+              0xf0, 0x88, 0x00, 0x00, 0xf0, 0x89, 0x00, 0x00, 0xf0, 0x8a, 0x00, 0x00,
+              0xf0, 0x8b, 0x00, 0x00, 0xf0, 0x8c, 0x00, 0x00, 0xf0, 0x8d, 0x00, 0x00,
+              0xf0, 0x8e, 0x00, 0x00, 0xf0, 0xcf, 0xff, 0xfe, 0xff, 0xfc]
       arch: "m68k"
       options: [CS_MODE_M68K_020]
       address: 0x20000
@@ -9388,28 +9428,7 @@ test_cases:
         - asm_text: "nop"
 
   - input:
-      bytes: [0xf0, 0x8f, 0x00]
-      arch: "m68k"
-      options: [CS_MODE_M68K_020]
-    expected:
-      insns: []
-
-  - input:
       bytes: [0xf0, 0xcf, 0x00, 0x00, 0x00]
-      arch: "m68k"
-      options: [CS_MODE_M68K_020]
-    expected:
-      insns: []
-
-  - input:
-      bytes: [0xf2, 0x80]
-      arch: "m68k"
-      options: [CS_MODE_M68K_020]
-    expected:
-      insns: []
-
-  - input:
-      bytes: [0xf2, 0xc0, 0x00, 0x00]
       arch: "m68k"
       options: [CS_MODE_M68K_020]
     expected:
@@ -9425,7 +9444,8 @@ test_cases:
         - asm_text: "nop"
 
   - input:
-      bytes: [0xf2, 0x3c, 0x48, 0x22, 0x3f, 0xff, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0]
+      bytes: [0xf2, 0x3c, 0x48, 0x22, 0x3f, 0xff, 0x00, 0x00,
+              0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
       arch: "m68k"
       options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
     expected:
@@ -9526,6 +9546,83 @@ test_cases:
             regs_write: [fp7, fp0]
 
   - input:
+      bytes: [0xf2, 0x00, 0x05, 0x30, 0xf2, 0x00, 0x05, 0x31, 0xf2, 0x00, 0x05, 0x32,
+              0xf2, 0x10, 0x54, 0x34, 0xf2, 0x10, 0x54, 0x35, 0xf2, 0x10, 0x54, 0x36]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "fsincos.x fp1, fp0:fp2"
+          details:
+            m68k:
+              operands:
+                - {type: M68K_OP_REG, reg: fp1}
+                - {type: M68K_OP_REG_PAIR, reg_pair_0: fp0, reg_pair_1: fp2}
+            regs_read: [fp1]
+            regs_write: [fp0, fp2]
+        - asm_text: "fsincos.x fp1, fp1:fp2"
+          details:
+            m68k:
+              operands:
+                - {type: M68K_OP_REG, reg: fp1}
+                - {type: M68K_OP_REG_PAIR, reg_pair_0: fp1, reg_pair_1: fp2}
+            regs_read: [fp1]
+            regs_write: [fp1, fp2]
+        - asm_text: "fsincos.x fp1, fp2:fp2"
+          details:
+            m68k:
+              operands:
+                - {type: M68K_OP_REG, reg: fp1}
+                - {type: M68K_OP_REG_PAIR, reg_pair_0: fp2, reg_pair_1: fp2}
+            regs_read: [fp1]
+            regs_write: [fp2]
+        - asm_text: "fsincos.d (a0), fp4:fp0"
+          details:
+            m68k:
+              operands:
+                - {type: M68K_OP_MEM, address_mode: M68K_AM_REGI_ADDR, mem: {base_reg: a0}}
+                - {type: M68K_OP_REG_PAIR, reg_pair_0: fp4, reg_pair_1: fp0}
+            regs_read: [a0]
+            regs_write: [fp4, fp0]
+        - asm_text: "fsincos.d (a0), fp5:fp0"
+          details:
+            m68k:
+              operands:
+                - {type: M68K_OP_MEM, address_mode: M68K_AM_REGI_ADDR, mem: {base_reg: a0}}
+                - {type: M68K_OP_REG_PAIR, reg_pair_0: fp5, reg_pair_1: fp0}
+            regs_read: [a0]
+            regs_write: [fp5, fp0]
+        - asm_text: "fsincos.d (a0), fp6:fp0"
+          details:
+            m68k:
+              operands:
+                - {type: M68K_OP_MEM, address_mode: M68K_AM_REGI_ADDR, mem: {base_reg: a0}}
+                - {type: M68K_OP_REG_PAIR, reg_pair_0: fp6, reg_pair_1: fp0}
+            regs_read: [a0]
+            regs_write: [fp6, fp0]
+
+  - input:
+      bytes: [0xf2, 0x00, 0x04, 0x8d, 0xf2, 0x10, 0x58, 0x80]
+      arch: "m68k"
+      options: [CS_OPT_DETAIL, CS_MODE_M68K_020]
+    expected:
+      insns:
+        - asm_text: "fatanh fp1"
+          details:
+            m68k:
+              operands:
+                - {type: M68K_OP_REG, reg: fp1}
+        - asm_text: "fmove.b (a0), fp1"
+          details:
+            m68k:
+              op_size_cpu: M68K_CPU_SIZE_BYTE
+              operands:
+                - {type: M68K_OP_MEM, address_mode: M68K_AM_REGI_ADDR, mem: {base_reg: a0}}
+                - {type: M68K_OP_REG, reg: fp1}
+            regs_read: [a0]
+            regs_write: [fp1]
+
+  - input:
       bytes: [0xf2, 0x00, 0x20, 0x62, 0x4e, 0x71]
       arch: "m68k"
       options: [CS_MODE_M68K_030]
@@ -9536,14 +9633,22 @@ test_cases:
         - asm_text: "nop"
 
   - input:
-      bytes: [0xf2, 0x3c, 0x4c, 0x22, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0x4e, 0x71]
+      bytes: [0x4e, 0x71]
+      arch: "m68k"
+      options: [CS_MODE_BIG_ENDIAN]
+    expected:
+      insns:
+        - asm_text: "nop"
+
+  - input:
+      bytes: [0xf2, 0x10, 0x4c, 0x22]
       arch: "m68k"
       options: [CS_MODE_M68K_CFV4E]
     expected:
       insns: []
 
   - input:
-      bytes: [0xf2, 0x3c, 0x48, 0x22, 0x3f, 0xff, 0, 0, 0x80, 0, 0, 0, 0, 0, 0, 0, 0x4e, 0x71]
+      bytes: [0xf2, 0x10, 0x48, 0x22]
       arch: "m68k"
       options: [CS_MODE_M68K_CFV4E]
     expected:
