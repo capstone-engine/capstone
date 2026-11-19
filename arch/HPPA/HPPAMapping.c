@@ -194,6 +194,7 @@ static const name_map insn_name_maps[HPPA_INS_ENDING] = {
 	{ HPPA_INS_LPA, "lpa" },
 	{ HPPA_INS_MFCPU, "mfcpu" },
 	{ HPPA_INS_MFCTL, "mfctl" },
+	{ HPPA_INS_MFDIAG, "mfdiag" },
 	{ HPPA_INS_MFIA, "mfia" },
 	{ HPPA_INS_MFSP, "mfsp" },
 	{ HPPA_INS_MIXH, "mixh" },
@@ -202,6 +203,7 @@ static const name_map insn_name_maps[HPPA_INS_ENDING] = {
 	{ HPPA_INS_MOVIB, "movib" },
 	{ HPPA_INS_MTCPU, "mtcpu" },
 	{ HPPA_INS_MTCTL, "mtctl" },
+	{ HPPA_INS_MTDIAG, "mtdiag" },
 	{ HPPA_INS_MTSAR, "mtsar" },
 	{ HPPA_INS_MTSARCM, "mtsarcm" },
 	{ HPPA_INS_MTSM, "mtsm" },
@@ -229,6 +231,7 @@ static const name_map insn_name_maps[HPPA_INS_ENDING] = {
 	{ HPPA_INS_RFI, "rfi" },
 	{ HPPA_INS_RFIR, "rfir" },
 	{ HPPA_INS_RSM, "rsm" },
+	{ HPPA_INS_SFDIAG, "sfdiag" },
 	{ HPPA_INS_SHDWGR, "shdwgr" },
 	{ HPPA_INS_SHLADD, "shladd" },
 	{ HPPA_INS_SH1ADD, "sh1add" },
@@ -255,6 +258,7 @@ static const name_map insn_name_maps[HPPA_INS_ENDING] = {
 	{ HPPA_INS_STD, "std" },
 	{ HPPA_INS_STDA, "stda" },
 	{ HPPA_INS_STDBY, "stdby" },
+	{ HPPA_INS_STDIAG, "stdiag" },
 	{ HPPA_INS_STH, "sth" },
 	{ HPPA_INS_STHS, "sths" },
 	{ HPPA_INS_STW, "stw" },
@@ -342,6 +346,13 @@ static const char *const sp_fp_reg[] = {
 	"fr16R", "fr17R", "fr18R", "fr19R", "fr20R", "fr21R", "fr22R", "fr23R",
 	"fr24R", "fr25R", "fr26R", "fr27R", "fr28R", "fr29R", "fr30R", "fr31R"
 };
+
+static const char *const diag_reg[] = {
+	"dr0",	"dr1",	"dr2",	"dr3",	"dr4",	"dr5",	"dr6",	"dr7",
+	"dr8",	"dr9",	"dr10", "dr11", "dr12", "dr13", "dr14", "dr15",
+	"dr16", "dr17", "dr18", "dr19", "dr20", "dr21", "dr22", "dr23",
+	"dr24", "dr25", "dr26", "dr27", "dr28", "dr29", "dr30", "dr31"
+};
 #endif
 
 const char *HPPA_reg_name(csh handle, unsigned int reg)
@@ -359,6 +370,8 @@ const char *HPPA_reg_name(csh handle, unsigned int reg)
 		return fpe_reg[reg - HPPA_REG_FPE0];
 	else if (reg >= HPPA_REG_SP_FPR0 && reg <= HPPA_REG_SP_FPR31)
 		return sp_fp_reg[reg - HPPA_REG_SP_FPR0];
+	else if (reg >= HPPA_REG_DR0 && reg <= HPPA_REG_DR31)
+		return diag_reg[reg - HPPA_REG_DR0];
 	return NULL;
 #else
 	return NULL;
