@@ -174,7 +174,9 @@ jobs:
         build_type: ${{ matrix.config.build_type }}
         toolchain_file: ${{ matrix.config.toolchain_file }}
       run: |
-        git clone --depth 1 https://git.cryptomilk.org/projects/cmocka.git suite/cstest/cmocka
+        wget https://gitlab.com/cmocka/cmocka/-/archive/cmocka-1.1.8/cmocka-cmocka-1.1.8.tar.gz
+        tar -xzf cmocka-cmocka-1.1.8.tar.gz
+        mv cmocka-cmocka-1.1.8 suite/cstest/cmocka
         cmake -S suite/cstest/cmocka \
           -B build/cmocka \
           -DCMAKE_BUILD_TYPE=${build_type} \
