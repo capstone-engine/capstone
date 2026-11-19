@@ -15,6 +15,7 @@
 #include "../../MCFixedLenDisassembler.h"
 #include "../../MCRegisterInfo.h"
 #include "../../MCDisassembler.h"
+#include "../../Mapping.h"
 #include "../../MathExtras.h"
 
 static uint64_t getFeatureBits(int mode);
@@ -550,7 +551,7 @@ bool TMS320C64x_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		decodeInstruction_4(DecoderTable32, MI, insn, address, info, 0);
 
 	if (result == MCDisassembler_Success) {
-		if (MI->flat_insn->detail) {
+		if (detail_is_set(MI)) {
 			cs_tms320c64x *detail =
 				&MI->flat_insn->detail->tms320c64x;
 			detail->condition.reg = MI->tms320c64x.condition_reg;
