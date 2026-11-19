@@ -310,6 +310,10 @@ Nonetheless, we hope this additional information is useful to you.
 - MC68851 `PBcc`: Each of the 16 PMMU branch conditions has its own instruction ID and mnemonic. `insn.id` identifies the condition shown in the disassembly.
 - Expanded integration tests and refactored invalid assembly edge cases.
 
+**M680X**
+
+- Added new registers for `HCS12X`: `TMP1`, `TMP2H`, `TMP2L`, `TMP3H`, `TMP3L`, `CCRH`, `CCRW`, `XH`, `XL`, `YH`, `YL`, `SPH`, `SPL`. Add support for them in transfer/exchange instructions `TFR` and `EXG`.
+
 **UX**
 
 - Instruction alias (see below).
