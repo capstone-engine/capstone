@@ -309,6 +309,10 @@ Nonetheless, we hope this additional information is useful to you.
 - Added `M68K_FPU_SIZE_PACKED` for `.p` operands. Packed register-to-memory moves expose their static immediate or dynamic data-register k-factor as a third detail operand.
 - Expanded integration tests and refactored invalid assembly edge cases.
 
+**M680X**
+
+- Added new registers for `HCS12X`: `TMP1`, `TMP2H`, `TMP2L`, `TMP3H`, `TMP3L`, `CCRH`, `CCRW`, `XH`, `XL`, `YH`, `YL`, `SPH`, `SPL`. Add support for them in transfer/exchange instructions `TFR` and `EXG`.
+
 **UX**
 
 - Instruction alias (see below).
