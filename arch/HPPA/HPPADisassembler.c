@@ -87,6 +87,7 @@ static const char *const add_compl_names[] = { "", "", "l", "tsv" };
 #define CREATE_FPE_REG(MI, fpe) MCOperand_CreateReg0(MI, fpe + HPPA_REG_FPE0)
 #define CREATE_SP_FPR_REG(MI, fpr) \
 	MCOperand_CreateReg0(MI, fpr + HPPA_REG_SP_FPR0)
+#define CREATE_DR_REG(MI, dr) MCOperand_CreateReg0(MI, dr + HPPA_REG_DR0)
 
 static void create_float_reg_spec(MCInst *MI, uint32_t reg, uint32_t fpe_flag)
 {
@@ -389,6 +390,78 @@ static bool decode_sysop(const cs_struct *ud, MCInst *MI, uint32_t insn)
 	default:
 		return false;
 	}
+}
+
+/* DIAG is implementation-dependent. The forms of different CPUs do not
+   overlap, so all of them are decoded in every mode. */
+static bool decode_diag(MCInst *MI, uint32_t insn)
+{
+	uint32_t dr = get_insn_field(insn, 6, 10);
+	uint32_t r = get_insn_field(insn, 11, 15);
+
+	switch (get_insn_field(insn, 6, 31)) {
+	case 0x403600:
+		MCInst_setOpcode(MI, HPPA_INS_TOCEN);
+		return true;
+	case 0x401620:
+		MCInst_setOpcode(MI, HPPA_INS_TOCDIS);
+		return true;
+	case 0x402600:
+		MCInst_setOpcode(MI, HPPA_INS_SHDWGR);
+		return true;
+	case 0x400620:
+		MCInst_setOpcode(MI, HPPA_INS_GRSHDW);
+		return true;
+	default:
+		break;
+	}
+
+	switch (get_insn_field(insn, 16, 31)) {
+	case 0x0600: // PCXL, PCXL2
+	case 0x1a00: // PCXS, PCXT
+		MCInst_setOpcode(MI, HPPA_INS_MFDIAG);
+		CREATE_DR_REG(MI, dr);
+		CREATE_GR_REG(MI, r);
+		return true;
+	case 0x0240: // PCXL
+	case 0x1600: // PCXS, PCXT, PCXL2
+	case 0x1840: // PCXU, PCXW
+		MCInst_setOpcode(MI, HPPA_INS_MTDIAG);
+		CREATE_GR_REG(MI, r);
+		CREATE_DR_REG(MI, dr);
+		return true;
+	default:
+		break;
+	}
+
+	/* Undocumented PCXW shifts of the remote diagnose register in bits
+	   6-10 from and to dr1. No assembler knows them: the names are the
+	   ones of the Linux perf_asm.S macros. */
+	switch (get_insn_field(insn, 11, 31)) {
+	case 0x0ba0:
+		MCInst_setOpcode(MI, HPPA_INS_SFDIAG);
+		MCOperand_CreateImm0(MI, dr);
+		return true;
+	case 0x0aa0:
+		MCInst_setOpcode(MI, HPPA_INS_STDIAG);
+		MCOperand_CreateImm0(MI, dr);
+		return true;
+	default:
+		break;
+	}
+
+	// PCXU, PCXW (0x45) and PCXL (0xa0) forms with the target in bits 27-31
+	uint32_t ext = get_insn_field(insn, 16, 26);
+	if (r == 0 && (ext == 0x45 || ext == 0xa0)) {
+		MCInst_setOpcode(MI, HPPA_INS_MFDIAG);
+		CREATE_DR_REG(MI, dr);
+		CREATE_GR_REG(MI, get_insn_field(insn, 27, 31));
+		return true;
+	}
+
+	MCInst_setOpcode(MI, HPPA_INS_DIAG);
+	MCOperand_CreateImm0(MI, get_insn_field(insn, 6, 31));
+	return true;
 }
 
 static void fill_memmgmt_insn_name(MCInst *MI, uint32_t insn)
@@ -3803,9 +3876,7 @@ static bool getInstruction(const cs_struct *ud, const uint8_t *code,
 		fill_float_insn_name(MI, full_insn);
 		return decode_float(ud, MI, full_insn);
 	case HPPA_OP_TYPE_DIAG:
-		MCInst_setOpcode(MI, HPPA_INS_DIAG);
-		MCOperand_CreateImm0(MI, get_insn_field(full_insn, 6, 31));
-		return true;
+		return decode_diag(MI, full_insn);
 	case HPPA_OP_TYPE_FMPYADD:
 	case HPPA_OP_TYPE_FMPYSUB:
 		return decode_fmpy(ud, MI, full_insn);

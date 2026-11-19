@@ -431,3 +431,66 @@ test_cases:
       insns:
         -
           asm_text: "diag 0xdead"
+  -
+    input:
+      bytes: [ 0x14, 0x40, 0x08, 0xbc ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfdiag dr2, ret0"
+  -
+    input:
+      bytes: [ 0x14, 0x5c, 0x18, 0x40 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mtdiag ret0, dr2"
+  -
+    input:
+      bytes: [ 0x17, 0xe0, 0x08, 0xa1 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "mfdiag dr31, r1"
+  -
+    input:
+      bytes: [ 0x14, 0x41, 0x08, 0xbc ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "diag 0x4108bc"
+  -
+    input:
+      bytes: [ 0x14, 0x40, 0x0b, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "sfdiag 2"
+  -
+    input:
+      bytes: [ 0x17, 0xe0, 0x0a, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "stdiag 0x1f"
+  -
+    input:
+      bytes: [ 0x14, 0x01, 0x0b, 0xa0 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "diag 0x10ba0"
