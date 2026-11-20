@@ -6,6 +6,12 @@ Capstone Engine
 [![pypi downloads](https://pepy.tech/badge/capstone)](https://pepy.tech/project/capstone)
 [![oss-fuzz Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/capstone.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:capstone)
 
+> [!IMPORTANT]
+>
+> Capstone v5 will soon be deprecated. Please migrate to Capstone v6 Beta.
+> You can find details about migration in our release guide:
+> https://github.com/capstone-engine/capstone/blob/next/docs/cs_v6_release_guide.md
+
 Capstone is a disassembly framework with the target of becoming the ultimate
 disasm engine for binary analysis and reversing in the security community.
 
