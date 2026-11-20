@@ -169,23 +169,25 @@ test_cases:
   -
     input:
       bytes: [ 0xa9, 0xff, 0x7f, 0x02 ]
-      name: "Little/big endian test no detail fixup."
+      name: "Little-endian disassembly without details"
       arch: "tms320c64x"
       options: [ CS_MODE_LITTLE_ENDIAN ]
       address: 0x1000
     expected:
       insns:
       -
-        asm_text: "mvk -1, a4"
+        asm_text: "mvk.S1 -1, a4 ||"
   -
     input:
-      bytes: [ 0x02, 0x7f, 0xff, 0xa9 ]
-      name: "Little/big endian test no detail fixup"
+      bytes: [ 0x02, 0x7f, 0xff, 0xa9, 0x86, 0x4a, 0x1a, 0x38 ]
+      name: "Big-endian disassembly without details"
       arch: "tms320c64x"
       options: [ CS_MODE_BIG_ENDIAN ]
       address: 0x1000
     expected:
       insns:
       -
-        asm_text: "mvk -1, a4"
+        asm_text: "mvk.S1 -1, a4 ||"
+      -
+        asm_text: "[ a1] cmpeq.L1X b16, a19:a18, a12"
 
