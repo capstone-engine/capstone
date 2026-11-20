@@ -1,6 +1,12 @@
 # For MSVC_RUNTIME_LIBRARY
 cmake_minimum_required(VERSION 3.15)
 
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 4.5)
+    # CMake v4.5 warns about definitions which have a global scope (add_definition()).
+    # Which is fine, but we won't fix that anymore for v5.
+    cmake_diagnostic(SET CMD_NON_TARGET_DIRECTIVE IGNORE)
+endif()
+
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
     message(FATAL_ERROR "In-tree builds are not supported. Run CMake from a separate directory: cmake -B build")
 endif()
