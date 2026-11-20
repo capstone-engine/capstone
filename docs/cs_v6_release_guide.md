@@ -307,6 +307,7 @@ Nonetheless, we hope this additional information is useful to you.
 - Expanded operand details for bitfield instructions, PC-relative addressing, immediate value types, and memory addressing metadata.
 - Added lossless detail operands for immediate 96-bit extended (`.x`) and packed-decimal (`.p`) values. Extended operands use `M68K_OP_FP_EXTENDED` with `sign_exp`, `reserved`, and `significand` in `fp_extended`; packed operands use `M68K_OP_FP_PACKED` with `header` and `fraction` in `fp_packed`.
 - Added `M68K_FPU_SIZE_PACKED` for `.p` operands. Packed register-to-memory moves expose their static immediate or dynamic data-register k-factor as a third detail operand.
+- MC68851 `PBcc`: Each of the 16 PMMU branch conditions has its own instruction ID and mnemonic. `insn.id` identifies the condition shown in the disassembly.
 - Expanded integration tests and refactored invalid assembly edge cases.
 
 **UX**

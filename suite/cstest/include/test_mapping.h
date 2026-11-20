@@ -953,6 +953,8 @@ static const cs_enum_id_map cs_enum_map[] = {
 	{ .str = "M68K_GRP_IRET", .val = M68K_GRP_IRET },
 	{ .str = "M68K_GRP_JUMP", .val = M68K_GRP_JUMP },
 	{ .str = "M68K_GRP_RET", .val = M68K_GRP_RET },
+	{ .str = "M68K_INS_PBBC", .val = M68K_INS_PBBC },
+	{ .str = "M68K_INS_PBSC", .val = M68K_INS_PBSC },
 	{ .str = "M68K_OP_BR_DISP", .val = M68K_OP_BR_DISP },
 	{ .str = "M68K_OP_BR_DISP_SIZE_BYTE",
 	  .val = M68K_OP_BR_DISP_SIZE_BYTE },

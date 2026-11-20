@@ -117,7 +117,10 @@ static const char *const s_instruction_names[] = {
 	"tbls",	     "tblu",	 "tblsn",    "tblun",	  "cp0bcbusy",
 	"cp0ld",     "cp0nop",	 "cp0st",    "cp1bcbusy", "cp1ld",
 	"cp1nop",    "cp1st",	 "tpf",	     "maaac",	  "masac",
-	"msaac",     "mssac",
+	"msaac",     "mssac",	 "pbbs",     "pbbc",	  "pbls",
+	"pblc",	     "pbss",	 "pbsc",     "pbas",	  "pbac",
+	"pbws",	     "pbwc",	 "pbis",     "pbic",	  "pbgs",
+	"pbgc",	     "pbcs",	 "pbcc",
 };
 #endif
 
@@ -267,7 +270,8 @@ static void printPackedImmediate(SStream *O, const m68k_op_fp_packed *value)
 	if (integer_digit > 9 ||
 	    !packed_exponent_to_string(exponent, exponent_digits) ||
 	    !packed_bcd_to_string(value->fraction, fraction_digits)) {
-		SStream_concat0(O, "#<invalid-packed>");
+		SStream_concat(O, "#:%08" PRIx32 "%016" PRIx64, header,
+			       value->fraction);
 		return;
 	}
 

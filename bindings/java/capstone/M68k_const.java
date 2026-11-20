@@ -533,7 +533,23 @@ public class M68k_const {
 	public static final int M68K_INS_MASAC = 404;
 	public static final int M68K_INS_MSAAC = 405;
 	public static final int M68K_INS_MSSAC = 406;
-	public static final int M68K_INS_ENDING = 407;
+	public static final int M68K_INS_PBBS = 407;
+	public static final int M68K_INS_PBBC = 408;
+	public static final int M68K_INS_PBLS = 409;
+	public static final int M68K_INS_PBLC = 410;
+	public static final int M68K_INS_PBSS = 411;
+	public static final int M68K_INS_PBSC = 412;
+	public static final int M68K_INS_PBAS = 413;
+	public static final int M68K_INS_PBAC = 414;
+	public static final int M68K_INS_PBWS = 415;
+	public static final int M68K_INS_PBWC = 416;
+	public static final int M68K_INS_PBIS = 417;
+	public static final int M68K_INS_PBIC = 418;
+	public static final int M68K_INS_PBGS = 419;
+	public static final int M68K_INS_PBGC = 420;
+	public static final int M68K_INS_PBCS = 421;
+	public static final int M68K_INS_PBCC = 422;
+	public static final int M68K_INS_ENDING = 423;
 
 	public static final int M68K_GRP_INVALID = 0;
 	public static final int M68K_GRP_JUMP = 1;
