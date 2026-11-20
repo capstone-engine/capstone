@@ -791,3 +791,75 @@ test_cases:
       insns:
         -
           asm_text: "xmpyu fpe2, fpe4, fpe6"
+  -
+    input:
+      bytes: [ 0x27, 0xc1, 0x10, 0x16 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fldws -0x10(sp), fr22"
+  -
+    input:
+      bytes: [ 0x27, 0xc1, 0x12, 0x56 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fstws fr22R, -0x10(sp)"
+  -
+    input:
+      bytes: [ 0x24, 0x41, 0x00, 0x56 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fldwx r1(rp), fr22R"
+  -
+    input:
+      bytes: [ 0x24, 0x41, 0x02, 0x56 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fstwx fr22R, r1(rp)"
+  -
+    input:
+      bytes: [ 0x2f, 0xc1, 0x10, 0x16 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fldds -0x10(sp), fr22"
+  -
+    input:
+      bytes: [ 0x2f, 0xc1, 0x12, 0x16 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fstds fr22, -0x10(sp)"
+  -
+    input:
+      bytes: [ 0x2c, 0x41, 0x00, 0x16 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "flddx r1(rp), fr22"
+  -
+    input:
+      bytes: [ 0x2c, 0x41, 0x02, 0x16 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_11" ]
+    expected:
+      insns:
+        -
+          asm_text: "fstdx fr22, r1(rp)"

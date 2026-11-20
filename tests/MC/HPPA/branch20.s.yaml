@@ -7,7 +7,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "b,l 0xfffffffffffffc54, r31"
+          asm_text: "b,l 0xfffffffffffffc54, rp"
   -
     input:
       bytes: [ 0xeb, 0xff, 0xb8, 0x97 ]
@@ -16,7 +16,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "b,l,n 0xfffffffffffffc50, r31"
+          asm_text: "b,l,n 0xfffffffffffffc50, rp"
   -
     input:
       bytes: [ 0xeb, 0x9f, 0x38, 0x8d ]
@@ -43,7 +43,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "b,l,push 0xfffffffffffffc44, r31"
+          asm_text: "b,l,push 0xfffffffffffffc44, rp"
   -
     input:
       bytes: [ 0xeb, 0xff, 0x98, 0x77 ]
@@ -52,7 +52,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "b,l,push,n 0xfffffffffffffc40, r31"
+          asm_text: "b,l,push,n 0xfffffffffffffc40, rp"
   -
     input:
       bytes: [ 0xe8, 0x41, 0x40, 0x00 ]

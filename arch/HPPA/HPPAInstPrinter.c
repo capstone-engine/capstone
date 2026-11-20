@@ -195,6 +195,10 @@ static const struct pa_insn pa_insns[] = {
 	{ HPPA_INS_IITLBT, HPPA_GRP_SYSCTRL },
 	{ HPPA_INS_MTCPU, HPPA_GRP_SYSCTRL },
 	{ HPPA_INS_MFCPU, HPPA_GRP_SYSCTRL },
+	{ HPPA_INS_MTDIAG, HPPA_GRP_SYSCTRL },
+	{ HPPA_INS_MFDIAG, HPPA_GRP_SYSCTRL },
+	{ HPPA_INS_STDIAG, HPPA_GRP_SYSCTRL },
+	{ HPPA_INS_SFDIAG, HPPA_GRP_SYSCTRL },
 	{ HPPA_INS_TOCEN, HPPA_GRP_SYSCTRL },
 	{ HPPA_INS_TOCDIS, HPPA_GRP_SYSCTRL },
 	{ HPPA_INS_SHDWGR, HPPA_GRP_SYSCTRL },
@@ -520,6 +524,10 @@ static const struct pa_insn_fmt pa_formats[] = {
 	{ HPPA_INS_FDCE, "r(Rb)", false },
 	{ HPPA_INS_FICE, "r(Rb)", false },
 	{ HPPA_INS_DIAG, "i", false },
+	{ HPPA_INS_MFDIAG, "RW", false },
+	{ HPPA_INS_MTDIAG, "RW", false },
+	{ HPPA_INS_SFDIAG, "i", false },
+	{ HPPA_INS_STDIAG, "i", false },
 	{ HPPA_INS_IDTLBT, "RR", false },
 	{ HPPA_INS_IITLBT, "RR", false },
 
@@ -709,6 +717,8 @@ static void fill_operands(MCInst *MI, cs_hppa *hppa)
 						base_access = CS_AC_READ;
 					} else if (*fmt == 'W') {
 						base_access = CS_AC_WRITE;
+					} else if (*fmt == 'w') {
+						base_access = CS_AC_READ_WRITE;
 					} else if (*fmt == 'b') {
 						base_access = CS_AC_READ;
 						if (hppa_ext->b_writeble)
@@ -801,6 +811,13 @@ static void update_regs_access(MCInst *MI, unsigned int opcode)
 		break;
 	case HPPA_INS_ADDIL:
 		map_add_implicit_write(MI, HPPA_REG_GR1);
+		break;
+	// dr1 is the staging register of the remote diagnose registers
+	case HPPA_INS_SFDIAG:
+		map_add_implicit_write(MI, HPPA_REG_DR1);
+		break;
+	case HPPA_INS_STDIAG:
+		map_add_implicit_read(MI, HPPA_REG_DR1);
 		break;
 	}
 }
