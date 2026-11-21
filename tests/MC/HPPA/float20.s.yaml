@@ -503,3 +503,66 @@ test_cases:
       insns:
         -
           asm_text: "fmpynfadd,sgl fr20, fr21, fr22, fr23"
+  -
+    input:
+      bytes: [ 0x27, 0xc1, 0x10, 0x56 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fldw -0x10(sp), fr22R"
+  -
+    input:
+      bytes: [ 0x27, 0xc1, 0x12, 0x56 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fstw fr22R, -0x10(sp)"
+  -
+    input:
+      bytes: [ 0x24, 0x41, 0x00, 0x56 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fldw r1(rp), fr22R"
+  -
+    input:
+      bytes: [ 0x5f, 0xd6, 0x20, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fldw -0x1000(sp), fr22R"
+  -
+    input:
+      bytes: [ 0x7f, 0xd6, 0x20, 0x03 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fstw fr22R, -0x1000(sp)"
+  -
+    input:
+      bytes: [ 0x5b, 0xd6, 0x20, 0x07 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fldw,mb -0x1000(sp), fr22R"
+  -
+    input:
+      bytes: [ 0x7b, 0xd6, 0x20, 0x02 ]
+      arch: "CS_ARCH_HPPA"
+      options: [ "CS_MODE_BIG_ENDIAN", "CS_MODE_HPPA_20" ]
+    expected:
+      insns:
+        -
+          asm_text: "fstw,ma fr22R, 0x1000(sp)"
