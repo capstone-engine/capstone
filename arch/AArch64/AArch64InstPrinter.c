@@ -617,7 +617,10 @@ void AArch64_printInst(MCInst *MI, SStream *O, void *Info)
 	if ((Opcode == AArch64_ORRXri || Opcode == AArch64_ORRWri) &&
 			(MCOperand_getReg(MCInst_getOperand(MI, 1)) == AArch64_XZR ||
 			 MCOperand_getReg(MCInst_getOperand(MI, 1)) == AArch64_WZR) &&
-			MCOperand_isImm(MCInst_getOperand(MI, 2))) {
+			MCOperand_isImm(MCInst_getOperand(MI, 2)) &&
+			!AArch64_AM_isAnyMOVWMovAlias(AArch64_AM_decodeLogicalImmediate(
+				MCOperand_getImm(MCInst_getOperand(MI, 2)), Opcode == AArch64_ORRXri ? 64 : 32),
+				Opcode == AArch64_ORRXri ? 64 : 32)) {
 		int RegWidth = Opcode == AArch64_ORRXri ? 64 : 32;
 		uint64_t Value = AArch64_AM_decodeLogicalImmediate(
 				MCOperand_getImm(MCInst_getOperand(MI, 2)), RegWidth);
