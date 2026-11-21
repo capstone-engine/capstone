@@ -646,10 +646,8 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				// ENTER imm16, imm8: both are unsigned
 				opsize = encsize = OpNo == 0 ? 2 : 1;
 				imm &= arch_masks[opsize];
-				if (imm > HEX_THRESHOLD)
-					SStream_concat(O, "$0x%"PRIx64, imm);
-				else
-					SStream_concat(O, "$%"PRIu64, imm);
+				SStream_concat0(O, "$");
+				printUInt64(O, imm);
 				break;
 
 			case X86_INS_LCALL:
