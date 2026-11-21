@@ -1761,7 +1761,7 @@ test_cases:
               -
                 type: X86_OP_IMM
                 imm: 0x1234
-                size: 4
+                size: 2
           regs_read: [ esp, eip ]
           regs_write: [ esp, eip ]
       -
@@ -7490,6 +7490,118 @@ test_cases:
                 type: X86_OP_IMM
                 imm: 0x48
                 size: 8
+  -
+    input:
+      # push has no previous operand, so the immediate size masks it
+      bytes: [ 0x6a, 0xff ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32, CS_OPT_UNSIGNED ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "push 0xffffffff"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: -0x1
+                size: 4
+  -
+    input:
+      bytes: [ 0x6a, 0xff ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_16, CS_OPT_UNSIGNED ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "push 0xffff"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: -0x1
+                size: 2
+  -
+    input:
+      bytes: [ 0x6a, 0xff ]
+      arch: "x86"
+      options: [ CS_MODE_32, CS_OPT_SYNTAX_MASM, CS_OPT_UNSIGNED ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "push 0ffffffffh"
+  -
+    input:
+      # ENTER takes an unsigned imm16 and imm8
+      bytes: [ 0xc8, 0xfe, 0xfe, 0xfe ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "enter 0xfefe, 0xfe"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0xfefe
+                size: 2
+              -
+                type: X86_OP_IMM
+                imm: 0xfe
+                size: 1
+  -
+    input:
+      bytes: [ 0xc8, 0xfe, 0xfe, 0xfe ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32, CS_OPT_SYNTAX_ATT ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "enter $0xfefe, $0xfe"
+        details:
+          x86:
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0xfefe
+                size: 2
+              -
+                type: X86_OP_IMM
+                imm: 0xfe
+                size: 1
+  -
+    input:
+      # the encoded immediate is the selector; the offset follows the operand size
+      bytes: [ 0x66, 0xea, 0x11, 0x22, 0x33, 0x44 ]
+      arch: "x86"
+      options: [ CS_OPT_DETAIL, CS_MODE_32 ]
+      address: 0x1000
+    expected:
+      insns:
+      -
+        asm_text: "ljmp 0x4433:0x2211"
+        details:
+          x86:
+            enc_imm_offset: 4
+            enc_imm_size: 2
+            operands:
+              -
+                type: X86_OP_IMM
+                imm: 0x4433
+                size: 2
+              -
+                type: X86_OP_IMM
+                imm: 0x2211
+                size: 2
   -
     input:
       # The size fixup must not overwrite the size printOperand derived from
