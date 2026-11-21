@@ -5,7 +5,7 @@ from autosync.PathVarHandler import PathVarHandler
 import lit.formats
 
 config.name = "Generate Capstone MC regression tests"
-config.test_format = lit.formats.ShTest(True)
+config.test_format = lit.formats.ShTest(execute_external=True)
 
 config.suffixes = [".txt", ".s"]
 
