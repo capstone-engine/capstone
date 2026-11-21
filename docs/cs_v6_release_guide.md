@@ -310,6 +310,10 @@ Nonetheless, we hope this additional information is useful to you.
 - MC68851 `PBcc`: Each of the 16 PMMU branch conditions has its own instruction ID and mnemonic. `insn.id` identifies the condition shown in the disassembly.
 - Expanded integration tests and refactored invalid assembly edge cases.
 
+**M680X**
+
+- Added new registers for `HCS12X`: `TMP1`, `TMP2H`, `TMP2L`, `TMP3H`, `TMP3L`, `CCRH`, `CCRW`, `XH`, `XL`, `YH`, `YL`, `SPH`, `SPL`. Add support for them in transfer/exchange instructions `TFR` and `EXG`.
+
 **UX**
 
 - Instruction alias (see below).
@@ -514,6 +518,11 @@ Such an instruction is ill-defined in LLVM and should be fixed upstream.
 | `M68K_FPU_SIZE_PACKED`                              | Identifies `.p` operands separately from `M68K_FPU_SIZE_EXTENDED`; both external formats occupy 12 bytes. | Allows consumers and printers to distinguish packed decimal from extended precision. |
 | Packed register-to-memory `FMOVE` operands          | A static immediate or dynamic data-register k-factor is exposed as the third detail operand. | Preserves the formatting operand encoded for packed-decimal output. |
 
+**M680X**
+
+| Keyword           | Change                                                                                                                                                | Justification                  |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| HCS12X Immediates |  `ADE{D,X,Y}`, `EOR{X,Y}`, `OR{X,Y}`, `SBE{D,X,Y}` now have `{D,X,Y}` register as first operand plus a 16-bit immediate. Now 2 instead of 1 operand.  | Register involvment was wrong. |
 
 ### Notes about AArch64, SystemZ, ARM and RISC-V renaming
 

@@ -20,9 +20,11 @@
 
 #ifndef CAPSTONE_DIET
 static const char s_reg_names[][10] = {
-	"<invalid>", "a",  "b",	 "e",  "f",   "0",    "d",    "w",
-	"cc",	     "dp", "md", "hx", "h",   "x",    "y",    "s",
-	"u",	     "v",  "q",	 "pc", "spc", "tmp2", "tmp3",
+	"<invalid>", "a",     "b",     "e",	"f",	"0",	"d",	"w",
+	"cc",	     "dp",    "md",    "hx",	"h",	"x",	"y",	"s",
+	"u",	     "v",     "q",     "pc",	"spc",	"tmp2", "tmp3", "tmp1",
+	"tmp2h",     "tmp2l", "tmp3h", "tmp3l", "ccrh", "ccrw", "xh",	"xl",
+	"yh",	     "yl",    "sph",   "spl",
 };
 
 static const char s_instruction_names[][6] = {
@@ -34,7 +36,7 @@ static const char s_instruction_names[][6] = {
 	"asr",	 "asra",  "asrb",  "asrd",  "asrw",  "asrx",  "asry",  "band",
 	"bcc",	 "bclr",  "bcs",   "beor",  "beq",   "bge",   "bgnd",  "bgt",
 	"bhcc",	 "bhcs",  "bhi",   "biand", "bieor", "bih",   "bil",   "bior",
-	"bit",	 "bita",  "bitb",  "bitx",  "bity",  "bitd",  "bitmd", "ble",
+	"bit",	 "bita",  "bitb",  "bitd",  "bitmd", "bitx",  "bity",  "ble",
 	"bls",	 "blt",	  "bmc",   "bmi",   "bms",   "bne",   "bor",   "bpl",
 	"brclr", "brset", "bra",   "brn",   "bset",  "bsr",   "btas",  "bvc",
 	"bvs",	 "call",  "cba",   "cbeq",  "cbeqa", "cbeqx", "clc",   "cli",

@@ -131,8 +131,8 @@ typedef struct inst_pageX {
 typedef struct insn_props {
 	unsigned group : 4;
 	unsigned access_mode : 5; // A value of type e_access_mode
-	unsigned reg0 : 5; // A value of type m680x_reg
-	unsigned reg1 : 5; // A value of type m680x_reg
+	unsigned reg0 : 6; // A value of type m680x_reg
+	unsigned reg1 : 6; // A value of type m680x_reg
 	bool cc_modified : 1;
 	bool update_reg_access : 1;
 } insn_props;
@@ -768,7 +768,8 @@ static bool is_tfr09_reg_valid(const m680x_info *info, uint8_t reg_nibble)
 static bool is_exg_tfr12_post_byte_valid(const m680x_info *info,
 					 uint8_t post_byte)
 {
-	return !(post_byte & 0x08);
+	// Post bytes with bit 3 set are only valid on the HCS12X
+	return !(post_byte & 0x08) || info->cpu_type == M680X_CPU_TYPE_HCS12X;
 }
 
 static bool is_tfm_reg_valid(const m680x_info *info, uint8_t reg_nibble)
@@ -852,6 +853,17 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 				size += 2;
 			break;
 
+		case index_hid:
+			// CALL [D,r] (postbyte 111rr111) and CALL [oprx16,r]
+			// (postbyte 111rr011) read the page from memory,
+			// so they have no page byte.
+			if (i == 1 && insn_description->hid[0] == idx12_hid &&
+			    read_byte(info, &ir, address) &&
+			    ((ir & 0xe7) == 0xe7 || (ir & 0xe7) == 0xe3))
+				break;
+
+			// intentionally fall through
+
 		case rel8_hid:
 		case dir_hid:
 		case rbits_hid:
@@ -860,7 +872,6 @@ static bool is_sufficient_code_size(const m680x_info *info, uint16_t address,
 		case idxXp_hid:
 		case idxY_hid:
 		case idxS_hid:
-		case index_hid:
 			if ((retval = read_byte(info, &ir, address + size)))
 				size++;
 			break;
@@ -1109,6 +1120,10 @@ static void set_operand_size(m680x_info *info, cs_m680x_op *op,
 		op->size = 2;
 	else if (info->insn == M680X_INS_EMACS)
 		op->size = 4;
+	else if (g_insn_props[info->insn].reg0 == M680X_REG_W &&
+		 !info->cpu->reg_byte_size[M680X_REG_W])
+		// HCS12X xxxW: 16-bit memory word (see m680x_disassemble)
+		op->size = 2;
 	else if ((m680x->op_count > 0) &&
 		 (m680x->operands[0].type == M680X_OP_REGISTER))
 		op->size = m680x->operands[0].size;
@@ -1207,7 +1222,105 @@ static void reg_reg12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 		M680X_REG_A, M680X_REG_B, M680X_REG_CC, M680X_REG_TMP2,
 		M680X_REG_D, M680X_REG_X, M680X_REG_Y,	M680X_REG_S,
 	};
+	// Registers for HCS12X post bytes with bit 3 set, indexed by
+	// post byte bits 6..4 (source) and bits 2..0 (destination).
+	// TFR and EXG use same registers. CCRL is M680X_REG_CC.
+	// See S12XCPU Reference Manual v02.05, Table A-5.
+	static const struct {
+		m680x_reg reg0;
+		m680x_reg reg1;
+	} g_tfr_exg12x_regs[8][8] = {
+		// MS 0 / 8: A
+		{
+			{ M680X_REG_A, M680X_REG_A },
+			{ M680X_REG_A, M680X_REG_B },
+			{ M680X_REG_A, M680X_REG_CCRH },
+			{ M680X_REG_A, M680X_REG_TMP2H },
+			{ M680X_REG_A, M680X_REG_D },
+			{ M680X_REG_A, M680X_REG_XH },
+			{ M680X_REG_A, M680X_REG_YH },
+			{ M680X_REG_A, M680X_REG_SPH },
+		},
+		// MS 1 / 9: B
+		{
+			{ M680X_REG_B, M680X_REG_A },
+			{ M680X_REG_B, M680X_REG_B },
+			{ M680X_REG_B, M680X_REG_CC },
+			{ M680X_REG_B, M680X_REG_TMP2L },
+			{ M680X_REG_B, M680X_REG_D },
+			{ M680X_REG_B, M680X_REG_XL },
+			{ M680X_REG_B, M680X_REG_YL },
+			{ M680X_REG_B, M680X_REG_SPL },
+		},
+		// MS 2 / A: CCR
+		{
+			{ M680X_REG_CCRH, M680X_REG_A },
+			{ M680X_REG_CC, M680X_REG_B },
+			{ M680X_REG_CCRW, M680X_REG_CCRW },
+			{ M680X_REG_CCRW, M680X_REG_TMP2 },
+			{ M680X_REG_CCRW, M680X_REG_D },
+			{ M680X_REG_CCRW, M680X_REG_X },
+			{ M680X_REG_CCRW, M680X_REG_Y },
+			{ M680X_REG_CCRW, M680X_REG_S },
+		},
+		// MS 3 / B: TMPx
+		{
+			{ M680X_REG_TMP3H, M680X_REG_A },
+			{ M680X_REG_TMP3L, M680X_REG_B },
+			{ M680X_REG_TMP3, M680X_REG_CCRW },
+			{ M680X_REG_TMP3, M680X_REG_TMP2 },
+			{ M680X_REG_TMP1, M680X_REG_D },
+			{ M680X_REG_TMP3, M680X_REG_X },
+			{ M680X_REG_TMP3, M680X_REG_Y },
+			{ M680X_REG_TMP3, M680X_REG_S },
+		},
+		// MS 4 / C: D
+		{
+			{ M680X_REG_D, M680X_REG_A },
+			{ M680X_REG_D, M680X_REG_B },
+			{ M680X_REG_D, M680X_REG_CCRW },
+			{ M680X_REG_D, M680X_REG_TMP1 },
+			{ M680X_REG_D, M680X_REG_D },
+			{ M680X_REG_D, M680X_REG_X },
+			{ M680X_REG_D, M680X_REG_Y },
+			{ M680X_REG_D, M680X_REG_S },
+		},
+		// MS 5 / D: X
+		{
+			{ M680X_REG_XH, M680X_REG_A },
+			{ M680X_REG_XL, M680X_REG_B },
+			{ M680X_REG_X, M680X_REG_CCRW },
+			{ M680X_REG_X, M680X_REG_TMP2 },
+			{ M680X_REG_X, M680X_REG_D },
+			{ M680X_REG_X, M680X_REG_X },
+			{ M680X_REG_X, M680X_REG_Y },
+			{ M680X_REG_X, M680X_REG_S },
+		},
+		// MS 6 / E: Y
+		{
+			{ M680X_REG_YH, M680X_REG_A },
+			{ M680X_REG_YL, M680X_REG_B },
+			{ M680X_REG_Y, M680X_REG_CCRW },
+			{ M680X_REG_Y, M680X_REG_TMP2 },
+			{ M680X_REG_Y, M680X_REG_D },
+			{ M680X_REG_Y, M680X_REG_X },
+			{ M680X_REG_Y, M680X_REG_Y },
+			{ M680X_REG_Y, M680X_REG_S },
+		},
+		// MS 7 / F: SP
+		{
+			{ M680X_REG_SPH, M680X_REG_A },
+			{ M680X_REG_SPL, M680X_REG_B },
+			{ M680X_REG_S, M680X_REG_CCRW },
+			{ M680X_REG_S, M680X_REG_TMP2 },
+			{ M680X_REG_S, M680X_REG_D },
+			{ M680X_REG_S, M680X_REG_X },
+			{ M680X_REG_S, M680X_REG_Y },
+			{ M680X_REG_S, M680X_REG_S },
+		},
+	};
 	uint8_t regs = 0;
+	m680x_reg reg0, reg1;
 
 	read_byte(info, &regs, (*address)++);
 
@@ -1218,8 +1331,18 @@ static void reg_reg12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 	else
 		info->insn = M680X_INS_TFR;
 
-	add_reg_operand(info, g_tfr_exg12_reg0_ids[(regs >> 4) & 0x07]);
-	add_reg_operand(info, g_tfr_exg12_reg1_ids[regs & 0x07]);
+	// Bit 3 set is only valid on the HCS12X,
+	// see is_exg_tfr12_post_byte_valid().
+	if (regs & 0x08) {
+		reg0 = g_tfr_exg12x_regs[(regs >> 4) & 0x07][regs & 0x07].reg0;
+		reg1 = g_tfr_exg12x_regs[(regs >> 4) & 0x07][regs & 0x07].reg1;
+	} else {
+		reg0 = g_tfr_exg12_reg0_ids[(regs >> 4) & 0x07];
+		reg1 = g_tfr_exg12_reg1_ids[regs & 0x07];
+	}
+
+	add_reg_operand(info, reg0);
+	add_reg_operand(info, reg1);
 }
 
 static void add_rel_operand(m680x_info *info, int16_t offset, uint16_t address)
@@ -1545,7 +1668,17 @@ static void indexed12_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 static void index_hdlr(MCInst *MI, m680x_info *info, uint16_t *address)
 {
 	cs_m680x *m680x = &info->m680x;
-	cs_m680x_op *op = &m680x->operands[m680x->op_count++];
+	cs_m680x_op *op;
+
+	// CALL [D,r] and CALL [oprx16,r] read the page from memory,
+	// so they have no page byte.
+	if (info->insn == M680X_INS_CALL && m680x->op_count > 0 &&
+	    m680x->operands[m680x->op_count - 1].type == M680X_OP_INDEXED &&
+	    (m680x->operands[m680x->op_count - 1].idx.flags &
+	     M680X_IDX_INDIRECT))
+		return;
+
+	op = &m680x->operands[m680x->op_count++];
 
 	op->type = M680X_OP_CONSTANT;
 	read_byte(info, &op->const_val, (*address)++);
@@ -1915,6 +2048,12 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 
 		reg = g_insn_props[info->insn].reg0;
 
+		// The HD6309 xxxW instructions operate on register W. On the
+		// HCS12X (no register W) they operate on a 16-bit memory
+		// word, which then gets the access of the register operand.
+		if (reg == M680X_REG_W && !info->cpu->reg_byte_size[reg])
+			reg = M680X_REG_INVALID;
+
 		if (reg != M680X_REG_INVALID) {
 			if (reg == M680X_REG_HX &&
 			    (!info->cpu->reg_byte_size[reg]))
@@ -1976,54 +2115,74 @@ static unsigned int m680x_disassemble(MCInst *MI, m680x_info *info,
 // Tables to get the byte size of a register on the CPU
 // based on an enum m680x_reg value defined in m680x.h
 // Invalid registers return 0.
-static const uint8_t g_m6800_reg_byte_size[23] = {
+static const uint8_t g_m6800_reg_byte_size[36] = {
 	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
-	0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0
+	0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0,
+	// T1 T2H T2L T3H T3L CCRH CCRW XH XL YH YL SPH SPL
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const uint8_t g_m6805_reg_byte_size[23] = {
+static const uint8_t g_m6805_reg_byte_size[36] = {
 	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
-	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0
+	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0,
+	// T1 T2H T2L T3H T3L CCRH CCRW XH XL YH YL SPH SPL
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const uint8_t g_m6808_reg_byte_size[23] = {
+static const uint8_t g_m6808_reg_byte_size[36] = {
 	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
-	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0
+	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0,
+	// T1 T2H T2L T3H T3L CCRH CCRW XH XL YH YL SPH SPL
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const uint8_t g_m6801_reg_byte_size[23] = {
+static const uint8_t g_m6801_reg_byte_size[36] = {
 	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0,
+	// T1 T2H T2L T3H T3L CCRH CCRW XH XL YH YL SPH SPL
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const uint8_t g_m6811_reg_byte_size[23] = {
+static const uint8_t g_m6811_reg_byte_size[36] = {
 	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 0, 0
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 0, 0,
+	// T1 T2H T2L T3H T3L CCRH CCRW XH XL YH YL SPH SPL
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const uint8_t g_cpu12_reg_byte_size[23] = {
+static const uint8_t g_cpu12_reg_byte_size[36] = {
 	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 2, 2
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 2, 2,
+	// T1 T2H T2L T3H T3L CCRH CCRW XH XL YH YL SPH SPL
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const uint8_t g_m6809_reg_byte_size[23] = {
+static const uint8_t g_m6809_reg_byte_size[36] = {
 	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 2, 0, 0, 0
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 1, 0, 0, 0, 2, 2, 2, 2, 0, 0, 2, 0, 0, 0,
+	// T1 T2H T2L T3H T3L CCRH CCRW XH XL YH YL SPH SPL
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const uint8_t g_hd6309_reg_byte_size[23] = {
+static const uint8_t g_hd6309_reg_byte_size[36] = {
 	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
-	0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 4, 2, 0, 0, 0
+	0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 2, 2, 2, 2, 2, 4, 2, 0, 0, 0,
+	// T1 T2H T2L T3H T3L CCRH CCRW XH XL YH YL SPH SPL
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const uint8_t g_rs08_reg_byte_size[23] = {
+static const uint8_t g_rs08_reg_byte_size[36] = {
 	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
-	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2, 2, 0, 0
+	0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0, 2, 0, 0, 0, 2, 2, 0, 0,
+	// T1 T2H T2L T3H T3L CCRH CCRW XH XL YH YL SPH SPL
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-static const uint8_t g_hcs12x_reg_byte_size[23] = {
+static const uint8_t g_hcs12x_reg_byte_size[36] = {
 	// A  B  E  F  0  D  W  CC DP MD HX H  X  Y  S  U  V  Q  PC SPC T2 T3
-	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 2, 2
+	0, 1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 0, 2, 2,
+	// T1 T2H T2L T3H T3L CCRH CCRW XH XL YH YL SPH SPL
+	2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1
 };
 
 // Table to check for a valid register nibble on the M6809 CPU
