@@ -1,6 +1,7 @@
 # Capstone Python bindings, by Nguyen Anh Quynnh <aquynh@gmail.com>
 
 import ctypes
+from collections.abc import Sequence
 
 from . import copy_ctypes_list
 from .riscv_const import *
@@ -8,6 +9,8 @@ from .riscv_const import *
 
 # define the API
 class RISCVOpMem(ctypes.Structure):
+    base: int
+    disp: int
     _fields_ = (
         ("base", ctypes.c_uint),
         ("disp", ctypes.c_int64),
@@ -15,6 +18,11 @@ class RISCVOpMem(ctypes.Structure):
 
 
 class RISCVOpValue(ctypes.Union):
+    reg: int
+    imm: int
+    dimm: float
+    mem: RISCVOpMem
+    csr: int
     _fields_ = (
         ("reg", ctypes.c_uint),
         ("imm", ctypes.c_int64),
@@ -25,6 +33,9 @@ class RISCVOpValue(ctypes.Union):
 
 
 class RISCVOp(ctypes.Structure):
+    type: int
+    value: RISCVOpValue
+    access: int
     _fields_ = (
         ("type", ctypes.c_uint),
         ("value", RISCVOpValue),
@@ -53,6 +64,10 @@ class RISCVOp(ctypes.Structure):
 
 
 class CsRISCV(ctypes.Structure):
+    need_effective_addr: bool
+    op_count: int
+    operands: Sequence[RISCVOp]
+    rounding_mode: int
     _fields_ = (
         ("need_effective_addr", ctypes.c_bool),
         ("op_count", ctypes.c_uint8),

@@ -1,0 +1,35 @@
+name: check python bindings
+
+on:
+  push:
+    paths:
+      - "bindings/python/**"
+      - ".github/workflows/python-lint.yml"
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: bindings/python
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Install Black
+        run: python -m pip install black
+
+      - name: Check formatting
+        run: python -m black --check --extend-exclude '_const\.py$' capstone type_hints.py
+
+      - name: Check annotations
+        run: python type_hints.py
