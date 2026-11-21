@@ -1,0 +1,15 @@
+# Keep RISCV_INS_C_SLLI_HINT in the generated instruction enum block after
+# ASUpdater has rewritten the header from the unpatched enum .inc file.
+# See 01_c_slli_hint_id.patch and issue #3131.
+diff --git a/include/capstone/riscv.h b/include/capstone/riscv.h
+index 696e84d5..a3669c0b 100644
+--- a/include/capstone/riscv.h
++++ b/include/capstone/riscv.h
+@@ -2646,6 +2646,7 @@ typedef enum riscv_insn {
+ 	RISCV_INS_XPERM4,
+ 	RISCV_INS_XPERM8,
+ 	RISCV_INS_ZIP,
++	RISCV_INS_C_SLLI_HINT,
+ 
+ 	// clang-format on
+ 	// generated content <RISCVGenCSInsnEnum.inc> end
