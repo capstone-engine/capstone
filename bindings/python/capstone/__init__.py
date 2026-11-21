@@ -1547,14 +1547,6 @@ class Cs(object):
             self.csh = None
             raise CsError(status)
 
-        try:
-            from . import ccapstone
-
-            # rewire disasm to use the faster version
-            setattr(self, "disasm", ccapstone.Cs(self).disasm)
-        except:
-            pass
-
         if arch == CS_ARCH_X86:
             # Intel syntax is default for X86
             self._syntax = CS_OPT_SYNTAX_INTEL
@@ -1879,15 +1871,6 @@ class Cs(object):
 
 # print out debugging info
 def debug():
-    # is Cython there?
-    try:
-        from . import ccapstone
-
-        return ccapstone.debug()
-    except:
-        # no Cython, fallback to Python code below
-        pass
-
     if cs_support(CS_SUPPORT_DIET):
         diet = "diet"
     else:
