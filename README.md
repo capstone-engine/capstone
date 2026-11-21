@@ -11,6 +11,17 @@ Capstone Engine
 > Capstone v5 will soon be deprecated. Please migrate to Capstone v6 Beta.
 > You can find details about migration in our release guide:
 > https://github.com/capstone-engine/capstone/blob/next/docs/cs_v6_release_guide.md
+>
+> Silence the warning
+>
+> **C**
+> - Configure the Capstone build with `-DCAPSTONE_NO_DEPRECATION_WARNING=1`
+> - Set the env variable `CAPSTONE_NO_DEPRECATION_WARNING=1`
+>
+> **Python**
+> - Set the env variable `PYTHONWARNINGS="ignore::DeprecationWarning:capstone"`.
+> - Add `-W ignore::DeprecationWarning:capstone` to Python cli.
+> - Add `warnings.filterwarnings("ignore", category=DeprecationWarning, module="capstone")` in code.
 
 Capstone is a disassembly framework with the target of becoming the ultimate
 disasm engine for binary analysis and reversing in the security community.
