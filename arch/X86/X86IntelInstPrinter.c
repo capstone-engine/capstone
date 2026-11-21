@@ -237,7 +237,6 @@ static void printf64mem(MCInst *MI, unsigned OpNo, SStream *O)
 				MI->x86opsize = 8;
 				break;
 			case X86_MOVPQI2QImr:
-			case X86_COMISDrm:
 				SStream_concat0(O, "xmmword ptr ");
 				MI->x86opsize = 16;
 				break;
@@ -839,7 +838,12 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 		// printf(">>> id = %u\n", MI->flat_insn->id);
 		switch(MI->flat_insn->id) {
 			default:
-				printImm(MI, O, imm, MI->csh->imm_unsigned);
+				// mask by the immediate size like the AT&T printer does:
+				// "push -1" has no previous operand to size it
+				if (MI->csh->imm_unsigned && imm < 0 && (opsize == 2 || opsize == 4))
+					printImm(MI, O, imm & arch_masks[opsize], true);
+				else
+					printImm(MI, O, imm, MI->csh->imm_unsigned);
 				break;
 
 			case X86_INS_MOVABS:
@@ -856,6 +860,13 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				printImm(MI, O, imm, true);
 				break;
 
+			case X86_INS_ENTER:
+				// ENTER imm16, imm8: both are unsigned
+				opsize = encsize = OpNo == 0 ? 2 : 1;
+				imm &= arch_masks[opsize];
+				printImm(MI, O, imm, true);
+				break;
+
 			case X86_INS_LCALL:
 			case X86_INS_LJMP:
 			case X86_INS_JMP:
@@ -864,7 +875,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					imm = imm & 0xffff;
 					opsize = 2;
 				} else
-					opsize = 4;
+					opsize = MI->imm_size;
+				// the encoded immediate is the selector, read last
+				encsize = 2;
 				printImm(MI, O, imm, true);
 				break;
 

@@ -642,6 +642,14 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 				}
 				break;
 
+			case X86_INS_ENTER:
+				// ENTER imm16, imm8: both are unsigned
+				opsize = encsize = OpNo == 0 ? 2 : 1;
+				imm &= arch_masks[opsize];
+				SStream_concat0(O, "$");
+				printUInt64(O, imm);
+				break;
+
 			case X86_INS_LCALL:
 			case X86_INS_LJMP:
 			case X86_INS_JMP:
@@ -650,7 +658,9 @@ static void printOperand(MCInst *MI, unsigned OpNo, SStream *O)
 					imm = imm & 0xffff;
 					opsize = 2;
 				} else
-					opsize = 4;
+					opsize = MI->imm_size;
+				// the encoded immediate is the selector, read last
+				encsize = 2;
 				SStream_concat(O, "$0x%"PRIx64, imm);
 				break;
 
@@ -863,7 +873,8 @@ void X86_ATT_printInst(MCInst *MI, SStream *OS, void *info)
 	if (MI->has_imm) {
 		// if op_count > 1, then this operand's size is taken from the destination op
 		if (MI->flat_insn->detail->x86.op_count > 1) {
-			if (MI->flat_insn->id != X86_INS_LCALL && MI->flat_insn->id != X86_INS_LJMP && MI->flat_insn->id != X86_INS_JMP) {
+			if (MI->flat_insn->id != X86_INS_LCALL && MI->flat_insn->id != X86_INS_LJMP && MI->flat_insn->id != X86_INS_JMP &&
+					MI->flat_insn->id != X86_INS_ENTER) {
 				for (i = 0; i < MI->flat_insn->detail->x86.op_count; i++) {
 					if (MI->flat_insn->detail->x86.operands[i].type == X86_OP_IMM)
 						MI->flat_insn->detail->x86.operands[i].size =

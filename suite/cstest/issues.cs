@@ -403,9 +403,9 @@
 !# CS_ARCH_X86, CS_MODE_32, None
 0xf0,0x12,0x45,0x08 == lock adc al, byte ptr [ebp + 8]
 
-!# issue 1456 xmmword
+!# issue 1456/2748 xmmword
 !# CS_ARCH_X86, CS_MODE_32, None
-0x66,0x0f,0x2f,0x00 == comisd xmm0, xmmword ptr [eax]
+0x66,0x0f,0x2f,0x00 == comisd xmm0, qword ptr [eax]
 
 !# issue 1456 ARM printPKHASRShiftImm
 !# CS_ARCH_ARM, CS_MODE_THUMB, None
@@ -622,6 +622,86 @@
 !# issue x64att unsigned
 !# CS_ARCH_X86, CS_MODE_64, CS_OPT_SYNTAX_ATT | CS_OPT_UNSIGNED
 0x66,0x83,0xc0,0x80 == addw $0xff80, %ax
+
+!# issue x32 unsigned push
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_UNSIGNED | CS_OPT_DETAIL
+0x6a,0xff == push 0xffffffff ; operands[0].type: IMM = 0xffffffffffffffff ; operands[0].size: 4
+
+!# issue x16 unsigned push
+!# CS_ARCH_X86, CS_MODE_16, CS_OPT_UNSIGNED | CS_OPT_DETAIL
+0x6a,0xff == push 0xffff ; operands[0].type: IMM = 0xffffffffffffffff ; operands[0].size: 2
+
+!# issue x32masm unsigned push
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_MASM | CS_OPT_UNSIGNED
+0x6a,0xff == push 0ffffffffh
+
+!# issue x32 enter unsigned
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0xc8,0xfe,0xfe,0xfe == enter 0xfefe, 0xfe ; operands[0].type: IMM = 0xfefe ; operands[0].size: 2 ; operands[1].type: IMM = 0xfe ; operands[1].size: 1
+
+!# issue x32att enter unsigned
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_SYNTAX_ATT | CS_OPT_DETAIL
+0xc8,0xfe,0xfe,0xfe == enter $0xfefe, $0xfe ; operands[0].type: IMM = 0xfefe ; operands[0].size: 2 ; operands[1].type: IMM = 0xfe ; operands[1].size: 1
+
+!# issue x16 mandatory 66 prefix of comisd
+!# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
+0x66,0x0f,0x2f,0x00 == comisd xmm0, qword ptr [bx + si] ; operands[1].type: MEM ; operands[1].size: 8
+
+!# issue x16 mandatory 66 prefix of cmppd
+!# CS_ARCH_X86, CS_MODE_16, None
+0x66,0x0f,0xc2,0xc0,0x00 == cmpeqpd xmm0, xmm0
+
+!# issue x16 66 prefix selects the xmm pxor
+!# CS_ARCH_X86, CS_MODE_16, None
+0x66,0x0f,0xef,0xc0 == pxor xmm0, xmm0
+
+!# issue x16 66 prefix is the data size override of bswap
+!# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
+0x66,0x0f,0xc8 == bswap eax ; operands[0].type: REG = eax ; operands[0].size: 4 ; operands[0].access: READ | WRITE
+
+!# issue x16 lcall offset follows the operand size
+!# CS_ARCH_X86, CS_MODE_16, CS_OPT_DETAIL
+0x9a,0x34,0x12,0x78,0x56 == lcall 0x5678, 0x1234 ; operands[0].size: 2 ; operands[1].size: 2
+
+!# issue x32 ljmp offset follows the operand size
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0x66,0xea,0x11,0x22,0x33,0x44 == ljmp 0x4433:0x2211 ; operands[0].size: 2 ; operands[1].size: 2
+
+!# issue x16 F3 is the mandatory prefix of ptwrite
+!# CS_ARCH_X86, CS_MODE_16, None
+0xf3,0x0f,0xae,0x20 == ptwrite dword ptr [bx + si]
+
+!# issue x32 reserved hint NOP 0F 1C /1
+!# CS_ARCH_X86, CS_MODE_32, CS_OPT_DETAIL
+0x0f,0x1c,0x08 == nop dword ptr [eax] ; operands[0].type: MEM ; operands[0].size: 4
+
+!# issue x32 reserved hint NOP register form
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x18,0xc0 == nop eax
+
+!# issue x16 reserved hint NOP takes 16-bit operands
+!# CS_ARCH_X86, CS_MODE_16, None
+0x0f,0x18,0x20 == nop word ptr [bx + si]
+
+!# issue x16 cldemote takes no 66 prefix
+!# CS_ARCH_X86, CS_MODE_16, None
+0x66,0x0f,0x1c,0x00 == nop dword ptr [bx + si]
+
+!# issue x32 cldemote takes no F3 prefix
+!# CS_ARCH_X86, CS_MODE_32, None
+0xf3,0x0f,0x1c,0x00 == nop dword ptr [eax]
+
+!# issue x32 cldemote without prefixes
+!# CS_ARCH_X86, CS_MODE_32, None
+0x0f,0x1c,0x00 == cldemote byte ptr [eax]
+
+!# issue x16 an ignored F3 prefix keeps 16-bit operands
+!# CS_ARCH_X86, CS_MODE_16, None
+0xf3,0x0f,0x40,0x00 == cmovo ax, word ptr [bx + si]
+
+!# issue x64 REX.W reserved hint NOP
+!# CS_ARCH_X86, CS_MODE_64, None
+0x48,0x0f,0x1d,0x00 == nop qword ptr [rax]
 
 !# issue 1323
 !# CS_ARCH_ARM, CS_MODE_THUMB, CS_OPT_DETAIL

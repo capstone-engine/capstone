@@ -890,6 +890,28 @@ static int readOpcode(struct InternalInstruction* insn)
 #endif
 
 /*
+ * isReservedNop - Determines whether an instruction of 0F 18-1E is a reserved
+ *   hint NOP: undefined, a NOP of its own or cldemote, which takes no 66, F2
+ *   or F3 prefix.
+ *
+ * @param id - The instruction ID decoded from the tables
+ */
+static bool isReservedNop(const struct InternalInstruction *insn, uint16_t id)
+{
+	unsigned int i;
+
+	if (insn->opcodeType != TWOBYTE || insn->opcode < 0x18 ||
+			insn->opcode > 0x1e || insn->vectorExtensionType != TYPE_NO_VEX_XOP)
+		return false;
+	if (!id)
+		return true;
+	if (id == X86_CLDEMOTE)
+		return insn->hasOpSize || insn->repeatPrefix;
+	i = find_insn(id);
+	return i != -1 && insns[i].mapid == X86_INS_NOP;
+}
+
+/*
  * getIDWithAttrMask - Determines the ID of an instruction, consuming
  *   the ModR/M byte as appropriate for extended and escape opcodes,
  *   and using a supplied attribute mask.
@@ -928,6 +950,13 @@ static int getIDWithAttrMask(uint16_t *instructionID,
 				0);
 	}
 
+	// decode them like the NOP 0F 1F to size them in 16-bit mode too
+	if (isReservedNop(insn, *instructionID)) {
+		if (readModRM(insn))
+			return -1;
+		*instructionID = decode(TWOBYTE, instructionClass, 0x1f, insn->modRM);
+	}
+
 	return 0;
 }
 
@@ -948,6 +977,43 @@ static bool is16BitEquivalent(unsigned orig, unsigned equiv)
 			if (x86_16_bit_eq_tbl[i].second == equiv)
 				return true;
 		}
+	}
+
+	return false;
+}
+
+/*
+ * isMandatoryOpSize16 - Determines whether 0x66 in 16-bit mode is the
+ * mandatory prefix of another instruction (comisd) instead of an operand size
+ * override. F2/F3 take precedence as mandatory prefixes.
+ *
+ * @param id         - The instruction ID decoded without ATTR_OPSIZE
+ * @param withOpSize - The instruction ID decoded with ATTR_OPSIZE
+ */
+static bool isMandatoryOpSize16(const struct InternalInstruction *insn,
+		uint16_t attrMask, uint16_t id, uint16_t withOpSize)
+{
+	const struct OperandSpecifier *ops, *opsWithOpSize;
+	unsigned int i, j;
+
+	if (insn->mode != MODE_16BIT || !insn->hasOpSize ||
+			insn->opcodeType == ONEBYTE || (attrMask & (ATTR_XS | ATTR_XD)))
+		return false;
+
+	i = find_insn(id);
+	j = find_insn(withOpSize);
+	if (i == -1 || j == -1 || insns[i].mapid != insns[j].mapid)
+		return true;
+
+	// with the same mnemonic only the operand size may differ (bswap),
+	// unless it is an SSE instruction (cmppd) or the register class
+	// changes (pshufb mm/xmm)
+	ops = x86OperandSets[specifierForUID(id)->operands];
+	opsWithOpSize = x86OperandSets[specifierForUID(withOpSize)->operands];
+	for (i = 0; i < X86_MAX_OPERANDS; i++) {
+		if (ops[i].type != opsWithOpSize[i].type ||
+				ops[i].type == TYPE_XMM || ops[i].type == TYPE_MM64)
+			return true;
 	}
 
 	return false;
@@ -1215,6 +1281,18 @@ static int getID(struct InternalInstruction *insn)
 			return -1;
 		}
 
+		// the address size only selects a variant (umonitor): it must
+		// neither make an invalid encoding valid (66 0F AE /4 is no
+		// xsave) nor drop one without such variant (16-bit ptwrite)
+		if (attrMask & ATTR_ADSIZE) {
+			uint16_t instructionIDWithoutAdSize;
+
+			if (getIDWithAttrMask(&instructionIDWithoutAdSize, insn, attrMask & ~ATTR_ADSIZE))
+				return -1;
+			if (!instructionIDWithoutAdSize || !instructionID)
+				instructionID = instructionIDWithoutAdSize;
+		}
+
 		insn->instructionID = instructionID;
 		insn->spec = specifierForUID(instructionID);
 
@@ -1251,8 +1329,15 @@ static int getID(struct InternalInstruction *insn)
 			return 0;
 		}
 
-		if (is16BitEquivalent(instructionID, instructionIDWithOpsize) &&
-				(insn->mode == MODE_16BIT) ^ insn->hasOpSize) {
+		// F2/F3 only ignored (rep nop): size it without them
+		if (!instructionIDWithOpsize && (attrMask & (ATTR_XS | ATTR_XD)) &&
+				getIDWithAttrMask(&instructionIDWithOpsize, insn,
+					(attrMask & ~(ATTR_XS | ATTR_XD)) | ATTR_OPSIZE))
+			instructionIDWithOpsize = 0;
+
+		if (is16BitEquivalent(instructionID, instructionIDWithOpsize) ?
+				(insn->mode == MODE_16BIT) ^ insn->hasOpSize :
+				isMandatoryOpSize16(insn, attrMask, instructionID, instructionIDWithOpsize)) {
 			insn->instructionID = instructionIDWithOpsize;
 			insn->spec = specifierForUID(instructionIDWithOpsize);
 		} else {
