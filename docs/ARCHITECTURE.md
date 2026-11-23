@@ -21,6 +21,14 @@ It uses:
 - Handwritten disassembler logic for decoding instruction operands
 and controlling the decoding procedure.
 
+> [!TIP]
+> It is recommended that you check out our description of how exactly the instruction decoder
+> (which maps bytes to instructions) is generated for LLVM.
+> This will give you an understanding of how the actual disassembly works.
+>
+> See https://github.com/capstone-engine/llvm-capstone/blob/auto-sync/llvm/utils/TableGen/DecoderEmitter.md
+> for a description.
+
 ### Component 2 - Mapping logic
 
 The mapping component has three different task:
