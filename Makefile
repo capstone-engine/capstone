@@ -425,6 +425,9 @@ PKGCFGF = $(BLDIR)/$(LIBNAME).pc
 .PHONY: all clean install uninstall dist
 
 all: $(LIBRARY) $(ARCHIVE) $(PKGCFGF)
+ifeq (,$(findstring yes,$(CAPSTONE_NO_DEPRECATION_WARNING)))
+	@echo "WARNING: Capstone v5 will soon be deprecated. Please migrate to Capstone v6 Beta. You can find details about migration in our release guide."
+endif
 ifeq (,$(findstring yes,$(CAPSTONE_BUILD_CORE_ONLY)))
 	@V=$(V) CC=$(CC) $(MAKE) -C cstool
 ifndef BUILDDIR

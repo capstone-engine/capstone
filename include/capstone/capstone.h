@@ -50,6 +50,16 @@ extern "C" {
 #define CS_API_MAJOR 5
 #define CS_API_MINOR 0
 
+// Capstone v5 will soon be deprecated. Define CAPSTONE_NO_DEPRECATION_WARNING to
+// silence the compile-time notice below.
+#ifndef CAPSTONE_NO_DEPRECATION_WARNING
+#if defined(_MSC_VER) && !defined(__clang__)
+#pragma message("Capstone v5 will soon be deprecated. Please migrate to Capstone v6 Beta. You can find details about migration in our release guide.")
+#elif defined(__GNUC__) || defined(__clang__) || defined(__IBMC__)
+#warning "Capstone v5 will soon be deprecated. Please migrate to Capstone v6 Beta. You can find details about migration in our release guide."
+#endif
+#endif
+
 // Version for bleeding edge code of the Github's "next" branch.
 // Use this if you want the absolutely latest development code.
 // This version number will be bumped up whenever we have a new major change.
