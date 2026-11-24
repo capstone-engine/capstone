@@ -2106,6 +2106,12 @@ static int readOperands(struct InternalInstruction *insn)
 	int sawRegImm = 0;
 	int i;
 
+#ifndef CAPSTONE_X86_REDUCE
+	/* Both EVEX VMOVQ stores use 8-byte compressed displacement scaling. */
+	if (insn->instructionID == X86_VMOVPQIto64Zmr)
+		insn->spec = specifierForUID(X86_VMOVPQI2QIZmr);
+#endif
+
 	/* If non-zero vvvv specified, need to make sure one of the operands
 	   uses it. */
 	hasVVVV = !readVVVV(insn);

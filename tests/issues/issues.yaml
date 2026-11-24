@@ -9062,3 +9062,52 @@ test_cases:
       options: [ CS_MODE_64 ]
     expected:
       insns: []
+  -
+    input:
+      name: "issue 1771: EVEX VMOVQ displacement scaling"
+      bytes: [ 0x62, 0xc1, 0xfd, 0x08, 0x7e, 0x6c, 0xaa, 0x20, 0x62, 0xc1, 0xfd, 0x08, 0x7e, 0x6c, 0xaa, 0xe0, 0x62, 0xc1, 0xfd, 0x08, 0x7e, 0xac, 0xaa, 0x00, 0x01, 0x00, 0x00 ]
+      arch: "CS_ARCH_X86"
+      options: [ CS_MODE_64, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "vmovq qword ptr [r10 + rbp*4 + 0x100], xmm21"
+        size: 8
+        details:
+          x86:
+            disp: 0x100
+            enc_disp_offset: 7
+            enc_disp_size: 1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_base: r10
+                mem_index: rbp
+                mem_scale: 4
+                mem_disp: 0x100
+                size: 8
+              -
+                type: X86_OP_REG
+                reg: xmm21
+      -
+        asm_text: "vmovq qword ptr [r10 + rbp*4 - 0x100], xmm21"
+        size: 8
+        details:
+          x86:
+            disp: -0x100
+            enc_disp_offset: 7
+            enc_disp_size: 1
+            operands:
+              -
+                type: X86_OP_MEM
+                mem_disp: -0x100
+              -
+                type: X86_OP_REG
+      -
+        asm_text: "vmovq qword ptr [r10 + rbp*4 + 0x100], xmm21"
+        size: 11
+        details:
+          x86:
+            disp: 0x100
+            enc_disp_offset: 7
+            enc_disp_size: 4
