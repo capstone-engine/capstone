@@ -403,9 +403,9 @@
 !# CS_ARCH_X86, CS_MODE_32, None
 0xf0,0x12,0x45,0x08 == lock adc al, byte ptr [ebp + 8]
 
-!# issue 1456 xmmword
+!# issue 1456/2748 xmmword
 !# CS_ARCH_X86, CS_MODE_32, None
-0x66,0x0f,0x2f,0x00 == comisd xmm0, xmmword ptr [eax]
+0x66,0x0f,0x2f,0x00 == comisd xmm0, qword ptr [eax]
 
 !# issue 1456 ARM printPKHASRShiftImm
 !# CS_ARCH_ARM, CS_MODE_THUMB, None
