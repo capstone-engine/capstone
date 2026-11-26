@@ -1241,6 +1241,10 @@ def test_expected_m68k(actual: CsInsn, expected: dict) -> bool:
                 return False
             if not compare_uint8(aop.mem.offset, eop["mem"].get("offset"), "offset"):
                 return False
+            if not compare_uint8(
+                aop.mem.pc_offset, eop["mem"].get("pc_offset"), "pc_offset"
+            ):
+                return False
             if not compare_uint64(
                 aop.mem.address, eop["mem"].get("address"), "address"
             ):

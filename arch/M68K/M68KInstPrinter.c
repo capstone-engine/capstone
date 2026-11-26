@@ -384,10 +384,19 @@ static void printImmediate(SStream *O, const cs_m68k *inst,
 	SStream_concat(O, "#$%" PRIx64, op->imm);
 }
 
-static void printIndex8BitDisp(SStream *O, uint32_t pc, const cs_m68k_op *op)
+/* The detail holds encoded displacements. PC-relative EAs are printed as
+ * absolute targets: their PC is the address of the first extension word, and
+ * a suppressed PC (ZPC) is zero (M68000PM/AD Rev. 1, 2.2.11-2.2.15). */
+static uint32_t pcRelativeBase(const m68k_info *info, const cs_m68k_op *op)
+{
+	return op->mem.pc_offset ? info->pc + op->mem.pc_offset : 0;
+}
+
+static void printIndex8BitDisp(SStream *O, uint32_t pc_base,
+			       const cs_m68k_op *op)
 {
 	if (op->address_mode == M68K_AM_PCI_INDEX_8_BIT_DISP) {
-		SStream_concat(O, "$%" PRIx32 "(pc,%s", pc + 2 + op->mem.disp,
+		SStream_concat(O, "$%" PRIx32 "(pc,%s", pc_base + op->mem.disp,
 			       s_spacing);
 	} else {
 		SStream_concat(O, "%s$%" PRIx16 "(%s,%s",
@@ -399,7 +408,7 @@ static void printIndex8BitDisp(SStream *O, uint32_t pc, const cs_m68k_op *op)
 	SStream_concat0(O, ")");
 }
 
-static void printRegAddrMode(SStream *O, uint32_t pc, const cs_m68k_op *op)
+static void printRegAddrMode(SStream *O, uint32_t pc_base, const cs_m68k_op *op)
 {
 	m68k_reg base_reg = op->type == M68K_OP_MEM ? op->mem.base_reg :
 						      op->reg;
@@ -426,19 +435,19 @@ static void printRegAddrMode(SStream *O, uint32_t pc, const cs_m68k_op *op)
 			       (base_reg - M68K_REG_A0));
 		break;
 	case M68K_AM_PCI_DISP:
-		SStream_concat(O, "$%" PRIx32 "(pc)", pc + 2 + op->mem.disp);
+		SStream_concat(O, "$%" PRIx32 "(pc)", pc_base + op->mem.disp);
 		break;
 	default:
 		break;
 	}
 }
 
-static void printBaseDisp(SStream *O, uint32_t pc, const cs_m68k_op *op)
+static void printBaseDisp(SStream *O, uint32_t pc_base, const cs_m68k_op *op)
 {
 	int is_pc = (op->address_mode == M68K_AM_PCI_INDEX_BASE_DISP);
 
 	if (is_pc) {
-		SStream_concat(O, "$%" PRIx32, pc + 2 + op->mem.in_disp);
+		SStream_concat(O, "$%" PRIx32, pc_base + op->mem.in_disp);
 	} else if (op->mem.in_disp != 0) {
 		SStream_concat(O, "%s$%" PRIx32,
 			       op->mem.in_disp >= 0 ? "" : "-",
@@ -447,11 +456,11 @@ static void printBaseDisp(SStream *O, uint32_t pc, const cs_m68k_op *op)
 
 	SStream_concat0(O, "(");
 
-	if (is_pc) {
-		SStream_concat0(O, "pc");
-	} else if (op->mem.base_reg != M68K_REG_INVALID) {
-		SStream_concat(O, "a%" PRId32, op->mem.base_reg - M68K_REG_A0);
-	}
+	/* pc or an; zpc for a suppressed PC, nothing for a suppressed an */
+	if (op->mem.base_reg != M68K_REG_INVALID)
+		SStream_concat0(O, getRegName(op->mem.base_reg));
+	else if (is_pc)
+		SStream_concat0(O, "zpc");
 
 	if ((is_pc || op->mem.base_reg != M68K_REG_INVALID) &&
 	    op->mem.index_reg != M68K_REG_INVALID)
@@ -465,7 +474,7 @@ static void printBaseDisp(SStream *O, uint32_t pc, const cs_m68k_op *op)
 	SStream_concat0(O, ")");
 }
 
-static void printMemIndirect(SStream *O, uint32_t pc, const cs_m68k_op *op)
+static void printMemIndirect(SStream *O, uint32_t pc_base, const cs_m68k_op *op)
 {
 	int is_pc = (op->address_mode == M68K_AM_PC_MEMI_POST_INDEX ||
 		     op->address_mode == M68K_AM_PC_MEMI_PRE_INDEX);
@@ -477,7 +486,7 @@ static void printMemIndirect(SStream *O, uint32_t pc, const cs_m68k_op *op)
 	SStream_concat0(O, "([");
 
 	if (is_pc) {
-		SStream_concat(O, "$%" PRIx32, pc + 2 + op->mem.in_disp);
+		SStream_concat(O, "$%" PRIx32, pc_base + op->mem.in_disp);
 	} else if (op->mem.in_disp != 0) {
 		SStream_concat(O, "%s$%" PRIx32,
 			       op->mem.in_disp >= 0 ? "" : "-",
@@ -485,18 +494,23 @@ static void printMemIndirect(SStream *O, uint32_t pc, const cs_m68k_op *op)
 	}
 
 	if (op->mem.base_reg != M68K_REG_INVALID) {
-		if (op->mem.in_disp != 0)
+		if (is_pc || op->mem.in_disp != 0)
 			SStream_concat(O, ",%s%s", s_spacing,
 				       getRegName(op->mem.base_reg));
 		else
 			SStream_concat(O, "%s", getRegName(op->mem.base_reg));
+	} else if (is_pc) {
+		SStream_concat(O, ",%szpc", s_spacing);
 	}
 
 	if (is_post)
 		SStream_concat0(O, "]");
 
 	if (op->mem.index_reg != M68K_REG_INVALID) {
-		SStream_concat(O, ",%s", s_spacing);
+		/* bd and the base register can both be suppressed */
+		if (is_post || is_pc || op->mem.in_disp != 0 ||
+		    op->mem.base_reg != M68K_REG_INVALID)
+			SStream_concat(O, ",%s", s_spacing);
 		printIndexReg(O, op);
 	}
 
@@ -514,8 +528,8 @@ static void printMemIndirect(SStream *O, uint32_t pc, const cs_m68k_op *op)
 	SStream_concat0(O, ")");
 }
 
-static void printAddressingMode(SStream *O, uint32_t pc, const cs_m68k *inst,
-				const cs_m68k_op *op)
+static void printAddressingMode(SStream *O, const m68k_info *info,
+				const cs_m68k *inst, const cs_m68k_op *op)
 {
 	switch (op->address_mode) {
 	case M68K_AM_NONE:
@@ -547,7 +561,7 @@ static void printAddressingMode(SStream *O, uint32_t pc, const cs_m68k *inst,
 	case M68K_AM_REGI_ADDR_PRE_DEC:
 	case M68K_AM_REGI_ADDR_DISP:
 	case M68K_AM_PCI_DISP:
-		printRegAddrMode(O, pc, op);
+		printRegAddrMode(O, pcRelativeBase(info, op), op);
 		break;
 	case M68K_AM_ABSOLUTE_DATA_SHORT:
 		SStream_concat(O, "$%" PRIx32 ".w", (uint32_t)op->mem.address);
@@ -560,20 +574,20 @@ static void printAddressingMode(SStream *O, uint32_t pc, const cs_m68k *inst,
 		break;
 	case M68K_AM_PCI_INDEX_8_BIT_DISP:
 	case M68K_AM_AREGI_INDEX_8_BIT_DISP:
-		printIndex8BitDisp(O, pc, op);
+		printIndex8BitDisp(O, pcRelativeBase(info, op), op);
 		break;
 	case M68K_AM_PCI_INDEX_BASE_DISP:
 	case M68K_AM_AREGI_INDEX_BASE_DISP:
-		printBaseDisp(O, pc, op);
+		printBaseDisp(O, pcRelativeBase(info, op), op);
 		break;
 	case M68K_AM_PC_MEMI_POST_INDEX:
 	case M68K_AM_PC_MEMI_PRE_INDEX:
 	case M68K_AM_MEMI_PRE_INDEX:
 	case M68K_AM_MEMI_POST_INDEX:
-		printMemIndirect(O, pc, op);
+		printMemIndirect(O, pcRelativeBase(info, op), op);
 		break;
 	case M68K_AM_BRANCH_DISPLACEMENT:
-		SStream_concat(O, "$%" PRIx32, pc + 2 + op->br_disp.disp);
+		SStream_concat(O, "$%" PRIx32, info->pc + 2 + op->br_disp.disp);
 	default:
 		break;
 	}
@@ -583,11 +597,11 @@ static void printAddressingMode(SStream *O, uint32_t pc, const cs_m68k *inst,
 		SStream_concat0(O, "&");
 }
 
-static void printCAS2(SStream *O, uint32_t pc, const cs_m68k *ext)
+static void printCAS2(SStream *O, const m68k_info *info, const cs_m68k *ext)
 {
-	printAddressingMode(O, pc, ext, &ext->operands[0]);
+	printAddressingMode(O, info, ext, &ext->operands[0]);
 	SStream_concat0(O, ",");
-	printAddressingMode(O, pc, ext, &ext->operands[1]);
+	printAddressingMode(O, info, ext, &ext->operands[1]);
 	SStream_concat0(O, ",");
 
 	SStream_concat(O, "(%s):(%s)",
@@ -595,7 +609,7 @@ static void printCAS2(SStream *O, uint32_t pc, const cs_m68k *ext)
 		       s_reg_names[ext->operands[2].reg_pair.reg_1]);
 }
 
-static void printCacheOp(SStream *O, uint32_t pc, const cs_m68k *ext)
+static void printCacheOp(SStream *O, const m68k_info *info, const cs_m68k *ext)
 {
 	static const char *const cache_names[] = { "nc", "dc", "ic", "bc" };
 	unsigned int sel = (unsigned int)ext->operands[0].imm;
@@ -608,23 +622,23 @@ static void printCacheOp(SStream *O, uint32_t pc, const cs_m68k *ext)
 
 	for (i = 1; i < ext->op_count; ++i) {
 		SStream_concat(O, ",%s", s_spacing);
-		printAddressingMode(O, pc, ext, &ext->operands[i]);
+		printAddressingMode(O, info, ext, &ext->operands[i]);
 	}
 }
 
-static void printPackedMoveDestination(SStream *O, uint32_t pc,
+static void printPackedMoveDestination(SStream *O, const m68k_info *info,
 				       const cs_m68k *ext)
 {
 	const cs_m68k_op *k_factor = &ext->operands[2];
 
-	printAddressingMode(O, pc, ext, &ext->operands[0]);
+	printAddressingMode(O, info, ext, &ext->operands[0]);
 	SStream_concat(O, ",%s", s_spacing);
-	printAddressingMode(O, pc, ext, &ext->operands[1]);
+	printAddressingMode(O, info, ext, &ext->operands[1]);
 	SStream_concat0(O, "{");
 	if (k_factor->type == M68K_OP_IMM)
 		SStream_concat(O, "#%" PRId64, (int64_t)k_factor->imm);
 	else
-		printAddressingMode(O, pc, ext, k_factor);
+		printAddressingMode(O, info, ext, k_factor);
 	SStream_concat0(O, "}");
 }
 
@@ -715,12 +729,12 @@ void M68K_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	SStream_concat0(O, " ");
 
 	if (MI->Opcode == M68K_INS_CAS2) {
-		printCAS2(O, info->pc, ext);
+		printCAS2(O, info, ext);
 		return;
 	}
 
 	if (MI->Opcode >= M68K_INS_CINVL && MI->Opcode <= M68K_INS_CPUSHA) {
-		printCacheOp(O, info->pc, ext);
+		printCacheOp(O, info, ext);
 		return;
 	}
 
@@ -728,12 +742,12 @@ void M68K_printInst(MCInst *MI, SStream *O, void *PrinterInfo)
 	    ext->op_size.type == M68K_SIZE_TYPE_FPU &&
 	    ext->op_size.fpu_size == M68K_FPU_SIZE_PACKED &&
 	    ext->op_count == 3) {
-		printPackedMoveDestination(O, info->pc, ext);
+		printPackedMoveDestination(O, info, ext);
 		return;
 	}
 
 	for (i = 0; i < ext->op_count; ++i) {
-		printAddressingMode(O, info->pc, ext, &ext->operands[i]);
+		printAddressingMode(O, info, ext, &ext->operands[i]);
 		if ((i + 1) != ext->op_count)
 			SStream_concat(O, ",%s", s_spacing);
 	}

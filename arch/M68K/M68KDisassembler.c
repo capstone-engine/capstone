@@ -283,20 +283,38 @@ static int make_int_16(int value)
 	return (value & 0x8000) ? value | ~0xffff : value & 0xffff;
 }
 
-static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
+/* M68000PM/AD Rev. 1, 2.2.11-2.2.15: the PC of a PC-relative EA is the
+ * address of its first extension word. Call before reading that word. */
+static uint8_t pc_ext_offset(const m68k_info *info)
+{
+	return (uint8_t)(info->pc - (uint32_t)info->baseAddress);
+}
+
+/* M68000PM/AD Rev. 1, Fig. 2-2 and Tables 2-1/2-2: bit 3, BD SIZE 00,
+ * I/IS 100, and I/IS 1xx with the index suppressed are reserved. */
+static bool full_ext_is_reserved(uint32_t extension)
+{
+	uint32_t iis = extension & 0x7;
+
+	return (extension & 0x8) || (extension & 0x30) == 0x0 || iis == 0x4 ||
+	       (!EXT_INDEX_REGISTER_PRESENT(extension) && iis > 0x4);
+}
+
+static bool get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 					uint32_t instruction, uint32_t size,
 					bool is_pc)
 {
-	uint32_t ext_addr = info->pc;
+	uint8_t pc_offset = pc_ext_offset(info);
 	uint32_t extension = read_imm_16(info);
-	int32_t pc_adjust =
-		is_pc ? (int32_t)(ext_addr - info->baseAddress - 2) : 0;
 
 	op->address_mode = M68K_AM_AREGI_INDEX_BASE_DISP;
 
 	if (EXT_FULL(extension)) {
 		uint32_t preindex;
 		uint32_t postindex;
+
+		if (full_ext_is_reserved(extension))
+			return false;
 
 		op->mem.base_reg = M68K_REG_INVALID;
 		op->mem.index_reg = M68K_REG_INVALID;
@@ -307,7 +325,6 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 					 read_imm_32(info) :
 					 (int16_t)read_imm_16(info)) :
 				0;
-		op->mem.in_disp += pc_adjust;
 
 		op->mem.in_disp_size =
 			EXT_BASE_DISPLACEMENT_PRESENT(extension) &&
@@ -328,9 +345,11 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 				1 :
 				0;
 
+		/* A suppressed PC (ZPC) is zero and leaves pc_offset 0. */
 		if (EXT_BASE_REGISTER_PRESENT(extension)) {
 			if (is_pc) {
 				op->mem.base_reg = M68K_REG_PC;
+				op->mem.pc_offset = pc_offset;
 			} else {
 				op->mem.base_reg =
 					M68K_REG_A0 + (instruction & 7);
@@ -370,7 +389,7 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 					M68K_AM_AREGI_INDEX_BASE_DISP;
 		}
 
-		return;
+		return true;
 	}
 
 	op->mem.index_reg =
@@ -380,6 +399,7 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 
 	if (is_pc) {
 		op->mem.base_reg = M68K_REG_PC;
+		op->mem.pc_offset = pc_offset;
 		op->address_mode = M68K_AM_PCI_INDEX_8_BIT_DISP;
 	} else {
 		op->mem.base_reg = M68K_REG_A0 + (instruction & 7);
@@ -387,12 +407,13 @@ static void get_with_index_address_mode(m68k_info *info, cs_m68k_op *op,
 	}
 
 	op->mem.disp = (int8_t)(extension & 0xff);
-	op->mem.disp += (int16_t)pc_adjust;
 	op->mem.disp_size = 0;
 
 	if (EXT_INDEX_SCALE(extension)) {
 		op->mem.scale = 1 << EXT_INDEX_SCALE(extension);
 	}
+
+	return true;
 }
 
 /* Raw effective-address encoding bits, used before get_ea_mode_op() consumes
@@ -477,6 +498,14 @@ static bool m68k_ea_is_alterable_control(uint32_t ir)
 	       mode == M68K_EA_MODE_ADDR_INDIRECT_DISP ||
 	       mode == M68K_EA_MODE_ADDR_INDIRECT_INDEX ||
 	       (mode == M68K_EA_MODE_EXTENDED &&
+		m68k_ea_register(ir) <= M68K_EA_EXT_ABSOLUTE_LONG);
+}
+
+static bool m68k_ea_is_data_alterable(uint32_t ir)
+{
+	uint32_t mode = m68k_ea_mode(ir);
+	return mode != M68K_EA_MODE_ADDR_DIRECT &&
+	       (mode != M68K_EA_MODE_EXTENDED ||
 		m68k_ea_register(ir) <= M68K_EA_EXT_ABSOLUTE_LONG);
 }
 
@@ -585,7 +614,9 @@ static bool get_ea_mode_op(m68k_info *info, cs_m68k_op *op,
 	case 0x36:
 	case 0x37:
 		/* address register indirect with index */
-		get_with_index_address_mode(info, op, instruction, size, false);
+		if (!get_with_index_address_mode(info, op, instruction, size,
+						 false))
+			return false;
 		break;
 
 	case 0x38:
@@ -600,26 +631,19 @@ static bool get_ea_mode_op(m68k_info *info, cs_m68k_op *op,
 		op->mem.address = read_imm_32(info);
 		break;
 
-	case 0x3a: {
+	case 0x3a:
 		/* program counter with displacement */
-		/* The printer computes the effective address as
-		 * instruction_start + 2 + disp, assuming the displacement
-		 * extension word immediately follows the opcode word.
-		 * When extra words precede the EA (e.g. an immediate in
-		 * BTST #imm,disp(PC)), the displacement word is further
-		 * along.  Adjust disp so the printer still produces the
-		 * correct absolute address. */
-		uint32_t disp_addr = info->pc;
 		op->address_mode = M68K_AM_PCI_DISP;
+		op->mem.pc_offset = pc_ext_offset(info);
 		op->mem.disp = (int16_t)read_imm_16(info);
-		op->mem.disp += (int16_t)(disp_addr - info->baseAddress - 2);
 		op->mem.disp_size = 1;
 		break;
-	}
 
 	case 0x3b:
 		/* program counter with index */
-		get_with_index_address_mode(info, op, instruction, size, true);
+		if (!get_with_index_address_mode(info, op, instruction, size,
+						 true))
+			return false;
 		break;
 
 	case 0x3c:
@@ -3016,9 +3040,24 @@ static void d68020_cpgen(m68k_info *info)
 		return;
 	}
 
+	/* An is not a data addressing mode, so it can be neither an FPU source
+	 * nor an FMOVE destination, which must also be alterable. Dn holds only
+	 * byte, word, long and single operands (M68000PM/AD Rev. 1, FMOVE and
+	 * the arithmetic instructions). */
+	if (ea_operand && m68k_ea_mode(info->ir) == M68K_EA_MODE_ADDR_DIRECT) {
+		invalid_insn(info);
+		return;
+	}
+	if (ea_operand && m68k_ea_is_data_register_direct(info->ir) &&
+	    src != M68K_FPSRC_LONG && src != M68K_FPSRC_SINGLE &&
+	    src != M68K_FPSRC_WORD && src != M68K_FPSRC_BYTE) {
+		invalid_insn(info);
+		return;
+	}
+
 	if (to_ea) {
 		m68k_insn opcode = M68K_INS_FMOVE;
-		if (m68k_ea_is_immediate(info->ir)) {
+		if (!m68k_ea_is_data_alterable(info->ir)) {
 			invalid_insn(info);
 			return;
 		}
@@ -3067,7 +3106,7 @@ static void d68020_cpgen(m68k_info *info)
 		MCInst_setOpcode(info->inst, M68K_INS_FETOXM1);
 		break;
 	case 0x09:
-		MCInst_setOpcode(info->inst, M68K_INS_FATANH);
+		MCInst_setOpcode(info->inst, M68K_INS_FTANH);
 		break;
 	case 0x0a:
 		MCInst_setOpcode(info->inst, M68K_INS_FATAN);
@@ -3362,6 +3401,14 @@ fpu_operands:
 		}
 	} else {
 		op0->reg = M68K_REG_FP0 + src;
+	}
+
+	/* FTST.<fmt> <ea> and FTST.X FPm only test the source. The destination
+	 * register field is ignored and never written (M68000PM/AD Rev. 1,
+	 * FTST). */
+	if (MCInst_getOpcode(info->inst) == M68K_INS_FTST) {
+		ext->op_count = 1;
+		return;
 	}
 
 	if (MCInst_getOpcode(info->inst) == M68K_INS_FSINCOS) {
@@ -5420,6 +5467,10 @@ static void update_am_reg_list(m68k_info *info, cs_m68k_op *op, int write)
 		add_reg_to_rw_list(info, op->mem.base_reg, 0);
 		break;
 
+	case M68K_AM_PCI_DISP:
+		add_reg_to_rw_list(info, M68K_REG_PC, 0);
+		break;
+
 	case M68K_AM_AREGI_INDEX_8_BIT_DISP:
 	case M68K_AM_AREGI_INDEX_BASE_DISP:
 	case M68K_AM_MEMI_POST_INDEX:
@@ -5508,7 +5559,8 @@ static void build_regs_read_write_counts(m68k_info *info)
 		return;
 	}
 
-	if (MCInst_getOpcode(info->inst) == M68K_INS_BTST) {
+	if (MCInst_getOpcode(info->inst) == M68K_INS_BTST ||
+	    MCInst_getOpcode(info->inst) == M68K_INS_FTST) {
 		for (i = 0; i < info->extension.op_count; ++i)
 			update_op_reg_list(info, &info->extension.operands[i],
 					   0);

@@ -142,6 +142,9 @@ void print_insn_detail_m68k(csh handle, cs_insn *ins)
 			if (op->mem.disp != 0)
 				printf("\t\t\toperands[%u].mem.disp: 0x%x\n", i,
 				       op->mem.disp);
+			if (op->mem.pc_offset != 0)
+				printf("\t\t\toperands[%u].mem.pc_offset: %u\n",
+				       i, op->mem.pc_offset);
 			if (op->mem.scale != 0)
 				printf("\t\t\toperands[%u].mem.scale: %d\n", i,
 				       op->mem.scale);
