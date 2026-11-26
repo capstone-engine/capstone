@@ -5457,7 +5457,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfae %v0, %v0, %v0, 11, 0"
+          asm_text: "vfae %v0, %v0, %v0, 11"
 
   -
     input:
@@ -5477,7 +5477,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfae %v18, %v3, %v20, 11, 0"
+          asm_text: "vfae %v18, %v3, %v20, 11"
 
   -
     input:
@@ -5497,7 +5497,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfaeb %v0, %v0, %v0, 0"
+          asm_text: "vfaeb %v0, %v0, %v0"
 
   -
     input:
@@ -5517,7 +5517,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfaeb %v18, %v3, %v20, 0"
+          asm_text: "vfaeb %v18, %v3, %v20"
 
   -
     input:
@@ -5567,7 +5567,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfaef %v0, %v0, %v0, 0"
+          asm_text: "vfaef %v0, %v0, %v0"
 
   -
     input:
@@ -5587,7 +5587,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfaef %v18, %v3, %v20, 0"
+          asm_text: "vfaef %v18, %v3, %v20"
 
   -
     input:
@@ -5637,7 +5637,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfaeh %v0, %v0, %v0, 0"
+          asm_text: "vfaeh %v0, %v0, %v0"
 
   -
     input:
@@ -5657,7 +5657,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfaeh %v18, %v3, %v20, 0"
+          asm_text: "vfaeh %v18, %v3, %v20"
 
   -
     input:
@@ -6037,7 +6037,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfee %v0, %v0, %v0, 11, 0"
+          asm_text: "vfee %v0, %v0, %v0, 11"
 
   -
     input:
@@ -6057,7 +6057,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfee %v18, %v3, %v20, 11, 0"
+          asm_text: "vfee %v18, %v3, %v20, 11"
 
   -
     input:
@@ -6067,7 +6067,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfee %v31, %v31, %v31, 11, 0"
+          asm_text: "vfee %v31, %v31, %v31, 11"
 
   -
     input:
@@ -6077,7 +6077,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeeb %v0, %v0, %v0, 0"
+          asm_text: "vfeeb %v0, %v0, %v0"
 
   -
     input:
@@ -6097,7 +6097,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeeb %v18, %v3, %v20, 0"
+          asm_text: "vfeeb %v18, %v3, %v20"
 
   -
     input:
@@ -6107,7 +6107,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeeb %v31, %v31, %v31, 0"
+          asm_text: "vfeeb %v31, %v31, %v31"
 
   -
     input:
@@ -6147,7 +6147,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeef %v0, %v0, %v0, 0"
+          asm_text: "vfeef %v0, %v0, %v0"
 
   -
     input:
@@ -6167,7 +6167,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeef %v18, %v3, %v20, 0"
+          asm_text: "vfeef %v18, %v3, %v20"
 
   -
     input:
@@ -6177,7 +6177,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeef %v31, %v31, %v31, 0"
+          asm_text: "vfeef %v31, %v31, %v31"
 
   -
     input:
@@ -6217,7 +6217,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeeh %v0, %v0, %v0, 0"
+          asm_text: "vfeeh %v0, %v0, %v0"
 
   -
     input:
@@ -6237,7 +6237,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeeh %v18, %v3, %v20, 0"
+          asm_text: "vfeeh %v18, %v3, %v20"
 
   -
     input:
@@ -6247,7 +6247,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeeh %v31, %v31, %v31, 0"
+          asm_text: "vfeeh %v31, %v31, %v31"
 
   -
     input:
@@ -6287,7 +6287,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfene %v0, %v0, %v0, 11, 0"
+          asm_text: "vfene %v0, %v0, %v0, 11"
 
   -
     input:
@@ -6307,7 +6307,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfene %v18, %v3, %v20, 11, 0"
+          asm_text: "vfene %v18, %v3, %v20, 11"
 
   -
     input:
@@ -6317,7 +6317,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfene %v31, %v31, %v31, 11, 0"
+          asm_text: "vfene %v31, %v31, %v31, 11"
 
   -
     input:
@@ -6327,7 +6327,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeneb %v0, %v0, %v0, 0"
+          asm_text: "vfeneb %v0, %v0, %v0"
 
   -
     input:
@@ -6347,7 +6347,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeneb %v18, %v3, %v20, 0"
+          asm_text: "vfeneb %v18, %v3, %v20"
 
   -
     input:
@@ -6367,7 +6367,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeneb %v31, %v31, %v31, 0"
+          asm_text: "vfeneb %v31, %v31, %v31"
 
   -
     input:
@@ -6397,7 +6397,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfenef %v0, %v0, %v0, 0"
+          asm_text: "vfenef %v0, %v0, %v0"
 
   -
     input:
@@ -6417,7 +6417,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfenef %v18, %v3, %v20, 0"
+          asm_text: "vfenef %v18, %v3, %v20"
 
   -
     input:
@@ -6427,7 +6427,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfenef %v31, %v31, %v31, 0"
+          asm_text: "vfenef %v31, %v31, %v31"
 
   -
     input:
@@ -6467,7 +6467,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeneh %v0, %v0, %v0, 0"
+          asm_text: "vfeneh %v0, %v0, %v0"
 
   -
     input:
@@ -6487,7 +6487,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeneh %v18, %v3, %v20, 0"
+          asm_text: "vfeneh %v18, %v3, %v20"
 
   -
     input:
@@ -6497,7 +6497,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vfeneh %v31, %v31, %v31, 0"
+          asm_text: "vfeneh %v31, %v31, %v31"
 
   -
     input:
@@ -7677,7 +7677,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistr %v0, %v0, 11, 0"
+          asm_text: "vistr %v0, %v0, 11"
 
   -
     input:
@@ -7697,7 +7697,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistr %v18, %v3, 11, 0"
+          asm_text: "vistr %v18, %v3, 11"
 
   -
     input:
@@ -7707,7 +7707,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistr %v31, %v31, 11, 0"
+          asm_text: "vistr %v31, %v31, 11"
 
   -
     input:
@@ -7717,7 +7717,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistrb %v0, %v0, 0"
+          asm_text: "vistrb %v0, %v0"
 
   -
     input:
@@ -7737,7 +7737,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistrb %v18, %v3, 0"
+          asm_text: "vistrb %v18, %v3"
 
   -
     input:
@@ -7747,7 +7747,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistrb %v31, %v31, 0"
+          asm_text: "vistrb %v31, %v31"
 
   -
     input:
@@ -7767,7 +7767,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistrf %v0, %v0, 0"
+          asm_text: "vistrf %v0, %v0"
 
   -
     input:
@@ -7787,7 +7787,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistrf %v18, %v3, 0"
+          asm_text: "vistrf %v18, %v3"
 
   -
     input:
@@ -7797,7 +7797,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistrf %v31, %v31, 0"
+          asm_text: "vistrf %v31, %v31"
 
   -
     input:
@@ -7817,7 +7817,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistrh %v0, %v0, 0"
+          asm_text: "vistrh %v0, %v0"
 
   -
     input:
@@ -7837,7 +7837,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistrh %v18, %v3, 0"
+          asm_text: "vistrh %v18, %v3"
 
   -
     input:
@@ -7847,7 +7847,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vistrh %v31, %v31, 0"
+          asm_text: "vistrh %v31, %v31"
 
   -
     input:
@@ -13967,7 +13967,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vstrc %v0, %v0, %v0, %v0, 11, 0"
+          asm_text: "vstrc %v0, %v0, %v0, %v0, 11"
 
   -
     input:
@@ -13987,7 +13987,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vstrc %v18, %v3, %v20, %v5, 11, 0"
+          asm_text: "vstrc %v18, %v3, %v20, %v5, 11"
 
   -
     input:
@@ -14007,7 +14007,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vstrcb %v0, %v0, %v0, %v0, 0"
+          asm_text: "vstrcb %v0, %v0, %v0, %v0"
 
   -
     input:
@@ -14027,7 +14027,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vstrcb %v18, %v3, %v20, %v5, 0"
+          asm_text: "vstrcb %v18, %v3, %v20, %v5"
 
   -
     input:
@@ -14077,7 +14077,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vstrcf %v0, %v0, %v0, %v0, 0"
+          asm_text: "vstrcf %v0, %v0, %v0, %v0"
 
   -
     input:
@@ -14097,7 +14097,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vstrcf %v18, %v3, %v20, %v5, 0"
+          asm_text: "vstrcf %v18, %v3, %v20, %v5"
 
   -
     input:
@@ -14147,7 +14147,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vstrch %v0, %v0, %v0, %v0, 0"
+          asm_text: "vstrch %v0, %v0, %v0, %v0"
 
   -
     input:
@@ -14167,7 +14167,7 @@ test_cases:
     expected:
       insns:
         -
-          asm_text: "vstrch %v18, %v3, %v20, %v5, 0"
+          asm_text: "vstrch %v18, %v3, %v20, %v5"
 
   -
     input:

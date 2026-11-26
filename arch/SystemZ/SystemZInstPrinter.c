@@ -32,6 +32,7 @@
 
 #include "SystemZMapping.h"
 #include "SystemZInstPrinter.h"
+#include "SystemZMCTargetDesc.h"
 
 #define CONCAT(a, b) CONCAT_(a, b)
 #define CONCAT_(a, b) a##_##b
@@ -68,7 +69,13 @@ static void printPCRelTLSOperand(MCInst *MI, uint64_t Address, int OpNum,
 // This forms part of the instruction name rather than the operand list.
 // Print the mnemonic for a condition-code mask ("ne", "lh", etc.)
 static void printCond4Operand(MCInst *MI, int OpNum, SStream *O);
+#ifndef CAPSTONE_DIET
+static void printCustomAliasOperand(MCInst *MI, uint64_t Address,
+				    unsigned OpIdx, unsigned PrintMethodIdx,
+				    SStream *O);
 
+#define PRINT_ALIAS_INSTR
+#endif
 #include "SystemZGenAsmWriter.inc"
 
 #define DECLARE_printUImmOperand(N) \
@@ -166,7 +173,24 @@ static void printRegName(const MCInst *MI, SStream *O, MCRegister Reg)
 static void printInst(MCInst *MI, uint64_t Address, const char *Annot,
 		      SStream *O)
 {
+#ifndef CAPSTONE_DIET
+	bool useAliasDetails = map_use_alias_details(MI);
+	map_set_fill_detail_ops(MI, useAliasDetails);
+
+	bool isAlias = printAliasInstr(MI, Address, O);
+
+	MCInst_setIsAlias(MI, isAlias);
+	if (!isAlias || !useAliasDetails) {
+		map_set_fill_detail_ops(MI, !(isAlias && useAliasDetails));
+		if (isAlias)
+			SStream_Close(O);
+		printInstruction(MI, Address, O);
+		if (isAlias)
+			SStream_Open(O);
+	}
+#else
 	printInstruction(MI, Address, O);
+#endif
 }
 
 #define DEFINE_printUImmOperand(N) \
