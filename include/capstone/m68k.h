@@ -174,6 +174,10 @@ typedef struct m68k_op_mem {
 	uint8_t in_disp_size; ///< 0 = word, 1 = long
 	uint8_t out_disp_size; ///< 0 = word, 1 = long
 	uint8_t disp_size; ///< 0 = byte, 1 = word
+	/// Offset in bytes from the instruction address to the PC used by a
+	/// PC-relative mode: its first extension word, which can follow other
+	/// extension words. 0 if the mode does not use the PC, also for ZPC.
+	uint8_t pc_offset;
 	uint64_t address; ///< absolute address for absolute MEM operands
 } m68k_op_mem;
 

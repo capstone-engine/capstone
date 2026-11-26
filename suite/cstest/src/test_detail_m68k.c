@@ -29,6 +29,7 @@ TestDetailM68KOpMem *test_detail_m68k_op_mem_clone(TestDetailM68KOpMem *mem)
 	clone->bitfield = mem->bitfield;
 	clone->width = mem->width;
 	clone->offset = mem->offset;
+	clone->pc_offset = mem->pc_offset;
 	clone->address = mem->address;
 	clone->in_disp_size = mem->in_disp_size;
 	clone->out_disp_size = mem->out_disp_size;
@@ -265,6 +266,10 @@ bool test_expected_m68k(csh *handle, cs_m68k *actual, TestDetailM68K *expected)
 			if (eop->mem->offset) {
 				compare_uint8_ret(op->mem.offset,
 						  eop->mem->offset, false);
+			}
+			if (eop->mem->pc_offset) {
+				compare_uint8_ret(op->mem.pc_offset,
+						  eop->mem->pc_offset, false);
 			}
 			if (eop->mem->address) {
 				compare_uint64_ret(op->mem.address,
