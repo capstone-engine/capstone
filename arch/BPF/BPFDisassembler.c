@@ -335,7 +335,10 @@ static bool decodeJump(MCInst *MI, bpf_internal *bpf)
 			}
 			if (bpf->op ==
 			    (BPF_CLASS_JMP | BPF_JUMP_CALL | BPF_SRC_X)) {
-				CHECK_READABLE_AND_PUSH(ud, MI, bpf->k);
+				/* LLVM before 19 has the register in imm.
+				 * GCC and newer LLVM have it in dst. */
+				uint64_t reg = bpf->k ? bpf->k : bpf->dst;
+				CHECK_READABLE_AND_PUSH(ud, MI, reg);
 				return true;
 			}
 			return false;
