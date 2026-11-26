@@ -70,7 +70,7 @@ const char *SystemZ_reg_name(csh handle, unsigned int reg)
 void SystemZ_printer(MCInst *MI, SStream *O, void * /* MCRegisterInfo* */ info)
 {
 	MI->MRI = (MCRegisterInfo *)info;
-	MI->fillDetailOps = detail_is_set(MI);
+	MI->flat_insn->usesAliasDetails = map_use_alias_details(MI);
 	SystemZ_LLVM_printInstruction(MI, "", O);
 #ifndef CAPSTONE_DIET
 	map_set_alias_id(MI, O, insn_alias_mnem_map,

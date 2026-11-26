@@ -1838,6 +1838,8 @@ static const cs_enum_id_map cs_enum_map[] = {
 	  .val = SYSTEMZ_INSN_FORM_INSTVRX },
 	{ .str = "SYSTEMZ_INSN_FORM_INSTVSI",
 	  .val = SYSTEMZ_INSN_FORM_INSTVSI },
+	{ .str = "SYSTEMZ_INS_ALIAS_VFAE", .val = SYSTEMZ_INS_ALIAS_VFAE },
+	{ .str = "SYSTEMZ_INS_ALIAS_VISTRB", .val = SYSTEMZ_INS_ALIAS_VISTRB },
 	{ .str = "SYSTEMZ_OP_IMM", .val = SYSTEMZ_OP_IMM },
 	{ .str = "SYSTEMZ_OP_MEM", .val = SYSTEMZ_OP_MEM },
 	{ .str = "SYSTEMZ_OP_REG", .val = SYSTEMZ_OP_REG },

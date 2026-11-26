@@ -119,3 +119,111 @@ test_cases:
                 type: SYSTEMZ_OP_IMM
                 imm_width: 0
                 imm: 0x1028
+  -
+    input:
+      name: "issue 2738: alias details"
+      bytes: [ 0xe7, 0x23, 0x00, 0x00, 0x08, 0x5c, 0xe7, 0x23, 0x40, 0x00, 0xba, 0x82 ]
+      arch: "CS_ARCH_SYSTEMZ"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_SYSTEMZ_ARCH14, CS_OPT_DETAIL ]
+    expected:
+      insns:
+      -
+        asm_text: "vistrb %v18, %v3"
+        is_alias: 1
+        alias_id: SYSTEMZ_INS_ALIAS_VISTRB
+        uses_alias_details: 1
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: v18
+                access: CS_AC_WRITE
+              -
+                type: SYSTEMZ_OP_REG
+                reg: v3
+                access: CS_AC_READ
+      -
+        asm_text: "vfae %v18, %v3, %v20, 0xb"
+        is_alias: 1
+        alias_id: SYSTEMZ_INS_ALIAS_VFAE
+        uses_alias_details: 1
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: v18
+                access: CS_AC_WRITE
+              -
+                type: SYSTEMZ_OP_REG
+                reg: v3
+                access: CS_AC_READ
+              -
+                type: SYSTEMZ_OP_REG
+                reg: v20
+                access: CS_AC_READ
+              -
+                type: SYSTEMZ_OP_IMM
+                imm: 11
+                imm_width: 4
+                access: CS_AC_READ
+  -
+    input:
+      name: "issue 2738: real details"
+      bytes: [ 0xe7, 0x23, 0x00, 0x00, 0x08, 0x5c, 0xe7, 0x23, 0x40, 0x00, 0xba, 0x82 ]
+      arch: "CS_ARCH_SYSTEMZ"
+      options: [ CS_MODE_BIG_ENDIAN, CS_MODE_SYSTEMZ_ARCH14, CS_OPT_DETAIL_REAL ]
+    expected:
+      insns:
+      -
+        asm_text: "vistrb %v18, %v3"
+        is_alias: 1
+        alias_id: SYSTEMZ_INS_ALIAS_VISTRB
+        uses_alias_details: -1
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: v18
+                access: CS_AC_WRITE
+              -
+                type: SYSTEMZ_OP_REG
+                reg: v3
+                access: CS_AC_READ
+              -
+                type: SYSTEMZ_OP_IMM
+                imm: 0
+                imm_width: 4
+                access: CS_AC_READ
+      -
+        asm_text: "vfae %v18, %v3, %v20, 0xb"
+        is_alias: 1
+        alias_id: SYSTEMZ_INS_ALIAS_VFAE
+        uses_alias_details: -1
+        details:
+          systemz:
+            operands:
+              -
+                type: SYSTEMZ_OP_REG
+                reg: v18
+                access: CS_AC_WRITE
+              -
+                type: SYSTEMZ_OP_REG
+                reg: v3
+                access: CS_AC_READ
+              -
+                type: SYSTEMZ_OP_REG
+                reg: v20
+                access: CS_AC_READ
+              -
+                type: SYSTEMZ_OP_IMM
+                imm: 11
+                imm_width: 4
+                access: CS_AC_READ
+              -
+                type: SYSTEMZ_OP_IMM
+                imm: 0
+                imm_width: 4
+                access: CS_AC_READ
