@@ -1686,3 +1686,4 @@
   "xperm4", // RISCV_INS_XPERM4
   "xperm8", // RISCV_INS_XPERM8
   "zip", // RISCV_INS_ZIP
+  "c_slli", // RISCV_INS_C_SLLI_HINT
